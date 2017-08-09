@@ -127,7 +127,7 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="利用できないリンク";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="これには次の理由が考えられます。- Tos/AUP 違反のためファイルが除外された。- URL が無効。アクセスしようとするリンクが存在しない。- ユーザーによりファイルが削除された。";
+"fileLinkUnavailableText"="これは、以下の理由による可能性があります：－ファイルがToS/AUP違反により削除されました。－URLが無効－アクセスしようとしているリンクが存在しません。－ファイルがユーザーによって削除されました。";
 /* Message shown when a download starts */
 "downloadStarted"="ダウンロード開始";
 /* Title for the folder link view */
@@ -139,11 +139,11 @@
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="フォルダ'%@' は作成できません。";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="これには次の理由が考えられます。- Tos/AUP 違反により、フォルダリンクが除去された。- URLが無効。アクセスしようとするリンクが存在しない。- ユーザーにより、フォルダリンクが削除された。";
+"folderLinkUnavailableText"="これは、以下の理由による可能性があります：－フォルダがToS/AUP違反により削除されました。－URLが無効－アクセスしようとしているリンクが存在しません。－フォルダリンクがユーザーによって削除されました。";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="ネット接続なし";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="フォルダにファイルなし";
+"emptyFolder"="空のフォルダ";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="あなたのクラウドデバイスにはファイルが存在しません。";
 /* Button title shown in empty views when you can 'Add files' */
@@ -151,7 +151,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="結果なし";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="ごみ箱を空にします";
+"cloudDriveEmptyState_titleRubbishBin"="ゴミ箱は空っぽ";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="オフライン用に保存されたファイルはありません";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -293,7 +293,7 @@
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="ダウンロードをキャンセルしますか？";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
-"selectDestination"="Select destination";
+"selectDestination"="宛先を選択";
 /* Text of the button for user to select files in MEGA. */
 "selectFiles"="ファイルを選択";
 /* Title for the action that allows you to move a file or folder */
@@ -336,11 +336,11 @@
 "rename"="名前を変更";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="新しい名前を入力して下さい。";
-/* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
+/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="ゴミ箱へ";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
 "moveFileToRubbishBinMessage"="ファイル１こ、ゴミ箱に移しますね？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="ファイル %dこ、ゴミ箱に移しますね？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
 "moveFolderToRubbishBinMessage"="フォルダ１こ、ゴミ箱に移しますね？";
@@ -355,9 +355,9 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="[A]ファイルと[B]フォルダをごみ箱に移動してもよろしいですか？　";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="ゴミ箱にファイル１こ、移動しました。";
+"fileMovedToRubbishBinMessage"="ファイル１つ、ゴミ箱に移動完了！";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="ゴミ箱にファイル%dこ、移動しました。";
+"filesMovedToRubbishBinMessage"="%dファイルは、ゴミ箱に移動しました。";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
 "folderMovedToRubbishBinMessage"="ゴミ箱にフォルダ１こ、移動しました。";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
@@ -403,7 +403,7 @@
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="写真アップロード有効";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="カメラアップロードは有効です";
+"cameraUploadsEnabled"="写真アップロードできます";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="選択アイテム%lu こ";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -517,7 +517,7 @@
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="許可";
 /* Permissions given to the user you share your folder with */
-"readOnly"="読み込みだけ";
+"readOnly"="読み取り専用";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="読み取りと書き込み";
 /* Permissions given to the user you share your folder with */
@@ -593,7 +593,7 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="MEGAに";
 /* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="ゴミ箱を空にする";
+"emptyRubbishBin"="ゴミ箱は空っぽ";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="ごみ箱の項目はすべて削除されます";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
@@ -609,7 +609,7 @@
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
 "cancelYourAccount"="アカウントをキャンセルする";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
-"youWillLooseAllData"="You will lose all data associated with this account. Are you sure you want to proceed?";
+"youWillLooseAllData"="このアカウントに関連付けられているデータがすべて失われます。続行してもよろしいですか？　";
 /*  */
 "pleaseCheckYourEmail"="Please check your email.";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
@@ -641,9 +641,9 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="[A]ファイルと[B]フォルダを完全に削除しようとしています。続行しますか？（この操作は元に戻すことはできません）。";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="MEGAからファイル１こ除去しました";
+"fileRemovedToRubbishBinMessage"="MEGAからファイル１こ、取り除かれました。";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="MEGAからファイル%dこ、除去しました。";
+"filesRemovedToRubbishBinMessage"="ファイル%dこ、MEGAから除外。";
 /* Success message shown when 1 folder has been removed from MEGA */
 "folderRemovedToRubbishBinMessage"="MEGAからフォルダ１こ、除去しました。";
 /* Success message shown when {1+} folders have been removed from MEGA */
@@ -669,7 +669,7 @@
 /* An option to reset the password. */
 "forgotPassword"="パスワードをわすれました？";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="You can reset your password by following the recovery link that will be sent to your email.";
+"youCanResetYourPasswordByFollowing"="あなたのメールアドレスに送信される回復リンクに従って、パスワードをリセットすることができます。";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="この回収リンクは期限切れです。やり直して下さい。";
 /* Headline of the password reset recovery procedure */
@@ -783,7 +783,7 @@
 /* button that allows the user the change his avatar */
 "changeAvatar"="アバターを替える";
 /* Button title that allows the user change his name */
-"changeName"="Change Name";
+"changeName"="名前の変更";
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="プロフィールを変更成功。";
 /* Hint text for the first name (Placeholder) */
@@ -817,7 +817,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="アカウントをアップグレードする";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
+"youCanUpgradeLaterInMyAccount"="マイアカウントで後でアップグレードできます";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="ストレージ";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -869,7 +869,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="デバッグモードを有効にします";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="オフライン・セクションで(MEGAiOS.log)と言うログファイルが作成されます。";
+"enableDebugMode_message"="ログがオフラインセクションに作成されます(MEGAiOS.log)。ログには、アカウントに関連する情報が含めることができます。";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="デバッグモードを無効にする";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -895,15 +895,15 @@
 /* The title for my message in a chat. The message was sent from yourself. */
 "me"="自分";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
-"wasRemovedFromTheGroupChatBy"="[A] was removed from the group chat by [B].";
+"wasRemovedFromTheGroupChatBy"="[A]さんは[B]さんによってグループチャットから削除されました。";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
 "leftTheGroupChat"="[A] がグループチャットから退出しました";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
-"joinedTheGroupChatByInvitationFrom"="[A] joined the group chat by invitation from [B].";
+"joinedTheGroupChatByInvitationFrom"="[A]さんは[B]さんからの招待によってグループチャットに参加しました。";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
 "clearedTheChatHistory"="[A]が履歴をクリアしました。";
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
-"wasChangedToBy"="[A] was changed to [B] by [C].";
+"wasChangedToBy"="[A]は[C]さんによって[B]に変更されました。";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A]はグループチャット名前を[B]に編集しました。";
 /* Button label. Allows to add contacts in current chat conversation. */
@@ -911,7 +911,7 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="ステータス";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
-"voiceAndVideoCalls"="Voice and Video Calls";
+"voiceAndVideoCalls"="音声通話とビデオ通話";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="モバイルデータを利用します";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
@@ -921,13 +921,13 @@
 /* */
 "1Minute"="1分";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfterXMinutesOfInactivity"="Show me away after [X] minutes of inactivity";
+"showMeAwayAfterXMinutesOfInactivity"="非アクティブ状態が[X]分続いたら退席中と表示します";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfter1MinuteOfInactivity"="非アクティブ状態が1分続いたら退席中と表示します";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
-"statusPersistence"="Status Persistence";
+"statusPersistence"="ステータスの永続性";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
-"maintainMyChosenStatusAppearance"="Maintain my chosen status appearance even when I have no connected devices.";
+"maintainMyChosenStatusAppearance"="接続された端末がない場合でも、選択したステータスの状態を維持します。";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="編集された";
 /*  */
@@ -987,7 +987,7 @@
 /* A button label. The button allows the user to close the conversation. */
 "close"="閉じる";
 /* Alert text that explains what means confirming the action 'Leave' */
-"youWillNoLongerHaveAccessToThisConversation"="You will no longer have access to this conversation";
+"youWillNoLongerHaveAccessToThisConversation"="あなたはこの会話にアクセスできなくなります";
 /* A button label. The button allows the user to leave the conversation. */
 "leaveChat"="チャットから退出";
 /* Button title that allows the user to leave a group chat. */
@@ -1020,32 +1020,34 @@
 "retry"="もう一度やる";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="メッセージを削除";
+/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
+"sendMedia"="Send Media";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="知り合いを送信";
 /* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
 "addFromMyCloudDrive"="私のクラウドドライブから追加する";
 /* */
-"done"="できました。";
+"done"="完了";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="ファイルを送る";
 /* */
 "warning"="警告";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
-"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="All files saved for Offline will be deleted from your device. Proceed to logout?";
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="オフライン用に保存されたファイルはすべて、端末から削除されます。ログアウトに進みますか？　";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Depleted transfer quota";
+"depletedTransferQuota_title"="転送容量が枯渇しました";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+"depletedTransferQuota_message"="あなたのキューに入れられたダウンロードは、あなたのアカウントで利用可能な現在の転送容量を超えているため、中断される可能性があります。";
 /* Button title to see the available pro plans in MEGA */
-"seePlans"="See plans";
+"seePlans"="計画を参照";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="終了する";
 /* Notification text body shown when you have received a new chat message */
-"newMessage"="New Message";
+"newMessage"="新しいメッセージ";
 /* Notification text body shown when you have received a contact request */
-"contactRequest"="Contact Request";
+"contactRequest"="コンタクト要求";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder"="New Shared Folder";
+"newSharedFolder"="新しい共有フォルダ";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="登録を中止しますか？";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
@@ -1063,6 +1065,61 @@
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s個のファイルを添付しました。";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="サブスクリプションは、選択した最初の期間と同じ期間の連続したサブスクリプション期間を対象に、および同じ価格で、自動的に更新されます。あなたのiTunesアカウントの設定ページから、次回のサブスクリプションのお支払い期限が切れる24時間前までに、MEGA PROサブスクリプションの自動更新をオフにすることができます。サブスクリプションを管理するには、携帯端末のApp Storeアイコンをクリックし、ページの下部にあるあなたのApple IDでサインインしてから（まだそのように行っていない場合）、「IDの表示」をクリックします。すると、アカウントのページに移動し、そこで「アプリサブスクリプションの管理]まで下にスクロールします。そこから、MEGA PROのサブスクリプションを選択したり、あなたの予定されている更新日を確認したり、別のサブスクリプションパッケージを選択したり、オン/オフスイッチをオフに切り替えて、サブスクリプションの自動更新を無効にしたりできます。";
+"autorenewableDescription"="サブスクリプションは、選択した最初の期間と同じ期間の連続したサブスクリプション期間を対象に、および同じ価格で、自動的に更新されます。あなたのiTunesアカウントの設定ページから、次回のサブスクリプションのお支払い期限が切れる24時間前までに、MEGA PROサブスクリプションの自動更新をオフにすることができます。サブスクリプションを管理するには、携帯端末のApp Storeアイコンをクリックし、ページの下部にあるあなたのApple IDでサインインしてから（まだそのように行っていない場合）、「IDを表示」をクリックします。すると、アカウントのページに移動し、そこで「アプリサブスクリプションの管理]まで下にスクロールします。そこから、MEGA PROのサブスクリプションを選択したり、あなたの予定されている更新日を確認したり、別のサブスクリプションパッケージを選択したり、オン/オフスイッチをオフに切り替えて、サブスクリプションの自動更新を無効にしたりできます。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
-"openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
+"openMEGAAndSignInToContinue"="MEGAを開いて、ログインして続行してください";
+/* A button title to revoke the access to an attachment in a chat. */
+"revoke"="取り消す";
+/* Inform user that there were unsupported assets in the share extension */
+"shareExtensionUnsupportedAssets"="一部のアイテムはMEGAと共有できませんでした";
+/* Notification message shown when a transfer failed. Keep colon. */
+"Transfer failed:"="転送できず:";
+/* MEGAError */
+/* Label to show that an SDK operation has been complete successfully. */
+"No error"="エラーなし";
+/* Label to show that an Internal error occurs during a SDK operation. */
+"Internal error"="エラー発生";
+/* Label to show that an error of Invalid argument occurs during a SDK operation. */
+"Invalid argument"="引数無効";
+/* Label to show that a request error occurs during a SDK operation. */
+"Request failed, retrying"="リクエスト失敗、再度トライ中";
+/* Label to show that the rate limit has been reached during a SDK operation. */
+"Rate limit exceeded"="レート上限超過";
+/* Label to show that a SDK operation has failed permanently. */
+"Failed permanently"="転送できませんでした。";
+/* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
+"Too many concurrent connections or transfers"="同時接続又は転送が多すぎます。";
+/* Label to show that an error of Out of range occurs during a SDK operation. */
+"Out of range"="領域外";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"Expired"="失効済み";
+/* Label to show that an error related with a resource Not found occurs during a SDK operation. */
+"Not found"="見つかりません。";
+/* Label to show that an error related with a circular linkage occurs during a SDK operation. */
+"Circular linkage detected"="環状連鎖あり";
+/* Label to show that an error related with an denied access occurs during a SDK operation. */
+"Access denied"="アクセスは拒否されました。";
+/* Label to show that an error related with an existent resource occurs during a SDK operation. */
+"Already exists"="既に存在します。";
+/* Label to show that an error related with an Incomplete SDK operation. */
+"Incomplete"="不完全です。";
+/* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
+"Invalid key/Decryption error"="鍵が無効／複合化エラー";
+/* Label to show that an error related with a bad session ID occurs during a SDK operation. */
+"Bad session ID"="セッションID不良";
+/* Label to show that an error related with a blocked account occurs during a SDK operation. */
+"Blocked"="妨害されています";
+/* Label to show that an error related with an over quota occurs during a SDK operation. */
+"Over quota"="クォータ超過";
+/* Label to show that an error related with a temporary problem occurs during a SDK operation. */
+"Temporarily not available"="今は使えません。";
+/* Label to show that an error related with too many connections occurs during a SDK operation. */
+"Connection overflow"="接続過多";
+/* Label to show that an error related with an write error occurs during a SDK operation. */
+"Write error"="エラーを書き込む";
+/* Label to show that an error related with an read error occurs during a SDK operation. */
+"Read error"="エラーを読み取る";
+/* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
+"Invalid application key"="アプリ鍵無効";
+/* Label to show that an error related with an unknown error occurs during a SDK operation. */
+"Unknown error"="未知のエラー";

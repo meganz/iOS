@@ -1,21 +1,21 @@
 /* Button title to cancel something */
 "cancel"="取消";
 /* Button title to accept something */
-"ok"="确认";
+"ok"="OK";
 /* */
-"yes"="是";
+"yes"="是的";
 /* */
-"no"="否";
+"no"="不是";
 /* */
 "upload"="上传";
 /*  */
 "error"="错误";
 /*  */
-"name"="文件（夹）名";
+"name"="名称";
 /* Caption of a button to edit the files that are selected */
 "edit"="编辑";
 /* State shown if something is 'Saved' (String as short as possible). */
-"saved"="保存";
+"saved"="已保存";
 /*  */
 "passcode"="密码";
 /* "Size" of the file or folder you are sharing */
@@ -27,43 +27,43 @@
 /* Alert title to attract attention */
 "attention"="请注意";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="请在设置中允许 MEGA 应用访问您的相机";
+"cameraPermissions"="请在设置中允许MEGA App 访问您的相机。";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="请在设置中允许 MEGA 应用访问您的相簿";
+"photoLibraryPermissions"="请在设置中允许MEGA App 访问您的照片库。";
 /* Alert message shown when the user tries to download an empty folder  */
-"emptyFolderMessage"="您不能下载一个空文件夹";
+"emptyFolderMessage"="您不能下载空的文件夹。";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="您的账户已激活。请登录。";
+"accountAlreadyConfirmed"="帐号已可使用。请登入。";
 /* Message shown when the user clicks on an link that is not valid */
-"linkNotValid"="无效链接";
+"linkNotValid"="无效的链接";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertTitle"="输入解密密钥";
+"decryptionKeyAlertTitle"="请输入解密金钥";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="你需要解密密钥才能访问这个文件或文件夹。如果你没有密钥，联系链接创建者";
+"decryptionKeyAlertMessage"="要进入此文件夹/文件，您需要它的解密密钥。如果没有密钥，请联系此链接的创建者。";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="解密密钥";
 /* Button title to try to decrypt the link */
 "decrypt"="解密";
 /* Alert title shown when you have written a decryption key not valid */
-"decryptionKeyNotValid"="无效解密密钥";
+"decryptionKeyNotValid"="无效的密钥";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="已登出";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="您已从其他位置登出该设备";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="服务器的SSL密钥无法验证. 你可能会受到中间人攻击.";
+"sslUnverified_alertTitle"="SSL服务器证书未能验证，您可能会遭受中间人攻击（man-in-the-middle attack）。";
 /* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
-"serversTooBusy"="服务器忙. 请稍后...";
+"serversTooBusy"="服务器繁忙，请稍候...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
-"pleaseLogInToYourAccount"="请登入您的账户";
+"pleaseLogInToYourAccount"="请登入您的帐号。";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA 存储空间";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="MEGA网络速度";
+"megaSpeed"="MEGA 网络速度";
 /* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
 "megaPrivacy"="MEGA 隐私保护";
 /* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="MEGA 访问";
+"megaAccess"="访问MEGA";
 /* Message shown on the app's start animation to explain what MEGA SPACE means */
 "megaSpaceText"="马上注册获得50 GB 免费空间";
 /* Message shown on the app's start animation to explain what MEGA SPEED means */
@@ -73,17 +73,17 @@
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
 "megaAccessText"="随时随地获得完全加密访问";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="登录";
+"login"="登入";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="创建帐户";
+"createAccount"="建立帐号";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="无效的电子邮件和/或密码. 请再试一次";
+"invalidMailOrPassword"="邮箱地址或密码无效。请重试";
 /* Error message when to many attempts to login */
-"tooManyAttemptsLogin"="你已经尝试多次登录，请等待%@并重新尝试";
+"tooManyAttemptsLogin"="您在短时间内尝试登入的次数过多。请等待%@ 后再重试。";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="请检查你的邮箱并且点击链接以确认你的账户";
+"accountNotConfirmed"="请检查您的电子信箱，并点击信中的链接以确认激活您的帐户。";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="您的帐户已被封锁. 请联系 support@mega.nz";
+"accountBlocked"="您的帐号已被锁定。请连系support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="请输入有效的邮箱地址";
 /* Message shown when the user enters a wrong password  */
@@ -93,91 +93,91 @@
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="密码";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
-"termsOfServiceButton"="我同意 MEGA 的服务条款";
+"termsOfServiceButton"="我同意MEGA 的服务条款";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="请输入有效的名字";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="密码不匹配";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="你必须同意MEGA上的服务条款。";
+"termsCheckboxUnselected"="您需要同意MEGA服务条款才可注册帐号。";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="该邮箱地址已在MEGA注册。";
+"emailAlreadyRegistered"="这个电子邮件信箱在Mega已被注册。";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingEmailConfirmation"="等待邮件确认中";
+"awaitingEmailConfirmation"="需要进入电子信箱来验证账户";
 /* Text shown on the confirm account view to remind the user what to do */
-"confirmText"="请输入您的密码来确认您的账户";
+"confirmText"="请输入您的密码来确认账户";
 /* Button title that triggers the confirm account action */
-"confirmAccountButton"="确认您的账户";
+"confirmAccountButton"="确认您的帐号";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="错误密码";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertTitle"="您已经使用其他账户登陆了";
+"alreadyLoggedInAlertTitle"="您已经使用其他账户登录了";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertMessage"="如果你同意，目前的账户将被登出且所有的脱机数据将被删除。你想继续吗？";
+"alreadyLoggedInAlertMessage"="如果您同意，当前的账户将被登出并且所有离线数据将被删除。是否要继续？";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
-"nodeTooBig"="您需要释放更多空间";
+"nodeTooBig"="您的设备内存不足";
 /* Title for the file link view */
 "fileLink"="文件链接";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="打开";
+"openButton"="开启";
 /* Error message shown when you try to download something bigger than the space available in your device */
-"fileTooBigMessage"="您要下载的文件大于可用内存.";
+"fileTooBigMessage"="您正在尝试下载的文件大于可用内存。";
 /* Error message shown when you try to open something bigger than the free space in your device */
-"fileTooBigMessage_open"="您正在尝试打开的文件大于可用内存.";
+"fileTooBigMessage_open"="您正在尝试打开的文件大于可用内存。";
 /* Error title shown when you open a file or folder link and it's no longer available */
-"linkUnavailable"="不可用的链接";
+"linkUnavailable"="无效的链接";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="可以由于以下原因导致：-由于违反ToS/AUP文件被删除-无效的URL-你正在尝试访问的链接不存在-文件已经被用户删除";
+"fileLinkUnavailableText"="该连接已失效，可能的原因： - 因ToS / AUP违规，该链接已被删除。 - 无效的网址– 您尝试存取的链接并不存在。 - 该文件的上传者已将此链接删除。";
 /* Message shown when a download starts */
-"downloadStarted"="下载已开始";
+"downloadStarted"="已开始下载";
 /* Title for the folder link view */
 "folderLink"="文件夹链接";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="下载";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
-"folderTooBigMessage"="您要下载的文件夹大于可用内存.";
+"folderTooBigMessage"="您正在尝试下载的文件夹大于可用内存。";
 /* Error message shown when a folder can't be created. */
-"folderCreationError"="文件夹 '%@' 不能被创建";
+"folderCreationError"="文件夹'%@' 创建失败";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="可能是由于下面的原因造成：-由于违反ToS/AUP文件夹链接已经被删除-无效URL-你正在尝试读取的链接不存在-文件夹链接已经被用户删除";
+"folderLinkUnavailableText"="该连接已失效，可能的原因： - 因ToS / AUP违规，该链接已被删除。 - 无效的网址– 您尝试存取的链接并不存在。 - 该文件夹的上传者已将此链接删除。";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="无网络连接";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="文件夹中无文件";
+"emptyFolder"="空的文件夹";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="您的云端立没有文件";
+"cloudDriveEmptyState_title"="您的云盘中没有文件";
 /* Button title shown in empty views when you can 'Add files' */
-"addFiles"="添加文件";
+"addFiles"="新增文件";
 /* Title shown when you make a search and there is 'No Results' */
-"noResults"="没有结果";
+"noResults"="没有符合搜索的项目";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="清空回收站";
+"cloudDriveEmptyState_titleRubbishBin"="空的垃圾桶";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="脱机处无文件";
+"offlineEmptyState_title"="离线模式中没有储存文件";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="没有联系人";
+"contactsEmptyState_title"="无连络人";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="无输入的共享文件夹";
+"noIncomingSharedItemsEmptyState_text"="没有传入的共享文件夹";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="无输出的共享文件夹";
+"noOutgoingSharedItemsEmptyState_text"="没有传出的共享文件夹";
 /* Title of Contacts requests section */
-"contactRequests"="联系人请求";
+"contactRequests"="联系人邀请与请求";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="添加联系人";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
-"sent"="已发送";
+"sent"="已寄出";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="请求";
+"requests"="新联系人请求";
 /* Success message shown when you acepted a contact request */
-"requestAccepted"="请求已接受";
+"requestAccepted"="您已接受邀请";
 /* Success message shown when you Cancelled a contact request */
-"requestCancelled"="请求已取消";
+"requestCancelled"="已取消联系人邀请";
 /* Success message shown when you remove a contact request */
-"requestDeleted"="请求已删除";
+"requestDeleted"="已删除联系人请求";
 /* Title shown when there's no pending contact requests */
-"noRequestPending"="没有挂起的请求";
+"noRequestPending"="没有新的联系人请求";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="已暂停的传输";
+"transfersEmptyState_titlePaused"="传输暂停";
 /* Title shown when the there's no transfers and they aren't paused */
 "transfersEmptyState_titleAll"="No Transfers";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
@@ -185,7 +185,7 @@
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
 /* Title of the Cloud Drive section */
-"cloudDrive"="云端硬盘";
+"cloudDrive"="云盘";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d 个文件";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -195,23 +195,23 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
 "folders"="%d 个文件夹";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="1 个文件夹 • 1 个文件";
+"folderAndFile"="1个文件夹•1个文件";
 /* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
-"foldersAndFiles"="[A] 个文件夹 • [B] 个文件";
+"foldersAndFiles"="[A]个文件夹•[B]个文件";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
-"foldersAndFile"="%d 个文件夹 • 1 个文件";
+"foldersAndFile"="%d个文件夹•1个文件";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="1 个文件夹 • %d 个文件";
+"folderAndFiles"="1个文件夹•%d 个文件";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
-"queued"="置于队列中";
+"queued"="已入进程";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertTitle"="还有尚未处理的下载";
+"documentOpening_alertTitle"="该文件有待处理的下载";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="稍后再试或取消";
 /* Section title of the 'Sort by' */
-"sortTitle"="排列顺序";
+"sortTitle"="排序";
 /* Button title to 'Save' the selected option */
-"save"="保存";
+"save"="储存";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="名字（升序）";
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
@@ -225,73 +225,73 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="由旧至新";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="选择";
+"choosePhotoVideo"="选取";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
-"capturePhotoVideo"="拍照";
+"capturePhotoVideo"="拍摄";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="新增文件夹";
 /* Hint text shown on the create folder alert. */
-"newFolderMessage"="请输入新文件夹的名字";
+"newFolderMessage"="新文件夹的名字";
 /* Title button for the create folder alert.  */
-"createFolderButton"="创建";
+"createFolderButton"="建立";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="自...导入";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
-"fileExistAlertController_Message"="[A] 已上传，其名字是 [B]";
+"fileExistAlertController_Message"="文件[A]已成功上传至MEGA，保存名称为[B]";
 /* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
-"fileAlreadyExistMessage"="该文件已用 %@ 名上传";
+"fileAlreadyExistMessage"="这个文件已用%@名上传";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
-"filesAlreadyExistMessage"="选取的 %d 个文件已上传至该文件夹中.";
+"filesAlreadyExistMessage"="%d个文件已被上传到这个文件夹";
 /* Message shown when a upload starts */
-"uploadStarted_Message"="上传已开始";
+"uploadStarted_Message"="开始上传";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
-"fileMovedToTheRubbishBin_alertTitle"="该文件已被移动回收站";
+"fileMovedToTheRubbishBin_alertTitle"="这个文件已被移到垃圾桶";
 /* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
-"folderMovedToTheRubbishBin_alertTitle"="该文件夹已被移至回收站";
+"folderMovedToTheRubbishBin_alertTitle"="这个文件夹已被移到垃圾桶";
 /* Alert title shown when you are seeing the details of a file and you moved it from another location */
-"fileMoved_alertTitle"="该文件已被移动";
+"fileMoved_alertTitle"="这个文件已移动";
 /* Alert title shown when you are seeing the details of a folder and you moved it from another location */
-"folderMoved_alertTitle"="该文件夹已被移动";
+"folderMoved_alertTitle"="这个文件夹已移动";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFile_alertTitle"="您已没有该文件的访问权限";
+"youNoLongerHaveAccessToThisFile_alertTitle"="您没有访问该文件的权限";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFolder_alertTitle"="您已没有该文件夹的访问权限";
+"youNoLongerHaveAccessToThisFolder_alertTitle"="您没有访问该文件夹的权限";
 /* List option shown on the details of a file or folder */
 "saveForOffline"="保存以便离线使用";
 /* List option shown on the details of a file or folder */
-"savedForOffline"="保存已供离线使用";
+"savedForOffline"="离线储存";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
-"folderInboxError"="收件箱标签由苹果公司保留使用.";
+"folderInboxError"="这个收件夹标签仅供Apple使用";
 /* Title shown under the action that allows you to save an image to your camera roll */
-"saveImage"="保存图像";
+"saveImage"="保存图片";
 /* Title shown under the action that allows you to save several images to your camera roll */
-"saveImages"="保存照片";
+"saveImages"="保存图片";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="获取链接";
+"getLink"="取得链接";
 /* Title shown under the action that allows you to get several links to files and/or folders */
-"getLinks"="获取链接";
+"getLinks"="取得分享链接";
 /* Message shown when a link to a file or folder is being generated */
-"generatingLink"="正在生成链接...";
+"generatingLink"="正在生成连接...";
 /* Message shown when some links to files and/or folders are being generated */
 "generatingLinks"="正在生成链接";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="已拷贝链接";
+"linkCopied"="链接已复制";
 /* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="链接已复制";
+"linksCopied"="已复制链接";
 /* Title shown under the action that allows you to open a file in another app */
-"openIn"="打开在...";
+"openIn"="从...打开";
 /* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="移除连接";
+"removeLink"="移除链接";
 /* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="删除链接";
+"removeLinks"="移除分享链接";
 /* Message shown when the link to a file or folder has been removed */
-"linkRemoved"="链接已删除";
+"linkRemoved"="已移除链接";
 /* Message shown when the links to files and/or folders have been removed */
-"linksRemoved"="链接已删除";
+"linksRemoved"="已移除链接";
 /* Title show when a file is being downloaded */
 "downloading"="正在下载...";
 /* Message shown when you tap on the cancel button of an active transfer */
-"cancelDownloadAlertViewText"="您是否要取消相机上传？";
+"cancelDownloadAlertViewText"="您确定取消下载吗?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
 "selectDestination"="选择目的地";
 /* Text of the button for user to select files in MEGA. */
@@ -301,95 +301,95 @@
 /* Success message shown when you have moved 1 file */
 "moveFileMessage"="已移动1个文件";
 /* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="%d 个文件被移动";
+"moveFilesMessage"="%d 个文件已被移动";
 /* Success message shown when you have moved 1 folder */
-"moveFolderMessage"="1个文件被移动";
+"moveFolderMessage"="1 个文件夹已移动";
 /* Success message shown when you have moved {1+} folders */
-"moveFoldersMessage"="已移动 %d 个文件夹";
+"moveFoldersMessage"="已被移动%d 个文件夹";
 /* Success message shown when you have moved 1 file and 1 folder */
-"moveFileFolderMessage"="以移动1个文件和1个文件夹";
+"moveFileFolderMessage"="已移动1 个文件和1 个文件夹";
 /* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="已移动 1 个文件和 %d 个文件夹";
+"moveFileFoldersMessage"="已移动1 个文件和%d 个文件夹";
 /* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="已移动 %d 个文件和1个文件夹";
+"moveFilesFolderMessage"="已移动%d 个文件和1 个文件夹";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="已移动 [A] 个文件 and [B] 个文件夹";
+"moveFilesFoldersMessage"="已移动[A]个文件与[B]个文件夹";
 /* List option shown on the details of a file or folder */
 "copy"="复制";
 /* Success message shown when you have copied 1 file */
-"copyFileMessage"="已复制1个文件";
+"copyFileMessage"="已复制1 个文件";
 /* Success message shown when you have copied {1+} files */
-"copyFilesMessage"="%d 个文件已拷贝";
+"copyFilesMessage"="已复制%d 个文件";
 /* Success message shown when you have copied 1 folder */
-"copyFolderMessage"="已拷贝1个文件夹";
+"copyFolderMessage"="已复制1 个文件夹";
 /* Success message shown when you have copied {1+} folders */
-"copyFoldersMessage"="%d 个文件夹已拷贝";
+"copyFoldersMessage"="已复制%d 个文件夹";
 /* Success message shown when you have copied 1 file and 1 folder */
-"copyFileFolderMessage"="已拷贝1个文件和1个文件夹";
+"copyFileFolderMessage"="已复制1 个文件和1 个文件夹";
 /* Success message shown when you have copied 1 file and {1+} folders */
-"copyFileFoldersMessage"="已拷贝 1 个文件和 %d 个文件夹";
+"copyFileFoldersMessage"="已复制1 个文件和%d 个文件夹";
 /* Success message shown when you have copied {1+} files and 1 folder */
-"copyFilesFolderMessage"="已拷贝 %d 个文件和 1 个文件夹";
+"copyFilesFolderMessage"="已复制%d 个文件和1 个文件夹";
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
-"copyFilesFoldersMessage"="已拷贝 [A] 个文件 and [B] 个文件夹";
+"copyFilesFoldersMessage"="已复制[A]个文件与[B]个文件夹";
 /* Title for the action that allows you to rename a file or folder  */
-"rename"="重命名";
+"rename"="重新命名";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
-"renameNodeMessage"="输入新的名字";
-/* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
-"moveToTheRubbishBin"="移至回收站";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
-"moveFileToRubbishBinMessage"="您确定要移动1个文件至回收站吗?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
-"moveFilesToRubbishBinMessage"="您确定要移动 %d 个文件至回收站吗?";
+"renameNodeMessage"="输入新名字";
+/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
+"moveToTheRubbishBin"="移至垃圾桶";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
+"moveFileToRubbishBinMessage"="您确定要移动1 个文件至垃圾箱吗？";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
+"moveFilesToRubbishBinMessage"="您确定要移动%d 个文件至垃圾箱吗？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
-"moveFolderToRubbishBinMessage"="您确定要移动 1 个文件夹至回收站吗?";
+"moveFolderToRubbishBinMessage"="您确定要移动1 个文件夹至垃圾箱吗？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="您确定要移动 %d 个文件夹至回收站吗?";
+"moveFoldersToRubbishBinMessage"="您确定要移动％d 个文件夹至垃圾箱吗？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="您确定要移动 1 个文件和 1 个文件夹至回收站吗?";
+"moveFileFolderToRubbishBinMessage"="您确定要移动1 个文件和1 个文件夹至垃圾箱吗？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="您确定要移动 1 个文件和 %d 个文件夹至回收站吗?";
+"moveFileFoldersToRubbishBinMessage"="您确定要移动1 个文件和%d 个文件夹至垃圾箱吗？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="您确定要移动 %d 个文件和 1 个文件夹至回收站吗?";
+"moveFilesFolderToRubbishBinMessage"="您确定要移动1 个文件和1 个文件夹至垃圾箱吗？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="您确定要移动 [A] 个文件和 [B] 个文件夹至回收站吗?";
+"moveFilesFoldersToRubbishBinMessage"="您确定要将[A]个文件和[B]个文件夹移至垃圾桶吗？";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="以移动 1 个文件至回收站";
+"fileMovedToRubbishBinMessage"="1 个文件已被移动到垃圾桶";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="已移动 %d 个文件至回收站";
+"filesMovedToRubbishBinMessage"="%d 个文件已被移动到垃圾桶";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="已移动 1 个文件至回收站";
+"folderMovedToRubbishBinMessage"="已将1个文件夹移到垃圾桶";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="已移动 %d 个文件夹至回收站";
+"foldersMovedToRubbishBinMessage"="已将%d个文件夹移到垃圾桶";
 /* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="已移动 1 个文件和 1 个文件夹至回收站";
+"fileFolderMovedToRubbishBinMessage"="1个文件与1个文件夹已移到垃圾桶";
 /* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="已移动 1 个文件和 %d 个文件夹至回收站";
+"fileFoldersMovedToRubbishBinMessage"="1个文件与%d个文件夹已移到垃圾桶";
 /* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="已移动 %d 个文件和 1 个文件夹至回收站";
+"filesFolderMovedToRubbishBinMessage"="%d个文件与1个文件夹已移到垃圾桶";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="已移动 [A] 文件和 [B] 文件夹至回收站";
+"filesFoldersMovedToRubbishBinMessage"="[A]个文件与[B]个文件夹已移到垃圾桶";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
-"permissionTitle"="权限错误";
+"permissionTitle"="未获得授权";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
-"permissionMessage"="请检查您对该文件夹的权限";
+"permissionMessage"="请检查您的访问权限";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="文件夹已共享";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="%d文件夹共享成功";
+"sharedFolders_success"="已成功分享%d 文件夹.";
 /* Button title that triggers the importing link action */
 "import"="导入";
 /* Message shown when a file has been imported */
-"fileImported"="文件已导入!";
+"fileImported"="文件已导入";
 /* Message shown when some files have been imported */
 "filesImported"="文件已导入";
 /* Error message shown when you have used more MEGA storage than you can */
-"quotaExceeded"="超出配额";
+"quotaExceeded"="超过储存配额";
 /* Alert title shown when the user is overquota */
 "overquotaAlert_title"="超过配额警告！";
 /* Alert message shown when the user is overquota */
-"overquotaAlert_message"="操作被禁，您将超过您的账户存储限额。您要升级账户吗？";
+"overquotaAlert_message"="操作被禁，您将超过您的账户储存限额。您要升级账户吗？";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="选择项目";
 /* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
@@ -399,137 +399,137 @@
 /* Button title that skips the current action */
 "skipButton"="跳过";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="自动备份你的图片至云驱动";
+"automaticallyBackupYourPhotos"="自动将相片备份到云盘";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="开启相机上传";
+"enableCameraUploadsButton"="激活相机上传";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="已开启相机上传";
+"cameraUploadsEnabled"="照片上传已激活";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
-"oneItemSelected"="已选 %lu 项";
+"oneItemSelected"="已选中%lu 个项目";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
-"itemsSelected"="已选 %lu 项";
+"itemsSelected"="已选中%lu 个项目";
 /* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
-"cameraUploadsWillBeDisabled"="摄像机上传将关闭";
+"cameraUploadsWillBeDisabled"="相机上传功能将被停用";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
-"cameraUploadsDisabled_alertView_message"="因您的设备上没有足够的空间，相机上传将被关闭.";
+"cameraUploadsDisabled_alertView_message"="相机上传将被禁用，因为您的设备没有足够的空间";
 /* Title of the Offline section */
 "offline"="离线";
 /* Title of the Contacts section */
 "contactsTitle"="联系人";
 /* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
-"noFoldersShared"="无共享文件夹";
+"noFoldersShared"="没有分享的文件夹";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1个文件夹";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d 个文件夹";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="输入电子邮箱";
+"addFromEmail"="输入邮箱地址";
 /* Title of Shared Items section */
-"sharedItems"="共享项";
+"sharedItems"="共享文件";
 /* Title of the tab bar item for the Shared Items section */
-"shared"="已共享";
+"shared"="分享";
 /* Title of the "Incoming" Shared Items. */
-"incoming"="传入的";
+"incoming"="传入";
 /* Title of the "Outgoing" Shared Items. */
-"outgoing"="传出的";
+"outgoing"="传出";
 /* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="已共享给1个联系人";
+"sharedWithOneContact"="与1位联系人共享";
 /* Text shown to explain with how many contacts you have shared a folder */
-"sharedWithXContacts"="共享给 %d 个联系人";
+"sharedWithXContacts"="已与%d 位联系人分享";
 /* Message shown when you have changed the permissions of a shared folder */
-"permissionsChanged"="权限已更改";
+"permissionsChanged"="权限已变更";
 /* Message shown when a share has been left */
-"shareLeft"="已离开共享";
+"shareLeft"="已离开该共享";
 /* Message shown when some shares have been left */
 "sharesLeft"="已离开共享";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
-"removeSharing"="取消共享";
+"removeSharing"="取消分享";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="您确定要删除该共享吗? (已共享给 1 个联系人)";
+"removeOneShareOneContactMessage"="您确定要删除这个分享吗？ （已与1 个联系人分享）";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="您确定要删除该共享吗? (已共享给 %d  个联系人)";
+"removeOneShareMultipleContactsMessage"="您确定要删除这个分享吗？ （已与%d 个联系人分享）";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="您确定要删除这些共享吗? (已共享给 %d 个联系人)";
+"removeMultipleSharesMultipleContactsMessage"="您确定要删除这些分享吗？ （已与%d 个联系人分享）";
 /* Message shown when a share have been removed */
 "shareRemoved"="共享已移除";
 /* Message shown when some shares have been removed */
-"sharesRemoved"="共享已取消";
+"sharesRemoved"="已取消分享";
 /* Text shown next to name of the "Owner" of the folder that is being shared */
 "owner"="所有者";
 /* Title of the view where you see with who you have shared a folder */
-"sharedWith"="共享";
+"sharedWith"="共享者";
 /* Item menu option to add a contact through your device app Contacts */
-"addFromContacts"="通过通讯录添加";
+"addFromContacts"="从通讯录添加";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="加入联系人";
+"addContact"="新增联系人";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="联系人邮箱";
 /* Button title to 'Add' the contact to your contacts list */
-"addContactButton"="添加";
+"addContactButton"="新增";
 /* Success message shown when a contact has been invited */
-"requestSent"="请求已发送";
+"requestSent"="已寄出联系人请求";
 /* Add contacts and share dialog error message when user try to add your own email address */
-"noNeedToAddYourOwnEmailAddress"="您无需添加个人的电子邮件地址";
+"noNeedToAddYourOwnEmailAddress"="您无须增加个人的电子邮件";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="您已有1个使用该电子邮件的联系人";
+"alreadyHaveAContactWithThatEmailAddress"="您已有一个使用该电子邮件的连络人";
 /* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="用户[X]已被邀请，请求被接受后将出现在您的联系人列表里。";
+"theUserHasBeenInvited"="用户[X]已被邀请。该邀请被接受后，他将会出现在您的联系人列表中。";
 /* Success message shown when some contacts have been invited */
-"theUsersHaveBeenInvited"="该用户已被邀请。请求被接受后将出现在您的联系人列表里。";
+"theUsersHaveBeenInvited"="该用户已被邀请。该邀请被接受后，他将会出现在您的联系人列表中。";
 /* Error message shown when it hasn't been posible to add a contact */
-"addContactError"="添加联系人错误";
+"addContactError"="新增联系人错误";
 /* Alert title shown when you want to remove one or more contacts */
-"removeUserTitle"="删除联系人";
+"removeUserTitle"="移除联系人";
 /* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="您确定要从您的联系人列表中删除 %@ 吗?";
+"removeUserMessage"="您确定要把%@ 从您的联系簿删除吗？";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
-"removeMultipleUsersMessage"="您确定要从您的联系人列表中删除 %d 个联系人吗?";
+"removeMultipleUsersMessage"="您确定要从联系簿删除%d 个联系人吗？";
 /* Success message shown when the selected contacts have been removed */
-"removedContacts"="已删除 %d 个联系人";
+"removedContacts"="已移除联系人%d ";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
-"removedContact"="联系人 %@ 已删除";
+"removedContact"="联系人%@ 已移除";
 /* Label shown when a contact request is pending */
-"pending"="待处理";
+"pending"="处理中";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
-"contactWithoutEmail"="该联系人没有邮箱";
+"contactWithoutEmail"="该联系人缺少邮箱地址";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="离开";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="你确定你想离开这个共享吗？";
+"leaveShareAlertMessage"="您确定要离开这个共享吗？";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="你确定你想离开这些共享？";
+"leaveSharesAlertMessage"="您确定要离开这些共享吗？";
 /* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="已离开文件夹";
+"shareFolderLeaved"="已离开该文件夹";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="共享";
 /* Select all items/elements on the list */
 "selectAll"="全选";
 /*  */
-"oneContact"="1个联系人";
+"oneContact"="一位联系人";
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
-"XContactsSelected"="[X] 个联系人";
+"XContactsSelected"="[X]位联系人";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="共享文件夹";
+"shareFolder"="分享文件夹";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
-"shareFolders"="共享文件夹";
+"shareFolders"="分享文件夹";
 /* Button that allows you to select a given folder */
 "select"="选择";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
-"permissions"="权限";
+"permissions"="允许";
 /* Permissions given to the user you share your folder with */
-"readOnly"="只读";
+"readOnly"="只能浏览";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="可读写";
+"readAndWrite"="读取与写入";
 /* Permissions given to the user you share your folder with */
-"fullAccess"="完全访问权限";
+"fullAccess"="全权使用";
 /* Title of the Settings section */
-"settingsTitle"="设置";
+"settingsTitle"="设定";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="相机上传";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
-"rubbishBinLabel"="回收站";
+"rubbishBinLabel"="垃圾桶";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
-"advanced"="高级选项";
+"advanced"="高级";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="安全选项";
 /* Title of one of the Settings sections where you can see things 'About' the app */
@@ -539,217 +539,217 @@
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="应用程序语言选项";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
-"sendFeedbackLabel"="发送反馈";
+"sendFeedbackLabel"="寄发反馈";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="请在此写下您的反馈:";
+"pleaseWriteYourFeedback"="请在此写下您的意见：";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
-"noEmailAccountConfigured"="您的email账户尚未在该设备上设置";
+"noEmailAccountConfigured"="您在该设备中尚未登录";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="隐私声明";
+"privacyPolicyLabel"="隐私政策";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="服务条款";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
-"off"="关";
+"off"="关闭";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
-"on"="开";
+"on"="开启";
 /* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
 "options"="选项";
 /* Option title to enable upload videos with Camera Uploads */
-"uploadVideosLabel"="上传视频";
+"uploadVideosLabel"="上传影片";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="只在充电状态下";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="开启后新的照片和视频将被上传.";
+"cameraUploads_footer"="开启后将上传新的照片和视频。";
 /* Label for the "Version" number of the app */
 "version"="版本";
 /* Title for the section "Acknowledgements" of the app */
-"acknowledgements"="感激";
+"acknowledgements"="感谢";
 /* Title for the MEGA Recovery Key */
-"masterKey"="解锁账号";
+"masterKey"="还原金钥";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="修改密码";
+"changePasswordLabel"="变更密码";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="导出恢复密钥且保存在安全的地方将使你无损地在丢失密码情况下恢复你的账户";
 /* Question button to present a view where it's explained what is the Recovery Key */
-"whyDoINeedARecoveryKey"="我为何需要恢复密钥";
+"whyDoINeedARecoveryKey"="恢复秘钥有何作用";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
-"masterKey_firstParagraph"="您的数据只能通过从主加密密钥（恢复密钥）开始的解密操作链读取，我们使用您的密码加密存储。 这意味着，如果您丢失了密码，您的恢复密钥将无法再被解密，您无法再解密数据。";
+"masterKey_firstParagraph"="您的资料只有在经过一连串的解密操作后才能读取，此操作属于严谨加密方式，需使用您的主加密密钥（还原金钥）才能解密，我们已使用您的密码加密储存该金钥。也就是说，如果您遗失了您的密码，还原金钥将无法再被解密汇出，您也无法再解密您的资料。";
 /* Advising the user to keep the user's recovery key safe. */
-"masterKey_secondParagraph"="导出恢复主键，保存在安全的位置将使你无损重置密码";
+"masterKey_secondParagraph"="预先汇出还原金钥并存放在安全之处，可以让您在不丢失资料的状况下重新设定密码。";
 /*  */
-"masterKey_thirdParagraph"="外部攻击者（黑客）如果只获取了您的秘钥仍然无法访问您的账户。因为重置账户密码的过程需要您的主秘钥并且登入您的电子邮箱来完成。";
+"masterKey_thirdParagraph"="外来攻击者如持有您的金钥仍将无法获取您的资料。密码重置将会需要金钥以及需可存取您的电子邮件。";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="恢复密钥已被复制至粘贴板";
+"recoveryKeyCopiedToClipboard"="已复制还原金钥至剪贴簿";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="恢复密钥已导出";
+"masterKeyExported"="已导出还原金钥";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="恢复密钥已经以恢复密钥文本的形式被导出到脱机部分。注意：如果你退出登录它将被删除，请在安全的地方保存它";
+"masterKeyExported_alertMessage"="还原金钥（RecoveryKey.txt）已导出至离线文件中。注意：当您登出账户时它将会被清除，请将其备份保存在安全的地方。";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
-"onYourDevice"="在您的设备上";
+"onYourDevice"="本机";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
 "clearOfflineFiles"="清除离线文件";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="清除缓存";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
-"onMEGA"="在Mega端";
+"onMEGA"="MEGA云端";
 /* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="清空垃圾箱";
+"emptyRubbishBin"="空的垃圾桶";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="垃圾箱中所有内容已被删除";
+"emptyRubbishBinAlertTitle"="所有垃圾桶中的项目将均被删除";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
-"imageAndVideoDownloadsHeader"="图像和视频下载";
+"imageAndVideoDownloadsHeader"="图片与影片下载";
 /* Section title where you can enable the option 'Save images in gallery' */
-"saveImagesInGallery"="在画廊中保存图像";
+"saveImagesInGallery"="将图片存入相册";
 /* Section title where you can enable the option 'Save videos in gallery' */
-"saveVideosInGallery"="在画廊中保存视频";
+"saveVideosInGallery"="将影片存入相册";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
-"imageAndVideoDownloadsFooter"="在你的设备的图片集中保存ISO兼容的图像和视频（注意：图像和视频将不会再脱机中保存）";
+"imageAndVideoDownloadsFooter"="将与iOS兼容的图片和影片保存在您设备上的相册中（注：图片和影片将不保存在离线文件里）。";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="当前使用 %@";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="注销您的账户";
+"cancelYourAccount"="注销帐户";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
-"youWillLooseAllData"="您将失去和这个账户相关的所有数据，确定继续吗？";
+"youWillLooseAllData"="您将遗失所有与此帐户相关的资料，确定要继续吗？";
 /*  */
 "pleaseCheckYourEmail"="Please check your email.";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="如果你不能访问你的邮箱，请联系support@mega.nz.";
+"ifYouCantAccessYourEmailAccount"="如果您无法进入您的信箱，请联系support@mega.nz。";
 /* During account cancellation (deletion) */
-"cancellationLinkHasExpired"="注销链接已失效";
+"cancellationLinkHasExpired"="注销连接已失效。";
 /* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
 "enterYourPasswordToConfirmThatYouWanToClose"="请输入密码以确认你想取消你的账号";
 /* Account closure, password check dialog when user click on closure email. */
-"closeAccount"="关闭帐号";
+"closeAccount"="注销帐户";
 /* Title for the action that allows to remove a file or folder */
-"remove"="删除";
+"remove"="移除";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
-"removeNodeFromRubbishBinTitle"="确认删除";
+"removeNodeFromRubbishBinTitle"="确认移除";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
-"removeFileToRubbishBinMessage"="你正永久删除一个文件。你想继续吗？（你无法撤销该操作）";
+"removeFileToRubbishBinMessage"="您即将永久删除1 个文件。您要继续吗？ （您不能撤销该操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
-"removeFilesToRubbishBinMessage"="你正永久删除%d文件。你想继续吗？（此操作无法撤销）";
+"removeFilesToRubbishBinMessage"="您即将永久删除%d 个文件。您要继续吗？ （您不能撤销该操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
-"removeFolderToRubbishBinMessage"="你正永久删除一个文件。你想继续吗？（此操作无法撤销）";
+"removeFolderToRubbishBinMessage"="您即将永久删除1 个文件夹。您要继续吗？ （您不能撤销该操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
-"removeFoldersToRubbishBinMessage"="你正在永久删除%d文件夹。你想继续吗？（此操作无法撤销）";
+"removeFoldersToRubbishBinMessage"="您即将永久删除%d 个文件夹。您要继续吗？ （您不能撤销该操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
-"removeFileFolderToRubbishBinMessage"="你正要永久删除一个文件和一个文件夹，想继续吗？（本操作无法撤销）";
+"removeFileFolderToRubbishBinMessage"="您即将永久删除1 个文件和1 个文件夹。您要继续吗？ （您不能撤销该操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
-"removeFileFoldersToRubbishBinMessage"="你正永久删除1个文件及%d的文件夹，你想继续吗？（此项操作将无法撤销）";
+"removeFileFoldersToRubbishBinMessage"="您即将永久删除1 个文件和%d 个文件夹。您要继续吗？ （您不能撤销该操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
-"removeFilesFolderToRubbishBinMessage"="你这个永久删除%d文件和1个文件夹。你想继续吗？（此项操作无法撤销）";
+"removeFilesFolderToRubbishBinMessage"="您即将永久删除%d 个文件和1 个文件夹。您要继续吗？ （您不能撤销该操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="你正永久删除[A] 文件和 [B]文件夹。你想继续吗（此操作无法撤销）";
+"removeFilesFoldersToRubbishBinMessage"="您将永久删除[A] 个文件和[B] 个文件夹。您要继续吗？ (注意！此操作不可复原。)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="已从MEGA移除1个文件";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="已从 MEGA 移除 %d 个文件";
+"filesRemovedToRubbishBinMessage"="已从MEGA移除%d个文件！";
 /* Success message shown when 1 folder has been removed from MEGA */
-"folderRemovedToRubbishBinMessage"="已从 MEGA 移除1个文件夹";
+"folderRemovedToRubbishBinMessage"="1 文件夹自MEGA移除";
 /* Success message shown when {1+} folders have been removed from MEGA */
-"foldersRemovedToRubbishBinMessage"="已从MEGA移除 %d 个文件夹";
+"foldersRemovedToRubbishBinMessage"="%d 文件夹自MEGA移除";
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
-"fileFolderRemovedToRubbishBinMessage"="已从MEGA移除 1 个文件和 1 个文件夹";
+"fileFolderRemovedToRubbishBinMessage"="1个文件与1个文件夹已自MEGA移除";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="已从MEGA移除 1 个文件和 %d 个文件夹";
+"fileFoldersRemovedToRubbishBinMessage"="1个文件与%d 个文件夹已自MEGA移除";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
-"filesFolderRemovedToRubbishBinMessage"="已从MEGA移除 %d 个文件和 1 个文件夹";
+"filesFolderRemovedToRubbishBinMessage"="%d 个文件与1个文件夹已自MEGA移除";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
-"filesFoldersRemovedToRubbishBinMessage"="已从MEGA移除 [A] 个文件和 [B] 个文件夹";
+"filesFoldersRemovedToRubbishBinMessage"="已从MEGA移除[A]个文件与[B]个文件夹";
 /* Hint text to suggest that the user have to write his/her current password */
-"currentPassword"="原密码";
+"currentPassword"="现行密码";
 /* Hint text to suggest that the user have to write the new password on it */
-"newPassword"="新密码";
+"newPassword"="新的密码";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="确认密码";
 /* Success message shown when the password has been changed */
-"passwordChanged"="密码已修改。";
+"passwordChanged"="你的密码已变更。";
 /* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="新的密码不能与您现在的密码相同.";
+"oldAndNewPasswordMatch"="新的密码不能与您现在的密码相同。";
 /* An option to reset the password. */
-"forgotPassword"="忘记密码？";
+"forgotPassword"="忘记密码了？";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="你可以按照发送至你邮箱的恢复链接操作重置密码";
+"youCanResetYourPasswordByFollowing"="您可以重新设定密码，请依稍后会寄至您的电子信箱的还原链接操作。";
 /* Message shown during forgot your password process if the link to reset password has expired */
-"recoveryLinkHasExpired"="该重置链接已过期，请重试。";
+"recoveryLinkHasExpired"="这个恢复链接已失效，请再试一次。";
 /* Headline of the password reset recovery procedure */
-"passwordReset"="密码重置";
+"passwordReset"="密码重设";
 /* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
 "pleaseWriteYourRecoveryKey"="请输入恢复密钥";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
-"recoveryKey"="解锁账号";
+"recoveryKey"="还原金钥";
 /* An alert title where the user provided the incorrect Recovery Key. */
-"invalidRecoveryKey"="无效的恢复密钥";
+"invalidRecoveryKey"="无效的还原金钥";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="您的恢复密钥正在被用于重置密码，请输入新密码";
+"youRecoveryKeyIsGoingTo"="还原金钥将被用于重设您的密码。请输入您的新密码。";
 /*  */
-"yourPasswordHasBeenReset"="您的密码已成功重置。请登录您的帐户。";
+"yourPasswordHasBeenReset"="您的密码已成功重置。请即登入测试。";
 /* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="如果你有恢复密钥的备份，你可以通过选择YES重置密码。数据将不会丢失";
+"forgotPassword_firstParagraph"="如果您有还原金钥的备份，您可以选择「是」以重设您的密码。任何资料均不会遗失。";
 /* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="如果您在此计算机或任何其他计算机上的任何其他浏览器中有活动的MEGA会话，您仍然可以导出恢复密钥。 如果不这样做，您将无法再解密现有帐户，但可以通过选择“否”，在相同电子邮件地址下开始新帐户。";
+"forgotPassword_secondParagraph"="若您现在于此电脑的其他浏览器中或其他电脑中，仍开有已登入MEGA的页面，您还有机会可以汇出还原金钥。如果您没有，您将无法再解密或登入您现有的帐户，但您可以选择「否」以使用同一电子信箱重新注册。";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="你想有一个恢复密钥的备份吗？";
+"doYouHaveABackupOfYourRecoveryKey"="您有备份您的还原金钥吗？";
 /* Headline when the user chose YES */
-"great"="好极了";
+"great"="很好!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="请在下方输入你的邮箱地址，你将收到收到一个恢复链接，它将允许你提交你的恢复密钥且重置密码";
+"recoveryLinkToResetYourPassword"="请于下方输入您的电子邮件地址。您将收到一个还原链接，让您可以提交您的还原金钥并重置密码。";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
-"send"="发送";
+"send"="送出";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="啊喔！";
+"noMasterKey_title"="噢！";
 /* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="由于我们的端对端加密模式，没有你的密码或者恢复密钥的备份你将不能访问你的数据";
+"noMasterKey_firstParagraph"="因我们使用严谨的端对端加密模式，您将无法在没有密码或还原金钥的备份下取得您的资料。";
 /* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="你可以暂停你现存的账户并使用相同的邮箱创建一个新的账户。你的数据将被保存至少60天。万一你召回你暂停的账户密码，请联系support@mega.nz";
+"noMasterKey_secondParagraph"="您可以先封存现有的帐户，再以同一个电子信箱重新注册。您的资料将会被保存至少60天。在这之间，如果您回想起您此一封存帐号的密码，请联系support@mega.nz以寻求恢复协助。";
 /* Text of the dialog message to ask for the link to park the account */
 "recoveryLinkToParkYourAccount"="请在下方输入你的邮箱地址。你讲收到允许你暂停你的账户的恢复主键";
 /* Headline for parking an account (basically restarting from scratch) */
-"parkAccount"="冻结帐号";
+"parkAccount"="封存帐号";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
-"startingFreshAccount"="我已被告知我正在开始使用一个全新的空账户且我将失去现有账户中所有的数据除非我想起我的密码或者定位一个导出的恢复密钥";
+"startingFreshAccount"="我已了解我正在重新注册一个全新且空白的帐户。除非我能想起原本的密码，或者找到之前汇出之还原金钥，否则我将失去我现在帐户中的所有资料。";
 /* Caption of the button to proceed */
-"startNewAccount"="开始新帐号";
+"startNewAccount"="开始建立新帐号";
 /*  */
-"yourAccounHasBeenParked"="您的旧帐户已成功封存。您现在可以登录到新的帐户。";
+"yourAccounHasBeenParked"="您的旧帐号已成功封存。现在可登入您的新帐号。";
 /* Hint text to suggest that the user have to write the new email on it */
-"newEmail"="新邮件";
+"newEmail"="新的邮件地址";
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="确认电子邮件地址";
 /* Hint text where the user have to re-write the new email to confirm it */
-"confirmNewEmail"="确认新邮箱";
+"confirmNewEmail"="确认新电子邮件地址";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="更换电子邮件";
+"changeEmail"="更改电子信箱";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="新旧邮箱不匹配";
+"oldAndNewEmailMatch"="新的和旧的电子邮件不能一模一样";
 /* Error message shown when you have not written the same email when confirming a new one */
-"emailsDoNotMatch"="邮箱不匹配";
+"emailsDoNotMatch"="您输入的电子邮件不一样";
 /* Error message when a use wants to validate the same email twice */
-"emailAddressChangeAlreadyRequested"="您已为该电子邮件地址请求了1个确认链接.";
+"emailAddressChangeAlreadyRequested"="你已经为此电子邮件地址申请了确认信。";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="请到您的邮件收件箱内点击邮件内的链接来确认您的新电子邮件地址.";
+"emailIsChanging_description"="请至您的收件匣查看确认信，并点击信中链接以确认您的新电子邮件地址";
 /* Text shown on the confirm email view to remind the user what to do */
-"verifyYourEmailAddress_description"="请输入您的密码来验证您的电子邮件地址";
+"verifyYourEmailAddress_description"="请输入您的密码以验证您的电子邮件地址";
 /* The [X] will be replaced with the e-mail address. */
-"congratulationsNewEmailAddress"="恭喜您, 您该MEGA账户的新电子邮件地址是: [X]";
+"congratulationsNewEmailAddress"="恭喜您完成更换，您于此MEGA帐户的新电子邮件地址为：[X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
-"closeOtherSessions"="关闭其他会话";
+"closeOtherSessions"="关闭其他登入帐户";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
-"sessionsClosed"="会话已关闭";
+"sessionsClosed"="已关闭其他登入";
 /* Section title where you can change the app's passcode */
 "changePasscodeLabel"="更改密码";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="简单密码";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
-"eraseAllLocalDataLabel"="清除本地数据";
+"eraseAllLocalDataLabel"="删除本地数据";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="10次错误密码尝试后将登出并删除本地数据";
+"failedAttempstSectionTitle"="于10次密码输入错误后，自动登出并删除本机资料";
 /* Title header for the bottom menu with various menu sections that suit the category support. */
 "support"="支持";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="帮助中心";
+"helpCentreLabel"="协助中心";
 /* Title to rate the app */
-"rateUsLabel"="请给我们打分";
+"rateUsLabel"="请帮我们评分！";
 /* Title of the Transfers section */
 "transfers"="传输";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
@@ -759,33 +759,33 @@
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="上传";
 /* Success message shown when one transfer has been cancelled */
-"transferCancelled"="传输已取消";
+"transferCancelled"="已取消传输";
 /* Success message shown when all the transfers have been cancelled */
 "transfersCancelled"="传输已取消";
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="取消传输";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="您要取消 %@ 吗?";
+"cancelTransfersText"="你要取消%@ 吗？";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="所有传输";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
-"uploadInUppercaseTransfers"="上传";
+"uploadInUppercaseTransfers"="上传传输";
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
-"downloadInUppercaseTransfers"="下载";
+"downloadInUppercaseTransfers"="下载传输";
 /* Title of My Account section. There you can see your account details */
-"myAccount"="我的账户";
+"myAccount"="我的帐号";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="登出";
 /* String shown when you are logging out of your account. */
-"loggingOut"="注销中";
+"loggingOut"="正在登出";
 /* Button to remove avatar. Try to keep the text short (as in English) */
-"removeAvatar"="删除头像";
+"removeAvatar"="移除头像";
 /* button that allows the user the change his avatar */
-"changeAvatar"="更换头像";
+"changeAvatar"="变更头像";
 /* Button title that allows the user change his name */
-"changeName"="修改姓名";
+"changeName"="更改名称";
 /* Success message when changing profile information. */
-"youHaveSuccessfullyChangedYourProfile"="您已成功修改个人资料.";
+"youHaveSuccessfullyChangedYourProfile"="您已成功更新您的个人文件";
 /* Hint text for the first name (Placeholder) */
 "firstName"="名";
 /* Hint text for the last name (Placeholder) */
@@ -793,97 +793,97 @@
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="用量";
 /* Title for "Local" used space. */
-"localLabel"="本地的";
+"localLabel"="本地";
 /* Title for "Used" MEGA space. */
 "usedSpaceLabel"="已用";
 /* Title for MEGA "Available" space. */
-"availableLabel"="可用的";
+"availableLabel"="可使用的";
 /* title of the My Account screen */
-"accountType"="账户类型";
+"accountType"="帐号类型:";
 /* Text relative to the MEGA account level. UPPER CASE */
 "free"="免费";
 /* Text that shows the expiry date of the account PRO level */
-"expiresOn"=" %@过期";
+"expiresOn"="到%@ 过期";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="购买历史";
+"purchaseHistory"="购买记录";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
-"incomingShares"="传入的共享";
+"incomingShares"="传入的分享";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
 "of %@"="%@ 中的";
 /* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="%@中已用";
+"used of %@"="%@ 中已用";
 /* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="共 %@ 可用";
+"available of %@"="共%@ 可用";
 /* Button title which triggers the action to upgrade your MEGA account level */
-"upgradeAccount"="升级账户";
+"upgradeAccount"="升级帐号";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="你可以在我的账户中稍后进行升级";
+"youCanUpgradeLaterInMyAccount"="您稍后可在'我的帐户'中进行升级";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="存储";
+"productSpace"="储存空间";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="宽带";
+"productBandwidth"="频宽";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%.2f %@ 每月";
+"productPricePerMonth"="每月%.2f %@";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
-"choosePlan"="请从下方选择一个计划:";
+"choosePlan"="请选择一个方案:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
-"twoMonthsFree"="订购一年期PRO计划可获得两个月免费";
+"twoMonthsFree"="选购一年期PRO专业版将包含两个月免费";
 /* Header shown to help on the purchasin process */
 "selectMembership"="选择会员资格:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="节省17 ％";
+"save17"="节省17%";
 /* Error message shown when the purchase has failed */
-"wrongPurchase"="错误选购 %@ (%ld)";
+"wrongPurchase"="购买出错%@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled"="应用内购买已禁用, 请在iOS设置中将其开启";
+"appPurchaseDisabled"="App内购买项目被禁用，请前往iOS设置来激活此功能";
 /* Error message shown when the selected product doesn't exist */
-"productNotFound"="产品 %@ 未找到,请联系 ios@mega.nz";
+"productNotFound"="未找到产品%@，请连系ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */
 "allowPurchase_title"="允许购买";
 /* Alert message to remenber the user that needs to enable purchases before continue */
-"allowPurchase_message"="在恢复购买之前，您需要在您的 iOS 设置中开启应用内购买.";
+"allowPurchase_message"="恢复购买之前您必须先在iOS设定中开启App内购买项目的功能。";
 /* Button title to restore failed purchases */
 "restore"="恢复";
 /* "Monthly" subscriptions */
-"monthly"="按月";
+"monthly"="每月";
 /* "Yearly" subscriptions */
-"yearly"="按年";
+"yearly"="每年";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="本次在应用商店中无法购买此项，请稍后尝试";
+"productNotAvailable"="该App内购买项目目前于App Store尚未能选用。请晚点再试一次。";
 /* Alert title shown when the user has purchase correctly some plan */
-"thankYou_title"="感谢您";
+"thankYou_title"="谢谢您";
 /* Alert message shown when a purchase was restored succesfully */
 "purchaseRestore_message"="您的购买已恢复";
 /* Alert title shown when a purchase has stopped because some error between the process */
-"failedPurchase_title"="购买已停止";
+"failedPurchase_title"="购买已中止";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message"="或者你取消这项请求或者Apple报告一个传输错误。请稍后再试或者联系ios@mega.nz.";
+"failedPurchase_message"="您取消请求或Apple报告交易错误。请稍后再试，或联系ios@mega.nz";
 /* Alert title shown when a restore hasn't been completed correctly */
-"incompleteRestore_title"="恢复问题";
+"incompleteRestore_title"="恢复出错";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message"="之前的购买找不到。请选择之前购买的产品重新恢复。你不会被再次收费";
+"incompleteRestore_message"="没有找到之前的购买。请选择之前已购买的产品再进行恢复。您不会被重复收费。";
 /* Alert title shown when the restoring process has stopped for some reason */
-"failedRestore_title"="恢复已停止";
+"failedRestore_title"="恢复停止";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="或者请求已被取消或者之前的购买不能被恢复，请稍后尝试或者联系ios@mega.nz";
+"failedRestore_message"="请求已取消或者之前的购买无法恢复。请稍后再试，或联系ios@mega.nz";
 /* Alert title shown when the DEBUG mode is enabled */
-"enableDebugMode_title"="开启 调试 模式";
+"enableDebugMode_title"="开启调试模式";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="日志将在脱机部分创建";
+"enableDebugMode_message"="日志（MEGAiOS.log）将保存在离线文件中。日志可能包含与账户相关的信息。";
 /* Alert title shown when the DEBUG mode is disabled */
-"disableDebugMode_title"="禁用 调试 模式";
+"disableDebugMode_title"="关闭调试模式";
 /* Alert message shown when the DEBUG mode is disabled */
-"disableDebugMode_message"="日志 (MEGAiOS.log)将不会被从脱机部分删除";
+"disableDebugMode_message"="系统日志档(MEGAiOS.log) 将从离线部分被删除。";
 /* Alert message shown when the user remove one item from the Offline section */
-"removeItemFromOffline"="你确定想从脱机中删除这项内容吗";
+"removeItemFromOffline"="您确定要从离线部份中删除这个项目吗？";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="你确定想从脱机中删除这些内容吗？";
+"removeItemsFromOffline"="您确定要从离线模式中删除这些项目吗？";
 /* Chat section header */
-"chat"="聊天";
+"chat"="交谈";
 /* Empty Conversations section */
-"noConversations"="无对话";
+"noConversations"="无对话(已清空)";
 /* Title show when the chat is disabled */
-"chatIsDisabled"="聊天已关闭";
+"chatIsDisabled"="聊天功能已停用";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="激活";
 /* Conversations section */
@@ -891,43 +891,43 @@
 /* A button on a dialog which invites a contact to join MEGA. */
 "invite"="邀请";
 /* A log message in a chat to indicate that the message has been deleted by the user. */
-"thisMessageHasBeenDeleted"="消息已被删除";
+"thisMessageHasBeenDeleted"="信息已删除";
 /* The title for my message in a chat. The message was sent from yourself. */
 "me"="我";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
-"wasRemovedFromTheGroupChatBy"="[A]已被[B]从群聊中删除";
+"wasRemovedFromTheGroupChatBy"="[B]已将[A]从此群组中移出。";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="[A]退出聊天";
+"leftTheGroupChat"="[A]已离开此群组。";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
-"joinedTheGroupChatByInvitationFrom"="通过[B]的邀请[A]加入群聊";
+"joinedTheGroupChatByInvitationFrom"="[A]接受[B]的邀请，已加入此群聊。";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
-"clearedTheChatHistory"="[A]已删除聊天历史";
+"clearedTheChatHistory"="[A]清除了聊天记录。";
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
-"wasChangedToBy"="[A]被[C]改成了[B]";
+"wasChangedToBy"="[A]的权限已被[C]变更为[B]。";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="[A]将群名改成了\"[B]\"";
+"changedGroupChatNameTo"="[A]将群组名称更改为'[B]'。";
 /* Button label. Allows to add contacts in current chat conversation. */
-"addParticipant"="添加成员";
+"addParticipant"="增加与会者...";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="状态";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
-"voiceAndVideoCalls"="音频视频呼叫";
+"voiceAndVideoCalls"="语音和视频通话";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
-"useMobileData"="使用移动网络";
+"useMobileData"="使用移动数据";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
-"autoAway"="自动离线";
+"autoAway"="自动显示为离开";
 /* */
 "xMinutes"="[X] 分钟";
 /* */
-"1Minute"="1 分钟";
+"1Minute"="1分钟";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfterXMinutesOfInactivity"="在[X]分钟不活动之后让我离开";
+"showMeAwayAfterXMinutesOfInactivity"="闲置[X]分钟后，显示为离开状态";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
+"showMeAwayAfter1MinuteOfInactivity"="处于非活动状态1分钟后显示为离开";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
-"statusPersistence"="状态持续";
+"statusPersistence"="状态持续设置";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
-"maintainMyChosenStatusAppearance"="保持我所选择的状态，即使没有连接的设备。";
+"maintainMyChosenStatusAppearance"="即使未连接时也显示为此状态";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(已编辑)";
 /*  */
@@ -937,45 +937,45 @@
 /*  */
 "busy"="忙碌";
 /* title of the contact properties screen */
-"contactInfo"="联络信息";
+"contactInfo"="联系资讯";
 /*  */
-"notifications"="通知";
+"notifications"="通知信息";
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="发送信息";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="验证凭证";
+"verifyCredentials"="确认凭证";
 /* A button title to delete the history of a chat. */
-"clearChatHistory"="清除聊天记录";
+"clearChatHistory"="清空对话记录";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
-"clearTheFullMessageHistory"="你确定想清空本次聊天的所有消息历史吗";
+"clearTheFullMessageHistory"="您确定要清除此对话的全部历史记录吗？";
 /* 'Next' button in a dialog */
 "continue"="继续";
 /* Button title that allows the user to close a chat. */
-"closeChat"="关闭聊天";
+"closeChat"="关闭对话";
 /* Title of the incoming shared folders of a user. */
-"sharedFolders"="共享文件";
+"sharedFolders"="已共享的文件夹";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
 "contactCredentials"="联系人凭证";
 /* "Verify user" dialog description */
-"thisIsBestDoneInRealLife"="最好的方式，就是面对面的操作。如果你已经有了另一个已经验证的渠道譬如OTR和PGP验证，你也可以使用这些。";
+"thisIsBestDoneInRealLife"="这最好由实际面对面来完成。如您有其他已验证管道，如已验证的OTR或PGP，也可以使采用。";
 /* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
 "yourCredentials"="您的凭证";
 /* Button to reset the password */
-"reset"="重设";
+"reset"="重置密码";
 /* Button title */
-"approve"="批准";
+"approve"="允许";
 /* start a chat/conversation */
-"startConversation"="开始聊天";
+"startConversation"="建立对话";
 /* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
-"group"="群";
+"group"="群组";
 /* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
-"groupInfo"="群信息";
+"groupInfo"="群组资讯";
 /* Label title for a group chat */
-"groupChat"="群聊";
+"groupChat"="群组聊天";
 /* The title of a menu button which allows users to rename a group chat. */
-"renameGroup"="重命名群";
+"renameGroup"="重新命名此群组";
 /* Title of the action that allows you to change the avatar of a group chat. */
-"changeGroupAvatar"="更换群头像";
+"changeGroupAvatar"="变更群组头像";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="离开";
 /* Top menu option which opens more menu options in a context menu. */
@@ -983,73 +983,75 @@
 /* A button label. The button allows the user to mute a conversation. */
 "mute"="静音";
 /* A button label. The button allows the user to get more info of the current context. */
-"info"="信息";
+"info"="资讯";
 /* A button label. The button allows the user to close the conversation. */
 "close"="关闭";
 /* Alert text that explains what means confirming the action 'Leave' */
-"youWillNoLongerHaveAccessToThisConversation"="你将不能访问这个聊天";
+"youWillNoLongerHaveAccessToThisConversation"="您将无法再读取此对话";
 /* A button label. The button allows the user to leave the conversation. */
 "leaveChat"="离开对话";
 /* Button title that allows the user to leave a group chat. */
-"leaveGroup"="退出群";
+"leaveGroup"="离开群组";
 /* Label to describe the section where you can see the participants of a group chat */
-"participants"="群聊成员";
+"participants"="成员";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
-"moderator"="主持人";
+"moderator"="共同管理";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
-"standard"="标准";
+"standard"="标准模式";
 /* A button title which removes a participant from a chat. */
-"removeParticipant"="删除成员";
+"removeParticipant"="移除此位成员";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="与%@的对话";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="为提供安全保障MEGA使用端对端（用户控制的）加密保护你的聊天";
+"chatIntroductionMessage"="MEGA提供安全加密保障，完全保护您的聊天隐私（由用户控制的终端至终端加密）：";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"confidentialityExplanation"="[S]机密性.[/S]只有作者和目标接收者能解密并且阅读内容";
+"confidentialityExplanation"="[S]保密性[/S] 只有发起人和预设收件人能够解译和阅读交谈内容。";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"authenticityExplanation"="[S]可靠性.[/S]系统确保接收到的数据来自于所显示的发送者，且在传输过程中内容未被篡改";
+"authenticityExplanation"="[S]真实性[/S] 此系统能确保接收到的资料是由您所见之发送者发送，且其内容在传输过程中不会被篡改。";
 /* Alert message shown when a chat does not exist */
-"chatNotFound"="聊天不存在";
+"chatNotFound"="未找到此对话";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
-"isTyping"="%@正在输入";
+"isTyping"="%@正在输入...";
 /* Message box label which shows that user can type message text in this textview */
-"writeAMessage"="输入消息...";
+"writeAMessage"="书写信息...";
 /* Information if there are no history messages in current chat conversation */
-"noConversationHistory"="无聊天记录";
+"noConversationHistory"="没有对话历史记录";
 /* Button which allows to retry send message in chat conversation. */
 "retry"="重试";
 /* Button which allows to delete message in chat conversation. */
-"deleteMessage"="删除消息";
+"deleteMessage"="删除信息";
+/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
+"sendMedia"="Send Media";
 /* A button label. The button sends contact information to a user in the conversation. */
-"sendContact"="发送联系信息";
+"sendContact"="发送联系资讯";
 /* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
-"addFromMyCloudDrive"="从我的云驱动中添加";
+"addFromMyCloudDrive"="从我的云盘选择";
 /* */
 "done"="完成";
 /* Button label for sending file attachments through the chat to another user. */
-"sendFiles"="发送文件";
+"sendFiles"="寄送文件";
 /* */
 "warning"="警告";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
-"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="保存为脱机的所有文件将从您的设备中删除。 继续注销？";
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="登出账户将清除所有离线保存文件。确定要登出吗？";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="消耗的转移配额";
+"depletedTransferQuota_title"="传输配额不足";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="您的排队下载次数超过了您帐户可用的当前传输量，因此可能会中断。";
+"depletedTransferQuota_message"="您所进程的下载已超出您帐户目前可用的传输配额，因此有可能会被中断。";
 /* Button title to see the available pro plans in MEGA */
-"seePlans"="查看套餐";
+"seePlans"="参看方案";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="解除";
 /* Notification text body shown when you have received a new chat message */
-"newMessage"="新消息";
+"newMessage"="新信息";
 /* Notification text body shown when you have received a contact request */
-"contactRequest"="添加联系人请求";
+"contactRequest"="联系人邀请";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder"="新的共享文件夹";
+"newSharedFolder"="新共享文件夹";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="您确定要中止注册吗？";
+"areYouSureYouWantToAbortTheRegistration"="您确定要中止注册吗?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="如果输错你的邮箱地址，输入正确的，然后点击重新发送";
+"misspelledEmailAddress"="如果您写错了您的电子邮件地址，请于修正后点击'重新发送'。";
 /* A button to resend the email confirmation. */
 "resend"="重新发送";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1066,3 +1068,58 @@
 "autorenewableDescription"="此订阅到期将会自动续订，续订内容与您一开始选择的订阅时间与价格一致。您可以在您的iTunes帐户设定页面关闭MEGA PRO的订阅自动更新续订，必须于您的下一个订阅缴款期限的24小时之前执行此操作。欲管理您的订阅内容，只需点击您手机上的App Store图标，可以在页面下方以您的Apple帐号登入（如果您尚未登入），然后点击查看帐号。您会被转到您的Apple帐户页面，然后向下滚动到管理应用程序订阅。接下来选择你的MEGA PRO订阅并查看您预定的续约日期，切换开关来关闭您的自动续订。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="打开MEGA并登入账户";
+/* A button title to revoke the access to an attachment in a chat. */
+"revoke"="撤除";
+/* Inform user that there were unsupported assets in the share extension */
+"shareExtensionUnsupportedAssets"="某些项目无法在MEGA上共享";
+/* Notification message shown when a transfer failed. Keep colon. */
+"Transfer failed:"="转移失败:";
+/* MEGAError */
+/* Label to show that an SDK operation has been complete successfully. */
+"No error"="无误";
+/* Label to show that an Internal error occurs during a SDK operation. */
+"Internal error"="内部错误";
+/* Label to show that an error of Invalid argument occurs during a SDK operation. */
+"Invalid argument"="无效参数";
+/* Label to show that a request error occurs during a SDK operation. */
+"Request failed, retrying"="请求失败，重试中";
+/* Label to show that the rate limit has been reached during a SDK operation. */
+"Rate limit exceeded"="超过速度限制";
+/* Label to show that a SDK operation has failed permanently. */
+"Failed permanently"="已失败";
+/* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
+"Too many concurrent connections or transfers"="过多并行链接或传输";
+/* Label to show that an error of Out of range occurs during a SDK operation. */
+"Out of range"="超出范围";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"Expired"="过期";
+/* Label to show that an error related with a resource Not found occurs during a SDK operation. */
+"Not found"="未找到";
+/* Label to show that an error related with a circular linkage occurs during a SDK operation. */
+"Circular linkage detected"="侦测到循环连动SDK";
+/* Label to show that an error related with an denied access occurs during a SDK operation. */
+"Access denied"="进入遭拒";
+/* Label to show that an error related with an existent resource occurs during a SDK operation. */
+"Already exists"="已存在";
+/* Label to show that an error related with an Incomplete SDK operation. */
+"Incomplete"="未完成";
+/* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
+"Invalid key/Decryption error"="无效金钥/解密错误";
+/* Label to show that an error related with a bad session ID occurs during a SDK operation. */
+"Bad session ID"="恶意session ID";
+/* Label to show that an error related with a blocked account occurs during a SDK operation. */
+"Blocked"="封锁";
+/* Label to show that an error related with an over quota occurs during a SDK operation. */
+"Over quota"="超过额度";
+/* Label to show that an error related with a temporary problem occurs during a SDK operation. */
+"Temporarily not available"="暂时无法取得";
+/* Label to show that an error related with too many connections occurs during a SDK operation. */
+"Connection overflow"="连接过量";
+/* Label to show that an error related with an write error occurs during a SDK operation. */
+"Write error"="写入错误";
+/* Label to show that an error related with an read error occurs during a SDK operation. */
+"Read error"="读取错误";
+/* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
+"Invalid application key"="无效应用程序金钥";
+/* Label to show that an error related with an unknown error occurs during a SDK operation. */
+"Unknown error"="未知的错误";

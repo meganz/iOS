@@ -7,7 +7,7 @@
 /* */
 "no"="Non";
 /* */
-"upload"="Téléverser";
+"upload"="Téléversement";
 /*  */
 "error"="Erreur";
 /*  */
@@ -127,7 +127,7 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Lien non disponible";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="Les causes possibles sont les suivantes :- Le fichier a été retiré en raison d'une violation des conditions générales d'utilisation ou de la politique d'utilisation acceptable de MEGA.- L'URL est invalide - le lien auquel vous essayez d'accéder n'existe pas.- Le fichier a été supprimé par l'utilisateur.";
+"fileLinkUnavailableText"="Cela pourrait être causé par les raisons suivantes :- Le fichier a été retiré à cause d'une violation des conditions générales d'utilisation ou de la politique d'utilisation acceptable.- L'URL est invalide. Le lien auquel vous essayez d'accéder n'existe pas.- Le fichier a été supprimé par l'utilisateur.";
 /* Message shown when a download starts */
 "downloadStarted"="Le téléchargement est lancé";
 /* Title for the folder link view */
@@ -139,7 +139,7 @@
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Le dossier '%@' ne peut pas être créé";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="Les causes possibles sont les suivantes :- Le lien de dossier a été retiré en raison d'une violation des conditions générales d'utilisation ou de la politique d'utilisation acceptable de MEGA.- L'URL est invalide - le lien auquel vous essayez d'accéder n'existe pas.- Le lien de dossier a été supprimé par l'utilisateur.";
+"folderLinkUnavailableText"="Cela pourrait être causé par les raisons suivantes :- Le lien de dossier a été retiré à cause d'une violation des conditions générales d'utilisation ou de la politique d'utilisation acceptable.- L'URL est invalide. Le lien auquel vous essayez d'accéder n'existe pas.- Le lien de dossier a été supprimé par l'utilisateur.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Aucune connexion internet";
 /* Title shown when a folder doesn't have any files */
@@ -336,11 +336,11 @@
 "rename"="Renommer";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Saisir le nouveau nom";
-/* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
+/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Déplacer vers la corbeille";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
 "moveFileToRubbishBinMessage"="Voulez-vous vraiment déplacer 1 fichier vers la corbeille?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="Voulez-vous vraiment déplacer %d fichiers vers la corbeille?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
 "moveFolderToRubbishBinMessage"="Voulez-vous vraiment déplacer 1 dossier vers la corbeille?";
@@ -1020,12 +1020,14 @@
 "retry"="Ressayer";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Supprimer le message";
+/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
+"sendMedia"="Send Media";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Envoyer le contact";
 /* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
 "addFromMyCloudDrive"="Ajouter de mon disque nuagiqueLe compte ";
 /* */
-"done"="terminé";
+"done"="Terminé";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Envoyer des fichiers";
 /* */
@@ -1066,3 +1068,58 @@
 "autorenewableDescription"="Les abonnements sont renouvelés automatiquement lors des périodes d'abonnement successives de même durée et au même tarif que la période initiale choisie. Vous pouvez désactiver le renouvellement automatique de votre abonnement MEGA PRO au plus tard 24 heures avant l'échéance de votre prochain paiement dans la page des réglages de votre compte iTunes. Pour gérer vos abonnements, cliquez simplement sur l'icône de la logithèque App Store sur votre appareil, connectez-vous en bas de la page avec votre identifiant Apple (si ce n'est pas déjà fait), et cliquez sur Afficher l'identifiant Apple. Vous atteindrez la page de votre compte où vous trouverez Gérer vers le bas. Ensuite, vous pourrez sélectionner votre abonnement MEGA PRO et visualiser votre date prévue de renouvellement, choisir un autre type d'abonnement, ou activer/désactiver le renouvellement automatique de votre abonnement.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Ouvrir MEGA et se connecter pour continuer";
+/* A button title to revoke the access to an attachment in a chat. */
+"revoke"="Révoquer";
+/* Inform user that there were unsupported assets in the share extension */
+"shareExtensionUnsupportedAssets"="Certains éléments n'ont pas pu être partagés avec MEGA";
+/* Notification message shown when a transfer failed. Keep colon. */
+"Transfer failed:"="Échec de transfert :";
+/* MEGAError */
+/* Label to show that an SDK operation has been complete successfully. */
+"No error"="Pas d'erreur";
+/* Label to show that an Internal error occurs during a SDK operation. */
+"Internal error"="Erreur interne";
+/* Label to show that an error of Invalid argument occurs during a SDK operation. */
+"Invalid argument"="Argument invalide";
+/* Label to show that a request error occurs during a SDK operation. */
+"Request failed, retrying"="Échec de la requête, nouvelle tentative";
+/* Label to show that the rate limit has been reached during a SDK operation. */
+"Rate limit exceeded"="Limite dépassée";
+/* Label to show that a SDK operation has failed permanently. */
+"Failed permanently"="Échec définitif";
+/* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
+"Too many concurrent connections or transfers"="Trop de connexions ou transferts simultanés";
+/* Label to show that an error of Out of range occurs during a SDK operation. */
+"Out of range"="Hors échelle";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"Expired"="Expiré";
+/* Label to show that an error related with a resource Not found occurs during a SDK operation. */
+"Not found"="Non trouvé";
+/* Label to show that an error related with a circular linkage occurs during a SDK operation. */
+"Circular linkage detected"="Un lien circulaire a été détecté";
+/* Label to show that an error related with an denied access occurs during a SDK operation. */
+"Access denied"="Accès refusé";
+/* Label to show that an error related with an existent resource occurs during a SDK operation. */
+"Already exists"="Existe déjà";
+/* Label to show that an error related with an Incomplete SDK operation. */
+"Incomplete"="Non terminée";
+/* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
+"Invalid key/Decryption error"="Clé invalide / Erreur de déchiffrement";
+/* Label to show that an error related with a bad session ID occurs during a SDK operation. */
+"Bad session ID"="ID de session erroné";
+/* Label to show that an error related with a blocked account occurs during a SDK operation. */
+"Blocked"="Bloqué";
+/* Label to show that an error related with an over quota occurs during a SDK operation. */
+"Over quota"="Dépassement de quota ";
+/* Label to show that an error related with a temporary problem occurs during a SDK operation. */
+"Temporarily not available"="Temporairement non disponible";
+/* Label to show that an error related with too many connections occurs during a SDK operation. */
+"Connection overflow"="Surcharge de la connexion";
+/* Label to show that an error related with an write error occurs during a SDK operation. */
+"Write error"="Erreur d'écriture";
+/* Label to show that an error related with an read error occurs during a SDK operation. */
+"Read error"="Erreur de lecture";
+/* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
+"Invalid application key"="Clé d'application invalide";
+/* Label to show that an error related with an unknown error occurs during a SDK operation. */
+"Unknown error"="Erreur inconnue";

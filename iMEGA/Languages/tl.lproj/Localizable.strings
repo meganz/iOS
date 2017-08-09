@@ -143,7 +143,7 @@
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Walang internet connection";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="Walang files sa folder";
+"emptyFolder"="Bakanteng Folder";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Wala kang files sa inyong Cloud Drive";
 /* Button title shown in empty views when you can 'Add files' */
@@ -151,7 +151,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Walang resulta";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Linisin ang Basurahan";
+"cloudDriveEmptyState_titleRubbishBin"="Bakatehin ang Basurahan";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Walang files sa Itinabi para sa Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -336,11 +336,11 @@
 "rename"="Pangalanan ng iba";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Ilagay ang pangalan";
-/* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
+/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Ilipat sa Basurahan";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
 "moveFileToRubbishBinMessage"="Gusto mo bang ilipat ang isang file na ito sa Basurahan?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="Gusto mo bang itapon ang mga %d files na ito sa Basurahan?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
 "moveFolderToRubbishBinMessage"="Gusto mo bang itapon ang isang folder na ito sa Basurahan?";
@@ -355,9 +355,9 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="Gusto mo bang ilipat ang [A] files sa [B] folders sa Basurahan?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="isang file ang tinapon sa Basurahan";
+"fileMovedToRubbishBinMessage"="1 file ang nilipat sa Basurahan!";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d files tinapon sa Basurahan";
+"filesMovedToRubbishBinMessage"="%d files ang nilipat sa Basurahan!";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
 "folderMovedToRubbishBinMessage"="isang folder ang tinapon sa Basurahan";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
@@ -403,7 +403,7 @@
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Gamitin ang Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Pinagana ang Camera Uploads";
+"cameraUploadsEnabled"="Bukas ang Camera Uploads";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu ang item na pinili";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -517,7 +517,7 @@
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Mga Pahintulot";
 /* Permissions given to the user you share your folder with */
-"readOnly"="Read only";
+"readOnly"="Read-only";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="Read & Write";
 /* Permissions given to the user you share your folder with */
@@ -593,7 +593,7 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Sa MEGA";
 /* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="Linisin ang Basurahan";
+"emptyRubbishBin"="Bakatehin ang Basurahan";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Lahat ng items sa basurahan ay papahiin";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
@@ -641,7 +641,7 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="Tatangalin mo na ng tuluyan ang [A] files at [B] folders. Gusto mo bang magpatuloy? (Hindi mo na pupwedeng baguhan ang aksyon na ito.)";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="1 file tinanggal sa MEGA";
+"fileRemovedToRubbishBinMessage"="1 file ang tinanggal sa MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
 "filesRemovedToRubbishBinMessage"="%d files ang tinanggal sa MEGA";
 /* Success message shown when 1 folder has been removed from MEGA */
@@ -651,7 +651,7 @@
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
 "fileFolderRemovedToRubbishBinMessage"="isang file at folder ang tinanggal sa MEGA";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="isang file at %@ folders ang tinanggal sa MEGA";
+"fileFoldersRemovedToRubbishBinMessage"="isang file at %s folders ang tinanggal sa MEGA";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
 "filesFolderRemovedToRubbishBinMessage"="%d files at isang folder ang tinanggal sa MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
@@ -869,7 +869,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Pagganahin ang DEBUG mode";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Isang log ang gagawin sa Offline section (MEGAiOS.log).";
+"enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log). Logs can contain information related to your account.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Patayin ang DEBUG mode";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -949,7 +949,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Sigurado ka bang gusto mong burahin ang kabuoang pag-uusap na ito?";
 /* 'Next' button in a dialog */
-"continue"="Magpatuloy";
+"continue"="Ipagpatuloy";
 /* Button title that allows the user to close a chat. */
 "closeChat"="Isara ang Chat";
 /* Title of the incoming shared folders of a user. */
@@ -1020,12 +1020,14 @@
 "retry"="Subukang muli";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Burahin ang mensahe";
+/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
+"sendMedia"="Send Media";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Ipadala ang contact";
 /* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
 "addFromMyCloudDrive"="Idagdag galing sa aking Cloud Drive";
 /* */
-"done"="tapos na";
+"done"="Tapos na.";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Magpadala ng files";
 /* */
@@ -1066,3 +1068,58 @@
 "autorenewableDescription"="Ang subscriptions ay kaagad na nirereview sa magkakasunod na subscription periods sa parehas na haba ng panahon at sa parehas na presyo sa napiling panahon. Pupuwede ng patayin ang automatic renewal ng iyong MEGA PRO subscription sa loob ng 24 oras bago ang iyong susunod na bayad sa subscription papunta sa iyong iTunes account settings page. Para ayusin ang iyong subscription, i-click ang AppStore icon sa iyong handset, mag-sign in gamit ang iyong Apple ID sa ilalim ng page (kung hindi pa nagagawa ito) at i-click ang View ID. Dadalhin ka nito sa iyong account page, mag-scroll down ka at pumunta sa Manage App Subscriptions. Pamula dito, pupwede mong piliin ang iyong MEGA PRO subscription at tingnan ang iyong nakatakdang petsa ng renewal, pumili ng ibang subscription package at mag-toggle sa on-off switch para patayin ang auto-renewal ng iyong subscription.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
+/* A button title to revoke the access to an attachment in a chat. */
+"revoke"="Bawiin";
+/* Inform user that there were unsupported assets in the share extension */
+"shareExtensionUnsupportedAssets"="Some items could not be shared with MEGA";
+/* Notification message shown when a transfer failed. Keep colon. */
+"Transfer failed:"="Naudlot ang paglilipat:";
+/* MEGAError */
+/* Label to show that an SDK operation has been complete successfully. */
+"No error"="Walang error";
+/* Label to show that an Internal error occurs during a SDK operation. */
+"Internal error"="Internal na error";
+/* Label to show that an error of Invalid argument occurs during a SDK operation. */
+"Invalid argument"="Maling argumento";
+/* Label to show that a request error occurs during a SDK operation. */
+"Request failed, retrying"="Bigo ang request, sinusubokang muli";
+/* Label to show that the rate limit has been reached during a SDK operation. */
+"Rate limit exceeded"="Lagpas na sa rate limit";
+/* Label to show that a SDK operation has failed permanently. */
+"Failed permanently"="Pumalpak talaga";
+/* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
+"Too many concurrent connections or transfers"="Masyadong maraming sabay-sabay na koneksyon o paglilipat";
+/* Label to show that an error of Out of range occurs during a SDK operation. */
+"Out of range"="Out of range";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"Expired"="Expired na";
+/* Label to show that an error related with a resource Not found occurs during a SDK operation. */
+"Not found"="Hindi makita";
+/* Label to show that an error related with a circular linkage occurs during a SDK operation. */
+"Circular linkage detected"="Na-detect ang circular linkage";
+/* Label to show that an error related with an denied access occurs during a SDK operation. */
+"Access denied"="Hindi maaari";
+/* Label to show that an error related with an existent resource occurs during a SDK operation. */
+"Already exists"="Meron na";
+/* Label to show that an error related with an Incomplete SDK operation. */
+"Incomplete"="Di natapos";
+/* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
+"Invalid key/Decryption error"="Maling key/Error sa pagdedecrypt";
+/* Label to show that an error related with a bad session ID occurs during a SDK operation. */
+"Bad session ID"="Maling session ID";
+/* Label to show that an error related with a blocked account occurs during a SDK operation. */
+"Blocked"="Hinarangan";
+/* Label to show that an error related with an over quota occurs during a SDK operation. */
+"Over quota"="Lagpas na sa quota";
+/* Label to show that an error related with a temporary problem occurs during a SDK operation. */
+"Temporarily not available"="Hindi muna available";
+/* Label to show that an error related with too many connections occurs during a SDK operation. */
+"Connection overflow"="Connection overflow";
+/* Label to show that an error related with an write error occurs during a SDK operation. */
+"Write error"="Write error";
+/* Label to show that an error related with an read error occurs during a SDK operation. */
+"Read error"="Read error";
+/* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
+"Invalid application key"="Maling application key";
+/* Label to show that an error related with an unknown error occurs during a SDK operation. */
+"Unknown error"="Di matukoy na error";

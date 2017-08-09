@@ -338,13 +338,16 @@
     [downloadTask resume];
 }
 
-- (void)uploadData:(NSURL *)url toParentNode:(MEGANode *)parentNode {
-    if (url.class == NSURL.class) {
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *storagePath = [self shareExtensionStorage];
+- (void)uploadData:(id)data toParentNode:(MEGANode *)parentNode {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *storagePath = [self shareExtensionStorage];
+    NSError *error = nil;
+    
+    if ([data class] == NSURL.class) {
+        NSURL *url = (NSURL *)data;
         NSString *path = [url path];
         NSString *tempPath = [storagePath stringByAppendingPathComponent:[path lastPathComponent]];
-        NSError *error = nil;
+        
         if ([fileManager copyItemAtPath:path toPath:tempPath error:&error]) {
             [self smartUploadLocalPath:tempPath parent:parentNode];
         } else {
@@ -352,8 +355,25 @@
             [self oneUnsupportedMore];
         }
     } else {
-        MEGALogError(@"Share extension error, %@ object received instead of NSURL", url.class);
-        [self oneUnsupportedMore];
+        if ([data class] == UIImage.class) {
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            formatter.dateFormat = @"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss";
+            NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+            formatter.locale = locale;
+            NSString *imageName = [NSString stringWithFormat:@"%@.jpg", [formatter stringFromDate:[NSDate date]]];
+            NSString *tempPath = [storagePath stringByAppendingPathComponent:imageName];
+            UIImage *image = (UIImage *)data;
+            
+            if([UIImageJPEGRepresentation(image, 1) writeToFile:tempPath atomically:YES]) {
+                [self smartUploadLocalPath:tempPath parent:parentNode];
+            } else {
+                MEGALogError(@"Write image failed:\n- At path: %@\n- With error: %@", tempPath, error);
+                [self oneUnsupportedMore];
+            }
+        } else {
+            MEGALogError(@"Share extension error, %@ object received instead of NSURL or UIImage", [data class]);
+            [self oneUnsupportedMore];
+        }
     }
 }
 

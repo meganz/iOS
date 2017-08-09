@@ -336,11 +336,11 @@
 "rename"="Renomear";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Introduza o novo nome";
-/* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
+/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Mover para o Lixo";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
 "moveFileToRubbishBinMessage"="Tem a certeza que pretende mover 1 ficheiro para o Lixo?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="Tem a certeza que pretende mover %d ficheiros para o Lixo?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
 "moveFolderToRubbishBinMessage"="Tem a certeza que pretende mover 1 pasta para o Lixo?";
@@ -355,9 +355,9 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="Você tem a certeza de que quer mover [A] ficheiros e [B] pastas para o Caixote do Lixo?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1 ficheiro movido para o Caixote do Lixo.";
+"fileMovedToRubbishBinMessage"="1 ficheiro movido para o Lixo!";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d ficheiros movidos para o Caixote do Lixo";
+"filesMovedToRubbishBinMessage"="%d ficheiros movidos para o Lixo!";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
 "folderMovedToRubbishBinMessage"="1 pasta movida para o Caixote do Lixo";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
@@ -403,7 +403,7 @@
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Ativar as Transferências da Câmara";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Camera Uploads ativada";
+"cameraUploadsEnabled"="Transferências da Camera Uploads ativadas";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu item selecionado";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -517,7 +517,7 @@
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Permissões";
 /* Permissions given to the user you share your folder with */
-"readOnly"="Apenas de leitura";
+"readOnly"="Só de leitura";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="Leitura e Escrita";
 /* Permissions given to the user you share your folder with */
@@ -869,7 +869,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Modo DEBUG activado";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Um relatório irá ser criado na secção Offline (MEGAiOS.log).";
+"enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log). Logs can contain information related to your account.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Modo DEBUG desactivado";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -1020,12 +1020,14 @@
 "retry"="Tente novamente";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Apagar mensagem";
+/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
+"sendMedia"="Send Media";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Enviar contacto";
 /* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
 "addFromMyCloudDrive"="Adicionar da sua Cloud Drive";
 /* */
-"done"="feito";
+"done"="Efetuado";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Enviar ficheiros";
 /* */
@@ -1066,3 +1068,58 @@
 "autorenewableDescription"="As subscrições são automaticamente renovadas por períodos iguais, de igual duração e ao mesmo preço que o período inicial escolhido.Pode anular a renovação automática da SUA subscrição MEGA  PRO até 24 horas antes do próximo pagamento da subscrição através da página de configurações da SUA conta iTunes.Para gerir as suas subscrições basta clicar no ícone da App Store no seu dispositivo, entrar com seu ID da Apple na parte inferior da página (se ainda não o tiver feito) e, em seguida, clicar em Ver ID. Aí será direcionado para a página da SUA conta, e na parte inferior da mesma, gerir as suas subscrições. A partir daqui, pode selecionar a SUA subscrição MEGA Pro e ver a SUA data de renovação programada, escolher um pacote de subscrição diferente ou puxar o botão on-off para fora para desactivar a renovação automática da SUA subscrição.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
+/* A button title to revoke the access to an attachment in a chat. */
+"revoke"="Revogar";
+/* Inform user that there were unsupported assets in the share extension */
+"shareExtensionUnsupportedAssets"="Some items could not be shared with MEGA";
+/* Notification message shown when a transfer failed. Keep colon. */
+"Transfer failed:"="A transferência falhou:";
+/* MEGAError */
+/* Label to show that an SDK operation has been complete successfully. */
+"No error"="Sem erros";
+/* Label to show that an Internal error occurs during a SDK operation. */
+"Internal error"="Erro interno";
+/* Label to show that an error of Invalid argument occurs during a SDK operation. */
+"Invalid argument"="Argumento inválido";
+/* Label to show that a request error occurs during a SDK operation. */
+"Request failed, retrying"="O pedido falhou, tente novamente";
+/* Label to show that the rate limit has been reached during a SDK operation. */
+"Rate limit exceeded"="Limite excedido";
+/* Label to show that a SDK operation has failed permanently. */
+"Failed permanently"="Falha permanente";
+/* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
+"Too many concurrent connections or transfers"="Demasiadas conexões ou transferências em simultâneo";
+/* Label to show that an error of Out of range occurs during a SDK operation. */
+"Out of range"="Fora de alcance";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"Expired"="Expirou";
+/* Label to show that an error related with a resource Not found occurs during a SDK operation. */
+"Not found"="Não encontrado";
+/* Label to show that an error related with a circular linkage occurs during a SDK operation. */
+"Circular linkage detected"="Ligação circular detetada";
+/* Label to show that an error related with an denied access occurs during a SDK operation. */
+"Access denied"="Acesso negado";
+/* Label to show that an error related with an existent resource occurs during a SDK operation. */
+"Already exists"="Já existe";
+/* Label to show that an error related with an Incomplete SDK operation. */
+"Incomplete"="Incompleto";
+/* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
+"Invalid key/Decryption error"="Chave errada/ Erro de decifração";
+/* Label to show that an error related with a bad session ID occurs during a SDK operation. */
+"Bad session ID"="ID de sessão errado";
+/* Label to show that an error related with a blocked account occurs during a SDK operation. */
+"Blocked"="Bloqueado";
+/* Label to show that an error related with an over quota occurs during a SDK operation. */
+"Over quota"="Quota excedida";
+/* Label to show that an error related with a temporary problem occurs during a SDK operation. */
+"Temporarily not available"="Temporariamente não disponível";
+/* Label to show that an error related with too many connections occurs during a SDK operation. */
+"Connection overflow"="Erro na conexão";
+/* Label to show that an error related with an write error occurs during a SDK operation. */
+"Write error"="Erro de escrita";
+/* Label to show that an error related with an read error occurs during a SDK operation. */
+"Read error"="Erro de leitura";
+/* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
+"Invalid application key"="Chave da aplicação inválida";
+/* Label to show that an error related with an unknown error occurs during a SDK operation. */
+"Unknown error"="Erro desconhecido";

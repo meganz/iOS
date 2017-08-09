@@ -127,7 +127,7 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Link nicht verfügbar";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="Mögliche Gründe hierfür sind:- Entfernung der Datei wegen einer Verletzung unserer AGBs oder Nutzungsrichtlinien- Ungültiger URL - der Link existiert nicht- Löschung der Datei durch den Benutzer";
+"fileLinkUnavailableText"="This could be due to the following reasons:- The file has been removed because of a ToS/AUP violation.- Invalid URL – the link you are trying to access does not exist.- The file has been deleted by the user.";
 /* Message shown when a download starts */
 "downloadStarted"="Download gestartet";
 /* Title for the folder link view */
@@ -139,11 +139,11 @@
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Der Ordner '%@' kann nicht erstellt werden";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="Dies könnte einen der folgenden Gründe haben:- Der Ordnerlink wurde wegen einer Verletzung unserer AGBs oder Nutzungsrichtlinien entfernt.- Ungültiger URL - der Link existiert nicht.- Der Benutzer hat den Ordnerlink gelöscht.";
+"folderLinkUnavailableText"="This could be due to the following reasons:- The folder link has been removed because of a ToS/AUP violation.- Invalid URL – the link you are trying to access does not exist.- The folder link has been deleted by the user.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Keine Internetverbindung";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="Keine Dateien im Ordner";
+"emptyFolder"="Leerer Ordner";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Keine Dateien vorhanden";
 /* Button title shown in empty views when you can 'Add files' */
@@ -336,11 +336,11 @@
 "rename"="Umbenennen";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Neuen Namen eingeben";
-/* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
+/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="In den Papierkorb verschieben";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
 "moveFileToRubbishBinMessage"="Eine Datei in den Papierkorb verschieben?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="%d Dateien in den Papierkorb verschieben?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
 "moveFolderToRubbishBinMessage"="Einen Ordner in den Papierkorb verschieben?";
@@ -593,7 +593,7 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Auf MEGA";
 /* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="Papierkorb leeren";
+"emptyRubbishBin"="Der Papierkorb ist leer";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Ihr Papierkorb wird unwiederbringlich geleert";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
@@ -869,7 +869,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="DEBUG-Modus aktivieren";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Eine Logdatei wird im Offlinebereich erstellt (MEGAiOS.log).";
+"enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log). Logs can contain information related to your account.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="DEBUG-Modus deaktivieren";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -921,13 +921,13 @@
 /* */
 "1Minute"="einer Minute frei";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfterXMinutesOfInactivity"="Show me away after [X] minutes of inactivity";
+"showMeAwayAfterXMinutesOfInactivity"="Mich nach [X] Minuten ohne Aktivität als abwesend anzeigen";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
-"statusPersistence"="Status Persistence";
+"statusPersistence"="Fester Status";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
-"maintainMyChosenStatusAppearance"="Maintain my chosen status appearance even when I have no connected devices.";
+"maintainMyChosenStatusAppearance"="Meinen gewählten Status anzeigen, auch wenn ich nicht mit MEGA verbunden bin.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(bearbeitet)";
 /*  */
@@ -1020,12 +1020,14 @@
 "retry"="Wiederholen";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Nachricht löschen";
+/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
+"sendMedia"="Send Media";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Kontakt senden";
 /* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
 "addFromMyCloudDrive"="Aus meinem Cloud-Speicher hinzufügen";
 /* */
-"done"="fertig";
+"done"="Fein";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Dateien senden";
 /* */
@@ -1066,3 +1068,58 @@
 "autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
+/* A button title to revoke the access to an attachment in a chat. */
+"revoke"="Entfernen";
+/* Inform user that there were unsupported assets in the share extension */
+"shareExtensionUnsupportedAssets"="Some items could not be shared with MEGA";
+/* Notification message shown when a transfer failed. Keep colon. */
+"Transfer failed:"="Übertragungsfehler:";
+/* MEGAError */
+/* Label to show that an SDK operation has been complete successfully. */
+"No error"="Kein Fehler";
+/* Label to show that an Internal error occurs during a SDK operation. */
+"Internal error"="Interner Fehler";
+/* Label to show that an error of Invalid argument occurs during a SDK operation. */
+"Invalid argument"="Ungültiges Argument";
+/* Label to show that a request error occurs during a SDK operation. */
+"Request failed, retrying"="Operations fehlgeschlagen, wiederhole";
+/* Label to show that the rate limit has been reached during a SDK operation. */
+"Rate limit exceeded"="Zuviele Kommandos";
+/* Label to show that a SDK operation has failed permanently. */
+"Failed permanently"="Endgültig fehlgeschlagen";
+/* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
+"Too many concurrent connections or transfers"="Zuviele gleichzeitige Verbindungen";
+/* Label to show that an error of Out of range occurs during a SDK operation. */
+"Out of range"="Außerhalb des erlaubten Bereichs";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"Expired"="Abgelaufen";
+/* Label to show that an error related with a resource Not found occurs during a SDK operation. */
+"Not found"="Nicht gefunden";
+/* Label to show that an error related with a circular linkage occurs during a SDK operation. */
+"Circular linkage detected"="Kreisverkettung detektiert";
+/* Label to show that an error related with an denied access occurs during a SDK operation. */
+"Access denied"="Zugriff verweigert";
+/* Label to show that an error related with an existent resource occurs during a SDK operation. */
+"Already exists"="Existiert bereits";
+/* Label to show that an error related with an Incomplete SDK operation. */
+"Incomplete"="Unvollständig";
+/* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
+"Invalid key/Decryption error"="Krypto-Fehler";
+/* Label to show that an error related with a bad session ID occurs during a SDK operation. */
+"Bad session ID"="Ungültige Session-ID";
+/* Label to show that an error related with a blocked account occurs during a SDK operation. */
+"Blocked"="Blockiert";
+/* Label to show that an error related with an over quota occurs during a SDK operation. */
+"Over quota"="Über dem Limit";
+/* Label to show that an error related with a temporary problem occurs during a SDK operation. */
+"Temporarily not available"="Vorübergehend nicht verfügbar";
+/* Label to show that an error related with too many connections occurs during a SDK operation. */
+"Connection overflow"="Zuviele gleichzeitige Verbindungen";
+/* Label to show that an error related with an write error occurs during a SDK operation. */
+"Write error"="Schreibfehler";
+/* Label to show that an error related with an read error occurs during a SDK operation. */
+"Read error"="Lesefehler";
+/* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
+"Invalid application key"="Dieses Programm ist gesperrt";
+/* Label to show that an error related with an unknown error occurs during a SDK operation. */
+"Unknown error"="Unbekannter Fehler";
