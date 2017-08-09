@@ -1362,17 +1362,22 @@ typedef NS_ENUM(NSUInteger, URLType) {
             for (NSInteger i = 0; i < transferList.size.integerValue; i++) {
                 MEGATransfer *transfer = [transferList transferAtIndex:i];
                 if (transfer.appData) {
-                    if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-                        if (![CameraUploads syncManager].isUseCellularConnectionEnabled && [MEGAReachabilityManager isReachableViaWWAN]) {
-                            [api cancelTransfer:transfer];
+                    NSArray *appDataComponentsArray = [transfer.appData componentsSeparatedByString:@"="];
+                    NSString *appDataFirstComponentString = [appDataComponentsArray objectAtIndex:0];
+                    if ([appDataFirstComponentString isEqualToString:@"CU"]) {
+                        if ([CameraUploads syncManager].isCameraUploadsEnabled) {
+                            if (![CameraUploads syncManager].isUseCellularConnectionEnabled && [MEGAReachabilityManager isReachableViaWWAN]) {
+                                [api cancelTransfer:transfer];
+                            } else {
+                                MEGALogInfo(@"Camera Upload should be delayed");
+                                MEGALogInfo(@"Set badge value to %@", transfer.appData);
+                                [CameraUploads syncManager].shouldCameraUploadsBeDelayed = YES;
+                                [[CameraUploads syncManager] setBadgeValue:transfer.appData];
+                            }
                         } else {
-                            MEGALogInfo(@"Camera Upload should be delayed");
-                            MEGALogInfo(@"Set badge value to %@", transfer.appData);
-                            [CameraUploads syncManager].shouldCameraUploadsBeDelayed = YES;
-                            [[CameraUploads syncManager] setBadgeValue:transfer.appData];
+                            [api cancelTransfer:transfer];
                         }
-                    } else {
-                        [api cancelTransfer:transfer];
+                        break;
                     }
                     break;
                 }
@@ -1872,11 +1877,22 @@ typedef NS_ENUM(NSUInteger, URLType) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         [[Helper downloadingNodes] setObject:[NSNumber numberWithInteger:transfer.tag] forKey:base64Handle];
     }
+    if (transfer.type == MEGATransferTypeUpload && transfer.fileName.mnz_isImagePathExtension) {
+        NSString *transferAbsolutePath = [NSHomeDirectory() stringByAppendingPathComponent:transfer.path];
+        [api createThumbnail:transferAbsolutePath destinatioPath:[transferAbsolutePath stringByAppendingString:@"_thumbnail"]];
+        [api createPreview:transferAbsolutePath destinatioPath:[transferAbsolutePath stringByAppendingString:@"_preview"]];
+    }
 }
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if (transfer.type == MEGATransferTypeUpload && transfer.appData && ![CameraUploads syncManager].isUseCellularConnectionEnabled && [MEGAReachabilityManager isReachableViaWWAN]) {
-        [api cancelTransfer:transfer];
+    if (transfer.type == MEGATransferTypeUpload) {
+        if (transfer.appData) {
+            NSArray *appDataComponentsArray = [transfer.appData componentsSeparatedByString:@"="];
+            NSString *appDataFirstComponentString = [appDataComponentsArray objectAtIndex:0];
+            if ([appDataFirstComponentString isEqualToString:@"CU"] && ![CameraUploads syncManager].isUseCellularConnectionEnabled && [MEGAReachabilityManager isReachableViaWWAN]) {
+                [api cancelTransfer:transfer];
+            }
+        }
     }
 }
 
@@ -1911,36 +1927,45 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
     }
     
-    if (transfer.type == MEGATransferTypeUpload && transfer.fileName.mnz_isImagePathExtension) {
-        NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
-        NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
-        if ([error type] == MEGAErrorTypeApiOk) {
-            MEGANode *node = [api nodeForHandle:transfer.nodeHandle];
-            
-            [[NSFileManager defaultManager] moveItemAtPath:[[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] stringByAppendingString:@"_thumbnail"] toPath:[thumbsDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
-            [[NSFileManager defaultManager] moveItemAtPath:[[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] stringByAppendingString:@"_preview"] toPath:[previewsDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
+    if (transfer.type == MEGATransferTypeUpload) {
+        if (transfer.fileName.mnz_isImagePathExtension) {
+            NSString *transferAbsolutePath = [NSHomeDirectory() stringByAppendingPathComponent:transfer.path];
+            NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
+            NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
+            if ([error type] == MEGAErrorTypeApiOk) {
+                MEGANode *node = [api nodeForHandle:transfer.nodeHandle];
+                
+                [[NSFileManager defaultManager] moveItemAtPath:[transferAbsolutePath stringByAppendingString:@"_thumbnail"] toPath:[thumbsDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
+                [[NSFileManager defaultManager] moveItemAtPath:[transferAbsolutePath stringByAppendingString:@"_preview"] toPath:[previewsDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
+            } else {
+                [[NSFileManager defaultManager] removeItemAtPath:[transferAbsolutePath stringByAppendingString:@"_thumbnail"] error:nil];
+                [[NSFileManager defaultManager] removeItemAtPath:[transferAbsolutePath stringByAppendingString:@"_preview"] error:nil];
+            }
         }
-        else {
-            [[NSFileManager defaultManager] removeItemAtPath:[[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] stringByAppendingString:@"_thumbnail"] error:nil];
-            [[NSFileManager defaultManager] removeItemAtPath:[[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] stringByAppendingString:@"_preview"] error:nil];
+        
+        if ([CameraUploads syncManager].shouldCameraUploadsBeDelayed) {
+            [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;
+            if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+                MEGALogInfo(@"Enable Camera Uploads");
+                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+            }
+        }
+        
+        NSArray *appDataComponentsArray = [transfer.appData componentsSeparatedByString:@"="];
+        NSString *appDataFirstComponentString = [appDataComponentsArray objectAtIndex:0];
+        if ([appDataFirstComponentString isEqualToString:@"attachToChatID"]) {
+            NSString *chatID = [appDataComponentsArray objectAtIndex:1];
+            unsigned long long chatIdUll = strtoull([chatID UTF8String], NULL, 0);
+            [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:transfer.nodeHandle];
         }
     }
     
-    if ([transfer type] == MEGATransferTypeUpload && [CameraUploads syncManager].shouldCameraUploadsBeDelayed) {
-        [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;
-        if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-            MEGALogInfo(@"Enable Camera Uploads");
-            [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-        }
-    }
-    
-    if ([error type]) {
-        switch ([error type]) {
+    if (error.type) {
+        switch (error.type) {
             case MEGAErrorTypeApiEOverQuota: {
                 [self showOverquotaAlert];
                 break;
             }
-                
             default:{
                 if (error.type != MEGAErrorTypeApiESid && error.type != MEGAErrorTypeApiESSL && error.type != MEGAErrorTypeApiEExist && error.type != MEGAErrorTypeApiEIncomplete) {
                     NSString *transferFailed = AMLocalizedString(@"Transfer failed:", @"Notification message shown when a transfer failed. Keep colon.");
@@ -1955,7 +1980,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([transfer type] == MEGATransferTypeDownload) {
         // Don't add to the database files saved in others applications
         if ([transfer.appData isEqualToString:@"SaveInPhotosApp"]) {
-
             if (node.name.mnz_isVideoPathExtension && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum([NSHomeDirectory() stringByAppendingPathComponent:transfer.path])) {
                 UISaveVideoAtPathToSavedPhotosAlbum([NSHomeDirectory() stringByAppendingPathComponent:transfer.path], self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
             }
@@ -1996,7 +2020,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
         
         MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
-        
         if (!offlineNodeExist) {
             MEGALogDebug(@"Transfer finish: insert node to DB: base64 handle: %@ - local path: %@", node.base64Handle, transfer.path);
             NSRange replaceRange = [transfer.path rangeOfString:@"Documents/"];
