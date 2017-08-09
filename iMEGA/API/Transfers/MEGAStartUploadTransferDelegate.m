@@ -3,8 +3,6 @@
 
 @interface MEGAStartUploadTransferDelegate ()
 
-@property (nonatomic, getter=toUploadToChat) BOOL uploadToChat;
-
 @property (nonatomic, copy) void (^totalBytes)(long long totalBytes);
 @property (nonatomic, copy) void (^progress)(float transferredBytes, float totalBytes);
 @property (nonatomic, copy) void (^completion)(long long transferTotalBytes);
@@ -18,7 +16,6 @@
 - (instancetype)initToUploadToChatWithTotalBytes:(void (^)(long long totalBytes))totalBytes progress:(void (^)(float transferredBytes, float totalBytes))progress completion:(void (^)(long long totalBytes))completion {
     self = [super init];
     if (self) {
-        _uploadToChat = YES;
         _totalBytes = totalBytes;
         _progress = progress;
         _completion = completion;
