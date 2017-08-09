@@ -10,6 +10,10 @@
 
 + (MEGAStore *)shareInstance;
 
+#pragma mark - Configure
+
+- (void)configureMEGAStore;
+
 #pragma mark - MOOfflineNode entity
 
 - (void)insertOfflineNode:(MEGANode *)node api:(MEGASdk *)api path:(NSString *)path;

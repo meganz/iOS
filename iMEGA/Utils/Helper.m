@@ -1096,6 +1096,8 @@ static BOOL copyToPasteboard;
         }
     }
     
+    [[MEGAStore shareInstance] configureMEGAStore];
+    
     // Delete files saved by extensions
     NSString *fileProviderStorage = [[[[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"File Provider Storage"] path];
     if ([[NSFileManager defaultManager] fileExistsAtPath:fileProviderStorage]) {
