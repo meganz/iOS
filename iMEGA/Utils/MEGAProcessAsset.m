@@ -96,7 +96,7 @@
              }
          } else {
              NSError *error = [info objectForKey:@"PHImageErrorKey"];
-             MEGALogError(@"Request image data for asset failed with error: %@", error);
+             MEGALogError(@"Request image data for asset: %@ failed with error: %@", self.asset, error);
              if (self.retries < 20) {
                  self.retries++;
                  [self requestImageAsset];
@@ -149,7 +149,7 @@
              }
          } else {
              NSError *error = [info objectForKey:@"PHImageErrorKey"];
-             MEGALogError(@"Request AVAsset failed with error: %@", error);
+             MEGALogError(@"Request AVAsset %@ failed with error: %@", self.asset, error);
              if (self.retries < 10) {
                  self.retries++;
                  [self requestVideoAsset];
