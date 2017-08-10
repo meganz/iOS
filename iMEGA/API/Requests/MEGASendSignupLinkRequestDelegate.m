@@ -40,7 +40,7 @@
         return;
     } else {
         [SAMKeychain setPassword:request.email forService:@"MEGA" account:@"email"];
-        [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"pleaseCheckYourEmail", nil)];
+        [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email")];
     }
 }
 
