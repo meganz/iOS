@@ -459,9 +459,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
-    if ([userActivity.activityType isEqualToString:CSSearchableItemActionType]) {
+    if ([userActivity.activityType isEqualToString:CSSearchableItemActionType] && [MEGAReachabilityManager isReachable]) {
         self.spotlightNodeBase64Handle = userActivity.userInfo[@"kCSSearchableItemActivityIdentifier"];
-        if ([self.window.rootViewController isKindOfClass:[MainTabBarController class]]) {
+        if ([self.window.rootViewController isKindOfClass:[MainTabBarController class]] && ![LTHPasscodeViewController doesPasscodeExist]) {
             [self presentNodeFromSpotlight];
         }
         return YES;
@@ -1204,6 +1204,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     } else {
         if (self.link != nil) {
             [self processLink:self.link];
+        }
+        
+        if (self.spotlightNodeBase64Handle) {
+            [self presentNodeFromSpotlight];
         }
     }
 }
