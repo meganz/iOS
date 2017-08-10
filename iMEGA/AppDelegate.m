@@ -1,6 +1,7 @@
 #import "AppDelegate.h"
 
 #import <AVFoundation/AVFoundation.h>
+#import <CoreSpotlight/CoreSpotlight.h>
 #import <Photos/Photos.h>
 #import <UserNotifications/UserNotifications.h>
 
@@ -10,9 +11,11 @@
 
 #import "CameraUploads.h"
 #import "Helper.h"
+#import "MEGAIndexer.h"
 #import "MEGALogger.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGANavigationController.h"
+#import "MEGANodeList+MNZCategory.h"
 #import "MEGAPurchase.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
@@ -23,6 +26,7 @@
 #import "BrowserViewController.h"
 #import "CameraUploadsPopUpViewController.h"
 #import "ChangePasswordViewController.h"
+#import "CloudDriveTableViewController.h"
 #import "ConfirmAccountViewController.h"
 #import "ContactRequestsViewController.h"
 #import "CreateAccountViewController.h"
@@ -34,6 +38,7 @@
 #import "OfflineTableViewController.h"
 #import "SecurityOptionsTableViewController.h"
 #import "SettingsTableViewController.h"
+#import "SharedItemsViewController.h"
 #import "UnavailableLinkView.h"
 #import "UpgradeTableViewController.h"
 #import "WarningTransferQuotaViewController.h"
@@ -87,6 +92,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @property (strong, nonatomic) NSString *exportedLinks;
 
 @property (nonatomic, getter=isSignalActivityRequired) BOOL signalActivityRequired;
+
+@property (nonatomic) MEGAIndexer *indexer;
+@property (nonatomic) NSString *spotlightNodeBase64Handle;
 
 @end
 
@@ -301,6 +309,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"9.0"]) {
+        self.indexer = [[MEGAIndexer alloc] init];
+        [Helper setIndexer:self.indexer];
+    }
+    
     return YES;
 }
 
@@ -443,6 +456,25 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     MEGALogError(@"Failed to register for remote notifications %@", error);
+}
+
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
+    if ([userActivity.activityType isEqualToString:CSSearchableItemActionType] && [MEGAReachabilityManager isReachable]) {
+        self.spotlightNodeBase64Handle = userActivity.userInfo[@"kCSSearchableItemActivityIdentifier"];
+        if ([self.window.rootViewController isKindOfClass:[MainTabBarController class]] && ![LTHPasscodeViewController doesPasscodeExist]) {
+            [self presentNodeFromSpotlight];
+        }
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"9.0"]) {
+        MEGALogWarning(@"Memory warning, stopping spotlight indexing");
+        [self.indexer stopIndexing];
+    }
 }
 
 #pragma mark - Private
@@ -1007,6 +1039,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [self.window setRootViewController:_mainTBC];
             [[UIApplication sharedApplication] setStatusBarHidden:NO];
             
+            if (self.spotlightNodeBase64Handle) {
+                [self presentNodeFromSpotlight];
+            }
+            
             if ([LTHPasscodeViewController doesPasscodeExist]) {
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
                     [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
@@ -1063,6 +1099,27 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [[UIApplication sharedApplication] registerForRemoteNotifications];
         }
     }];
+}
+
+- (void)presentNodeFromSpotlight {
+    uint64_t handle = [MEGASdk handleForBase64Handle:self.spotlightNodeBase64Handle];
+    MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:handle];
+    UINavigationController *navigationController;
+    NSUInteger tabPosition;
+    if (node) {
+        if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) { // node from inshare
+            [Helper changeToViewController:SharedItemsViewController.class onTabBarController:self.mainTBC];
+            tabPosition = [self.mainTBC tabPositionForTag:3];
+            SharedItemsViewController *sharedItemsVC = self.mainTBC.childViewControllers[tabPosition].childViewControllers[0];
+            [sharedItemsVC selectSegment:0]; // Incoming
+        } else {
+            [Helper changeToViewController:CloudDriveTableViewController.class onTabBarController:self.mainTBC];
+            tabPosition = [self.mainTBC tabPositionForTag:0];
+        }
+        navigationController = self.mainTBC.childViewControllers[tabPosition];
+        [self.indexer presentNodeFromSpotlight:node inNavigationController:navigationController];
+    }
+    self.spotlightNodeBase64Handle = nil;
 }
 
 - (void)migrateLocalCachesLocation {
@@ -1147,6 +1204,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     } else {
         if (self.link != nil) {
             [self processLink:self.link];
+        }
+        
+        if (self.spotlightNodeBase64Handle) {
+            [self presentNodeFromSpotlight];
         }
     }
 }
@@ -1381,6 +1442,14 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     }
                     break;
                 }
+            }
+        }
+    } else {
+        if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"9.0"]) {
+            NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
+            MEGALogDebug(@"Spotlight indexing %lu nodes updated", nodesToIndex.count);
+            for (MEGANode *node in nodesToIndex) {
+                [self.indexer index:node];
             }
         }
     }
@@ -1635,6 +1704,21 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 }
             }
             [self showMainTabBar];
+
+            if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"9.0"]) {
+                NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                    if (![sharedUserDefaults boolForKey:@"treeCompleted"]) {
+                        [self.indexer generateAndSaveTree];
+                    }
+                    @try {
+                        [self.indexer indexTree];
+                    } @catch (NSException *exception) {
+                        MEGALogError(@"Exception during spotlight indexing: %@", exception);
+                    }
+                });
+            }
+            
             break;
         }
             
