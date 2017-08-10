@@ -4,4 +4,6 @@
 
 @property (nonatomic, strong) MEGAUser *user;
 
+- (void)selectSegment:(NSUInteger)index;
+
 @end

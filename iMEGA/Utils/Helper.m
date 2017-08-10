@@ -1,5 +1,6 @@
 #import "Helper.h"
 
+#import <CoreSpotlight/CoreSpotlight.h>
 #import "LTHPasscodeViewController.h"
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
@@ -12,10 +13,10 @@
 #import "MEGAStore.h"
 
 #import "CameraUploads.h"
-#import "NodeTableViewCell.h"
-#import "PhotoCollectionViewCell.h"
 #import "GetLinkActivity.h"
+#import "NodeTableViewCell.h"
 #import "OpenInActivity.h"
+#import "PhotoCollectionViewCell.h"
 #import "RemoveLinkActivity.h"
 #import "ShareFolderActivity.h"
 
@@ -25,6 +26,8 @@ static NSMutableArray *nodesFromLinkMutableArray;
 
 static NSUInteger totalOperations;
 static BOOL copyToPasteboard;
+
+static MEGAIndexer *indexer;
 
 @implementation Helper
 
@@ -759,6 +762,9 @@ static BOOL copyToPasteboard;
         [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
         photoCollectionViewCell.thumbnailPlayImageView.hidden = node.name.mnz_videoPathExtension ? NO : YES;
     }
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"9.0"]) {
+        [indexer index:node];
+    }
 }
 
 + (NSString *)sizeAndDateForNode:(MEGANode *)node api:(MEGASdk *)api {
@@ -916,6 +922,10 @@ static BOOL copyToPasteboard;
     }
     
     return [filesURLMutableArray copy];
+}
+
++ (void)setIndexer:(MEGAIndexer* )megaIndexer {
+    indexer = megaIndexer;
 }
 
 #pragma mark - Utils for empty states
@@ -1088,7 +1098,7 @@ static BOOL copyToPasteboard;
     // Delete application support directory content
     NSString *applicationSupportDirectory = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:applicationSupportDirectory error:&error]) {
-        if ([file containsString:@"MEGACD"]) {
+        if ([file containsString:@"MEGACD"] || [file containsString:@"spotlightTree"]) {
             if (![[NSFileManager defaultManager] removeItemAtPath:[applicationSupportDirectory stringByAppendingPathComponent:file] error:&error]) {
                 MEGALogError(@"Remove item at path failed with error: %@", error);
             }
@@ -1109,6 +1119,18 @@ static BOOL copyToPasteboard;
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
+    
+    // Delete Spotlight index
+    NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+    [sharedUserDefaults removeObjectForKey:@"treeCompleted"];
+    [sharedUserDefaults removeObjectForKey:@"base64HandlesToIndex"];
+    [[CSSearchableIndex defaultSearchableIndex] deleteSearchableItemsWithDomainIdentifiers:@[@"nodes"] completionHandler:^(NSError * _Nullable error) {
+        if (error) {
+            MEGALogError(@"Error deleting spotligth index");
+        } else {
+            MEGALogInfo(@"Spotlight index deleted");
+        }
+    }];
 }
 
 + (void)deleteMasterKey {

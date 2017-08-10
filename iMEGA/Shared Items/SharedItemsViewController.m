@@ -305,6 +305,11 @@
     return indexPathsMutableArray;
 }
 
+#pragma mark - Utils
+
+- (void)selectSegment:(NSUInteger)index {
+    [self.sharedItemsSegmentedControl setSelectedSegmentIndex:index];
+}
 
 #pragma mark - IBActions
 
