@@ -51,12 +51,12 @@
             _thumbnailFolder = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Spotlight_folder@3x" ofType:@"png"]];
         }
         _byteCountFormatter = [[NSByteCountFormatter alloc] init];
-        [_byteCountFormatter setCountStyle:NSByteCountFormatterCountStyleMemory];
+        _byteCountFormatter.countStyle = NSByteCountFormatterCountStyleMemory;
         _sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
         _pListPath = [[[[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil] URLByAppendingPathComponent:@"spotlightTree.plist"] path];
         if ([_sharedUserDefaults boolForKey:@"treeCompleted"]) {
             _base64HandlesToIndex = [NSMutableArray arrayWithContentsOfFile:self.pListPath];
-            MEGALogDebug(@"%lu nodes pending after loading from pList", _base64HandlesToIndex.count);
+            MEGALogDebug(@"%lu nodes pending after loading from pList", (unsigned long)_base64HandlesToIndex.count);
             _base64HandlesIndexed = [[NSMutableArray alloc] init];
         }
     }
@@ -87,7 +87,7 @@
     NSMutableArray *toIndex = [[NSMutableArray alloc] initWithArray:self.base64HandlesToIndex copyItems:YES];
     [toIndex removeObjectsInArray:self.base64HandlesIndexed];
     [toIndex writeToFile:self.pListPath atomically:YES];
-    MEGALogDebug(@"%lu nodes pending", toIndex.count);
+    MEGALogDebug(@"%lu nodes pending", (unsigned long)toIndex.count);
 }
 
 - (void)indexTree {
@@ -128,22 +128,22 @@
     __block BOOL success = NO;
     dispatch_semaphore_t sem = dispatch_semaphore_create(0);
     
-    if (![[MEGASdkManager sharedMEGASdk] nodePathForNode:node]) {
-        return [self removeFromIndex:[node base64Handle]];
+    if ([[MEGASdkManager sharedMEGASdk] nodePathForNode:node]) {
+        [self.searchableIndex indexSearchableItems:@[[self spotlightSearchableItemForNode:node downloadThumbnail:NO]] completionHandler:^(NSError *error){
+            if (error) {
+                MEGALogError(@"Spotlight error %@", error);
+            } else {
+                success = YES;
+                MEGALogDebug(@"Spotlight indexed node");
+            }
+            dispatch_semaphore_signal(sem);
+        }];
+        
+        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+        return success;
+    } else {
+        return [self removeFromIndex:node.base64Handle];
     }
-    
-    [self.searchableIndex indexSearchableItems:@[[self spotlightSearchableItemForNode:node downloadThumbnail:NO]] completionHandler:^(NSError *error){
-        if (error) {
-            MEGALogError(@"Spotlight error %@", error);
-        } else {
-            success = YES;
-            MEGALogDebug(@"Spotlight indexed node");
-        }
-        dispatch_semaphore_signal(sem);
-    }];
-    
-    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
-    return success;
 }
 
 - (BOOL)removeFromIndex:(NSString *)base64Handle {
@@ -170,7 +170,7 @@
     CSSearchableItemAttributeSet *attributeSet = [[CSSearchableItemAttributeSet alloc] initWithItemContentType:(NSString *)kUTTypeData];
     attributeSet.title = node.name;
     
-    if ([node isFile]) {
+    if (node.isFile) {
         NSString *extendedDescription = [self.byteCountFormatter stringFromByteCount:node.size.longLongValue];
         attributeSet.contentDescription = [NSString stringWithFormat:@"%@\n%@", path, extendedDescription];
     } else {
@@ -178,14 +178,14 @@
     }
     
     NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
-    if ([node hasThumbnail] && [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
+    if (node.hasThumbnail && [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
         attributeSet.thumbnailURL = [NSURL fileURLWithPath:thumbnailFilePath];
     } else {
-        if ([node hasThumbnail] && downloadThumbnail) {
+        if (node.hasThumbnail && downloadThumbnail) {
             [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
             attributeSet.thumbnailURL = [NSURL fileURLWithPath:thumbnailFilePath];
         } else {
-            if ([node isFile]) {
+            if (node.isFile) {
                 attributeSet.thumbnailURL = self.thumbnailGeneric;
             } else {
                 attributeSet.thumbnailURL = self.thumbnailFolder;
@@ -193,7 +193,7 @@
         }
     }
     
-    CSSearchableItem *searchableItem = [[CSSearchableItem alloc] initWithUniqueIdentifier:[node base64Handle] domainIdentifier:@"nodes" attributeSet:attributeSet];
+    CSSearchableItem *searchableItem = [[CSSearchableItem alloc] initWithUniqueIdentifier:node.base64Handle domainIdentifier:@"nodes" attributeSet:attributeSet];
     return searchableItem;
 }
 
@@ -203,10 +203,10 @@
     NSMutableArray *nodes = [[NSMutableArray alloc] init];
 
     if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) { // node from inshare
-        MEGANode *tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[node parentHandle]];
+        MEGANode *tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.parentHandle];
         while (tempNode != nil) {
             [nodes insertObject:tempNode atIndex:0];
-            tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[tempNode parentHandle]];
+            tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:tempNode.parentHandle];
         }
     } else {
         uint64_t rootHandle;
@@ -215,11 +215,11 @@
         } else {
             rootHandle = [[MEGASdkManager sharedMEGASdk] rootNode].handle;
         }
-        uint64_t tempHandle = [node parentHandle];
+        uint64_t tempHandle = node.parentHandle;
         while (tempHandle != rootHandle) {
             MEGANode *tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:tempHandle];
             [nodes insertObject:tempNode atIndex:0];
-            tempHandle = [tempNode parentHandle];
+            tempHandle = tempNode.parentHandle;
         }
     }
 
@@ -257,7 +257,7 @@
 
 - (BOOL)processMEGANode:(MEGANode *)node {
     static unsigned int processed = 0;
-    [self.base64HandlesToIndex addObject:[node base64Handle]];
+    [self.base64HandlesToIndex addObject:node.base64Handle];
     if (++processed == self.totalNodes) {
         processed = 0;
         dispatch_semaphore_signal(self.semaphore);
