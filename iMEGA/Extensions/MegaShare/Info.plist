@@ -17,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.7</string>
+	<string>3.7.1</string>
 	<key>CFBundleVersion</key>
-	<string>64</string>
+	<string>65</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>
@@ -29,11 +29,11 @@
           $extensionItem,
           SUBQUERY ($extensionItem.attachments,
                     $attachment,
-                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.image&quot; ||
-                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.movie&quot; ||
-                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.file-url&quot; ||
-                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.url&quot; ||
-                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.vcard&quot;)
+                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.image" ||
+                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.movie" ||
+                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.file-url" ||
+                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.url" ||
+                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.vcard")
           .@count &gt;= 1)
 .@count &gt; 0</string>
 		</dict>
