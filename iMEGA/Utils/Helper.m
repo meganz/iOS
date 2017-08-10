@@ -1098,7 +1098,7 @@ static MEGAIndexer *indexer;
     // Delete application support directory content
     NSString *applicationSupportDirectory = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:applicationSupportDirectory error:&error]) {
-        if ([file containsString:@"MEGACD"]) {
+        if ([file containsString:@"MEGACD"] || [file containsString:@"spotlightTree"]) {
             if (![[NSFileManager defaultManager] removeItemAtPath:[applicationSupportDirectory stringByAppendingPathComponent:file] error:&error]) {
                 MEGALogError(@"Remove item at path failed with error: %@", error);
             }
