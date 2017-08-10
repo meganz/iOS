@@ -18,7 +18,7 @@
     
     self.whyDoINeedARecoveryKeyLabel.text = AMLocalizedString(@"whyDoINeedARecoveryKey", @"Question button to present a view where it's explained what is the Recovery Key");
     self.firstParagraphLabel.text = AMLocalizedString(@"masterKey_firstParagraph", @"Detailed explanation of how the master encryption key (now renamed 'Recovery Key') works, and why it is important to remember your password.");
-    self.secondParagraphLabel.text = AMLocalizedString(@"masterKey_secondParagraph", @"Advising the user to keep the user's recovery key safe.");
+    self.secondParagraphLabel.text = AMLocalizedString(@"exportMasterKeyFooter", @"Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key");
     self.thirdParagraphLabel.text = AMLocalizedString(@"masterKey_thirdParagraph", nil);
 }
 

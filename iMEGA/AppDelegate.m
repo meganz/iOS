@@ -1683,7 +1683,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                         masterKeyLoggedInAlertView.tag = 2;
                         [masterKeyLoggedInAlertView show];
                     } else {
-                        UIAlertView *masterKeyLoggedOutAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") message:AMLocalizedString(@"pleaseWriteYourRecoveryKey", @"Message shown to explain that you have to write your recovery key to continue with the reset password process.") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                        UIAlertView *masterKeyLoggedOutAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") message:AMLocalizedString(@"pleaseEnterYourRecoveryKey", @"A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process.") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
                         masterKeyLoggedOutAlertView.tag = 3;
                         masterKeyLoggedOutAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
                         UITextField *textField = [masterKeyLoggedOutAlertView textFieldAtIndex:0];
