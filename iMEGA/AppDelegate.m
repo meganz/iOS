@@ -1579,11 +1579,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 break;
             }
                 
-            case MEGAErrorTypeApiESid: {
-                if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-                    [[MEGASdkManager sharedMEGAChatSdk] logout];
-                }
-                
+            case MEGAErrorTypeApiESid: {                                
                 if (self.urlType == URLTypeCancelAccountLink) {
                     self.urlType = URLTypeDefault;
                     [Helper logout];
