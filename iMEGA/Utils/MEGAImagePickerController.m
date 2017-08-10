@@ -7,7 +7,7 @@
 
 #import "Helper.h"
 #import "NSFileManager+MNZCategory.h"
-
+#import "MEGACreateFolderRequestDelegate.h"
 #import "MEGASdkManager.h"
 
 @interface MEGAImagePickerController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
@@ -16,6 +16,10 @@
 @property (nonatomic) MEGANode *parentNode;
 
 @property (nonatomic, getter=toChangeAvatar) BOOL changeAvatar;
+
+@property (nonatomic, getter=toShareThroughChat) BOOL shareThroughChat;
+@property (nonatomic, copy) void (^filePathCompletion)(NSString *filePath, UIImagePickerControllerSourceType sourceType);
+@property (nonatomic) NSString *filePath;
 
 @end
 
@@ -44,10 +48,26 @@
     return self;
 }
 
+- (instancetype)initToShareThroughChatWithSourceType:(UIImagePickerControllerSourceType)sourceType filePathCompletion:(void (^)(NSString *filePath, UIImagePickerControllerSourceType sourceType))filePathCompletion {
+    self = [super init];
+    
+    if (self) {
+        _shareThroughChat = YES;
+        _filePathCompletion = filePathCompletion;
+        self.sourceType = sourceType;
+    }
+    
+    return self;
+}
+
 #pragma mark - Lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (self.toShareThroughChat) {
+        [self createMyChatFilesFolderWithCompletion:nil];
+    }
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:NSTemporaryDirectory()]) {
         [[NSFileManager defaultManager] createDirectoryAtPath:NSTemporaryDirectory() withIntermediateDirectories:YES attributes:nil error:nil];
@@ -65,6 +85,10 @@
         self.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)kUTTypeMovie, (NSString *)kUTTypeImage, nil];
     } else if (self.toChangeAvatar) {
         self.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)kUTTypeImage, nil];
+    } else if (self.toShareThroughChat) {
+        if (self.sourceType == UIImagePickerControllerSourceTypeCamera) {
+            self.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:self.sourceType];
+        }
     }
     self.videoQuality = UIImagePickerControllerQualityTypeHigh;
     self.delegate = self;
@@ -82,6 +106,33 @@
     }
 }
 
+- (void)prepareUploadDestination {
+    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
+    if (parentNode) {
+        [self triggerPathCompletion];
+    } else {
+        [self createMyChatFilesFolderWithCompletion:^{
+            [self triggerPathCompletion];
+        }];
+    }
+}
+
+- (void)triggerPathCompletion {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    if (self.filePathCompletion) {
+        self.filePathCompletion(self.filePath, self.sourceType);
+    }
+}
+
+- (void)createMyChatFilesFolderWithCompletion:(void (^)(void))completion {
+    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
+    if (!parentNode) {
+        MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:completion];
+        [[MEGASdkManager sharedMEGASdk] createFolderWithName:@"My chat files" parent:[[MEGASdkManager sharedMEGASdk] rootNode] delegate:createFolderRequestDelegate];
+    }
+}
+
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
@@ -93,19 +144,23 @@
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeImage]) {
         NSString *imageName = [NSString stringWithFormat:@"%@.jpg", [formatter stringFromDate:[NSDate date]]];
-        NSString *imagePath = self.toUploadSomething ? [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:imageName] : [NSTemporaryDirectory() stringByAppendingPathComponent:imageName];
+        NSString *imagePath = (self.toUploadSomething || self.toShareThroughChat) ? [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:imageName] : [NSTemporaryDirectory() stringByAppendingPathComponent:imageName];
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
         NSData *imageData = UIImageJPEGRepresentation(image, 1);
         [imageData writeToFile:imagePath atomically:YES];
         
+        self.filePath = [imagePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
         if (self.toUploadSomething) {
-            [[MEGASdkManager sharedMEGASdk] createThumbnail:imagePath destinatioPath:[imagePath stringByAppendingString:@"_thumbnail"]];
-            [[MEGASdkManager sharedMEGASdk] createPreview:imagePath destinatioPath:[imagePath stringByAppendingString:@"_preview"]];
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[imagePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:nil isSourceTemporary:YES];
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:YES];
         } else if (self.toChangeAvatar) {
             NSString *avatarFilePath = [self createAvatarWithImagePath:imagePath];
             [[MEGASdkManager sharedMEGASdk] setAvatarUserWithSourceFilePath:avatarFilePath];
+        } else if (self.toShareThroughChat) {
+            [self prepareUploadDestination];
+            return;
         }
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
     } else if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeMovie]) {
         NSURL *videoUrl = (NSURL *)[info objectForKey:UIImagePickerControllerMediaURL];
         NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:videoUrl.path error:nil];
@@ -113,18 +168,24 @@
         NSString *videoName = [[formatter stringFromDate:modificationDate] stringByAppendingPathExtension:@"mov"];
         NSString *localFilePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:videoName];
         NSError *error = nil;
+        self.filePath = [localFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
         if ([[NSFileManager defaultManager] moveItemAtPath:videoUrl.path toPath:localFilePath error:&error]) {
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[localFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:nil isSourceTemporary:YES];
+            if (self.toUploadSomething) {
+                [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:YES];
+            } else if (self.toShareThroughChat) {
+                [self prepareUploadDestination];
+                return;
+            }
         } else {
             MEGALogError(@"Move item at path failed with error: %@", error);
         }
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
-    
-    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

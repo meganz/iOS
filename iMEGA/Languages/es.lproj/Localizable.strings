@@ -102,7 +102,7 @@
 "termsCheckboxUnselected"="Necesitas aceptar los Términos del Servicio para poder crear una cuenta en MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Está dirección de correo electrónico ya fue utilizada para el registro de una cuenta en MEGA.";
-/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+/* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Esperando confirmación por correo electrónico.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Por favor, introduce tu contraseña para confirmar tu cuenta.";
@@ -145,7 +145,7 @@
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Carpeta vacía";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="No hay archivos en tu Disco";
+"cloudDriveEmptyState_title"="No hay archivos en tu nube";
 /* Button title shown in empty views when you can 'Add files' */
 "addFiles"="Añadir archivos";
 /* Title shown when you make a search and there is 'No Results' */
@@ -185,7 +185,7 @@
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No hay subidas";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Disco";
+"cloudDrive"="Mi nube";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d archivo";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -399,7 +399,7 @@
 /* Button title that skips the current action */
 "skipButton"="Saltar";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Guarda automáticamente tus fotos en tu Disco";
+"automaticallyBackupYourPhotos"="Guarda automáticamente tus fotos en tu nube";
 /* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Activar Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
@@ -425,7 +425,7 @@
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="Introducir un email";
 /* Title of Shared Items section */
-"sharedItems"="Elementos compartidos";
+"sharedItems"="Carpetas compartidas";
 /* Title of the tab bar item for the Shared Items section */
 "shared"="Compartido";
 /* Title of the "Incoming" Shared Items. */
@@ -574,8 +574,6 @@
 "whyDoINeedARecoveryKey"="¿Por qué necesito la clave de recuperación?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
 "masterKey_firstParagraph"="Tus datos solo pueden ser leídos a través de una cadena de operaciones de descifrado que comienzan con tu clave de cifrado (Clave de recuperación) maestra, que almacenamos cifrada con tu contraseña. Esto significa que si pierdes tu contraseña, tu clave de recuperación ya no podrá ser descifrada, y que tú no podrás descifrar tus datos.";
-/* Advising the user to keep the user's recovery key safe. */
-"masterKey_secondParagraph"="Exportar la clave de recuperación y guardarla a buen recaudo te permitirá fijar una nueva contraseña sin pérdida de datos.";
 /*  */
 "masterKey_thirdParagraph"="Un atacante desde el exterior no puede acceder a tu cuenta solo con tu clave. Un restablecimiento de contraseña requiere tanto la clave principal como el acceso a tu correo electrónico.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
@@ -605,13 +603,11 @@
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Guardar las imágenes y los vídeos compatibles con iOS en la galería del dispositivo (Nota: las imágenes y los vídeos no serán guardados en sin conexión).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
-"currentlyUsing" = "Actualmente en uso %@";
+"currentlyUsing" = "Actualmente en uso %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
 "cancelYourAccount" = "Cierra tu cuenta";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData" = "Perderás todos los datos asociados con esta cuenta. ¿Estas seguro de que quieres continuar?";
-/*  */
-"pleaseCheckYourEmail" = "Por favor, comprueba tu correo electrónico.";
 /* Account closure, warning dialog to remind user to contact mega support after he confirms that he wants to cancel account. */
 "ifYouCantAccessYourEmailAccount" = "Si no puedes acceder a tu correo electrónico, por favor, contacta con support@mega.nz.";
 /* During account cancellation (deletion) */
@@ -674,8 +670,8 @@
 "recoveryLinkHasExpired" = "Este enlace recuperación ha caducado, por favor, inténtalo de nuevo.";
 /* Headline of the password reset recovery procedure */
 "passwordReset" = "Restablecer contraseña";
-/* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
-"pleaseWriteYourRecoveryKey" = "Por favor, escribe tu clave de recuperación.";
+/* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
+"pleaseEnterYourRecoveryKey" = "Por favor introduce tu clave de recuperación.";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account "Master Key", and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey" = "Clave de recuperación";
 /* An alert title where the user provided the incorrect Recovery Key. */
@@ -1020,10 +1016,12 @@
 "retry"="Reintentar";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Eliminar mensaje";
+/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
+"sendMedia"="Enviar contenido multimedia";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"= "Enviar contacto";
 /* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
-"addFromMyCloudDrive"="Enviar desde mi Disco";
+"addFromMyCloudDrive"="Enviar desde mi nube";
 /* */
 "done"="Aceptar";
 /* Button label for sending file attachments through the chat to another user. */
@@ -1068,3 +1066,54 @@
 "openMEGAAndSignInToContinue"="Abre MEGA e inicia sesión para continuar";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Algunos elementos no pudieron ser compartidos con MEGA";
+/* Notification message shown when a transfer failed. Keep colon. */
+"Transfer failed:"="Error en la transferencia:";
+/* MEGAError */
+/* Label to show that an SDK operation has been complete successfully. */
+"No error"="Ningún error";
+/* Label to show that an Internal error occurs during a SDK operation. */
+"Internal error"="Error interno";
+/* Label to show that an error of Invalid argument occurs during a SDK operation. */
+"Invalid argument"="Argumento no válido ";
+/* Label to show that a request error occurs during a SDK operation. */
+"Request failed, retrying"="Petición fallida, reintentando";
+/* Label to show that the rate limit has been reached during a SDK operation. */
+"Rate limit exceeded"="Se ha superado el límite";
+/* Label to show that a SDK operation has failed permanently. */
+"Failed permanently"="Archivo no disponible temporalmente";
+/* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
+"Too many concurrent connections or transfers"="Demasiadas conexiones o transferencias simultáneas";
+/* Label to show that an error of Out of range occurs during a SDK operation. */
+"Out of range"="Fuera de alcance";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"Expired"="Caducado";
+/* Label to show that an error related with a resource Not found occurs during a SDK operation. */
+"Not found"="No encontrado";
+/* Label to show that an error related with a circular linkage occurs during a SDK operation. */
+"Circular linkage detected"="Enlace circular detectado";
+/* Label to show that an error related with an denied access occurs during a SDK operation. */
+"Access denied"="Acceso denegado";
+/* Label to show that an error related with an existent resource occurs during a SDK operation. */
+"Already exists"="Ya existe";
+/* Label to show that an error related with an Incomplete SDK operation. */
+"Incomplete"="Incompleto";
+/* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
+"Invalid key/Decryption error"="Clave incorrecta / Error de descifrado";
+/* Label to show that an error related with a bad session ID occurs during a SDK operation. */
+"Bad session ID"="Identificador de sesión erróneo";
+/* Label to show that an error related with a blocked account occurs during a SDK operation. */
+"Blocked"="Bloqueado";
+/* Label to show that an error related with an over quota occurs during a SDK operation. */
+"Over quota"="Límite de cuenta excedido";
+/* Label to show that an error related with a temporary problem occurs during a SDK operation. */
+"Temporarily not available"="No disponible temporalmente";
+/* Label to show that an error related with too many connections occurs during a SDK operation. */
+"Connection overflow"="Demasiadas conexiones";
+/* Label to show that an error related with an write error occurs during a SDK operation. */
+"Write error"="Error de escritura";
+/* Label to show that an error related with an read error occurs during a SDK operation. */
+"Read error"="Error de lectura";
+/* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
+"Invalid application key"="Clave de aplicación no válida";
+/* Label to show that an error related with an unknown error occurs during a SDK operation. */
+"Unknown error"="Error desconocido";

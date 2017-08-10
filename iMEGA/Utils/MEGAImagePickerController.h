@@ -7,4 +7,6 @@
 
 - (instancetype)initToChangeAvatarWithSourceType:(UIImagePickerControllerSourceType)sourceType;
 
+- (instancetype)initToShareThroughChatWithSourceType:(UIImagePickerControllerSourceType)sourceType filePathCompletion:(void (^)(NSString *filePath, UIImagePickerControllerSourceType sourceType))pathCompletion;
+
 @end

@@ -102,7 +102,7 @@
 "termsCheckboxUnselected"="Ви повинні погодитися з умовами користування, щоб зареєструвати обліковий запис на MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Ця адреса електронної пошти вже зареєстрована в Mega.";
-/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+/* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Очікування підтвердження е-пошти.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Будь ласка, введіть пароль, щоб підтвердити обліковий запис";
@@ -143,7 +143,7 @@
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Немає інтернет з'єднання";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="Немає файлів у теці";
+"emptyFolder"="Порожня тека";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Не має файлів на вашому Хмарному диску";
 /* Button title shown in empty views when you can 'Add files' */
@@ -151,7 +151,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Немає результатів";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Очистити кошик";
+"cloudDriveEmptyState_titleRubbishBin"="Кошик для сміття порожній";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Немає автономно збережених файлів";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -336,11 +336,11 @@
 "rename"="Перейменувати";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Введіть нове ім'я";
-/* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
+/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Перемістити у кошик для сміття";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
 "moveFileToRubbishBinMessage"="Ви впевнені, що хочете перенести 1 файл у Кошик для сміття?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="Ви впевнені, що бажаєте перенести %d файли у Кошик для сміття?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
 "moveFolderToRubbishBinMessage"="Ви впевнені, що бажаєте перенести 1 теку у Кошик для сміття?";
@@ -517,7 +517,7 @@
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Дозволи";
 /* Permissions given to the user you share your folder with */
-"readOnly"="Лише читання";
+"readOnly"="Тільки для читання";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="Читання та запис";
 /* Permissions given to the user you share your folder with */
@@ -574,8 +574,6 @@
 "whyDoINeedARecoveryKey"="Навіщо мені потрібен Ключ відновлення?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
 "masterKey_firstParagraph"="Ваші дані доступні для читання лише через ланцюжок дешифрувальних операцій, які починаються з майстер-ключа шифрування (Ключа відновлення), який ми зберігаємо зашифрованим вашим паролем. Це означає, що якщо ви втратите свій пароль, ключ відновлення вже не зможе бути розшифрованим, і ви більше не зможе розшифрувати дані.";
-/* Advising the user to keep the user's recovery key safe. */
-"masterKey_secondParagraph"="Експорт ключа відновлення і збереження його у безпечному місці дозволить встановити новий пароль без втрати даних.";
 /*  */
 "masterKey_thirdParagraph"="Зовнішній зловмисник не зможе отримати доступ до вашого рахунку тільки за наявністю вашого ключа. Скидання пароля вимагає ключ і доступ до вашої е-пошти.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
@@ -593,7 +591,7 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="На MEGA";
 /* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="Очистити кошик для сміття";
+"emptyRubbishBin"="Кошик для сміття порожній";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Всі елементи у сміттєвому кошику були видалені";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
@@ -605,13 +603,11 @@
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Зберегти iOS сумісні картинки та відео у галереї вашого пристрою (Примітка: зображення і відео не будуть доступні автономно).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
-"currentlyUsing"="Використовується %@";
+"currentlyUsing"="Використовується %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
 "cancelYourAccount"="Анулювати акаунт";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Ви втратите усі дані, пов'язані з цим обліковим записом. Ви впевнені, що бажаєте продовжити?";
-/*  */
-"pleaseCheckYourEmail"="Please check your email.";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
 "ifYouCantAccessYourEmailAccount"="Якщо ви не можете отримати доступ до вашої е-пошти, будь ласка, зв'яжіться з support@mega.nz.";
 /* During account cancellation (deletion) */
@@ -674,8 +670,8 @@
 "recoveryLinkHasExpired"="Час дії цієї ланки відновлення вичерпано, будь ласка, спробуйте ще раз.";
 /* Headline of the password reset recovery procedure */
 "passwordReset"="Відновлення паролю";
-/* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
-"pleaseWriteYourRecoveryKey"="Будь ласка, введіть ваш ключ відновлення";
+/* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
+"pleaseEnterYourRecoveryKey"="Будь ласка, введіть ваш ключ відновлення";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey"="Ключ Відновлення";
 /* An alert title where the user provided the incorrect Recovery Key. */
@@ -869,7 +865,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Увімкнути режим налагодження";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Журнал буде створено у розділі (MEGAiOS.log).";
+"enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log). Logs can contain information related to your account.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Вимкнути режим налагодження";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -1020,12 +1016,14 @@
 "retry"="Повторити";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Видалити повідомлення";
+/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
+"sendMedia"="Send Media";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Надіслати контакт";
 /* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
 "addFromMyCloudDrive"="Додати з Хмарного диску";
 /* */
-"done"="зроблено";
+"done"="Гаразд";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Надіслати файли";
 /* */
@@ -1066,3 +1064,58 @@
 "autorenewableDescription"="Підписки автоматично продовжуються на той само термін і в ту само ціну, що ви вибрали початково. Ви можете відключити автоматичне оновлення вашої підписки не пізніше ніж за 24 години до вашої наступної абонентської плати через сторінку налаштувань облікового запису iTunes. Для того щоб управляти підписками, просто натисніть на іконку App Store на вашому телефоні, увійдіть у свій Apple ID, в нижній частині сторінки (якщо ви цього не робили) і натисніть Переглянути Apple ID. Ви потрапите на сторінку облікового запису, де зможете прокрутити до керування підписками. Звідти ви можете вибрати підписку MEGA PRO і переглянути дату оновлення підписки, вибрати інший пакет підписки або перемикачем вимкнути автооновлення підписки.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
+/* A button title to revoke the access to an attachment in a chat. */
+"revoke"="ВІідкликати";
+/* Inform user that there were unsupported assets in the share extension */
+"shareExtensionUnsupportedAssets"="Some items could not be shared with MEGA";
+/* Notification message shown when a transfer failed. Keep colon. */
+"Transfer failed:"="Невдала передача:";
+/* MEGAError */
+/* Label to show that an SDK operation has been complete successfully. */
+"No error"="Все гаразд";
+/* Label to show that an Internal error occurs during a SDK operation. */
+"Internal error"="Внутрішня помилка";
+/* Label to show that an error of Invalid argument occurs during a SDK operation. */
+"Invalid argument"="Невірний параметр";
+/* Label to show that a request error occurs during a SDK operation. */
+"Request failed, retrying"="Не вдалося виконати запит, повторна спроба";
+/* Label to show that the rate limit has been reached during a SDK operation. */
+"Rate limit exceeded"="Перевищення обмеження";
+/* Label to show that a SDK operation has failed permanently. */
+"Failed permanently"="Неможливо перманентно";
+/* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
+"Too many concurrent connections or transfers"="Забагато одночасних з'єднань або передач";
+/* Label to show that an error of Out of range occurs during a SDK operation. */
+"Out of range"="Поза межами";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"Expired"="Минуло";
+/* Label to show that an error related with a resource Not found occurs during a SDK operation. */
+"Not found"="Не знайдено";
+/* Label to show that an error related with a circular linkage occurs during a SDK operation. */
+"Circular linkage detected"="Виявлено циркулярний зв'язок";
+/* Label to show that an error related with an denied access occurs during a SDK operation. */
+"Access denied"="Доступ заборонено";
+/* Label to show that an error related with an existent resource occurs during a SDK operation. */
+"Already exists"="Вже існує";
+/* Label to show that an error related with an Incomplete SDK operation. */
+"Incomplete"="Недостатньо";
+/* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
+"Invalid key/Decryption error"="Невірний ключ/Помилка шифрування";
+/* Label to show that an error related with a bad session ID occurs during a SDK operation. */
+"Bad session ID"="Хибний ідентифікатор сесії";
+/* Label to show that an error related with a blocked account occurs during a SDK operation. */
+"Blocked"="Заблоковано";
+/* Label to show that an error related with an over quota occurs during a SDK operation. */
+"Over quota"="Понад квоту";
+/* Label to show that an error related with a temporary problem occurs during a SDK operation. */
+"Temporarily not available"="Тимчасово не доступно";
+/* Label to show that an error related with too many connections occurs during a SDK operation. */
+"Connection overflow"="Переповнення з'єднання";
+/* Label to show that an error related with an write error occurs during a SDK operation. */
+"Write error"="Помилка запису";
+/* Label to show that an error related with an read error occurs during a SDK operation. */
+"Read error"="Помилка читання";
+/* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
+"Invalid application key"="Невірний ключ додатку";
+/* Label to show that an error related with an unknown error occurs during a SDK operation. */
+"Unknown error"="Невідома помилка";

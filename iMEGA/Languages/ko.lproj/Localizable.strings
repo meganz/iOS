@@ -102,7 +102,7 @@
 "termsCheckboxUnselected"="MEGA에 계정을 등록하려면 이용 약관에 동의해야합니다.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="이 이메일 주소는 이미 MEGA에 등록되어있는 계정입니다.";
-/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+/* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="이메일 확인 기다리는 중";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="계정을 확인하려면 비밀번호를 입력하세요";
@@ -127,7 +127,7 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="사용할 수 없는 링크";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="이것은 다음과 같은 이유로 발생할 수 있습니다:- 파일이 ToS/AUP 위반으로 제거됨.- 잘못된 URL - 접속하려는 링크가 존재하지 않음.- 이용자에 의해 파일이 삭제됨.";
+"fileLinkUnavailableText"="다음의 이유로 인해 발생할 수 있습니다:- 파일이 이용 약관/이용 목적 제한 방침을 위반하여 삭제되었습니다.- 잘못된 URL – 접속하려는 링크가 존재하지 않습니다.- 파일이 이용자에 의해 삭제되었습니다.";
 /* Message shown when a download starts */
 "downloadStarted"="다운로드가 시작되었습니다";
 /* Title for the folder link view */
@@ -139,11 +139,11 @@
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="'%@' 폴더를 생성할 수 없습니다";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="아래의 이유로 발생한 문제일 수 있습니다:- 폴더 링크가 ToS/AUP 위반으로 삭제됨.- 잘못된 URL - 접속하려는 링크가 존재하지 않음.- 폴더 링크가 이용자에 의해 삭제됨.";
+"folderLinkUnavailableText"="다음의 이유로 인해 발생할 수 있습니다:- 폴더 링크가 이용 약관/이용 목적 제한 방침을 위반하여 삭제되었습니다.- 잘못된 URL – 접속하려는 링크가 존재하지 않습니다.- 폴더 링크가 이용자에 의해 삭제되었습니다.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="인터넷 연결 없음";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="폴더에 파일이 없음";
+"emptyFolder"="빈 폴더";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="당신의 클라우드 드라이브에 파일이 없습니다";
 /* Button title shown in empty views when you can 'Add files' */
@@ -336,11 +336,11 @@
 "rename"="이름 바꾸기";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="새 이름을 입력하세요";
-/* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
+/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="휴지통으로 이동";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
 "moveFileToRubbishBinMessage"="파일 1개를 휴지통으로 이동하시겠습니까?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="파일 %d개를 휴지통으로 이동하시겠습니까?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
 "moveFolderToRubbishBinMessage"="폴더 1개를 휴지통으로 이동하시겠습니까?";
@@ -355,9 +355,9 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="[A] 파일과 [B] 폴더를 휴지통으로 이동하시겠습니까?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="파일 1개가 휴지통으로 이동됨";
+"fileMovedToRubbishBinMessage"="1 파일이 휴지통으로 이동됨!";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="파일 %d개가 휴지통으로 이동됨";
+"filesMovedToRubbishBinMessage"="%d 파일이 휴지통으로 이동되었습니다!";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
 "folderMovedToRubbishBinMessage"="폴더 1개가 휴지통으로 이동됨";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
@@ -403,7 +403,7 @@
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="카메라 업로드 설정";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="카메라 업로드 활성화됨";
+"cameraUploadsEnabled"="카메라 업로드 설정";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu 항목 선택됨";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -574,8 +574,6 @@
 "whyDoINeedARecoveryKey"="왜 복구 키가 필요한가요?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
 "masterKey_firstParagraph"="당신의 데이터는 우리가 당신의 비밀번호와 함께 암호화하여 저장한 마스터 암호화 키 (복구 키)로 시작하는 일련의 해독 과정을 통해서만 읽을 수 있습니다. 이것은 비밀번호를 잃어버리면, 복구 키를 더 이상 해독할 수 없다는 뜻이고, 더 이상 당신의 데이터를 해독할 수 없다는 뜻입니다.";
-/* Advising the user to keep the user's recovery key safe. */
-"masterKey_secondParagraph"="복구 키를 내보내고 안전한 장소에 보관하는 것은 데이터 손실 없이 새 비밀번호를 설정할 수 있도록 해줍니다.";
 /*  */
 "masterKey_thirdParagraph"="외부 공격자가 당신의 키만으로 계정에 접근할 수는 없습니다. 비밀번호 재설정은 당신의 이메일에 대한 접근과 키 모두를 요구합니다.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
@@ -605,13 +603,11 @@
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="iOS 호환 가능 이미지와 동영상을 장치의 갤러리에 저장하세요 (참고: 이미지와 동영상은 오프라인에 저장되지 않을 것입니다).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
-"currentlyUsing"="현재 %@ 사용중";
+"currentlyUsing"="현재 %s 사용중";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
 "cancelYourAccount"="계정 취소";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="이 계정과 연결된 모든 데이터를 잃게 됩니다. 진행하시겠습니까?";
-/*  */
-"pleaseCheckYourEmail"="Please check your email.";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
 "ifYouCantAccessYourEmailAccount"="당신의 이메일에 접근할 수 없다면, support@mega.nz로 연락주세요.";
 /* During account cancellation (deletion) */
@@ -641,9 +637,9 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="[A] 파일과 [B] 폴더를 영구적으로 제거하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="MEGA에서 파일 1개 삭제됨";
+"fileRemovedToRubbishBinMessage"="1 파일이 MEGA에서 제거됨!";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="MEGA에서 파일 %d개 삭제됨";
+"filesRemovedToRubbishBinMessage"="%d 파일이 MEGA에서 제거됨!";
 /* Success message shown when 1 folder has been removed from MEGA */
 "folderRemovedToRubbishBinMessage"="MEGA에서 폴더 1개 삭제됨";
 /* Success message shown when {1+} folders have been removed from MEGA */
@@ -674,8 +670,8 @@
 "recoveryLinkHasExpired"="이 복구 링크는 만료된 것으로 보입니다. 다시 시도하세요.";
 /* Headline of the password reset recovery procedure */
 "passwordReset"="비밀번호 재설정";
-/* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
-"pleaseWriteYourRecoveryKey"="복구 키를 입력하세요";
+/* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
+"pleaseEnterYourRecoveryKey"="복구 키를 입력하세요";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey"="복구 키";
 /* An alert title where the user provided the incorrect Recovery Key. */
@@ -1020,6 +1016,8 @@
 "retry"="재시도";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="메시지 삭제";
+/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
+"sendMedia"="Send Media";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="연락처 보내기";
 /* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
@@ -1066,3 +1064,58 @@
 "autorenewableDescription"="구독은 처음 선택했던 기간과 동일한 가격과 동일한 기간으로 자동으로 연장됩니다. 다음 구독 결제 24시간 전에 당신의 iTunes 계정 설정 페이지에서 자동 결제를 제거할 수 있습니다. 구독을 관라허려면, 휴대전화에서 앱 스토어를 클릭하여 페이지 하단에서 애플 ID로 로그인하세요 (만약 하지 않았다면) 그리고 ID 보기를 클릭하세요. 앱 구독 관리 페이지로 내려갈 수 있는 계정 페이지가 보이게 됩니다. 거기서, MEGA PRO 구독을 선택할 수 있고, 예정된 갱신일을 보고, 다른 구독 패키지 선택 또는 구독의 자동 갱신을 해제할 수 있는 스위치를 끌 수 있습니다.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="계속하려면 MEGA를 열고 로그인하세요";
+/* A button title to revoke the access to an attachment in a chat. */
+"revoke"="철회";
+/* Inform user that there were unsupported assets in the share extension */
+"shareExtensionUnsupportedAssets"="Some items could not be shared with MEGA";
+/* Notification message shown when a transfer failed. Keep colon. */
+"Transfer failed:"="전송 실패:";
+/* MEGAError */
+/* Label to show that an SDK operation has been complete successfully. */
+"No error"="오류 없음";
+/* Label to show that an Internal error occurs during a SDK operation. */
+"Internal error"="내부 오류";
+/* Label to show that an error of Invalid argument occurs during a SDK operation. */
+"Invalid argument"="잘못된 인수";
+/* Label to show that a request error occurs during a SDK operation. */
+"Request failed, retrying"="요청이 실패함, 재시도중";
+/* Label to show that the rate limit has been reached during a SDK operation. */
+"Rate limit exceeded"="비율 제한 초과";
+/* Label to show that a SDK operation has failed permanently. */
+"Failed permanently"="영구적으로 실패함";
+/* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
+"Too many concurrent connections or transfers"="너무 많은 동시 연결 또는 전송";
+/* Label to show that an error of Out of range occurs during a SDK operation. */
+"Out of range"="범위를 벗어남";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"Expired"="만료됨";
+/* Label to show that an error related with a resource Not found occurs during a SDK operation. */
+"Not found"="발견되지 않음";
+/* Label to show that an error related with a circular linkage occurs during a SDK operation. */
+"Circular linkage detected"="순환 연결 감지";
+/* Label to show that an error related with an denied access occurs during a SDK operation. */
+"Access denied"="접근이 거부됨";
+/* Label to show that an error related with an existent resource occurs during a SDK operation. */
+"Already exists"="이미 존재합니다";
+/* Label to show that an error related with an Incomplete SDK operation. */
+"Incomplete"="완료되지 않음";
+/* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
+"Invalid key/Decryption error"="잘못된 키/해독 오류";
+/* Label to show that an error related with a bad session ID occurs during a SDK operation. */
+"Bad session ID"="세션 ID 오류";
+/* Label to show that an error related with a blocked account occurs during a SDK operation. */
+"Blocked"="차단됨";
+/* Label to show that an error related with an over quota occurs during a SDK operation. */
+"Over quota"="할당량 초과";
+/* Label to show that an error related with a temporary problem occurs during a SDK operation. */
+"Temporarily not available"="일시적으로 이용이 불가능합니다";
+/* Label to show that an error related with too many connections occurs during a SDK operation. */
+"Connection overflow"="연결 초과";
+/* Label to show that an error related with an write error occurs during a SDK operation. */
+"Write error"="쓰기 오류";
+/* Label to show that an error related with an read error occurs during a SDK operation. */
+"Read error"="읽기 오류";
+/* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
+"Invalid application key"="잘못된 어플리케이션 키";
+/* Label to show that an error related with an unknown error occurs during a SDK operation. */
+"Unknown error"="알 수 없는 오류";

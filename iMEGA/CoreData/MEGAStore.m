@@ -6,8 +6,6 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-- (void)initMEGAStore;
-
 @end
 
 @implementation MEGAStore
@@ -27,13 +25,13 @@ static MEGAStore *_megaStore = nil;
 - (instancetype)init {
     self = [super init];
     if (self != nil) {
-        [self initMEGAStore];
+        [self configureMEGAStore];
     }
     
     return self;
 }
 
-- (void)initMEGAStore {
+- (void)configureMEGAStore {
     _managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
     NSURL *storeURL = [[self applicationSupportDirectory] URLByAppendingPathComponent:@"MEGACD.sqlite"];
     
