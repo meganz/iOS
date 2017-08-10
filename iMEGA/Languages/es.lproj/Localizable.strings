@@ -102,7 +102,7 @@
 "termsCheckboxUnselected"="Necesitas aceptar los Términos del Servicio para poder crear una cuenta en MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Está dirección de correo electrónico ya fue utilizada para el registro de una cuenta en MEGA.";
-/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+/* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Esperando confirmación por correo electrónico.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Por favor, introduce tu contraseña para confirmar tu cuenta.";
@@ -574,8 +574,6 @@
 "whyDoINeedARecoveryKey"="¿Por qué necesito la clave de recuperación?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
 "masterKey_firstParagraph"="Tus datos solo pueden ser leídos a través de una cadena de operaciones de descifrado que comienzan con tu clave de cifrado (Clave de recuperación) maestra, que almacenamos cifrada con tu contraseña. Esto significa que si pierdes tu contraseña, tu clave de recuperación ya no podrá ser descifrada, y que tú no podrás descifrar tus datos.";
-/* Advising the user to keep the user's recovery key safe. */
-"masterKey_secondParagraph"="Exportar la clave de recuperación y guardarla a buen recaudo te permitirá fijar una nueva contraseña sin pérdida de datos.";
 /*  */
 "masterKey_thirdParagraph"="Un atacante desde el exterior no puede acceder a tu cuenta solo con tu clave. Un restablecimiento de contraseña requiere tanto la clave principal como el acceso a tu correo electrónico.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
@@ -605,13 +603,11 @@
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Guardar las imágenes y los vídeos compatibles con iOS en la galería del dispositivo (Nota: las imágenes y los vídeos no serán guardados en sin conexión).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
-"currentlyUsing" = "Actualmente en uso %@";
+"currentlyUsing" = "Actualmente en uso %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
 "cancelYourAccount" = "Cierra tu cuenta";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData" = "Perderás todos los datos asociados con esta cuenta. ¿Estas seguro de que quieres continuar?";
-/*  */
-"pleaseCheckYourEmail" = "Por favor, comprueba tu correo electrónico.";
 /* Account closure, warning dialog to remind user to contact mega support after he confirms that he wants to cancel account. */
 "ifYouCantAccessYourEmailAccount" = "Si no puedes acceder a tu correo electrónico, por favor, contacta con support@mega.nz.";
 /* During account cancellation (deletion) */
@@ -674,8 +670,8 @@
 "recoveryLinkHasExpired" = "Este enlace recuperación ha caducado, por favor, inténtalo de nuevo.";
 /* Headline of the password reset recovery procedure */
 "passwordReset" = "Restablecer contraseña";
-/* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
-"pleaseWriteYourRecoveryKey" = "Por favor, escribe tu clave de recuperación.";
+/* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
+"pleaseEnterYourRecoveryKey" = "Por favor introduce tu clave de recuperación.";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account "Master Key", and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey" = "Clave de recuperación";
 /* An alert title where the user provided the incorrect Recovery Key. */

@@ -192,12 +192,14 @@
     NSString *titleFooter;
     switch (section) {
         case 0: { //Offline
-            titleFooter = [NSString stringWithFormat:AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped"), self.offlineSizeString];
+            NSString *currentlyUsingString = AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped");
+            currentlyUsingString = [currentlyUsingString stringByReplacingOccurrencesOfString:@"%s" withString:self.offlineSizeString];
             break;
         }
             
         case 1: { //Cache
-            titleFooter = [NSString stringWithFormat:AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped"), self.cacheSizeString];
+            NSString *currentlyUsingString = AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped");
+            currentlyUsingString = [currentlyUsingString stringByReplacingOccurrencesOfString:@"%s" withString:self.cacheSizeString];
             break;
         }
             
@@ -205,7 +207,9 @@
             NSNumber *rubbishBinSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
             NSString *stringFromByteCount = [byteCountFormatter stringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
             stringFromByteCount = [self formatStringFromByteCountFormatter:stringFromByteCount];
-            titleFooter = [NSString stringWithFormat:AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped"), stringFromByteCount];
+            NSString *currentlyUsingString = AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped");
+            currentlyUsingString = [currentlyUsingString stringByReplacingOccurrencesOfString:@"%s" withString:stringFromByteCount];
+            titleFooter = currentlyUsingString;
             break;
         }
             
@@ -291,7 +295,7 @@
     switch (request.type) {
         case MEGARequestTypeGetCancelLink: {
             ChangePasswordViewController *changePasswordVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChangePasswordViewControllerID"];
-            changePasswordVC.emailIsChangingTitleLabel.text = AMLocalizedString(@"pleaseCheckYourEmail", nil);
+            changePasswordVC.emailIsChangingTitleLabel.text = AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
             changePasswordVC.emailIsChangingDescriptionLabel.text = AMLocalizedString(@"ifYouCantAccessYourEmailAccount", @"Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account.");
             self.view = changePasswordVC.emailIsChangingView;
             break;
