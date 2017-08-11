@@ -49,6 +49,9 @@
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"AdvancedCell"];
     
     self.cancelAccountLabel.text = AMLocalizedString(@"cancelYourAccount", @"In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account'");
+    
+    _offlineSizeString = @"...";
+    _cacheSizeString = @"...";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -194,12 +197,14 @@
         case 0: { //Offline
             NSString *currentlyUsingString = AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped");
             currentlyUsingString = [currentlyUsingString stringByReplacingOccurrencesOfString:@"%s" withString:self.offlineSizeString];
+            titleFooter = currentlyUsingString;
             break;
         }
             
         case 1: { //Cache
             NSString *currentlyUsingString = AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped");
             currentlyUsingString = [currentlyUsingString stringByReplacingOccurrencesOfString:@"%s" withString:self.cacheSizeString];
+            titleFooter = currentlyUsingString;
             break;
         }
             
