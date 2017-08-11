@@ -90,7 +90,7 @@
 #pragma mark - Table view delegate
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Restart MEGA to apply new language?" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Restart to apply changes" message:@"" preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         // Change the language:
         NSString *selectedLanguage = [Helper languageID:indexPath.row];
@@ -98,6 +98,7 @@
         [[MEGASdkManager sharedMEGASdk] setLanguageCode:selectedLanguage];
 
         // Schedule a notification to make it easy to reopen MEGA:
+        NSString *notificationText = @"Tap to reopen";
         if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"10.0"]) {
             UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
             UNAuthorizationOptions options = UNAuthorizationOptionAlert + UNAuthorizationOptionSound;
@@ -105,7 +106,7 @@
                                   completionHandler:^(BOOL granted, NSError * _Nullable error) {
                                       if (granted) {
                                           UNMutableNotificationContent *content = [UNMutableNotificationContent new];
-                                          content.title = @"Tap here to open MEGA";
+                                          content.title = notificationText;
                                           content.sound = [UNNotificationSound defaultSound];
                                           UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1
                                                                                                                                           repeats:NO];
@@ -120,8 +121,17 @@
                                       }
                                   }];
         } else {
-            // TODO: Handle iOS 8 and 9
-            exit(0);
+            UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+            localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+            localNotification.alertBody = notificationText;
+            localNotification.timeZone = [NSTimeZone defaultTimeZone];
+            [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+            // The exit must be called some time after the previous method is called, because there is no way to
+            // know when the notification is properly scheduled, and calling exit inmediatley causes to not have
+            // it shown:
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                exit(0);
+            });
         }
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
