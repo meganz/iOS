@@ -1,6 +1,8 @@
 
 #import "LanguageTableViewController.h"
 
+#import <UserNotifications/UserNotifications.h>
+
 #import "Helper.h"
 #import "MEGASDKManager.h"
 #import "SelectableTableViewCell.h"
@@ -90,10 +92,37 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Restart MEGA to apply new language?" message:@"" preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        // Change the language:
         NSString *selectedLanguage = [Helper languageID:indexPath.row];
         [[LocalizationSystem sharedLocalSystem] setLanguage:selectedLanguage];
         [[MEGASdkManager sharedMEGASdk] setLanguageCode:selectedLanguage];
-        exit(0);
+
+        // Schedule a notification to make it easy to reopen MEGA:
+        if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"10.0"]) {
+            UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+            UNAuthorizationOptions options = UNAuthorizationOptionAlert + UNAuthorizationOptionSound;
+            [center requestAuthorizationWithOptions:options
+                                  completionHandler:^(BOOL granted, NSError * _Nullable error) {
+                                      if (granted) {
+                                          UNMutableNotificationContent *content = [UNMutableNotificationContent new];
+                                          content.title = @"Tap here to open MEGA";
+                                          content.sound = [UNNotificationSound defaultSound];
+                                          UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1
+                                                                                                                                          repeats:NO];
+                                          NSString *identifier = @"nz.mega";
+                                          UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier
+                                                                                                                content:content trigger:trigger];
+                                          [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+                                              exit(0);
+                                          }];
+                                      } else {
+                                          exit(0);
+                                      }
+                                  }];
+        } else {
+            // TODO: Handle iOS 8 and 9
+            exit(0);
+        }
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
