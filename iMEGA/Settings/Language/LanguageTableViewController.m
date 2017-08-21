@@ -90,7 +90,7 @@
 #pragma mark - Table view delegate
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Restart to apply changes" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"languageRestartAlert", @"Text shown in an alert when the user is about to change the language of the app") message:@"" preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         // Change the language:
         NSString *selectedLanguage = [Helper languageID:indexPath.row];
@@ -98,7 +98,7 @@
         [[MEGASdkManager sharedMEGASdk] setLanguageCode:selectedLanguage];
 
         // Schedule a notification to make it easy to reopen MEGA:
-        NSString *notificationText = @"Tap to reopen";
+        NSString *notificationText = AMLocalizedString(@"languageRestartNotification", @"Text shown in a notification to make it easy for the user to restart the app after the language is changed");
         if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"10.0"]) {
             UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
             UNAuthorizationOptions options = UNAuthorizationOptionAlert + UNAuthorizationOptionSound;
