@@ -59,7 +59,7 @@
         
         [self.theNewPasswordTextField becomeFirstResponder];
         
-        self.emailIsChangingTitleLabel.text = AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after creating an account to remenber the user what to do to complete the account creation proccess");
+        self.emailIsChangingTitleLabel.text = AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
         self.emailIsChangingDescriptionLabel.text = AMLocalizedString(@"emailIsChanging_description", @"Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess");
     } else if (self.changeType == ChangeTypeResetPassword || self.changeType == ChangeTypeParkAccount) {
         self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
@@ -231,7 +231,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (alertView.tag == 0) { //invalidMasterKeyAlert
-        UIAlertView *masterKeyAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") message:AMLocalizedString(@"pleaseWriteYourRecoveryKey", @"Message shown to explain that you have to write your recovery key to continue with the reset password process.") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+        UIAlertView *masterKeyAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") message:AMLocalizedString(@"pleaseEnterYourRecoveryKey", @"A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process.") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
         masterKeyAlertView.tag = 1;
         masterKeyAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
         UITextField *textField = [masterKeyAlertView textFieldAtIndex:0];

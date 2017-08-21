@@ -6,8 +6,6 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-- (void)initMEGAStore;
-
 @end
 
 @implementation MEGAStore
@@ -27,13 +25,13 @@ static MEGAStore *_megaStore = nil;
 - (instancetype)init {
     self = [super init];
     if (self != nil) {
-        [self initMEGAStore];
+        [self configureMEGAStore];
     }
     
     return self;
 }
 
-- (void)initMEGAStore {
+- (void)configureMEGAStore {
     _managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
     NSURL *storeURL = [[self applicationSupportDirectory] URLByAppendingPathComponent:@"MEGACD.sqlite"];
     
@@ -203,22 +201,6 @@ static MEGAStore *_megaStore = nil;
     NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
     
     return [array firstObject];
-}
-
-- (void)removeAllUsers {
-    NSFetchRequest *allUsers = [[NSFetchRequest alloc] init];
-    [allUsers setEntity:[NSEntityDescription entityForName:@"User" inManagedObjectContext:self.managedObjectContext]];
-    [allUsers setIncludesPropertyValues:NO]; //only fetch the managedObjectID
-    
-    NSError *error = nil;
-    NSArray *users = [self.managedObjectContext executeFetchRequest:allUsers error:&error];
-    
-    for (NSManagedObject *user in users) {
-        MEGALogDebug(@"Save context - remove user: %@", user);
-        [self.managedObjectContext deleteObject:user];
-    }
-    
-    [self saveContext];
 }
 
 @end

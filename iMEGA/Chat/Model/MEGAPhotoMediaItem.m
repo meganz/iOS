@@ -30,13 +30,8 @@
         _cachedImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
         _cachedImageView.contentMode = UIViewContentModeScaleAspectFill;
         _cachedImageView.clipsToBounds = YES;
-        _cachedImageView.layer.cornerRadius = 4;
-        _cachedImageView.backgroundColor = [UIColor grayColor];
-        
-        _activityIndicator = [JSQMessagesMediaPlaceholderView viewWithActivityIndicator];
-        _activityIndicator.frame = _cachedImageView.frame;
-
-        [_cachedImageView addSubview:_activityIndicator];
+        _cachedImageView.layer.cornerRadius = 5;
+        _cachedImageView.backgroundColor = [UIColor mnz_grayE3E3E3];
         
         NSString *previewFilePath = [[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"] stringByAppendingPathComponent:self.node.base64Handle];
         
@@ -44,8 +39,12 @@
             [self configureCachedImageViewWithImagePath:previewFilePath];
         } else {
             if ([self.node hasPreview]) {
+                _activityIndicator = [JSQMessagesMediaPlaceholderView viewWithActivityIndicator];
+                _activityIndicator.frame = _cachedImageView.frame;
+                [_cachedImageView addSubview:_activityIndicator];
                 MEGAGetPreviewRequestDelegate *getPreviewRequestDelegate = [[MEGAGetPreviewRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                     [self configureCachedImageViewWithImagePath:request.file];
+                    [_activityIndicator removeFromSuperview];
                 }];
                 [self.cachedImageView mnz_setImageForExtension:self.node.name.pathExtension];
                 [[MEGASdkManager sharedMEGASdk] getPreviewNode:self.node destinationFilePath:previewFilePath delegate:getPreviewRequestDelegate];
@@ -73,7 +72,7 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    return CGSizeMake([[UIScreen mainScreen] mnz_screenWidth] *2/3, [[UIScreen mainScreen] mnz_screenWidth] *2/3);
+    return CGSizeMake([[UIScreen mainScreen] mnz_screenWidth] * 2/3 + 8, [[UIScreen mainScreen] mnz_screenWidth] * 2/3 + 8);
 }
 
 - (UIView *)mediaPlaceholderView {
@@ -85,14 +84,24 @@
 #pragma mark - Private
 
 - (void)configureCachedImageViewWithImagePath:(NSString *)imagePath {
-    self.cachedImageView.image = [UIImage imageWithContentsOfFile:imagePath];
+    CGSize size = self.cachedImageView.frame.size;
+    
+    UIImageView *previewImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width - 8, size.height - 8)];
+    previewImageView.contentMode = UIViewContentModeScaleAspectFill;
+    previewImageView.clipsToBounds = YES;
+    previewImageView.layer.cornerRadius = 2.5;
+    previewImageView.backgroundColor = [UIColor grayColor];
+    previewImageView.center = [self.cachedImageView convertPoint:self.cachedImageView.center fromView:self.cachedImageView.superview];
+    previewImageView.image = [UIImage imageWithContentsOfFile:imagePath];
+    
+    [_cachedImageView addSubview:previewImageView];
+    
     [self.activityIndicator removeFromSuperview];
     if (self.node.name.mnz_isMultimediaPathExtension) {
         UIImageView *playImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"video_list"]];
-        playImageView.center = [self.cachedImageView convertPoint:self.cachedImageView.center fromView:self.cachedImageView.superview];
-        [self.cachedImageView addSubview:playImageView];
+        playImageView.center = [previewImageView convertPoint:previewImageView.center fromView:previewImageView.superview];
+        [previewImageView addSubview:playImageView];
     }
-    [_activityIndicator removeFromSuperview];
 }
 
 #pragma mark - JSQMessageMediaData protocol

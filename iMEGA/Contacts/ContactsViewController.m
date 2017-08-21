@@ -360,7 +360,8 @@
     BOOL userHasChanged = NO;
     
     if ([user hasChangedType:MEGAUserChangeTypeAvatar]) {
-        NSString *avatarFilePath = [Helper pathForUser:user inSharedSandboxCacheDirectory:@"thumbnailsV3"];
+        NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
+        NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
         BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
         if (fileExists) {
             NSError *error = nil;
@@ -474,7 +475,7 @@
     [self.tableView reloadData];
 }
 
-- (IBAction)addContact:(UIBarButtonItem *)sender {
+- (IBAction)addContact:(UIButton *)sender {
     UIAlertController *addContactAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [addContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -532,7 +533,12 @@
     
     addContactAlertController.modalPresentationStyle = UIModalPresentationPopover;
     if ([[UIDevice currentDevice] iPad]) {
-        addContactAlertController.popoverPresentationController.barButtonItem = self.addBarButtonItem;
+        if (self.addBarButtonItem) {
+            addContactAlertController.popoverPresentationController.barButtonItem = self.addBarButtonItem;
+        } else {
+            addContactAlertController.popoverPresentationController.sourceRect = sender.frame;
+            addContactAlertController.popoverPresentationController.sourceView = sender.superview;
+        }
     } else {
         addContactAlertController.popoverPresentationController.sourceRect = self.view.frame;
         addContactAlertController.popoverPresentationController.sourceView = self.view;
@@ -1034,7 +1040,7 @@
 #pragma mark - DZNEmptyDataSetDelegate Methods
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
-    [self addContact:self.addBarButtonItem];
+    [self addContact:button];
 }
 
 #pragma mark - MEGAGlobalDelegate
