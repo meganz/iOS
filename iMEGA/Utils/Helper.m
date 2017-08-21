@@ -1,5 +1,6 @@
 #import "Helper.h"
 
+#import <CoreSpotlight/CoreSpotlight.h>
 #import "LTHPasscodeViewController.h"
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
@@ -12,10 +13,10 @@
 #import "MEGAStore.h"
 
 #import "CameraUploads.h"
-#import "NodeTableViewCell.h"
-#import "PhotoCollectionViewCell.h"
 #import "GetLinkActivity.h"
+#import "NodeTableViewCell.h"
 #import "OpenInActivity.h"
+#import "PhotoCollectionViewCell.h"
 #import "RemoveLinkActivity.h"
 #import "ShareFolderActivity.h"
 
@@ -25,6 +26,8 @@ static NSMutableArray *nodesFromLinkMutableArray;
 
 static NSUInteger totalOperations;
 static BOOL copyToPasteboard;
+
+static MEGAIndexer *indexer;
 
 @implementation Helper
 
@@ -537,22 +540,6 @@ static BOOL copyToPasteboard;
     return [destinationPath stringByAppendingPathComponent:[node base64Handle]];
 }
 
-+ (NSString *)pathForUser:(MEGAUser *)user searchPath:(NSSearchPathDirectory)path directory:(NSString *)directory {
-    
-    NSString *destinationPath = [NSSearchPathForDirectoriesInDomains(path, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *fileName = [user email];
-    NSString *destinationFilePath = nil;
-    destinationFilePath = [directory isEqualToString:@""] ? [destinationPath stringByAppendingPathComponent:fileName]
-    :[[destinationPath stringByAppendingPathComponent:directory] stringByAppendingPathComponent:fileName];
-    
-    return destinationFilePath;
-}
-
-+ (NSString *)pathForUser:(MEGAUser *)user inSharedSandboxCacheDirectory:(NSString *)directory {
-    NSString *destinationPath = [Helper pathForSharedSandboxCacheDirectory:directory];
-    return [destinationPath stringByAppendingPathComponent:[user email]];
-}
-
 + (NSString *)pathForSharedSandboxCacheDirectory:(NSString *)directory {
     NSString *cacheDirectory = @"Library/Cache/";
     NSString *targetDirectory = [cacheDirectory stringByAppendingString:directory];
@@ -732,9 +719,9 @@ static BOOL copyToPasteboard;
 
 + (uint64_t)freeDiskSpace {
     uint64_t totalFreeSpace = 0;
-    NSError *error = nil;
+    NSError *error;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:[paths lastObject] error: &error];
+    NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:[paths lastObject] error:&error];
     
     if (dictionary) {
         NSNumber *freeFileSystemSizeInBytes = [dictionary objectForKey:NSFileSystemFreeSize];
@@ -774,6 +761,9 @@ static BOOL copyToPasteboard;
         PhotoCollectionViewCell *photoCollectionViewCell = cell;
         [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
         photoCollectionViewCell.thumbnailPlayImageView.hidden = node.name.mnz_videoPathExtension ? NO : YES;
+    }
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"9.0"]) {
+        [indexer index:node];
     }
 }
 
@@ -934,6 +924,10 @@ static BOOL copyToPasteboard;
     return [filesURLMutableArray copy];
 }
 
++ (void)setIndexer:(MEGAIndexer* )megaIndexer {
+    indexer = megaIndexer;
+}
+
 #pragma mark - Utils for empty states
 
 + (UIEdgeInsets)capInsetsForEmptyStateButton {
@@ -1056,7 +1050,7 @@ static BOOL copyToPasteboard;
 
 + (void)deleteUserData {
     // Delete app's directories: Library/Cache/thumbs - Library/Cache/previews - Documents - tmp
-    NSError *error = nil;
+    NSError *error;
     
     NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:thumbsDirectory]) {
@@ -1075,14 +1069,12 @@ static BOOL copyToPasteboard;
     // Remove "Inbox" folder return an error. "Inbox" is reserved by Apple
     NSString *offlineDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:offlineDirectory error:&error]) {
-        error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:[offlineDirectory stringByAppendingPathComponent:file] error:&error]) {
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
     
     for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:NSTemporaryDirectory() error:&error]) {
-        error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:file] error:&error]) {
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
@@ -1103,17 +1095,13 @@ static BOOL copyToPasteboard;
         }
     }
     
-    NSString *downloadsDirectory = [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Downloads"];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:downloadsDirectory]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:downloadsDirectory error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
-    
-    NSString *uploadsDirectory = [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Uploads"];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:uploadsDirectory]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:uploadsDirectory error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
+    // Delete application support directory content
+    NSString *applicationSupportDirectory = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:applicationSupportDirectory error:&error]) {
+        if ([file containsString:@"MEGACD"] || [file containsString:@"spotlightTree"]) {
+            if (![[NSFileManager defaultManager] removeItemAtPath:[applicationSupportDirectory stringByAppendingPathComponent:file] error:&error]) {
+                MEGALogError(@"Remove item at path failed with error: %@", error);
+            }
         }
     }
     
@@ -1131,17 +1119,27 @@ static BOOL copyToPasteboard;
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
+    
+    // Delete Spotlight index
+    NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+    [sharedUserDefaults removeObjectForKey:@"treeCompleted"];
+    [sharedUserDefaults removeObjectForKey:@"base64HandlesToIndex"];
+    [[CSSearchableIndex defaultSearchableIndex] deleteSearchableItemsWithDomainIdentifiers:@[@"nodes"] completionHandler:^(NSError * _Nullable error) {
+        if (error) {
+            MEGALogError(@"Error deleting spotligth index");
+        } else {
+            MEGALogInfo(@"Spotlight index deleted");
+        }
+    }];
 }
 
 + (void)deleteMasterKey {
-    NSError *error = nil;
+    NSError *error;
     
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    BOOL existMasterKey = [[NSFileManager defaultManager] fileExistsAtPath:[documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"]];
-    
     NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
     
-    if (existMasterKey) {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"]]) {
         if (![[NSFileManager defaultManager] removeItemAtPath:masterKeyFilePath error:&error]) {
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
@@ -1150,8 +1148,6 @@ static BOOL copyToPasteboard;
 
 + (void)resetUserData {
     [[Helper downloadingNodes] removeAllObjects];
-    [[MEGAStore shareInstance] removeAllOfflineNodes];
-    [[MEGAStore shareInstance] removeAllUsers];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DownloadedNodes"];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TabsOrderInTabBar"];

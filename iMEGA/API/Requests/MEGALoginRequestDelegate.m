@@ -6,6 +6,8 @@
 
 #import "LaunchViewController.h"
 
+#import "MEGAStore.h"
+
 @interface MEGALoginRequestDelegate ()
 
 @property (nonatomic, getter=hasSession) BOOL session;
@@ -99,6 +101,7 @@
     if (!self.hasSession) {
         NSString *session = [api dumpSession];
         [SAMKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
+        [[MEGAStore shareInstance] configureMEGAStore];
         
         LaunchViewController *launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
         UIWindow *window = [[[UIApplication sharedApplication] delegate] window];

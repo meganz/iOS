@@ -33,7 +33,7 @@ static NSString* const B = @"[B]";
 }
 
 - (BOOL)mnz_isImagePathExtension {
-    NSSet *imagesExtensionsSet = [[NSSet alloc] initWithObjects:@"gif", @"jpg", @"tif", @"jpeg", @"bmp", @"png", @"nef", nil];
+    NSSet *imagesExtensionsSet = [[NSSet alloc] initWithObjects:@"gif", @"jpg", @"tif", @"jpeg", @"bmp", @"png", @"nef", @"heic", nil];
     
     return [imagesExtensionsSet containsObject:self.pathExtension.lowercaseString];
 }

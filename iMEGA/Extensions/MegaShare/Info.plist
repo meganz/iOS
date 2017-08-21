@@ -17,24 +17,25 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.7</string>
+	<string>3.7.1</string>
 	<key>CFBundleVersion</key>
-	<string>64</string>
+	<string>66</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>
 		<dict>
 			<key>NSExtensionActivationRule</key>
-			<dict>
-				<key>NSExtensionActivationSupportsFileWithMaxCount</key>
-				<integer>2147483647</integer>
-				<key>NSExtensionActivationSupportsImageWithMaxCount</key>
-				<integer>2147483647</integer>
-				<key>NSExtensionActivationSupportsMovieWithMaxCount</key>
-				<integer>2147483647</integer>
-				<key>NSExtensionActivationSupportsWebURLWithMaxCount</key>
-				<integer>2147483647</integer>
-			</dict>
+			<string>SUBQUERY (extensionItems,
+          $extensionItem,
+          SUBQUERY ($extensionItem.attachments,
+                    $attachment,
+                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.image" ||
+                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.movie" ||
+                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.file-url" ||
+                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.url" ||
+                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.vcard")
+          .@count &gt;= 1)
+.@count &gt; 0</string>
 		</dict>
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.share-services</string>

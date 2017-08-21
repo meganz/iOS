@@ -463,10 +463,6 @@
             NSString *localFilePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:self.localpath.lastPathComponent];
             if ([[NSFileManager defaultManager] moveItemAtPath:self.localpath toPath:localFilePath error:&error]) {
                 [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", @"Message shown when uploading a file from the Open In Browser")];
-                if (self.localpath.mnz_isImagePathExtension) {
-                    [[MEGASdkManager sharedMEGASdk] createThumbnail:localFilePath destinatioPath:[self.localpath stringByAppendingString:@"_thumbnail"]];
-                    [[MEGASdkManager sharedMEGASdk] createPreview:localFilePath destinatioPath:[self.localpath stringByAppendingString:@"_preview"]];
-                }
                 [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[localFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:nil isSourceTemporary:YES];
             } else {
                 MEGALogError(@"Move item at path failed with error: %@", error);

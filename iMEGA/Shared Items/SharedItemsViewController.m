@@ -305,6 +305,11 @@
     return indexPathsMutableArray;
 }
 
+#pragma mark - Utils
+
+- (void)selectSegment:(NSUInteger)index {
+    [self.sharedItemsSegmentedControl setSelectedSegmentIndex:index];
+}
 
 #pragma mark - IBActions
 
@@ -427,6 +432,10 @@
 }
 
 - (IBAction)permissionsTouchUpInside:(UIButton *)sender {
+    if (self.tableView.isEditing) {
+        return;
+    }
+    
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
             case 0: { //Incoming
@@ -449,6 +458,9 @@
 }
 
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
+    if (self.tableView.isEditing) {
+        return;
+    }
     
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];

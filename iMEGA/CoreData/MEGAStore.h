@@ -10,6 +10,10 @@
 
 + (MEGAStore *)shareInstance;
 
+#pragma mark - Configure
+
+- (void)configureMEGAStore;
+
 #pragma mark - MOOfflineNode entity
 
 - (void)insertOfflineNode:(MEGANode *)node api:(MEGASdk *)api path:(NSString *)path;
@@ -25,6 +29,5 @@
 - (void)updateUserWithUserHandle:(uint64_t)userHandle lastname:(NSString *)lastname;
 - (void)updateUserWithUserHandle:(uint64_t)userHandle email:(NSString *)email;
 - (MOUser *)fetchUserWithUserHandle:(uint64_t)userHandle;
-- (void)removeAllUsers;
 
 @end
