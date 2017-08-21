@@ -18,6 +18,7 @@
 #import "FeedbackTableViewController.h"
 #import "SecurityOptionsTableViewController.h"
 #import "AdvancedTableViewController.h"
+#import "UIViewController+MNZCategory.h"
 
 @interface SettingsTableViewController () <MFMailComposeViewControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -104,6 +105,7 @@
     NSUInteger languageIndex = [[Helper languagesSupportedIDs] indexOfObject:self.selectedLanguage];
     [self.languagePickerView selectRow:languageIndex inComponent:0 animated:NO];
     
+    [self mnz_customBackBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
