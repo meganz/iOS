@@ -1,16 +1,16 @@
+
 #import "AdvancedTableViewController.h"
-
-#import "NSString+MNZCategory.h"
-
-#import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
-#import "MEGAStore.h"
-#import "Helper.h"
-
-#import "ChangePasswordViewController.h"
 
 #import "SVProgressHUD.h"
 
+#import "Helper.h"
+#import "MEGAReachabilityManager.h"
+#import "MEGASdkManager.h"
+#import "MEGAStore.h"
+#import "NSString+MNZCategory.h"
+#import "UIViewController+MNZCategory.h"
+
+#import "ChangePasswordViewController.h"
 
 @interface AdvancedTableViewController () <UIAlertViewDelegate, MEGAGlobalDelegate, MEGARequestDelegate> {
     NSByteCountFormatter *byteCountFormatter;
@@ -52,6 +52,8 @@
     
     _offlineSizeString = @"...";
     _cacheSizeString = @"...";
+    
+    [self mnz_customBackBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

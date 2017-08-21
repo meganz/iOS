@@ -1,4 +1,7 @@
+
 #import "WhyDoINeedARecoveryKeyViewController.h"
+
+#import "UIViewController+MNZCategory.h"
 
 @interface WhyDoINeedARecoveryKeyViewController ()
 
@@ -20,6 +23,8 @@
     self.firstParagraphLabel.text = AMLocalizedString(@"masterKey_firstParagraph", @"Detailed explanation of how the master encryption key (now renamed 'Recovery Key') works, and why it is important to remember your password.");
     self.secondParagraphLabel.text = AMLocalizedString(@"exportMasterKeyFooter", @"Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key");
     self.thirdParagraphLabel.text = AMLocalizedString(@"masterKey_thirdParagraph", nil);
+        
+    [self mnz_customBackBarButtonItem];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {

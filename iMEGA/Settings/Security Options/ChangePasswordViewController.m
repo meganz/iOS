@@ -1,8 +1,10 @@
+
 #import "ChangePasswordViewController.h"
 
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "NSString+MNZCategory.h"
+#import "UIViewController+MNZCategory.h"
 
 #import "SVProgressHUD.h"
 
@@ -79,6 +81,8 @@
         
         [self.theNewPasswordTextField becomeFirstResponder];
     }
+    
+    [self mnz_customBackBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

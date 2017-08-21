@@ -4,6 +4,7 @@
 
 #import "MEGAReachabilityManager.h"
 #import "NSString+MNZCategory.h"
+#import "UIViewController+MNZCategory.h"
 
 #import "CameraUploads.h"
 #import "Helper.h"
@@ -27,7 +28,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+        
+    [self mnz_customBackBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
