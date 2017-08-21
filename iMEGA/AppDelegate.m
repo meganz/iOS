@@ -218,6 +218,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     isFetchNodesDone = NO;
     
     if (sessionV3) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TabsOrderInTabBar"];
+        
         NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
         if (![sharedUserDefaults boolForKey:@"extensions"]) {
             [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
@@ -228,8 +230,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [[LTHPasscodeViewController sharedUser] resetPasscode];
             [sharedUserDefaults setBool:YES forKey:@"extensions-passcode"];
         }
+        
         [self registerForNotifications];
+        
         isAccountFirstLogin = NO;
+        
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"IsChatEnabled"] == nil) {
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
             [[NSUserDefaults standardUserDefaults] synchronize];
