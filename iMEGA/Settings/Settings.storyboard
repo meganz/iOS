@@ -1234,6 +1234,52 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="TRANSFERS" id="Omu-b7-TCb" userLabel="useHttpsOnly">
+                                <string key="footerTitle">Enable this option only if your transfers don't start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</string>
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="NgY-Fi-hpk" userLabel="Don't use HTTP Table View Cell">
+                                        <rect key="frame" x="0.0" y="378.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NgY-Fi-hpk" id="h3R-hg-8mw">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Vyq-Yn-Bxz" userLabel="Don't use HTTP Switch">
+                                                    <rect key="frame" x="311" y="6" width="51" height="31"/>
+                                                    <color key="onTintColor" red="0.80392156859999997" green="0.0" blue="0.043137254899999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="photosSwitchValueChanged:" destination="Zqt-Yf-u7D" eventType="valueChanged" id="vHy-zT-7dD"/>
+                                                        <action selector="useHttpsOnlySwitch:" destination="Zqt-Yf-u7D" eventType="valueChanged" id="PRf-l2-BHX"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't use HTTP" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1kL-0h-YiN" userLabel="Don't use HTTP">
+                                                    <rect key="frame" x="15" y="11" width="288" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Vyq-Yn-Bxz" firstAttribute="leading" secondItem="1kL-0h-YiN" secondAttribute="trailing" constant="8" id="Jhu-Og-FNi"/>
+                                                <constraint firstItem="Vyq-Yn-Bxz" firstAttribute="trailing" secondItem="h3R-hg-8mw" secondAttribute="trailingMargin" id="TRV-A7-DWm"/>
+                                                <constraint firstItem="Vyq-Yn-Bxz" firstAttribute="top" secondItem="h3R-hg-8mw" secondAttribute="topMargin" constant="-2" id="XCK-K4-uhH"/>
+                                                <constraint firstItem="1kL-0h-YiN" firstAttribute="leading" secondItem="h3R-hg-8mw" secondAttribute="leadingMargin" constant="15" id="atS-7D-Ojl"/>
+                                                <constraint firstItem="1kL-0h-YiN" firstAttribute="leading" secondItem="h3R-hg-8mw" secondAttribute="leading" constant="15" id="bTS-lt-WbW"/>
+                                                <constraint firstAttribute="trailing" secondItem="Vyq-Yn-Bxz" secondAttribute="trailing" constant="15" id="cGb-Gr-9uX"/>
+                                                <constraint firstItem="1kL-0h-YiN" firstAttribute="trailing" secondItem="h3R-hg-8mw" secondAttribute="trailingMargin" id="f7B-b2-3vb"/>
+                                                <constraint firstItem="1kL-0h-YiN" firstAttribute="top" secondItem="h3R-hg-8mw" secondAttribute="topMargin" constant="3" id="vhv-M3-YiR"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="atS-7D-Ojl"/>
+                                                    <exclude reference="f7B-b2-3vb"/>
+                                                    <exclude reference="TRV-A7-DWm"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection headerTitle="Downloads" footerTitle="Save iOS compatible images and videos into your device's gallery" id="8u2-hQ-lGy">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="qCA-HQ-nS1" userLabel="Save photos to gallery Table View Cell">
@@ -1352,12 +1398,14 @@
                         <outlet property="cancelAccountLabel" destination="Cab-ov-Gol" id="cgP-TO-wow"/>
                         <outlet property="clearCacheLabel" destination="ogF-KK-8A5" id="YHu-oM-aAm"/>
                         <outlet property="clearOfflineFilesLabel" destination="3Yt-m5-7Wy" id="mpF-84-qPx"/>
+                        <outlet property="dontUseHttpLabel" destination="1kL-0h-YiN" id="dTh-da-9fl"/>
                         <outlet property="emptyRubbishBinLabel" destination="c4p-Ce-HHU" id="BpO-vs-BwL"/>
                         <outlet property="photosSwitch" destination="kXr-NU-yFc" id="pMD-zN-OWf"/>
                         <outlet property="savePhotosLabel" destination="gFD-P4-mTY" id="tda-4j-GxT"/>
                         <outlet property="savePhotosTableViewCell" destination="qCA-HQ-nS1" id="JXc-6u-cVc"/>
                         <outlet property="saveVideosLabel" destination="IIQ-d9-Fdl" id="r3m-el-iaA"/>
                         <outlet property="saveVideosTableViewCell" destination="2uJ-Cf-XIf" id="I5y-gX-gS8"/>
+                        <outlet property="useHttpsOnlySwitch" destination="Vyq-Yn-Bxz" id="eDN-vd-W8p"/>
                         <outlet property="videosSwitch" destination="7Cc-dW-hDg" id="B5Z-6l-2hG"/>
                     </connections>
                 </tableViewController>
