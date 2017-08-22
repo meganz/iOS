@@ -197,7 +197,7 @@
             break;
             
         case 3: //TRANSFERS
-            titleHeader = AMLocalizedString(@"transfersSectionHeader", @"Title header that refers to where you enable the option for Don't use HTTP inside 'Settings' -> 'Advanced' section (UPPERCASE)");
+            titleHeader = AMLocalizedString(@"transfers", @"Title of the Transfers section");
             break;
             
         case 4: //Downloads
