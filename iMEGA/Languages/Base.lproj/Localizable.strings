@@ -1123,3 +1123,7 @@
 "Invalid application key"="Invalid application key";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Unknown error";
+/* Text shown in an alert when the user is about to change the language of the app */
+"languageRestartAlert"="You'll need to restart MEGA after changing the language";
+/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
+"languageRestartNotification"="Language changed. Tap to restart.";
