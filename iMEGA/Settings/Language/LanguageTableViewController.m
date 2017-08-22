@@ -105,7 +105,7 @@
                                   completionHandler:^(BOOL granted, NSError * _Nullable error) {
                                       if (granted) {
                                           UNMutableNotificationContent *content = [UNMutableNotificationContent new];
-                                          content.title = notificationText;
+                                          content.body = notificationText;
                                           content.sound = [UNNotificationSound defaultSound];
                                           UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1
                                                                                                                                           repeats:NO];
