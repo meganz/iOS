@@ -544,9 +544,7 @@
         }
         // If there is no supported asset to process, then the extension is done:
         if (self.pendingAssets == self.unsupportedAssets) {
-            [self dismissWithCompletionHandler:^{
-                [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
-            }];
+            [self alertIfNeededAndDismiss];
         }
     } else {
         // The user tapped "Cancel":
