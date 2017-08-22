@@ -285,6 +285,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 [[UIApplication sharedApplication] setStatusBarHidden:NO];
             }
         }
+        
+        if ([sharedUserDefaults boolForKey:@"useHttpsOnly"]) {
+            [[MEGASdkManager sharedMEGASdk] useHttpsOnly:YES];
+        }
     } else {
         // Resume ephemeral account
         NSString *sessionId = [SAMKeychain passwordForService:@"MEGA" account:@"sessionId"];
