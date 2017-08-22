@@ -594,8 +594,6 @@
 "emptyRubbishBin" = "Empty Rubbish Bin";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="All the items in the rubbish bin will be deleted";
-/* Title header that refers to where you enable the option for Don't use HTTP inside 'Settings' -> 'Advanced' section (UPPERCASE) */
-"transfersSectionHeader"="TRANSFERS";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Don't use HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
