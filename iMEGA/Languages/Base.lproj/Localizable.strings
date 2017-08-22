@@ -594,6 +594,10 @@
 "emptyRubbishBin" = "Empty Rubbish Bin";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="All the items in the rubbish bin will be deleted";
+/* Text next to a switch that allows disabling the HTTP protocol for transfers */
+"dontUseHttp"="Don't use HTTP";
+/* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
+"transfersSectionFooter"="Enable this option only if your transfers don't start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Image and video downloads";
 /* Section title where you can enable the option 'Save images in gallery' */
