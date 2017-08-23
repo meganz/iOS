@@ -52,8 +52,6 @@
 "loggedOutFromAnotherLocation"="Bạn đã bị đăng xuất ra bơi một phiên đăng nhập từ chỗ khác";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Không xác thực được SSL key từ máy chủ. Xem chừng bạn đã bị tác động bởi người hack trung gian.";
-/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
-"serversTooBusy"="Các máy chủ hiện đang bận. Xin vui lòng chờ...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Xin đăng nhập vào tài khoản.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
