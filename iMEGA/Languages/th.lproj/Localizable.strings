@@ -52,8 +52,6 @@
 "loggedOutFromAnotherLocation"="คุณได้ออกจากระบบของอุปกรณ์นี้จากตำแหน่งที่ตั้งอื่น";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="คีย์ SSL ของเซิร์ฟเวอร์ไม่สามารถตรวจสอบได้ คุณอาจจะได้รับผลกระทบจากการลักลอบดักข้อมูล";
-/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
-"serversTooBusy"="เซิร์ฟเวอร์ไม่ว่าง กรุณารอสักครู่";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="กรุณาเข้าสู่ระบบในบัญชีของคุณ";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */

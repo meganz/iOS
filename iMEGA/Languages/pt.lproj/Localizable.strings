@@ -52,8 +52,6 @@
 "loggedOutFromAnotherLocation"="Foi desconectado deste dispositivo a partir de outro local.";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="O SSL do servidor não pode ser verificado. Você pode estar a ser alvo de um ataque man-in-the-middle.";
-/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
-"serversTooBusy"="Servidores ocupados. Por favor aguarde...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Por favor entra na tua conta.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
