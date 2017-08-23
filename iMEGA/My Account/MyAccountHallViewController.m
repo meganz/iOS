@@ -66,17 +66,9 @@
     }
     
     switch (indexPath.row) {
-        case 0: { //Offline
-            cell.sectionLabel.text = AMLocalizedString(@"offline", @"Title of the Offline section");
-            cell.iconImageView.image = [UIImage imageNamed:@"offlineIcon"];
-            cell.pendingView.hidden = YES;
-            cell.pendingLabel.text = nil;
-            break;
-        }
-            
-        case 1: { //Contacts
+        case 0: { //Contacts
             cell.sectionLabel.text = AMLocalizedString(@"contactsTitle", @"Title of the Contacts section");
-            cell.iconImageView.image = [UIImage imageNamed:@"contactsIcon"];
+            cell.iconImageView.image = [UIImage imageNamed:@"myAccountContactsIcon"];
             MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
             NSUInteger incomingContacts = incomingContactsLists.size.unsignedIntegerValue;
             if (incomingContacts == 0) {
@@ -93,9 +85,17 @@
             break;
         }
             
-        case 2: { //Transfers
+        case 1: { //Transfers
             cell.sectionLabel.text = AMLocalizedString(@"transfers", @"Title of the Transfers section");
-            cell.iconImageView.image = [UIImage imageNamed:@"transfersIcon"];
+            cell.iconImageView.image = [UIImage imageNamed:@"myAccountTransfersIcon"];
+            cell.pendingView.hidden = YES;
+            cell.pendingLabel.text = nil;
+            break;
+        }
+            
+        case 2: { //Offline
+            cell.sectionLabel.text = AMLocalizedString(@"offline", @"Title of the Offline section");
+            cell.iconImageView.image = [UIImage imageNamed:@"myAccountOfflineIcon"];
             cell.pendingView.hidden = YES;
             cell.pendingLabel.text = nil;
             break;
@@ -103,7 +103,7 @@
         
         case 3: { //Settings
             cell.sectionLabel.text = AMLocalizedString(@"settingsTitle", @"Title of the Settings section");
-            cell.iconImageView.image = [UIImage imageNamed:@"settingsIcon"];
+            cell.iconImageView.image = [UIImage imageNamed:@"myAccountSettingsIcon"];
             cell.pendingView.hidden = YES;
             cell.pendingLabel.text = nil;
             break;
@@ -119,21 +119,21 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.row) {
-        case 0: { //Offline
-            OfflineTableViewController *offlineTVC = [[UIStoryboard storyboardWithName:@"Offline" bundle:nil] instantiateViewControllerWithIdentifier:@"OfflineTableViewControllerID"];
-            [self.navigationController pushViewController:offlineTVC animated:YES];
-            break;
-        }
-            
-        case 1: { //Contacts
+        case 0: { //Contacts
             ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
             [self.navigationController pushViewController:contactsVC animated:YES];
             break;
         }
             
-        case 2: { //Transfers
+        case 1: { //Transfers
             TransfersViewController *transferVC = [[UIStoryboard storyboardWithName:@"Transfers" bundle:nil] instantiateViewControllerWithIdentifier:@"TransfersViewControllerID"];
             [self.navigationController pushViewController:transferVC animated:YES];
+            break;
+        }
+            
+        case 2: { //Offline
+            OfflineTableViewController *offlineTVC = [[UIStoryboard storyboardWithName:@"Offline" bundle:nil] instantiateViewControllerWithIdentifier:@"OfflineTableViewControllerID"];
+            [self.navigationController pushViewController:offlineTVC animated:YES];
             break;
         }
             
