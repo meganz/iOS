@@ -1,5 +1,7 @@
 #import "GetLinkActivity.h"
 
+#import "CopywriteWarningViewController.h"
+#import "GetLinkTableViewController.h"
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
 
@@ -43,11 +45,17 @@
 
 - (void)performActivity {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [Helper setCopyToPasteboard:YES];
-        
         if (self.nodes != nil) {
-            for (MEGANode *n in self.nodes) {
-                [[MEGASdkManager sharedMEGASdk] exportNode:n];
+            if ([[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] boolForKey:@"agreedCopywriteWarning"]) {
+                UINavigationController *getLinkNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"GetLinkNavigationControllerID"];
+                GetLinkTableViewController *getLinkTVC = getLinkNavigationController.childViewControllers[0];
+                getLinkTVC.nodesToExport = self.nodes;
+                [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:getLinkNavigationController animated:YES completion:nil];
+            } else {
+                UINavigationController *cwNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CopywriteWarningNavigationControllerID"];
+                CopywriteWarningViewController *cwViewController = cwNavigationController.childViewControllers[0];
+                [cwViewController setNodesToExport:self.nodes];
+                [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:cwNavigationController animated:YES completion:nil];
             }
         }
     }
