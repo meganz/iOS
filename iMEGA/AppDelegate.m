@@ -929,8 +929,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)invalidateTimerAPI_EAGAIN {
     [timerAPI_EAGAIN invalidate];
     
-    LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
-    launchVC.label.text = @"";
+    if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
+        LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
+        launchVC.label.text = @"";
+    }
 }
 
 - (void)showServersTooBusy {
