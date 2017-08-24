@@ -13,7 +13,6 @@
 #import "ContactsViewController.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
-#import "GetLinkActivity.h"
 #import "ShareFolderActivity.h"
 #import "OpenInActivity.h"
 #import "RemoveLinkActivity.h"
@@ -179,18 +178,6 @@
         if ([self.node isFolder]) {
             [self.navigationController popViewControllerAnimated:YES];
         }
-    }
-}
-
-- (void)getLink {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [[MEGASdkManager sharedMEGASdk] exportNode:self.node];
-    }
-}
-
-- (void)disableLink {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [[MEGASdkManager sharedMEGASdk] disableExportNode:self.node];
     }
 }
 
