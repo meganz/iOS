@@ -52,8 +52,8 @@
 "loggedOutFromAnotherLocation"="You have been logged out of this device from another location";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Server's SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
-/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
-"serversTooBusy"="Servers are too busy. Please wait...";
+/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
+"takingLongerThanExpected"="Taking longer than expected. Please wait...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Please log in to your account.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -614,6 +614,10 @@
 "emptyRubbishBin" = "Empty Rubbish Bin";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="All the items in the rubbish bin will be deleted";
+/* Text next to a switch that allows disabling the HTTP protocol for transfers */
+"dontUseHttp"="Don't use HTTP";
+/* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
+"transfersSectionFooter"="Enable this option only if your transfers don't start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Image and video downloads";
 /* Section title where you can enable the option 'Save images in gallery' */
@@ -1139,3 +1143,7 @@
 "Invalid application key"="Invalid application key";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Unknown error";
+/* Text shown in an alert when the user is about to change the language of the app */
+"languageRestartAlert"="You'll need to restart MEGA after changing the language";
+/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
+"languageRestartNotification"="Language changed. Tap to restart.";
