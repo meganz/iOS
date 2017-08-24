@@ -1,7 +1,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CopywriteWarningViewController : UIViewController
+@interface CopyrightWarningViewController : UIViewController
 
 @property (nonatomic) NSArray *nodesToExport;
 

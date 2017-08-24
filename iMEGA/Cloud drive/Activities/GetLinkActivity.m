@@ -1,6 +1,6 @@
 #import "GetLinkActivity.h"
 
-#import "CopywriteWarningViewController.h"
+#import "CopyrightWarningViewController.h"
 #import "GetLinkTableViewController.h"
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
@@ -53,7 +53,7 @@
                 [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:getLinkNavigationController animated:YES completion:nil];
             } else {
                 UINavigationController *cwNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CopywriteWarningNavigationControllerID"];
-                CopywriteWarningViewController *cwViewController = cwNavigationController.childViewControllers[0];
+                CopyrightWarningViewController *cwViewController = cwNavigationController.childViewControllers[0];
                 [cwViewController setNodesToExport:self.nodes];
                 [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:cwNavigationController animated:YES completion:nil];
             }
