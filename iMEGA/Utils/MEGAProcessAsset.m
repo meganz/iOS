@@ -72,8 +72,8 @@
                  [self deleteLocalFileIfExists:filePath];
                  long long imageSize = imageData.length;
                  if ([self hasFreeSpaceOnDiskForWriteFile:imageSize]) {
-                     if ([imageData writeToFile:filePath atomically:YES]) {
-                         NSError *error;
+                     NSError *error;
+                     if ([imageData writeToFile:filePath options:NSDataWritingFileProtectionNone error:&error]) {
                          NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:self.asset.creationDate forKey:NSFileModificationDate];
                          if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
                              MEGALogError(@"Set attributes failed with error: %@", error);
@@ -84,10 +84,6 @@
                          }
                      } else {
                          if (self.error) {
-                             NSDictionary *dict = @{NSLocalizedDescriptionKey:@"Unable to send the image",
-                                                    NSLocalizedFailureReasonErrorKey:@"Unable to write the image in the sandbox to upload it",
-                                                    NSLocalizedRecoverySuggestionErrorKey:@"Have you tried opening this image in Photos app?"};
-                             NSError *error = [NSError errorWithDomain:MEGAProcessAssetErrorDomain code:-1 userInfo:dict];
                              MEGALogError(@"Write to file failed with error %@", error);
                              self.error(error);
                          }
