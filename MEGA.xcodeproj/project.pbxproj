@@ -436,6 +436,7 @@
 		94B28C491F0E4865000331E6 /* libsodium.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCE1F0A52E90081BCE3 /* libsodium.a */; };
 		94B28C4A1F0E4865000331E6 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCC1F0A52E90081BCE3 /* libssl.a */; };
 		94B28C4B1F0E4865000331E6 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCD1F0A52E90081BCE3 /* libuv.a */; };
+		94E62E1A1F3C5252003A8DEF /* LanguageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E62E191F3C5252003A8DEF /* LanguageTableViewController.m */; };
 		A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */; };
 		A819B33F1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m */; };
 		A819B3421EAFA844004592F9 /* WarningTransferQuotaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* WarningTransferQuotaViewController.xib */; };
@@ -1132,6 +1133,8 @@
 		94B28C301F0E473E000331E6 /* libsodium.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsodium.a; path = ../sdk/bindings/ios/3rdparty/lib/libsodium.a; sourceTree = "<group>"; };
 		94B28C311F0E473E000331E6 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../sdk/bindings/ios/3rdparty/lib/libssl.a; sourceTree = "<group>"; };
 		94B28C321F0E473E000331E6 /* libuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuv.a; path = ../sdk/bindings/ios/3rdparty/lib/libuv.a; sourceTree = "<group>"; };
+		94E62E181F3C5252003A8DEF /* LanguageTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LanguageTableViewController.h; sourceTree = "<group>"; };
+		94E62E191F3C5252003A8DEF /* LanguageTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LanguageTableViewController.m; sourceTree = "<group>"; };
 		A81613FC1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGACreateAccountRequestDelegate.h; path = API/Requests/MEGACreateAccountRequestDelegate.h; sourceTree = "<group>"; };
 		A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGACreateAccountRequestDelegate.m; path = API/Requests/MEGACreateAccountRequestDelegate.m; sourceTree = "<group>"; };
 		A819B33D1EAFA7E2004592F9 /* WarningTransferQuotaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WarningTransferQuotaViewController.h; path = ViewControllers/WarningTransferQuotaViewController.h; sourceTree = "<group>"; };
@@ -1471,7 +1474,7 @@
 				942254D71EDC02CB0074C51A /* Extensions */,
 				418851EE1A66826800FDBA15 /* Frameworks */,
 				1373618B1A6664C300B740E8 /* Products */,
-				946B2D131F46CEA9009ED32C /* Recovered References */,
+				94E62E161F3C50C8003A8DEF /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1770,6 +1773,7 @@
 				E8534D481E1522D300911C40 /* Chat */,
 				41B3B82D1AD591A80093A88D /* Passcode */,
 				41AC66441AB1D488003FE8DA /* About */,
+				94E62E171F3C51F9003A8DEF /* Language */,
 				41ADA9EE1ADE7AB400641BB4 /* Feedback */,
 				41AA1A191AC07EB900D32691 /* Security Options */,
 				E87C98321CC411D400E2B9E6 /* Advanced */,
@@ -2585,12 +2589,21 @@
 			path = MEGAShare;
 			sourceTree = "<group>";
 		};
-		946B2D131F46CEA9009ED32C /* Recovered References */ = {
+		94E62E161F3C50C8003A8DEF /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
 				411C4C5D1BBEAFB3006FE451 /* CTAssetsPicker.xcassets */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		94E62E171F3C51F9003A8DEF /* Language */ = {
+			isa = PBXGroup;
+			children = (
+				94E62E181F3C5252003A8DEF /* LanguageTableViewController.h */,
+				94E62E191F3C5252003A8DEF /* LanguageTableViewController.m */,
+			);
+			path = Language;
 			sourceTree = "<group>";
 		};
 		A819B3401EAFA7E7004592F9 /* ViewControllers */ = {
@@ -3269,6 +3282,7 @@
 				417B5AAE1DEC792400A193D5 /* MOUser+CoreDataProperties.m in Sources */,
 				41E250141D79E9D400499A6C /* SAMKeychainQuery.m in Sources */,
 				41E150041DB7CB1400383645 /* UIImageView+MNZCategory.m in Sources */,
+				94E62E1A1F3C5252003A8DEF /* LanguageTableViewController.m in Sources */,
 				5B7B4CA31EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m in Sources */,
 				A86FC4FC1EBB4999006053A6 /* MEGAPhotoMediaItem.m in Sources */,
 				E879DFDA1D12A31D009B74FD /* UIDevice+MNZCategory.m in Sources */,
