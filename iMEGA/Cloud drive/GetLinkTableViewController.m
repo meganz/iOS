@@ -22,6 +22,12 @@
 @property (weak, nonatomic) IBOutlet UISwitch *expireSwitch;
 @property (weak, nonatomic) IBOutlet UIDatePicker *expireDatePicker;
 
+@property (weak, nonatomic) IBOutlet UILabel *linkWithoutKeyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *decryptionKeyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *linkWithKeyLabel;
+@property (weak, nonatomic) IBOutlet UIButton *pasteboardCopyButton;
+@property (weak, nonatomic) IBOutlet UILabel *expireDateLabel;
+
 @end
 
 @implementation GetLinkTableViewController
@@ -41,6 +47,7 @@
     self.isFree = NO;
     NSDate *tomorrow = [NSDate dateWithTimeInterval:(24*60*60) sinceDate:[NSDate date]];
     self.expireDatePicker.minimumDate = tomorrow;
+    [self.expireDatePicker setLocale:[NSLocale localeWithLocaleIdentifier:[[LocalizationSystem sharedLocalSystem] getLanguage]]];
     
     [[MEGASdkManager sharedMEGASdk] getAccountDetailsWithDelegate:self];
 
@@ -48,6 +55,12 @@
     for (MEGANode *node in self.nodesToExport) {
         [[MEGASdkManager sharedMEGASdk] exportNode:node delegate:self];
     }
+    
+    self.linkWithoutKeyLabel.text = AMLocalizedString(@"linkWithoutKey", @"This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT.");
+    self.decryptionKeyLabel.text = AMLocalizedString(@"decryptionKey", nil);
+    self.linkWithKeyLabel.text = AMLocalizedString(@"linkWithKey", @"This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE.");
+    [self.pasteboardCopyButton setTitle:AMLocalizedString(@"copy", nil) forState:UIControlStateNormal];
+    self.expireDateLabel.text = AMLocalizedString(@"expiryDate", @"A label in the Get Link dialog which allows the user to set an expiry date on their public link.");
 }
 
 #pragma mark - Private
@@ -131,11 +144,11 @@
     NSString *title = @"";
     switch (section) {
         case 0:
-            title = @"Export";
+            title = AMLocalizedString(@"export", @"Title for the Export section of the get link view");
             break;
             
         case 2:
-            title = self.isFree ? @"" : @"Options";
+            title = self.isFree ? @"" : AMLocalizedString(@"options", nil);
             break;
 
         default:
