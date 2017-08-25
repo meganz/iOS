@@ -11,6 +11,7 @@
 
 #import "CameraUploads.h"
 #import "Helper.h"
+#import "MEGASdk+MNZCategory.h"
 #import "MEGAIndexer.h"
 #import "MEGALogger.h"
 #import "MEGALoginRequestDelegate.h"
@@ -944,8 +945,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [self disableCameraUploads];
     
     if (!overquotaAlertView.visible) {
-        [[MEGASdkManager sharedMEGASdk] getAccountDetails];
         isOverquota = YES;
+        [[MEGASdkManager sharedMEGASdk] getAccountDetails];
     }
 }
 
@@ -1696,6 +1697,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 });
             }
             
+            isOverquota = NO;
+            [[MEGASdkManager sharedMEGASdk] getAccountDetails];
+            
             break;
         }
             
@@ -1784,6 +1788,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
             
         case MEGARequestTypeAccountDetails: {
+            
+            [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:[request megaAccountDetails]];
             
             if (isOverquota) {
                 if ([[request megaAccountDetails] type] > MEGAAccountTypeFree) {

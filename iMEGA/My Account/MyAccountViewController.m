@@ -7,6 +7,7 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
+#import "MEGASdk+MNZCategory.h"
 #import "MEGAImagePickerController.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
@@ -20,8 +21,6 @@
 #import "SettingsTableViewController.h"
 
 @interface MyAccountViewController () <MEGARequestDelegate, MEGAChatRequestDelegate> {
-    BOOL isAccountDetailsAvailable;
-    
     NSNumber *localSize;
     NSNumber *cloudDriveSize;
     NSNumber *rubbishBinSize;
@@ -105,7 +104,6 @@
     
     [self.logoutButton setTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") forState:UIControlStateNormal];
     
-    isAccountDetailsAvailable = NO;
     byteCountFormatter = [[NSByteCountFormatter alloc] init];
     [byteCountFormatter setCountStyle:NSByteCountFormatterCountStyleMemory];
     
@@ -135,6 +133,7 @@
     NSString *stringFromByteCount = [byteCountFormatter stringFromByteCount:[localSize longLongValue]];
     [_localUsedSpaceLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
     
+    [self setupWithAccountDetails];
     [[MEGASdkManager sharedMEGASdk] getAccountDetails];
     
     [self setUserAvatar];
@@ -258,6 +257,86 @@
     [self presentViewController:imagePickerController animated:YES completion:nil];
 }
 
+- (void)setupWithAccountDetails {
+    if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
+        MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
+        
+        self.megaAccountType = [accountDetails type];
+        cloudDriveSize = [accountDetails storageUsedForHandle:[[[MEGASdkManager sharedMEGASdk] rootNode] handle]];
+        rubbishBinSize = [accountDetails storageUsedForHandle:[[[MEGASdkManager sharedMEGASdk] rubbishNode] handle]];
+        
+        MEGANodeList *incomingShares = [[MEGASdkManager sharedMEGASdk] inShares];
+        NSUInteger count = [incomingShares.size unsignedIntegerValue];
+        long long incomingSharesSizeLongLong = 0;
+        for (NSUInteger i = 0; i < count; i++) {
+            MEGANode *node = [incomingShares nodeAtIndex:i];
+            incomingSharesSizeLongLong += [[[MEGASdkManager sharedMEGASdk] sizeForNode:node] longLongValue];
+        }
+        incomingSharesSize = [NSNumber numberWithLongLong:incomingSharesSizeLongLong];
+        
+        usedStorage = [accountDetails storageUsed];
+        maxStorage = [accountDetails storageMax];
+        
+        NSString *usedStorageString = [byteCountFormatter stringFromByteCount:[usedStorage longLongValue]];
+        long long availableStorage = maxStorage.longLongValue - usedStorage.longLongValue;
+        NSString *availableStorageString = [byteCountFormatter stringFromByteCount:(availableStorage < 0) ? 0 : availableStorage];
+        
+        [_usedSpaceLabel setAttributedText:[self textForSizeLabels:usedStorageString]];
+        [_availableSpaceLabel setAttributedText:[self textForSizeLabels:availableStorageString]];
+        
+        NSString *expiresString;
+        if ([accountDetails type]) {
+            [_freeView setHidden:YES];
+            [_proView setHidden:NO];
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"yyyy'-'MM'-'dd'"];
+            NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+            [formatter setLocale:locale];
+            NSDate *expireDate = [[NSDate alloc] initWithTimeIntervalSince1970:[accountDetails proExpiration]];
+            
+            expiresString = [NSString stringWithFormat:AMLocalizedString(@"expiresOn", @"(Expires on %@)"), [formatter stringFromDate:expireDate]];
+        } else {
+            [_proView setHidden:YES];
+            [_freeView setHidden:NO];
+        }
+        
+        switch ([accountDetails type]) {
+            case MEGAAccountTypeFree: {
+                break;
+            }
+                
+            case MEGAAccountTypeLite: {
+                [_proStatusLabel setText:[NSString stringWithFormat:@"PRO LITE"]];
+                [_proExpiryDateLabel setText:[NSString stringWithFormat:@"%@", expiresString]];
+                break;
+            }
+                
+            case MEGAAccountTypeProI: {
+                [_proStatusLabel setText:[NSString stringWithFormat:@"PRO I"]];
+                [_proExpiryDateLabel setText:[NSString stringWithFormat:@"%@", expiresString]];
+                break;
+            }
+                
+            case MEGAAccountTypeProII: {
+                [_proStatusLabel setText:[NSString stringWithFormat:@"PRO II"]];
+                [_proExpiryDateLabel setText:[NSString stringWithFormat:@"%@", expiresString]];
+                break;
+            }
+                
+            case MEGAAccountTypeProIII: {
+                [_proStatusLabel setText:[NSString stringWithFormat:@"PRO III"]];
+                [_proExpiryDateLabel setText:[NSString stringWithFormat:@"%@", expiresString]];
+                break;
+            }
+                
+            default:
+                break;
+        }
+    } else {
+        MEGALogError(@"Account details unavailable");
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)editTouchUpInside:(UIBarButtonItem *)sender {
@@ -333,7 +412,7 @@
 
 - (IBAction)usageTouchUpInside:(UIButton *)sender {
     
-    if (isAccountDetailsAvailable) {
+    if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
         NSArray *sizesArray = @[cloudDriveSize, rubbishBinSize, incomingSharesSize, usedStorage, maxStorage];
         
         UsageViewController *usageVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UsageViewControllerID"];
@@ -384,81 +463,7 @@
         }
             
         case MEGARequestTypeAccountDetails: {
-            self.megaAccountType = [[request megaAccountDetails] type];
-            
-            cloudDriveSize = [[request megaAccountDetails] storageUsedForHandle:[[[MEGASdkManager sharedMEGASdk] rootNode] handle]];
-            rubbishBinSize = [[request megaAccountDetails] storageUsedForHandle:[[[MEGASdkManager sharedMEGASdk] rubbishNode] handle]];
-            
-            MEGANodeList *incomingShares = [[MEGASdkManager sharedMEGASdk] inShares];
-            NSUInteger count = [incomingShares.size unsignedIntegerValue];
-            long long incomingSharesSizeLongLong = 0;
-            for (NSUInteger i = 0; i < count; i++) {
-                MEGANode *node = [incomingShares nodeAtIndex:i];
-                incomingSharesSizeLongLong += [[[MEGASdkManager sharedMEGASdk] sizeForNode:node] longLongValue];
-            }
-            incomingSharesSize = [NSNumber numberWithLongLong:incomingSharesSizeLongLong];
-            
-            usedStorage = [request.megaAccountDetails storageUsed];
-            maxStorage = [request.megaAccountDetails storageMax];
-            
-            NSString *usedStorageString = [byteCountFormatter stringFromByteCount:[usedStorage longLongValue]];
-            long long availableStorage = maxStorage.longLongValue - usedStorage.longLongValue;
-            NSString *availableStorageString = [byteCountFormatter stringFromByteCount:(availableStorage < 0) ? 0 : availableStorage];
-            
-            [_usedSpaceLabel setAttributedText:[self textForSizeLabels:usedStorageString]];
-            [_availableSpaceLabel setAttributedText:[self textForSizeLabels:availableStorageString]];
-            
-            NSString *expiresString;
-            if ([request.megaAccountDetails type]) {
-                [_freeView setHidden:YES];
-                [_proView setHidden:NO];
-                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                [formatter setDateFormat:@"yyyy'-'MM'-'dd'"];
-                NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-                [formatter setLocale:locale];
-                NSDate *expireDate = [[NSDate alloc] initWithTimeIntervalSince1970:[request.megaAccountDetails proExpiration]];
-                
-                expiresString = [NSString stringWithFormat:AMLocalizedString(@"expiresOn", @"(Expires on %@)"), [formatter stringFromDate:expireDate]];
-            } else {
-                [_proView setHidden:YES];
-                [_freeView setHidden:NO];
-            }
-            
-            switch ([request.megaAccountDetails type]) {
-                case MEGAAccountTypeFree: {
-                    break;
-                }
-                    
-                case MEGAAccountTypeLite: {
-                    [_proStatusLabel setText:[NSString stringWithFormat:@"PRO LITE"]];
-                    [_proExpiryDateLabel setText:[NSString stringWithFormat:@"%@", expiresString]];
-                    break;
-                }
-                    
-                case MEGAAccountTypeProI: {
-                    [_proStatusLabel setText:[NSString stringWithFormat:@"PRO I"]];
-                    [_proExpiryDateLabel setText:[NSString stringWithFormat:@"%@", expiresString]];
-                    break;
-                }
-                    
-                case MEGAAccountTypeProII: {
-                    [_proStatusLabel setText:[NSString stringWithFormat:@"PRO II"]];
-                    [_proExpiryDateLabel setText:[NSString stringWithFormat:@"%@", expiresString]];
-                    break;
-                }
-                    
-                case MEGAAccountTypeProIII: {
-                    [_proStatusLabel setText:[NSString stringWithFormat:@"PRO III"]];
-                    [_proExpiryDateLabel setText:[NSString stringWithFormat:@"%@", expiresString]];
-                    break;
-                }
-                    
-                default:
-                    break;
-            }
-            
-            isAccountDetailsAvailable = YES;
-            
+            [self setupWithAccountDetails];
             break;
         }
             
