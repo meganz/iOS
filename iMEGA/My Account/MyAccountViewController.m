@@ -131,7 +131,7 @@
     localSize = [NSNumber numberWithLongLong:(thumbsSize + previewsSize + offlineSize)];
     
     NSString *stringFromByteCount = [byteCountFormatter stringFromByteCount:[localSize longLongValue]];
-    [_localUsedSpaceLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
+    [self.localUsedSpaceLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
     
     [self setupWithAccountDetails];
     [[MEGASdkManager sharedMEGASdk] getAccountDetails];
@@ -281,13 +281,13 @@
         long long availableStorage = maxStorage.longLongValue - usedStorage.longLongValue;
         NSString *availableStorageString = [byteCountFormatter stringFromByteCount:(availableStorage < 0) ? 0 : availableStorage];
         
-        [_usedSpaceLabel setAttributedText:[self textForSizeLabels:usedStorageString]];
-        [_availableSpaceLabel setAttributedText:[self textForSizeLabels:availableStorageString]];
+        [self.usedSpaceLabel setAttributedText:[self textForSizeLabels:usedStorageString]];
+        [self.availableSpaceLabel setAttributedText:[self textForSizeLabels:availableStorageString]];
         
         NSString *expiresString;
         if ([accountDetails type]) {
-            [_freeView setHidden:YES];
-            [_proView setHidden:NO];
+            [self.freeView setHidden:YES];
+            [self.proView setHidden:NO];
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
             [formatter setDateFormat:@"yyyy'-'MM'-'dd'"];
             NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
@@ -296,8 +296,8 @@
             
             expiresString = [NSString stringWithFormat:AMLocalizedString(@"expiresOn", @"(Expires on %@)"), [formatter stringFromDate:expireDate]];
         } else {
-            [_proView setHidden:YES];
-            [_freeView setHidden:NO];
+            [self.proView setHidden:YES];
+            [self.freeView setHidden:NO];
         }
         
         switch ([accountDetails type]) {
@@ -306,26 +306,26 @@
             }
                 
             case MEGAAccountTypeLite: {
-                [_proStatusLabel setText:[NSString stringWithFormat:@"PRO LITE"]];
-                [_proExpiryDateLabel setText:[NSString stringWithFormat:@"%@", expiresString]];
+                [self.proStatusLabel setText:[NSString stringWithFormat:@"PRO LITE"]];
+                [self.proExpiryDateLabel setText:[NSString stringWithFormat:@"%@", expiresString]];
                 break;
             }
                 
             case MEGAAccountTypeProI: {
-                [_proStatusLabel setText:[NSString stringWithFormat:@"PRO I"]];
-                [_proExpiryDateLabel setText:[NSString stringWithFormat:@"%@", expiresString]];
+                [self.proStatusLabel setText:[NSString stringWithFormat:@"PRO I"]];
+                [self.proExpiryDateLabel setText:[NSString stringWithFormat:@"%@", expiresString]];
                 break;
             }
                 
             case MEGAAccountTypeProII: {
-                [_proStatusLabel setText:[NSString stringWithFormat:@"PRO II"]];
-                [_proExpiryDateLabel setText:[NSString stringWithFormat:@"%@", expiresString]];
+                [self.proStatusLabel setText:[NSString stringWithFormat:@"PRO II"]];
+                [self.proExpiryDateLabel setText:[NSString stringWithFormat:@"%@", expiresString]];
                 break;
             }
                 
             case MEGAAccountTypeProIII: {
-                [_proStatusLabel setText:[NSString stringWithFormat:@"PRO III"]];
-                [_proExpiryDateLabel setText:[NSString stringWithFormat:@"%@", expiresString]];
+                [self.proStatusLabel setText:[NSString stringWithFormat:@"PRO III"]];
+                [self.proExpiryDateLabel setText:[NSString stringWithFormat:@"%@", expiresString]];
                 break;
             }
                 
