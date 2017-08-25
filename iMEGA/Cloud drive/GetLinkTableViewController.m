@@ -4,6 +4,7 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
+#import "MEGASdk+MNZCategory.h"
 #import "MEGASDKManager.h"
 
 @interface GetLinkTableViewController () <MEGARequestDelegate>
@@ -49,7 +50,7 @@
     self.expireDatePicker.minimumDate = tomorrow;
     [self.expireDatePicker setLocale:[NSLocale localeWithLocaleIdentifier:[[LocalizationSystem sharedLocalSystem] getLanguage]]];
     
-    [[MEGASdkManager sharedMEGASdk] getAccountDetailsWithDelegate:self];
+    self.isFree = ![[MEGASdkManager sharedMEGASdk] mnz_isProAccount];
 
     self.pending = self.nodesToExport.count;
     for (MEGANode *node in self.nodesToExport) {
@@ -191,11 +192,6 @@
                 }
             }
             break;
-        }
-            
-        case MEGARequestTypeAccountDetails: {
-            self.isFree = [[request megaAccountDetails] type] == MEGAAccountTypeFree;
-            [self.tableView reloadData];
         }
             
         default:

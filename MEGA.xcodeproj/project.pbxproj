@@ -296,6 +296,7 @@
 		942ED2B81EDEE62800C9908D /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229281EDD84D9007DB542 /* CoreMedia.framework */; };
 		942ED2B91EDEE68D00C9908D /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291B1EDD83E9007DB542 /* ImageIO.framework */; };
 		942ED2BA1EDEE6A900C9908D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291D1EDD83FF007DB542 /* MobileCoreServices.framework */; };
+		942F4FD81F500A8F001FC4AC /* MEGASdk+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */; };
 		9432290B1EDD8271007DB542 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432290A1EDD8271007DB542 /* QuartzCore.framework */; };
 		9432290D1EDD829F007DB542 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432290C1EDD829F007DB542 /* CoreGraphics.framework */; };
 		9432290F1EDD82CF007DB542 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432290E1EDD82CF007DB542 /* Security.framework */; };
@@ -1089,6 +1090,8 @@
 		942255081EDC04BA0074C51A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = iMEGA/Extensions/MEGAPicker/Info.plist; sourceTree = SOURCE_ROOT; };
 		9422550B1EDC04DC0074C51A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = iMEGA/Extensions/MEGAPicker/Base.lproj/MainInterface.storyboard; sourceTree = SOURCE_ROOT; };
 		942ED2B01EDEE58100C9908D /* MEGAPickerFileProvider-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MEGAPickerFileProvider-PrefixHeader.pch"; path = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch"; sourceTree = SOURCE_ROOT; };
+		942F4FD61F500A8F001FC4AC /* MEGASdk+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGASdk+MNZCategory.h"; sourceTree = "<group>"; };
+		942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGASdk+MNZCategory.m"; sourceTree = "<group>"; };
 		942FD07A1EF3EEA000E99FB1 /* MEGAShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MEGAShare.entitlements; path = iMEGA/Extensions/MEGAShare/MEGAShare.entitlements; sourceTree = SOURCE_ROOT; };
 		9432290A1EDD8271007DB542 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		9432290C1EDD829F007DB542 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -2256,6 +2259,8 @@
 				4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */,
 				A81A85291F0F6F5100702353 /* UIScreen+MNZCategory.h */,
 				A81A852A1F0F6F5100702353 /* UIScreen+MNZCategory.m */,
+				942F4FD61F500A8F001FC4AC /* MEGASdk+MNZCategory.h */,
+				942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -3299,6 +3304,7 @@
 				41D21E621D01AEC3002E6296 /* CTAssetSelectionLabel.m in Sources */,
 				E8404E151D9BBFD100B196FA /* ForgotPasswordViewController.m in Sources */,
 				E83E102A1E1582E8002F3E2E /* ChatStatusTableViewController.m in Sources */,
+				942F4FD81F500A8F001FC4AC /* MEGASdk+MNZCategory.m in Sources */,
 				E85EB30D1DF58EBA0066AC68 /* VerifyCredentialsViewController.m in Sources */,
 				E8F7917F1BC5754A00C58676 /* MEGAActivityItemProvider.m in Sources */,
 				A8EC55B41F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m in Sources */,
