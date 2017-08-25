@@ -1,12 +1,10 @@
 
 #import "MyAccountHallViewController.h"
 
-#import "MEGASdkManager.h"
-#import "UIImageView+MNZCategory.h"
-
 #import "ContactsViewController.h"
 #import "OfflineTableViewController.h"
 #import "MEGAUser+MNZCategory.h"
+#import "MEGASdkManager.h"
 #import "MyAccountHallTableViewCell.h"
 #import "MyAccountViewController.h"
 #import "SettingsTableViewController.h"
@@ -15,10 +13,9 @@
 @interface MyAccountHallViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *profileView;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *viewAndEditProfileLabel;
 @property (weak, nonatomic) IBOutlet UIButton *viewAndEditProfileButton;
-@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -33,11 +30,7 @@
     
     self.navigationItem.title = AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details");
     
-    self.nameLabel.text = [[[MEGASdkManager sharedMEGASdk] myUser] mnz_fullName];
     self.viewAndEditProfileLabel.text = AMLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
-    
-    MEGAUser *myUser = [[MEGASdkManager sharedMEGASdk] myUser];
-    [self.avatarImageView mnz_setImageForUserHandle:myUser.handle];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -146,6 +139,5 @@
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-
 
 @end

@@ -33,7 +33,7 @@
                 <navigationController id="goA-hy-Wkg" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" tag="4" title="My Account" image="tabBarItem:aWE-TN-bqV:image" selectedImage="myAccountIcon" id="aWE-TN-bqV"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="PlA-rl-aKy">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="PlA-rl-aKy">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -91,7 +91,7 @@
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="myAccountDisclosureIndicatorRed" translatesAutoresizingMaskIntoConstraints="NO" id="Zd2-ds-fPD">
-                                        <rect key="frame" x="148" y="114" width="12" height="12"/>
+                                        <rect key="frame" x="148" y="114.33333333333333" width="12" height="12"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -235,7 +235,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Usage" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NW6-GD-9fB">
-                                        <rect key="frame" x="91.666666666666671" y="82" width="30" height="12"/>
+                                        <rect key="frame" x="92" y="82" width="30" height="12"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="80" id="NDK-I1-B5d"/>
                                             <constraint firstAttribute="height" constant="12" id="fRk-Dx-ARA"/>
@@ -448,7 +448,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account Type" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oAz-KQ-toW" userLabel="Account Type Label">
-                                        <rect key="frame" x="169.66666666666666" y="79" width="77.666666666666686" height="14"/>
+                                        <rect key="frame" x="170" y="79" width="77.666666666666657" height="14"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="CRo-V7-6cp"/>
                                         </constraints>
@@ -465,7 +465,7 @@
                                         <rect key="frame" x="0.0" y="94" width="414" height="80"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Free" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vXH-an-191" userLabel="FREE Status Label">
-                                                <rect key="frame" x="188.33333333333337" y="0.0" width="37.666666666666657" height="20"/>
+                                                <rect key="frame" x="188.66666666666666" y="0.0" width="37.666666666666686" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="QdK-4m-mO6"/>
                                                 </constraints>
@@ -731,6 +731,7 @@
                         <outlet property="accountTypeLabelTopLayoutConstraint" destination="Omr-Pu-JKa" id="J02-s4-K7x"/>
                         <outlet property="availableLabel" destination="3dl-nH-kCx" id="vnp-Mg-Wbf"/>
                         <outlet property="availableSpaceLabel" destination="njd-E9-kUK" id="uwc-Vs-Rvc"/>
+                        <outlet property="avatarImageView" destination="fhg-mo-BVo" id="5Ec-Wg-V6L"/>
                         <outlet property="editBarButtonItem" destination="znj-ZT-mdS" id="4o4-kL-N6f"/>
                         <outlet property="emailLabel" destination="Xs0-A0-XA4" id="6dk-6p-vOd"/>
                         <outlet property="freeStatusLabel" destination="vXH-an-191" id="ERX-ew-17I"/>
@@ -756,7 +757,6 @@
                         <outlet property="usedLabel" destination="2XS-o5-QAe" id="Gry-Ba-vGT"/>
                         <outlet property="usedLabelTopLayoutConstraint" destination="Y2Y-vK-vWk" id="UtM-I3-cla"/>
                         <outlet property="usedSpaceLabel" destination="AFi-Vi-W4J" id="ynf-yE-oJd"/>
-                        <outlet property="userAvatarImageView" destination="fhg-mo-BVo" id="ay7-Ki-kQL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OMo-Y0-P9R" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -777,7 +777,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose from one of the plans below:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ARR-TB-q8Q">
-                                    <rect key="frame" x="103.66666666666669" y="16" width="207.66666666666663" height="14"/>
+                                    <rect key="frame" x="104" y="16" width="207.66666666666669" height="14"/>
                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                     <color key="textColor" red="0.60000002384185791" green="0.60000002384185791" blue="0.60000002384185791" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
@@ -1748,7 +1748,7 @@
             <objects>
                 <navigationController storyboardIdentifier="ChangeNameNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" id="rqD-yU-4HN" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="OhY-MV-htY">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="OhY-MV-htY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
