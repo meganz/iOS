@@ -772,6 +772,8 @@
 "myAccount"="My Account";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="View and edit profile";
+/* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
+"profile"="Profile";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Logout";
 /* String shown when you are logging out of your account. */

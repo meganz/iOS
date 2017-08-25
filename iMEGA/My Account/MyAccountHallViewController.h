@@ -1,6 +1,6 @@
 
-#import <UIKit/UIKit.h>
+#import "MyAccountBaseViewController.h"
 
-@interface MyAccountHallViewController : UIViewController
+@interface MyAccountHallViewController : MyAccountBaseViewController
 
 @end
