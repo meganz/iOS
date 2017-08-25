@@ -192,8 +192,7 @@ static CameraUploads *instance = nil;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         NSInteger cameraUploadsTabPosition = 1;
-        UIViewController *cameraUploadsVC = [self.tabBarController.viewControllers objectAtIndex:cameraUploadsTabPosition];
-        cameraUploadsVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", self.assetsOperationQueue.operationCount];
+        [[self.tabBarController.viewControllers objectAtIndex:cameraUploadsTabPosition] tabBarItem].badgeValue = value;
     });
 }
 
