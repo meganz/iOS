@@ -290,6 +290,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 [[UIApplication sharedApplication] setStatusBarHidden:NO];
             }
         }
+        
+        if ([sharedUserDefaults boolForKey:@"useHttpsOnly"]) {
+            [[MEGASdkManager sharedMEGASdk] useHttpsOnly:YES];
+        }
     } else {
         // Resume ephemeral account
         NSString *sessionId = [SAMKeychain passwordForService:@"MEGA" account:@"sessionId"];
@@ -929,10 +933,19 @@ typedef NS_ENUM(NSUInteger, URLType) {
     timerAPI_EAGAIN = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(showServersTooBusy) userInfo:nil repeats:NO];
 }
 
+- (void)invalidateTimerAPI_EAGAIN {
+    [timerAPI_EAGAIN invalidate];
+    
+    if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
+        LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
+        launchVC.label.text = @"";
+    }
+}
+
 - (void)showServersTooBusy {
     if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
         LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
-        [launchVC.label setText:AMLocalizedString(@"serversTooBusy", nil)];
+        launchVC.label.text = AMLocalizedString(@"takingLongerThanExpected", @"Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in");
     }
 }
 
@@ -1527,6 +1540,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
     if ([request type] == MEGARequestTypeFetchNodes){
         if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
+            [self invalidateTimerAPI_EAGAIN];
+            
             LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
             float progress = [[request transferredBytes] floatValue] / [[request totalBytes] floatValue];
             
@@ -1667,7 +1682,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     switch ([request type]) {
         case MEGARequestTypeLogin: {
-            [timerAPI_EAGAIN invalidate];
+            [self invalidateTimerAPI_EAGAIN];
             
             if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
                 isAccountFirstLogin = NO;
@@ -1684,7 +1699,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [[SKPaymentQueue defaultQueue] addTransactionObserver:[MEGAPurchase sharedInstance]];
             [[MEGASdkManager sharedMEGASdk] enableTransferResumption];
             [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;
-            [timerAPI_EAGAIN invalidate];
+            [self invalidateTimerAPI_EAGAIN];
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
                 [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES];
