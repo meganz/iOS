@@ -262,8 +262,14 @@
     self.timerAPI_EAGAIN = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(showServersTooBusy) userInfo:nil repeats:NO];
 }
 
+- (void)invalidateTimerAPI_EAGAIN {
+    [self.timerAPI_EAGAIN invalidate];
+    
+    self.launchVC.label.text = @"";
+}
+
 - (void)showServersTooBusy {
-    [self.launchVC.label setText:AMLocalizedString(@"serversTooBusy", @"Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in")];
+    self.launchVC.label.text = AMLocalizedString(@"takingLongerThanExpected", @"Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in");
 }
 
 #pragma mark BrowserViewControllerDelegate
@@ -316,6 +322,8 @@
 
 - (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
     if (request.type == MEGARequestTypeFetchNodes) {
+        [self invalidateTimerAPI_EAGAIN];
+        
         float progress = (request.transferredBytes.floatValue / request.totalBytes.floatValue);
         
         if (self.isFirstFetchNodesRequestUpdate) {
@@ -335,11 +343,15 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     switch ([request type]) {
         case MEGARequestTypeLogin: {
+            [self invalidateTimerAPI_EAGAIN];
+            
             [api fetchNodesWithDelegate:self];
             break;
         }
             
         case MEGARequestTypeFetchNodes: {
+            [self invalidateTimerAPI_EAGAIN];
+            
             [self presentDocumentPicker];
             break;
         }

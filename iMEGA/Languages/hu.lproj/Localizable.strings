@@ -52,8 +52,6 @@
 "loggedOutFromAnotherLocation"="Ebből a készülékből másik helyről jelentkezett ki";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="A szerver SSL kulcsa nem erősíthető meg. Lehetséges, hogy közbeékelődéses támadás áldozata.";
-/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
-"serversTooBusy"="A szerverek túlterheltek. Kérjük várjon...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Kérlek jelentkezz be fiókodba.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
