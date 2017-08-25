@@ -4,10 +4,11 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
+#import "MEGAExportRequestDelegate.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGASDKManager.h"
 
-@interface GetLinkTableViewController () <MEGARequestDelegate>
+@interface GetLinkTableViewController ()
 
 @property (nonatomic) NSMutableArray *fullLinks;
 @property (nonatomic) NSMutableArray *links;
@@ -29,6 +30,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *pasteboardCopyButton;
 @property (weak, nonatomic) IBOutlet UILabel *expireDateLabel;
 
+@property (nonatomic) MEGAExportRequestDelegate *exportDelegate;
+
 @end
 
 @implementation GetLinkTableViewController
@@ -37,6 +40,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.exportDelegate = [[MEGAExportRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+        NSString *fullLink = [request link];
+        
+        NSArray *components = [fullLink componentsSeparatedByString:@"!"];
+        NSString *link = [NSString stringWithFormat:@"%@!%@", components[0], components[1]];
+        NSString *key = components[2];
+        
+        [self.fullLinks addObject:fullLink];
+        [self.links addObject:link];
+        [self.keys addObject:key];
+        
+        [self updateTextToCopy];
+        
+        if (--self.pending==0) {
+            [SVProgressHUD dismiss];
+        }
+    } multipleLinks:self.nodesToExport.count > 1];
     
     self.fullLinks = [NSMutableArray new];
     self.links = [NSMutableArray new];
@@ -54,7 +75,7 @@
 
     self.pending = self.nodesToExport.count;
     for (MEGANode *node in self.nodesToExport) {
-        [[MEGASdkManager sharedMEGASdk] exportNode:node delegate:self];
+        [[MEGASdkManager sharedMEGASdk] exportNode:node delegate:self.exportDelegate];
     }
     
     self.linkWithoutKeyLabel.text = AMLocalizedString(@"linkWithoutKey", @"This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT.");
@@ -88,9 +109,9 @@
     self.pending = self.nodesToExport.count;
     for (MEGANode *node in self.nodesToExport) {
         if (sender.isOn) {
-            [[MEGASdkManager sharedMEGASdk] exportNode:node expireTime:self.expireDatePicker.date delegate:self];
+            [[MEGASdkManager sharedMEGASdk] exportNode:node expireTime:self.expireDatePicker.date delegate:self.exportDelegate];
         } else {
-            [[MEGASdkManager sharedMEGASdk] exportNode:node delegate:self];
+            [[MEGASdkManager sharedMEGASdk] exportNode:node delegate:self.exportDelegate];
         }
     }
 }
@@ -98,7 +119,7 @@
 - (IBAction)expireDateChanged:(UIDatePicker *)sender {
     self.pending = self.nodesToExport.count;
     for (MEGANode *node in self.nodesToExport) {
-        [[MEGASdkManager sharedMEGASdk] exportNode:node expireTime:self.expireDatePicker.date delegate:self];
+        [[MEGASdkManager sharedMEGASdk] exportNode:node expireTime:self.expireDatePicker.date delegate:self.exportDelegate];
     }
 }
 
@@ -156,47 +177,6 @@
             break;
     }
     return title;
-}
-
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    if ([request type] == MEGARequestTypeExport && [request access]) {
-        NSString *status = self.pending > 1 ? AMLocalizedString(@"generatingLinks", nil) : AMLocalizedString(@"generatingLink", nil);
-        [SVProgressHUD showWithStatus:status];
-    }
-}
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if ([error type]) {
-        [SVProgressHUD showErrorWithStatus:error.name];
-        return;
-    }
-    
-    switch ([request type]) {
-        case MEGARequestTypeExport: {
-            if ([request access]) {
-                NSString *fullLink = [request link];
-                
-                NSArray *components = [fullLink componentsSeparatedByString:@"!"];
-                NSString *link = [NSString stringWithFormat:@"%@!%@", components[0], components[1]];
-                NSString *key = components[2];
-                
-                [self.fullLinks addObject:fullLink];
-                [self.links addObject:link];
-                [self.keys addObject:key];
-                
-                [self updateTextToCopy];
-                if (--self.pending==0) {
-                    [SVProgressHUD dismiss];
-                }
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
 }
 
 @end
