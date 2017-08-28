@@ -218,6 +218,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     isFetchNodesDone = NO;
     
     if (sessionV3) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TabsOrderInTabBar"];
+        
         NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
         if (![sharedUserDefaults boolForKey:@"extensions"]) {
             [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
@@ -228,8 +230,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [[LTHPasscodeViewController sharedUser] resetPasscode];
             [sharedUserDefaults setBool:YES forKey:@"extensions-passcode"];
         }
+        
         [self registerForNotifications];
+        
         isAccountFirstLogin = NO;
+        
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"IsChatEnabled"] == nil) {
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
             [[NSUserDefaults standardUserDefaults] synchronize];
@@ -495,10 +500,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
     
-    [[UIBarButtonItem appearance] setTintColor:[UIColor mnz_redD90007]];
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
-    UIImage *backButtonImage = [[UIImage imageNamed:@"backArrow"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 0)];
-    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButtonImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    if([[UIDevice currentDevice] systemVersionLessThanVersion:@"11.0"]) {
+        [[UIBarButtonItem appearance] setTintColor:[UIColor mnz_redD90007]];
+        UIImage *backButtonImage = [[UIImage imageNamed:@"backArrow"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 0)];
+        [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButtonImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    }
     
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:8.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]} forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:8.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateSelected];
@@ -1400,13 +1407,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     }
                     [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
                 }
-            }
-            
-            if ([user hasChangedType:MEGAUserChangeTypeFirstname]) {
-                [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeFirstname];
-            }
-            if ([user hasChangedType:MEGAUserChangeTypeLastname]) {
-                [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname];
+                
+                if ([user hasChangedType:MEGAUserChangeTypeFirstname]) {
+                    [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeFirstname];
+                }
+                if ([user hasChangedType:MEGAUserChangeTypeLastname]) {
+                    [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname];
+                }
             }
         } else {
             if (user.changes) {
@@ -1883,6 +1890,23 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     
                     if (request.paramType == MEGAUserAttributeLastname) {
                         [[MEGAStore shareInstance] insertUserWithUserHandle:user.handle firstname:nil lastname:request.text email:user.email];
+                    }
+                }
+            }
+            break;
+        }
+            
+        case MEGARequestTypeSetAttrUser: {
+            MEGAUser *user = [[MEGASdkManager sharedMEGASdk] myUser];
+            if (user) {
+                MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:user.handle];
+                if (moUser) {
+                    if (request.paramType == MEGAUserAttributeFirstname && ![request.text isEqualToString:moUser.firstname]) {
+                        [[MEGAStore shareInstance] updateUserWithUserHandle:user.handle firstname:request.text];
+                    }
+                    
+                    if (request.paramType == MEGAUserAttributeLastname && ![request.text isEqualToString:moUser.lastname]) {
+                        [[MEGAStore shareInstance] updateUserWithUserHandle:user.handle lastname:request.text];
                     }
                 }
             }

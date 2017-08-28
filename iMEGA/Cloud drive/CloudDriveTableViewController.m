@@ -20,6 +20,7 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
+#import "UIViewController+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "DetailsNodeInfoViewController.h"
@@ -46,6 +47,7 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sortByBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *negativeSpaceBarButtonItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
@@ -136,6 +138,14 @@
     }
     
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
+    
+    // Custom navigation bar back button item:
+    self.backBarButtonItem = [self mnz_prepareCustomBackBarButtonItem];
+    if (self.parentNode.handle != [[MEGASdkManager sharedMEGASdk] rootNode].handle) {
+        self.navigationItem.leftBarButtonItems = @[self.backBarButtonItem];
+    } else {
+        self.navigationItem.leftBarButtonItems = @[];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -1087,7 +1097,11 @@
         
         allNodesSelected = NO;
         self.selectedNodesArray = nil;
-        self.navigationItem.leftBarButtonItems = @[];
+        if (self.parentNode.handle != [[MEGASdkManager sharedMEGASdk] rootNode].handle) {
+            self.navigationItem.leftBarButtonItems = @[self.backBarButtonItem];
+        } else {
+            self.navigationItem.leftBarButtonItems = @[];
+        }
     }
     
     if (!self.selectedNodesArray) {
