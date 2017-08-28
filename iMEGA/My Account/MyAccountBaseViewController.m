@@ -14,7 +14,7 @@
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
-@interface MyAccountBaseViewController () <MEGARequestDelegate>
+@interface MyAccountBaseViewController ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 
@@ -37,7 +37,9 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
+    if (self.presentedViewController == nil) {
+        [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
+    }
     
     [self setUserAvatar];
     self.nameLabel.text = [[[MEGASdkManager sharedMEGASdk] myUser] mnz_fullName];
@@ -47,9 +49,7 @@
     [super viewWillDisappear:animated];
     
     if (self.presentedViewController == nil) {
-        if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
-            [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
-        }
+        [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
     }
 }
 
@@ -168,6 +168,10 @@
             
             if (request.file) {
                 [self setUserAvatar];
+            }
+            
+            if (request.paramType == MEGAUserAttributeFirstname || request.paramType == MEGAUserAttributeLastname) {
+                self.nameLabel.text = [[[MEGASdkManager sharedMEGASdk] myUser] mnz_fullName];
             }
             break;
         }
