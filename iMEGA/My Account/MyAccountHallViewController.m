@@ -10,7 +10,7 @@
 #import "SettingsTableViewController.h"
 #import "TransfersViewController.h"
 
-@interface MyAccountHallViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface MyAccountHallViewController () <UITableViewDataSource, UITableViewDelegate, MEGAGlobalDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *profileView;
 
@@ -36,7 +36,15 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    
     [self.tableView reloadData];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
 #pragma mark - IBActions
@@ -138,6 +146,12 @@
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - MEGAGlobalDelegate
+
+- (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 @end
