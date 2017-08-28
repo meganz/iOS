@@ -738,7 +738,7 @@ static MEGAIndexer *indexer;
 + (void)thumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell {
     NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
-        [Helper setThumbnailForNode:node api:api cell:cell];
+        [Helper setThumbnailForNode:node api:api cell:cell reindexNode:NO];
     } else {
         [api getThumbnailNode:node destinationFilePath:thumbnailFilePath];
         if ([cell isKindOfClass:[NodeTableViewCell class]]) {
@@ -751,7 +751,7 @@ static MEGAIndexer *indexer;
     }
 }
 
-+ (void)setThumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell {
++ (void)setThumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell reindexNode:(BOOL)reindex {
     NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
     if ([cell isKindOfClass:[NodeTableViewCell class]]) {
         NodeTableViewCell *nodeTableViewCell = cell;
@@ -762,7 +762,7 @@ static MEGAIndexer *indexer;
         [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
         photoCollectionViewCell.thumbnailPlayImageView.hidden = node.name.mnz_videoPathExtension ? NO : YES;
     }
-    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"9.0"]) {
+    if (reindex && [[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"9.0"]) {
         [indexer index:node];
     }
 }
