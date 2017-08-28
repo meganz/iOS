@@ -1,7 +1,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MyAccountBaseViewController : UIViewController
+@interface MyAccountBaseViewController : UIViewController <MEGARequestDelegate>
 
 - (void)presentEditProfileAlertController;
 
