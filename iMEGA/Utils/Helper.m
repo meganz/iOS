@@ -1150,7 +1150,6 @@ static MEGAIndexer *indexer;
     [[Helper downloadingNodes] removeAllObjects];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DownloadedNodes"];
     
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TabsOrderInTabBar"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TransfersPaused"];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSavePhotoToGalleryEnabled"];

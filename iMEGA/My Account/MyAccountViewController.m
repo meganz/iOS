@@ -1,25 +1,16 @@
 #import "MyAccountViewController.h"
 
-#import <AVFoundation/AVCaptureDevice.h>
-#import <AVFoundation/AVMediaFormat.h>
-
 #import "UIImage+GKContact.h"
-#import "SVProgressHUD.h"
 
 #import "Helper.h"
-#import "MEGAImagePickerController.h"
-#import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
-#import "MEGAUser+MNZCategory.h"
 #import "NSString+MNZCategory.h"
-#import "UIAlertAction+MNZCategory.h"
-#import "UIImageView+MNZCategory.h"
 
 #import "UsageViewController.h"
 #import "SettingsTableViewController.h"
 
-@interface MyAccountViewController () <MEGARequestDelegate, MEGAChatRequestDelegate> {
+@interface MyAccountViewController () <MEGARequestDelegate> {
     BOOL isAccountDetailsAvailable;
     
     NSNumber *localSize;
@@ -37,12 +28,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *usageButton;
 @property (weak, nonatomic) IBOutlet UILabel *usageLabel;
 
-@property (weak, nonatomic) IBOutlet UIImageView *userAvatarImageView;
-
 @property (weak, nonatomic) IBOutlet UIButton *settingsButton;
 @property (weak, nonatomic) IBOutlet UILabel *settingsLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *emailLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *localLabel;
@@ -86,7 +74,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.navigationItem setTitle:AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details")];
+    self.navigationItem.title = AMLocalizedString(@"profile", @"Label for any 'Profile' button, link, text, title, etc. - (String as short as possible).");
     
     self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
     
@@ -124,8 +112,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
-    
     long long thumbsSize = [Helper sizeOfFolderAtPath:[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"]];
     long long previewsSize = [Helper sizeOfFolderAtPath:[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"]];
     long long offlineSize = [Helper sizeOfFolderAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]];
@@ -137,20 +123,7 @@
     
     [[MEGASdkManager sharedMEGASdk] getAccountDetails];
     
-    [self setUserAvatar];
-    
-    self.nameLabel.text = [[[MEGASdkManager sharedMEGASdk] myUser] mnz_fullName];
     self.emailLabel.text = [[MEGASdkManager sharedMEGASdk] myEmail];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    if (self.presentedViewController == nil) {
-        if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
-            [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
-        }
-    }
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -158,11 +131,6 @@
 }
 
 #pragma mark - Private
-
-- (void)setUserAvatar {
-    MEGAUser *myUser = [[MEGASdkManager sharedMEGASdk] myUser];
-    [self.userAvatarImageView mnz_setImageForUserHandle:myUser.handle];
-}
 
 - (NSMutableAttributedString *)textForSizeLabels:(NSString *)stringFromByteCount {
     
@@ -202,98 +170,10 @@
     return firstPartMutableAttributedString;
 }
 
-- (void)presentChangeAvatarAlertController {
-    UIAlertController *changeAvatarAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [changeAvatarAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }]];
-    
-    UIAlertAction *fromPhotosAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"choosePhotoVideo", @"Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-    }];
-    [fromPhotosAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [changeAvatarAlertController addAction:fromPhotosAlertAction];
-    
-    UIAlertAction *captureAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"capturePhotoVideo", @"Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType: completionHandler:)]) {
-            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL permissionGranted) {
-                if (permissionGranted) {
-                    // Permission has been granted. Use dispatch_async for any UI updating code because this block may be executed in a thread.
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
-                    });
-                } else {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        UIAlertController *cameraPermissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"cameraPermissions", @"Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it") preferredStyle:UIAlertControllerStyleAlert];
-                        [cameraPermissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                            [self dismissViewControllerAnimated:YES completion:nil];
-                        }]];
-                        [cameraPermissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                            //Check Camera permissions
-                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-                        }]];
-                        
-                        [self presentViewController:cameraPermissionsAlertController animated:YES completion:nil];
-                    });
-                }
-            }];
-        }
-    }];
-    [captureAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [changeAvatarAlertController addAction:captureAlertAction];
-    
-    changeAvatarAlertController.modalPresentationStyle = UIModalPresentationPopover;
-    changeAvatarAlertController.popoverPresentationController.barButtonItem = self.editBarButtonItem;
-    changeAvatarAlertController.popoverPresentationController.sourceView = self.view;
-    
-    [self presentViewController:changeAvatarAlertController animated:YES completion:nil];
-}
-
-- (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType {
-    MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToChangeAvatarWithSourceType:sourceType];
-    imagePickerController.modalPresentationStyle = UIModalPresentationPopover;
-    imagePickerController.popoverPresentationController.sourceView = self.view;
-    imagePickerController.popoverPresentationController.barButtonItem = self.editBarButtonItem;
-    
-    [self presentViewController:imagePickerController animated:YES completion:nil];
-}
-
 #pragma mark - IBActions
 
 - (IBAction)editTouchUpInside:(UIBarButtonItem *)sender {
-    UIAlertController *editAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [editAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }]];
-    
-    UIAlertAction *changeNameAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"changeName", @"Button title that allows the user change his name") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        MEGANavigationController *changeNameNavigationController = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"ChangeNameNavigationControllerID"];
-        [self presentViewController:changeNameNavigationController animated:YES completion:nil];
-    }];
-    [changeNameAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [editAlertController addAction:changeNameAlertAction];
-    
-    UIAlertAction *changeAvatarAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"changeAvatar", @"button that allows the user the change his avatar") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self presentChangeAvatarAlertController];
-    }];
-    [changeAvatarAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
-    [editAlertController addAction:changeAvatarAlertAction];
-    
-    NSString *myUserBase64Handle = [MEGASdk base64HandleForUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
-    NSString *myAvatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:myUserBase64Handle];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:myAvatarFilePath]) {
-        UIAlertAction *removeAvatarAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"removeAvatar", @"Button to remove avatar. Try to keep the text short (as in English)") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [[MEGASdkManager sharedMEGASdk] setAvatarUserWithSourceFilePath:nil];
-        }];
-        [removeAvatarAlertAction mnz_setTitleTextColor:[UIColor mnz_redD90007]];
-        [editAlertController addAction:removeAvatarAlertAction];
-    }
-    
-    editAlertController.modalPresentationStyle = UIModalPresentationPopover;
-    editAlertController.popoverPresentationController.barButtonItem = self.editBarButtonItem;
-    editAlertController.popoverPresentationController.sourceView = self.view;
-    
-    [self presentViewController:editAlertController animated:YES completion:nil];
+    [super presentEditProfileAlertController];
 }
 
 - (IBAction)logoutTouchUpInside:(UIButton *)sender {
@@ -344,45 +224,20 @@
 }
 
 - (IBAction)settingsTouchUpInside:(UIButton *)sender {
-    [Helper changeToViewController:[SettingsTableViewController class] onTabBarController:self.tabBarController];
+    SettingsTableViewController *settingsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"SettingsTableViewControllerID"];
+    [self.navigationController pushViewController:settingsTVC animated:YES];
 }
 
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    [super onRequestFinish:api request:request error:error];
+    
     if ([error type]) {
-        if (request.type == MEGARequestTypeSetAttrFile) {
-            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
-        }
-        
         return;
     }
     
     switch ([request type]) {
-        case MEGARequestTypeGetAttrUser: {
-            if (request.file) {
-                [self setUserAvatar];
-            }
-            break;
-        }
-            
-        case MEGARequestTypeSetAttrUser: {
-            if (request.paramType == MEGAUserAttributeFirstname || request.paramType == MEGAUserAttributeLastname) {
-                self.nameLabel.text = [[[MEGASdkManager sharedMEGASdk] myUser] mnz_fullName];
-            } else if (request.paramType  == MEGAUserAttributeAvatar) {
-                NSString *myUserBase64Handle = [MEGASdk base64HandleForUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
-                NSString *myAvatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:myUserBase64Handle];
-                if (request.file == nil) {
-                    NSError *removeError = nil;
-                    [[NSFileManager defaultManager] removeItemAtPath:myAvatarFilePath error:&removeError];
-                    if (removeError) MEGALogError(@"Remove item at path failed with error: %@", removeError);
-                }
-                
-                [self setUserAvatar];
-            }
-            break;
-        }
-            
         case MEGARequestTypeAccountDetails: {
             self.megaAccountType = [[request megaAccountDetails] type];
             
