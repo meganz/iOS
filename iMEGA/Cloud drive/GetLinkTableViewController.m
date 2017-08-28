@@ -52,7 +52,7 @@
         [self.links addObject:link];
         [self.keys addObject:key];
         
-        [self updateTextToCopy];
+        [self updateUI];
         
         if (--self.pending==0) {
             [SVProgressHUD dismiss];
@@ -87,8 +87,9 @@
 
 #pragma mark - Private
 
-- (void)updateTextToCopy {
+- (void)updateUI {
     self.textToCopy.text = [self.selectedArray componentsJoinedByString:@" "];
+    [self.tableView reloadData];
 }
 
 #pragma mark - IBActions
@@ -143,7 +144,7 @@
             default:
                 break;
         }
-        [self updateTextToCopy];
+        [self updateUI];
         [tableView cellForRowAtIndexPath:self.selectedIndexPath].accessoryType = UITableViewCellAccessoryNone;
         [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
         self.selectedIndexPath = indexPath;
@@ -162,11 +163,15 @@
     return heightForRow;
 }
 
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSString *title = @"";
     switch (section) {
         case 0:
             title = AMLocalizedString(@"export", @"Title for the Export section of the get link view");
+            break;
+            
+        case 1:
+            title = self.selectedArray.count > 1 ? AMLocalizedString(@"megaLinks", @"Title for the Link section of the get link view when there are more than one link") : [AMLocalizedString(@"megaLink", @"Title for the Link section of the get link view when there is only one link") stringByReplacingOccurrencesOfString:@":" withString:@""];
             break;
             
         case 2:
