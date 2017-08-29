@@ -5,23 +5,27 @@
 
 #import "Helper.h"
 #import "MEGAExportRequestDelegate.h"
+#import "MEGAPasswordLinkRequestDelegate.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGASDKManager.h"
 
-@interface GetLinkTableViewController ()
+@interface GetLinkTableViewController () <UITextFieldDelegate>
 
 @property (nonatomic) NSMutableArray *fullLinks;
 @property (nonatomic) NSMutableArray *links;
 @property (nonatomic) NSMutableArray *keys;
+@property (nonatomic) NSMutableArray *encryptedLinks;
 
 @property (nonatomic) NSMutableArray *selectedArray;
 @property (nonatomic) NSIndexPath *selectedIndexPath;
+@property (nonatomic) NSIndexPath *linkWithKeyIndexPath;
 
 @property (nonatomic) BOOL isFree;
 @property (nonatomic) NSUInteger pending;
 
 @property (weak, nonatomic) IBOutlet UILabel *textToCopy;
 @property (weak, nonatomic) IBOutlet UISwitch *expireSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *passwordSwitch;
 @property (weak, nonatomic) IBOutlet UIDatePicker *expireDatePicker;
 
 @property (weak, nonatomic) IBOutlet UILabel *linkWithoutKeyLabel;
@@ -29,8 +33,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *linkWithKeyLabel;
 @property (weak, nonatomic) IBOutlet UIButton *pasteboardCopyButton;
 @property (weak, nonatomic) IBOutlet UILabel *expireDateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *passwordProtectionLabel;
+
+@property (weak, nonatomic) IBOutlet UITextField *enterPasswordTextField;
+@property (weak, nonatomic) IBOutlet UITextField *confirmPasswordTextField;
 
 @property (nonatomic) MEGAExportRequestDelegate *exportDelegate;
+@property (nonatomic) MEGAPasswordLinkRequestDelegate *passwordLinkDelegate;
 
 @end
 
@@ -59,13 +68,23 @@
         }
     } multipleLinks:self.nodesToExport.count > 1];
     
+    self.passwordLinkDelegate = [[MEGAPasswordLinkRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+        [self.encryptedLinks addObject:request.text];
+        [self updateUI];
+        
+        if (--self.pending==0) {
+            [SVProgressHUD dismiss];
+        }
+    } multipleLinks:self.nodesToExport.count > 1];
+    
     self.fullLinks = [NSMutableArray new];
     self.links = [NSMutableArray new];
     self.keys = [NSMutableArray new];
-    
+
     self.selectedArray = self.fullLinks;
-    self.selectedIndexPath = [NSIndexPath indexPathForRow:2 inSection:0];
-    
+    self.linkWithKeyIndexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+    self.selectedIndexPath = self.linkWithKeyIndexPath;
+
     self.isFree = NO;
     NSDate *tomorrow = [NSDate dateWithTimeInterval:(24*60*60) sinceDate:[NSDate date]];
     self.expireDatePicker.minimumDate = tomorrow;
@@ -90,6 +109,13 @@
 - (void)updateUI {
     self.textToCopy.text = [self.selectedArray componentsJoinedByString:@" "];
     [self.tableView reloadData];
+}
+
+- (void)encryptLinks:(NSString *)password {
+    self.pending = self.fullLinks.count;
+    for (NSString *link in self.fullLinks) {
+        [[MEGASdkManager sharedMEGASdk] encryptLinkWithPassword:link password:password delegate:self.passwordLinkDelegate];
+    }
 }
 
 #pragma mark - IBActions
@@ -124,6 +150,21 @@
     }
 }
 
+- (IBAction)passwordProtectionSwitchChanged:(UISwitch *)sender {
+    if (sender.isOn) {
+        self.encryptedLinks = [NSMutableArray new];
+        self.selectedArray = self.encryptedLinks;
+        [self.tableView cellForRowAtIndexPath:self.selectedIndexPath].accessoryType = UITableViewCellAccessoryNone;
+        [self.tableView cellForRowAtIndexPath:self.linkWithKeyIndexPath].accessoryType = UITableViewCellAccessoryCheckmark;
+        self.selectedIndexPath = self.linkWithKeyIndexPath;
+    } else {
+        self.selectedArray = self.fullLinks;
+        self.enterPasswordTextField.text = @"";
+        self.confirmPasswordTextField.text = @"";
+    }
+    [self updateUI];
+}
+
 #pragma mark - TableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -154,11 +195,17 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat heightForRow = 44.0;
-    if (self.isFree && indexPath.section == 2) {
+    if (self.isFree && indexPath.section >= 2) {
         return 0.0f;
     }
     if (indexPath.section == 2 && indexPath.row == 1) {
         return self.expireSwitch.isOn ? 162.0f : 0.0f;
+    }
+    if (!self.passwordSwitch.isOn && indexPath.section == 3 && indexPath.row >= 1) {
+         return 0.0f;
+    }
+    if (self.passwordSwitch.isOn && indexPath.section == 0 && indexPath.row < 2) {
+        return 0.0f;
     }
     return heightForRow;
 }
@@ -182,6 +229,48 @@
             break;
     }
     return title;
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString *password = [textField.text stringByReplacingCharactersInRange:range withString:string];
+
+    switch (textField.tag) {
+        case 0:
+            if ([password compare:self.confirmPasswordTextField.text] == NSOrderedSame) {
+                [self encryptLinks:password];
+            }
+            break;
+            
+        case 1:
+            if ([password compare:self.enterPasswordTextField.text] == NSOrderedSame) {
+                [self encryptLinks:password];
+            }
+            break;
+            
+        default:
+            break;
+    }
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    switch (textField.tag) {
+        case 0:
+            [self.confirmPasswordTextField becomeFirstResponder];
+            break;
+            
+        case 1:
+            [self.confirmPasswordTextField resignFirstResponder];
+            break;
+            
+        default:
+            break;
+    }
+    
+    return YES;
 }
 
 @end
