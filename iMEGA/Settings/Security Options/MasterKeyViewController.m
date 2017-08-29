@@ -67,6 +67,8 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"recoveryKeyCopiedToClipboard", @"Title of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported - (String as short as possible).") message:nil delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
         [alertView show];
     }
+    
+    [[MEGASdkManager sharedMEGASdk] masterKeyExported];
 }
 
 - (IBAction)saveMasterKeyTouchUpInside:(UIButton *)sender {
@@ -80,6 +82,8 @@
             [alertView show];
         }
     }
+    
+    [[MEGASdkManager sharedMEGASdk] masterKeyExported];
 }
 
 - (IBAction)whyDoINeedARecoveryKeyTouchUpInside:(UIButton *)sender {
