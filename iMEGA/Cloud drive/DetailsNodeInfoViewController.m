@@ -16,7 +16,6 @@
 #import "ShareFolderActivity.h"
 #import "OpenInActivity.h"
 #import "RemoveLinkActivity.h"
-#import "MEGAActivityItemProvider.h"
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
 
