@@ -772,6 +772,34 @@
 "myAccount"="Mi cuenta";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Ver y editar tu perfil";
+/* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
+"profile"="Perfil";
+/* Title of the Achievements section */
+"achievementsTitle"="Logros";
+/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
+"inviteFriendsAndGetRewards"="Invita a tus amigos y obtén recompensas";
+/* Indicating text for when "you invite your friends" */
+"inviteYourFriends"="Invita a tus amigos";
+/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
+"inviteFriendsAndGetForEachReferral"="Obtén 10GB de almacenamiento y 20GB de transferencia por cada recomendación";
+/* Header of block with achievements bonuses. */
+"unlockedBonuses"="Bonos desbloqueados:";
+/* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
+"storageQuota"="Cuota de almacenamiento";
+/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
+"transferQuota"="Cuota de transferencia";
+/* The user's achieved base quota */
+"accountBaseQuota"="Cuota base de la cuenta";
+/* achievement type */
+"registrationBonus"="Bono por registro de cuenta";
+/* achievement type */
+"referralBonuses"="Bonos por invitación";
+/*  */
+"installMEGASync"="Instala MEGAsync";
+/*  */
+"installOurMobileApp"="Instala nuestra aplicación móvil";
+/*  */
+"xDaysLeft"="%1 días restantes";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Desconectar";
 /* String shown when you are logging out of your account. */
