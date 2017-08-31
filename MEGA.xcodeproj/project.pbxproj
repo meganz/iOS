@@ -1774,9 +1774,7 @@
 				41FC83BC1AAE0559008FA551 /* Camera Uploads */,
 				E8534D481E1522D300911C40 /* Chat */,
 				41B3B82D1AD591A80093A88D /* Passcode */,
-				41AC66441AB1D488003FE8DA /* About */,
 				94E62E171F3C51F9003A8DEF /* Language */,
-				41ADA9EE1ADE7AB400641BB4 /* Feedback */,
 				41AA1A191AC07EB900D32691 /* Security Options */,
 				E87C98321CC411D400E2B9E6 /* Advanced */,
 				41AC66441AB1D488003FE8DA /* About */,
@@ -2506,14 +2504,6 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		9400F1F71F4B2FB60051278C /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				411C4C5D1BBEAFB3006FE451 /* CTAssetsPicker.xcassets */,
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		9419B6BD1F20D18300FEBE31 /* Spotlight */ = {
 			isa = PBXGroup;
 			children = (
@@ -2898,7 +2888,7 @@
 								enabled = 1;
 							};
 							com.apple.DataProtection = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.Keychain = {
 								enabled = 1;
