@@ -263,6 +263,9 @@
             break;
             
         case 1:
+            if ([self.enterPasswordTextField.text compare:self.confirmPasswordTextField.text] != NSOrderedSame) {
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordsDoNotMatch", @"Error text shown when you have not written the same password")];
+            }
             [self.confirmPasswordTextField resignFirstResponder];
             break;
             
