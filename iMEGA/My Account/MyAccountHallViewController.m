@@ -1,6 +1,7 @@
 
 #import "MyAccountHallViewController.h"
 
+#import "AchievementsViewController.h"
 #import "ContactsViewController.h"
 #import "OfflineTableViewController.h"
 #import "MEGAUser+MNZCategory.h"
@@ -57,13 +58,14 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MyAccountHallTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MyAccountHallTableViewCellID" forIndexPath:indexPath];
+    NSString *identifier = (indexPath.row == 1) ? @"MyAccountHallWithSubtitleTableViewCellID" : @"MyAccountHallTableViewCellID";
+    MyAccountHallTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     if (cell == nil) {
-        cell = [[MyAccountHallTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MyAccountHallTableViewCellID"];
+        cell = [[MyAccountHallTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
     switch (indexPath.row) {
@@ -80,13 +82,22 @@
                     cell.pendingView.hidden = NO;
                     cell.pendingView.clipsToBounds = YES;
                 }
-        
+                
                 cell.pendingLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)incomingContacts];
             }
             break;
         }
             
-        case 1: { //Transfers
+        case 1: { //Achievements
+            cell.sectionLabel.text = AMLocalizedString(@"achievementsTitle", @"Title of the Achievements section");
+            cell.subtitleLabel.text = AMLocalizedString(@"inviteFriendsAndGetRewards", @"Subtitle show under the Achievements label to explain what is this section");
+            cell.iconImageView.image = [UIImage imageNamed:@"myAccountAchievementsIcon"];
+            cell.pendingView.hidden = YES;
+            cell.pendingLabel.text = nil;
+            break;
+        }
+            
+        case 2: { //Transfers
             cell.sectionLabel.text = AMLocalizedString(@"transfers", @"Title of the Transfers section");
             cell.iconImageView.image = [UIImage imageNamed:@"myAccountTransfersIcon"];
             cell.pendingView.hidden = YES;
@@ -94,15 +105,15 @@
             break;
         }
             
-        case 2: { //Offline
+        case 3: { //Offline
             cell.sectionLabel.text = AMLocalizedString(@"offline", @"Title of the Offline section");
             cell.iconImageView.image = [UIImage imageNamed:@"myAccountOfflineIcon"];
             cell.pendingView.hidden = YES;
             cell.pendingLabel.text = nil;
             break;
         }
-        
-        case 3: { //Settings
+            
+        case 4: { //Settings
             cell.sectionLabel.text = AMLocalizedString(@"settingsTitle", @"Title of the Settings section");
             cell.iconImageView.image = [UIImage imageNamed:@"myAccountSettingsIcon"];
             cell.pendingView.hidden = YES;
@@ -116,6 +127,17 @@
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat heightForRow;
+    if (indexPath.row == 1 && ![[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
+        heightForRow = 0.0f;
+    } else {
+        heightForRow = 60.0f;
+    }
+    
+    return heightForRow;
+}
+
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -126,19 +148,25 @@
             break;
         }
             
-        case 1: { //Transfers
+        case 1: { //Achievements
+            AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
+            [self.navigationController pushViewController:achievementsVC animated:YES];
+            break;
+        }
+            
+        case 2: { //Transfers
             TransfersViewController *transferVC = [[UIStoryboard storyboardWithName:@"Transfers" bundle:nil] instantiateViewControllerWithIdentifier:@"TransfersViewControllerID"];
             [self.navigationController pushViewController:transferVC animated:YES];
             break;
         }
             
-        case 2: { //Offline
+        case 3: { //Offline
             OfflineTableViewController *offlineTVC = [[UIStoryboard storyboardWithName:@"Offline" bundle:nil] instantiateViewControllerWithIdentifier:@"OfflineTableViewControllerID"];
             [self.navigationController pushViewController:offlineTVC animated:YES];
             break;
         }
             
-        case 3: { //Settings
+        case 4: { //Settings
             SettingsTableViewController *settingsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"SettingsTableViewControllerID"];
             [self.navigationController pushViewController:settingsTVC animated:YES];
             break;

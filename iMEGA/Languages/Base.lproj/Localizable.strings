@@ -778,6 +778,32 @@
 "viewAndEditProfile"="View and edit profile";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Profile";
+/* Title of the Achievements section */
+"achievementsTitle"="Achievements";
+/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
+"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+/* Indicating text for when "you invite your friends" */
+"inviteYourFriends"="Invite your friends";
+/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
+"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* Header of block with achievements bonuses. */
+"unlockedBonuses"="Unlocked bonuses:";
+/* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
+"storageQuota"="Storage Quota";
+/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
+"transferQuota"="Transfer Quota";
+/* The user's achieved base quota */
+"accountBaseQuota"="Account base quota";
+/* achievement type */
+"registrationBonus"="Registration Bonus";
+/* achievement type */
+"referralBonuses"="Referral bonuses";
+/*  */
+"installMEGASync"="Install MEGAsync";
+/*  */
+"installOurMobileApp"="Install our mobile app";
+/*  */
+"xDaysLeft"="%1 days left";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Logout";
 /* String shown when you are logging out of your account. */
