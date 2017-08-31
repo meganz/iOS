@@ -421,24 +421,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     return YES;
 }
 
-- (void)applicationProtectedDataDidBecomeAvailable:(UIApplication *)application {
-    if ([[MEGASdkManager sharedMEGASdk] areTransferPausedForDirection:0]) {
-        [[MEGASdkManager sharedMEGASdk] pauseTransfers:NO forDirection:0];
-    }
-    if ([[MEGASdkManager sharedMEGASdkFolder] areTransferPausedForDirection:0]) {
-        [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:NO forDirection:0];
-    }
-}
-
-- (void)applicationProtectedDataWillBecomeUnavailable:(UIApplication *)application {
-    if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 1) {
-        [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES forDirection:0];
-    }
-    if ([[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 1) {
-        [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES forDirection:0];
-    }
-}
-
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
     [application registerForRemoteNotifications];
 }
