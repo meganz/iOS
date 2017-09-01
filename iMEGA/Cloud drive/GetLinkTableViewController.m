@@ -165,6 +165,13 @@
     [self updateUI];
 }
 
+- (IBAction)shareAction:(UIBarButtonItem *)sender {
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.textToCopy.text] applicationActivities:nil];
+    [activityVC setExcludedActivityTypes:@[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]];
+    [activityVC.popoverPresentationController setBarButtonItem:sender];
+    [self presentViewController:activityVC animated:YES completion:nil];
+}
+
 #pragma mark - TableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

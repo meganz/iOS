@@ -869,13 +869,13 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="icS-K3-BvR">
-                                                    <rect key="frame" x="60.000000000000007" y="6" width="43.666666666666679" height="18"/>
+                                                    <rect key="frame" x="60" y="6" width="41" height="18"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="cd8-yG-jq7">
-                                                    <rect key="frame" x="60.000000000000007" y="24" width="43.666666666666679" height="14"/>
+                                                    <rect key="frame" x="60" y="24" width="41" height="14"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1388,10 +1388,16 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="RuD-LE-Jxn">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="Bb8-Kf-AnR">
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="Bb8-Kf-AnR">
                             <color key="tintColor" red="0.80392156859999997" green="0.0" blue="0.043137254899999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="doneTapped:" destination="Lpo-hP-uLZ" id="Pjf-7W-xAn"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="Iod-rc-wj6">
+                            <color key="tintColor" red="0.80392156859999997" green="0.0" blue="0.043137254899999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="shareAction:" destination="Lpo-hP-uLZ" id="OCw-no-Cuz"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
