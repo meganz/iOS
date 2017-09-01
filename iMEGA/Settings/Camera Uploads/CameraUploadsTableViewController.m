@@ -4,6 +4,7 @@
 
 #import "MEGAReachabilityManager.h"
 #import "NSString+MNZCategory.h"
+#import "UIViewController+MNZCategory.h"
 
 #import "CameraUploads.h"
 #import "Helper.h"
@@ -27,7 +28,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+        
+    [self mnz_customBackBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -87,7 +89,9 @@
         if (transferList.size.integerValue > 0) {
             for (NSInteger i = 0; i < transferList.size.integerValue; i++) {
                 MEGATransfer *transfer = [transferList transferAtIndex:i];
-                if (transfer.appData) {
+                NSArray *appDataComponentsArray = [transfer.appData componentsSeparatedByString:@"="];
+                NSString *appDataFirstComponentString = [appDataComponentsArray objectAtIndex:0];
+                if ([appDataFirstComponentString isEqualToString:@"CU"]) {
                     [[MEGASdkManager sharedMEGASdk] cancelTransfer:transfer];
                 }
             }
@@ -173,7 +177,9 @@
         if (transferList.size.integerValue > 0) {
             for (NSInteger i = 0; i < transferList.size.integerValue; i++) {
                 MEGATransfer *transfer = [transferList transferAtIndex:i];
-                if (transfer.appData && transfer.fileName.mnz_isVideoPathExtension) {
+                NSArray *appDataComponentsArray = [transfer.appData componentsSeparatedByString:@"="];
+                NSString *appDataFirstComponentString = [appDataComponentsArray objectAtIndex:0];
+                if ([appDataFirstComponentString isEqualToString:@"CU"] && transfer.fileName.mnz_isVideoPathExtension) {
                     [[MEGASdkManager sharedMEGASdk] cancelTransfer:transfer];
                 }
             }

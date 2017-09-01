@@ -192,15 +192,6 @@
                 return;
             }
             
-            if (request.paramType == MEGAUserAttributeFirstname) {
-                self.firstName = request.text;
-            } else if (request.paramType == MEGAUserAttributeLastname) {
-                self.lastName = request.text;
-            }
-            
-            [self.firstNameTextField resignFirstResponder];
-            [self.lastNameTextField resignFirstResponder];
-            
             [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"youHaveSuccessfullyChangedYourProfile", @"Success message when changing profile information.")];
             [self dismissViewControllerAnimated:YES completion:nil];
             break;

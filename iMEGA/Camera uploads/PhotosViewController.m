@@ -722,7 +722,7 @@
             for (PhotoCollectionViewCell *pcvc in [self.photosCollectionView visibleCells]) {
                 if ([request nodeHandle] == [pcvc nodeHandle]) {
                     MEGANode *node = [api nodeForHandle:request.nodeHandle];
-                    [Helper setThumbnailForNode:node api:api cell:pcvc];
+                    [Helper setThumbnailForNode:node api:api cell:pcvc reindexNode:YES];
                 }
             }
             break;

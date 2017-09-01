@@ -89,7 +89,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 #pragma mark - Utils for nodes
 
 + (void)thumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell;
-+ (void)setThumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell;
++ (void)setThumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell reindexNode:(BOOL)reindex;
 
 + (NSString *)sizeAndDateForNode:(MEGANode *)node api:(MEGASdk *)api;
 + (NSString *)dateWithISO8601FormatOfRawTime:(time_t)rawtime;

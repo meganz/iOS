@@ -52,6 +52,8 @@
 "loggedOutFromAnotherLocation"="다른 위치에서 이 장치가 로그아웃 되었습니다";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="서버의 SSL 암호를 확인할 수 없습니다. 중간자 공격의 영향을 받았을 수 있습니다.";
+/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
+"takingLongerThanExpected"="과정이 예상보다 오래 걸립니다. 기다려주세요...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="당신의 계정에 로그인하세요.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -567,7 +569,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="비밀번호 바꾸기";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="복구 키를 내보내고 안전한 장소에 보관하면 비밀번호를 잊어버렸을 때 데이터 손실 없이 계정을 복구할 수 있습니다.";
+"exportMasterKeyFooter"="복구 키를 저장하고 안전한 위치에 저장하는 것은 비밀번호를 잊어버렸을 때 데이터 손실 없이 계정을 복구할 수 있도록 해줍니다.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="왜 복구 키가 필요한가요?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -592,6 +594,10 @@
 "emptyRubbishBin"="휴지통 비우기";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="휴지통의 모든 항목이 삭제됩니다";
+/* Text next to a switch that allows disabling the HTTP protocol for transfers */
+"dontUseHttp"="HTTP 사용 안함";
+/* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
+"transfersSectionFooter"="이 옵션은 전송이 시작되지 않을때만 활성화하세요. 일반적은 환경에서는 모든 전송이 이미 암호화되었기 때문에 HTTP면 충분합니다.";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="이미지와 동영상 다운로드";
 /* Section title where you can enable the option 'Save images in gallery' */
@@ -611,7 +617,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="취소 링크가 만료되었습니다.";
 /* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="계정 폐쇄를 확정하려면 비밀번호를 입력하세요.";
+"enterYourPasswordToConfirmThatYouWanToClose"="계정을 취소하려면 비밀번호를 입력하여 확인해주세요.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="계정 닫기";
 /* Title for the action that allows to remove a file or folder */
@@ -768,6 +774,10 @@
 "downloadInUppercaseTransfers"="다운로드 전송";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="내 계정";
+/* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
+"viewAndEditProfile"="프로필 보기/수정";
+/* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
+"profile"="프로필";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="로그아웃";
 /* String shown when you are logging out of your account. */
@@ -1015,7 +1025,7 @@
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="메시지 삭제";
 /* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="Send Media";
+"sendMedia"="미디어 전송";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="연락처 보내기";
 /* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
@@ -1065,7 +1075,7 @@
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="철회";
 /* Inform user that there were unsupported assets in the share extension */
-"shareExtensionUnsupportedAssets"="Some items could not be shared with MEGA";
+"shareExtensionUnsupportedAssets"="일부 항목이 MEGA로 공유될 수 없습니다.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="전송 실패:";
 /* MEGAError */
@@ -1117,3 +1127,21 @@
 "Invalid application key"="잘못된 어플리케이션 키";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="알 수 없는 오류";
+/* Text shown in an alert when the user is about to change the language of the app */
+"languageRestartAlert"="언어를 변경한 후 MEGA를 재시작해야합니다";
+/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
+"languageRestartNotification"="언어가 변경되었습니다. 재시작하려면 탭하세요.";
+/* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
+/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph1"="MEGA는 당신에게 50 GB의 무료 저장 공간을 주는 안전한 클라우드 저장소 서비스입니다. 다른 클라우드 저장소 제공자들과 달리, 당신의 데이터는 우리가 아닌 당신의 클라이언트 기기에서만 암호화되고 해독됩니다.";
+/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph2"="당신의 스마트폰이나 타블렛에서 파일을 업로드하고, 어느 기기에서나 어디서든지 당신의 파일을 검색, 보관, 다운로드, 스트림, 보기, 공유, 이름변경 또는 삭제하세요. 당신의 연락처와 폴더를 공유하고 그들의 업데이트를 실시간으로 보세요.";
+/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph3"="암호화 과정은 우리가 당신의 비밀번호에 접근하거나 초기화할 수 없기 때문에 반드시 기억해야한다는 것입니다 (복구 키를 백업하지 않는 이상) 그렇지 않으면 저장된 파일에 대한 접근을 잃게 됩니다.";
+/* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph4"="앱에서 월간 또는 연간 구독으로 저장 공간과 전송 할당량을 업그레이드할 수 있습니다.";
+/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
+"generalDescriptionParagraph5"="PRO LITE 구독권: 매월 €4.99 (US$4.99) 또는 매년 €49.99 (US$49.99)에 200 GB의 저장 공간과 1 TB의 대역폭을 매달 드립니다.PRO I 구독권: 매월 €9.99 (US$9.99) 또는 매년 €99.99 (US$99.99)에 1 TB의 저장 공간과 2 TB의 대역폭을 매달 드립니다.PRO II 구독권: 매월 €19.99 (US$19.99) 또는 매년 €199.99 (US$199.99)에 4 TB의 저장 공간과 8 TB의 대역폭을 매달 드립니다.PRO III 구독권: 매월 €29.99 (US$29.99) 또는 매년 €299.99 (US$299.99)에 8 TB의 저장 공간과 16 TB의 대역폭을 매달 드립니다.";
+/* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
+/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
+"generalDescriptionParagraph6"="자세한 정보는 저희 홈페이지를 참고하세요:모바일 - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html데스크톱 - https://mega.nz/";
