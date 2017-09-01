@@ -7,6 +7,7 @@
 #import "MEGALogger.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "UIViewController+MNZCategory.h"
 
 @interface AboutTableViewController ()
 
@@ -39,6 +40,8 @@
     self.sdkVersionSHALabel.text = @"9a7559a";
     
     [self.acknowledgementsLabel setText:AMLocalizedString(@"acknowledgements", nil)];
+
+    [self mnz_customBackBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

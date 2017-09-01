@@ -14,6 +14,7 @@
 #import "OfflineTableViewCell.h"
 #import "OpenInActivity.h"
 #import "SortByTableViewController.h"
+#import "UIViewController+MNZCategory.h"
 
 #import "MEGAStore.h"
 #import "MEGAAVViewController.h"
@@ -80,6 +81,8 @@ static NSString *kisDirectory = @"kisDirectory";
         [negativeSpaceBarButtonItem setWidth:-4.0];
     }
     [self.navigationItem setRightBarButtonItems:@[negativeSpaceBarButtonItem, self.editBarButtonItem, self.sortByBarButtonItem]];
+        
+    [self mnz_customBackBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
