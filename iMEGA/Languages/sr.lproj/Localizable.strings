@@ -52,6 +52,8 @@
 "loggedOutFromAnotherLocation"="Одјављени сте из овог уређаја са друге локације";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="SSL кључеви сервера не могу бити верификовани. Могућност man-in-the-middle напада.";
+/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
+"takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Молимо Вас да се улогујете на Ваш налог.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -592,6 +594,10 @@
 "emptyRubbishBin"="Празна корпа";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Све ставке у канти за отпатке ће бити уклоњене";
+/* Text next to a switch that allows disabling the HTTP protocol for transfers */
+"dontUseHttp"="Не користи HTTP";
+/* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
+"transfersSectionFooter"="Омогући ову опцију само ако твоји трансфери не почну. У нормалним условима HTTP је задовољавајући јер су сви трансфери већ енкриптовани.";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Преузимање слика и видеа";
 /* Section title where you can enable the option 'Save images in gallery' */
@@ -768,6 +774,10 @@
 "downloadInUppercaseTransfers"="СКИНИ трансфере";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Мој профил";
+/* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
+"viewAndEditProfile"="View and edit profile";
+/* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
+"profile"="Профил";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Излаз";
 /* String shown when you are logging out of your account. */
@@ -1117,3 +1127,21 @@
 "Invalid application key"="Погрешан апликациони кључ";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Непозната грешка";
+/* Text shown in an alert when the user is about to change the language of the app */
+"languageRestartAlert"="You will need to restart MEGA after changing the language";
+/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
+"languageRestartNotification"="Language changed. Tap to restart.";
+/* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
+/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph1"="MEGA is a secure cloud storage service that gives you 50 GB free storage space. Unlike other cloud storage providers, your data is encrypted and decrypted by your client devices only and never by us.";
+/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph2"="Upload your files from your smartphone or tablet, then search, store, download, stream, view, share, rename or delete your files any time, from any device, anywhere. Share folders with your contacts and see their updates in real time.";
+/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph3"="The encryption process means we cannot access or reset your password so you MUST remember it (unless you have your Recovery Key backed up) or you will lose access to your stored files.";
+/* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph4"="Inside the app you can upgrade your storage space and transfer quota with a monthly or yearly subscription.";
+/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
+"generalDescriptionParagraph5"="PRO LITE subscription: €4.99 (US$4.99) per month or €49.99 (US$49.99) per year gives you 200 GB of storage space and 1 TB of transfer quota per month.PRO I subscription: €9.99 (US$9.99) per month or €99.99 (US$99.99) per year gives you 1 TB of storage space and 2 TB of transfer quota per month.PRO II subscription: €19.99 (US$19.99) per month or €199.99 (US$199.99) per year gives you 4 TB of storage space and 8 TB of transfer quota per month.PRO III subscription: €29.99 (US$29.99) per month or €299.99 (US$299.99) per year gives you 8 TB of storage space and 16 TB of transfer quota per month.";
+/* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
+/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
+"generalDescriptionParagraph6"="For more info, please check our website:Mobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmlDesktop - https://mega.nz/";

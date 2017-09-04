@@ -52,6 +52,8 @@
 "loggedOutFromAnotherLocation"="Başka bir yerden oturum açıldığı için bu cihazdan çıkış yapıldı";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Sunucunun SSL anahtarı doğrulanamadı. İki bağlantı noktası arasındaki bağlantıyı izinsiz izleme saldırısı altında olabilirsiniz.";
+/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
+"takingLongerThanExpected"="İşlem beklenilenden uzun sürüyor. Lütfen bekleyin...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Lütfen oturum açın.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -567,7 +569,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Şifre değiştir";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Kurtarma Anahtarını kaydetmek ve güvenli bir yerde tutmak, parolanızı kaybetmeniz durumunda veri kaybı olmadan hesabınızı kurtarmanıza olanak tanır.";
+"exportMasterKeyFooter"="Kurtarma Anahtarını kaydetmek ve güvenli bir konumda saklamak parolanızı unuttuğunuzda hiçbir veri kaybına uğramadan parolanızı sıfırlamanızı sağlar.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Neden Kurtarma Anahtarına ihtiyacım var?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -592,6 +594,10 @@
 "emptyRubbishBin"="Çöp Kutusunu Boşalt";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Çöp kutusundaki tüm öğeler silinecek";
+/* Text next to a switch that allows disabling the HTTP protocol for transfers */
+"dontUseHttp"="HTTP kullanma";
+/* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
+"transfersSectionFooter"="Bu seçeneği sadece aktarmalarınız başlamazsa etkinleştirin. Normal koşullarda, tüm aktarmalar zaten şifreli olduğu için HTTP tatmin edicidir.";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Görsel ve video indirmeleri";
 /* Section title where you can enable the option 'Save images in gallery' */
@@ -768,6 +774,10 @@
 "downloadInUppercaseTransfers"="İNDİRME aktarmaları";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Hesabım";
+/* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
+"viewAndEditProfile"="Profili görüntüle ve düzenle";
+/* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
+"profile"="Profil";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Oturumu Kapat";
 /* String shown when you are logging out of your account. */
@@ -1117,3 +1127,21 @@
 "Invalid application key"="Geçersiz uygulama anahtarı";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Bilinmeyen hata";
+/* Text shown in an alert when the user is about to change the language of the app */
+"languageRestartAlert"="Dili değiştirdikten sonra MEGA'yı tekrar başlatmanız gerekir.";
+/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
+"languageRestartNotification"="Dil değiştirildi. Tekrar başlatmak için dokunun.";
+/* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
+/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph1"="MEGA size 50 GB boş alan sağlayan güvenli bir bulut depolama hizmetidir. Diğer bulut depolama sağlayıcılarından farklı olarak, verileriniz yalnızca istemci cihazlarınız tarafından şifrelenir ve şifre çözülür ve şifreler asla tarafımızca çözülmez.";
+/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph2"="Dosyalarını akıllı telefondan veya tabletten yükle, sonra istediğin yer ve zamanda istediğin cihazdan ara, depola, indir, yayınla, görüntüle, paylaş, yeniden adlandır veya sil. Dosyalarını kişilerinle gerçek zamanlı olarak paylaş ve onların güncellemelerini gör.";
+/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph3"="Şifreleme işlemi, parolanıza erişemediğimiz veya parolanızı sıfırlayamadığımız anlamına gelir. O nedenle MUTLAKA hatırlamalısınız (Kurtarma Anahtarınızı yedeklemediğiniz sürece) veya kayıtlı dosyalarınıza erişimi kaybedeceksiniz.";
+/* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph4"="Uygulamanın içinde depolama alanınızı yükseltebilir ve kotayı aylık veya yıllık abonelik ile aktarabilirsiniz.";
+/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
+"generalDescriptionParagraph5"="PRO LITE aboneliği: aylık €4.99 (US$4.99) veya yıllık €49.99 (US$49.99) ödeyerek 200 GB depolama alanı ve aylık 1 TB aktarma kotası alabilirsiniz.PRO I aboneliği: aylık €9.99 (US$9.99) veya yıllık €99.99 (US$99.99) ödeyerek 1 TB depolama alanı ve aylık 2 TB aktarma kotası alabilirsiniz.PRO II aboneliği: aylık €19.99 (US$19.99) veya yıllık €199.99 (US$199.99) ödeyerek 4 TB depolama alanı ve aylık 8 TB aktarma kotası alabilirsiniz.PRO III aboneliği: aylık €29.99 (US$29.99) veya yıllık €299.99 (US$299.99) ödeyerek 8 TB depolama alanı ve aylık 16 TB aktarma kotası alabilirsiniz.";
+/* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
+/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
+"generalDescriptionParagraph6"="Daha fazla bilgi için, lütfen sitemizi ziyaret edin:Mobil - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmlMasaüstü - https://mega.nz/";

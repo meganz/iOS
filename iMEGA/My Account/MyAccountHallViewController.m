@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIView *profileView;
 
 @property (weak, nonatomic) IBOutlet UILabel *viewAndEditProfileLabel;
-@property (weak, nonatomic) IBOutlet UIButton *viewAndEditProfileButton;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -32,6 +31,9 @@
     self.navigationItem.title = AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details");
     
     self.viewAndEditProfileLabel.text = AMLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
+    
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewAndEditProfileTouchUpInside:)];
+    self.profileView.gestureRecognizers = @[tapGestureRecognizer];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

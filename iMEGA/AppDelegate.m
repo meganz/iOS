@@ -336,8 +336,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
     
-    BOOL pendingTransfers = [[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0 || [[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0;
-    if (pendingTransfers) {
+    BOOL pendingTasks = [[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0 || [[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0 || [[[CameraUploads syncManager] assetsOperationQueue] operationCount] > 0;
+    if (pendingTasks) {
         [self startBackgroundTask];
     }
     
@@ -419,24 +419,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
     
     return YES;
-}
-
-- (void)applicationProtectedDataDidBecomeAvailable:(UIApplication *)application {
-    if ([[MEGASdkManager sharedMEGASdk] areTransferPausedForDirection:0]) {
-        [[MEGASdkManager sharedMEGASdk] pauseTransfers:NO forDirection:0];
-    }
-    if ([[MEGASdkManager sharedMEGASdkFolder] areTransferPausedForDirection:0]) {
-        [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:NO forDirection:0];
-    }
-}
-
-- (void)applicationProtectedDataWillBecomeUnavailable:(UIApplication *)application {
-    if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 1) {
-        [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES forDirection:0];
-    }
-    if ([[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 1) {
-        [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES forDirection:0];
-    }
 }
 
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
