@@ -32,12 +32,13 @@
 #import "ConfirmAccountViewController.h"
 #import "ContactRequestsViewController.h"
 #import "CreateAccountViewController.h"
-#import "MainTabBarController.h"
-#import "MEGACreateAccountRequestDelegate.h"
 #import "FileLinkViewController.h"
 #import "FolderLinkViewController.h"
 #import "LaunchViewController.h"
 #import "LoginViewController.h"
+#import "MainTabBarController.h"
+#import "MEGACreateAccountRequestDelegate.h"
+#import "MEGAPasswordLinkRequestDelegate.h"
 #import "OfflineTableViewController.h"
 #import "SecurityOptionsTableViewController.h"
 #import "SettingsTableViewController.h"
@@ -55,6 +56,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeDefault,
     URLTypeFileLink,
     URLTypeFolderLink,
+    URLTypeEncryptedLink,
     URLTypeConfirmationLink,
     URLTypeOpenInLink,
     URLTypeNewSignUpLink,
@@ -615,6 +617,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         return;
     }
     
+    if ([self isEncryptedLink:afterSlashesString]) {
+        self.urlType = URLTypeEncryptedLink;
+        return;
+    }
+    
     if ([self isConfirmationLink:afterSlashesString]) {
         self.urlType = URLTypeConfirmationLink;
         return;
@@ -711,6 +718,48 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [folderlinkVC setFolderLinkString:folderLinkURLString];
     
     [self presentLinkViewController:folderNavigationController];
+    
+    self.link = nil;
+}
+
+- (BOOL)isEncryptedLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 3) {
+        return NO;
+    }
+    
+    NSString *megaURLTypeString = [afterSlashesString substringToIndex:3]; // mega://"#P!"
+    BOOL isEncryptedLink = [megaURLTypeString isEqualToString:@"#P!"];
+    if (isEncryptedLink) {
+        NSString *encryptedLinkString = @"https://mega.nz/";
+        encryptedLinkString = [encryptedLinkString stringByAppendingString:afterSlashesString];
+        [self showEncryptedLinkAlert:encryptedLinkString];
+        return YES;
+    }
+    return NO;
+}
+
+- (void)showEncryptedLinkAlert:(NSString *)encryptedLinkURLString {
+    MEGAPasswordLinkRequestDelegate *delegate = [[MEGAPasswordLinkRequestDelegate alloc] initForDecryptionWithCompletion:^(MEGARequest *request) {
+        NSString *url = [NSString stringWithFormat:@"mega://%@", [[request.text componentsSeparatedByString:@"/"] lastObject]];
+        [self processLink:[NSURL URLWithString:url]];
+    } onError:^(MEGARequest *request) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyNotValid", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            [self showEncryptedLinkAlert:request.link];
+        }]];
+        [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+    }];
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyAlertTitle", nil) message:AMLocalizedString(@"decryptionKeyAlertMessage", nil) preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = AMLocalizedString(@"decryptionKey", nil);
+    }];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [[MEGASdkManager sharedMEGASdk] decryptPasswordProtectedLink:encryptedLinkURLString password:alertController.textFields.firstObject.text delegate:delegate];
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    }]];
+    [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
     
     self.link = nil;
 }
