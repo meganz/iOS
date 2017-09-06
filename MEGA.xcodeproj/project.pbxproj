@@ -403,6 +403,8 @@
 		945605521EDD7E020094EF0F /* GetLinkActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F791751BC5754A00C58676 /* GetLinkActivity.m */; };
 		945605531EDD7E0C0094EF0F /* CameraUploads.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A602991A8A5D11001AE538 /* CameraUploads.m */; };
 		94598D751F0CD53A00B57144 /* LoginRequired.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94598D741F0CD53A00B57144 /* LoginRequired.storyboard */; };
+		9486EFBE1F5FF62D00C00EC7 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9400F1F91F4B30D10051278C /* UIViewController+MNZCategory.m */; };
+		9486EFC01F5FF62E00C00EC7 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9400F1F91F4B30D10051278C /* UIViewController+MNZCategory.m */; };
 		94892C901EFBEA1F00AEAC25 /* SAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250101D79E9D400499A6C /* SAMKeychain.m */; };
 		94892C911EFBEA2300AEAC25 /* SAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250121D79E9D400499A6C /* SAMKeychainQuery.m */; };
 		94892C921EFBEA3D00AEAC25 /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
@@ -3432,6 +3434,7 @@
 				9432293E1EDD8903007DB542 /* MWTapDetectingImageView.m in Sources */,
 				945605401EDD65400094EF0F /* BrowserViewController.m in Sources */,
 				9456053E1EDD54F10094EF0F /* SAMKeychainQuery.m in Sources */,
+				9486EFBE1F5FF62D00C00EC7 /* UIViewController+MNZCategory.m in Sources */,
 				9456053A1EDD52C00094EF0F /* SVRadialGradientLayer.m in Sources */,
 				943229231EDD845E007DB542 /* MEGAStore.m in Sources */,
 				945605421EDD65960094EF0F /* LocalizationSystem.m in Sources */,
@@ -3478,6 +3481,7 @@
 				941135621F01015700D33428 /* LocalizationSystem.m in Sources */,
 				941135591F01006A00D33428 /* LTHKeychainUtils.m in Sources */,
 				9411355A1F01006A00D33428 /* LTHPasscodeViewController.m in Sources */,
+				9486EFC01F5FF62E00C00EC7 /* UIViewController+MNZCategory.m in Sources */,
 				94892C941EFBF02A00AEAC25 /* SVProgressAnimatedView.m in Sources */,
 				9411355D1F0100CA00D33428 /* CameraUploadsTableViewController.m in Sources */,
 				941135641F01071600D33428 /* NSString+MNZCategory.m in Sources */,
