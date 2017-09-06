@@ -289,6 +289,29 @@
     [decryptionKeyNotValidAlertView show];
 }
 
+- (void)navigateToFolder {
+    if (self.isFolderRootNode) {
+        // Push folders to go to the selected subfolder:
+        NSString *base64Handle = [[self.folderLinkString componentsSeparatedByString:@"!"] lastObject];
+        MEGANode *targetNode = [[MEGASdkManager sharedMEGASdkFolder] nodeForHandle:[MEGASdk handleForBase64Handle:base64Handle]];
+        if (targetNode.type == MEGANodeTypeFolder) { //The handle shouldn't be of a file
+            MEGANode *tempNode = targetNode;
+            NSMutableArray *nodesToPush = [NSMutableArray new];
+            while (tempNode.handle != self.parentNode.handle) {
+                [nodesToPush insertObject:tempNode atIndex:0];
+                tempNode = [[MEGASdkManager sharedMEGASdkFolder] nodeForHandle:tempNode.parentHandle];
+            }
+            for (MEGANode *n in nodesToPush) {
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Links" bundle:nil];
+                FolderLinkViewController *folderLinkVC = [storyboard instantiateViewControllerWithIdentifier:@"FolderLinkViewControllerID"];
+                [folderLinkVC setParentNode:n];
+                [folderLinkVC setIsFolderRootNode:NO];
+                [self.navigationController pushViewController:folderLinkVC animated:NO];
+            }
+        }
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
@@ -807,6 +830,7 @@
             
             isFetchNodesDone = YES;
             [self reloadUI];
+            [self navigateToFolder];
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
                 [api pauseTransfers:YES];
