@@ -53,7 +53,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Chave SSL do servidor não pode ser verificada. Você pode ter sido afetado por um ataque \"man-in-the-middle\".";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
-"takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
+"takingLongerThanExpected"="O processo está demorando mais do que o esperado. Aguarde...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Por favor, entre em sua conta.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -77,7 +77,7 @@
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Criar conta";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="E-mail inválido e / ou senha. Por favor, tente novamente";
+"invalidMailOrPassword"="E-mail e/ou senha inválidos. Por favor, tente novamente.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Você tentou entrar muitas vezes. Por favor, espere até %@ e tente novamente.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -85,15 +85,15 @@
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Sua conta foi bloqueada. Por favor, entre em contato com support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
-"emailInvalidFormat"="Digite  e-mail válido";
+"emailInvalidFormat"="Digite um email válido";
 /* Message shown when the user enters a wrong password  */
-"passwordInvalidFormat"="Digite uma palavra-passe válida";
+"passwordInvalidFormat"="Digite uma senha válida";
 /* Hint text to suggest that the user has to write his email */
-"emailPlaceholder"="E-mail";
+"emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Senha";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
-"termsOfServiceButton"="Concordo com os Termos de Serviço MEGA";
+"termsOfServiceButton"="Concordo com os Termos de Serviço do MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Digite um nome válido";
 /* Error text shown when you have not written the same password */
@@ -203,7 +203,7 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 pasta • %d arquivos";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
-"queued"="Na fila";
+"queued"="Em fila";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Há descarregamentos pendentes";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -569,7 +569,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Mudar senha";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Exportar a chave de recuperação e mantê-la em um local seguro permitirá recuperar a sua conta no caso de esquecer a senha, sem perda de dados.";
+"exportMasterKeyFooter"="Salvar a chave de recuperação e mantê-la em um local seguro permite que você recupere a sua conta no caso de esquecer a sua senha, sem perda de dados.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Por que eu preciso de uma chave de recuperação?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -619,7 +619,7 @@
 /* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
 "enterYourPasswordToConfirmThatYouWanToClose"="Digite a sua senha para confirmar que você quer cancelar a sua conta.";
 /* Account closure, password check dialog when user click on closure email. */
-"closeAccount"="Encerrar conta";
+"closeAccount"="Encerrar a conta";
 /* Title for the action that allows to remove a file or folder */
 "remove"="Remover";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
@@ -775,7 +775,7 @@
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Minha conta";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
-"viewAndEditProfile"="View and edit profile";
+"viewAndEditProfile"="Ver e editar o perfil";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Perfil";
 /* Title of the button which logs out from your account. */
@@ -791,9 +791,9 @@
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="Você mudou o seu perfil com sucesso.";
 /* Hint text for the first name (Placeholder) */
-"firstName"="Primeiro nome";
+"firstName"="Nome";
 /* Hint text for the last name (Placeholder) */
-"lastName"="Último nome";
+"lastName"="Sobrenome";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="Utilização";
 /* Title for "Local" used space. */
@@ -967,7 +967,7 @@
 /* Button to reset the password */
 "reset"="Resetar";
 /* Button title */
-"approve"="Confirmar";
+"approve"="Validar";
 /* start a chat/conversation */
 "startConversation"="Iniciar conversa";
 /* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
@@ -1128,9 +1128,9 @@
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Erro desconhecido";
 /* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="You will need to restart MEGA after changing the language";
+"languageRestartAlert"="Você precisará reiniciar o MEGA depois de mudar o idioma.";
 /* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
-"languageRestartNotification"="Language changed. Tap to restart.";
+"languageRestartNotification"="Idioma modificado. Toque para reiniciar.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA é um serviço de armazenamento em nuvem seguro que oferece 50 GB de espaço de armazenamento gratuito. Ao contrário de outros provedores de armazenamento em nuvem, seus dados são criptografados e descriptografados apenas por seus dispositivos e nunca por nós.";

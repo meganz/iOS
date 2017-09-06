@@ -1128,7 +1128,7 @@
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Di matukoy na error";
 /* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="You will need to restart MEGA after changing the language";
+"languageRestartAlert"="Kinakailangan mag-restart ng MEGA pagkatapos magbago ng wika";
 /* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
 "languageRestartNotification"="Language changed. Tap to restart.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
