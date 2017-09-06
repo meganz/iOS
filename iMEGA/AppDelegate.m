@@ -1157,6 +1157,31 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
 }
 
+- (void)copyDatabasesForExtensions {
+    NSError *error;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSURL *applicationSupportDirectoryURL = [fileManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
+    if (error) {
+        MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
+    }
+    
+    NSString *groupSupportPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"GroupSupport"] path];
+    if (![fileManager fileExistsAtPath:groupSupportPath]) {
+        [fileManager createDirectoryAtPath:groupSupportPath withIntermediateDirectories:NO attributes:nil error:nil];
+    }
+    
+    NSString *applicationSupportDirectoryString = applicationSupportDirectoryURL.path;
+    NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryString error:&error];
+    for (NSString *filename in applicationSupportContent) {
+        if ([filename containsString:@"megaclient"]) {
+            if (![fileManager copyItemAtPath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename] toPath:[groupSupportPath stringByAppendingPathComponent:filename] error:&error]) {
+                MEGALogError(@"Copy item at path failed with error: %@", error);
+            }
+        }
+    }
+}
+
 #pragma mark - Battery changed
 
 - (void)batteryChanged:(NSNotification *)notification {
@@ -1718,6 +1743,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     }
                 });
             }
+            
+            [self copyDatabasesForExtensions];
             
             break;
         }
