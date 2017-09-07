@@ -13,6 +13,7 @@
 #import "LaunchViewController.h"
 #import "LoginRequiredViewController.h"
 #import "MEGALogger.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGARequestDelegate.h"
 #import "MEGASdk.h"
 #import "MEGASdkManager.h"
@@ -92,15 +93,19 @@
     
     self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     if (self.session) {
-        // Common scenario, present the browser after passcode.
         [[LTHPasscodeViewController sharedUser] setDelegate:self];
-        if ([LTHPasscodeViewController doesPasscodeExist]) {
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
-                [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+        if ([MEGAReachabilityManager isReachable]) {
+            if ([LTHPasscodeViewController doesPasscodeExist]) {
+                [self presentPasscode];
+            } else {
+                [self loginToMEGA];
             }
-            [self presentPasscode];
         } else {
-            [self loginToMEGA];
+            if ([LTHPasscodeViewController doesPasscodeExist]) {
+                [self presentPasscode];
+            } else {
+                [self presentDocumentPicker];
+            }
         }
     } else {
         [self requireLogin];
@@ -279,6 +284,10 @@
 
 - (void)presentPasscode {
     if (!self.passcodePresented) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+            [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+        }
+        
         LTHPasscodeViewController *passcodeVC = [LTHPasscodeViewController sharedUser];
         [passcodeVC showLockScreenOver:self.view.superview
                          withAnimation:YES
@@ -719,8 +728,12 @@
 - (void)passcodeWasEnteredSuccessfully {
     [self dismissViewControllerAnimated:YES completion:^{
         self.passcodePresented = NO;
-        if (!self.fetchNodesDone) {
-            [self loginToMEGA];
+        if ([MEGAReachabilityManager isReachable]) {
+            if (!self.fetchNodesDone) {
+                [self loginToMEGA];
+            }
+        } else {
+            [self presentDocumentPicker];
         }
     }];
 }
