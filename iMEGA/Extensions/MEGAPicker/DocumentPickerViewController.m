@@ -9,6 +9,7 @@
 #import "LaunchViewController.h"
 #import "MEGALogger.h"
 #import "MEGANavigationController.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGARequestDelegate.h"
 
 #import "BrowserViewController.h"
@@ -89,10 +90,18 @@
 
 - (void)willResignActive {
     if (self.session) {
-        UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
-        privacyVC.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
-        self.privacyView = privacyVC.view;
-        [self.view addSubview:self.privacyView];
+        if ([MEGAReachabilityManager isReachable]) {
+            UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
+            privacyVC.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+            self.privacyView = privacyVC.view;
+            [self.view addSubview:self.privacyView];
+        } else {
+            if ([LTHPasscodeViewController doesPasscodeExist]) {
+                [self presentPasscode];
+            } else {
+                [self presentDocumentPicker];
+            }
+        }
     }
 }
 
@@ -455,7 +464,11 @@
 - (void)passcodeWasEnteredSuccessfully {
     [self dismissViewControllerAnimated:YES completion:^{
         self.passcodePresented = NO;
-        [self loginToMEGA];
+        if ([MEGAReachabilityManager isReachable]) {
+            [self loginToMEGA];
+        } else {
+            [self presentDocumentPicker];
+        }
     }];
 }
 

@@ -342,6 +342,8 @@
 }
 
 - (void)setToolbarItemsEnabled:(BOOL)boolValue {
+    boolValue = boolValue && [MEGAReachabilityManager isReachable];
+    
     self.toolBarNewFolderBarButtonItem.enabled = boolValue;
     
     self.toolBarMoveBarButtonItem.enabled = boolValue;
