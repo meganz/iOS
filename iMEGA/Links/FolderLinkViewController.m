@@ -294,19 +294,28 @@
         // Push folders to go to the selected subfolder:
         NSString *base64Handle = [[self.folderLinkString componentsSeparatedByString:@"!"] lastObject];
         MEGANode *targetNode = [[MEGASdkManager sharedMEGASdkFolder] nodeForHandle:[MEGASdk handleForBase64Handle:base64Handle]];
-        if (targetNode.type == MEGANodeTypeFolder) { //The handle shouldn't be of a file
+        if (targetNode.type == MEGANodeTypeFolder || targetNode.type == MEGANodeTypeFile) {
             MEGANode *tempNode = targetNode;
             NSMutableArray *nodesToPush = [NSMutableArray new];
             while (tempNode.handle != self.parentNode.handle) {
                 [nodesToPush insertObject:tempNode atIndex:0];
                 tempNode = [[MEGASdkManager sharedMEGASdkFolder] nodeForHandle:tempNode.parentHandle];
             }
-            for (MEGANode *n in nodesToPush) {
-                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Links" bundle:nil];
-                FolderLinkViewController *folderLinkVC = [storyboard instantiateViewControllerWithIdentifier:@"FolderLinkViewControllerID"];
-                [folderLinkVC setParentNode:n];
-                [folderLinkVC setIsFolderRootNode:NO];
-                [self.navigationController pushViewController:folderLinkVC animated:NO];
+            for (MEGANode *node in nodesToPush) {
+                if (node.type == MEGANodeTypeFolder) {
+                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Links" bundle:nil];
+                    FolderLinkViewController *folderLinkVC = [storyboard instantiateViewControllerWithIdentifier:@"FolderLinkViewControllerID"];
+                    [folderLinkVC setParentNode:node];
+                    [folderLinkVC setIsFolderRootNode:NO];
+                    [self.navigationController pushViewController:folderLinkVC animated:NO];
+
+                } else {
+                    if (node.name.mnz_isImagePathExtension) {
+                        [node mnz_openImageInNavigationController:self.navigationController withNodes:@[node] folderLink:NO displayMode:DisplayModeCloudDrive];
+                    } else {
+                        [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+                    }
+                }
             }
         }
     }
