@@ -13,6 +13,7 @@
 #import "LaunchViewController.h"
 #import "LoginRequiredViewController.h"
 #import "MEGALogger.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGARequestDelegate.h"
 #import "MEGASdk.h"
 #import "MEGASdkManager.h"
@@ -60,6 +61,8 @@
         [[MEGALogger sharedLogger] startLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.shareExt.log"]];
     }
     
+    [self copyDatabasesFromMainApp];
+    
     self.fetchNodesDone = NO;
     self.passcodePresented = NO;
     
@@ -90,15 +93,19 @@
     
     self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     if (self.session) {
-        // Common scenario, present the browser after passcode.
         [[LTHPasscodeViewController sharedUser] setDelegate:self];
-        if ([LTHPasscodeViewController doesPasscodeExist]) {
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
-                [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+        if ([MEGAReachabilityManager isReachable]) {
+            if ([LTHPasscodeViewController doesPasscodeExist]) {
+                [self presentPasscode];
+            } else {
+                [self loginToMEGA];
             }
-            [self presentPasscode];
         } else {
-            [self loginToMEGA];
+            if ([LTHPasscodeViewController doesPasscodeExist]) {
+                [self presentPasscode];
+            } else {
+                [self presentDocumentPicker];
+            }
         }
     } else {
         [self requireLogin];
@@ -220,10 +227,11 @@
     
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
     
-    [[UIBarButtonItem appearance] setTintColor:[UIColor mnz_redD90007]];
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
-    UIImage *backButtonImage = [[UIImage imageNamed:@"backArrow"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 0)];
-    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButtonImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    if([[UIDevice currentDevice] systemVersionLessThanVersion:@"11.0"]) {
+        UIImage *backButtonImage = [[UIImage imageNamed:@"backArrow"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 0)];
+        [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButtonImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    }
     
     [[UITextField appearance] setTintColor:[UIColor mnz_redD90007]];
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:[UIColor mnz_grayF9F9F9]];
@@ -276,6 +284,10 @@
 
 - (void)presentPasscode {
     if (!self.passcodePresented) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+            [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+        }
+        
         LTHPasscodeViewController *passcodeVC = [LTHPasscodeViewController sharedUser];
         [passcodeVC showLockScreenOver:self.view.superview
                          withAnimation:YES
@@ -319,6 +331,60 @@
                              completion();
                          }
                      }];
+}
+
+- (void)copyDatabasesFromMainApp {
+    NSError *error;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSURL *applicationSupportDirectoryURL = [fileManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
+    if (error) {
+        MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
+    }
+    
+    NSURL *groupSupportURL = [[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"GroupSupport"];
+    if (![fileManager fileExistsAtPath:groupSupportURL.path]) {
+        [fileManager createDirectoryAtURL:groupSupportURL withIntermediateDirectories:NO attributes:nil error:nil];
+    }
+    
+    NSDate *incomingDate = [self newestMegaclientModificationDateForDirectoryAtUrl:groupSupportURL];
+    NSDate *extensionDate = [self newestMegaclientModificationDateForDirectoryAtUrl:applicationSupportDirectoryURL];
+    
+    if ([incomingDate compare:extensionDate] == NSOrderedDescending) {
+        NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryURL.path error:&error];
+        for (NSString *filename in applicationSupportContent) {
+            if ([filename containsString:@"megaclient"]) {
+                if(![fileManager removeItemAtPath:[applicationSupportDirectoryURL.path stringByAppendingPathComponent:filename] error:&error]) {
+                    MEGALogError(@"Remove item at path failed with error: %@", error);
+                }
+            }
+        }
+        
+        NSArray *groupSupportPathContent = [fileManager contentsOfDirectoryAtPath:groupSupportURL.path error:&error];
+        for (NSString *filename in groupSupportPathContent) {
+            if ([filename containsString:@"megaclient"]) {
+                if (![fileManager copyItemAtURL:[groupSupportURL URLByAppendingPathComponent:filename] toURL:[applicationSupportDirectoryURL URLByAppendingPathComponent:filename] error:&error]) {
+                    MEGALogError(@"Copy item at path failed with error: %@", error);
+                }
+            }
+        }
+    }
+}
+
+- (NSDate *)newestMegaclientModificationDateForDirectoryAtUrl:(NSURL *)url {
+    NSError *error;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSDate *newestDate = [[NSDate alloc] initWithTimeIntervalSince1970:0];
+    NSArray *pathContent = [fileManager contentsOfDirectoryAtPath:url.path error:&error];
+    for (NSString *filename in pathContent) {
+        if ([filename containsString:@"megaclient"]) {
+            NSDate *date = [[fileManager attributesOfItemAtPath:[url.path stringByAppendingPathComponent:filename] error:nil] fileModificationDate];
+            if ([date compare:newestDate] == NSOrderedDescending) {
+                newestDate = date;
+            }
+        }
+    }
+    return newestDate;
 }
 
 #pragma mark - Share Extension Code
@@ -662,8 +728,12 @@
 - (void)passcodeWasEnteredSuccessfully {
     [self dismissViewControllerAnimated:YES completion:^{
         self.passcodePresented = NO;
-        if (!self.fetchNodesDone) {
-            [self loginToMEGA];
+        if ([MEGAReachabilityManager isReachable]) {
+            if (!self.fetchNodesDone) {
+                [self loginToMEGA];
+            }
+        } else {
+            [self presentDocumentPicker];
         }
     }];
 }
