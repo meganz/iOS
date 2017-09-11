@@ -8,6 +8,7 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
+#import "UIViewController+MNZCategory.h"
 
 #import "NodeTableViewCell.h"
 
@@ -54,6 +55,9 @@
     self.tableView.emptyDataSetDelegate = self;
     
     [self setupBrowser];
+    if (self.parentNode && self.parentNode.handle != [[MEGASdkManager sharedMEGASdk] rootNode].handle) {
+        [self mnz_customBackBarButtonItem];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -338,6 +342,8 @@
 }
 
 - (void)setToolbarItemsEnabled:(BOOL)boolValue {
+    boolValue = boolValue && [MEGAReachabilityManager isReachable];
+    
     self.toolBarNewFolderBarButtonItem.enabled = boolValue;
     
     self.toolBarMoveBarButtonItem.enabled = boolValue;
@@ -769,7 +775,7 @@
             for (NodeTableViewCell *nodeTableViewCell in [self.tableView visibleCells]) {
                 if ([request nodeHandle] == [nodeTableViewCell nodeHandle]) {
                     MEGANode *node = [api nodeForHandle:request.nodeHandle];
-                    [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell];
+                    [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell reindexNode:YES];
                 }
             }
             break;

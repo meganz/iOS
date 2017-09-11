@@ -52,8 +52,8 @@
 "loggedOutFromAnotherLocation"="You have been logged out of this device from another location";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="La chiave SSL del server non può essere verificata. Potresti essere affetto da un attacco di tipo man-in-the-middle.";
-/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
-"serversTooBusy"="I server sono attualmente troppo impegnati. Per favore, aspetta...";
+/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
+"takingLongerThanExpected"="Il processo ci sta mettendo più del dovuto. Per favore, attendi...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Si prega di accedere al proprio account.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -257,7 +257,7 @@
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Non hai più accesso a questa cartella";
 /* List option shown on the details of a file or folder */
-"saveForOffline"="Salva per l'Offline";
+"saveForOffline"="Salva per Offline";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Salvato in locale";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -569,7 +569,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Modifica password";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Esportare la Chiave di recupero e mantenerla in uno spazio sicuro ti permette di recuperare il tuo account in caso di perdita della password senza perdite di dati.";
+"exportMasterKeyFooter"="Salvando la Chiave di Recupero e tenendola in un posto sicuro ti permette di recuperare il tuo account nel caso di password dimenticata senza perdita di dati.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Perché ho bisogno di una Chiave di Recupero?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -594,6 +594,10 @@
 "emptyRubbishBin"="Svuota il cestino";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Tutti gli elementi nel cestino verranno cancellati";
+/* Text next to a switch that allows disabling the HTTP protocol for transfers */
+"dontUseHttp"="Non usare HTTP";
+/* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
+"transfersSectionFooter"="Attiva questa opzione solo se i tuoi trasferimenti non partono. Nelle situazioni normali HTTP soddisfa i requisiti di sicurezza in quanto tutti i trasferimenti sono già criptati.";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Download di immagini e video";
 /* Section title where you can enable the option 'Save images in gallery' */
@@ -613,7 +617,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Link di cancellazione scaduto";
 /* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Per favore, inserisci la tua password per confermare che vuoi chiudere il tuo account.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Per favore, inserisci la tua password per confermare che vuoi eliminare il tuo account.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Chiudi account";
 /* Title for the action that allows to remove a file or folder */
@@ -770,6 +774,10 @@
 "downloadInUppercaseTransfers"="DOWNLOAD trasferimenti";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Il mio account";
+/* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
+"viewAndEditProfile"="Vedi e modifica profilo";
+/* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
+"profile"="Profilo";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Esci";
 /* String shown when you are logging out of your account. */
@@ -1017,7 +1025,7 @@
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Cancella messaggio";
 /* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="Send Media";
+"sendMedia"="Invia media";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Invia contatto";
 /* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
@@ -1119,3 +1127,21 @@
 "Invalid application key"="Chiave di applicazione non valida";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Errore sconosciuto";
+/* Text shown in an alert when the user is about to change the language of the app */
+"languageRestartAlert"="Dovrai riavviare MEGA dopo aver cambiato la lingua";
+/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
+"languageRestartNotification"="Lingua cambiata. Clicca per riavviare.";
+/* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
+/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph1"="MEGA è un servizio di spazio di archiviazione cloud sicuro che ti dà 50GB di spazio di archiviazione gratuito. Diversamente da altri provider di spazio di archiviazione cloud, i tuoi dati sono criptati e decriptati solo dai tuoi dispositivi e mai da noi.";
+/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph2"="Carica i tuoi file dal tuo smartphone o dal tuo tablet, poi cerca, archivia, scarica, streamma, vedi, condividi, rinomina o cancella i tuoi file in ogni momento, da qualsiasi dispositivo, ovunque tu voglia. Condividi le cartelle con i tuoi contatti e vedi i loro aggiornamenti in tempo reale.";
+/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph3"="Il processo di criptazione implica che non possiamo accedere o cambiare la tua password, quindi DEVI ricordarla (tranne nel caso in cui tu abbia copia della tua Chiave di Ripristino) o perderai l'accesso ai tuoi file archiviati.";
+/* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph4"="All'interno dell'app puoi aumentare il tuo spazio di archiviazione e la tua banda di trasferimento con un abbonamento mensile o annuale.";
+/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
+"generalDescriptionParagraph5"="Abbonamento PRO LITE: €4.99 ($4.99) al mese o €49.99 ($49.99) all'anno ti dà 200GB di spazio di archiviazione e 1TB di larghezza di banda al mese.Abbonamento PRO I: €9.99 ($9.99) al mese o €99.99 ($99.99) all'anno ti dà 1TB di spazio di archiviazione e 2TB di larghezza di banda al mese.Abbonamento PRO II: €19.99 ($19.99) al mese o €199.99 ($199.99) all'anno ti dà 4TB di spazio di archiviazione ed 8TB di larghezza di banda al mese.Abbonamento PRO III: €29.99 ($29.99) al mese o €299.99 ($299.99) all'anno ti dà 8TB di spazio di archiviazione e 16TB di larghezza di banda al mese.";
+/* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
+/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
+"generalDescriptionParagraph6"="Per più informazioni, per favore visita il nostro sito web:Mobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmlDesktop - https://mega.nz/";

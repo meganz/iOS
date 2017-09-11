@@ -52,8 +52,8 @@
 "loggedOutFromAnotherLocation"="لقد تم تسجيل خروجك من هذا الجهاز من موقع آخر";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="مفتاح طبقة المنفذ الآمن (SSL) لايمكن توثيقه، ربما تتأثر من هجوم رجل في الوسط.";
-/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
-"serversTooBusy"="الخوادم مشغولة جدا. الرجاء الانتظار...";
+/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
+"takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="يرجى تسجيل الدخول إلى حسابك.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -257,7 +257,7 @@
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="لم يعد لديك القدرة على دخول هذا المجلد";
 /* List option shown on the details of a file or folder */
-"saveForOffline"="احفظ دون اتصال";
+"saveForOffline"="احفظ في وضع عدم اتصال";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="حفظ الملفات للعمل دون اتصال";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -594,6 +594,10 @@
 "emptyRubbishBin"="سلة المهملات فارغة";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="كل العناصر في سلة المحذوفات ستحذف نهائيا";
+/* Text next to a switch that allows disabling the HTTP protocol for transfers */
+"dontUseHttp"="لا تستخدم بروتوكول HTTP";
+/* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
+"transfersSectionFooter"="فعل هذا الخيار فقط عندما لم تبدأ بعمليات النقل. في الظروف العادية فإن استخدام HTTP مقبول كون جميع عمليات النقل مشفرة.";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="تحميلات الصور والفيديو";
 /* Section title where you can enable the option 'Save images in gallery' */
@@ -613,7 +617,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="انتهت صلاحية رابط الإلغاء.";
 /* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="يرجى إدخال كلمة المرور للتأكيد على رغبتك في إغلاق حسابك.";
+"enterYourPasswordToConfirmThatYouWanToClose"="الرجاء إدخال كلمة المرور لتوكيد طلبك بإلغاء الحساب";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="إغلاق الحساب";
 /* Title for the action that allows to remove a file or folder */
@@ -770,6 +774,10 @@
 "downloadInUppercaseTransfers"="تحميل عمليات النقل";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="حسابي";
+/* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
+"viewAndEditProfile"="View and edit profile";
+/* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
+"profile"="الملف الشخصي";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="تسجيل الخروج";
 /* String shown when you are logging out of your account. */
@@ -1017,7 +1025,7 @@
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="مسح الرسالة";
 /* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="Send Media";
+"sendMedia"="أرسل صور أو فيديوهات ";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="أرسل لجهة الاتصال";
 /* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
@@ -1119,3 +1127,21 @@
 "Invalid application key"="مفتاح التطبيق غير صالح";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="خطأ غير معروف";
+/* Text shown in an alert when the user is about to change the language of the app */
+"languageRestartAlert"="ستحتاج لإعادة تشغيل MEGA بعد تغيير اللغة ";
+/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
+"languageRestartNotification"="تم تغيير اللغة ،، اضغط لإعادة التشغيل ";
+/* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
+/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph1"="MEGA هي خدمة تخزين سحابية آمنة تمنحك 50 غيغابايت كمساحة تخزين مجانية. خلافا لغيرها من مقدمي سحابة التخزين، يتم تشفير البيانات الخاصة بك وفك التشفير بواسطة أجهزة المستخدم فقط ولن يكون أبدا من قبلنا.";
+/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph2"="ارفع الملفات الخاصة بك من الهاتف الذكي أو الكمبيوتر اللوحي، ثم ابحث، أو خزن، أو حمل، أو شاهد، أو اعرض، أو شارك، أو أعد تسمية أو احذف الملفات الخاصة بك في أي وقت، من أي جهاز وفي أي مكان. شارك مجلداتك مع جهات اتصالك وشاهد تحديثاتهم مباشرة وقت التحديث.";
+/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph3"="تعني عملية التشفير أنه يتعذر علينا الدخول إلى كلمة المرور أو إعادة تعيينها، لذا يجب عليك تذكرها (إلا إذا كان لديك مفتاح الاستعادة كنسخة احتياطية) أو ستفقد إمكانية الدخول إلى الملفات المخزنة.";
+/* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph4"="داخل التطبيق يمكنك ترقية مساحة التخزين الخاصة بك وحصة النقل وذلك باشتراك شهري أو سنوي.";
+/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
+"generalDescriptionParagraph5"="اشتراك برو لايت: 4،99 € (4،99 $) في الشهر أو 49،99 € (49،99 $) سنويا يمنحك 200 غيغابايت من مساحة التخزين و 1 تيرابايت من حصة نقل في الشهر.اشتراك برو 1: 9.99 € (9.99 دولار أمريكي) في الشهر أو 99.99 € (99.99 دولار أمريكي) سنويا يمنحك 1 تيرابايت من مساحة التخزين و 2 تيرابايت من حصة نقل شهريا.اشتراك برو 2: 19.99 يورو (19.99 دولار أمريكي) في الشهر أو 199.99 يورو (199.99 دولار أمريكي) سنويا يمنحك 4 تيرابايت من مساحة التخزين و 8 تيرابايت من حصة النقل شهريا.اشتراك برو 3: 29.99 € (29.99 دولار أمريكي) في الشهر أو 299.99 € (299.99 دولار أمريكي) سنويا يمنحك 8 تيرابايت من مساحة التخزين و 16 تيرابايت من حصة نقل في الشهر.";
+/* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
+/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
+"generalDescriptionParagraph6"="لمزيد من المعلومات، الرجاء الدخول لموقعنا الالكتروني:للمحمول https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmlلسطح المكتب - https://mega.nz/";

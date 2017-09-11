@@ -194,6 +194,7 @@
     
     if (request.type == MEGARequestTypeGetPricing) {
         self.pricing = request.pricing;
+        [self.pricingsDelegate pricingsReady];
     }
 }
 

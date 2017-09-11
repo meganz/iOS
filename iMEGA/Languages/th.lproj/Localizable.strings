@@ -52,8 +52,8 @@
 "loggedOutFromAnotherLocation"="คุณได้ออกจากระบบของอุปกรณ์นี้จากตำแหน่งที่ตั้งอื่น";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="คีย์ SSL ของเซิร์ฟเวอร์ไม่สามารถตรวจสอบได้ คุณอาจจะได้รับผลกระทบจากการลักลอบดักข้อมูล";
-/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
-"serversTooBusy"="เซิร์ฟเวอร์ไม่ว่าง กรุณารอสักครู่";
+/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
+"takingLongerThanExpected"="กระบวนการนี้ใช้เวลานานกว่าที่คาดไว้ กรุณารอสักครู่...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="กรุณาเข้าสู่ระบบในบัญชีของคุณ";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -257,7 +257,7 @@
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="คุณไม่สามารถเข้าถึงโฟลเดอร์นี้ได้";
 /* List option shown on the details of a file or folder */
-"saveForOffline"="บันทึกไว้สำหรับออฟไลน์";
+"saveForOffline"="บันทึกแบบออฟไลน์";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="บันทึกสำหรับไฟล์ออฟไลน์";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -569,7 +569,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="เปลี่ยนรหัสผ่าน";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="การส่งออกคีย์การกู้คืนและเก็บไว้ในที่ปลอดภัยทำให้คุณสามารถกู้คืนบัญชีของคุณได้ในกรณีที่รหัสผ่านสูญหายโดยไม่สูญเสียข้อมูล";
+"exportMasterKeyFooter"="การบันทึกคีย์การกู้คืนและเก็บรักษาไว้ในที่ปลอดภัย จะช่วยให้คุณกู้คืนบัญชีของคุณได้ในกรณีที่รหัสผ่านสูญหายโดยไม่สูญเสียข้อมูล";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="เหตุใดฉันจึงต้องมีคีย์การกู้คืน";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -594,6 +594,10 @@
 "emptyRubbishBin"="ล้างข้อมูลในถังขยะ";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="ทุกรายการในถังขยะจะถูกลบ";
+/* Text next to a switch that allows disabling the HTTP protocol for transfers */
+"dontUseHttp"="อย่าใช้ HTTP";
+/* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
+"transfersSectionFooter"="เปิดใช้ตัวเลือกนี้เท่านั้นถ้าการโอนย้ายของคุณยังไม่เริ่มต้น โดยปกติ HTTP จะยังมีการเข้ารหัสลับระหว่างการโอนย้ายอยู่แล้ว";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="ดาวน์โหลดรูปภาพและวิดีโอ";
 /* Section title where you can enable the option 'Save images in gallery' */
@@ -613,7 +617,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="ลิงก์ยกเลิกหมดอายุแล้ว";
 /* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="กรุณากรอกรหัสผ่านของคุณเพื่อยืนยันว่าคุณต้องการปิดบัญชีของคุณ";
+"enterYourPasswordToConfirmThatYouWanToClose"="กรุณากรอกรหัสผ่านของคุณเพื่อยืนยันว่าคุณต้องการยกเลิกบัญชีของคุณ";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="ปิดบัญชี";
 /* Title for the action that allows to remove a file or folder */
@@ -685,7 +689,7 @@
 /* Second paragraph of the screen when the password has been forgotten */
 "forgotPassword_secondParagraph"="คุณยังสามารถส่งออกคีย์การกู้คืนของคุณได้ในขณะนี้ หากคุณมีเซสชัน MEGA ที่ใช้งานอยู่ในเบราว์เซอร์อื่น ๆ บนคอมพิวเตอร์เครื่องอื่นหรืออย่างอื่น คุณสามารถถอดรหัสบัญชีเดิมของคุณได้ แต่คุณสามารถเริ่มต้นใหม่ได้ภายใต้ที่อยู่อีเมลเดียวกัน โดยเลือก ไม่";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="คุณมีการสำรองข้อมูลคีย์กู้คืนแล้วหรือยัง                ";
+"doYouHaveABackupOfYourRecoveryKey"="คุณมีการสำรองข้อมูลคีย์การกู้คืนแล้วหรือยัง";
 /* Headline when the user chose YES */
 "great"="ยอดเยี่ยม!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
@@ -770,6 +774,10 @@
 "downloadInUppercaseTransfers"="โอนย้ายการดาวน์โหลด";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="บัญชีของฉัน";
+/* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
+"viewAndEditProfile"="ดูและแก้ไขโปรไฟล์";
+/* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
+"profile"="โปรไฟล์";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="ออกจากระบบ";
 /* String shown when you are logging out of your account. */
@@ -1017,7 +1025,7 @@
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="ลบข้อความ";
 /* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="Send Media";
+"sendMedia"="ส่งมีเดีย";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="ส่งผู้ติดต่อ";
 /* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
@@ -1031,7 +1039,7 @@
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="ไฟล์ทั้งหมดที่บันทึกไว้สำหรับออฟไลน์จะถูกลบออกจากอุปกรณ์ของคุณ ดำเนินการออกจากระบบหรือไม่";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Depleted transfer quota";
+"depletedTransferQuota_title"="โควตาการโอนถ่ายหมดแล้ว";
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="การดาวน์โหลดที่รอการจัดคิวของคุณเกินกว่าโควต้าการถ่ายโอนข้อมูลปัจจุบันสำหรับบัญชีของคุณแล้ว และอาจถูกขัดจังหวะได้";
 /* Button title to see the available pro plans in MEGA */
@@ -1067,7 +1075,7 @@
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="เพิกถอน";
 /* Inform user that there were unsupported assets in the share extension */
-"shareExtensionUnsupportedAssets"="Some items could not be shared with MEGA";
+"shareExtensionUnsupportedAssets"="ไม่สามารถแชร์บางรายการกับ MEGA";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="โอนย้ายไม่สำเร็จ:";
 /* MEGAError */
@@ -1119,3 +1127,21 @@
 "Invalid application key"="คีย์แอปพลิเคชันไม่ถูกต้อง";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="ข้อผิดพลาดที่ไม่รู้จัก";
+/* Text shown in an alert when the user is about to change the language of the app */
+"languageRestartAlert"="คุณต้องรีสตาร์ท MEGA หลังจากเปลี่ยนภาษา";
+/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
+"languageRestartNotification"="เปลี่ยนภาษาแล้ว แตะเพื่อเริ่มต้นใหม่";
+/* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
+/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph1"="MEGA เป็นบริการเก็บข้อมูลระบบคลาวด์ที่มีความปลอดภัยซึ่งจะให้พื้นที่เก็บข้อมูลฟรี 50 GB ไม่เหมือนกับผู้ให้บริการระบบจัดเก็บข้อมูลระบบคลาวด์อื่น ๆ ข้อมูลของคุณจะได้รับการเข้ารหัสและถอดรหัสโดยอุปกรณ์ไคลเอ็นต์ของคุณเท่านั้นและไม่จะไม่มีการดำเนินการใด ๆ จากเรา";
+/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph2"="อัปโหลดไฟล์จากสมาร์ทโฟนหรือแท็บเล็ตแล้วค้นหา จัดเก็บ ดาวน์โหลด สตรีม ดู แชร์ เปลี่ยนชื่อหรือลบไฟล์ของคุณได้ตลอดเวลาจากอุปกรณ์ใดก็ได้จากทุกที่ แชร์โฟลเดอร์กับผู้ติดต่อของคุณและดูข้อมูลอัปเดตของพวกเขาในแบบเรียลไทม์";
+/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph3"="ขั้นตอนการเข้ารหัสหมายความว่า เราไม่สามารถเข้าถึงหรือรีเซ็ตรหัสผ่านของคุณได้ ดังนั้นคุณต้องจำรหัสผ่าน (ยกเว้นกรณีที่คุณได้สำรองข้อมูลคีย์การกู้คืนไว้แล้ว) มิฉะนั้นคุณจะสูญเสียการเข้าถึงไฟล์ที่จัดเก็บไว้";
+/* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph4"="ภายในแอปพลิเคชันคุณสามารถอัปเกรดพื้นที่เก็บข้อมูลและโควต้าการโอนย้ายด้วยการสมัครรายเดือนหรือรายปี";
+/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
+"generalDescriptionParagraph5"="สมัครใช้งาน PRO LITE: 4.99 ยูโร (4.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 49.99 ยูโร (49.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 200 GB และโควต้าการถ่ายโอน 1 TB ต่อเดือนสมัครใช้งาน PRO I: 9.99 ยูโร (9.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 99.99 ยูโร (99.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 1 TB และโควต้าการถ่ายโอน 2 TB ต่อเดือนสมัครใช้งาน PRO II: 19.99 ยูโร (19.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 199.99 ยูโร (199.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 4 TB และโควต้าการถ่ายโอน 8 TB ต่อเดือนสมัครใช้งาน PRO III: 29.99 ยูโร (29.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 299.99 ยูโร (299.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 8 TB และโควต้าการถ่ายโอน 16 TB ต่อเดือน";
+/* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
+/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
+"generalDescriptionParagraph6"="สำหรับข้อมูลเพิ่มเติม กรุณาตรวจสอบเว็บไซต์ของเรา:มือถือ - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmlดสก์ทอป - https://mega.nz/";

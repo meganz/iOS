@@ -21,6 +21,7 @@
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+#import "UIViewController+MNZCategory.h"
 
 #import "ContactDetailsViewController.h"
 #import "ContactTableViewCell.h"
@@ -72,6 +73,8 @@
     self.tableView.emptyDataSetDelegate = self;
     
     [self setupContacts];
+    
+    [self mnz_customBackBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

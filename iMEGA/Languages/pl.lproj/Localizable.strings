@@ -52,8 +52,8 @@
 "loggedOutFromAnotherLocation"="Zostałeś wylogowany z innej lokalizacji";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Klucz SSL nie może zostać zweryfikowany.";
-/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
-"serversTooBusy"="Serwery są bardzo zajęte. Proszę czekać...";
+/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
+"takingLongerThanExpected"="Operacja zajmuję więcej czasu niż zwykle. Proszę czekać...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Zaloguj się do swojego konta.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -257,7 +257,7 @@
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Nie masz dostępu do katalogu";
 /* List option shown on the details of a file or folder */
-"saveForOffline"="Zapisz lokalnie";
+"saveForOffline"="Zapisz offline";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Zapisane offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -569,7 +569,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Zmień hasło";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Posiadanie Klucza Zapasowego i przechowywanie go w bezpiecznym miejscu, umożliwia później odzyskanie dostępu do konto bez ryzyka utraty danych.";
+"exportMasterKeyFooter"="Zapisany i przechowywany w bezpiecznym miejscu klucz umożliwia dostęp do konta w przypadku zapomnienia hasła bez utraty danych.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Do czego służy klucz?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -594,6 +594,10 @@
 "emptyRubbishBin"="Opróżnij kosz";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Wszystkie elementy z kosza zostaną usunięte";
+/* Text next to a switch that allows disabling the HTTP protocol for transfers */
+"dontUseHttp"="Nie używaj HTTP";
+/* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
+"transfersSectionFooter"="Zaznacz tą opcję tylko w przypadku problemów z transferem plików. W normalnej sytuacji HTTP jest wystarczający ponieważ wszystkie pliki są szyfrowane.";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Pobieranie zdjęć i filmów";
 /* Section title where you can enable the option 'Save images in gallery' */
@@ -613,7 +617,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Link nie jest poprawny.";
 /* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Wprowadź swoje hasło aby potwierdzić, że chcesz je anulować.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Wprowadź swoje hasło ponownie aby potwierdzić anulowanie konta.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Zamknij konto";
 /* Title for the action that allows to remove a file or folder */
@@ -770,6 +774,10 @@
 "downloadInUppercaseTransfers"="Transfery POBRAŃ";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Moje konto";
+/* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
+"viewAndEditProfile"="Zobacz i edytuj profil";
+/* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
+"profile"="Profil";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Wyloguj się";
 /* String shown when you are logging out of your account. */
@@ -1017,7 +1025,7 @@
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Usuń wiadomość";
 /* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="Send Media";
+"sendMedia"="Wyślij media";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Wyślij kontakt";
 /* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
@@ -1119,3 +1127,21 @@
 "Invalid application key"="Błędny klucz aplikacji";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Nieznany błąd";
+/* Text shown in an alert when the user is about to change the language of the app */
+"languageRestartAlert"="Po zmianie jezyka, należy zrestartować aplikację MEGA";
+/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
+"languageRestartNotification"="Język został zmieniony. Kliknij aby zrestartować.";
+/* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
+/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph1"="MEGA to bezpieczna chmura do przechowywania plików z darmowym limitem 50 GB. W odróżnieniu od innych podobnych rozwiązach, wszystkie Twoje dane są zawsze szyforwane na Twoim urządzeniu.";
+/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph2"="Wgrywaj pliki ze swojego telefonu lub tableta, następnie łatwo wyszukuj, przechowuj, pobieraj, udostępniaj i usuwaj w dowonym czasie, z dowolnego urządzenia i z dowolnego miejsca. Udostępniach katalogi swoim znajomym i obserwuj zmiany na żywo.";
+/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph3"="Procesz szyfrowania powoduje, że nie mamy dostępu oraz możliwości zresetowania Twojego hasła, dlatego hasło MUSISZ pamiętać (chyba, że posiadasz kopię klucza) lub stracisz dostęp do przechowywanych plików.";
+/* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph4"="Poprzez aplikację zawsze możesz zwiększyć dostępną powierzchnię na pliki i limit transferu opłacając subskrypcję miesięczną lub roczną.";
+/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
+"generalDescriptionParagraph5"="Subkrypcja PRO LITE: €4.99 (US$4.99) miesięcznie lub €49.99 (US$49.99) rocznie otrzymasz 200 GB przestrzeni na pliki oraz 1 TB na transfer danych miesięcznie.Subkrypcja PRO I: €9.99 (US$9.99) miesięcznie lub €99.99 (US$99.99) rocznie otrzymasz 1 TB przestrzeni na pliki oraz 2 TB na transfer danych miesięcznie.Subkrypcja PRO II: €19.99 (US$19.99) miesięcznie lub €199.99 (US$199.99) rocznie otrzymasz 4 TB przestrzeni na pliki oraz 8 TB na transfer danych miesięcznie.Subkrypcja PRO III: €29.99 (US$29.99) miesięcznie lub €299.99 (US$299.99) rocznie otrzymasz 8 TB przestrzeni na pliki oraz 16 TB na transfer danych miesięcznie.";
+/* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
+/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
+"generalDescriptionParagraph6"="Po więcej informacji, sprawdź naszą strone:Mobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmlDesktop - https://mega.nz/";

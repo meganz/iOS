@@ -7,6 +7,7 @@
 #import "MEGALogger.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "UIViewController+MNZCategory.h"
 
 @interface AboutTableViewController ()
 
@@ -36,9 +37,11 @@
     self.versionCell.gestureRecognizers = @[tapGestureRecognizer];
     
     [self.sdkVersionLabel setText:[NSString stringWithFormat:@"MEGA SDK %@", AMLocalizedString(@"version", nil)]];
-    self.sdkVersionSHALabel.text = @"9a7559a";
+    self.sdkVersionSHALabel.text = @"6b26713";
     
     [self.acknowledgementsLabel setText:AMLocalizedString(@"acknowledgements", nil)];
+
+    [self mnz_customBackBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
