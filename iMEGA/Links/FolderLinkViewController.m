@@ -289,18 +289,18 @@
     [decryptionKeyNotValidAlertView show];
 }
 
-- (void)navigateToFolder {
+- (void)navigateToNodeWithBase64Handle:(NSString *)base64Handle {
     if (self.isFolderRootNode) {
         // Push folders to go to the selected subfolder:
-        NSString *base64Handle = [[self.folderLinkString componentsSeparatedByString:@"!"] lastObject];
         MEGANode *targetNode = [[MEGASdkManager sharedMEGASdkFolder] nodeForHandle:[MEGASdk handleForBase64Handle:base64Handle]];
-        if (targetNode.type == MEGANodeTypeFolder || targetNode.type == MEGANodeTypeFile) {
+        if (targetNode) {
             MEGANode *tempNode = targetNode;
             NSMutableArray *nodesToPush = [NSMutableArray new];
             while (tempNode.handle != self.parentNode.handle) {
                 [nodesToPush insertObject:tempNode atIndex:0];
                 tempNode = [[MEGASdkManager sharedMEGASdkFolder] nodeForHandle:tempNode.parentHandle];
             }
+            
             for (MEGANode *node in nodesToPush) {
                 if (node.type == MEGANodeTypeFolder) {
                     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Links" bundle:nil];
@@ -311,9 +311,10 @@
 
                 } else {
                     if (node.name.mnz_isImagePathExtension) {
-                        [node mnz_openImageInNavigationController:self.navigationController withNodes:@[node] folderLink:NO displayMode:DisplayModeCloudDrive];
+                        NSArray *nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
+                        [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:YES displayMode:DisplayModeSharedItem];
                     } else {
-                        [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+                        [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
                     }
                 }
             }
@@ -839,7 +840,11 @@
             
             isFetchNodesDone = YES;
             [self reloadUI];
-            [self navigateToFolder];
+            
+            NSArray *componentsArray = [self.folderLinkString componentsSeparatedByString:@"!"];
+            if (componentsArray.count == 4) {
+                [self navigateToNodeWithBase64Handle:componentsArray.lastObject];
+            }
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
                 [api pauseTransfers:YES];

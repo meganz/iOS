@@ -1009,9 +1009,9 @@
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA提供安全加密保障，完全保护您的聊天隐私（保障使用者终端到终端，用户控制之隐私）：";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"confidentialityExplanation"="[S]保密性。 [/S] 只有作者和预设收件人能够解译和阅读交谈内容。";
+"confidentialityExplanation"="[S]保密性。 [/S]只有发送人和收件人能够解译和阅读会话的内容。";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"authenticityExplanation"="[S]真实性。 [/S] 此系统能确保接收到的资料是由您看到的发送者发送，且其内容在传输过程中不会被修改。";
+"authenticityExplanation"="[S]真实性。 [/S] 我们的系统能确保接收到的资料是由真实的发件人发送的，且其内容在传输过程中不会被篡改。";
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="未找到此对话";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
@@ -1041,7 +1041,7 @@
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="传输配额不足";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="您所进程的下载已超出您帐户目前可用的传输配额，因此有可能会被中断。";
+"depletedTransferQuota_message"="您进程中的下载已超出您帐户目前可用的传输配额，因此有可能会被中断。";
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="参看方案";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
@@ -1128,7 +1128,7 @@
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="未知的错误";
 /* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="You will need to restart MEGA after changing the language";
+"languageRestartAlert"="更改语言设置之后，请重启 app";
 /* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
 "languageRestartNotification"="Language changed. Tap to restart.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
