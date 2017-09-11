@@ -13,6 +13,7 @@
 #import "LaunchViewController.h"
 #import "LoginRequiredViewController.h"
 #import "MEGALogger.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGARequestDelegate.h"
 #import "MEGASdk.h"
 #import "MEGASdkManager.h"
@@ -60,6 +61,8 @@
         [[MEGALogger sharedLogger] startLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.shareExt.log"]];
     }
     
+    [self copyDatabasesFromMainApp];
+    
     self.fetchNodesDone = NO;
     self.passcodePresented = NO;
     
@@ -90,15 +93,19 @@
     
     self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     if (self.session) {
-        // Common scenario, present the browser after passcode.
         [[LTHPasscodeViewController sharedUser] setDelegate:self];
-        if ([LTHPasscodeViewController doesPasscodeExist]) {
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
-                [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+        if ([MEGAReachabilityManager isReachable]) {
+            if ([LTHPasscodeViewController doesPasscodeExist]) {
+                [self presentPasscode];
+            } else {
+                [self loginToMEGA];
             }
-            [self presentPasscode];
         } else {
-            [self loginToMEGA];
+            if ([LTHPasscodeViewController doesPasscodeExist]) {
+                [self presentPasscode];
+            } else {
+                [self presentDocumentPicker];
+            }
         }
     } else {
         [self requireLogin];
@@ -220,10 +227,11 @@
     
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
     
-    [[UIBarButtonItem appearance] setTintColor:[UIColor mnz_redD90007]];
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
-    UIImage *backButtonImage = [[UIImage imageNamed:@"backArrow"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 0)];
-    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButtonImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    if([[UIDevice currentDevice] systemVersionLessThanVersion:@"11.0"]) {
+        UIImage *backButtonImage = [[UIImage imageNamed:@"backArrow"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 0)];
+        [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButtonImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    }
     
     [[UITextField appearance] setTintColor:[UIColor mnz_redD90007]];
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:[UIColor mnz_grayF9F9F9]];
@@ -276,6 +284,10 @@
 
 - (void)presentPasscode {
     if (!self.passcodePresented) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+            [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+        }
+        
         LTHPasscodeViewController *passcodeVC = [LTHPasscodeViewController sharedUser];
         [passcodeVC showLockScreenOver:self.view.superview
                          withAnimation:YES
@@ -292,8 +304,14 @@
     self.timerAPI_EAGAIN = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(showServersTooBusy) userInfo:nil repeats:NO];
 }
 
+- (void)invalidateTimerAPI_EAGAIN {
+    [self.timerAPI_EAGAIN invalidate];
+    
+    self.launchVC.label.text = @"";
+}
+
 - (void)showServersTooBusy {
-    [self.launchVC.label setText:AMLocalizedString(@"serversTooBusy", @"Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in")];
+    self.launchVC.label.text = AMLocalizedString(@"takingLongerThanExpected", @"Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in");
 }
 
 - (void)fakeModalPresentation {
@@ -313,6 +331,60 @@
                              completion();
                          }
                      }];
+}
+
+- (void)copyDatabasesFromMainApp {
+    NSError *error;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSURL *applicationSupportDirectoryURL = [fileManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
+    if (error) {
+        MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
+    }
+    
+    NSURL *groupSupportURL = [[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"GroupSupport"];
+    if (![fileManager fileExistsAtPath:groupSupportURL.path]) {
+        [fileManager createDirectoryAtURL:groupSupportURL withIntermediateDirectories:NO attributes:nil error:nil];
+    }
+    
+    NSDate *incomingDate = [self newestMegaclientModificationDateForDirectoryAtUrl:groupSupportURL];
+    NSDate *extensionDate = [self newestMegaclientModificationDateForDirectoryAtUrl:applicationSupportDirectoryURL];
+    
+    if ([incomingDate compare:extensionDate] == NSOrderedDescending) {
+        NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryURL.path error:&error];
+        for (NSString *filename in applicationSupportContent) {
+            if ([filename containsString:@"megaclient"]) {
+                if(![fileManager removeItemAtPath:[applicationSupportDirectoryURL.path stringByAppendingPathComponent:filename] error:&error]) {
+                    MEGALogError(@"Remove item at path failed with error: %@", error);
+                }
+            }
+        }
+        
+        NSArray *groupSupportPathContent = [fileManager contentsOfDirectoryAtPath:groupSupportURL.path error:&error];
+        for (NSString *filename in groupSupportPathContent) {
+            if ([filename containsString:@"megaclient"]) {
+                if (![fileManager copyItemAtURL:[groupSupportURL URLByAppendingPathComponent:filename] toURL:[applicationSupportDirectoryURL URLByAppendingPathComponent:filename] error:&error]) {
+                    MEGALogError(@"Copy item at path failed with error: %@", error);
+                }
+            }
+        }
+    }
+}
+
+- (NSDate *)newestMegaclientModificationDateForDirectoryAtUrl:(NSURL *)url {
+    NSError *error;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSDate *newestDate = [[NSDate alloc] initWithTimeIntervalSince1970:0];
+    NSArray *pathContent = [fileManager contentsOfDirectoryAtPath:url.path error:&error];
+    for (NSString *filename in pathContent) {
+        if ([filename containsString:@"megaclient"]) {
+            NSDate *date = [[fileManager attributesOfItemAtPath:[url.path stringByAppendingPathComponent:filename] error:nil] fileModificationDate];
+            if ([date compare:newestDate] == NSOrderedDescending) {
+                newestDate = date;
+            }
+        }
+    }
+    return newestDate;
 }
 
 #pragma mark - Share Extension Code
@@ -544,9 +616,7 @@
         }
         // If there is no supported asset to process, then the extension is done:
         if (self.pendingAssets == self.unsupportedAssets) {
-            [self dismissWithCompletionHandler:^{
-                [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
-            }];
+            [self alertIfNeededAndDismiss];
         }
     } else {
         // The user tapped "Cancel":
@@ -577,6 +647,8 @@
 
 - (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
     if (request.type == MEGARequestTypeFetchNodes) {
+        [self invalidateTimerAPI_EAGAIN];
+        
         float progress = (request.transferredBytes.floatValue / request.totalBytes.floatValue);
         
         if (self.isFirstFetchNodesRequestUpdate) {
@@ -596,11 +668,15 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     switch ([request type]) {
         case MEGARequestTypeLogin: {
+            [self invalidateTimerAPI_EAGAIN];
+            
             [api fetchNodesWithDelegate:self];
             break;
         }
             
         case MEGARequestTypeFetchNodes: {
+            [self invalidateTimerAPI_EAGAIN];
+            
             self.fetchNodesDone = YES;
             [self.launchVC.view removeFromSuperview];
             [self presentDocumentPicker];
@@ -652,8 +728,12 @@
 - (void)passcodeWasEnteredSuccessfully {
     [self dismissViewControllerAnimated:YES completion:^{
         self.passcodePresented = NO;
-        if (!self.fetchNodesDone) {
-            [self loginToMEGA];
+        if ([MEGAReachabilityManager isReachable]) {
+            if (!self.fetchNodesDone) {
+                [self loginToMEGA];
+            }
+        } else {
+            [self presentDocumentPicker];
         }
     }];
 }

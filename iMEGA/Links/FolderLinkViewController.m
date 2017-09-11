@@ -289,6 +289,39 @@
     [decryptionKeyNotValidAlertView show];
 }
 
+- (void)navigateToNodeWithBase64Handle:(NSString *)base64Handle {
+    if (self.isFolderRootNode) {
+        // Push folders to go to the selected subfolder:
+        MEGANode *targetNode = [[MEGASdkManager sharedMEGASdkFolder] nodeForHandle:[MEGASdk handleForBase64Handle:base64Handle]];
+        if (targetNode) {
+            MEGANode *tempNode = targetNode;
+            NSMutableArray *nodesToPush = [NSMutableArray new];
+            while (tempNode.handle != self.parentNode.handle) {
+                [nodesToPush insertObject:tempNode atIndex:0];
+                tempNode = [[MEGASdkManager sharedMEGASdkFolder] nodeForHandle:tempNode.parentHandle];
+            }
+            
+            for (MEGANode *node in nodesToPush) {
+                if (node.type == MEGANodeTypeFolder) {
+                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Links" bundle:nil];
+                    FolderLinkViewController *folderLinkVC = [storyboard instantiateViewControllerWithIdentifier:@"FolderLinkViewControllerID"];
+                    [folderLinkVC setParentNode:node];
+                    [folderLinkVC setIsFolderRootNode:NO];
+                    [self.navigationController pushViewController:folderLinkVC animated:NO];
+
+                } else {
+                    if (node.name.mnz_isImagePathExtension) {
+                        NSArray *nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
+                        [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:YES displayMode:2];
+                    } else {
+                        [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
+                    }
+                }
+            }
+        }
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
@@ -808,6 +841,11 @@
             isFetchNodesDone = YES;
             [self reloadUI];
             
+            NSArray *componentsArray = [self.folderLinkString componentsSeparatedByString:@"!"];
+            if (componentsArray.count == 4) {
+                [self navigateToNodeWithBase64Handle:componentsArray.lastObject];
+            }
+            
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
                 [api pauseTransfers:YES];
             }
@@ -825,7 +863,7 @@
             for (NodeTableViewCell *nodeTableViewCell in [self.tableView visibleCells]) {
                 if ([request nodeHandle] == [nodeTableViewCell nodeHandle]) {
                     MEGANode *node = [api nodeForHandle:request.nodeHandle];
-                    [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell];
+                    [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell reindexNode:YES];
                 }
             }
             break;

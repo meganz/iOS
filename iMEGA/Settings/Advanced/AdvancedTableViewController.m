@@ -1,16 +1,16 @@
+
 #import "AdvancedTableViewController.h"
-
-#import "NSString+MNZCategory.h"
-
-#import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
-#import "MEGAStore.h"
-#import "Helper.h"
-
-#import "ChangePasswordViewController.h"
 
 #import "SVProgressHUD.h"
 
+#import "Helper.h"
+#import "MEGAReachabilityManager.h"
+#import "MEGASdkManager.h"
+#import "MEGAStore.h"
+#import "NSString+MNZCategory.h"
+#import "UIViewController+MNZCategory.h"
+
+#import "ChangePasswordViewController.h"
 
 @interface AdvancedTableViewController () <UIAlertViewDelegate, MEGAGlobalDelegate, MEGARequestDelegate> {
     NSByteCountFormatter *byteCountFormatter;
@@ -30,6 +30,9 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *saveVideosTableViewCell;
 
 @property (weak, nonatomic) IBOutlet UILabel *cancelAccountLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *dontUseHttpLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *useHttpsOnlySwitch;
 
 @property (nonatomic, copy) NSString *offlineSizeString;
 @property (nonatomic, copy) NSString *cacheSizeString;
@@ -52,6 +55,8 @@
     
     _offlineSizeString = @"...";
     _cacheSizeString = @"...";
+    
+    [self mnz_customBackBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -60,8 +65,12 @@
     [self.clearOfflineFilesLabel setText:AMLocalizedString(@"clearOfflineFiles", @"Section title where you can 'Clear Offline files' of your MEGA app")];
     [self.clearCacheLabel setText:AMLocalizedString(@"clearCache", @"Section title where you can 'Clear Cache' of your MEGA app")];
     [self.emptyRubbishBinLabel setText:AMLocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account")];
+    [self.dontUseHttpLabel setText:AMLocalizedString(@"dontUseHttp", @"Text next to a switch that allows disabling the HTTP protocol for transfers")];
     [self.savePhotosLabel setText:AMLocalizedString(@"saveImagesInGallery", @"Section title where you can enable the option 'Save images in gallery'")];
     [self.saveVideosLabel setText:AMLocalizedString(@"saveVideosInGallery", @"Section title where you can enable the option 'Save videos in gallery'")];
+    
+    BOOL useHttpsOnly = [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] boolForKey:@"useHttpsOnly"];
+    [self.useHttpsOnlySwitch setOn:useHttpsOnly];
     
     BOOL isSavePhotoToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"];
     [self.photosSwitch setOn:isSavePhotoToGalleryEnabled];
@@ -123,6 +132,11 @@
 
 #pragma mark - IBActions
 
+- (IBAction)useHttpsOnlySwitch:(UISwitch *)sender {
+    [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:sender.on forKey:@"useHttpsOnly"];
+    [[MEGASdkManager sharedMEGASdk] useHttpsOnly:sender.on];
+}
+
 - (IBAction)photosSwitchValueChanged:(UISwitch *)sender {
     [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"IsSavePhotoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -150,12 +164,12 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 5;
+    return 6;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 1;
-    if (section == 3) {
+    if (section == 4) {
         numberOfRows = 2;
     }
     return numberOfRows;
@@ -184,7 +198,11 @@
             titleHeader = AMLocalizedString(@"onMEGA", @"Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section");
             break;
             
-        case 3: //Downloads
+        case 3: //TRANSFERS
+            titleHeader = AMLocalizedString(@"transfers", @"Title of the Transfers section");
+            break;
+            
+        case 4: //Downloads
             titleHeader = ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) ? @"" : AMLocalizedString(@"imageAndVideoDownloadsHeader", @"Title header that refers to where do you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section");
             break;
     }
@@ -218,7 +236,12 @@
             break;
         }
             
-        case 3: { //Image and videos downloads
+        case 3: { //TRANSFERS
+            titleFooter = AMLocalizedString(@"transfersSectionFooter", @"Footer text that explains when disabling the HTTP protocol for transfers may be useful");
+            break;
+        }
+            
+        case 4: { //Image and videos downloads
             titleFooter = ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) ? @"" : AMLocalizedString(@"imageAndVideoDownloadsFooter", @"Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled");
             break;
         }
@@ -274,7 +297,7 @@
             break;
         }
             
-        case 4: { //Cancel account
+        case 5: { //Cancel account
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 UIAlertView *cancelAccountAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"youWillLooseAllData", @"Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted.") message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
                 cancelAccountAlertView.tag = 1;

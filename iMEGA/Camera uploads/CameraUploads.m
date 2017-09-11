@@ -186,21 +186,12 @@ static CameraUploads *instance = nil;
 #pragma mark - Utils
 
 - (void)setBadgeValue:(NSString *)value {
-    NSInteger cameraUploadsTabPosition;
-    for (cameraUploadsTabPosition = 0 ; cameraUploadsTabPosition < self.tabBarController.viewControllers.count ; cameraUploadsTabPosition++) {
-        if ([[[self.tabBarController.viewControllers objectAtIndex:cameraUploadsTabPosition] tabBarItem] tag] == 1) {
-            break;
-        }
-    }
-    
     if (![value boolValue]) {
         value = nil;
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (((cameraUploadsTabPosition >= 4) && [[UIDevice currentDevice] iPhoneDevice]) || ((cameraUploadsTabPosition >= 7) && [[UIDevice currentDevice] iPadDevice])) {
-            [[[self.tabBarController moreNavigationController] tabBarItem] setBadgeValue:value];
-        }
+        NSInteger cameraUploadsTabPosition = 1;
         [[self.tabBarController.viewControllers objectAtIndex:cameraUploadsTabPosition] tabBarItem].badgeValue = value;
     });
 }
@@ -209,19 +200,10 @@ static CameraUploads *instance = nil;
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    //If settings is on "more" tab bar item
-    if (self.tabBarController.selectedIndex >= 4) {
-        if ([[self.tabBarController.moreNavigationController visibleViewController] isKindOfClass:[CameraUploadsTableViewController class]]) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [[self.tabBarController.moreNavigationController visibleViewController] viewWillAppear:YES];
-            });
-        }
-    } else {
-        if ([[(UINavigationController *)[(UITabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController] selectedViewController] visibleViewController] isKindOfClass:[CameraUploadsTableViewController class]]) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [[(UINavigationController *)[(UITabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController] selectedViewController] visibleViewController] viewWillAppear:YES];
-            });
-        }
+    if ([[(UINavigationController *)[(UITabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController] selectedViewController] visibleViewController] isKindOfClass:[CameraUploadsTableViewController class]]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[(UINavigationController *)[(UITabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController] selectedViewController] visibleViewController] viewWillAppear:YES];
+        });
     }
 }
 

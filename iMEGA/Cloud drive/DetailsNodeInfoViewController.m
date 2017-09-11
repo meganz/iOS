@@ -582,26 +582,26 @@
             
             NSMutableArray *outSharesMutableArray = [self outSharesForNode:self.node];
             NSString *sharedWithXContacts;
+            NSString *xContacts;
             if ([outSharesMutableArray count] > 1) {
-                sharedWithXContacts = [NSString stringWithFormat:AMLocalizedString(@"sharedWithXContacts", nil), [outSharesMutableArray count]];
+                sharedWithXContacts = [NSString stringWithFormat:AMLocalizedString(@"sharedWithXContacts", @"Text shown to explain with how many contacts you have shared a folder"), [outSharesMutableArray count]];
+                xContacts = [AMLocalizedString(@"XContactsSelected", @"[X] will be replaced by a plural number, indicating the total number of contacts the user has") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%lu", (unsigned long)[outSharesMutableArray count]]];
             } else {
-                NSString *tempString = AMLocalizedString(@"removeOneShareOneContactMessage", nil);
-                sharedWithXContacts = [tempString mnz_stringBetweenString:@"(" andString:@")"];
+                sharedWithXContacts = AMLocalizedString(@"sharedWithOneContact", @"Text shown to explain that you have shared a folder with one contact");
+                xContacts = AMLocalizedString(@"oneContact", @"");
             }
-            NSArray *sharedWithXContactsArray = [sharedWithXContacts componentsSeparatedByString:@" "];
-            NSString *sharedWith = [[sharedWithXContactsArray objectAtIndex:0] stringByAppendingString:[NSString stringWithFormat:@" %@ ", [sharedWithXContactsArray objectAtIndex:1]]];
-            NSString *xContacts = [[sharedWithXContactsArray objectAtIndex:2] stringByAppendingString:[NSString stringWithFormat:@" %@", [sharedWithXContactsArray objectAtIndex:3]]];
             
-            NSMutableAttributedString *xContactsMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:xContacts];
-            [xContactsMutableAttributedString addAttribute:NSForegroundColorAttributeName
-                                                     value:[UIColor mnz_redD90007]
-                                                     range:[xContacts rangeOfString:xContacts]];
-            
-            NSMutableAttributedString *sharedWithMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:sharedWith];
-            [sharedWithMutableAttributedString appendAttributedString:xContactsMutableAttributedString];
-            [cell.nameLabel setAttributedText:sharedWithMutableAttributedString];
-            
-            [cell.arrowImageView setImage:[UIImage imageNamed:@"info_sharedWithArrow"]];
+            NSRange range = [sharedWithXContacts rangeOfString:xContacts];
+            if (range.location == NSNotFound && range.length == 0) {
+                cell.nameLabel.text = sharedWithXContacts;
+            } else {
+                NSMutableAttributedString *sharedWithXContactsMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:sharedWithXContacts];
+                [sharedWithXContactsMutableAttributedString addAttribute:NSForegroundColorAttributeName
+                                                                   value:[UIColor mnz_redD90007]
+                                                                   range:range];
+                cell.nameLabel.attributedText = sharedWithXContactsMutableAttributedString;
+            }
+            cell.arrowImageView.image = [UIImage imageNamed:@"info_sharedWithArrow"];
         }
         
         [cell.horizontalLineLayoutConstraint setConstant:0.5f];
