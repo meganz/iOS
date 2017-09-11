@@ -9,6 +9,7 @@
 #import "LaunchViewController.h"
 #import "MEGALogger.h"
 #import "MEGANavigationController.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGARequestDelegate.h"
 
 #import "BrowserViewController.h"
@@ -52,6 +53,8 @@
         [[MEGALogger sharedLogger] startLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.docExt.log"]];
     }
     
+    [self copyDatabasesFromMainApp];
+    
     self.pickerPresented = NO;
     self.passcodePresented = NO;
     
@@ -87,10 +90,18 @@
 
 - (void)willResignActive {
     if (self.session) {
-        UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
-        privacyVC.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
-        self.privacyView = privacyVC.view;
-        [self.view addSubview:self.privacyView];
+        if ([MEGAReachabilityManager isReachable]) {
+            UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
+            privacyVC.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+            self.privacyView = privacyVC.view;
+            [self.view addSubview:self.privacyView];
+        } else {
+            if ([LTHPasscodeViewController doesPasscodeExist]) {
+                [self presentPasscode];
+            } else {
+                [self presentDocumentPicker];
+            }
+        }
     }
 }
 
@@ -272,7 +283,61 @@
     self.launchVC.label.text = AMLocalizedString(@"takingLongerThanExpected", @"Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in");
 }
 
-#pragma mark BrowserViewControllerDelegate
+- (void)copyDatabasesFromMainApp {
+    NSError *error;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSURL *applicationSupportDirectoryURL = [fileManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
+    if (error) {
+        MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
+    }
+    
+    NSURL *groupSupportURL = [[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"GroupSupport"];
+    if (![fileManager fileExistsAtPath:groupSupportURL.path]) {
+        [fileManager createDirectoryAtURL:groupSupportURL withIntermediateDirectories:NO attributes:nil error:nil];
+    }
+    
+    NSDate *incomingDate = [self newestMegaclientModificationDateForDirectoryAtUrl:groupSupportURL];
+    NSDate *extensionDate = [self newestMegaclientModificationDateForDirectoryAtUrl:applicationSupportDirectoryURL];
+    
+    if ([incomingDate compare:extensionDate] == NSOrderedDescending) {
+        NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryURL.path error:&error];
+        for (NSString *filename in applicationSupportContent) {
+            if ([filename containsString:@"megaclient"]) {
+                if(![fileManager removeItemAtPath:[applicationSupportDirectoryURL.path stringByAppendingPathComponent:filename] error:&error]) {
+                    MEGALogError(@"Remove item at path failed with error: %@", error);
+                }
+            }
+        }
+        
+        NSArray *groupSupportPathContent = [fileManager contentsOfDirectoryAtPath:groupSupportURL.path error:&error];
+        for (NSString *filename in groupSupportPathContent) {
+            if ([filename containsString:@"megaclient"]) {
+                if (![fileManager copyItemAtURL:[groupSupportURL URLByAppendingPathComponent:filename] toURL:[applicationSupportDirectoryURL URLByAppendingPathComponent:filename] error:&error]) {
+                    MEGALogError(@"Copy item at path failed with error: %@", error);
+                }
+            }
+        }
+    }
+}
+
+- (NSDate *)newestMegaclientModificationDateForDirectoryAtUrl:(NSURL *)url {
+    NSError *error;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSDate *newestDate = [[NSDate alloc] initWithTimeIntervalSince1970:0];
+    NSArray *pathContent = [fileManager contentsOfDirectoryAtPath:url.path error:&error];
+    for (NSString *filename in pathContent) {
+        if ([filename containsString:@"megaclient"]) {
+            NSDate *date = [[fileManager attributesOfItemAtPath:[url.path stringByAppendingPathComponent:filename] error:nil] fileModificationDate];
+            if ([date compare:newestDate] == NSOrderedDescending) {
+                newestDate = date;
+            }
+        }
+    }
+    return newestDate;
+}
+
+#pragma mark - BrowserViewControllerDelegate
 
 - (void)didSelectNode:(MEGANode *)node {
     NSString *destinationPath = [self appGroupContainerURL];
@@ -301,7 +366,7 @@
     }
 }
 
-#pragma mark MEGARequestDelegate
+#pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
@@ -399,7 +464,11 @@
 - (void)passcodeWasEnteredSuccessfully {
     [self dismissViewControllerAnimated:YES completion:^{
         self.passcodePresented = NO;
-        [self loginToMEGA];
+        if ([MEGAReachabilityManager isReachable]) {
+            [self loginToMEGA];
+        } else {
+            [self presentDocumentPicker];
+        }
     }];
 }
 

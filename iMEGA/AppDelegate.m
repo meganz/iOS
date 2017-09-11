@@ -15,6 +15,7 @@
 #import "MEGALogger.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGANavigationController.h"
+#import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAPurchase.h"
 #import "MEGAReachabilityManager.h"
@@ -62,7 +63,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeChangeEmailLink,
     URLTypeCancelAccountLink,
     URLTypeRecoverLink,
-    URLTypeLoginRequiredLink
+    URLTypeLoginRequiredLink,
+    URLTypeHandleLink
 };
 
 @interface AppDelegate () <UIAlertViewDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate> {
@@ -94,7 +96,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @property (nonatomic, getter=isSignalActivityRequired) BOOL signalActivityRequired;
 
 @property (nonatomic) MEGAIndexer *indexer;
-@property (nonatomic) NSString *spotlightNodeBase64Handle;
+@property (nonatomic) NSString *nodeToPresentBase64Handle;
 
 @end
 
@@ -451,9 +453,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
     if ([userActivity.activityType isEqualToString:CSSearchableItemActionType] && [MEGAReachabilityManager isReachable]) {
-        self.spotlightNodeBase64Handle = userActivity.userInfo[@"kCSSearchableItemActivityIdentifier"];
+        self.nodeToPresentBase64Handle = userActivity.userInfo[@"kCSSearchableItemActivityIdentifier"];
         if ([self.window.rootViewController isKindOfClass:[MainTabBarController class]] && ![LTHPasscodeViewController doesPasscodeExist]) {
-            [self presentNodeFromSpotlight];
+            [self presentNode];
         }
         return YES;
     } else {
@@ -653,6 +655,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     if ([self isLoginRequiredLink:afterSlashesString]) {
         self.urlType = URLTypeLoginRequiredLink;
+        return;
+    }
+    
+    if ([self isHandleLink:afterSlashesString]) {
+        self.urlType = URLTypeHandleLink;
         return;
     }
     
@@ -881,6 +888,17 @@ typedef NS_ENUM(NSUInteger, URLType) {
     return isLoginRequiredLink;
 }
 
+- (BOOL)isHandleLink:(NSString *)afterSlashesString {
+    NSString *megaURLTypeString = [afterSlashesString substringToIndex:1]; // mega://"#"
+    BOOL hasHash = [megaURLTypeString isEqualToString:@"#"];
+    if (hasHash) {
+        self.nodeToPresentBase64Handle = [afterSlashesString substringFromIndex:1];
+        [self presentNode];
+        return YES;
+    }
+    return NO;
+}
+
 - (void)openIn {
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         MEGANavigationController *browserNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
@@ -1041,8 +1059,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [self.window setRootViewController:_mainTBC];
             [[UIApplication sharedApplication] setStatusBarHidden:NO];
             
-            if (self.spotlightNodeBase64Handle) {
-                [self presentNodeFromSpotlight];
+            if (self.nodeToPresentBase64Handle) {
+                [self presentNode];
             }
             
             if ([LTHPasscodeViewController doesPasscodeExist]) {
@@ -1103,8 +1121,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }];
 }
 
-- (void)presentNodeFromSpotlight {
-    uint64_t handle = [MEGASdk handleForBase64Handle:self.spotlightNodeBase64Handle];
+- (void)presentNode {
+    uint64_t handle = [MEGASdk handleForBase64Handle:self.nodeToPresentBase64Handle];
     MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:handle];
     UINavigationController *navigationController;
     NSUInteger tabPosition;
@@ -1118,10 +1136,68 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [Helper changeToViewController:CloudDriveTableViewController.class onTabBarController:self.mainTBC];
             tabPosition = [self.mainTBC tabPositionForTag:0];
         }
-        navigationController = self.mainTBC.childViewControllers[tabPosition];
-        [self.indexer presentNodeFromSpotlight:node inNavigationController:navigationController];
+        navigationController = [self.mainTBC.childViewControllers objectAtIndex:tabPosition];
+        [self presentNode:node inNavigationController:navigationController];
+    } else {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Access denied", @"Label to show that an error related with an denied access occurs during a SDK operation.")];
     }
-    self.spotlightNodeBase64Handle = nil;
+    self.nodeToPresentBase64Handle = nil;
+}
+
+- (void)presentNode:(MEGANode *)node inNavigationController:(UINavigationController *)navigationController {
+    NSMutableArray *nodes = [[NSMutableArray alloc] init];
+    
+    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) { // node from inshare
+        MEGANode *tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.parentHandle];
+        while (tempNode != nil) {
+            [nodes insertObject:tempNode atIndex:0];
+            tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:tempNode.parentHandle];
+        }
+    } else {
+        uint64_t rootHandle;
+        if ([[[MEGASdkManager sharedMEGASdk] nodePathForNode:node] hasPrefix:@"//bin"]) {
+            rootHandle = [[MEGASdkManager sharedMEGASdk] rubbishNode].parentHandle;
+        } else {
+            rootHandle = [[MEGASdkManager sharedMEGASdk] rootNode].handle;
+        }
+        uint64_t tempHandle = node.parentHandle;
+        while (tempHandle != rootHandle) {
+            MEGANode *tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:tempHandle];
+            [nodes insertObject:tempNode atIndex:0];
+            tempHandle = tempNode.parentHandle;
+        }
+    }
+    
+    [navigationController popToRootViewControllerAnimated:NO];
+    
+    for (MEGANode *node in nodes) {
+        CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+        [cloudDriveTVC setParentNode:node];
+        [navigationController pushViewController:cloudDriveTVC animated:NO];
+    }
+    
+    switch ([node type]) {
+        case MEGANodeTypeFolder: {
+            CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveTVC.parentNode = node;
+            [navigationController pushViewController:cloudDriveTVC animated:NO];
+            break;
+        }
+            
+        case MEGANodeTypeFile: {
+            if (node.name.mnz_isImagePathExtension) {
+                MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.parentHandle];
+                NSArray *nodes = [[[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode] mnz_nodesArrayFromNodeList];
+                [node mnz_openImageInNavigationController:navigationController withNodes:nodes folderLink:NO displayMode:DisplayModeCloudDrive];
+            } else {
+                [node mnz_openNodeInNavigationController:navigationController folderLink:NO];
+            }
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 - (void)migrateLocalCachesLocation {
@@ -1154,6 +1230,31 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
     } else {
         MEGALogError(@"Contents of directory at path failed with error: %@", error);
+    }
+}
+
+- (void)copyDatabasesForExtensions {
+    NSError *error;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSURL *applicationSupportDirectoryURL = [fileManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
+    if (error) {
+        MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
+    }
+    
+    NSString *groupSupportPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"GroupSupport"] path];
+    if (![fileManager fileExistsAtPath:groupSupportPath]) {
+        [fileManager createDirectoryAtPath:groupSupportPath withIntermediateDirectories:NO attributes:nil error:nil];
+    }
+    
+    NSString *applicationSupportDirectoryString = applicationSupportDirectoryURL.path;
+    NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryString error:&error];
+    for (NSString *filename in applicationSupportContent) {
+        if ([filename containsString:@"megaclient"]) {
+            if (![fileManager copyItemAtPath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename] toPath:[groupSupportPath stringByAppendingPathComponent:filename] error:&error]) {
+                MEGALogError(@"Copy item at path failed with error: %@", error);
+            }
+        }
     }
 }
 
@@ -1208,8 +1309,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [self processLink:self.link];
         }
         
-        if (self.spotlightNodeBase64Handle) {
-            [self presentNodeFromSpotlight];
+        if (self.nodeToPresentBase64Handle) {
+            [self presentNode];
         }
     }
 }
@@ -1718,6 +1819,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     }
                 });
             }
+            
+            [self copyDatabasesForExtensions];
             
             break;
         }
