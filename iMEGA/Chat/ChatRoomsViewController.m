@@ -707,8 +707,10 @@
                     
                 case MEGAChatListItemChangeTypeLastMsg:
                 case MEGAChatListItemChangeTypeLastTs:
-                    [self.chatListItemArray replaceObjectAtIndex:indexPath.row withObject:item];
-                    [self updateCell:cell forChatListItem:item];
+                    if (self.chatListItemArray.count > 0) {
+                        [self.chatListItemArray replaceObjectAtIndex:indexPath.row withObject:item];
+                        [self updateCell:cell forChatListItem:item];
+                    }
                     break;
                     
                 default:
