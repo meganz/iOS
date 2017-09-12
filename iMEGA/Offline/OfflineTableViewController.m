@@ -83,6 +83,9 @@ static NSString *kisDirectory = @"kisDirectory";
     [self.navigationItem setRightBarButtonItems:@[negativeSpaceBarButtonItem, self.editBarButtonItem, self.sortByBarButtonItem]];
         
     [self mnz_customBackBarButtonItem];
+    
+    // Long press to select:
+    [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -761,6 +764,33 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (UIViewController *)documentInteractionControllerViewControllerForPreview:(UIDocumentInteractionController *)controller {
     return self;
+}
+
+#pragma mark - UILongPressGestureRecognizer
+
+- (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
+    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
+        
+        if (self.isEditing) {
+            // Only stop editing if long pressed over a cell that is the only one selected or when selected none
+            if (self.selectedItems.count == 0) {
+                [self setEditing:NO animated:YES];
+            }
+            if (self.selectedItems.count == 1) {
+                NSURL *offlineUrlSelected = self.selectedItems.firstObject;
+                NSURL *offlineUrlPressed = [[self.offlineSortedItems objectAtIndex:indexPath.row] objectForKey:kPath];
+                if ([[offlineUrlPressed path] compare:[offlineUrlSelected path]] == NSOrderedSame) {
+                    [self setEditing:NO animated:YES];
+                }
+            }
+        } else {
+            [self setEditing:YES animated:YES];
+            [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+            [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        }
+    }
 }
 
 #pragma mark - DZNEmptyDataSetSource

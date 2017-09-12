@@ -93,6 +93,8 @@
     _outgoingNodesForEmailMutableDictionary = [[NSMutableDictionary alloc] init];
     _outgoingIndexPathsMutableDictionary = [[NSMutableDictionary alloc] init];
     
+    // Long press to select:
+    [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -886,6 +888,33 @@
     }
     
     return titleForDeleteConfirmationButton;
+}
+
+#pragma mark - UILongPressGestureRecognizer
+
+- (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
+    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
+        
+        if (self.isEditing) {
+            // Only stop editing if long pressed over a cell that is the only one selected or when selected none
+            if (self.selectedNodesMutableArray.count == 0) {
+                [self setEditing:NO animated:YES];
+            }
+            if (self.selectedNodesMutableArray.count == 1) {
+                MEGANode *nodeSelected = self.selectedNodesMutableArray.firstObject;
+                MEGANode *nodePressed = self.sharedItemsSegmentedControl.selectedSegmentIndex == 0 ? [self.incomingNodesMutableArray objectAtIndex:indexPath.row] : [self.outgoingNodesMutableArray objectAtIndex:indexPath.row];
+                if (nodeSelected.handle == nodePressed.handle) {
+                    [self setEditing:NO animated:YES];
+                }
+            }
+        } else {
+            [self setEditing:YES animated:YES];
+            [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+            [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        }
+    }
 }
 
 #pragma mark - DZNEmptyDataSetSource
