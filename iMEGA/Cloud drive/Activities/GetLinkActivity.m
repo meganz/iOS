@@ -57,7 +57,7 @@
 - (void)performActivity {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if (self.nodes != nil) {
-            if ([[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] boolForKey:@"agreedCopywriteWarning"]) {
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"agreedCopywriteWarning"]) {
                 UINavigationController *getLinkNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"GetLinkNavigationControllerID"];
                 GetLinkTableViewController *getLinkTVC = getLinkNavigationController.childViewControllers[0];
                 getLinkTVC.nodesToExport = self.nodes;
