@@ -23,6 +23,9 @@
 @property (nonatomic) BOOL isFree;
 @property (nonatomic) NSUInteger pending;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *doneBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
+
 @property (weak, nonatomic) IBOutlet UILabel *textToCopy;
 @property (weak, nonatomic) IBOutlet UISwitch *expireSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *passwordSwitch;
@@ -91,11 +94,19 @@
     [self.expireDatePicker setLocale:[NSLocale localeWithLocaleIdentifier:[[LocalizationSystem sharedLocalSystem] getLanguage]]];
     
     self.isFree = ![[MEGASdkManager sharedMEGASdk] mnz_isProAccount];
+    if (self.isFree) {
+        self.expireDateLabel.enabled = self.expireSwitch.enabled = NO;
+        self.passwordProtectionLabel.enabled = self.passwordSwitch.enabled = NO;
+    }
 
     self.pending = self.nodesToExport.count;
     for (MEGANode *node in self.nodesToExport) {
         [[MEGASdkManager sharedMEGASdk] exportNode:node delegate:self.exportDelegate];
     }
+    
+    self.navigationItem.title = (self.nodesToExport.count > 1) ? AMLocalizedString(@"getLinks", @"Title shown under the action that allows you to get several links to files and/or folders") : AMLocalizedString(@"getLink", @"Title shown under the action that allows you to get a link to file or folder");
+    self.doneBarButtonItem.title = AMLocalizedString(@"done", @"");
+    self.shareBarButtonItem.title = AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected");
     
     self.linkWithoutKeyLabel.text = AMLocalizedString(@"linkWithoutKey", @"This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT.");
     self.decryptionKeyLabel.text = AMLocalizedString(@"decryptionKey", nil);
@@ -202,9 +213,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat heightForRow = 44.0;
-    if (self.isFree && indexPath.section >= 2) {
-        return 0.0f;
-    }
     if (indexPath.section == 2 && indexPath.row == 1) {
         return self.expireSwitch.isOn ? 162.0f : 0.0f;
     }
@@ -214,27 +222,23 @@
     if (self.passwordSwitch.isOn && indexPath.section == 0 && indexPath.row < 2) {
         return 0.0f;
     }
+    
     return heightForRow;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSString *title = @"";
     switch (section) {
-        case 0:
-            title = AMLocalizedString(@"export", @"Title for the Export section of the get link view");
+        case 2: {
+            NSString *options = [AMLocalizedString(@"options", @"Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads") stringByAppendingString:@" "];
+            title = self.isFree ? [options stringByAppendingString:AMLocalizedString(@"proOnly", @"An alert dialog for the Get Link feature")] : options;
             break;
-            
-        case 1:
-            title = self.selectedArray.count > 1 ? AMLocalizedString(@"megaLinks", @"Title for the Link section of the get link view when there are more than one link") : [AMLocalizedString(@"megaLink", @"Title for the Link section of the get link view when there is only one link") stringByReplacingOccurrencesOfString:@":" withString:@""];
-            break;
-            
-        case 2:
-            title = self.isFree ? @"" : AMLocalizedString(@"options", nil);
-            break;
+        }
 
         default:
             break;
     }
+    
     return title;
 }
 

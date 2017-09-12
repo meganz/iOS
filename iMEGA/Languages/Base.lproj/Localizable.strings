@@ -270,6 +270,10 @@
 "getLink"="Get link";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Get links";
+/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
+"updateLink"="Update link";
+/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
+"updateLinks"="Update links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Generating link...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -290,16 +294,12 @@
 "agree"="Agree";
 /* button caption text that the user clicks when he disagrees */
 "disagree"="Disagree";
-/* Title for the Export section of the get link view */
-"export"="Export";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
 "linkWithoutKey"="Link without key";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
 "linkWithKey"="Link with key";
-/* Title for the Link section of the get link view when there is only one link */
-"megaLink"="MEGA link:";
-/* Title for the Link section of the get link view when there are more than one link */
-"megaLinks"="MEGA links";
+/* An alert dialog for the Get Link feature */
+"proOnly"="(PRO ONLY)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
 "expiryDate"="Set expiry date";
 /* Title shown under the action that allows you to open a file in another app */
@@ -576,7 +576,7 @@
 "off"="Off";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
 "on"="On";
-/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+/* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Options";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Upload videos";
