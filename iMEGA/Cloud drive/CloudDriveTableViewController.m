@@ -148,6 +148,9 @@
     } else {
         self.navigationItem.leftBarButtonItems = @[];
     }
+    
+    // Long press to select:
+    [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -508,6 +511,24 @@
 
 -(void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
     [self.navigationController pushViewController:viewControllerToCommit animated:YES];
+}
+
+#pragma mark - UILongPressGestureRecognizer
+
+- (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
+    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.view];
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
+        
+        if (self.isEditing) {
+            [self setEditing:NO animated:YES];
+        } else {
+            [self setEditing:YES animated:YES];
+            [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+        }
+        
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
 }
 
 #pragma mark - DZNEmptyDataSetSource
