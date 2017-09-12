@@ -517,17 +517,26 @@
 
 - (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
     if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.view];
+        CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
         
         if (self.isEditing) {
-            [self setEditing:NO animated:YES];
+            // Only stop editing if long pressed over a cell that is the only one selected or when selected none
+            if (self.selectedNodesArray.count == 0) {
+                [self setEditing:NO animated:YES];
+            }
+            if (self.selectedNodesArray.count == 1) {
+                MEGANode *nodeSelected = self.selectedNodesArray.firstObject;
+                MEGANode *nodePressed = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+                if (nodeSelected.handle == nodePressed.handle) {
+                    [self setEditing:NO animated:YES];
+                }
+            }
         } else {
             [self setEditing:YES animated:YES];
             [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+            [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
         }
-        
-        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 
