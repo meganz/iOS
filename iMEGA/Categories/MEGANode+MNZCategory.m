@@ -1,8 +1,6 @@
 
 #import "MEGANode+MNZCategory.h"
 
-#import "MWPhotoBrowser.h"
-
 #import "Helper.h"
 #import "MEGAAVViewController.h"
 #import "MEGANode.h"
@@ -19,7 +17,11 @@
 }
 
 - (void)mnz_openImageInNavigationController:(UINavigationController *)navigationController withNodes:(NSArray *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(NSUInteger)displayMode enableMoveToRubbishBin:(BOOL)enableMoveToRubbishBin {
-    
+    MWPhotoBrowser *photoBrowser = [self mnz_photoBrowserWithNodes:nodesArray folderLink:isFolderLink displayMode:displayMode enableMoveToRubbishBin:enableMoveToRubbishBin];
+    [navigationController pushViewController:photoBrowser animated:YES];
+}
+
+- (MWPhotoBrowser *)mnz_photoBrowserWithNodes:(NSArray *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(NSUInteger)displayMode enableMoveToRubbishBin:(BOOL)enableMoveToRubbishBin {
     NSInteger offsetIndex = 0;
     NSMutableArray *imagesMutableArray = [[NSMutableArray alloc] init];
     
@@ -47,11 +49,11 @@
     photoBrowser.displayMode = displayMode;
     photoBrowser.enableMoveToRubbishBin = enableMoveToRubbishBin;
     
-    [navigationController pushViewController:photoBrowser animated:YES];
-    
     [photoBrowser showNextPhotoAnimated:YES];
     [photoBrowser showPreviousPhotoAnimated:YES];
     [photoBrowser setCurrentPhotoIndex:offsetIndex];
+    
+    return photoBrowser;
 }
 
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink {
