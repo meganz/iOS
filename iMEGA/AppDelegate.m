@@ -1181,7 +1181,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
     
     switch ([node type]) {
-        case MEGANodeTypeFolder: {
+        case MEGANodeTypeFolder:
+        case MEGANodeTypeRubbish: {
             CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             cloudDriveTVC.parentNode = node;
             [navigationController pushViewController:cloudDriveTVC animated:NO];
