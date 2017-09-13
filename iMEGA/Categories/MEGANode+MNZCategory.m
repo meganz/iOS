@@ -57,6 +57,17 @@
 }
 
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink {
+    UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink];
+    if (viewController) {
+        if (viewController.class == PreviewDocumentViewController.class) {
+            [navigationController pushViewController:viewController animated:YES];
+        } else {
+            [navigationController presentViewController:viewController animated:YES completion:nil];
+        }
+    }
+}
+
+- (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink {
     MEGASdk *api = isFolderLink ? [MEGASdkManager sharedMEGASdkFolder] : [MEGASdkManager sharedMEGASdk];
     
     MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self api:[MEGASdkManager sharedMEGASdk]];
@@ -76,31 +87,30 @@
         if (self.name.mnz_isMultimediaPathExtension) {
             NSURL *path = [NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingString:offlineNodeExist.localPath]];
             MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:path];
-            [navigationController presentViewController:megaAVViewController animated:YES completion:nil];
-            return;
+            return megaAVViewController;
         } else {
             MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentPath];
-            [navigationController presentViewController:previewController animated:YES completion:nil];
+            return previewController;
         }
     } else if (self.name.mnz_isAudiovisualContentUTI && [api httpServerStart:YES port:4443]) {
         MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:self folderLink:isFolderLink];
-        [navigationController presentViewController:megaAVViewController animated:YES completion:nil];
+        return megaAVViewController;
     } else {
         if ([[[api downloadTransfers] size] integerValue] > 0) {
             UIAlertController *documentOpeningAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"documentOpening_alertTitle", @"Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download") message:AMLocalizedString(@"documentOpening_alertMessage", @"Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download") preferredStyle:UIAlertControllerStyleAlert];
             
             [documentOpeningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
             
-            [navigationController presentViewController:documentOpeningAlertController animated:YES completion:nil];
+            return documentOpeningAlertController;
         } else {
             if (![Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
-                return;
+                return nil;
             }
             
             PreviewDocumentViewController *previewDocumentVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentID"];
             previewDocumentVC.node = self;
             previewDocumentVC.api = api;
-            [navigationController pushViewController:previewDocumentVC animated:YES];
+            return previewDocumentVC;
         }
     }
 }

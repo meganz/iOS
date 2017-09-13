@@ -5,6 +5,8 @@
 
 @interface MEGAAVViewController : UIViewController
 
+@property (nonatomic) BOOL peekAndPop;
+
 - (instancetype)initWithURL:(NSURL *)path;
 - (instancetype)initWithNode:(MEGANode *)node folderLink:(BOOL)folderLink;
 

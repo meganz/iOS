@@ -1,8 +1,8 @@
 #import "CloudDriveTableViewController.h"
 
-#import <MobileCoreServices/MobileCoreServices.h>
 #import <AVFoundation/AVCaptureDevice.h>
 #import <AVFoundation/AVMediaFormat.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
@@ -24,8 +24,10 @@
 
 #import "BrowserViewController.h"
 #import "DetailsNodeInfoViewController.h"
+#import "MEGAAVViewController.h"
 #import "NodeTableViewCell.h"
 #import "PhotosViewController.h"
+#import "PreviewDocumentViewController.h"
 #import "SortByTableViewController.h"
 
 @interface CloudDriveTableViewController () <UIAlertViewDelegate, UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate> {
@@ -515,6 +517,12 @@
             if (node.name.mnz_isImagePathExtension) {
                 NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList]);
                 return [node mnz_photoBrowserWithNodes:nodesArray folderLink:NO displayMode:self.displayMode enableMoveToRubbishBin:YES];
+            } else {
+                UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO];
+                if (viewController.class == MEGAAVViewController.class) {
+                    ((MEGAAVViewController *)viewController).peekAndPop = YES;
+                }
+                return viewController;
             }
             break;
         }
@@ -526,8 +534,12 @@
     return nil;
 }
 
--(void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
-    [self.navigationController pushViewController:viewControllerToCommit animated:YES];
+- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    if (viewControllerToCommit.class == CloudDriveTableViewController.class || viewControllerToCommit.class == MWPhotoBrowser.class || viewControllerToCommit.class == PreviewDocumentViewController.class) {
+        [self.navigationController pushViewController:viewControllerToCommit animated:YES];
+    } else {
+        [self.navigationController presentViewController:viewControllerToCommit animated:YES completion:nil];
+    }
 }
 
 #pragma mark - UILongPressGestureRecognizer
