@@ -81,6 +81,9 @@
     [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
     
     [self calculateSizeForItem];
+    
+    // Long press to select:
+    [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -621,6 +624,39 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return self.sizeForItem;
+}
+
+#pragma mark - UILongPressGestureRecognizer
+
+- (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
+    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.photosCollectionView];
+        NSIndexPath *indexPath = [self.photosCollectionView indexPathForItemAtPoint:touchPoint];
+        
+        if (self.isEditing) {
+            // Only stop editing if long pressed over a cell that is the only one selected or when selected none
+            if (self.selectedItemsDictionary.count == 0) {
+                [self setEditing:NO animated:YES];
+            }
+            if (self.selectedItemsDictionary.count == 1) {
+                NSInteger index = 0;
+                for (NSInteger i = 0; i < indexPath.section; i++) {
+                    NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:i];
+                    NSString *key = [[dict allKeys] objectAtIndex:0];
+                    NSArray *array = [dict objectForKey:key];
+                    index += array.count;
+                }
+                index += indexPath.row;
+                MEGANode *nodePressed = [self.nodeList nodeAtIndex:index];
+                if ([self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:nodePressed.handle]]) {
+                    [self setEditing:NO animated:YES];
+                }
+            }
+        } else {
+            [self setEditing:YES animated:YES];
+            [self collectionView:self.photosCollectionView didSelectItemAtIndexPath:indexPath];
+        }
+    }
 }
 
 #pragma mark - DZNEmptyDataSetSource
