@@ -500,12 +500,29 @@
         return nil;
     }
     
-    if (node.type == MEGANodeTypeFile) {
-        if (node.name.mnz_isImagePathExtension) {
-            NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList]);
-            return [node mnz_photoBrowserWithNodes:nodesArray folderLink:NO displayMode:self.displayMode enableMoveToRubbishBin:YES];
+    switch ([node type]) {
+        case MEGANodeTypeFolder: {
+            CloudDriveTableViewController *cloudDriveTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            [cloudDriveTVC setParentNode:node];
+            if (self.displayMode == DisplayModeRubbishBin) {
+                [cloudDriveTVC setDisplayMode:self.displayMode];
+            }
+            return cloudDriveTVC;
+            break;
         }
+            
+        case MEGANodeTypeFile: {
+            if (node.name.mnz_isImagePathExtension) {
+                NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList]);
+                return [node mnz_photoBrowserWithNodes:nodesArray folderLink:NO displayMode:self.displayMode enableMoveToRubbishBin:YES];
+            }
+            break;
+        }
+            
+        default:
+            break;
     }
+
     return nil;
 }
 
@@ -679,7 +696,7 @@
     return [Helper spaceHeightForEmptyState];
 }
 
-#pragma mark - DZNEmptyDataSetDelegate Methods
+#pragma mark - DZNEmptyDataSetDelegate
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
     switch (self.displayMode) {
