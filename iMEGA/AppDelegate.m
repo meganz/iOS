@@ -1163,8 +1163,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
         uint64_t tempHandle = node.parentHandle;
         while (tempHandle != rootHandle) {
             MEGANode *tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:tempHandle];
-            [nodes insertObject:tempNode atIndex:0];
-            tempHandle = tempNode.parentHandle;
+            if (tempNode) {
+                [nodes insertObject:tempNode atIndex:0];
+                tempHandle = tempNode.parentHandle;
+            } else {
+                break;
+            }
         }
     }
     
