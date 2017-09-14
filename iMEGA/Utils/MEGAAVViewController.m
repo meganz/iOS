@@ -52,8 +52,8 @@
     [self play];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
     [self.moviePlayerViewController.moviePlayer prepareToPlay];
     [self.moviePlayerViewController.moviePlayer play];
@@ -82,6 +82,8 @@
         [self.view addSubview:self.moviePlayerViewController.view];
         [self addChildViewController:self.moviePlayerViewController];
         [self.moviePlayerViewController didMoveToParentViewController:self];
+        
+        [self.moviePlayerViewController.moviePlayer setShouldAutoplay:NO];
     }
 }
 
