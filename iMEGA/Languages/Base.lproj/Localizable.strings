@@ -301,7 +301,9 @@
 /* An alert dialog for the Get Link feature */
 "proOnly"="(PRO ONLY)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
-"expiryDate"="Set expiry date";
+"setExpiryDate"="Set expiry date";
+/* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
+"setPasswordProtection"="Set password protection";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Open in...";
 /* Message shown when there is an active link that can be removed or disabled */
