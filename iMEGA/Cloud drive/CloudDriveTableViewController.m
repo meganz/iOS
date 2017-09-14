@@ -19,6 +19,7 @@
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
+#import "MEGASdk+MNZCategory.h"
 #import "MEGAStore.h"
 #import "UIViewController+MNZCategory.h"
 
@@ -27,6 +28,7 @@
 #import "NodeTableViewCell.h"
 #import "PhotosViewController.h"
 #import "SortByTableViewController.h"
+#import "UpgradeTableViewController.h"
 
 @interface CloudDriveTableViewController () <UIAlertViewDelegate, UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate> {
     
@@ -157,6 +159,11 @@
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     
     [self reloadUI];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self encourageToUpgrade];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -975,6 +982,19 @@
     }
     
     self.navigationItem.title = navigationTitle;
+}
+
+- (void)encourageToUpgrade {
+    static BOOL alreadyPresented = NO;
+    if (!alreadyPresented && ![[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
+        MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
+        if (arc4random_uniform(20) == 0 || (accountDetails && ((accountDetails.storageUsed.doubleValue / accountDetails.storageMax.doubleValue) > 0.95))) { // +95% used or 5 percent of the times
+            UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+            [self presentViewController:navigationController animated:YES completion:nil];
+            alreadyPresented = YES;
+        }
+    }
 }
 
 #pragma mark - IBActions
