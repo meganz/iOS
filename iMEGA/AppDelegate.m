@@ -1711,6 +1711,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 break;
             }
                 
+            case MEGAErrorTypeApiEgoingOverquota: {
+                [self showOverquotaAlert];
+                break;
+            }
+                
             case MEGAErrorTypeApiESSL: {
                 if ([request type] == MEGARequestTypeLogout) {
                     NSString *issuer = [NSString stringWithFormat:@"(Issuer: %@)", [request text] ? [request text] : @"Unknown"];
@@ -2175,6 +2180,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 [self showOverquotaAlert];
                 break;
             }
+                
+            case MEGAErrorTypeApiEgoingOverquota: {
+                [self showOverquotaAlert];
+                break;
+            }
+                
             default:{
                 if (error.type != MEGAErrorTypeApiESid && error.type != MEGAErrorTypeApiESSL && error.type != MEGAErrorTypeApiEExist && error.type != MEGAErrorTypeApiEIncomplete) {
                     NSString *transferFailed = AMLocalizedString(@"Transfer failed:", @"Notification message shown when a transfer failed. Keep colon.");
