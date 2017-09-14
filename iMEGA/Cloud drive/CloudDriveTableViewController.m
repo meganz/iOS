@@ -30,7 +30,7 @@
 #import "PreviewDocumentViewController.h"
 #import "SortByTableViewController.h"
 
-@interface CloudDriveTableViewController () <UIAlertViewDelegate, UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate> {
+@interface CloudDriveTableViewController () <UIAlertViewDelegate, UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate> {
     
     UIAlertView *removeAlertView;
     
@@ -540,6 +540,83 @@
     } else {
         [self.navigationController presentViewController:viewControllerToCommit animated:YES completion:nil];
     }
+}
+
+- (NSArray<id<UIPreviewActionItem>> *)previewActions {
+    UIViewController *rootViewController = UIApplication.sharedApplication.delegate.window.rootViewController;
+    UIPreviewAction *saveForOfflineAction =
+    [UIPreviewAction actionWithTitle:AMLocalizedString(@"saveForOffline", @"List option shown on the details of a file or folder")
+                               style:UIPreviewActionStyleDefault
+                             handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+                                 CloudDriveTableViewController *cloudDriveTVC = (CloudDriveTableViewController *)previewViewController;
+                                 self.selectedNodesArray = [NSMutableArray new];
+                                 [self.selectedNodesArray addObject:cloudDriveTVC.parentNode];
+                                 [self downloadAction:nil];
+                             }];
+    
+    UIPreviewAction *shareAction =
+    [UIPreviewAction actionWithTitle:AMLocalizedString(@"share", nil)
+                               style:UIPreviewActionStyleDefault
+                             handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+                                 CloudDriveTableViewController *cloudDriveTVC = (CloudDriveTableViewController *)previewViewController;
+                                 UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[cloudDriveTVC.parentNode] button:nil];
+                                 [rootViewController presentViewController:activityVC animated:YES completion:nil];
+                             }];
+    
+    UIPreviewAction *moveAction =
+    [UIPreviewAction actionWithTitle:AMLocalizedString(@"move", @"Title for the action that allows you to move a file or folder")
+                               style:UIPreviewActionStyleDefault
+                             handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+                                 CloudDriveTableViewController *cloudDriveTVC = (CloudDriveTableViewController *)previewViewController;
+                                 MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+                                 BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+                                 browserVC.selectedNodesArray = @[cloudDriveTVC.parentNode];
+                                 if (lowShareType == MEGAShareTypeAccessOwner) {
+                                     [browserVC setBrowserAction:BrowserActionMove];
+                                 }
+                                 [rootViewController presentViewController:navigationController animated:YES completion:nil];
+                             }];
+    
+    UIPreviewAction *copyAction =
+    [UIPreviewAction actionWithTitle:AMLocalizedString(@"copy", @"List option shown on the details of a file or folder")
+                               style:UIPreviewActionStyleDefault
+                             handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+                                 CloudDriveTableViewController *cloudDriveTVC = (CloudDriveTableViewController *)previewViewController;
+                                 MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+                                 BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+                                 browserVC.selectedNodesArray = @[cloudDriveTVC.parentNode];
+                                 [browserVC setBrowserAction:BrowserActionCopy];
+                                 [rootViewController presentViewController:navigationController animated:YES completion:nil];
+                             }];
+    
+    UIPreviewAction *deleteAction =
+    [UIPreviewAction actionWithTitle:AMLocalizedString(@"moveToTheRubbishBin", @"Title for the action that allows you to 'Move to the Rubbish Bin' files or folders")
+                               style:UIPreviewActionStyleDefault
+                             handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+                                 CloudDriveTableViewController *cloudDriveTVC = (CloudDriveTableViewController *)previewViewController;
+                                 MEGANode *node = cloudDriveTVC.parentNode;
+                                 remainingOperations = 1;
+                                 if ([node isFolder]) {
+                                     numFoldersAction = 1;
+                                     numFilesAction = 0;
+                                 } else {
+                                     numFilesAction = 1;
+                                     numFoldersAction = 0;
+                                 }
+                                 MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
+                                 if (accessType == MEGAShareTypeAccessOwner) {
+                                     if (self.displayMode == DisplayModeCloudDrive) {
+                                         [[MEGASdkManager sharedMEGASdk] moveNode:node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode] delegate:self];
+                                     } else { //DisplayModeRubbishBin (Remove)
+                                         [[MEGASdkManager sharedMEGASdk] removeNode:node delegate:self];
+                                     }
+                                 } if (accessType == MEGAShareTypeAccessFull) { //DisplayModeSharedItem (Move to the Rubbish Bin)
+                                     [[MEGASdkManager sharedMEGASdk] moveNode:node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode] delegate:self];
+                                 }
+                             }];
+    
+    NSArray<id<UIPreviewActionItem>> *previewActions = @[saveForOfflineAction, shareAction, moveAction, copyAction, deleteAction];
+    return previewActions;
 }
 
 #pragma mark - UILongPressGestureRecognizer
