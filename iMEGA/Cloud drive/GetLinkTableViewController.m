@@ -24,7 +24,6 @@
 @property (nonatomic) NSUInteger pending;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *doneBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UILabel *textToCopy;
 @property (weak, nonatomic) IBOutlet UISwitch *expireSwitch;
@@ -34,15 +33,17 @@
 @property (weak, nonatomic) IBOutlet UILabel *linkWithoutKeyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *decryptionKeyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *linkWithKeyLabel;
-@property (weak, nonatomic) IBOutlet UIButton *pasteboardCopyButton;
 @property (weak, nonatomic) IBOutlet UILabel *expireDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *expireDateSetLabel;
 @property (weak, nonatomic) IBOutlet UIButton *expireDateSetSaveButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *passwordProtectionLabel;
-
 @property (weak, nonatomic) IBOutlet UITextField *enterPasswordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *confirmPasswordTextField;
+@property (weak, nonatomic) IBOutlet UILabel *encryptWithPasswordLabel;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarCopyLinkBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
 
 @property (nonatomic) MEGAExportRequestDelegate *exportDelegate;
 @property (nonatomic) MEGAPasswordLinkRequestDelegate *passwordLinkDelegate;
@@ -59,6 +60,8 @@
     [super viewDidLoad];
     
     [self setNavigationBarTitle];
+    
+    [self checkExpirationTime];
 
     self.dateFormatter = [[NSDateFormatter alloc] init];
     self.dateFormatter.dateStyle = NSDateFormatterMediumStyle;
@@ -90,6 +93,10 @@
         [self updateUI];
         
         if (--self.pending==0) {
+            self.enterPasswordTextField.enabled = self.confirmPasswordTextField.enabled = NO;
+            [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:4]].userInteractionEnabled = NO;
+            self.encryptWithPasswordLabel.text = AMLocalizedString(@"encrypted", @"The button text on the Export Link dialog to indicate that the link has been encrypted successfully.");
+            self.encryptWithPasswordLabel.textColor = [UIColor mnz_green31B500];
             [SVProgressHUD dismiss];
         }
     } multipleLinks:self.nodesToExport.count > 1];
@@ -119,18 +126,20 @@
     }
     
     self.doneBarButtonItem.title = AMLocalizedString(@"done", @"");
-    self.shareBarButtonItem.title = AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected");
     
     self.linkWithoutKeyLabel.text = AMLocalizedString(@"linkWithoutKey", @"This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT.");
     self.decryptionKeyLabel.text = AMLocalizedString(@"decryptionKey", nil);
     self.linkWithKeyLabel.text = AMLocalizedString(@"linkWithKey", @"This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE.");
-    [self.pasteboardCopyButton setTitle:AMLocalizedString(@"copy", nil) forState:UIControlStateNormal];
     self.expireDateLabel.text = AMLocalizedString(@"setExpiryDate", @"A label in the Get Link dialog which allows the user to set an expiry date on their public link.");
     [self.expireDateSetSaveButton setTitle:AMLocalizedString(@"save", @"Button title to 'Save' the selected option") forState:UIControlStateNormal];
     
     self.passwordProtectionLabel.text = AMLocalizedString(@"setPasswordProtection", @"This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link.");
+    self.enterPasswordTextField.placeholder = AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password");
+    self.confirmPasswordTextField.placeholder = AMLocalizedString(@"confirmPassword", @"Hint text where the user have to re-write the new password to confirm it");
+    self.encryptWithPasswordLabel.text = AMLocalizedString(@"encrypt", @"The text of a button. This button will encrypt a link with a password.");
     
-    [self checkExpirationTime];
+    self.shareBarButtonItem.title = AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected");
+    self.toolbarCopyLinkBarButtonItem.title = AMLocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard");
 }
 
 #pragma mark - Private
@@ -208,14 +217,17 @@
     [self.tableView endUpdates];
 }
 
-#pragma mark - IBActions
-
-- (IBAction)copyTapped:(UIButton *)sender {
-    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    [pasteboard setString:self.textToCopy.text];
-    NSString *status = self.selectedArray.count > 1 ? AMLocalizedString(@"linksCopied", @"Message shown when the links have been copied to the pasteboard") : AMLocalizedString(@"linkCopied", @"Message shown when the link has been copied to the pasteboard");
-    [SVProgressHUD showSuccessWithStatus:status];
+- (BOOL)validPasswordOnTextField:(UITextField *)textField {
+    if (textField.text.length == 0) {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
+        [textField becomeFirstResponder];
+        return NO;
+    }
+    
+    return YES;
 }
+
+#pragma mark - IBActions
 
 - (IBAction)doneTapped:(UIBarButtonItem *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -243,7 +255,13 @@
 }
 
 - (IBAction)passwordProtectionSwitchChanged:(UISwitch *)sender {
+    self.enterPasswordTextField.enabled = self.confirmPasswordTextField.enabled = sender.isOn;
+    [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:4]].userInteractionEnabled = sender.isOn;
+    
     if (sender.isOn) {
+        self.encryptWithPasswordLabel.text = AMLocalizedString(@"encrypt", @"The text of a button. This button will encrypt a link with a password.");
+        self.encryptWithPasswordLabel.textColor = [UIColor mnz_blue007AFF];
+        
         self.encryptedLinks = [NSMutableArray new];
         self.selectedArray = self.encryptedLinks;
         [self.tableView cellForRowAtIndexPath:self.selectedIndexPath].accessoryType = UITableViewCellAccessoryNone;
@@ -277,6 +295,19 @@
     [self hideDatePicker];
 }
 
+- (IBAction)copyLinkTapped:(UIBarButtonItem *)sender {
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = self.textToCopy.text;
+    
+    NSString *status;
+    if (self.selectedIndexPath == [NSIndexPath indexPathForRow:1 inSection:0]) {
+        status = AMLocalizedString(@"copiedToTheClipboard", @"Text of the button after the links were copied to the clipboard");
+    } else {
+        status = (self.selectedArray.count > 1) ? AMLocalizedString(@"linksCopied", @"Message shown when the links have been copied to the pasteboard") : AMLocalizedString(@"linkCopied", @"Message shown when the link has been copied to the pasteboard");
+    }
+    [SVProgressHUD showSuccessWithStatus:status];
+}
+
 #pragma mark - TableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -284,14 +315,17 @@
         switch (indexPath.row) {
             case 0:
                 self.selectedArray = self.links;
+                self.toolbarCopyLinkBarButtonItem.title = AMLocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard");
                 break;
                 
             case 1:
                 self.selectedArray = self.keys;
+                self.toolbarCopyLinkBarButtonItem.title = AMLocalizedString(@"copyKey", @"Title for a button that copies the key of the link to the clipboard");
                 break;
                 
             case 2:
                 self.selectedArray = self.fullLinks;
+                self.toolbarCopyLinkBarButtonItem.title = AMLocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard");
                 break;
                 
             default:
@@ -305,8 +339,18 @@
         if (indexPath.row == 1) {
             self.expireDatePicker.hidden ? [self showDatePicker] : [self hideDatePicker];
         }
+    } else if (indexPath.section == 4) {
+        if (![self validPasswordOnTextField:self.enterPasswordTextField] || ![self validPasswordOnTextField:self.confirmPasswordTextField]) {
+            return;
+        }
+        
+        if ([self.enterPasswordTextField.text compare:self.confirmPasswordTextField.text] == NSOrderedSame) {
+            [self encryptLinks:self.confirmPasswordTextField.text];
+        } else {
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordsDoNotMatch", @"Error text shown when you have not written the same password")];
+        }
     }
-    
+
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -337,6 +381,10 @@
             }
             break;
         }
+            
+        case 4: {
+            heightForRow = self.passwordSwitch.isOn ? 44.0f : 0.0f;
+        }
     }
     
     return heightForRow;
@@ -360,29 +408,6 @@
 
 #pragma mark - UITextFieldDelegate
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    NSString *password = [textField.text stringByReplacingCharactersInRange:range withString:string];
-
-    switch (textField.tag) {
-        case 0:
-            if ([password compare:self.confirmPasswordTextField.text] == NSOrderedSame) {
-                [self encryptLinks:password];
-            }
-            break;
-            
-        case 1:
-            if ([password compare:self.enterPasswordTextField.text] == NSOrderedSame) {
-                [self encryptLinks:password];
-            }
-            break;
-            
-        default:
-            break;
-    }
-    
-    return YES;
-}
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     switch (textField.tag) {
         case 0:
@@ -390,9 +415,6 @@
             break;
             
         case 1:
-            if ([self.enterPasswordTextField.text compare:self.confirmPasswordTextField.text] != NSOrderedSame) {
-                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordsDoNotMatch", @"Error text shown when you have not written the same password")];
-            }
             [self.confirmPasswordTextField resignFirstResponder];
             break;
             

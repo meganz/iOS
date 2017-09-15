@@ -282,7 +282,9 @@
 "linkCopied"="Link copied";
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="Links copied";
-/* A title for the Copyright Warning */
+/* Text of the button after the links were copied to the clipboard */
+"copiedToTheClipboard"="Copied to the clipboard";
+/* A title for the Copyright Warning dialog. */
 "copyrightWarning"="Copyright warning";
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Copyright warning to all users";
@@ -304,6 +306,14 @@
 "setExpiryDate"="Set expiry date";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
 "setPasswordProtection"="Set password protection";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypt"="Encrypt";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypted"="Encrypted";
+/* Title for a button to copy the link to the clipboard */
+"copyLink"="Copy link";
+/* Title for a button that copies the key of the link to the clipboard */
+"copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Open in...";
 /* Message shown when there is an active link that can be removed or disabled */
