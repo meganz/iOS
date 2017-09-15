@@ -52,6 +52,8 @@
 "loggedOutFromAnotherLocation"="Вы вышли из этого устройства из другого места";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="SSL-ключ сервера не удаётся проверить. Возможно, вы находитесь под «атакой посредника» (англ. Man in the middle (MitM)).";
+/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
+"takingLongerThanExpected"="Процесс длится дольше ожидаемого. Пожалуйста, подождите…";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Пожалуйста, авторизируйтесь.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -255,7 +257,7 @@
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="У вас больше нет доступа к этой папке";
 /* List option shown on the details of a file or folder */
-"saveForOffline"="Сохранить для Оффлайн";
+"saveForOffline"="Сохранено локально";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Сохранено для оффлайн";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -567,7 +569,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Изменить пароль";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Экспортировав ключ восстановления и спрятав его в надёжном месте, вы сможете восстановить учётную запись без потери данных, если забудете пароль.";
+"exportMasterKeyFooter"="Сохранив ключ восстановления и спрятав его в безопасном месте, вы сможете восстановить учетную запись в случае потери пароля без утраты данных.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Для чего нужен ключ восстановления";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -592,6 +594,10 @@
 "emptyRubbishBin"="Корзина пуста";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Все элементы в корзине удалены";
+/* Text next to a switch that allows disabling the HTTP protocol for transfers */
+"dontUseHttp"="Не использовать HTTP";
+/* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
+"transfersSectionFooter"="Включите эту опцию, только если передача не начинается. Обычно HTTP достаточно, так как все передачи уже зашифрованы.";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Загрузка изображений и видео";
 /* Section title where you can enable the option 'Save images in gallery' */
@@ -611,7 +617,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Срок действия ссылки удаления истёк.";
 /* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Введите пароль для подтверждения, что вы хотите удалить учётную запись.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Введите пароль, чтобы подтвердить удаление учётной записи.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Закрыть учётную запись";
 /* Title for the action that allows to remove a file or folder */
@@ -768,6 +774,10 @@
 "downloadInUppercaseTransfers"="ЗАГРУЗКИ с сервера";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Моя учётная запись";
+/* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
+"viewAndEditProfile"="Посмотреть и изменить профиль.";
+/* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
+"profile"="Профиль";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Выход";
 /* String shown when you are logging out of your account. */
@@ -1015,7 +1025,7 @@
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Удалить сообщение";
 /* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="Send Media";
+"sendMedia"="Послать медиа";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Отправить контакт";
 /* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
@@ -1117,3 +1127,21 @@
 "Invalid application key"="Неверный ключ приложения";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Неизвестная ошибка";
+/* Text shown in an alert when the user is about to change the language of the app */
+"languageRestartAlert"="Нужно перезапустить приложение после смены языка";
+/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
+"languageRestartNotification"="Язык изменён. Коснитесь для перезапуска.";
+/* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
+/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph1"="MEGA — это поставщик услуг безопасного облачного хранения данных с 50 ГБ бесплатного свободного пространства. В отличие от других облачных хранилищ, здесь данные шифруют и расшифровывают только ваши устройства, а не мы.";
+/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph2"="Загружайте файлы со своего смартфона или планшета, и ищите, храните, скачивайте, транслируйте, просматривайте, раздавайте, переименовывайте или удаляйте файлы когда угодно, с любого устройства, где угодно. Делитесь папками со своими контактами и следите за изменениями в реальном времени.";
+/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph3"="Процесс шифрования означает, что мы не можем получить доступ или сбросить пароль, поэтому вы ДОЛЖНЫ его запомнить (если у вас нет резервной копии ключа восстановления), иначе вы потеряете доступ к сохранённым файлам.";
+/* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph4"="В приложении вы можете расширить место для хранения и квоту передач с месячной или годовой подпиской.";
+/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
+"generalDescriptionParagraph5"="Подписка PRO LITE: €4.99 (US$4.99) в месяц или €49.99 (US$49.99) в год предоставляет 200 ГБ дискового пространства и 1 ТБ трафика в месяц.Подписка PRO I: €9.99 (US$9.99) в месяц или €99.99 (US$99.99) в год предоставляет 1 ТБ дискового пространства и 2 ТБ трафика в месяц.Подписка PRO II: €19.99 (US$19.99) в месяц или €199.99 (US$199.99) в год предоставляет 4 ТБ дискового пространства и 8 ТБ трафика в месяц.Подписка PRO III: €29.99 (US$29.99) в месяц или €299.99 (US$299.99) в год предоставляет 8 ТБ дискового пространства и 16 ТБ трафика в месяц.";
+/* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
+/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
+"generalDescriptionParagraph6"="Подробнее на сайте:Мобильный - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmlНастольный - https://mega.nz/";

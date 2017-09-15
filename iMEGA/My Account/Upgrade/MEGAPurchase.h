@@ -4,10 +4,12 @@
 #import "MEGASdkManager.h"
 
 @protocol MEGAPurchaseDelegate;
+@protocol MEGAPurchasePricingDelegate;
 
 @interface MEGAPurchase : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver, MEGARequestDelegate>
 
 @property (assign) id<MEGAPurchaseDelegate>delegate;
+@property (assign) id<MEGAPurchasePricingDelegate>pricingsDelegate;
 @property (nonatomic, strong) SKProduct *validProduct;
 @property (nonatomic, strong) MEGAPricing *pricing;
 
@@ -26,5 +28,11 @@
 - (void)failedPurchase:(NSInteger)errorCode message:(NSString *)errorMessage;
 - (void)incompleteRestore;
 - (void)failedRestore:(NSInteger)errorCode message:(NSString *)errorMessage;
+
+@end
+
+@protocol MEGAPurchasePricingDelegate <NSObject>
+
+- (void)pricingsReady;
 
 @end

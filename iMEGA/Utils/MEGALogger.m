@@ -53,12 +53,6 @@ static MEGALogger *_megaLogger = nil;
         [self stopLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.fileExt.log"]];
         [self stopLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.shareExt.log"]];
     }
-}
-
-- (void)stopLoggingToFile:(NSString *)logFilePath {
-    if ([[NSFileManager defaultManager] fileExistsAtPath:logFilePath]) {
-        [[NSFileManager defaultManager] removeItemAtPath:logFilePath error:nil];
-    }
     
 #ifndef DEBUG
     [MEGASdk setLogLevel:MEGALogLevelFatal];
@@ -68,7 +62,15 @@ static MEGALogger *_megaLogger = nil;
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"logging"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:NO forKey:@"logging"];
+    NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+    [sharedUserDefaults setBool:NO forKey:@"logging"];
+    [sharedUserDefaults synchronize];
+}
+
+- (void)stopLoggingToFile:(NSString *)logFilePath {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:logFilePath]) {
+        [[NSFileManager defaultManager] removeItemAtPath:logFilePath error:nil];
+    }
 }
 
 - (void)enableSDKlogs {
