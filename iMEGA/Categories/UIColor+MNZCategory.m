@@ -21,6 +21,10 @@
 
 #pragma mark - Blue
 
++ (UIColor *)mnz_blue007AFF {
+    return [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
+}
+
 + (UIColor *)mnz_blue2BA6DE {
     return [UIColor colorWithRed:43.0/255.0 green:166.0/255.0 blue:222.0/255.0 alpha:1.0];
 }

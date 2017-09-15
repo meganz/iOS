@@ -270,6 +270,10 @@
 "getLink"="Obtener enlace";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Obtener enlaces";
+/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
+"updateLink"="Actualizar enlace";
+/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
+"updateLinks"="Actualizar enlaces";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Generando enlace...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -278,6 +282,38 @@
 "linkCopied"="Enlace copiado";
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="Enlaces copiados";
+/* Text of the button after the links were copied to the clipboard */
+"copiedToTheClipboard"="Copiado en el portapapeles";
+/* A title for the Copyright Warning dialog. */
+"copyrightWarning"="Aviso de derechos de autor";
+/* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
+"copyrightWarningToAll"="Aviso de derechos de autor para todos los usuarios";
+/* String already exists: 367, but we need to split paragraphs. */
+"copyrightMessagePart1"="MEGA respeta los derechos de propiedad intelectual de terceros y exige a los usuarios de MEGA que respeten las leyes de propiedad intelectual.";
+/* String already exists: 367, but we need to split paragraphs */
+"copyrightMessagePart2"="Está terminantemente prohibido utilizar el servicio en la nube de MEGA para infringir derechos de propiedad intelectual. No puedes subir, descargar, almacenar, compartir, mostrar, reproducir, distribuir, enviar por email, vincular o poner a disposición de ninguna forma archivos, datos o contenido que infrinjan derechos de propiedad intelectual de cualquier persona o entidad.";
+/* button caption text that the user clicks when he agrees */
+"agree"="Acepto";
+/* button caption text that the user clicks when he disagrees */
+"disagree"="No acepto";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
+"linkWithoutKey"="Enlace sin clave";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
+"linkWithKey"="Enlace con clave";
+/* An alert dialog for the Get Link feature */
+"proOnly"="(SOLO PRO)";
+/* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
+"setExpiryDate"="Establecer fecha de caducidad";
+/* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
+"setPasswordProtection"="Protección por contraseña";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypt"="Cifrar";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypted"="Cifrado";
+/* Title for a button to copy the link to the clipboard */
+"copyLink"="Copiar enlace";
+/* Title for a button that copies the key of the link to the clipboard */
+"copyKey"="Copiar clave";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Abrir en...";
 /* Message shown when there is an active link that can be removed or disabled */
