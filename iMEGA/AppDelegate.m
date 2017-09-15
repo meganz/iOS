@@ -1211,8 +1211,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
         uint64_t tempHandle = node.parentHandle;
         while (tempHandle != rootHandle) {
             MEGANode *tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:tempHandle];
-            [nodes insertObject:tempNode atIndex:0];
-            tempHandle = tempNode.parentHandle;
+            if (tempNode) {
+                [nodes insertObject:tempNode atIndex:0];
+                tempHandle = tempNode.parentHandle;
+            } else {
+                break;
+            }
         }
     }
     
@@ -1225,7 +1229,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
     
     switch ([node type]) {
-        case MEGANodeTypeFolder: {
+        case MEGANodeTypeFolder:
+        case MEGANodeTypeRubbish: {
             CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             cloudDriveTVC.parentNode = node;
             [navigationController pushViewController:cloudDriveTVC animated:NO];
