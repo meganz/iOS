@@ -8,7 +8,7 @@
 
 #define TOBYTES 1024*1024*1024
 
-@interface UpgradeTableViewController ()
+@interface UpgradeTableViewController () <MEGAPurchasePricingDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *choosePlanLabel;
 @property (weak, nonatomic) IBOutlet UILabel *twoMonthsFreeLabel;
@@ -38,6 +38,8 @@
         [self.navigationItem setRightBarButtonItem:self.skipBarButtonItem];
         self.skipBarButtonItem.title = AMLocalizedString(@"skipButton", @"Button title that skips the current action");
     }
+    
+    [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -164,6 +166,12 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - MEGAPurchasePricingDelegate
+
+- (void)pricingsReady {
+    [self.tableView reloadData];
 }
 
 @end

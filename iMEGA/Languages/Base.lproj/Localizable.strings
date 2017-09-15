@@ -53,7 +53,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Server's SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
-"takingLongerThanExpected"="Taking longer than expected. Please wait...";
+"takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Please log in to your account.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -270,6 +270,10 @@
 "getLink"="Get link";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Get links";
+/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
+"updateLink"="Update link";
+/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
+"updateLinks"="Update links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Generating link...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -278,6 +282,38 @@
 "linkCopied"="Link copied";
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="Links copied";
+/* Text of the button after the links were copied to the clipboard */
+"copiedToTheClipboard"="Copied to the clipboard";
+/* A title for the Copyright Warning dialog. */
+"copyrightWarning"="Copyright warning";
+/* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
+"copyrightWarningToAll"="Copyright warning to all users";
+/* String already exists: 367, but we need to split paragraphs. */
+"copyrightMessagePart1"="MEGA respects the copyrights of others and requires that users of the MEGA cloud service comply with the laws of copyright.";
+/* String already exists: 367, but we need to split paragraphs */
+"copyrightMessagePart2"="You are strictly prohibited from using the MEGA cloud service to infringe copyrights. You may not upload, download, store, share, display, stream, distribute, email, link to, transmit or otherwise make available any files, data or content that infringes any copyright or other proprietary rights of any person or entity.";
+/* button caption text that the user clicks when he agrees */
+"agree"="Agree";
+/* button caption text that the user clicks when he disagrees */
+"disagree"="Disagree";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
+"linkWithoutKey"="Link without key";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
+"linkWithKey"="Link with key";
+/* An alert dialog for the Get Link feature */
+"proOnly"="(PRO ONLY)";
+/* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
+"setExpiryDate"="Set expiry date";
+/* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
+"setPasswordProtection"="Set password protection";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypt"="Encrypt";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypted"="Encrypted";
+/* Title for a button to copy the link to the clipboard */
+"copyLink"="Copy link";
+/* Title for a button that copies the key of the link to the clipboard */
+"copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Open in...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -552,7 +588,7 @@
 "off"="Off";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
 "on"="On";
-/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+/* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Options";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Upload videos";
@@ -585,13 +621,13 @@
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="On your device";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
-"clearOfflineFiles" = "Clear Offline Files";
+"clearOfflineFiles"="Clear Offline Files";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="Clear Cache";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="On MEGA";
 /* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin" = "Empty Rubbish Bin";
+"emptyRubbishBin"="Empty Rubbish Bin";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="All the items in the rubbish bin will be deleted";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -607,7 +643,7 @@
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Save iOS compatible images and videos in your device's gallery (Note: images and videos won't be saved in Offline).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
-"currentlyUsing" = "Currently using %s";
+"currentlyUsing"="Currently using %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
 "cancelYourAccount"="Cancel your account";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
@@ -617,7 +653,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Cancellation link has expired.";
 /* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose" = "Please enter your password to confirm that you want to cancel your account.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Please enter your password to confirm that you want to cancel your account.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Close account";
 /* Title for the action that allows to remove a file or folder */
@@ -1128,7 +1164,7 @@
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Unknown error";
 /* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="You'll need to restart MEGA after changing the language";
+"languageRestartAlert"="You will need to restart MEGA after changing the language";
 /* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
 "languageRestartNotification"="Language changed. Tap to restart.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */

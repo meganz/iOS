@@ -52,6 +52,8 @@
 "loggedOutFromAnotherLocation"="Você foi desconectado deste dispositivo a partir de outro local.";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Chave SSL do servidor não pode ser verificada. Você pode ter sido afetado por um ataque \"man-in-the-middle\".";
+/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
+"takingLongerThanExpected"="O processo está demorando mais do que o esperado. Aguarde...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Por favor, entre em sua conta.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -75,7 +77,7 @@
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Criar conta";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="E-mail inválido e / ou senha. Por favor, tente novamente";
+"invalidMailOrPassword"="E-mail e/ou senha inválidos. Por favor, tente novamente.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Você tentou entrar muitas vezes. Por favor, espere até %@ e tente novamente.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -83,15 +85,15 @@
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Sua conta foi bloqueada. Por favor, entre em contato com support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
-"emailInvalidFormat"="Digite  e-mail válido";
+"emailInvalidFormat"="Digite um email válido";
 /* Message shown when the user enters a wrong password  */
-"passwordInvalidFormat"="Digite uma palavra-passe válida";
+"passwordInvalidFormat"="Digite uma senha válida";
 /* Hint text to suggest that the user has to write his email */
-"emailPlaceholder"="E-mail";
+"emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Senha";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
-"termsOfServiceButton"="Concordo com os Termos de Serviço MEGA";
+"termsOfServiceButton"="Concordo com os Termos de Serviço do MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Digite um nome válido";
 /* Error text shown when you have not written the same password */
@@ -201,7 +203,7 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 pasta • %d arquivos";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
-"queued"="Na fila";
+"queued"="Em fila";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Há descarregamentos pendentes";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -255,7 +257,7 @@
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Você não tem acesso a esta pasta";
 /* List option shown on the details of a file or folder */
-"saveForOffline"="Salvo para off-line";
+"saveForOffline"="Salvar para uso offline";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -547,7 +549,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Termos de Serviço";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
-"off"="Desligado";
+"off"="Desativado";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
 "on"="Ativado";
 /* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
@@ -567,7 +569,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Mudar senha";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Exportar a chave de recuperação e mantê-la em um local seguro permitirá recuperar a sua conta no caso de esquecer a senha, sem perda de dados.";
+"exportMasterKeyFooter"="Salvar a chave de recuperação e mantê-la em um local seguro permite que você recupere a sua conta no caso de esquecer a sua senha, sem perda de dados.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Por que eu preciso de uma chave de recuperação?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -592,6 +594,10 @@
 "emptyRubbishBin"="Limpar lixeira";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Todos os itens da lixeira serão apagados";
+/* Text next to a switch that allows disabling the HTTP protocol for transfers */
+"dontUseHttp"="Não usar HTTP";
+/* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
+"transfersSectionFooter"="Ative essa opção apenas se a sua transferência não iniciar. Em circunstâncias normais, o HTTP é satisfatória como já todas as transferências são criptografados.";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Imagem e vídeo de downloads";
 /* Section title where you can enable the option 'Save images in gallery' */
@@ -611,9 +617,9 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Link de cancelamento expirou.";
 /* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Digite a sua senha para confirmar que deseja cancelar a sua conta.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Digite a sua senha para confirmar que você quer cancelar a sua conta.";
 /* Account closure, password check dialog when user click on closure email. */
-"closeAccount"="Encerrar conta";
+"closeAccount"="Encerrar a conta";
 /* Title for the action that allows to remove a file or folder */
 "remove"="Remover";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
@@ -709,7 +715,7 @@
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Novo e-mail";
 /* Button text for the user to confirm their change of email address. */
-"confirmEmail"="Confirmar e-mail";
+"confirmEmail"="Confirmar email";
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Confirmar novo e-mail";
 /* The title of the alert dialog to change the email associated to an account. */
@@ -719,13 +725,13 @@
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="Os e-mails não coincidem";
 /* Error message when a use wants to validate the same email twice */
-"emailAddressChangeAlreadyRequested"="Você já solicitou um link de confirmação para esse endereço de e-mail.";
+"emailAddressChangeAlreadyRequested"="Você já solicitou um link de confirmação para esse endereço de email.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Por favor, vá para sua caixa de entrada e clique no link para confirmar seu endereço de e-mail novo.";
+"emailIsChanging_description"="Acesse a sua caixa de entrada e clique no link para confirmar o seu novo endereço de email.";
 /* Text shown on the confirm email view to remind the user what to do */
-"verifyYourEmailAddress_description"="Por favor insira sua senha para verificar o seu endereço de e-mail";
+"verifyYourEmailAddress_description"="Por favor, digite a sua senha para confirmar o seu endereço de email";
 /* The [X] will be replaced with the e-mail address. */
-"congratulationsNewEmailAddress"="Parabéns, o seu novo endereço de e-mailpara esta conta MEGA é: [X]";
+"congratulationsNewEmailAddress"="Parabéns! O novo endereço de email para esta conta MEGA é: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
 "closeOtherSessions"="Fechar as outras sessões";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
@@ -768,8 +774,12 @@
 "downloadInUppercaseTransfers"="Descarregamento de transferências";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Minha conta";
+/* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
+"viewAndEditProfile"="Ver e editar o perfil";
+/* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
+"profile"="Perfil";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="Deslogar";
+"logoutLabel"="Fazer logout";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Deslogando";
 /* Button to remove avatar. Try to keep the text short (as in English) */
@@ -779,11 +789,11 @@
 /* Button title that allows the user change his name */
 "changeName"="Mudar de nome";
 /* Success message when changing profile information. */
-"youHaveSuccessfullyChangedYourProfile"="Você mudou com sucesso seu perfil.";
+"youHaveSuccessfullyChangedYourProfile"="Você mudou o seu perfil com sucesso.";
 /* Hint text for the first name (Placeholder) */
-"firstName"="Primeiro nome";
+"firstName"="Nome";
 /* Hint text for the last name (Placeholder) */
-"lastName"="Último nome";
+"lastName"="Sobrenome";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="Utilização";
 /* Title for "Local" used space. */
@@ -801,7 +811,7 @@
 /* Button title for the section where you can see the 'Purchase history' related to your account */
 "purchaseHistory"="Histórico de compras";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
-"incomingShares"="Partilhas Recebidas";
+"incomingShares"="Compartilhado comigo";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
 "of %@"="de %@";
 /* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
@@ -951,13 +961,13 @@
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
 "contactCredentials"="Credenciais do contato";
 /* "Verify user" dialog description */
-"thisIsBestDoneInRealLife"="O melhor jeito de fazer isso, é se conhecendo pessoalmente, na vida real. Se você tem um outro canal já verificada como OTR ou PGP, você também pode usar estes canais.";
+"thisIsBestDoneInRealLife"="O melhor jeito de fazer isso é pessoalmente, na vida real. Se você tem outro canal verificado como OTR ou PGP, você também pode usá-lo.";
 /* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
 "yourCredentials"="Suas credenciais";
 /* Button to reset the password */
 "reset"="Resetar";
 /* Button title */
-"approve"="Aprovar";
+"approve"="Validar";
 /* start a chat/conversation */
 "startConversation"="Iniciar conversa";
 /* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
@@ -1015,7 +1025,7 @@
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Excluir mensagem";
 /* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="Send Media";
+"sendMedia"="Enviar fotos/vídeos";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Enviar contato";
 /* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
@@ -1117,3 +1127,21 @@
 "Invalid application key"="Chave de aplicação inválida";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Erro desconhecido";
+/* Text shown in an alert when the user is about to change the language of the app */
+"languageRestartAlert"="Você precisará reiniciar o MEGA depois de mudar o idioma.";
+/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
+"languageRestartNotification"="Idioma modificado. Toque para reiniciar.";
+/* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
+/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph1"="MEGA é um serviço de armazenamento em nuvem seguro que oferece 50 GB de espaço de armazenamento gratuito. Ao contrário de outros provedores de armazenamento em nuvem, seus dados são criptografados e descriptografados apenas por seus dispositivos e nunca por nós.";
+/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph2"="Carregue os seus arquivos a partir do smartphone ou tablet e, em seguida, procure, armazene, transfira, transmita, visualize, compartilhe, mude o nome ou elimine os seus ficheiros a qualquer momento, a partir de qualquer dispositivo, em qualquer lugar. Compartilhe pastas com seus contatos e veja suas atualizações em tempo real.";
+/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph3"="O processo de criptografia significa que não podemos acessar ou redefinir sua senha você DEVE se lembrar (a menos que você tenha a sua chave de recuperação backup) ou você perderá o acesso aos seus arquivos armazenados.";
+/* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph4"="Dentro do aplicativo, você pode atualizar seu espaço de armazenamento e transferir cota com uma assinatura mensal ou anual.";
+/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
+"generalDescriptionParagraph5"="Assinatura PRO LITE: €4,99 (US$4,99) por mês ou €49,99 (US$49,99) por ano oferece 200 GB de espaço de armazenamento e 1 TB de cota de transferência por mês.Assinatura PRO I: €9,99 (US$9,99) por mês ou €99,99 (US$99,99) por ano oferece 1 TB de espaço de armazenamento e 2 TB de cota de transferência por mês.Assinatura PRO II: €19,99 (US$19,99) por mês ou €199,99 (US$199,99) por ano oferece 4 TB de espaço de armazenamento e 8 TB de cota de transferência por mês.Assinatura PRO III: €29,99 (US$29,99) por mês ou €299,99 (US$299,99) por ano oferece 8 TB de espaço de armazenamento e 16 TB de cota de transferência por mês.";
+/* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
+/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
+"generalDescriptionParagraph6"="Para mais informações, por favor visite o nosso site:Móvel - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmlDesktop - https://mega.nz/";

@@ -4,11 +4,9 @@
 #import <CoreSpotlight/CoreSpotlight.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 
-#import "CloudDriveTableViewController.h"
 #import "Helper.h"
 #import "MEGASDKManager.h"
 #import "MEGANodeList+MNZCategory.h"
-#import "MEGANode+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
 #define MNZ_PERSIST_EACH 1000
@@ -195,62 +193,6 @@
     
     CSSearchableItem *searchableItem = [[CSSearchableItem alloc] initWithUniqueIdentifier:node.base64Handle domainIdentifier:@"nodes" attributeSet:attributeSet];
     return searchableItem;
-}
-
-#pragma mark - continueUserActivity
-
-- (void)presentNodeFromSpotlight:(MEGANode *)node inNavigationController:(UINavigationController *)navigationController {
-    NSMutableArray *nodes = [[NSMutableArray alloc] init];
-
-    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) { // node from inshare
-        MEGANode *tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.parentHandle];
-        while (tempNode != nil) {
-            [nodes insertObject:tempNode atIndex:0];
-            tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:tempNode.parentHandle];
-        }
-    } else {
-        uint64_t rootHandle;
-        if ([[[MEGASdkManager sharedMEGASdk] nodePathForNode:node] hasPrefix:@"//bin"]) {
-            rootHandle = [[MEGASdkManager sharedMEGASdk] rubbishNode].parentHandle;
-        } else {
-            rootHandle = [[MEGASdkManager sharedMEGASdk] rootNode].handle;
-        }
-        uint64_t tempHandle = node.parentHandle;
-        while (tempHandle != rootHandle) {
-            MEGANode *tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:tempHandle];
-            [nodes insertObject:tempNode atIndex:0];
-            tempHandle = tempNode.parentHandle;
-        }
-    }
-
-    [navigationController popToRootViewControllerAnimated:NO];
-    
-    for (MEGANode *n in nodes) {
-        CloudDriveTableViewController *cdvc = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-        [cdvc setParentNode:n];
-        [navigationController pushViewController:cdvc animated:NO];
-    }
-    
-    switch ([node type]) {
-        case MEGANodeTypeFolder: {
-            CloudDriveTableViewController *cdvc = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            [cdvc setParentNode:node];
-            [navigationController pushViewController:cdvc animated:NO];
-            break;
-        }
-            
-        case MEGANodeTypeFile: {
-            if (node.name.mnz_isImagePathExtension) {
-                [node mnz_openImageInNavigationController:navigationController withNodes:@[node] folderLink:NO displayMode:DisplayModeCloudDrive];
-            } else {
-                [node mnz_openNodeInNavigationController:navigationController folderLink:NO];
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
 }
 
 #pragma mark - MEGATreeProcessorDelegate

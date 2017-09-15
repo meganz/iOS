@@ -15,7 +15,7 @@
 /* Caption of a button to edit the files that are selected */
 "edit"="编辑";
 /* State shown if something is 'Saved' (String as short as possible). */
-"saved"="已储存";
+"saved"="已保存";
 /*  */
 "passcode"="密码";
 /* "Size" of the file or folder you are sharing */
@@ -52,6 +52,8 @@
 "loggedOutFromAnotherLocation"="您已从其他位置登出该设备";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="服务器SSL 金钥未能认证。您可能会收到第三方攻击。";
+/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
+"takingLongerThanExpected"="加载时间比预期的长，请耐心等待。";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="请登入您的帐号。";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -255,7 +257,7 @@
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="您没有访问该文件夹的权限";
 /* List option shown on the details of a file or folder */
-"saveForOffline"="保存以便离线使用";
+"saveForOffline"="离线保存";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="离线储存";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -267,11 +269,11 @@
 /* Title shown under the action that allows you to get a link to file or folder */
 "getLink"="取得链接";
 /* Title shown under the action that allows you to get several links to files and/or folders */
-"getLinks"="取得分享链接";
+"getLinks"="创建共享链接";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="正在生成连接...";
 /* Message shown when some links to files and/or folders are being generated */
-"generatingLinks"="产生链接网址中...";
+"generatingLinks"="正在生产链接...";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="链接已复制";
 /* Message shown when some links have been copied to the pasteboard */
@@ -279,13 +281,13 @@
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="开启于...";
 /* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="移除链接";
+"removeLink"="删除链接";
 /* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="移除分享链接";
+"removeLinks"="删除共享链接";
 /* Message shown when the link to a file or folder has been removed */
-"linkRemoved"="已移除链接";
+"linkRemoved"="链接已删除";
 /* Message shown when the links to files and/or folders have been removed */
-"linksRemoved"="已移除链接";
+"linksRemoved"="链接已删除";
 /* Title show when a file is being downloaded */
 "downloading"="正在下载...";
 /* Message shown when you tap on the cancel button of an active transfer */
@@ -477,15 +479,15 @@
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="新增联系人错误";
 /* Alert title shown when you want to remove one or more contacts */
-"removeUserTitle"="移除联系人";
+"removeUserTitle"="删除联系人";
 /* Alert confirmation message shown when you want to remove one contact from your contacts list */
 "removeUserMessage"="您确定要把%@ 从您的联系簿删除吗？";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="您确定要从联系簿删除%d 个联系人吗？";
 /* Success message shown when the selected contacts have been removed */
-"removedContacts"="已移除%d 联系人";
+"removedContacts"="已删除联系人%d";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
-"removedContact"="联系人%@ 已移除";
+"removedContact"="联系人%@ 已被删除";
 /* Label shown when a contact request is pending */
 "pending"="处理中";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
@@ -567,7 +569,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="变更密码";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="导出恢复密钥且保存在安全的地方将使你无损地在丢失密码情况下恢复你的账户";
+"exportMasterKeyFooter"="备份恢复金钥并将其存放于安全之处能确保您不会因为忘记帐号密码而丢失已储存的数据。";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="为什么我会需要还原金钥？";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -592,6 +594,10 @@
 "emptyRubbishBin"="空的垃圾桶";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="所有垃圾桶中的项目将均被删除";
+/* Text next to a switch that allows disabling the HTTP protocol for transfers */
+"dontUseHttp"="不使用HTTP";
+/* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
+"transfersSectionFooter"="仅于您的传输未启动时，才激活此选项。正常情况下，HTTP已可为所有传输加密，且成果令人满意。";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="图片与影片下载";
 /* Section title where you can enable the option 'Save images in gallery' */
@@ -611,13 +617,13 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="注销连接已失效。";
 /* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="请输入密码以确认你想取消你的账号";
+"enterYourPasswordToConfirmThatYouWanToClose"="请输入您的密码来确认您要删除帐号。";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="注销帐户";
 /* Title for the action that allows to remove a file or folder */
-"remove"="移除";
+"remove"="删除";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
-"removeNodeFromRubbishBinTitle"="确认移除";
+"removeNodeFromRubbishBinTitle"="确认删除";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
 "removeFileToRubbishBinMessage"="您即将永久删除1 个文件。您要继续吗？ （您不能撤销该操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
@@ -639,17 +645,17 @@
 /* Success message shown when {1+} files have been removed from MEGA */
 "filesRemovedToRubbishBinMessage"="从MEGA 移除%d 个文件";
 /* Success message shown when 1 folder has been removed from MEGA */
-"folderRemovedToRubbishBinMessage"="1 文件夹自MEGA移除";
+"folderRemovedToRubbishBinMessage"="已从MEGA删除1个文件夹";
 /* Success message shown when {1+} folders have been removed from MEGA */
-"foldersRemovedToRubbishBinMessage"="%d 文件夹自MEGA移除";
+"foldersRemovedToRubbishBinMessage"="已从MEGA删除%d个文件夹";
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
-"fileFolderRemovedToRubbishBinMessage"="1个文件与1个文件夹已自MEGA移除";
+"fileFolderRemovedToRubbishBinMessage"="已从MEGA删除1个文件与1个文件夹";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="1个文件与%d 个文件夹已自MEGA移除";
+"fileFoldersRemovedToRubbishBinMessage"="已从MEGA删除1个文件与%d 个文件夹";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
-"filesFolderRemovedToRubbishBinMessage"="%d 个文件与1个文件夹已自MEGA移除";
+"filesFolderRemovedToRubbishBinMessage"="已从MEGA删除%d 个文件与1个文件夹";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
-"filesFoldersRemovedToRubbishBinMessage"="[A] 个文件与[B]个文件夹已自MEGA移除";
+"filesFoldersRemovedToRubbishBinMessage"="已从MEGA删除[A]个文件和[B]个文件夹";
 /* Hint text to suggest that the user have to write his/her current password */
 "currentPassword"="现行密码";
 /* Hint text to suggest that the user have to write the new password on it */
@@ -677,7 +683,7 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="还原金钥将被用于重设您的密码。请输入您的新密码。";
 /*  */
-"yourPasswordHasBeenReset"="您的密码已成功重置。请即登入测试。";
+"yourPasswordHasBeenReset"="密码已重置。请立即登入帐户。";
 /* First paragraph of the screen when the password has been forgotten */
 "forgotPassword_firstParagraph"="如果您有还原金钥的备份，您可以选择「是」以重设您的密码。任何资料均不会遗失。";
 /* Second paragraph of the screen when the password has been forgotten */
@@ -727,7 +733,7 @@
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="恭喜您完成更换，您于此MEGA帐户的新电子邮件地址为：[X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
-"closeOtherSessions"="关闭其他登入帐户";
+"closeOtherSessions"="从其他设备中登出帐户";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="已关闭之其他登入";
 /* Section title where you can change the app's passcode */
@@ -768,12 +774,16 @@
 "downloadInUppercaseTransfers"="下载传输";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="我的帐号";
+/* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
+"viewAndEditProfile"="查看并修改帐户资料";
+/* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
+"profile"="文件";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="登出";
 /* String shown when you are logging out of your account. */
 "loggingOut"="正在登出";
 /* Button to remove avatar. Try to keep the text short (as in English) */
-"removeAvatar"="移除头像";
+"removeAvatar"="删除头像";
 /* button that allows the user the change his avatar */
 "changeAvatar"="变更头像";
 /* Button title that allows the user change his name */
@@ -809,7 +819,7 @@
 /* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
 "available of %@"="共%@ 可用";
 /* Button title which triggers the action to upgrade your MEGA account level */
-"upgradeAccount"="升级帐号";
+"upgradeAccount"="付费升级账户";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="您稍后可在\"我的帐户\"中进行升级";
 /* Storage related with the MEGA PRO account level you can subscribe */
@@ -993,19 +1003,19 @@
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="标准模式";
 /* A button title which removes a participant from a chat. */
-"removeParticipant"="移除此位成员";
+"removeParticipant"="删除该成员";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="与%@的对话";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA提供安全加密保障，完全保护您的聊天隐私（保障使用者终端到终端，用户控制之隐私）：";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"confidentialityExplanation"="[S]保密性。 [/S] 只有作者和预设收件人能够解译和阅读交谈内容。";
+"confidentialityExplanation"="[S]保密性。 [/S]只有发送人和收件人能够解译和阅读会话的内容。";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"authenticityExplanation"="[S]真实性。 [/S] 此系统能确保接收到的资料是由您看到的发送者发送，且其内容在传输过程中不会被修改。";
+"authenticityExplanation"="[S]真实性。 [/S] 我们的系统能确保接收到的资料是由真实的发件人发送的，且其内容在传输过程中不会被篡改。";
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="未找到此对话";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
-"isTyping"="%@正在打字...";
+"isTyping"="%@正在输入...";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="书写信息...";
 /* Information if there are no history messages in current chat conversation */
@@ -1015,7 +1025,7 @@
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="删除信息";
 /* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="Send Media";
+"sendMedia"="发送多媒体文件";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="发送联系资讯";
 /* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
@@ -1031,7 +1041,7 @@
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="传输配额不足";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="您所进程的下载已超出您帐户目前可用的传输配额，因此有可能会被中断。";
+"depletedTransferQuota_message"="您进程中的下载已超出您帐户目前可用的传输配额，因此有可能会被中断。";
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="参看方案";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
@@ -1117,3 +1127,21 @@
 "Invalid application key"="无效应用程序金钥";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="未知的错误";
+/* Text shown in an alert when the user is about to change the language of the app */
+"languageRestartAlert"="更改语言设置之后，请重启 app";
+/* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
+"languageRestartNotification"="Language changed. Tap to restart.";
+/* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
+/* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph1"="MEGA提供极为安全的云端存储服务，您可享有50 GB 的免费储存空间。不同于其他云端空间供应商，您的资料仅由用户端设备进行加密和解密，而从不是经由我们加解密。";
+/* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph2"="从您的智能手机或平板电脑上传您的文件后，随时可从任何设备搜索、储存、下载、串流、查看、共享、重新命名或删除您的文件。并可与您的联系人共享文件夹，随时查看其更新。";
+/* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph3"="此加密方式也代表我们无法存取或重新设定您的密码，因此您必须牢牢记住它(除非您有备份还原金钥)，否则您将无法存取您所储存的文件。";
+/* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
+"generalDescriptionParagraph4"="在应用程序里，您可以升级扩大您的储存空间与传输配额，并选择按月给付或年度专案。";
+/* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
+"generalDescriptionParagraph5"="PRO LITE方案：每月€4.99欧元（$4.99美元）或每年€49.99欧元（$49.99美元），可享有200 GB的储存空间和每月1 TB的传输配额。 PRO I 方案：每月€9.99欧元（$9.99美元）或€99.99欧元（$99.99美元），可享有1 TB的储存空间和每月2 TB的传输配额。 PRO II 方案：每月€19.99欧元（$19.99美元）或每年€199.99欧元（$199.99美元），可享有4 TB的储存空间和每月8 TB的传输配额。 PRO III 方案：每月€29.99欧元（$29.99美元）或€299.99欧元（$299.99美元），可享有8 TB的储存空间和每月16 TB的传输配额。";
+/* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
+/* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
+"generalDescriptionParagraph6"="想了解更多资讯，请至我们的网站： 手机- https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html 电脑- https://mega.nz/";
