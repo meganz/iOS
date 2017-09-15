@@ -60,17 +60,21 @@
 #pragma mark - IBActions
 
 - (IBAction)copyMasterKeyTouchUpInside:(UIButton *)sender {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
         UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
         pasteboard.string = [[MEGASdkManager sharedMEGASdk] masterKey];
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"recoveryKeyCopiedToClipboard", @"Title of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported - (String as short as possible).") message:nil delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
         [alertView show];
+        
+        [[MEGASdkManager sharedMEGASdk] masterKeyExported];
+    } else {
+        [MEGAReachabilityManager isReachableHUDIfNot];
     }
 }
 
 - (IBAction)saveMasterKeyTouchUpInside:(UIButton *)sender {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
         NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
         NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
         
@@ -78,7 +82,11 @@
         if (success) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"masterKeyExported", nil) message:AMLocalizedString(@"masterKeyExported_alertMessage", nil) delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
             [alertView show];
+            
+            [[MEGASdkManager sharedMEGASdk] masterKeyExported];
         }
+    } else {
+        [MEGAReachabilityManager isReachableHUDIfNot];
     }
 }
 
