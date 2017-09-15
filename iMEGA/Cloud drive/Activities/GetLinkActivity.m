@@ -58,15 +58,15 @@
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if (self.nodes != nil) {
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"agreedCopywriteWarning"]) {
-                UINavigationController *getLinkNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"GetLinkNavigationControllerID"];
-                GetLinkTableViewController *getLinkTVC = getLinkNavigationController.childViewControllers[0];
+                UINavigationController *getLinkNC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"GetLinkNavigationControllerID"];
+                GetLinkTableViewController *getLinkTVC = getLinkNC.childViewControllers.firstObject;
                 getLinkTVC.nodesToExport = self.nodes;
-                [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:getLinkNavigationController animated:YES completion:nil];
+                [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:getLinkNC animated:YES completion:nil];
             } else {
-                UINavigationController *cwNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CopywriteWarningNavigationControllerID"];
-                CopyrightWarningViewController *cwViewController = cwNavigationController.childViewControllers[0];
-                [cwViewController setNodesToExport:self.nodes];
-                [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:cwNavigationController animated:YES completion:nil];
+                UINavigationController *copyrightWarningNC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CopywriteWarningNavigationControllerID"];
+                CopyrightWarningViewController *copyrightWarningVC = copyrightWarningNC.childViewControllers.firstObject;
+                copyrightWarningVC.nodesToExport = self.nodes;
+                [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:copyrightWarningNC animated:YES completion:nil];
             }
         }
     }

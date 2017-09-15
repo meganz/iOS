@@ -119,7 +119,7 @@
     localSize = [NSNumber numberWithLongLong:(thumbsSize + previewsSize + offlineSize)];
     
     NSString *stringFromByteCount = [byteCountFormatter stringFromByteCount:[localSize longLongValue]];
-    [self.localUsedSpaceLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
+    self.localUsedSpaceLabel.attributedText = [self textForSizeLabels:stringFromByteCount];
     
     [self setupWithAccountDetails];
     [[MEGASdkManager sharedMEGASdk] getAccountDetails];
@@ -175,12 +175,12 @@
     if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
         MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
         
-        self.megaAccountType = [accountDetails type];
+        self.megaAccountType = accountDetails.type;
         cloudDriveSize = [accountDetails storageUsedForHandle:[[[MEGASdkManager sharedMEGASdk] rootNode] handle]];
         rubbishBinSize = [accountDetails storageUsedForHandle:[[[MEGASdkManager sharedMEGASdk] rubbishNode] handle]];
         
         MEGANodeList *incomingShares = [[MEGASdkManager sharedMEGASdk] inShares];
-        NSUInteger count = [incomingShares.size unsignedIntegerValue];
+        NSUInteger count = incomingShares.size.unsignedIntegerValue;
         long long incomingSharesSizeLongLong = 0;
         for (NSUInteger i = 0; i < count; i++) {
             MEGANode *node = [incomingShares nodeAtIndex:i];
@@ -188,58 +188,59 @@
         }
         incomingSharesSize = [NSNumber numberWithLongLong:incomingSharesSizeLongLong];
         
-        usedStorage = [accountDetails storageUsed];
-        maxStorage = [accountDetails storageMax];
+        usedStorage = accountDetails.storageUsed;
+        maxStorage = accountDetails.storageMax;
         
         NSString *usedStorageString = [byteCountFormatter stringFromByteCount:[usedStorage longLongValue]];
         long long availableStorage = maxStorage.longLongValue - usedStorage.longLongValue;
         NSString *availableStorageString = [byteCountFormatter stringFromByteCount:(availableStorage < 0) ? 0 : availableStorage];
         
-        [self.usedSpaceLabel setAttributedText:[self textForSizeLabels:usedStorageString]];
-        [self.availableSpaceLabel setAttributedText:[self textForSizeLabels:availableStorageString]];
+        self.usedSpaceLabel.attributedText = [self textForSizeLabels:usedStorageString];
+        self.availableSpaceLabel.attributedText = [self textForSizeLabels:availableStorageString];
         
         NSString *expiresString;
-        if ([accountDetails type]) {
-            [self.freeView setHidden:YES];
-            [self.proView setHidden:NO];
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            [formatter setDateFormat:@"yyyy'-'MM'-'dd'"];
-            NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-            [formatter setLocale:locale];
-            NSDate *expireDate = [[NSDate alloc] initWithTimeIntervalSince1970:[accountDetails proExpiration]];
+        if (accountDetails.type) {
+            self.freeView.hidden = YES;
+            self.proView.hidden = NO;
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            dateFormatter.dateStyle = NSDateFormatterShortStyle;
+            dateFormatter.timeStyle = NSDateFormatterNoStyle;
+            NSString *currentLanguageID = [[LocalizationSystem sharedLocalSystem] getLanguage];
+            dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:currentLanguageID];
             
-            expiresString = [NSString stringWithFormat:AMLocalizedString(@"expiresOn", @"(Expires on %@)"), [formatter stringFromDate:expireDate]];
+            NSDate *expireDate = [[NSDate alloc] initWithTimeIntervalSince1970:accountDetails.proExpiration];
+            expiresString = [NSString stringWithFormat:AMLocalizedString(@"expiresOn", @"Text that shows the expiry date of the account PRO level"), [dateFormatter stringFromDate:expireDate]];
         } else {
-            [self.proView setHidden:YES];
-            [self.freeView setHidden:NO];
+            self.proView.hidden = YES;
+            self.freeView.hidden = NO;
         }
         
-        switch ([accountDetails type]) {
+        switch (accountDetails.type) {
             case MEGAAccountTypeFree: {
                 break;
             }
                 
             case MEGAAccountTypeLite: {
-                [self.proStatusLabel setText:[NSString stringWithFormat:@"PRO LITE"]];
-                [self.proExpiryDateLabel setText:[NSString stringWithFormat:@"%@", expiresString]];
+                self.proStatusLabel.text = [NSString stringWithFormat:@"PRO LITE"];
+                self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
                 break;
             }
                 
             case MEGAAccountTypeProI: {
-                [self.proStatusLabel setText:[NSString stringWithFormat:@"PRO I"]];
-                [self.proExpiryDateLabel setText:[NSString stringWithFormat:@"%@", expiresString]];
+                self.proStatusLabel.text = [NSString stringWithFormat:@"PRO I"];
+                self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
                 break;
             }
                 
             case MEGAAccountTypeProII: {
-                [self.proStatusLabel setText:[NSString stringWithFormat:@"PRO II"]];
-                [self.proExpiryDateLabel setText:[NSString stringWithFormat:@"%@", expiresString]];
+                self.proStatusLabel.text = [NSString stringWithFormat:@"PRO II"];
+                self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
                 break;
             }
                 
             case MEGAAccountTypeProIII: {
-                [self.proStatusLabel setText:[NSString stringWithFormat:@"PRO III"]];
-                [self.proExpiryDateLabel setText:[NSString stringWithFormat:@"%@", expiresString]];
+                self.proStatusLabel.text = [NSString stringWithFormat:@"PRO III"];
+                self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
                 break;
             }
                 
