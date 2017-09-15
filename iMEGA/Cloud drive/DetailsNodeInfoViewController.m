@@ -185,18 +185,6 @@
     }
 }
 
-- (void)getLink {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [[MEGASdkManager sharedMEGASdk] exportNode:self.node];
-    }
-}
-
-- (void)disableLink {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [[MEGASdkManager sharedMEGASdk] disableExportNode:self.node];
-    }
-}
-
 - (void)browserWithAction:(NSInteger)browserAction {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
