@@ -858,6 +858,8 @@
 "upgradeAccount"="Hazte PRO";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Puedes hacerte PRO más tarde en mi cuenta";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
+"cloudDriveIsAlmostFull"="[S]Tu nube está casi llena.[/S] [A]Hazte PRO ahora[/A] y obtén [S]hasta 4TB (4096 GB)[/S] de espacio de almacenamiento en la nube.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Almacenamiento";
 /* Bandwich related with the MEGA PRO account level you can subscribe */

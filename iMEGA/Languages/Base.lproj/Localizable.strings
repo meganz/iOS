@@ -858,6 +858,8 @@
 "upgradeAccount"="Upgrade account";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
+"cloudDriveIsAlmostFull"="[S]Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to 4 TB (4096 GB)[/S] of cloud storage space.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Storage";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
