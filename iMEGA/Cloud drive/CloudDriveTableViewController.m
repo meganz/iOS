@@ -988,13 +988,39 @@
     static BOOL alreadyPresented = NO;
     if (!alreadyPresented && ![[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
         MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
-        if (arc4random_uniform(20) == 0 || (accountDetails && ((accountDetails.storageUsed.doubleValue / accountDetails.storageMax.doubleValue) > 0.95))) { // +95% used or 5 percent of the times
-            UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
-            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-            [self presentViewController:navigationController animated:YES completion:nil];
+        if (accountDetails && ((accountDetails.storageUsed.doubleValue / accountDetails.storageMax.doubleValue) > 0.95)) { // +95% used storage
+            NSString *alertMessage = AMLocalizedString(@"cloudDriveIsAlmostFull", @"Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are.");
+            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[S]" withString:@""];
+            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[/S]" withString:@""];
+            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[A]" withString:@""];
+            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[/A]" withString:@""];
+            
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level") message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"skipButton", @"Button title that skips the current action") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                [alertController dismissViewControllerAnimated:YES completion:nil];
+            }]];
+            
+            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                [self showUpgradeTVC];
+            }]];
+            
+            [self presentViewController:alertController animated:YES completion:nil];
+            
             alreadyPresented = YES;
+        } else {
+            if (arc4random_uniform(20) == 0) { // 5 % of the times
+                [self showUpgradeTVC];
+                alreadyPresented = YES;
+            }
         }
     }
+}
+
+- (void)showUpgradeTVC {
+    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 #pragma mark - IBActions
