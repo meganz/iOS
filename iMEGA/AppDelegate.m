@@ -1706,12 +1706,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 break;
             }
                 
+            case MEGAErrorTypeApiEgoingOverquota:
             case MEGAErrorTypeApiEOverQuota: {
-                [self showOverquotaAlert];
-                break;
-            }
-                
-            case MEGAErrorTypeApiEgoingOverquota: {
                 [self showOverquotaAlert];
                 break;
             }
@@ -2176,12 +2172,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     if (error.type) {
         switch (error.type) {
+            case MEGAErrorTypeApiEgoingOverquota:
             case MEGAErrorTypeApiEOverQuota: {
-                [self showOverquotaAlert];
-                break;
-            }
-                
-            case MEGAErrorTypeApiEgoingOverquota: {
                 [self showOverquotaAlert];
                 break;
             }
