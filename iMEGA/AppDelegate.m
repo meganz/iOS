@@ -1727,6 +1727,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 break;
             }
                 
+            case MEGAErrorTypeApiEgoingOverquota:
             case MEGAErrorTypeApiEOverQuota: {
                 [self showOverquotaAlert];
                 break;
@@ -2160,10 +2161,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     if (error.type) {
         switch (error.type) {
+            case MEGAErrorTypeApiEgoingOverquota:
             case MEGAErrorTypeApiEOverQuota: {
                 [self showOverquotaAlert];
                 break;
             }
+                
             default:{
                 if (error.type != MEGAErrorTypeApiESid && error.type != MEGAErrorTypeApiESSL && error.type != MEGAErrorTypeApiEExist && error.type != MEGAErrorTypeApiEIncomplete) {
                     NSString *transferFailed = AMLocalizedString(@"Transfer failed:", @"Notification message shown when a transfer failed. Keep colon.");
