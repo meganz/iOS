@@ -1062,12 +1062,14 @@
 "retry"="Retry";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Delete message";
-/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="Send Media";
+/*  */
+"fromCloudDrive"="From Cloud drive";
+/*  */
+"fromDevice"="From device";
+/* referring to a contact in the contact list of the user */
+"contact"="Contact";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Send contact";
-/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
-"addFromMyCloudDrive"="Add from my Cloud Drive";
 /* */
 "done"="Done";
 /* Button label for sending file attachments through the chat to another user. */

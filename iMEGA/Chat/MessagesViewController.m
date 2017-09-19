@@ -690,19 +690,20 @@
 - (void)didPressAccessoryButton:(UIButton *)sender {
     [self.inputToolbar.contentView.textView resignFirstResponder];
     
-    UIAlertController *selectOptionAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    NSString *alertControllerTitle = AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
+    UIAlertController *selectOptionAlertController = [UIAlertController alertControllerWithTitle:alertControllerTitle message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [selectOptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         [self dismissViewControllerAnimated:YES completion:nil];
         
         [self.inputToolbar.contentView.textView becomeFirstResponder];
     }]];
     
-    UIAlertAction *sendMediaAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sendMedia", @"A button label. The button allows to capture or upload pictures or videos directly to chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertAction *sendMediaAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fromDevice", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self presentSendMediaAlertController];
     }];
     [selectOptionAlertController addAction:sendMediaAlertAction];
     
-    UIAlertAction *sendFromCloudDriveAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addFromMyCloudDrive", @"Button label. Allows to share files(from my Cloud Drive) in chat conversation") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertAction *sendFromCloudDriveAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fromCloudDrive", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
         [self presentViewController:navigationController animated:YES completion:nil];
         
@@ -716,7 +717,7 @@
     }];
     [selectOptionAlertController addAction:sendFromCloudDriveAlertAction];
     
-    UIAlertAction *sendContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sendContact", @"A button label. The button sends contact information to a user in the conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertAction *sendContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"contact", @"referring to a contact in the contact list of the user") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self presentAddOrAttachParticipantToGroup:nil];
     }];
     [selectOptionAlertController addAction:sendContactAlertAction];
