@@ -414,6 +414,10 @@
             }
         }
         
+        if (!peerName.length) {
+            peerName = [self.chatRoom peerEmailByHandle:[self.chatRoom peerHandleAtIndex:i]];
+        }
+        
         if (self.chatRoom.peerCount == 1 || (i + 1) == self.chatRoom.peerCount) {
             participantsNames = [participantsNames stringByAppendingString:peerName ? peerName : @"Unknown user"];
         } else {
@@ -1375,7 +1379,7 @@
                     self.peerTyping = [chat peerFullnameByHandle:chat.userTypingHandle];
                 }
                 
-                if ([self.peerTyping isEqualToString:@""]) {
+                if (!self.peerTyping.length) {
                     self.peerTyping = [chat peerEmailByHandle:chat.userTypingHandle];
                 }
                 
