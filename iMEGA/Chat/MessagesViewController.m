@@ -1374,6 +1374,11 @@
                 if (![self.peerTyping isEqualToString:[chat peerFullnameByHandle:chat.userTypingHandle]]) {
                     self.peerTyping = [chat peerFullnameByHandle:chat.userTypingHandle];
                 }
+                
+                if ([self.peerTyping isEqualToString:@""]) {
+                    self.peerTyping = [chat peerEmailByHandle:chat.userTypingHandle];
+                }
+                
                 self.footerView.typingLabel.text = [NSString stringWithFormat:AMLocalizedString(@"isTyping", nil), self.peerTyping];
                 
                 [self.receiveTypingTimer invalidate];
