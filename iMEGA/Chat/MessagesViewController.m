@@ -217,7 +217,11 @@
         }
     } else {
         NSString *chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
-        label = [Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:chatRoomState];
+        if (chatRoomState) {
+            label = [Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:chatRoomState];
+        } else {
+            label = [Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:@""];
+        }
     }
     
     label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
