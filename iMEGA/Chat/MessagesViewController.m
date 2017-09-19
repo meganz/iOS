@@ -814,22 +814,12 @@
         NSString *topCellString = nil;
         
         if (self.chatRoom.isGroup && !message.isManagementMessage) {
-            NSString *firstName = [self.chatRoom peerFirstnameByHandle:message.userHandle];
-            NSString *lastName = [self.chatRoom peerLastnameByHandle:message.userHandle];
-            if (firstName) {
-                if (lastName) {
-                    topCellString = [[[[firstName stringByAppendingString:@" "] stringByAppendingString:lastName] stringByAppendingString:@" "] stringByAppendingString:hour];
-                } else {
-                    topCellString = [[firstName stringByAppendingString:@" "] stringByAppendingString:hour];
-                }
-            } else {
-                if (lastName) {
-                    topCellString = [[lastName stringByAppendingString:@" "] stringByAppendingString:hour];
-                } else {
-                    // No name
-                    topCellString = hour;
-                }
+            NSString *fullname = [self.chatRoom peerFullnameByHandle:message.userHandle];
+            if (!fullname.length) {
+                fullname = [self.chatRoom peerEmailByHandle:message.userHandle];
             }
+            // For my own messages show only the hour (fullname is nil, because I am not in the peer list)
+            topCellString = [NSString stringWithFormat:@"%@ %@", fullname ? fullname : @"", hour];
         } else {
             topCellString = hour;
         }
