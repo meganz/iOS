@@ -292,7 +292,7 @@
         case MEGARequestTypeInviteContact:
             switch (request.number.integerValue) {                    
                 case 1:
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:AMLocalizedString(@"requestCancelled", nil)];
+                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"requestCancelled", nil)];
                     break;
                     
                 default:
@@ -304,11 +304,11 @@
         case MEGARequestTypeReplyContactRequest:
             switch (request.number.integerValue) {
                 case 0:
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudSuccess"] status:AMLocalizedString(@"requestAccepted", nil)];
+                    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"requestAccepted", nil)];
                     break;
                     
                 case 1:
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:AMLocalizedString(@"requestDeleted", nil)];
+                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"requestDeleted", nil)];
                     break;
                     
                 default:
