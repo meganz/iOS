@@ -24,6 +24,9 @@
 #import "MEGAStartUploadTransferDelegate.h"
 #import "NSString+MNZCategory.h"
 
+const CGFloat kGroupChatCellLabelHeight = 35.0f;
+const CGFloat k1on1CellLabelHeight = 28.0f;
+
 @interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
@@ -816,20 +819,26 @@
 
     if (showMessageBubleTopLabel) {
         NSString *hour = [[JSQMessagesTimestampFormatter sharedFormatter] timeForDate:message.date];
-        NSString *topCellString = nil;
+        NSAttributedString *hourAttributed = [[NSAttributedString alloc] initWithString:hour attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:9.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]}];
+        NSMutableAttributedString *topCellAttributed = [[NSMutableAttributedString alloc] init];
+        
         
         if (self.chatRoom.isGroup && !message.isManagementMessage) {
             NSString *fullname = [self.chatRoom peerFullnameByHandle:message.userHandle];
             if (!fullname.length) {
                 fullname = [self.chatRoom peerEmailByHandle:message.userHandle];
+                if (!fullname) {
+                    fullname = @"";
+                }
             }
-            // For my own messages show only the hour (fullname is nil, because I am not in the peer list)
-            topCellString = [NSString stringWithFormat:@"%@ %@", fullname ? fullname : @"", hour];
+            NSAttributedString *fullnameAttributed = [[NSAttributedString alloc] initWithString:[fullname stringByAppendingString:@" "] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:14.0f], NSForegroundColorAttributeName:[UIColor blackColor]}];
+            [topCellAttributed appendAttributedString:fullnameAttributed];
+            [topCellAttributed appendAttributedString:hourAttributed];
         } else {
-            topCellString = hour;
+            [topCellAttributed appendAttributedString:hourAttributed];
         }
         
-        return [[NSAttributedString alloc] initWithString:topCellString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:9.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]}];
+        return topCellAttributed;
     }
     
     return nil;
@@ -1094,6 +1103,7 @@
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                    layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat height = 0.0f;
     BOOL showMessageBubleTopLabel = NO;
     if (indexPath.item == 0) {
         showMessageBubleTopLabel = YES;
@@ -1107,10 +1117,14 @@
     }
     
     if (showMessageBubleTopLabel) {
-        return kJSQMessagesCollectionViewCellLabelHeightDefault;
+        if (self.chatRoom.isGroup) {
+            height = kGroupChatCellLabelHeight;
+        } else {
+            height = k1on1CellLabelHeight;
+        }
     }
     
-    return 0.0f;
+    return height;
 }
 
 #pragma mark - Responding to collection view tap events
