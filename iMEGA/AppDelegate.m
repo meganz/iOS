@@ -942,8 +942,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if (hasHash) {
         self.nodeToPresentBase64Handle = [afterSlashesString substringFromIndex:1];
         [self presentNode];
+        
         return YES;
     }
+    
     return NO;
 }
 
@@ -1107,10 +1109,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [self.window setRootViewController:_mainTBC];
             [[UIApplication sharedApplication] setStatusBarHidden:NO];
             
-            if (self.nodeToPresentBase64Handle) {
-                [self presentNode];
-            }
-            
             if ([LTHPasscodeViewController doesPasscodeExist]) {
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
                     [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
@@ -1123,6 +1121,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
         
         if (![LTHPasscodeViewController doesPasscodeExist]) {
+            if (self.nodeToPresentBase64Handle) {
+                [self presentNode];
+            }
+            
             if (isAccountFirstLogin) {
                 [self showCameraUploadsPopUp];
             }
@@ -1185,9 +1187,49 @@ typedef NS_ENUM(NSUInteger, URLType) {
             tabPosition = [self.mainTBC tabPositionForTag:0];
         }
         navigationController = [self.mainTBC.childViewControllers objectAtIndex:tabPosition];
+        
         [self presentNode:node inNavigationController:navigationController];
     } else {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Access denied", @"Label to show that an error related with an denied access occurs during a SDK operation.")];
+        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            UIAlertController *theContentIsNotAvailableAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"theContentIsNotAvailableForThisAccount", @"") message:nil preferredStyle:UIAlertControllerStyleAlert];
+            [theContentIsNotAvailableAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+            
+            [theContentIsNotAvailableAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                NSError *error;
+                NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] error:&error];
+                if (error) {
+                    MEGALogError(@"Contents of directory at path failed with error: %@", error);
+                }
+                
+                BOOL isInboxDirectory = NO;
+                for (NSString *directoryElement in directoryContent) {
+                    if ([directoryElement isEqualToString:@"Inbox"]) {
+                        NSString *inboxPath = [[Helper pathForOffline] stringByAppendingPathComponent:@"Inbox"];
+                        [[NSFileManager defaultManager] fileExistsAtPath:inboxPath isDirectory:&isInboxDirectory];
+                        break;
+                    }
+                }
+                
+                if (directoryContent.count > 0) {
+                    if (directoryContent.count == 1 && isInboxDirectory) {
+                        [[MEGASdkManager sharedMEGASdk] logout];
+                        return;
+                    }
+                    
+                    UIAlertController *warningAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"warning", nil) message:AMLocalizedString(@"allFilesSavedForOfflineWillBeDeletedFromYourDevice", @"Alert message shown when the user perform logout and has files in the Offline directory") preferredStyle:UIAlertControllerStyleAlert];
+                    [warningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
+                    [warningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                        [[MEGASdkManager sharedMEGASdk] logout];
+                    }]];
+                    
+                    [self.window.rootViewController presentViewController:warningAlertController animated:YES completion:nil];
+                } else {
+                    [[MEGASdkManager sharedMEGASdk] logout];
+                }
+            }]];
+            
+            [self.window.rootViewController presentViewController:theContentIsNotAvailableAlertController animated:YES completion:nil];
+        }
     }
     self.nodeToPresentBase64Handle = nil;
 }
