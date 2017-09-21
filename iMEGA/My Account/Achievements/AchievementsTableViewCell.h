@@ -12,4 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *disclosureIndicatorImageView;
 
+@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
+@property (weak, nonatomic) IBOutlet UILabel *daysLeftTrailingLabel;
+
 @end

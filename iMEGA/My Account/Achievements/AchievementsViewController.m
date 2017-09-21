@@ -7,6 +7,7 @@
 #import "NSString+MNZCategory.h"
 
 #import "AchievementsTableViewCell.h"
+#import "ReferralBonusesTableViewController.h"
 
 @interface AchievementsViewController () <UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate>
 
@@ -98,18 +99,19 @@
     return firstPartMutableAttributedString;
 }
 
-- (void)setStorageAndTransferQuotaRewardsForCell:(AchievementsTableViewCell *)cell withAchievement:(NSInteger)achievement {
+- (void)setStorageAndTransferQuotaRewardsForCell:(AchievementsTableViewCell *)cell forIndex:(NSInteger)index {
     long long classStorageReward = 0;
     long long classTransferReward = 0;
-    if (achievement == -1) {
+    if (index == -2) {
         classStorageReward = self.achievementsDetails.baseStorage;
         classTransferReward = 0;
-    } else if (achievement == MEGAAchievementInvite) {
+    } else if (index == -1) {
         classStorageReward = self.achievementsDetails.currentStorageReferrals;
         classTransferReward = self.achievementsDetails.currentTransferReferrals;
     } else {
-        classStorageReward = [self.achievementsDetails classStorageForClassId:achievement];
-        classTransferReward = [self.achievementsDetails classTransferForClassId:achievement];
+        NSInteger awardId = [self.achievementsDetails awardIdAtIndex:index];
+        classStorageReward = [self.achievementsDetails rewardStorageByAwardId:awardId];
+        classTransferReward = [self.achievementsDetails rewardTransferByAwardId:awardId];
     }
     
     cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = ((classStorageReward == 0) ? [UIColor mnz_grayCCCCCC] : [UIColor mnz_blue2BA6DE]);
@@ -123,7 +125,7 @@
     cell.titleLabel.text = AMLocalizedString(@"accountBaseQuota", @"The user's achieved base quota");
     cell.disclosureIndicatorImageView.hidden = YES;
 
-    [self setStorageAndTransferQuotaRewardsForCell:cell withAchievement:-1];
+    [self setStorageAndTransferQuotaRewardsForCell:cell forIndex:-2];
 }
 
 #pragma mark - UITableViewDataSource
@@ -153,7 +155,7 @@
             
             cell.disclosureIndicatorImageView.hidden = NO;
             
-            [self setStorageAndTransferQuotaRewardsForCell:cell withAchievement:MEGAAchievementInvite];
+            [self setStorageAndTransferQuotaRewardsForCell:cell forIndex:-1];
         } else {
             [self setAccountBaseQuotaInCell:cell];
         }
@@ -165,7 +167,7 @@
             NSNumber *index = [self.achievementsIndexesMutableArray objectAtIndex:(indexPath.row - numberOfStaticCells)];
             MEGAAchievement achievementClass = [self.achievementsDetails awardClassAtIndex:index.unsignedIntegerValue];
             
-            [self setStorageAndTransferQuotaRewardsForCell:cell withAchievement:achievementClass];
+            [self setStorageAndTransferQuotaRewardsForCell:cell forIndex:index.integerValue];
             
             switch (achievementClass) {
                 case MEGAAchievementWelcome: {
@@ -199,7 +201,17 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    switch (indexPath.row) {
+        case 0: {
+            ReferralBonusesTableViewController *referralBonusesTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"ReferralBonusesTableViewControllerID"];
+            referralBonusesTVC.achievementsDetails = self.achievementsDetails;
+            [self.navigationController pushViewController:referralBonusesTVC animated:YES];
+            break;
+        }
+            
+        default:
+            break;
+    } 
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -227,6 +239,8 @@
         
         self.unlockedStorageQuotaLabel.attributedText = [self textForUnlockedBonuses:self.achievementsDetails.currentStorage];
         self.unlockedTransferQuotaLabel.attributedText = [self textForUnlockedBonuses:self.achievementsDetails.currentTransfer];
+        
+        [self.inviteYourFriendsSubtitleLabel sizeToFit];
         
         [self.tableView reloadData];
     }
