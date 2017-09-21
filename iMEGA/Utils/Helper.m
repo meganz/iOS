@@ -1121,9 +1121,6 @@ static MEGAIndexer *indexer;
     }
     
     // Delete Spotlight index
-    NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
-    [sharedUserDefaults removeObjectForKey:@"treeCompleted"];
-    [sharedUserDefaults removeObjectForKey:@"base64HandlesToIndex"];
     [[CSSearchableIndex defaultSearchableIndex] deleteSearchableItemsWithDomainIdentifiers:@[@"nodes"] completionHandler:^(NSError * _Nullable error) {
         if (error) {
             MEGALogError(@"Error deleting spotligth index");
@@ -1148,6 +1145,9 @@ static MEGAIndexer *indexer;
 
 + (void)resetUserData {
     [[Helper downloadingNodes] removeAllObjects];
+    
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"agreedCopywriteWarning"];
+    
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DownloadedNodes"];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TransfersPaused"];
@@ -1158,8 +1158,14 @@ static MEGAIndexer *indexer;
     //Set default order on logout
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"OfflineSortOrderType"];
-
     [[NSUserDefaults standardUserDefaults] synchronize];
+
+    NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+    [sharedUserDefaults removeObjectForKey:@"extensions"];
+    [sharedUserDefaults removeObjectForKey:@"extensions-passcode"];
+    [sharedUserDefaults removeObjectForKey:@"treeCompleted"];
+    [sharedUserDefaults removeObjectForKey:@"useHttpsOnly"];
+    [sharedUserDefaults synchronize];
 }
 
 + (void)resetCameraUploadsSettings {

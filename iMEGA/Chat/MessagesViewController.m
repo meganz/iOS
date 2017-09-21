@@ -24,6 +24,9 @@
 #import "MEGAStartUploadTransferDelegate.h"
 #import "NSString+MNZCategory.h"
 
+const CGFloat kGroupChatCellLabelHeight = 35.0f;
+const CGFloat k1on1CellLabelHeight = 28.0f;
+
 @interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
@@ -217,7 +220,11 @@
         }
     } else {
         NSString *chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
-        label = [Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:chatRoomState];
+        if (chatRoomState) {
+            label = [Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:chatRoomState];
+        } else {
+            label = [Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:@""];
+        }
     }
     
     label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
@@ -412,6 +419,10 @@
             if (peerLastname.length > 0 && ![[peerLastname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]) {
                 peerName = peerLastname;
             }
+        }
+        
+        if (!peerName.length) {
+            peerName = [self.chatRoom peerEmailByHandle:[self.chatRoom peerHandleAtIndex:i]];
         }
         
         if (self.chatRoom.peerCount == 1 || (i + 1) == self.chatRoom.peerCount) {
@@ -682,19 +693,20 @@
 - (void)didPressAccessoryButton:(UIButton *)sender {
     [self.inputToolbar.contentView.textView resignFirstResponder];
     
-    UIAlertController *selectOptionAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    NSString *alertControllerTitle = AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
+    UIAlertController *selectOptionAlertController = [UIAlertController alertControllerWithTitle:alertControllerTitle message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [selectOptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         [self dismissViewControllerAnimated:YES completion:nil];
         
         [self.inputToolbar.contentView.textView becomeFirstResponder];
     }]];
     
-    UIAlertAction *sendMediaAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sendMedia", @"A button label. The button allows to capture or upload pictures or videos directly to chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertAction *sendMediaAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fromDevice", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self presentSendMediaAlertController];
     }];
     [selectOptionAlertController addAction:sendMediaAlertAction];
     
-    UIAlertAction *sendFromCloudDriveAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addFromMyCloudDrive", @"Button label. Allows to share files(from my Cloud Drive) in chat conversation") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertAction *sendFromCloudDriveAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fromCloudDrive", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
         [self presentViewController:navigationController animated:YES completion:nil];
         
@@ -708,7 +720,7 @@
     }];
     [selectOptionAlertController addAction:sendFromCloudDriveAlertAction];
     
-    UIAlertAction *sendContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sendContact", @"A button label. The button sends contact information to a user in the conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertAction *sendContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"contact", @"referring to a contact in the contact list of the user") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self presentAddOrAttachParticipantToGroup:nil];
     }];
     [selectOptionAlertController addAction:sendContactAlertAction];
@@ -807,30 +819,26 @@
 
     if (showMessageBubleTopLabel) {
         NSString *hour = [[JSQMessagesTimestampFormatter sharedFormatter] timeForDate:message.date];
-        NSString *topCellString = nil;
+        NSAttributedString *hourAttributed = [[NSAttributedString alloc] initWithString:hour attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:9.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]}];
+        NSMutableAttributedString *topCellAttributed = [[NSMutableAttributedString alloc] init];
+        
         
         if (self.chatRoom.isGroup && !message.isManagementMessage) {
-            NSString *firstName = [self.chatRoom peerFirstnameByHandle:message.userHandle];
-            NSString *lastName = [self.chatRoom peerLastnameByHandle:message.userHandle];
-            if (firstName) {
-                if (lastName) {
-                    topCellString = [[[[firstName stringByAppendingString:@" "] stringByAppendingString:lastName] stringByAppendingString:@" "] stringByAppendingString:hour];
-                } else {
-                    topCellString = [[firstName stringByAppendingString:@" "] stringByAppendingString:hour];
-                }
-            } else {
-                if (lastName) {
-                    topCellString = [[lastName stringByAppendingString:@" "] stringByAppendingString:hour];
-                } else {
-                    // No name
-                    topCellString = hour;
+            NSString *fullname = [self.chatRoom peerFullnameByHandle:message.userHandle];
+            if (!fullname.length) {
+                fullname = [self.chatRoom peerEmailByHandle:message.userHandle];
+                if (!fullname) {
+                    fullname = @"";
                 }
             }
+            NSAttributedString *fullnameAttributed = [[NSAttributedString alloc] initWithString:[fullname stringByAppendingString:@" "] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:14.0f], NSForegroundColorAttributeName:[UIColor blackColor]}];
+            [topCellAttributed appendAttributedString:fullnameAttributed];
+            [topCellAttributed appendAttributedString:hourAttributed];
         } else {
-            topCellString = hour;
+            [topCellAttributed appendAttributedString:hourAttributed];
         }
         
-        return [[NSAttributedString alloc] initWithString:topCellString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:9.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]}];
+        return topCellAttributed;
     }
     
     return nil;
@@ -1095,6 +1103,7 @@
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                    layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat height = 0.0f;
     BOOL showMessageBubleTopLabel = NO;
     if (indexPath.item == 0) {
         showMessageBubleTopLabel = YES;
@@ -1108,10 +1117,14 @@
     }
     
     if (showMessageBubleTopLabel) {
-        return kJSQMessagesCollectionViewCellLabelHeightDefault;
+        if (self.chatRoom.isGroup) {
+            height = kGroupChatCellLabelHeight;
+        } else {
+            height = k1on1CellLabelHeight;
+        }
     }
     
-    return 0.0f;
+    return height;
 }
 
 #pragma mark - Responding to collection view tap events
@@ -1374,6 +1387,11 @@
                 if (![self.peerTyping isEqualToString:[chat peerFullnameByHandle:chat.userTypingHandle]]) {
                     self.peerTyping = [chat peerFullnameByHandle:chat.userTypingHandle];
                 }
+                
+                if (!self.peerTyping.length) {
+                    self.peerTyping = [chat peerEmailByHandle:chat.userTypingHandle];
+                }
+                
                 self.footerView.typingLabel.text = [NSString stringWithFormat:AMLocalizedString(@"isTyping", nil), self.peerTyping];
                 
                 [self.receiveTypingTimer invalidate];

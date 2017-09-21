@@ -78,6 +78,8 @@
         [[MEGALogger sharedLogger] startLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.fileExt.log"]];
     }
     
+    [self copyDatabasesFromMainApp];
+    
     // Called at some point after the file has changed; the provider may then trigger an upload
     self.url = url;
     self.semaphore = dispatch_semaphore_create(0);
@@ -108,6 +110,62 @@
     [self providePlaceholderAtURL:url completionHandler:^(NSError * __nullable error) {
         // TODO: handle any error, do any necessary cleanup
     }];
+}
+
+#pragma mark - Private
+
+- (void)copyDatabasesFromMainApp {
+    NSError *error;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSURL *applicationSupportDirectoryURL = [fileManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
+    if (error) {
+        MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
+    }
+    
+    NSURL *groupSupportURL = [[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"GroupSupport"];
+    if (![fileManager fileExistsAtPath:groupSupportURL.path]) {
+        [fileManager createDirectoryAtURL:groupSupportURL withIntermediateDirectories:NO attributes:nil error:nil];
+    }
+    
+    NSDate *incomingDate = [self newestMegaclientModificationDateForDirectoryAtUrl:groupSupportURL];
+    NSDate *extensionDate = [self newestMegaclientModificationDateForDirectoryAtUrl:applicationSupportDirectoryURL];
+    
+    if ([incomingDate compare:extensionDate] == NSOrderedDescending) {
+        NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryURL.path error:&error];
+        for (NSString *filename in applicationSupportContent) {
+            if ([filename containsString:@"megaclient"]) {
+                if(![fileManager removeItemAtPath:[applicationSupportDirectoryURL.path stringByAppendingPathComponent:filename] error:&error]) {
+                    MEGALogError(@"Remove item at path failed with error: %@", error);
+                }
+            }
+        }
+        
+        NSArray *groupSupportPathContent = [fileManager contentsOfDirectoryAtPath:groupSupportURL.path error:&error];
+        for (NSString *filename in groupSupportPathContent) {
+            if ([filename containsString:@"megaclient"]) {
+                if (![fileManager copyItemAtURL:[groupSupportURL URLByAppendingPathComponent:filename] toURL:[applicationSupportDirectoryURL URLByAppendingPathComponent:filename] error:&error]) {
+                    MEGALogError(@"Copy item at path failed with error: %@", error);
+                }
+            }
+        }
+    }
+}
+
+- (NSDate *)newestMegaclientModificationDateForDirectoryAtUrl:(NSURL *)url {
+    NSError *error;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSDate *newestDate = [[NSDate alloc] initWithTimeIntervalSince1970:0];
+    NSArray *pathContent = [fileManager contentsOfDirectoryAtPath:url.path error:&error];
+    for (NSString *filename in pathContent) {
+        if ([filename containsString:@"megaclient"]) {
+            NSDate *date = [[fileManager attributesOfItemAtPath:[url.path stringByAppendingPathComponent:filename] error:nil] fileModificationDate];
+            if ([date compare:newestDate] == NSOrderedDescending) {
+                newestDate = date;
+            }
+        }
+    }
+    return newestDate;
 }
 
 #pragma mark - MEGATransferDelegate

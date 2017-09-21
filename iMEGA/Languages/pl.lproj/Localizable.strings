@@ -53,7 +53,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Klucz SSL nie może zostać zweryfikowany.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
-"takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
+"takingLongerThanExpected"="Operacja zajmuję więcej czasu niż zwykle. Proszę czekać...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Zaloguj się do swojego konta.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -569,7 +569,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Zmień hasło";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Posiadanie Klucza Zapasowego i przechowywanie go w bezpiecznym miejscu, umożliwia później odzyskanie dostępu do konto bez ryzyka utraty danych.";
+"exportMasterKeyFooter"="Zapisany i przechowywany w bezpiecznym miejscu klucz umożliwia dostęp do konta w przypadku zapomnienia hasła bez utraty danych.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Do czego służy klucz?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -775,7 +775,7 @@
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Moje konto";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
-"viewAndEditProfile"="View and edit profile";
+"viewAndEditProfile"="Zobacz i edytuj profil";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Profil";
 /* Title of the button which logs out from your account. */
@@ -1128,9 +1128,9 @@
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Nieznany błąd";
 /* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="You will need to restart MEGA after changing the language";
+"languageRestartAlert"="Po zmianie jezyka, należy zrestartować aplikację MEGA";
 /* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
-"languageRestartNotification"="Language changed. Tap to restart.";
+"languageRestartNotification"="Język został zmieniony. Kliknij aby zrestartować.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA to bezpieczna chmura do przechowywania plików z darmowym limitem 50 GB. W odróżnieniu od innych podobnych rozwiązach, wszystkie Twoje dane są zawsze szyforwane na Twoim urządzeniu.";

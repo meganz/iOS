@@ -11,10 +11,12 @@
 
 #import "CameraUploads.h"
 #import "Helper.h"
+#import "MEGASdk+MNZCategory.h"
 #import "MEGAIndexer.h"
 #import "MEGALogger.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGANavigationController.h"
+#import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAPurchase.h"
 #import "MEGAReachabilityManager.h"
@@ -26,15 +28,18 @@
 #import "BrowserViewController.h"
 #import "CameraUploadsPopUpViewController.h"
 #import "ChangePasswordViewController.h"
+#import "CheckEmailAndFollowTheLinkViewController.h"
 #import "CloudDriveTableViewController.h"
 #import "ConfirmAccountViewController.h"
 #import "ContactRequestsViewController.h"
 #import "CreateAccountViewController.h"
-#import "MainTabBarController.h"
 #import "FileLinkViewController.h"
 #import "FolderLinkViewController.h"
 #import "LaunchViewController.h"
 #import "LoginViewController.h"
+#import "MainTabBarController.h"
+#import "MEGACreateAccountRequestDelegate.h"
+#import "MEGAPasswordLinkRequestDelegate.h"
 #import "OfflineTableViewController.h"
 #import "SecurityOptionsTableViewController.h"
 #import "SettingsTableViewController.h"
@@ -42,8 +47,6 @@
 #import "UnavailableLinkView.h"
 #import "UpgradeTableViewController.h"
 #import "WarningTransferQuotaViewController.h"
-#import "CheckEmailAndFollowTheLinkViewController.h"
-#import "MEGACreateAccountRequestDelegate.h"
 
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
@@ -54,6 +57,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeDefault,
     URLTypeFileLink,
     URLTypeFolderLink,
+    URLTypeEncryptedLink,
     URLTypeConfirmationLink,
     URLTypeOpenInLink,
     URLTypeNewSignUpLink,
@@ -62,7 +66,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeChangeEmailLink,
     URLTypeCancelAccountLink,
     URLTypeRecoverLink,
-    URLTypeLoginRequiredLink
+    URLTypeLoginRequiredLink,
+    URLTypeHandleLink
 };
 
 @interface AppDelegate () <UIAlertViewDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate> {
@@ -87,14 +92,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 @property (nonatomic, weak) MainTabBarController *mainTBC;
 
-@property (nonatomic) NSUInteger remainingOperations;
-
-@property (strong, nonatomic) NSString *exportedLinks;
+@property (strong, nonatomic) NSString *recoveryLink;
 
 @property (nonatomic, getter=isSignalActivityRequired) BOOL signalActivityRequired;
 
 @property (nonatomic) MEGAIndexer *indexer;
-@property (nonatomic) NSString *spotlightNodeBase64Handle;
+@property (nonatomic) NSString *nodeToPresentBase64Handle;
 
 @end
 
@@ -451,9 +454,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
     if ([userActivity.activityType isEqualToString:CSSearchableItemActionType] && [MEGAReachabilityManager isReachable]) {
-        self.spotlightNodeBase64Handle = userActivity.userInfo[@"kCSSearchableItemActivityIdentifier"];
+        self.nodeToPresentBase64Handle = userActivity.userInfo[@"kCSSearchableItemActivityIdentifier"];
         if ([self.window.rootViewController isKindOfClass:[MainTabBarController class]] && ![LTHPasscodeViewController doesPasscodeExist]) {
-            [self presentNodeFromSpotlight];
+            [self presentNode];
         }
         return YES;
     } else {
@@ -616,6 +619,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         return;
     }
     
+    if ([self isEncryptedLink:afterSlashesString]) {
+        self.urlType = URLTypeEncryptedLink;
+        return;
+    }
+    
     if ([self isConfirmationLink:afterSlashesString]) {
         self.urlType = URLTypeConfirmationLink;
         return;
@@ -653,6 +661,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     if ([self isLoginRequiredLink:afterSlashesString]) {
         self.urlType = URLTypeLoginRequiredLink;
+        return;
+    }
+    
+    if ([self isHandleLink:afterSlashesString]) {
+        self.urlType = URLTypeHandleLink;
         return;
     }
     
@@ -712,6 +725,48 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [folderlinkVC setFolderLinkString:folderLinkURLString];
     
     [self presentLinkViewController:folderNavigationController];
+    
+    self.link = nil;
+}
+
+- (BOOL)isEncryptedLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 3) {
+        return NO;
+    }
+    
+    NSString *megaURLTypeString = [afterSlashesString substringToIndex:3]; // mega://"#P!"
+    BOOL isEncryptedLink = [megaURLTypeString isEqualToString:@"#P!"];
+    if (isEncryptedLink) {
+        NSString *encryptedLinkString = @"https://mega.nz/";
+        encryptedLinkString = [encryptedLinkString stringByAppendingString:afterSlashesString];
+        [self showEncryptedLinkAlert:encryptedLinkString];
+        return YES;
+    }
+    return NO;
+}
+
+- (void)showEncryptedLinkAlert:(NSString *)encryptedLinkURLString {
+    MEGAPasswordLinkRequestDelegate *delegate = [[MEGAPasswordLinkRequestDelegate alloc] initForDecryptionWithCompletion:^(MEGARequest *request) {
+        NSString *url = [NSString stringWithFormat:@"mega://%@", [[request.text componentsSeparatedByString:@"/"] lastObject]];
+        [self processLink:[NSURL URLWithString:url]];
+    } onError:^(MEGARequest *request) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyNotValid", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            [self showEncryptedLinkAlert:request.link];
+        }]];
+        [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+    }];
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyAlertTitle", nil) message:AMLocalizedString(@"decryptionKeyAlertMessage", nil) preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = AMLocalizedString(@"decryptionKey", nil);
+    }];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [[MEGASdkManager sharedMEGASdk] decryptPasswordProtectedLink:encryptedLinkURLString password:alertController.textFields.firstObject.text delegate:delegate];
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    }]];
+    [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
     
     self.link = nil;
 }
@@ -881,6 +936,19 @@ typedef NS_ENUM(NSUInteger, URLType) {
     return isLoginRequiredLink;
 }
 
+- (BOOL)isHandleLink:(NSString *)afterSlashesString {
+    NSString *megaURLTypeString = [afterSlashesString substringToIndex:1]; // mega://"#"
+    BOOL hasHash = [megaURLTypeString isEqualToString:@"#"];
+    if (hasHash) {
+        self.nodeToPresentBase64Handle = [afterSlashesString substringFromIndex:1];
+        [self presentNode];
+        
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (void)openIn {
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         MEGANavigationController *browserNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
@@ -935,8 +1003,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [self disableCameraUploads];
     
     if (!overquotaAlertView.visible) {
-        [[MEGASdkManager sharedMEGASdk] getAccountDetails];
         isOverquota = YES;
+        [[MEGASdkManager sharedMEGASdk] getAccountDetails];
     }
 }
 
@@ -1041,10 +1109,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [self.window setRootViewController:_mainTBC];
             [[UIApplication sharedApplication] setStatusBarHidden:NO];
             
-            if (self.spotlightNodeBase64Handle) {
-                [self presentNodeFromSpotlight];
-            }
-            
             if ([LTHPasscodeViewController doesPasscodeExist]) {
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
                     [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
@@ -1057,6 +1121,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
         
         if (![LTHPasscodeViewController doesPasscodeExist]) {
+            if (self.nodeToPresentBase64Handle) {
+                [self presentNode];
+            }
+            
             if (isAccountFirstLogin) {
                 [self showCameraUploadsPopUp];
             }
@@ -1103,8 +1171,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }];
 }
 
-- (void)presentNodeFromSpotlight {
-    uint64_t handle = [MEGASdk handleForBase64Handle:self.spotlightNodeBase64Handle];
+- (void)presentNode {
+    uint64_t handle = [MEGASdk handleForBase64Handle:self.nodeToPresentBase64Handle];
     MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:handle];
     UINavigationController *navigationController;
     NSUInteger tabPosition;
@@ -1118,10 +1186,113 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [Helper changeToViewController:CloudDriveTableViewController.class onTabBarController:self.mainTBC];
             tabPosition = [self.mainTBC tabPositionForTag:0];
         }
-        navigationController = self.mainTBC.childViewControllers[tabPosition];
-        [self.indexer presentNodeFromSpotlight:node inNavigationController:navigationController];
+        navigationController = [self.mainTBC.childViewControllers objectAtIndex:tabPosition];
+        
+        [self presentNode:node inNavigationController:navigationController];
+    } else {
+        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            UIAlertController *theContentIsNotAvailableAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"theContentIsNotAvailableForThisAccount", @"") message:nil preferredStyle:UIAlertControllerStyleAlert];
+            [theContentIsNotAvailableAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+            
+            [theContentIsNotAvailableAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                NSError *error;
+                NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] error:&error];
+                if (error) {
+                    MEGALogError(@"Contents of directory at path failed with error: %@", error);
+                }
+                
+                BOOL isInboxDirectory = NO;
+                for (NSString *directoryElement in directoryContent) {
+                    if ([directoryElement isEqualToString:@"Inbox"]) {
+                        NSString *inboxPath = [[Helper pathForOffline] stringByAppendingPathComponent:@"Inbox"];
+                        [[NSFileManager defaultManager] fileExistsAtPath:inboxPath isDirectory:&isInboxDirectory];
+                        break;
+                    }
+                }
+                
+                if (directoryContent.count > 0) {
+                    if (directoryContent.count == 1 && isInboxDirectory) {
+                        [[MEGASdkManager sharedMEGASdk] logout];
+                        return;
+                    }
+                    
+                    UIAlertController *warningAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"warning", nil) message:AMLocalizedString(@"allFilesSavedForOfflineWillBeDeletedFromYourDevice", @"Alert message shown when the user perform logout and has files in the Offline directory") preferredStyle:UIAlertControllerStyleAlert];
+                    [warningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
+                    [warningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                        [[MEGASdkManager sharedMEGASdk] logout];
+                    }]];
+                    
+                    [self.window.rootViewController presentViewController:warningAlertController animated:YES completion:nil];
+                } else {
+                    [[MEGASdkManager sharedMEGASdk] logout];
+                }
+            }]];
+            
+            [self.window.rootViewController presentViewController:theContentIsNotAvailableAlertController animated:YES completion:nil];
+        }
     }
-    self.spotlightNodeBase64Handle = nil;
+    self.nodeToPresentBase64Handle = nil;
+}
+
+- (void)presentNode:(MEGANode *)node inNavigationController:(UINavigationController *)navigationController {
+    NSMutableArray *nodes = [[NSMutableArray alloc] init];
+    
+    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) { // node from inshare
+        MEGANode *tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.parentHandle];
+        while (tempNode != nil) {
+            [nodes insertObject:tempNode atIndex:0];
+            tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:tempNode.parentHandle];
+        }
+    } else {
+        uint64_t rootHandle;
+        if ([[[MEGASdkManager sharedMEGASdk] nodePathForNode:node] hasPrefix:@"//bin"]) {
+            rootHandle = [[MEGASdkManager sharedMEGASdk] rubbishNode].parentHandle;
+        } else {
+            rootHandle = [[MEGASdkManager sharedMEGASdk] rootNode].handle;
+        }
+        uint64_t tempHandle = node.parentHandle;
+        while (tempHandle != rootHandle) {
+            MEGANode *tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:tempHandle];
+            if (tempNode) {
+                [nodes insertObject:tempNode atIndex:0];
+                tempHandle = tempNode.parentHandle;
+            } else {
+                break;
+            }
+        }
+    }
+    
+    [navigationController popToRootViewControllerAnimated:NO];
+    
+    for (MEGANode *node in nodes) {
+        CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+        [cloudDriveTVC setParentNode:node];
+        [navigationController pushViewController:cloudDriveTVC animated:NO];
+    }
+    
+    switch ([node type]) {
+        case MEGANodeTypeFolder:
+        case MEGANodeTypeRubbish: {
+            CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveTVC.parentNode = node;
+            [navigationController pushViewController:cloudDriveTVC animated:NO];
+            break;
+        }
+            
+        case MEGANodeTypeFile: {
+            if (node.name.mnz_isImagePathExtension) {
+                MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.parentHandle];
+                NSArray *nodes = [[[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode] mnz_nodesArrayFromNodeList];
+                [node mnz_openImageInNavigationController:navigationController withNodes:nodes folderLink:NO displayMode:DisplayModeCloudDrive];
+            } else {
+                [node mnz_openNodeInNavigationController:navigationController folderLink:NO];
+            }
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 - (void)migrateLocalCachesLocation {
@@ -1157,6 +1328,31 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
 }
 
+- (void)copyDatabasesForExtensions {
+    NSError *error;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSURL *applicationSupportDirectoryURL = [fileManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
+    if (error) {
+        MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
+    }
+    
+    NSString *groupSupportPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"GroupSupport"] path];
+    if (![fileManager fileExistsAtPath:groupSupportPath]) {
+        [fileManager createDirectoryAtPath:groupSupportPath withIntermediateDirectories:NO attributes:nil error:nil];
+    }
+    
+    NSString *applicationSupportDirectoryString = applicationSupportDirectoryURL.path;
+    NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryString error:&error];
+    for (NSString *filename in applicationSupportContent) {
+        if ([filename containsString:@"megaclient"]) {
+            if (![fileManager copyItemAtPath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename] toPath:[groupSupportPath stringByAppendingPathComponent:filename] error:&error]) {
+                MEGALogError(@"Copy item at path failed with error: %@", error);
+            }
+        }
+    }
+}
+
 #pragma mark - Battery changed
 
 - (void)batteryChanged:(NSNotification *)notification {
@@ -1189,10 +1385,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
     } else if ((alertView.tag == 2 && buttonIndex == 1) || (alertView.tag == 3 && buttonIndex == 1)) { //masterKeyLoggedInAlertView, masterKeyLoggedOutAlertView
         NSString *masterKey = (alertView.tag == 2) ? [[MEGASdkManager sharedMEGASdk] masterKey] : [[alertView textFieldAtIndex:0] text];
-        [self presentChangeViewType:ChangeTypeResetPassword email:self.emailOfNewSignUpLink masterKey:masterKey link:self.exportedLinks];
+        [self presentChangeViewType:ChangeTypeResetPassword email:self.emailOfNewSignUpLink masterKey:masterKey link:self.recoveryLink];
         
         self.emailOfNewSignUpLink = nil;
-        self.exportedLinks = nil;
+        self.recoveryLink = nil;
     }
 }
 
@@ -1208,8 +1404,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [self processLink:self.link];
         }
         
-        if (self.spotlightNodeBase64Handle) {
-            [self presentNodeFromSpotlight];
+        if (self.nodeToPresentBase64Handle) {
+            [self presentNode];
         }
     }
 }
@@ -1487,33 +1683,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             break;
         }
             
-        case MEGARequestTypeExport: {
-            if (self.remainingOperations == 0) {
-                self.exportedLinks = @"";
-                
-                if ([_mainTBC.selectedViewController isKindOfClass:[MEGANavigationController class]]) {
-                    MEGANavigationController *navigationController = _mainTBC.selectedViewController;
-                    if ([navigationController.topViewController respondsToSelector:@selector(setEditing:animated:)]) {
-                        [navigationController.topViewController performSelector:@selector(setEditing:animated:) withObject:@(NO) withObject:@(YES)];
-                    }
-                }
-            }
-            
-            self.remainingOperations += 1;
-            
-            if (![SVProgressHUD isVisible]) {
-                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-                
-                if ([request access]) {
-                    NSString *status = ([Helper totalOperations] > 1) ? AMLocalizedString(@"generatingLinks", nil) : AMLocalizedString(@"generatingLink", nil);
-                    [SVProgressHUD showWithStatus:status];
-                } else {
-                    [SVProgressHUD show];
-                }
-            }
-            break;
-        }
-            
         default:
             break;
     }
@@ -1600,6 +1769,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 break;
             }
                 
+            case MEGAErrorTypeApiEgoingOverquota:
             case MEGAErrorTypeApiEOverQuota: {
                 [self showOverquotaAlert];
                 break;
@@ -1652,11 +1822,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 
             default:
                 break;
-        }
-        
-        if ([request type] == MEGARequestTypeExport) {
-            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-            [SVProgressHUD showErrorWithStatus:error.name];
         }
         
         return;
@@ -1719,6 +1884,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 });
             }
             
+            isOverquota = NO;
+            [[MEGASdkManager sharedMEGASdk] getAccountDetails];
+            [self copyDatabasesForExtensions];
+            
             break;
         }
             
@@ -1776,7 +1945,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     }
                     
                     self.emailOfNewSignUpLink = request.email;
-                    self.exportedLinks = request.link;
+                    self.recoveryLink = request.link;
                 } else {
                     [self presentChangeViewType:ChangeTypeParkAccount email:request.email masterKey:nil link:request.link];
                 }
@@ -1808,6 +1977,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
             
         case MEGARequestTypeAccountDetails: {
             
+            [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:[request megaAccountDetails]];
+            
             if (isOverquota) {
                 if ([[request megaAccountDetails] type] > MEGAAccountTypeFree) {
                     overquotaAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"overquotaAlert_title", nil) message:AMLocalizedString(@"quotaExceeded", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
@@ -1819,37 +1990,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 isOverquota = NO;
             }
             
-            break;
-        }
-            
-        case MEGARequestTypeExport: {
-            self.remainingOperations -= 1;
-            
-            if ([request access] && [Helper copyToPasteboard]) {
-                NSString *link = [NSString stringWithFormat:@"%@\n\n", [request link]];
-                self.exportedLinks = [self.exportedLinks stringByAppendingString:link];
-            }
-            
-            if (self.remainingOperations == 0) {
-                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                
-                NSString *status;
-                BOOL areSeveralOperations = ([Helper totalOperations] > 1);
-                if ([request access]) { //Export link
-                    if ([Helper copyToPasteboard]) {
-                        UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-                        [pasteboard setString:self.exportedLinks];
-                        
-                        status = areSeveralOperations ? AMLocalizedString(@"linksCopied", @"Message shown when the links have been copied to the pasteboard") : AMLocalizedString(@"linkCopied", @"Message shown when the link has been copied to the pasteboard");
-                        [SVProgressHUD showSuccessWithStatus:status];
-                    } else {
-                        [SVProgressHUD dismiss];
-                    }
-                } else { //Disable link
-                    status = areSeveralOperations ? AMLocalizedString(@"linksRemoved", @"Message shown when the links to files and folders have been removed") : AMLocalizedString(@"linkRemoved", @"Message shown when the links to a file or folder has been removed");
-                    [SVProgressHUD showSuccessWithStatus:status];
-                }
-            }
             break;
         }
             
@@ -2063,10 +2203,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     if (error.type) {
         switch (error.type) {
+            case MEGAErrorTypeApiEgoingOverquota:
             case MEGAErrorTypeApiEOverQuota: {
                 [self showOverquotaAlert];
                 break;
             }
+                
             default:{
                 if (error.type != MEGAErrorTypeApiESid && error.type != MEGAErrorTypeApiESSL && error.type != MEGAErrorTypeApiEExist && error.type != MEGAErrorTypeApiEIncomplete) {
                     NSString *transferFailed = AMLocalizedString(@"Transfer failed:", @"Notification message shown when a transfer failed. Keep colon.");
