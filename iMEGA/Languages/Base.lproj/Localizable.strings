@@ -52,6 +52,8 @@
 "loggedOutFromAnotherLocation"="You have been logged out of this device from another location";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Server's SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
