@@ -52,6 +52,8 @@
 "loggedOutFromAnotherLocation"="You have been logged out of this device from another location";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Server's SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -270,6 +272,10 @@
 "getLink"="Get link";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Get links";
+/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
+"updateLink"="Update link";
+/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
+"updateLinks"="Update links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Generating link...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -278,6 +284,38 @@
 "linkCopied"="Link copied";
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="Links copied";
+/* Text of the button after the links were copied to the clipboard */
+"copiedToTheClipboard"="Copied to the clipboard";
+/* A title for the Copyright Warning dialog. */
+"copyrightWarning"="Copyright warning";
+/* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
+"copyrightWarningToAll"="Copyright warning to all users";
+/* String already exists: 367, but we need to split paragraphs. */
+"copyrightMessagePart1"="MEGA respects the copyrights of others and requires that users of the MEGA cloud service comply with the laws of copyright.";
+/* String already exists: 367, but we need to split paragraphs */
+"copyrightMessagePart2"="You are strictly prohibited from using the MEGA cloud service to infringe copyrights. You may not upload, download, store, share, display, stream, distribute, email, link to, transmit or otherwise make available any files, data or content that infringes any copyright or other proprietary rights of any person or entity.";
+/* button caption text that the user clicks when he agrees */
+"agree"="Agree";
+/* button caption text that the user clicks when he disagrees */
+"disagree"="Disagree";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
+"linkWithoutKey"="Link without key";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
+"linkWithKey"="Link with key";
+/* An alert dialog for the Get Link feature */
+"proOnly"="(PRO ONLY)";
+/* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
+"setExpiryDate"="Set expiry date";
+/* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
+"setPasswordProtection"="Set password protection";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypt"="Encrypt";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypted"="Encrypted";
+/* Title for a button to copy the link to the clipboard */
+"copyLink"="Copy link";
+/* Title for a button that copies the key of the link to the clipboard */
+"copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Open in...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -552,7 +590,7 @@
 "off"="Off";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
 "on"="On";
-/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+/* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Options";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Upload videos";
@@ -848,6 +886,8 @@
 "upgradeAccount"="Upgrade account";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
+"cloudDriveIsAlmostFull"="[S]Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to 4 TB (4096 GB)[/S] of cloud storage space.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Storage";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -1050,12 +1090,14 @@
 "retry"="Retry";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Delete message";
-/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="Send Media";
+/*  */
+"fromCloudDrive"="From Cloud drive";
+/*  */
+"fromDevice"="From device";
+/* referring to a contact in the contact list of the user */
+"contact"="Contact";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Send contact";
-/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
-"addFromMyCloudDrive"="Add from my Cloud Drive";
 /* */
 "done"="Done";
 /* Button label for sending file attachments through the chat to another user. */

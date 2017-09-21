@@ -158,13 +158,15 @@
 }
 
 - (NSString *)timeFormatted:(NSUInteger)totalSeconds {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateStyle:NSDateFormatterNoStyle];
-    [formatter setTimeStyle:NSDateFormatterMediumStyle];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateStyle = NSDateFormatterNoStyle;
+    dateFormatter.timeStyle = NSDateFormatterMediumStyle;
+    NSString *currentLanguageID = [[LocalizationSystem sharedLocalSystem] getLanguage];
+    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:currentLanguageID];
     
     NSDate *date = [NSDate dateWithTimeIntervalSinceNow:totalSeconds];
     
-    return [formatter stringFromDate:date];
+    return [dateFormatter stringFromDate:date];
 }
 
 - (IBAction)forgotPasswordTouchUpInside:(UIButton *)sender {

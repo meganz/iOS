@@ -80,8 +80,6 @@
     [self customNavigationBarLabel];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-        [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
-  
         self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
         for (NSUInteger i = 0; i < self.chatListItemList.size ; i++) {
             MEGAChatListItem *chatListItem = [self.chatListItemList chatListItemAtIndex:i];
@@ -108,6 +106,8 @@
         }] mutableCopy];
         
         [self updateChatIdIndexPathDictionary];
+        
+        [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     } else {
         self.addBarButtonItem.enabled = NO;
         self.tableView.tableHeaderView = nil;
@@ -121,8 +121,9 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
-    [self.chatListItemArray removeAllObjects];    
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
+    
+    [self.chatListItemArray removeAllObjects];
 }
 
 #pragma mark - DZNEmptyDataSetSource
@@ -706,8 +707,10 @@
                     
                 case MEGAChatListItemChangeTypeLastMsg:
                 case MEGAChatListItemChangeTypeLastTs:
-                    [self.chatListItemArray replaceObjectAtIndex:indexPath.row withObject:item];
-                    [self updateCell:cell forChatListItem:item];
+                    if (self.chatListItemArray.count > 0) {
+                        [self.chatListItemArray replaceObjectAtIndex:indexPath.row withObject:item];
+                        [self updateCell:cell forChatListItem:item];
+                    }
                     break;
                     
                 default:
