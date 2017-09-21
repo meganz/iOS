@@ -239,6 +239,7 @@
 		5B28D1371F0FB9590062998C /* MEGAImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B28D1361F0FB9590062998C /* MEGAImagePickerController.m */; };
 		5B2E918D1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E918C1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.m */; };
 		5B2E91921F1F98F4003C6920 /* MEGACopyRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E91911F1F98F4003C6920 /* MEGACopyRequestDelegate.m */; };
+		5B323F231F5834E100C5F557 /* ReferralBonusesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B323F221F5834E100C5F557 /* ReferralBonusesTableViewController.m */; };
 		5B39DAA21EF916D900BC2319 /* ChatAttachedContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B39DAA11EF916D900BC2319 /* ChatAttachedContactsViewController.m */; };
 		5B4429401E6D705D00BCACC0 /* SF-UI-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B44293E1E6D705D00BCACC0 /* SF-UI-Display-Medium.otf */; };
 		5B4429411E6D705D00BCACC0 /* SF-UI-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B44293F1E6D705D00BCACC0 /* SF-UI-Text-Medium.otf */; };
@@ -1064,6 +1065,8 @@
 		5B2E918C1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAStartUploadTransferDelegate.m; sourceTree = "<group>"; };
 		5B2E91901F1F98F4003C6920 /* MEGACopyRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGACopyRequestDelegate.h; path = API/Requests/MEGACopyRequestDelegate.h; sourceTree = "<group>"; };
 		5B2E91911F1F98F4003C6920 /* MEGACopyRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGACopyRequestDelegate.m; path = API/Requests/MEGACopyRequestDelegate.m; sourceTree = "<group>"; };
+		5B323F211F5834E100C5F557 /* ReferralBonusesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReferralBonusesTableViewController.h; sourceTree = "<group>"; };
+		5B323F221F5834E100C5F557 /* ReferralBonusesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReferralBonusesTableViewController.m; sourceTree = "<group>"; };
 		5B39DAA01EF916D900BC2319 /* ChatAttachedContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatAttachedContactsViewController.h; path = Chat/ChatAttachedContactsViewController.h; sourceTree = "<group>"; };
 		5B39DAA11EF916D900BC2319 /* ChatAttachedContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatAttachedContactsViewController.m; path = Chat/ChatAttachedContactsViewController.m; sourceTree = "<group>"; };
 		5B44293E1E6D705D00BCACC0 /* SF-UI-Display-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Display-Medium.otf"; path = "Fonts/SF-UI-Display-Medium.otf"; sourceTree = "<group>"; };
@@ -2531,6 +2534,8 @@
 				5B48F8021F4C73FE001E3A29 /* AchievementsViewController.m */,
 				5B48F8041F4C80F4001E3A29 /* AchievementsTableViewCell.h */,
 				5B48F8051F4C80F4001E3A29 /* AchievementsTableViewCell.m */,
+				5B323F211F5834E100C5F557 /* ReferralBonusesTableViewController.h */,
+				5B323F221F5834E100C5F557 /* ReferralBonusesTableViewController.m */,
 			);
 			path = Achievements;
 			sourceTree = "<group>";
@@ -3315,6 +3320,7 @@
 				E8B3FE781DDB379C008A9C82 /* WhyDoINeedARecoveryKeyViewController.m in Sources */,
 				A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */,
 				415C6B921CE39D6100B13070 /* SVProgressAnimatedView.m in Sources */,
+				5B323F231F5834E100C5F557 /* ReferralBonusesTableViewController.m in Sources */,
 				41EAAE471D06B49400622FAF /* NSDateFormatter+CTAssetsPickerController.m in Sources */,
 				4182B4EF1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m in Sources */,
 				41840EEA1E811CD600D8308D /* MEGAApplication.m in Sources */,
