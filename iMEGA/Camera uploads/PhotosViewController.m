@@ -81,6 +81,8 @@
     [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
     
     [self calculateSizeForItem];
+    
+    [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -355,9 +357,11 @@
     
     [self.tabBarController.tabBar addSubview:self.toolbar];
     
-    [UIView animateWithDuration:animated ? .33 : 0 animations:^{
-        self.toolbar.frame = CGRectMake(0, editing ? 0 : 49 , CGRectGetWidth(self.view.frame), 49);
-    }];
+    if (editing) {
+        [self.toolbar setHidden:NO];
+    } else {
+        [self.toolbar setHidden:YES];
+    }
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {

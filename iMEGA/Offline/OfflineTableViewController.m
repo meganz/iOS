@@ -71,7 +71,7 @@ static NSString *kisDirectory = @"kisDirectory";
     
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
-    [self.toolbar setFrame:CGRectMake(0, 49, CGRectGetWidth(self.view.frame), 49)];    
+    [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];    
     [self.toolbar setItems:@[self.activityBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
     
     UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
@@ -672,9 +672,11 @@ static NSString *kisDirectory = @"kisDirectory";
     }
     [self.tabBarController.tabBar addSubview:self.toolbar];
     
-    [UIView animateWithDuration:animated ? .33 : 0 animations:^{
-        self.toolbar.frame = CGRectMake(0, editing ? 0 : 49 , CGRectGetWidth(self.view.frame), 49);
-    }];
+    if (editing) {
+        [self.toolbar setHidden:NO];
+    } else {
+        [self.toolbar setHidden:YES];
+    }
     
     isSwipeEditing = NO;
 }

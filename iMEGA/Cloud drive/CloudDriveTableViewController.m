@@ -102,7 +102,7 @@
     self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
     
     [self setNavigationBarButtonItems];
-    [self.toolbar setFrame:CGRectMake(0, 49, CGRectGetWidth(self.view.frame), 49)];
+    [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];
     
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
@@ -1158,9 +1158,11 @@
     
     [self.tabBarController.tabBar addSubview:self.toolbar];
     
-    [UIView animateWithDuration:animated ? .33 : 0 animations:^{
-        self.toolbar.frame = CGRectMake(0, editing ? 0 : 49 , CGRectGetWidth(self.view.frame), 49);
-    }];
+    if (editing) {
+        [self.toolbar setHidden:NO];
+    } else {
+        [self.toolbar setHidden:YES];
+    }
     
     isSwipeEditing = NO;
 }
