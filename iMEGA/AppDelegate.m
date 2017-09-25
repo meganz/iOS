@@ -1166,7 +1166,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings *settings) {
         MEGALogInfo(@"Notifications settings %@", settings);
         if (settings.authorizationStatus == UNAuthorizationStatusAuthorized) {
-            [[UIApplication sharedApplication] registerForRemoteNotifications];
+            dispatch_async(dispatch_get_main_queue(), ^(void) {
+                [[UIApplication sharedApplication] registerForRemoteNotifications];
+            });
         }
     }];
 }
