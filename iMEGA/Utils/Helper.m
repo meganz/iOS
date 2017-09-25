@@ -773,7 +773,7 @@ static MEGAIndexer *indexer;
     if ([node isFile]) {
         size = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory];
         rawtime = [[node modificationTime] timeIntervalSince1970];
-    } else  if ([node isFolder]) {
+    } else {
         size = [NSByteCountFormatter stringFromByteCount:[[api sizeForNode:node] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
         rawtime = [[node creationTime] timeIntervalSince1970];
     }
