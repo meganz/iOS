@@ -100,6 +100,9 @@
     if (self.contactsMode == ContactsModeDefault) {
         MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
         [self.contactRequestsBarButtonItem setBadgeValue:[NSString stringWithFormat:@"%d", incomingContactsLists.size.intValue]];
+        if (@available(iOS 11.0, *)) {
+            self.contactRequestsBarButtonItem.badgeOriginY = 0.0f;
+        }
     }
 }
 
@@ -1124,6 +1127,9 @@
 - (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
     MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
     self.contactRequestsBarButtonItem.badgeValue = [NSString stringWithFormat:@"%d", incomingContactsLists.size.intValue];
+    if (@available(iOS 11.0, *)) {
+        self.contactRequestsBarButtonItem.badgeOriginY = 0.0f;
+    }
 }
 
 @end
