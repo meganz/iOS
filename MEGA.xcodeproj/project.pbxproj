@@ -1846,7 +1846,7 @@
 				411504131CEB07C700BF38E3 /* Classes */,
 			);
 			name = MWPhotoBrowser;
-			path = Vendor/MWPhotoBrowser/MWPhotoBrowser;
+			path = Vendor/MWPhotoBrowser;
 			sourceTree = "<group>";
 		};
 		415227351A692EEF00EC7BB6 /* SVProgressHUD */ = {
@@ -2563,7 +2563,8 @@
 				942254DE1EDC03140074C51A /* Supporting Files */,
 				945605431EDD66350094EF0F /* MEGAPicker-PrefixHeader.pch */,
 			);
-			path = MEGAPicker;
+			name = MEGAPicker;
+			path = iMEGA/Extensions/MEGAPicker;
 			sourceTree = "<group>";
 		};
 		942254DE1EDC03140074C51A /* Supporting Files */ = {
@@ -2583,7 +2584,8 @@
 				942254ED1EDC03150074C51A /* Supporting Files */,
 				942ED2B01EDEE58100C9908D /* MEGAPickerFileProvider-PrefixHeader.pch */,
 			);
-			path = MEGAPickerFileProvider;
+			name = MEGAPickerFileProvider;
+			path = iMEGA/Extensions/MEGAPickerFileProvider;
 			sourceTree = "<group>";
 		};
 		942254ED1EDC03150074C51A /* Supporting Files */ = {
@@ -2614,7 +2616,8 @@
 				942FD0791EF3EE8800E99FB1 /* Supporting Files */,
 				943F8B291EF284A500AFD89F /* MEGAShare-PrefixHeader.pch */,
 			);
-			path = MEGAShare;
+			name = MEGAShare;
+			path = iMEGA/Extensions/MEGAShare;
 			sourceTree = "<group>";
 		};
 		94E62E171F3C51F9003A8DEF /* Language */ = {
