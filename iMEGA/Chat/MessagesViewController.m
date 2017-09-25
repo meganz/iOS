@@ -85,7 +85,7 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
         MEGALogError(@"The delegate is NULL or the chatroom is not found");
     }
     
-    self.inputToolbar.contentView.textView.pasteDelegate = self;
+    self.inputToolbar.contentView.textView.jsq_pasteDelegate = self;
     
     [self customiseCollectionViewLayout];
     
