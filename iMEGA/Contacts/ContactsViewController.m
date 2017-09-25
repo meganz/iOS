@@ -441,23 +441,29 @@
     if (editing) {
         [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
         [self.addBarButtonItem setEnabled:NO];
+        
+        [self.toolbar setAlpha:0.0];
+        [self.tabBarController.tabBar addSubview:self.toolbar];
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:1.0];
+        }];
     } else {
         [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
         self.selectedUsersArray = nil;
         [self.addBarButtonItem setEnabled:YES];
+        
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:0.0];
+        } completion:^(BOOL finished) {
+            if (finished) {
+                [self.toolbar removeFromSuperview];
+            }
+        }];
     }
     
     if (!self.selectedUsersArray) {
         self.selectedUsersArray = [NSMutableArray new];
         [self.deleteBarButtonItem setEnabled:NO];
-    }
-    
-    [self.tabBarController.tabBar addSubview:self.toolbar];
-    
-    if (editing) {
-        [self.toolbar setHidden:NO];
-    } else {
-        [self.toolbar setHidden:YES];
     }
 }
 

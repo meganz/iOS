@@ -657,11 +657,25 @@ static NSString *kisDirectory = @"kisDirectory";
         if (!isSwipeEditing) {
             self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         }
+        
+        [self.toolbar setAlpha:0.0];
+        [self.tabBarController.tabBar addSubview:self.toolbar];
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:1.0];
+        }];
     } else {
         [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
         allItemsSelected = NO;
         self.selectedItems = nil;
         self.navigationItem.leftBarButtonItems = @[];
+        
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:0.0];
+        } completion:^(BOOL finished) {
+            if (finished) {
+                [self.toolbar removeFromSuperview];
+            }
+        }];
     }
     
     if (!self.selectedItems) {
@@ -669,13 +683,6 @@ static NSString *kisDirectory = @"kisDirectory";
         
         [self.activityBarButtonItem setEnabled:NO];
         [self.deleteBarButtonItem setEnabled:NO];
-    }
-    [self.tabBarController.tabBar addSubview:self.toolbar];
-    
-    if (editing) {
-        [self.toolbar setHidden:NO];
-    } else {
-        [self.toolbar setHidden:YES];
     }
     
     isSwipeEditing = NO;
