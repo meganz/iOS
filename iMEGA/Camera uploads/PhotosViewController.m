@@ -342,6 +342,12 @@
         [self.navigationItem setTitle:AMLocalizedString(@"selectTitle", @"Select items")];
         [self.photosCollectionView setAllowsMultipleSelection:YES];
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+        
+        [self.toolbar setAlpha:0.0];
+        [self.tabBarController.tabBar addSubview:self.toolbar];
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:1.0];
+        }];
     } else {
         [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
         allNodesSelected = NO;
@@ -350,17 +356,17 @@
         [self.selectedItemsDictionary removeAllObjects];
         [self.photosCollectionView reloadData];
         self.navigationItem.leftBarButtonItems = @[];
+        
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:0.0];
+        } completion:^(BOOL finished) {
+            if (finished) {
+                [self.toolbar removeFromSuperview];
+            }
+        }];
     }
     if (![self.selectedItemsDictionary count]) {
         [self setToolbarActionsEnabled:NO];
-    }
-    
-    [self.tabBarController.tabBar addSubview:self.toolbar];
-    
-    if (editing) {
-        [self.toolbar setHidden:NO];
-    } else {
-        [self.toolbar setHidden:YES];
     }
 }
 
