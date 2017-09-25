@@ -937,7 +937,7 @@ static MEGAIndexer *indexer;
 }
 
 + (UIEdgeInsets)rectInsetsForEmptyStateButton {
-    UIEdgeInsets rectInsets;
+    UIEdgeInsets rectInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
     if ([[UIDevice currentDevice] iPhoneDevice]) {
         UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
         if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
