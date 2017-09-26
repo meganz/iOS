@@ -127,6 +127,9 @@
         case MEGAChatStatusBusy:
             presenceIndexPath = [NSIndexPath indexPathForRow:2 inSection:0];
             break;
+            
+        case MEGAChatStatusInvalid:
+            break;
     }
     self.currentStatusIndexPath = presenceIndexPath;
     

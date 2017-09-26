@@ -5,7 +5,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MOUser : NSManagedObject
 
-@property (nonatomic, copy) NSString *fullName;
+@property (nonatomic, copy, readonly) NSString *fullName;
 
 @end
 
