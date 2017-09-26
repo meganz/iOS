@@ -102,10 +102,7 @@
 - (void)setStorageAndTransferQuotaRewardsForCell:(AchievementsTableViewCell *)cell forIndex:(NSInteger)index {
     long long classStorageReward = 0;
     long long classTransferReward = 0;
-    if (index == -2) {
-        classStorageReward = self.achievementsDetails.baseStorage;
-        classTransferReward = 0;
-    } else if (index == -1) {
+    if (index == -1) {
         classStorageReward = self.achievementsDetails.currentStorageReferrals;
         classTransferReward = self.achievementsDetails.currentTransferReferrals;
     } else {
@@ -121,24 +118,17 @@
     cell.transferQuotaRewardLabel.text = (classTransferReward == 0) ? @"— GB" : [self.byteCountFormatter stringFromByteCount:classTransferReward];
 }
 
-- (void)setAccountBaseQuotaInCell:(AchievementsTableViewCell *)cell {
-    cell.titleLabel.text = AMLocalizedString(@"accountBaseQuota", @"The user's achieved base quota");
-    cell.disclosureIndicatorImageView.hidden = YES;
-
-    [self setStorageAndTransferQuotaRewardsForCell:cell forIndex:-2];
-}
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSUInteger numberOfStaticCells = self.haveReferralBonuses ? 2 : 1;
+    NSUInteger numberOfStaticCells = self.haveReferralBonuses ? 1 : 0;
     
     return numberOfStaticCells + self.achievementsIndexesMutableArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *identifier;
-    if (indexPath.row == 0 || indexPath.row == 1) {
+    if (indexPath.row == 0) {
         identifier = self.haveReferralBonuses ? @"AchievementsTableViewCellID" : @"AchievementsWithSubtitleTableViewCellID";
     } else {
         identifier = @"AchievementsWithSubtitleTableViewCellID";
@@ -156,43 +146,37 @@
             cell.disclosureIndicatorImageView.hidden = NO;
             
             [self setStorageAndTransferQuotaRewardsForCell:cell forIndex:-1];
-        } else {
-            [self setAccountBaseQuotaInCell:cell];
         }
     } else {
-        if (indexPath.row == 1 && self.haveReferralBonuses) {
-            [self setAccountBaseQuotaInCell:cell];
-        } else {
-            NSUInteger numberOfStaticCells = self.haveReferralBonuses ? 2 : 1;
-            NSNumber *index = [self.achievementsIndexesMutableArray objectAtIndex:(indexPath.row - numberOfStaticCells)];
-            MEGAAchievement achievementClass = [self.achievementsDetails awardClassAtIndex:index.unsignedIntegerValue];
-            
-            [self setStorageAndTransferQuotaRewardsForCell:cell forIndex:index.integerValue];
-            
-            switch (achievementClass) {
-                case MEGAAchievementWelcome: {
-                    cell.titleLabel.text = AMLocalizedString(@"registrationBonus", @"achievement type");
-                    break;
-                }
-                    
-                case MEGAAchievementDesktopInstall: {
-                    cell.titleLabel.text = AMLocalizedString(@"installMEGASync", @"");
-                    break;
-                }
-                    
-                case MEGAAchievementMobileInstall: {
-                    cell.titleLabel.text = AMLocalizedString(@"installOurMobileApp", @"");
-                    break;
-                }
-                    
-                default:
-                    break;
+        NSUInteger numberOfStaticCells = self.haveReferralBonuses ? 1 : 0;
+        NSNumber *index = [self.achievementsIndexesMutableArray objectAtIndex:(indexPath.row - numberOfStaticCells)];
+        MEGAAchievement achievementClass = [self.achievementsDetails awardClassAtIndex:index.unsignedIntegerValue];
+        
+        [self setStorageAndTransferQuotaRewardsForCell:cell forIndex:index.integerValue];
+        
+        switch (achievementClass) {
+            case MEGAAchievementWelcome: {
+                cell.titleLabel.text = AMLocalizedString(@"registrationBonus", @"achievement type");
+                break;
             }
-            
-            NSDate *awardExpirationdDate = [self.achievementsDetails awardExpirationAtIndex:index.unsignedIntegerValue];
-            cell.subtitleLabel.text = [AMLocalizedString(@"xDaysLeft", @"") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%lu", awardExpirationdDate.daysUntil]];
-            cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_redD90007] : [UIColor mnz_gray666666];
+                
+            case MEGAAchievementDesktopInstall: {
+                cell.titleLabel.text = AMLocalizedString(@"installMEGASync", @"");
+                break;
+            }
+                
+            case MEGAAchievementMobileInstall: {
+                cell.titleLabel.text = AMLocalizedString(@"installOurMobileApp", @"");
+                break;
+            }
+                
+            default:
+                break;
         }
+        
+        NSDate *awardExpirationdDate = [self.achievementsDetails awardExpirationAtIndex:index.unsignedIntegerValue];
+        cell.subtitleLabel.text = [AMLocalizedString(@"xDaysLeft", @"") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%lu", awardExpirationdDate.daysUntil]];
+        cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_redD90007] : [UIColor mnz_gray666666];
     }
     
     return cell;
