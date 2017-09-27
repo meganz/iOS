@@ -646,6 +646,13 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
     self.navigationBarProgressView.hidden = YES;
 }
 
+- (void)handleTruncateMessage:(MEGAChatMessage *)message {
+    [self.messages removeAllObjects];
+    [self.messages addObject:message];
+    [self.collectionView reloadData];
+    [self.nodesLoaded removeAllObjects];
+}
+
 #pragma mark - Custom menu actions for cells
 
 - (void)didReceiveMenuWillShowNotification:(NSNotification *)notification {
@@ -1244,13 +1251,15 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
 - (void)onMessageReceived:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
     MEGALogInfo(@"onMessageReceived %@", message);
     message.chatRoom = self.chatRoom;
-    if (message.type != MEGAChatMessageTypeRevokeAttachment) {        
+    if (message.type == MEGAChatMessageTypeTruncate) {
+        [self handleTruncateMessage:message];
+    } else if (message.type != MEGAChatMessageTypeRevokeAttachment) {
         [self.messages addObject:message];
+        [self finishReceivingMessage];
+        [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId];
+        
+        [self loadNodesFromMessage:message atTheBeginning:YES];
     }
-    [self finishReceivingMessage];
-    [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId];
-            
-    [self loadNodesFromMessage:message atTheBeginning:YES];
 }
 
 - (void)onMessageLoaded:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
@@ -1353,10 +1362,7 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
         }
         
         if (message.type == MEGAChatMessageTypeTruncate) {
-            [self.messages removeAllObjects];
-            [self.messages addObject:message];
-            [self.collectionView reloadData];
-            [self.nodesLoaded removeAllObjects];
+            [self handleTruncateMessage:message];
         }
     }
 }
