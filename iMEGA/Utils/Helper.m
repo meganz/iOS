@@ -773,7 +773,7 @@ static MEGAIndexer *indexer;
     if ([node isFile]) {
         size = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory];
         rawtime = [[node modificationTime] timeIntervalSince1970];
-    } else  if ([node isFolder]) {
+    } else {
         size = [NSByteCountFormatter stringFromByteCount:[[api sizeForNode:node] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
         rawtime = [[node creationTime] timeIntervalSince1970];
     }
@@ -937,7 +937,7 @@ static MEGAIndexer *indexer;
 }
 
 + (UIEdgeInsets)rectInsetsForEmptyStateButton {
-    UIEdgeInsets rectInsets;
+    UIEdgeInsets rectInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
     if ([[UIDevice currentDevice] iPhoneDevice]) {
         UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
         if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
