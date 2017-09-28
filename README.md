@@ -36,4 +36,4 @@ git submodule update --init --recursive
 
 8.- Enjoy!
 
-If you want to build the third party dependencies by yourself: open a terminal in the directory `iMEGA/sdk/bindings/ios/3rdparty`. Run sh build-all.sh (Wait until the process ends, it will take some minutes ~20)
+If you want to build the third party dependencies by yourself: open a terminal in the directory `iMEGA/sdk/bindings/ios/3rdparty`. Run sh build-all.sh --enable-chat (Wait until the process ends, it will take some minutes ~20)

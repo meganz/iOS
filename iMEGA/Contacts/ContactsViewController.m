@@ -100,6 +100,9 @@
     if (self.contactsMode == ContactsModeDefault) {
         MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
         [self.contactRequestsBarButtonItem setBadgeValue:[NSString stringWithFormat:@"%d", incomingContactsLists.size.intValue]];
+        if (@available(iOS 11.0, *)) {
+            self.contactRequestsBarButtonItem.badgeOriginY = 0.0f;
+        }
     }
 }
 
@@ -120,7 +123,7 @@
 - (void)setupContacts {
     self.indexPathsMutableDictionary = [[NSMutableDictionary alloc] init];
     
-    [self.toolbar setFrame:CGRectMake(0, 49, CGRectGetWidth(self.view.frame), 49)];
+    [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];
     
     switch (self.contactsMode) {
         case ContactsModeDefault: {
@@ -438,22 +441,30 @@
     if (editing) {
         [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
         [self.addBarButtonItem setEnabled:NO];
+        
+        [self.toolbar setAlpha:0.0];
+        [self.tabBarController.tabBar addSubview:self.toolbar];
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:1.0];
+        }];
     } else {
         [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
         self.selectedUsersArray = nil;
         [self.addBarButtonItem setEnabled:YES];
+        
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:0.0];
+        } completion:^(BOOL finished) {
+            if (finished) {
+                [self.toolbar removeFromSuperview];
+            }
+        }];
     }
     
     if (!self.selectedUsersArray) {
         self.selectedUsersArray = [NSMutableArray new];
         [self.deleteBarButtonItem setEnabled:NO];
     }
-    
-    [self.tabBarController.tabBar addSubview:self.toolbar];
-    
-    [UIView animateWithDuration:animated ? .33 : 0 animations:^{
-        self.toolbar.frame = CGRectMake(0, editing ? 0 : 49 , CGRectGetWidth(self.view.frame), 49);
-    }];
 }
 
 #pragma mark - IBActions
@@ -1122,6 +1133,9 @@
 - (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
     MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
     self.contactRequestsBarButtonItem.badgeValue = [NSString stringWithFormat:@"%d", incomingContactsLists.size.intValue];
+    if (@available(iOS 11.0, *)) {
+        self.contactRequestsBarButtonItem.badgeOriginY = 0.0f;
+    }
 }
 
 @end
