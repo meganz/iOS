@@ -6,6 +6,7 @@
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 
+#import "AchievementsDetailsViewController.h"
 #import "AchievementsTableViewCell.h"
 #import "ReferralBonusesTableViewController.h"
 
@@ -118,6 +119,16 @@
     cell.transferQuotaRewardLabel.text = (classTransferReward == 0) ? @"— GB" : [self.byteCountFormatter stringFromByteCount:classTransferReward];
 }
 
+- (void)pushAchievementsDetailsWithIndexPath:(NSIndexPath *)indexPath {
+    AchievementsDetailsViewController *achievementsDetailsVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsDetailsViewControllerID"];
+    achievementsDetailsVC.achievementsDetails = self.achievementsDetails;
+    NSUInteger numberOfStaticCells = self.haveReferralBonuses ? 1 : 0;
+    NSNumber *index = [self.achievementsIndexesMutableArray objectAtIndex:(indexPath.row - numberOfStaticCells)];
+    achievementsDetailsVC.index = index.unsignedIntegerValue;
+    
+    [self.navigationController pushViewController:achievementsDetailsVC animated:YES];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -139,14 +150,12 @@
         cell = [[AchievementsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
-    if (indexPath.row == 0) {
-        if (self.haveReferralBonuses) {
-            cell.titleLabel.text = AMLocalizedString(@"referralBonuses", @"achievement type");
-            
-            cell.disclosureIndicatorImageView.hidden = NO;
-            
-            [self setStorageAndTransferQuotaRewardsForCell:cell forIndex:-1];
-        }
+    if (indexPath.row == 0 && self.haveReferralBonuses) {
+        cell.titleLabel.text = AMLocalizedString(@"referralBonuses", @"achievement type");
+        
+        cell.disclosureIndicatorImageView.hidden = NO;
+        
+        [self setStorageAndTransferQuotaRewardsForCell:cell forIndex:-1];
     } else {
         NSUInteger numberOfStaticCells = self.haveReferralBonuses ? 1 : 0;
         NSNumber *index = [self.achievementsIndexesMutableArray objectAtIndex:(indexPath.row - numberOfStaticCells)];
@@ -187,15 +196,21 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.row) {
         case 0: {
-            ReferralBonusesTableViewController *referralBonusesTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"ReferralBonusesTableViewControllerID"];
-            referralBonusesTVC.achievementsDetails = self.achievementsDetails;
-            [self.navigationController pushViewController:referralBonusesTVC animated:YES];
+            if (self.haveReferralBonuses) {
+                ReferralBonusesTableViewController *referralBonusesTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"ReferralBonusesTableViewControllerID"];
+                referralBonusesTVC.achievementsDetails = self.achievementsDetails;
+                [self.navigationController pushViewController:referralBonusesTVC animated:YES];
+            } else {
+                [self pushAchievementsDetailsWithIndexPath:indexPath];
+            }
             break;
         }
             
-        default:
+        default: {
+            [self pushAchievementsDetailsWithIndexPath:indexPath];
             break;
-    } 
+        }
+    }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
