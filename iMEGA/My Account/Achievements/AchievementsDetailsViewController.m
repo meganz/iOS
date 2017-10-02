@@ -2,6 +2,8 @@
 #import "AchievementsDetailsViewController.h"
 
 #import "NSDate+DateTools.h"
+
+#import "NSString+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
 
 @interface AchievementsDetailsViewController ()
@@ -93,15 +95,14 @@
     NSString *bonusExpiresIn = AMLocalizedString(@"bonusExpiresIn", @"%1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days)");
     bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@"(" withString:@""];
     bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@")" withString:@""];
-    bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@"[S]" withString:@""];
-    bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@"[/S]" withString:@""];
+    bonusExpiresIn = [bonusExpiresIn mnz_removeWebclientFormatters];
     
     if (awardExpirationdDate.daysUntil == 0) {
         bonusExpiresIn = AMLocalizedString(@"expired", @"Label to show that an error related with expiration occurs during a SDK operation.");
-        self.bonusExpireInLabel.textColor = [UIColor colorFromHexString:@"#F0373A"];
+        self.bonusExpireInLabel.textColor = [UIColor mnz_redF0373A];
         self.bonusExpireInView.backgroundColor = self.bonusExpireInLabel.backgroundColor = [UIColor colorFromHexString:@"#FEF9F9"];
         
-        self.bonusExpireInView.layer.borderColor = [UIColor colorFromHexString:@"#F0373A"].CGColor;
+        self.bonusExpireInView.layer.borderColor = [UIColor mnz_redF0373A].CGColor;
     } else {
         self.bonusExpireInView.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.14].CGColor;
         
