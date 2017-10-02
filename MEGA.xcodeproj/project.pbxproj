@@ -2564,7 +2564,7 @@
 				5B5338C81F753A1A0065A868 /* ZFTokenField.m */,
 			);
 			name = ZFTokenField;
-			path = Vendor/ZFTokenField/Classes;
+			path = Vendor/ZFTokenField;
 			sourceTree = "<group>";
 		};
 		5B8281451E7BE7FA0079C1BB /* Cells */ = {
