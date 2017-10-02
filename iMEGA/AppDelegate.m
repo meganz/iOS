@@ -95,7 +95,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @property (strong, nonatomic) NSString *recoveryLink;
 
 @property (nonatomic, getter=isSignalActivityRequired) BOOL signalActivityRequired;
-@property (nonatomic, getter=areTherePendingRequests) BOOL pendingRequests;
 
 @property (nonatomic) MEGAIndexer *indexer;
 @property (nonatomic) NSString *nodeToPresentBase64Handle;
@@ -340,7 +339,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
     
-    BOOL pendingTasks = [[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0 || [[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0 || [[[CameraUploads syncManager] assetsOperationQueue] operationCount] > 0 || self.pendingRequests > 0;
+    BOOL pendingTasks = [[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0 || [[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0 || [[[CameraUploads syncManager] assetsOperationQueue] operationCount] > 0;
     if (pendingTasks) {
         [self startBackgroundTask];
     }
@@ -1663,7 +1662,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    self.pendingRequests++;
     switch ([request type]) {
             
         case MEGARequestTypeLogin:
@@ -1717,7 +1715,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    self.pendingRequests--;
     if ([error type]) {
         switch ([error type]) {
             case MEGAErrorTypeApiEArgs: {
@@ -2074,7 +2071,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 #pragma mark - MEGAChatRequestDelegate
 
 - (void)onChatRequestStart:(MEGAChatSdk *)api request:(MEGAChatRequest *)request {
-    self.pendingRequests++;
     if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]] && request.type == MEGAChatRequestTypeConnect) {
         LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
         [launchVC.activityIndicatorView setHidden:NO];
@@ -2083,7 +2079,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
-    self.pendingRequests--;
     if ([error type] != MEGAChatErrorTypeOk) {
         MEGALogError(@"onChatRequestFinish error type: %ld request type: %ld", error.type, request.type);
         return;
