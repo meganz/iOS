@@ -1,6 +1,9 @@
 
 #import "InviteFriendsViewController.h"
 
+#import <AddressBookUI/AddressBookUI.h>
+#import <ContactsUI/ContactsUI.h>
+
 #import "ZFTokenField.h"
 
 #import "MEGAInviteContactRequestDelegate.h"
@@ -9,7 +12,7 @@
 #import "NSString+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
 
-@interface InviteFriendsViewController () <ZFTokenFieldDataSource, ZFTokenFieldDelegate>
+@interface InviteFriendsViewController () <ABPeoplePickerNavigationControllerDelegate, CNContactPickerDelegate, ZFTokenFieldDataSource, ZFTokenFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
@@ -75,10 +78,33 @@
     [self.scrollView scrollRectToVisible:self.howItWorksView.frame animated:YES];
 }
 
+- (void)addEmailToTokenList:(NSString *)email {
+    [self.tokens addObject:email];
+    [self.tokenField reloadData];
+    
+    self.inviteButton.backgroundColor = [UIColor mnz_redF0373A];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)addContactsTouchUpInside:(UIButton *)sender {
+    if (self.presentedViewController != nil) {
+        [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+    }
     
+    if ([[UIDevice currentDevice] systemVersionLessThanVersion:@"9.0"]) {
+        ABPeoplePickerNavigationController *contactsPickerNC = [[ABPeoplePickerNavigationController alloc] init];
+        contactsPickerNC.predicateForEnablingPerson = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
+        contactsPickerNC.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
+        contactsPickerNC.peoplePickerDelegate = self;
+        [self presentViewController:contactsPickerNC animated:YES completion:nil];
+    } else {
+        CNContactPickerViewController *contactsPickerViewController = [[CNContactPickerViewController alloc] init];
+        contactsPickerViewController.predicateForEnablingContact = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
+        contactsPickerViewController.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
+        contactsPickerViewController.delegate = self;
+        [self presentViewController:contactsPickerViewController animated:YES completion:nil];
+    }
 }
 
 - (IBAction)inviteTouchUpInside:(UIButton *)sender {
@@ -111,6 +137,43 @@
     return view;
 }
 
+#pragma mark - ABPeoplePickerNavigationControllerDelegate
+
+- (void)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker didSelectPerson:(ABRecordRef)person {
+    NSString *email = nil;
+    ABMultiValueRef emails = ABRecordCopyValue(person, kABPersonEmailProperty);
+    if (ABMultiValueGetCount(emails) > 0) {
+        email = (__bridge_transfer NSString *)
+        ABMultiValueCopyValueAtIndex(emails, 0);
+    }
+    
+    if (email) {
+        [self addEmailToTokenList:email];
+    } else {
+        UIAlertController *contactHasNoEmailAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"contactWithoutEmail", @"Alert title shown when you add a contact from your device and the selected one doesn't have an email.") message:nil preferredStyle:UIAlertControllerStyleAlert];
+        
+        [contactHasNoEmailAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+        
+        [self presentViewController:contactHasNoEmailAlertController animated:YES completion:nil];
+    }
+    
+    if (emails) {
+        CFRelease(emails);
+    }
+}
+
+#pragma mark - CNContactPickerDelegate
+
+- (void)contactPicker:(CNContactPickerViewController *)picker didSelectContactProperties:(NSArray<CNContactProperty*> *)contactProperties {
+    for (CNContactProperty *contactProperty in contactProperties) {
+        [self.tokens addObject:contactProperty.value];
+    }
+    
+    [self.tokenField reloadData];
+    
+    self.inviteButton.backgroundColor = [UIColor mnz_redF0373A];
+}
+
 #pragma mark - ZFTokenFieldDelegate
 
 - (CGFloat)tokenMarginInTokenInField:(ZFTokenField *)tokenField {
@@ -128,10 +191,7 @@
         self.inviteButtonUpperLabel.text = @"";
         self.inviteButtonUpperLabel.textColor = [UIColor mnz_gray999999];
         
-        [self.tokens addObject:text];
-        [tokenField reloadData];
-        
-        self.inviteButton.backgroundColor = [UIColor mnz_redF0373A];
+        [self addEmailToTokenList:text];
     } else {
         self.tokenField.textField.textColor = [UIColor mnz_redD90007];
         
