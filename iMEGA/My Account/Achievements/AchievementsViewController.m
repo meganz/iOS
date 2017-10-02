@@ -8,6 +8,7 @@
 
 #import "AchievementsDetailsViewController.h"
 #import "AchievementsTableViewCell.h"
+#import "InviteFriendsViewController.h"
 #import "ReferralBonusesTableViewController.h"
 
 @interface AchievementsViewController () <UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate>
@@ -47,6 +48,9 @@
     
     self.inviteYourFriendsTitleLabel.text = AMLocalizedString(@"inviteYourFriends", @"Indicating text for when 'you invite your friends'");
     self.inviteYourFriendsSubtitleLabel.text = AMLocalizedString(@"inviteFriendsAndGetForEachReferral", @"Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral");
+    
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(inviteYourFriendsTapped)];
+    self.inviteYourFriendsView.gestureRecognizers = @[tapGestureRecognizer];
     
     self.unlockedBonusesLabel.text = AMLocalizedString(@"unlockedBonuses", @"Header of block with achievements bonuses.");
     self.storageQuotaLabel.text = AMLocalizedString(@"storageQuota", @"A header/title of a section which contains information about used/available storage space on a user's cloud drive.");
@@ -127,6 +131,12 @@
     achievementsDetailsVC.index = index.unsignedIntegerValue;
     
     [self.navigationController pushViewController:achievementsDetailsVC animated:YES];
+}
+
+- (void)inviteYourFriendsTapped {
+    InviteFriendsViewController *inviteFriendsViewController = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteFriendsViewControllerID"];
+    
+    [self.navigationController pushViewController:inviteFriendsViewController animated:YES];
 }
 
 #pragma mark - UITableViewDataSource

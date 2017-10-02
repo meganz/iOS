@@ -235,6 +235,8 @@
 		41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */; };
 		5B0062C61F3DBA16008B7A91 /* MyAccountHallTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0062C51F3DBA16008B7A91 /* MyAccountHallTableViewCell.m */; };
 		5B0C55AE1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0C55AD1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m */; };
+		5B0EFACA1F78E241005B64E9 /* EmailTokenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0EFAC91F78E241005B64E9 /* EmailTokenView.xib */; };
+		5B17C9B31F73DE310093F162 /* InviteFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B17C9B21F73DE310093F162 /* InviteFriendsViewController.m */; };
 		5B20F4A21EFA9629007E0A34 /* ChatAttachedNodesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20F4A11EFA9629007E0A34 /* ChatAttachedNodesViewController.m */; };
 		5B28D1371F0FB9590062998C /* MEGAImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B28D1361F0FB9590062998C /* MEGAImagePickerController.m */; };
 		5B2E918D1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E918C1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.m */; };
@@ -247,6 +249,7 @@
 		5B4429431E6D7B7000BCACC0 /* SF-UI-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B4429421E6D7B7000BCACC0 /* SF-UI-Text-RegularItalic.otf */; };
 		5B48F8031F4C73FE001E3A29 /* AchievementsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B48F8021F4C73FE001E3A29 /* AchievementsViewController.m */; };
 		5B48F8061F4C80F4001E3A29 /* AchievementsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B48F8051F4C80F4001E3A29 /* AchievementsTableViewCell.m */; };
+		5B5338C91F753A1A0065A868 /* ZFTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5338C81F753A1A0065A868 /* ZFTokenField.m */; };
 		5B5737D61EFBE6410027ECCD /* MEGANode+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5737D51EFBE6410027ECCD /* MEGANode+MNZCategory.m */; };
 		5B5B4FFF1E681BAC00DBEB3B /* UIFont+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */; };
 		5B5B50011E684FDC00DBEB3B /* SF-UI-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B5B50001E684FDC00DBEB3B /* SF-UI-Display-Regular.otf */; };
@@ -1058,6 +1061,9 @@
 		5B0062C51F3DBA16008B7A91 /* MyAccountHallTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAccountHallTableViewCell.m; sourceTree = "<group>"; };
 		5B0C55AC1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGARemoveContactRequestDelegate.h; path = API/Requests/MEGARemoveContactRequestDelegate.h; sourceTree = "<group>"; };
 		5B0C55AD1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGARemoveContactRequestDelegate.m; path = API/Requests/MEGARemoveContactRequestDelegate.m; sourceTree = "<group>"; };
+		5B0EFAC91F78E241005B64E9 /* EmailTokenView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmailTokenView.xib; sourceTree = "<group>"; };
+		5B17C9B11F73DE310093F162 /* InviteFriendsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InviteFriendsViewController.h; sourceTree = "<group>"; };
+		5B17C9B21F73DE310093F162 /* InviteFriendsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InviteFriendsViewController.m; sourceTree = "<group>"; };
 		5B20F4A01EFA9629007E0A34 /* ChatAttachedNodesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatAttachedNodesViewController.h; path = Chat/ChatAttachedNodesViewController.h; sourceTree = "<group>"; };
 		5B20F4A11EFA9629007E0A34 /* ChatAttachedNodesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatAttachedNodesViewController.m; path = Chat/ChatAttachedNodesViewController.m; sourceTree = "<group>"; };
 		5B28D1351F0FB9590062998C /* MEGAImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAImagePickerController.h; sourceTree = "<group>"; };
@@ -1079,6 +1085,8 @@
 		5B48F8021F4C73FE001E3A29 /* AchievementsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AchievementsViewController.m; sourceTree = "<group>"; };
 		5B48F8041F4C80F4001E3A29 /* AchievementsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementsTableViewCell.h; sourceTree = "<group>"; };
 		5B48F8051F4C80F4001E3A29 /* AchievementsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AchievementsTableViewCell.m; sourceTree = "<group>"; };
+		5B5338C71F753A190065A868 /* ZFTokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZFTokenField.h; path = iMEGA/Vendor/ZFTokenField/Classes/ZFTokenField.h; sourceTree = SOURCE_ROOT; };
+		5B5338C81F753A1A0065A868 /* ZFTokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZFTokenField.m; path = iMEGA/Vendor/ZFTokenField/Classes/ZFTokenField.m; sourceTree = SOURCE_ROOT; };
 		5B5737D41EFBE6410027ECCD /* MEGANode+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGANode+MNZCategory.h"; sourceTree = "<group>"; };
 		5B5737D51EFBE6410027ECCD /* MEGANode+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGANode+MNZCategory.m"; sourceTree = "<group>"; };
 		5B5B4FFD1E681BAC00DBEB3B /* UIFont+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+MNZCategory.h"; sourceTree = "<group>"; };
@@ -1703,6 +1711,7 @@
 		415226671A692EBD00EC7BB6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				5B5338C61F7539FA0065A868 /* ZFTokenField */,
 				417278CF1DB663FA001AC818 /* JSQMessagesViewController */,
 				41E250151D79E9EF00499A6C /* Import */,
 				41E2500E1D79E9D400499A6C /* SAMKeychain */,
@@ -2541,8 +2550,21 @@
 				5B40AB301F7A512D0034C3B3 /* AchievementsDetailsViewController.m */,
 				5B323F211F5834E100C5F557 /* ReferralBonusesTableViewController.h */,
 				5B323F221F5834E100C5F557 /* ReferralBonusesTableViewController.m */,
+				5B17C9B11F73DE310093F162 /* InviteFriendsViewController.h */,
+				5B17C9B21F73DE310093F162 /* InviteFriendsViewController.m */,
+				5B0EFAC91F78E241005B64E9 /* EmailTokenView.xib */,
 			);
 			path = Achievements;
+			sourceTree = "<group>";
+		};
+		5B5338C61F7539FA0065A868 /* ZFTokenField */ = {
+			isa = PBXGroup;
+			children = (
+				5B5338C71F753A190065A868 /* ZFTokenField.h */,
+				5B5338C81F753A1A0065A868 /* ZFTokenField.m */,
+			);
+			name = ZFTokenField;
+			path = Vendor/ZFTokenField/Classes;
 			sourceTree = "<group>";
 		};
 		5B8281451E7BE7FA0079C1BB /* Cells */ = {
@@ -3120,6 +3142,7 @@
 				411504341CEB07C700BF38E3 /* ImageSelectedSmallOff.png in Resources */,
 				4115042F1CEB07C700BF38E3 /* ImageSelectedOff@2x.png in Resources */,
 				41D77EA91A6E8E6300818BE8 /* LaunchScreen.xib in Resources */,
+				5B0EFACA1F78E241005B64E9 /* EmailTokenView.xib in Resources */,
 				411504411CEB07C700BF38E3 /* UIBarButtonItemArrowLeft@2x.png in Resources */,
 				411504431CEB07C700BF38E3 /* UIBarButtonItemArrowRight.png in Resources */,
 				417279541DB663FA001AC818 /* JSQMessagesCollectionViewCellOutgoing.xib in Resources */,
@@ -3250,6 +3273,7 @@
 				946B2D191F46E5B9009ED32C /* CopyrightWarningViewController.m in Sources */,
 				410B42451D9D375E00B540DE /* MEGAQLPreviewController.m in Sources */,
 				4131997D1BD7BD5D002CD6EA /* NSDate+DateTools.m in Sources */,
+				5B17C9B31F73DE310093F162 /* InviteFriendsViewController.m in Sources */,
 				4172793E1DB663FA001AC818 /* JSQMessagesTimestampFormatter.m in Sources */,
 				E8C8D73F1B1DCB4000BCDBA4 /* MEGANavigationController.m in Sources */,
 				A8F5D67A1ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m in Sources */,
@@ -3289,6 +3313,7 @@
 				E8C8D7851B219C5B00BCDBA4 /* MEGAQLPreviewControllerTransitionAnimator.m in Sources */,
 				5BDE180C1F500EE000CD9F82 /* MyAccountBaseViewController.m in Sources */,
 				41EAAE4D1D06B49400622FAF /* UICollectionView+CTAssetsPickerController.m in Sources */,
+				5B5338C91F753A1A0065A868 /* ZFTokenField.m in Sources */,
 				41D21E6F1D01AEC3002E6296 /* CTAssetsPickerNoAssetsView.m in Sources */,
 				A81A852B1F0F6F5100702353 /* UIScreen+MNZCategory.m in Sources */,
 				415226911A692ECC00EC7BB6 /* ContactsViewController.m in Sources */,
