@@ -82,7 +82,14 @@
     [self.tokens addObject:email];
     [self.tokenField reloadData];
     
+    [self cleanErrors];
+    
     self.inviteButton.backgroundColor = [UIColor mnz_redF0373A];
+}
+
+- (void)cleanErrors {
+    self.inviteButtonUpperLabel.text = @"";
+    self.inviteButtonUpperLabel.textColor = [UIColor mnz_gray999999];
 }
 
 #pragma mark - IBActions
@@ -109,11 +116,15 @@
 
 - (IBAction)inviteTouchUpInside:(UIButton *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:self.tokens.count];
-        for (NSString *email in self.tokens) {
-            [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+        if (self.tokens.count != 0) {
+            MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:self.tokens.count];
+            for (NSString *email in self.tokens) {
+                [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+            }
         }
     }
+    
+    [self.tokenField resignFirstResponder];
 }
 
 #pragma mark - ZFTokenFieldDataSource
@@ -165,13 +176,17 @@
 #pragma mark - CNContactPickerDelegate
 
 - (void)contactPicker:(CNContactPickerViewController *)picker didSelectContactProperties:(NSArray<CNContactProperty*> *)contactProperties {
-    for (CNContactProperty *contactProperty in contactProperties) {
-        [self.tokens addObject:contactProperty.value];
+    if (contactProperties.count != 0) {
+        for (CNContactProperty *contactProperty in contactProperties) {
+            [self.tokens addObject:contactProperty.value];
+        }
+        
+        [self.tokenField reloadData];
+        
+        self.inviteButton.backgroundColor = [UIColor mnz_redF0373A];
+        
+        [self cleanErrors];
     }
-    
-    [self.tokenField reloadData];
-    
-    self.inviteButton.backgroundColor = [UIColor mnz_redF0373A];
 }
 
 #pragma mark - ZFTokenFieldDelegate
@@ -206,6 +221,10 @@
     if (self.tokens.count == 0) {
         self.inviteButton.backgroundColor = [UIColor mnz_grayCCCCCC];
     }
+}
+
+- (BOOL)tokenFieldShouldEndEditing:(ZFTokenField *)textField {
+    return NO;
 }
 
 @end
