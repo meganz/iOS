@@ -91,22 +91,24 @@
 - (void)indexTree {
     MEGALogInfo(@"[Spotlight] start indexing");
     for (NSString *base64Handle in self.base64HandlesToIndex) {
-        uint64_t handle = [MEGASdk handleForBase64Handle:base64Handle];
-        MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:handle];
-        if (node) {
-            if ([self index:node]) {
-                [self.base64HandlesIndexed addObject:base64Handle];
+        @autoreleasepool {
+            uint64_t handle = [MEGASdk handleForBase64Handle:base64Handle];
+            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:handle];
+            if (node) {
+                if ([self index:node]) {
+                    [self.base64HandlesIndexed addObject:base64Handle];
+                }
+            } else {
+                if ([self removeFromIndex:base64Handle]) {
+                    [self.base64HandlesIndexed addObject:base64Handle];
+                }
             }
-        } else {
-            if ([self removeFromIndex:base64Handle]) {
-                [self.base64HandlesIndexed addObject:base64Handle];
+            if (self.shouldStop) {
+                break;
             }
-        }
-        if (self.shouldStop) {
-            break;
-        }
-        if (self.base64HandlesIndexed.count%MNZ_PERSIST_EACH == 0) {
-            [self saveTree];
+            if (self.base64HandlesIndexed.count%MNZ_PERSIST_EACH == 0) {
+                [self saveTree];
+            }
         }
     }
     [self saveTree];
