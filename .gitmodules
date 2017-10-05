@@ -49,6 +49,9 @@ url=https://github.com/meganz/CTAssetsPickerController.git
 [submodule "iMEGA/Vendor/Karere"]
 	path = iMEGA/Vendor/Karere
 	url = https://github.com/meganz/MEGAchat.git
-[submodule "iMEGA/Vendor/ZFTokenField"]
-	path = iMEGA/Vendor/ZFTokenField
-	url = https://github.com/zoonooz/ZFTokenField.git
+[submodule "iMEGA/Vendor/VENTokenField"]
+	path = iMEGA/Vendor/VENTokenField
+	url = https://github.com/meganz/VENTokenField.git
+[submodule "iMEGA/Vendor/FrameAccessor"]
+	path = iMEGA/Vendor/FrameAccessor
+	url = https://github.com/AlexDenisov/FrameAccessor.git
