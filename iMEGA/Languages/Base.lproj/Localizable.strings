@@ -828,8 +828,8 @@
 "inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Select contacts from your phone’s contact list or enter multiple email adresses.";
-/* Placeholder shown to give a hint of what you have to write in it. In this case email addresses */
-"enterEmailAddress"="Enter email address";
+/*  */
+"insertYourFriendsEmails"="Insert your friend's email(s):";
 /*  */
 "howItWorks"="How it works";
 /*  */
