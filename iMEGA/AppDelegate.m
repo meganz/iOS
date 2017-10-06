@@ -1346,7 +1346,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
     NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryString error:&error];
     for (NSString *filename in applicationSupportContent) {
         if ([filename containsString:@"megaclient"]) {
-            if (![fileManager copyItemAtPath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename] toPath:[groupSupportPath stringByAppendingPathComponent:filename] error:&error]) {
+            NSString *destinationPath = [groupSupportPath stringByAppendingPathComponent:filename];
+            if ([fileManager fileExistsAtPath:destinationPath]) {
+                if (![fileManager removeItemAtPath:destinationPath error:&error]) {
+                    MEGALogError(@"Remove item at path failed with error: %@", error);
+                }
+            }
+            if (![fileManager copyItemAtPath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename] toPath:destinationPath error:&error]) {
                 MEGALogError(@"Copy item at path failed with error: %@", error);
             }
         }
