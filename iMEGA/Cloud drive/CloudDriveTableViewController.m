@@ -990,10 +990,7 @@
         MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
         if (accountDetails && ((accountDetails.storageUsed.doubleValue / accountDetails.storageMax.doubleValue) > 0.95)) { // +95% used storage
             NSString *alertMessage = AMLocalizedString(@"cloudDriveIsAlmostFull", @"Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are.");
-            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[S]" withString:@""];
-            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[/S]" withString:@""];
-            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[A]" withString:@""];
-            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[/A]" withString:@""];
+            alertMessage = [alertMessage mnz_removeWebclientFormatters];
             
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level") message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"skipButton", @"Button title that skips the current action") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
