@@ -374,8 +374,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             window.frame = [[UIScreen mainScreen] bounds];
         }
     }
-    
-    [[MEGASdkManager sharedMEGAChatSdk] retryPendingConnections];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
