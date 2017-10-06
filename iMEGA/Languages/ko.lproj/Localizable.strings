@@ -52,6 +52,8 @@
 "loggedOutFromAnotherLocation"="다른 위치에서 이 장치가 로그아웃 되었습니다";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="서버의 SSL 암호를 확인할 수 없습니다. 중간자 공격의 영향을 받았을 수 있습니다.";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="과정이 예상보다 오래 걸립니다. 기다려주세요...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -84,8 +86,10 @@
 "accountNotConfirmed"="계정을 확인하려면 이메일을 확인하고 링크를 따라가세요.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="계정이 막혔습니다. support@mega.nz로 연락하세요";
-/* Message shown when the user writes an invalid format in the email field  */
+/* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="올바른 이메일을 입력하세요";
+/* Add contacts and share dialog error message when user try to add wrong email address */
+"theEmailAddressFormatIsInvalid"="이메일 주소 형식이 올바르지 않습니다";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="올바른 비밀번호를 입력하세요";
 /* Hint text to suggest that the user has to write his email */
@@ -270,6 +274,10 @@
 "getLink"="링크 얻기";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="링크 얻기";
+/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
+"updateLink"="링크 업데이트";
+/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
+"updateLinks"="링크 업데이트";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="링크 생성중...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -278,6 +286,38 @@
 "linkCopied"="링크 복사됨";
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="링크 복사됨";
+/* Text of the button after the links were copied to the clipboard */
+"copiedToTheClipboard"="클립보드에 복사됨";
+/* A title for the Copyright Warning dialog. */
+"copyrightWarning"="저작권 경고";
+/* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
+"copyrightWarningToAll"="모든 사용자에게 저작권 경고";
+/* String already exists: 367, but we need to split paragraphs. */
+"copyrightMessagePart1"="MEGA는 다른 사람들의 저작권을 존중하고 MEGA 클라우드 서비스의 이용자들이 저작권법을 준수할 것을 요구합니다.";
+/* String already exists: 367, but we need to split paragraphs */
+"copyrightMessagePart2"="당신은 MEGA 클라우드 서비스를 저작권을 침해할 목적으로 사용하는 것에 대하여 엄격히 금지되어 있습니다. 당신은 그 어떠한 사람 또는 개체의 저작권 또는 다른 소유권을 침해하는 파일, 자료, 또는 콘텐츠을 업로드, 다운로드, 저장, 공유, 전시, 스트림, 배포, 이메일, 링크, 전송 등을 해서는 안됩니다.";
+/* button caption text that the user clicks when he agrees */
+"agree"="동의";
+/* button caption text that the user clicks when he disagrees */
+"disagree"="동의하지 않음";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
+"linkWithoutKey"="키가 없는 링크";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
+"linkWithKey"="키가 있는 링크";
+/* An alert dialog for the Get Link feature */
+"proOnly"="(PRO 전용)";
+/* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
+"setExpiryDate"="만료일 설정";
+/* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
+"setPasswordProtection"="비밀번호 보호 설정";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypt"="암호화";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypted"="암호화됨";
+/* Title for a button to copy the link to the clipboard */
+"copyLink"="링크 복사";
+/* Title for a button that copies the key of the link to the clipboard */
+"copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="다른 곳에서 열기...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -552,7 +592,7 @@
 "off"="끔";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
 "on"="켬";
-/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+/* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="옵션";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="동영상 업로드";
@@ -778,6 +818,58 @@
 "viewAndEditProfile"="프로필 보기/수정";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="프로필";
+/* Title of the Achievements section */
+"achievementsTitle"="도전 과제";
+/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
+"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+/* Indicating text for when "you invite your friends" */
+"inviteYourFriends"="친구를 초대하세요";
+/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
+"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* Text shown to explain how and where you can invite friends */
+"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+/*  */
+"insertYourFriendsEmails"="친구의 이메일 주소를 입력하세요:";
+/*  */
+"howItWorks"="작동 원리";
+/*  */
+"howItWorksMain"="친구가 MEGA에 무료 계정을 등록하고 [S]MEGA 클라이언트 어플리케이션 중 하나를 설치[/S]해야합니다 (동기화 클라이언트나 모바일 앱 중 하나)";
+/*  */
+"howItWorksSecondary"="당신의 친구에게 어떤 방법을 통해서든 알릴 수 있습니다. 친구의 이메일을 친구가 가입하기 전에 여기에 입력하면 할당량을 얻을 것입니다.";
+/* A message which is shown once someone has invited a friend as part of the achievements program. */
+"howItWorksTertiary"="MEGA를 이전에 사용했던 사람을 초대하는 것은 인정되지 않으며 이러한 거부는 통보되지 않습니다.";
+/* Header of block with achievements bonuses. */
+"unlockedBonuses"="해제된 보너스:";
+/* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
+"storageQuota"="저장공간 할당량";
+/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
+"transferQuota"="전송 할당량";
+/* The user's achieved base quota */
+"accountBaseQuota"="계정 기본 할당량";
+/* achievement type */
+"registrationBonus"="가입 보너스";
+/* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
+"registrationBonusExplanation"="무료 가입 보너스로 %1의 저장 공간을 받았습니다.";
+/* achievement type */
+"referralBonuses"="초대 보너스";
+/*  */
+"installMEGASync"="MEGAsync 설치";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installMEGASyncCompletedExplanation"="MEGAsync를 설치하여 %1의 저장 공간과 %2의 전송 한도를 받았습니다.";
+/*  */
+"installOurMobileApp"="모바일 앱 설치";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installOurMobileAppCompletedExplanation"="모바일 앱을 설치하여 %1의 저장 공간과 %2의 전송 한도를 받았습니다.";
+/*  */
+"xDaysLeft"="%1일 남음";
+/* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
+"bonusExpiresIn"="([S]%1[/S] %2 후 보너스 만료)";
+/* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
+"months"="개월";
+/*  */
+"days"="일";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"expired"="만료됨";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="로그아웃";
 /* String shown when you are logging out of your account. */
@@ -822,6 +914,8 @@
 "upgradeAccount"="계정 업그레이드";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="나중에 내 계정에서 업그레이드할 수 있습니다";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
+"cloudDriveIsAlmostFull"="[S]클라우드 드라이브가 거의 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 4 TB (4096 GB)[/S]의 클라우드 저장 공간을 받으세요.                ";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="저장소";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -1024,12 +1118,14 @@
 "retry"="재시도";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="메시지 삭제";
-/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="미디어 전송";
+/*  */
+"fromCloudDrive"="클라우드 드라이브에서";
+/*  */
+"fromDevice"="장치에서";
+/* referring to a contact in the contact list of the user */
+"contact"="연락처";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="연락처 보내기";
-/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
-"addFromMyCloudDrive"="내 클라우드 드라이브에 추가";
 /* */
 "done"="완료";
 /* Button label for sending file attachments through the chat to another user. */

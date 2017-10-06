@@ -43,7 +43,7 @@
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Chave de decodificação";
 /* Button title to try to decrypt the link */
-"decrypt"="Descriptografar";
+"decrypt"="Decodificar";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="Chave de decodificação inválida";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -52,10 +52,12 @@
 "loggedOutFromAnotherLocation"="Você foi desconectado deste dispositivo a partir de outro local.";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Chave SSL do servidor não pode ser verificada. Você pode ter sido afetado por um ataque \"man-in-the-middle\".";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
-"takingLongerThanExpected"="O processo está demorando mais do que o esperado. Aguarde...";
+"takingLongerThanExpected"="O processo está demorando mais do que o esperado. Por favor, aguarde...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
-"pleaseLogInToYourAccount"="Por favor, entre em sua conta.";
+"pleaseLogInToYourAccount"="Por favor, faça login na sua conta.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="ESPAÇO MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -84,8 +86,10 @@
 "accountNotConfirmed"="Verifique o seu e-mail e clique no link para confirmar a sua conta.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Sua conta foi bloqueada. Por favor, entre em contato com support@mega.nz";
-/* Message shown when the user writes an invalid format in the email field  */
+/* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Digite um email válido";
+/* Add contacts and share dialog error message when user try to add wrong email address */
+"theEmailAddressFormatIsInvalid"="O formato do e-mail é inválido";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="Digite uma senha válida";
 /* Hint text to suggest that the user has to write his email */
@@ -99,7 +103,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="As senhas não são iguais";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Você precisa concordar com os termos de serviço para se registrar em uma conta no MEGA.";
+"termsCheckboxUnselected"="Você precisa aceitar os termos de serviço para criar uma conta no MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Este endereço de e-mail já registrou uma conta no Mega.";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -107,7 +111,7 @@
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Por favor, digite sua senha para confirmar sua conta";
 /* Button title that triggers the confirm account action */
-"confirmAccountButton"="Confirme sua conta";
+"confirmAccountButton"="Confirme a sua conta";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Senha incorreta";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
@@ -270,6 +274,10 @@
 "getLink"="Obter Link";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Obter links";
+/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
+"updateLink"="Atualizar link";
+/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
+"updateLinks"="Atualizar links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Gerando link...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -278,6 +286,38 @@
 "linkCopied"="Link copiado";
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="Links copiados";
+/* Text of the button after the links were copied to the clipboard */
+"copiedToTheClipboard"="Copiado ao bloco de notas";
+/* A title for the Copyright Warning dialog. */
+"copyrightWarning"="Aviso de copyright";
+/* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
+"copyrightWarningToAll"="Aviso de direitos autorais a todos os usuários";
+/* String already exists: 367, but we need to split paragraphs. */
+"copyrightMessagePart1"="O MEGA respeita os direitos autorais de terceiros e exige que os usuários do serviço de nuvem MEGA cumpram as leis de direitos autorais.";
+/* String already exists: 367, but we need to split paragraphs */
+"copyrightMessagePart2"="Você está estritamente proibido de usar o serviço de nuvem MEGA para infringir direitos autorais. Você não pode fazer upload, download, armazenar, compartilhar, exibir, fazer streaming, distribuir, enviar por email, criar um link, transmitir ou disponibilizar quaisquer arquivos, dados ou conteúdos que violem os direitos de autor ou outros direitos de propriedade de qualquer pessoa ou entidade.";
+/* button caption text that the user clicks when he agrees */
+"agree"="Concordo";
+/* button caption text that the user clicks when he disagrees */
+"disagree"="Não concordo";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
+"linkWithoutKey"="Link sem chave";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
+"linkWithKey"="Link com chave";
+/* An alert dialog for the Get Link feature */
+"proOnly"="(SOMENTE PRO)";
+/* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
+"setExpiryDate"="Definir uma data de validade";
+/* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
+"setPasswordProtection"="Estabelecer uma senha de acesso";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypt"="Criptografar";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypted"="Criptografado";
+/* Title for a button to copy the link to the clipboard */
+"copyLink"="Copiar link";
+/* Title for a button that copies the key of the link to the clipboard */
+"copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Aberto em...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -473,9 +513,9 @@
 /* Add contacts and share dialog error message when user try to add already existing email address. */
 "alreadyHaveAContactWithThatEmailAddress"="Você já tem um contato com este e-mail";
 /* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="O usuário [X] te enviou um convite, e aparecerá na sua lista de contatos assim que você aceitar.";
+"theUserHasBeenInvited"="O usuário [X] foi convidado, e aparecerá na sua lista de contatos assim que aceitar.";
 /* Success message shown when some contacts have been invited */
-"theUsersHaveBeenInvited"="Os usuários foram convidados e aparecerão em sua lista assim que aceitarem.";
+"theUsersHaveBeenInvited"="Os usuários foram convidados e aparecerão na sua lista de contatos assim que aceitarem.";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Erro ao adicionar contatos";
 /* Alert title shown when you want to remove one or more contacts */
@@ -552,7 +592,7 @@
 "off"="Desativado";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
 "on"="Ativado";
-/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+/* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Opções";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Carregamento de vídeos";
@@ -573,9 +613,9 @@
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Por que eu preciso de uma chave de recuperação?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
-"masterKey_firstParagraph"="Seus dados só pode ser lido através de uma cadeia de operações de descriptografia que começa com a sua mestra de criptografia de chave (Recovery Key), que nós armazenamento criptografado com sua senha. Isto significa que se você perder sua senha, a chave de recuperação não pode mais ser decifrada, e você já não pode descriptografar os dados.";
+"masterKey_firstParagraph"="O seus dados só podem ser lidos através de uma cadeia de operações de decodificação que começa com a sua chave mestra de criptografia (chave de recuperação), a qual nós armazenamos criptografada com a sua senha. Isso significa que, se você perder a sua senha, a chave de recuperação já não poderá ser decodificada, e você já não poderá decodificar os seus dados.";
 /*  */
-"masterKey_thirdParagraph"="Um ataque externo não pode ter acesso a sua conta apenas com sua chave. Uma recuperação de senha necessita da chave mestra e do acesso ao seu e-mail.";
+"masterKey_thirdParagraph"="Um atacante externo não pode obter acesso à sua conta apenas com a sua chave. A recuperação de senha necessita tanto a chave como o acesso ao seu email.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
 "recoveryKeyCopiedToClipboard"="A chave de recuperação foi copiada para o clipboard";
 /* Alert title shown when you have exported your MEGA Recovery Key */
@@ -609,13 +649,13 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Atualmente usando %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Encerrar sua conta";
+"cancelYourAccount"="Cancelar a sua conta";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Você perderá todos os dados associados a esta conta. Tem certeza de que deseja continuar?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
 "ifYouCantAccessYourEmailAccount"="Se você não pode acessar o seu e-mail, entre em contato support@mega.nz.";
 /* During account cancellation (deletion) */
-"cancellationLinkHasExpired"="Link de cancelamento expirou.";
+"cancellationLinkHasExpired"="Link de cancelamento expirado.";
 /* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
 "enterYourPasswordToConfirmThatYouWanToClose"="Digite a sua senha para confirmar que você quer cancelar a sua conta.";
 /* Account closure, password check dialog when user click on closure email. */
@@ -671,7 +711,7 @@
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
 "youCanResetYourPasswordByFollowing"="Você pode resetar a sua senha clicando no link de recuperação que será enviado para o seu e-mail.";
 /* Message shown during forgot your password process if the link to reset password has expired */
-"recoveryLinkHasExpired"="O link de recuperação expirou, por favor tente novamente.";
+"recoveryLinkHasExpired"="O link de recuperação expirou. Tente novamente.";
 /* Headline of the password reset recovery procedure */
 "passwordReset"="Resetar senha";
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
@@ -679,11 +719,11 @@
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey"="Chave de Recuperação";
 /* An alert title where the user provided the incorrect Recovery Key. */
-"invalidRecoveryKey"="chave de recuperação inválida";
+"invalidRecoveryKey"="Chave de recuperação inválida";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Sua chave de recuperação vai ser usado para redefinir sua senha. Por favor, insira sua nova senha.";
 /*  */
-"yourPasswordHasBeenReset"="Sua senha foi resetada com sucesso. Por favor, entre na sua conta agora.";
+"yourPasswordHasBeenReset"="A sua senha foi resetada com sucesso. Por favor, faça login na sua conta agora.";
 /* First paragraph of the screen when the password has been forgotten */
 "forgotPassword_firstParagraph"="Se você tem um backup da sua chave de recuperação, você pode redefinir sua senha, selecionando YES. Nenhum dado será perdido.";
 /* Second paragraph of the screen when the password has been forgotten */
@@ -693,7 +733,7 @@
 /* Headline when the user chose YES */
 "great"="Ótimo!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Por favor, indique o seu endereço de e-mail abaixo. Você receberá um link de recuperação que lhe permitirá enviar a chave de recuperação e redefinir sua senha.";
+"recoveryLinkToResetYourPassword"="Por favor, digite o seu endereço de email abaixo. Você receberá um link de recuperação para informar a chave de recuperação, e resetar a sua senha.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Enviar";
 /* The title of the screen to park an account. */
@@ -705,13 +745,13 @@
 /* Text of the dialog message to ask for the link to park the account */
 "recoveryLinkToParkYourAccount"="Por favor, indique o seu endereço de e-mail abaixo. Você receberá um link de recuperação que permitirá que você estacionar sua conta.";
 /* Headline for parking an account (basically restarting from scratch) */
-"parkAccount"="Congelar conta";
+"parkAccount"="Estacionar a minha conta";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
-"startingFreshAccount"="Eu reconheço que eu estou começando uma nova conta, vazio e que eu vou perder todos os dados em minha conta presente, a menos que me lembro minha senha ou localizar uma chave de recuperação exportado.";
+"startingFreshAccount"="Entendo que estou criando uma conta nova e vazia, e que vou perder todos os dados na minha conta atual, a menos que recupere a minha senha ou encontre a chave de recuperação exportada.";
 /* Caption of the button to proceed */
-"startNewAccount"="Iniciar nova conta";
+"startNewAccount"="Criar uma nova conta";
 /*  */
-"yourAccounHasBeenParked"="Sua conta antiga foi congelada com sucesso. Agora você pode acessar a sua nova conta.";
+"yourAccounHasBeenParked"="A sua conta antiga foi estacionada. Agora você pode fazer login na sua nova conta.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Novo e-mail";
 /* Button text for the user to confirm their change of email address. */
@@ -778,6 +818,58 @@
 "viewAndEditProfile"="Ver e editar o perfil";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Perfil";
+/* Title of the Achievements section */
+"achievementsTitle"="Conquistas";
+/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
+"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+/* Indicating text for when "you invite your friends" */
+"inviteYourFriends"="Convide os seus amigos";
+/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
+"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* Text shown to explain how and where you can invite friends */
+"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+/*  */
+"insertYourFriendsEmails"="Insira o(s) email(s) do(s) seu(s) amigo(s):";
+/*  */
+"howItWorks"="Como funciona";
+/*  */
+"howItWorksMain"="O seu amigo precisa criar uma conta gratuita no MEGA e [S]instalar pelo menos um app MEGA[/S] (pode ser o cliente de sincronização ou um dos nossos aplicativos móveis)";
+/*  */
+"howItWorksSecondary"="Você pode notificar o seu amigo através de qualquer método. Você ganhará a cota se você inseriu o email do seu amigo aqui antes dele se registrar com esse mesmo email.";
+/* A message which is shown once someone has invited a friend as part of the achievements program. */
+"howItWorksTertiary"="Você não receberá crédito por ter convidado alguém que já tiver usado o MEGA anteriormente e você não será notificado sobre tal rejeição.";
+/* Header of block with achievements bonuses. */
+"unlockedBonuses"="Bônus obtidos:";
+/* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
+"storageQuota"="Cota de armazenamento";
+/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
+"transferQuota"="Cota de transferência";
+/* The user's achieved base quota */
+"accountBaseQuota"="Cota base da conta";
+/* achievement type */
+"registrationBonus"="Bônus de registro";
+/* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
+"registrationBonusExplanation"="Você recebeu %1 de espaço de armazenamento como bônus pelo seu registro.";
+/* achievement type */
+"referralBonuses"="Bônus de indicação";
+/*  */
+"installMEGASync"="Instalar o MEGAsync";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installMEGASyncCompletedExplanation"="Você recebeu %1 de espaço de armazenamento e %2 de cota de transferência por instalar o MEGAsync.";
+/*  */
+"installOurMobileApp"="Instalar o nosso aplicativo para celular";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installOurMobileAppCompletedExplanation"="Você recebeu %1 de espaço de armazenamento e %2 de cota de transferência por ter instalado o nosso aplicativo para dispositivos móveis.";
+/*  */
+"xDaysLeft"="%1 dias restantes";
+/* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
+"bonusExpiresIn"="(O bônus expira em [S]%1[/S] %2)";
+/* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
+"months"="meses";
+/*  */
+"days"="dias";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"expired"="Expirado";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Fazer logout";
 /* String shown when you are logging out of your account. */
@@ -822,6 +914,8 @@
 "upgradeAccount"="Atualizar conta";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Você pode atualizar mais tarde em Minha conta";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
+"cloudDriveIsAlmostFull"="A sua [S]Nuvem de arquivos está quase cheia.[/S] [A]Faça o upgrade[/A] para uma conta PRO e obtenha [S]até 4TB (4096 GB)[/S] de espaço de armazenamento em nuvem.               ";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Armazenamento";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -1024,14 +1118,16 @@
 "retry"="Tentar novamente";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Excluir mensagem";
-/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="Enviar fotos/vídeos";
+/*  */
+"fromCloudDrive"="Da Nuvem de arquivos";
+/*  */
+"fromDevice"="Do seu dispositivo";
+/* referring to a contact in the contact list of the user */
+"contact"="Contato";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Enviar contato";
-/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
-"addFromMyCloudDrive"="Adicionar da minha nuvem de arquivos";
 /* */
-"done"="Feito";
+"done"="OK";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Enviar arquivos";
 /* */
@@ -1128,7 +1224,7 @@
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Erro desconhecido";
 /* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="Você precisará reiniciar o MEGA depois de mudar o idioma.";
+"languageRestartAlert"="Será necessário reiniciar o MEGA depois de modificar o idioma.";
 /* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
 "languageRestartNotification"="Idioma modificado. Toque para reiniciar.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */

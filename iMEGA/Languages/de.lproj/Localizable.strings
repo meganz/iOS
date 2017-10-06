@@ -52,6 +52,8 @@
 "loggedOutFromAnotherLocation"="Ihre Sitzung wurde beendet";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Der Server-SSL-Schlüssel kann nicht verifiziert werden. Es könnte ein Man-in-the-middle-Angriff vorliegen.";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="Die Bearbeitung Ihrer Anfrage dauert unerwartet lange. Bitte haben Sie noch etwas Geduld...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -84,8 +86,10 @@
 "accountNotConfirmed"="Bitte klicken Sie auf den Link, den Sie per E-Mail erhalten haben, um Ihren Account zu bestätigen.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Ihr Account wurde gesperrt. Bitte setzen Sie sich mit support@mega.nz in Verbindung.";
-/* Message shown when the user writes an invalid format in the email field  */
+/* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Bitte geben Sie eine gültige E-Mail-Adresse ein";
+/* Add contacts and share dialog error message when user try to add wrong email address */
+"theEmailAddressFormatIsInvalid"="Das Format der E-Mail-Adresse ist ungültig.";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="Geben Sie ein gültiges Passwort ein";
 /* Hint text to suggest that the user has to write his email */
@@ -270,6 +274,10 @@
 "getLink"="Link exportieren";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Linkexport";
+/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
+"updateLink"="Link ändern";
+/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
+"updateLinks"="Links ändern";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Link generieren...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -278,6 +286,38 @@
 "linkCopied"="Links kopiert";
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="Die Links wurden kopiert";
+/* Text of the button after the links were copied to the clipboard */
+"copiedToTheClipboard"="Copied to the clipboard";
+/* A title for the Copyright Warning dialog. */
+"copyrightWarning"="Richtlinien zum Urheberrecht";
+/* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
+"copyrightWarningToAll"="Hinweis zur Wahrung von Urheberrechten";
+/* String already exists: 367, but we need to split paragraphs. */
+"copyrightMessagePart1"="MEGA respektiert die Urheberrechte Dritter und erwartet von seinen Nutzern die Einhaltung aller relevanten Copyright-Gesetze.";
+/* String already exists: 367, but we need to split paragraphs */
+"copyrightMessagePart2"="Es ist strikt untersagt, den MEGA-Cloudspeicherdienst zur Verletzung von Urheberrechten zu missbrauchen. Sie dürfen keine Dateien uploaden, downloaden, speichern, teilen, anzeigen, streamen, verteilen, emailen, verlinken, übetragen oder sonstwie verfügbar machen, die die Urheberrechte oder andere Besitzrechte irgendwelcher natürlichen oder juristischen Personen verletzen.";
+/* button caption text that the user clicks when he agrees */
+"agree"="Einverstanden";
+/* button caption text that the user clicks when he disagrees */
+"disagree"="Disagree";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
+"linkWithoutKey"="Link ohne Schlüssel";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
+"linkWithKey"="Link mit Schlüssel";
+/* An alert dialog for the Get Link feature */
+"proOnly"="(NUR PRO)";
+/* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
+"setExpiryDate"="Ablaufdatum setzen";
+/* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
+"setPasswordProtection"="Mit Passwortschutz";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypt"="Verschlüsseln";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypted"="Verschlüsselt";
+/* Title for a button to copy the link to the clipboard */
+"copyLink"="Link kopieren";
+/* Title for a button that copies the key of the link to the clipboard */
+"copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Öffnen in...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -552,7 +592,7 @@
 "off"="Aus";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
 "on"="An";
-/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+/* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Optionen";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Videos uploaden";
@@ -778,6 +818,58 @@
 "viewAndEditProfile"="Profil anzeigen/bearbeiten";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Profil";
+/* Title of the Achievements section */
+"achievementsTitle"="Errungenschaften";
+/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
+"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+/* Indicating text for when "you invite your friends" */
+"inviteYourFriends"="Laden Sie Ihre Freunde und Bekannten ein";
+/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
+"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* Text shown to explain how and where you can invite friends */
+"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+/*  */
+"insertYourFriendsEmails"="E-Mail-Adresse(n) Ihrer Freunde:";
+/*  */
+"howItWorks"="Funktionsprinzip";
+/*  */
+"howItWorksMain"="Der eingeladene Benutzer muss einen kostenlosen MEGA-Account erstellen und [S]mindens eine unserer Apps installieren und nutzen[/S] (MEGAsync oder eine unserer Mobil-Apps)";
+/*  */
+"howItWorksSecondary"="Sie können den oder die eingeladenen Benutzer mit Mitteln Ihrer Wahl von einer Registrierung überzeugen. Sie erhalten den Bonus, sofern sich der Benutzer nach Ihrer Einladung mit der von Ihnen angegebenen E-Mail-Adresse bei uns anmeldet.";
+/* A message which is shown once someone has invited a friend as part of the achievements program. */
+"howItWorksTertiary"="Sie erhalten keine Boni für die Einladung bestehender oder ehemaliger MEGA-Nutzer. Sie werden über einen aus diesem Grund nicht erhaltenen Bonus nicht gesondert informiert.";
+/* Header of block with achievements bonuses. */
+"unlockedBonuses"="Erhaltene Boni:";
+/* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
+"storageQuota"="Speicherplatz";
+/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
+"transferQuota"="Übertragungsvolumen";
+/* The user's achieved base quota */
+"accountBaseQuota"="Account-Basisquota";
+/* achievement type */
+"registrationBonus"="Bonus für neue Nutzer";
+/* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
+"registrationBonusExplanation"="Sie haben %1 Speicherplatz als kostenlosen Registrierungsbonus erhalten.";
+/* achievement type */
+"referralBonuses"="Nutzer werben";
+/*  */
+"installMEGASync"="MEGAsync installieren";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installMEGASyncCompletedExplanation"="Sie haben für die erfolgreiche Installation von MEGAsync %1 Speicherplatz und %2 Transfervolumen erhalten.";
+/*  */
+"installOurMobileApp"="Mobil-App installieren";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installOurMobileAppCompletedExplanation"="Sie haben für die erfolgreiche Installation unserer Mobil-App %1 Speicherplatz und %2 Transfervolumen erhalten.";
+/*  */
+"xDaysLeft"="noch %1 Tage";
+/* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
+"bonusExpiresIn"="(Bonus noch [S]%1[/S] %2 gültig)";
+/* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
+"months"="Monate";
+/*  */
+"days"="Tage";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"expired"="Abgelaufen";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Logout";
 /* String shown when you are logging out of your account. */
@@ -822,6 +914,8 @@
 "upgradeAccount"="Accountupgrade";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Sie können dies jederzeit unter Mein Account nachholen";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
+"cloudDriveIsAlmostFull"="[S]Ihr Cloud Drive ist fast voll.[/S] [A]Wechseln Sie jetzt[/A] auf einen PRO-Plan und erhalten Sie [S]bis zu 4 TB (4096 GB)[/S] Speicherplatz in der Cloud.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Speicher";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -1024,12 +1118,14 @@
 "retry"="Wiederholen";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Nachricht löschen";
-/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="Send Media";
+/*  */
+"fromCloudDrive"="From Cloud drive";
+/*  */
+"fromDevice"="From device";
+/* referring to a contact in the contact list of the user */
+"contact"="Kontakt";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Kontakt senden";
-/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
-"addFromMyCloudDrive"="Aus meinem Cloud-Speicher hinzufügen";
 /* */
 "done"="Fein";
 /* Button label for sending file attachments through the chat to another user. */

@@ -52,8 +52,10 @@
 "loggedOutFromAnotherLocation"="لقد تم تسجيل خروجك من هذا الجهاز من موقع آخر";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="مفتاح طبقة المنفذ الآمن (SSL) لايمكن توثيقه، ربما تتأثر من هجوم رجل في الوسط.";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
-"takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
+"takingLongerThanExpected"="تستغرق العملية وقتا أطول من المتوقع. الرجاء الإنتظار...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="يرجى تسجيل الدخول إلى حسابك.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -84,8 +86,10 @@
 "accountNotConfirmed"="الرجاء تفقد بريدك الالكتروني والضغط على رابط تأكيد الحساب";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="تم حظر الحساب الخاص بك. يرجى الاتصال ب support@mega.nz";
-/* Message shown when the user writes an invalid format in the email field  */
+/* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="ادخل يريد إليكتروني صالح";
+/* Add contacts and share dialog error message when user try to add wrong email address */
+"theEmailAddressFormatIsInvalid"="صيغة البريد الاليكنروني غير صالحة";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="أدخل كلمة السر الصحيحة";
 /* Hint text to suggest that the user has to write his email */
@@ -270,6 +274,10 @@
 "getLink"="الحصول على الرابط";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="احصل على رابط";
+/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
+"updateLink"="تحديث الرابط";
+/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
+"updateLinks"="تحديث الروابط";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="توليد الرابط...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -278,6 +286,38 @@
 "linkCopied"="تم نسخ الرابط";
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="‏تم نسخ الروابط";
+/* Text of the button after the links were copied to the clipboard */
+"copiedToTheClipboard"="تم النسخ إلى الحافظة ";
+/* A title for the Copyright Warning dialog. */
+"copyrightWarning"="تحذير حقوق التأليف والنشر";
+/* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
+"copyrightWarningToAll"="تحذير حقوق النشر لكل المستخدمين";
+/* String already exists: 367, but we need to split paragraphs. */
+"copyrightMessagePart1"="MEGA تحترم حقوق نشر الآخرين وتطلب من مستخدمي خدمات السحابة MEGA بالالتزام بقوانين حقوق النشر.";
+/* String already exists: 367, but we need to split paragraphs */
+"copyrightMessagePart2"="تم منعك منعا باتا من استخدام خدمة MEGA  السحابية لانتهاكك حقوق النشر. لايمكنك من الرفع أوالتحميل أوالتخزين أوالمشاركة أوالعرض أوالبث أوالتوزيع أوإرسال البريد الالكتروني أوالتواصل أونقل أو تفير أية ملفات أو بيانات أو محتوى ينتهك أي حق من حقوق النشر أو أية حقوق ملكية لأي شخص.";
+/* button caption text that the user clicks when he agrees */
+"agree"="موافق";
+/* button caption text that the user clicks when he disagrees */
+"disagree"="غير موافق";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
+"linkWithoutKey"="رابط بدون مفتاح";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
+"linkWithKey"="الرابط مع المفتاح";
+/* An alert dialog for the Get Link feature */
+"proOnly"="(فقط لمشتركي PRO)";
+/* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
+"setExpiryDate"="ضع تاريخ لانتهاء الصلاحية";
+/* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
+"setPasswordProtection"="تفعيل الحماية بكلمة مرور";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypt"="تشفير";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypted"="مشفر";
+/* Title for a button to copy the link to the clipboard */
+"copyLink"="نسخ الرابط";
+/* Title for a button that copies the key of the link to the clipboard */
+"copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="فتح في...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -552,7 +592,7 @@
 "off"="ايقاف";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
 "on"="تشغيل";
-/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+/* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="الخيارات";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="رفع مقاطع الفيديو";
@@ -569,7 +609,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="تغيير كلمة المرور";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="تصدير مفتاح الاستعادة والحفاظ عليه في مكان آمن تمكنك من استرداد حسابك في حالة فقدان كلمة السر دون فقدان البيانات.";
+"exportMasterKeyFooter"="حفظ مفتاح الاستعادة ووضعه في مكان آمن يمكنك من استرداد حسابك في حالة فقدان كلمة المرور دون فقدان البيانات.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="لماذا أحتاج لمفتاح استعادة؟";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -775,9 +815,61 @@
 /* Title of My Account section. There you can see your account details */
 "myAccount"="حسابي";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
-"viewAndEditProfile"="View and edit profile";
+"viewAndEditProfile"="عرض وتعديل الملف الشخصي";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="الملف الشخصي";
+/* Title of the Achievements section */
+"achievementsTitle"="الإنجازات";
+/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
+"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+/* Indicating text for when "you invite your friends" */
+"inviteYourFriends"="ادع اصدقائك";
+/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
+"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* Text shown to explain how and where you can invite friends */
+"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+/*  */
+"insertYourFriendsEmails"="أدخل بريد صديقك الإليكتروني:";
+/*  */
+"howItWorks"="كيف تعمل";
+/*  */
+"howItWorksMain"="صديقك يحتاج لأن يسجل حساب مجاني في MEGA و [S]ويحمل تطبيق واحد على الأقل من تطبيقات ميغا[/S] (إما إحدى تطبيقات الجوال أو تطبيق المزامنة)";
+/*  */
+"howItWorksSecondary"="تستطيع إخبار أصدقائك بأي وسيلة، ستحصل على حصتك إذا أدخلت بريد صديقك الالكتروني هنا قبل أن يسجل صديقك بالبريد.";
+/* A message which is shown once someone has invited a friend as part of the achievements program. */
+"howItWorksTertiary"="لن تستسلم منحة مجانية إن دعوت شخص مسجل بالفعل لدى MEGA من قبل ولن يتم إخطارك برفض العملية.";
+/* Header of block with achievements bonuses. */
+"unlockedBonuses"="الإضافات الممنوحة:";
+/* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
+"storageQuota"="حصة التخزين ";
+/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
+"transferQuota"="حصة النقل";
+/* The user's achieved base quota */
+"accountBaseQuota"="حصة قاعدة الحساب";
+/* achievement type */
+"registrationBonus"="مكافآت التسجيل";
+/* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
+"registrationBonusExplanation"="لقد تلقيت %1 مساحة تخزين كمكافأة تسجيل مجانية.";
+/* achievement type */
+"referralBonuses"="علاوات الإحالة ";
+/*  */
+"installMEGASync"="تثبيت MEGAsync";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installMEGASyncCompletedExplanation"="لقد تلقيت %1 مساحة تخزين و%2 حصة نقل لتثبيتك MEGAsync.";
+/*  */
+"installOurMobileApp"="حمل تطبيقاتنا للجوال";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installOurMobileAppCompletedExplanation"="لقد تلقيت %1 مساحة تخزين و %2 حصة نقل لتنزيل تطبيقنا على جوالك .";
+/*  */
+"xDaysLeft"="%1 أيام متبقية";
+/* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
+"bonusExpiresIn"="(الإضافة تنتهي في [S]%1[/S]  %2)";
+/* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
+"months"="شهور";
+/*  */
+"days"="أيام";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"expired"="انتهت";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="تسجيل الخروج";
 /* String shown when you are logging out of your account. */
@@ -822,6 +914,8 @@
 "upgradeAccount"="ترقية الحساب";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="تستطيع الترقية لاحقا عبر حسابك";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
+"cloudDriveIsAlmostFull"="[S]مساحة السحابة على وشك الامتلاء[/S] [A]رق عضويتك الآن[/A] لحساب برو واحصل [S]حتى 4 تيرابايت  (4096 جيجابايت)[/S] كمساحة تخزين.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="التخزين";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -1024,12 +1118,14 @@
 "retry"="اعادة المحاولة";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="مسح الرسالة";
-/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="أرسل صور أو فيديوهات ";
+/*  */
+"fromCloudDrive"="من سحابة التخزين ";
+/*  */
+"fromDevice"="من الجهاز ";
+/* referring to a contact in the contact list of the user */
+"contact"="جهة اتصال";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="أرسل لجهة الاتصال";
-/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
-"addFromMyCloudDrive"="أضف من سحابتي";
 /* */
 "done"="تم";
 /* Button label for sending file attachments through the chat to another user. */
