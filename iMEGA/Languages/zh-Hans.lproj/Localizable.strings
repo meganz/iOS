@@ -52,6 +52,8 @@
 "loggedOutFromAnotherLocation"="您已从其他位置登出该设备";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="服务器SSL 金钥未能认证。您可能会收到第三方攻击。";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="加载时间比预期的长，请耐心等待。";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -84,8 +86,10 @@
 "accountNotConfirmed"="请检查您的电子信箱，并点击信中的链接以确认激活您的帐户。";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="您的帐号已被锁定。请连系support@mega.nz";
-/* Message shown when the user writes an invalid format in the email field  */
+/* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="请输入有效的邮箱地址";
+/* Add contacts and share dialog error message when user try to add wrong email address */
+"theEmailAddressFormatIsInvalid"="email格式无效";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="请输入有效的密码";
 /* Hint text to suggest that the user has to write his email */
@@ -270,6 +274,10 @@
 "getLink"="取得链接";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="创建共享链接";
+/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
+"updateLink"="更新共享链接";
+/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
+"updateLinks"="更新共享链接";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="正在生成连接...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -278,6 +286,38 @@
 "linkCopied"="链接已复制";
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="已复制链接";
+/* Text of the button after the links were copied to the clipboard */
+"copiedToTheClipboard"="已复制至粘贴板";
+/* A title for the Copyright Warning dialog. */
+"copyrightWarning"="智慧财产权警告";
+/* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
+"copyrightWarningToAll"="致所有使用者之著作权警告";
+/* String already exists: 367, but we need to split paragraphs. */
+"copyrightMessagePart1"="MEGA尊重他人之著作权，且要求MEGA的云端服务使用者遵守著作权法。";
+/* String already exists: 367, but we need to split paragraphs */
+"copyrightMessagePart2"="严禁使用MEGA云端服务侵害他人之知识产权。您不得上传、下载、储存、分享、展示、流通、散布、寄发、提供链接、传播或以其他方式侵犯任何知识产权，或提供任何侵犯个人或团体知识产权之文件、数据或内容。";
+/* button caption text that the user clicks when he agrees */
+"agree"="同意";
+/* button caption text that the user clicks when he disagrees */
+"disagree"="反对";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
+"linkWithoutKey"="链接不包含密钥";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
+"linkWithKey"="链接包含密钥";
+/* An alert dialog for the Get Link feature */
+"proOnly"="(PRO专业版限定)";
+/* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
+"setExpiryDate"="设定到期日";
+/* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
+"setPasswordProtection"="密码保护设定";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypt"="加密";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypted"="已加密";
+/* Title for a button to copy the link to the clipboard */
+"copyLink"="复制链接";
+/* Title for a button that copies the key of the link to the clipboard */
+"copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="开启于...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -552,7 +592,7 @@
 "off"="关闭";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
 "on"="开启";
-/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+/* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="选择";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="上传影片";
@@ -778,6 +818,58 @@
 "viewAndEditProfile"="查看并修改帐户资料";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="文件";
+/* Title of the Achievements section */
+"achievementsTitle"="成果";
+/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
+"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+/* Indicating text for when "you invite your friends" */
+"inviteYourFriends"="邀请朋友加入";
+/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
+"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* Text shown to explain how and where you can invite friends */
+"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+/*  */
+"insertYourFriendsEmails"="请填入您好友的电子邮件：";
+/*  */
+"howItWorks"="如何使用";
+/*  */
+"howItWorksMain"="您的朋友必须在MEGA注册一个免费帐户，并且[S]安装至少一个MEGA用户端应用程序[/S] (同步用户端或我们的任一个手机应用程序)";
+/*  */
+"howItWorksSecondary"="您可以使用任何方式通知您的朋友。如果您在使用该电子邮件注册之前于此处输入了您的朋友的电子信箱，您将会获得配额。";
+/* A message which is shown once someone has invited a friend as part of the achievements program. */
+"howItWorksTertiary"="若您邀请的是曾使用过MEGA的用户，则无法得到奖励，且您将不会收到相关通知。";
+/* Header of block with achievements bonuses. */
+"unlockedBonuses"="待解任务与奖励挑战：";
+/* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
+"storageQuota"="空间使用量";
+/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
+"transferQuota"="传输配额";
+/* The user's achieved base quota */
+"accountBaseQuota"="帐户基本配额";
+/* achievement type */
+"registrationBonus"="注册奖励";
+/* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
+"registrationBonusExplanation"="您已获得免费注册的额外%1储存空间";
+/* achievement type */
+"referralBonuses"="推荐奖励";
+/*  */
+"installMEGASync"="安装MEGAsync";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installMEGASyncCompletedExplanation"="由于您安装了MEGAsync，您已获得%1储存空间以及%2传输配额";
+/*  */
+"installOurMobileApp"="安装我们的手机应用程序";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installOurMobileAppCompletedExplanation"="由于您安装了我们的应用程序上的应用程序，您已获得%1储存空间以及%2传输配额";
+/*  */
+"xDaysLeft"="剩下%1天";
+/* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
+"bonusExpiresIn"="(奖励将于[S]%1[/S] %2 内到期)";
+/* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
+"months"="个月";
+/*  */
+"days"="日";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"expired"="过期";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="登出";
 /* String shown when you are logging out of your account. */
@@ -822,6 +914,8 @@
 "upgradeAccount"="付费升级账户";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="您稍后可在\"我的帐户\"中进行升级";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
+"cloudDriveIsAlmostFull"="[S]云盘快要满了。 [/S] [A]立即付费升级[/A]为PRO专业级帐户，并获得[S]最高4TB (4096 GB) [/S]的云端储存空间。";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="储存空间";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -1024,12 +1118,14 @@
 "retry"="重试";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="删除信息";
-/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="发送多媒体文件";
+/*  */
+"fromCloudDrive"="从云盘";
+/*  */
+"fromDevice"="从设备";
+/* referring to a contact in the contact list of the user */
+"contact"="联系人";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="发送联系资讯";
-/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
-"addFromMyCloudDrive"="从我的云盘选择";
 /* */
 "done"="完成";
 /* Button label for sending file attachments through the chat to another user. */
@@ -1069,7 +1165,7 @@
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="已附加%s 个文件。";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="此订阅将会自动更新续订，续订内容与您一开始选择的订阅时间与价格一致。您可以于您的iTunes帐户设定页面关闭MEGA PRO的订阅自动更新续订，必须于您的下一个订阅缴款期限的24小时之前执行此操作。欲管理您的订阅内容，只需点击您手机上的App Store图标，可以在页面下方以您的Apple帐号登入（如果您还没有这样做），然后点击查看帐号。您会被带到您的帐户页面，就可以向下滚动到管理应用程序订阅。在那里，您可以选择你的MEGA PRO订阅和查看您预定的续约日期，选择不同的订阅专案或切换开关至关闭以停用您的自动续订。";
+"autorenewableDescription"="此订阅将会自动更新续订，续订内容与您一开始选择的订阅时间与价格一致。您可以于您的iTunes帐户设定页面关闭MEGA PRO的订阅自动更新续订，必须于您的下一个订阅缴款期限的24小时之前执行此操作。欲管理您的订阅内容，只需点击您手机上的App Store图标，可以在页面下方以您的Apple帐号登入（如果您还没有这样做），然后点击查看帐号。您会被带到您的帐户页面，就可以向下滚动到管理应用程序订阅。在那里，您可以选择你的MEGA PRO订阅和查看您预定的续约日期，选择不同的计划或切换开关至关闭以停用您的自动续订。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="开启MEGA并登入以继续";
 /* A button title to revoke the access to an attachment in a chat. */
@@ -1128,9 +1224,9 @@
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="未知的错误";
 /* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="更改语言设置之后，请重启 app";
+"languageRestartAlert"="更改语言后，您将需要重启Mega";
 /* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
-"languageRestartNotification"="Language changed. Tap to restart.";
+"languageRestartNotification"="语言设置完成。点击重新启动。";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA提供极为安全的云端存储服务，您可享有50 GB 的免费储存空间。不同于其他云端空间供应商，您的资料仅由用户端设备进行加密和解密，而从不是经由我们加解密。";

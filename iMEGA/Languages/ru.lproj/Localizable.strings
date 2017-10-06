@@ -52,8 +52,10 @@
 "loggedOutFromAnotherLocation"="Вы вышли из этого устройства из другого места";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="SSL-ключ сервера не удаётся проверить. Возможно, вы находитесь под «атакой посредника» (англ. Man in the middle (MitM)).";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
-"takingLongerThanExpected"="Процесс длится дольше ожидаемого. Пожалуйста, подождите…";
+"takingLongerThanExpected"="Процесс занимает больше ожидаемого. Подождите…";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Пожалуйста, авторизируйтесь.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -84,8 +86,10 @@
 "accountNotConfirmed"="Пожалуйста, проверьте адрес эл. почты и перейдите по ссылке для подтверждения.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Ваша учётная запись была заблокирована. Пожалуйста, свяжитесь с support@mega.nz";
-/* Message shown when the user writes an invalid format in the email field  */
+/* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Введите правильный email";
+/* Add contacts and share dialog error message when user try to add wrong email address */
+"theEmailAddressFormatIsInvalid"="Похоже, что email некорректен";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="Введите правильный пароль";
 /* Hint text to suggest that the user has to write his email */
@@ -270,6 +274,10 @@
 "getLink"="Получить ссылку";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Получить ссылки";
+/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
+"updateLink"="Обновить ссылку";
+/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
+"updateLinks"="Обновить ссылки";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Создание ссылки...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -278,6 +286,38 @@
 "linkCopied"="Ссылка скопирована";
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="Ссылки скопированы";
+/* Text of the button after the links were copied to the clipboard */
+"copiedToTheClipboard"="Скопировано в буфер обмена";
+/* A title for the Copyright Warning dialog. */
+"copyrightWarning"="Предупреждение об авторском праве";
+/* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
+"copyrightWarningToAll"="Предупреждение о защите авторских прав";
+/* String already exists: 367, but we need to split paragraphs. */
+"copyrightMessagePart1"="MEGA уважает авторские права других лиц и требует, чтобы пользователи сервиса облачного сервиса MEGA соблюдали закон об авторском праве.";
+/* String already exists: 367, but we need to split paragraphs */
+"copyrightMessagePart2"="Вам строго запрещено использовать сервис облачный сервис MEGA для нарушения авторского права. Вы не можете загружать, скачивать, хранить, обмениваться, отображать, транслировать, распространять, пересылать по электронной почте, ссылаться на материалы, передавать или использовать любой другой способ публикации файлов, данных или контента, который нарушает авторское право или другие права собственности любого физического или юридического лица.";
+/* button caption text that the user clicks when he agrees */
+"agree"="Согласен";
+/* button caption text that the user clicks when he disagrees */
+"disagree"="Не согласен";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
+"linkWithoutKey"="Ссылка без ключа";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
+"linkWithKey"="Ссылка с ключом";
+/* An alert dialog for the Get Link feature */
+"proOnly"="(ТОЛЬКО PRO)";
+/* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
+"setExpiryDate"="Задать срок годности";
+/* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
+"setPasswordProtection"="Установить защиту паролем";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypt"="Шифровать";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypted"="Зашифровано";
+/* Title for a button to copy the link to the clipboard */
+"copyLink"="Скопировать ссылку";
+/* Title for a button that copies the key of the link to the clipboard */
+"copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Открыть в…";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -552,7 +592,7 @@
 "off"="Выкл";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
 "on"="Вкл";
-/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+/* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Опции";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Загрузить видео";
@@ -778,6 +818,58 @@
 "viewAndEditProfile"="Посмотреть и изменить профиль.";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Профиль";
+/* Title of the Achievements section */
+"achievementsTitle"="Достижения";
+/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
+"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+/* Indicating text for when "you invite your friends" */
+"inviteYourFriends"="Пригласите друзей";
+/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
+"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* Text shown to explain how and where you can invite friends */
+"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+/*  */
+"insertYourFriendsEmails"="Введите e-mail друга:";
+/*  */
+"howItWorks"="Как это работает";
+/*  */
+"howItWorksMain"="Вашему другу нужно зарегистрироваться в MEGA и [S]установить хотя бы одно приложение MEGA[/S] (для ПК или мобильных устройств)";
+/*  */
+"howItWorksSecondary"="Вы можете пригласить друга любым способом. Вы получите квоту, введя адрес электронной почты друга здесь до его регистрации с этим адресом.";
+/* A message which is shown once someone has invited a friend as part of the achievements program. */
+"howItWorksTertiary"="Вы не получите бонус за приглашение тех, кто раньше использовал MEGA, и вы не будете уведомлены об отказе.";
+/* Header of block with achievements bonuses. */
+"unlockedBonuses"="Полученные бонусы:";
+/* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
+"storageQuota"="Квота на свободное место";
+/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
+"transferQuota"="Квота на передачу";
+/* The user's achieved base quota */
+"accountBaseQuota"="Базовая квота";
+/* achievement type */
+"registrationBonus"="Бонус регистрации";
+/* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
+"registrationBonusExplanation"="Получено %1 места для хранения за регистрацию.";
+/* achievement type */
+"referralBonuses"="Бонусы за приглашения";
+/*  */
+"installMEGASync"="Установить MEGAsync";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installMEGASyncCompletedExplanation"="Получено %1 места для хранения и %2 трафика за установку MEGAsync.";
+/*  */
+"installOurMobileApp"="Установить мобильное приложение";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installOurMobileAppCompletedExplanation"="Получено %1 места для хранения и %2 трафика за установку мобильного приложения.";
+/*  */
+"xDaysLeft"="Осталось %1 дн.";
+/* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
+"bonusExpiresIn"="(Бонус действует [S]%1[/S] %2)";
+/* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
+"months"="месяцев";
+/*  */
+"days"="дн.";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"expired"="Истекло";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Выход";
 /* String shown when you are logging out of your account. */
@@ -822,6 +914,8 @@
 "upgradeAccount"="Улучшить аккаунт";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Учётную запись можно улучшить позже в разделе «Моя учётная запись»";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
+"cloudDriveIsAlmostFull"="[S]Облачный диск почти заполнен.[/S] [A]Улучшите его сейчас[/A] до PRO и получите [S]до 4 ТБ (4096 ГБ)[/S] места в облаке.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="свободного места";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -1024,12 +1118,14 @@
 "retry"="Повторить попытку";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Удалить сообщение";
-/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="Послать медиа";
+/*  */
+"fromCloudDrive"="Из облачного диска";
+/*  */
+"fromDevice"="Из устройства";
+/* referring to a contact in the contact list of the user */
+"contact"="Контакт";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Отправить контакт";
-/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
-"addFromMyCloudDrive"="Добавить из облачного диска";
 /* */
 "done"="Готово";
 /* Button label for sending file attachments through the chat to another user. */
@@ -1128,7 +1224,7 @@
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Неизвестная ошибка";
 /* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="Нужно перезапустить приложение после смены языка";
+"languageRestartAlert"="После смены языка нужно перезапустить MEGA";
 /* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
 "languageRestartNotification"="Язык изменён. Коснитесь для перезапуска.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
