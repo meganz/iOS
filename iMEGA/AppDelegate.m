@@ -1663,6 +1663,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [api getAccountDetails];
 }
 
+- (void)onEvent:(MEGASdk *)api event:(MEGAEvent *)event {
+    if (event.type == EventChangeToHttps) {
+        [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"useHttpsOnly"];
+    }
+}
+
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
