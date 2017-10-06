@@ -410,6 +410,25 @@
     [downloadTask resume];
 }
 
+- (void)uploadImage:(UIImage *)image toParentNode:(MEGANode *)parentNode isPNG:(BOOL)isPNG {
+    NSString *storagePath = [self shareExtensionStorage];
+    NSError *error = nil;
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss";
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    formatter.locale = locale;
+    NSString *imageName = [NSString stringWithFormat:@"%@.%@", [formatter stringFromDate:[NSDate date]], isPNG ? @"png" : @"jpg"];
+    NSString *tempPath = [storagePath stringByAppendingPathComponent:imageName];
+
+    if (isPNG ? [UIImagePNGRepresentation(image) writeToFile:tempPath atomically:YES] : [UIImageJPEGRepresentation(image, 1) writeToFile:tempPath atomically:YES]) {
+        [self smartUploadLocalPath:tempPath parent:parentNode];
+    } else {
+        MEGALogError(@"Write image failed:\n- At path: %@\n- With error: %@", tempPath, error);
+        [self oneUnsupportedMore];
+    }
+}
+
 - (void)uploadData:(id)data toParentNode:(MEGANode *)parentNode {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *storagePath = [self shareExtensionStorage];
@@ -427,25 +446,8 @@
             [self oneUnsupportedMore];
         }
     } else {
-        if ([data class] == UIImage.class) {
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            formatter.dateFormat = @"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss";
-            NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-            formatter.locale = locale;
-            NSString *imageName = [NSString stringWithFormat:@"%@.jpg", [formatter stringFromDate:[NSDate date]]];
-            NSString *tempPath = [storagePath stringByAppendingPathComponent:imageName];
-            UIImage *image = (UIImage *)data;
-            
-            if([UIImageJPEGRepresentation(image, 1) writeToFile:tempPath atomically:YES]) {
-                [self smartUploadLocalPath:tempPath parent:parentNode];
-            } else {
-                MEGALogError(@"Write image failed:\n- At path: %@\n- With error: %@", tempPath, error);
-                [self oneUnsupportedMore];
-            }
-        } else {
-            MEGALogError(@"Share extension error, %@ object received instead of NSURL or UIImage", [data class]);
-            [self oneUnsupportedMore];
-        }
+        MEGALogError(@"Share extension error, %@ object received instead of NSURL or UIImage", [data class]);
+        [self oneUnsupportedMore];
     }
 }
 
@@ -547,15 +549,24 @@
         self.unsupportedAssets = 0;
         for (NSItemProvider *attachment in content.attachments) {
             if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeImage]) {
+                BOOL isPNG = [attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypePNG];
                 [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeImage options:nil completionHandler:^(id data, NSError *error){
-                    [self uploadData:(NSURL *)data toParentNode:parentNode];
+                    if ([data class] == UIImage.class) {
+                        UIImage *image = (UIImage *)data;
+                        [self uploadImage:image toParentNode:parentNode isPNG:isPNG];
+                    } else if ([[data class] isSubclassOfClass:NSData.class]) {
+                        UIImage *image = [UIImage imageWithData:data];
+                        [self uploadImage:image toParentNode:parentNode isPNG:isPNG];
+                    } else {
+                        [self uploadData:(NSURL *)data toParentNode:parentNode];
+                    }
                 }];
             } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeMovie]) {
                 [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeMovie options:nil completionHandler:^(id data, NSError *error){
                     [self uploadData:(NSURL *)data toParentNode:parentNode];
                 }];
             } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeFileURL]) {
-                // This type includes kUTTypeText, so kUTTypeText it's omitted
+                // This type includes kUTTypeText, so kUTTypeText is omitted
                 [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeFileURL options:nil completionHandler:^(id data, NSError *error){
                     [self uploadData:(NSURL *)data toParentNode:parentNode];
                 }];

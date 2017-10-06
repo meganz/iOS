@@ -47,6 +47,12 @@ static NSString *deviceName;
                               @"iPhone9,2":@"iPhone 7 Plus",      //iPhone 7 Plus
                               @"iPhone9,3":@"iPhone 7",           //iPhone 7
                               @"iPhone9,4":@"iPhone 7 Plus",      //iPhone 7 Plus
+                              @"iPhone10,1":@"iPhone 8",          //iPhone 8
+                              @"iPhone10,2":@"iPhone 8 Plus",     //iPhone 8 Plus
+                              @"iPhone10,3":@"iPhone X",          //iPhone X
+                              @"iPhone10,4":@"iPhone 8",          //iPhone 8
+                              @"iPhone10,5":@"iPhone 8 Plus",     //iPhone 8 Plus
+                              @"iPhone10,6":@"iPhone X",          //iPhone X
                               @"iPad1,1":@"iPad",                 //iPad (Original/1st Gen) (Wi-Fi/3G/GPS)
                               @"iPad2,1":@"iPad",                 //iPad 2 (Wi-Fi Only)
                               @"iPad2,2":@"iPad",                 //iPad 2 (Wi-Fi/GSM/GPS)
