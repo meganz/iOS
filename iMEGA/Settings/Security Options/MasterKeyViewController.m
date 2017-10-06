@@ -5,7 +5,7 @@
 #import "MEGASdkManager.h"
 #import "UIViewController+MNZCategory.h"
 
-#import "WhyDoINeedARecoveryKeyViewController.h"
+#import "HelpModalViewController.h"
 
 @interface MasterKeyViewController ()
 
@@ -91,9 +91,14 @@
 }
 
 - (IBAction)whyDoINeedARecoveryKeyTouchUpInside:(UIButton *)sender {
-    WhyDoINeedARecoveryKeyViewController *whyDoINeedARecoveryKeyVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"WhyDoINeedARecoveryKeyID"];
-    whyDoINeedARecoveryKeyVC.modalPresentationStyle = UIModalPresentationCustom;
-    [self presentViewController:whyDoINeedARecoveryKeyVC animated:YES completion:nil];
+    HelpModalViewController *helpModalVC = [[HelpModalViewController alloc] init];
+    helpModalVC.modalPresentationStyle = UIModalPresentationCustom;
+    helpModalVC.viewTitle = AMLocalizedString(@"whyDoINeedARecoveryKey", @"Question button to present a view where it's explained what is the Recovery Key");
+    helpModalVC.firstParagraph = AMLocalizedString(@"masterKey_firstParagraph", @"Detailed explanation of how the master encryption key (now renamed 'Recovery Key') works, and why it is important to remember your password.");
+    helpModalVC.secondParagraph = AMLocalizedString(@"exportMasterKeyFooter", @"Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key");
+    helpModalVC.thirdParagraph = AMLocalizedString(@"masterKey_thirdParagraph", nil);
+    
+    [self presentViewController:helpModalVC animated:YES completion:nil];
 }
 
 @end

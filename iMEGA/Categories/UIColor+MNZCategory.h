@@ -22,6 +22,7 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 + (UIColor *)mnz_gray777777;
 + (UIColor *)mnz_gray8A8A8A;
 + (UIColor *)mnz_gray999999;
++ (UIColor *)mnz_grayEEEEEE;
 + (UIColor *)mnz_grayE3E3E3;
 + (UIColor *)mnz_grayF5F5F5;
 + (UIColor *)mnz_grayCCCCCC;
@@ -41,6 +42,7 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 + (UIColor *)mnz_redE13339;
 + (UIColor *)mnz_redDC191F;
++ (UIColor *)mnz_redF0373A;
 + (UIColor *)mnz_redFF4C52;
 + (UIColor *)mnz_redFF4D52;
 + (UIColor *)mnz_redD90007;

@@ -86,8 +86,10 @@
 "accountNotConfirmed"="Please check your e-mail and follow the link to confirm your account.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Your account has been blocked. Please contact support@mega.nz";
-/* Message shown when the user writes an invalid format in the email field  */
+/* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Enter a valid email";
+/* Add contacts and share dialog error message when user try to add wrong email address */
+"theEmailAddressFormatIsInvalid"="The email address format is invalid";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="Enter a valid password";
 /* Hint text to suggest that the user has to write his email */
@@ -816,6 +818,58 @@
 "viewAndEditProfile"="View and edit profile";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Profile";
+/* Title of the Achievements section */
+"achievementsTitle"="Achievements";
+/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
+"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+/* Indicating text for when "you invite your friends" */
+"inviteYourFriends"="Invite your friends";
+/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
+"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* Text shown to explain how and where you can invite friends */
+"inviteYourFriendsExplanation"="Select contacts from your phone’s contact list or enter multiple email adresses.";
+/*  */
+"insertYourFriendsEmails"="Insert your friend's email(s):";
+/*  */
+"howItWorks"="How it works";
+/*  */
+"howItWorksMain"="Your friend needs to register for a free account on MEGA and [S]install at least one MEGA client application[/S] (either the sync client or one of our mobile apps)";
+/*  */
+"howItWorksSecondary"="You can notify your friend through any method. You will earn the quota if you have entered your friend's email here prior to them registering with that address.";
+/* A message which is shown once someone has invited a friend as part of the achievements program. */
+"howItWorksTertiary"="You will not receive credit for inviting someone who has used MEGA previously and you will not be notified about such a rejection. ";
+/* Header of block with achievements bonuses. */
+"unlockedBonuses"="Unlocked bonuses:";
+/* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
+"storageQuota"="Storage Quota";
+/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
+"transferQuota"="Transfer Quota";
+/* The user's achieved base quota */
+"accountBaseQuota"="Account base quota";
+/* achievement type */
+"registrationBonus"="Registration Bonus";
+/* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
+"registrationBonusExplanation"="You have received %1 storage space as your free registration bonus.";
+/* achievement type */
+"referralBonuses"="Referral bonuses";
+/*  */
+"installMEGASync"="Install MEGAsync";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installMEGASyncCompletedExplanation"="You have received %1 storage space and %2 transfer quota for installing MEGAsync.";
+/*  */
+"installOurMobileApp"="Install our mobile app";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installOurMobileAppCompletedExplanation"="You have received %1 storage space and %2 transfer quota for installing our mobile app.";
+/*  */
+"xDaysLeft"="%1 days left";
+/* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
+"bonusExpiresIn"="(Bonus expires in [S]%1[/S] %2)";
+/* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
+"months"="months";
+/*  */
+"days"="days";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"expired"="Expired";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Logout";
 /* String shown when you are logging out of your account. */
