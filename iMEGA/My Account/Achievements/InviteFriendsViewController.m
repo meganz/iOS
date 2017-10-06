@@ -92,7 +92,7 @@
     self.tokenField.tokenHighlightedTextColor = [UIColor mnz_black333333];
     self.tokenField.tokenHighlightedBackgroundColor = [UIColor mnz_grayEEEEEE];
     
-    self.tokenField.delimiters = @[@","];
+    self.tokenField.delimiters = @[@",", @" "];
     self.tokenField.placeholderText = AMLocalizedString(@"insertYourFriendsEmails", @"");
     [self.tokenField setColorScheme:[UIColor mnz_redD90007]];
 }
