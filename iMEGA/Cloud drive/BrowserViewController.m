@@ -346,7 +346,12 @@
     
     self.toolBarNewFolderBarButtonItem.enabled = boolValue;
     
-    self.toolBarMoveBarButtonItem.enabled = boolValue;
+    MEGANode *firstNode = self.selectedNodesArray.firstObject;
+    if (self.browserAction == BrowserActionMove && self.parentNode.handle == firstNode.parentHandle) {
+        self.toolBarMoveBarButtonItem.enabled = NO;
+    } else {
+        self.toolBarMoveBarButtonItem.enabled = boolValue;
+    }
     self.toolBarCopyBarButtonItem.enabled = boolValue;
     self.toolBarSaveInMegaBarButtonItem.enabled = boolValue;
     self.toolbarSendBarButtonItem.enabled = boolValue;
