@@ -255,6 +255,7 @@
     [SVProgressHUD setBackgroundColor:[UIColor mnz_grayF7F7F7]];
     [SVProgressHUD setForegroundColor:[UIColor mnz_gray666666]];
     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
+    [SVProgressHUD setHapticsEnabled:YES];
     
     [SVProgressHUD setSuccessImage:[UIImage imageNamed:@"hudSuccess"]];
     [SVProgressHUD setErrorImage:[UIImage imageNamed:@"hudError"]];
