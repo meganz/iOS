@@ -8,7 +8,6 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
-#import "UIViewController+MNZCategory.h"
 
 #import "NodeTableViewCell.h"
 
@@ -55,9 +54,6 @@
     self.tableView.emptyDataSetDelegate = self;
     
     [self setupBrowser];
-    if (self.parentNode && self.parentNode.handle != [[MEGASdkManager sharedMEGASdk] rootNode].handle) {
-        [self mnz_customBackBarButtonItem];
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -268,7 +268,6 @@
 		5BD4A0221F838606000E24E6 /* ScrollViewFrameAccessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4A0201F838606000E24E6 /* ScrollViewFrameAccessor.m */; };
 		5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */; };
 		5BDE180C1F500EE000CD9F82 /* MyAccountBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE180B1F500DEE00CD9F82 /* MyAccountBaseViewController.m */; };
-		9400F1FA1F4B30D10051278C /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9400F1F91F4B30D10051278C /* UIViewController+MNZCategory.m */; };
 		9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226691A692ECC00EC7BB6 /* Cloud.storyboard */; };
 		941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
 		941135511F00FFC700D33428 /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226881A692ECC00EC7BB6 /* Helper.m */; };
@@ -424,8 +423,6 @@
 		94624CFF1F50518900D52504 /* MEGABaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AA4F7C1ED433CA00E7BA23 /* MEGABaseRequestDelegate.m */; };
 		946B2D161F46E235009ED32C /* GetLinkTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 946B2D151F46E235009ED32C /* GetLinkTableViewController.m */; };
 		946B2D191F46E5B9009ED32C /* CopyrightWarningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 946B2D181F46E5B9009ED32C /* CopyrightWarningViewController.m */; };
-		9486EFBE1F5FF62D00C00EC7 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9400F1F91F4B30D10051278C /* UIViewController+MNZCategory.m */; };
-		9486EFC01F5FF62E00C00EC7 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9400F1F91F4B30D10051278C /* UIViewController+MNZCategory.m */; };
 		94892C901EFBEA1F00AEAC25 /* SAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250101D79E9D400499A6C /* SAMKeychain.m */; };
 		94892C911EFBEA2300AEAC25 /* SAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250121D79E9D400499A6C /* SAMKeychainQuery.m */; };
 		94892C921EFBEA3D00AEAC25 /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
@@ -1126,8 +1123,6 @@
 		5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeNameViewController.m; sourceTree = "<group>"; };
 		5BDE180A1F500DEE00CD9F82 /* MyAccountBaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyAccountBaseViewController.h; sourceTree = "<group>"; };
 		5BDE180B1F500DEE00CD9F82 /* MyAccountBaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyAccountBaseViewController.m; sourceTree = "<group>"; };
-		9400F1F81F4B30D10051278C /* UIViewController+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MNZCategory.h"; sourceTree = "<group>"; };
-		9400F1F91F4B30D10051278C /* UIViewController+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MNZCategory.m"; sourceTree = "<group>"; };
 		9419B6BE1F20D1D700FEBE31 /* MEGAIndexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAIndexer.h; path = Spotlight/MEGAIndexer.h; sourceTree = "<group>"; };
 		9419B6BF1F20D1D700FEBE31 /* MEGAIndexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAIndexer.m; path = Spotlight/MEGAIndexer.m; sourceTree = "<group>"; };
 		9419B6C51F20DC5700FEBE31 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
@@ -2317,8 +2312,6 @@
 				A81A852A1F0F6F5100702353 /* UIScreen+MNZCategory.m */,
 				942F4FD61F500A8F001FC4AC /* MEGASdk+MNZCategory.h */,
 				942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */,
-				9400F1F81F4B30D10051278C /* UIViewController+MNZCategory.h */,
-				9400F1F91F4B30D10051278C /* UIViewController+MNZCategory.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -3332,7 +3325,6 @@
 				4147C2D41B4EE9BA00A37044 /* MEGAStore.m in Sources */,
 				5B0C55AE1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m in Sources */,
 				E889C9E21B55657E00ECEFDF /* MyAccountViewController.m in Sources */,
-				9400F1FA1F4B30D10051278C /* UIViewController+MNZCategory.m in Sources */,
 				5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */,
 				41ADAA1F1ADE8B8800641BB4 /* SVWebViewControllerActivity.m in Sources */,
 				41ADAA161ADE8B8800641BB4 /* SVWebViewController.m in Sources */,
@@ -3568,7 +3560,6 @@
 				9432293E1EDD8903007DB542 /* MWTapDetectingImageView.m in Sources */,
 				945605401EDD65400094EF0F /* BrowserViewController.m in Sources */,
 				9456053E1EDD54F10094EF0F /* SAMKeychainQuery.m in Sources */,
-				9486EFBE1F5FF62D00C00EC7 /* UIViewController+MNZCategory.m in Sources */,
 				9456053A1EDD52C00094EF0F /* SVRadialGradientLayer.m in Sources */,
 				943229231EDD845E007DB542 /* MEGAStore.m in Sources */,
 				945605421EDD65960094EF0F /* LocalizationSystem.m in Sources */,
@@ -3617,7 +3608,6 @@
 				941135621F01015700D33428 /* LocalizationSystem.m in Sources */,
 				941135591F01006A00D33428 /* LTHKeychainUtils.m in Sources */,
 				9411355A1F01006A00D33428 /* LTHPasscodeViewController.m in Sources */,
-				9486EFC01F5FF62E00C00EC7 /* UIViewController+MNZCategory.m in Sources */,
 				94892C941EFBF02A00AEAC25 /* SVProgressAnimatedView.m in Sources */,
 				9411355D1F0100CA00D33428 /* CameraUploadsTableViewController.m in Sources */,
 				941135641F01071600D33428 /* NSString+MNZCategory.m in Sources */,

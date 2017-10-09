@@ -7,7 +7,6 @@
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
-#import "UIViewController+MNZCategory.h"
 
 #import "SelectableTableViewCell.h"
 
@@ -58,8 +57,6 @@
     self.autoAwayLabel.text = AMLocalizedString(@"autoAway", nil);
     
     self.statusPersistenceLabel.text = AMLocalizedString(@"statusPersistence", nil);
-    
-    [self mnz_customBackBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -1,8 +1,6 @@
 
 #import "HelpModalViewController.h"
 
-#import "UIViewController+MNZCategory.h"
-
 @interface HelpModalViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -23,8 +21,6 @@
     self.firstParagraphLabel.text = self.firstParagraph;
     self.secondParagraphLabel.text = self.secondParagraph;
     self.thirdParagraphLabel.text = self.thirdParagraph;
-        
-    [self mnz_customBackBarButtonItem];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {

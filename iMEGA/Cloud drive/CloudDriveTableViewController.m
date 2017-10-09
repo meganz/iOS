@@ -21,7 +21,6 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAStore.h"
-#import "UIViewController+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "DetailsNodeInfoViewController.h"
@@ -140,14 +139,6 @@
     }
     
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
-    
-    // Custom navigation bar back button item:
-    self.backBarButtonItem = [self mnz_prepareCustomBackBarButtonItem];
-    if (self.parentNode.handle != [[MEGASdkManager sharedMEGASdk] rootNode].handle) {
-        self.navigationItem.leftBarButtonItems = @[self.backBarButtonItem];
-    } else {
-        self.navigationItem.leftBarButtonItems = @[];
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {

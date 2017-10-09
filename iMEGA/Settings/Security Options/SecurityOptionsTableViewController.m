@@ -5,7 +5,6 @@
 
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
-#import "UIViewController+MNZCategory.h"
 
 #import "ChangePasswordViewController.h"
 
@@ -43,8 +42,6 @@
     self.closeOtherSessionsLabel.text = AMLocalizedString(@"closeOtherSessions", @"Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session.");
     
     [self isMasterKeyExported];
-        
-    [self mnz_customBackBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

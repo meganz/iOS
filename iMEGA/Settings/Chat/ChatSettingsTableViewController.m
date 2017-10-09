@@ -8,7 +8,6 @@
 #import "MEGALogger.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
-#import "UIViewController+MNZCategory.h"
 
 #import "ChatStatusTableViewController.h"
 
@@ -54,8 +53,6 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         [self.useMobileDataSwitch setOn:NO animated:YES];
     }
-
-    [self mnz_customBackBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

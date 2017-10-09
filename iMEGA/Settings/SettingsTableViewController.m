@@ -19,7 +19,6 @@
 #import "LanguageTableViewController.h"
 #import "PasscodeTableViewController.h"
 #import "SecurityOptionsTableViewController.h"
-#import "UIViewController+MNZCategory.h"
 
 @interface SettingsTableViewController () <MFMailComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -93,8 +92,6 @@
                             @"vi":@"Tiếng Việt",
                             @"zh-Hans":@"简体中文",
                             @"zh-Hant":@"中文繁體"};
-    
-    [self mnz_customBackBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

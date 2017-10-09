@@ -3,7 +3,6 @@
 
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
-#import "UIViewController+MNZCategory.h"
 
 #import "HelpModalViewController.h"
 
@@ -29,8 +28,6 @@
     [self.saveMasterKey setTitle:AMLocalizedString(@"save", @"Button title to 'Save' the selected option") forState:UIControlStateNormal];
     
     self.whyDoINeedARecoveryKeyLabel.text = AMLocalizedString(@"whyDoINeedARecoveryKey", @"Question button to present a view where it's explained what is the Recovery Key");
-        
-    [self mnz_customBackBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

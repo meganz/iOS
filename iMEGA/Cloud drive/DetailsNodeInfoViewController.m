@@ -19,7 +19,6 @@
 #import "OpenInActivity.h"
 #import "RemoveLinkActivity.h"
 #import "ShareFolderActivity.h"
-#import "UIViewController+MNZCategory.h"
 
 @interface DetailsNodeInfoViewController () <UIAlertViewDelegate, UIDocumentInteractionControllerDelegate,UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MEGADelegate> {
     UIAlertView *cancelDownloadAlertView;
@@ -92,8 +91,6 @@
     if ((self.displayMode == DisplayModeSharedItem) && (accessType != MEGAShareTypeAccessOwner)) {
         [self setNavigationBarTitleLabel];
     }
-    
-    [self mnz_customBackBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
