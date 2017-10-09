@@ -152,13 +152,18 @@
 #pragma mark - Language
 
 - (void)languageCompatibility {
-    
-    NSString *currentLanguageID = [[LocalizationSystem sharedLocalSystem] getLanguage];
-    
-    if ([Helper isLanguageSupported:currentLanguageID]) {
-        [[LocalizationSystem sharedLocalSystem] setLanguage:currentLanguageID];
+    NSString *languageCode = [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] objectForKey:@"languageCode"];
+    if (languageCode) {
+        [[LocalizationSystem sharedLocalSystem] setLanguage:languageCode];
+        [[MEGASdkManager sharedMEGASdk] setLanguageCode:languageCode];
     } else {
-        [self setLanguage:currentLanguageID];
+        NSString *currentLanguageID = [[LocalizationSystem sharedLocalSystem] getLanguage];
+        
+        if ([Helper isLanguageSupported:currentLanguageID]) {
+            [[LocalizationSystem sharedLocalSystem] setLanguage:currentLanguageID];
+        } else {
+            [self setLanguage:currentLanguageID];
+        }
     }
 }
 
