@@ -105,6 +105,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
 #ifdef DEBUG
     [MEGASdk setLogLevel:MEGALogLevelMax];
     [MEGAChatSdk setCatchException:false];
@@ -1354,6 +1355,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
         }
     }
+}
+
+void uncaughtExceptionHandler(NSException *exception) {
+    MEGALogError(@"Exception name: %@\nreason: %@\nuser info: %@\n", exception.name, exception.reason, exception.userInfo);
+    MEGALogError(@"Stack trace: %@", [exception callStackSymbols]);
 }
 
 #pragma mark - Battery changed
