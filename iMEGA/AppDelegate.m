@@ -483,11 +483,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
     
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
-    if([[UIDevice currentDevice] systemVersionLessThanVersion:@"11.0"]) {
-        [[UIBarButtonItem appearance] setTintColor:[UIColor mnz_redD90007]];
-        UIImage *backButtonImage = [[UIImage imageNamed:@"backArrow"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 0)];
-        [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButtonImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    }
+    [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"backArrow"]];
+    [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backArrow"]];
+    [UIBarButtonItem appearance].tintColor = [UIColor mnz_redD90007];
     
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:8.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]} forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:8.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateSelected];

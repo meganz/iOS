@@ -21,7 +21,6 @@
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
-#import "UIViewController+MNZCategory.h"
 
 #import "ContactDetailsViewController.h"
 #import "ContactTableViewCell.h"
@@ -128,8 +127,7 @@
     switch (self.contactsMode) {
         case ContactsModeDefault: {
             NSArray *buttonsItems = @[self.addBarButtonItem, self.contactRequestsBarButtonItem];
-            self.navigationItem.rightBarButtonItems = buttonsItems;
-            [self mnz_customBackBarButtonItem];
+            self.navigationItem.rightBarButtonItems = buttonsItems;            
             break;
         }
             
@@ -168,7 +166,6 @@
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
             self.deleteBarButtonItem.title = AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
             self.toolbar.items = @[flexibleItem, self.deleteBarButtonItem];
-            [self mnz_customBackBarButtonItem];
             break;
         }
             
