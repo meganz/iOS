@@ -8,7 +8,6 @@
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
-#import "UIViewController+MNZCategory.h"
 
 #import "ChangePasswordViewController.h"
 
@@ -55,8 +54,6 @@
     
     _offlineSizeString = @"...";
     _cacheSizeString = @"...";
-    
-    [self mnz_customBackBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

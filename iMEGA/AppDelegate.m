@@ -259,8 +259,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 MEGALogError(@"Init Karere with session failed");
                 NSString *message = [NSString stringWithFormat:@"Error (%ld) initializing the chat", (long)chatInit];
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                }]];
+                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                 [[MEGASdkManager sharedMEGAChatSdk] logout];
                 [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
             }
@@ -374,8 +373,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             window.frame = [[UIScreen mainScreen] bounds];
         }
     }
-    
-    [[MEGASdkManager sharedMEGAChatSdk] retryPendingConnections];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -486,11 +483,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
     
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
-    if([[UIDevice currentDevice] systemVersionLessThanVersion:@"11.0"]) {
-        [[UIBarButtonItem appearance] setTintColor:[UIColor mnz_redD90007]];
-        UIImage *backButtonImage = [[UIImage imageNamed:@"backArrow"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 0)];
-        [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButtonImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    }
+    [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"backArrow"]];
+    [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backArrow"]];
+    [UIBarButtonItem appearance].tintColor = [UIColor mnz_redD90007];
     
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:8.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]} forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:8.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateSelected];
@@ -765,8 +760,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [[MEGASdkManager sharedMEGASdk] decryptPasswordProtectedLink:encryptedLinkURLString password:alertController.textFields.firstObject.text delegate:delegate];
     }]];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
     [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
     
     self.link = nil;
@@ -943,8 +937,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if (hasHash) {
         self.nodeToPresentBase64Handle = [afterSlashesString substringFromIndex:1];
         [self presentNode];
+        
         return YES;
     }
+    
     return NO;
 }
 
@@ -1108,10 +1104,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [self.window setRootViewController:_mainTBC];
             [[UIApplication sharedApplication] setStatusBarHidden:NO];
             
-            if (self.nodeToPresentBase64Handle) {
-                [self presentNode];
-            }
-            
             if ([LTHPasscodeViewController doesPasscodeExist]) {
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
                     [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
@@ -1124,6 +1116,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
         
         if (![LTHPasscodeViewController doesPasscodeExist]) {
+            if (self.nodeToPresentBase64Handle) {
+                [self presentNode];
+            }
+            
             if (isAccountFirstLogin) {
                 [self showCameraUploadsPopUp];
             }
@@ -1165,7 +1161,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings *settings) {
         MEGALogInfo(@"Notifications settings %@", settings);
         if (settings.authorizationStatus == UNAuthorizationStatusAuthorized) {
-            [[UIApplication sharedApplication] registerForRemoteNotifications];
+            dispatch_async(dispatch_get_main_queue(), ^(void) {
+                [[UIApplication sharedApplication] registerForRemoteNotifications];
+            });
         }
     }];
 }
@@ -1186,9 +1184,49 @@ typedef NS_ENUM(NSUInteger, URLType) {
             tabPosition = [self.mainTBC tabPositionForTag:0];
         }
         navigationController = [self.mainTBC.childViewControllers objectAtIndex:tabPosition];
+        
         [self presentNode:node inNavigationController:navigationController];
     } else {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Access denied", @"Label to show that an error related with an denied access occurs during a SDK operation.")];
+        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            UIAlertController *theContentIsNotAvailableAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"theContentIsNotAvailableForThisAccount", @"") message:nil preferredStyle:UIAlertControllerStyleAlert];
+            [theContentIsNotAvailableAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+            
+            [theContentIsNotAvailableAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                NSError *error;
+                NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] error:&error];
+                if (error) {
+                    MEGALogError(@"Contents of directory at path failed with error: %@", error);
+                }
+                
+                BOOL isInboxDirectory = NO;
+                for (NSString *directoryElement in directoryContent) {
+                    if ([directoryElement isEqualToString:@"Inbox"]) {
+                        NSString *inboxPath = [[Helper pathForOffline] stringByAppendingPathComponent:@"Inbox"];
+                        [[NSFileManager defaultManager] fileExistsAtPath:inboxPath isDirectory:&isInboxDirectory];
+                        break;
+                    }
+                }
+                
+                if (directoryContent.count > 0) {
+                    if (directoryContent.count == 1 && isInboxDirectory) {
+                        [[MEGASdkManager sharedMEGASdk] logout];
+                        return;
+                    }
+                    
+                    UIAlertController *warningAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"warning", nil) message:AMLocalizedString(@"allFilesSavedForOfflineWillBeDeletedFromYourDevice", @"Alert message shown when the user perform logout and has files in the Offline directory") preferredStyle:UIAlertControllerStyleAlert];
+                    [warningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
+                    [warningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                        [[MEGASdkManager sharedMEGASdk] logout];
+                    }]];
+                    
+                    [self.window.rootViewController presentViewController:warningAlertController animated:YES completion:nil];
+                } else {
+                    [[MEGASdkManager sharedMEGASdk] logout];
+                }
+            }]];
+            
+            [self.window.rootViewController presentViewController:theContentIsNotAvailableAlertController animated:YES completion:nil];
+        }
     }
     self.nodeToPresentBase64Handle = nil;
 }
@@ -1305,7 +1343,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
     NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryString error:&error];
     for (NSString *filename in applicationSupportContent) {
         if ([filename containsString:@"megaclient"]) {
-            if (![fileManager copyItemAtPath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename] toPath:[groupSupportPath stringByAppendingPathComponent:filename] error:&error]) {
+            NSString *destinationPath = [groupSupportPath stringByAppendingPathComponent:filename];
+            if ([fileManager fileExistsAtPath:destinationPath]) {
+                if (![fileManager removeItemAtPath:destinationPath error:&error]) {
+                    MEGALogError(@"Remove item at path failed with error: %@", error);
+                }
+            }
+            if (![fileManager copyItemAtPath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename] toPath:destinationPath error:&error]) {
                 MEGALogError(@"Copy item at path failed with error: %@", error);
             }
         }
@@ -1614,6 +1658,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)onAccountUpdate:(MEGASdk *)api {
     [api getAccountDetails];
+}
+
+- (void)onEvent:(MEGASdk *)api event:(MEGAEvent *)event {
+    if (event.type == EventChangeToHttps) {
+        [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"useHttpsOnly"];
+    }
 }
 
 #pragma mark - MEGARequestDelegate
@@ -2057,8 +2107,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     MEGALogInfo(@"onChatInitStateUpdate new state: %ld", newState);
     if (newState == MEGAChatInitError) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:@"Chat disabled (Init error). Enable chat in More -> Settings -> Chat" preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         [[MEGASdkManager sharedMEGAChatSdk] logout];
         [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
     }

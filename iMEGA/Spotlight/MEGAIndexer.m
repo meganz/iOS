@@ -54,7 +54,7 @@
         _pListPath = [[[[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil] URLByAppendingPathComponent:@"spotlightTree.plist"] path];
         if ([_sharedUserDefaults boolForKey:@"treeCompleted"]) {
             _base64HandlesToIndex = [NSMutableArray arrayWithContentsOfFile:self.pListPath];
-            MEGALogDebug(@"%lu nodes pending after loading from pList", (unsigned long)_base64HandlesToIndex.count);
+            MEGALogDebug(@"[Spotlight] %lu nodes pending after loading from pList", (unsigned long)_base64HandlesToIndex.count);
             _base64HandlesIndexed = [[NSMutableArray alloc] init];
         }
     }
@@ -85,28 +85,30 @@
     NSMutableArray *toIndex = [[NSMutableArray alloc] initWithArray:self.base64HandlesToIndex copyItems:YES];
     [toIndex removeObjectsInArray:self.base64HandlesIndexed];
     [toIndex writeToFile:self.pListPath atomically:YES];
-    MEGALogDebug(@"%lu nodes pending", (unsigned long)toIndex.count);
+    MEGALogDebug(@"[Spotlight] %lu nodes pending after saving to pList", (unsigned long)toIndex.count);
 }
 
 - (void)indexTree {
-    MEGALogInfo(@"Spotlight start");
+    MEGALogInfo(@"[Spotlight] start indexing");
     for (NSString *base64Handle in self.base64HandlesToIndex) {
-        uint64_t handle = [MEGASdk handleForBase64Handle:base64Handle];
-        MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:handle];
-        if (node) {
-            if ([self index:node]) {
-                [self.base64HandlesIndexed addObject:base64Handle];
+        @autoreleasepool {
+            uint64_t handle = [MEGASdk handleForBase64Handle:base64Handle];
+            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:handle];
+            if (node) {
+                if ([self index:node]) {
+                    [self.base64HandlesIndexed addObject:base64Handle];
+                }
+            } else {
+                if ([self removeFromIndex:base64Handle]) {
+                    [self.base64HandlesIndexed addObject:base64Handle];
+                }
             }
-        } else {
-            if ([self removeFromIndex:base64Handle]) {
-                [self.base64HandlesIndexed addObject:base64Handle];
+            if (self.shouldStop) {
+                break;
             }
-        }
-        if (self.shouldStop) {
-            break;
-        }
-        if (self.base64HandlesIndexed.count%MNZ_PERSIST_EACH == 0) {
-            [self saveTree];
+            if (self.base64HandlesIndexed.count%MNZ_PERSIST_EACH == 0) {
+                [self saveTree];
+            }
         }
     }
     [self saveTree];
@@ -129,10 +131,9 @@
     if ([[MEGASdkManager sharedMEGASdk] nodePathForNode:node]) {
         [self.searchableIndex indexSearchableItems:@[[self spotlightSearchableItemForNode:node downloadThumbnail:NO]] completionHandler:^(NSError *error){
             if (error) {
-                MEGALogError(@"Spotlight error %@", error);
+                MEGALogError(@"[Spotlight] indexing error %@", error);
             } else {
                 success = YES;
-                MEGALogDebug(@"Spotlight indexed node");
             }
             dispatch_semaphore_signal(sem);
         }];
@@ -150,10 +151,9 @@
 
     [self.searchableIndex deleteSearchableItemsWithIdentifiers:@[base64Handle] completionHandler:^(NSError * _Nullable error) {
         if (error) {
-            MEGALogError(@"Spotlight error %@", error);
+            MEGALogError(@"[Spotlight] indexing error %@", error);
         } else {
             success = YES;
-            MEGALogDebug(@"Spotlight indexed node");
         }
         dispatch_semaphore_signal(sem);
     }];

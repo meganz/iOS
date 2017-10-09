@@ -21,7 +21,6 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAStore.h"
-#import "UIViewController+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "DetailsNodeInfoViewController.h"
@@ -102,7 +101,7 @@
     self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
     
     [self setNavigationBarButtonItems];
-    [self.toolbar setFrame:CGRectMake(0, 49, CGRectGetWidth(self.view.frame), 49)];
+    [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];
     
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
@@ -140,14 +139,6 @@
     }
     
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
-    
-    // Custom navigation bar back button item:
-    self.backBarButtonItem = [self mnz_prepareCustomBackBarButtonItem];
-    if (self.parentNode.handle != [[MEGASdkManager sharedMEGASdk] rootNode].handle) {
-        self.navigationItem.leftBarButtonItems = @[self.backBarButtonItem];
-    } else {
-        self.navigationItem.leftBarButtonItems = @[];
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -196,9 +187,7 @@
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.tableView reloadEmptyDataSet];
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        
-    }];
+    } completion:nil];
 }
 
 #pragma mark - UITableViewDataSource
@@ -892,9 +881,7 @@
 
 - (void)presentUploadAlertController {
     UIAlertController *uploadAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [uploadAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }]];
+    [uploadAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     UIAlertAction *fromPhotosAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"choosePhotoVideo", @"Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
@@ -913,9 +900,7 @@
                     dispatch_async(dispatch_get_main_queue(), ^{
                         UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"cameraPermissions", @"Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it") preferredStyle:UIAlertControllerStyleAlert];
                         
-                        [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                            [self dismissViewControllerAnimated:YES completion:nil];
-                        }]];
+                        [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
                         
                         [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
@@ -990,15 +975,10 @@
         MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
         if (accountDetails && ((accountDetails.storageUsed.doubleValue / accountDetails.storageMax.doubleValue) > 0.95)) { // +95% used storage
             NSString *alertMessage = AMLocalizedString(@"cloudDriveIsAlmostFull", @"Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are.");
-            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[S]" withString:@""];
-            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[/S]" withString:@""];
-            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[A]" withString:@""];
-            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[/A]" withString:@""];
+            alertMessage = [alertMessage mnz_removeWebclientFormatters];
             
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level") message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"skipButton", @"Button title that skips the current action") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                [alertController dismissViewControllerAnimated:YES completion:nil];
-            }]];
+            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"skipButton", @"Button title that skips the current action") style:UIAlertActionStyleCancel handler:nil]];
             
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [self showUpgradeTVC];
@@ -1008,7 +988,7 @@
             
             alreadyPresented = YES;
         } else {
-            if (arc4random_uniform(20) == 0) { // 5 % of the times
+            if (accountDetails && (arc4random_uniform(20) == 0)) { // 5 % of the times
                 [self showUpgradeTVC];
                 alreadyPresented = YES;
             }
@@ -1059,9 +1039,7 @@
 
 - (IBAction)moreAction:(UIBarButtonItem *)sender {
     UIAlertController *moreAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [moreAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }]];
+    [moreAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     UIAlertAction *uploadAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"upload", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self presentUploadAlertController];
@@ -1077,9 +1055,7 @@
             [textField addTarget:self action:@selector(newFolderAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         }];
         
-        [newFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }]];
+        [newFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
         
         [newFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
@@ -1136,6 +1112,12 @@
         if (!isSwipeEditing) {
             self.navigationItem.leftBarButtonItems = @[self.negativeSpaceBarButtonItem, self.selectAllBarButtonItem];
         }
+        
+        [self.toolbar setAlpha:0.0];
+        [self.tabBarController.tabBar addSubview:self.toolbar];
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:1.0];
+        }];
     } else {
         [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
         
@@ -1148,6 +1130,14 @@
         } else {
             self.navigationItem.leftBarButtonItems = @[];
         }
+        
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:0.0];
+        } completion:^(BOOL finished) {
+            if (finished) {
+                [self.toolbar removeFromSuperview];
+            }
+        }];
     }
     
     if (!self.selectedNodesArray) {
@@ -1155,12 +1145,6 @@
         
         [self setToolbarActionsEnabled:NO];
     }
-    
-    [self.tabBarController.tabBar addSubview:self.toolbar];
-    
-    [UIView animateWithDuration:animated ? .33 : 0 animations:^{
-        self.toolbar.frame = CGRectMake(0, editing ? 0 : 49 , CGRectGetWidth(self.view.frame), 49);
-    }];
     
     isSwipeEditing = NO;
 }

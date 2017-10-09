@@ -24,6 +24,9 @@
 #import "MEGAStartUploadTransferDelegate.h"
 #import "NSString+MNZCategory.h"
 
+const CGFloat kGroupChatCellLabelHeight = 35.0f;
+const CGFloat k1on1CellLabelHeight = 28.0f;
+
 @interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
@@ -82,7 +85,7 @@
         MEGALogError(@"The delegate is NULL or the chatroom is not found");
     }
     
-    self.inputToolbar.contentView.textView.pasteDelegate = self;
+    self.inputToolbar.contentView.textView.jsq_pasteDelegate = self;
     
     [self customiseCollectionViewLayout];
     
@@ -474,9 +477,7 @@
 
 - (void)presentSendMediaAlertController {
     UIAlertController *sendMediaAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [sendMediaAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }]];
+    [sendMediaAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     UIAlertAction *fromPhotosAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"choosePhotoVideo", @"Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
@@ -493,9 +494,7 @@
                 } else {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"cameraPermissions", @"Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it") preferredStyle:UIAlertControllerStyleAlert];
-                        [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                            [self dismissViewControllerAnimated:YES completion:nil];
-                        }]];
+                        [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
                         
                         [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
@@ -643,6 +642,13 @@
     self.navigationBarProgressView.hidden = YES;
 }
 
+- (void)handleTruncateMessage:(MEGAChatMessage *)message {
+    [self.messages removeAllObjects];
+    [self.messages addObject:message];
+    [self.collectionView reloadData];
+    [self.nodesLoaded removeAllObjects];
+}
+
 #pragma mark - Custom menu actions for cells
 
 - (void)didReceiveMenuWillShowNotification:(NSNotification *)notification {
@@ -693,8 +699,6 @@
     NSString *alertControllerTitle = AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
     UIAlertController *selectOptionAlertController = [UIAlertController alertControllerWithTitle:alertControllerTitle message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [selectOptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-        
         [self.inputToolbar.contentView.textView becomeFirstResponder];
     }]];
     
@@ -816,20 +820,26 @@
 
     if (showMessageBubleTopLabel) {
         NSString *hour = [[JSQMessagesTimestampFormatter sharedFormatter] timeForDate:message.date];
-        NSString *topCellString = nil;
+        NSAttributedString *hourAttributed = [[NSAttributedString alloc] initWithString:hour attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:9.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]}];
+        NSMutableAttributedString *topCellAttributed = [[NSMutableAttributedString alloc] init];
+        
         
         if (self.chatRoom.isGroup && !message.isManagementMessage) {
             NSString *fullname = [self.chatRoom peerFullnameByHandle:message.userHandle];
             if (!fullname.length) {
                 fullname = [self.chatRoom peerEmailByHandle:message.userHandle];
+                if (!fullname) {
+                    fullname = @"";
+                }
             }
-            // For my own messages show only the hour (fullname is nil, because I am not in the peer list)
-            topCellString = [NSString stringWithFormat:@"%@ %@", fullname ? fullname : @"", hour];
+            NSAttributedString *fullnameAttributed = [[NSAttributedString alloc] initWithString:[fullname stringByAppendingString:@" "] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:14.0f], NSForegroundColorAttributeName:[UIColor blackColor]}];
+            [topCellAttributed appendAttributedString:fullnameAttributed];
+            [topCellAttributed appendAttributedString:hourAttributed];
         } else {
-            topCellString = hour;
+            [topCellAttributed appendAttributedString:hourAttributed];
         }
         
-        return [[NSAttributedString alloc] initWithString:topCellString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:9.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]}];
+        return topCellAttributed;
     }
     
     return nil;
@@ -1094,6 +1104,7 @@
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                    layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat height = 0.0f;
     BOOL showMessageBubleTopLabel = NO;
     if (indexPath.item == 0) {
         showMessageBubleTopLabel = YES;
@@ -1107,10 +1118,14 @@
     }
     
     if (showMessageBubleTopLabel) {
-        return kJSQMessagesCollectionViewCellLabelHeightDefault;
+        if (self.chatRoom.isGroup) {
+            height = kGroupChatCellLabelHeight;
+        } else {
+            height = k1on1CellLabelHeight;
+        }
     }
     
-    return 0.0f;
+    return height;
 }
 
 #pragma mark - Responding to collection view tap events
@@ -1186,9 +1201,7 @@
         }
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
         
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"retry", @"Button which allows to retry send message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             NSLog(@"retry tapped"); // sent message + discard || delete
@@ -1230,13 +1243,15 @@
 - (void)onMessageReceived:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
     MEGALogInfo(@"onMessageReceived %@", message);
     message.chatRoom = self.chatRoom;
-    if (message.type != MEGAChatMessageTypeRevokeAttachment) {        
+    if (message.type == MEGAChatMessageTypeTruncate) {
+        [self handleTruncateMessage:message];
+    } else if (message.type != MEGAChatMessageTypeRevokeAttachment) {
         [self.messages addObject:message];
+        [self finishReceivingMessage];
+        [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId];
+        
+        [self loadNodesFromMessage:message atTheBeginning:YES];
     }
-    [self finishReceivingMessage];
-    [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId];
-            
-    [self loadNodesFromMessage:message atTheBeginning:YES];
 }
 
 - (void)onMessageLoaded:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
@@ -1339,10 +1354,7 @@
         }
         
         if (message.type == MEGAChatMessageTypeTruncate) {
-            [self.messages removeAllObjects];
-            [self.messages addObject:message];
-            [self.collectionView reloadData];
-            [self.nodesLoaded removeAllObjects];
+            [self handleTruncateMessage:message];
         }
     }
 }
