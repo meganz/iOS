@@ -8,7 +8,6 @@
 #import "MEGALogger.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
-#import "UIViewController+MNZCategory.h"
 
 #import "ChatStatusTableViewController.h"
 
@@ -54,8 +53,6 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         [self.useMobileDataSwitch setOn:NO animated:YES];
     }
-
-    [self mnz_customBackBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -103,8 +100,7 @@
                 MEGALogError(@"Init Karere with session failed");
                 NSString *message = [NSString stringWithFormat:@"Error (%ld) initializing the chat", (long)chatInit];
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                }]];
+                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                 [[MEGASdkManager sharedMEGAChatSdk] logoutWithDelegate:self];
                 [self presentViewController:alertController animated:YES completion:nil];
                 sender.on = NO;

@@ -170,4 +170,18 @@ static NSString* const B = @"[B]";
     return [predicate evaluateWithObject:self];
 }
 
+- (BOOL)mnz_isEmpty {
+    return ![[self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length];
+}
+
+- (NSString *)mnz_removeWebclientFormatters {
+    NSString *string;
+    string = [self stringByReplacingOccurrencesOfString:@"[A]" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"[/A]" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"[S]" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"[/S]" withString:@""];
+    
+    return string;
+}
+
 @end

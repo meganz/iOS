@@ -52,6 +52,8 @@
 "loggedOutFromAnotherLocation"="別の場所から、この機器はログアウトされました。";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="サーバーのSSL鍵が照合できません。中間者攻撃かも知れません。";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="プロセスに予想以上時間がかかっています。お待ちください...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -84,8 +86,10 @@
 "accountNotConfirmed"="アカウントを確認するためにMEGAからのメール内のリンクをアクセスしてください。";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="あなたのアカウントはブロックされています。support@mega.nzへ連絡して下さい。";
-/* Message shown when the user writes an invalid format in the email field  */
+/* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="正しいメールを入力して下さい";
+/* Add contacts and share dialog error message when user try to add wrong email address */
+"theEmailAddressFormatIsInvalid"="メールアドレスのフォーマットが正しくありません。";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="有効パスワードを入力して下さい";
 /* Hint text to suggest that the user has to write his email */
@@ -270,6 +274,10 @@
 "getLink"="リンクを取得";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="リンクを取得する";
+/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
+"updateLink"="リンクをアップデートする";
+/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
+"updateLinks"="リンクをアップデートする";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="リンク作成中";
 /* Message shown when some links to files and/or folders are being generated */
@@ -278,6 +286,38 @@
 "linkCopied"="リンクコピー完了";
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="リンクコピー完了";
+/* Text of the button after the links were copied to the clipboard */
+"copiedToTheClipboard"="クリップボードにコピーされました";
+/* A title for the Copyright Warning dialog. */
+"copyrightWarning"="著作権に関する警告";
+/* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
+"copyrightWarningToAll"="お客様への警告";
+/* String already exists: 367, but we need to split paragraphs. */
+"copyrightMessagePart1"="MEGAは他人の著作権を尊重し、MEGAクラウドサービスのユーザーが著作権に関する法律に従うことを義務づけています";
+/* String already exists: 367, but we need to split paragraphs */
+"copyrightMessagePart2"="著作権を侵害するためにMEGAクラウドサービスを利用することは厳しく禁じれています。どんな個人または団体の著作権やその他の所有権をも侵害するようなファイル、データ、またはコンテンツをアップロード、ダウンロード、保存、共有、表示、ストリーム、配布、メール、リンク、送信等するのは許されません。";
+/* button caption text that the user clicks when he agrees */
+"agree"="同意する";
+/* button caption text that the user clicks when he disagrees */
+"disagree"="同意しない";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
+"linkWithoutKey"="キーなしのリンク";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
+"linkWithKey"="キーを含むリンク";
+/* An alert dialog for the Get Link feature */
+"proOnly"="(プロのみ)";
+/* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
+"setExpiryDate"="失効日を選ぶ";
+/* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
+"setPasswordProtection"="パスワード保護の設定";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypt"="暗号化する";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypted"="暗号化済み";
+/* Title for a button to copy the link to the clipboard */
+"copyLink"="リンクをコピーする";
+/* Title for a button that copies the key of the link to the clipboard */
+"copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="開けるのに使うのは...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -552,7 +592,7 @@
 "off"="オフ";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
 "on"="オン";
-/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+/* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="オプション";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="動画アップロード";
@@ -778,6 +818,58 @@
 "viewAndEditProfile"="プロファイルの表示と編集";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="プロファイル";
+/* Title of the Achievements section */
+"achievementsTitle"="実績";
+/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
+"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+/* Indicating text for when "you invite your friends" */
+"inviteYourFriends"="ご友人を招待する";
+/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
+"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* Text shown to explain how and where you can invite friends */
+"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+/*  */
+"insertYourFriendsEmails"="お友達のEメールを入力:";
+/*  */
+"howItWorks"="こうなっています。";
+/*  */
+"howItWorksMain"="ご友人はMEGAの無料アカウントに登録し、[S]MEGAクライアントアプリケーションを少なくとも1つインストールする[/S]必要があります（同期クライアントまたは当社のモバイルアプリのいずれか）。";
+/*  */
+"howItWorksSecondary"="何らかの方法でご友人にお知らせください。ご友人がご友人のメールアドレスでご登録される前に、そのメールアドレスをこちらでご入力いただいた場合　あなたは当該容量を獲得します。";
+/* A message which is shown once someone has invited a friend as part of the achievements program. */
+"howItWorksTertiary"="MEGAを以前に使用したことのある人を招待した場合、あなたはそのクレジットを受け取ることはありません。また、そのような拒否について通知されることもありません。";
+/* Header of block with achievements bonuses. */
+"unlockedBonuses"="解除ボーナス：";
+/* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
+"storageQuota"="ストレージ容量制限";
+/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
+"transferQuota"="転送容量制限";
+/* The user's achieved base quota */
+"accountBaseQuota"="アカウントの原容量制限";
+/* achievement type */
+"registrationBonus"="登録実績";
+/* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
+"registrationBonusExplanation"="あなたは無料登録ボーナスとして%1のストレージスペースを受け取りました。";
+/* achievement type */
+"referralBonuses"="紹介ボーナス";
+/*  */
+"installMEGASync"="MEGAsyncをインストールする";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installMEGASyncCompletedExplanation"="あなたはMEGAsyncのインストールに対して、%1のストレージスペースと%2の転送容量を受け取りました。";
+/*  */
+"installOurMobileApp"="当社のモバイルアプリをインストール";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installOurMobileAppCompletedExplanation"="あなたは当社のモバイルアプリのインストールに対して、%1のストレージスペースと%2の転送容量を受け取りました。";
+/*  */
+"xDaysLeft"="%1残り日";
+/* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
+"bonusExpiresIn"="（ボーナスは[S]%1[/S]%2後に有効期限が切れます）";
+/* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
+"months"="か月";
+/*  */
+"days"="日間";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"expired"="失効済み";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="ログアウト";
 /* String shown when you are logging out of your account. */
@@ -822,6 +914,8 @@
 "upgradeAccount"="アカウントをアップグレードする";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="マイアカウントで後でアップグレードできます";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
+"cloudDriveIsAlmostFull"="[S]クラウドドライブはほぼいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大4 TB（4096 GB）[/S]のクラウドストレージスペースを取得してください。";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="ストレージ";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -1024,12 +1118,14 @@
 "retry"="もう一度やる";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="メッセージを削除";
-/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="メディアを送信";
+/*  */
+"fromCloudDrive"="クラウドドライブから";
+/*  */
+"fromDevice"="端末から";
+/* referring to a contact in the contact list of the user */
+"contact"="知り合い";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="知り合いを送信";
-/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
-"addFromMyCloudDrive"="私のクラウドドライブから追加する";
 /* */
 "done"="完了";
 /* Button label for sending file attachments through the chat to another user. */
