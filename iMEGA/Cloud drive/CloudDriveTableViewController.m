@@ -1125,11 +1125,7 @@
         
         allNodesSelected = NO;
         self.selectedNodesArray = nil;
-        if (self.parentNode.handle != [[MEGASdkManager sharedMEGASdk] rootNode].handle) {
-            self.navigationItem.leftBarButtonItems = @[self.backBarButtonItem];
-        } else {
-            self.navigationItem.leftBarButtonItems = @[];
-        }
+        self.navigationItem.leftBarButtonItems = @[];
         
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:0.0];
