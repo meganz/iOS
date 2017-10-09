@@ -997,7 +997,7 @@
             
             alreadyPresented = YES;
         } else {
-            if (arc4random_uniform(20) == 0) { // 5 % of the times
+            if (accountDetails && (arc4random_uniform(20) == 0)) { // 5 % of the times
                 [self showUpgradeTVC];
                 alreadyPresented = YES;
             }
