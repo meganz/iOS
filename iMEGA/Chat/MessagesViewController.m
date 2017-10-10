@@ -1268,7 +1268,6 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
         if (!self.areAllMessagesSeen && message.userHandle != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
             if ([[MEGASdkManager sharedMEGAChatSdk] lastChatMessageSeenForChat:self.chatRoom.chatId].messageId != message.messageId) {
                 if ([[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId]) {
-                    [self updateUnreadLabel];
                     self.areAllMessagesSeen = YES;
                 } else {
                     MEGALogError(@"setMessageSeenForChat failed: The chatid is invalid or the message is older than last-seen-by-us message.");
@@ -1364,6 +1363,7 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
     self.chatRoom = chat;
     switch (chat.changes) {
         case MEGAChatRoomChangeTypeUnreadCount:
+            [self updateUnreadLabel];
             break;
             
         case MEGAChatRoomChangeTypeParticipans:
