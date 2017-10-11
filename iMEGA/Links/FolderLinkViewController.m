@@ -315,7 +315,7 @@
                 } else {
                     if (node.name.mnz_isImagePathExtension) {
                         NSArray *nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
-                        [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:YES displayMode:2];
+                        [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:YES displayMode:DisplayModeSharedItem];
                     } else {
                         [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
                     }

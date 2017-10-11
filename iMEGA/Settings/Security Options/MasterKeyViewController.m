@@ -3,9 +3,8 @@
 
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
-#import "UIViewController+MNZCategory.h"
 
-#import "WhyDoINeedARecoveryKeyViewController.h"
+#import "HelpModalViewController.h"
 
 @interface MasterKeyViewController ()
 
@@ -29,8 +28,6 @@
     [self.saveMasterKey setTitle:AMLocalizedString(@"save", @"Button title to 'Save' the selected option") forState:UIControlStateNormal];
     
     self.whyDoINeedARecoveryKeyLabel.text = AMLocalizedString(@"whyDoINeedARecoveryKey", @"Question button to present a view where it's explained what is the Recovery Key");
-        
-    [self mnz_customBackBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -60,17 +57,21 @@
 #pragma mark - IBActions
 
 - (IBAction)copyMasterKeyTouchUpInside:(UIButton *)sender {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
         UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
         pasteboard.string = [[MEGASdkManager sharedMEGASdk] masterKey];
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"recoveryKeyCopiedToClipboard", @"Title of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported - (String as short as possible).") message:nil delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
         [alertView show];
+        
+        [[MEGASdkManager sharedMEGASdk] masterKeyExported];
+    } else {
+        [MEGAReachabilityManager isReachableHUDIfNot];
     }
 }
 
 - (IBAction)saveMasterKeyTouchUpInside:(UIButton *)sender {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
         NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
         NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
         
@@ -78,14 +79,23 @@
         if (success) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"masterKeyExported", nil) message:AMLocalizedString(@"masterKeyExported_alertMessage", nil) delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
             [alertView show];
+            
+            [[MEGASdkManager sharedMEGASdk] masterKeyExported];
         }
+    } else {
+        [MEGAReachabilityManager isReachableHUDIfNot];
     }
 }
 
 - (IBAction)whyDoINeedARecoveryKeyTouchUpInside:(UIButton *)sender {
-    WhyDoINeedARecoveryKeyViewController *whyDoINeedARecoveryKeyVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"WhyDoINeedARecoveryKeyID"];
-    whyDoINeedARecoveryKeyVC.modalPresentationStyle = UIModalPresentationCustom;
-    [self presentViewController:whyDoINeedARecoveryKeyVC animated:YES completion:nil];
+    HelpModalViewController *helpModalVC = [[HelpModalViewController alloc] init];
+    helpModalVC.modalPresentationStyle = UIModalPresentationCustom;
+    helpModalVC.viewTitle = AMLocalizedString(@"whyDoINeedARecoveryKey", @"Question button to present a view where it's explained what is the Recovery Key");
+    helpModalVC.firstParagraph = AMLocalizedString(@"masterKey_firstParagraph", @"Detailed explanation of how the master encryption key (now renamed 'Recovery Key') works, and why it is important to remember your password.");
+    helpModalVC.secondParagraph = AMLocalizedString(@"exportMasterKeyFooter", @"Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key");
+    helpModalVC.thirdParagraph = AMLocalizedString(@"masterKey_thirdParagraph", nil);
+    
+    [self presentViewController:helpModalVC animated:YES completion:nil];
 }
 
 @end

@@ -52,6 +52,8 @@
 "loggedOutFromAnotherLocation"="Ai fost deconectat de pe acest dispozitiv din altă locaţie";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Cheia SSL a serverului nu poate fi verificată. Poţi fi afectat de un atac tip man-in-the-middle.";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -84,8 +86,10 @@
 "accountNotConfirmed"="Te rugăm să verifici e-mailul şi să urmăreşti linkul pentru a confirma contul.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Contul tău a fost blocat. Te rugăm să contactezi support@mega.nz";
-/* Message shown when the user writes an invalid format in the email field  */
+/* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Introdu un e-mail valid";
+/* Add contacts and share dialog error message when user try to add wrong email address */
+"theEmailAddressFormatIsInvalid"="Formatul adresei de e-mail este invalid";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="Introdu o parolă validă";
 /* Hint text to suggest that the user has to write his email */
@@ -270,6 +274,10 @@
 "getLink"="Obţine linkul";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Obţine linkuri";
+/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
+"updateLink"="Actualizează linkul";
+/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
+"updateLinks"="Actualizează linkurile";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Se generează linkul...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -278,6 +286,38 @@
 "linkCopied"="Link copiat";
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="Linkuri copiate";
+/* Text of the button after the links were copied to the clipboard */
+"copiedToTheClipboard"="Copied to the clipboard";
+/* A title for the Copyright Warning dialog. */
+"copyrightWarning"="Avertisment privind drepturile de autor";
+/* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
+"copyrightWarningToAll"="Avertisment privind drepturile de autor pentru toţi utilizatorii";
+/* String already exists: 367, but we need to split paragraphs. */
+"copyrightMessagePart1"="MEGA respectă drepturile de autor ale celorlalţi şi impune utilizatorilor serviciului de stocare în cloud MEGA să se conformeze cu legile drepturilor de autor.";
+/* String already exists: 367, but we need to split paragraphs */
+"copyrightMessagePart2"="Ai interdicţia strică de a folosi serviciul de stocare în cloud MEGA pentru încălcarea drepturilor de autor. Nu poţi încărca, descărca, stoca, partaja, afişa, distribui, trimite e-mail, oferi link, transmite sau altfel pune la dispoziţie fişiere, date sau conţinut care încalcă orice drept de autor sau alte drepturi de proprietate ale unei persoane sau entităţi.";
+/* button caption text that the user clicks when he agrees */
+"agree"="De acord";
+/* button caption text that the user clicks when he disagrees */
+"disagree"="Disagree";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
+"linkWithoutKey"="Link fără cheie";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
+"linkWithKey"="Link cu cheie";
+/* An alert dialog for the Get Link feature */
+"proOnly"="(NUMAI PRO)";
+/* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
+"setExpiryDate"="Setează data de expirare";
+/* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
+"setPasswordProtection"="Setează protecţie pentru parolă";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypt"="Criptează";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypted"="Criptat";
+/* Title for a button to copy the link to the clipboard */
+"copyLink"="Copiază linkul";
+/* Title for a button that copies the key of the link to the clipboard */
+"copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Deschide în...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -552,7 +592,7 @@
 "off"="Dezactivat";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
 "on"="Activat";
-/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+/* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Opţiuni";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Încarcă videoclipuri";
@@ -778,6 +818,58 @@
 "viewAndEditProfile"="View and edit profile";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Profil";
+/* Title of the Achievements section */
+"achievementsTitle"="Realizări";
+/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
+"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+/* Indicating text for when "you invite your friends" */
+"inviteYourFriends"="Invită-ţi prietenii";
+/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
+"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* Text shown to explain how and where you can invite friends */
+"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+/*  */
+"insertYourFriendsEmails"="Introdu e-mailul(urile) prietenului:";
+/*  */
+"howItWorks"="Cum funcţionează";
+/*  */
+"howItWorksMain"="Prietenul tău trebuie să se înregistreze pentru un cont gratuit pe MEGA şi [S]să instaleze cel puţin un client MEGA[/S] (fie clientul de sincronizare, fie una dintre aplicaţiile noastre mobile)";
+/*  */
+"howItWorksSecondary"="Poţi să îţi informezi prietenul prin orice metodă. Vei câştiga cota dacă ai introdus e-mailul prietenului tău aici înainte de a se înregistra cu acea adresă.";
+/* A message which is shown once someone has invited a friend as part of the achievements program. */
+"howItWorksTertiary"="Nu vei primi credit pentru invitarea cuiva care a folosit MEGA anterior şi nu vei fi notificat despre o astfel de respingere.";
+/* Header of block with achievements bonuses. */
+"unlockedBonuses"="Bonusuri deblocate:";
+/* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
+"storageQuota"="Cotă de stocare";
+/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
+"transferQuota"="Cotă de transfer";
+/* The user's achieved base quota */
+"accountBaseQuota"="Cotă de bază a contului";
+/* achievement type */
+"registrationBonus"="Bonus de înregistrare";
+/* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
+"registrationBonusExplanation"="Ai primit %1 spaţiu de stocare ca bonus de înregistrare gratuită.";
+/* achievement type */
+"referralBonuses"="Bonusuri pentru referenţi";
+/*  */
+"installMEGASync"="Instalează MEGAsync";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installMEGASyncCompletedExplanation"="Ai primit %1 spaţiu de stocare şi %2 cotă de transfer pentru instalarea MEGAsync.";
+/*  */
+"installOurMobileApp"="Instalează aplicaţia noastră mobilă";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installOurMobileAppCompletedExplanation"="Ai primit %1 spaţiu de stocare şi %2 cotă de transfer pentru instalarea aplicaţiei noastre mobile.";
+/*  */
+"xDaysLeft"="%1 zile rămase";
+/* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
+"bonusExpiresIn"="(Bonusul expiră în [S]%1[/S] %2)";
+/* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
+"months"="luni";
+/*  */
+"days"="zile";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"expired"="Expirat";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Deconectare";
 /* String shown when you are logging out of your account. */
@@ -822,6 +914,8 @@
 "upgradeAccount"="Upgradează contul";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Poţi upgrada mai târziu din Contul meu";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
+"cloudDriveIsAlmostFull"="[S]Unitatea cloud este aproape plină.[/S] [A]Upgradează acum[/A] la un cont PRO şi obţine [S]până la 4 TB (4096 GB)[/S] spaţiu de stocare în cloud.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Spaţiu de stocare";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -1024,12 +1118,14 @@
 "retry"="Reîncearcă";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Şterge mesajul";
-/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="Trimte media";
+/*  */
+"fromCloudDrive"="From Cloud drive";
+/*  */
+"fromDevice"="From device";
+/* referring to a contact in the contact list of the user */
+"contact"="Contact";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Trimite contactul";
-/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
-"addFromMyCloudDrive"="Adaugă din unitatea mea cloud";
 /* */
 "done"="Realizat";
 /* Button label for sending file attachments through the chat to another user. */

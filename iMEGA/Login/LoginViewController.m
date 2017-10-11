@@ -24,6 +24,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 @property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
 
+@property (nonatomic) NSString *email;
+@property (nonatomic) NSString *password;
+
 @end
 
 @implementation LoginViewController
@@ -86,6 +89,9 @@
     
     if ([self validateForm]) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+            self.email = self.emailTextField.text;
+            self.password = self.passwordTextField.text;
+            
             NSOperationQueue *operationQueue = [NSOperationQueue new];
             
             NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
@@ -108,11 +114,11 @@
 }
 
 - (void)generateKeys {
-    NSString *privateKey = [[MEGASdkManager sharedMEGASdk] base64pwkeyForPassword:self.passwordTextField.text];
-    NSString *publicKey  = [[MEGASdkManager sharedMEGASdk] hashForBase64pwkey:privateKey email:self.emailTextField.text];
+    NSString *privateKey = [[MEGASdkManager sharedMEGASdk] base64pwkeyForPassword:self.password];
+    NSString *publicKey  = [[MEGASdkManager sharedMEGASdk] hashForBase64pwkey:privateKey email:self.email];
     
     MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
-    [[MEGASdkManager sharedMEGASdk] fastLoginWithEmail:self.emailTextField.text stringHash:publicKey base64pwKey:privateKey delegate:loginRequestDelegate];
+    [[MEGASdkManager sharedMEGASdk] fastLoginWithEmail:self.email stringHash:publicKey base64pwKey:privateKey delegate:loginRequestDelegate];
 }
 
 - (BOOL)validateForm {
@@ -158,13 +164,15 @@
 }
 
 - (NSString *)timeFormatted:(NSUInteger)totalSeconds {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateStyle:NSDateFormatterNoStyle];
-    [formatter setTimeStyle:NSDateFormatterMediumStyle];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateStyle = NSDateFormatterNoStyle;
+    dateFormatter.timeStyle = NSDateFormatterMediumStyle;
+    NSString *currentLanguageID = [[LocalizationSystem sharedLocalSystem] getLanguage];
+    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:currentLanguageID];
     
     NSDate *date = [NSDate dateWithTimeIntervalSinceNow:totalSeconds];
     
-    return [formatter stringFromDate:date];
+    return [dateFormatter stringFromDate:date];
 }
 
 - (IBAction)forgotPasswordTouchUpInside:(UIButton *)sender {

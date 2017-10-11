@@ -52,8 +52,10 @@
 "loggedOutFromAnotherLocation"="Başka bir yerden oturum açıldığı için bu cihazdan çıkış yapıldı";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Sunucunun SSL anahtarı doğrulanamadı. İki bağlantı noktası arasındaki bağlantıyı izinsiz izleme saldırısı altında olabilirsiniz.";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
-"takingLongerThanExpected"="İşlem gerektiğinden uzun sürüyor. Lütfen bekleyin...";
+"takingLongerThanExpected"="İşlem beklenilenden uzun sürüyor. Lütfen bekleyin...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Lütfen oturum açın.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -84,8 +86,10 @@
 "accountNotConfirmed"="Lütfen e-postanızı kontrol edin ve hesabınızı onaylamak için gönderilen linke tıklayın.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Hesabınız bloke edilmiştir.  Lütfen support@mega.nz ile irtibata geçiniz";
-/* Message shown when the user writes an invalid format in the email field  */
+/* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Geçerli bir e-posta girin";
+/* Add contacts and share dialog error message when user try to add wrong email address */
+"theEmailAddressFormatIsInvalid"="E-posta adresi biçimi geçersiz";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="Geçerli bir parola girin";
 /* Hint text to suggest that the user has to write his email */
@@ -270,6 +274,10 @@
 "getLink"="Link al";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Bağlantıları al";
+/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
+"updateLink"="Bağlantıyı güncelle";
+/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
+"updateLinks"="Bağlantıları güncelle";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Bağlantı oluşturuluyor...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -278,6 +286,38 @@
 "linkCopied"="Bağlantı kopyalandı";
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="Bağlantılar kopyalandı";
+/* Text of the button after the links were copied to the clipboard */
+"copiedToTheClipboard"="Panoya kopyalandı";
+/* A title for the Copyright Warning dialog. */
+"copyrightWarning"="Telif hakkı uyarısı";
+/* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
+"copyrightWarningToAll"="Tüm kullanıcılar için telif hakkı uyarısı";
+/* String already exists: 367, but we need to split paragraphs. */
+"copyrightMessagePart1"="MEGA başkalarının telif haklarına saygı duyar ve MEGA bulut hizmeti kullanıcılarının telif yasalarına uyması gerekir.";
+/* String already exists: 367, but we need to split paragraphs */
+"copyrightMessagePart2"="MEGA bulut hizmetini kesinlikle telif haklarını ihlal etmek için kullanamazsınız. Herhangi bir kişi veya kuruluşun telif hakkı veya diğer mülkiyet haklarını ihlal eden herhangi bir dosya, veri veya içeriğin; yüklenmesi, indirilmesi, depolanması, paylaşılması, görüntülenmesi, yayınlanması, dağıtılması, eposta ile gönderilmesi, bağlantısının paylaşılması kesinlikle yasaktır.";
+/* button caption text that the user clicks when he agrees */
+"agree"="Kabul ediyorum";
+/* button caption text that the user clicks when he disagrees */
+"disagree"="Reddet";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
+"linkWithoutKey"="Anahtarsız bağlantı";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
+"linkWithKey"="Anahtarlı bağlantı";
+/* An alert dialog for the Get Link feature */
+"proOnly"="(SADECE PRO)";
+/* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
+"setExpiryDate"="Son kullanma tarihi belirle";
+/* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
+"setPasswordProtection"="Parola ile koru";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypt"="Şifrele";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypted"="Şifrelendi";
+/* Title for a button to copy the link to the clipboard */
+"copyLink"="Bağlantıyı Kopyala";
+/* Title for a button that copies the key of the link to the clipboard */
+"copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Uygulamada aç...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -552,7 +592,7 @@
 "off"="Kapalı";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
 "on"="Açık";
-/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+/* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Seçenekler";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Videoları yükle";
@@ -778,6 +818,58 @@
 "viewAndEditProfile"="Profili görüntüle ve düzenle";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Profil";
+/* Title of the Achievements section */
+"achievementsTitle"="Başarılar";
+/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
+"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+/* Indicating text for when "you invite your friends" */
+"inviteYourFriends"="Arkadaşlarınızı davet edin";
+/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
+"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* Text shown to explain how and where you can invite friends */
+"inviteYourFriendsExplanation"="Telefonunuzun kişi listesinden kişileri seçin veya birden fazla e-posta adresi girin.";
+/*  */
+"insertYourFriendsEmails"="Arkadaşınızın eposta(lar)ını giriniz:";
+/*  */
+"howItWorks"="Nasıl çalışıyor";
+/*  */
+"howItWorksMain"="Arkadaşınızın MEGA'da ücretsiz bir hesap için kaydolması ve [S]en az bir MEGA istemci uygulaması[/S] yüklemesi (senkronizasyon istemcisi veya mobil uygulamalarımızdan biri) gerekir";
+/*  */
+"howItWorksSecondary"="Arkadaşınıza istediğiniz şekilde davet edebilirsiniz. Buraya arkadaşınız kaydolmadan önce eposta adresini girerseniz kotanızı kazanırsınız.";
+/* A message which is shown once someone has invited a friend as part of the achievements program. */
+"howItWorksTertiary"="Önceden MEGA kullanmış birini davet etmeniz geçersiz sayılır ve reddedildiğine dair herhangi bir bildirim gönderilmez.";
+/* Header of block with achievements bonuses. */
+"unlockedBonuses"="Açılan bonuslar";
+/* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
+"storageQuota"="Depolama Kotası";
+/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
+"transferQuota"="Aktarım Kotası";
+/* The user's achieved base quota */
+"accountBaseQuota"="Ana hesap kotası";
+/* achievement type */
+"registrationBonus"="Kaydolma bonusu";
+/* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
+"registrationBonusExplanation"="Ücretsiz kayıt bonusu olarak %1 depolama alanı kazandınız.";
+/* achievement type */
+"referralBonuses"="Referans bonusları";
+/*  */
+"installMEGASync"="MEGAsync yükle";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installMEGASyncCompletedExplanation"="MEGAsync yüklediğiniz için %1 depolama alanı ve %2 aktarma kotası kazandınız.";
+/*  */
+"installOurMobileApp"="Mobil uygulamamızı yükleyin";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installOurMobileAppCompletedExplanation"="Mobil uygulamamızı yüklediğiniz için %1 depolama alanı ve %2 aktarma kotası kazandınız.";
+/*  */
+"xDaysLeft"="%1 gün kaldı";
+/* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
+"bonusExpiresIn"="(Bonus [S]%1[/S] %2 içerisinde bitecek)";
+/* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
+"months"="ay";
+/*  */
+"days"="gün";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"expired"="Süresi doldu";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Oturumu Kapat";
 /* String shown when you are logging out of your account. */
@@ -822,6 +914,8 @@
 "upgradeAccount"="Hesabı yükselt";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Daha sonra Hesabım sekmesinden yükseltebilirsiniz";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
+"cloudDriveIsAlmostFull"="[S]Bulut Sürücü neredeyse dolu.[/S] [A]Şimdi PRO hesabına yükseltin[/A] ve [S]4TB'a (4096 GB)[/S] kadar bulut depolama alanı sahip olun.                ";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Saklama alanı";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -1024,12 +1118,14 @@
 "retry"="Yeniden Dene";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Mesajı sil";
-/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="Medya Gönder";
+/*  */
+"fromCloudDrive"="Bulut sürücüsünden";
+/*  */
+"fromDevice"="Cihazdan";
+/* referring to a contact in the contact list of the user */
+"contact"="Kişi";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Kişiyi gönder";
-/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
-"addFromMyCloudDrive"="Bulut Sürücümden Ekle";
 /* */
 "done"="Tamam";
 /* Button label for sending file attachments through the chat to another user. */
@@ -1128,7 +1224,7 @@
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Bilinmeyen hata";
 /* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="Dil tercihini değiştirdikten sonra MEGA'yı yeniden başlatmanız gereklidir";
+"languageRestartAlert"="Dili değiştirdikten sonra MEGA'yı tekrar başlatmanız gerekir.";
 /* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
 "languageRestartNotification"="Dil değiştirildi. Tekrar başlatmak için dokunun.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */

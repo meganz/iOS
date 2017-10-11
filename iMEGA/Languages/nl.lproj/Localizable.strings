@@ -52,6 +52,8 @@
 "loggedOutFromAnotherLocation"="U bent uitgelogd van dit apparaat vanuit een andere locatie";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="De SSL sleutel van de server kan niet worden geverifieerd. U zou kunnen worden geschaad door een man-in-the-middle aanval.";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="Het process duurt langer dan verwacht. Wacht alstublieft...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -84,8 +86,10 @@
 "accountNotConfirmed"="Check a.u.b. uw email en klik op de koppeling om uw account te bevestigen.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Uw account is geblokkeerd. Neem alstublieft contact op met support@mega.nz";
-/* Message shown when the user writes an invalid format in the email field  */
+/* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Vul een correct email adres in";
+/* Add contacts and share dialog error message when user try to add wrong email address */
+"theEmailAddressFormatIsInvalid"="Het e-mailadres is ongeldig";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="Correct wachtwoord vereist";
 /* Hint text to suggest that the user has to write his email */
@@ -99,7 +103,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Wachtwoorden komen niet overeen";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="U dient akkoord te gaan met de gebruikersvoorwaarden om een account te registreren bij MEGA.";
+"termsCheckboxUnselected"="U dient akkoord te gaan met de Algemene Voorwaarden om een account te registreren bij MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Met dit e-mail adres is al een account bij MEGA geregistreerd.";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -270,6 +274,10 @@
 "getLink"="Haal de koppeling op";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Koppelingen verkrijgen";
+/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
+"updateLink"="Update koppeling";
+/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
+"updateLinks"="Update koppelingen";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Koppeling creëren";
 /* Message shown when some links to files and/or folders are being generated */
@@ -278,6 +286,38 @@
 "linkCopied"="Koppeling is gekopieerd";
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="Koppelingen gekopieerd";
+/* Text of the button after the links were copied to the clipboard */
+"copiedToTheClipboard"="Gekopieerd naar het klembord";
+/* A title for the Copyright Warning dialog. */
+"copyrightWarning"="Copyright waarschuwing";
+/* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
+"copyrightWarningToAll"="Waarschuwing over auteursrechten aan alle gebruikers";
+/* String already exists: 367, but we need to split paragraphs. */
+"copyrightMessagePart1"="MEGA respecteert het auteursrecht van anderen en eist dat de gebruikers van de MEGA cloud service zich aan de auteurswetten houden. ";
+/* String already exists: 367, but we need to split paragraphs */
+"copyrightMessagePart2"="Het is strikt verboden om MEGA te gebruiken om het auteursrecht te schenden.U mag bestanden, data of andere content die enig auteursrecht of ander eigendomsrecht van een persoon of entiteit schenden niet uploaden, downloaden, opslaan, delen, weergeven, streamen, distribueren, emailen, linken naar, verzenden of op een andere manier beschikbaar maken.";
+/* button caption text that the user clicks when he agrees */
+"agree"="Instemmen";
+/* button caption text that the user clicks when he disagrees */
+"disagree"="Oneens";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
+"linkWithoutKey"="Koppeling zonder sleutel";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
+"linkWithKey"="Koppeling met code";
+/* An alert dialog for the Get Link feature */
+"proOnly"="(ALLEEN VOOR PRO)";
+/* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
+"setExpiryDate"="Instellen vervaldatum";
+/* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
+"setPasswordProtection"="Wachtwoord bescherming instellen";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypt"="Coderen";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypted"="Gecodeerd";
+/* Title for a button to copy the link to the clipboard */
+"copyLink"="Kopieer Koppeling";
+/* Title for a button that copies the key of the link to the clipboard */
+"copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Openen in...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -547,12 +587,12 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Privacy Policy";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="Gebruikersvoorwaarden";
+"termsOfServicesLabel"="Algemene Voorwaarden";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Uit";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
 "on"="Aan";
-/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+/* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Opties";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Upload video's";
@@ -778,6 +818,58 @@
 "viewAndEditProfile"="Profiel weergeven en wijzigen";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Profiel";
+/* Title of the Achievements section */
+"achievementsTitle"="Beloningen";
+/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
+"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+/* Indicating text for when "you invite your friends" */
+"inviteYourFriends"="Nodig uw vrienden uit";
+/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
+"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* Text shown to explain how and where you can invite friends */
+"inviteYourFriendsExplanation"="Selecteer contacten vanuit uw telefoon's contact lijst of voer meerdere e-mailadressen in.";
+/*  */
+"insertYourFriendsEmails"="Plaats e-mail(s) van uw vriend:";
+/*  */
+"howItWorks"="Hoe het werkt";
+/*  */
+"howItWorksMain"="Uw vriend moet zich registreren voor een gratis account op MEGA en [S]installeer ten minste één MEGA programma applicatie[/S] (ofwel sync programma of één van onze mobiele applicaties)";
+/*  */
+"howItWorksSecondary"="U kunt uw vriend via elke methode melden. U kan het tegoed verdienen als u uw vriend's email hier hebt ingevoerd voordat ze zelf hebben geregistreerd met dat adres.";
+/* A message which is shown once someone has invited a friend as part of the achievements program. */
+"howItWorksTertiary"="U ontvangt geen tegoed voor het uitnodigen van iemand die MEGA voorheen gebruikt heeft en deze weigering wordt niet gemeld.";
+/* Header of block with achievements bonuses. */
+"unlockedBonuses"="Geopende bonussen:";
+/* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
+"storageQuota"="Opslag Tegoed";
+/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
+"transferQuota"="Overdracht Tegoed";
+/* The user's achieved base quota */
+"accountBaseQuota"="Account basis tegoed";
+/* achievement type */
+"registrationBonus"="Registratie Bonus";
+/* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
+"registrationBonusExplanation"="U heeft %1 gratis opslag ruimte ontvangen bij uw gratis registratie bonus.";
+/* achievement type */
+"referralBonuses"="Doorverwijzing bonussen";
+/*  */
+"installMEGASync"="Installeer MEGAsync";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installMEGASyncCompletedExplanation"="U heeft %1 opslagruimte en %2 overdracht tegoed ontvangen bij het installeren van MEGAsync.";
+/*  */
+"installOurMobileApp"="Installeer onze mobiele app";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installOurMobileAppCompletedExplanation"="U heeft %1 opslagruimte en %2 overdracht tegoed ontvangen voor het installeren van onze mobiele applicatie.";
+/*  */
+"xDaysLeft"="%1 dagen over";
+/* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
+"bonusExpiresIn"="(Bonus verloopt in  [S]%1[/S] %2)";
+/* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
+"months"="maanden";
+/*  */
+"days"="dagen";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"expired"="Verlopen";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Uitloggen";
 /* String shown when you are logging out of your account. */
@@ -822,6 +914,8 @@
 "upgradeAccount"="Upgrade account";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Upgrade later in Mijn Account";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
+"cloudDriveIsAlmostFull"="[S]Cloud Schijf is bijna vol.[/S] [A]Upgrade nu[/A] naar een PRO account en krijg [S]tot 4 TB (4096 GB)[/S] cloud opslag ruimte.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Opslagruimte";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -829,11 +923,11 @@
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%.2f %@ per maand";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
-"choosePlan"="Kies één van de plannen hieronder:";
+"choosePlan"="Kies één van de abonnementen hieronder:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
-"twoMonthsFree"="Ontvang twee maanden gratis als u zich inschrijft voor een jaar PRO plan";
+"twoMonthsFree"="Ontvang twee maanden gratis als u zich inschrijft voor een jaar PRO abonnement";
 /* Header shown to help on the purchasin process */
-"selectMembership"="Kies lidmaatschap:";
+"selectMembership"="Kies abonnement:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
 "save17"="17% Opgeslagen";
 /* Error message shown when the purchase has failed */
@@ -1024,12 +1118,14 @@
 "retry"="Opnieuw proberen";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Verwijder bericht";
-/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="Verstuur Media";
+/*  */
+"fromCloudDrive"="Van Cloud schijf";
+/*  */
+"fromDevice"="Van apparaat";
+/* referring to a contact in the contact list of the user */
+"contact"="Contact";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Zend contactgegevens";
-/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
-"addFromMyCloudDrive"="Voeg toe vanuit mijn Cloud Schijf";
 /* */
 "done"="Voltooid";
 /* Button label for sending file attachments through the chat to another user. */
@@ -1039,9 +1135,9 @@
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Alle bestanden opgeslagen voor Offline worden verwijderd van uw apparaat. Wilt u verder gaan om uit te loggen?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Uitgeputte overdracht tegoed";
+"depletedTransferQuota_title"="Verminderde overdracht tegoed";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="Uw wachtende download overschrijdt de huidige bandbreedte beschikbaar op uw account en kan daardoor onderbroken worden.";
+"depletedTransferQuota_message"="Uw wachtende download overschrijdt de huidige overdracht tegoed die beschikbaar is op uw account en kan daardoor onderbroken worden.";
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="Zie abonnementen";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
@@ -1139,7 +1235,7 @@
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="De coderings-procedure betekend dat we geen toegang hebben of uw wachtwoord kunnen herstellen dus u MOET het onthouden (behalve) als u uw Herstelsleutel opgeslagen heeft) of u verliest toegang tot uw opgeslagen bestanden.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="Binnen de applicatie kunt u de opslagruimte en bandbreedte upgraden met een maandelijkse of jaarlijkse contributie.";
+"generalDescriptionParagraph4"="Binnen de applicatie kunt u de opslagruimte en overdracht tegoed upgraden met een maandelijks of jaarlijks abonnement.";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="PRO LITE abonnement: €4.99 (US$4.99) per maand of €49.99 (US$49.99) per jaar biedt u 200 GB aan opslagruimte en 1 TB aan overdrachtssnelheid tegoed per maand. PRO I abonnement: €9.99 (US$9.99) per maand of €99.99 (US$99.99) per jaar biedt u 1 TB aan opslagruimte en 2 TB aan overdrachtssnelheid tegoed per maand.PRO II abonnement: €19.99 (US$19.99) per maand of €199.99 (US$199.99) per jaar biedt u 4 TB aan opslagruimte en 8 TB aan overdrachtssnelheid per maand. PRO III abonnement: €29.99 (US$29.99) per maand of €299.99 (US$299.99) per jaar biedt u 8 TB aan opslagruimte en 16 TB aan overdrachtssnelheid per maand.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
