@@ -21,6 +21,10 @@
 
 #pragma mark - Blue
 
++ (UIColor *)mnz_blue007AFF {
+    return [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
+}
+
 + (UIColor *)mnz_blue2BA6DE {
     return [UIColor colorWithRed:43.0/255.0 green:166.0/255.0 blue:222.0/255.0 alpha:1.0];
 }
@@ -41,6 +45,10 @@
 
 + (UIColor *)mnz_gray999999 {
     return [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0];
+}
+
++ (UIColor *)mnz_grayEEEEEE {
+    return [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
 }
 
 + (UIColor *)mnz_grayE3E3E3 {
@@ -87,6 +95,10 @@
 
 + (UIColor *)mnz_redDC191F {
     return [UIColor colorWithRed:220.0/255.0 green:25.0/255.0 blue:31.0/255.0 alpha:1.0];
+}
+
++ (UIColor *)mnz_redF0373A {
+    return [UIColor colorWithRed:240.0/255.0 green:55.0/255.0 blue:58.0/255.0 alpha:1.0];
 }
 
 + (UIColor *)mnz_redFF4C52 {

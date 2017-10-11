@@ -19,6 +19,11 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 + (NSString*)mnz_stringByFiles:(NSInteger)files andFolders:(NSInteger)folders;
 
 + (NSString *)chatStatusString:(MEGAChatStatus)onlineStatus;
+
 - (BOOL)mnz_isValidEmail;
+
+- (BOOL)mnz_isEmpty;
+
+- (NSString *)mnz_removeWebclientFormatters;
 
 @end

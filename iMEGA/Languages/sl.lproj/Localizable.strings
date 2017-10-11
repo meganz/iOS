@@ -52,6 +52,8 @@
 "loggedOutFromAnotherLocation"="S te naprave ste bili odjavljeni z druge lokacije";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Ne morem preveriti strežniškega SSL ključa. Lahko ste žrtev man-in-the-middle napada.";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -84,8 +86,10 @@
 "accountNotConfirmed"="Prosim, preverite svojo e-pošto in sledite povezavi, da potrdite svoj račun.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Vaš račun je bil blokiran. Prosim, stopite v stik s support@mega.nz";
-/* Message shown when the user writes an invalid format in the email field  */
+/* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Vnesi veljavno e-pošto";
+/* Add contacts and share dialog error message when user try to add wrong email address */
+"theEmailAddressFormatIsInvalid"="Format e-poštnega naslova je neveljaven";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="Vnesite veljavno geslo";
 /* Hint text to suggest that the user has to write his email */
@@ -270,6 +274,10 @@
 "getLink"="Pridobi povezavo";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Pridobi povezave";
+/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
+"updateLink"="Obnovi povezavo";
+/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
+"updateLinks"="Obnovi povezave";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Generiram povezavo...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -278,6 +286,38 @@
 "linkCopied"="Povezava kopirana";
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="Povezave kopirane";
+/* Text of the button after the links were copied to the clipboard */
+"copiedToTheClipboard"="Copied to the clipboard";
+/* A title for the Copyright Warning dialog. */
+"copyrightWarning"="Opozorilo o avtorskih pravicah";
+/* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
+"copyrightWarningToAll"="Opozorilo o avtorskih pravicah za vse uporabnike";
+/* String already exists: 367, but we need to split paragraphs. */
+"copyrightMessagePart1"="MEGA spoštuje avtorske pravice drugih in zahteva od uporabnikov MEGA storitev v oblaku, da se držijo pravil avtorskega prava.";
+/* String already exists: 367, but we need to split paragraphs */
+"copyrightMessagePart2"="Striktno vam je prepovedana uporaba MEGA storitev v oblaku za kršenje avtorskih pravic. Ne smete nalagati, prevzemati, shranjevati, deliti, prikazovati, prenašati, distribuirati, pošiljtati preko e-pošte, deliti povezave ali kako drugače dajati na voljo kakršnekoli datoteke, podatke ali vsebino, ki krši kakršnekoli avtorske pravice ali druge pravice katerekoli osebe ali entitete.";
+/* button caption text that the user clicks when he agrees */
+"agree"="Se strinjam";
+/* button caption text that the user clicks when he disagrees */
+"disagree"="Disagree";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
+"linkWithoutKey"="Povezava brez ključa";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
+"linkWithKey"="Poveži s ključem";
+/* An alert dialog for the Get Link feature */
+"proOnly"="(SAMO PRO)";
+/* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
+"setExpiryDate"="Nastavite datum poteka";
+/* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
+"setPasswordProtection"="Nastavite zaščito gesla";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypt"="Kriptiraj";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypted"="Kriptirano";
+/* Title for a button to copy the link to the clipboard */
+"copyLink"="Kopiraj povezavo";
+/* Title for a button that copies the key of the link to the clipboard */
+"copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Odpri v...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -552,7 +592,7 @@
 "off"="Ugasnjeno";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
 "on"="Prižgano";
-/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+/* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Možnosti";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Naloži videe";
@@ -778,6 +818,58 @@
 "viewAndEditProfile"="View and edit profile";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Profil";
+/* Title of the Achievements section */
+"achievementsTitle"="Dosežki";
+/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
+"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+/* Indicating text for when "you invite your friends" */
+"inviteYourFriends"="Invite your friends";
+/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
+"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* Text shown to explain how and where you can invite friends */
+"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+/*  */
+"insertYourFriendsEmails"="Vnesite prijateljevo(/e) e-pošto(/e):";
+/*  */
+"howItWorks"="Kako deluje";
+/*  */
+"howItWorksMain"="Vaš prijatelj se mora registrirati za brezplačni račun na MEGA in [S]inštalirati vsaj eno MEGA odjemalsko aplikacijo[/S] (bodisi sinhronizacijski odjemalec ali eno od naših mobilnih aplikacij)";
+/*  */
+"howItWorksSecondary"="Prijatelje lahko obvestite na katerikoli način. Kvoto boste pridobili, če ste vnesli prijateljev e-poštni naslov v ta polja, preden so se registrirali s tem e-poštnim naslovom.";
+/* A message which is shown once someone has invited a friend as part of the achievements program. */
+"howItWorksTertiary"="Bonusa ne boste dobili, če boste povabili nekoga, ki je MEGA že uporabljal in ne boste dobili obvestila o takšni zavrnitvi.";
+/* Header of block with achievements bonuses. */
+"unlockedBonuses"="Odklenjeni bonusi:";
+/* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
+"storageQuota"="Shranjevalna kvota";
+/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
+"transferQuota"="Prenosna kvota";
+/* The user's achieved base quota */
+"accountBaseQuota"="Osnovna kvota računa";
+/* achievement type */
+"registrationBonus"="Bonus za registracijo";
+/* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
+"registrationBonusExplanation"="Prejeli ste %1 prostora za shranjevanje kot brezplačni bonus za registracijo.";
+/* achievement type */
+"referralBonuses"="Povezovalni bonusi";
+/*  */
+"installMEGASync"="Namestite MEGAsync";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installMEGASyncCompletedExplanation"="Prejeli ste %1 prostora za shranjevanje in %2 prenosne kvote za namestitev MEAsync.";
+/*  */
+"installOurMobileApp"="Namestite naš mobilni app";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installOurMobileAppCompletedExplanation"="Prejeli ste %1 prostora za shranjevanje in %2 prenosne kvote za namestitev naše mobilne aplikacije.";
+/*  */
+"xDaysLeft"="še %1 dni";
+/* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
+"bonusExpiresIn"="(Bonus poteče čez [S]%1[/S] %2)";
+/* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
+"months"="mesecev";
+/*  */
+"days"="dni";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"expired"="Poteklo";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Odjava";
 /* String shown when you are logging out of your account. */
@@ -822,6 +914,8 @@
 "upgradeAccount"="Nadgradi račun";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Kasneje ga lahko nadgradite v Moj račun";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
+"cloudDriveIsAlmostFull"="[S]Prostor v oblaku je skoraj poln.[/S] [A]Nadgradite sedaj[/A] v PRO račun in pridobite [S]do 4TB (4096 GB)[/S] prostora za shranjevanje v oblaku.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Prostora";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -1024,12 +1118,14 @@
 "retry"="Ponovi";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Briši sporočilo";
-/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="Send Media";
+/*  */
+"fromCloudDrive"="From Cloud drive";
+/*  */
+"fromDevice"="From device";
+/* referring to a contact in the contact list of the user */
+"contact"="Stik";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Pošlji stik";
-/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
-"addFromMyCloudDrive"="Dodaj iz mojega Oblaka";
 /* */
 "done"="Urejeno";
 /* Button label for sending file attachments through the chat to another user. */

@@ -95,6 +95,8 @@
     
     // Long press to select:
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
+    
+    [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -338,12 +340,26 @@
         if (!isSwipeEditing) {
             self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         }
+        
+        [self.toolbar setAlpha:0.0];
+        [self.tabBarController.tabBar addSubview:self.toolbar];
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:1.0];
+        }];
     } else {
         [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
         allNodesSelected = NO;
         [_selectedNodesMutableArray removeAllObjects];
         [_selectedSharesMutableArray removeAllObjects];
         self.navigationItem.leftBarButtonItems = @[];
+        
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:0.0];
+        } completion:^(BOOL finished) {
+            if (finished) {
+                [self.toolbar removeFromSuperview];
+            }
+        }];
     }
     
     if (!self.selectedNodesMutableArray) {
@@ -352,12 +368,6 @@
         
         [self toolbarItemsSetEnabled:NO];
     }
-    
-    [self.tabBarController.tabBar addSubview:self.toolbar];
-    
-    [UIView animateWithDuration:animated ? .33 : 0 animations:^{
-        self.toolbar.frame = CGRectMake(0, editing ? 0 : 49 , CGRectGetWidth(self.view.frame), 49);
-    }];
     
     isSwipeEditing = NO;
 }

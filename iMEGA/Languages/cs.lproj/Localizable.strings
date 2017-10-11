@@ -52,6 +52,8 @@
 "loggedOutFromAnotherLocation"="Byli jste odhlášeni z tohoto zařízení z jiného umístění";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="SSL klíč serveru nemůže být ověřen. Mohli byste být ovlivněni útokem člověkem uprostřed.";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -84,8 +86,10 @@
 "accountNotConfirmed"="Zkontrolujte svůj e-mail a následujte odkaz pro potvrzení vašeho účtu.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Váš účet byl zablokován. Obraťte se na support@mega.nz";
-/* Message shown when the user writes an invalid format in the email field  */
+/* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Zadejte platný e-mail";
+/* Add contacts and share dialog error message when user try to add wrong email address */
+"theEmailAddressFormatIsInvalid"="Vypadá to, že je zde poškozený e-mail";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="Zadejte platné heslo";
 /* Hint text to suggest that the user has to write his email */
@@ -270,6 +274,10 @@
 "getLink"="Získat odkaz";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Získat odkazy";
+/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
+"updateLink"="Aktualizovat odkaz";
+/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
+"updateLinks"="Aktualizovat odkaz";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Generování odkazu...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -278,6 +286,38 @@
 "linkCopied"="Odkaz zkopírován";
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="Odkazy zkopírovány";
+/* Text of the button after the links were copied to the clipboard */
+"copiedToTheClipboard"="Copied to the clipboard";
+/* A title for the Copyright Warning dialog. */
+"copyrightWarning"="Upozornění na autorská práva";
+/* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
+"copyrightWarningToAll"="Upozornění na autorská práva pro všechny uživatele";
+/* String already exists: 367, but we need to split paragraphs. */
+"copyrightMessagePart1"="MEGA respektuje autorská práva druhých a vyžaduje, aby uživatelé cloudové služby MEGA dodržovali právní předpisy autorského práva.";
+/* String already exists: 367, but we need to split paragraphs */
+"copyrightMessagePart2"="Je striktně zakázáno používání cloudové služby MEGA k porušování autorských práv. Nesmíte nahrávat, stahovat, ukládat, sdílet, zobrazovat, streamovat, distribuovat, odesílat e-mailem, odkazovat na, přenášet nebo jinak zpřístupňovat jakékoliv soubory, data nebo obsah, který porušuje jakákoliv autorská práva nebo jiná vlastnická práva jakékoliv osoby nebo subjektu.";
+/* button caption text that the user clicks when he agrees */
+"agree"="Souhlasím";
+/* button caption text that the user clicks when he disagrees */
+"disagree"="Disagree";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
+"linkWithoutKey"="Odkaz bez klíče";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
+"linkWithKey"="Odkaz s klíčem";
+/* An alert dialog for the Get Link feature */
+"proOnly"="(POUZE PRO)";
+/* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
+"setExpiryDate"="Nastavit datum vypršení";
+/* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
+"setPasswordProtection"="Nastavte ochranu heslem";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypt"="Šifrovat";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypted"="Šifrováno";
+/* Title for a button to copy the link to the clipboard */
+"copyLink"="Kopírovat odkaz";
+/* Title for a button that copies the key of the link to the clipboard */
+"copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Otevřít v...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -552,7 +592,7 @@
 "off"="Vypnuto";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
 "on"="Zapnuto";
-/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+/* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Možnosti";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Nahrát videa";
@@ -778,6 +818,58 @@
 "viewAndEditProfile"="View and edit profile";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Profil";
+/* Title of the Achievements section */
+"achievementsTitle"="Bonusy";
+/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
+"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+/* Indicating text for when "you invite your friends" */
+"inviteYourFriends"="Invite your friends";
+/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
+"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* Text shown to explain how and where you can invite friends */
+"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+/*  */
+"insertYourFriendsEmails"="Vložte e-mail svého přítele:";
+/*  */
+"howItWorks"="Jak to funguje";
+/*  */
+"howItWorksMain"="Váš přítel si musí zaregistrovat bezplatný účet na MEGA a [S]nainstalovat alespoň jednu klientskou aplikaci MEGA[/S] (buď synchronizačního klienta, nebo jednu z našich mobilních aplikací)";
+/*  */
+"howItWorksSecondary"="Svého přítele můžete upozornit pomocí jakékoliv metody. Získáte kvótu, pokud jste sem zadali e-mail svého přítele dříve, než se zaregistrovali pomocí této adresy.";
+/* A message which is shown once someone has invited a friend as part of the achievements program. */
+"howItWorksTertiary"="Za pozvání někoho, kdo již dříve používal MEGA, nezískáte zásluhy a nedostanete oznámení o takovém zamítnutí.";
+/* Header of block with achievements bonuses. */
+"unlockedBonuses"="Odemknuté bonusy:";
+/* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
+"storageQuota"="Kvóta úložiště";
+/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
+"transferQuota"="Kvóta přenosu";
+/* The user's achieved base quota */
+"accountBaseQuota"="Základní kvóta účtu";
+/* achievement type */
+"registrationBonus"="Bonus za registraci";
+/* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
+"registrationBonusExplanation"="Obdrželi jste %1 prostoru úložiště jako bonus za bezplatnou registraci.";
+/* achievement type */
+"referralBonuses"="Bonusy za doporučení";
+/*  */
+"installMEGASync"="Instalovat MEGAsync";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installMEGASyncCompletedExplanation"="Obdrželi jste %1 prostoru úložiště a %2 kvóty přenosu za instalaci MEGAsync.";
+/*  */
+"installOurMobileApp"="Nainstalujte si naši mobilní aplikaci";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installOurMobileAppCompletedExplanation"="Obdrželi jste %1 prostoru úložiště a %2 kvóty přenosu za instalaci naší mobilní aplikace.";
+/*  */
+"xDaysLeft"="Zbývá %1 dní";
+/* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
+"bonusExpiresIn"="(Bonus vyprší za [S]%1[/S] %2)";
+/* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
+"months"="měsíců";
+/*  */
+"days"="dní";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"expired"="Vypršelo";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Odhlásit se";
 /* String shown when you are logging out of your account. */
@@ -822,6 +914,8 @@
 "upgradeAccount"="Upgradujte účet";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Můžete upgradovat později v Můj účet";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
+"cloudDriveIsAlmostFull"="[S]Cloudová jednotka je téměř plná.[/S] [A]Upgradujte nyní[/A] na účet PRO a získejte [S]až 4 TB (4096 GB)[/S] prostoru cloudového úložiště.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Úložiště";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -1024,12 +1118,14 @@
 "retry"="Opakovat";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Odstranit zprávu";
-/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="Send Media";
+/*  */
+"fromCloudDrive"="From Cloud drive";
+/*  */
+"fromDevice"="From device";
+/* referring to a contact in the contact list of the user */
+"contact"="Kontakt";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Odeslat kontakt";
-/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
-"addFromMyCloudDrive"="Přidat z mé Cloudové jednotky";
 /* */
 "done"="Hotovo";
 /* Button label for sending file attachments through the chat to another user. */
