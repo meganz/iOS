@@ -153,8 +153,15 @@
     df.locale = [NSLocale currentLocale];
     df.dateFormat = @"LLLL yyyy";
     
+    self.previewsArray = [[NSMutableArray alloc] init];
+    
     for (NSInteger i = 0; i < [self.nodeList.size integerValue]; i++) {
         MEGANode *node = [self.nodeList nodeAtIndex:i];
+        
+        if (node.name.mnz_isImagePathExtension) {
+            MWPhoto *preview = [[MWPhoto alloc] initWithNode:node];
+            [self.previewsArray addObject:preview];
+        }
         
         if (!node.name.mnz_isImagePathExtension && !node.name.mnz_isVideoPathExtension) {
             continue;
@@ -533,17 +540,6 @@
 #pragma mark - UICollectioViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    self.previewsArray = [[NSMutableArray alloc] init];
-    
-    for (NSInteger i = 0; i < [[self.nodeList size] integerValue]; i++) {
-        MEGANode *n = [self.nodeList nodeAtIndex:i];
-        if (n.name.mnz_isImagePathExtension) {
-            MWPhoto *preview = [[MWPhoto alloc] initWithNode:n];
-            [self.previewsArray addObject:preview];
-        }
-    }
-    
-    // Get the index of the array using the indexPath
     NSInteger index = 0;
     for (NSInteger i = 0; i < indexPath.section; i++) {
         NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:i];
@@ -553,17 +549,24 @@
     }
     
     NSInteger videosCount = 0;
-    for (NSInteger i = 0; i < index + indexPath.row; i++) {
+    NSInteger count = index + indexPath.row;
+    for (NSInteger i = 0; i < count; i++) {
         MEGANode *n = [self.nodeList nodeAtIndex:i];
-        if (!n.name.mnz_isImagePathExtension) {
+        if (n.isFile && n.name.mnz_videoPathExtension) {
             videosCount++;
+        }
+        
+        if (!n.name.mnz_isImagePathExtension && !n.name.mnz_isVideoPathExtension) {
+            count++;
         }
     }
     
     index += indexPath.row - videosCount;
     
-    MEGANode *node = [self.nodeList nodeAtIndex:(index + videosCount)];
-    
+    NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
+    NSString *key = [dict.allKeys objectAtIndex:0];
+    NSArray *array = [dict objectForKey:key];
+    MEGANode *node = [array objectAtIndex:indexPath.row];
     
     if (![self.photosCollectionView allowsMultipleSelection]) {
         if (node.name.mnz_isImagePathExtension) {
