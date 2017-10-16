@@ -17,9 +17,14 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.7.2</string>
+	<string>3.7.3</string>
 	<key>CFBundleVersion</key>
-	<string>68</string>
+	<string>70</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>
@@ -52,10 +57,5 @@
 		<string>SF-UI-Text-Regular.otf</string>
 		<string>SF-UI-Text-RegularItalic.otf</string>
 	</array>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 </dict>
 </plist>
