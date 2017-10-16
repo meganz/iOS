@@ -8,7 +8,6 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
-#import "UIViewController+MNZCategory.h"
 
 #import "NodeTableViewCell.h"
 
@@ -55,9 +54,6 @@
     self.tableView.emptyDataSetDelegate = self;
     
     [self setupBrowser];
-    if (self.parentNode && self.parentNode.handle != [[MEGASdkManager sharedMEGASdk] rootNode].handle) {
-        [self mnz_customBackBarButtonItem];
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -346,7 +342,12 @@
     
     self.toolBarNewFolderBarButtonItem.enabled = boolValue;
     
-    self.toolBarMoveBarButtonItem.enabled = boolValue;
+    MEGANode *firstNode = self.selectedNodesArray.firstObject;
+    if (self.browserAction == BrowserActionMove && self.parentNode.handle == firstNode.parentHandle) {
+        self.toolBarMoveBarButtonItem.enabled = NO;
+    } else {
+        self.toolBarMoveBarButtonItem.enabled = boolValue;
+    }
     self.toolBarCopyBarButtonItem.enabled = boolValue;
     self.toolBarSaveInMegaBarButtonItem.enabled = boolValue;
     self.toolbarSendBarButtonItem.enabled = boolValue;
@@ -428,9 +429,7 @@
         [textField addTarget:self action:@selector(alertControllerShouldEnableDefaultButtonForTextField:) forControlEvents:UIControlEventEditingChanged];
     }];
     
-    [newFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        [newFolderAlertController dismissViewControllerAnimated:YES completion:nil];
-    }]];
+    [newFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     UIAlertAction *createFolderAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {

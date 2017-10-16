@@ -123,13 +123,18 @@
 #pragma mark - Language
 
 - (void)languageCompatibility {
-    
-    NSString *currentLanguageID = [[LocalizationSystem sharedLocalSystem] getLanguage];
-    
-    if ([Helper isLanguageSupported:currentLanguageID]) {
-        [[LocalizationSystem sharedLocalSystem] setLanguage:currentLanguageID];
+    NSString *languageCode = [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] objectForKey:@"languageCode"];
+    if (languageCode) {
+        [[LocalizationSystem sharedLocalSystem] setLanguage:languageCode];
+        [[MEGASdkManager sharedMEGASdk] setLanguageCode:languageCode];
     } else {
-        [self setLanguage:currentLanguageID];
+        NSString *currentLanguageID = [[LocalizationSystem sharedLocalSystem] getLanguage];
+        
+        if ([Helper isLanguageSupported:currentLanguageID]) {
+            [[LocalizationSystem sharedLocalSystem] setLanguage:currentLanguageID];
+        } else {
+            [self setLanguage:currentLanguageID];
+        }
     }
 }
 
@@ -202,6 +207,7 @@
     [SVProgressHUD setBackgroundColor:[UIColor mnz_grayF7F7F7]];
     [SVProgressHUD setForegroundColor:[UIColor mnz_gray666666]];
     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
+    [SVProgressHUD setHapticsEnabled:YES];
     
     [SVProgressHUD setSuccessImage:[UIImage imageNamed:@"hudSuccess"]];
     [SVProgressHUD setErrorImage:[UIImage imageNamed:@"hudError"]];

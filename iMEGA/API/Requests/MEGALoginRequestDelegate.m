@@ -30,13 +30,15 @@
 #pragma mark - Private
 
 - (NSString *)timeFormatted:(NSUInteger)totalSeconds {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateStyle:NSDateFormatterNoStyle];
-    [formatter setTimeStyle:NSDateFormatterMediumStyle];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateStyle = NSDateFormatterNoStyle;
+    dateFormatter.timeStyle = NSDateFormatterMediumStyle;
+    NSString *currentLanguageID = [[LocalizationSystem sharedLocalSystem] getLanguage];
+    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:currentLanguageID];
     
     NSDate *date = [NSDate dateWithTimeIntervalSinceNow:totalSeconds];
     
-    return [formatter stringFromDate:date];
+    return [dateFormatter stringFromDate:date];
 }
 
 #pragma mark - MEGARequestDelegate
@@ -90,8 +92,7 @@
         }
         
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         
         [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:alertController animated:YES completion:nil];
         

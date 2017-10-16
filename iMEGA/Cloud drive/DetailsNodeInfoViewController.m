@@ -4,22 +4,21 @@
 #import "SVProgressHUD.h"
 #import "UIImage+GKContact.h"
 
+#import "GetLinkActivity.h"
 #import "Helper.h"
+#import "MEGAActivityItemProvider.h"
+#import "MEGAReachabilityManager.h"
+#import "MEGAStore.h"
 #import "UIImageView+MNZCategory.h"
 
 #import "BrowserViewController.h"
-#import "CloudDriveTableViewController.h"
-#import "NodeTableViewCell.h"
 #import "ContactsViewController.h"
 #import "MEGANavigationController.h"
-#import "MEGAReachabilityManager.h"
-#import "GetLinkActivity.h"
-#import "ShareFolderActivity.h"
+#import "MEGAShareRequestDelegate.h"
+#import "NodeTableViewCell.h"
 #import "OpenInActivity.h"
 #import "RemoveLinkActivity.h"
-#import "MEGAActivityItemProvider.h"
-#import "MEGAShareRequestDelegate.h"
-#import "MEGAStore.h"
+#import "ShareFolderActivity.h"
 
 @interface DetailsNodeInfoViewController () <UIAlertViewDelegate, UIDocumentInteractionControllerDelegate,UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MEGADelegate> {
     UIAlertView *cancelDownloadAlertView;
@@ -179,18 +178,6 @@
         if ([self.node isFolder]) {
             [self.navigationController popViewControllerAnimated:YES];
         }
-    }
-}
-
-- (void)getLink {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [[MEGASdkManager sharedMEGASdk] exportNode:self.node];
-    }
-}
-
-- (void)disableLink {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [[MEGASdkManager sharedMEGASdk] disableExportNode:self.node];
     }
 }
 

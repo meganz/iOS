@@ -52,6 +52,8 @@
 "loggedOutFromAnotherLocation"="נותקת ממכשיר זה ממקום אחר";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="מפתח ה-SSL של השרת לא אומת. ייתכן ואתה קורבן של התקפת איש-באמצע.";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -84,8 +86,10 @@
 "accountNotConfirmed"="אנא בדוק את תיבת הדואר שלך על מנת לאשר את חשבונך.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="החשבון שלך נחסם. אנא צור קשר עם support@mega.nz";
-/* Message shown when the user writes an invalid format in the email field  */
+/* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="הכנס אימייל תקין";
+/* Add contacts and share dialog error message when user try to add wrong email address */
+"theEmailAddressFormatIsInvalid"="כתובת המייל איננה תקינה";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="הכנס סיסמא תקינה";
 /* Hint text to suggest that the user has to write his email */
@@ -270,6 +274,10 @@
 "getLink"="קבל קישור";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="קבל קישור";
+/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
+"updateLink"="עדכן קישור";
+/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
+"updateLinks"="עדכן קישורים";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="יוצר קישור...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -278,6 +286,38 @@
 "linkCopied"="קישור הועתק";
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="הקישורים הועתקו";
+/* Text of the button after the links were copied to the clipboard */
+"copiedToTheClipboard"="הועתק";
+/* A title for the Copyright Warning dialog. */
+"copyrightWarning"="אזהרות זכויות יוצרים";
+/* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
+"copyrightWarningToAll"="אזהרת הפרת זכויות יוצרים עבור כל המשתמשים";
+/* String already exists: 367, but we need to split paragraphs. */
+"copyrightMessagePart1"="MEGA מכבדת את זכויות היוצרים של אחרים ודורשת שמשתמשי אחסון ענן MEGA להיענות לחוקי זכויות היוצרים.";
+/* String already exists: 367, but we need to split paragraphs */
+"copyrightMessagePart2"="אסור לחלוטין להשתמש באחסון הענן של MEGA כדי להפר זכויות יוצרים. אסור לכם להעלאות, להוריד, לאחסן, לשתף, להציג, להזרים, להפיץ, לשלוח אימייל, לקשר, לשדר או במילים אחרות לא ליצור עותק זמין של הקבצים, המידע, או תוכן שמפר זכויות יוצרים או זכויות הקניין של כל אדם.";
+/* button caption text that the user clicks when he agrees */
+"agree"="מסכים";
+/* button caption text that the user clicks when he disagrees */
+"disagree"="Disagree";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
+"linkWithoutKey"="קישור ללא מפתח";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
+"linkWithKey"="קישור עם מפתח";
+/* An alert dialog for the Get Link feature */
+"proOnly"="(רק PRO)";
+/* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
+"setExpiryDate"="קבע תאריך תפוגה";
+/* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
+"setPasswordProtection"="הגדר הגנה עם סיסמא";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypt"="הצפן";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypted"="מוצפן";
+/* Title for a button to copy the link to the clipboard */
+"copyLink"="העתק קישור";
+/* Title for a button that copies the key of the link to the clipboard */
+"copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="פתח עם...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -552,7 +592,7 @@
 "off"="כבוי";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
 "on"="מופעל";
-/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+/* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="אפשרויות";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="העלה סרטים";
@@ -778,6 +818,58 @@
 "viewAndEditProfile"="View and edit profile";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="פרופיל";
+/* Title of the Achievements section */
+"achievementsTitle"="הישגים";
+/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
+"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+/* Indicating text for when "you invite your friends" */
+"inviteYourFriends"="הזמן חברים";
+/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
+"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* Text shown to explain how and where you can invite friends */
+"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+/*  */
+"insertYourFriendsEmails"="הכנס מייל(ים) של חבר שלך:";
+/*  */
+"howItWorks"="איך זה עובד";
+/*  */
+"howItWorksMain"="חבריך צריך להירשם לחשבון חינמי ב-MEGA [S]ולהתקין לפחות אפליקציה אחת של MEGA[/S] (או השירות למחשב או אחת מאפליקציות המובייל שלנו)";
+/*  */
+"howItWorksSecondary"="תוכל להודיע לחבריך בכל דרך. תזכה בקרדיט עליו אם הכנסת את כתובת המייל שלו לפני שהוא נרשם איתה.";
+/* A message which is shown once someone has invited a friend as part of the achievements program. */
+"howItWorksTertiary"="לא תקבל קרדיט על הזמנת משתמש שכבר השתמש ב-MEGA וגם לא תקבל דחייה עליו.";
+/* Header of block with achievements bonuses. */
+"unlockedBonuses"="בונוסים הניתנים להשגה:";
+/* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
+"storageQuota"="מכסת אחסון";
+/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
+"transferQuota"="מכסת תעבורה";
+/* The user's achieved base quota */
+"accountBaseQuota"="מכסת תעבורה של החשבון";
+/* achievement type */
+"registrationBonus"="בונוס הרשמה";
+/* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
+"registrationBonusExplanation"="קיבלת תוספת של %1 לנפח האחסון כבונוס הרשמה.";
+/* achievement type */
+"referralBonuses"="בונוסים על הפניות";
+/*  */
+"installMEGASync"="התקן MEGAsync";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installMEGASyncCompletedExplanation"="קיבלת תוספת של %1 לנפח האחסון ו-%2 למכסת התעבורה שלך עבור התקנת MEGAsync.";
+/*  */
+"installOurMobileApp"="התקן את אפליקציית המובייל שלנו";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installOurMobileAppCompletedExplanation"="קיבלת תוספת של %1 לנפח האחסון ו-%2 למכסת התעבורה שלך עבור התקנת אפליקציית מובייל שלנו.";
+/*  */
+"xDaysLeft"="%1 ימים נשארו";
+/* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
+"bonusExpiresIn"="(בונוס פג תוקף בעוד [S]%1[/S] %2)";
+/* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
+"months"="חודשים";
+/*  */
+"days"="ימים";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"expired"="פג תוקף";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="התנתק";
 /* String shown when you are logging out of your account. */
@@ -822,6 +914,8 @@
 "upgradeAccount"="שדרג חשבון";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="תוכל לשדרג מאוחר יותר ב\"חשבון שלי\"";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
+"cloudDriveIsAlmostFull"="[S]אחסון הענן שלך כמעט מלא.[/S] [A]שדרג עכשיו[/A] לחשבון PRU וקבל [S]עד 4TB (4096 GB)[/S] של נפח אחסון בענן.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="אחסון";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -1024,12 +1118,14 @@
 "retry"="נסה שנית";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="מחק הודעה";
-/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="שלח מדיה";
+/*  */
+"fromCloudDrive"="From Cloud drive";
+/*  */
+"fromDevice"="From device";
+/* referring to a contact in the contact list of the user */
+"contact"="צור קשר";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="שלח איש קשר";
-/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
-"addFromMyCloudDrive"="הוסף מהכונן בענן שלי";
 /* */
 "done"="מוכן";
 /* Button label for sending file attachments through the chat to another user. */

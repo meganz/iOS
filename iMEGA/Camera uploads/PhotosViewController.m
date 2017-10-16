@@ -81,6 +81,8 @@
     [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
     
     [self calculateSizeForItem];
+    
+    [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -151,8 +153,15 @@
     df.locale = [NSLocale currentLocale];
     df.dateFormat = @"LLLL yyyy";
     
+    self.previewsArray = [[NSMutableArray alloc] init];
+    
     for (NSInteger i = 0; i < [self.nodeList.size integerValue]; i++) {
         MEGANode *node = [self.nodeList nodeAtIndex:i];
+        
+        if (node.name.mnz_isImagePathExtension) {
+            MWPhoto *preview = [[MWPhoto alloc] initWithNode:node];
+            [self.previewsArray addObject:preview];
+        }
         
         if (!node.name.mnz_isImagePathExtension && !node.name.mnz_isVideoPathExtension) {
             continue;
@@ -340,6 +349,12 @@
         [self.navigationItem setTitle:AMLocalizedString(@"selectTitle", @"Select items")];
         [self.photosCollectionView setAllowsMultipleSelection:YES];
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+        
+        [self.toolbar setAlpha:0.0];
+        [self.tabBarController.tabBar addSubview:self.toolbar];
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:1.0];
+        }];
     } else {
         [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
         allNodesSelected = NO;
@@ -348,16 +363,18 @@
         [self.selectedItemsDictionary removeAllObjects];
         [self.photosCollectionView reloadData];
         self.navigationItem.leftBarButtonItems = @[];
+        
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:0.0];
+        } completion:^(BOOL finished) {
+            if (finished) {
+                [self.toolbar removeFromSuperview];
+            }
+        }];
     }
     if (![self.selectedItemsDictionary count]) {
         [self setToolbarActionsEnabled:NO];
     }
-    
-    [self.tabBarController.tabBar addSubview:self.toolbar];
-    
-    [UIView animateWithDuration:animated ? .33 : 0 animations:^{
-        self.toolbar.frame = CGRectMake(0, editing ? 0 : 49 , CGRectGetWidth(self.view.frame), 49);
-    }];
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
@@ -403,9 +420,7 @@
     NSString *message = (self.selectedItemsDictionary.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"moveFilesToRubbishBinMessage", @"Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files'"), self.selectedItemsDictionary.count] : [NSString stringWithString:AMLocalizedString(@"moveFileToRubbishBinMessage", @"Alert message to confirm if the user wants to move to the Rubbish Bin '1 file'")];
     UIAlertController *moveToTheRubbishBinAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"moveToTheRubbishBin", @"Title for the action that allows you to 'Move to the Rubbish Bin' files or folders") message:message preferredStyle:UIAlertControllerStyleAlert];
     
-    [moveToTheRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }]];
+    [moveToTheRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
     
     [moveToTheRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         remainingOperations = self.selectedItemsDictionary.count;
@@ -525,17 +540,6 @@
 #pragma mark - UICollectioViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    self.previewsArray = [[NSMutableArray alloc] init];
-    
-    for (NSInteger i = 0; i < [[self.nodeList size] integerValue]; i++) {
-        MEGANode *n = [self.nodeList nodeAtIndex:i];
-        if (n.name.mnz_isImagePathExtension) {
-            MWPhoto *preview = [[MWPhoto alloc] initWithNode:n];
-            [self.previewsArray addObject:preview];
-        }
-    }
-    
-    // Get the index of the array using the indexPath
     NSInteger index = 0;
     for (NSInteger i = 0; i < indexPath.section; i++) {
         NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:i];
@@ -545,17 +549,24 @@
     }
     
     NSInteger videosCount = 0;
-    for (NSInteger i = 0; i < index + indexPath.row; i++) {
+    NSInteger count = index + indexPath.row;
+    for (NSInteger i = 0; i < count; i++) {
         MEGANode *n = [self.nodeList nodeAtIndex:i];
-        if (!n.name.mnz_isImagePathExtension) {
+        if (n.isFile && n.name.mnz_videoPathExtension) {
             videosCount++;
+        }
+        
+        if (!n.name.mnz_isImagePathExtension && !n.name.mnz_isVideoPathExtension) {
+            count++;
         }
     }
     
     index += indexPath.row - videosCount;
     
-    MEGANode *node = [self.nodeList nodeAtIndex:(index + videosCount)];
-    
+    NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
+    NSString *key = [dict.allKeys objectAtIndex:0];
+    NSArray *array = [dict objectForKey:key];
+    MEGANode *node = [array objectAtIndex:indexPath.row];
     
     if (![self.photosCollectionView allowsMultipleSelection]) {
         if (node.name.mnz_isImagePathExtension) {
