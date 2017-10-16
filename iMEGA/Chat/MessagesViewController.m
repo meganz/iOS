@@ -882,8 +882,6 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
     } else if (message.isManagementMessage) {
         cell.textView.attributedText = message.attributedText;
     } else if (!message.isMediaMessage) {
-        cell.textView.selectable = NO;
-        cell.textView.userInteractionEnabled = NO;
         cell.textView.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
         if (message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
             cell.textView.textColor = [UIColor mnz_black333333_02];
