@@ -52,8 +52,10 @@
 "loggedOutFromAnotherLocation"="Anda telah keluar dari perangkat ini dari lokasi lain";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="SSL key server tidak bisa diverifikasi. Anda mungkin mengalami serangan man-in-the-middle.";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
-"takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
+"takingLongerThanExpected"="Prosesnya memakan waktu lebih lama dari yang diperkirakan. Mohon tunggu...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Harap masuk ke akun anda";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -84,8 +86,10 @@
 "accountNotConfirmed"="Harap cek e-mail anda dan ikuti link untuk mengkonfirmasi akun anda.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Akun anda telah di-blok. Harap kontak support@mega.nz";
-/* Message shown when the user writes an invalid format in the email field  */
+/* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Masukan email yang benar";
+/* Add contacts and share dialog error message when user try to add wrong email address */
+"theEmailAddressFormatIsInvalid"="Format alamat email tidak sah";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="Masukan password yang benar";
 /* Hint text to suggest that the user has to write his email */
@@ -270,6 +274,10 @@
 "getLink"="Dapatkan tautan";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Dapatkan links";
+/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
+"updateLink"="Update link";
+/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
+"updateLinks"="Update links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Membuat link...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -278,6 +286,38 @@
 "linkCopied"="Link terkopi";
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="Link terkopi";
+/* Text of the button after the links were copied to the clipboard */
+"copiedToTheClipboard"="Disalin ke clipboard";
+/* A title for the Copyright Warning dialog. */
+"copyrightWarning"="Peringatan Hak Cipta";
+/* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
+"copyrightWarningToAll"="Peringatan hak cipta untuk semua pengguna";
+/* String already exists: 367, but we need to split paragraphs. */
+"copyrightMessagePart1"="MEGA menghargai hak cipta orang lain dan mengharuskan pengguna layanan MEGA cloud menuruti hukum hak cipta.";
+/* String already exists: 367, but we need to split paragraphs */
+"copyrightMessagePart2"="Anda dilarang keras menggunakan layanan MEGA cloud untuk melanggar hak cipta. Anda tidak boleh upload, download, simpan, bagi, menampilkan, stream, mendistribusi, email, link, mentransmisi atau membuat tersedia file, data, atau kontent apapun yang melanggar hak cipta atau hak milik perorangan atau lembaga.";
+/* button caption text that the user clicks when he agrees */
+"agree"="Setuju";
+/* button caption text that the user clicks when he disagrees */
+"disagree"="Tidak setuju";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
+"linkWithoutKey"="Link tanpa key";
+/* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
+"linkWithKey"="Link dengan key";
+/* An alert dialog for the Get Link feature */
+"proOnly"="(HANYA PRO)";
+/* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
+"setExpiryDate"="Set tanggal expiration";
+/* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
+"setPasswordProtection"="Atur proteksi password";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypt"="Encrypt";
+/* The text of a button. This button will encrypt a link with a password. */
+"encrypted"="Terenkripsi";
+/* Title for a button to copy the link to the clipboard */
+"copyLink"="Salin tautan";
+/* Title for a button that copies the key of the link to the clipboard */
+"copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Buka dengan...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -552,7 +592,7 @@
 "off"="Off";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
 "on"="On";
-/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+/* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Pilihan";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Upload video";
@@ -569,7 +609,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Ubah kata sandi";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Mengekspor Recovery Key dan menyimpannya dalam lokasi yang aman membolehkan anda untuk mengembalikan akun anda jika kehilangan password tanpa harus kehilangan data.";
+"exportMasterKeyFooter"="Menyimpan Recovery Key dan menyimpannya di lokasi yang aman memungkinkan Anda memulihkan akun Anda jika terjadi kehilangan kata kunci tanpa kehilangan data.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Mengapa saya butuh Recovery Key?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -775,9 +815,61 @@
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Akun saya";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
-"viewAndEditProfile"="View and edit profile";
+"viewAndEditProfile"="Melihat dan mengedit profil";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Profil";
+/* Title of the Achievements section */
+"achievementsTitle"="Pencapaian";
+/* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
+"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+/* Indicating text for when "you invite your friends" */
+"inviteYourFriends"="Undang temanmu";
+/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
+"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* Text shown to explain how and where you can invite friends */
+"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+/*  */
+"insertYourFriendsEmails"="Masukkan email teman anda:";
+/*  */
+"howItWorks"="Cara kerja";
+/*  */
+"howItWorksMain"="Teman anda harus mendaftar akun gratis MEGA dan  [S]install setidaknya satu MEGA client application[/S] (antara sync client atau salah satu mobile apps kami)";
+/*  */
+"howItWorksSecondary"="Anda dapat mengabarkan teman anda melalui metoda apapun. Anda akan menerima quota jika anda telah memasukan email teman anda disini sebelum mereka mendaftar dengan email tersebut.";
+/* A message which is shown once someone has invited a friend as part of the achievements program. */
+"howItWorksTertiary"="Anda tidak akan menerima kredit untuk mengundang seseorang yang telah menggunakan MEGA sebelumnya dan anda tidak akan dikabari tentang penolakkan tersebut.";
+/* Header of block with achievements bonuses. */
+"unlockedBonuses"="Bonus unlocked:";
+/* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
+"storageQuota"="Quota Storage";
+/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
+"transferQuota"="Quota Transfer";
+/* The user's achieved base quota */
+"accountBaseQuota"="Quota dasar account";
+/* achievement type */
+"registrationBonus"="Bonus pendaftaran";
+/* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
+"registrationBonusExplanation"="Anda telah menerima %1 storage space sebagai bonus registrasi gratis anda.";
+/* achievement type */
+"referralBonuses"="Bonus referral";
+/*  */
+"installMEGASync"="Install MEGAsync";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installMEGASyncCompletedExplanation"="Anda telah menerima %1 storage space dan %2 transfer quota karena menginstall MEGAsync.";
+/*  */
+"installOurMobileApp"="Install mobile app kami";
+/* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
+"installOurMobileAppCompletedExplanation"="Anda telah menerima %1 storage space dan %2 transfer quota karena telah menginstall mobile app kami";
+/*  */
+"xDaysLeft"="%1 hari tersisa";
+/* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
+"bonusExpiresIn"="(Bonus expires dalam [S]%1[/S] %2)";
+/* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
+"months"="bulan";
+/*  */
+"days"="hari";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"expired"="Kadarluarsa";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Keluar";
 /* String shown when you are logging out of your account. */
@@ -822,6 +914,8 @@
 "upgradeAccount"="Upgrade akun";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Anda dapat upgrade nanti di Akun Saya";
+/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
+"cloudDriveIsAlmostFull"="[S]Cloud Drive hampir penuh.[/S] [A]Upgrade sekarang[/A] ke akun PRO dan dapatkan [S]sampai 4 TB (4096 GB)[/S] cloud storage space.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Gudang";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -1024,12 +1118,14 @@
 "retry"="Ulangi";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Hapus pesan";
-/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
-"sendMedia"="Kirim Media";
+/*  */
+"fromCloudDrive"="Dari Cloud drive";
+/*  */
+"fromDevice"="Dari perangkat";
+/* referring to a contact in the contact list of the user */
+"contact"="Kontak";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Kirim kontak";
-/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
-"addFromMyCloudDrive"="Tambahkan ke Cloud Drive saya";
 /* */
 "done"="Selesai";
 /* Button label for sending file attachments through the chat to another user. */
@@ -1128,9 +1224,9 @@
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Error tidak diketahui";
 /* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="You will need to restart MEGA after changing the language";
+"languageRestartAlert"="Anda harus me-restart MEGA setelah mengganti bahasa";
 /* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
-"languageRestartNotification"="Language changed. Tap to restart.";
+"languageRestartNotification"="Bahasa terganti. Tap untuk merestart.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA adalah cloud storage aman yang memberi anda 50 GB storage space gratis. Tidak sama seperti penyedia cloud storage lainnya, data anda dienkripsi dan dekripsi oleh perangkat klien anda dan tidak pernah oleh kami.";

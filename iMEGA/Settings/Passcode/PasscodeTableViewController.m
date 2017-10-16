@@ -5,7 +5,6 @@
 #import <LocalAuthentication/LAContext.h>
 
 #import "Helper.h"
-#import "UIViewController+MNZCategory.h"
 
 @interface PasscodeTableViewController () {
     BOOL wasPasscodeAlreadyEnabled;
@@ -39,8 +38,6 @@
     
     wasPasscodeAlreadyEnabled = [LTHPasscodeViewController doesPasscodeExist];
     [[LTHPasscodeViewController sharedUser] setHidesCancelButton:NO];
-    
-    [self mnz_customBackBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

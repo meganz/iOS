@@ -7,7 +7,6 @@
 #import "MEGAReachabilityManager.h"
 #import "Helper.h"
 #import "NSMutableAttributedString+MNZCategory.h"
-#import "UIViewController+MNZCategory.h"
 
 #import "TransferTableViewCell.h"
 
@@ -58,8 +57,6 @@
     self.allTransfersIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
     self.downloadTransfersIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
     self.uploadTransfersIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
-    
-    [self mnz_customBackBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -122,9 +119,7 @@
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.tableView reloadEmptyDataSet];
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        
-    }];
+    } completion:nil];
 }
 
 #pragma mark - UITableViewDataSource

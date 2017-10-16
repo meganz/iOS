@@ -17,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.7.2</string>
+	<string>3.7.3</string>
 	<key>CFBundleVersion</key>
-	<string>68</string>
+	<string>70</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>
@@ -34,6 +34,7 @@
 			<key>UIDocumentPickerSupportedFileTypes</key>
 			<array>
 				<string>public.content</string>
+				<string>public.data</string>
 			</array>
 		</dict>
 		<key>NSExtensionMainStoryboard</key>

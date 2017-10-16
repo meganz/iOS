@@ -14,7 +14,6 @@
 #import "OfflineTableViewCell.h"
 #import "OpenInActivity.h"
 #import "SortByTableViewController.h"
-#import "UIViewController+MNZCategory.h"
 
 #import "MEGAStore.h"
 #import "MEGAAVViewController.h"
@@ -71,7 +70,7 @@ static NSString *kisDirectory = @"kisDirectory";
     
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
-    [self.toolbar setFrame:CGRectMake(0, 49, CGRectGetWidth(self.view.frame), 49)];    
+    [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];    
     [self.toolbar setItems:@[self.activityBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
     
     UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
@@ -81,8 +80,6 @@ static NSString *kisDirectory = @"kisDirectory";
         [negativeSpaceBarButtonItem setWidth:-4.0];
     }
     [self.navigationItem setRightBarButtonItems:@[negativeSpaceBarButtonItem, self.editBarButtonItem, self.sortByBarButtonItem]];
-        
-    [self mnz_customBackBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -138,9 +135,7 @@ static NSString *kisDirectory = @"kisDirectory";
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.tableView reloadEmptyDataSet];
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        
-    }];
+    } completion:nil];
 }
 
 #pragma mark - Private
@@ -657,11 +652,25 @@ static NSString *kisDirectory = @"kisDirectory";
         if (!isSwipeEditing) {
             self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         }
+        
+        [self.toolbar setAlpha:0.0];
+        [self.tabBarController.tabBar addSubview:self.toolbar];
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:1.0];
+        }];
     } else {
         [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
         allItemsSelected = NO;
         self.selectedItems = nil;
         self.navigationItem.leftBarButtonItems = @[];
+        
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:0.0];
+        } completion:^(BOOL finished) {
+            if (finished) {
+                [self.toolbar removeFromSuperview];
+            }
+        }];
     }
     
     if (!self.selectedItems) {
@@ -670,11 +679,6 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.activityBarButtonItem setEnabled:NO];
         [self.deleteBarButtonItem setEnabled:NO];
     }
-    [self.tabBarController.tabBar addSubview:self.toolbar];
-    
-    [UIView animateWithDuration:animated ? .33 : 0 animations:^{
-        self.toolbar.frame = CGRectMake(0, editing ? 0 : 49 , CGRectGetWidth(self.view.frame), 49);
-    }];
     
     isSwipeEditing = NO;
 }
