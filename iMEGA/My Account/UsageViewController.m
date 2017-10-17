@@ -75,7 +75,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.navigationItem setTitle:AMLocalizedString(@"usage", nil)];
+    [self.navigationItem setTitle:AMLocalizedString(@"usedStorage", @"Title of the Used Storage section")];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
