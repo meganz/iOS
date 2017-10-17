@@ -338,34 +338,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fjn-Rn-zND">
                                 <rect key="frame" x="0.0" y="20" width="375" height="180"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MaN-gA-xPj" userLabel="Usage Button">
-                                        <rect key="frame" x="73.5" y="51" width="26" height="26"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="26" id="qiJ-YJ-t7b"/>
-                                            <constraint firstAttribute="width" constant="26" id="tOU-pQ-FqA"/>
-                                        </constraints>
-                                        <state key="normal" image="usage">
-                                            <color key="titleShadowColor" red="0.92941176470588238" green="0.92941176470588238" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="usageTouchUpInside:" destination="0iP-kU-mqG" eventType="touchUpInside" id="5mg-AK-L2Q"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Usage" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NW6-GD-9fB">
-                                        <rect key="frame" x="72" y="82" width="29" height="12"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="80" id="NDK-I1-B5d"/>
-                                            <constraint firstAttribute="height" constant="12" id="fRk-Dx-ARA"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="10"/>
-                                        <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="NDK-I1-B5d"/>
-                                            </mask>
-                                        </variation>
-                                    </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fhg-mo-BVo">
                                         <rect key="frame" x="144.5" y="21" width="86" height="86"/>
                                         <constraints>
@@ -380,7 +352,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oyo-dx-6pw">
-                                        <rect key="frame" x="168.5" y="113" width="40" height="21"/>
+                                        <rect key="frame" x="167" y="113" width="41.5" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="lkk-Ek-olm"/>
                                         </constraints>
@@ -402,67 +374,27 @@
                                             </mask>
                                         </variation>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a9q-w9-7He" userLabel="Settings Button">
-                                        <rect key="frame" x="275.5" y="51" width="26" height="26"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="26" id="H6U-vx-CVu"/>
-                                            <constraint firstAttribute="height" constant="26" id="w7w-lH-j9c"/>
-                                        </constraints>
-                                        <state key="normal" image="settings">
-                                            <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="settingsTouchUpInside:" destination="0iP-kU-mqG" eventType="touchUpInside" id="Zt7-0M-KaN"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4lf-R0-nQj">
-                                        <rect key="frame" x="270.5" y="82" width="37" height="12"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="80" id="3eW-Wa-kgL"/>
-                                            <constraint firstAttribute="height" constant="12" id="8gg-Gn-iya"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="10"/>
-                                        <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="3eW-Wa-kgL"/>
-                                            </mask>
-                                        </variation>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.9686274528503418" green="0.9686274528503418" blue="0.9686274528503418" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="fhg-mo-BVo" firstAttribute="leading" secondItem="MaN-gA-xPj" secondAttribute="trailing" constant="45" id="0c5-m7-06F"/>
                                     <constraint firstItem="fhg-mo-BVo" firstAttribute="centerY" secondItem="Fjn-Rn-zND" secondAttribute="centerY" id="AwZ-jr-pwC">
                                         <variation key="heightClass=compact" constant="-44"/>
                                     </constraint>
                                     <constraint firstItem="oyo-dx-6pw" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Fjn-Rn-zND" secondAttribute="leading" constant="20" id="Azc-1D-kfc"/>
                                     <constraint firstItem="Xs0-A0-XA4" firstAttribute="top" secondItem="oyo-dx-6pw" secondAttribute="bottom" constant="4" id="Dx4-DO-Oaq"/>
-                                    <constraint firstItem="4lf-R0-nQj" firstAttribute="centerY" secondItem="a9q-w9-7He" secondAttribute="centerY" id="H1l-Gw-0gr"/>
-                                    <constraint firstItem="a9q-w9-7He" firstAttribute="centerY" secondItem="fhg-mo-BVo" secondAttribute="centerY" id="J7e-rd-vzb"/>
-                                    <constraint firstItem="NW6-GD-9fB" firstAttribute="top" secondItem="MaN-gA-xPj" secondAttribute="bottom" constant="5" id="NwX-2K-y7P"/>
-                                    <constraint firstItem="4lf-R0-nQj" firstAttribute="centerX" secondItem="a9q-w9-7He" secondAttribute="centerX" id="RWk-1P-Tgf"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="oyo-dx-6pw" secondAttribute="trailing" constant="20" id="SXo-16-6aL"/>
                                     <constraint firstAttribute="height" constant="180" id="Srp-t2-Nm9"/>
-                                    <constraint firstItem="MaN-gA-xPj" firstAttribute="centerY" secondItem="fhg-mo-BVo" secondAttribute="centerY" id="V4q-jk-IwC"/>
                                     <constraint firstItem="oyo-dx-6pw" firstAttribute="centerX" secondItem="fhg-mo-BVo" secondAttribute="centerX" id="bu3-mn-lwB"/>
                                     <constraint firstItem="fhg-mo-BVo" firstAttribute="top" secondItem="Fjn-Rn-zND" secondAttribute="top" constant="21" id="fHy-89-16n"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Xs0-A0-XA4" secondAttribute="trailing" constant="20" id="g2a-uw-cbx"/>
                                     <constraint firstItem="Xs0-A0-XA4" firstAttribute="centerX" secondItem="oyo-dx-6pw" secondAttribute="centerX" id="hRd-Hb-Wwe"/>
                                     <constraint firstItem="fhg-mo-BVo" firstAttribute="centerX" secondItem="Fjn-Rn-zND" secondAttribute="centerX" id="j46-Sp-WMd"/>
-                                    <constraint firstItem="4lf-R0-nQj" firstAttribute="top" secondItem="a9q-w9-7He" secondAttribute="bottom" constant="5" id="jlg-yJ-yQa"/>
-                                    <constraint firstItem="NW6-GD-9fB" firstAttribute="centerX" secondItem="MaN-gA-xPj" secondAttribute="centerX" id="nnP-8l-1SX"/>
                                     <constraint firstItem="Xs0-A0-XA4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Fjn-Rn-zND" secondAttribute="leading" constant="20" id="pnY-K9-t8b"/>
-                                    <constraint firstItem="4lf-R0-nQj" firstAttribute="top" secondItem="a9q-w9-7He" secondAttribute="top" id="sWt-b4-XRC"/>
-                                    <constraint firstItem="a9q-w9-7He" firstAttribute="leading" secondItem="fhg-mo-BVo" secondAttribute="trailing" constant="45" id="vao-tt-1nm"/>
                                     <constraint firstItem="oyo-dx-6pw" firstAttribute="top" secondItem="fhg-mo-BVo" secondAttribute="bottom" constant="6" id="z2h-aE-GMB"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="AwZ-jr-pwC"/>
-                                        <exclude reference="H1l-Gw-0gr"/>
-                                        <exclude reference="sWt-b4-XRC"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=compact">
@@ -565,7 +497,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account Type" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oAz-KQ-toW" userLabel="Account Type Label">
-                                        <rect key="frame" x="151" y="79" width="73.5" height="14"/>
+                                        <rect key="frame" x="149" y="79" width="78" height="14"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="CRo-V7-6cp"/>
                                         </constraints>
@@ -582,7 +514,7 @@
                                         <rect key="frame" x="0.0" y="94" width="375" height="80"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Free" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vXH-an-191" userLabel="FREE Status Label">
-                                                <rect key="frame" x="168.5" y="0.0" width="39.5" height="20"/>
+                                                <rect key="frame" x="168.5" y="0.0" width="38" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="QdK-4m-mO6"/>
                                                 </constraints>
@@ -693,7 +625,7 @@
                                         </variation>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hdr-nD-Am1">
-                                        <rect key="frame" x="0.0" y="237" width="375" height="32"/>
+                                        <rect key="frame" x="0.0" y="237" width="375" height="33"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                         <state key="normal" title="Logout">
                                             <color key="titleColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -703,7 +635,7 @@
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PAI-nV-qvF" userLabel="Line Image View">
-                                        <rect key="frame" x="0.0" y="269" width="375" height="1"/>
+                                        <rect key="frame" x="0.0" y="270" width="375" height="1"/>
                                         <color key="backgroundColor" red="0.7843137255" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="Fva-ec-Z1R"/>
@@ -865,12 +797,8 @@
                         <outlet property="proStatusLabel" destination="HMJ-BG-UeS" id="TFJ-Tu-ibu"/>
                         <outlet property="proView" destination="vxM-hL-36v" id="7Hy-AM-jjF"/>
                         <outlet property="proViewTopLayoutConstraint" destination="2So-b8-SZE" id="4En-Sw-Opi"/>
-                        <outlet property="settingsButton" destination="a9q-w9-7He" id="uU1-yw-Ib7"/>
-                        <outlet property="settingsLabel" destination="4lf-R0-nQj" id="FHP-8m-Imw"/>
                         <outlet property="upgradeAccountTopLayoutConstraint" destination="lVB-Kr-3gq" id="GZe-g8-087"/>
                         <outlet property="upgradeToProButton" destination="Bck-VT-j38" id="T7h-8i-raF"/>
-                        <outlet property="usageButton" destination="MaN-gA-xPj" id="w89-Yx-ngT"/>
-                        <outlet property="usageLabel" destination="NW6-GD-9fB" id="R6T-sR-qkQ"/>
                         <outlet property="usedLabel" destination="2XS-o5-QAe" id="Gry-Ba-vGT"/>
                         <outlet property="usedLabelTopLayoutConstraint" destination="Y2Y-vK-vWk" id="UtM-I3-cla"/>
                         <outlet property="usedSpaceLabel" destination="AFi-Vi-W4J" id="ynf-yE-oJd"/>
@@ -2638,7 +2566,7 @@
                                                         </constraints>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use “ , “ to enter multiple addresses" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IwL-dM-YLd">
-                                                        <rect key="frame" x="83.5" y="19" width="210" height="16"/>
+                                                        <rect key="frame" x="83" y="19" width="210" height="16"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="16" id="TE2-Ni-cqC"/>
                                                         </constraints>
@@ -2760,8 +2688,6 @@
         <image name="inviteFriendsButton" width="44" height="44"/>
         <image name="myAccountDisclosureIndicatorRed" width="12" height="12"/>
         <image name="myAccountIcon" width="26" height="26"/>
-        <image name="settings" width="26" height="26"/>
         <image name="tabBarItem:aWE-TN-bqV:image" width="16" height="16"/>
-        <image name="usage" width="26" height="26"/>
     </resources>
 </document>
