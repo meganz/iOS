@@ -120,26 +120,14 @@
 
 - (NSMutableAttributedString *)textForSizeLabels:(NSString *)stringFromByteCount {
     
-    NSMutableAttributedString *firstPartMutableAttributedString;
+    ;
     NSMutableAttributedString *secondPartMutableAttributedString;
     
     NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
-    NSString *firstPartString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
-    NSRange firstPartRange;
-    
-    NSArray *stringComponentsArray = [firstPartString componentsSeparatedByString:@","];
-    NSString *secondPartString;
-    if ([stringComponentsArray count] > 1) {
-        NSString *integerPartString = [stringComponentsArray objectAtIndex:0];
-        NSString *fractionalPartString = [stringComponentsArray objectAtIndex:1];
-        firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:integerPartString];
-        firstPartRange = [integerPartString rangeOfString:integerPartString];
-        secondPartString = [NSString stringWithFormat:@".%@ %@", fractionalPartString, [NSString mnz_stringWithoutCountOfComponents:componentsSeparatedByStringArray]];
-    } else {
-        firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:firstPartString];
-        firstPartRange = [firstPartString rangeOfString:firstPartString];
-        secondPartString = [NSString stringWithFormat:@" %@", [NSString mnz_stringWithoutCountOfComponents:componentsSeparatedByStringArray]];
-    }
+    NSString *firstPartString = [[NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray] stringByAppendingString:@" "];
+    NSMutableAttributedString *firstPartMutableAttributedString =[[NSMutableAttributedString alloc] initWithString:firstPartString];
+    NSRange firstPartRange = [firstPartString rangeOfString:firstPartString];
+    NSString *secondPartString = [componentsSeparatedByStringArray objectAtIndex:1];
     NSRange secondPartRange = [secondPartString rangeOfString:secondPartString];
     secondPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:secondPartString];
     
