@@ -27,9 +27,6 @@
 			<key>UIDocumentPickerModes</key>
 			<array>
 				<string>UIDocumentPickerModeImport</string>
-				<string>UIDocumentPickerModeOpen</string>
-				<string>UIDocumentPickerModeExportToService</string>
-				<string>UIDocumentPickerModeMoveToService</string>
 			</array>
 			<key>UIDocumentPickerSupportedFileTypes</key>
 			<array>
