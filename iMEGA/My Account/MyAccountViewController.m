@@ -8,16 +8,10 @@
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 
-#import "UsageViewController.h"
-#import "SettingsTableViewController.h"
-
 @interface MyAccountViewController () <MEGARequestDelegate> {
     BOOL isAccountDetailsAvailable;
     
     NSNumber *localSize;
-    NSNumber *cloudDriveSize;
-    NSNumber *rubbishBinSize;
-    NSNumber *incomingSharesSize;
     NSNumber *usedStorage;
     NSNumber *maxStorage;
     
@@ -25,12 +19,6 @@
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
-
-@property (weak, nonatomic) IBOutlet UIButton *usageButton;
-@property (weak, nonatomic) IBOutlet UILabel *usageLabel;
-
-@property (weak, nonatomic) IBOutlet UIButton *settingsButton;
-@property (weak, nonatomic) IBOutlet UILabel *settingsLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *emailLabel;
 
@@ -78,9 +66,6 @@
     self.navigationItem.title = AMLocalizedString(@"profile", @"Label for any 'Profile' button, link, text, title, etc. - (String as short as possible).");
     
     self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
-    
-    [self.usageLabel setText:AMLocalizedString(@"usage", nil)];
-    [self.settingsLabel setText:AMLocalizedString(@"settingsTitle", nil)];
     
     [self.localLabel setText:AMLocalizedString(@"localLabel", @"Local")];
     [self.usedLabel setText:AMLocalizedString(@"usedSpaceLabel", @"Used")];
@@ -176,17 +161,6 @@
         MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
         
         self.megaAccountType = accountDetails.type;
-        cloudDriveSize = [accountDetails storageUsedForHandle:[[[MEGASdkManager sharedMEGASdk] rootNode] handle]];
-        rubbishBinSize = [accountDetails storageUsedForHandle:[[[MEGASdkManager sharedMEGASdk] rubbishNode] handle]];
-        
-        MEGANodeList *incomingShares = [[MEGASdkManager sharedMEGASdk] inShares];
-        NSUInteger count = incomingShares.size.unsignedIntegerValue;
-        long long incomingSharesSizeLongLong = 0;
-        for (NSUInteger i = 0; i < count; i++) {
-            MEGANode *node = [incomingShares nodeAtIndex:i];
-            incomingSharesSizeLongLong += [[[MEGASdkManager sharedMEGASdk] sizeForNode:node] longLongValue];
-        }
-        incomingSharesSize = [NSNumber numberWithLongLong:incomingSharesSizeLongLong];
         
         usedStorage = accountDetails.storageUsed;
         maxStorage = accountDetails.storageMax;
@@ -291,23 +265,6 @@
             [[MEGASdkManager sharedMEGASdk] logout];
         }
     }
-}
-
-- (IBAction)usageTouchUpInside:(UIButton *)sender {
-    
-    if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
-        NSArray *sizesArray = @[cloudDriveSize, rubbishBinSize, incomingSharesSize, usedStorage, maxStorage];
-        
-        UsageViewController *usageVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UsageViewControllerID"];
-        [self.navigationController pushViewController:usageVC animated:YES];
-        
-        [usageVC setSizesArray:sizesArray];
-    }
-}
-
-- (IBAction)settingsTouchUpInside:(UIButton *)sender {
-    SettingsTableViewController *settingsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"SettingsTableViewControllerID"];
-    [self.navigationController pushViewController:settingsTVC animated:YES];
 }
 
 #pragma mark - MEGARequestDelegate
