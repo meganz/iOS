@@ -150,8 +150,6 @@
         NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
         
         NSString *firstPartString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
-        NSNumber *number = [numberFormatter numberFromString:firstPartString];
-        firstPartString = [numberFormatter stringFromNumber:number];
 
         if ([firstPartString length] == 0) {
             firstPartString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
@@ -179,40 +177,14 @@
 }
 
 - (NSMutableAttributedString *)textForSizeLabels:(NSString *)stringFromByteCount {
-    
-    NSMutableAttributedString *firstPartMutableAttributedString;
-    NSMutableAttributedString *firstFractionalPartMutableAttributedString;
-    NSMutableAttributedString *secondPartMutableAttributedString;
-    
     NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
-    NSString *firstPartString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
-    NSRange firstPartRange;
-    
-    NSArray *stringComponentsArray = [firstPartString componentsSeparatedByString:@","];
-    NSString *secondPartString;
-    if ([stringComponentsArray count] > 1) {
-        NSString *integerPartString = [stringComponentsArray objectAtIndex:0];
-        NSString *fractionalPartString = [stringComponentsArray objectAtIndex:1];
-        firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:integerPartString];
-        firstPartRange = [integerPartString rangeOfString:integerPartString];
-        
-        fractionalPartString = [NSString stringWithFormat:@".%@ ", fractionalPartString];
-        firstFractionalPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:fractionalPartString];
-        NSRange firstFractionalPartRange = [fractionalPartString rangeOfString:fractionalPartString];
-        [firstFractionalPartMutableAttributedString addAttribute:NSFontAttributeName
-                                                           value:[UIFont mnz_SFUILightWithSize:12.0f]
-                                                           range:firstFractionalPartRange];
-        [firstPartMutableAttributedString appendAttributedString:firstFractionalPartMutableAttributedString];
-        
-        secondPartString = [NSString mnz_stringWithoutCountOfComponents:componentsSeparatedByStringArray];
-    } else {
-        firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:firstPartString];
-        firstPartRange = [firstPartString rangeOfString:firstPartString];
-        secondPartString = [NSString stringWithFormat:@" %@", [NSString mnz_stringWithoutCountOfComponents:componentsSeparatedByStringArray]];
-    }
+    NSString *firstPartString = [[NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray] stringByAppendingString:@" "];
+    NSMutableAttributedString *firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:firstPartString];
+    NSString *secondPartString = [componentsSeparatedByStringArray objectAtIndex:1];
     NSRange secondPartRange = [secondPartString rangeOfString:secondPartString];
-    secondPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:secondPartString];
+    NSMutableAttributedString *secondPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:secondPartString];
     
+    NSRange firstPartRange = [firstPartString rangeOfString:firstPartString];
     [firstPartMutableAttributedString addAttribute:NSFontAttributeName
                                              value:[UIFont mnz_SFUILightWithSize:18.0f]
                                              range:firstPartRange];
