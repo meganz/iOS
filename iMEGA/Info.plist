@@ -112,5 +112,7 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+	<key>NSContactsUsageDescription</key>
+	<string>NSContactsUsageDescription</string>
 </dict>
 </plist>
