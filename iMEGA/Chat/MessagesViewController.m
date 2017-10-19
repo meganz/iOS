@@ -1313,10 +1313,15 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
                 } else {
                     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"temporalId == %" PRIu64, message.temporalId];
                     NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
-                    NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
-                    [self.messages replaceObjectAtIndex:index withObject:message];
-                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-                    [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                    if (filteredArray.count) {
+                        NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
+                        [self.messages replaceObjectAtIndex:index withObject:message];
+                        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+                        [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                    } else {
+                        MEGALogWarning(@"Message to update is not in the array of messages");
+                        NSAssert(filteredArray.count, @"Message to update is not in the array of messages");
+                    }
                 }
                 break;
             }
@@ -1338,15 +1343,20 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
         if (message.isDeleted || message.isEdited) {
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageId == %" PRIu64, message.messageId];
             NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
-            NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-            if (message.isEdited) {
-                [self.messages replaceObjectAtIndex:index withObject:message];
-                [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
-            }
-            if (message.isDeleted) {
-                [self.messages removeObjectAtIndex:index];
-                [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+            if (filteredArray.count) {
+                NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+                if (message.isEdited) {
+                    [self.messages replaceObjectAtIndex:index withObject:message];
+                    [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                }
+                if (message.isDeleted) {
+                    [self.messages removeObjectAtIndex:index];
+                    [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                }
+            } else {
+                MEGALogWarning(@"Message to update is not in the array of messages");
+                NSAssert(filteredArray.count, @"Message to update is not in the array of messages");
             }
         }
         
