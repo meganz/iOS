@@ -1176,18 +1176,6 @@
 		949CEACE1F05121D00A3A580 /* LoginRequiredViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginRequiredViewController.m; path = iMEGA/Extensions/MEGAShare/LoginRequiredViewController.m; sourceTree = SOURCE_ROOT; };
 		94B28C231F0E464C000331E6 /* libKarere.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKarere.a; path = "iMEGA/Vendor/Karere/bindings/Objective-C/build/Release-iphoneos/libKarere.a"; sourceTree = "<group>"; };
 		94B28C241F0E464C000331E6 /* libMEGASDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMEGASDK.a; path = "iMEGA/Vendor/SDK/bindings/ios/build/Release-iphoneos/libMEGASDK.a"; sourceTree = "<group>"; };
-		94B28C271F0E473E000331E6 /* libevent_core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_core.a; path = ../sdk/bindings/ios/3rdparty/lib/libevent_core.a; sourceTree = "<group>"; };
-		94B28C281F0E473E000331E6 /* libevent_extra.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_extra.a; path = ../sdk/bindings/ios/3rdparty/lib/libevent_extra.a; sourceTree = "<group>"; };
-		94B28C291F0E473E000331E6 /* libevent_openssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_openssl.a; path = ../sdk/bindings/ios/3rdparty/lib/libevent_openssl.a; sourceTree = "<group>"; };
-		94B28C2A1F0E473E000331E6 /* libevent_pthreads.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_pthreads.a; path = ../sdk/bindings/ios/3rdparty/lib/libevent_pthreads.a; sourceTree = "<group>"; };
-		94B28C2B1F0E473E000331E6 /* libevent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent.a; path = ../sdk/bindings/ios/3rdparty/lib/libevent.a; sourceTree = "<group>"; };
-		94B28C2C1F0E473E000331E6 /* libcares.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcares.a; path = ../sdk/bindings/ios/3rdparty/lib/libcares.a; sourceTree = "<group>"; };
-		94B28C2D1F0E473E000331E6 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../sdk/bindings/ios/3rdparty/lib/libcrypto.a; sourceTree = "<group>"; };
-		94B28C2E1F0E473E000331E6 /* libcryptopp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcryptopp.a; path = ../sdk/bindings/ios/3rdparty/lib/libcryptopp.a; sourceTree = "<group>"; };
-		94B28C2F1F0E473E000331E6 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../sdk/bindings/ios/3rdparty/lib/libcurl.a; sourceTree = "<group>"; };
-		94B28C301F0E473E000331E6 /* libsodium.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsodium.a; path = ../sdk/bindings/ios/3rdparty/lib/libsodium.a; sourceTree = "<group>"; };
-		94B28C311F0E473E000331E6 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../sdk/bindings/ios/3rdparty/lib/libssl.a; sourceTree = "<group>"; };
-		94B28C321F0E473E000331E6 /* libuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuv.a; path = ../sdk/bindings/ios/3rdparty/lib/libuv.a; sourceTree = "<group>"; };
 		94E62E181F3C5252003A8DEF /* LanguageTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LanguageTableViewController.h; sourceTree = "<group>"; };
 		94E62E191F3C5252003A8DEF /* LanguageTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LanguageTableViewController.m; sourceTree = "<group>"; };
 		A81613FC1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGACreateAccountRequestDelegate.h; path = API/Requests/MEGACreateAccountRequestDelegate.h; sourceTree = "<group>"; };
@@ -2072,18 +2060,6 @@
 			isa = PBXGroup;
 			children = (
 				9419B6C51F20DC5700FEBE31 /* CoreSpotlight.framework */,
-				94B28C271F0E473E000331E6 /* libevent_core.a */,
-				94B28C281F0E473E000331E6 /* libevent_extra.a */,
-				94B28C291F0E473E000331E6 /* libevent_openssl.a */,
-				94B28C2A1F0E473E000331E6 /* libevent_pthreads.a */,
-				94B28C2B1F0E473E000331E6 /* libevent.a */,
-				94B28C2C1F0E473E000331E6 /* libcares.a */,
-				94B28C2D1F0E473E000331E6 /* libcrypto.a */,
-				94B28C2E1F0E473E000331E6 /* libcryptopp.a */,
-				94B28C2F1F0E473E000331E6 /* libcurl.a */,
-				94B28C301F0E473E000331E6 /* libsodium.a */,
-				94B28C311F0E473E000331E6 /* libssl.a */,
-				94B28C321F0E473E000331E6 /* libuv.a */,
 				94B28C231F0E464C000331E6 /* libKarere.a */,
 				94B28C241F0E464C000331E6 /* libMEGASDK.a */,
 				A88BFFEC1F0A56B80081BCE3 /* libKarere.a */,
