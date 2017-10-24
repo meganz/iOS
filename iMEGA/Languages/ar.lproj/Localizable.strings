@@ -329,7 +329,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="الروابط محذوفة";
 /* Title show when a file is being downloaded */
-"downloading"="التحميل";
+"downloading"="جار التحميل...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="هل تريد إلغاء التحميل؟";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -820,6 +820,8 @@
 "profile"="الملف الشخصي";
 /* Title of the Achievements section */
 "achievementsTitle"="الإنجازات";
+/* Title of the Used storage section */
+"usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Invite friends and get Rewards";
 /* Indicating text for when "you invite your friends" */
@@ -916,6 +918,8 @@
 "youCanUpgradeLaterInMyAccount"="تستطيع الترقية لاحقا عبر حسابك";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="[S]مساحة السحابة على وشك الامتلاء[/S] [A]رق عضويتك الآن[/A] لحساب برو واحصل [S]حتى 4 تيرابايت  (4096 جيجابايت)[/S] كمساحة تخزين.";
+/* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
+"cloudDriveIsFull"="[S]سحابة التخزين ممتلئة بالكامل[/S] [A]رق حسابك الآن إلى[/A] ل PRO واحصل على [S]4 تيرابايت (4000 جيجابايت)[/S] كمساحة تخزين.                ";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="التخزين";
 /* Bandwich related with the MEGA PRO account level you can subscribe */

@@ -627,6 +627,10 @@
                         }
                     }
                 }];
+            } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeData]) {
+                [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeData options:nil completionHandler:^(id data, NSError *error){
+                    [self uploadData:(NSURL *)data toParentNode:parentNode];
+                }];
             } else {
                 self.unsupportedAssets++;
             }

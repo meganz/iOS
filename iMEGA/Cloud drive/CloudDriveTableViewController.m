@@ -18,6 +18,7 @@
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
+#import "MEGAPurchase.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAStore.h"
@@ -973,9 +974,14 @@
     static BOOL alreadyPresented = NO;
     if (!alreadyPresented && ![[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
         MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
-        if (accountDetails && ((accountDetails.storageUsed.doubleValue / accountDetails.storageMax.doubleValue) > 0.95)) { // +95% used storage
-            NSString *alertMessage = AMLocalizedString(@"cloudDriveIsAlmostFull", @"Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are.");
+        double percentage = accountDetails.storageUsed.doubleValue / accountDetails.storageMax.doubleValue;
+        if (accountDetails && percentage > 0.95) { // +95% used storage
+            NSString *alertMessage = percentage < 1 ? AMLocalizedString(@"cloudDriveIsAlmostFull", @"Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are.") : AMLocalizedString(@"cloudDriveIsFull", @"A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text.");
             alertMessage = [alertMessage mnz_removeWebclientFormatters];
+            NSString *maxStorage = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7]];
+            NSString *maxStorageTB = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7] / 1024];
+            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"4096" withString:maxStorage];
+            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"4" withString:maxStorageTB];
             
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level") message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"skipButton", @"Button title that skips the current action") style:UIAlertActionStyleCancel handler:nil]];

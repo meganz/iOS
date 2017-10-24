@@ -820,6 +820,8 @@
 "profile"="Profil";
 /* Title of the Achievements section */
 "achievementsTitle"="Achievements";
+/* Title of the Used storage section */
+"usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Invite friends and get Rewards";
 /* Indicating text for when "you invite your friends" */
@@ -916,6 +918,8 @@
 "youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="[S]Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to 4 TB (4096 GB)[/S] of cloud storage space.";
+/* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
+"cloudDriveIsFull"="[S]Your account is full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to 4 TB (4096 GB)[/S] of cloud storage space.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Úložný priestor";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
