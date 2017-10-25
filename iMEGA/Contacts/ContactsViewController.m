@@ -272,7 +272,7 @@
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         UIAlertController *shareFolderAlertController = [self prepareShareFolderAlertController];
         
-        if ([[UIDevice currentDevice] iPad] && sourceButton) {
+        if (sourceButton) {
             shareFolderAlertController.popoverPresentationController.barButtonItem = sourceButton;
         } else {
             shareFolderAlertController.popoverPresentationController.sourceRect = self.view.frame;
@@ -545,16 +545,11 @@
     [addContactAlertController addAction:addFromContactsAlertAction];
     
     addContactAlertController.modalPresentationStyle = UIModalPresentationPopover;
-    if ([[UIDevice currentDevice] iPad]) {
-        if (self.addBarButtonItem) {
-            addContactAlertController.popoverPresentationController.barButtonItem = self.addBarButtonItem;
-        } else {
-            addContactAlertController.popoverPresentationController.sourceRect = sender.frame;
-            addContactAlertController.popoverPresentationController.sourceView = sender.superview;
-        }
+    if (self.addBarButtonItem) {
+        addContactAlertController.popoverPresentationController.barButtonItem = self.addBarButtonItem;
     } else {
-        addContactAlertController.popoverPresentationController.sourceRect = self.view.frame;
-        addContactAlertController.popoverPresentationController.sourceView = self.view;
+        addContactAlertController.popoverPresentationController.sourceRect = sender.frame;
+        addContactAlertController.popoverPresentationController.sourceView = sender.superview;
     }
     
     [self presentViewController:addContactAlertController animated:YES completion:nil];
