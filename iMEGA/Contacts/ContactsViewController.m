@@ -59,6 +59,8 @@
 
 @property (nonatomic, strong) MEGAUser *userTapped;
 
+@property (nonatomic) BOOL pendingRequestsPresented;
+
 @end
 
 @implementation ContactsViewController
@@ -70,6 +72,7 @@
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
+    self.pendingRequestsPresented = NO;
     
     [self setupContacts];
 }
@@ -101,6 +104,11 @@
         [self.contactRequestsBarButtonItem setBadgeValue:[NSString stringWithFormat:@"%d", incomingContactsLists.size.intValue]];
         if (@available(iOS 11.0, *)) {
             self.contactRequestsBarButtonItem.badgeOriginY = 0.0f;
+        }
+        if (!self.pendingRequestsPresented && incomingContactsLists.size.intValue > 0) {
+            UINavigationController *contactRequestsNC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsNavigationControllerID"];
+            [self presentViewController:contactRequestsNC animated:YES completion:nil];
+            self.pendingRequestsPresented = YES;
         }
     }
 }

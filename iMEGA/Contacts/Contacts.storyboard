@@ -1387,7 +1387,7 @@
         <!--Navigation Controller-->
         <scene sceneID="05u-8m-AM2">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rnW-Cn-V2s" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ContactsRequestsNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" id="rnW-Cn-V2s" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="MAk-Sm-Fza">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
