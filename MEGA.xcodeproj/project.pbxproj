@@ -452,10 +452,8 @@
 		94B28C441F0E4865000331E6 /* libevent_pthreads.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAF1F0A52CD0081BCE3 /* libevent_pthreads.a */; };
 		94B28C451F0E4865000331E6 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB01F0A52CD0081BCE3 /* libevent.a */; };
 		94B28C461F0E4865000331E6 /* libws.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB11F0A52CD0081BCE3 /* libws.a */; };
-		94B28C471F0E4865000331E6 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC91F0A52E90081BCE3 /* libcrypto.a */; };
 		94B28C481F0E4865000331E6 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
 		94B28C491F0E4865000331E6 /* libsodium.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCE1F0A52E90081BCE3 /* libsodium.a */; };
-		94B28C4A1F0E4865000331E6 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCC1F0A52E90081BCE3 /* libssl.a */; };
 		94B28C4B1F0E4865000331E6 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCD1F0A52E90081BCE3 /* libuv.a */; };
 		94E62E1A1F3C5252003A8DEF /* LanguageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E62E191F3C5252003A8DEF /* LanguageTableViewController.m */; };
 		A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */; };
@@ -499,18 +497,12 @@
 		A88BFFCF1F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
 		A88BFFD01F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
 		A88BFFD11F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
-		A88BFFD21F0A52E90081BCE3 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC91F0A52E90081BCE3 /* libcrypto.a */; };
-		A88BFFD31F0A52E90081BCE3 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC91F0A52E90081BCE3 /* libcrypto.a */; };
-		A88BFFD41F0A52E90081BCE3 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC91F0A52E90081BCE3 /* libcrypto.a */; };
 		A88BFFD51F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
 		A88BFFD61F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
 		A88BFFD71F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
 		A88BFFD81F0A52E90081BCE3 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCB1F0A52E90081BCE3 /* libcurl.a */; };
 		A88BFFD91F0A52E90081BCE3 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCB1F0A52E90081BCE3 /* libcurl.a */; };
 		A88BFFDA1F0A52E90081BCE3 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCB1F0A52E90081BCE3 /* libcurl.a */; };
-		A88BFFDB1F0A52E90081BCE3 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCC1F0A52E90081BCE3 /* libssl.a */; };
-		A88BFFDC1F0A52E90081BCE3 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCC1F0A52E90081BCE3 /* libssl.a */; };
-		A88BFFDD1F0A52E90081BCE3 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCC1F0A52E90081BCE3 /* libssl.a */; };
 		A88BFFDE1F0A52E90081BCE3 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCD1F0A52E90081BCE3 /* libuv.a */; };
 		A88BFFDF1F0A52E90081BCE3 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCD1F0A52E90081BCE3 /* libuv.a */; };
 		A88BFFE01F0A52E90081BCE3 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCD1F0A52E90081BCE3 /* libuv.a */; };
@@ -528,9 +520,31 @@
 		A89E77491EA605A900ADC0D2 /* MEGAMessageAttachmentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A89E77481EA605A900ADC0D2 /* MEGAMessageAttachmentView.xib */; };
 		A8AA4F7A1ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AA4F781ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m */; };
 		A8AA4F7D1ED433CA00E7BA23 /* MEGABaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AA4F7C1ED433CA00E7BA23 /* MEGABaseRequestDelegate.m */; };
+		A8C262901FA0B3F3006172CE /* librtc_sdk_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88B1F9E75090087859C /* librtc_sdk_objc.a */; };
+		A8C262911FA0B3F3006172CE /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
+		A8C262921FA0B425006172CE /* librtc_sdk_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88B1F9E75090087859C /* librtc_sdk_objc.a */; };
+		A8C262931FA0B425006172CE /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
+		A8C262941FA0B439006172CE /* librtc_sdk_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88B1F9E75090087859C /* librtc_sdk_objc.a */; };
+		A8C262951FA0B439006172CE /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
+		A8C262981FA0B4A2006172CE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262971FA0B4A2006172CE /* AudioToolbox.framework */; };
+		A8C262991FA0B4BA006172CE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262971FA0B4A2006172CE /* AudioToolbox.framework */; };
+		A8C2629D1FA0B55E006172CE /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
+		A8C2629E1FA0B56E006172CE /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
+		A8C2629F1FA0B57C006172CE /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
+		A8C262A01FA0B58B006172CE /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8921F9E75D50087859C /* GLKit.framework */; };
+		A8C262A11FA0B590006172CE /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8921F9E75D50087859C /* GLKit.framework */; };
+		A8C262A21FA0B5AE006172CE /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C2629A1FA0B4EA006172CE /* OpenGLES.framework */; };
+		A8C262A41FA0B5CD006172CE /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262A31FA0B5CD006172CE /* CoreVideo.framework */; };
+		A8C262A51FA0B5D9006172CE /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8921F9E75D50087859C /* GLKit.framework */; };
+		A8C262A71FA0B60B006172CE /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262A61FA0B60B006172CE /* Metal.framework */; };
 		A8EC55B41F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
 		A8F5D67A1ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F5D6791ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m */; };
 		A8F5D67D1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F5D67C1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m */; };
+		A8F6E88D1F9E75A00087859C /* librtc_sdk_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88B1F9E75090087859C /* librtc_sdk_objc.a */; };
+		A8F6E88F1F9E75B70087859C /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
+		A8F6E8911F9E75D00087859C /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
+		A8F6E8931F9E75DD0087859C /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8921F9E75D50087859C /* GLKit.framework */; };
+		A8F6E8941F9E770C0087859C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291D1EDD83FF007DB542 /* MobileCoreServices.framework */; };
 		E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E803CB661D5336F100F81A36 /* InfoPlist.strings */; };
 		E80620AB1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E80620AA1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m */; };
 		E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */; };
@@ -1209,10 +1223,8 @@
 		A88BFFB01F0A52CD0081BCE3 /* libevent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent.a; sourceTree = "<group>"; };
 		A88BFFB11F0A52CD0081BCE3 /* libws.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libws.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libws.a; sourceTree = "<group>"; };
 		A88BFFC81F0A52E90081BCE3 /* libcares.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcares.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcares.a; sourceTree = "<group>"; };
-		A88BFFC91F0A52E90081BCE3 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcrypto.a; sourceTree = "<group>"; };
 		A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcryptopp.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcryptopp.a; sourceTree = "<group>"; };
 		A88BFFCB1F0A52E90081BCE3 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcurl.a; sourceTree = "<group>"; };
-		A88BFFCC1F0A52E90081BCE3 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libssl.a; sourceTree = "<group>"; };
 		A88BFFCD1F0A52E90081BCE3 /* libuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuv.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libuv.a; sourceTree = "<group>"; };
 		A88BFFCE1F0A52E90081BCE3 /* libsodium.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsodium.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libsodium.a; sourceTree = "<group>"; };
 		A88BFFE81F0A55E20081BCE3 /* libMEGASDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMEGASDK.a; sourceTree = "<group>"; };
@@ -1227,12 +1239,20 @@
 		A8AA4F7B1ED433CA00E7BA23 /* MEGABaseRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGABaseRequestDelegate.h; path = API/Requests/MEGABaseRequestDelegate.h; sourceTree = "<group>"; };
 		A8AA4F7C1ED433CA00E7BA23 /* MEGABaseRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGABaseRequestDelegate.m; path = API/Requests/MEGABaseRequestDelegate.m; sourceTree = "<group>"; };
 		A8B1F4701F0A9A080057520C /* MEGAPhotoMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAPhotoMediaItem.h; sourceTree = "<group>"; };
+		A8C262971FA0B4A2006172CE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		A8C2629A1FA0B4EA006172CE /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		A8C262A31FA0B5CD006172CE /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		A8C262A61FA0B60B006172CE /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		A8EC55B21F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAGetPreviewRequestDelegate.h; path = API/Requests/MEGAGetPreviewRequestDelegate.h; sourceTree = "<group>"; };
 		A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAGetPreviewRequestDelegate.m; path = API/Requests/MEGAGetPreviewRequestDelegate.m; sourceTree = "<group>"; };
 		A8F5D6781ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckEmailAndFollowTheLinkViewController.h; sourceTree = "<group>"; };
 		A8F5D6791ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckEmailAndFollowTheLinkViewController.m; sourceTree = "<group>"; };
 		A8F5D67B1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGASendSignupLinkRequestDelegate.h; path = API/Requests/MEGASendSignupLinkRequestDelegate.h; sourceTree = "<group>"; };
 		A8F5D67C1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGASendSignupLinkRequestDelegate.m; path = API/Requests/MEGASendSignupLinkRequestDelegate.m; sourceTree = "<group>"; };
+		A8F6E88B1F9E75090087859C /* librtc_sdk_objc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = librtc_sdk_objc.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/librtc_sdk_objc.a; sourceTree = "<group>"; };
+		A8F6E88E1F9E75B60087859C /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libwebsockets.a; sourceTree = "<group>"; };
+		A8F6E8901F9E75C20087859C /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		A8F6E8921F9E75D50087859C /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB691D54AB6A00F81A36 /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -1374,6 +1394,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8F6E8941F9E770C0087859C /* MobileCoreServices.framework in Frameworks */,
+				A8F6E8931F9E75DD0087859C /* GLKit.framework in Frameworks */,
+				A8F6E8911F9E75D00087859C /* VideoToolbox.framework in Frameworks */,
+				A8F6E88F1F9E75B70087859C /* libwebsockets.a in Frameworks */,
+				A8F6E88D1F9E75A00087859C /* librtc_sdk_objc.a in Frameworks */,
 				A88BFFED1F0A56B80081BCE3 /* libKarere.a in Frameworks */,
 				A88BFFE91F0A55E20081BCE3 /* libMEGASDK.a in Frameworks */,
 				A88BFFDE1F0A52E90081BCE3 /* libuv.a in Frameworks */,
@@ -1385,10 +1410,8 @@
 				A88BFFD81F0A52E90081BCE3 /* libcurl.a in Frameworks */,
 				A82751141E97AB79007CD9E2 /* libsqlite3.tbd in Frameworks */,
 				A82751121E97AB73007CD9E2 /* libresolv.tbd in Frameworks */,
-				A88BFFD21F0A52E90081BCE3 /* libcrypto.a in Frameworks */,
 				A82751101E97AB6E007CD9E2 /* libz.tbd in Frameworks */,
 				A88BFFCF1F0A52E90081BCE3 /* libcares.a in Frameworks */,
-				A88BFFDB1F0A52E90081BCE3 /* libssl.a in Frameworks */,
 				A88BFFB91F0A52CD0081BCE3 /* libevent_openssl.a in Frameworks */,
 				A88BFFBF1F0A52CD0081BCE3 /* libevent.a in Frameworks */,
 				A88BFFBC1F0A52CD0081BCE3 /* libevent_pthreads.a in Frameworks */,
@@ -1400,6 +1423,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8C262A71FA0B60B006172CE /* Metal.framework in Frameworks */,
+				A8C262A51FA0B5D9006172CE /* GLKit.framework in Frameworks */,
+				A8C262A41FA0B5CD006172CE /* CoreVideo.framework in Frameworks */,
+				A8C262A21FA0B5AE006172CE /* OpenGLES.framework in Frameworks */,
+				A8C2629F1FA0B57C006172CE /* VideoToolbox.framework in Frameworks */,
+				A8C262981FA0B4A2006172CE /* AudioToolbox.framework in Frameworks */,
+				A8C262921FA0B425006172CE /* librtc_sdk_objc.a in Frameworks */,
+				A8C262931FA0B425006172CE /* libwebsockets.a in Frameworks */,
 				9432292B1EDD84FD007DB542 /* AssetsLibrary.framework in Frameworks */,
 				9432291A1EDD83B0007DB542 /* AVFoundation.framework in Frameworks */,
 				943229251EDD8479007DB542 /* CoreData.framework in Frameworks */,
@@ -1417,14 +1448,12 @@
 				943229111EDD82E2007DB542 /* UIKit.framework in Frameworks */,
 				A88BFFEE1F0A56C60081BCE3 /* libKarere.a in Frameworks */,
 				A88BFFEA1F0A56280081BCE3 /* libMEGASDK.a in Frameworks */,
-				A88BFFDC1F0A52E90081BCE3 /* libssl.a in Frameworks */,
 				A88BFFB71F0A52CD0081BCE3 /* libevent_extra.a in Frameworks */,
 				A88BFFD01F0A52E90081BCE3 /* libcares.a in Frameworks */,
 				A88BFFC01F0A52CD0081BCE3 /* libevent.a in Frameworks */,
 				A88BFFD91F0A52E90081BCE3 /* libcurl.a in Frameworks */,
 				A88BFFD61F0A52E90081BCE3 /* libcryptopp.a in Frameworks */,
 				A88BFFC31F0A52CD0081BCE3 /* libws.a in Frameworks */,
-				A88BFFD31F0A52E90081BCE3 /* libcrypto.a in Frameworks */,
 				A88BFFB41F0A52CD0081BCE3 /* libevent_core.a in Frameworks */,
 				A88BFFE21F0A52E90081BCE3 /* libsodium.a in Frameworks */,
 				943229141EDD8363007DB542 /* libstdc++.tbd in Frameworks */,
@@ -1441,11 +1470,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8C262A11FA0B590006172CE /* GLKit.framework in Frameworks */,
+				A8C2629E1FA0B56E006172CE /* VideoToolbox.framework in Frameworks */,
+				A8C262991FA0B4BA006172CE /* AudioToolbox.framework in Frameworks */,
+				A8C262901FA0B3F3006172CE /* librtc_sdk_objc.a in Frameworks */,
+				A8C262911FA0B3F3006172CE /* libwebsockets.a in Frameworks */,
 				A88BFFEF1F0A56CB0081BCE3 /* libKarere.a in Frameworks */,
 				A88BFFEB1F0A562D0081BCE3 /* libMEGASDK.a in Frameworks */,
 				942ED2BA1EDEE6A900C9908D /* MobileCoreServices.framework in Frameworks */,
 				942ED2B91EDEE68D00C9908D /* ImageIO.framework in Frameworks */,
-				A88BFFDD1F0A52E90081BCE3 /* libssl.a in Frameworks */,
 				A88BFFC11F0A52CD0081BCE3 /* libevent.a in Frameworks */,
 				942ED2B81EDEE62800C9908D /* CoreMedia.framework in Frameworks */,
 				A88BFFB51F0A52CD0081BCE3 /* libevent_core.a in Frameworks */,
@@ -1454,7 +1487,6 @@
 				A88BFFE31F0A52E90081BCE3 /* libsodium.a in Frameworks */,
 				A88BFFD11F0A52E90081BCE3 /* libcares.a in Frameworks */,
 				942ED2B61EDEE60800C9908D /* AVFoundation.framework in Frameworks */,
-				A88BFFD41F0A52E90081BCE3 /* libcrypto.a in Frameworks */,
 				A88BFFBB1F0A52CD0081BCE3 /* libevent_openssl.a in Frameworks */,
 				A88BFFB81F0A52CD0081BCE3 /* libevent_extra.a in Frameworks */,
 				A88BFFC41F0A52CD0081BCE3 /* libws.a in Frameworks */,
@@ -1471,6 +1503,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8C262A01FA0B58B006172CE /* GLKit.framework in Frameworks */,
+				A8C2629D1FA0B55E006172CE /* VideoToolbox.framework in Frameworks */,
+				A8C262941FA0B439006172CE /* librtc_sdk_objc.a in Frameworks */,
+				A8C262951FA0B439006172CE /* libwebsockets.a in Frameworks */,
 				94B28C3F1F0E4865000331E6 /* libcares.a in Frameworks */,
 				94B28C401F0E4865000331E6 /* libcurl.a in Frameworks */,
 				94B28C411F0E4865000331E6 /* libevent_core.a in Frameworks */,
@@ -1479,10 +1515,8 @@
 				94B28C441F0E4865000331E6 /* libevent_pthreads.a in Frameworks */,
 				94B28C451F0E4865000331E6 /* libevent.a in Frameworks */,
 				94B28C461F0E4865000331E6 /* libws.a in Frameworks */,
-				94B28C471F0E4865000331E6 /* libcrypto.a in Frameworks */,
 				94B28C481F0E4865000331E6 /* libcryptopp.a in Frameworks */,
 				94B28C491F0E4865000331E6 /* libsodium.a in Frameworks */,
-				94B28C4A1F0E4865000331E6 /* libssl.a in Frameworks */,
 				94B28C4B1F0E4865000331E6 /* libuv.a in Frameworks */,
 				94B28C251F0E464C000331E6 /* libKarere.a in Frameworks */,
 				94B28C261F0E464C000331E6 /* libMEGASDK.a in Frameworks */,
@@ -2059,16 +2093,22 @@
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A8C262A61FA0B60B006172CE /* Metal.framework */,
+				A8C262A31FA0B5CD006172CE /* CoreVideo.framework */,
+				A8C2629A1FA0B4EA006172CE /* OpenGLES.framework */,
+				A8C262971FA0B4A2006172CE /* AudioToolbox.framework */,
+				A8F6E8921F9E75D50087859C /* GLKit.framework */,
+				A8F6E8901F9E75C20087859C /* VideoToolbox.framework */,
+				A8F6E88E1F9E75B60087859C /* libwebsockets.a */,
+				A8F6E88B1F9E75090087859C /* librtc_sdk_objc.a */,
 				9419B6C51F20DC5700FEBE31 /* CoreSpotlight.framework */,
 				94B28C231F0E464C000331E6 /* libKarere.a */,
 				94B28C241F0E464C000331E6 /* libMEGASDK.a */,
 				A88BFFEC1F0A56B80081BCE3 /* libKarere.a */,
 				A88BFFE81F0A55E20081BCE3 /* libMEGASDK.a */,
 				A88BFFC81F0A52E90081BCE3 /* libcares.a */,
-				A88BFFC91F0A52E90081BCE3 /* libcrypto.a */,
 				A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */,
 				A88BFFCB1F0A52E90081BCE3 /* libcurl.a */,
-				A88BFFCC1F0A52E90081BCE3 /* libssl.a */,
 				A88BFFCD1F0A52E90081BCE3 /* libuv.a */,
 				A88BFFCE1F0A52E90081BCE3 /* libsodium.a */,
 				A88BFFAC1F0A52CD0081BCE3 /* libevent_core.a */,
@@ -3875,7 +3915,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
 				PRODUCT_NAME = MEGA;
 				PROVISIONING_PROFILE = "";
@@ -3924,7 +3964,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
 				PRODUCT_NAME = MEGA;
 				PROVISIONING_PROFILE = "";
