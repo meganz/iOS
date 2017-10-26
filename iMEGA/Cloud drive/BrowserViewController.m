@@ -4,6 +4,7 @@
 #import "UIScrollView+EmptyDataSet.h"
 
 #import "Helper.h"
+#import "MEGACreateFolderRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -434,8 +435,18 @@
     UIAlertAction *createFolderAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             UITextField *textField = [[newFolderAlertController textFields] firstObject];
-            [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text parent:self.parentNode];
-            [newFolderAlertController dismissViewControllerAnimated:YES completion:nil];
+            NSString *parentPath = [[MEGASdkManager sharedMEGASdk] nodePathForNode:self.parentNode];
+            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForPath:[parentPath stringByAppendingPathComponent:textField.text]];
+            if (node) {
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"folderAlreadyExists", @"message when trying to create a folder that already exists")];
+            } else {
+                MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                    MEGANode *newFolderNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+                    [self pushBrowserWithParentNode:newFolderNode];
+                }];
+                
+                [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text parent:self.parentNode delegate:createFolderRequestDelegate];
+            }
         }
     }];
     createFolderAlertAction.enabled = NO;
@@ -761,12 +772,6 @@
                 
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
-            break;
-        }
-            
-        case MEGARequestTypeCreateFolder: {
-            MEGANode *newFolderNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
-            [self pushBrowserWithParentNode:newFolderNode];
             break;
         }
             

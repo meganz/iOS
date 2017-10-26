@@ -3,6 +3,7 @@
 #import <Photos/Photos.h>
 #import "MEGAAssetOperation.h"
 
+#import "MEGACreateFolderRequestDelegate.h"
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "Helper.h"
@@ -113,7 +114,18 @@ static CameraUploads *instance = nil;
             }
             
             if (cameraUploadHandle == -1){
-                [[MEGASdkManager sharedMEGASdk] createFolderWithName:kCameraUploads parent:[[MEGASdkManager sharedMEGASdk] rootNode] delegate:self];
+                MEGANode *cameraUploadsNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/Camera Uploads"];
+                if (!cameraUploadsNode) {
+                    MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                        cameraUploadHandle = request.nodeHandle;
+                        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithLongLong:cameraUploadHandle] forKey:kCameraUploadsNodeHandle];
+                        [[NSUserDefaults standardUserDefaults] synchronize];
+                        self->cameraUploadsNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:cameraUploadHandle];
+                        [self getAssetsForUpload];
+                    }];
+                    
+                    [[MEGASdkManager sharedMEGASdk] createFolderWithName:kCameraUploads parent:[[MEGASdkManager sharedMEGASdk] rootNode] delegate:createFolderRequestDelegate];
+                }
             } else {
                 if (cameraUploadsNode == nil) {
                     cameraUploadsNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:cameraUploadHandle];
@@ -204,27 +216,6 @@ static CameraUploads *instance = nil;
         dispatch_async(dispatch_get_main_queue(), ^{
             [[(UINavigationController *)[(UITabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController] selectedViewController] visibleViewController] viewWillAppear:YES];
         });
-    }
-}
-
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if ([error type]) {
-        return;
-    }
-    
-    switch ([request type]) {
-        case MEGARequestTypeCreateFolder:
-            cameraUploadHandle = request.nodeHandle;
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithLongLong:cameraUploadHandle] forKey:kCameraUploadsNodeHandle];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            cameraUploadsNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:cameraUploadHandle];
-            [self getAssetsForUpload];
-            break;
-            
-        default:
-            break;
     }
 }
 
