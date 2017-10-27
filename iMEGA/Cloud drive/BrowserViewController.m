@@ -5,6 +5,7 @@
 
 #import "Helper.h"
 #import "MEGACreateFolderRequestDelegate.h"
+#import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -435,9 +436,8 @@
     UIAlertAction *createFolderAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             UITextField *textField = [[newFolderAlertController textFields] firstObject];
-            NSString *parentPath = [[MEGASdkManager sharedMEGASdk] nodePathForNode:self.parentNode];
-            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForPath:[parentPath stringByAppendingPathComponent:textField.text]];
-            if (node) {
+            MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:textField.text];
+            if ([childrenNodeList mnz_existsFolderWithName:textField.text]) {
                 [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"folderAlreadyExists", @"message when trying to create a folder that already exists")];
             } else {
                 MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
