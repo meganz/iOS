@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="Erase local data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Logout and erase local data after 10 failed passcode attempts";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Support";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Help centre";
 /* Title to rate the app */

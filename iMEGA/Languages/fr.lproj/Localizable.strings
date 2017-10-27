@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="Effacer les données locales";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Se déconnecter et effacer les données locales après 10 tentatives infructueuses de saisie du code d'accès";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Assistance";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centre d'assistance";
 /* Title to rate the app */

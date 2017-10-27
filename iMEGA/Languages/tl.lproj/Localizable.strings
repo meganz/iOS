@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="Pahiin ang local data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Mag-logout at burahin ang local data matapos ang 10 maling pagsubok sa passcode";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Suporta";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Tulong";
 /* Title to rate the app */

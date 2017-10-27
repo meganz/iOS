@@ -149,7 +149,7 @@
 		41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */; };
 		41AC33A81A926C27005118AF /* HeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC33A71A926C27005118AF /* HeaderCollectionReusableView.m */; };
 		41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC66471AB1D493003FE8DA /* AboutTableViewController.m */; };
-		41ADA9F21ADE7AC100641BB4 /* FeedbackTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41ADA9F11ADE7AC100641BB4 /* FeedbackTableViewController.m */; };
+		41ADA9F21ADE7AC100641BB4 /* HelpTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41ADA9F11ADE7AC100641BB4 /* HelpTableViewController.m */; };
 		41ADAA131ADE8B8800641BB4 /* SVWebViewController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41ADA9F41ADE8B8800641BB4 /* SVWebViewController.strings */; };
 		41ADAA141ADE8B8800641BB4 /* SVModalWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41ADA9FE1ADE8B8800641BB4 /* SVModalWebViewController.m */; };
 		41ADAA151ADE8B8800641BB4 /* SVWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 41ADA9FF1ADE8B8800641BB4 /* SVWebViewController.bundle */; };
@@ -884,8 +884,8 @@
 		41AC33A71A926C27005118AF /* HeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderCollectionReusableView.m; sourceTree = "<group>"; };
 		41AC66461AB1D493003FE8DA /* AboutTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutTableViewController.h; sourceTree = "<group>"; };
 		41AC66471AB1D493003FE8DA /* AboutTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutTableViewController.m; sourceTree = "<group>"; };
-		41ADA9F01ADE7AC100641BB4 /* FeedbackTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackTableViewController.h; sourceTree = "<group>"; };
-		41ADA9F11ADE7AC100641BB4 /* FeedbackTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackTableViewController.m; sourceTree = "<group>"; };
+		41ADA9F01ADE7AC100641BB4 /* HelpTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpTableViewController.h; sourceTree = "<group>"; };
+		41ADA9F11ADE7AC100641BB4 /* HelpTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpTableViewController.m; sourceTree = "<group>"; };
 		41ADA9F51ADE8B8800641BB4 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
 		41ADA9F61ADE8B8800641BB4 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
 		41ADA9F71ADE8B8800641BB4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
@@ -1822,7 +1822,7 @@
 				41AA1A191AC07EB900D32691 /* Security Options */,
 				E87C98321CC411D400E2B9E6 /* Advanced */,
 				41AC66441AB1D488003FE8DA /* About */,
-				41ADA9EE1ADE7AB400641BB4 /* Feedback */,
+				41ADA9EE1ADE7AB400641BB4 /* Help */,
 				415226831A692ECC00EC7BB6 /* Settings.storyboard */,
 				41FC83AF1AA853CC008FA551 /* SettingsTableViewController.h */,
 				41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */,
@@ -2181,13 +2181,13 @@
 			path = About;
 			sourceTree = "<group>";
 		};
-		41ADA9EE1ADE7AB400641BB4 /* Feedback */ = {
+		41ADA9EE1ADE7AB400641BB4 /* Help */ = {
 			isa = PBXGroup;
 			children = (
-				41ADA9F01ADE7AC100641BB4 /* FeedbackTableViewController.h */,
-				41ADA9F11ADE7AC100641BB4 /* FeedbackTableViewController.m */,
+				41ADA9F01ADE7AC100641BB4 /* HelpTableViewController.h */,
+				41ADA9F11ADE7AC100641BB4 /* HelpTableViewController.m */,
 			);
-			path = Feedback;
+			path = Help;
 			sourceTree = "<group>";
 		};
 		41ADA9F31ADE8B8800641BB4 /* SVWebViewController */ = {
@@ -3307,7 +3307,7 @@
 				41ADAA1F1ADE8B8800641BB4 /* SVWebViewControllerActivity.m in Sources */,
 				41ADAA161ADE8B8800641BB4 /* SVWebViewController.m in Sources */,
 				412EB2661C6E52AA001EA6D6 /* MEGAAssetOperation.m in Sources */,
-				41ADA9F21ADE7AC100641BB4 /* FeedbackTableViewController.m in Sources */,
+				41ADA9F21ADE7AC100641BB4 /* HelpTableViewController.m in Sources */,
 				41E88F101CF451B000BD3B79 /* MWTapDetectingImageView.m in Sources */,
 				A8F5D67D1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m in Sources */,
 				4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */,

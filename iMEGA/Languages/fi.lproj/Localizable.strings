@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="Pyyhi paikalliset tiedot";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Kirjaa ulos ja poista paikalliset tiedot 10 epäonnistuneen pääsykoodiyrityksen jälkeen";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Tuki";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Tukikeskus";
 /* Title to rate the app */

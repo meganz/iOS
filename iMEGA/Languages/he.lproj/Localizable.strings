@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="מחק מידע מקומי";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="התנתק ומחק מידע מקומי לאחר 10 ניסיונות כושלות של סיסמא";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="תמיכה";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="מרכז שירות";
 /* Title to rate the app */

@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="مسح البيانت";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="سجل الخروج وامسح البيانات المحلية بعد عشر محاولات فاشلة لادخال كلمة المرور.";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="الدعم";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="مركز المساعدة";
 /* Title to rate the app */

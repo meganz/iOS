@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="Zmazať lokálne data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Odhlásiť a zmazať lokálne dáta po 10 neúspešných pokusoch o uhádnutie hesla";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Podpora";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centrum pomoci";
 /* Title to rate the app */

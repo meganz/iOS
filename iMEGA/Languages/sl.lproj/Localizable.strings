@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="Izbriši lokalne podatke";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Odjavi in izbriši lokalne podatke po 10 neuspešnih poskusih vnosa varnostne kode";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Podpora";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Center za pomoč";
 /* Title to rate the app */
