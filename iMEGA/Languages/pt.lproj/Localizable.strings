@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="Apagar dados locais";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Se \"apagar dados locais\" estiver activado, os dados locais são apagados após 10 tentativas falhadas de introduzir a palavra-passe";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Suporte";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centro de ajuda";
 /* Title to rate the app */

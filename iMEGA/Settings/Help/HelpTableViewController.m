@@ -1,35 +1,32 @@
 
-#import "FeedbackTableViewController.h"
+#import "HelpTableViewController.h"
 #import "MEGAReachabilityManager.h"
+#import "MEGASdkManager.h"
 #import "SVProgressHUD.h"
 #import "SVWebViewController.h"
 
 #import <MessageUI/MFMailComposeViewController.h>
 
-@interface FeedbackTableViewController () <MFMailComposeViewControllerDelegate>
+@interface HelpTableViewController () <MFMailComposeViewControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *sendFeedbackLabel;
 @property (weak, nonatomic) IBOutlet UILabel *helpCentreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sendFeedbackLabel;
 @property (weak, nonatomic) IBOutlet UILabel *rateUsLabel;
 
 @end
 
-@implementation FeedbackTableViewController
+@implementation HelpTableViewController
 
 #pragma mark - Lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.title = AMLocalizedString(@"help", @"Menu item");
+    
     self.sendFeedbackLabel.text = AMLocalizedString(@"sendFeedbackLabel", @"Title of one of the Settings sections where you can 'Send Feedback' to MEGA");
     self.helpCentreLabel.text = AMLocalizedString(@"helpCentreLabel", @"Title of the section to access MEGA's help centre");
     self.rateUsLabel.text = AMLocalizedString(@"rateUsLabel", @"Title to rate the app");
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    self.navigationItem.title = AMLocalizedString(@"support", @"Title header for the bottom menu with various menu sections that suit the category support.");
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -97,12 +94,13 @@
                     connectionStatus = @"Mobile Data";
                 }
             }
+            NSString *myEmail = [[MEGASdkManager sharedMEGASdk] myEmail];
             
             NSString *messageBody = AMLocalizedString(@"pleaseWriteYourFeedback", @"Message body of the email that appears when the users tap on \"Send feedback\"");
             messageBody = [messageBody stringByAppendingFormat:@"\n\n\nApp Information:\nApp Name: %@\n", appName];
             messageBody = [messageBody stringByAppendingFormat:@"App Version: %@ (%@)\n\n", shortAppVersion, appVersion];
             
-            messageBody = [messageBody stringByAppendingFormat:@"Device information:\nDevice: %@\niOS Version: %@\nLanguage: %@\nTimezone: %@\nConnection Status: %@", [[UIDevice currentDevice] deviceName], systemVersion, language, [NSTimeZone localTimeZone].name, connectionStatus];
+            messageBody = [messageBody stringByAppendingFormat:@"Device information:\nDevice: %@\niOS Version: %@\nLanguage: %@\nTimezone: %@\nConnection Status: %@\nMEGA account: %@", [[UIDevice currentDevice] deviceName], systemVersion, language, [NSTimeZone localTimeZone].name, connectionStatus, myEmail];
             
             [mailComposeVC setMessageBody:messageBody isHTML:NO];
             
@@ -128,6 +126,5 @@
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
 
 @end

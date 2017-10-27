@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="Yerel verileri silin";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="10 kez hatalı girişte yerel veriyi sil ve çıkış yap.";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Destek";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Destek Merkezi";
 /* Title to rate the app */

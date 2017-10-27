@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="ลบข้อมูลบนเครื่อง";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="ออกจากระบบและลบข้อมูลภายในเครื่องหลังจากพยายามกรอกรหัสผ่านผิดเกิน 10 ครั้ง";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="การสนับสนุน";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="ศูนย์ความช่วยเหลือ";
 /* Title to rate the app */

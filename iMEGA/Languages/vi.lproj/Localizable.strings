@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="Xóa mọi dữ liệu đã lưu";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Sau 10 lần nhập sai mã, ứng dụng sẽ tự động thoát tài khoản và xóa các dữ liệu có liên quan đến MEGA trong iPhone";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Hỗ trợ";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Trung tâm Hỗ trợ";
 /* Title to rate the app */

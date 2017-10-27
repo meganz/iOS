@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="ローカルデータを削除";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="10回のパスコード試行が失敗した後にログアウトし、ローカルデータを消去する";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="サポート";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="ヘルプセンター";
 /* Title to rate the app */

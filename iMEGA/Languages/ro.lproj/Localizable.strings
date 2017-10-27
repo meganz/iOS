@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="Şterge datele locale";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Deconectează-te şi şterge datele locale după 10 încercări eşuate pentru codul de trecere";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Asistenţă";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centrul de ajutor";
 /* Title to rate the app */

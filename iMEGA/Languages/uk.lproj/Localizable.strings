@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="Стерти локальні дані";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Вихід із системи і видалення локальних даних після 10 невдалих спроб вводу коду доступу";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Підтримка";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Центр допомоги";
 /* Title to rate the app */

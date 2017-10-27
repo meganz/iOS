@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="Cancella dati locali";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Esci e cancella i dati locali dopo 10 tentativi falliti";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Supporto";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Assistenza";
 /* Title to rate the app */

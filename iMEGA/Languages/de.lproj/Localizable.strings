@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="Lokale Daten löschen";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Ausloggen und lokale Daten nach zehn fehlerhaften PIN-Eingaben löschen";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Hilfe";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Onlinehilfe";
 /* Title to rate the app */

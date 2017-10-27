@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="Изтрий локални данни";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Излез от системата и изтрий локалните данни след 10 неуспешни въвеждания на код.";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Поддръжка";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Помощен център";
 /* Title to rate the app */

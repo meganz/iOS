@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="Hapus data lokal";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Keluar dan hapus data lokal setelah 10 kali gagal mencoba passcode";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Dukungan";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Pusat Bantuan";
 /* Title to rate the app */

@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="Verwijder lokale data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Afmelden en lokale gegevens worden gewist na 10 mislukte inlogpogingen ";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Ondersteuning";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Help Center";
 /* Title to rate the app */

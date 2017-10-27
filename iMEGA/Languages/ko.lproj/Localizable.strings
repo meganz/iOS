@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="로컬 데이터 삭제";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="10번의 실패한 비밀번호 시도 후 로그아웃하고 로컬 데이터를 지움";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="지원";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="도움 센터";
 /* Title to rate the app */

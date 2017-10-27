@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="删除本地数据";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="于10次密码输入错误后，自动登出并删除本机资料";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="支持";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="协助中心";
 /* Title to rate the app */
