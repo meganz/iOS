@@ -114,18 +114,15 @@ static CameraUploads *instance = nil;
             }
             
             if (cameraUploadHandle == -1){
-                MEGANode *cameraUploadsNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/Camera Uploads"];
-                if (!cameraUploadsNode) {
-                    MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                        cameraUploadHandle = request.nodeHandle;
-                        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithLongLong:cameraUploadHandle] forKey:kCameraUploadsNodeHandle];
-                        [[NSUserDefaults standardUserDefaults] synchronize];
-                        self->cameraUploadsNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:cameraUploadHandle];
-                        [self getAssetsForUpload];
-                    }];
-                    
-                    [[MEGASdkManager sharedMEGASdk] createFolderWithName:kCameraUploads parent:[[MEGASdkManager sharedMEGASdk] rootNode] delegate:createFolderRequestDelegate];
-                }
+                MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                    cameraUploadHandle = request.nodeHandle;
+                    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithLongLong:cameraUploadHandle] forKey:kCameraUploadsNodeHandle];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    cameraUploadsNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:cameraUploadHandle];
+                    [self getAssetsForUpload];
+                }];
+                
+                [[MEGASdkManager sharedMEGASdk] createFolderWithName:kCameraUploads parent:[[MEGASdkManager sharedMEGASdk] rootNode] delegate:createFolderRequestDelegate];
             } else {
                 if (cameraUploadsNode == nil) {
                     cameraUploadsNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:cameraUploadHandle];
