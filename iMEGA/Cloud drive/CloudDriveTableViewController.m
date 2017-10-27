@@ -14,6 +14,7 @@
 
 #import "Helper.h"
 #import "MEGAAssetsPickerController.h"
+#import "MEGACreateFolderRequestDelegate.h"
 #import "MEGAImagePickerController.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
@@ -1066,8 +1067,13 @@
         [newFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 UITextField *textField = [[newFolderAlertController textFields] firstObject];
-                [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text parent:self.parentNode];
-                [self dismissViewControllerAnimated:YES completion:nil];
+                MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:textField.text];
+                if ([childrenNodeList mnz_existsFolderWithName:textField.text]) {
+                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"folderAlreadyExists", @"message when trying to create a folder that already exists")];
+                } else {
+                    MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:nil];
+                    [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text parent:self.parentNode delegate:createFolderRequestDelegate];
+                }
             }
         }]];
         
@@ -1384,9 +1390,9 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEAccess) {
-            if ([request type] == MEGARequestTypeCreateFolder || [request type] == MEGARequestTypeUpload) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"permissionTitle", nil) message:AMLocalizedString(@"permissionMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
-                [alertView show];
+            if (request.type == MEGARequestTypeUpload) {
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"permissionTitle", @"Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions") message:AMLocalizedString(@"permissionMessage", @"Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions") preferredStyle:UIAlertControllerStyleActionSheet];
+                [self presentViewController:alertController animated:YES completion:nil];
             }
         } else {
             if ([request type] == MEGARequestTypeMove || [request type] == MEGARequestTypeRemove) {

@@ -7,7 +7,7 @@
 #define kIsUseCellularConnectionEnabled @"IsUseCellularConnectionEnabled"
 #define kIsOnlyWhenChargingEnabled @"IsOnlyWhenChargingEnabled"
 
-@interface CameraUploads : NSObject <MEGARequestDelegate, MEGATransferDelegate>
+@interface CameraUploads : NSObject <MEGATransferDelegate>
 
 @property (nonatomic, strong) NSOperationQueue *assetsOperationQueue;
 
