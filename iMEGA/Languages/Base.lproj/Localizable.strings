@@ -238,6 +238,8 @@
 "newFolderMessage"="Name for the new folder";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Create";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="Folder already exists";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Import from...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */

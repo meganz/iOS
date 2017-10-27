@@ -66,7 +66,7 @@
     if (parentNode) {
         [self triggerAssetsCompletion];
     } else {
-        [self createMyChatFilesFolderWithCompletion:^{
+        [self createMyChatFilesFolderWithCompletion:^(MEGARequest *request) {
             [self triggerAssetsCompletion];
         }];
     }
@@ -78,7 +78,7 @@
     }
 }
 
-- (void)createMyChatFilesFolderWithCompletion:(void (^)(void))completion {
+- (void)createMyChatFilesFolderWithCompletion:(void (^)(MEGARequest *request))completion {
     MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
     if (!parentNode) {
         MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:completion];

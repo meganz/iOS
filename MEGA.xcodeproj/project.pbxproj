@@ -243,6 +243,8 @@
 		5B22F97E1F8374C500D2B156 /* VENTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B22F97A1F8374C400D2B156 /* VENTokenField.m */; };
 		5B22F97F1F8374C500D2B156 /* VENBackspaceTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B22F97B1F8374C500D2B156 /* VENBackspaceTextField.m */; };
 		5B28D1371F0FB9590062998C /* MEGAImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B28D1361F0FB9590062998C /* MEGAImagePickerController.m */; };
+		5B2E78CD1FA0C3310096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB50E081F20E840000CA24D /* MEGACreateFolderRequestDelegate.m */; };
+		5B2E78CE1FA0C3450096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB50E081F20E840000CA24D /* MEGACreateFolderRequestDelegate.m */; };
 		5B2E918D1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E918C1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.m */; };
 		5B2E91921F1F98F4003C6920 /* MEGACopyRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E91911F1F98F4003C6920 /* MEGACopyRequestDelegate.m */; };
 		5B323F231F5834E100C5F557 /* ReferralBonusesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B323F221F5834E100C5F557 /* ReferralBonusesTableViewController.m */; };
@@ -3539,6 +3541,7 @@
 				9456053A1EDD52C00094EF0F /* SVRadialGradientLayer.m in Sources */,
 				943229231EDD845E007DB542 /* MEGAStore.m in Sources */,
 				945605421EDD65960094EF0F /* LocalizationSystem.m in Sources */,
+				5B2E78CE1FA0C3450096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
 				9432293F1EDD8903007DB542 /* MWTapDetectingView.m in Sources */,
 				94624CFD1F50517700D52504 /* MEGAExportRequestDelegate.m in Sources */,
 				9432294C1EDD9CE9007DB542 /* NSFileManager+MNZCategory.m in Sources */,
@@ -3590,6 +3593,7 @@
 				941135611F01013F00D33428 /* NodeTableViewCell.m in Sources */,
 				941135551F01002E00D33428 /* OpenInActivity.m in Sources */,
 				94892C981EFBF03800AEAC25 /* SVProgressHUD.m in Sources */,
+				5B2E78CD1FA0C3310096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
 				941135581F01005D00D33428 /* CameraUploads.m in Sources */,
 				941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */,
 				94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */,
