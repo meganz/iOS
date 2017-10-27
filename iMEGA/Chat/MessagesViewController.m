@@ -882,8 +882,6 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
     } else if (message.isManagementMessage) {
         cell.textView.attributedText = message.attributedText;
     } else if (!message.isMediaMessage) {
-        cell.textView.selectable = NO;
-        cell.textView.userInteractionEnabled = NO;
         cell.textView.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
         if (message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
             cell.textView.textColor = [UIColor mnz_black333333_02];
@@ -1268,7 +1266,6 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
         if (!self.areAllMessagesSeen && message.userHandle != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
             if ([[MEGASdkManager sharedMEGAChatSdk] lastChatMessageSeenForChat:self.chatRoom.chatId].messageId != message.messageId) {
                 if ([[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId]) {
-                    [self updateUnreadLabel];
                     self.areAllMessagesSeen = YES;
                 } else {
                     MEGALogError(@"setMessageSeenForChat failed: The chatid is invalid or the message is older than last-seen-by-us message.");
@@ -1316,10 +1313,15 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
                 } else {
                     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"temporalId == %" PRIu64, message.temporalId];
                     NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
-                    NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
-                    [self.messages replaceObjectAtIndex:index withObject:message];
-                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-                    [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                    if (filteredArray.count) {
+                        NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
+                        [self.messages replaceObjectAtIndex:index withObject:message];
+                        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+                        [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                    } else {
+                        MEGALogWarning(@"Message to update is not in the array of messages");
+                        NSAssert(filteredArray.count, @"Message to update is not in the array of messages");
+                    }
                 }
                 break;
             }
@@ -1341,15 +1343,20 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
         if (message.isDeleted || message.isEdited) {
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageId == %" PRIu64, message.messageId];
             NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
-            NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-            if (message.isEdited) {
-                [self.messages replaceObjectAtIndex:index withObject:message];
-                [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
-            }
-            if (message.isDeleted) {
-                [self.messages removeObjectAtIndex:index];
-                [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+            if (filteredArray.count) {
+                NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+                if (message.isEdited) {
+                    [self.messages replaceObjectAtIndex:index withObject:message];
+                    [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                }
+                if (message.isDeleted) {
+                    [self.messages removeObjectAtIndex:index];
+                    [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                }
+            } else {
+                MEGALogWarning(@"Message to update is not in the array of messages");
+                NSAssert(filteredArray.count, @"Message to update is not in the array of messages");
             }
         }
         
@@ -1364,6 +1371,7 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
     self.chatRoom = chat;
     switch (chat.changes) {
         case MEGAChatRoomChangeTypeUnreadCount:
+            [self updateUnreadLabel];
             break;
             
         case MEGAChatRoomChangeTypeParticipans:

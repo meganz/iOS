@@ -261,7 +261,7 @@
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Sie haben keinen Zugriff mehr auf diesen Ordner";
 /* List option shown on the details of a file or folder */
-"saveForOffline"="Für Offline-Nutzung speichern";
+"saveForOffline"="Für Offline-Zugriff speichern";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Für Offline-Zugriff gespeichert";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -287,7 +287,7 @@
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="Die Links wurden kopiert";
 /* Text of the button after the links were copied to the clipboard */
-"copiedToTheClipboard"="Copied to the clipboard";
+"copiedToTheClipboard"="In die Zwischenablage kopiert";
 /* A title for the Copyright Warning dialog. */
 "copyrightWarning"="Richtlinien zum Urheberrecht";
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
@@ -299,7 +299,7 @@
 /* button caption text that the user clicks when he agrees */
 "agree"="Einverstanden";
 /* button caption text that the user clicks when he disagrees */
-"disagree"="Disagree";
+"disagree"="Ich stimme nicht zu";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
 "linkWithoutKey"="Link ohne Schlüssel";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="Lokale Daten löschen";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Ausloggen und lokale Daten nach zehn fehlerhaften PIN-Eingaben löschen";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Hilfe";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Onlinehilfe";
 /* Title to rate the app */
@@ -820,6 +818,8 @@
 "profile"="Profil";
 /* Title of the Achievements section */
 "achievementsTitle"="Errungenschaften";
+/* Title of the Used storage section */
+"usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Invite friends and get Rewards";
 /* Indicating text for when "you invite your friends" */
@@ -916,6 +916,8 @@
 "youCanUpgradeLaterInMyAccount"="Sie können dies jederzeit unter Mein Account nachholen";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="[S]Ihr Cloud Drive ist fast voll.[/S] [A]Wechseln Sie jetzt[/A] auf einen PRO-Plan und erhalten Sie [S]bis zu 4 TB (4096 GB)[/S] Speicherplatz in der Cloud.";
+/* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
+"cloudDriveIsFull"="[S]Ihr Account hat sein Speicherlimit erreicht.[/S] [A]Wechseln Sie jetzt[/A] auf einen PRO-Account und erhalten Sie [S]bis zu 4 TB (4096 GB)[/S] Speicherplatz in der Cloud.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Speicher";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -1119,9 +1121,9 @@
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Nachricht löschen";
 /*  */
-"fromCloudDrive"="From Cloud drive";
+"fromCloudDrive"="Aus dem Cloud Drive";
 /*  */
-"fromDevice"="From device";
+"fromDevice"="Vom Gerät";
 /* referring to a contact in the contact list of the user */
 "contact"="Kontakt";
 /* A button label. The button sends contact information to a user in the conversation. */
@@ -1224,9 +1226,9 @@
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Unbekannter Fehler";
 /* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="You will need to restart MEGA after changing the language";
+"languageRestartAlert"="Nach einer Änderung der Spracheinstellung muss die MEGA-App neu gestartet werden.";
 /* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
-"languageRestartNotification"="Language changed. Tap to restart.";
+"languageRestartNotification"="Spracheinstellung geändert. Tippen zum Neustart.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA is a secure cloud storage service that gives you 50 GB free storage space. Unlike other cloud storage providers, your data is encrypted and decrypted by your client devices only and never by us.";

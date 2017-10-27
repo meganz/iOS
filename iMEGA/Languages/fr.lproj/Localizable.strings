@@ -59,7 +59,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Connectez-vous dans votre compte.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="ESPACE MEGA";
+"megaSpace"="L’ESPACE MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
 "megaSpeed"="VITESSE MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="Effacer les données locales";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Se déconnecter et effacer les données locales après 10 tentatives infructueuses de saisie du code d'accès";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Assistance";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centre d'assistance";
 /* Title to rate the app */
@@ -820,6 +818,8 @@
 "profile"="Profil";
 /* Title of the Achievements section */
 "achievementsTitle"="Objectifs";
+/* Title of the Used storage section */
+"usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Invite friends and get Rewards";
 /* Indicating text for when "you invite your friends" */
@@ -916,6 +916,8 @@
 "youCanUpgradeLaterInMyAccount"="Vous pourrez surclasser votre compte ultérieurement dans Mon compte";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="[S]Le disque nuagique est presque plein.[/S] [A]Passez maintenant[/A] à un compte PRO et obtenez [S]jusqu'à 4 To (4 096 Go)[/S] d'espace nuagique de stockage";
+/* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
+"cloudDriveIsFull"="[S]Votre compte est plein.[/S] [A]Passez maintenant[/A] à un compte PRO et obtenez [S]jusqu'à 4 To (4 096 Go)[/S] d'espace de stockage nuagique.      ";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Espace de stockage";
 /* Bandwich related with the MEGA PRO account level you can subscribe */

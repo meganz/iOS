@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="删除本地数据";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="于10次密码输入错误后，自动登出并删除本机资料";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="支持";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="协助中心";
 /* Title to rate the app */
@@ -820,6 +818,8 @@
 "profile"="文件";
 /* Title of the Achievements section */
 "achievementsTitle"="成果";
+/* Title of the Used storage section */
+"usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Invite friends and get Rewards";
 /* Indicating text for when "you invite your friends" */
@@ -916,6 +916,8 @@
 "youCanUpgradeLaterInMyAccount"="您稍后可在\"我的帐户\"中进行升级";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="[S]云盘快要满了。 [/S] [A]立即付费升级[/A]为PRO专业级帐户，并获得[S]最高4TB (4096 GB) [/S]的云端储存空间。";
+/* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
+"cloudDriveIsFull"="[S]您的帐号空间已满。 [/S] [A]立即升级[/A]为PRO专业版帐户，并可获得[S]最高4TB (4096 GB)[/S] 的云端储存空间。";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="储存空间";
 /* Bandwich related with the MEGA PRO account level you can subscribe */

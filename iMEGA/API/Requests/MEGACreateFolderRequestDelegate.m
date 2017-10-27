@@ -5,7 +5,7 @@
 
 @interface MEGACreateFolderRequestDelegate ()
 
-@property (nonatomic, copy) void (^completion)(void);
+@property (nonatomic, copy) void (^completion)(MEGARequest *request);
 
 @end
 
@@ -13,7 +13,7 @@
 
 #pragma mark - Initialization
 
-- (instancetype)initWithCompletion:(void (^)(void))completion {
+- (instancetype)initWithCompletion:(void (^)(MEGARequest *request))completion {
     self = [super init];
     if (self) {
         _completion = completion;
@@ -32,13 +32,18 @@
     [super onRequestFinish:api request:request error:error];
     
     if (error.type) {
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+        if (error.type == MEGAErrorTypeApiEAccess) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"permissionTitle", @"Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions") message:AMLocalizedString(@"permissionMessage", @"Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions") preferredStyle:UIAlertControllerStyleActionSheet];
+            [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+        } else {
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+        }
         return;
     }
     
     if (self.completion) {
-        self.completion();
+        self.completion(request);
     }
 }
 
