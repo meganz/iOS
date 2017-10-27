@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="ลบข้อมูลบนเครื่อง";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="ออกจากระบบและลบข้อมูลภายในเครื่องหลังจากพยายามกรอกรหัสผ่านผิดเกิน 10 ครั้ง";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="การสนับสนุน";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="ศูนย์ความช่วยเหลือ";
 /* Title to rate the app */
@@ -820,6 +818,8 @@
 "profile"="โปรไฟล์";
 /* Title of the Achievements section */
 "achievementsTitle"="ความสำเร็จ";
+/* Title of the Used storage section */
+"usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Invite friends and get Rewards";
 /* Indicating text for when "you invite your friends" */
@@ -916,6 +916,8 @@
 "youCanUpgradeLaterInMyAccount"="คุณสามารถอัปเกรดภายหลังได้ในบัญชีของฉัน";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="[S]คลาวด์ไดร์ฟเกือบเต็มแล้ว[/S] [A]อัปเกรดเดี๋ยวนี้[/A] เป็นบัญชี PRO และเพิ่มพื้นที่เก็บข้อมูลระบบคลาวด์ได้ถึง [S]4 TB (4096 GB)[/S]";
+/* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
+"cloudDriveIsFull"="[S]บัญชีของคุณเต็มแล้ว[/S] [A]อัปเกรดเดี๋ยวนี้[/A] เป็นบัญชี PRO และเพิ่มพื้นที่เก็บข้อมูลระบบคลาวด์ได้ถึง [S]4 TB (4096 GB)[/S]";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="พื้นที่จัดเก็บ";
 /* Bandwich related with the MEGA PRO account level you can subscribe */

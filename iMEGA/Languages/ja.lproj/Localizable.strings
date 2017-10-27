@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="ローカルデータを削除";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="10回のパスコード試行が失敗した後にログアウトし、ローカルデータを消去する";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="サポート";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="ヘルプセンター";
 /* Title to rate the app */
@@ -820,6 +818,8 @@
 "profile"="プロファイル";
 /* Title of the Achievements section */
 "achievementsTitle"="実績";
+/* Title of the Used storage section */
+"usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Invite friends and get Rewards";
 /* Indicating text for when "you invite your friends" */
@@ -916,6 +916,8 @@
 "youCanUpgradeLaterInMyAccount"="マイアカウントで後でアップグレードできます";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="[S]クラウドドライブはほぼいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大4 TB（4096 GB）[/S]のクラウドストレージスペースを取得してください。";
+/* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
+"cloudDriveIsFull"="[S]あなたのアカウントはいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大4 TB（4096 GB）[/S]のクラウドストレージスペースを取得してください。";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="ストレージ";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -1099,7 +1101,7 @@
 /* A button title which removes a participant from a chat. */
 "removeParticipant"="参加者を削除する";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
-"conversationWith"="Conversation with %@";
+"conversationWith"="%@さんとの会話";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGAは、必須の安全保証をご提供するエンドツーエンド（ユーザー制御の）暗号化を使用してチャットを保護いたします：";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */

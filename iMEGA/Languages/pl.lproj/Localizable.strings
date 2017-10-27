@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="Wyczyść dane lokalne";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Wyloguj i usuń lokalne dane po 10 nieudanych próbach logowania";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Wsparcie";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centrum pomocy";
 /* Title to rate the app */
@@ -820,6 +818,8 @@
 "profile"="Profil";
 /* Title of the Achievements section */
 "achievementsTitle"="Osiągnięcia";
+/* Title of the Used storage section */
+"usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Invite friends and get Rewards";
 /* Indicating text for when "you invite your friends" */
@@ -916,6 +916,8 @@
 "youCanUpgradeLaterInMyAccount"="Możesz zmienić rodzaj konto w ustawieniach";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="[S]Twoje konto jest prawie pełne.[/S] [A]Zmień konto[/A] na PRO i otrzymaj [S]do 4 TB (4096 GB)[/S] miejsca dostępnego na pliki.";
+/* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
+"cloudDriveIsFull"="[S]Twoje konto jest pełne.[/S] [A]Zmień konto[/A] na PRO i otrzymaj [S]do 4 TB (4096 GB)[/S] miejsca dostępnego na pliki.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Pojemność";
 /* Bandwich related with the MEGA PRO account level you can subscribe */

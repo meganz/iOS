@@ -287,7 +287,7 @@
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="Linkuri copiate";
 /* Text of the button after the links were copied to the clipboard */
-"copiedToTheClipboard"="Copied to the clipboard";
+"copiedToTheClipboard"="Copiat în clipboard";
 /* A title for the Copyright Warning dialog. */
 "copyrightWarning"="Avertisment privind drepturile de autor";
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="Şterge datele locale";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Deconectează-te şi şterge datele locale după 10 încercări eşuate pentru codul de trecere";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Asistenţă";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centrul de ajutor";
 /* Title to rate the app */
@@ -820,6 +818,8 @@
 "profile"="Profil";
 /* Title of the Achievements section */
 "achievementsTitle"="Realizări";
+/* Title of the Used storage section */
+"usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Invite friends and get Rewards";
 /* Indicating text for when "you invite your friends" */
@@ -916,6 +916,8 @@
 "youCanUpgradeLaterInMyAccount"="Poţi upgrada mai târziu din Contul meu";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="[S]Unitatea cloud este aproape plină.[/S] [A]Upgradează acum[/A] la un cont PRO şi obţine [S]până la 4 TB (4096 GB)[/S] spaţiu de stocare în cloud.";
+/* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
+"cloudDriveIsFull"="[S]Contul tău este plin.[/S] [A]Upgradează acum[/A] la un cont PRO şi obţine [S]până la 4 TB (4096 GB)[/S] spaţiu de stocare în cloud.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Spaţiu de stocare";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -1041,7 +1043,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Trimite mesaj";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Verifică datele de autentificare";
+"verifyCredentials"="Verifică credenţialele";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Goleşte istoricul chatului";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1053,11 +1055,11 @@
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="Foldere partajate";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
-"contactCredentials"="Datele de autentificare ale contactului";
+"contactCredentials"="Credenţialele contactului";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="Acest lucru este realizat cel mai bine întâlnindu-vă faţă în faţă. Dacă ai un alt canal verificat deja precum OTR sau PGP verificat, l-ai putea folosi şi pe acela.";
 /* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Datele de autentificare ale tale";
+"yourCredentials"="Credenţialele tale";
 /* Button to reset the password */
 "reset"="Resetează";
 /* Button title */
@@ -1067,9 +1069,9 @@
 /* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
 "group"="Grup";
 /* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
-"groupInfo"="Informaţii privind grupului";
+"groupInfo"="Informaţii privind grupul";
 /* Label title for a group chat */
-"groupChat"="Chatul grupului";
+"groupChat"="Chat de grup";
 /* The title of a menu button which allows users to rename a group chat. */
 "renameGroup"="Redenumeşte grupul";
 /* Title of the action that allows you to change the avatar of a group chat. */
@@ -1119,9 +1121,9 @@
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Şterge mesajul";
 /*  */
-"fromCloudDrive"="From Cloud drive";
+"fromCloudDrive"="Din unitatea cloud";
 /*  */
-"fromDevice"="From device";
+"fromDevice"="De pe dispozitiv";
 /* referring to a contact in the contact list of the user */
 "contact"="Contact";
 /* A button label. The button sends contact information to a user in the conversation. */
@@ -1224,9 +1226,9 @@
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Eroare necunoscută";
 /* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="You will need to restart MEGA after changing the language";
+"languageRestartAlert"="Va trebui să reporneşti MEGA după schimbarea limbii";
 /* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
-"languageRestartNotification"="Language changed. Tap to restart.";
+"languageRestartNotification"="Limbă schimbată. Atinge pentru repornire.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA este un serviciu sigur de stocare în cloud care îţi oferă 50GB spaţiu de stocare gratuit. Spre deosebire de ceilalţi furnizori de stocare în cloud, datele tale sunt criptate şi decriptate doar de către dispozitivele client ale tale şi niciodată de către noi.";

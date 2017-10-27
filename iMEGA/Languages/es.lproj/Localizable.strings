@@ -238,6 +238,8 @@
 "newFolderMessage"="Nombre para la carpeta";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Crear";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="La carpeta ya existe";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Subir desde...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -376,7 +378,7 @@
 "rename"="Renombrar";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Introduce otro nombre";
-/* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
+/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Mover a la Papelera";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
 "moveFileToRubbishBinMessage"="¿Seguro que quieres mover 1 archivo a la Papelera?";
@@ -443,7 +445,7 @@
 /* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Activar Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Camera Uploads activadas";
+"cameraUploadsEnabled"="Camera Uploads activado";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu elemento seleccionado";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -526,7 +528,7 @@
 "removeMultipleUsersMessage"="¿Seguro que deseas eliminar %d usuarios de la lista de contactos?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d contactos eliminados";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Contacto %@ eliminado";
 /* Label shown when a contact request is pending */
 "pending"="Pendiente";
@@ -564,7 +566,7 @@
 "fullAccess"="Acceso completo";
 /* Title of the Settings section */
 "settingsTitle"="Ajustes";
-/* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
+/* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Camera Uploads";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Papelera";
@@ -572,9 +574,9 @@
 "advanced"="Avanzado";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Opciones de seguridad";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="Acerca de";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Idioma";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="Español";
@@ -592,7 +594,7 @@
 "off"="No";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
 "on"="Sí";
-/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+/* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Opciones";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Subir videos";
@@ -731,11 +733,11 @@
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
 "doYouHaveABackupOfYourRecoveryKey" = "¿Tienes copia de tu clave de recuperación?";
 /* Headline when the user chose YES */
-"great" = "¡Bien!";
+"great"="¡Bien!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
 "recoveryLinkToResetYourPassword" = "Por favor introduce tu correo electrónico a continuación. Recibirás un enlace que te permitirá usar tu clave de recuperación y restablecer tu contraseña.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
-"send" = "Enviar";
+"send"="Enviar";
 /* The title of the screen to park an account. */
 "noMasterKey_title" = "Vaya...";
 /* First paragraph of the screen to park an account */
@@ -751,7 +753,7 @@
 /* Caption of the button to proceed */
 "startNewAccount" = "Crear cuenta nueva";
 /*  */
-"yourAccounHasBeenParked" = "Tu antigua cuenta se ha aparcado con éxito. Ahora puedes acceder a tu nueva cuenta.";
+"yourAccounHasBeenParked"="Tu antigua cuenta se ha aparcado con éxito. Ahora puedes acceder a tu nueva cuenta.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Nuevo correo electrónico";
 /* Button text for the user to confirm their change of email address. */
@@ -773,9 +775,9 @@
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="Felicidades, el nuevo correo electrónico para tu cuenta MEGA es: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
-"closeOtherSessions" = "Cerrar el resto de sesiones";
+"closeOtherSessions"="Cerrar el resto de sesiones";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
-"sessionsClosed" = "Sesiones cerradas";
+"sessionsClosed"="Sesiones cerradas";
 /* Section title where you can change the app's passcode */
 "changePasscodeLabel"="Cambiar código de acceso";
 /* Title to describe a simple (four digit) passcode */
@@ -784,8 +786,8 @@
 "eraseAllLocalDataLabel"="Borrar los datos locales";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Cerrar sesión y borrar los datos locales tras 10 intentos fallidos";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Soporte";
+/* Menu item */
+"help"="Ayuda";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centro de ayuda";
 /* Title to rate the app */
@@ -820,6 +822,8 @@
 "profile"="Perfil";
 /* Title of the Achievements section */
 "achievementsTitle"="Logros";
+/* Title of the Used storage section */
+"usedStorage"="Almacenamiento usado";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Invita a tus amigos y obtén recompensas";
 /* Indicating text for when "you invite your friends" */
@@ -916,6 +920,8 @@
 "youCanUpgradeLaterInMyAccount"="Puedes hacerte PRO más tarde en mi cuenta";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="[S]Tu nube está casi llena.[/S] [A]Hazte PRO ahora[/A] y obtén [S]hasta 4TB (4096 GB)[/S] de espacio de almacenamiento en la nube.";
+/* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
+"cloudDriveIsFull"="[S]Tu cuenta está llena.[/S] [A]Hazte PRO ahora[/A] y obtén [S]hasta 4 TB (4096 GB)[/S] de espacio de almacenamiento en la nube.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Almacenamiento";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -939,7 +945,7 @@
 /* Alert title to remenber the user that needs to enable purchases */
 "allowPurchase_title"="Permitir compras";
 /* Alert message to remenber the user that needs to enable purchases before continue */
-"allowPurchase_message" = "Debes activar compras en la App Store en Ajustes antes de restaurar una compra.";
+"allowPurchase_message"="Debes activar compras en la App Store en Ajustes antes de restaurar una compra.";
 /* Button title to restore failed purchases */
 "restore"="Restaurar";
 /* "Monthly" subscriptions */
@@ -949,7 +955,7 @@
 /* Alert title shown when a selected plan is not available at that moment on the App store */
 "productNotAvailable" = "Este producto no está disponible en la App Store en estos momentos. Por favor inténtalo de nuevo más tarde.";
 /* Alert title shown when the user has purchase correctly some plan */
-"thankYou_title" = "Gracias";
+"thankYou_title"="Gracias";
 /* Alert message shown when a purchase was restored succesfully */
 "purchaseRestore_message" = "Tu compra ha sido restaurada";
 /* Alert title shown when a purchase has stopped because some error between the process */

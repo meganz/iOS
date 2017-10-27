@@ -329,7 +329,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Links terhapus";
 /* Title show when a file is being downloaded */
-"downloading"="Men-download...";
+"downloading"="Mengunduh...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Apakah anda ingin membatalkan download?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -784,8 +784,6 @@
 "eraseAllLocalDataLabel"="Hapus data lokal";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Keluar dan hapus data lokal setelah 10 kali gagal mencoba passcode";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Dukungan";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Pusat Bantuan";
 /* Title to rate the app */
@@ -820,6 +818,8 @@
 "profile"="Profil";
 /* Title of the Achievements section */
 "achievementsTitle"="Pencapaian";
+/* Title of the Used storage section */
+"usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Invite friends and get Rewards";
 /* Indicating text for when "you invite your friends" */
@@ -916,6 +916,8 @@
 "youCanUpgradeLaterInMyAccount"="Anda dapat upgrade nanti di Akun Saya";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="[S]Cloud Drive hampir penuh.[/S] [A]Upgrade sekarang[/A] ke akun PRO dan dapatkan [S]sampai 4 TB (4096 GB)[/S] cloud storage space.";
+/* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
+"cloudDriveIsFull"="[S]Akun anda penuh.[/S] [A]Upgrade sekarang[/A] ke akun PRO dan dapatkan [S]sampai 4 TB (4096 GB)[/S] cloud storage space.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Gudang";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
