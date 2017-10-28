@@ -35,13 +35,6 @@
 + (UIImage *)mnz_convertBitmapRGBA8ToUIImage:(unsigned char *)buffer
                                withWidth:(NSInteger)width
                               withHeight:(NSInteger)height {
-    
-    for(int i = 0; i < width * height * 4; i += 4) {
-        unsigned char tmp = buffer[i];
-        buffer[i] = buffer[i + 2];
-        buffer[i + 2] = tmp;
-    }
-    
     size_t bufferLength = width * height * 4;
     CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, buffer, bufferLength, NULL);
     size_t bitsPerComponent = 8;
