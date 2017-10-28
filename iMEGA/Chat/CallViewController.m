@@ -3,6 +3,9 @@
 #import "MEGARemoteImageView.h"
 #import "MEGALocalImageView.h"
 
+#import <AVFoundation/AVFoundation.h>
+#import <AudioToolbox/AudioToolbox.h>
+
 @interface CallViewController () <MEGAChatRequestDelegate, MEGAChatCallDelegate, MEGAChatVideoDelegate>
 
 @property (weak, nonatomic) IBOutlet MEGARemoteImageView *remoteVideoImageView;
@@ -14,6 +17,8 @@
 @property (weak, nonatomic) IBOutlet UIView *outgoingCallView;
 @property (weak, nonatomic) IBOutlet UIView *incomingCallView;
 
+@property BOOL loudSpeakerEnabled;
+
 @end
 
 @implementation CallViewController
@@ -23,12 +28,73 @@
     // Do any additional setup after loading the view.
     
     self.enableDisableVideoButton.selected = self.videoCall;
+    self.loudSpeakerEnabled = self.videoCall;
     
     if (self.callType == CallTypeIncoming) {
         self.outgoingCallView.hidden = YES;
     } else {
         [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatId enableVideo:self.videoCall delegate:self];
         self.incomingCallView.hidden = YES;
+
+        [[UIDevice currentDevice] setProximityMonitoringEnabled:YES];
+        
+        // These observers should be removed when the call finishes
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSessionRouteChange:) name:AVAudioSessionRouteChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sensorStateMonitor:) name:@"UIDeviceProximityStateDidChangeNotification" object:nil];
+    }
+}
+
+- (void)sensorStateMonitor:(NSNotificationCenter *)notification
+{
+    if (!self.videoCall)
+    {
+        return;
+    }
+    
+    if ([[UIDevice currentDevice] proximityState] == YES)
+    {
+        [self disableLoudspeaker];
+    }
+    
+    else
+    {
+        [self enableLoudspeaker];
+    }
+}
+
+- (void)didSessionRouteChange:(NSNotification *)notification
+{
+    NSDictionary *interuptionDict = notification.userInfo;
+    const NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
+    
+    if (routeChangeReason == AVAudioSessionRouteChangeReasonRouteConfigurationChange) {
+        if (self.loudSpeakerEnabled) {
+            [self enableLoudspeaker];
+        }
+        else {
+            [self disableLoudspeaker];
+        }
+    }
+}
+
+- (void)enableLoudspeaker {
+    self.loudSpeakerEnabled = TRUE;
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    AVAudioSessionCategoryOptions options = audioSession.categoryOptions;
+    if (options & AVAudioSessionCategoryOptionDefaultToSpeaker) return;
+    options |= AVAudioSessionCategoryOptionDefaultToSpeaker;
+    [audioSession setActive:YES error:nil];
+    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:options error:nil];
+}
+
+- (void)disableLoudspeaker {
+    self.loudSpeakerEnabled = FALSE;
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    AVAudioSessionCategoryOptions options = audioSession.categoryOptions;
+    if (options & AVAudioSessionCategoryOptionDefaultToSpeaker) {
+        options &= ~AVAudioSessionCategoryOptionDefaultToSpeaker;
+        [audioSession setActive:YES error:nil];
+        [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:options error:nil];
     }
 }
 
