@@ -5,7 +5,7 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -196,6 +196,108 @@
             </objects>
             <point key="canvasLocation" x="2545" y="450"/>
         </scene>
+        <!--Call View Controller-->
+        <scene sceneID="mXn-pT-v0u">
+            <objects>
+                <viewController storyboardIdentifier="CallViewControllerID" id="m0F-zS-y46" customClass="CallViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ok2-tf-MST"/>
+                        <viewControllerLayoutGuide type="bottom" id="EmB-Jc-D1p"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2DR-0o-zFw">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tqR-aM-aH4" customClass="MEGARemoteImageView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XBi-5G-ZJL" customClass="MEGALocalImageView">
+                                <rect key="frame" x="209" y="38" width="131" height="189"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zo2-s1-xCp" userLabel="outgoingCallView">
+                                <rect key="frame" x="46" y="501" width="294" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="22a-wx-Shy">
+                                        <rect key="frame" x="127" y="14" width="72" height="72"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <state key="normal" image="unMuteMic"/>
+                                        <state key="selected" image="muteMic"/>
+                                        <connections>
+                                            <action selector="muteCall:" destination="m0F-zS-y46" eventType="touchUpInside" id="aBh-Rr-oXZ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4O9-0Y-ZM5">
+                                        <rect key="frame" x="8" y="14" width="72" height="72"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <state key="normal" image="rejectCall"/>
+                                        <connections>
+                                            <action selector="hangCall:" destination="m0F-zS-y46" eventType="touchUpInside" id="PDm-7s-Hsz"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqO-Tf-O54">
+                                        <rect key="frame" x="241" y="36" width="28" height="28"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                        <state key="normal" image="hudCameraUploads"/>
+                                        <state key="selected" image="hudNoCamera"/>
+                                        <connections>
+                                            <action selector="enableDisableVideo:" destination="m0F-zS-y46" eventType="touchUpInside" id="omp-Lv-s7E"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eGD-Fd-hut" userLabel="incomingCallView">
+                                <rect key="frame" x="46" y="501" width="294" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0tj-Yk-xcM">
+                                        <rect key="frame" x="8" y="14" width="72" height="72"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <state key="normal" image="rejectCall"/>
+                                        <connections>
+                                            <action selector="hangCall:" destination="m0F-zS-y46" eventType="touchUpInside" id="BgW-El-Bx6"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ShH-Pd-PJF">
+                                        <rect key="frame" x="111" y="14" width="72" height="72"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <state key="normal" image="acceptCall"/>
+                                        <state key="selected" image="hudNoCamera"/>
+                                        <connections>
+                                            <action selector="acceptCall:" destination="m0F-zS-y46" eventType="touchUpInside" id="B2i-Yy-rSU"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vYy-qQ-22M">
+                                        <rect key="frame" x="234" y="36" width="28" height="28"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                        <state key="normal" image="hudCameraUploads"/>
+                                        <state key="selected" image="hudNoCamera"/>
+                                        <connections>
+                                            <action selector="acceptCallWithVideo:" destination="m0F-zS-y46" eventType="touchUpInside" id="C5g-vl-s54"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <connections>
+                        <outlet property="enableDisableVideoButton" destination="hqO-Tf-O54" id="xK7-Wv-1ie"/>
+                        <outlet property="incomingCallView" destination="eGD-Fd-hut" id="qw7-ME-H9Q"/>
+                        <outlet property="localVideoImageView" destination="XBi-5G-ZJL" id="NKM-kX-4GF"/>
+                        <outlet property="muteUnmuteMicrophone" destination="22a-wx-Shy" id="26Q-94-law"/>
+                        <outlet property="outgoingCallView" destination="Zo2-s1-xCp" id="OGV-yW-dPv"/>
+                        <outlet property="remoteVideoImageView" destination="tqR-aM-aH4" id="441-Bt-n47"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3ui-lT-2Za" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1080.8" y="1452.3238380809596"/>
+        </scene>
         <!--Chat Attached Contacts View Controller-->
         <scene sceneID="CPH-wX-UXf">
             <objects>
@@ -319,7 +421,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W71-dB-C1l">
-                                        <rect key="frame" x="169" y="113" width="40" height="18"/>
+                                        <rect key="frame" x="168.5" y="113" width="40" height="18"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                         <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -934,14 +1036,20 @@
         </scene>
     </scenes>
     <resources>
+        <image name="acceptCall" width="290" height="290"/>
         <image name="add" width="22" height="22"/>
         <image name="backArrow" width="22" height="22"/>
         <image name="chatIcon" width="32" height="26"/>
         <image name="chatSelectedIcon" width="32" height="26"/>
         <image name="check_mark" width="29" height="29"/>
         <image name="edit" width="22" height="22"/>
+        <image name="hudCameraUploads" width="28" height="28"/>
+        <image name="hudNoCamera" width="28" height="28"/>
+        <image name="muteMic" width="290" height="290"/>
         <image name="readPermissions" width="46" height="44"/>
         <image name="readWritePermissions" width="46" height="44"/>
+        <image name="rejectCall" width="288" height="288"/>
+        <image name="unMuteMic" width="214" height="214"/>
         <image name="video_list" width="22" height="22"/>
     </resources>
 </document>

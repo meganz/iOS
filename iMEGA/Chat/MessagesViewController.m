@@ -3,6 +3,7 @@
 #import "SVProgressHUD.h"
 
 #import "BrowserViewController.h"
+#import "CallViewController.h"
 #import "ChatAttachedContactsViewController.h"
 #import "ChatAttachedNodesViewController.h"
 #import "ContactsViewController.h"
@@ -49,7 +50,6 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
 @property (nonatomic, strong) UIBarButtonItem *unreadBarButtonItem;
 @property (nonatomic, strong) UILabel *unreadLabel;
 
-@property (nonatomic, strong) UIBarButtonItem *moreBarButtonItem;
 @property (nonatomic, getter=shouldStopInvitingContacts) BOOL stopInvitingContacts;
 
 @property (strong, nonatomic) NSMutableDictionary *participantsMutableDictionary;
@@ -239,10 +239,25 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
 }
 
 - (void)rightBarButtonItems {
-    if (self.chatRoom.isGroup && (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator)) {
-        self.moreBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"addContact"] style:UIBarButtonItemStyleDone target:self action:@selector(presentAddOrAttachParticipantToGroup:)];
-        self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
+    if (self.chatRoom.isGroup) {
+        if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
+            UIBarButtonItem *addContactBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"addContact"] style:UIBarButtonItemStyleDone target:self action:@selector(presentAddOrAttachParticipantToGroup:)];
+            self.navigationItem.rightBarButtonItem = addContactBarButtonItem;
+        }
+    } else {
+        UIBarButtonItem *audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audioCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
+        UIBarButtonItem *videoCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audioCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
+        videoCallBarButtonItem.tag = 1;
+        self.navigationItem.rightBarButtonItems = @[audioCallBarButtonItem, videoCallBarButtonItem];
     }
+}
+
+- (void)startAudioVideoCall:(UIBarButtonItem *)sender {
+    CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
+    callVC.chatId = self.chatRoom.chatId;
+    callVC.videoCall = sender.tag;
+    callVC.callType = CallTypeOutgoing;
+    [self presentViewController:callVC animated:YES completion:nil];
 }
 
 - (void)presentAddOrAttachParticipantToGroup:(UIBarButtonItem *)sender {

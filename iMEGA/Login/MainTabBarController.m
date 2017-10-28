@@ -1,6 +1,7 @@
 #import "MainTabBarController.h"
 #import "MEGASdkManager.h"
 
+#import "CallViewController.h"
 #import "MessagesViewController.h"
 
 NSInteger const CLOUD = 0;
@@ -70,6 +71,8 @@ NSInteger const MYACCOUNT = 4;
     
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
+    
     [self setBadgeValueForChats];
     [self setBadgeValueForIncomingContactRequests];
 }
@@ -157,6 +160,46 @@ NSInteger const MYACCOUNT = 4;
                 [messagesViewController updateUnreadLabel];
             }
         }        
+    }
+}
+
+#pragma mark - MEGAChatCallDelegate
+
+- (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
+    MEGALogDebug(@"onChatCallUpdate %@", call);
+    
+    switch (call.status) {
+        case MEGAChatCallStatusInitial:
+            break;
+            
+        case MEGAChatCallStatusHasLocalStream:
+            break;
+            
+        case MEGAChatCallStatusRequestSent:
+            break;
+            
+        case MEGAChatCallStatusRingIn: {
+            CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
+            callVC.chatId  = call.chatId;
+            callVC.videoCall = NO;
+            callVC.callType = CallTypeIncoming;
+            [self presentViewController:callVC animated:YES completion:nil];
+            break;
+        }
+            
+        case MEGAChatCallStatusJoining:
+            break;
+            
+        case MEGAChatCallStatusInProgress:
+            break;
+        case MEGAChatCallStatusTerminating:
+        case MEGAChatCallStatusDestroyed:
+        case MEGAChatCallStatusDisconnected:
+            [self dismissViewControllerAnimated:YES completion:nil];
+            break;
+            
+        default:
+            break;
     }
 }
 
