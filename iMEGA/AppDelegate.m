@@ -3,6 +3,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <CoreSpotlight/CoreSpotlight.h>
 #import <Photos/Photos.h>
+#import <PushKit/PushKit.h>
 #import <UserNotifications/UserNotifications.h>
 
 #import "LTHPasscodeViewController.h"
@@ -70,7 +71,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeHandleLink
 };
 
-@interface AppDelegate () <UIAlertViewDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate> {
+@interface AppDelegate () <UIAlertViewDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, PKPushRegistryDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
     
@@ -235,6 +236,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [sharedUserDefaults setBool:YES forKey:@"extensions-passcode"];
         }
         
+        [self registerForVoIPNotifications];
         [self registerForNotifications];
         
         isAccountFirstLogin = NO;
@@ -1133,8 +1135,16 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [[CameraUploads syncManager] setTabBarController:_mainTBC];
     if (isAccountFirstLogin) {
+        [self registerForVoIPNotifications];
         [self registerForNotifications];
     }
+}
+
+- (void)registerForVoIPNotifications {
+    dispatch_queue_t mainQueue = dispatch_get_main_queue();
+    PKPushRegistry *voipRegistry = [[PKPushRegistry alloc] initWithQueue:mainQueue];
+    voipRegistry.delegate = self;
+    voipRegistry.desiredPushTypes = [NSSet setWithObject:PKPushTypeVoIP];
 }
 
 - (void)registerForNotifications {
@@ -1565,6 +1575,32 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)setDefaultLanguage {    
     [[MEGASdkManager sharedMEGASdk] setLanguageCode:@"en"];
     [[LocalizationSystem sharedLocalSystem] setLanguage:@"en"];
+}
+
+#pragma mark - PKPushRegistryDelegate
+
+- (void)pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials:(PKPushCredentials *)credentials forType:(NSString *)type {
+    if([credentials.token length] == 0) {
+        MEGALogError(@"VoIP token length is 0");
+        return;
+    }
+    const unsigned char *dataBuffer = (const unsigned char *)credentials.token.bytes;
+    
+    NSUInteger dataLength = credentials.token.length;
+    NSMutableString *hexString = [NSMutableString stringWithCapacity:(dataLength * 2)];
+    
+    for (int i = 0; i < dataLength; ++i) {
+        [hexString appendString:[NSString stringWithFormat:@"%02lx", (unsigned long)dataBuffer[i]]];
+    }
+    
+    NSString *deviceTokenString = [NSString stringWithString:hexString];
+    MEGALogDebug(@"Device token %@", deviceTokenString);
+    [[MEGASdkManager sharedMEGASdk] registeriOSVoIPdeviceToken:deviceTokenString];
+    
+}
+
+- (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type {
+    MEGALogDebug(@"didReceiveIncomingPushWithPayload: %@", [payload dictionaryPayload]);
 }
 
 #pragma mark - MEGAGlobalDelegate
