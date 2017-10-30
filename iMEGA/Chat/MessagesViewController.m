@@ -254,7 +254,7 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
 
 - (void)startAudioVideoCall:(UIBarButtonItem *)sender {
     CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-    callVC.chatId = self.chatRoom.chatId;
+    callVC.chatRoom = self.chatRoom;
     callVC.videoCall = sender.tag;
     callVC.callType = CallTypeOutgoing;
     [self presentViewController:callVC animated:YES completion:nil];

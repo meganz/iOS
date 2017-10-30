@@ -9,7 +9,7 @@ typedef NS_ENUM(NSUInteger, CallType) {
 
 @interface CallViewController : UIViewController
 
-@property (nonatomic) uint64_t chatId;
+@property (nonatomic, strong) MEGAChatRoom *chatRoom;
 @property (nonatomic) BOOL videoCall;
 @property (nonatomic) CallType callType;
 
