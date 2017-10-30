@@ -5,7 +5,6 @@
 #import "Helper.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGANavigationController.h"
-#import "MEGAUser+MNZCategory.h"
 #import "MEGARemoveContactRequestDelegate.h"
 
 #import "ChatRoomsViewController.h"

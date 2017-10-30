@@ -180,7 +180,7 @@ NSInteger const MYACCOUNT = 4;
             
         case MEGAChatCallStatusRingIn: {
             CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-            callVC.chatId  = call.chatId;
+            callVC.chatRoom  = [api chatRoomForChatId:call.chatId];
             callVC.videoCall = NO;
             callVC.callType = CallTypeIncoming;
             [self presentViewController:callVC animated:YES completion:nil];
