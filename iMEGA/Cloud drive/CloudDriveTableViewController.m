@@ -1148,6 +1148,10 @@
 }
 
 - (void)encourageToUpgrade {
+    if (self.tabBarController == nil) { //Avoid presenting Upgrade view when peeking
+        return;
+    }
+    
     static BOOL alreadyPresented = NO;
     if (!alreadyPresented && ![[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
         MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
