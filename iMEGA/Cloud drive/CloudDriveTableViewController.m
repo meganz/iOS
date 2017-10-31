@@ -500,12 +500,12 @@
         return nil;
     }
     
-    switch ([node type]) {
+    switch (node.type) {
         case MEGANodeTypeFolder: {
             CloudDriveTableViewController *cloudDriveTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            [cloudDriveTVC setParentNode:node];
+            cloudDriveTVC.parentNode = node;
             if (self.displayMode == DisplayModeRubbishBin) {
-                [cloudDriveTVC setDisplayMode:self.displayMode];
+                cloudDriveTVC.displayMode = self.displayMode;
             }
             return cloudDriveTVC;
             break;
@@ -517,6 +517,10 @@
                 return [node mnz_photoBrowserWithNodes:nodesArray folderLink:NO displayMode:self.displayMode enableMoveToRubbishBin:YES];
             } else {
                 UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO];
+                if (viewController.class == PreviewDocumentViewController.class) {
+                    return nil;
+                }
+                
                 if (viewController.class == MEGAAVViewController.class) {
                     ((MEGAAVViewController *)viewController).peekAndPop = YES;
                 }
