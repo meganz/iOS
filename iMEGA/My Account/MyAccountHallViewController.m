@@ -59,8 +59,18 @@
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
-    [self.tableView reloadData];
+    [self initializeStorageInfo];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     
+    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+}
+
+#pragma mark - Private
+
+- (void)initializeStorageInfo {
     MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
     
     self.cloudDriveSize = [accountDetails storageUsedForHandle:[[[MEGASdkManager sharedMEGASdk] rootNode] handle]];
@@ -77,13 +87,6 @@
     
     self.usedStorage = accountDetails.storageUsed;
     self.maxStorage = accountDetails.storageMax;
-    
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
 #pragma mark - IBActions
@@ -203,6 +206,9 @@
     switch (indexPath.row) {
         case 0: { // Used Storage
             if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
+                if (!self.cloudDriveSize || !self.rubbishBinSize || !self.incomingSharesSize || !self.usedStorage || !self.maxStorage) {
+                    [self initializeStorageInfo];
+                }
                 NSArray *sizesArray = @[self.cloudDriveSize, self.rubbishBinSize, self.incomingSharesSize, self.usedStorage, self.maxStorage];
                 UsageViewController *usageVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UsageViewControllerID"];
                 usageVC.sizesArray = sizesArray;
