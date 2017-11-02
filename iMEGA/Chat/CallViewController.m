@@ -8,8 +8,14 @@
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 
+#import "MEGAChatAnswerCallRequestDelegate.h"
+#import "MEGAChatEnableDisableAudioRequestDelegate.h"
+#import "MEGAChatEnableDisableVideoRequestDelegate.h"
+#import "MEGAChatStartCallRequestDelegate.h"
+
 @interface CallViewController () <MEGAChatRequestDelegate, MEGAChatCallDelegate, MEGAChatVideoDelegate>
 
+@property (nonatomic, strong) MEGAChatCall *chatCall;
 @property (weak, nonatomic) IBOutlet MEGARemoteImageView *remoteVideoImageView;
 @property (weak, nonatomic) IBOutlet MEGALocalImageView *localVideoImageView;
 
@@ -30,6 +36,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    _chatCall = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+    
     self.enableDisableVideoButton.selected = self.videoCall;
     self.loudSpeakerEnabled = self.videoCall;
     
@@ -38,14 +46,20 @@
     if (self.callType == CallTypeIncoming) {
         self.outgoingCallView.hidden = YES;
     } else {
-        [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:self];
-        self.incomingCallView.hidden = YES;
-
-        [[UIDevice currentDevice] setProximityMonitoringEnabled:YES];
+        MEGAChatStartCallRequestDelegate *startCallRequestDelegate = [[MEGAChatStartCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
+            if (error.type) {
+                [self dismissViewControllerAnimated:YES completion:nil];
+            } else {
+                self.incomingCallView.hidden = YES;
+                
+                [[UIDevice currentDevice] setProximityMonitoringEnabled:YES];
+                
+                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSessionRouteChange:) name:AVAudioSessionRouteChangeNotification object:nil];
+                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sensorStateMonitor:) name:@"UIDeviceProximityStateDidChangeNotification" object:nil];
+            }
+        }];
         
-        // These observers should be removed when the call finishes
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSessionRouteChange:) name:AVAudioSessionRouteChangeNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sensorStateMonitor:) name:@"UIDeviceProximityStateDidChangeNotification" object:nil];
+        [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:startCallRequestDelegate];
     }
     
     self.nameLabel.text = [self.chatRoom peerFullnameAtIndex:0];
@@ -65,24 +79,21 @@
     [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideoDelegate:self.remoteVideoImageView];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatLocalVideoDelegate:self.localVideoImageView];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:AVAudioSessionRouteChangeNotification];
+    [[NSNotificationCenter defaultCenter] removeObserver:@"UIDeviceProximityStateDidChangeNotification"];
 }
 
 #pragma mark - Private
 
-- (void)sensorStateMonitor:(NSNotificationCenter *)notification
-{
-    if (!self.videoCall)
-    {
+- (void)sensorStateMonitor:(NSNotificationCenter *)notification {
+    if (!self.videoCall) {
         return;
     }
     
-    if ([[UIDevice currentDevice] proximityState] == YES)
-    {
+    if ([[UIDevice currentDevice] proximityState] == YES) {
         [self disableLoudspeaker];
-    }
-    
-    else
-    {
+    } else {
         [self enableLoudspeaker];
     }
 }
@@ -123,38 +134,66 @@
     }
 }
 - (IBAction)acceptCallWithVideo:(UIButton *)sender {
-    [[MEGASdkManager sharedMEGAChatSdk] answerChatCall:self.chatRoom.chatId enableVideo:YES delegate:self];
-    [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideoDelegate:self.localVideoImageView];
+    MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [[MEGAChatAnswerCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
+        if (error.type == MEGAChatErrorTypeOk) {
+            [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideoDelegate:self.localVideoImageView];
+        } else {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+    }];
+    [[MEGASdkManager sharedMEGAChatSdk] answerChatCall:self.chatRoom.chatId enableVideo:YES delegate:answerCallRequestDelegate];
 }
 
 - (IBAction)acceptCall:(UIButton *)sender {
-    [[MEGASdkManager sharedMEGAChatSdk] answerChatCall:self.chatRoom.chatId enableVideo:NO delegate:self];
+    MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [[MEGAChatAnswerCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
+        if (error.type != MEGAChatErrorTypeOk) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+    }];
+    [[MEGASdkManager sharedMEGAChatSdk] answerChatCall:self.chatRoom.chatId enableVideo:NO delegate:answerCallRequestDelegate];
 }
 
 - (IBAction)hangCall:(UIButton *)sender {
-    [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:self.chatRoom.chatId delegate:self];
+    if (self.chatCall.status == MEGAChatCallStatusRingIn) {
+        [[MEGASdkManager sharedMEGAChatSdk] rejectChatCall:self.chatRoom.chatId];
+    } else {
+        [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:self.chatRoom.chatId];
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)muteCall:(UIButton *)sender {
+- (IBAction)muteOrUnmuteCall:(UIButton *)sender {
+    MEGAChatEnableDisableAudioRequestDelegate *enableDisableAudioRequestDelegate = [[MEGAChatEnableDisableAudioRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
+        if (error.type == MEGAChatErrorTypeOk) {
+            sender.selected = !sender.selected;
+        }
+    }];
+    
     if (sender.selected) {
-        [[MEGASdkManager sharedMEGAChatSdk] enableAudioForChat:self.chatRoom.chatId delegate:self];
+        [[MEGASdkManager sharedMEGAChatSdk] enableAudioForChat:self.chatRoom.chatId delegate:enableDisableAudioRequestDelegate];
     } else {
-        [[MEGASdkManager sharedMEGAChatSdk] disableAudioForChat:self.chatRoom.chatId delegate:self];
+        [[MEGASdkManager sharedMEGAChatSdk] disableAudioForChat:self.chatRoom.chatId delegate:enableDisableAudioRequestDelegate];
     }
-    sender.selected = !sender.selected;
 }
 
 - (IBAction)enableDisableVideo:(UIButton *)sender {
+    MEGAChatEnableDisableVideoRequestDelegate *enableDisableVideoRequestDelegate = [[MEGAChatEnableDisableVideoRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
+        if (error.type == MEGAChatErrorTypeOk) {
+            if (sender.selected) {
+                self.localVideoImageView.hidden = YES;
+                [[MEGASdkManager sharedMEGAChatSdk] removeChatLocalVideoDelegate:self.localVideoImageView];
+            } else {
+                self.localVideoImageView.hidden = NO;
+                [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideoDelegate:self.localVideoImageView];
+            }
+            sender.selected = !sender.selected;
+        }
+    }];
     if (sender.selected) {
-        [[MEGASdkManager sharedMEGAChatSdk] disableVideoForChat:self.chatRoom.chatId delegate:self];
-        self.localVideoImageView.hidden = YES;
-        [[MEGASdkManager sharedMEGAChatSdk] removeChatLocalVideoDelegate:self.localVideoImageView];
+        [[MEGASdkManager sharedMEGAChatSdk] disableVideoForChat:self.chatRoom.chatId delegate:enableDisableVideoRequestDelegate];
     } else {
-        [[MEGASdkManager sharedMEGAChatSdk] enableVideoForChat:self.chatRoom.chatId delegate:self];
-        self.localVideoImageView.hidden = NO;
-        [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideoDelegate:self.localVideoImageView];
+        [[MEGASdkManager sharedMEGAChatSdk] enableVideoForChat:self.chatRoom.chatId delegate:enableDisableVideoRequestDelegate];
     }
-    sender.selected = !sender.selected;
 }
 
 #pragma mark - MEGAChatCallDelegate
