@@ -182,11 +182,11 @@
 "noRequestPending"="No pending requests";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Paused Transfers";
-/* Title shown when the there's no transfers and they aren't paused */
+/* Title shown when the there is not any transfer and they are not paused */
 "transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
 "transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloud Drive";
