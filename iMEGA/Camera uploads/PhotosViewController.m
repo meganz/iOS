@@ -6,6 +6,8 @@
 #import "Helper.h"
 #import "MEGAAVViewController.h"
 #import "MEGANavigationController.h"
+#import "MEGANode+MNZCategory.h"
+#import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
@@ -16,11 +18,13 @@
 #import "CameraUploadsTableViewController.h"
 #import "BrowserViewController.h"
 
-@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate> {
+@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate> {
     BOOL allNodesSelected;
 
     NSUInteger remainingOperations;
 }
+
+@property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (nonatomic, strong) MEGANode *parentNode;
 @property (nonatomic, strong) MEGANodeList *nodeList;
@@ -136,6 +140,21 @@
             [self.photosCollectionView reloadData];
         }
     } completion:nil];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
+        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+            if (!self.previewingContext) {
+                self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.view];
+            }
+        } else {
+            [self unregisterForPreviewingWithContext:self.previewingContext];
+            self.previewingContext = nil;
+        }
+    }
 }
 
 #pragma mark - Private
@@ -671,6 +690,44 @@
             [self setEditing:YES animated:YES];
             [self collectionView:self.photosCollectionView didSelectItemAtIndexPath:indexPath];
         }
+    }
+}
+
+#pragma mark - UIViewControllerPreviewingDelegate
+
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
+    if ([self.photosCollectionView allowsMultipleSelection]) {
+        return nil;
+    }
+    
+    CGPoint itemPoint = [self.photosCollectionView convertPoint:location fromView:self.view];
+    NSIndexPath *indexPath = [self.photosCollectionView indexPathForItemAtPoint:itemPoint];
+    
+    previewingContext.sourceRect = [self.photosCollectionView convertRect:[self.photosCollectionView cellForItemAtIndexPath:indexPath].frame toView:self.view];
+    
+    NSDictionary *monthPhotosDictionary = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
+    NSString *monthKey = [monthPhotosDictionary.allKeys objectAtIndex:0];
+    NSArray *monthPhotosArray = [monthPhotosDictionary objectForKey:monthKey];
+    MEGANode *nodeSelected = [monthPhotosArray objectAtIndex:indexPath.row];
+    if (nodeSelected.name.mnz_isImagePathExtension) {
+        return [nodeSelected mnz_photoBrowserWithNodes:[self.nodeList mnz_nodesArrayFromNodeList] folderLink:NO displayMode:0 enableMoveToRubbishBin:YES];
+    } else {
+        UIViewController *viewController = [nodeSelected mnz_viewControllerForNodeInFolderLink:NO];
+        if (viewController.class == MEGAAVViewController.class) {
+            ((MEGAAVViewController *)viewController).peekAndPop = YES;
+        }
+        
+        return viewController;
+    }
+    
+    return nil;
+}
+
+- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    if (viewControllerToCommit.class == MWPhotoBrowser.class) {
+        [self.navigationController pushViewController:viewControllerToCommit animated:YES];
+    } else {
+        [self.navigationController presentViewController:viewControllerToCommit animated:YES completion:nil];
     }
 }
 
