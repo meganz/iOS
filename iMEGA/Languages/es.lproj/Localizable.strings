@@ -182,12 +182,12 @@
 "noRequestPending"="No tienes solicitudes pendientes";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transferencias en pausa";
-/* Title shown when the there's no transfers and they aren't paused */
+/* Title shown when the there is not any transfer and they are not paused */
 "transfersEmptyState_titleAll"="No hay Transferencias";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No hay descargas";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No hay subidas";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="No hay Descargas";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="No hay Subidas";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Mi nube";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
