@@ -658,8 +658,12 @@
                     index += array.count;
                 }
                 index += indexPath.row;
-                MEGANode *nodePressed = [self.nodeList nodeAtIndex:index];
-                if ([self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:nodePressed.handle]]) {
+                
+                NSDictionary *monthPhotosDictionary = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
+                NSString *monthKey = [monthPhotosDictionary.allKeys objectAtIndex:0];
+                NSArray *monthPhotosArray = [monthPhotosDictionary objectForKey:monthKey];
+                MEGANode *nodeSelected = [monthPhotosArray objectAtIndex:indexPath.row];
+                if ([self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:nodeSelected.handle]]) {
                     [self setEditing:NO animated:YES];
                 }
             }
