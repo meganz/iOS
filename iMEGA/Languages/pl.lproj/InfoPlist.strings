@@ -4,3 +4,5 @@
 "NSCameraUsageDescription"="MEGA ma dostęp do aparatu podczas nagrywania filmu, lub robienia zdjęć. ";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryUsageDescription"="MEGA ma dostęp do Twoich zdjęć i/lub filmów, jeżeli je wcześniej wgrasz lub masz uruchomioną funkcję wgrywania zdjęć.";
+/* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSContactsUsageDescription"="MEGA uzyskuje dostęp do Twoich kontaktów w momencie wybrania kogoś do zapisania/wyeksportowania.";
