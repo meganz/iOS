@@ -825,7 +825,7 @@
 /* Title of the Used storage section */
 "usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="Invite friends and get bonuses";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="Invite your friends";
 /* title of the introduction for the achievements screen */

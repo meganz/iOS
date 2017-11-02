@@ -52,7 +52,7 @@
 "loggedOutFromAnotherLocation"="Vous avez été déconnecté de cet appareil à partir d'un autre endroit";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="La clé SSL du serveur ne peut pas être vérifiée. Vous pourriez être la cible d'une attaque de l'intercepteur.";
-/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+/* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="Le processus prend plus de temps que prévu. Veuillez patienter...";
@@ -238,6 +238,8 @@
 "newFolderMessage"="Nom du nouveau dossier";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Créer";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="Dossier déjà existant";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importer de...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -317,7 +319,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="Copier le lien";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Copy key";
+"copyKey"="Copier la clé";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Ouvrir avec...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -784,6 +786,8 @@
 "eraseAllLocalDataLabel"="Effacer les données locales";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Se déconnecter et effacer les données locales après 10 tentatives infructueuses de saisie du code d'accès";
+/* Menu item */
+"help"="Aide";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centre d'assistance";
 /* Title to rate the app */
@@ -819,15 +823,15 @@
 /* Title of the Achievements section */
 "achievementsTitle"="Objectifs";
 /* Title of the Used storage section */
-"usedStorage"="Used storage";
+"usedStorage"="Espace de stockage utilisé";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="Invitez des amis et obtenez des primes";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="Invitez vos amis";
-/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
-"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* title of the introduction for the achievements screen */
+"inviteFriendsAndGetForEachReferral"="Obtenez %1$s d’espace de stockage et %2$s de transferts pour chaque parrainage";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+"inviteYourFriendsExplanation"="Choisissez des contacts de la liste de contacts de votre téléphone ou saisissez plusieurs adresses courriel.";
 /*  */
 "insertYourFriendsEmails"="Saisissez les adresses courriel de votre ami :";
 /*  */
@@ -847,9 +851,9 @@
 /* The user's achieved base quota */
 "accountBaseQuota"="Quota de base du compte";
 /* achievement type */
-"registrationBonus"="Prime d'adhésion";
+"registrationBonus"="Prime d’inscription";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
-"registrationBonusExplanation"="Vous avez reçu %1 d'espace de stockage comme prime gratuite d'adhésion.";
+"registrationBonusExplanation"="Vous avez reçu %1 d’espace de stockage comme prime gratuite d’inscription.";
 /* achievement type */
 "referralBonuses"="Primes de parrainage";
 /*  */
@@ -1151,7 +1155,7 @@
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Nouveau dossier partagé";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="Voulez-vous vraiment annuler l'adhésion?";
+"areYouSureYouWantToAbortTheRegistration"="Voulez-vous vraiment annuler l’inscription ?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="Si vous avez mal orthographié votre adresse courriel, corrigez-la et cliquez sur « Renvoyer ».";
 /* A button to resend the email confirmation. */
@@ -1170,6 +1174,8 @@
 "autorenewableDescription"="Les abonnements sont renouvelés automatiquement lors des périodes d'abonnement successives de même durée et au même tarif que la période initiale choisie. Vous pouvez désactiver le renouvellement automatique de votre abonnement MEGA PRO au plus tard 24 heures avant l'échéance de votre prochain paiement dans la page des réglages de votre compte iTunes. Pour gérer vos abonnements, cliquez simplement sur l'icône de la logithèque App Store sur votre appareil, connectez-vous en bas de la page avec votre identifiant Apple (si ce n'est pas déjà fait), et cliquez sur Afficher l'identifiant Apple. Vous atteindrez la page de votre compte où vous trouverez Gérer vers le bas. Ensuite, vous pourrez sélectionner votre abonnement MEGA PRO et visualiser votre date prévue de renouvellement, choisir un autre type d'abonnement, ou activer/désactiver le renouvellement automatique de votre abonnement.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Ouvrir MEGA et se connecter pour continuer";
+/* Text shown when you try to use Files app while having a passcode */
+"disablePasscodeToUseFiles"="L’appli Fichiers ne peut pas être utilisée si vous avez un code de verrouillage dans MEGA. Si vous souhaitez utiliser Fichiers, veuillez ouvrir MEGA et désactiver le code.";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Révoquer";
 /* Inform user that there were unsupported assets in the share extension */

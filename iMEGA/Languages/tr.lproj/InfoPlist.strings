@@ -4,3 +4,5 @@
 "NSCameraUsageDescription"="MEGA kameranıza uygulama içerisinden resim veya video çekerken erişim sağlar.";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryUsageDescription"="MEGA Kamera Yüklemeleri'ni açtığınızda veya yüklemek için bazılarını seçtiğinizde fotoğraf ve/ya videolarınıza erişir.";
+/* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSContactsUsageDescription"="MEGA, kaydetmek/dışa aktarmak için seçmiş olduğunuz kişilere erişir.";

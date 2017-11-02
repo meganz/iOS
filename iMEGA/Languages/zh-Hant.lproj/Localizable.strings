@@ -52,7 +52,7 @@
 "loggedOutFromAnotherLocation"="您已從其他位置登出該設備";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="伺服器 SSL 金鑰未能認證。您可能會收到第三方攻擊。";
-/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+/* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="此處理過程比預期的長些。請稍候...";
@@ -238,6 +238,8 @@
 "newFolderMessage"="新資料夾的名字";
 /* Title button for the create folder alert.  */
 "createFolderButton"="建立";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="資料夾已存在";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="自...匯入";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -317,7 +319,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="複製鏈接";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Copy key";
+"copyKey"="複製金鑰";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="開啟於...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -784,6 +786,8 @@
 "eraseAllLocalDataLabel"="刪除本地數據";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="於10次密碼輸入錯誤後，自動登出並刪除本機資料";
+/* Menu item */
+"help"="幫助";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="協助中心";
 /* Title to rate the app */
@@ -819,13 +823,13 @@
 /* Title of the Achievements section */
 "achievementsTitle"="成果";
 /* Title of the Used storage section */
-"usedStorage"="Used storage";
+"usedStorage"="已使用空間";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="邀請朋友並獲得獎勵";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="邀請朋友加入";
-/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
-"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* title of the introduction for the achievements screen */
+"inviteFriendsAndGetForEachReferral"="每筆推薦成功，皆可獲得%1$s的儲存空間和%2$s的傳輸配額";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
 /*  */
@@ -1170,6 +1174,8 @@
 "autorenewableDescription"="此訂閱將會自動更新續訂，續訂內容與您一開始選擇的訂閱時間與價格一致。您可以於您的iTunes帳戶設定頁面關閉MEGA PRO的訂閱自動更新續訂，必須於您的下一個訂閱繳款期限的24小時之前執行此操作。欲管理您的訂閱內容，只需點擊您手機上的App Store圖標，可以在頁面下方以您的Apple帳號登入（如果您還沒有這樣做），然後點擊查看帳號。您會被帶到您的帳戶頁面，就可以向下滾動到管理應用程序訂閱。在那裡，您可以選擇你的MEGA PRO訂閱和查看您預定的續約日期，選擇不同的訂閱專案或切換開關至關閉以停用您的自動續訂。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="開啟MEGA並登入以繼續";
+/* Text shown when you try to use Files app while having a passcode */
+"disablePasscodeToUseFiles"="如果您在MEGA中設有密碼，則無法使用該檔案。如果要使用該檔案，請開啟MEGA並停用該密碼功能。";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="撤除";
 /* Inform user that there were unsupported assets in the share extension */
