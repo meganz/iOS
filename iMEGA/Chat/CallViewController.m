@@ -154,11 +154,7 @@
 }
 
 - (IBAction)hangCall:(UIButton *)sender {
-    if (self.chatCall.status == MEGAChatCallStatusRingIn) {
-        [[MEGASdkManager sharedMEGAChatSdk] rejectChatCall:self.chatRoom.chatId];
-    } else {
-        [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:self.chatRoom.chatId];
-    }
+    [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:self.chatRoom.chatId];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
