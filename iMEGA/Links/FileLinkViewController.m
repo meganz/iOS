@@ -115,7 +115,9 @@
 - (void)showUnavailableLinkView {
     [SVProgressHUD dismiss];
     
-    [self showEmptyStateViewWithTitle:AMLocalizedString(@"linkUnavailable", nil) text:AMLocalizedString(@"fileLinkUnavailableText", nil)];
+    NSString *fileLinkUnavailableText = [NSString stringWithFormat:@"%@\n%@\n%@\n%@", AMLocalizedString(@"fileLinkUnavailableText1", nil), AMLocalizedString(@"fileLinkUnavailableText2", nil), AMLocalizedString(@"fileLinkUnavailableText3", nil), AMLocalizedString(@"fileLinkUnavailableText4", nil)];
+    
+    [self showEmptyStateViewWithTitle:AMLocalizedString(@"linkUnavailable", nil) text:fileLinkUnavailableText];
 }
 
 - (void)showEmptyStateViewWithTitle:(NSString *)title text:(NSString *)text {
