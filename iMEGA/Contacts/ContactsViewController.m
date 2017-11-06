@@ -215,18 +215,21 @@
     } else {
         self.users = [[MEGASdkManager sharedMEGASdk] contacts];
         NSInteger count = [[self.users size] integerValue];
+        NSMutableArray *usersArray = [[NSMutableArray alloc] init];
         for (NSInteger i = 0; i < count; i++) {
             MEGAUser *user = [self.users userAtIndex:i];
             if ([user visibility] == MEGAUserVisibilityVisible) {
                 if (self.contactsMode == ContactsModeChatAddParticipant) {
                     if ([self.participantsMutableDictionary objectForKey:[NSNumber numberWithUnsignedLongLong:user.handle]] == nil) {
-                        [self.visibleUsersArray addObject:user];
+                        [usersArray addObject:user];
                     }
                 } else {
-                    [self.visibleUsersArray addObject:user];
+                    [usersArray addObject:user];
                 }
             }
         }
+        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"mnz_fullName" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+        self.visibleUsersArray = [usersArray sortedArrayUsingDescriptors:@[sort]];
     }
     
     if ([self.visibleUsersArray count] == 0) {
