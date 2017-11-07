@@ -26,7 +26,7 @@
 #import "ContactTableViewCell.h"
 #import "ShareFolderActivity.h"
 
-@interface ContactsViewController () <ABPeoplePickerNavigationControllerDelegate, CNContactPickerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate>
+@interface ContactsViewController () <ABPeoplePickerNavigationControllerDelegate, CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
@@ -61,6 +61,9 @@
 
 @property (nonatomic) BOOL pendingRequestsPresented;
 
+@property (nonatomic, strong) NSMutableArray *searchVisibleUsersArray;
+@property (strong, nonatomic) UISearchController *searchController;
+
 @end
 
 @implementation ContactsViewController
@@ -72,8 +75,24 @@
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
+    
     self.pendingRequestsPresented = NO;
     
+    // Search controller:
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.searchBar.delegate = self;
+    self.searchController.searchBar.barTintColor = [UIColor colorWithWhite:235.0f / 255.0f alpha:1.0f];
+    self.searchController.searchBar.translucent = YES;
+    [self.searchController.searchBar sizeToFit];
+    UITextField *searchTextField = [self.searchController.searchBar valueForKey:@"_searchField"];
+    searchTextField.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
+    searchTextField.textColor = [UIColor mnz_gray999999];
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+    self.definesPresentationContext = YES;
+    [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
+
     [self setupContacts];
 }
 
@@ -84,6 +103,10 @@
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    
+    if (!self.tableView.tableHeaderView) {
+        self.tableView.tableHeaderView = self.searchController.searchBar;
+    }
     
     [self reloadUI];
 }
@@ -470,6 +493,18 @@
     }
 }
 
+- (MEGAUser *)userAtIndexPath:(NSIndexPath *)indexPath {
+    MEGAUser *user = nil;
+    if (indexPath) {
+        if (self.searchController.isActive) {
+            user = [self.searchVisibleUsersArray objectAtIndex:indexPath.row];
+        } else {
+            user = [self.visibleUsersArray objectAtIndex:indexPath.row];
+        }
+    }
+    return user;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -681,7 +716,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
     if ([MEGAReachabilityManager isReachable]) {
-        numberOfRows = [self.visibleUsersArray count];
+        numberOfRows = self.searchController.isActive ? [self.searchVisibleUsersArray count] : [self.visibleUsersArray count];
     }
     
     if (numberOfRows == 0) {
@@ -694,7 +729,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
+    MEGAUser *user = [self userAtIndexPath:indexPath];
     NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
     [self.indexPathsMutableDictionary setObject:indexPath forKey:base64Handle];
     
@@ -784,7 +819,7 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
+    MEGAUser *user = [self userAtIndexPath:indexPath];
     if (!user) {
         [SVProgressHUD showErrorWithStatus:@"Invalid user"];
         return;
@@ -829,7 +864,13 @@
             }
             
             self.userSelected(@[user]);
-            [self dismissViewControllerAnimated:YES completion:nil];
+            if (self.searchController.isActive) {
+                [self.searchController dismissViewControllerAnimated:YES completion:^{
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                }];
+            } else {
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }
             break;
         }
             
@@ -846,7 +887,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
+    MEGAUser *user = [self userAtIndexPath:indexPath];
     
     if (tableView.isEditing) {
         //tempArray avoid crash: "was mutated while being enumerated."
@@ -888,7 +929,7 @@
         return UITableViewCellEditingStyleNone;
     }
     
-    MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
+    MEGAUser *user = [self userAtIndexPath:indexPath];
     
     self.selectedUsersArray = [NSMutableArray new];
     [self.selectedUsersArray addObject:user];
@@ -905,7 +946,7 @@
                 MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [[MEGARemoveContactRequestDelegate alloc] initWithNumberOfRequests:1 completion:^{
                     [self setTableViewEditing:NO animated:NO];
                 }];
-                MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
+                MEGAUser *user = [self userAtIndexPath:indexPath];
                 [[MEGASdkManager sharedMEGASdk] removeContactUser:user delegate:removeContactRequestDelegate];
                 break;
             }
@@ -988,10 +1029,15 @@
     
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
-    NSString *text;
+    NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
-        return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.") sectionTitle:AMLocalizedString(@"contactsTitle", @"Title of My Contacts section")];
-        
+        if (self.searchController.isActive ) {
+            if (self.searchController.searchBar.text.length > 0) {
+                text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
+            }
+        } else {
+            return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.") sectionTitle:AMLocalizedString(@"contactsTitle", @"Title of My Contacts section")];
+        }
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
@@ -1003,7 +1049,15 @@
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     if ([MEGAReachabilityManager isReachable]) {
-        return [UIImage imageNamed:@"emptyContacts"];
+        if (self.searchController.isActive) {
+            if (self.searchController.searchBar.text.length > 0) {
+                return [UIImage imageNamed:@"emptySearch"];
+            } else {
+                return nil;
+            }
+        } else {
+            return [UIImage imageNamed:@"emptyContacts"];
+        }
     } else {
         return [UIImage imageNamed:@"noInternetConnection"];
     }
@@ -1015,7 +1069,7 @@
     }
     
     NSString *text = @"";
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachable] && !self.searchController.isActive) {
         text = AMLocalizedString(@"addContacts", nil);
     }
     
@@ -1035,6 +1089,10 @@
     return [UIColor whiteColor];
 }
 
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:self.searchController.isActive];
+}
+
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
     return [Helper spaceHeightForEmptyState];
 }
@@ -1043,6 +1101,28 @@
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
     [self addContact:button];
+}
+
+#pragma mark - UISearchBarDelegate
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    self.searchVisibleUsersArray = nil;
+}
+
+#pragma mark - UISearchResultsUpdating
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    NSString *searchString = searchController.searchBar.text;
+    if (searchController.isActive) {
+        if ([searchString isEqualToString:@""]) {
+            self.searchVisibleUsersArray = self.visibleUsersArray;
+        } else {
+            NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.mnz_fullName contains[c] %@", searchString];
+            self.searchVisibleUsersArray = [[self.visibleUsersArray filteredArrayUsingPredicate:resultPredicate] mutableCopy];
+        }
+    }
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - MEGAGlobalDelegate
