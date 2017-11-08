@@ -52,7 +52,7 @@
 "loggedOutFromAnotherLocation"="You have been logged out of this device from another location";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Server's SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
-/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+/* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="The file you are trying to open is bigger than the available memory.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Unavailable link";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="This could be due to the following reasons:\n- The file has been removed because of a ToS/AUP violation.\n- Invalid URL – the link you are trying to access does not exist.\n- The file has been deleted by the user.";
+/* */
+"fileLinkUnavailableText1"="This could be due to the following reasons:";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="The file has been removed because of a ToS/AUP violation.";
+/* */
+"fileLinkUnavailableText3"="Invalid URL - the link you are trying to access does not exist";
+/* */
+"fileLinkUnavailableText4"="The file has been deleted by the user.";
 /* Message shown when a download starts */
 "downloadStarted"="Download started";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="The folder you are trying to download is bigger than the available memory.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="The folder '%@' can't be created";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="This could be due to the following reasons:\n- The folder link has been removed because of a ToS/AUP violation.\n- Invalid URL – the link you are trying to access does not exist.\n- The folder link has been deleted by the user.";
+/* */
+"folderLinkUnavailableText1"="This could be due to the following reasons:";
+/* */
+"folderLinkUnavailableText2"="The folder link has been removed because of a ToS/AUP violation.";
+/* */
+"folderLinkUnavailableText3"="Invalid URL - the link you are trying to access does not exist";
+/* */
+"folderLinkUnavailableText4"="The folder link has been disabled by the user.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="No internet connection";
 /* Title shown when a folder doesn't have any files */
@@ -182,11 +194,11 @@
 "noRequestPending"="No pending requests";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Paused Transfers";
-/* Title shown when the there's no transfers and they aren't paused */
+/* Title shown when the there is not any transfer and they are not paused */
 "transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
 "transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloud Drive";
@@ -823,11 +835,11 @@
 /* Title of the Used storage section */
 "usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="Invite friends and get bonuses";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="Invite your friends";
-/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
-"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* title of the introduction for the achievements screen */
+"inviteFriendsAndGetForEachReferral"="Get %1$s of storage and %2$s of transfers for each referral";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Select contacts from your phone’s contact list or enter multiple email adresses.";
 /*  */

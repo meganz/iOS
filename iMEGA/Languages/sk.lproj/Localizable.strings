@@ -52,7 +52,7 @@
 "loggedOutFromAnotherLocation"="Z tohoto zariadenia ste boli z iného miesta odhlásený";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Nebolo možné overiť serverový SSL kľúč. Je možné, že ste pod vplyvom útoku typu man-in-the-middle.";
-/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+/* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
@@ -238,6 +238,8 @@
 "newFolderMessage"="Názov nového priečinku";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Vytvoriť";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="Priečinok už existuje";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importovať z...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -784,6 +786,8 @@
 "eraseAllLocalDataLabel"="Zmazať lokálne data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Odhlásiť a zmazať lokálne dáta po 10 neúspešných pokusoch o uhádnutie hesla";
+/* Menu item */
+"help"="Pomoc";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centrum pomoci";
 /* Title to rate the app */
@@ -821,11 +825,11 @@
 /* Title of the Used storage section */
 "usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="Invite friends and get bonuses";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="Invite your friends";
-/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
-"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* title of the introduction for the achievements screen */
+"inviteFriendsAndGetForEachReferral"="Get %1$s of storage and %2$s of transfers for each referral";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
 /*  */
@@ -1170,6 +1174,8 @@
 "autorenewableDescription"="Predplatné sa automaticky obnovuje pre po sebe idúce predplatné obdobia s rovnakou dĺžkou a za rovnakú cenu ako je prvotne zvolená. Automatické predlžovanie predplatného vášho MEGA PRO účtu môžete zmeniť najneskôr 24 hodín predtým ako je splatnosť vášho predplatného cez stránku nastavení vášho iTunes účtu. Pre správu vašich predplatných, jednoducho kliknite na ikonu App store na vašom zariadení, prihláste sa pomocou vášho Apple ID (ak ste tak už neurobili predtým) a kliknite na Zobraziť ID. Budete presmerovaný na stránku vášho účtu kde môžete zoskrolovať nižšie na Správu Predplatených Aplikácií. Tam si môžete zvoliť MEGA PRO predplatné a nechať si zobraziť dátum obnovy, vybrať iný predplatený balíček alebo prepnúť \"Zapnuté/Vypnuté\" pre vypnutie automatického predlžovania predplatného.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
+/* Text shown when you try to use Files app while having a passcode */
+"disablePasscodeToUseFiles"="Files cannot be used if you have a passcode in MEGA. If you want to use Files, please open MEGA and disable it.";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Odobrať";
 /* Inform user that there were unsupported assets in the share extension */
