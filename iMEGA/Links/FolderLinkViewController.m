@@ -220,7 +220,10 @@
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
     [unavailableLinkView.imageView setImage:[UIImage imageNamed:@"invalidFolderLink"]];
     [unavailableLinkView.titleLabel setText:AMLocalizedString(@"linkUnavailable", nil)];
-    unavailableLinkView.textLabel.text = AMLocalizedString(@"folderLinkUnavailableText", @"Error message shown when a folder link doesn't exist. Keep '\n'");
+    
+    NSString *folderLinkUnavailableText = [NSString stringWithFormat:@"%@\n%@\n%@\n%@", AMLocalizedString(@"folderLinkUnavailableText1", nil), AMLocalizedString(@"folderLinkUnavailableText2", nil), AMLocalizedString(@"folderLinkUnavailableText3", nil), AMLocalizedString(@"folderLinkUnavailableText4", nil)];
+
+    unavailableLinkView.textLabel.text = folderLinkUnavailableText;
     
     if ([[UIDevice currentDevice] iPhone4X]) {
         [unavailableLinkView.imageViewCenterYLayoutConstraint setConstant:-64];

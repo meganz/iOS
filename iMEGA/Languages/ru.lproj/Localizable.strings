@@ -52,8 +52,8 @@
 "loggedOutFromAnotherLocation"="Вы вышли из этого устройства из другого места";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="SSL-ключ сервера не удаётся проверить. Возможно, вы находитесь под «атакой посредника» (англ. Man in the middle (MitM)).";
-/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
+"theContentIsNotAvailableForThisAccount"="Содержимое, которое вы пытаетесь получить, недоступно для этой учётной записи. Попробуйте войти в ту же учётную запись, что и в мобильном веб-клиенте.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="Процесс занимает больше ожидаемого. Подождите…";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -238,6 +238,8 @@
 "newFolderMessage"="Имя для новой папки";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Создать";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="Папка уже существует";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Импорт из…";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -317,7 +319,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="Скопировать ссылку";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Copy key";
+"copyKey"="Скопировать ключ";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Открыть в…";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -784,6 +786,8 @@
 "eraseAllLocalDataLabel"="Удалить локальные данные";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Выход из системы и удаление локальных данных после 10 неудачных попыток ввода пароля.";
+/* Menu item */
+"help"="Помощь";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Техническая поддержка ";
 /* Title to rate the app */
@@ -819,15 +823,15 @@
 /* Title of the Achievements section */
 "achievementsTitle"="Достижения";
 /* Title of the Used storage section */
-"usedStorage"="Used storage";
+"usedStorage"="Использовано";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="Приглашайте друзей и получайте бонусы";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="Пригласите друзей";
-/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
-"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* title of the introduction for the achievements screen */
+"inviteFriendsAndGetForEachReferral"="Получите %1$s места на диске и %2$s трафика за каждого, кто примет приглашение";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+"inviteYourFriendsExplanation"="Выберите контакты из телефонного списка контактов или введите адреса электронной почты.";
 /*  */
 "insertYourFriendsEmails"="Введите e-mail друга:";
 /*  */
@@ -1170,6 +1174,8 @@
 "autorenewableDescription"="Подписки продлеваются автоматически на тот же срок по такой же цене. Вы можете отключить автоматическое продление подписки MEGA PRO не позднее чем за 24 часа до следующего платежа в настройках учётной записи iTunes. Для управления подписками просто нажмите на значок App Store в телефоне, войдите со своим Apple ID внизу страницы (если вы этого ещё не сделали) и нажмите View ID. Вы попадёте на страницу своей учётной записи, прокрутите её вниз до управления подписками приложений. Там вы можете выбрать свою подписку MEGA PRO и посмотреть запланированную дату продления. Выберите другой план подписки или нажмите на переключатель «вкл/выкл» для отключения автоматического продления подписок.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Откройте MEGA и войдите, чтобы продолжить";
+/* Text shown when you try to use Files app while having a passcode */
+"disablePasscodeToUseFiles"="«Файлы» нельзя использовать, если у вас есть код доступа в MEGA. Если вы хотите использовать «Файлы», откройте MEGA и отключите его.";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Отозвать";
 /* Inform user that there were unsupported assets in the share extension */

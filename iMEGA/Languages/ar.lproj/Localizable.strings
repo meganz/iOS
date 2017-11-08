@@ -52,7 +52,7 @@
 "loggedOutFromAnotherLocation"="لقد تم تسجيل خروجك من هذا الجهاز من موقع آخر";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="مفتاح طبقة المنفذ الآمن (SSL) لايمكن توثيقه، ربما تتأثر من هجوم رجل في الوسط.";
-/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+/* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="تستغرق العملية وقتا أطول من المتوقع. الرجاء الإنتظار...";
@@ -238,6 +238,8 @@
 "newFolderMessage"="اسم للمجلد الجديد";
 /* Title button for the create folder alert.  */
 "createFolderButton"="إنشاء";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="المجلد موجود مسبقا";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="الاستيراد من...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -784,6 +786,8 @@
 "eraseAllLocalDataLabel"="مسح البيانت";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="سجل الخروج وامسح البيانات المحلية بعد عشر محاولات فاشلة لادخال كلمة المرور.";
+/* Menu item */
+"help"="مساعدة";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="مركز المساعدة";
 /* Title to rate the app */
@@ -821,11 +825,11 @@
 /* Title of the Used storage section */
 "usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="Invite friends and get bonuses";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="ادع اصدقائك";
-/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
-"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* title of the introduction for the achievements screen */
+"inviteFriendsAndGetForEachReferral"="Get %1$s of storage and %2$s of transfers for each referral";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
 /*  */
@@ -1170,6 +1174,8 @@
 "autorenewableDescription"="يتم تجديد الاشتراكات تلقائيا لفترات اشتراك المتتالية لنفس المدة وبنفس سعر الباقة الأولى التي تم اختيارها. يمكنك إيقاف التجديد التلقائي من اشتراكك MEGA برو في موعد أقصاه 24 ساعة قبل دفع اشتراكك المقبل ومن خلال صفحة إعدادات الحساب الخاصة بك في اي تيونز. لإدارة الاشتراكات الخاصة بك، ببساطة انقر على أيقونة المتجر على الهاتف الخاص بك، قم بتسجيل الدخول باستخدام معرف أبل الخاص بك في أسفل الصفحة (إذا لم تكن قد فعلت ذلك) ثم انقر فوق عرض ID. سوف يتم نقلك إلى صفحة الحساب الخاص بك حيث يمكنك النزل لأسفل الى إدارة التطبيقات والاشتراكات. من هناك، يمكنك تحديد اشتراكك MEGA برو وعرض تاريخ التجديد المقرر، واختيار حزمة الاشتراك مختلفة أو تعطيل أو تشغيل التجديد التلقائي لاشتراكك.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="افتح MEGA و سجل دخولك للاستمرار";
+/* Text shown when you try to use Files app while having a passcode */
+"disablePasscodeToUseFiles"="Files cannot be used if you have a passcode in MEGA. If you want to use Files, please open MEGA and disable it.";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="إلغاء";
 /* Inform user that there were unsupported assets in the share extension */

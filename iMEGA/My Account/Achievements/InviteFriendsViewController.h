@@ -3,4 +3,6 @@
 
 @interface InviteFriendsViewController : UIViewController
 
+@property (nonatomic) NSString *inviteYourFriendsSubtitleString;
+
 @end

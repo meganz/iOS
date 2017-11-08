@@ -123,6 +123,10 @@
                  if ([self hasFreeSpaceOnDiskForWriteFile:fileSize]) {
                      NSError *error;
                      if ([[NSFileManager defaultManager] copyItemAtPath:avassetUrl.path toPath:filePath error:&error]) {
+                         NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:self.asset.creationDate forKey:NSFileModificationDate];
+                         if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
+                             MEGALogError(@"Set attributes failed with error: %@", error);
+                         }
                          NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:filePath];
                          MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:self.parentNode];
                          if (node) {

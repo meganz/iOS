@@ -52,7 +52,7 @@
 "loggedOutFromAnotherLocation"="נותקת ממכשיר זה ממקום אחר";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="מפתח ה-SSL של השרת לא אומת. ייתכן ואתה קורבן של התקפת איש-באמצע.";
-/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+/* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
@@ -238,6 +238,8 @@
 "newFolderMessage"="שם לתיקייה החדשה";
 /* Title button for the create folder alert.  */
 "createFolderButton"="צור";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="תיקייה כבר קיימת";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="ייבא מ...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -784,6 +786,8 @@
 "eraseAllLocalDataLabel"="מחק מידע מקומי";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="התנתק ומחק מידע מקומי לאחר 10 ניסיונות כושלות של סיסמא";
+/* Menu item */
+"help"="עזרה";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="מרכז שירות";
 /* Title to rate the app */
@@ -821,11 +825,11 @@
 /* Title of the Used storage section */
 "usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="Invite friends and get bonuses";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="הזמן חברים";
-/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
-"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* title of the introduction for the achievements screen */
+"inviteFriendsAndGetForEachReferral"="Get %1$s of storage and %2$s of transfers for each referral";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
 /*  */
@@ -1170,6 +1174,8 @@
 "autorenewableDescription"="המנויים מחודשים באופן אוטומטי לתקופות צמודות. כל חידוש הוא לאותה תקופה כמו התקופה ההתחלתית ובאותו הסכום. ניתן לכבות את החידוש האוטומטי של חשבון ה-MEGA PRO שלך לא יאוחר מ-24 שעות לפני החידוש הבא דרך עמוד האפשרויות של החשבון שלך ב-iTunes. ניתן לנהל בקלות את המנויים שלך, לחץ על האייקון של חנות האפליקציות של אפל, ה-App Store, היכנס עם החשבון של באפל בתחתית העמוד (אם לא עשית זאת כבר) ולחץ על \"הצג חשבון\"  (View ID). תילקח לדף החשבון שלך ושם תוכל לגלול למטה אל \"נהל מנויים מאפליקציות\" (Manage App Subscriptions). משם תוכל לבחור את החשבון שלך ב-MEGA PRO ולראות את התאריך לחידוש, לבחור מבין אפשרויות המנויים שלנו וגם לשנות את הגדרת החידוש האוטומטי.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="פתח MEGA והתחבר על מנת להמשיך";
+/* Text shown when you try to use Files app while having a passcode */
+"disablePasscodeToUseFiles"="Files cannot be used if you have a passcode in MEGA. If you want to use Files, please open MEGA and disable it.";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="בטל גישה";
 /* Inform user that there were unsupported assets in the share extension */

@@ -47,7 +47,7 @@
     self.navigationItem.title = AMLocalizedString(@"inviteYourFriends", @"Indicating text for when 'you invite your friends'");
     
     self.inviteYourFriendsTitleLabel.text = AMLocalizedString(@"inviteYourFriends", @"Indicating text for when 'you invite your friends'");
-    self.inviteYourFriendsSubtitleLabel.text = AMLocalizedString(@"inviteFriendsAndGetForEachReferral", @"Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral");
+    self.inviteYourFriendsSubtitleLabel.text = self.inviteYourFriendsSubtitleString;
     
     self.inviteYourFriendsExplanationLabel.text = AMLocalizedString(@"inviteYourFriendsExplanation", @"Text shown to explain how and where you can invite friends");
     

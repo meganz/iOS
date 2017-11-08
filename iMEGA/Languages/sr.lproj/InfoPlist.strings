@@ -4,3 +4,5 @@
 "NSCameraUsageDescription"="MEGA приступа Вашој камери када снимате видео или слику унутар апликације.";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryUsageDescription"="MEGA приступа Вашим сликама и/или клиповима када изаберете неке од њих за отпремање или када омогућите отпремање са Камере.";
+/* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSContactsUsageDescription"="MEGA accesses your contacts when you select some of them to save/export.";
