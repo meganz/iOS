@@ -350,7 +350,13 @@
     
     if (self.contactsMode == ContactsModeShareFoldersWith) {
         MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initWithNumberOfRequests:self.nodesArray.count completion:^{
-            [self dismissViewControllerAnimated:YES completion:nil];
+            if (self.searchController.isActive) {
+                [self.searchController dismissViewControllerAnimated:YES completion:^{
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                }];
+            } else {
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }
         }];
         if (self.insertedEmail) {
             for (MEGANode *node in self.nodesArray) {
