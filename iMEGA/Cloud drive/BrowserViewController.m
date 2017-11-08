@@ -6,8 +6,10 @@
 #import "Helper.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGANodeList+MNZCategory.h"
+#import "MEGAMoveRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "NSFileManager+MNZCategory.h"
+#import "NSMutableArray+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
 
@@ -403,10 +405,13 @@
 
 - (IBAction)moveNode:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        self.remainingOperations = self.selectedNodesArray.count;
+        NSMutableArray *selectedNodesMutableArray = self.selectedNodesArray.mutableCopy;
+        MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initWithNumberOfFilesAndFolders:selectedNodesMutableArray.mnz_numberOfFilesAndFolders completion:^{
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
         
         for (MEGANode *n in self.selectedNodesArray) {
-            [[MEGASdkManager sharedMEGASdk] moveNode:n newParent:self.parentNode];
+            [[MEGASdkManager sharedMEGASdk] moveNode:n newParent:self.parentNode delegate:moveRequestDelegate];
         }
     }
 }
@@ -678,8 +683,7 @@
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
-        case MEGARequestTypeCopy:
-        case MEGARequestTypeMove: {
+        case MEGARequestTypeCopy: {
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
             [SVProgressHUD show];
             break;
@@ -692,7 +696,7 @@
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
-        if ([request type] == MEGARequestTypeMove || [request type] == MEGARequestTypeCopy) {
+        if (request.type == MEGARequestTypeCopy) {
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
             [SVProgressHUD showErrorWithStatus:error.name];
         }
@@ -700,55 +704,6 @@
     }
     
     switch ([request type]) {
-        case MEGARequestTypeMove: {
-            self.remainingOperations--;
-            
-            if (self.remainingOperations == 0) {
-                NSInteger files = 0;
-                NSInteger folders = 0;
-                for (MEGANode *n in self.selectedNodesArray) {
-                    if ([n type] == MEGANodeTypeFolder) {
-                        folders++;
-                    } else {
-                        files++;
-                    }
-                }
-                
-                NSString *message;
-                if (files == 0) {
-                    if (folders == 1) {
-                        message = AMLocalizedString(@"moveFolderMessage", nil);
-                    } else { //folders > 1
-                        message = [NSString stringWithFormat:AMLocalizedString(@"moveFoldersMessage", nil), folders];
-                    }
-                } else if (files == 1) {
-                    if (folders == 0) {
-                        message = AMLocalizedString(@"moveFileMessage", nil);
-                    } else if (folders == 1) {
-                        message = AMLocalizedString(@"moveFileFolderMessage", nil);
-                    } else {
-                        message = [NSString stringWithFormat:AMLocalizedString(@"moveFileFoldersMessage", nil), folders];
-                    }
-                } else {
-                    if (folders == 0) {
-                        message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesMessage", nil), files];
-                    } else if (folders == 1) {
-                        message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesFolderMessage", nil), files];
-                    } else {
-                        message = AMLocalizedString(@"moveFilesFoldersMessage", nil);
-                        NSString *filesString = [NSString stringWithFormat:@"%ld", (long)files];
-                        NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)folders];
-                        message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
-                        message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
-                    }
-                }
-                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                [SVProgressHUD showSuccessWithStatus:message];
-                [self dismissViewControllerAnimated:YES completion:nil];
-            }
-            break;
-        }
-        
         case MEGARequestTypeCopy: {
             self.remainingOperations--;
             
