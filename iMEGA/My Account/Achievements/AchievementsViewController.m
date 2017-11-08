@@ -47,7 +47,6 @@
     self.navigationItem.title = AMLocalizedString(@"achievementsTitle", @"Title of the Achievements section");
     
     self.inviteYourFriendsTitleLabel.text = AMLocalizedString(@"inviteYourFriends", @"Indicating text for when 'you invite your friends'");
-    self.inviteYourFriendsSubtitleLabel.text = AMLocalizedString(@"inviteFriendsAndGetForEachReferral", @"Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral");
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(inviteYourFriendsTapped)];
     self.inviteYourFriendsView.gestureRecognizers = @[tapGestureRecognizer];
@@ -135,6 +134,7 @@
 
 - (void)inviteYourFriendsTapped {
     InviteFriendsViewController *inviteFriendsViewController = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteFriendsViewControllerID"];
+    inviteFriendsViewController.inviteYourFriendsSubtitleString = self.inviteYourFriendsSubtitleLabel.text;
     
     [self.navigationController pushViewController:inviteFriendsViewController animated:YES];
 }
@@ -245,6 +245,13 @@
                 [self.achievementsIndexesMutableArray addObject:[NSNumber numberWithInteger:i]];
             }
         }
+        
+        NSString *inviteStorageString = [self.byteCountFormatter stringFromByteCount:[self.achievementsDetails classStorageForClassId:MEGAAchievementInvite]];
+        NSString *inviteTransferString = [self.byteCountFormatter stringFromByteCount:[self.achievementsDetails classTransferForClassId:MEGAAchievementInvite]];
+        NSString *inviteFriendsAndGetForEachReferral = AMLocalizedString(@"inviteFriendsAndGetForEachReferral", @"title of the introduction for the achievements screen");
+        inviteFriendsAndGetForEachReferral = [inviteFriendsAndGetForEachReferral stringByReplacingOccurrencesOfString:@"%1$s" withString:inviteStorageString];
+        inviteFriendsAndGetForEachReferral = [inviteFriendsAndGetForEachReferral stringByReplacingOccurrencesOfString:@"%2$s" withString:inviteTransferString];
+        self.inviteYourFriendsSubtitleLabel.text = inviteFriendsAndGetForEachReferral;
         
         self.unlockedStorageQuotaLabel.attributedText = [self textForUnlockedBonuses:self.achievementsDetails.currentStorage];
         self.unlockedTransferQuotaLabel.attributedText = [self textForUnlockedBonuses:self.achievementsDetails.currentTransfer];

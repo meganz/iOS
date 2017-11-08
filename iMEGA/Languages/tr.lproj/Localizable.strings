@@ -52,8 +52,8 @@
 "loggedOutFromAnotherLocation"="Başka bir yerden oturum açıldığı için bu cihazdan çıkış yapıldı";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Sunucunun SSL anahtarı doğrulanamadı. İki bağlantı noktası arasındaki bağlantıyı izinsiz izleme saldırısı altında olabilirsiniz.";
-/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
+"theContentIsNotAvailableForThisAccount"="Erişmeye çalıştığınız içerik bu hesap için mevcut değil. Mobil web istemcisindeki hesabta yer alan aynı hesapla giriş yapmayı deneyin.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="İşlem beklenilenden uzun sürüyor. Lütfen bekleyin...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -238,6 +238,8 @@
 "newFolderMessage"="Yeni klasör için isim";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Yeni Oluştur";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="Klasör zaten var";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Şuradan içe aktar...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -317,7 +319,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="Bağlantıyı Kopyala";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Copy key";
+"copyKey"="Anahtarı kopyala";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Uygulamada aç...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -784,8 +786,8 @@
 "eraseAllLocalDataLabel"="Yerel verileri silin";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="10 kez hatalı girişte yerel veriyi sil ve çıkış yap.";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Destek";
+/* Menu item */
+"help"="Yardım";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Destek Merkezi";
 /* Title to rate the app */
@@ -821,15 +823,15 @@
 /* Title of the Achievements section */
 "achievementsTitle"="Başarılar";
 /* Title of the Used storage section */
-"usedStorage"="Used storage";
+"usedStorage"="Kullanılan depolama";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="Arkadaşlarını davet et ve bonus kazan";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="Arkadaşlarınızı davet edin";
-/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
-"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* title of the introduction for the achievements screen */
+"inviteFriendsAndGetForEachReferral"="Her tavsiye için %1$s depolama alanı ve %2$s aktarım kazanın";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Telefonunuzun kişi listesinden kişileri seçin veya birden fazla e-posta adresi girin.";
+"inviteYourFriendsExplanation"="Telefonunuzun kişi listesinden kişilerinizi seçin ya da çoğul eposta adresi girin.";
 /*  */
 "insertYourFriendsEmails"="Arkadaşınızın eposta(lar)ını giriniz:";
 /*  */
@@ -1172,6 +1174,8 @@
 "autorenewableDescription"="Abonelikler ardışık abonelik periyotlarında aynı ücret ve süre uzunluğunda otomatik olarak yenilenir. MEGA PRO otomatik abonelik yenilenmesini bir sonraki yenilenme zamanından önce iTunes hesap ayarlarından kapatabilirsiniz. Aboneliklerinizi yönetmek için, App Store ikonuna tıklayın ve Apple ID'niz ile en alttan giriş yapın (önceden yapmadıysanız) ve ID Göster'e basın. Uygulama Aboneliklerini yönetebileceğiniz bir sayfa çıkacaktır. Buradan, MEGA PRO aboneliğinizi seçip yenilenme tarihini görebilirsiniz, veya otomatik yenilenme tarihini kapatabilirsiniz.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Devam etmek için MEGA'ya giriş yapın";
+/* Text shown when you try to use Files app while having a passcode */
+"disablePasscodeToUseFiles"="MEGA'da bir şifre kodu varsa dosyalar kullanılamaz. Dosyaları kullanmak istiyorsanız, lütfen MEGA'yi açın ve şifre kodunu devre dışı bırakın.";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="İptal et";
 /* Inform user that there were unsupported assets in the share extension */

@@ -51,8 +51,8 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Ai fost deconectat de pe acest dispozitiv din altă locaţie";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="Cheia SSL a serverului nu poate fi verificată. Poţi fi afectat de un atac tip man-in-the-middle.";
-/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+"sslUnverified_alertTitle"="Cheia SSL a serverului nu poate fi verificată. Ai putea fi afectat de un atac de tip man-in-the-middle.";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
@@ -238,6 +238,8 @@
 "newFolderMessage"="Nume pentru folderul nou";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Creează";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="Folderul există deja";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importă din...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -299,7 +301,7 @@
 /* button caption text that the user clicks when he agrees */
 "agree"="De acord";
 /* button caption text that the user clicks when he disagrees */
-"disagree"="Disagree";
+"disagree"="Dezacord";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
 "linkWithoutKey"="Link fără cheie";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
@@ -784,8 +786,8 @@
 "eraseAllLocalDataLabel"="Şterge datele locale";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Deconectează-te şi şterge datele locale după 10 încercări eşuate pentru codul de trecere";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Asistenţă";
+/* Menu item */
+"help"="Ajutor";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centrul de ajutor";
 /* Title to rate the app */
@@ -823,11 +825,11 @@
 /* Title of the Used storage section */
 "usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="Invite friends and get bonuses";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="Invită-ţi prietenii";
-/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
-"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* title of the introduction for the achievements screen */
+"inviteFriendsAndGetForEachReferral"="Get %1$s of storage and %2$s of transfers for each referral";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
 /*  */
@@ -1172,6 +1174,8 @@
 "autorenewableDescription"="Abonamentele sunt reînnoite automat pentru perioade de abonare succesive de aceeaşi durată şi la acelaşi preţ ca şi perioada iniţială aleasă. Poţi dezactiva reînnoirea automată a abonamentului tău MEGA PRO nu mai târziu de 24 de ore înainte ca următoarea ta plată pentru abonament să se realizeze prin pagina de setări a contului iTunes. Pentru a gestiona abonamentele, clic pe pictograma App Store de pe telefon, conectează-te cu ID-ul Apple în partea de jos a paginii (dacă nu ai făcut deja acest lucru), iar apoi clic pe Afişaţi ID. Vei ajunge la pagina contului tău unde poţi să derula în jos pentru a gestiona abonamentele aplicaţiilor. De acolo poţi selecta abonamentul MEGA PRO şi să vezi data de reînnoire programată, alege un pachet de abonament diferit sau setează comutatorul on-off la off pentru a dezactiva reînnoirea automată a abonamentului.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Deschide MEGA şi autentifică-te pentru a continua";
+/* Text shown when you try to use Files app while having a passcode */
+"disablePasscodeToUseFiles"="Files cannot be used if you have a passcode in MEGA. If you want to use Files, please open MEGA and disable it.";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Revocă";
 /* Inform user that there were unsupported assets in the share extension */
