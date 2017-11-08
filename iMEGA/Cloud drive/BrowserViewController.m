@@ -15,7 +15,9 @@
 
 #import "NodeTableViewCell.h"
 
-@interface BrowserViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate>
+@interface BrowserViewController () <UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate>
+
+@property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (nonatomic, getter=isParentBrowser) BOOL parentBrowser;
 
@@ -89,6 +91,21 @@
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.tableView reloadEmptyDataSet];
     } completion:nil];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
+        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+            if (!self.previewingContext) {
+                self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.view];
+            }
+        } else {
+            [self unregisterForPreviewingWithContext:self.previewingContext];
+            self.previewingContext = nil;
+        }
+    }
 }
 
 #pragma mark - Private
@@ -631,6 +648,42 @@
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - UIViewControllerPreviewingDelegate
+
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
+    CGPoint rowPoint = [self.tableView convertPoint:location fromView:self.view];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:rowPoint];
+    MEGANode *node = [self.nodes nodeAtIndex:indexPath.row];
+    previewingContext.sourceRect = [self.tableView convertRect:[self.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view];
+    
+    switch (node.type) {
+        case MEGANodeTypeFolder: {
+            BrowserViewController *browserVC = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserViewControllerID"];
+            browserVC.browserAction = self.browserAction;
+            browserVC.childBrowser = YES;
+            browserVC.childBrowserFromIncoming = ((self.browserSegmentedControl.selectedSegmentIndex == 1) || self.isChildBrowserFromIncoming) ? YES : NO;
+            browserVC.localpath = self.localpath;
+            browserVC.parentNode = node;
+            browserVC.selectedNodesMutableDictionary = self.selectedNodesMutableDictionary;
+            browserVC.selectedNodesArray = self.selectedNodesArray;
+            browserVC.browserViewControllerDelegate = self.browserViewControllerDelegate;
+            
+            return browserVC;
+        }
+            
+        default:
+            break;
+    }
+    
+    return nil;
+}
+
+- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    if (viewControllerToCommit.class == BrowserViewController.class) {
+        [self.navigationController pushViewController:viewControllerToCommit animated:YES];
+    }
 }
 
 #pragma mark - DZNEmptyDataSetSource
