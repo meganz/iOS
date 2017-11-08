@@ -5,6 +5,7 @@
 
 #import "Helper.h"
 #import "MEGAAVViewController.h"
+#import "MEGAMoveRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
@@ -449,8 +450,12 @@
         NSUInteger count = self.selectedItemsDictionary.count;
         NSArray *selectedItemsArray = [self.selectedItemsDictionary allValues];
         MEGANode *rubbishBinNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
+        MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithNumberOfFilesAndFolders:@[[NSNumber numberWithUnsignedInteger:1], [NSNumber numberWithUnsignedInteger:0]] completion:^{
+            [self setEditing:NO animated:NO];
+        }];
+        
         for (NSUInteger i = 0; i < count; i++) {
-            [[MEGASdkManager sharedMEGASdk] moveNode:[selectedItemsArray objectAtIndex:i] newParent:rubbishBinNode delegate:self];
+            [[MEGASdkManager sharedMEGASdk] moveNode:[selectedItemsArray objectAtIndex:i] newParent:rubbishBinNode delegate:moveRequestDelegate];
         }
         
         [self setEditing:NO animated:YES];
@@ -832,17 +837,6 @@
                     MEGANode *node = [api nodeForHandle:request.nodeHandle];
                     [Helper setThumbnailForNode:node api:api cell:pcvc reindexNode:YES];
                 }
-            }
-            break;
-        }
-            
-            
-        case MEGARequestTypeMove: {
-            remainingOperations--;
-            if (remainingOperations == 0) {
-                NSString *message = (self.selectedItemsDictionary.count <= 1 ) ? AMLocalizedString(@"fileMovedToRubbishBinMessage", nil) : [NSString stringWithFormat:AMLocalizedString(@"filesMovedToRubbishBinMessage", nil), self.selectedItemsDictionary.count];
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudRubbishBin"] status:message];
-                [self setEditing:NO animated:NO];
             }
             break;
         }

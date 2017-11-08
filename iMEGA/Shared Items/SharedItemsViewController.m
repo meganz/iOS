@@ -8,14 +8,16 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
 #import "MEGAUser+MNZCategory.h"
+#import "MEGARemoveRequestDelegate.h"
 #import "MEGAShareRequestDelegate.h"
+#import "NSMutableArray+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
 #import "DetailsNodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate> {
     
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
@@ -42,7 +44,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareFolderBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *removeShareBarButtonItem;
 
-@property (nonatomic) NSUInteger remainingOperations;
 @property (nonatomic) NSIndexPath *indexPath;
 
 @property (nonatomic, strong) MEGAShareList *incomingShareList;
@@ -51,8 +52,6 @@
 @property (nonatomic, strong) MEGAShareList *outgoingShareList;
 @property (nonatomic, strong) NSMutableArray *outgoingSharesMutableArray;
 @property (nonatomic, strong) NSMutableArray *outgoingNodesMutableArray;
-
-@property (nonatomic) NSUInteger numberOfShares;
 
 @property (nonatomic, strong) NSMutableArray *selectedNodesMutableArray;
 @property (nonatomic, strong) NSMutableArray *selectedSharesMutableArray;
@@ -269,26 +268,21 @@
 }
 
 - (void)removeSelectedIncomingShares {
-    self.remainingOperations = [self.selectedNodesMutableArray count];
-    self.numberOfShares = self.remainingOperations;
+    MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:DisplayModeSharedItem numberOfFilesAndFolders:self.selectedNodesMutableArray.mnz_numberOfFilesAndFolders completion:nil];
     for (NSInteger i = 0; i < self.selectedNodesMutableArray.count; i++) {
-        [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesMutableArray objectAtIndex:i] delegate:self];
+        [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesMutableArray objectAtIndex:i] delegate:removeRequestDelegate];
     }
     
     [self setEditing:NO animated:YES];
 }
 
 - (void)selectedSharesOfSelectedNodes {
-    self.numberOfShares = 0;
     self.selectedSharesMutableArray = [[NSMutableArray alloc] init];
     
     for (MEGANode *node in self.selectedNodesMutableArray) {
         NSMutableArray *outSharesOfNodeMutableArray = [self outSharesForNode:node];
-        self.numberOfShares += [outSharesOfNodeMutableArray count];
         [self.selectedSharesMutableArray addObjectsFromArray:outSharesOfNodeMutableArray];
     }
-    
-    self.remainingOperations = self.numberOfShares;
 }
 
 - (void)removeSelectedOutgoingShares {
@@ -1041,36 +1035,6 @@
 
 - (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
     [self reloadUI];
-}
-
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    
-    if ([error type]) {
-        return;
-    }
-    
-    switch ([request type]) {
-        case MEGARequestTypeRemove: {
-            
-            _remainingOperations--;
-            
-            if (_remainingOperations == 0) {
-                
-                if (_numberOfShares > 1) {
-                    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"sharesLeft", nil)];
-                } else {
-                    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"shareLeft", nil)];
-                }
-            }
-            
-            break;
-        }
-            
-        default:
-            break;
-    }
 }
 
 @end
