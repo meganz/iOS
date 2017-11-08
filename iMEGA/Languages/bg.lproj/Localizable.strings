@@ -52,7 +52,7 @@
 "loggedOutFromAnotherLocation"="Излезли сте от това устройство от друго място";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="SSL ключът на сървъра не може да бъде проверен. Възможно е да сте засегнати от атака  \"човек-в-средата\".";
-/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+/* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
@@ -238,6 +238,8 @@
 "newFolderMessage"="Име на новата папка";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Създай";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="Папката вече съществува";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Импортирай от...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -784,8 +786,8 @@
 "eraseAllLocalDataLabel"="Изтрий локални данни";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Излез от системата и изтрий локалните данни след 10 неуспешни въвеждания на код.";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Поддръжка";
+/* Menu item */
+"help"="Помощ";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Помощен център";
 /* Title to rate the app */
@@ -823,11 +825,11 @@
 /* Title of the Used storage section */
 "usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="Invite friends and get bonuses";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="Invite your friends";
-/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
-"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* title of the introduction for the achievements screen */
+"inviteFriendsAndGetForEachReferral"="Get %1$s of storage and %2$s of transfers for each referral";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
 /*  */
@@ -1172,6 +1174,8 @@
 "autorenewableDescription"="Абонаментите се подновяват автоматично за последователни абонаментни периоди със същия срок и на същата цена като на първоначално избрания период. Можете да изключите автоматичното подновяване на вашия MEGA PRO абонамент не по-късно от 24 часа преди следващата абонаментна дата за плащане, от страницата за настройки на вашия iTunes профил. За да управлявате вашите абонаменти, просто кликнете върху иконата на App Store на вашия телефон, влезте с вашия Apple ID в долната част на страницата (ако вече не сте го направили) и след това щракнете върху View ID. Ще бъдете пренасочени към страницата на профила си, където по-надолу на страницата се намира Настройка на Абонаментите за Приложения. От там можете да изберете вашия MEGA PRO абонамент и видите насрочената дата за подновяване, да изберете друг абонаментен пакет или превключване ключа за включване/изключване на изключено положение, за да забраните автоматичното подновяване на абонамента си.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
+/* Text shown when you try to use Files app while having a passcode */
+"disablePasscodeToUseFiles"="Files cannot be used if you have a passcode in MEGA. If you want to use Files, please open MEGA and disable it.";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Анулирай";
 /* Inform user that there were unsupported assets in the share extension */

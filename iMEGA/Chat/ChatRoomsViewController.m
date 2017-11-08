@@ -437,7 +437,7 @@
     }
     
     changeOnlineStatusAlertController.modalPresentationStyle = UIModalPresentationPopover;
-    changeOnlineStatusAlertController.popoverPresentationController.sourceView = self.view;
+    changeOnlineStatusAlertController.popoverPresentationController.sourceView = self.view.superview;
     changeOnlineStatusAlertController.popoverPresentationController.sourceRect = self.navigationController.navigationBar.frame;
     
     [self presentViewController:changeOnlineStatusAlertController animated:YES completion:nil];

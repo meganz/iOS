@@ -52,8 +52,8 @@
 "loggedOutFromAnotherLocation"="您已从其他位置登出该设备";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="服务器SSL 金钥未能认证。您可能会收到第三方攻击。";
-/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
+"theContentIsNotAvailableForThisAccount"="您尝试访问的内容于对此帐户开放。请您使用与移动网络客户端相同的帐户进行登录。";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="加载时间比预期的长，请耐心等待。";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -238,6 +238,8 @@
 "newFolderMessage"="新文件夹的名字";
 /* Title button for the create folder alert.  */
 "createFolderButton"="建立";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="文件夹已存在";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="自...导入";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -317,7 +319,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="复制链接";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Copy key";
+"copyKey"="复制密钥";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="开启于...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -784,8 +786,8 @@
 "eraseAllLocalDataLabel"="删除本地数据";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="于10次密码输入错误后，自动登出并删除本机资料";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="支持";
+/* Menu item */
+"help"="帮助";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="协助中心";
 /* Title to rate the app */
@@ -819,17 +821,17 @@
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="文件";
 /* Title of the Achievements section */
-"achievementsTitle"="成果";
+"achievementsTitle"="成就";
 /* Title of the Used storage section */
-"usedStorage"="Used storage";
+"usedStorage"="已使用容量";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="邀请朋友并获得奖励";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="邀请朋友加入";
-/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
-"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* title of the introduction for the achievements screen */
+"inviteFriendsAndGetForEachReferral"="每当推荐成功便能获取%1$s的存储空间和%2$s的流量";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+"inviteYourFriendsExplanation"="从手机通讯录选择联系人，或输入多个电子邮件地址。";
 /*  */
 "insertYourFriendsEmails"="请填入您好友的电子邮件：";
 /*  */
@@ -845,7 +847,7 @@
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="空间使用量";
 /* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
-"transferQuota"="传输配额";
+"transferQuota"="流量限制";
 /* The user's achieved base quota */
 "accountBaseQuota"="帐户基本配额";
 /* achievement type */
@@ -857,11 +859,11 @@
 /*  */
 "installMEGASync"="安装MEGAsync";
 /* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
-"installMEGASyncCompletedExplanation"="由于您安装了MEGAsync，您已获得%1储存空间以及%2传输配额";
+"installMEGASyncCompletedExplanation"="由于您安装了MEGAsync，您已获得%1储存空间以及%2流量。";
 /*  */
 "installOurMobileApp"="安装我们的手机应用程序";
 /* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
-"installOurMobileAppCompletedExplanation"="由于您安装了我们的应用程序上的应用程序，您已获得%1储存空间以及%2传输配额";
+"installOurMobileAppCompletedExplanation"="由于您安装了我们的应用程序上的应用程序，您已获得%1储存空间以及%2流量。";
 /*  */
 "xDaysLeft"="剩下%1天";
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
@@ -1139,9 +1141,9 @@
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="您储存之所有离线文件将会被从您的设备中删除。确定要登出吗？";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="传输配额不足";
+"depletedTransferQuota_title"="流量不足";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="您进程中的下载已超出您帐户目前可用的传输配额，因此有可能会被中断。";
+"depletedTransferQuota_message"="您进程中的下载已超出您帐户目前可用的流量，因此有可能会被中断。";
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="参看方案";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
@@ -1172,6 +1174,8 @@
 "autorenewableDescription"="此订阅将会自动更新续订，续订内容与您一开始选择的订阅时间与价格一致。您可以于您的iTunes帐户设定页面关闭MEGA PRO的订阅自动更新续订，必须于您的下一个订阅缴款期限的24小时之前执行此操作。欲管理您的订阅内容，只需点击您手机上的App Store图标，可以在页面下方以您的Apple帐号登入（如果您还没有这样做），然后点击查看帐号。您会被带到您的帐户页面，就可以向下滚动到管理应用程序订阅。在那里，您可以选择你的MEGA PRO订阅和查看您预定的续约日期，选择不同的计划或切换开关至关闭以停用您的自动续订。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="开启MEGA并登入以继续";
+/* Text shown when you try to use Files app while having a passcode */
+"disablePasscodeToUseFiles"="如果您在MEGA中有密码，则无法打开文件。如果要使用文件，请打开MEGA并禁用密码。";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="撤除";
 /* Inform user that there were unsupported assets in the share extension */
@@ -1239,9 +1243,9 @@
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="此加密方式也代表我们无法存取或重新设定您的密码，因此您必须牢牢记住它(除非您有备份还原金钥)，否则您将无法存取您所储存的文件。";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="在应用程序里，您可以升级扩大您的储存空间与传输配额，并选择按月给付或年度专案。";
+"generalDescriptionParagraph4"="在应用程序里，您可以升级扩大您的储存空间与流量，并选择按月给付或年度专案。";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITE方案：每月€4.99欧元（$4.99美元）或每年€49.99欧元（$49.99美元），可享有200 GB的储存空间和每月1 TB的传输配额。 PRO I 方案：每月€9.99欧元（$9.99美元）或€99.99欧元（$99.99美元），可享有1 TB的储存空间和每月2 TB的传输配额。 PRO II 方案：每月€19.99欧元（$19.99美元）或每年€199.99欧元（$199.99美元），可享有4 TB的储存空间和每月8 TB的传输配额。 PRO III 方案：每月€29.99欧元（$29.99美元）或€299.99欧元（$299.99美元），可享有8 TB的储存空间和每月16 TB的传输配额。";
+"generalDescriptionParagraph5"="PRO LITE方案：每月€4.99欧元（$4.99美元）或每年€49.99欧元（$49.99美元），可享有200 GB的储存空间和每月1 TB的流量。 PRO I 方案：每月€9.99欧元（$9.99美元）或€99.99欧元（$99.99美元），可享有1 TB的储存空间和每月2 TB的流量。 PRO II 方案：每月€19.99欧元（$19.99美元）或每年€199.99欧元（$199.99美元），可享有4 TB的储存空间和每月8 TB的流量。 PRO III 方案：每月€29.99欧元（$29.99美元）或€299.99欧元（$299.99美元），可享有8 TB的储存空间和每月16 TB的流量。";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="想了解更多资讯，请至我们的网站： 手机- https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html 电脑- https://mega.nz/";

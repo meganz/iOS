@@ -4,3 +4,5 @@
 "NSCameraUsageDescription"="MEGA benötigt Zugriff auf die Kamera, sofern Sie aus der App heraus fotografieren oder filmen möchten.";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryUsageDescription"="Für Kamera-Uploads oder spezifische Medienuploads benötigt MEGA Zugriff auf Ihre Fotos und Videos.";
+/* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSContactsUsageDescription"="MEGA accesses your contacts when you select some of them to save/export.";

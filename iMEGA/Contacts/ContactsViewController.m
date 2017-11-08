@@ -59,6 +59,8 @@
 
 @property (nonatomic, strong) MEGAUser *userTapped;
 
+@property (nonatomic) BOOL pendingRequestsPresented;
+
 @end
 
 @implementation ContactsViewController
@@ -70,6 +72,7 @@
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
+    self.pendingRequestsPresented = NO;
     
     [self setupContacts];
 }
@@ -101,6 +104,11 @@
         [self.contactRequestsBarButtonItem setBadgeValue:[NSString stringWithFormat:@"%d", incomingContactsLists.size.intValue]];
         if (@available(iOS 11.0, *)) {
             self.contactRequestsBarButtonItem.badgeOriginY = 0.0f;
+        }
+        if (!self.pendingRequestsPresented && incomingContactsLists.size.intValue > 0) {
+            UINavigationController *contactRequestsNC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsNavigationControllerID"];
+            [self presentViewController:contactRequestsNC animated:YES completion:nil];
+            self.pendingRequestsPresented = YES;
         }
     }
 }
@@ -207,18 +215,21 @@
     } else {
         self.users = [[MEGASdkManager sharedMEGASdk] contacts];
         NSInteger count = [[self.users size] integerValue];
+        NSMutableArray *usersArray = [[NSMutableArray alloc] init];
         for (NSInteger i = 0; i < count; i++) {
             MEGAUser *user = [self.users userAtIndex:i];
             if ([user visibility] == MEGAUserVisibilityVisible) {
                 if (self.contactsMode == ContactsModeChatAddParticipant) {
                     if ([self.participantsMutableDictionary objectForKey:[NSNumber numberWithUnsignedLongLong:user.handle]] == nil) {
-                        [self.visibleUsersArray addObject:user];
+                        [usersArray addObject:user];
                     }
                 } else {
-                    [self.visibleUsersArray addObject:user];
+                    [usersArray addObject:user];
                 }
             }
         }
+        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"mnz_fullName" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+        self.visibleUsersArray = [usersArray sortedArrayUsingDescriptors:@[sort]];
     }
     
     if ([self.visibleUsersArray count] == 0) {
@@ -264,7 +275,7 @@
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         UIAlertController *shareFolderAlertController = [self prepareShareFolderAlertController];
         
-        if ([[UIDevice currentDevice] iPad] && sourceButton) {
+        if (sourceButton) {
             shareFolderAlertController.popoverPresentationController.barButtonItem = sourceButton;
         } else {
             shareFolderAlertController.popoverPresentationController.sourceRect = self.view.frame;
@@ -537,16 +548,11 @@
     [addContactAlertController addAction:addFromContactsAlertAction];
     
     addContactAlertController.modalPresentationStyle = UIModalPresentationPopover;
-    if ([[UIDevice currentDevice] iPad]) {
-        if (self.addBarButtonItem) {
-            addContactAlertController.popoverPresentationController.barButtonItem = self.addBarButtonItem;
-        } else {
-            addContactAlertController.popoverPresentationController.sourceRect = sender.frame;
-            addContactAlertController.popoverPresentationController.sourceView = sender.superview;
-        }
+    if (self.addBarButtonItem) {
+        addContactAlertController.popoverPresentationController.barButtonItem = self.addBarButtonItem;
     } else {
-        addContactAlertController.popoverPresentationController.sourceRect = self.view.frame;
-        addContactAlertController.popoverPresentationController.sourceView = self.view;
+        addContactAlertController.popoverPresentationController.sourceRect = sender.frame;
+        addContactAlertController.popoverPresentationController.sourceView = sender.superview;
     }
     
     [self presentViewController:addContactAlertController animated:YES completion:nil];

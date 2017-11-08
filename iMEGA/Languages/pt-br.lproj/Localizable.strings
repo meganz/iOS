@@ -52,7 +52,7 @@
 "loggedOutFromAnotherLocation"="Você foi desconectado deste dispositivo a partir de outro local.";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Chave SSL do servidor não pode ser verificada. Você pode ter sido afetado por um ataque \"man-in-the-middle\".";
-/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+/* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="O processo está demorando mais do que o esperado. Por favor, aguarde...";
@@ -238,6 +238,8 @@
 "newFolderMessage"="Nome da nova pasta";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Criar";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="Pasta já existe";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importado de...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -439,7 +441,7 @@
 /* Button title that skips the current action */
 "skipButton"="Avançar";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Faça backup automático das suas fotos para a Nuvem de Arquivos";
+"automaticallyBackupYourPhotos"="Faça backup automático das suas fotos para a Nuvem de arquivos";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Habilitar uploads da câmera";
 /* Success message shown when Camera Uploads has been enabled */
@@ -784,8 +786,8 @@
 "eraseAllLocalDataLabel"="Apagar dados locais";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Fazer logout e apagar os dados locais após 10 tentativas fracassadas de senha";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Suporte";
+/* Menu item */
+"help"="Ajuda";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Central de Ajuda";
 /* Title to rate the app */
@@ -823,11 +825,11 @@
 /* Title of the Used storage section */
 "usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="Invite friends and get bonuses";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="Convide os seus amigos";
-/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
-"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* title of the introduction for the achievements screen */
+"inviteFriendsAndGetForEachReferral"="Get %1$s of storage and %2$s of transfers for each referral";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
 /*  */
@@ -1172,6 +1174,8 @@
 "autorenewableDescription"="As assinaturas são automaticamente renovadas por períodos iguais, de igual duração e ao mesmo preço que o período inicial escolhido. Você pode anular a renovação automática da sua assinatura MEGA até 24 horas antes DO próximo pagamento da assinatura fazendo-o através da página de configurações da sua conta iTunes. Para gerenciar suas assinaturas basta clicar no ícone da App Store no seu aparelho, entrar com seu ID da Apple na parte inferior da página (se você ainda não o tiver feito) e, em seguida, clicar em Ver ID. Você será levado à página da sua conta onde rolando para baixo pode gerenciar as suas assinaturas. A partir daqui, você pode selecionar sua assinatura MEGA Pro e ver a sua data de renovação programada, escolher um pacote de assinatura diferente ou puxar o botão on-off para fora para desativar a renovação automática da sua assinatura.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Abra o MEGA e faça o login para continuar";
+/* Text shown when you try to use Files app while having a passcode */
+"disablePasscodeToUseFiles"="Files cannot be used if you have a passcode in MEGA. If you want to use Files, please open MEGA and disable it.";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Revogar";
 /* Inform user that there were unsupported assets in the share extension */

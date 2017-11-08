@@ -28,6 +28,7 @@
 #import "BrowserViewController.h"
 #import "CameraUploadsPopUpViewController.h"
 #import "ChangePasswordViewController.h"
+#import "ChatRoomsViewController.h"
 #import "CheckEmailAndFollowTheLinkViewController.h"
 #import "CloudDriveTableViewController.h"
 #import "ConfirmAccountViewController.h"
@@ -66,6 +67,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeChangeEmailLink,
     URLTypeCancelAccountLink,
     URLTypeRecoverLink,
+    URLTypeChatLink,
     URLTypeLoginRequiredLink,
     URLTypeHandleLink
 };
@@ -656,6 +658,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         return;
     }
     
+    if ([self isChatLink:afterSlashesString]) {
+        self.urlType = URLTypeChatLink;
+        return;
+    }
+    
     if ([self isLoginRequiredLink:afterSlashesString]) {
         self.urlType = URLTypeLoginRequiredLink;
         return;
@@ -910,6 +917,18 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
     
     return NO;
+}
+
+- (BOOL)isChatLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 8) {
+        return NO;
+    }
+    
+    BOOL isChatLink = [[afterSlashesString substringToIndex:8] isEqualToString:@"#fm/chat"]; //mega://"#fm/chat"
+    if (isChatLink) {
+        [Helper changeToViewController:ChatRoomsViewController.class onTabBarController:self.mainTBC];
+    }
+    return isChatLink;
 }
 
 - (BOOL)isLoginRequiredLink:(NSString *)afterSlashesString {
