@@ -56,7 +56,7 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
             if (fullNameDidAction.length == 0) {
                 MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:self.userHandle];
                 if (moUser) {
-                    fullNameDidAction = moUser.fullName ? moUser.fullName : moUser.email;
+                    fullNameDidAction = moUser.fullName;
                 } else {
                     // TODO: request firstname and lastname
                     fullNameDidAction = @"Unknown user";
@@ -80,7 +80,7 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
             if (fullNameReceiveAction.length == 0) {
                 MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:tempHandle];
                 if (moUser) {
-                    fullNameReceiveAction = moUser.fullName ? moUser.fullName : moUser.email;
+                    fullNameReceiveAction = moUser.fullName;
                 } else {
                     // TODO: request firstname and lastname
                     fullNameReceiveAction = @"Unknown user";
