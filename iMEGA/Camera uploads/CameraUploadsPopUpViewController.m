@@ -80,7 +80,7 @@
 }
 
 - (IBAction)enableTouchUpInside:(UIButton *)sender {
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+    if (@available(iOS 8.0, *)) {
         [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
             switch (status) {
                 case PHAuthorizationStatusNotDetermined:
