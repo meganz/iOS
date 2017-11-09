@@ -270,6 +270,23 @@
 		5BD4A0221F838606000E24E6 /* ScrollViewFrameAccessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4A0201F838606000E24E6 /* ScrollViewFrameAccessor.m */; };
 		5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */; };
 		5BDE180C1F500EE000CD9F82 /* MyAccountBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE180B1F500DEE00CD9F82 /* MyAccountBaseViewController.m */; };
+		5BEACE1F1FB472C80010E02F /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
+		5BEACE201FB472CC0010E02F /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
+		5BEACE211FB473490010E02F /* NSMutableArray+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B118EC21FB1B0C5005D7D90 /* NSMutableArray+MNZCategory.m */; };
+		5BEACE221FB4734A0010E02F /* NSMutableArray+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B118EC21FB1B0C5005D7D90 /* NSMutableArray+MNZCategory.m */; };
+		5BEACE231FB473700010E02F /* NSMutableAttributedString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E80620AA1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m */; };
+		5BEACE241FB473940010E02F /* UIImageView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E150031DB7CB1400383645 /* UIImageView+MNZCategory.m */; };
+		5BEACE251FB473A20010E02F /* UIImage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */; };
+		5BEACE2A1FB474060010E02F /* MEGAUser+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 411C8B6A1DECBD87006A0D8C /* MEGAUser+MNZCategory.m */; };
+		5BEACE2B1FB4740E0010E02F /* UIAlertAction+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 944B205C1EE55533003C967B /* UIAlertAction+MNZCategory.m */; };
+		5BEACE2C1FB4740F0010E02F /* UIAlertAction+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 944B205C1EE55533003C967B /* UIAlertAction+MNZCategory.m */; };
+		5BEACE2D1FB4741A0010E02F /* UIScreen+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A81A852A1F0F6F5100702353 /* UIScreen+MNZCategory.m */; };
+		5BEACE2E1FB4741B0010E02F /* UIScreen+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A81A852A1F0F6F5100702353 /* UIScreen+MNZCategory.m */; };
+		5BFA346B1FAB4169005BFC4E /* MEGARemoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */; };
+		5BFA346E1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
+		5BFA346F1FAC5850005BFC4E /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
+		5BFA34701FAC5857005BFC4E /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
+		5BFA34711FAC5BFB005BFC4E /* MEGARemoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */; };
 		9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226691A692ECC00EC7BB6 /* Cloud.storyboard */; };
 		941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
 		941135511F00FFC700D33428 /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226881A692ECC00EC7BB6 /* Helper.m */; };
@@ -3503,10 +3520,12 @@
 				943229401EDD8969007DB542 /* UIScrollView+EmptyDataSet.m in Sources */,
 				9456054F1EDD7DBD0094EF0F /* ShareFolderActivity.m in Sources */,
 				9432294F1EDD9CF6007DB542 /* UIImageView+MNZCategory.m in Sources */,
+				5BEACE221FB4734A0010E02F /* NSMutableArray+MNZCategory.m in Sources */,
 				9456054A1EDD7AD70094EF0F /* LTHKeychainUtils.m in Sources */,
 				9432293D1EDD88F5007DB542 /* MWZoomingScrollView.m in Sources */,
 				945605481EDD6F9B0094EF0F /* MEGAReachabilityManager.m in Sources */,
 				943229341EDD8823007DB542 /* MEGANavigationController.m in Sources */,
+				5BEACE2B1FB4740E0010E02F /* UIAlertAction+MNZCategory.m in Sources */,
 				943229501EDD9CF8007DB542 /* UIImage+MNZCategory.m in Sources */,
 				9456053D1EDD54F10094EF0F /* SAMKeychain.m in Sources */,
 				9432294A1EDD9CAA007DB542 /* UIDevice+MNZCategory.m in Sources */,
@@ -3517,6 +3536,7 @@
 				943229311EDD8696007DB542 /* Reachability.m in Sources */,
 				943229261EDD8495007DB542 /* MEGAAssetOperation.m in Sources */,
 				945605381EDD52C00094EF0F /* SVProgressAnimatedView.m in Sources */,
+				5BEACE201FB472CC0010E02F /* MEGANodeList+MNZCategory.m in Sources */,
 				945605531EDD7E0C0094EF0F /* CameraUploads.m in Sources */,
 				945605471EDD67520094EF0F /* MEGASdkManager.m in Sources */,
 				9432292C1EDD8542007DB542 /* CameraUploadsTableViewController.m in Sources */,
@@ -3525,6 +3545,7 @@
 				94624CFF1F50518900D52504 /* MEGABaseRequestDelegate.m in Sources */,
 				945605501EDD7DD10094EF0F /* MEGAActivityItemProvider.m in Sources */,
 				943229391EDD88CD007DB542 /* MWGridCell.m in Sources */,
+				5BEACE2D1FB4741A0010E02F /* UIScreen+MNZCategory.m in Sources */,
 				9456053B1EDD52C00094EF0F /* SVProgressHUD.m in Sources */,
 				945605511EDD7DF70094EF0F /* PhotoCollectionViewCell.m in Sources */,
 				944DF2BD1EF9379E007798DD /* MEGALogger.m in Sources */,
@@ -3562,22 +3583,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				94892C921EFBEA3D00AEAC25 /* MEGASdkManager.m in Sources */,
+				5BEACE211FB473490010E02F /* NSMutableArray+MNZCategory.m in Sources */,
 				94624CFE1F50518400D52504 /* MEGABaseRequestDelegate.m in Sources */,
 				943F8B201EF2705300AFD89F /* ShareViewController.m in Sources */,
 				9411355F1F0100F600D33428 /* MEGAAssetOperation.m in Sources */,
 				941135571F01004300D33428 /* GetLinkActivity.m in Sources */,
 				94892C951EFBF02D00AEAC25 /* SVIndefiniteAnimatedView.m in Sources */,
 				941135601F01011B00D33428 /* PhotoCollectionViewCell.m in Sources */,
+				5BEACE2A1FB474060010E02F /* MEGAUser+MNZCategory.m in Sources */,
 				94892C901EFBEA1F00AEAC25 /* SAMKeychain.m in Sources */,
 				941135561F01004000D33428 /* ShareFolderActivity.m in Sources */,
+				5BEACE241FB473940010E02F /* UIImageView+MNZCategory.m in Sources */,
 				941135511F00FFC700D33428 /* Helper.m in Sources */,
 				94892C911EFBEA2300AEAC25 /* SAMKeychainQuery.m in Sources */,
 				A81F2C6A1F334FB2008600A5 /* MEGAProcessAsset.m in Sources */,
 				943F8B281EF283D300AFD89F /* UIDevice+MNZCategory.m in Sources */,
+				5BEACE251FB473A20010E02F /* UIImage+MNZCategory.m in Sources */,
 				94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */,
 				94892CA01EFBF16A00AEAC25 /* UIColor+MNZCategory.m in Sources */,
 				9411355E1F0100DA00D33428 /* RemoveLinkActivity.m in Sources */,
 				943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */,
+				5BFA346F1FAC5850005BFC4E /* MEGAMoveRequestDelegate.m in Sources */,
+				5BEACE2C1FB4740F0010E02F /* UIAlertAction+MNZCategory.m in Sources */,
 				941135541F01001A00D33428 /* MEGAActivityItemProvider.m in Sources */,
 				941135661F01541100D33428 /* NSFileManager+MNZCategory.m in Sources */,
 				941135521F00FFE400D33428 /* MEGAReachabilityManager.m in Sources */,
@@ -3586,11 +3613,14 @@
 				9411355A1F01006A00D33428 /* LTHPasscodeViewController.m in Sources */,
 				94892C941EFBF02A00AEAC25 /* SVProgressAnimatedView.m in Sources */,
 				9411355D1F0100CA00D33428 /* CameraUploadsTableViewController.m in Sources */,
+				5BEACE231FB473700010E02F /* NSMutableAttributedString+MNZCategory.m in Sources */,
 				941135641F01071600D33428 /* NSString+MNZCategory.m in Sources */,
+				5BEACE2E1FB4741B0010E02F /* UIScreen+MNZCategory.m in Sources */,
 				941135611F01013F00D33428 /* NodeTableViewCell.m in Sources */,
 				941135551F01002E00D33428 /* OpenInActivity.m in Sources */,
 				94892C981EFBF03800AEAC25 /* SVProgressHUD.m in Sources */,
 				5B2E78CD1FA0C3310096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
+				5BEACE1F1FB472C80010E02F /* MEGANodeList+MNZCategory.m in Sources */,
 				941135581F01005D00D33428 /* CameraUploads.m in Sources */,
 				941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */,
 				94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */,
