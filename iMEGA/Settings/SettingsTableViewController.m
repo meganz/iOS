@@ -1,13 +1,16 @@
+
 #import "SettingsTableViewController.h"
+
+#import <SafariServices/SafariServices.h>
 
 #import "LTHPasscodeViewController.h"
 #import "SVProgressHUD.h"
 #import "SVWebViewController.h"
 
+#import "CameraUploads.h"
+#import "Helper.h"
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
-#import "Helper.h"
-#import "CameraUploads.h"
 
 #import "AboutTableViewController.h"
 #import "AdvancedTableViewController.h"
@@ -130,8 +133,18 @@
 - (void)showURL:(NSString *)urlString {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         NSURL *URL = [NSURL URLWithString:urlString];
-        SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
-        [self.navigationController pushViewController:webViewController animated:YES];
+        if (@available(iOS 9.0, *)) {
+            SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:URL];
+            if (@available(iOS 10.0, *)) {
+                webViewController.preferredControlTintColor = [UIColor mnz_redD90007];
+            } else {
+                webViewController.view.tintColor = [UIColor mnz_redD90007];
+            }
+            [self presentViewController:webViewController animated:YES completion:nil];
+        } else {
+            SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
+            [self.navigationController pushViewController:webViewController animated:YES];
+        }
     }
 }
 
