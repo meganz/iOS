@@ -74,18 +74,18 @@
 - (void)acknowledgements {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         NSURL *URL = [NSURL URLWithString:@"https://mega.nz/ios_acknowledgements.html"];
-        UIViewController *webViewController;
         if (@available(iOS 9.0, *)) {
-            webViewController = [[SFSafariViewController alloc] initWithURL:URL];
+            SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:URL];
             if (@available(iOS 10.0, *)) {
-                ((SFSafariViewController *)webViewController).preferredControlTintColor = [UIColor mnz_redD90007];
+                webViewController.preferredControlTintColor = [UIColor mnz_redD90007];
             } else {
                 webViewController.view.tintColor = [UIColor mnz_redD90007];
             }
+            [self presentViewController:webViewController animated:YES completion:nil];
         } else {
-            webViewController = [[SVWebViewController alloc] initWithURL:URL];
+            SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
+            [self.navigationController pushViewController:webViewController animated:YES];
         }
-        [self presentViewController:webViewController animated:YES completion:nil];
     }
 }
 
