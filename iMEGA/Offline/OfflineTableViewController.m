@@ -837,10 +837,12 @@ static NSString *kisDirectory = @"kisDirectory";
         
         OfflineTableViewController *offlineTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineTableViewControllerID"];
         offlineTVC.folderPathFromOffline = folderPathFromOffline;
+        offlineTVC.peekIndexPath = indexPath;
         
         return offlineTVC;
     } else if (previewDocumentPath.mnz_isMultimediaPathExtension) {
         MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
+        megaAVViewController.peekAndPop = YES;
         
         return megaAVViewController;
     } else {
@@ -863,6 +865,17 @@ static NSString *kisDirectory = @"kisDirectory";
     } else {
         [self.navigationController presentViewController:viewControllerToCommit animated:YES completion:nil];
     }
+}
+
+- (NSArray<id<UIPreviewActionItem>> *)previewActionItems {
+    UIPreviewAction *deleteAction = [UIPreviewAction actionWithTitle:AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder")
+                                                               style:UIPreviewActionStyleDestructive
+                                                             handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+                                                                 OfflineTableViewController *offlineTVC = (OfflineTableViewController *)previewViewController;
+                                                                 [offlineTVC tableView:offlineTVC.tableView commitEditingStyle:UITableViewCellEditingStyleDelete forRowAtIndexPath:offlineTVC.peekIndexPath];
+                                                             }];
+    
+    return @[deleteAction];
 }
 
 #pragma mark - DZNEmptyDataSetSource
