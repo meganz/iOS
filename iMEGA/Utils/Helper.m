@@ -762,8 +762,11 @@ static MEGAIndexer *indexer;
         [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
         photoCollectionViewCell.thumbnailPlayImageView.hidden = node.name.mnz_videoPathExtension ? NO : YES;
     }
-    if (reindex && [[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"9.0"]) {
-        [indexer index:node];
+    
+    if (@available(iOS 9.0, *)) {
+        if (reindex) {
+            [indexer index:node];
+        }
     }
 }
 

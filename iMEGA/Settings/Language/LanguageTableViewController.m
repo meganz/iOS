@@ -99,7 +99,7 @@
         
         // Schedule a notification to make it easy to reopen MEGA:
         NSString *notificationText = AMLocalizedString(@"languageRestartNotification", @"Text shown in a notification to make it easy for the user to restart the app after the language is changed");
-        if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"10.0"]) {
+        if (@available(iOS 10.0, *)) {
             UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
             UNAuthorizationOptions options = UNAuthorizationOptionAlert + UNAuthorizationOptionSound;
             [center requestAuthorizationWithOptions:options

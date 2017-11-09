@@ -317,13 +317,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
     }
     
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) {
+    if (@available(iOS 9.0, *)) {} else {
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSavePhotoToGalleryEnabled"];
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSaveVideoToGalleryEnabled"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
-    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"9.0"]) {
+    if (@available(iOS 9.0, *)) {
         self.indexer = [[MEGAIndexer alloc] init];
         [Helper setIndexer:self.indexer];
     }
@@ -465,7 +465,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"9.0"]) {
+    if (@available(iOS 9.0, *)) {
         MEGALogWarning(@"Memory warning, stopping spotlight indexing");
         [self.indexer stopIndexing];
     }
@@ -478,7 +478,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[UINavigationBar appearance] setTintColor:[UIColor mnz_redD90007]];
     [[UINavigationBar appearance] setBackgroundColor:[UIColor mnz_grayF9F9F9]];
     
-    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"10.0"]) {
+    if (@available(iOS 10.0, *)) {
         [[UINavigationBar appearance] setShadowImage:[UIImage mnz_navigationBarShadow]];
         [[UINavigationBar appearance] setBackgroundImage:[UIImage mnz_navigationBarBackground] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsCompact];
     }
@@ -1157,7 +1157,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)registerForNotifications {
-    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"10.0"]) {
+    if (@available(iOS 10.0, *)) {
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
         center.delegate = self;
         [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert)
@@ -1671,7 +1671,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
         }
     } else {
-        if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"9.0"]) {
+        if (@available(iOS 9.0, *)) {
             NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
             MEGALogDebug(@"Spotlight indexing %lu nodes updated", nodesToIndex.count);
             for (MEGANode *node in nodesToIndex) {
@@ -1904,7 +1904,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
             [self showMainTabBar];
 
-            if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"9.0"]) {
+            if (@available(iOS 9.0, *)) {
                 NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
                     if (![sharedUserDefaults boolForKey:@"treeCompleted"]) {

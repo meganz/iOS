@@ -194,12 +194,4 @@ static NSString *deviceName;
     return deviceName;
 }
 
-- (BOOL)systemVersionLessThanVersion:(NSString *)version {
-    return [[[UIDevice currentDevice] systemVersion] compare:version options:NSNumericSearch] == NSOrderedAscending;
-}
-
-- (BOOL)systemVersionGreaterThanOrEqualVersion:(NSString *)version {
-    return [[[UIDevice currentDevice] systemVersion] compare:version options:NSNumericSearch] != NSOrderedAscending;
-}
-
 @end
