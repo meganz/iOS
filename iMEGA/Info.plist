@@ -69,6 +69,8 @@
 	<string>NSMicrophoneUsageDescription</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>NSPhotoLibraryUsageDescription</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>NSPhotoLibraryAddUsageDescription</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SF-UI-Display-Medium.otf</string>
