@@ -136,7 +136,8 @@
 - (IBAction)acceptCallWithVideo:(UIButton *)sender {
     MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [[MEGAChatAnswerCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
         if (error.type == MEGAChatErrorTypeOk) {
-            [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideoDelegate:self.localVideoImageView];
+            [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideoDelegate:self.localVideoImageView];            
+            self.enableDisableVideoButton.selected = YES;
         } else {
             [self dismissViewControllerAnimated:YES completion:nil];
         }

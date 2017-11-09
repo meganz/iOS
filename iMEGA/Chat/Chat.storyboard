@@ -227,8 +227,8 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqO-Tf-O54">
                                         <rect key="frame" x="214" y="14" width="72" height="72"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                        <state key="normal" image="answerCallWithVideo"/>
-                                        <state key="selected" image="answerCallWithVideo"/>
+                                        <state key="normal" image="cameraOff"/>
+                                        <state key="selected" image="cameraOn"/>
                                         <connections>
                                             <action selector="enableDisableVideo:" destination="m0F-zS-y46" eventType="touchUpInside" id="omp-Lv-s7E"/>
                                         </connections>
@@ -269,7 +269,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vYy-qQ-22M" userLabel="answerCallWithVideo">
                                         <rect key="frame" x="214" y="14" width="72" height="72"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                        <state key="normal" image="answerCallWithVideo"/>
+                                        <state key="normal" image="cameraOn"/>
                                         <state key="selected" image="hudNoCamera"/>
                                         <connections>
                                             <action selector="acceptCallWithVideo:" destination="m0F-zS-y46" eventType="touchUpInside" id="C5g-vl-s54"/>
@@ -430,7 +430,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W71-dB-C1l">
-                                        <rect key="frame" x="168.5" y="113" width="40" height="18"/>
+                                        <rect key="frame" x="169" y="113" width="40" height="18"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                         <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1045,20 +1045,21 @@
         </scene>
     </scenes>
     <resources>
-        <image name="acceptCall" width="290" height="290"/>
+        <image name="acceptCall" width="48" height="48"/>
         <image name="add" width="22" height="22"/>
-        <image name="answerCallWithVideo" width="111" height="112"/>
         <image name="backArrow" width="22" height="22"/>
+        <image name="cameraOff" width="48" height="48"/>
+        <image name="cameraOn" width="48" height="48"/>
         <image name="chatIcon" width="32" height="26"/>
         <image name="chatSelectedIcon" width="32" height="26"/>
         <image name="check_mark" width="29" height="29"/>
         <image name="edit" width="22" height="22"/>
         <image name="hudNoCamera" width="28" height="28"/>
-        <image name="micOff" width="111" height="111"/>
-        <image name="micOn" width="112" height="111"/>
+        <image name="micOff" width="48" height="48"/>
+        <image name="micOn" width="48" height="48"/>
         <image name="readPermissions" width="46" height="44"/>
         <image name="readWritePermissions" width="46" height="44"/>
-        <image name="rejectCall" width="288" height="288"/>
+        <image name="rejectCall" width="48" height="48"/>
         <image name="video_list" width="22" height="22"/>
     </resources>
 </document>
