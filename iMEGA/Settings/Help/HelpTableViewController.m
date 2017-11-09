@@ -1,11 +1,14 @@
 
 #import "HelpTableViewController.h"
-#import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
+
+#import <MessageUI/MFMailComposeViewController.h>
+#import <SafariServices/SafariServices.h>
+
 #import "SVProgressHUD.h"
 #import "SVWebViewController.h"
 
-#import <MessageUI/MFMailComposeViewController.h>
+#import "MEGAReachabilityManager.h"
+#import "MEGASdkManager.h"
 
 @interface HelpTableViewController () <MFMailComposeViewControllerDelegate>
 
@@ -113,8 +116,18 @@
 
 - (void)openHelpCentre {
     NSURL *URL = [NSURL URLWithString:@"https://mega.nz/help/client/ios/"];
-    SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
-    [self.navigationController pushViewController:webViewController animated:YES];
+    if (@available(iOS 9.0, *)) {
+        SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:URL];
+        if (@available(iOS 10.0, *)) {
+            webViewController.preferredControlTintColor = [UIColor mnz_redD90007];
+        } else {
+            webViewController.view.tintColor = [UIColor mnz_redD90007];
+        }
+        [self presentViewController:webViewController animated:YES completion:nil];
+    } else {
+        SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
+        [self.navigationController pushViewController:webViewController animated:YES];
+    }
 }
 
 - (void)rateApp {
