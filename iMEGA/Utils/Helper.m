@@ -47,7 +47,6 @@ static MEGAIndexer *indexer;
                                  @"fi",
                                  @"fr",
                                  @"he",
-                                 @"hu",
                                  @"id",
                                  @"it",
                                  @"ja",

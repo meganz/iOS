@@ -34,7 +34,6 @@
                                  @"fi":@"Suomi",
                                  @"fr":@"Français",
                                  @"he":@"עברית",
-                                 @"hu":@"magyar",
                                  @"id":@"Bahasa Indonesia",
                                  @"it":@"Italiano",
                                  @"ja":@"日本語",
