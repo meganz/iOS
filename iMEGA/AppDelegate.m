@@ -2171,7 +2171,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if (error.type == MEGAErrorTypeApiEOverQuota) {
+    if (error.type == MEGAErrorTypeApiEOverQuota && error.value) {
         [SVProgressHUD dismiss];
         WarningTransferQuotaViewController *warningTransferQuotaVC = [[WarningTransferQuotaViewController alloc] init];
         warningTransferQuotaVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
