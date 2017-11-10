@@ -350,9 +350,17 @@
                     </view>
                     <navigationItem key="navigationItem" title="My Account" id="mxI-vZ-8su">
                         <barButtonItem key="backBarButtonItem" title=" " id="n2C-mH-XhE"/>
+                        <barButtonItem key="rightBarButtonItem" title=" Buy PRO" id="yAq-Z4-Blx">
+                            <color key="tintColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="buyPROAction:" destination="EN7-B0-mf8" id="T5j-i0-Sgb"/>
+                                <segue destination="Qcu-zo-POO" kind="show" id="osx-wT-qmA"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="avatarImageView" destination="wKG-M1-Umc" id="Rkf-F1-Mgw"/>
+                        <outlet property="buyPROBarButtonItem" destination="yAq-Z4-Blx" id="LGG-fY-4Dv"/>
                         <outlet property="nameLabel" destination="YqG-fz-6ti" id="ONK-2v-2hU"/>
                         <outlet property="profileView" destination="eYn-oF-AZu" id="wui-te-f6l"/>
                         <outlet property="tableView" destination="Yui-UF-WIL" id="dT7-Ok-gtJ"/>
@@ -2724,4 +2732,7 @@
         <image name="myAccountIcon" width="26" height="26"/>
         <image name="tabBarItem:aWE-TN-bqV:image" width="16" height="16"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="PB8-6N-hAL"/>
+    </inferredMetricsTieBreakers>
 </document>

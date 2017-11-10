@@ -816,6 +816,10 @@
 "downloadInUppercaseTransfers"="las transferencias de DESCARGA";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Mi cuenta";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (Strings as short as possible) */
+"buyPRO"="Hazte PRO";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="Hazte PRO";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Ver y editar tu perfil";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
