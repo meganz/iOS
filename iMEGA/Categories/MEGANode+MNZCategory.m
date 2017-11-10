@@ -22,6 +22,10 @@
 }
 
 - (MWPhotoBrowser *)mnz_photoBrowserWithNodes:(NSArray *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(NSUInteger)displayMode enableMoveToRubbishBin:(BOOL)enableMoveToRubbishBin {
+    return [self mnz_photoBrowserWithNodes:nodesArray folderLink:isFolderLink displayMode:displayMode enableMoveToRubbishBin:enableMoveToRubbishBin hideControls:NO];
+}
+
+- (MWPhotoBrowser *)mnz_photoBrowserWithNodes:(NSArray *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(NSUInteger)displayMode enableMoveToRubbishBin:(BOOL)enableMoveToRubbishBin hideControls:(BOOL)hideControls {
     NSInteger offsetIndex = 0;
     NSMutableArray *imagesMutableArray = [[NSMutableArray alloc] init];
     
@@ -52,6 +56,10 @@
     [photoBrowser showNextPhotoAnimated:YES];
     [photoBrowser showPreviousPhotoAnimated:YES];
     [photoBrowser setCurrentPhotoIndex:offsetIndex];
+    
+    if (hideControls) {
+        [photoBrowser setControlsHidden:YES animated:NO permanent:NO];
+    }
     
     return photoBrowser;
 }

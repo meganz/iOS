@@ -715,7 +715,7 @@
     NSArray *monthPhotosArray = [monthPhotosDictionary objectForKey:monthKey];
     MEGANode *nodeSelected = [monthPhotosArray objectAtIndex:indexPath.row];
     if (nodeSelected.name.mnz_isImagePathExtension) {
-        return [nodeSelected mnz_photoBrowserWithNodes:[self.nodeList mnz_nodesArrayFromNodeList] folderLink:NO displayMode:0 enableMoveToRubbishBin:YES];
+        return [nodeSelected mnz_photoBrowserWithNodes:[self.nodeList mnz_nodesArrayFromNodeList] folderLink:NO displayMode:0 enableMoveToRubbishBin:YES hideControls:YES];
     } else {
         UIViewController *viewController = [nodeSelected mnz_viewControllerForNodeInFolderLink:NO];
         if (viewController.class == MEGAAVViewController.class) {
