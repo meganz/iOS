@@ -509,7 +509,7 @@
         case MEGANodeTypeFile: {
             if (node.name.mnz_isImagePathExtension) {
                 NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList]);
-                return [node mnz_photoBrowserWithNodes:nodesArray folderLink:NO displayMode:self.displayMode enableMoveToRubbishBin:YES];
+                return [node mnz_photoBrowserWithNodes:nodesArray folderLink:NO displayMode:self.displayMode enableMoveToRubbishBin:YES hideControls:YES];
             } else {
                 UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO];
                 if (viewController.class == PreviewDocumentViewController.class) {
