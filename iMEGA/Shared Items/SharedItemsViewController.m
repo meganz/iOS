@@ -268,7 +268,8 @@
 }
 
 - (void)removeSelectedIncomingShares {
-    MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:DisplayModeSharedItem numberOfFilesAndFolders:self.selectedNodesMutableArray.mnz_numberOfFilesAndFolders completion:nil];
+    NSArray *filesAndFolders = self.selectedNodesMutableArray.mnz_numberOfFilesAndFolders;
+    MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:DisplayModeSharedItem files:[filesAndFolders[0] unsignedIntegerValue] folders:[filesAndFolders[1] unsignedIntegerValue] completion:nil];
     for (NSInteger i = 0; i < self.selectedNodesMutableArray.count; i++) {
         [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesMutableArray objectAtIndex:i] delegate:removeRequestDelegate];
     }

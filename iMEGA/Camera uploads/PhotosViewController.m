@@ -450,7 +450,7 @@
         NSUInteger count = self.selectedItemsDictionary.count;
         NSArray *selectedItemsArray = [self.selectedItemsDictionary allValues];
         MEGANode *rubbishBinNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
-        MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithNumberOfFilesAndFolders:@[[NSNumber numberWithUnsignedInteger:1], [NSNumber numberWithUnsignedInteger:0]] completion:^{
+        MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:selectedItemsArray.count folders:0 completion:^{
             [self setEditing:NO animated:NO];
         }];
         

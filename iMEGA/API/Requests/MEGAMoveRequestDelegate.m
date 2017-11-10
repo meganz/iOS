@@ -21,14 +21,12 @@
 
 #pragma mark - Initialization
 
-- (instancetype)initWithNumberOfFilesAndFolders:(NSArray *)numberOfFilesAndFoldersArray completion:(void (^)(void))completion {
+- (instancetype)initWithFiles:(NSUInteger)files folders:(NSUInteger)folders completion:(void (^)(void))completion {
     self = [super init];
     if (self) {
         _moveToTheRubbishBin = NO;
-        NSNumber *numberOfFilesTemp = [numberOfFilesAndFoldersArray objectAtIndex:0];
-        _numberOfFiles = numberOfFilesTemp.unsignedIntegerValue;
-        NSNumber *numberOfFoldersTemp = [numberOfFilesAndFoldersArray objectAtIndex:1];
-        _numberOfFolders = numberOfFoldersTemp.unsignedIntegerValue;
+        _numberOfFiles = files;
+        _numberOfFolders = folders;
         _numberOfRequests = (_numberOfFiles + _numberOfFolders);
         _totalRequests = (_numberOfFiles + _numberOfFolders);
         _completion = completion;
@@ -37,14 +35,12 @@
     return self;
 }
 
-- (instancetype)initToMoveToTheRubbishBinWithNumberOfFilesAndFolders:(NSArray *)numberOfFilesAndFoldersArray completion:(void (^)(void))completion {
+- (instancetype)initToMoveToTheRubbishBinWithFiles:(NSUInteger)files folders:(NSUInteger)folders completion:(void (^)(void))completion {
     self = [super init];
     if (self) {
         _moveToTheRubbishBin = YES;
-        NSNumber *numberOfFilesTemp = [numberOfFilesAndFoldersArray objectAtIndex:0];
-        _numberOfFiles = numberOfFilesTemp.unsignedIntegerValue;
-        NSNumber *numberOfFoldersTemp = [numberOfFilesAndFoldersArray objectAtIndex:1];
-        _numberOfFolders = numberOfFoldersTemp.unsignedIntegerValue;
+        _numberOfFiles = files;
+        _numberOfFolders = folders;
         _numberOfRequests = (_numberOfFiles + _numberOfFolders);
         _totalRequests = (_numberOfFiles + _numberOfFolders);
         _completion = completion;

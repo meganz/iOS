@@ -432,10 +432,10 @@
                     };
                     
                     if (self.displayMode == DisplayModeCloudDrive) {
-                        MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithNumberOfFilesAndFolders:@[[NSNumber numberWithUnsignedInteger:(self.node.isFile ? 1 : 0)], [NSNumber numberWithUnsignedInteger:(self.node.isFolder ? 1 : 0)]] completion:completion];
+                        MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:(self.node.isFile ? 1 : 0) folders:(self.node.isFolder ? 1 : 0) completion:completion];
                         [[MEGASdkManager sharedMEGASdk] moveNode:self.node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode] delegate:moveRequestDelegate];
                     } else { //DisplayModeRubbishBin (Remove), DisplayModeSharedItem (Remove share)
-                        MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:self.displayMode numberOfFilesAndFolders:@[[NSNumber numberWithUnsignedInteger:(self.node.isFile ? 1 : 0)], [NSNumber numberWithUnsignedInteger:(self.node.isFolder ? 1 : 0)]] completion:completion];
+                        MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:self.displayMode files:(self.node.isFile ? 1 : 0) folders:(self.node.isFolder ? 1 : 0) completion:completion];
                         [[MEGASdkManager sharedMEGASdk] removeNode:self.node delegate:removeRequestDelegate];
                     }
                 }

@@ -20,14 +20,12 @@
 
 #pragma mark - Initialization
 
-- (instancetype)initWithMode:(NSInteger)mode numberOfFilesAndFolders:(NSArray *)numberOfFilesAndFoldersArray completion:(void (^)(void))completion {
+- (instancetype)initWithMode:(NSInteger)mode files:(NSUInteger)files folders:(NSUInteger)folders completion:(void (^)(void))completion {
     self = [super init];
     if (self) {
         _mode = mode;
-        NSNumber *numberOfFilesTemp = [numberOfFilesAndFoldersArray objectAtIndex:0];
-        _numberOfFiles = numberOfFilesTemp.unsignedIntegerValue;
-        NSNumber *numberOfFoldersTemp = [numberOfFilesAndFoldersArray objectAtIndex:1];
-        _numberOfFolders = numberOfFoldersTemp.unsignedIntegerValue;
+        _numberOfFiles = files;
+        _numberOfFolders = folders;
         _numberOfRequests = (_numberOfFiles + _numberOfFolders);
         _totalRequests = (_numberOfFiles + _numberOfFolders);
         _completion = completion;
