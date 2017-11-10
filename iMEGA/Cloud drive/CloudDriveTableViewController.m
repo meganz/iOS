@@ -471,14 +471,14 @@
         MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
         if (accessType == MEGAShareTypeAccessOwner) {
             if (self.displayMode == DisplayModeCloudDrive) {
-                MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithNumberOfFilesAndFolders:@[[NSNumber numberWithUnsignedInteger:(node.isFile ? 1 : 0)], [NSNumber numberWithUnsignedInteger:(node.isFolder ? 1 : 0)]] completion:completion];
+                MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:(node.isFile ? 1 : 0) folders:(node.isFolder ? 1 : 0) completion:completion];
                 [[MEGASdkManager sharedMEGASdk] moveNode:node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode] delegate:moveRequestDelegate];
             } else { //DisplayModeRubbishBin (Remove)
-                MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:DisplayModeRubbishBin numberOfFilesAndFolders:@[[NSNumber numberWithUnsignedInteger:(node.isFile ? 1 : 0)], [NSNumber numberWithUnsignedInteger:(node.isFolder ? 1 : 0)]] completion:completion];
+                MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:DisplayModeRubbishBin files:(node.isFile ? 1 : 0) folders:(node.isFolder ? 1 : 0) completion:completion];
                 [[MEGASdkManager sharedMEGASdk] removeNode:node delegate:removeRequestDelegate];
             }
         } if (accessType == MEGAShareTypeAccessFull) { //DisplayModeSharedItem (Move to the Rubbish Bin)
-            MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithNumberOfFilesAndFolders:@[[NSNumber numberWithUnsignedInteger:(node.isFile ? 1 : 0)], [NSNumber numberWithUnsignedInteger:(node.isFolder ? 1 : 0)]] completion:completion];
+            MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:(node.isFile ? 1 : 0) folders:(node.isFolder ? 1 : 0) completion:completion];
             [[MEGASdkManager sharedMEGASdk] moveNode:node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode] delegate:moveRequestDelegate];
         }
     }
@@ -588,7 +588,7 @@
                                  if (accessType == MEGAShareTypeAccessOwner) {
                                      if (self.displayMode == DisplayModeCloudDrive) {
                                          if (navigationController.viewControllers.lastObject.class == CloudDriveTableViewController.class) {
-                                             MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithNumberOfFilesAndFolders:@[[NSNumber numberWithUnsignedInteger:(self.parentNode.isFile ? 1 : 0)], [NSNumber numberWithUnsignedInteger:(self.parentNode.isFolder ? 1 : 0)]] completion:^{
+                                             MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:(self.parentNode.isFile ? 1 : 0) folders:(self.parentNode.isFolder ? 1 : 0) completion:^{
                                                  [self setEditing:NO animated:YES];
                                              }];
                                              
@@ -610,13 +610,13 @@
                                              }
                                          }
                                      } else { //DisplayModeRubbishBin (Remove)
-                                         MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:DisplayModeRubbishBin numberOfFilesAndFolders:@[[NSNumber numberWithUnsignedInteger:(self.parentNode.isFile ? 1 : 0)], [NSNumber numberWithUnsignedInteger:(self.parentNode.isFolder ? 1 : 0)]] completion:^{
+                                         MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:DisplayModeRubbishBin files:(self.parentNode.isFile ? 1 : 0) folders:(self.parentNode.isFolder ? 1 : 0) completion:^{
                                              [self setEditing:NO animated:YES];
                                          }];
                                          [[MEGASdkManager sharedMEGASdk] removeNode:parentNode delegate:removeRequestDelegate];
                                      }
                                  } if (accessType == MEGAShareTypeAccessFull) { //DisplayModeSharedItem (Move to the Rubbish Bin)
-                                     MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithNumberOfFilesAndFolders:@[[NSNumber numberWithUnsignedInteger:(self.parentNode.isFile ? 1 : 0)], [NSNumber numberWithUnsignedInteger:(self.parentNode.isFolder ? 1 : 0)]] completion:^{
+                                     MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:(self.parentNode.isFile ? 1 : 0) folders:(self.parentNode.isFolder ? 1 : 0) completion:^{
                                          [self setEditing:NO animated:YES];
                                      }];
                                      
@@ -643,7 +643,7 @@
                                                                                  [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
                                                                                  
                                                                                  [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                                                                                     MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:DisplayModeSharedItem numberOfFilesAndFolders:@[[NSNumber numberWithUnsignedInteger:(self.parentNode.isFile ? 1 : 0)], [NSNumber numberWithUnsignedInteger:(self.parentNode.isFolder ? 1 : 0)]] completion:^{
+                                                                                     MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:DisplayModeSharedItem files:(self.parentNode.isFile ? 1 : 0) folders:(self.parentNode.isFolder ? 1 : 0) completion:^{
                                                                                          [self setEditing:NO animated:YES];
                                                                                      }];
                                                                                      [[MEGASdkManager sharedMEGASdk] removeNode:self.parentNode delegate:removeRequestDelegate];
@@ -1479,7 +1479,7 @@
         alertTitle = AMLocalizedString(@"moveToTheRubbishBin", @"Title for the action that allows you to 'Move to the Rubbish Bin' files or folders");
         
         handler = ^(UIAlertAction *action) {
-            MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithNumberOfFilesAndFolders:numberOfFilesAndFoldersArray completion:completion];
+            MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:numFilesAction folders:numFoldersAction completion:completion];
             MEGANode *rubbishBinNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
             for (MEGANode *node in self.selectedNodesArray) {
                 [[MEGASdkManager sharedMEGASdk] moveNode:node newParent:rubbishBinNode delegate:moveRequestDelegate];
@@ -1517,7 +1517,7 @@
         alertTitle = AMLocalizedString(@"removeNodeFromRubbishBinTitle", @"Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account");
         
         handler = ^(UIAlertAction *action) {
-            MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:DisplayModeRubbishBin numberOfFilesAndFolders:numberOfFilesAndFoldersArray completion:completion];
+            MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:DisplayModeRubbishBin files:numFilesAction folders:numFoldersAction completion:completion];
             for (MEGANode *node in self.selectedNodesArray) {
                 [[MEGASdkManager sharedMEGASdk] removeNode:node delegate:removeRequestDelegate];
             }

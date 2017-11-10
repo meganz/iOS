@@ -3,7 +3,7 @@
 
 @interface MEGAMoveRequestDelegate : MEGABaseRequestDelegate
 
-- (instancetype)initWithNumberOfFilesAndFolders:(NSArray *)numberOfFilesAndFoldersArray completion:(void (^)(void))completion;
-- (instancetype)initToMoveToTheRubbishBinWithNumberOfFilesAndFolders:(NSArray *)numberOfFilesAndFoldersArray completion:(void (^)(void))completion;
+- (instancetype)initWithFiles:(NSUInteger)files folders:(NSUInteger)folders completion:(void (^)(void))completion;
+- (instancetype)initToMoveToTheRubbishBinWithFiles:(NSUInteger)files folders:(NSUInteger)folders completion:(void (^)(void))completion;
 
 @end

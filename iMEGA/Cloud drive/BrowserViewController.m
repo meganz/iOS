@@ -423,7 +423,8 @@
 - (IBAction)moveNode:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         NSMutableArray *selectedNodesMutableArray = self.selectedNodesArray.mutableCopy;
-        MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initWithNumberOfFilesAndFolders:selectedNodesMutableArray.mnz_numberOfFilesAndFolders completion:^{
+        NSArray *filesAndFolders = selectedNodesMutableArray.mnz_numberOfFilesAndFolders;
+        MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initWithFiles:[filesAndFolders[0] unsignedIntegerValue] folders:[filesAndFolders[1] unsignedIntegerValue] completion:^{
             [self dismissViewControllerAnimated:YES completion:nil];
         }];
         
