@@ -53,7 +53,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Chave SSL do servidor não pode ser verificada. Você pode ter sido afetado por um ataque \"man-in-the-middle\".";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
+"theContentIsNotAvailableForThisAccount"="O conteúdo que você está tentando acessar não está disponível para esta conta. Tente fazer o login com a mesma conta usada no navegador móvel.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="O processo está demorando mais do que o esperado. Por favor, aguarde...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="O arquivo que você está tentando abrir é maior do que a memória disponível.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Link indisponível";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="Isso pode acontecer devido às seguintes razões:- O arquivo foi removido devido a uma violação de ToS / AUP.- URL inválido - o link que você está tentando acessar não existe.- O arquivo foi excluído pelo usuário.";
+/* */
+"fileLinkUnavailableText1"="Isto pode ser devido às seguintes razões:";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="O arquivo foi removido por causa de uma violação ToS/AUP.";
+/* */
+"fileLinkUnavailableText3"="URL inválido - o link que você está tentando acessar não existe";
+/* */
+"fileLinkUnavailableText4"="O arquivo foi apagado pelo usuário.";
 /* Message shown when a download starts */
 "downloadStarted"="Descarregamento iniciado";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="A pasta que você está tentando descarregar é maior do que a memória disponível.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="O arquivo '%@' não pode ser criado";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="Isso pode acontecer devido às seguintes razões:- O link da pasta foi removido devido a uma violação ToS / AUP.- URL inválido - o link que você está tentando acessar não existe.- O link da pasta foi excluído pelo usuário.";
+/* */
+"folderLinkUnavailableText1"="Isto pode ser devido às seguintes razões:";
+/* */
+"folderLinkUnavailableText2"="O link desta pasta foi eliminado por uma violação dos nossos Termos de serviço.";
+/* */
+"folderLinkUnavailableText3"="URL inválido - o link que você está tentando acessar não existe";
+/* */
+"folderLinkUnavailableText4"="O link desta pasta foi desativado pelo usuário.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Sem ligação à internet";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="solicitações de contato";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Add contatos";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="Received";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="Enviar";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="solicitações";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="pedido aceito";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="Não existem convites pendentes";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transferências em pausa";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="Não há Transferências";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="Não há Descarregamentos";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="Sem Uploads";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Nuvem de Arquivos";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -319,7 +331,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="Copiar link";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Copy key";
+"copyKey"="Copiar chave";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Aberto em...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -816,6 +828,10 @@
 "downloadInUppercaseTransfers"="Descarregamento de transferências";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Minha conta";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="Buy PRO";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="Atualizar conta";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Ver e editar o perfil";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -823,13 +839,13 @@
 /* Title of the Achievements section */
 "achievementsTitle"="Conquistas";
 /* Title of the Used storage section */
-"usedStorage"="Used storage";
+"usedStorage"="Armazenamento usado";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get bonuses";
+"inviteFriendsAndGetRewards"="Convide amigos e ganhe bônus";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="Convide os seus amigos";
 /* title of the introduction for the achievements screen */
-"inviteFriendsAndGetForEachReferral"="Get %1$s of storage and %2$s of transfers for each referral";
+"inviteFriendsAndGetForEachReferral"="Ganhe %1$s de armazenamento e %2$s de cota de transferência para cada indicação";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
 /*  */
@@ -1174,8 +1190,6 @@
 "autorenewableDescription"="As assinaturas são automaticamente renovadas por períodos iguais, de igual duração e ao mesmo preço que o período inicial escolhido. Você pode anular a renovação automática da sua assinatura MEGA até 24 horas antes DO próximo pagamento da assinatura fazendo-o através da página de configurações da sua conta iTunes. Para gerenciar suas assinaturas basta clicar no ícone da App Store no seu aparelho, entrar com seu ID da Apple na parte inferior da página (se você ainda não o tiver feito) e, em seguida, clicar em Ver ID. Você será levado à página da sua conta onde rolando para baixo pode gerenciar as suas assinaturas. A partir daqui, você pode selecionar sua assinatura MEGA Pro e ver a sua data de renovação programada, escolher um pacote de assinatura diferente ou puxar o botão on-off para fora para desativar a renovação automática da sua assinatura.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Abra o MEGA e faça o login para continuar";
-/* Text shown when you try to use Files app while having a passcode */
-"disablePasscodeToUseFiles"="Files cannot be used if you have a passcode in MEGA. If you want to use Files, please open MEGA and disable it.";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Revogar";
 /* Inform user that there were unsupported assets in the share extension */

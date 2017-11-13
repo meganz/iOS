@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="Документ који покушавате да отворите је већи од расположиве меморије.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Непостојећи линк";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="Ово се може десити због једног од следећих разлога:- Документ је уклоњен због кршења ToS/AUP.- Неисправан URL - линк коме покушавате приступити не постоји.- Документ је обрисан од стране корисника.";
+/* */
+"fileLinkUnavailableText1"="Ово може бити из следећих разлога:";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="Датотека је уклоњена због кршења услова коришћења или правила прихватљивог коришћења.";
+/* */
+"fileLinkUnavailableText3"="Неисправан URL - линк који покушавате отворити не постоји";
+/* */
+"fileLinkUnavailableText4"="Датотека је обрисана од стране корисника.";
 /* Message shown when a download starts */
 "downloadStarted"="Скидање започето";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="Директоријум који покушавате да скинете је већи од расположиве меморије.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Директоријум '%@' не може бити креиран";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="Ово се може десити због једног од следећих разлога:- Директоријум је уклоњен због кршења ToS/AUP.- Неисправан URL - линк коме покушавате приступити не постоји.- Директоријум је обрисан од стране корисника.";
+/* */
+"folderLinkUnavailableText1"="Ово може бити из следећих разлога:";
+/* */
+"folderLinkUnavailableText2"="Фолдер линк је био премештен због  нарушавања ToS/AUP ";
+/* */
+"folderLinkUnavailableText3"="Неисправан URL - линк који покушавате отворити не постоји";
+/* */
+"folderLinkUnavailableText4"="Фолдер линк је онемогућен за овог корисника.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Нема интернет конекције";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="Контакт захтеви";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Додај контакте";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="Received";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="Послато";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="Захтеви";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="Захтев прихваћен";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="Нема захтева на чекању";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Паузирани Трансфери";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="Нема трансфера";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="Нема скидања";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="Нема аплоада";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloud диск";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -816,6 +828,10 @@
 "downloadInUppercaseTransfers"="СКИНИ трансфере";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Мој профил";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="Buy PRO";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="Надоградите";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="View and edit profile";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -1174,8 +1190,6 @@
 "autorenewableDescription"="Претплате се обнављају аутоматски за узастопне претплатне периоде истог трајања и исте цене као и почетни изабрани период. Можете угасити аутоматску обнову Ваше MEGA PRO претплате не касније од 24 часа пре наплате следећег претплатног периода преко Ваше iTunes странице подешавања налога. Да бисте управљали својим претплатама, једноставно кликните на Продавницу Апликације иконицу на свом уређају пријавите се са својим Apple ID на дну странице (ако већ нисте) и након тога кликните на Погледај ID. Бићете пребачени на страницу Вашег налога где можете да скролујете доле до Управљај Претплатама Апликација. Одатле, можете изабрати своју MEGA PRO претплатз и видети Ваш заказан датум обнове, изабрати другачији претплатнички пакет или пребацити on-off прекидач на off да онемогућите аутоматско-обнављање Ваше претплате.    ";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
-/* Text shown when you try to use Files app while having a passcode */
-"disablePasscodeToUseFiles"="Files cannot be used if you have a passcode in MEGA. If you want to use Files, please open MEGA and disable it.";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Уклони";
 /* Inform user that there were unsupported assets in the share extension */

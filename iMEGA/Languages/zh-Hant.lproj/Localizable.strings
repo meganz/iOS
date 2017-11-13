@@ -53,7 +53,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="伺服器 SSL 金鑰未能認證。您可能會收到第三方攻擊。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
+"theContentIsNotAvailableForThisAccount"="您嘗試存取的內容與此帳戶不匹配。請使用與手機用戶端相同的帳戶登入。";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="此處理過程比預期的長些。請稍候...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="您正在嘗試打開的檔案大於可用內存。";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="不可用的連結";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="檔案連結不存在之可能原因：- 因ToS / AUP違規，故該檔案連結已被刪除。- 無效的網址 – 您嘗試存取的連結並不存在。- 該使用者已將檔案連結刪除。";
+/* */
+"fileLinkUnavailableText1"="這可能因下列因素造成:";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="這個檔案因違反ToS服務條款或AUP可接受的使用政策而被移除。";
+/* */
+"fileLinkUnavailableText3"="無效的連結-你嘗試連結的檔案不存在";
+/* */
+"fileLinkUnavailableText4"="此檔案已被使用者刪除。";
 /* Message shown when a download starts */
 "downloadStarted"="已開始下載";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="您正在嘗試下載的資料夾大於可用內存。";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="資料夾 '%@' 創建失敗";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="資料夾連結不存在之可能原因：- 因ToS / AUP違規，故該資料夾連結已被刪除。- 無效的網址 – 您嘗試存取的連結並不存在。- 該使用者已將資料夾連結刪除。";
+/* */
+"folderLinkUnavailableText1"="這可能因下列因素造成:";
+/* */
+"folderLinkUnavailableText2"="該資料夾連結因違反ToS/AUP使用條款已被移除。";
+/* */
+"folderLinkUnavailableText3"="無效的連結-你嘗試連結的檔案不存在";
+/* */
+"folderLinkUnavailableText4"="該資料夾連結被使用者關閉。";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="無網絡連接";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="聯絡人邀請";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="新增聯絡人";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="Received";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="已寄出";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="聯絡人邀請";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="您已接受邀請";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="已無尚待處理的聯絡人邀請";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="傳輸暫停";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="無傳輸/不傳輸";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="無下載/不下載";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="無上傳/不上傳";
 /* Title of the Cloud Drive section */
 "cloudDrive"="雲端硬碟";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -816,6 +828,10 @@
 "downloadInUppercaseTransfers"="下載傳輸";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="我的帳號";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="Buy PRO";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="升級";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="查看並編輯檔案";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -1174,8 +1190,6 @@
 "autorenewableDescription"="此訂閱將會自動更新續訂，續訂內容與您一開始選擇的訂閱時間與價格一致。您可以於您的iTunes帳戶設定頁面關閉MEGA PRO的訂閱自動更新續訂，必須於您的下一個訂閱繳款期限的24小時之前執行此操作。欲管理您的訂閱內容，只需點擊您手機上的App Store圖標，可以在頁面下方以您的Apple帳號登入（如果您還沒有這樣做），然後點擊查看帳號。您會被帶到您的帳戶頁面，就可以向下滾動到管理應用程序訂閱。在那裡，您可以選擇你的MEGA PRO訂閱和查看您預定的續約日期，選擇不同的訂閱專案或切換開關至關閉以停用您的自動續訂。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="開啟MEGA並登入以繼續";
-/* Text shown when you try to use Files app while having a passcode */
-"disablePasscodeToUseFiles"="如果您在MEGA中設有密碼，則無法使用該檔案。如果要使用該檔案，請開啟MEGA並停用該密碼功能。";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="撤除";
 /* Inform user that there were unsupported assets in the share extension */
