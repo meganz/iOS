@@ -51,6 +51,9 @@
     
     [self.remoteAvatarImageView mnz_setImageForUserHandle:[self.chatRoom peerHandleAtIndex:0]];
     
+    self.localVideoImageView.layer.masksToBounds = YES;
+    self.localVideoImageView.layer.cornerRadius = 4;
+    
     self.statusCallLabel.text = AMLocalizedString(@"calling...", @"Label shown when you receive an incoming call, before start the call.");
     
     if (self.callType == CallTypeIncoming) {
