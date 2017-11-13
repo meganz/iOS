@@ -553,7 +553,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
                 return;
             }
-            [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)self.window.rootViewController];
+            [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:self.mainTBC];
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
             [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
             break;
@@ -574,7 +574,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     return;
                 }
             }
-            [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)self.window.rootViewController];
+            [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:self.mainTBC];
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
             for (MEGANode *node in [Helper nodesFromLinkMutableArray]) {
                 [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES];
@@ -1897,6 +1897,8 @@ void uncaughtExceptionHandler(NSException *exception) {
             [self requestContactsFullname];
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
+                [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self.mainTBC];
+                
                 [[MEGASdkManager sharedMEGAChatSdk] connect];
                 if (isAccountFirstLogin) {
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
@@ -2121,6 +2123,8 @@ void uncaughtExceptionHandler(NSException *exception) {
             [[MEGALogger sharedLogger] enableSDKlogs];
         }
         [MEGASdkManager destroySharedMEGAChatSdk];
+        
+        [self.mainTBC setBadgeValueForChats];
     }
     
     MEGALogInfo(@"onChatRequestFinish request type: %ld", request.type);
