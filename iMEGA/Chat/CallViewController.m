@@ -33,6 +33,9 @@
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, strong) NSDate *baseDate;
 
+@property (strong, nonatomic) AVAudioPlayer *player;
+
+
 @end
 
 @implementation CallViewController
@@ -70,6 +73,14 @@
     }
     
     self.nameLabel.text = [self.chatRoom peerFullnameAtIndex:0];
+    
+    NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"incoming_voice_video_call" ofType:@"mp3"];
+    NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
+    
+    _player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
+    self.player.numberOfLoops = -1; //Infinite
+    
+    [self.player play];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -83,6 +94,15 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    [self.player stop];
+    
+    NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"hang_out" ofType:@"mp3"];
+    NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
+    self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
+    
+    [self.player play];
+    
     [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideoDelegate:self.remoteVideoImageView];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatLocalVideoDelegate:self.localVideoImageView];
@@ -236,6 +256,8 @@
             
         case MEGAChatCallStatusInProgress: {
             if (!self.timer.isValid) {
+                [self.player stop];
+                
                 _timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateLabel) userInfo:nil repeats:YES];
                 [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
                 _baseDate = [NSDate date];

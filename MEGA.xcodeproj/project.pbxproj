@@ -544,6 +544,8 @@
 		A8C262AD1FA1D85E006172CE /* MEGARemoteImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A8C262AC1FA1D85E006172CE /* MEGARemoteImageView.m */; };
 		A8C262B01FA1D876006172CE /* MEGALocalImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A8C262AF1FA1D876006172CE /* MEGALocalImageView.m */; };
 		A8EC55B41F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
+		A8F2629A1FA8F7C3000B2768 /* incoming_voice_video_call.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8F262991FA8F7C2000B2768 /* incoming_voice_video_call.mp3 */; };
+		A8F2629C1FA8F82F000B2768 /* hang_out.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8F2629B1FA8F82F000B2768 /* hang_out.mp3 */; };
 		A8F5D67A1ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F5D6791ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m */; };
 		A8F5D67D1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F5D67C1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m */; };
 		A8F6C5F31FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F6C5F11FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m */; };
@@ -1269,6 +1271,8 @@
 		A8C262AF1FA1D876006172CE /* MEGALocalImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGALocalImageView.m; sourceTree = "<group>"; };
 		A8EC55B21F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAGetPreviewRequestDelegate.h; path = API/Requests/MEGAGetPreviewRequestDelegate.h; sourceTree = "<group>"; };
 		A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAGetPreviewRequestDelegate.m; path = API/Requests/MEGAGetPreviewRequestDelegate.m; sourceTree = "<group>"; };
+		A8F262991FA8F7C2000B2768 /* incoming_voice_video_call.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incoming_voice_video_call.mp3; sourceTree = "<group>"; };
+		A8F2629B1FA8F82F000B2768 /* hang_out.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hang_out.mp3; sourceTree = "<group>"; };
 		A8F5D6781ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckEmailAndFollowTheLinkViewController.h; sourceTree = "<group>"; };
 		A8F5D6791ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckEmailAndFollowTheLinkViewController.m; sourceTree = "<group>"; };
 		A8F5D67B1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGASendSignupLinkRequestDelegate.h; path = API/Requests/MEGASendSignupLinkRequestDelegate.h; sourceTree = "<group>"; };
@@ -2545,6 +2549,7 @@
 				E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */,
 				A8C262A81FA0B8F9006172CE /* CallViewController.h */,
 				A8C262A91FA0B8F9006172CE /* CallViewController.m */,
+				A8BB54191FB9ABBD004FD03B /* Audios */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -2828,6 +2833,15 @@
 				9437B93E1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m */,
 			);
 			name = Requests;
+			sourceTree = "<group>";
+		};
+		A8BB54191FB9ABBD004FD03B /* Audios */ = {
+			isa = PBXGroup;
+			children = (
+				A8F2629B1FA8F82F000B2768 /* hang_out.mp3 */,
+				A8F262991FA8F7C2000B2768 /* incoming_voice_video_call.mp3 */,
+			);
+			path = Audios;
 			sourceTree = "<group>";
 		};
 		E84CDAFE1A7292AA003F4C77 /* Links */ = {
@@ -3178,7 +3192,9 @@
 				415226901A692ECC00EC7BB6 /* Contacts.storyboard in Resources */,
 				415226961A692ECC00EC7BB6 /* Offline.storyboard in Resources */,
 				4115043E1CEB07C700BF38E3 /* PlayButtonOverlayLargeTap@2x.png in Resources */,
+				A8F2629C1FA8F82F000B2768 /* hang_out.mp3 in Resources */,
 				41ADAA171ADE8B8800641BB4 /* SVWebViewControllerActivityChrome-iPad.png in Resources */,
+				A8F2629A1FA8F7C3000B2768 /* incoming_voice_video_call.mp3 in Resources */,
 				E8D36F791AD677C6006D4D40 /* Transfers.storyboard in Resources */,
 				411504391CEB07C700BF38E3 /* ImageSelectedSmallOn@3x.png in Resources */,
 				41ADAA151ADE8B8800641BB4 /* SVWebViewController.bundle in Resources */,
