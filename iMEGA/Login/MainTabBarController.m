@@ -194,7 +194,6 @@ NSInteger const MYACCOUNT = 4;
             break;
         case MEGAChatCallStatusTerminating:
         case MEGAChatCallStatusDestroyed:
-        case MEGAChatCallStatusDisconnected:
             [self dismissViewControllerAnimated:YES completion:nil];
             break;
             

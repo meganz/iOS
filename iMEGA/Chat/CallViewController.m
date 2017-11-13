@@ -259,7 +259,6 @@
         }
         case MEGAChatCallStatusTerminating:
         case MEGAChatCallStatusDestroyed:
-        case MEGAChatCallStatusDisconnected:
             [self dismissViewControllerAnimated:YES completion:nil];
             break;
             
