@@ -79,7 +79,7 @@
 #endif
     
     // Add a observer to get notified when the extension come back to the foreground:
-    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.2"]) {
+    if (@available(iOS 8.2, *)) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActive)
                                                      name:NSExtensionHostWillResignActiveNotification
                                                    object:nil];
@@ -233,7 +233,7 @@
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
     
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
-    if([[UIDevice currentDevice] systemVersionLessThanVersion:@"11.0"]) {
+    if (@available(iOS 11.0, *)) {} else {
         UIImage *backButtonImage = [[UIImage imageNamed:@"backArrow"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 0)];
         [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButtonImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     }
@@ -583,7 +583,19 @@
             } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeVCard]) {
                 [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeVCard options:nil completionHandler:^(NSData *vCardData, NSError *error) {
                     NSString *contactFullName;
-                    if ([[UIDevice currentDevice] systemVersionLessThanVersion:@"9.0"]) {
+                    
+                    if (@available(iOS 9.0, *)) {
+                        NSArray *contacts = [CNContactVCardSerialization contactsWithData:vCardData error:nil];
+                        for (CNContact *contact in contacts) {
+                            contactFullName = [CNContactFormatter stringFromContact:contact style:CNContactFormatterStyleFullName];
+                            if (contactFullName.length == 0) {
+                                contactFullName = [[contact.emailAddresses objectAtIndex:0] value];
+                                if (contactFullName.length == 0) {
+                                    self.unsupportedAssets++;
+                                }
+                            }
+                        }
+                    } else {
                         CFDataRef vCardDataRef = CFDataCreate(NULL, vCardData.bytes, vCardData.length);
                         ABAddressBookRef book = ABAddressBookCreate();
                         ABRecordRef defaultSource = ABAddressBookCopyDefaultSource(book);
@@ -598,17 +610,6 @@
                             if (contactFullName.length == 0) {
                                 ABMultiValueRef emailMultiValue = ABRecordCopyValue(person, kABPersonEmailProperty);
                                 contactFullName = CFBridgingRelease(ABMultiValueCopyValueAtIndex(emailMultiValue, 0));
-                                if (contactFullName.length == 0) {
-                                    self.unsupportedAssets++;
-                                }
-                            }
-                        }
-                    } else {
-                        NSArray *contacts = [CNContactVCardSerialization contactsWithData:vCardData error:nil];
-                        for (CNContact *contact in contacts) {
-                            contactFullName = [CNContactFormatter stringFromContact:contact style:CNContactFormatterStyleFullName];
-                            if (contactFullName.length == 0) {
-                                contactFullName = [[contact.emailAddresses objectAtIndex:0] value];
                                 if (contactFullName.length == 0) {
                                     self.unsupportedAssets++;
                                 }
