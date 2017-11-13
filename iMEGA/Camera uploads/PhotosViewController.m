@@ -203,8 +203,7 @@
     if ([self.photosCollectionView allowsMultipleSelection]) {
         [self.navigationItem setTitle:AMLocalizedString(@"selectTitle", @"Select items")];
     } else {
-        
-        [self.navigationItem setTitle:@"Camera Uploads"]; //TODO: Translate or not?
+        self.navigationItem.title = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
     }
     
 }
