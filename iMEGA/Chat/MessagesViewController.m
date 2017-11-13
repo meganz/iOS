@@ -245,10 +245,10 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
             self.navigationItem.rightBarButtonItem = addContactBarButtonItem;
         }
     } else {
-        UIBarButtonItem *audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audioCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
         UIBarButtonItem *videoCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"videoCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
+        UIBarButtonItem *audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audioCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
         videoCallBarButtonItem.tag = 1;
-        self.navigationItem.rightBarButtonItems = @[audioCallBarButtonItem, videoCallBarButtonItem];
+        self.navigationItem.rightBarButtonItems = @[videoCallBarButtonItem, audioCallBarButtonItem];
     }
 }
 
