@@ -1178,6 +1178,9 @@
 		944B205B1EE5551C003C967B /* UIAlertAction+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "UIAlertAction+MNZCategory.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		944B205C1EE55533003C967B /* UIAlertAction+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "UIAlertAction+MNZCategory.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		945605431EDD66350094EF0F /* MEGAPicker-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MEGAPicker-PrefixHeader.pch"; path = "iMEGA/Extensions/MEGAPicker/MEGAPicker-PrefixHeader.pch"; sourceTree = SOURCE_ROOT; };
+		9458AEE11FB9D3B800BABD58 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9458AEE21FB9D40500BABD58 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9458AEE51FB9D5C700BABD58 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = tl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		94598D741F0CD53A00B57144 /* LoginRequired.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LoginRequired.storyboard; path = iMEGA/Extensions/MEGAShare/LoginRequired.storyboard; sourceTree = SOURCE_ROOT; };
 		94624CF91F50484200D52504 /* MEGAExportRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAExportRequestDelegate.h; sourceTree = "<group>"; };
 		94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAExportRequestDelegate.m; sourceTree = "<group>"; };
@@ -3744,6 +3747,9 @@
 				E8BB737F1D773AA20067D89C /* uk */,
 				E8BB73801D773AA80067D89C /* pt-BR */,
 				E8BB73811D773AC30067D89C /* vi */,
+				9458AEE11FB9D3B800BABD58 /* en */,
+				9458AEE21FB9D40500BABD58 /* ja */,
+				9458AEE51FB9D5C700BABD58 /* fil */,
 			);
 			name = InfoPlist.strings;
 			path = Languages;
