@@ -18,6 +18,7 @@
 @property (nonatomic, strong) MEGAChatCall *chatCall;
 @property (weak, nonatomic) IBOutlet MEGARemoteImageView *remoteVideoImageView;
 @property (weak, nonatomic) IBOutlet MEGALocalImageView *localVideoImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *remoteAvatarImageView;
 
 @property (weak, nonatomic) IBOutlet UIButton *enableDisableVideoButton;
 @property (weak, nonatomic) IBOutlet UIButton *muteUnmuteMicrophone;
@@ -25,8 +26,12 @@
 @property (weak, nonatomic) IBOutlet UIView *outgoingCallView;
 @property (weak, nonatomic) IBOutlet UIView *incomingCallView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *statusCallLabel;
 
 @property BOOL loudSpeakerEnabled;
+
+@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, strong) NSDate *baseDate;
 
 @end
 
@@ -41,7 +46,9 @@
     self.enableDisableVideoButton.selected = self.videoCall;
     self.loudSpeakerEnabled = self.videoCall;
     
-    [self.remoteVideoImageView mnz_setImageForUserHandle:[self.chatRoom peerHandleAtIndex:0]];
+    [self.remoteAvatarImageView mnz_setImageForUserHandle:[self.chatRoom peerHandleAtIndex:0]];
+    
+    self.statusCallLabel.text = AMLocalizedString(@"calling...", @"Label shown when you receive an incoming call, before start the call.");
     
     if (self.callType == CallTypeIncoming) {
         self.outgoingCallView.hidden = YES;
@@ -82,6 +89,8 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:AVAudioSessionRouteChangeNotification];
     [[NSNotificationCenter defaultCenter] removeObserver:@"UIDeviceProximityStateDidChangeNotification"];
+    
+    [self.timer invalidate];
 }
 
 #pragma mark - Private
@@ -133,6 +142,18 @@
         [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:options error:nil];
     }
 }
+
+- (void)updateLabel {
+    NSTimeInterval interval = [self.baseDate timeIntervalSinceNow];
+    NSUInteger seconds = ABS((int)interval);
+    NSUInteger minutes = seconds/60;
+    NSUInteger hours = minutes/60;
+    self.statusCallLabel.text = [NSString stringWithFormat:@"%02lu:%02lu:%02lu", (unsigned long)hours, (unsigned long)minutes%60, (unsigned long)seconds%60];
+}
+
+
+#pragma mark - IBActions
+
 - (IBAction)acceptCallWithVideo:(UIButton *)sender {
     MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [[MEGAChatAnswerCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
         if (error.type == MEGAChatErrorTypeOk) {
@@ -156,7 +177,6 @@
 
 - (IBAction)hangCall:(UIButton *)sender {
     [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:self.chatRoom.chatId];
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)muteOrUnmuteCall:(UIButton *)sender {
@@ -215,15 +235,24 @@
             break;
             
         case MEGAChatCallStatusInProgress: {
+            if (!self.timer.isValid) {
+                _timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateLabel) userInfo:nil repeats:YES];
+                [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+                _baseDate = [NSDate date];
+            }
             self.outgoingCallView.hidden = NO;
             self.incomingCallView.hidden = YES;
             
             if ([call hasChangedForType:MEGAChatCallChangeTypeRemoteAVFlags]) {
-                if (call.hasRemoteVideo) {                    
+                if (call.hasRemoteVideo) {
+                    self.remoteVideoImageView.hidden = NO;
                     [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideoDelegate:self.remoteVideoImageView];
+                    self.remoteAvatarImageView.hidden = YES;
                 } else {
                     [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideoDelegate:self.remoteVideoImageView];
-                    [self.remoteVideoImageView mnz_setImageForUserHandle:[self.chatRoom peerHandleAtIndex:0]];
+                    self.remoteVideoImageView.hidden = YES;
+                    self.remoteAvatarImageView.hidden = NO;
+                    [self.remoteAvatarImageView mnz_setImageForUserHandle:[self.chatRoom peerHandleAtIndex:0]];
                 }
             }
             break;
