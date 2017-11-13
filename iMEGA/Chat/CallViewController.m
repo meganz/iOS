@@ -171,6 +171,18 @@
     self.statusCallLabel.text = [NSString stringWithFormat:@"%02lu:%02lu:%02lu", (unsigned long)hours, (unsigned long)minutes%60, (unsigned long)seconds%60];
 }
 
+- (void)showOrHideControls {
+    [UIView animateWithDuration:0.3f animations:^{
+        if (self.outgoingCallView.alpha != 1.0f) {
+            [self.outgoingCallView setAlpha:1.0f];
+            [self.nameLabel setAlpha:1.0f];
+        } else {
+            [self.outgoingCallView setAlpha:0.0f];
+            [self.nameLabel setAlpha:0.0f];
+        }
+        [self.view layoutIfNeeded];
+    }];
+}
 
 #pragma mark - IBActions
 
@@ -261,6 +273,15 @@
                 _timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateLabel) userInfo:nil repeats:YES];
                 [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
                 _baseDate = [NSDate date];
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    //Add Tap to hide/show controls
+                    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showOrHideControls)];
+                    [tapGestureRecognizer setNumberOfTapsRequired:1];
+                    [self.view addGestureRecognizer:tapGestureRecognizer];
+                    
+                    [self showOrHideControls];
+                });
             }
             self.outgoingCallView.hidden = NO;
             self.incomingCallView.hidden = YES;
