@@ -180,10 +180,10 @@
 "contactRequests"="Contact requests";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Add contacts";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="Received";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="Sent";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="Requests";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="Request accepted";
 /* Success message shown when you Cancelled a contact request */

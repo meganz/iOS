@@ -43,7 +43,7 @@
     
     [self.navigationItem setTitle:AMLocalizedString(@"contactRequests", @"Contact requests")];
     
-    [self.contactRequestsSegmentedControl setTitle:AMLocalizedString(@"requests", nil) forSegmentAtIndex:0];
+    [self.contactRequestsSegmentedControl setTitle:AMLocalizedString(@"received", @"Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved.") forSegmentAtIndex:0];
     [self.contactRequestsSegmentedControl setTitle:AMLocalizedString(@"sent", nil) forSegmentAtIndex:1];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
