@@ -90,7 +90,7 @@
         MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:session];
         switch (chatInit) {
             case MEGAChatInitNoCache: {
-                [[MEGASdkManager sharedMEGASdk] fetchNodesWithDelegate:self];
+                [[MEGASdkManager sharedMEGASdk] fetchNodes];
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 break;
@@ -223,14 +223,6 @@
 
 - (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
     switch (request.type) {
-        case MEGAChatRequestTypeConnect: {
-            
-            if (error.type) return;
-            
-            [self.tableView reloadData];
-            break;
-        }
-            
         case MEGAChatRequestTypeLogout: {
             if (error.type) return;
             
