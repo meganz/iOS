@@ -88,17 +88,6 @@
 
 - (void)previewControllerWillDismiss:(QLPreviewController *)controller {
     previewDocumentTransfer = nil;
-    
-    if (([[[UIDevice currentDevice] systemVersion] compare:@"9.0" options:NSNumericSearch] != NSOrderedAscending)) {
-        [self.navigationController popViewControllerAnimated:NO];
-    }
-}
-
-- (void)previewControllerDidDismiss:(QLPreviewController *)controller {
-    //Avoid crash on iOS 7 and 8
-    if (([[[UIDevice currentDevice] systemVersion] compare:@"9.0" options:NSNumericSearch] != NSOrderedDescending)) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
 }
 
 #pragma mark - MEGATransferDelegate
@@ -124,9 +113,10 @@
     [previewController setDataSource:self];
     [previewController setTransitioningDelegate:self];
     [previewController setTitle:transfer.fileName];
-    [self presentViewController:previewController animated:YES completion:^{
-        [_progressView setHidden:YES];
-    }];
+    [self addChildViewController:previewController];
+    CGFloat y = [UIApplication sharedApplication].statusBarFrame.size.height + self.navigationController.navigationBar.frame.size.height;
+    previewController.view.frame = CGRectMake(0.0f, y, self.view.frame.size.width, self.view.frame.size.height - y);
+    [self.view addSubview:previewController.view];
 }
 
 @end
