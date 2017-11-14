@@ -51,6 +51,8 @@
     
     [self.remoteAvatarImageView mnz_setImageForUserHandle:[self.chatRoom peerHandleAtIndex:0]];
     
+    self.localVideoImageView.transform = CGAffineTransformMakeScale(-1, 1); //Flipped horizontally
+
     self.localVideoImageView.layer.masksToBounds = YES;
     self.localVideoImageView.layer.cornerRadius = 4;
     
