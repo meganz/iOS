@@ -3,7 +3,7 @@
 /* Button title to accept something */
 "ok"="Aceptar";
 /* */
-"yes"="Si";
+"yes"="Sí";
 /* */
 "no"="No";
 /* */
@@ -181,7 +181,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Añadir contactos";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
-"received"="Received";
+"received"="Recibidas";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="Enviadas";
 /* Success message shown when you acepted a contact request */
@@ -739,7 +739,7 @@
 /*  */
 "yourPasswordHasBeenReset"="Tu contraseña ha sido restablecida con éxito. Por favor accede a tu cuenta.";
 /* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Si tienes una copia de tu Clave de recuperación, puedes restablecer tu contraseña seleccionando SI. No se perderá ningún dato.";
+"forgotPassword_firstParagraph"="Si tienes una copia de tu Clave de recuperación, puedes restablecer tu contraseña seleccionando SÍ. No se perderá ningún dato.";
 /* Second paragraph of the screen when the password has been forgotten */
 "forgotPassword_secondParagraph"="Aún puedes exportar tu Clave de recuperación si tienes una sesión de MEGA activa en cualquier navegador en este u otro ordenador. Si no, ya no podrás descifrar tu cuenta existente, pero podrás empezar una nueva cuenta utilizando el mismo correo electrónico si seleccionas NO.";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
@@ -829,7 +829,7 @@
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Mi cuenta";
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
-"buyPRO"="Buy PRO";
+"buyPRO"="Hazte PRO";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Hazte Pro";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */

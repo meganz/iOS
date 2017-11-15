@@ -355,11 +355,11 @@
 /* Success message shown when you have moved 1 file */
 "moveFileMessage"="تم نقل ملف واحد";
 /* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="% الملفات المنقولة";
+"moveFilesMessage"="%d الملفات المنقولة";
 /* Success message shown when you have moved 1 folder */
 "moveFolderMessage"="تم نقل مجلد واحد";
 /* Success message shown when you have moved {1+} folders */
-"moveFoldersMessage"="% مجلدات منقولة";
+"moveFoldersMessage"="%d مجلدات منقولة";
 /* Success message shown when you have moved 1 file and 1 folder */
 "moveFileFolderMessage"="1 ملفات و 1 مجلدات تم نقلها";
 /* Success message shown when you have moved 1 file and {1+} folders */
@@ -373,7 +373,7 @@
 /* Success message shown when you have copied 1 file */
 "copyFileMessage"="تم نسخ ملف واحد";
 /* Success message shown when you have copied {1+} files */
-"copyFilesMessage"="% الملفات المنسوخة";
+"copyFilesMessage"="%d الملفات المنسوخة";
 /* Success message shown when you have copied 1 folder */
 "copyFolderMessage"="تم نسخ مجلد واحد";
 /* Success message shown when you have copied {1+} folders */

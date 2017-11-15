@@ -355,7 +355,7 @@
 /* Success message shown when you have moved 1 file */
 "moveFileMessage"="Isang file ang nailipat";
 /* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="%2 files ang nailipat";
+"moveFilesMessage"="%d files ang nailipat";
 /* Success message shown when you have moved 1 folder */
 "moveFolderMessage"="isang folder ang nailipat";
 /* Success message shown when you have moved {1+} folders */
@@ -705,7 +705,7 @@
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
 "fileFolderRemovedToRubbishBinMessage"="isang file at folder ang tinanggal sa MEGA";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="isang file at %s folders ang tinanggal sa MEGA";
+"fileFoldersRemovedToRubbishBinMessage"="isang file at %d folders ang tinanggal sa MEGA";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
 "filesFolderRemovedToRubbishBinMessage"="%d files at isang folder ang tinanggal sa MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
@@ -1181,7 +1181,7 @@
 /* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
 "sentContact"="Ipadala ang Contact na si: %s";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
-"sentXContacts"="Naipadalang mga % Contacts.";
+"sentXContacts"="Naipadalang mga %s Contacts.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
 "attachedFile"="Nakalakip: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
