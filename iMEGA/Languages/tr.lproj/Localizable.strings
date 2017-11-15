@@ -52,8 +52,8 @@
 "loggedOutFromAnotherLocation"="Başka bir yerden oturum açıldığı için bu cihazdan çıkış yapıldı";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Sunucunun SSL anahtarı doğrulanamadı. İki bağlantı noktası arasındaki bağlantıyı izinsiz izleme saldırısı altında olabilirsiniz.";
-/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
+"theContentIsNotAvailableForThisAccount"="Erişmeye çalıştığınız içerik bu hesap için mevcut değil. Mobil web istemcisindeki hesabta yer alan aynı hesapla giriş yapmayı deneyin.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="İşlem beklenilenden uzun sürüyor. Lütfen bekleyin...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="Açmaya çalıştığınız dosya kullanılabilir bellekten daha büyük.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Mevcut olmayan bağlantı";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="Bunun nedeni aşağıdakilerden biri olabilir:- Dosya Hizmet Koşullarını ihlal ettiği için kaldırıldı.- Geçersiz URL – erişmeye çalıştığınız link yok- Dosya kullanıcı tarafından kaldırıldı.";
+/* */
+"fileLinkUnavailableText1"="Aşağıdaki nedenlerden ötürü olabilir:";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="Bu dosya Dosya Hizmet Koşulları/Kabul Edilebilir Kullanım İlkeleri ihlali nedeni ile silinmiş.";
+/* */
+"fileLinkUnavailableText3"="Geçersiz URL - erişmek istediğiniz link geçerli değil";
+/* */
+"fileLinkUnavailableText4"="Dosya kullanıcı tarafından silinmiş.";
 /* Message shown when a download starts */
 "downloadStarted"="İndirme başladı";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="İndirmeye çalıştığınız klasör kullanılabilir bellekten daha büyük.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="'%@' klasörü oluşturulamadı";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="Bunun nedeni aşağıdakilerden biri olabilir:- Klasör linki Hizmet Koşullarını ihlal ettiği için kaldırıldı.- Geçersiz URL – erişmeye çalıştığınız link yok- Klasör linki kullanıcı tarafından kaldırıldı.";
+/* */
+"folderLinkUnavailableText1"="Aşağıdaki nedenlerden ötürü olabilir:";
+/* */
+"folderLinkUnavailableText2"="Bu klasör linki Dosya Hizmet Koşulları/Kabul Edilebilir Kullanım İlkeleri ihlali nedeni ile silinmiş.";
+/* */
+"folderLinkUnavailableText3"="Geçersiz URL - erişmek istediğiniz link geçerli değil";
+/* */
+"folderLinkUnavailableText4"="Klasör linki kullanıcı tarafından geçersiz hale getirildi.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="İnternet bağlantısı yok";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="İrtibat talepleri";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Kişi ekleyin";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="Alınan";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="Gönderilen";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="İstekler";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="İstek kabul edildi";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="Bekleyen istek yok";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Durdurulmuş Aktarmalar";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="Aktarma Yok";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="İndirme Yok";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="Yükleme Yok";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Bulut Sürücüsü";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -238,6 +250,8 @@
 "newFolderMessage"="Yeni klasör için isim";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Yeni Oluştur";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="Klasör zaten var";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Şuradan içe aktar...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -317,7 +331,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="Bağlantıyı Kopyala";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Copy key";
+"copyKey"="Anahtarı kopyala";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Uygulamada aç...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -784,8 +798,8 @@
 "eraseAllLocalDataLabel"="Yerel verileri silin";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="10 kez hatalı girişte yerel veriyi sil ve çıkış yap.";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Destek";
+/* Menu item */
+"help"="Yardım";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Destek Merkezi";
 /* Title to rate the app */
@@ -814,6 +828,10 @@
 "downloadInUppercaseTransfers"="İNDİRME aktarmaları";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Hesabım";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="PRO'yu satın al";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="Yükselt";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Profili görüntüle ve düzenle";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -821,15 +839,15 @@
 /* Title of the Achievements section */
 "achievementsTitle"="Başarılar";
 /* Title of the Used storage section */
-"usedStorage"="Used storage";
+"usedStorage"="Kullanılan depolama";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="Arkadaşlarını davet et ve bonus kazan";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="Arkadaşlarınızı davet edin";
-/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
-"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* title of the introduction for the achievements screen */
+"inviteFriendsAndGetForEachReferral"="Her tavsiye için %1$s depolama alanı ve %2$s aktarım kazanın";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Telefonunuzun kişi listesinden kişileri seçin veya birden fazla e-posta adresi girin.";
+"inviteYourFriendsExplanation"="Telefonunuzun kişi listesinden kişilerinizi seçin ya da çoğul eposta adresi girin.";
 /*  */
 "insertYourFriendsEmails"="Arkadaşınızın eposta(lar)ını giriniz:";
 /*  */

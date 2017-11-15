@@ -180,23 +180,26 @@
     NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
     NSString *firstPartString = [[NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray] stringByAppendingString:@" "];
     NSMutableAttributedString *firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:firstPartString];
-    NSString *secondPartString = [componentsSeparatedByStringArray objectAtIndex:1];
-    NSRange secondPartRange = [secondPartString rangeOfString:secondPartString];
-    NSMutableAttributedString *secondPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:secondPartString];
     
     NSRange firstPartRange = [firstPartString rangeOfString:firstPartString];
     [firstPartMutableAttributedString addAttribute:NSFontAttributeName
                                              value:[UIFont mnz_SFUILightWithSize:18.0f]
                                              range:firstPartRange];
     
-    [secondPartMutableAttributedString addAttribute:NSFontAttributeName
-                                              value:[UIFont mnz_SFUILightWithSize:12.0f]
-                                              range:secondPartRange];
-    [secondPartMutableAttributedString addAttribute:NSForegroundColorAttributeName
-                                              value:[UIColor mnz_gray777777]
-                                              range:secondPartRange];
-    
-    [firstPartMutableAttributedString appendAttributedString:secondPartMutableAttributedString];
+    if (componentsSeparatedByStringArray.count > 1) {
+        NSString *secondPartString = [componentsSeparatedByStringArray objectAtIndex:1];
+        NSRange secondPartRange = [secondPartString rangeOfString:secondPartString];
+        NSMutableAttributedString *secondPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:secondPartString];
+        
+        [secondPartMutableAttributedString addAttribute:NSFontAttributeName
+                                                  value:[UIFont mnz_SFUILightWithSize:12.0f]
+                                                  range:secondPartRange];
+        [secondPartMutableAttributedString addAttribute:NSForegroundColorAttributeName
+                                                  value:[UIColor mnz_gray777777]
+                                                  range:secondPartRange];
+        
+        [firstPartMutableAttributedString appendAttributedString:secondPartMutableAttributedString];
+    }
     
     return firstPartMutableAttributedString;
 }

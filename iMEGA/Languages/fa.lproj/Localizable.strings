@@ -52,7 +52,7 @@
 "loggedOutFromAnotherLocation"="شما از محل دیگری از این دستگاه خارج شده اید.";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="كدگذار SSL سرور شناخته نشد. شما ممكن است مورد حمله سايبري قرار بگيريد.";
-/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+/* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="فایلی که دارید تلاش می کنید باز کنید بزرگتر از حافظه ی موجود است.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Unavailable link";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="می تواند به دلایل زیر باشد:- فایل به دلیل نقض قوانیت استفاده ی ما پاک گردیده است.- ادرس اشتباه - لینکی که دارید سعی می کنید باز کنید وجود ندارد.-فایل بوسیله ی خود کاربر حذف گردیده است.";
+/* */
+"fileLinkUnavailableText1"="احتمالاٌ دلایل زیر را دارد:";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="این پرونده به دلیل نقض قوانین MEGA حذف شده‌است.";
+/* */
+"fileLinkUnavailableText3"="لینک مورد نظر اشتباه است";
+/* */
+"fileLinkUnavailableText4"="این پرونده توسط کاربر پاک شده‌است.";
 /* Message shown when a download starts */
 "downloadStarted"="دانلود اغاز شد";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="پوشه ای که سعی می کنید دانلود کنید بزرگتر از حافظه ی موجود است";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="فولدر '%@'  نمی تواند کپی شود";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="می تواند به دلایل زیر باشد:- لینک پوشه به دلیل نقض قوانین ما حذف گردیده است.- ادرس اشتباه - لینکی که سعی می کنید دسترسی پیدا کنید اشتباه است.- لینک پوشه بوسیله ی خود کاربر حذف گردیده است.";
+/* */
+"folderLinkUnavailableText1"="احتمالاٌ دلایل زیر را دارد:";
+/* */
+"folderLinkUnavailableText2"="پیوند مربوط به پوشه ممکن است بدلیل تخطی از نوع ToS/AUP حذف شده باشد.";
+/* */
+"folderLinkUnavailableText3"="لینک مورد نظر اشتباه است";
+/* */
+"folderLinkUnavailableText4"="پیوند مربوط به پوشه توسط کاربر مربوطه غیر فعال شده است.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="هیچ اتصال اینترنتی وجود ندارد";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="درخواستهای تماس";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Add contacts";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="Received";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="ارسال شد";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="درخواستها";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="درخواست قبول شد";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="No pending requests";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Paused Transfers";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="بدون انتقال";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="بدون دانلود";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="آپلودي نيست";
 /* Title of the Cloud Drive section */
 "cloudDrive"="درایو ابری";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -238,6 +250,8 @@
 "newFolderMessage"="نام برای پوشه ی جدید";
 /* Title button for the create folder alert.  */
 "createFolderButton"="ایجاد";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="پوشه از قبل وجود دارد";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="داخل کن از ...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -245,7 +259,7 @@
 /* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
 "fileAlreadyExistMessage"="این فایل قبلا\" با نام %@ آپلود شده است";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
-"filesAlreadyExistMessage"="d% فایل انتحاب شده قبلا در این فولدر آپلود شده است.";
+"filesAlreadyExistMessage"="%d فایل انتحاب شده قبلا در این فولدر آپلود شده است.";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="اپلود شروع شد";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
@@ -475,7 +489,7 @@
 /* Text shown to explain that you have shared a folder with one contact */
 "sharedWithOneContact"="Shared with 1 contact";
 /* Text shown to explain with how many contacts you have shared a folder */
-"sharedWithXContacts"="با d% نفر به اشتراک گذاشته شده";
+"sharedWithXContacts"="با %d نفر به اشتراک گذاشته شده";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="اجازه ها تغییر کردند";
 /* Message shown when a share has been left */
@@ -687,13 +701,13 @@
 /* Success message shown when 1 folder has been removed from MEGA */
 "folderRemovedToRubbishBinMessage"="1 فولدر از مگا حذف شد";
 /* Success message shown when {1+} folders have been removed from MEGA */
-"foldersRemovedToRubbishBinMessage"="d% فولدر از مگا حذف شد";
+"foldersRemovedToRubbishBinMessage"="%d فولدر از مگا حذف شد";
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
 "fileFolderRemovedToRubbishBinMessage"="١فايل و ١ فولدر از مگا حذف شدند";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="١فايل و d% فولدر از مگا حذف شدند";
+"fileFoldersRemovedToRubbishBinMessage"="١فايل و %d فولدر از مگا حذف شدند";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
-"filesFolderRemovedToRubbishBinMessage"="d% فايل و ١ فولدر از مگا حذف شدند";
+"filesFolderRemovedToRubbishBinMessage"="%d فايل و ١ فولدر از مگا حذف شدند";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A]فايل و [B] فولدر از مگا حذف شدند";
 /* Hint text to suggest that the user have to write his/her current password */
@@ -784,8 +798,8 @@
 "eraseAllLocalDataLabel"="داده های محلی را پاک کن";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Logout and erase local data after 10 failed passcode attempts";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="پشتیبانی";
+/* Menu item */
+"help"="راهنمایی";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="راهنما";
 /* Title to rate the app */
@@ -814,6 +828,10 @@
 "downloadInUppercaseTransfers"="انتقال های دانلود";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="شناسهٔ من";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="Buy PRO";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="ارتقا";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="View and edit profile";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -823,11 +841,11 @@
 /* Title of the Used storage section */
 "usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="Invite friends and get bonuses";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="Invite your friends";
-/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
-"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* title of the introduction for the achievements screen */
+"inviteFriendsAndGetForEachReferral"="Get %1$s of storage and %2$s of transfers for each referral";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
 /*  */

@@ -52,8 +52,8 @@
 "loggedOutFromAnotherLocation"="U bent uitgelogd van dit apparaat vanuit een andere locatie";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="De SSL sleutel van de server kan niet worden geverifieerd. U zou kunnen worden geschaad door een man-in-the-middle aanval.";
-/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
+"theContentIsNotAvailableForThisAccount"="De inhoud die u probeert te krijgen is niet beschikbaar voor deze account. Probeer in te loggen met dezelfde account als in de mobiele web programma.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="Het process duurt langer dan verwacht. Wacht alstublieft...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="Het bestand dat u probeert te openen is groter dan het beschikbare geheugen.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Koppeling niet beschikbaar";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="Dit gevolg kan zijn om de volgende redenen:-Het bestand is verwijderd vanwege een ToS/AUP Schending.-Ongeldige URL- De koppeling die u probeert te bereiken bestaat niet.-Het bestand is verwijderd door de gebruiker.";
+/* */
+"fileLinkUnavailableText1"="Dit kan de volgende redenen hebben:";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="Het bestand werd verwijderd door inbreuk op de Algemene Voorwaarden.";
+/* */
+"fileLinkUnavailableText3"="Ongeldige URL - de koppeling die u probeert te bereiken bestaat niet";
+/* */
+"fileLinkUnavailableText4"="Het bestand is door de gebruiker verwijderd.";
 /* Message shown when a download starts */
 "downloadStarted"="Download gestart";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="De map die u probeert te downloaden is groter dan het beschikbare geheugen.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="De map '%@' kan niet gecreëerd worden";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="Dit gevolg kan zijn om de volgende redenen:-De map koppeling is verwijderd vanwege een ToS/AUP schending.-Ongeldige URL- de koppeling die u probeert te bereiken bestaat niet.-De map koppeling is verwijderd door de gebruiker.";
+/* */
+"folderLinkUnavailableText1"="Dit kan de volgende redenen hebben:";
+/* */
+"folderLinkUnavailableText2"="De koppeling naar de map is verwijderd vanwege een schending van onze gebruikersvoorwaarden.";
+/* */
+"folderLinkUnavailableText3"="Ongeldige URL - de koppeling die u probeert te bereiken bestaat niet";
+/* */
+"folderLinkUnavailableText4"="De koppeling naar de map is door de gebruiker uitgeschakeld.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Geen Internet connectie";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="Contact aanvragen";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Contacten toevoegen";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="Ontvangen";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="Verzonden";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="Aanvragen";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="Verzoek geaccepteerd";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="Geen verzoeken in behandeling";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Onderbroken transfers";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="Geen overdrachten";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="Geen Downloads";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="Geen Uploads";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloud Schijf";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -238,6 +250,8 @@
 "newFolderMessage"="Naam voor de nieuwe map";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Maak";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="Map bestaat al";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importeren van...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -317,7 +331,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="Kopieer Koppeling";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Copy key";
+"copyKey"="Kopieer sleutel";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Openen in...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -401,13 +415,13 @@
 /* Success message shown when you have moved 1 folder to the rubbish bin */
 "folderMovedToRubbishBinMessage"="1 map verplaatst naar de prullenbak";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="% mappen verplaatst naar de prullenbak";
+"foldersMovedToRubbishBinMessage"="%d mappen verplaatst naar de prullenbak";
 /* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
 "fileFolderMovedToRubbishBinMessage"="1 bestand en 1 map zijn verplaatst naar de prullenbak";
 /* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="1 bestand en % mappen zijn verplaatst naar de prullenbak";
+"fileFoldersMovedToRubbishBinMessage"="1 bestand en %d mappen zijn verplaatst naar de prullenbak";
 /* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="% bestanden en 1 map zijn verplaatst naar de prullenbak";
+"filesFolderMovedToRubbishBinMessage"="%d bestanden en 1 map zijn verplaatst naar de prullenbak";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
 "filesFoldersMovedToRubbishBinMessage"="[A] bestanden en [B] mappen zijn verplaatst naar de prullenbak";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -683,17 +697,17 @@
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="1 bestand verwijderd van MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="% bestanden verwijderd van MEGA";
+"filesRemovedToRubbishBinMessage"="%d bestanden verwijderd van MEGA";
 /* Success message shown when 1 folder has been removed from MEGA */
 "folderRemovedToRubbishBinMessage"="1 map verwijderd van MEGA";
 /* Success message shown when {1+} folders have been removed from MEGA */
-"foldersRemovedToRubbishBinMessage"="% mappen verwijderd van MEGA";
+"foldersRemovedToRubbishBinMessage"="%d mappen verwijderd van MEGA";
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
 "fileFolderRemovedToRubbishBinMessage"="1 bestand en 1 map zijn verwijderd van MEGA";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="1 bestand en % mappen zijn verwijderd van MEGA";
+"fileFoldersRemovedToRubbishBinMessage"="1 bestand en %d mappen zijn verwijderd van MEGA";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
-"filesFolderRemovedToRubbishBinMessage"="% bestanden en 1 map zijn verwijderd van MEGA";
+"filesFolderRemovedToRubbishBinMessage"="%d bestanden en 1 map zijn verwijderd van MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] bestanden en [B] mappen zijn verwijderd van MEGA";
 /* Hint text to suggest that the user have to write his/her current password */
@@ -784,8 +798,8 @@
 "eraseAllLocalDataLabel"="Verwijder lokale data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Afmelden en lokale gegevens worden gewist na 10 mislukte inlogpogingen ";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Ondersteuning";
+/* Menu item */
+"help"="Help";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Help Center";
 /* Title to rate the app */
@@ -814,6 +828,10 @@
 "downloadInUppercaseTransfers"="DOWNLOAD overdrachten";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Mijn account";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="Koop PRO";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="Upgrade";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Profiel weergeven en wijzigen";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -821,13 +839,13 @@
 /* Title of the Achievements section */
 "achievementsTitle"="Beloningen";
 /* Title of the Used storage section */
-"usedStorage"="Used storage";
+"usedStorage"="Gebruikte opslag";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="Nodig vrienden uit en krijg bonussen";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="Nodig uw vrienden uit";
-/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
-"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* title of the introduction for the achievements screen */
+"inviteFriendsAndGetForEachReferral"="Krijg %1$s aan opslag en %2$s aan overdrachten voor elke verwijzing";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Selecteer contacten vanuit uw telefoon's contact lijst of voer meerdere e-mailadressen in.";
 /*  */

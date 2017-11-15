@@ -52,7 +52,7 @@
 "loggedOutFromAnotherLocation"="Ikaw ay nag-log out sa device na ito sa ibang lokasyon";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Ang SSL key ng Server ay hindi ma-verify. Ikaw ay maaaring apektado ng isang man-in-the-middle attack.";
-/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+/* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="Bumabagal ang proseso kaysa sa inasahan. Pakihintay...";
@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="Ang inyong file na tinatangkang buksan ay mas malaki sa inyong available na memory.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Hindi available ang link";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="Maaaring dahilan nito ay ang mga sumusunod:- Ang folder link ay tinanggal dahilan sa paglabag sa ToS/AUP.- Maling URL - Ang link na gusto mo ma-access ay wala.- Ang folder link ay binura na ng user.";
+/* */
+"fileLinkUnavailableText1"="Dahil ito sa sumusunod na kadahilanan:";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="Tinangal ang file dahil sa paglabag sa Tos/AUp.";
+/* */
+"fileLinkUnavailableText3"="Mali ang URL-ang ink na yong sinubukang i-access ay hindi umiiral";
+/* */
+"fileLinkUnavailableText4"="Ang file ay binura na ng user.";
 /* Message shown when a download starts */
 "downloadStarted"="Nagsimula na ang Download";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="Ang folder na tinatangka mong i-download ay mas malaki sa available memory.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Ang folder na '%@' ay hindi mabuo";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="Maaaring dahilan nito ay ang mga sumusunod:- Ang folder link ay tinanggal dahilan sa paglabag sa ToS/AUP.- Maling URL - Ang link na gusto mo ma-access ay wala.- Ang folder link ay binura na ng user.";
+/* */
+"folderLinkUnavailableText1"="Dahil ito sa sumusunod na kadahilanan:";
+/* */
+"folderLinkUnavailableText2"="Tinanggal ang folder link dahil sa Tos/AUP violation.";
+/* */
+"folderLinkUnavailableText3"="Mali ang URL-ang ink na yong sinubukang i-access ay hindi umiiral";
+/* */
+"folderLinkUnavailableText4"="Ang folder link ay dinisable ng user.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Walang internet connection";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="Mga request ng contact";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Magdagdag ng contacts";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="Received";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="Naipadala";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="Mga Requests";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="Tinanggap ang request";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="Walang pending na request";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Itigil muna ang Paglilipat";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="Walang Transfer";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="Walang Download";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="Walang Upload";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloud Drive";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -238,6 +250,8 @@
 "newFolderMessage"="Pangalan ng bagong folder";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Gumawa";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="meron na ganitong folder";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="I-upload galing sa ...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -341,7 +355,7 @@
 /* Success message shown when you have moved 1 file */
 "moveFileMessage"="Isang file ang nailipat";
 /* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="%2 files ang nailipat";
+"moveFilesMessage"="%d files ang nailipat";
 /* Success message shown when you have moved 1 folder */
 "moveFolderMessage"="isang folder ang nailipat";
 /* Success message shown when you have moved {1+} folders */
@@ -691,7 +705,7 @@
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
 "fileFolderRemovedToRubbishBinMessage"="isang file at folder ang tinanggal sa MEGA";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="isang file at %s folders ang tinanggal sa MEGA";
+"fileFoldersRemovedToRubbishBinMessage"="isang file at %d folders ang tinanggal sa MEGA";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
 "filesFolderRemovedToRubbishBinMessage"="%d files at isang folder ang tinanggal sa MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
@@ -784,8 +798,8 @@
 "eraseAllLocalDataLabel"="Pahiin ang local data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Mag-logout at burahin ang local data matapos ang 10 maling pagsubok sa passcode";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Suporta";
+/* Menu item */
+"help"="Ayuda";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Tulong";
 /* Title to rate the app */
@@ -814,6 +828,10 @@
 "downloadInUppercaseTransfers"="DOWNLOAD transfers";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="sariling  Account";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="Buy PRO";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="Upgrade";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="View and edit profile";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -823,11 +841,11 @@
 /* Title of the Used storage section */
 "usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="Invite friends and get bonuses";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="I-invite ang kaibigan mo";
-/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
-"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* title of the introduction for the achievements screen */
+"inviteFriendsAndGetForEachReferral"="Get %1$s of storage and %2$s of transfers for each referral";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
 /*  */
@@ -1163,7 +1181,7 @@
 /* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
 "sentContact"="Ipadala ang Contact na si: %s";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
-"sentXContacts"="Naipadalang mga % Contacts.";
+"sentXContacts"="Naipadalang mga %s Contacts.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
 "attachedFile"="Nakalakip: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */

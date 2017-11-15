@@ -51,11 +51,11 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Ai fost deconectat de pe acest dispozitiv din altă locaţie";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="Cheia SSL a serverului nu poate fi verificată. Poţi fi afectat de un atac tip man-in-the-middle.";
-/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
+"sslUnverified_alertTitle"="Cheia SSL a serverului nu poate fi verificată. Ai putea fi afectat de un atac de tip man-in-the-middle.";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
+"theContentIsNotAvailableForThisAccount"="Conţinutul pe care încerci să îl accesezi nu este disponibil pentru acest cont. Încearcă să te autentifici cu acelaşi cont ca şi în clientul web mobil.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
-"takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
+"takingLongerThanExpected"="Procesul durează mai mult decât era de aşteptat. Te rugăm să aştepţi...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Te rugăm să te autentifici.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -97,13 +97,13 @@
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Parolă";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
-"termsOfServiceButton"="Sunt de acord cu termenii de utilizare a serviciului MEGA";
+"termsOfServiceButton"="Sunt de acord cu Termenii de utilizare a serviciului MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Introdu un nume valid";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Parolele nu se potrivesc";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Trebuie să fii de-acord cu termenii de utilizare a serviciului pentru a înregistra un cont pe MEGA.";
+"termsCheckboxUnselected"="Trebuie să fii de-acord cu Termenii de utilizare a serviciului pentru a înregistra un cont pe MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Această adresă de e-mail a înregistrat deja un cont cu MEGA";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="Fişierul pe care încerci să îl deschizi este mai mare decât memoria disponibilă.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Link indisponibil";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="Acest lucru ar putea fi din cauza următoarelor motive:- Fişierul a fost eliminat din cauza unei încălcări a ToS/AUP.- URL invalid – linkul pe care încerci să-l accesezi nu există.- Fişierul a fost şters de către utilizator.";
+/* */
+"fileLinkUnavailableText1"="Acest lucru ar putea fi din cauza următoarelor motive:";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="Fişierul a fost eliminat din cauza unei încălcări a ToS/AUP.";
+/* */
+"fileLinkUnavailableText3"="URL invalid - linkul pe care încerci să-l accesezi nu există";
+/* */
+"fileLinkUnavailableText4"="Fişierul a fost şters de către utilizator.";
 /* Message shown when a download starts */
 "downloadStarted"="Descărcarea a început";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="Folderul pe care încerci să îl descarci este mai mare decât memoria disponibilă.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Folderul '%@' nu poate fi creat";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="Acest lucru ar putea fi din cauza următoarelor motive:- Linkul folderului a fost eliminat din cauza unei încălcări a ToS/AUP.- URL invalid – linkul pe care încerci să-l accesezi nu există.- Linkul folderului a fost şters de către utilizator.";
+/* */
+"folderLinkUnavailableText1"="Acest lucru ar putea fi din cauza următoarelor motive:";
+/* */
+"folderLinkUnavailableText2"="Linkul folderului a fost eliminat din cauza unei încălcări a ToS/AUP.";
+/* */
+"folderLinkUnavailableText3"="URL invalid - linkul pe care încerci să-l accesezi nu există";
+/* */
+"folderLinkUnavailableText4"="Linkul folderului a fost dezactivat de către utilizator.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Fără conexiune la internet";
 /* Title shown when a folder doesn't have any files */
@@ -157,7 +169,7 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Coş de gunoi gol";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="Niciun fişier salvat pentru Offline";
+"offlineEmptyState_title"="Niciun fişier salvat pentru offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Niciun contact";
 /* Title shown when there's no incoming Shared Items */
@@ -168,10 +180,10 @@
 "contactRequests"="Cereri de contact";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Adaugă contacte";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="Received";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="Trimise";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="Cereri";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="Cerere acceptată";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="Nicio cerere în aşteptare";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transferuri puse pe pauză";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="Niciun transfer";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="Nicio descărcare";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="Nicio încărcare";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Unitate cloud";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -238,6 +250,8 @@
 "newFolderMessage"="Nume pentru folderul nou";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Creează";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="Folderul există deja";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importă din...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -263,7 +277,7 @@
 /* List option shown on the details of a file or folder */
 "saveForOffline"="Salvează pentru offline";
 /* List option shown on the details of a file or folder */
-"savedForOffline"="Fişiere salvate pt. offline";
+"savedForOffline"="Salvate pentru offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Inbox este rezervat pentru folosire de Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
@@ -299,7 +313,7 @@
 /* button caption text that the user clicks when he agrees */
 "agree"="De acord";
 /* button caption text that the user clicks when he disagrees */
-"disagree"="Disagree";
+"disagree"="Dezacord";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
 "linkWithoutKey"="Link fără cheie";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
@@ -309,7 +323,7 @@
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
 "setExpiryDate"="Setează data de expirare";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
-"setPasswordProtection"="Setează protecţie pentru parolă";
+"setPasswordProtection"="Setează protecţie prin parolă";
 /* The text of a button. This button will encrypt a link with a password. */
 "encrypt"="Criptează";
 /* The text of a button. This button will encrypt a link with a password. */
@@ -317,7 +331,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="Copiază linkul";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Copy key";
+"copyKey"="Copiază cheia";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Deschide în...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -609,7 +623,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Schimbă parola";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Exportarea cheii de recuperare şi păstrarea ei într-o locaţie sigură îţi permite să setezi o parolă nouă fără pierderea datelor.";
+"exportMasterKeyFooter"="Salvarea cheii de recuperare şi păstrarea ei într-o locaţie sigură îţi permite să recuperezi contul în cazul unei parole pierdute fără ca să pierzi date.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="De ce am nevoie de o cheie de recuperare?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -727,7 +741,7 @@
 /* First paragraph of the screen when the password has been forgotten */
 "forgotPassword_firstParagraph"="Dacă ai un backup al cheii tale de recuperare, îţi poţi reseta parola selectând DA. Niciuna dintre date nu va fi pierdută.";
 /* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="Poţi exporta în continuare cheia de recuperare acum dacă ai o sesiune MEGA activă în orice alt browser sau acesta sau orice alt calculator. Dacă nu ai, nu mai poţi decripta contul existent, însă poţi începe unul nou sub aceeaşi adresă de e-mail prin selectarea NU.";
+"forgotPassword_secondParagraph"="Poţi exporta în continuare cheia de recuperare acum dacă ai o sesiune MEGA activă în orice alt browser pe acesta sau orice alt calculator. Dacă nu ai, nu mai poţi decripta contul existent, însă poţi începe unul nou sub aceeaşi adresă de e-mail selectând NU.";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
 "doYouHaveABackupOfYourRecoveryKey"="Ai un backup al cheii tale de recuperare?";
 /* Headline when the user chose YES */
@@ -784,8 +798,8 @@
 "eraseAllLocalDataLabel"="Şterge datele locale";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Deconectează-te şi şterge datele locale după 10 încercări eşuate pentru codul de trecere";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Asistenţă";
+/* Menu item */
+"help"="Ajutor";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centrul de ajutor";
 /* Title to rate the app */
@@ -814,20 +828,24 @@
 "downloadInUppercaseTransfers"="DESCARCĂ transferurile";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Contul meu";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="Buy PRO";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="Upgradează";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
-"viewAndEditProfile"="View and edit profile";
+"viewAndEditProfile"="Vezi şi editează profilul";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Profil";
 /* Title of the Achievements section */
 "achievementsTitle"="Realizări";
 /* Title of the Used storage section */
-"usedStorage"="Used storage";
+"usedStorage"="Stocare folosită";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="Invită prieteni şi obţine bonusuri";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="Invită-ţi prietenii";
-/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
-"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* title of the introduction for the achievements screen */
+"inviteFriendsAndGetForEachReferral"="Obţine %1$s stocare şi %2$s transferuri pentru fiecare recomandare";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
 /*  */
@@ -853,7 +871,7 @@
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
 "registrationBonusExplanation"="Ai primit %1 spaţiu de stocare ca bonus de înregistrare gratuită.";
 /* achievement type */
-"referralBonuses"="Bonusuri pentru referenţi";
+"referralBonuses"="Bonusuri pentru recomandări";
 /*  */
 "installMEGASync"="Instalează MEGAsync";
 /* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
@@ -1067,7 +1085,7 @@
 /* Button title */
 "approve"="Aprobă";
 /* start a chat/conversation */
-"startConversation"="Începe conversaţia";
+"startConversation"="Începe o conversaţie";
 /* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
 "group"="Grup";
 /* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
@@ -1137,7 +1155,7 @@
 /* */
 "warning"="Avertisment";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
-"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Toate fişierele salvate în Offline vor fi şterse de pe dispozitiv. Continui spre deconectare?";
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Toate fişierele salvate pentru offline vor fi şterse de pe dispozitiv. Continui spre deconectare?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Cotă de transfer epuizată";
 /* Description shown when you almost had used your available transfer quota. */

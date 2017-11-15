@@ -52,7 +52,7 @@
 "loggedOutFromAnotherLocation"="Z tohoto zariadenia ste boli z iného miesta odhlásený";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Nebolo možné overiť serverový SSL kľúč. Je možné, že ste pod vplyvom útoku typu man-in-the-middle.";
-/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+/* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="Súbor ktorý sa snažíte otvoriť je väčší ako dostupná pamäť.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Odkaz nedostupný";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="Toto mohlo nastať z nasledujúcich dôvodov:- Súbor mohol byť odstránený z dôvodu porušenia podmienok používania služby.- neplatný odkaz - odkaz ku ktorému sa snažíte získať prístup neexistuje.- Súbor bol odstránený používateľom.";
+/* */
+"fileLinkUnavailableText1"="Toto mohlo nastať z dôvodov:";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="Súbor bol odstránený lebo porušoval Podmienky služby / Politiku prijateľného využitia";
+/* */
+"fileLinkUnavailableText3"="Neplatná URL - linka na ktorú ste sa snažili dostať neexistuje";
+/* */
+"fileLinkUnavailableText4"="Súbor bol zmazaný používateľom.";
 /* Message shown when a download starts */
 "downloadStarted"="Sťahovanie začalo";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="Priečinok ktorý sa snažíte stiahnuť je väčší ako dostupná pamäť.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Priečinok '%@' sa nedá vytvoriť";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="Toto môže byť z nasledujúcich dôvodov:- Odkaz na priečinok bol odstránený z dôvodu porušenia podmienok.- Neplatná URL - odkaz ktorý sa  snažíte otvoriť neexistuje.- Odkaz na priečinok bol odstránený používateľom.";
+/* */
+"folderLinkUnavailableText1"="Toto mohlo nastať z dôvodov:";
+/* */
+"folderLinkUnavailableText2"="Odkaz na priečinok  bol odstránený z dôvodu porušovania Podmienok používania / AUP.";
+/* */
+"folderLinkUnavailableText3"="Neplatná URL - linka na ktorú ste sa snažili dostať neexistuje";
+/* */
+"folderLinkUnavailableText4"="Odkaz na priečinok bol zablokovaný užívateľom.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Žiadne internetové pripojenie";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="Žiadosti o kontakt";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Pridať kontakty";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="Received";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="Odoslané";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="Žiadosti";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="Žiadosť prijatá";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="Žiadne čakajúce žiadosti";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Pozastaviť prenosy";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="Žiadne Prenosy";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="Žiadne Sťahovania";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="Žiadne Uploady";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloudový disk";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -238,6 +250,8 @@
 "newFolderMessage"="Názov nového priečinku";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Vytvoriť";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="Priečinok už existuje";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importovať z...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -784,8 +798,8 @@
 "eraseAllLocalDataLabel"="Zmazať lokálne data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Odhlásiť a zmazať lokálne dáta po 10 neúspešných pokusoch o uhádnutie hesla";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Podpora";
+/* Menu item */
+"help"="Pomoc";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centrum pomoci";
 /* Title to rate the app */
@@ -814,6 +828,10 @@
 "downloadInUppercaseTransfers"="SŤAHOVANIE prenosy";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Môj účet";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="Buy PRO";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="Vylepšiť";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="View and edit profile";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -823,11 +841,11 @@
 /* Title of the Used storage section */
 "usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="Invite friends and get bonuses";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="Invite your friends";
-/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
-"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* title of the introduction for the achievements screen */
+"inviteFriendsAndGetForEachReferral"="Get %1$s of storage and %2$s of transfers for each referral";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
 /*  */

@@ -215,18 +215,21 @@
     } else {
         self.users = [[MEGASdkManager sharedMEGASdk] contacts];
         NSInteger count = [[self.users size] integerValue];
+        NSMutableArray *usersArray = [[NSMutableArray alloc] init];
         for (NSInteger i = 0; i < count; i++) {
             MEGAUser *user = [self.users userAtIndex:i];
             if ([user visibility] == MEGAUserVisibilityVisible) {
                 if (self.contactsMode == ContactsModeChatAddParticipant) {
                     if ([self.participantsMutableDictionary objectForKey:[NSNumber numberWithUnsignedLongLong:user.handle]] == nil) {
-                        [self.visibleUsersArray addObject:user];
+                        [usersArray addObject:user];
                     }
                 } else {
-                    [self.visibleUsersArray addObject:user];
+                    [usersArray addObject:user];
                 }
             }
         }
+        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"mnz_fullName" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+        self.visibleUsersArray = [usersArray sortedArrayUsingDescriptors:@[sort]];
     }
     
     if ([self.visibleUsersArray count] == 0) {
@@ -527,18 +530,18 @@
             [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
         }
         
-        if ([[UIDevice currentDevice] systemVersionLessThanVersion:@"9.0"]) {
-            ABPeoplePickerNavigationController *contactsPickerNC = [[ABPeoplePickerNavigationController alloc] init];
-            contactsPickerNC.predicateForEnablingPerson = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
-            contactsPickerNC.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
-            contactsPickerNC.peoplePickerDelegate = self;
-            [self presentViewController:contactsPickerNC animated:YES completion:nil];
-        } else {
+        if (@available(iOS 9.0, *)) {
             CNContactPickerViewController *contactsPickerViewController = [[CNContactPickerViewController alloc] init];
             contactsPickerViewController.predicateForEnablingContact = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
             contactsPickerViewController.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
             contactsPickerViewController.delegate = self;
             [self presentViewController:contactsPickerViewController animated:YES completion:nil];
+        } else {
+            ABPeoplePickerNavigationController *contactsPickerNC = [[ABPeoplePickerNavigationController alloc] init];
+            contactsPickerNC.predicateForEnablingPerson = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
+            contactsPickerNC.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
+            contactsPickerNC.peoplePickerDelegate = self;
+            [self presentViewController:contactsPickerNC animated:YES completion:nil];
         }
     }];
     [addFromContactsAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
