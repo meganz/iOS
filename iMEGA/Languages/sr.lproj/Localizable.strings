@@ -207,7 +207,7 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
 "files"="%d документа";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
-"oneFolder"="%1 директоријум";
+"oneFolder"="1 директоријум";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
 "folders"="%d директоријуми";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
