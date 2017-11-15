@@ -68,16 +68,16 @@
                 [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 self.incomingCallView.hidden = YES;
-                
-                [[UIDevice currentDevice] setProximityMonitoringEnabled:YES];
-                
-                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSessionRouteChange:) name:AVAudioSessionRouteChangeNotification object:nil];
-                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sensorStateMonitor:) name:@"UIDeviceProximityStateDidChangeNotification" object:nil];
             }
         }];
         
         [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:startCallRequestDelegate];
     }
+    
+    
+    [[UIDevice currentDevice] setProximityMonitoringEnabled:YES];    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSessionRouteChange:) name:AVAudioSessionRouteChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sensorStateMonitor:) name:@"UIDeviceProximityStateDidChangeNotification" object:nil];
     
     self.nameLabel.text = [self.chatRoom peerFullnameAtIndex:0];
     
@@ -114,6 +114,7 @@
     [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideoDelegate:self.remoteVideoImageView];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatLocalVideoDelegate:self.localVideoImageView];
     
+    [[UIDevice currentDevice] setProximityMonitoringEnabled:NO];
     [[NSNotificationCenter defaultCenter] removeObserver:AVAudioSessionRouteChangeNotification];
     [[NSNotificationCenter defaultCenter] removeObserver:@"UIDeviceProximityStateDidChangeNotification"];
     
