@@ -182,7 +182,14 @@ NSInteger const MYACCOUNT = 4;
             callVC.chatRoom  = [api chatRoomForChatId:call.chatId];
             callVC.videoCall = NO;
             callVC.callType = CallTypeIncoming;
-            [self presentViewController:callVC animated:YES completion:nil];
+            
+            UIViewController *presentedVC = self.presentedViewController;
+            
+            if (presentedVC) {
+                [presentedVC presentViewController:callVC animated:YES completion:nil];
+            } else {
+                [self presentViewController:callVC animated:YES completion:nil];
+            }
             break;
         }
             
