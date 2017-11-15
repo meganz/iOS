@@ -1,26 +1,27 @@
+
 #import "SettingsTableViewController.h"
 
-#import <MessageUI/MFMailComposeViewController.h>
+#import <SafariServices/SafariServices.h>
 
 #import "LTHPasscodeViewController.h"
 #import "SVProgressHUD.h"
 #import "SVWebViewController.h"
 
+#import "CameraUploads.h"
+#import "Helper.h"
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
-#import "Helper.h"
-#import "CameraUploads.h"
 
 #import "AboutTableViewController.h"
 #import "AdvancedTableViewController.h"
 #import "CameraUploadsTableViewController.h"
 #import "ChatSettingsTableViewController.h"
-#import "FeedbackTableViewController.h"
+#import "HelpTableViewController.h"
 #import "LanguageTableViewController.h"
 #import "PasscodeTableViewController.h"
 #import "SecurityOptionsTableViewController.h"
 
-@interface SettingsTableViewController () <MFMailComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface SettingsTableViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) NSDictionary *languagesDictionary;
 @property (weak, nonatomic) NSString *selectedLanguage;
@@ -70,7 +71,6 @@
                             @"fi":@"Suomi",
                             @"fr":@"Français",
                             @"he":@"עברית",
-                            @"hu":@"magyar",
                             @"id":@"Bahasa Indonesia",
                             @"it":@"Italiano",
                             @"ja":@"日本語",
@@ -123,69 +123,28 @@
     self.aboutLabel.text = AMLocalizedString(@"about", @"Title of one of the Settings sections where you can see things 'About' the app");
     self.languageLabel.text = AMLocalizedString(@"language", @"Title of one of the Settings sections where you can set up the 'Language' of the app");
     
-    self.helpLabel.text = AMLocalizedString(@"sendFeedbackLabel", @"Title of one of the Settings sections where you can 'Send Feedback' to MEGA");
+    self.helpLabel.text = AMLocalizedString(@"help", @"Menu item");
     
     self.privacyPolicyLabel.text = AMLocalizedString(@"privacyPolicyLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy'");
     self.termsOfServiceLabel.text = AMLocalizedString(@"termsOfServicesLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Terms of Service'");
 }
 
-- (void)sendFeedback {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        if ([MFMailComposeViewController canSendMail]) {
-            MFMailComposeViewController *mailComposeVC = [[MFMailComposeViewController alloc] init];
-            [mailComposeVC setMailComposeDelegate:self];
-            [mailComposeVC setToRecipients:@[@"ios@mega.nz"]];
-            
-            NSString *version = [NSString stringWithFormat:@"%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
-            
-            [mailComposeVC setSubject:[NSString stringWithFormat:@"Feedback %@", version]];
-            NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
-            
-            NSString *appVersion = [[NSBundle mainBundle]
-                                    objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
-            NSString *shortAppVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-            NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
-            
-            NSArray *languageArray = [NSLocale preferredLanguages];
-            NSString *language = [[NSLocale currentLocale] displayNameForKey:NSLocaleIdentifier value:[languageArray objectAtIndex:0]];
-            
-            NSString *connectionStatus = @"No internet connection";
-            if ([MEGAReachabilityManager isReachable]) {
-                if ([MEGAReachabilityManager isReachableViaWiFi]) {
-                    connectionStatus = @"WiFi";
-                } else {
-                    connectionStatus = @"Mobile Data";
-                }
-            }
-            NSString *myEmail = [[MEGASdkManager sharedMEGASdk] myEmail];
-            
-            NSString *messageBody = AMLocalizedString(@"pleaseWriteYourFeedback", @"Message body of the email that appears when the users tap on \"Send feedback\"");
-            messageBody = [messageBody stringByAppendingFormat:@"\n\n\nApp Information:\nApp Name: %@\n", appName];
-            messageBody = [messageBody stringByAppendingFormat:@"App Version: %@ (%@)\n\n", shortAppVersion, appVersion];
-            
-            messageBody = [messageBody stringByAppendingFormat:@"Device information:\nDevice: %@\niOS Version: %@\nLanguage: %@\nTimezone: %@\nConnection Status: %@\nMEGA account: %@", [[UIDevice currentDevice] deviceName], systemVersion, language, [NSTimeZone localTimeZone].name, connectionStatus, myEmail];
-            
-            [mailComposeVC setMessageBody:messageBody isHTML:NO];
-            
-            [self presentViewController:mailComposeVC animated:YES completion:nil];
-        } else {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"noEmailAccountConfigured", nil)];
-        }
-    }
-}
-
 - (void)showURL:(NSString *)urlString {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         NSURL *URL = [NSURL URLWithString:urlString];
-        SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
-        [self.navigationController pushViewController:webViewController animated:YES];
+        if (@available(iOS 9.0, *)) {
+            SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:URL];
+            if (@available(iOS 10.0, *)) {
+                webViewController.preferredControlTintColor = [UIColor mnz_redD90007];
+            } else {
+                webViewController.view.tintColor = [UIColor mnz_redD90007];
+            }
+            [self presentViewController:webViewController animated:YES completion:nil];
+        } else {
+            SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
+            [self.navigationController pushViewController:webViewController animated:YES];
+        }
     }
-}
-
-#pragma mark - MFMailComposeViewControllerDelegate
-
--(void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource
@@ -264,7 +223,8 @@
             
         case 4: { //Help
             if (indexPath.row == 0) {
-                [self sendFeedback];
+                HelpTableViewController *helpTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"HelpTableViewControllerID"];
+                [self.navigationController pushViewController:helpTVC animated:YES];
                 break;
             }
             break;

@@ -52,8 +52,8 @@
 "loggedOutFromAnotherLocation"="Zostałeś wylogowany z innej lokalizacji";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Klucz SSL nie może zostać zweryfikowany.";
-/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
+"theContentIsNotAvailableForThisAccount"="Plik/Katalog króry próbujesz otworzyć jest niedostępny dla Twojego konta. Spróbuj otworzyć na urządzeniu mobilnym, urzywając tego samego konta.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="Operacja zamuje więcej czasu niż planowano. Proszę czekać...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="Plik, który chcesz otworzyć jest większy niż dostępna pamięć.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Niedostępny link";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="Mogło to nastąpić z następujących powodów:- Podlinkowany plik został usunięty z powodu naruszenia regulaminu- Błędny link - link, który posiadasz nie istnieje- Plik został usunięty przez użytkownika.";
+/* */
+"fileLinkUnavailableText1"="Może to wynikać z następujących przyczyn:";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="Plik został usunięty ze względu na naruszenie ToS/AUP.";
+/* */
+"fileLinkUnavailableText3"="Błędny link - podany link nie istnieje";
+/* */
+"fileLinkUnavailableText4"="Plik został usunięty przez użytkownika.";
 /* Message shown when a download starts */
 "downloadStarted"="Pobieranie rozpoczęte";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="Katalog, który chcesz pobrać jest większy niż dostępna pamięć.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Katalog '%@' nie może zostać utworzony";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="Mogło to nastąpić z następujących powodów:- Podlinkowany katalog został usunięty z powodu naruszenia regulaminu- Błędny link - link, który posiadasz nie istnieje- Katalog został usunięty przez użytkownika.";
+/* */
+"folderLinkUnavailableText1"="Może to wynikać z następujących przyczyn:";
+/* */
+"folderLinkUnavailableText2"="Link został usunięty z powodu naruszenia zasad regulaminu lub praw autorskich.";
+/* */
+"folderLinkUnavailableText3"="Błędny link - podany link nie istnieje";
+/* */
+"folderLinkUnavailableText4"="Link został zablokowany przez użytkownika.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Brak połączenia z internetem";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="Nowe zaproszenia";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Dodaj kontakty";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="Otrzymane";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="Wysłane";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="Zgłoszenia";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="Zaproszenie zaakceptowane";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="Brak zgłoszeń";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Zatrzymaj przesyłanie";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="Brak transferów";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="Brak pobrań";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="Brak plików";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Dysk";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -238,6 +250,8 @@
 "newFolderMessage"="Nazwa nowego katalogu";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Utwórz";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="Katalog już istnieje";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importuj z...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -317,7 +331,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="Skopiuj link";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Copy key";
+"copyKey"="Skopiuj klucz";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Otwórz...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -489,7 +503,7 @@
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareMultipleContactsMessage"="Czy na pewno chcesz usunąć to udostępnienie? (Udostępnione z %d kontaktami)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Czy na pewno chcesz usunąć te udostępnienia? (Udostępnione z 1 kontaktami)";
+"removeMultipleSharesMultipleContactsMessage"="Czy na pewno chcesz usunąć te udostępnienia? (Udostępnione z %d kontaktami)";
 /* Message shown when a share have been removed */
 "shareRemoved"="Udostępnienie zostało usunięte";
 /* Message shown when some shares have been removed */
@@ -784,8 +798,8 @@
 "eraseAllLocalDataLabel"="Wyczyść dane lokalne";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Wyloguj i usuń lokalne dane po 10 nieudanych próbach logowania";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Wsparcie";
+/* Menu item */
+"help"="Pomoc";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centrum pomocy";
 /* Title to rate the app */
@@ -814,6 +828,10 @@
 "downloadInUppercaseTransfers"="Transfery POBRAŃ";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Moje konto";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="Kup PRO";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="Wybierz PRO";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Zobacz i edytuj profil";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -821,15 +839,15 @@
 /* Title of the Achievements section */
 "achievementsTitle"="Osiągnięcia";
 /* Title of the Used storage section */
-"usedStorage"="Used storage";
+"usedStorage"="Wykorzystana powierzchnia";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="Zaproś znajomych i odbierz bonusy";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="Zaproś znajomych";
-/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
-"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* title of the introduction for the achievements screen */
+"inviteFriendsAndGetForEachReferral"="Odbierz %1$s dodatkowej powierzchni i %2$s dodatkowego transferu za każde polecenie";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+"inviteYourFriendsExplanation"="Wybierz kontakty z listy w telefonie lub wpisz adresy email.";
 /*  */
 "insertYourFriendsEmails"="Wpisz adresy email Twoich znajomych:";
 /*  */

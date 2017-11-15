@@ -52,7 +52,7 @@
 "loggedOutFromAnotherLocation"="Du har loggats ut från den här enheten från en annan plats";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Serverns SSL kan inte verifieras, du kan vara utsatt för intrång. ";
-/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+/* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="Filen du försöker öppna är större än det tillgängliga minnet.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Otillgänglig länk";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="Detta skulle kunna bero på följande orsaker:- Filen har tagits bort på grund av en ToS/AUP kränkning.- Ogiltig webbadress - länken du försöker komma åt existerar inte.- Filen har tagits bort av användaren.";
+/* */
+"fileLinkUnavailableText1"="Detta kan vara på grund av följande anledningar: ";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="Filen har blivit borttagen för regelbrott mot ToS (användarvillkor) / AUP (policy för acceptabel användning).";
+/* */
+"fileLinkUnavailableText3"="Ogiltig URL-länken du försöker öppna existerar inte längre.";
+/* */
+"fileLinkUnavailableText4"="Användaren har raderat filen.";
 /* Message shown when a download starts */
 "downloadStarted"="Nedladdning startades!";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="Mappen du försöker ladda ner är större än avaliable minnet.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Mappen '%@' kan inte skapas";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="Detta kan bero på följande orsaker:- Länken mapp har tagits bort på grund av en ToS / AUP kränkning.- Ogiltig webbadress - länken du försöker komma åt existerar inte.- Länken mappen har tagits bort av användaren.";
+/* */
+"folderLinkUnavailableText1"="Detta kan vara på grund av följande anledningar: ";
+/* */
+"folderLinkUnavailableText2"="Länken till mappen har raderats på grund av en överträdelse av våra tjänstevillkor.";
+/* */
+"folderLinkUnavailableText3"="Ogiltig URL-länken du försöker öppna existerar inte längre.";
+/* */
+"folderLinkUnavailableText4"="Länken till mappen har inaktiverats av användaren.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Ingen internetuppkoppling";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="Kontaktförfrågningar";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Lägg till kontakter";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="Received";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="Skickade";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="Förfrågningar";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="Förfrågan accepterad";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="Inga obesvarade förfrågningar";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Pausade överföringar";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="Inga överföringar";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="Inga nedladdningar";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="Inga uppladdningar";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Molnlagring";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -238,6 +250,8 @@
 "newFolderMessage"="Namn för den nya mappen";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Skapa";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="Denna mapp finns redan";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Ladda upp från...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -784,8 +798,8 @@
 "eraseAllLocalDataLabel"="Ta bort lokal data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Logga ut och radera lokala data efter 10 misslyckade lösenkodsförsök";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="Hjälp";
+/* Menu item */
+"help"="Hjälp";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Hjälpcenter";
 /* Title to rate the app */
@@ -814,6 +828,10 @@
 "downloadInUppercaseTransfers"="LADDA NED överföringar";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Mitt konto";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="Buy PRO";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="Uppgradera";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="View and edit profile";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -823,11 +841,11 @@
 /* Title of the Used storage section */
 "usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="Invite friends and get bonuses";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="Invite your friends";
-/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
-"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* title of the introduction for the achievements screen */
+"inviteFriendsAndGetForEachReferral"="Get %1$s of storage and %2$s of transfers for each referral";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
 /*  */

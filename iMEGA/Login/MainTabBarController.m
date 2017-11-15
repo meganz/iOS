@@ -1,5 +1,4 @@
 #import "MainTabBarController.h"
-#import "MEGASdkManager.h"
 
 #import "CallViewController.h"
 #import "MessagesViewController.h"
@@ -10,7 +9,7 @@ NSInteger const CHAT = 2;
 NSInteger const SHARED = 3;
 NSInteger const MYACCOUNT = 4;
 
-@interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate, MEGAChatDelegate>
+@interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate>
 
 @end
 
@@ -117,7 +116,7 @@ NSInteger const MYACCOUNT = 4;
 
 - (void)setBadgeValueForChats {
     NSInteger chatTabPosition = [self tabPositionForTag:CHAT];
-    NSInteger unreadChats = [[MEGASdkManager sharedMEGAChatSdk] unreadChats];
+    NSInteger unreadChats = ([MEGASdkManager sharedMEGAChatSdk] != nil) ? [[MEGASdkManager sharedMEGAChatSdk] unreadChats] : 0;
     
     NSString *badgeValue = unreadChats ? [NSString stringWithFormat:@"%ld", unreadChats] : nil;
     [self setBadgeValue:badgeValue tabPosition:chatTabPosition];

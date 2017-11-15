@@ -52,8 +52,8 @@
 "loggedOutFromAnotherLocation"="別の場所から、この機器はログアウトされました。";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="サーバーのSSL鍵が照合できません。中間者攻撃かも知れません。";
-/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
+/* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
+"theContentIsNotAvailableForThisAccount"="アクセスしようとしているコンテンツは、このアカウントでは利用できません。モバイルWebクライアントと同じアカウントでログインしてください。";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="プロセスに予想以上時間がかかっています。お待ちください...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="開けようとしているファイルは、メモリーの空き容量を超えています。";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="利用できないリンク";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="これは、以下の理由による可能性があります：－ファイルがToS/AUP違反により削除されました。－URLが無効－アクセスしようとしているリンクが存在しません。－ファイルがユーザーによって削除されました。";
+/* */
+"fileLinkUnavailableText1"="これは以下の理由によるものであると考えられます：";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="ファイルは利用規約/ポリシー違反のため削除されました。";
+/* */
+"fileLinkUnavailableText3"="無効URL：アクセスしようとしているリンクは存在しません。";
+/* */
+"fileLinkUnavailableText4"="このファイルはユーザーによって削除されています。";
 /* Message shown when a download starts */
 "downloadStarted"="ダウンロード開始";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="ダウンロードしようとしているフォルダは、空きメモリの容量を超えています。";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="フォルダ'%@' は作成できません。";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="これは、以下の理由による可能性があります：－フォルダがToS/AUP違反により削除されました。－URLが無効－アクセスしようとしているリンクが存在しません。－フォルダリンクがユーザーによって削除されました。";
+/* */
+"folderLinkUnavailableText1"="これは以下の理由によるものであると考えられます：";
+/* */
+"folderLinkUnavailableText2"="そのリンクは利用規約/ポリシー違反のため削除されました。";
+/* */
+"folderLinkUnavailableText3"="無効URL：アクセスしようとしているリンクは存在しません。";
+/* */
+"folderLinkUnavailableText4"="そのリンクはユーザーによって無効とされました。";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="ネット接続なし";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="知り合いリクエスト";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="知り合いを追加";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="受信済み";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="送信";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="リクエスト";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="リクエストを受け入れました";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="新しいリクエストなし";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="転送停止";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="転送なし";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="ダウンロードなし";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="アップロードなし";
 /* Title of the Cloud Drive section */
 "cloudDrive"="クラウドドライブ";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -238,6 +250,8 @@
 "newFolderMessage"="新フォルダの名前";
 /* Title button for the create folder alert.  */
 "createFolderButton"="作成";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="そのフォルダは存在しています。";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="インポート...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -317,7 +331,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="リンクをコピーする";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Copy key";
+"copyKey"="キーをコピー";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="開けるのに使うのは...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -784,8 +798,8 @@
 "eraseAllLocalDataLabel"="ローカルデータを削除";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="10回のパスコード試行が失敗した後にログアウトし、ローカルデータを消去する";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="サポート";
+/* Menu item */
+"help"="ヘルプ";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="ヘルプセンター";
 /* Title to rate the app */
@@ -814,6 +828,10 @@
 "downloadInUppercaseTransfers"="ダウンロード中";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="アカウント設定";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="PROを購入";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="アップグレード";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="プロファイルの表示と編集";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -821,13 +839,13 @@
 /* Title of the Achievements section */
 "achievementsTitle"="実績";
 /* Title of the Used storage section */
-"usedStorage"="Used storage";
+"usedStorage"="使用済みストレージ";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="友人を招待してボーナスを獲得";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="ご友人を招待する";
-/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
-"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* title of the introduction for the achievements screen */
+"inviteFriendsAndGetForEachReferral"="ご紹介ごとに%1$sのストレージと%2$sの転送を取得";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
 /*  */
@@ -1165,7 +1183,7 @@
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="%s人の知り合いを送信しました。";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="添付された:";
+"attachedFile"="%s添付された:";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s個のファイルを添付しました。";
 /* Describe how works auto-renewable subscriptions on the Apple Store */

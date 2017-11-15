@@ -4,3 +4,7 @@
 "NSCameraUsageDescription"="MEGA cần dùng camera của điện thoại khi bạn muốn dùng ứng dụng này để quay phim hoặc chụp hình.";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryUsageDescription"="MEGA truy cập vào danh sách hình ảnh và/hoặc video khi người dùng muốn dùng ứng dụng này để chọn hình ảnh để đăng tải, hoặc thông qua tính năng Camera Uploads.";
+/* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSContactsUsageDescription"="MEGA accesses your contacts when you select some of them to save/export.";
+/* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSPhotoLibraryAddUsageDescription"="MEGA accesses your photo library to save your photos or videos in case you do so.";

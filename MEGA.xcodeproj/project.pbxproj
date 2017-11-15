@@ -149,7 +149,7 @@
 		41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */; };
 		41AC33A81A926C27005118AF /* HeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC33A71A926C27005118AF /* HeaderCollectionReusableView.m */; };
 		41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC66471AB1D493003FE8DA /* AboutTableViewController.m */; };
-		41ADA9F21ADE7AC100641BB4 /* FeedbackTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41ADA9F11ADE7AC100641BB4 /* FeedbackTableViewController.m */; };
+		41ADA9F21ADE7AC100641BB4 /* HelpTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41ADA9F11ADE7AC100641BB4 /* HelpTableViewController.m */; };
 		41ADAA131ADE8B8800641BB4 /* SVWebViewController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41ADA9F41ADE8B8800641BB4 /* SVWebViewController.strings */; };
 		41ADAA141ADE8B8800641BB4 /* SVModalWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41ADA9FE1ADE8B8800641BB4 /* SVModalWebViewController.m */; };
 		41ADAA151ADE8B8800641BB4 /* SVWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 41ADA9FF1ADE8B8800641BB4 /* SVWebViewController.bundle */; };
@@ -243,6 +243,8 @@
 		5B22F97E1F8374C500D2B156 /* VENTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B22F97A1F8374C400D2B156 /* VENTokenField.m */; };
 		5B22F97F1F8374C500D2B156 /* VENBackspaceTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B22F97B1F8374C500D2B156 /* VENBackspaceTextField.m */; };
 		5B28D1371F0FB9590062998C /* MEGAImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B28D1361F0FB9590062998C /* MEGAImagePickerController.m */; };
+		5B2E78CD1FA0C3310096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB50E081F20E840000CA24D /* MEGACreateFolderRequestDelegate.m */; };
+		5B2E78CE1FA0C3450096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB50E081F20E840000CA24D /* MEGACreateFolderRequestDelegate.m */; };
 		5B2E918D1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E918C1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.m */; };
 		5B2E91921F1F98F4003C6920 /* MEGACopyRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E91911F1F98F4003C6920 /* MEGACopyRequestDelegate.m */; };
 		5B323F231F5834E100C5F557 /* ReferralBonusesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B323F221F5834E100C5F557 /* ReferralBonusesTableViewController.m */; };
@@ -268,6 +270,19 @@
 		5BD4A0221F838606000E24E6 /* ScrollViewFrameAccessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4A0201F838606000E24E6 /* ScrollViewFrameAccessor.m */; };
 		5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */; };
 		5BDE180C1F500EE000CD9F82 /* MyAccountBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE180B1F500DEE00CD9F82 /* MyAccountBaseViewController.m */; };
+		5BEACE1F1FB472C80010E02F /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
+		5BEACE201FB472CC0010E02F /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
+		5BEACE211FB473490010E02F /* (null) in Sources */ = {isa = PBXBuildFile; };
+		5BEACE221FB4734A0010E02F /* (null) in Sources */ = {isa = PBXBuildFile; };
+		5BEACE231FB473700010E02F /* NSMutableAttributedString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E80620AA1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m */; };
+		5BEACE241FB473940010E02F /* UIImageView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E150031DB7CB1400383645 /* UIImageView+MNZCategory.m */; };
+		5BEACE251FB473A20010E02F /* UIImage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */; };
+		5BEACE2A1FB474060010E02F /* MEGAUser+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 411C8B6A1DECBD87006A0D8C /* MEGAUser+MNZCategory.m */; };
+		5BEACE2B1FB4740E0010E02F /* UIAlertAction+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 944B205C1EE55533003C967B /* UIAlertAction+MNZCategory.m */; };
+		5BEACE2C1FB4740F0010E02F /* UIAlertAction+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 944B205C1EE55533003C967B /* UIAlertAction+MNZCategory.m */; };
+		5BEACE2D1FB4741A0010E02F /* UIScreen+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A81A852A1F0F6F5100702353 /* UIScreen+MNZCategory.m */; };
+		5BEACE2E1FB4741B0010E02F /* UIScreen+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A81A852A1F0F6F5100702353 /* UIScreen+MNZCategory.m */; };
+		5BFA346F1FAC5850005BFC4E /* (null) in Sources */ = {isa = PBXBuildFile; };
 		9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226691A692ECC00EC7BB6 /* Cloud.storyboard */; };
 		941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
 		941135511F00FFC700D33428 /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226881A692ECC00EC7BB6 /* Helper.m */; };
@@ -655,7 +670,6 @@
 		410333D01B9992A200380FF3 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		410333D71B9993A000380FF3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		410333D91B99940C00380FF3 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
-		410333DF1B99946D00380FF3 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = hu; path = hu.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		410333E11B99948600380FF3 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		410333EB1B9994F400380FF3 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		410333ED1B99950900380FF3 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -906,12 +920,11 @@
 		41AC33A71A926C27005118AF /* HeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderCollectionReusableView.m; sourceTree = "<group>"; };
 		41AC66461AB1D493003FE8DA /* AboutTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutTableViewController.h; sourceTree = "<group>"; };
 		41AC66471AB1D493003FE8DA /* AboutTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutTableViewController.m; sourceTree = "<group>"; };
-		41ADA9F01ADE7AC100641BB4 /* FeedbackTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackTableViewController.h; sourceTree = "<group>"; };
-		41ADA9F11ADE7AC100641BB4 /* FeedbackTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackTableViewController.m; sourceTree = "<group>"; };
+		41ADA9F01ADE7AC100641BB4 /* HelpTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpTableViewController.h; sourceTree = "<group>"; };
+		41ADA9F11ADE7AC100641BB4 /* HelpTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpTableViewController.m; sourceTree = "<group>"; };
 		41ADA9F51ADE8B8800641BB4 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
 		41ADA9F61ADE8B8800641BB4 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
 		41ADA9F71ADE8B8800641BB4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
-		41ADA9F81ADE8B8800641BB4 /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/SVWebViewController.strings"; sourceTree = "<group>"; };
 		41ADA9F91ADE8B8800641BB4 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
 		41ADA9FA1ADE8B8800641BB4 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
 		41ADA9FB1ADE8B8800641BB4 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
@@ -1189,6 +1202,9 @@
 		944B205B1EE5551C003C967B /* UIAlertAction+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "UIAlertAction+MNZCategory.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		944B205C1EE55533003C967B /* UIAlertAction+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "UIAlertAction+MNZCategory.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		945605431EDD66350094EF0F /* MEGAPicker-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MEGAPicker-PrefixHeader.pch"; path = "iMEGA/Extensions/MEGAPicker/MEGAPicker-PrefixHeader.pch"; sourceTree = SOURCE_ROOT; };
+		9458AEE11FB9D3B800BABD58 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9458AEE21FB9D40500BABD58 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9458AEE51FB9D5C700BABD58 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = tl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		94598D741F0CD53A00B57144 /* LoginRequired.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LoginRequired.storyboard; path = iMEGA/Extensions/MEGAShare/LoginRequired.storyboard; sourceTree = SOURCE_ROOT; };
 		94624CF91F50484200D52504 /* MEGAExportRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAExportRequestDelegate.h; sourceTree = "<group>"; };
 		94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAExportRequestDelegate.m; sourceTree = "<group>"; };
@@ -1287,7 +1303,6 @@
 		A8F6E8921F9E75D50087859C /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		E803CB691D54AB6A00F81A36 /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E80620A91CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+MNZCategory.h"; sourceTree = "<group>"; };
 		E80620AA1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "NSMutableAttributedString+MNZCategory.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupChatDetailsViewTableViewCell.h; path = Chat/GroupChatDetailsViewTableViewCell.h; sourceTree = "<group>"; };
@@ -1356,7 +1371,6 @@
 		E8BB736D1D7739C10067D89C /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fa; path = fa.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BB736E1D7739C70067D89C /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BB736F1D7739CE0067D89C /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		E8BB73701D7739DE0067D89C /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BB73711D7739E70067D89C /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BB73721D7739E90067D89C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BB73731D7739F50067D89C /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1369,7 +1383,6 @@
 		E8BB737A1D773A690067D89C /* sr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sr; path = sr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BB737B1D773A710067D89C /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BB737C1D773A750067D89C /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		E8BB737D1D773A890067D89C /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BB737E1D773A930067D89C /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BB737F1D773AA20067D89C /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BB73801D773AA80067D89C /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -1890,7 +1903,7 @@
 				41AA1A191AC07EB900D32691 /* Security Options */,
 				E87C98321CC411D400E2B9E6 /* Advanced */,
 				41AC66441AB1D488003FE8DA /* About */,
-				41ADA9EE1ADE7AB400641BB4 /* Feedback */,
+				41ADA9EE1ADE7AB400641BB4 /* Help */,
 				415226831A692ECC00EC7BB6 /* Settings.storyboard */,
 				41FC83AF1AA853CC008FA551 /* SettingsTableViewController.h */,
 				41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */,
@@ -2255,13 +2268,13 @@
 			path = About;
 			sourceTree = "<group>";
 		};
-		41ADA9EE1ADE7AB400641BB4 /* Feedback */ = {
+		41ADA9EE1ADE7AB400641BB4 /* Help */ = {
 			isa = PBXGroup;
 			children = (
-				41ADA9F01ADE7AC100641BB4 /* FeedbackTableViewController.h */,
-				41ADA9F11ADE7AC100641BB4 /* FeedbackTableViewController.m */,
+				41ADA9F01ADE7AC100641BB4 /* HelpTableViewController.h */,
+				41ADA9F11ADE7AC100641BB4 /* HelpTableViewController.m */,
 			);
-			path = Feedback;
+			path = Help;
 			sourceTree = "<group>";
 		};
 		41ADA9F31ADE8B8800641BB4 /* SVWebViewController */ = {
@@ -3419,7 +3432,7 @@
 				41ADAA1F1ADE8B8800641BB4 /* SVWebViewControllerActivity.m in Sources */,
 				41ADAA161ADE8B8800641BB4 /* SVWebViewController.m in Sources */,
 				412EB2661C6E52AA001EA6D6 /* MEGAAssetOperation.m in Sources */,
-				41ADA9F21ADE7AC100641BB4 /* FeedbackTableViewController.m in Sources */,
+				41ADA9F21ADE7AC100641BB4 /* HelpTableViewController.m in Sources */,
 				41E88F101CF451B000BD3B79 /* MWTapDetectingImageView.m in Sources */,
 				A8F5D67D1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m in Sources */,
 				4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */,
@@ -3625,10 +3638,12 @@
 				943229401EDD8969007DB542 /* UIScrollView+EmptyDataSet.m in Sources */,
 				9456054F1EDD7DBD0094EF0F /* ShareFolderActivity.m in Sources */,
 				9432294F1EDD9CF6007DB542 /* UIImageView+MNZCategory.m in Sources */,
+				5BEACE221FB4734A0010E02F /* (null) in Sources */,
 				9456054A1EDD7AD70094EF0F /* LTHKeychainUtils.m in Sources */,
 				9432293D1EDD88F5007DB542 /* MWZoomingScrollView.m in Sources */,
 				945605481EDD6F9B0094EF0F /* MEGAReachabilityManager.m in Sources */,
 				943229341EDD8823007DB542 /* MEGANavigationController.m in Sources */,
+				5BEACE2B1FB4740E0010E02F /* UIAlertAction+MNZCategory.m in Sources */,
 				943229501EDD9CF8007DB542 /* UIImage+MNZCategory.m in Sources */,
 				9456053D1EDD54F10094EF0F /* SAMKeychain.m in Sources */,
 				9432294A1EDD9CAA007DB542 /* UIDevice+MNZCategory.m in Sources */,
@@ -3639,6 +3654,7 @@
 				943229311EDD8696007DB542 /* Reachability.m in Sources */,
 				943229261EDD8495007DB542 /* MEGAAssetOperation.m in Sources */,
 				945605381EDD52C00094EF0F /* SVProgressAnimatedView.m in Sources */,
+				5BEACE201FB472CC0010E02F /* MEGANodeList+MNZCategory.m in Sources */,
 				945605531EDD7E0C0094EF0F /* CameraUploads.m in Sources */,
 				945605471EDD67520094EF0F /* MEGASdkManager.m in Sources */,
 				9432292C1EDD8542007DB542 /* CameraUploadsTableViewController.m in Sources */,
@@ -3647,6 +3663,7 @@
 				94624CFF1F50518900D52504 /* MEGABaseRequestDelegate.m in Sources */,
 				945605501EDD7DD10094EF0F /* MEGAActivityItemProvider.m in Sources */,
 				943229391EDD88CD007DB542 /* MWGridCell.m in Sources */,
+				5BEACE2D1FB4741A0010E02F /* UIScreen+MNZCategory.m in Sources */,
 				9456053B1EDD52C00094EF0F /* SVProgressHUD.m in Sources */,
 				945605511EDD7DF70094EF0F /* PhotoCollectionViewCell.m in Sources */,
 				944DF2BD1EF9379E007798DD /* MEGALogger.m in Sources */,
@@ -3660,6 +3677,7 @@
 				9456053A1EDD52C00094EF0F /* SVRadialGradientLayer.m in Sources */,
 				943229231EDD845E007DB542 /* MEGAStore.m in Sources */,
 				945605421EDD65960094EF0F /* LocalizationSystem.m in Sources */,
+				5B2E78CE1FA0C3450096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
 				9432293F1EDD8903007DB542 /* MWTapDetectingView.m in Sources */,
 				94624CFD1F50517700D52504 /* MEGAExportRequestDelegate.m in Sources */,
 				9432294C1EDD9CE9007DB542 /* NSFileManager+MNZCategory.m in Sources */,
@@ -3683,22 +3701,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				94892C921EFBEA3D00AEAC25 /* MEGASdkManager.m in Sources */,
+				5BEACE211FB473490010E02F /* (null) in Sources */,
 				94624CFE1F50518400D52504 /* MEGABaseRequestDelegate.m in Sources */,
 				943F8B201EF2705300AFD89F /* ShareViewController.m in Sources */,
 				9411355F1F0100F600D33428 /* MEGAAssetOperation.m in Sources */,
 				941135571F01004300D33428 /* GetLinkActivity.m in Sources */,
 				94892C951EFBF02D00AEAC25 /* SVIndefiniteAnimatedView.m in Sources */,
 				941135601F01011B00D33428 /* PhotoCollectionViewCell.m in Sources */,
+				5BEACE2A1FB474060010E02F /* MEGAUser+MNZCategory.m in Sources */,
 				94892C901EFBEA1F00AEAC25 /* SAMKeychain.m in Sources */,
 				941135561F01004000D33428 /* ShareFolderActivity.m in Sources */,
+				5BEACE241FB473940010E02F /* UIImageView+MNZCategory.m in Sources */,
 				941135511F00FFC700D33428 /* Helper.m in Sources */,
 				94892C911EFBEA2300AEAC25 /* SAMKeychainQuery.m in Sources */,
 				A81F2C6A1F334FB2008600A5 /* MEGAProcessAsset.m in Sources */,
 				943F8B281EF283D300AFD89F /* UIDevice+MNZCategory.m in Sources */,
+				5BEACE251FB473A20010E02F /* UIImage+MNZCategory.m in Sources */,
 				94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */,
 				94892CA01EFBF16A00AEAC25 /* UIColor+MNZCategory.m in Sources */,
 				9411355E1F0100DA00D33428 /* RemoveLinkActivity.m in Sources */,
 				943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */,
+				5BFA346F1FAC5850005BFC4E /* (null) in Sources */,
+				5BEACE2C1FB4740F0010E02F /* UIAlertAction+MNZCategory.m in Sources */,
 				941135541F01001A00D33428 /* MEGAActivityItemProvider.m in Sources */,
 				941135661F01541100D33428 /* NSFileManager+MNZCategory.m in Sources */,
 				941135521F00FFE400D33428 /* MEGAReachabilityManager.m in Sources */,
@@ -3707,10 +3731,14 @@
 				9411355A1F01006A00D33428 /* LTHPasscodeViewController.m in Sources */,
 				94892C941EFBF02A00AEAC25 /* SVProgressAnimatedView.m in Sources */,
 				9411355D1F0100CA00D33428 /* CameraUploadsTableViewController.m in Sources */,
+				5BEACE231FB473700010E02F /* NSMutableAttributedString+MNZCategory.m in Sources */,
 				941135641F01071600D33428 /* NSString+MNZCategory.m in Sources */,
+				5BEACE2E1FB4741B0010E02F /* UIScreen+MNZCategory.m in Sources */,
 				941135611F01013F00D33428 /* NodeTableViewCell.m in Sources */,
 				941135551F01002E00D33428 /* OpenInActivity.m in Sources */,
 				94892C981EFBF03800AEAC25 /* SVProgressHUD.m in Sources */,
+				5B2E78CD1FA0C3310096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
+				5BEACE1F1FB472C80010E02F /* MEGANodeList+MNZCategory.m in Sources */,
 				941135581F01005D00D33428 /* CameraUploads.m in Sources */,
 				941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */,
 				94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */,
@@ -3752,7 +3780,6 @@
 				410333D01B9992A200380FF3 /* cs */,
 				410333D71B9993A000380FF3 /* en */,
 				410333D91B99940C00380FF3 /* fi */,
-				410333DF1B99946D00380FF3 /* hu */,
 				410333E11B99948600380FF3 /* it */,
 				410333EB1B9994F400380FF3 /* nl */,
 				410333ED1B99950900380FF3 /* pt */,
@@ -3791,7 +3818,6 @@
 				41ADA9F51ADE8B8800641BB4 /* da */,
 				41ADA9F61ADE8B8800641BB4 /* de */,
 				41ADA9F71ADE8B8800641BB4 /* en */,
-				41ADA9F81ADE8B8800641BB4 /* es-ES */,
 				41ADA9F91ADE8B8800641BB4 /* es */,
 				41ADA9FA1ADE8B8800641BB4 /* fr */,
 				41ADA9FB1ADE8B8800641BB4 /* ja */,
@@ -3815,7 +3841,6 @@
 			children = (
 				E803CB651D5336F100F81A36 /* Base */,
 				E803CB681D53374A00F81A36 /* es */,
-				E803CB691D54AB6A00F81A36 /* es-ES */,
 				E8BB73651D77398A0067D89C /* de */,
 				E8BB73661D7739960067D89C /* fr */,
 				E8BB73671D7739980067D89C /* pt */,
@@ -3827,7 +3852,6 @@
 				E8BB736D1D7739C10067D89C /* fa */,
 				E8BB736E1D7739C70067D89C /* fi */,
 				E8BB736F1D7739CE0067D89C /* he */,
-				E8BB73701D7739DE0067D89C /* hu */,
 				E8BB73711D7739E70067D89C /* id */,
 				E8BB73721D7739E90067D89C /* it */,
 				E8BB73731D7739F50067D89C /* ko */,
@@ -3840,11 +3864,13 @@
 				E8BB737A1D773A690067D89C /* sr */,
 				E8BB737B1D773A710067D89C /* sv */,
 				E8BB737C1D773A750067D89C /* th */,
-				E8BB737D1D773A890067D89C /* fil */,
 				E8BB737E1D773A930067D89C /* tr */,
 				E8BB737F1D773AA20067D89C /* uk */,
 				E8BB73801D773AA80067D89C /* pt-BR */,
 				E8BB73811D773AC30067D89C /* vi */,
+				9458AEE11FB9D3B800BABD58 /* en */,
+				9458AEE21FB9D40500BABD58 /* ja */,
+				9458AEE51FB9D5C700BABD58 /* fil */,
 			);
 			name = InfoPlist.strings;
 			path = Languages;

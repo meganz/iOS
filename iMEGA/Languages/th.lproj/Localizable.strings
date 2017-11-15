@@ -52,7 +52,7 @@
 "loggedOutFromAnotherLocation"="คุณได้ออกจากระบบของอุปกรณ์นี้จากตำแหน่งที่ตั้งอื่น";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="คีย์ SSL ของเซิร์ฟเวอร์ไม่สามารถตรวจสอบได้ คุณอาจจะได้รับผลกระทบจากการลักลอบดักข้อมูล";
-/* Message shown when you're trying to open a file or folder from the mobile webclient and you want to open it on the  */
+/* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="กระบวนการนี้ใช้เวลานานกว่าที่คาดไว้ กรุณารอสักครู่...";
@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="ไฟล์ที่คุณกำลังพยายามเปิด มีขนาดใหญ่กว่าหน่วยความจำที่มีอยู่";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="ลิงก์ใช้งานไม่ได้";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="ซึ่งอาจเป็นเพราะสาเหตุต่อไปนี้:- ไฟล์ถูกลบเนื่องจากมีการละเมิด ToS/AUP- URL ไม่ถูกต้อง - ลิงก์ที่คุณพยายามเข้าถึงไม่มีอยู่- ไฟล์ถูกลบโดยผู้ใช้";
+/* */
+"fileLinkUnavailableText1"="ซึ่งอาจเป็นเพราะเหตุผลดังต่อไปนี้:";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="ไฟล์นี้ถูกลบออกไปแล้ว เนื่องจากละเมิด ToS/AUP";
+/* */
+"fileLinkUnavailableText3"="URL ไม่ถูกต้อง - ไม่พบลิงก์ที่คุณพยายามเข้าถึง";
+/* */
+"fileLinkUnavailableText4"="ไฟล์ถูกลบไปแล้วโดยผู้ใช้";
 /* Message shown when a download starts */
 "downloadStarted"="เริ่มต้นดาวน์โหลด";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="โฟลเดอร์ที่คุณกำลังพยายามดาวน์โหลด มีขนาดใหญ่กว่าหน่วยความจำที่มีอยู่";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="โฟลเดอร์ '%@' ไม่สามารถสร้างได้";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="ซึ่งอาจเป็นเพราะสาเหตุต่อไปนี้:- โฟลเดอร์ถูกลบเนื่องจากมีการละเมิด ToS/AUP- URL ไม่ถูกต้อง - ลิงก์ที่คุณพยายามเข้าถึงไม่มีอยู่- โฟลเดอร์ถูกลบโดยผู้ใช้";
+/* */
+"folderLinkUnavailableText1"="ซึ่งอาจเป็นเพราะเหตุผลดังต่อไปนี้:";
+/* */
+"folderLinkUnavailableText2"="ลิงก์โฟลเดอร์ถูกลบออกแล้ว เนื่องจากละเมิด ToS/AUP";
+/* */
+"folderLinkUnavailableText3"="URL ไม่ถูกต้อง - ไม่พบลิงก์ที่คุณพยายามเข้าถึง";
+/* */
+"folderLinkUnavailableText4"="ลิงก์โฟลเดอร์ถูกปิดใช้งานโดยผู้ใช้";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="ไม่มีการเชื่อมต่ออินเทอร์เน็ต";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="คำขอผู้ติดต่อ";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="เพิ่มผู้ติดต่อ";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="Received";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="ส่ง";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="คำขอ";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="ยอมรับคำขอแล้ว";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="ไม่มีคำขอที่รอดำเนินการ";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="การถ่ายโอนถูกพักชั่วคราว";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="ยังไม่มีการโอนย้าย";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="ยังไม่มีการดาวน์โหลด";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="ยังไม่มีการอัปโหลด";
 /* Title of the Cloud Drive section */
 "cloudDrive"="คลาวด์ไดรฟ์";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -238,6 +250,8 @@
 "newFolderMessage"="ชื่อสำหรับโฟลเดอร์ใหม่";
 /* Title button for the create folder alert.  */
 "createFolderButton"="สร้าง";
+/* message when trying to create a folder that already exists */
+"folderAlreadyExists"="โฟลเดอร์นี้มีการใช้งานแล้ว";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="นำเข้าจาก...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -299,7 +313,7 @@
 /* button caption text that the user clicks when he agrees */
 "agree"="เห็นด้วย";
 /* button caption text that the user clicks when he disagrees */
-"disagree"="Disagree";
+"disagree"="ไม่เห็นด้วย";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
 "linkWithoutKey"="ลิงก์ไม่รวมคีย์";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
@@ -784,8 +798,8 @@
 "eraseAllLocalDataLabel"="ลบข้อมูลบนเครื่อง";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="ออกจากระบบและลบข้อมูลภายในเครื่องหลังจากพยายามกรอกรหัสผ่านผิดเกิน 10 ครั้ง";
-/* Title header for the bottom menu with various menu sections that suit the category support. */
-"support"="การสนับสนุน";
+/* Menu item */
+"help"="ช่วยเหลือ";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="ศูนย์ความช่วยเหลือ";
 /* Title to rate the app */
@@ -814,6 +828,10 @@
 "downloadInUppercaseTransfers"="โอนย้ายการดาวน์โหลด";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="บัญชีของฉัน";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="Buy PRO";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="อัปเกรด";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="ดูและแก้ไขโปรไฟล์";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -823,11 +841,11 @@
 /* Title of the Used storage section */
 "usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get Rewards";
+"inviteFriendsAndGetRewards"="Invite friends and get bonuses";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="เชิญเพื่อนของคุณ";
-/* Subtitle shown under the label 'Invite your friends' explaining the reward you will get after each referral */
-"inviteFriendsAndGetForEachReferral"="Get 10GB of storage and 20GB of transfers for each referral";
+/* title of the introduction for the achievements screen */
+"inviteFriendsAndGetForEachReferral"="Get %1$s of storage and %2$s of transfers for each referral";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
 /*  */
