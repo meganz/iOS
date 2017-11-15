@@ -28,6 +28,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *statusCallLabel;
 
+@property (weak, nonatomic) IBOutlet UIImageView *remoteMicImageView;
+
 @property BOOL loudSpeakerEnabled;
 
 @property (nonatomic, strong) NSTimer *timer;
@@ -302,6 +304,8 @@
                     self.remoteAvatarImageView.hidden = NO;
                     [self.remoteAvatarImageView mnz_setImageForUserHandle:[self.chatRoom peerHandleAtIndex:0]];
                 }
+                
+                self.remoteMicImageView.hidden = call.hasRemoteAudio;
             }
             break;
         }
