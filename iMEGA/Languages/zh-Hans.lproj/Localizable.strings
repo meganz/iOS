@@ -53,7 +53,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="服务器SSL 金钥未能认证。您可能会收到第三方攻击。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="您尝试访问的内容于对此帐户开放。请您使用与移动网络客户端相同的帐户进行登录。";
+"theContentIsNotAvailableForThisAccount"="您尝试访问的内容并不对当前登入的帐户开放。请登入与浏览器中所登录的相同的帐户。";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="加载时间比预期的长，请耐心等待。";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -181,7 +181,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="新增联系人";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
-"received"="Received";
+"received"="已收到";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="已寄出";
 /* Success message shown when you acepted a contact request */
@@ -399,13 +399,13 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
 "moveFolderToRubbishBinMessage"="您确定要移动1 个文件夹至垃圾箱吗？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="您确定要移动％d 个文件夹至垃圾箱吗？";
+"moveFoldersToRubbishBinMessage"="您确定要移动%d 个文件夹至垃圾箱吗？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
 "moveFileFolderToRubbishBinMessage"="您确定要移动1 个文件和1 个文件夹至垃圾箱吗？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
 "moveFileFoldersToRubbishBinMessage"="您确定要移动1 个文件和%d 个文件夹至垃圾箱吗？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="您确定要移动1 个文件和1 个文件夹至垃圾箱吗？";
+"moveFilesFolderToRubbishBinMessage"="您确定要移动%d 个文件和1 个文件夹至垃圾箱吗？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="您确定要将[A] 文件和[B] 文件夹移至垃圾桶吗？";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -829,7 +829,7 @@
 /* Title of My Account section. There you can see your account details */
 "myAccount"="我的帐号";
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
-"buyPRO"="Buy PRO";
+"buyPRO"="购买 PRO";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="付费升级";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */

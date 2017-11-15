@@ -148,8 +148,14 @@
 "folderTooBigMessage"="پوشه ای که سعی می کنید دانلود کنید بزرگتر از حافظه ی موجود است";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="فولدر '%@'  نمی تواند کپی شود";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="می تواند به دلایل زیر باشد:- لینک پوشه به دلیل نقض قوانین ما حذف گردیده است.- ادرس اشتباه - لینکی که سعی می کنید دسترسی پیدا کنید اشتباه است.- لینک پوشه بوسیله ی خود کاربر حذف گردیده است.";
+/* */
+"folderLinkUnavailableText1"="احتمالاٌ دلایل زیر را دارد:";
+/* */
+"folderLinkUnavailableText2"="پیوند مربوط به پوشه ممکن است بدلیل تخطی از نوع ToS/AUP حذف شده باشد.";
+/* */
+"folderLinkUnavailableText3"="لینک مورد نظر اشتباه است";
+/* */
+"folderLinkUnavailableText4"="پیوند مربوط به پوشه توسط کاربر مربوطه غیر فعال شده است.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="هیچ اتصال اینترنتی وجود ندارد";
 /* Title shown when a folder doesn't have any files */
@@ -253,7 +259,7 @@
 /* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
 "fileAlreadyExistMessage"="این فایل قبلا\" با نام %@ آپلود شده است";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
-"filesAlreadyExistMessage"="d% فایل انتحاب شده قبلا در این فولدر آپلود شده است.";
+"filesAlreadyExistMessage"="%d فایل انتحاب شده قبلا در این فولدر آپلود شده است.";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="اپلود شروع شد";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
@@ -483,7 +489,7 @@
 /* Text shown to explain that you have shared a folder with one contact */
 "sharedWithOneContact"="Shared with 1 contact";
 /* Text shown to explain with how many contacts you have shared a folder */
-"sharedWithXContacts"="با d% نفر به اشتراک گذاشته شده";
+"sharedWithXContacts"="با %d نفر به اشتراک گذاشته شده";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="اجازه ها تغییر کردند";
 /* Message shown when a share has been left */
@@ -695,13 +701,13 @@
 /* Success message shown when 1 folder has been removed from MEGA */
 "folderRemovedToRubbishBinMessage"="1 فولدر از مگا حذف شد";
 /* Success message shown when {1+} folders have been removed from MEGA */
-"foldersRemovedToRubbishBinMessage"="d% فولدر از مگا حذف شد";
+"foldersRemovedToRubbishBinMessage"="%d فولدر از مگا حذف شد";
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
 "fileFolderRemovedToRubbishBinMessage"="١فايل و ١ فولدر از مگا حذف شدند";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="١فايل و d% فولدر از مگا حذف شدند";
+"fileFoldersRemovedToRubbishBinMessage"="١فايل و %d فولدر از مگا حذف شدند";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
-"filesFolderRemovedToRubbishBinMessage"="d% فايل و ١ فولدر از مگا حذف شدند";
+"filesFolderRemovedToRubbishBinMessage"="%d فايل و ١ فولدر از مگا حذف شدند";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A]فايل و [B] فولدر از مگا حذف شدند";
 /* Hint text to suggest that the user have to write his/her current password */

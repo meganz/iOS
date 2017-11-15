@@ -181,7 +181,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Dodaj kontakty";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
-"received"="Received";
+"received"="Otrzymane";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="Wysłane";
 /* Success message shown when you acepted a contact request */
@@ -503,7 +503,7 @@
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareMultipleContactsMessage"="Czy na pewno chcesz usunąć to udostępnienie? (Udostępnione z %d kontaktami)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Czy na pewno chcesz usunąć te udostępnienia? (Udostępnione z 1 kontaktami)";
+"removeMultipleSharesMultipleContactsMessage"="Czy na pewno chcesz usunąć te udostępnienia? (Udostępnione z %d kontaktami)";
 /* Message shown when a share have been removed */
 "shareRemoved"="Udostępnienie zostało usunięte";
 /* Message shown when some shares have been removed */
@@ -829,7 +829,7 @@
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Moje konto";
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
-"buyPRO"="Buy PRO";
+"buyPRO"="Kup PRO";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Wybierz PRO";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */

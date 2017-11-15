@@ -399,13 +399,13 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
 "moveFolderToRubbishBinMessage"="您確定要移動 1 個資料夾至垃圾箱嗎？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="您確定要移動 ％d 個資料夾至垃圾箱嗎？";
+"moveFoldersToRubbishBinMessage"="您確定要移動 %d 個資料夾至垃圾箱嗎？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
 "moveFileFolderToRubbishBinMessage"="您確定要移動 1 個檔案和 1 個資料夾至垃圾箱嗎？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
 "moveFileFoldersToRubbishBinMessage"="您確定要移動 1 個檔案和 %d 個資料夾至垃圾箱嗎？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="您確定要移動 1 個檔案和 1 個資料夾至垃圾箱嗎？";
+"moveFilesFolderToRubbishBinMessage"="您確定要移動 %d 個檔案和 1 個資料夾至垃圾箱嗎？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="您確定要將 [A] 檔案和 [B] 資料夾移至垃圾桶嗎？";
 /* Success message shown when you have moved 1 file to the rubbish bin */
