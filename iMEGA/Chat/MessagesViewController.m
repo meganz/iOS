@@ -22,6 +22,7 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAOpenMessageHeaderView.h"
 #import "MEGAProcessAsset.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGAStartUploadTransferDelegate.h"
 #import "NSString+MNZCategory.h"
 
@@ -56,6 +57,9 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
 @property (strong, nonatomic) NSMutableArray *nodesLoaded;
 
 @property (strong, nonatomic) UIProgressView *navigationBarProgressView;
+
+@property (strong, nonatomic) UIBarButtonItem * videoCallBarButtonItem;
+@property (strong, nonatomic) UIBarButtonItem * audioCallBarButtonItem;
 
 @property (nonatomic) long long totalBytesToUpload;
 @property (nonatomic) long long remainingBytesToUpload;
@@ -151,7 +155,11 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+    
     [self customNavigationBarLabel];
     [self rightBarButtonItems];
     [self updateUnreadLabel];
@@ -159,6 +167,9 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+
     if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound || self.presentingViewController) {
         [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
     }
@@ -245,10 +256,12 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
             self.navigationItem.rightBarButtonItem = addContactBarButtonItem;
         }
     } else {
-        UIBarButtonItem *videoCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"videoCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
-        UIBarButtonItem *audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audioCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
-        videoCallBarButtonItem.tag = 1;
-        self.navigationItem.rightBarButtonItems = @[videoCallBarButtonItem, audioCallBarButtonItem];
+        _videoCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"videoCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
+        _audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audioCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
+        self.videoCallBarButtonItem.tag = 1;
+        self.navigationItem.rightBarButtonItems = @[self.videoCallBarButtonItem, self.audioCallBarButtonItem];
+        self.videoCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
+        self.audioCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
     }
 }
 
@@ -662,6 +675,11 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
     [self.messages addObject:message];
     [self.collectionView reloadData];
     [self.nodesLoaded removeAllObjects];
+}
+
+- (void)internetConnectionChanged {
+    self.videoCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
+    self.audioCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
 }
 
 #pragma mark - Custom menu actions for cells
