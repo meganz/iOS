@@ -71,6 +71,8 @@
 	<string>NSPhotoLibraryAddUsageDescription</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>NSPhotoLibraryUsageDescription</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>NSFaceIDUsageDescription</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SF-UI-Display-Medium.otf</string>
