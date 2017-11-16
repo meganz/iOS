@@ -441,6 +441,7 @@
 - (MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath {
     return self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
 }
+
 #pragma mark - IBActions
 
 - (IBAction)browserSegmentedControl:(UISegmentedControl *)sender {
@@ -719,7 +720,7 @@
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
-        if (self.searchController.isActive ) {
+        if (self.searchController.isActive) {
             if (self.searchController.searchBar.text.length > 0) {
                 text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
             }
