@@ -102,14 +102,6 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [self.player stop];
-    
-    NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"hang_out" ofType:@"mp3"];
-    NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
-    self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
-    
-    [self.player play];
-    
     [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideoDelegate:self.remoteVideoImageView];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatLocalVideoDelegate:self.localVideoImageView];
@@ -117,8 +109,6 @@
     [[UIDevice currentDevice] setProximityMonitoringEnabled:NO];
     [[NSNotificationCenter defaultCenter] removeObserver:AVAudioSessionRouteChangeNotification];
     [[NSNotificationCenter defaultCenter] removeObserver:@"UIDeviceProximityStateDidChangeNotification"];
-    
-    [self.timer invalidate];
 }
 
 #pragma mark - Private
@@ -310,10 +300,30 @@
             }
             break;
         }
+            
         case MEGAChatCallStatusTerminating:
-        case MEGAChatCallStatusDestroyed:
-            [self dismissViewControllerAnimated:YES completion:nil];
             break;
+            
+        case MEGAChatCallStatusDestroyed: {
+            self.statusCallLabel.text = call.duration ? @"Call ended" : @"Call rejected";
+            self.incomingCallView.userInteractionEnabled = NO;
+            
+            [self.timer invalidate];
+            
+            [self.player stop];
+            
+            NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"hang_out" ofType:@"mp3"];
+            NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
+            self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
+            
+            [self.player play];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self dismissViewControllerAnimated:YES completion:nil];
+            });
+            
+            break;
+        }
             
         default:
             break;
