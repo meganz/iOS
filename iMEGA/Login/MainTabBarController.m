@@ -9,7 +9,7 @@ NSInteger const CHAT = 2;
 NSInteger const SHARED = 3;
 NSInteger const MYACCOUNT = 4;
 
-@interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate>
+@interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate, MEGAChatCallDelegate>
 
 @end
 
