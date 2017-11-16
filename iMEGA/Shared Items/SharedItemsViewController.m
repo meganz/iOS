@@ -15,7 +15,7 @@
 #import "DetailsNodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate> {
     
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
@@ -60,6 +60,9 @@
 @property (nonatomic, strong) NSMutableDictionary *outgoingNodesForEmailMutableDictionary;
 @property (nonatomic, strong) NSMutableDictionary *outgoingIndexPathsMutableDictionary;
 
+@property (nonatomic) NSMutableArray *searchNodesArray;
+@property (nonatomic) UISearchController *searchController;
+
 @end
 
 @implementation SharedItemsViewController
@@ -94,6 +97,21 @@
     _outgoingIndexPathsMutableDictionary = [[NSMutableDictionary alloc] init];
     
     [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];
+    
+    // Search controller:
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.searchBar.delegate = self;
+    self.searchController.searchBar.barTintColor = [UIColor colorWithWhite:235.0f / 255.0f alpha:1.0f];
+    self.searchController.searchBar.translucent = YES;
+    [self.searchController.searchBar sizeToFit];
+    UITextField *searchTextField = [self.searchController.searchBar valueForKey:@"_searchField"];
+    searchTextField.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
+    searchTextField.textColor = [UIColor mnz_gray999999];
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+    self.definesPresentationContext = YES;
+    [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -103,6 +121,10 @@
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    
+    if (self.searchController && !self.tableView.tableHeaderView) {
+        self.tableView.tableHeaderView = self.searchController.searchBar;
+    }
     
     [self reloadUI];
 }
@@ -306,6 +328,10 @@
     return indexPathsMutableArray;
 }
 
+- (MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath {
+    return self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : self.sharedItemsSegmentedControl.selectedSegmentIndex == 0 ? [self.incomingNodesMutableArray objectAtIndex:indexPath.row] : [self.outgoingNodesMutableArray objectAtIndex:indexPath.row];
+}
+
 #pragma mark - Utils
 
 - (void)selectSegment:(NSUInteger)index {
@@ -457,7 +483,7 @@
                 
                 CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
                 NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-                MEGANode *node = [_outgoingNodesMutableArray objectAtIndex:indexPath.row];
+                MEGANode *node = [self nodeAtIndexPath:indexPath];
                 [contactsVC setNode:node];
                 [self.navigationController pushViewController:contactsVC animated:YES];
                 break;
@@ -474,18 +500,28 @@
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     
-    MEGANode *node = nil;
+    MEGANode *node = [self nodeAtIndexPath:indexPath];
     MEGAShare *share = nil;
     switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
         case 0: { //Incoming
-            node = [_incomingNodesMutableArray objectAtIndex:indexPath.row];
-            share = [_incomingShareList shareAtIndex:indexPath.row];
+            for (NSUInteger i=0; i<[self.incomingShareList.size unsignedIntegerValue]; i++) {
+                MEGAShare *s = [self.incomingShareList shareAtIndex:i];
+                if (s.nodeHandle == node.handle) {
+                    share = s;
+                    break;
+                }
+            }
             break;
         }
             
         case 1: { //Outgoing
-            node = [_outgoingNodesMutableArray objectAtIndex:indexPath.row];
-            share = [_outgoingSharesMutableArray objectAtIndex:indexPath.row];
+            for (NSUInteger i=0; i<self.outgoingSharesMutableArray.count; i++) {
+                MEGAShare *s = self.outgoingSharesMutableArray[i];
+                if (s.nodeHandle == node.handle) {
+                    share = s;
+                    break;
+                }
+            }
             break;
         }
     }
@@ -621,15 +657,19 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
     if ([MEGAReachabilityManager isReachable]) {
-        switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
-            case 0: { //Incoming
-                numberOfRows = [self.incomingNodesMutableArray count];
-                break;
-            }
-                
-            case 1:  { //Outgoing
-                numberOfRows = [self.outgoingNodesMutableArray count];
-                break;
+        if (self.searchController.isActive) {
+            numberOfRows = self.searchNodesArray.count;
+        } else {
+            switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
+                case 0: { //Incoming
+                    numberOfRows = [self.incomingNodesMutableArray count];
+                    break;
+                }
+                    
+                case 1:  { //Outgoing
+                    numberOfRows = [self.outgoingNodesMutableArray count];
+                    break;
+                }
             }
         }
     }
@@ -656,14 +696,18 @@
     }
     
     MEGAShare *share = nil;
-    MEGANode *node = nil;
+    MEGANode *node = [self nodeAtIndexPath:indexPath];
     NSUInteger outSharesCount = 1;
     
     switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
         case 0: { //Incoming
-            
-            share = [_incomingShareList shareAtIndex:indexPath.row];
-            node = [_incomingNodesMutableArray objectAtIndex:indexPath.row];
+            for (NSUInteger i=0; i<[self.incomingShareList.size unsignedIntegerValue]; i++) {
+                MEGAShare *s = [self.incomingShareList shareAtIndex:i];
+                if (s.nodeHandle == node.handle) {
+                    share = s;
+                    break;
+                }
+            }
             
             NSString *userEmail = [share user];
             [self.incomingNodesForEmailMutableDictionary setObject:userEmail forKey:node.base64Handle];
@@ -688,9 +732,13 @@
         }
             
         case 1: { //Outgoing
-            
-            share = [_outgoingSharesMutableArray objectAtIndex:indexPath.row];
-            node = [_outgoingNodesMutableArray objectAtIndex:indexPath.row];
+            for (NSUInteger i=0; i<self.outgoingSharesMutableArray.count; i++) {
+                MEGAShare *s = self.outgoingSharesMutableArray[i];
+                if (s.nodeHandle == node.handle) {
+                    share = s;
+                    break;
+                }
+            }
             
             [_outgoingNodesForEmailMutableDictionary setObject:[share user] forKey:node.base64Handle];
             [_outgoingIndexPathsMutableDictionary setObject:indexPath forKey:node.base64Handle];
@@ -756,18 +804,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    MEGANode *node;
-    switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
-        case 0: { //Incoming
-            node = [_incomingNodesMutableArray objectAtIndex:indexPath.row];
-            break;
-        }
-            
-        case 1: { //Outgoing
-            node = [_outgoingNodesMutableArray objectAtIndex:indexPath.row];
-            break;
-        }
-    }
+    MEGANode *node = [self nodeAtIndexPath:indexPath];
     
     if (tableView.isEditing) {
         if (node != nil) {
@@ -816,22 +853,9 @@
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    MEGANode *node;
-
-    switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
-        case 0: { //Incoming
-            node = [_incomingNodesMutableArray objectAtIndex:indexPath.row];
-            break;
-        }
-            
-        case 1: { //Outgoing
-            node = [_outgoingNodesMutableArray objectAtIndex:indexPath.row];
-            break;
-        }
-    }
+    MEGANode *node = [self nodeAtIndexPath:indexPath];
     
     if (tableView.isEditing) {
-        
         NSMutableArray *tempNodesMutableArray = [_selectedNodesMutableArray copy];
         for (MEGANode *n in tempNodesMutableArray) {
             if ([n handle] == node.handle) {
@@ -859,16 +883,7 @@
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = nil;
-    switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
-        case 0: //Incoming
-            node = [self.incomingNodesMutableArray objectAtIndex:indexPath.row];
-            break;
-            
-        case 1: //Outgoing
-            node = [self.outgoingNodesMutableArray objectAtIndex:indexPath.row];
-            break;
-    }
+    MEGANode *node = [self nodeAtIndexPath:indexPath];
     
     self.selectedNodesMutableArray = [[NSMutableArray alloc] init];
     if (node != nil) {
@@ -897,6 +912,38 @@
     return titleForDeleteConfirmationButton;
 }
 
+#pragma mark - UISearchBarDelegate
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    self.searchNodesArray = nil;
+    self.sharedItemsSegmentedControl.enabled = YES;
+}
+
+#pragma mark - UISearchResultsUpdating
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    NSString *searchString = searchController.searchBar.text;
+    if (searchController.isActive) {
+        if ([searchString isEqualToString:@""]) {
+            if (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0) {
+                self.searchNodesArray = self.incomingNodesMutableArray;
+            } else {
+                self.searchNodesArray = self.outgoingNodesMutableArray;
+            }
+        } else {
+            NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", searchString];
+            if (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0) {
+                self.searchNodesArray = [[self.incomingNodesMutableArray filteredArrayUsingPredicate:resultPredicate] mutableCopy];
+            } else {
+                self.searchNodesArray = [[self.outgoingNodesMutableArray filteredArrayUsingPredicate:resultPredicate] mutableCopy];
+            }
+        }
+        self.sharedItemsSegmentedControl.enabled = NO;
+    }
+    
+    [self.tableView reloadData];
+}
+
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
@@ -905,15 +952,21 @@
     
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
-        switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
-            case 0: { //Incoming
-                text = AMLocalizedString(@"noIncomingSharedItemsEmptyState_text", nil);
-                break;
+        if (self.searchController.isActive) {
+            if (self.searchController.searchBar.text.length > 0) {
+                text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
             }
-                
-            case 1: { //Outgoing
-                text = AMLocalizedString(@"noOutgoingSharedItemsEmptyState_text", nil);
-                break;
+        } else {
+            switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
+                case 0: { //Incoming
+                    text = AMLocalizedString(@"noIncomingSharedItemsEmptyState_text", nil);
+                    break;
+                }
+                    
+                case 1: { //Outgoing
+                    text = AMLocalizedString(@"noOutgoingSharedItemsEmptyState_text", nil);
+                    break;
+                }
             }
         }
     } else {
@@ -928,15 +981,23 @@
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     UIImage *image;
     if ([MEGAReachabilityManager isReachable]) {
-        switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
-            case 0: { //Incoming
-                image = [UIImage imageNamed:@"emptySharedItemsIncoming"];
-                break;
+        if (self.searchController.isActive) {
+            if (self.searchController.searchBar.text.length > 0) {
+                return [UIImage imageNamed:@"emptySearch"];
+            } else {
+                return nil;
             }
-                
-            case 1: { //Outgoing
-                image = [UIImage imageNamed:@"emptySharedItemsOutgoing"];
-                break;
+        } else {
+            switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
+                case 0: { //Incoming
+                    image = [UIImage imageNamed:@"emptySharedItemsIncoming"];
+                    break;
+                }
+                    
+                case 1: { //Outgoing
+                    image = [UIImage imageNamed:@"emptySharedItemsOutgoing"];
+                    break;
+                }
             }
         }
     } else {
@@ -952,6 +1013,10 @@
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
     return [Helper spaceHeightForEmptyState];
+}
+
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:self.searchController.isActive];
 }
 
 #pragma mark - MEGAGlobalDelegate
