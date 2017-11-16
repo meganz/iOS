@@ -214,7 +214,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zo2-s1-xCp" userLabel="outgoingCallView">
-                                <rect key="frame" x="46" y="544" width="294" height="100"/>
+                                <rect key="frame" x="41" y="544" width="294" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4O9-0Y-ZM5">
@@ -254,9 +254,8 @@
                                 <rect key="frame" x="235" y="90" width="120" height="160"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8NQ-41-n6m">
-                                <rect key="frame" x="16" y="27" width="343" height="29"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8NQ-41-n6m">
+                                <rect key="frame" x="155" y="27" width="66" height="29"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="24"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -268,7 +267,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eGD-Fd-hut" userLabel="incomingCallView">
-                                <rect key="frame" x="46" y="544" width="294" height="100"/>
+                                <rect key="frame" x="41" y="544" width="294" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0tj-Yk-xcM" userLabel="hangCall">
@@ -312,9 +311,12 @@
                         <color key="backgroundColor" red="0.2196078431372549" green="0.16078431372549018" blue="0.16078431372549018" alpha="0.94999998807907104" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="agW-lq-qgD" firstAttribute="top" secondItem="ok2-tf-MST" secondAttribute="bottom" constant="43" id="KQK-o6-Sic"/>
+                            <constraint firstItem="2Au-MG-eIH" firstAttribute="top" secondItem="8NQ-41-n6m" secondAttribute="bottom" constant="9" id="TA6-RV-iPz"/>
                             <constraint firstItem="2Au-MG-eIH" firstAttribute="leading" secondItem="agW-lq-qgD" secondAttribute="trailing" constant="8" id="ah5-xF-Bkg"/>
                             <constraint firstItem="2Au-MG-eIH" firstAttribute="centerX" secondItem="2DR-0o-zFw" secondAttribute="centerX" id="ctu-E8-wMi"/>
+                            <constraint firstItem="8NQ-41-n6m" firstAttribute="centerX" secondItem="2DR-0o-zFw" secondAttribute="centerX" id="i7W-EF-0nV"/>
                             <constraint firstItem="2Au-MG-eIH" firstAttribute="top" secondItem="ok2-tf-MST" secondAttribute="bottom" constant="45" id="nhX-Gg-OLR"/>
+                            <constraint firstItem="8NQ-41-n6m" firstAttribute="top" secondItem="ok2-tf-MST" secondAttribute="bottom" constant="7" id="v6m-2T-l0W"/>
                         </constraints>
                     </view>
                     <connections>
