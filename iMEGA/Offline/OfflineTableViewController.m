@@ -96,8 +96,9 @@ static NSString *kisDirectory = @"kisDirectory";
     searchTextField.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
     searchTextField.textColor = [UIColor mnz_gray999999];
     self.tableView.tableHeaderView = self.searchController.searchBar;
-    self.definesPresentationContext = YES;
     [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
+    self.definesPresentationContext = NO;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
