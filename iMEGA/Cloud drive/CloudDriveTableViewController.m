@@ -157,6 +157,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self encourageToUpgrade];
+    [self requestReview];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -1008,6 +1009,29 @@
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
     
     [self presentViewController:navigationController animated:YES completion:nil];
+}
+
+- (void)requestReview {
+    if (@available(iOS 10.3, *)) {
+        static BOOL alreadyPresented = NO;
+        if (!alreadyPresented && [[MEGASdkManager sharedMEGASdk] mnz_accountDetails] && [[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
+            alreadyPresented = YES;
+            NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+            NSDate *rateUsDate = [sharedUserDefaults objectForKey:@"rateUsDate"];
+            if (rateUsDate) {
+                NSInteger months = [[NSCalendar currentCalendar] components:NSCalendarUnitMonth
+                                                                   fromDate:rateUsDate
+                                                                     toDate:[NSDate date]
+                                                                    options:NSCalendarWrapComponents].month;
+                if (months < 4) {
+                    return;
+                }
+            }
+            [SKStoreReviewController requestReview];
+            rateUsDate = [NSDate date];
+            [sharedUserDefaults setObject:rateUsDate forKey:@"rateUsDate"];
+        }
+    }
 }
 
 #pragma mark - IBActions
