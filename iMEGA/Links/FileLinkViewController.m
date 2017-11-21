@@ -74,6 +74,10 @@
             }
         }
     }
+    
+    if (@available(iOS 11.0, *)) {
+        self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
