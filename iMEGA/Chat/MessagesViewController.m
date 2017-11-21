@@ -112,10 +112,10 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
     
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:[UIApplication sharedApplication].userInterfaceLayoutDirection];
     
-    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor mnz_grayE3E3E3]];
-    self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor whiteColor]];
+    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor mnz_green00BFA5]];
+    self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor mnz_grayE2EAEA]];
 
-    self.collectionView.backgroundColor = [UIColor mnz_grayF5F5F5];
+    self.collectionView.backgroundColor = [UIColor whiteColor];
     
     [self customToolbarContentView];
     
@@ -287,7 +287,7 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
 }
 
 - (void)customiseCollectionViewLayout {
-    self.collectionView.collectionViewLayout.messageBubbleFont = [UIFont mnz_SFUIRegularWithSize:14.0f];
+    self.collectionView.collectionViewLayout.messageBubbleFont = [UIFont mnz_SFUIRegularWithSize:15.0f];
     self.collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(9.0f, 9.0f, 9.0f, 9.0f);
     
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
@@ -299,7 +299,7 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
 - (void)customToolbarContentView {
     self.inputToolbar.contentView.textView.placeHolderTextColor = [UIColor mnz_grayCCCCCC];
     self.inputToolbar.contentView.textView.placeHolder = AMLocalizedString(@"writeAMessage", @"Message box label which shows that user can type message text in this textview");
-    self.inputToolbar.contentView.textView.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
+    self.inputToolbar.contentView.textView.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
     self.inputToolbar.contentView.textView.textColor = [UIColor mnz_black333333];
     self.inputToolbar.contentView.textView.tintColor = [UIColor mnz_redD90007];
     
@@ -796,7 +796,7 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
     
     if (showDayMonthYear) {
         NSString *dateString = [[JSQMessagesTimestampFormatter sharedFormatter] relativeDateForDate:message.date];
-        NSAttributedString *dateAttributedString = [[NSAttributedString alloc] initWithString:dateString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:11.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+        NSAttributedString *dateAttributedString = [[NSAttributedString alloc] initWithString:dateString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
         return dateAttributedString;
     }
     
@@ -820,7 +820,7 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
 
     if (showMessageBubleTopLabel) {
         NSString *hour = [[JSQMessagesTimestampFormatter sharedFormatter] timeForDate:message.date];
-        NSAttributedString *hourAttributed = [[NSAttributedString alloc] initWithString:hour attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:9.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]}];
+        NSAttributedString *hourAttributed = [[NSAttributedString alloc] initWithString:hour attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]}];
         NSMutableAttributedString *topCellAttributed = [[NSMutableAttributedString alloc] init];
         
         
@@ -832,7 +832,7 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
                     fullname = @"";
                 }
             }
-            NSAttributedString *fullnameAttributed = [[NSAttributedString alloc] initWithString:[fullname stringByAppendingString:@" "] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:14.0f], NSForegroundColorAttributeName:[UIColor blackColor]}];
+            NSAttributedString *fullnameAttributed = [[NSAttributedString alloc] initWithString:[fullname stringByAppendingString:@" "] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:15.0f], NSForegroundColorAttributeName:[UIColor blackColor]}];
             [topCellAttributed appendAttributedString:fullnameAttributed];
             [topCellAttributed appendAttributedString:hourAttributed];
         } else {
@@ -863,34 +863,34 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
     
     if (message.isEdited) {
         [cell.accessoryButton setImage:nil forState:UIControlStateNormal];
-        [cell.accessoryButton setAttributedTitle:[[NSAttributedString alloc] initWithString:AMLocalizedString(@"edited", @"A log message in a chat to indicate that the message has been edited by the user.") attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:9.0f], NSForegroundColorAttributeName:[UIColor mnz_blue2BA6DE]}] forState:UIControlStateNormal];
+        [cell.accessoryButton setAttributedTitle:[[NSAttributedString alloc] initWithString:AMLocalizedString(@"edited", @"A log message in a chat to indicate that the message has been edited by the user.") attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_blue2BA6DE]}] forState:UIControlStateNormal];
         cell.accessoryButton.hidden = NO;
         
-        cell.textView.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
+        cell.textView.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
         if (message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
-            cell.textView.textColor = [UIColor mnz_black333333_02];
+            cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? [UIColor mnz_whiteFFFFFF_02] : [UIColor mnz_black333333_02];
             if (message.status == MEGAChatMessageStatusSendingManual) {
                 [cell.accessoryButton setImage:[UIImage imageNamed:@"sending_manual"] forState:UIControlStateNormal];
                 cell.accessoryButton.hidden = NO;
             }
         } else {
-            cell.textView.textColor = [UIColor mnz_black333333];
+            cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? [UIColor whiteColor] : [UIColor mnz_black333333];
         }
     } else if (message.isDeleted) {
-        cell.textView.font = [UIFont mnz_SFUIRegularItalicWithSize:14.0f];
+        cell.textView.font = [UIFont mnz_SFUIRegularItalicWithSize:15.0f];
         cell.textView.textColor = [UIColor mnz_blue2BA6DE];
     } else if (message.isManagementMessage) {
         cell.textView.attributedText = message.attributedText;
     } else if (!message.isMediaMessage) {
-        cell.textView.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
+        cell.textView.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
         if (message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
-            cell.textView.textColor = [UIColor mnz_black333333_02];
+            cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? [UIColor mnz_whiteFFFFFF_02] : [UIColor mnz_black333333_02];
             if (message.status == MEGAChatMessageStatusSendingManual) {
                 [cell.accessoryButton setImage:[UIImage imageNamed:@"sending_manual"] forState:UIControlStateNormal];
                 cell.accessoryButton.hidden = NO;
             }
         } else {
-            cell.textView.textColor = [UIColor mnz_black333333];
+            cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? [UIColor whiteColor] : [UIColor mnz_black333333];
         }
         cell.textView.linkTextAttributes = @{ NSForegroundColorAttributeName : cell.textView.textColor,
                                               NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
