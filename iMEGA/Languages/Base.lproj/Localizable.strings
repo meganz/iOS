@@ -288,10 +288,10 @@
 "getLink"="Get link";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Get links";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="Update link";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="Update links";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="Manage link";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="Manage links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Generating link...";
 /* Message shown when some links to files and/or folders are being generated */
