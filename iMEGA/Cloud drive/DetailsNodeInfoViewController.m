@@ -13,6 +13,7 @@
 
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
+#import "MEGAExportRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGAShareRequestDelegate.h"
 #import "NodeTableViewCell.h"
@@ -40,6 +41,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *linkedImageView;
 @property (weak, nonatomic) IBOutlet UILabel *foldersFilesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 
@@ -80,7 +82,7 @@
             if ((self.displayMode == DisplayModeSharedItem) && [self.node isOutShare]) {
                 actions = 3; //Copy, rename and remove sharing
             } else {
-                actions = 5; //Download, move, copy, rename and move to rubbish bin or remove
+                actions = 6; //Download, move, copy, rename, remove link and move to rubbish bin or remove
             }
             break;
             
@@ -123,7 +125,6 @@
 
 - (void)reloadUI {
     if ([self.node type] == MEGANodeTypeFile) {
-        
         if ([self.node hasThumbnail]) {
             NSString *thumbnailFilePath = [Helper pathForNode:self.node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
             BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
@@ -139,7 +140,6 @@
         [_foldersFilesLabel setHidden:YES];
         
     } else if ([self.node type] == MEGANodeTypeFolder) {
-        
         if (self.displayMode == DisplayModeSharedItem) {
             if ([self.node isInShare]) {
                 [self.thumbnailImageView setImage:[UIImage imageNamed:@"info_folder_incoming"]];
@@ -159,6 +159,7 @@
         [self.navigationItem setTitleView:navigationBarLabel];
     } else {
         [self setTitle:[self.node name]];
+        self.linkedImageView.hidden = self.node.isExported ? NO : YES;
     }
     
     self.infoLabel.text = [Helper sizeAndDateForNode:self.node api:[MEGASdkManager sharedMEGASdk]];
@@ -690,6 +691,11 @@
                             break;
                             
                         case 4:
+                            cell.thumbnailImageView.image = [UIImage imageNamed:@"removeLink"];
+                            cell.nameLabel.text = AMLocalizedString(@"removeLink", @"Message shown when there is an active link that can be removed or disabled");
+                            break;
+                            
+                        case 5:
                             [cell.thumbnailImageView setImage:[UIImage imageNamed:@"rubbishBin"]];
                             [cell.nameLabel setText:AMLocalizedString(@"moveToTheRubbishBin", @"Move to the rubbish bin")];
                             break;
@@ -744,12 +750,8 @@
         return 66.0;
     }
     
-    return 44.0;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ((self.displayMode == DisplayModeSharedItem) && (indexPath.section == 0)) {
-        return 66.0;
+    if (((indexPath.row == 4) && !self.node.isExported)) {
+        return 0.0;
     }
     
     return 44.0;
@@ -862,7 +864,17 @@
                 break;
             }
                 
-            case 4: //Move to the Rubbish Bin / Remove
+            case 4: { //Remove link
+                MEGAExportRequestDelegate *requestDelegate = [[MEGAExportRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                    NSString *status = AMLocalizedString(@"linkRemoved", @"Message shown when the links to a file or folder has been removed");
+                    [SVProgressHUD showSuccessWithStatus:status];
+                } multipleLinks:NO];
+                
+                [[MEGASdkManager sharedMEGASdk] disableExportNode:self.node delegate:requestDelegate];
+                break;
+            }
+                
+            case 5: //Move to the Rubbish Bin / Remove
                 [self delete];
                 break;
         }
