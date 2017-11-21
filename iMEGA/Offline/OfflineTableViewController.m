@@ -504,6 +504,11 @@ static NSString *kisDirectory = @"kisDirectory";
         }
     }
     
+    if (@available(iOS 11.0, *)) {
+        cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
+        cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
+    }
+    
     return cell;
 }
 
