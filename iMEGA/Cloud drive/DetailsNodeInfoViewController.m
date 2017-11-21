@@ -98,13 +98,19 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self reloadUI];
-    [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
+    
+    if (!self.presentedViewController) {
+        [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
+    }
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
+    
+    if (!self.presentedViewController) {
+        [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
+    }
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
