@@ -82,7 +82,7 @@
             if ((self.displayMode == DisplayModeSharedItem) && [self.node isOutShare]) {
                 actions = 3; //Copy, rename and remove sharing
             } else {
-                actions = 6; //Download, move, copy, rename, remove link and move to rubbish bin or remove
+                actions = 7; //Download, move, copy, rename, remove link, remove sharing and move to rubbish bin or remove
             }
             break;
             
@@ -265,7 +265,10 @@
     for (MEGAShare *share in outSharesOfNodeMutableArray) {
         [[MEGASdkManager sharedMEGASdk] shareNode:self.node withEmail:share.user level:MEGAShareTypeAccessUnkown delegate:shareRequestDelegate];
     }
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    if (self.displayMode == DisplayModeSharedItem) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)showWarningAfterActionOnNode:(MEGANode *)nodeUpdated {
@@ -696,6 +699,11 @@
                             break;
                             
                         case 5:
+                            cell.thumbnailImageView.image = [UIImage imageNamed:@"removeShare"];
+                            cell.nameLabel.text = AMLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share");
+                            break;
+                            
+                        case 6:
                             [cell.thumbnailImageView setImage:[UIImage imageNamed:@"rubbishBin"]];
                             [cell.nameLabel setText:AMLocalizedString(@"moveToTheRubbishBin", @"Move to the rubbish bin")];
                             break;
@@ -750,7 +758,7 @@
         return 66.0;
     }
     
-    if (((indexPath.row == 4) && !self.node.isExported)) {
+    if (((indexPath.row == 4) && !self.node.isExported) || ((indexPath.row == 5) && !self.node.isOutShare)) {
         return 0.0;
     }
     
@@ -873,8 +881,12 @@
                 [[MEGASdkManager sharedMEGASdk] disableExportNode:self.node delegate:requestDelegate];
                 break;
             }
+            
+            case 5: //Remove sharing
+                [self confirmRemoveSharing];
+                break;
                 
-            case 5: //Move to the Rubbish Bin / Remove
+            case 6: //Move to the Rubbish Bin / Remove
                 [self delete];
                 break;
         }
