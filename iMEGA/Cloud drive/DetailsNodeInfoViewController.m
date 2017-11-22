@@ -423,7 +423,7 @@
     switch (self.displayMode) {
         case DisplayModeCloudDrive:
         case DisplayModeRubbishBin: {
-            numberOfSections = 1;
+            numberOfSections = self.node.isOutShare ? 2 : 1;
             break;
         }
             
@@ -440,6 +440,13 @@
     NSInteger numberOfRows;
     switch (self.displayMode) {
         case DisplayModeCloudDrive:
+            if (section == 0) {
+                numberOfRows = self.node.isOutShare ? 1 : actions;
+            } else {
+                numberOfRows = actions;
+            }
+            break;
+            
         case DisplayModeRubbishBin: {
             numberOfRows = actions;
             break;
@@ -459,14 +466,20 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     NodeTableViewCell *cell;
     switch (self.displayMode) {
         case DisplayModeCloudDrive:
         case DisplayModeRubbishBin: {
-            cell = [self.tableView dequeueReusableCellWithIdentifier:@"NodeDetailsTableViewCellID" forIndexPath:indexPath];
-            if (cell == nil) {
-                cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NodeDetailsTableViewCellID"];
+            if (indexPath.section == 0 && self.node.isOutShare) {
+                cell = [self.tableView dequeueReusableCellWithIdentifier:@"SharedItemContactsTableViewCellID" forIndexPath:indexPath];
+                if (cell == nil) {
+                    cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SharedItemContactsTableViewCellID"];
+                }
+            } else {
+                cell = [self.tableView dequeueReusableCellWithIdentifier:@"NodeDetailsTableViewCellID" forIndexPath:indexPath];
+                if (cell == nil) {
+                    cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NodeDetailsTableViewCellID"];
+                }
             }
             break;
         }
@@ -496,7 +509,7 @@
         }
     }
     
-    if ((self.displayMode == DisplayModeSharedItem) && (indexPath.section == 0)) {
+    if (((self.displayMode == DisplayModeSharedItem) && (indexPath.section == 0)) || ((self.displayMode == DisplayModeCloudDrive) && (indexPath.section == 0) && self.node.isOutShare)) {
         if ([self.node isInShare]) {
             MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.email];
             [cell.thumbnailImageView mnz_setImageForUserHandle:user.handle];
@@ -697,7 +710,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ((self.displayMode == DisplayModeSharedItem) && (indexPath.section == 0)) {
+    if (((self.displayMode == DisplayModeSharedItem) && (indexPath.section == 0)) || ((self.displayMode == DisplayModeCloudDrive) && (indexPath.section == 0) && self.node.isOutShare)) {
         return 66.0;
     }
     
@@ -711,7 +724,6 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     if ((self.displayMode == DisplayModeSharedItem) && (accessType == MEGAShareTypeAccessOwner)) {
         if (indexPath.section == 0) {
             ContactsViewController *contactsVC =  [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
@@ -739,104 +751,112 @@
              return;
          }
         
-        switch (indexPath.row) {
-            case 0: { //Save for Offline
-                if ([[Helper downloadingNodes] objectForKey:self.node.base64Handle] != nil) {
-                    UIAlertController *cancelDownloadAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"downloading", @"Title show when a file is being downloaded") message:AMLocalizedString(@"cancelDownloadAlertViewText", @"Message shown when you tap on the cancel button of an active transfer") preferredStyle:UIAlertControllerStyleAlert];
-                    
-                    [cancelDownloadAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-                    
-                    [cancelDownloadAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                            NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:self.node.base64Handle];
-                            if (transferTag != nil) {
-                                [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:transferTag.integerValue];
+        if (self.node.isOutShare && (indexPath.section == 0) && (self.displayMode == DisplayModeCloudDrive)) {
+            ContactsViewController *contactsVC =  [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
+            contactsVC.contactsMode = ContactsModeFolderSharedWith;
+            contactsVC.node = self.node;
+            [self.navigationController pushViewController:contactsVC animated:YES];
+        } else {
+            switch (indexPath.row) {
+                case 0: { //Save for Offline
+                    if ([[Helper downloadingNodes] objectForKey:self.node.base64Handle] != nil) {
+                        UIAlertController *cancelDownloadAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"downloading", @"Title show when a file is being downloaded") message:AMLocalizedString(@"cancelDownloadAlertViewText", @"Message shown when you tap on the cancel button of an active transfer") preferredStyle:UIAlertControllerStyleAlert];
+                        
+                        [cancelDownloadAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+                        
+                        [cancelDownloadAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                                NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:self.node.base64Handle];
+                                if (transferTag != nil) {
+                                    [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:transferTag.integerValue];
+                                }
                             }
+                        }]];
+                        
+                        [self presentViewController:cancelDownloadAlertController animated:YES completion:nil];
+                    } else {
+                        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self.node api:[MEGASdkManager sharedMEGASdk]];
+                        if (!offlineNodeExist) {
+                            [self download];
                         }
-                    }]];
-                    
-                    [self presentViewController:cancelDownloadAlertController animated:YES completion:nil];
-                } else {
-                    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self.node api:[MEGASdkManager sharedMEGASdk]];
-                    if (!offlineNodeExist) {
-                        [self download];
                     }
+                    break;
                 }
-                break;
-            }
-                
-            case 1: {
-                switch (accessType) {
-                    case MEGAShareTypeAccessRead:
-                    case MEGAShareTypeAccessReadWrite:
-                    case MEGAShareTypeAccessFull:
-                        [self browserWithAction:BrowserActionCopy];
-                        break;
-                        
-                    case MEGAShareTypeAccessOwner:
-                        [self browserWithAction:BrowserActionMove];
-                        break;
-                        
-                    default:
-                        break;
+                    
+                case 1: { //Copy or Move
+                    switch (accessType) {
+                        case MEGAShareTypeAccessRead:
+                        case MEGAShareTypeAccessReadWrite:
+                        case MEGAShareTypeAccessFull:
+                            [self browserWithAction:BrowserActionCopy];
+                            break;
+                            
+                        case MEGAShareTypeAccessOwner:
+                            [self browserWithAction:BrowserActionMove];
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                    break;
                 }
-                break;
-            }
-                
-            case 2: {
-                switch (accessType) {
-                    case MEGAShareTypeAccessRead:
-                    case MEGAShareTypeAccessReadWrite:
-                        [self delete];
-                        break;
-                        
-                    case MEGAShareTypeAccessFull:
-                        [self rename];
-                        break;
-                        
-                    case MEGAShareTypeAccessOwner:
-                        [self browserWithAction:BrowserActionCopy];
-                        break;
-                        
-                    default:
-                        break;
+                    
+                case 2: { //Leave, rename or copy
+                    switch (accessType) {
+                        case MEGAShareTypeAccessRead:
+                        case MEGAShareTypeAccessReadWrite:
+                            [self delete];
+                            break;
+                            
+                        case MEGAShareTypeAccessFull:
+                            [self rename];
+                            break;
+                            
+                        case MEGAShareTypeAccessOwner:
+                            [self browserWithAction:BrowserActionCopy];
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                    break;
                 }
-                break;
-            }
-                
-            case 3: {
-                switch (accessType) {
-                    case MEGAShareTypeAccessFull:
-                        [self delete];
-                        break;
-                        
-                    case MEGAShareTypeAccessOwner:
-                        [self rename];
-                        break;
-                        
-                    default:
-                        break;
+                    
+                case 3: { //Leave, rename
+                    switch (accessType) {
+                        case MEGAShareTypeAccessFull:
+                            [self delete];
+                            break;
+                            
+                        case MEGAShareTypeAccessOwner:
+                            [self rename];
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                    break;
                 }
-                break;
-            }
-                
-            case 4: { //Remove link
-                MEGAExportRequestDelegate *requestDelegate = [[MEGAExportRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                    NSString *status = AMLocalizedString(@"linkRemoved", @"Message shown when the links to a file or folder has been removed");
-                    [SVProgressHUD showSuccessWithStatus:status];
-                } multipleLinks:NO];
-                
-                [[MEGASdkManager sharedMEGASdk] disableExportNode:self.node delegate:requestDelegate];
-                break;
+                    
+                case 4: { //Remove link
+                    MEGAExportRequestDelegate *requestDelegate = [[MEGAExportRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                        NSString *status = AMLocalizedString(@"linkRemoved", @"Message shown when the links to a file or folder has been removed");
+                        [SVProgressHUD showSuccessWithStatus:status];
+                    } multipleLinks:NO];
+                    
+                    [[MEGASdkManager sharedMEGASdk] disableExportNode:self.node delegate:requestDelegate];
+                    break;
+                }
+                    
+                case 5: //Remove sharing
+                    [self confirmRemoveSharing];
+                    break;
+                    
+                case 6: //Move to the Rubbish Bin / Remove
+                    [self delete];
+                    break;
             }
             
-            case 5: //Remove sharing
-                [self confirmRemoveSharing];
-                break;
-                
-            case 6: //Move to the Rubbish Bin / Remove
-                [self delete];
-                break;
         }
     }
     
