@@ -23,9 +23,11 @@
 #import "MEGAProcessAsset.h"
 #import "MEGAStartUploadTransferDelegate.h"
 #import "NSString+MNZCategory.h"
+#import "UIImage+MNZCategory.h"
 
 const CGFloat kGroupChatCellLabelHeight = 35.0f;
 const CGFloat k1on1CellLabelHeight = 28.0f;
+const CGFloat kAvatarImageDiameter = 24.0f;
 
 @interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
 
@@ -60,6 +62,9 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
 @property (nonatomic) long long totalBytesToUpload;
 @property (nonatomic) long long remainingBytesToUpload;
 @property (nonatomic) float totalProgressOfTransfersCompleted;
+
+@property (nonatomic) JSQMessagesAvatarImageFactory *avatarImageFactory;
+@property (nonatomic) NSMutableDictionary *avatarImages;
 
 @end
 
@@ -147,6 +152,10 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
     self.navigationController.interactivePopGestureRecognizer.delegate = nil;
     
     _nodesLoaded = [[NSMutableArray alloc] init];
+    
+    // Avatar images
+    self.avatarImageFactory = [[JSQMessagesAvatarImageFactory alloc] initWithDiameter:kAvatarImageDiameter];
+    self.avatarImages = [[NSMutableDictionary alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -290,8 +299,8 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
     self.collectionView.collectionViewLayout.messageBubbleFont = [UIFont mnz_SFUIRegularWithSize:15.0f];
     self.collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(9.0f, 9.0f, 9.0f, 9.0f);
     
-    self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
-    self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
+    self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeMake(kAvatarImageDiameter, kAvatarImageDiameter);
+    self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeMake(kAvatarImageDiameter, kAvatarImageDiameter);
     
     self.collectionView.collectionViewLayout.minimumLineSpacing = 2.0f;
 }
@@ -780,7 +789,20 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
 }
 
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return nil;
+    MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
+    if (indexPath.item < self.messages.count-1) {
+        MEGAChatMessage *nextMessage = [self.messages objectAtIndex:indexPath.item+1];
+        if (nextMessage.userHandle == message.userHandle) {
+            return nil;
+        }
+    }
+    NSNumber *avatarKey = [NSNumber numberWithUnsignedLong:message.userHandle];
+    UIImage *avatar = [self.avatarImages objectForKey:avatarKey];
+    if (!avatar) {
+        avatar = [UIImage mnz_imageForUserHandle:message.userHandle size:CGSizeMake(kAvatarImageDiameter, kAvatarImageDiameter) delegate:nil];
+        [self.avatarImages setObject:avatar forKey:avatarKey];
+    }
+    return [self.avatarImageFactory avatarImageWithImage:avatar];
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
