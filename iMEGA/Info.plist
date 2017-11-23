@@ -51,7 +51,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>76</string>
+	<string>79</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -65,14 +65,14 @@
 	<string>NSCameraUsageDescription</string>
 	<key>NSContactsUsageDescription</key>
 	<string>NSContactsUsageDescription</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>NSFaceIDUsageDescription</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>NSMicrophoneUsageDescription</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>NSPhotoLibraryAddUsageDescription</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>NSPhotoLibraryUsageDescription</string>
-	<key>NSFaceIDUsageDescription</key>
-	<string>NSFaceIDUsageDescription</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SF-UI-Display-Medium.otf</string>
