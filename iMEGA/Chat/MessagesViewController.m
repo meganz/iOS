@@ -829,18 +829,18 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     
-    BOOL showMessageBubleTopLabel = NO;
+    BOOL showMessageBubbleTopLabel = NO;
     if (indexPath.item == 0) {
-        showMessageBubleTopLabel = YES;
+        showMessageBubbleTopLabel = YES;
     } else {
         if (message.isManagementMessage) {
-            showMessageBubleTopLabel = YES;
+            showMessageBubbleTopLabel = YES;
         } else {
-            showMessageBubleTopLabel = [self showHourForMessage:message withIndexPath:indexPath];
+            showMessageBubbleTopLabel = [self showHourForMessage:message withIndexPath:indexPath];
         }
     }
 
-    if (showMessageBubleTopLabel) {
+    if (showMessageBubbleTopLabel) {
         NSString *hour = [[JSQMessagesTimestampFormatter sharedFormatter] timeForDate:message.date];
         NSAttributedString *hourAttributed = [[NSAttributedString alloc] initWithString:hour attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]}];
         NSMutableAttributedString *topCellAttributed = [[NSMutableAttributedString alloc] init];
