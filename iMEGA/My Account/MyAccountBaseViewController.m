@@ -32,6 +32,10 @@
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(avatarTapped:)];
     self.avatarImageView.gestureRecognizers = @[tapGestureRecognizer];
     self.avatarImageView.userInteractionEnabled = YES;
+    
+    if (@available(iOS 11.0, *)) {
+        self.avatarImageView.accessibilityIgnoresInvertColors = YES;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {

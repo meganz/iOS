@@ -489,6 +489,10 @@
         [cell.thumbnailImageView.layer setOpacity:1.0];
     }
     
+    if (@available(iOS 11.0, *)) {
+        cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
+    }
+    
     return cell;
 }
 

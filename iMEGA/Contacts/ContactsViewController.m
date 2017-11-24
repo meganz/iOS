@@ -755,6 +755,10 @@
     
     cell.separatorInset = (self.tableView.isEditing) ? UIEdgeInsetsMake(0.0, 96.0, 0.0, 0.0) : UIEdgeInsetsMake(0.0, 58.0, 0.0, 0.0);
     
+    if (@available(iOS 11.0, *)) {
+        cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
+    }
+    
     return cell;
 }
 
