@@ -755,6 +755,10 @@
     
     cell.separatorInset = (self.tableView.isEditing) ? UIEdgeInsetsMake(0.0, 96.0, 0.0, 0.0) : UIEdgeInsetsMake(0.0, 58.0, 0.0, 0.0);
     
+    if (@available(iOS 11.0, *)) {
+        cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
+    }
+    
     return cell;
 }
 
@@ -1049,6 +1053,22 @@
 }
 
 #pragma mark - MEGAGlobalDelegate
+
+- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
+    if (self.contactsMode != ContactsModeFolderSharedWith) {
+        return;
+    }
+    
+    NSUInteger size = nodeList.size.unsignedIntegerValue;
+    for (NSUInteger i = 0; i < size; i++) {
+        MEGANode *nodeUpdated = [nodeList nodeAtIndex:i];
+        if (nodeUpdated.handle == self.node.handle) {
+            self.node = nodeUpdated;
+            [self reloadUI];
+            break;
+        }
+    }
+}
 
 - (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
     BOOL userAdded = NO;

@@ -33,6 +33,7 @@
 #import "CloudDriveTableViewController.h"
 #import "ConfirmAccountViewController.h"
 #import "ContactRequestsViewController.h"
+#import "ContactsViewController.h"
 #import "CreateAccountViewController.h"
 #import "FileLinkViewController.h"
 #import "FolderLinkViewController.h"
@@ -101,6 +102,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @property (nonatomic) MEGAIndexer *indexer;
 @property (nonatomic) NSString *nodeToPresentBase64Handle;
 
+@property (nonatomic) NSUInteger megatype; //1 share folder, 2 new message, 3 contact request
+
 @end
 
 @implementation AppDelegate
@@ -117,9 +120,15 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [self migrateLocalCachesLocation];
     
+    if ([launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"]) {
+        _megatype = [[[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"megatype"] unsignedIntegerValue];
+    }
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
         [[MEGALogger sharedLogger] startLogging];
     }
+    
+    MEGALogDebug(@"The launch process is almost done and the app is almost ready to run. Launch options: %@", launchOptions);
     
     _signalActivityRequired = NO;
     
@@ -139,6 +148,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    
+    [[MEGASdkManager sharedMEGASdk] httpServerSetMaxBufferSize:[UIDevice currentDevice].maxBufferSize];
     
     [[LTHPasscodeViewController sharedUser] setDelegate:self];
     
@@ -340,7 +351,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
-    
+    [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
+
     BOOL pendingTasks = [[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0 || [[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0 || [[[CameraUploads syncManager] assetsOperationQueue] operationCount] > 0;
     if (pendingTasks) {
         [self startBackgroundTask];
@@ -468,6 +480,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if (@available(iOS 9.0, *)) {
         MEGALogWarning(@"Memory warning, stopping spotlight indexing");
         [self.indexer stopIndexing];
+    }
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    if (application.applicationState == UIApplicationStateInactive) {
+        _megatype = [[userInfo objectForKey:@"megatype"] unsignedIntegerValue];
+        [self openTabBasedOnNotificationMegatype];
     }
 }
 
@@ -1153,6 +1172,35 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[CameraUploads syncManager] setTabBarController:_mainTBC];
     if (isAccountFirstLogin) {
         [self registerForNotifications];
+    }
+    
+    [self openTabBasedOnNotificationMegatype];
+}
+
+- (void)openTabBasedOnNotificationMegatype {
+    NSUInteger tabTag = 0;
+    switch (self.megatype) {
+        case 1:
+            tabTag = 3;
+            break;
+            
+        case 2:
+            tabTag = 2;
+            break;
+            
+        case 3:
+            tabTag = 4;
+            break;
+            
+        default:
+            return;
+    }
+    NSUInteger tabPosition = [self.mainTBC tabPositionForTag:tabTag];
+    self.mainTBC.selectedIndex = tabPosition;
+    if (self.megatype == 3) {
+        MEGANavigationController *navigationController = [[self.mainTBC viewControllers] objectAtIndex:tabTag];
+        ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
+        [navigationController pushViewController:contactsVC animated:NO];
     }
 }
 
