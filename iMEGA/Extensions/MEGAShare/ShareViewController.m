@@ -43,6 +43,7 @@
 
 @property (nonatomic) BOOL fetchNodesDone;
 @property (nonatomic) BOOL passcodePresented;
+@property (nonatomic) BOOL passcodeToBePresented;
 
 @end
 
@@ -65,7 +66,8 @@
     
     self.fetchNodesDone = NO;
     self.passcodePresented = NO;
-    
+    self.passcodeToBePresented = NO;
+
     [MEGASdkManager setAppKey:kAppKey];
     NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     [MEGASdkManager setUserAgent:userAgent];
@@ -96,13 +98,13 @@
         [[LTHPasscodeViewController sharedUser] setDelegate:self];
         if ([MEGAReachabilityManager isReachable]) {
             if ([LTHPasscodeViewController doesPasscodeExist]) {
-                [self presentPasscode];
+                self.passcodeToBePresented = YES;
             } else {
                 [self loginToMEGA];
             }
         } else {
             if ([LTHPasscodeViewController doesPasscodeExist]) {
-                [self presentPasscode];
+                self.passcodeToBePresented = YES;
             } else {
                 [self presentDocumentPicker];
             }
@@ -115,6 +117,13 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self fakeModalPresentation];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (self.passcodeToBePresented) {
+        [self presentPasscode];
+    }
 }
 
 - (void)willResignActive {
@@ -303,6 +312,7 @@
         [passcodeVC.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
         [self presentViewController:passcodeVC animated:NO completion:nil];
         self.passcodePresented = YES;
+        self.passcodeToBePresented = NO;
     }
 }
 

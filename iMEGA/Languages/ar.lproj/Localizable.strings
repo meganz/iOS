@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="الملف الذي تحاول فتحه أكبر من الذاكرة المتوفرة.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="رابط غير متوفر";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="قد يرجع ذلك إلى الأسباب التالية:- تمت إزالة الملف بسبب انتهاك ToS/AUP.- رابط غير موجود - الرابط الذي تحاول الدخول إليه غير موجود.- تم حذف الملف من قبل المستخدم.";
+/* */
+"fileLinkUnavailableText1"="هذا يمكن أن يكون راجعاً إلى أسباب التالية:";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="تمت إزالة الملف بسبب وجود انتهاك شروط الخدمة / سياسة الاستخدام المقبول.";
+/* */
+"fileLinkUnavailableText3"="عنوان URL غير صالح - الرابط الذي تحاول الوصول إليه غير موجود";
+/* */
+"fileLinkUnavailableText4"="تم حذف الملف من قبل المستخدم.";
 /* Message shown when a download starts */
 "downloadStarted"="بدء التحميل";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="المجلد الذي تحاول تحميله أكبر من الذاكرة المتوفرة.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="المجلد '%@' لايمكن إنشاؤه";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="قد يرجع ذلك إلى الأسباب التالية:- تمت إزالة رابط المجلد بسبب انتهاك ToS/AUP.- رابط غير موجود - الرابط الذي تحاول الدخول إليه غير موجود.- تم حذف رابط المجلد من قبل المستخدم.";
+/* */
+"folderLinkUnavailableText1"="هذا يمكن أن يكون راجعاً إلى أسباب التالية:";
+/* */
+"folderLinkUnavailableText2"="تمت إزالة الرابط المجلد بسبب  شروط الخدمة / انتهاك سياسة الاستخدام المقبول.";
+/* */
+"folderLinkUnavailableText3"="عنوان URL غير صالح - الرابط الذي تحاول الوصول إليه غير موجود";
+/* */
+"folderLinkUnavailableText4"="لقد تم تعطيل رابط المجلد من قبل المستخدم.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="الاتصال غير متوفر";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="طلبات جهة الاتصال";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="أضف جهات اتصال ";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="Received";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="تم الارسال";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="الطلبات";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="تم قبول الطلب";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="لاتوجد طلبات بالانتظار";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="إيقاف مؤقت لعمليات النقل";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="لا يوجد عمليات نقل";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="لا يوجد عمليات تحميل";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="لا يوجد ملفات مرفوعه";
 /* Title of the Cloud Drive section */
 "cloudDrive"="سحابة التخزين";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -343,11 +355,11 @@
 /* Success message shown when you have moved 1 file */
 "moveFileMessage"="تم نقل ملف واحد";
 /* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="% الملفات المنقولة";
+"moveFilesMessage"="%d الملفات المنقولة";
 /* Success message shown when you have moved 1 folder */
 "moveFolderMessage"="تم نقل مجلد واحد";
 /* Success message shown when you have moved {1+} folders */
-"moveFoldersMessage"="% مجلدات منقولة";
+"moveFoldersMessage"="%d مجلدات منقولة";
 /* Success message shown when you have moved 1 file and 1 folder */
 "moveFileFolderMessage"="1 ملفات و 1 مجلدات تم نقلها";
 /* Success message shown when you have moved 1 file and {1+} folders */
@@ -361,7 +373,7 @@
 /* Success message shown when you have copied 1 file */
 "copyFileMessage"="تم نسخ ملف واحد";
 /* Success message shown when you have copied {1+} files */
-"copyFilesMessage"="% الملفات المنسوخة";
+"copyFilesMessage"="%d الملفات المنسوخة";
 /* Success message shown when you have copied 1 folder */
 "copyFolderMessage"="تم نسخ مجلد واحد";
 /* Success message shown when you have copied {1+} folders */
@@ -816,6 +828,10 @@
 "downloadInUppercaseTransfers"="تحميل عمليات النقل";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="حسابي";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="Buy PRO";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="الترقية";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="عرض وتعديل الملف الشخصي";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -1174,8 +1190,6 @@
 "autorenewableDescription"="يتم تجديد الاشتراكات تلقائيا لفترات اشتراك المتتالية لنفس المدة وبنفس سعر الباقة الأولى التي تم اختيارها. يمكنك إيقاف التجديد التلقائي من اشتراكك MEGA برو في موعد أقصاه 24 ساعة قبل دفع اشتراكك المقبل ومن خلال صفحة إعدادات الحساب الخاصة بك في اي تيونز. لإدارة الاشتراكات الخاصة بك، ببساطة انقر على أيقونة المتجر على الهاتف الخاص بك، قم بتسجيل الدخول باستخدام معرف أبل الخاص بك في أسفل الصفحة (إذا لم تكن قد فعلت ذلك) ثم انقر فوق عرض ID. سوف يتم نقلك إلى صفحة الحساب الخاص بك حيث يمكنك النزل لأسفل الى إدارة التطبيقات والاشتراكات. من هناك، يمكنك تحديد اشتراكك MEGA برو وعرض تاريخ التجديد المقرر، واختيار حزمة الاشتراك مختلفة أو تعطيل أو تشغيل التجديد التلقائي لاشتراكك.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="افتح MEGA و سجل دخولك للاستمرار";
-/* Text shown when you try to use Files app while having a passcode */
-"disablePasscodeToUseFiles"="Files cannot be used if you have a passcode in MEGA. If you want to use Files, please open MEGA and disable it.";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="إلغاء";
 /* Inform user that there were unsupported assets in the share extension */

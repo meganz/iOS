@@ -3,6 +3,9 @@
 
 @interface MyAccountBaseViewController : UIViewController <MEGARequestDelegate>
 
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+
 - (void)presentEditProfileAlertController;
+- (void)setUserAvatar;
 
 @end
