@@ -237,6 +237,7 @@
 		5B0C55AE1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0C55AD1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m */; };
 		5B134B8F1F86260B000E367E /* HelpModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B134B8E1F86260A000E367E /* HelpModalViewController.xib */; };
 		5B17C9B31F73DE310093F162 /* InviteFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B17C9B21F73DE310093F162 /* InviteFriendsViewController.m */; };
+		5B19713D1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B19713C1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m */; };
 		5B20F4A21EFA9629007E0A34 /* ChatAttachedNodesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20F4A11EFA9629007E0A34 /* ChatAttachedNodesViewController.m */; };
 		5B22F97C1F8374C500D2B156 /* VENToken.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B22F9771F8374C400D2B156 /* VENToken.xib */; };
 		5B22F97D1F8374C500D2B156 /* VENToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B22F9781F8374C400D2B156 /* VENToken.m */; };
@@ -264,6 +265,10 @@
 		5B8281491E7BE8300079C1BB /* SelectableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8281471E7BE8300079C1BB /* SelectableTableViewCell.m */; };
 		5B82814A1E7BE8300079C1BB /* SelectableTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B8281481E7BE8300079C1BB /* SelectableTableViewCell.xib */; };
 		5B8499091F13DBCE0034A36E /* MEGAAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8499081F13DBCE0034A36E /* MEGAAssetsPickerController.m */; };
+		5BA81EA11FC2FF0100C8146C /* RemoveSharingActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B19713C1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m */; };
+		5BA81EA21FC2FF0600C8146C /* RemoveSharingActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B19713C1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m */; };
+		5BA81EA31FC30C8F00C8146C /* MEGAShareRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B4CA11EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m */; };
+		5BA81EA41FC30C9A00C8146C /* MEGAShareRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B4CA11EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m */; };
 		5BADE39A1F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
 		5BB50E091F20E840000CA24D /* MEGACreateFolderRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB50E081F20E840000CA24D /* MEGACreateFolderRequestDelegate.m */; };
 		5BD4A0211F838606000E24E6 /* ViewFrameAccessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4A01F1F838606000E24E6 /* ViewFrameAccessor.m */; };
@@ -1079,6 +1084,8 @@
 		5B134B8E1F86260A000E367E /* HelpModalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpModalViewController.xib; sourceTree = "<group>"; };
 		5B17C9B11F73DE310093F162 /* InviteFriendsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InviteFriendsViewController.h; sourceTree = "<group>"; };
 		5B17C9B21F73DE310093F162 /* InviteFriendsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InviteFriendsViewController.m; sourceTree = "<group>"; };
+		5B19713B1F2F1D1C00DE1BB2 /* RemoveSharingActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoveSharingActivity.h; sourceTree = "<group>"; };
+		5B19713C1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveSharingActivity.m; sourceTree = "<group>"; };
 		5B20F4A01EFA9629007E0A34 /* ChatAttachedNodesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatAttachedNodesViewController.h; path = Chat/ChatAttachedNodesViewController.h; sourceTree = "<group>"; };
 		5B20F4A11EFA9629007E0A34 /* ChatAttachedNodesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatAttachedNodesViewController.m; path = Chat/ChatAttachedNodesViewController.m; sourceTree = "<group>"; };
 		5B22F9751F8374C400D2B156 /* VENTokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENTokenField.h; path = iMEGA/Vendor/VENTokenField/VENTokenField/VENTokenField.h; sourceTree = SOURCE_ROOT; };
@@ -2872,6 +2879,8 @@
 				E8F791791BC5754A00C58676 /* OpenInActivity.m */,
 				E8F7917A1BC5754A00C58676 /* RemoveLinkActivity.h */,
 				E8F7917B1BC5754A00C58676 /* RemoveLinkActivity.m */,
+				5B19713B1F2F1D1C00DE1BB2 /* RemoveSharingActivity.h */,
+				5B19713C1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m */,
 				E8F7917C1BC5754A00C58676 /* ShareFolderActivity.h */,
 				E8F7917D1BC5754A00C58676 /* ShareFolderActivity.m */,
 				411504921CEB183600BF38E3 /* SaveToCameraRollActivity.h */,
@@ -3482,6 +3491,7 @@
 				4152268C1A692ECC00EC7BB6 /* CloudDriveTableViewController.m in Sources */,
 				41D21E631D01AEC3002E6296 /* CTAssetsGridSelectedView.m in Sources */,
 				A89E77441EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m in Sources */,
+				5B19713D1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m in Sources */,
 				417279401DB663FA001AC818 /* JSQMessagesVideoThumbnailFactory.m in Sources */,
 				4152269A1A692ECC00EC7BB6 /* Helper.m in Sources */,
 				5B5B4FFF1E681BAC00DBEB3B /* UIFont+MNZCategory.m in Sources */,
@@ -3522,6 +3532,7 @@
 				9432293D1EDD88F5007DB542 /* MWZoomingScrollView.m in Sources */,
 				945605481EDD6F9B0094EF0F /* MEGAReachabilityManager.m in Sources */,
 				943229341EDD8823007DB542 /* MEGANavigationController.m in Sources */,
+				5BA81EA41FC30C9A00C8146C /* MEGAShareRequestDelegate.m in Sources */,
 				5BEACE2B1FB4740E0010E02F /* UIAlertAction+MNZCategory.m in Sources */,
 				943229501EDD9CF8007DB542 /* UIImage+MNZCategory.m in Sources */,
 				9456053D1EDD54F10094EF0F /* SAMKeychain.m in Sources */,
@@ -3554,6 +3565,7 @@
 				945605401EDD65400094EF0F /* BrowserViewController.m in Sources */,
 				9456053E1EDD54F10094EF0F /* SAMKeychainQuery.m in Sources */,
 				9456053A1EDD52C00094EF0F /* SVRadialGradientLayer.m in Sources */,
+				5BA81EA21FC2FF0600C8146C /* RemoveSharingActivity.m in Sources */,
 				943229231EDD845E007DB542 /* MEGAStore.m in Sources */,
 				945605421EDD65960094EF0F /* LocalizationSystem.m in Sources */,
 				5B2E78CE1FA0C3450096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
@@ -3599,6 +3611,7 @@
 				94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */,
 				94892CA01EFBF16A00AEAC25 /* UIColor+MNZCategory.m in Sources */,
 				9411355E1F0100DA00D33428 /* RemoveLinkActivity.m in Sources */,
+				5BA81EA31FC30C8F00C8146C /* MEGAShareRequestDelegate.m in Sources */,
 				943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */,
 				5BFA346F1FAC5850005BFC4E /* (null) in Sources */,
 				5BEACE2C1FB4740F0010E02F /* UIAlertAction+MNZCategory.m in Sources */,
@@ -3621,6 +3634,7 @@
 				941135581F01005D00D33428 /* CameraUploads.m in Sources */,
 				941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */,
 				94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */,
+				5BA81EA11FC2FF0100C8146C /* RemoveSharingActivity.m in Sources */,
 				94892C961EFBF03000AEAC25 /* SVRadialGradientLayer.m in Sources */,
 				94624CFC1F50516900D52504 /* MEGAExportRequestDelegate.m in Sources */,
 				9411355C1F01008400D33428 /* MEGAStore.m in Sources */,
