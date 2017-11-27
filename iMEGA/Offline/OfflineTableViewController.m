@@ -624,7 +624,13 @@ static NSString *kisDirectory = @"kisDirectory";
         
         OfflineTableViewController *offlineTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineTableViewControllerID"];
         [offlineTVC setFolderPathFromOffline:folderPathFromOffline];
-        [self.navigationController pushViewController:offlineTVC animated:YES];
+        if (self.searchController.isActive) {
+            [self.searchController dismissViewControllerAnimated:YES completion:^{
+                [self.navigationController pushViewController:offlineTVC animated:YES];
+            }];
+        } else {
+            [self.navigationController pushViewController:offlineTVC animated:YES];
+        }
     } else if (previewDocumentPath.mnz_isMultimediaPathExtension) {
         MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
         [self presentViewController:megaAVViewController animated:YES completion:nil];
