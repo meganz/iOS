@@ -89,14 +89,13 @@
 - (void)previewControllerWillDismiss:(QLPreviewController *)controller {
     previewDocumentTransfer = nil;
     
-    if (([[[UIDevice currentDevice] systemVersion] compare:@"9.0" options:NSNumericSearch] != NSOrderedAscending)) {
+    if (@available(iOS 9.0, *)) {
         [self.navigationController popViewControllerAnimated:NO];
     }
 }
 
 - (void)previewControllerDidDismiss:(QLPreviewController *)controller {
-    //Avoid crash on iOS 7 and 8
-    if (([[[UIDevice currentDevice] systemVersion] compare:@"9.0" options:NSNumericSearch] != NSOrderedDescending)) {
+    if (@available(iOS 9.0, *)) {} else {
         [self.navigationController popViewControllerAnimated:YES];
     }
 }

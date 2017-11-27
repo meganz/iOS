@@ -5,4 +5,8 @@
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryUsageDescription"="MEGA는 당신이 카메라 업로드를 활성화했거나 사진이나 동영상을 선택했을 경우 그에 대한 접근을 합니다.";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSContactsUsageDescription"="MEGA accesses your contacts when you select some of them to save/export.";
+"NSContactsUsageDescription"="MEGA는 당신이 저장/내보내기를 위해 연락처를 선택할 때 연락처에 접근합니다.";
+/* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSPhotoLibraryAddUsageDescription"="MEGA accesses your photo library to save your photos or videos in case you do so.";
+/* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
+"NSFaceIDUsageDescription"="MEGA accesses Face ID to allow you to easily unlock the app's passcode in case you enable this option.";
