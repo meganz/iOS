@@ -303,6 +303,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeMake(kAvatarImageDiameter, kAvatarImageDiameter);
     
     self.collectionView.collectionViewLayout.minimumLineSpacing = 2.0f;
+    
+    self.collectionView.collectionViewLayout.sectionInset = UIEdgeInsetsMake(10.0f, 30.0f, 10.0f, 30.0f);
+    self.collectionView.collectionViewLayout.messageBubbleLeftRightMargin = 10.0f;
 }
 
 - (void)customToolbarContentView {
