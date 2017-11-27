@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="Ang inyong file na tinatangkang buksan ay mas malaki sa inyong available na memory.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Hindi available ang link";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="Maaaring dahilan nito ay ang mga sumusunod:- Ang folder link ay tinanggal dahilan sa paglabag sa ToS/AUP.- Maling URL - Ang link na gusto mo ma-access ay wala.- Ang folder link ay binura na ng user.";
+/* */
+"fileLinkUnavailableText1"="Dahil ito sa sumusunod na kadahilanan:";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="Tinangal ang file dahil sa paglabag sa Tos/AUp.";
+/* */
+"fileLinkUnavailableText3"="Mali ang URL-ang ink na yong sinubukang i-access ay hindi umiiral";
+/* */
+"fileLinkUnavailableText4"="Ang file ay binura na ng user.";
 /* Message shown when a download starts */
 "downloadStarted"="Nagsimula na ang Download";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="Ang folder na tinatangka mong i-download ay mas malaki sa available memory.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Ang folder na '%@' ay hindi mabuo";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="Maaaring dahilan nito ay ang mga sumusunod:- Ang folder link ay tinanggal dahilan sa paglabag sa ToS/AUP.- Maling URL - Ang link na gusto mo ma-access ay wala.- Ang folder link ay binura na ng user.";
+/* */
+"folderLinkUnavailableText1"="Dahil ito sa sumusunod na kadahilanan:";
+/* */
+"folderLinkUnavailableText2"="Tinanggal ang folder link dahil sa Tos/AUP violation.";
+/* */
+"folderLinkUnavailableText3"="Mali ang URL-ang ink na yong sinubukang i-access ay hindi umiiral";
+/* */
+"folderLinkUnavailableText4"="Ang folder link ay dinisable ng user.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Walang internet connection";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="Mga request ng contact";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Magdagdag ng contacts";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="Received";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="Naipadala";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="Mga Requests";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="Tinanggap ang request";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="Walang pending na request";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Itigil muna ang Paglilipat";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="Walang Transfer";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="Walang Download";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="Walang Upload";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloud Drive";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -343,7 +355,7 @@
 /* Success message shown when you have moved 1 file */
 "moveFileMessage"="Isang file ang nailipat";
 /* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="%2 files ang nailipat";
+"moveFilesMessage"="%d files ang nailipat";
 /* Success message shown when you have moved 1 folder */
 "moveFolderMessage"="isang folder ang nailipat";
 /* Success message shown when you have moved {1+} folders */
@@ -693,7 +705,7 @@
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
 "fileFolderRemovedToRubbishBinMessage"="isang file at folder ang tinanggal sa MEGA";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="isang file at %s folders ang tinanggal sa MEGA";
+"fileFoldersRemovedToRubbishBinMessage"="isang file at %d folders ang tinanggal sa MEGA";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
 "filesFolderRemovedToRubbishBinMessage"="%d files at isang folder ang tinanggal sa MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
@@ -816,6 +828,10 @@
 "downloadInUppercaseTransfers"="DOWNLOAD transfers";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="sariling  Account";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="Buy PRO";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="Upgrade";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="View and edit profile";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -1165,7 +1181,7 @@
 /* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
 "sentContact"="Ipadala ang Contact na si: %s";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
-"sentXContacts"="Naipadalang mga % Contacts.";
+"sentXContacts"="Naipadalang mga %s Contacts.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
 "attachedFile"="Nakalakip: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
@@ -1174,8 +1190,6 @@
 "autorenewableDescription"="Ang subscriptions ay kaagad na nirereview sa magkakasunod na subscription periods sa parehas na haba ng panahon at sa parehas na presyo sa napiling panahon. Pupuwede ng patayin ang automatic renewal ng iyong MEGA PRO subscription sa loob ng 24 oras bago ang iyong susunod na bayad sa subscription papunta sa iyong iTunes account settings page. Para ayusin ang iyong subscription, i-click ang AppStore icon sa iyong handset, mag-sign in gamit ang iyong Apple ID sa ilalim ng page (kung hindi pa nagagawa ito) at i-click ang View ID. Dadalhin ka nito sa iyong account page, mag-scroll down ka at pumunta sa Manage App Subscriptions. Pamula dito, pupwede mong piliin ang iyong MEGA PRO subscription at tingnan ang iyong nakatakdang petsa ng renewal, pumili ng ibang subscription package at mag-toggle sa on-off switch para patayin ang auto-renewal ng iyong subscription.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Buksan ang MEGA at mag-sign in upang magpatuloy";
-/* Text shown when you try to use Files app while having a passcode */
-"disablePasscodeToUseFiles"="Files cannot be used if you have a passcode in MEGA. If you want to use Files, please open MEGA and disable it.";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Bawiin";
 /* Inform user that there were unsupported assets in the share extension */

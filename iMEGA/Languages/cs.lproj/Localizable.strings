@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="Soubor, který se pokoušíte otevřít, je větší než dostupná paměť.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Nedostupný odkaz";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="Mohlo by to být kvůli následujícím důvodům:- Soubor byl odebrán, protože porušoval podmínky užívání nebo použití.- Neplatná URL – odkaz, ke kterému se pokoušíte získat přístup, neexistuje.- Soubor byl odstraněn uživatelem.";
+/* */
+"fileLinkUnavailableText1"="Mohlo by to být kvůli následujícím důvodům:";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="Soubor byl odebrán z důvodů porušení podmínek užívání nebo použití.";
+/* */
+"fileLinkUnavailableText3"="Neplatná URL – odkaz, ke kterému se pokoušíte získat přístup, neexistuje";
+/* */
+"fileLinkUnavailableText4"="Soubor byl odstraněn uživatelem.";
 /* Message shown when a download starts */
 "downloadStarted"="Stahování spuštěno!";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="Složka, kterou se pokoušíte stáhnout, je větší než dostupná paměť.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Složka '%@' nemůže být vytvořena";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="Mohlo by to být kvůli následujícím důvodům:- Odkaz na složku byl odebrán, protože porušoval podmínky užívání nebo použití.- Neplatná URL – odkaz, ke kterému se pokoušíte získat přístup, neexistuje.- Odkaz na složku byl odstraněn uživatelem.";
+/* */
+"folderLinkUnavailableText1"="Mohlo by to být kvůli následujícím důvodům:";
+/* */
+"folderLinkUnavailableText2"="Odkaz na složku byl odebrán z důvodu porušení podmínek užívání nebo použití.";
+/* */
+"folderLinkUnavailableText3"="Neplatná URL – odkaz, ke kterému se pokoušíte získat přístup, neexistuje";
+/* */
+"folderLinkUnavailableText4"="Odkaz na složku byl zakázán uživatelem.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Žádné řipojení k Internetu";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="Požadavky kontaktů";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Přidat kontakty";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="Received";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="Odeslané";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="Požadavky";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="Požadavek přijat";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="Žádné žádosti čekající na vyřízení";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Pozastavené přenosy";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="Žádné Přenosy";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="Žádná Stahování";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="Žádná Nahrávání";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloudová jednotka";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -816,6 +828,10 @@
 "downloadInUppercaseTransfers"="přenosy STAHOVÁNÍ";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Můj účet";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="Buy PRO";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="Upgradovat";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="View and edit profile";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -1174,8 +1190,6 @@
 "autorenewableDescription"="Předplatné je automaticky obnovováno PRO následující období automaticky a to za stejných podmínek, jako bylo prvotní období. Automatické obnovení předplatného MEGA PRO můžete vypnout nejpozději 24 hodin před zaúčtováním dalšího období. Automatickou obnovu předplatného můžete vypnout nastavení účtu iTunes. PRO správu předplatných, otevřete Nastavení -> App Store, přihlaste se svým Apple ID vespod obrazovky (pokud již přihlášení nejste) a zvolte možnost Zobrazit ID. Budete přesměrování na stránku správy vašeho účtu, zde zvolte položku Spravovat. V seznamu Odběrů zvolte MEGA PRO předplatné. Nyní vidíte stav vašeho předplatného a datum dalšího zúčtovacího období. Zde můžete změnit druh vašeho předplatného nebo jej úplně vypnout pomocí přepínače vyp/zap.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
-/* Text shown when you try to use Files app while having a passcode */
-"disablePasscodeToUseFiles"="Files cannot be used if you have a passcode in MEGA. If you want to use Files, please open MEGA and disable it.";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Odvolat";
 /* Inform user that there were unsupported assets in the share extension */

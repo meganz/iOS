@@ -17,8 +17,8 @@
 @property (weak, nonatomic) IBOutlet UISwitch *simplePasscodeSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *eraseLocalDataLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *eraseLocalDataSwitch;
-@property (weak, nonatomic) IBOutlet UILabel *touchIDLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *touchIDSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *biometricsLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *biometricsSwitch;
 
 @end
 
@@ -33,7 +33,19 @@
     [self.turnOnOffPasscodeLabel setText:AMLocalizedString(@"passcode", nil)];
     [self.changePasscodeLabel setText:AMLocalizedString(@"changePasscodeLabel", @"Change passcode")];
     [self.simplePasscodeLabel setText:AMLocalizedString(@"simplePasscodeLabel", @"Simple passcode")];
-    [self.touchIDLabel setText:@"Touch ID"];
+
+    self.biometricsLabel.text = @"Touch ID";
+    
+    LAContext *context = [[LAContext alloc] init];;
+    
+    if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:nil]) {
+        if (@available(iOS 11.0, *)) {
+            if (context.biometryType == LABiometryTypeFaceID) {
+                self.biometricsLabel.text = @"Face ID";
+            }
+        }
+    }
+
     [self.eraseLocalDataLabel setText:AMLocalizedString(@"eraseAllLocalDataLabel", @"Erase all local data")];
     
     wasPasscodeAlreadyEnabled = [LTHPasscodeViewController doesPasscodeExist];
@@ -47,7 +59,7 @@
     [self.turnOnOffPasscodeSwitch setOn:doesPasscodeExist];
     if (doesPasscodeExist) {
         [self.simplePasscodeSwitch setOn:[[LTHPasscodeViewController sharedUser] isSimple]];
-        [self.touchIDSwitch setOn:[[LTHPasscodeViewController sharedUser] allowUnlockWithTouchID]];
+        [self.biometricsSwitch setOn:[[LTHPasscodeViewController sharedUser] allowUnlockWithBiometrics]];
         
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
             [self.eraseLocalDataSwitch setOn:YES];
@@ -65,7 +77,7 @@
         
     } else {
         [self.simplePasscodeSwitch setOn:NO];
-        [self.touchIDSwitch setOn:NO];
+        [self.biometricsSwitch setOn:NO];
         [self.eraseLocalDataSwitch setOn:NO];
     }
     
@@ -120,8 +132,8 @@
     }
 }
 
-- (IBAction)touchIDSwitchValueChanged:(UISwitch *)sender {
-    [[LTHPasscodeViewController sharedUser] setAllowUnlockWithTouchID:sender.isOn];
+- (IBAction)biometricsSwitchValueChanged:(UISwitch *)sender {
+    [[LTHPasscodeViewController sharedUser] setAllowUnlockWithBiometrics:sender.isOn];
 }
 
 #pragma mark - UITableViewDataSource
@@ -133,8 +145,8 @@
     [self.simplePasscodeSwitch setEnabled:doesPasscodeExist];
     [self.eraseLocalDataLabel setEnabled:doesPasscodeExist];
     [self.eraseLocalDataSwitch setEnabled:doesPasscodeExist];
-    [self.touchIDSwitch setEnabled:doesPasscodeExist];
-    [self.touchIDLabel setEnabled:doesPasscodeExist];
+    [self.biometricsSwitch setEnabled:doesPasscodeExist];
+    [self.biometricsLabel setEnabled:doesPasscodeExist];
 
     return 2;
 }
