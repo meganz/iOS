@@ -1054,6 +1054,22 @@
 
 #pragma mark - MEGAGlobalDelegate
 
+- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
+    if (self.contactsMode != ContactsModeFolderSharedWith) {
+        return;
+    }
+    
+    NSUInteger size = nodeList.size.unsignedIntegerValue;
+    for (NSUInteger i = 0; i < size; i++) {
+        MEGANode *nodeUpdated = [nodeList nodeAtIndex:i];
+        if (nodeUpdated.handle == self.node.handle) {
+            self.node = nodeUpdated;
+            [self reloadUI];
+            break;
+        }
+    }
+}
+
 - (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
     BOOL userAdded = NO;
     
