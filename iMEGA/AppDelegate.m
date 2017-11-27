@@ -351,7 +351,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
-    
+    [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
+
     BOOL pendingTasks = [[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0 || [[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0 || [[[CameraUploads syncManager] assetsOperationQueue] operationCount] > 0;
     if (pendingTasks) {
         [self startBackgroundTask];
