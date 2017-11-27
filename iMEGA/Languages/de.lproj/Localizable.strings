@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="Diese Datei ist größer als der verfügbare Speicherplatz.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Link nicht verfügbar";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="This could be due to the following reasons:- The file has been removed because of a ToS/AUP violation.- Invalid URL – the link you are trying to access does not exist.- The file has been deleted by the user.";
+/* */
+"fileLinkUnavailableText1"="Dies könnte eine der folgenden Ursachen haben:";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="Die Datei wurde aufgrund einer Verletzung der AGB entfernt.";
+/* */
+"fileLinkUnavailableText3"="Ungültiger URL - der Link, den Sie öffnen möchten, existiert nicht";
+/* */
+"fileLinkUnavailableText4"="Die Datei wurde vom Benutzer gelöscht.";
 /* Message shown when a download starts */
 "downloadStarted"="Download gestartet";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="Die Größe dieses Ordners überschreitet den verfügbaren Speicherplatz.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Der Ordner '%@' kann nicht erstellt werden";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="This could be due to the following reasons:- The folder link has been removed because of a ToS/AUP violation.- Invalid URL – the link you are trying to access does not exist.- The folder link has been deleted by the user.";
+/* */
+"folderLinkUnavailableText1"="Dies könnte eine der folgenden Ursachen haben:";
+/* */
+"folderLinkUnavailableText2"="Der Ordner-Link wurde aufgrund eines AGB/AUP-Verstoßes entfernt.";
+/* */
+"folderLinkUnavailableText3"="Ungültiger URL - der Link, den Sie öffnen möchten, existiert nicht";
+/* */
+"folderLinkUnavailableText4"="Der Ordner-Link wurde von dem Nutzer deaktiviert.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Keine Internetverbindung";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="Kontaktersuchen";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Kontakte hinzufügen";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="Received";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="Gesendet";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="Anfragen";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="Ersuchen angenommen";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="Keine Anfragen vorhanden";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Angehaltene Transfers";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="Keine Transfers";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="Keine Downloads";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="Keine Uploads";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloud Drive";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -816,6 +828,10 @@
 "downloadInUppercaseTransfers"="DOWNLOAD-Transfers";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Mein Account";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="Buy PRO";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="Upgrade";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Profil anzeigen/bearbeiten";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -1174,8 +1190,6 @@
 "autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
-/* Text shown when you try to use Files app while having a passcode */
-"disablePasscodeToUseFiles"="Files cannot be used if you have a passcode in MEGA. If you want to use Files, please open MEGA and disable it.";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Entfernen";
 /* Inform user that there were unsupported assets in the share extension */

@@ -53,7 +53,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="La clé SSL du serveur ne peut pas être vérifiée. Vous pourriez être la cible d'une attaque de l'intercepteur.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
+"theContentIsNotAvailableForThisAccount"="Le contenu auquel vous essayez d’accéder n’est pas proposé pour ce compte. Essayez de vous connecter avec le même compte que le client Web mobile.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="Le processus prend plus de temps que prévu. Veuillez patienter...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="Le fichier que vous tentez d'ouvrir est plus grand que la mémoire disponible.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Lien non disponible";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="Cela pourrait être causé par les raisons suivantes :- Le fichier a été retiré en raison du non-respect des conditions générales d'utilisation ou de la politique d'utilisation acceptable.- L'URL est invalide. Le lien auquel vous essayez d'accéder n'existe pas.- Le fichier a été supprimé par l'utilisateur.";
+/* */
+"fileLinkUnavailableText1"="Cela pourrait être dû aux raisons suivantes :";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="Le fichier a été retiré en raison du non-respect des CGU/PUA.";
+/* */
+"fileLinkUnavailableText3"="URL invalide - le lien auquel vous essayez d'accéder n'existe pas";
+/* */
+"fileLinkUnavailableText4"="Le fichier a été supprimé par son utilisateur";
 /* Message shown when a download starts */
 "downloadStarted"="Le téléchargement est lancé";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="Le dossier que vous tentez de télécharger est plus grand que la mémoire disponible.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Le dossier '%@' ne peut pas être créé";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="Cela pourrait être causé par les raisons suivantes :- Le lien de dossier a été retiré en raison du non-respect des conditions générales d'utilisation ou de la politique d'utilisation acceptable.- L'URL est invalide. Le lien auquel vous essayez d'accéder n'existe pas.- Le lien de dossier a été supprimé par l'utilisateur.";
+/* */
+"folderLinkUnavailableText1"="Cela pourrait être dû aux raisons suivantes :";
+/* */
+"folderLinkUnavailableText2"="Le lien du dossier a été retiré en raison du non-respect des CGU/PUA.";
+/* */
+"folderLinkUnavailableText3"="URL invalide - le lien auquel vous essayez d'accéder n'existe pas";
+/* */
+"folderLinkUnavailableText4"="Le lien de dossier a été désactivé par l'utilisateur";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Aucune connexion internet";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="Demandes de contact";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Ajouter des contacts";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="Reçues";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="Envoyées";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="Demandes";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="Le demande a été acceptée";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="Aucune requête en attente";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transferts en pause";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="Aucun transfert";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="Aucun téléchargement";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="Aucun téléversement";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Disque nuagique";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -221,17 +233,17 @@
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
 "nameDescending"="Nom (décroissant)";
 /* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
-"largest"="du plus grand";
+"largest"="Du plus grand";
 /* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
-"smallest"="du plus petit";
+"smallest"="Du plus petit";
 /* Sort by option (5/6). This one order the files by its modification date, newer first */
-"newest"="du plus récent";
+"newest"="Du plus récent";
 /* Sort by option (6/6). This one order the files by its modification date, older first */
-"oldest"="du plus ancien";
+"oldest"="Du plus ancien";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
 "choosePhotoVideo"="Choisir";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
-"capturePhotoVideo"="Prendre";
+"capturePhotoVideo"="Prendre une photo";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Nouveau dossier";
 /* Hint text shown on the create folder alert. */
@@ -816,6 +828,10 @@
 "downloadInUppercaseTransfers"="Transferts TÉLÉCHARGEMENTS";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Mon compte";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="Acheter PRO";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="Surclasser le compte";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Visualiser et modifier le profil";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -897,7 +913,7 @@
 /* Title for "Used" MEGA space. */
 "usedSpaceLabel"="Utilisés";
 /* Title for MEGA "Available" space. */
-"availableLabel"="Disponible";
+"availableLabel"="Disponibles";
 /* title of the My Account screen */
 "accountType"="Type de compte :";
 /* Text relative to the MEGA account level. UPPER CASE */
@@ -983,11 +999,11 @@
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Voulez-vous vraiment supprimer ces éléments hors ligne?";
 /* Chat section header */
-"chat"="Dialogue en ligne";
+"chat"="Clavardage";
 /* Empty Conversations section */
 "noConversations"="Aucune conversation";
 /* Title show when the chat is disabled */
-"chatIsDisabled"="Le dialogue en ligne est désactivé";
+"chatIsDisabled"="Le clavardage est désactivé";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Activer";
 /* Conversations section */
@@ -1111,7 +1127,7 @@
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]Confidentialité.[/S] Seuls l'auteur et les destinataires visés peuvent déchiffrer et lire le contenu.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"authenticityExplanation"="[S]Authenticité.[/S] Le système garantit que les données reçues proviennent de l'expéditeur affiché, et que leur contenu n'a pas été manipulé pendant le transfert.";
+"authenticityExplanation"="[S]Authenticité.[/S] Le système garantit que les données reçues proviennent de l'expéditeur affiché et que leur contenu n'a pas été manipulé pendant le transfert.";
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="La conversation est introuvable";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
@@ -1174,8 +1190,6 @@
 "autorenewableDescription"="Les abonnements sont renouvelés automatiquement lors des périodes d'abonnement successives de même durée et au même tarif que la période initiale choisie. Vous pouvez désactiver le renouvellement automatique de votre abonnement MEGA PRO au plus tard 24 heures avant l'échéance de votre prochain paiement dans la page des réglages de votre compte iTunes. Pour gérer vos abonnements, cliquez simplement sur l'icône de la logithèque App Store sur votre appareil, connectez-vous en bas de la page avec votre identifiant Apple (si ce n'est pas déjà fait), et cliquez sur Afficher l'identifiant Apple. Vous atteindrez la page de votre compte où vous trouverez Gérer vers le bas. Ensuite, vous pourrez sélectionner votre abonnement MEGA PRO et visualiser votre date prévue de renouvellement, choisir un autre type d'abonnement, ou activer/désactiver le renouvellement automatique de votre abonnement.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Ouvrir MEGA et se connecter pour continuer";
-/* Text shown when you try to use Files app while having a passcode */
-"disablePasscodeToUseFiles"="L’appli Fichiers ne peut pas être utilisée si vous avez un code de verrouillage dans MEGA. Si vous souhaitez utiliser Fichiers, veuillez ouvrir MEGA et désactiver le code.";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Révoquer";
 /* Inform user that there were unsupported assets in the share extension */
@@ -1234,7 +1248,7 @@
 /* Text shown in an alert when the user is about to change the language of the app */
 "languageRestartAlert"="Vous devrez redémarrer MEGA après avoir changer la langue";
 /* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
-"languageRestartNotification"="La langue a été changée. Toquer pour redémarrer.";
+"languageRestartNotification"="La langue a été changée. Toucher pour redémarrer.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA est un service de stockage nuagique sécurisé qui vous offre gratuitement 50 Go d'espace de stockage gratuit. Contrairement aux autres fournisseurs de stockage nuagique, vos données sont  seulement chiffrées et déchiffrées par vos appareils client et jamais par nous.";

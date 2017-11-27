@@ -14,7 +14,8 @@
 typedef NS_OPTIONS(NSUInteger, NodesAre) {
     NodesAreFiles    = 1 << 0,
     NodesAreFolders  = 1 << 1,
-    NodesAreExported = 1 << 2
+    NodesAreExported = 1 << 2,
+    NodesAreOutShares = 1 << 3
 };
 
 @interface Helper : NSObject

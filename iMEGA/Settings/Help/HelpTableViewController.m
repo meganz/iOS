@@ -1,11 +1,15 @@
 
 #import "HelpTableViewController.h"
-#import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
+
+#import <MessageUI/MFMailComposeViewController.h>
+#import <SafariServices/SafariServices.h>
+
 #import "SVProgressHUD.h"
 #import "SVWebViewController.h"
 
-#import <MessageUI/MFMailComposeViewController.h>
+#import "MEGAReachabilityManager.h"
+#import "MEGASdkManager.h"
+#import "MEGASDK+MNZCategory.h"
 
 @interface HelpTableViewController () <MFMailComposeViewControllerDelegate>
 
@@ -36,7 +40,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return [[MEGASdkManager sharedMEGASdk] mnz_isProAccount] ? 3 : 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -113,12 +117,23 @@
 
 - (void)openHelpCentre {
     NSURL *URL = [NSURL URLWithString:@"https://mega.nz/help/client/ios/"];
-    SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
-    [self.navigationController pushViewController:webViewController animated:YES];
+    if (@available(iOS 9.0, *)) {
+        SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:URL];
+        if (@available(iOS 10.0, *)) {
+            webViewController.preferredControlTintColor = [UIColor mnz_redD90007];
+        } else {
+            webViewController.view.tintColor = [UIColor mnz_redD90007];
+        }
+        [self presentViewController:webViewController animated:YES completion:nil];
+    } else {
+        SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
+        [self.navigationController pushViewController:webViewController animated:YES];
+    }
 }
 
 - (void)rateApp {
-    //TODO: Add logic to allow user rate the app from the app.
+    NSString *appStoreLink = @"https://itunes.apple.com/us/app/mega/id706857885?mt=8&action=write-review";
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appStoreLink]];
 }
 
 #pragma mark - MFMailComposeViewControllerDelegate

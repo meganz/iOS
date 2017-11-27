@@ -609,6 +609,11 @@
     [cell setSelectedBackgroundView:view];
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
+    if (@available(iOS 11.0, *)) {
+        cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
+        cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
+    }
+    
     return cell;
 }
 

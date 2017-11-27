@@ -53,6 +53,10 @@
     self.emailLabel.text = self.userEmail;
     
     self.incomingNodeListForUser = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
+    
+    if (@available(iOS 11.0, *)) {
+        self.avatarImageView.accessibilityIgnoresInvertColors = YES;
+    }
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -217,6 +221,10 @@
         cell.shareLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
         MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
         cell.permissionsImageView.image = [Helper permissionsButtonImageForShareType:shareType];
+    }
+    
+    if (@available(iOS 11.0, *)) {
+        cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
     
     return cell;
