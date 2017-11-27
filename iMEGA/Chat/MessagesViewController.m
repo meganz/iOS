@@ -842,7 +842,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
     if (showMessageBubbleTopLabel) {
         NSString *hour = [[JSQMessagesTimestampFormatter sharedFormatter] timeForDate:message.date];
-        NSAttributedString *hourAttributed = [[NSAttributedString alloc] initWithString:hour attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]}];
+        NSAttributedString *hourAttributed = [[NSAttributedString alloc] initWithString:hour attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor grayColor]}];
         NSMutableAttributedString *topCellAttributed = [[NSMutableAttributedString alloc] init];
         
         
@@ -854,7 +854,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                     fullname = @"";
                 }
             }
-            NSAttributedString *fullnameAttributed = [[NSAttributedString alloc] initWithString:[fullname stringByAppendingString:@" "] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:15.0f], NSForegroundColorAttributeName:[UIColor blackColor]}];
+            NSAttributedString *fullnameAttributed = [[NSAttributedString alloc] initWithString:[fullname stringByAppendingString:@"   "] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor grayColor]}];
             [topCellAttributed appendAttributedString:fullnameAttributed];
             [topCellAttributed appendAttributedString:hourAttributed];
         } else {
