@@ -162,7 +162,13 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
     [self encourageToUpgrade];
+    
+    if (self.homeQuickActionSearch) {
+        self.homeQuickActionSearch = NO;
+        [self activateSearch];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -1248,6 +1254,11 @@
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
     
     [self presentViewController:navigationController animated:YES completion:nil];
+}
+
+- (void)activateSearch {
+    [self.searchController.searchBar becomeFirstResponder];
+    self.searchController.active = YES;
 }
 
 #pragma mark - IBActions
