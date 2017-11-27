@@ -305,6 +305,11 @@
         }
     }
     
+    if (@available(iOS 11.0, *)) {
+        cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
+        cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
+    }
+    
     return cell;
 }
 
@@ -1088,7 +1093,7 @@
         
         [newFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
         
-        [newFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIAlertAction *createFolderAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 UITextField *textField = [[newFolderAlertController textFields] firstObject];
                 MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:textField.text];
@@ -1099,7 +1104,9 @@
                     [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text parent:self.parentNode delegate:createFolderRequestDelegate];
                 }
             }
-        }]];
+        }];
+        createFolderAlertAction.enabled = NO;
+        [newFolderAlertController addAction:createFolderAlertAction];
         
         [self presentViewController:newFolderAlertController animated:YES completion:nil];
     }];

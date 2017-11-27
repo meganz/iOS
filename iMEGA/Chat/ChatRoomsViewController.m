@@ -570,6 +570,10 @@
     
     cell.separatorInset = UIEdgeInsetsMake(0.0, 57.0, 0.0, 0.0);
     
+    if (@available(iOS 11.0, *)) {
+        cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
+    }
+    
     return cell;
 }
 

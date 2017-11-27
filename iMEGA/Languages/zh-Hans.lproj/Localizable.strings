@@ -53,7 +53,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="服务器SSL 金钥未能认证。您可能会收到第三方攻击。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="您尝试访问的内容于对此帐户开放。请您使用与移动网络客户端相同的帐户进行登录。";
+"theContentIsNotAvailableForThisAccount"="您尝试访问的内容并不对当前登入的帐户开放。请登入与浏览器中所登录的相同的帐户。";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="加载时间比预期的长，请耐心等待。";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="您正在尝试打开的文件大于可用内存。";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="不可用的链接";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="文件链接不存在之可能原因： - 因ToS / AUP违规，故该文件链接已被删除。 - 无效的网址– 您尝试存取的链接并不存在。 - 该使用者已将文件链接删除。";
+/* */
+"fileLinkUnavailableText1"="这可能因下列因素造成:";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="这个文件因违反ToS服务条款或AUP可接受的使用政策而被移除。";
+/* */
+"fileLinkUnavailableText3"="无效的链接-你尝试链接的文件不存在";
+/* */
+"fileLinkUnavailableText4"="此文件已被使用者删除。";
 /* Message shown when a download starts */
 "downloadStarted"="已开始下载";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="您正在尝试下载的文件夹大于可用内存。";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="文件夹'%@' 创建失败";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="文件夹链接不存在之可能原因： - 因ToS / AUP违规，故该文件夹链接已被删除。 - 无效的网址– 您尝试存取的链接并不存在。 - 该使用者已将文件夹链接删除。";
+/* */
+"folderLinkUnavailableText1"="这可能因下列因素造成:";
+/* */
+"folderLinkUnavailableText2"="该文件夹链接因违反ToS/AUP使用条款已被移除。";
+/* */
+"folderLinkUnavailableText3"="无效的链接-你尝试链接的文件不存在";
+/* */
+"folderLinkUnavailableText4"="该文件夹链接被使用者关闭。";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="无网络连接";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="联系人邀请";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="新增联系人";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="已收到";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="已寄出";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="联系人邀请";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="您已接受邀请";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="已无尚待处理的联系人邀请";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="传输暂停";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="无传输/不传输";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="无下载/不下载";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="无上传/不上传";
 /* Title of the Cloud Drive section */
 "cloudDrive"="云盘";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -387,13 +399,13 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
 "moveFolderToRubbishBinMessage"="您确定要移动1 个文件夹至垃圾箱吗？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="您确定要移动％d 个文件夹至垃圾箱吗？";
+"moveFoldersToRubbishBinMessage"="您确定要移动%d 个文件夹至垃圾箱吗？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
 "moveFileFolderToRubbishBinMessage"="您确定要移动1 个文件和1 个文件夹至垃圾箱吗？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
 "moveFileFoldersToRubbishBinMessage"="您确定要移动1 个文件和%d 个文件夹至垃圾箱吗？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="您确定要移动1 个文件和1 个文件夹至垃圾箱吗？";
+"moveFilesFolderToRubbishBinMessage"="您确定要移动%d 个文件和1 个文件夹至垃圾箱吗？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="您确定要将[A] 文件和[B] 文件夹移至垃圾桶吗？";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -816,6 +828,10 @@
 "downloadInUppercaseTransfers"="下载传输";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="我的帐号";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="购买 PRO";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="付费升级";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="查看并修改帐户资料";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -1174,8 +1190,6 @@
 "autorenewableDescription"="此订阅将会自动更新续订，续订内容与您一开始选择的订阅时间与价格一致。您可以于您的iTunes帐户设定页面关闭MEGA PRO的订阅自动更新续订，必须于您的下一个订阅缴款期限的24小时之前执行此操作。欲管理您的订阅内容，只需点击您手机上的App Store图标，可以在页面下方以您的Apple帐号登入（如果您还没有这样做），然后点击查看帐号。您会被带到您的帐户页面，就可以向下滚动到管理应用程序订阅。在那里，您可以选择你的MEGA PRO订阅和查看您预定的续约日期，选择不同的计划或切换开关至关闭以停用您的自动续订。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="开启MEGA并登入以继续";
-/* Text shown when you try to use Files app while having a passcode */
-"disablePasscodeToUseFiles"="如果您在MEGA中有密码，则无法打开文件。如果要使用文件，请打开MEGA并禁用密码。";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="撤除";
 /* Inform user that there were unsupported assets in the share extension */

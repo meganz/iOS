@@ -13,6 +13,7 @@
 
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
+#import "MEGAExportRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGAShareRequestDelegate.h"
 #import "NodeTableViewCell.h"
@@ -20,16 +21,9 @@
 #import "RemoveLinkActivity.h"
 #import "ShareFolderActivity.h"
 
-@interface DetailsNodeInfoViewController () <UIAlertViewDelegate, UIDocumentInteractionControllerDelegate,UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MEGADelegate> {
-    UIAlertView *cancelDownloadAlertView;
-    UIAlertView *renameAlertView;
-    UIAlertView *removeAlertView;
-    
+@interface DetailsNodeInfoViewController () <UIDocumentInteractionControllerDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MEGADelegate> {
     NSInteger actions;
     MEGAShareType accessType;
-    
-    NSUInteger remainingOperations;
-    NSUInteger numberOfShares;
     
     UILabel *navigationBarLabel;
 }
@@ -40,6 +34,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *linkedImageView;
 @property (weak, nonatomic) IBOutlet UILabel *foldersFilesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 
@@ -80,7 +75,7 @@
             if ((self.displayMode == DisplayModeSharedItem) && [self.node isOutShare]) {
                 actions = 3; //Copy, rename and remove sharing
             } else {
-                actions = 5; //Download, move, copy, rename and move to rubbish bin or remove
+                actions = 7; //Download, move, copy, rename, remove link, remove sharing and move to rubbish bin or remove
             }
             break;
             
@@ -91,18 +86,28 @@
     if ((self.displayMode == DisplayModeSharedItem) && (accessType != MEGAShareTypeAccessOwner)) {
         [self setNavigationBarTitleLabel];
     }
+    
+    if (@available(iOS 11.0, *)) {
+        self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self reloadUI];
-    [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
+    
+    if (!self.presentedViewController) {
+        [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
+    }
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
+    
+    if (!self.presentedViewController) {
+        [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
+    }
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -123,7 +128,6 @@
 
 - (void)reloadUI {
     if ([self.node type] == MEGANodeTypeFile) {
-        
         if ([self.node hasThumbnail]) {
             NSString *thumbnailFilePath = [Helper pathForNode:self.node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
             BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
@@ -139,7 +143,6 @@
         [_foldersFilesLabel setHidden:YES];
         
     } else if ([self.node type] == MEGANodeTypeFolder) {
-        
         if (self.displayMode == DisplayModeSharedItem) {
             if ([self.node isInShare]) {
                 [self.thumbnailImageView setImage:[UIImage imageNamed:@"info_folder_incoming"]];
@@ -159,6 +162,7 @@
         [self.navigationItem setTitleView:navigationBarLabel];
     } else {
         [self setTitle:[self.node name]];
+        self.linkedImageView.hidden = self.node.isExported ? NO : YES;
     }
     
     self.infoLabel.text = [Helper sizeAndDateForNode:self.node api:[MEGASdkManager sharedMEGASdk]];
@@ -194,37 +198,49 @@
 
 - (void)rename {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        if (!renameAlertView) {
-            renameAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"rename", nil) message:AMLocalizedString(@"renameNodeMessage", @"Enter the new name") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"rename", nil), nil];
-        }
+        UIAlertController *renameAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") message:AMLocalizedString(@"renameNodeMessage", @"Hint text to suggest that the user have to write the new name for the file or folder") preferredStyle:UIAlertControllerStyleAlert];
         
-        [renameAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-        [renameAlertView setTag:0];
+        [renameAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.delegate = self;
+            textField.text = self.node.name;
+            [textField addTarget:self action:@selector(renameAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        }];
         
-        UITextField *textField = [renameAlertView textFieldAtIndex:0];
-        [textField setDelegate:self];
-        [textField setText:[self.node name]];
+        [renameAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
         
-        [renameAlertView show];
+        UIAlertAction *renameAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                UITextField *alertViewTextField = [[renameAlertController textFields] firstObject];
+                [[MEGASdkManager sharedMEGASdk] renameNode:self.node newName:alertViewTextField.text];
+            }
+        }];
+        renameAlertAction.enabled = NO;
+        [renameAlertController addAction:renameAlertAction];
+        
+        [self presentViewController:renameAlertController animated:YES completion:nil];
     }
 }
 
 - (void)delete {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        NSString *alertTitle;
+        NSString *alertMessage;
         switch (self.displayMode) {
             case DisplayModeCloudDrive: {
-                removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveToTheRubbishBin", nil) message:AMLocalizedString(@"moveFileToRubbishBinMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                alertTitle = AMLocalizedString(@"moveToTheRubbishBin", @"Title for the action that allows you to 'Move to the Rubbish Bin' files or folders");
+                alertMessage = (self.node.type == MEGANodeTypeFolder) ? AMLocalizedString(@"moveFolderToRubbishBinMessage", @"Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder'") : AMLocalizedString(@"moveFileToRubbishBinMessage", @"Alert message to confirm if the user wants to move to the Rubbish Bin '1 file'");
                 break;
             }
                 
             case DisplayModeRubbishBin: {
-                NSString *alertMessage = ([self.node type] == MEGANodeTypeFolder) ? AMLocalizedString(@"removeFolderToRubbishBinMessage", nil) : AMLocalizedString(@"removeFileToRubbishBinMessage", nil);
-                removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"remove", nil) message:alertMessage delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                alertTitle = AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
+                alertMessage = (self.node.type == MEGANodeTypeFolder) ? AMLocalizedString(@"removeFolderToRubbishBinMessage", @"Alert message shown on the Rubbish Bin when you want to remove '1 folder'") : AMLocalizedString(@"removeFileToRubbishBinMessage", @"Alert message shown on the Rubbish Bin when you want to remove '1 file'");
                 break;
             }
-            
+                
             case DisplayModeSharedItem: {
-                removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"leaveFolder", nil) message:AMLocalizedString(@"leaveShareAlertMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                alertTitle = AMLocalizedString(@"leaveFolder", @"Button title of the action that allows to leave a shared folder");
+                alertMessage = AMLocalizedString(@"leaveShareAlertMessage", @"Alert message shown when the user tap on the leave share action for one inshare");
                 break;
             }
                 
@@ -232,18 +248,29 @@
                 break;
         }
         
-        [removeAlertView setTag:1];
-        [removeAlertView show];
+        UIAlertController *moveRemoveLeaveAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+        
+        [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        
+        [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                self.isOwnChange = YES;
+                if (self.displayMode == DisplayModeCloudDrive) {
+                    [[MEGASdkManager sharedMEGASdk] moveNode:self.node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+                } else { //DisplayModeRubbishBin (Remove), DisplayModeSharedItem (Remove share)
+                    [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
+                }
+            }
+        }]];
+        
+        [self presentViewController:moveRemoveLeaveAlertController animated:YES completion:nil];
     }
 }
 
 - (void)confirmRemoveSharing {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-
         NSMutableArray *outSharesOfNodeMutableArray = [self outSharesForNode:self.node];
         NSUInteger outSharesCount = [outSharesOfNodeMutableArray count];
-        remainingOperations = outSharesCount;
-        numberOfShares = outSharesCount;
         
         NSString *alertMessage;
         if (outSharesCount == 1) {
@@ -252,9 +279,15 @@
             alertMessage = [NSString stringWithFormat:AMLocalizedString(@"removeOneShareMultipleContactsMessage", nil), (NSInteger)outSharesCount];
         }
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"removeSharing", nil) message:alertMessage delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-        [alertView setTag:4];
-        [alertView show];
+        UIAlertController *confirmRemoveSharingAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share") message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+        
+        [confirmRemoveSharingAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        
+        [confirmRemoveSharingAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self removeSharing];
+        }]];
+        
+        [self presentViewController:confirmRemoveSharingAlertController animated:YES completion:nil];
     }
 }
 
@@ -264,12 +297,13 @@
     for (MEGAShare *share in outSharesOfNodeMutableArray) {
         [[MEGASdkManager sharedMEGASdk] shareNode:self.node withEmail:share.user level:MEGAShareTypeAccessUnkown delegate:shareRequestDelegate];
     }
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    if (self.displayMode == DisplayModeSharedItem) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
-- (void)showWarningAfterActionOnNode:(MEGANode *)nodeUpdated {
-    NSString *alertTitle = @"";
-    
+- (void)reloadOrShowWarningAfterActionOnNode:(MEGANode *)nodeUpdated {
     nodeUpdated = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[self.node handle]];
     if (nodeUpdated != nil) { //Is nil if you don't have access to it
         if (nodeUpdated.parentHandle == self.node.parentHandle) { //Same place as before
@@ -279,41 +313,29 @@
             [self reloadUI];
         } else {
             //Node moved to the Rubbish Bin or moved inside the same shared folder
+            NSString *alertTitle;
             if (nodeUpdated.parentHandle == [[[MEGASdkManager sharedMEGASdk] rubbishNode] handle]) {
-                if ([self.node isFile]) {
-                    alertTitle = @"fileMovedToTheRubbishBin_alertTitle";
-                } else {
-                    alertTitle = @"folderMovedToTheRubbishBin_alertTitle";
-                }
+                alertTitle = (self.node.isFolder) ? AMLocalizedString(@"folderMovedToTheRubbishBin_alertTitle", @"Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location") : AMLocalizedString(@"fileMovedToTheRubbishBin_alertTitle", @"Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location");
             } else {
-                if ([self.node isFile]) {
-                    alertTitle = @"fileMoved_alertTitle";
-                } else {
-                    alertTitle = @"folderMoved_alertTitle";
-                }
+                alertTitle = (self.node.isFolder) ? AMLocalizedString(@"folderMoved_alertTitle", @"Alert title shown when you are seeing the details of a folder and you moved it from another location") : AMLocalizedString(@"fileMoved_alertTitle", @"Alert title shown when you are seeing the details of a file and you moved it from another location");
             }
             
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(alertTitle, nil)
-                                                                message:nil
-                                                               delegate:self
-                                                      cancelButtonTitle:nil otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-            [alertView setTag:3];
-            [alertView show];
+            UIAlertController *warningAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
+            [warningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }]];
+            
+            [self presentViewController:warningAlertController animated:YES completion:nil];
         }
     } else {
         //Node removed from the Rubbish Bin or moved outside of the shared folder
-        if ([self.node isFile]) {
-            alertTitle = @"youNoLongerHaveAccessToThisFile_alertTitle";
-        } else {
-            alertTitle = @"youNoLongerHaveAccessToThisFolder_alertTitle";
-        }
+        NSString *alertTitle = (self.node.isFolder) ? AMLocalizedString(@"youNoLongerHaveAccessToThisFolder_alertTitle", @"Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be") : AMLocalizedString(@"youNoLongerHaveAccessToThisFile_alertTitle", @"Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be");
+        UIAlertController *warningAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [warningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }]];
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(alertTitle, nil)
-                                                            message:nil
-                                                           delegate:self
-                                                  cancelButtonTitle:nil otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-        [alertView setTag:3];
-        [alertView show];
+        [self presentViewController:warningAlertController animated:YES completion:nil];
     }
 }
 
@@ -348,7 +370,6 @@
 }
 
 - (NSMutableArray *)outSharesForNode:(MEGANode *)node {
-    
     NSMutableArray *outSharesForNodeMutableArray = [[NSMutableArray alloc] init];
     
     MEGAShareList *outSharesForNodeShareList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:node];
@@ -363,103 +384,33 @@
     return outSharesForNodeMutableArray;
 }
 
+- (void)renameAlertTextFieldDidChange:(UITextField *)sender {
+    UIAlertController *renameAlertController = (UIAlertController *)self.presentedViewController;
+    if (renameAlertController) {
+        UITextField *textField = renameAlertController.textFields.firstObject;
+        UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
+        BOOL enableRightButton = NO;
+        
+        NSString *newName = textField.text;
+        NSString *nodeNameString = self.node.name;
+        
+        if (self.node.isFile || self.node.isFolder) {
+            if ([newName isEqualToString:@""] || [newName isEqualToString:nodeNameString] || newName.mnz_isEmpty) {
+                enableRightButton = NO;
+            } else {
+                enableRightButton = YES;
+            }
+        }
+        
+        rightButtonAction.enabled = enableRightButton;
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)shareTouchUpInside:(UIBarButtonItem *)sender {
     UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[self.node] button:self.shareBarButtonItem];
     [self presentViewController:activityVC animated:YES completion:nil];
-}
-
-#pragma mark - UIAlertDelegate
-
-- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
-    BOOL shouldEnable;
-    if ([alertView tag] == 0) {
-        UITextField *textField = [alertView textFieldAtIndex:0];
-        NSString *newName = [textField text];
-        NSString *nodeNameString = [self.node name];
-        
-        switch ([self.node type]) {
-            case MEGANodeTypeFile:
-            case MEGANodeTypeFolder: {
-                if ([newName isEqualToString:@""] || [newName isEqualToString:nodeNameString]) {
-                    shouldEnable = NO;
-                } else {
-                    shouldEnable = YES;
-                }
-                break;
-            }
-                
-            default:
-                shouldEnable = NO;
-                break;
-        }
-        
-    } else {
-        shouldEnable = YES;
-    }
-    
-    return shouldEnable;
-}
-
-- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if ([alertView tag] == 0) {
-        UITextField *textField = [alertView textFieldAtIndex:0];
-        [textField setSelectedTextRange:nil];
-    }
-}
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    switch ([alertView tag]) {
-        case 0: {
-            if (buttonIndex == 1) {
-                if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                    UITextField *alertViewTextField = [alertView textFieldAtIndex:0];
-                    [[MEGASdkManager sharedMEGASdk] renameNode:self.node newName:[alertViewTextField text]];
-                }
-            }
-            break;
-        }
-            
-        case 1: {
-            if (buttonIndex == 1) {
-                if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                    self.isOwnChange = YES;
-                    if (self.displayMode == DisplayModeCloudDrive) {
-                        [[MEGASdkManager sharedMEGASdk] moveNode:self.node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
-                    } else { //DisplayModeRubbishBin (Remove), DisplayModeSharedItem (Remove share)
-                        [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
-                    }
-                }
-            }
-            break;
-        }
-            
-        case 2: {
-            if (buttonIndex == 1) {
-                if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                    NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:self.node.base64Handle];
-                    if (transferTag != nil) {
-                        [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:transferTag.integerValue];
-                    }
-                }
-            }
-            break;
-        }
-            
-        case 3: {
-            [self.navigationController popViewControllerAnimated:YES];
-            break;
-        }
-            
-        case 4: {
-            if (buttonIndex == 1) {
-                [self removeSharing];
-            }
-            break;
-        }
-
-    }
 }
 
 #pragma mark - UIDocumentInteractionController
@@ -476,7 +427,7 @@
     switch (self.displayMode) {
         case DisplayModeCloudDrive:
         case DisplayModeRubbishBin: {
-            numberOfSections = 1;
+            numberOfSections = self.node.isOutShare ? 2 : 1;
             break;
         }
             
@@ -493,6 +444,13 @@
     NSInteger numberOfRows;
     switch (self.displayMode) {
         case DisplayModeCloudDrive:
+            if (section == 0) {
+                numberOfRows = self.node.isOutShare ? 1 : actions;
+            } else {
+                numberOfRows = actions;
+            }
+            break;
+            
         case DisplayModeRubbishBin: {
             numberOfRows = actions;
             break;
@@ -512,14 +470,20 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     NodeTableViewCell *cell;
     switch (self.displayMode) {
         case DisplayModeCloudDrive:
         case DisplayModeRubbishBin: {
-            cell = [self.tableView dequeueReusableCellWithIdentifier:@"NodeDetailsTableViewCellID" forIndexPath:indexPath];
-            if (cell == nil) {
-                cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NodeDetailsTableViewCellID"];
+            if (indexPath.section == 0 && self.node.isOutShare) {
+                cell = [self.tableView dequeueReusableCellWithIdentifier:@"SharedItemContactsTableViewCellID" forIndexPath:indexPath];
+                if (cell == nil) {
+                    cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SharedItemContactsTableViewCellID"];
+                }
+            } else {
+                cell = [self.tableView dequeueReusableCellWithIdentifier:@"NodeDetailsTableViewCellID" forIndexPath:indexPath];
+                if (cell == nil) {
+                    cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NodeDetailsTableViewCellID"];
+                }
             }
             break;
         }
@@ -549,7 +513,7 @@
         }
     }
     
-    if ((self.displayMode == DisplayModeSharedItem) && (indexPath.section == 0)) {
+    if (((self.displayMode == DisplayModeSharedItem) && (indexPath.section == 0)) || ((self.displayMode == DisplayModeCloudDrive) && (indexPath.section == 0) && self.node.isOutShare)) {
         if ([self.node isInShare]) {
             MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.email];
             [cell.thumbnailImageView mnz_setImageForUserHandle:user.handle];
@@ -690,6 +654,16 @@
                             break;
                             
                         case 4:
+                            cell.thumbnailImageView.image = [UIImage imageNamed:@"removeLink"];
+                            cell.nameLabel.text = AMLocalizedString(@"removeLink", @"Message shown when there is an active link that can be removed or disabled");
+                            break;
+                            
+                        case 5:
+                            cell.thumbnailImageView.image = [UIImage imageNamed:@"removeShare"];
+                            cell.nameLabel.text = AMLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share");
+                            break;
+                            
+                        case 6:
                             [cell.thumbnailImageView setImage:[UIImage imageNamed:@"rubbishBin"]];
                             [cell.nameLabel setText:AMLocalizedString(@"moveToTheRubbishBin", @"Move to the rubbish bin")];
                             break;
@@ -736,20 +710,21 @@
     [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
     [cell setSelectedBackgroundView:view];
     
+    if (@available(iOS 11.0, *)) {
+        cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
+        cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
+    }
+    
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ((self.displayMode == DisplayModeSharedItem) && (indexPath.section == 0)) {
+    if (((self.displayMode == DisplayModeSharedItem) && (indexPath.section == 0)) || ((self.displayMode == DisplayModeCloudDrive) && (indexPath.section == 0) && self.node.isOutShare)) {
         return 66.0;
     }
     
-    return 44.0;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ((self.displayMode == DisplayModeSharedItem) && (indexPath.section == 0)) {
-        return 66.0;
+    if (((indexPath.row == 4) && !self.node.isExported) || ((indexPath.row == 5) && !self.node.isOutShare)) {
+        return 0.0;
     }
     
     return 44.0;
@@ -758,7 +733,6 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     if ((self.displayMode == DisplayModeSharedItem) && (accessType == MEGAShareTypeAccessOwner)) {
         if (indexPath.section == 0) {
             ContactsViewController *contactsVC =  [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
@@ -786,85 +760,112 @@
              return;
          }
         
-        switch (indexPath.row) {
-            case 0: { //Save for Offline
-                if ([[Helper downloadingNodes] objectForKey:self.node.base64Handle] != nil) {
-                    if (!cancelDownloadAlertView) {
-                        cancelDownloadAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"downloading", @"Downloading...")
-                                                                             message:AMLocalizedString(@"cancelDownloadAlertViewText", @"Do you want to cancel the download?")
-                                                                            delegate:self
-                                                                   cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                                                   otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+        if (self.node.isOutShare && (indexPath.section == 0) && (self.displayMode == DisplayModeCloudDrive)) {
+            ContactsViewController *contactsVC =  [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
+            contactsVC.contactsMode = ContactsModeFolderSharedWith;
+            contactsVC.node = self.node;
+            [self.navigationController pushViewController:contactsVC animated:YES];
+        } else {
+            switch (indexPath.row) {
+                case 0: { //Save for Offline
+                    if ([[Helper downloadingNodes] objectForKey:self.node.base64Handle] != nil) {
+                        UIAlertController *cancelDownloadAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"downloading", @"Title show when a file is being downloaded") message:AMLocalizedString(@"cancelDownloadAlertViewText", @"Message shown when you tap on the cancel button of an active transfer") preferredStyle:UIAlertControllerStyleAlert];
+                        
+                        [cancelDownloadAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+                        
+                        [cancelDownloadAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                                NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:self.node.base64Handle];
+                                if (transferTag != nil) {
+                                    [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:transferTag.integerValue];
+                                }
+                            }
+                        }]];
+                        
+                        [self presentViewController:cancelDownloadAlertController animated:YES completion:nil];
+                    } else {
+                        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self.node api:[MEGASdkManager sharedMEGASdk]];
+                        if (!offlineNodeExist) {
+                            [self download];
+                        }
                     }
-                    [cancelDownloadAlertView setTag:2];
-                    [cancelDownloadAlertView show];
-                } else {
-                    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self.node api:[MEGASdkManager sharedMEGASdk]];
-                    if (!offlineNodeExist) {
-                        [self download];
+                    break;
+                }
+                    
+                case 1: { //Copy or Move
+                    switch (accessType) {
+                        case MEGAShareTypeAccessRead:
+                        case MEGAShareTypeAccessReadWrite:
+                        case MEGAShareTypeAccessFull:
+                            [self browserWithAction:BrowserActionCopy];
+                            break;
+                            
+                        case MEGAShareTypeAccessOwner:
+                            [self browserWithAction:BrowserActionMove];
+                            break;
+                            
+                        default:
+                            break;
                     }
+                    break;
                 }
-                break;
-            }
-                
-            case 1: {
-                switch (accessType) {
-                    case MEGAShareTypeAccessRead:
-                    case MEGAShareTypeAccessReadWrite:
-                    case MEGAShareTypeAccessFull:
-                        [self browserWithAction:BrowserActionCopy];
-                        break;
-                        
-                    case MEGAShareTypeAccessOwner:
-                        [self browserWithAction:BrowserActionMove];
-                        break;
-                        
-                    default:
-                        break;
+                    
+                case 2: { //Leave, rename or copy
+                    switch (accessType) {
+                        case MEGAShareTypeAccessRead:
+                        case MEGAShareTypeAccessReadWrite:
+                            [self delete];
+                            break;
+                            
+                        case MEGAShareTypeAccessFull:
+                            [self rename];
+                            break;
+                            
+                        case MEGAShareTypeAccessOwner:
+                            [self browserWithAction:BrowserActionCopy];
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                    break;
                 }
-                break;
-            }
-                
-            case 2: {
-                switch (accessType) {
-                    case MEGAShareTypeAccessRead:
-                    case MEGAShareTypeAccessReadWrite:
-                        [self delete];
-                        break;
-                        
-                    case MEGAShareTypeAccessFull:
-                        [self rename];
-                        break;
-                        
-                    case MEGAShareTypeAccessOwner:
-                        [self browserWithAction:BrowserActionCopy];
-                        break;
-                        
-                    default:
-                        break;
+                    
+                case 3: { //Leave, rename
+                    switch (accessType) {
+                        case MEGAShareTypeAccessFull:
+                            [self delete];
+                            break;
+                            
+                        case MEGAShareTypeAccessOwner:
+                            [self rename];
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                    break;
                 }
-                break;
-            }
-                
-            case 3: {
-                switch (accessType) {
-                    case MEGAShareTypeAccessFull:
-                        [self delete];
-                        break;
-                        
-                    case MEGAShareTypeAccessOwner:
-                        [self rename];
-                        break;
-                        
-                    default:
-                        break;
+                    
+                case 4: { //Remove link
+                    MEGAExportRequestDelegate *requestDelegate = [[MEGAExportRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                        NSString *status = AMLocalizedString(@"linkRemoved", @"Message shown when the links to a file or folder has been removed");
+                        [SVProgressHUD showSuccessWithStatus:status];
+                    } multipleLinks:NO];
+                    
+                    [[MEGASdkManager sharedMEGASdk] disableExportNode:self.node delegate:requestDelegate];
+                    break;
                 }
-                break;
+                    
+                case 5: //Remove sharing
+                    [self confirmRemoveSharing];
+                    break;
+                    
+                case 6: //Move to the Rubbish Bin / Remove
+                    [self delete];
+                    break;
             }
-                
-            case 4: //Move to the Rubbish Bin / Remove
-                [self delete];
-                break;
+            
         }
     }
     
@@ -989,7 +990,7 @@
         nodeUpdated = [nodeList nodeAtIndex:i];
         
         if ([nodeUpdated handle] == [self.node handle]) {
-            [self showWarningAfterActionOnNode:nodeUpdated];
+            [self reloadOrShowWarningAfterActionOnNode:nodeUpdated];
             break;
         }
     }
@@ -1051,8 +1052,8 @@
         MOOfflineNode *offlineNode =  [[MEGAStore shareInstance] offlineNodeWithNode:self.node api:api];
         
         if ((offlineNode != nil) && ([self.node.base64Handle isEqualToString:base64Handle])) {
-            if (cancelDownloadAlertView.visible) {
-                [cancelDownloadAlertView dismissWithClickedButtonIndex:0 animated:YES];
+            if ([self.presentedViewController.title isEqualToString:AMLocalizedString(@"downloading", @"Title show when a file is being downloaded")]) {
+                [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
             }
             
             NodeTableViewCell *cell;
