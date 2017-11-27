@@ -6,8 +6,10 @@
 #import "SVProgressHUD.h"
 #import "SAMKeychain.h"
 
-#import "MEGASdkManager.h"
 #import "Helper.h"
+#import "MEGANode+MNZCategory.h"
+#import "MEGASdkManager.h"
+#import "NSString+MNZCategory.h"
 
 #import "LoginViewController.h"
 #import "MainTabBarController.h"
@@ -21,9 +23,7 @@
 #import "MEGAStore.h"
 #import "PreviewDocumentViewController.h"
 
-@interface FileLinkViewController () <UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate> {
-    UIAlertView *decryptionAlertView;
-}
+@interface FileLinkViewController () <UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate>
 
 @property (strong, nonatomic) MEGANode *node;
 
@@ -40,6 +40,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic, getter=isFolderEmpty) BOOL folderEmpty;
+
+@property (nonatomic) BOOL decryptionAlertControllerHasBeenPresented;
 
 @end
 
@@ -148,26 +150,42 @@
 - (void)showDecryptionAlert {
     [SVProgressHUD dismiss];
     
-    decryptionAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"decryptionKeyAlertTitle", nil)
-                                                     message:AMLocalizedString(@"decryptionKeyAlertMessage", nil)
-                                                    delegate:self
-                                           cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                           otherButtonTitles:AMLocalizedString(@"decrypt", nil), nil];
-    [decryptionAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    UITextField *textField = [decryptionAlertView textFieldAtIndex:0];
-    [textField setPlaceholder:AMLocalizedString(@"decryptionKey", nil)];
-    [decryptionAlertView setTag:1];
-    [decryptionAlertView show];
+    UIAlertController *decryptionAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyAlertTitle", @"Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents") message:AMLocalizedString(@"decryptionKeyAlertMessage", @"Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents") preferredStyle:UIAlertControllerStyleAlert];
+    
+    [decryptionAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = AMLocalizedString(@"decryptionKey", @"Hint text to suggest that the user has to write the decryption key");
+        [textField addTarget:self action:@selector(decryptionAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    }];
+    
+    [decryptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    UIAlertAction *decryptAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"decrypt", @"Button title to try to decrypt the link") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+            NSString *key = decryptionAlertController.textFields.firstObject.text;
+            NSString *linkString = ([[key substringToIndex:1] isEqualToString:@"!"]) ? self.fileLinkString : [self.fileLinkString stringByAppendingString:@"!"];
+            linkString = [linkString stringByAppendingString:key];
+            
+            [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:linkString delegate:self];
+        }
+    }];
+    decryptAlertAction.enabled = NO;
+    [decryptionAlertController addAction:decryptAlertAction];
+    
+    [self presentViewController:decryptionAlertController animated:YES completion:^{
+        self.decryptionAlertControllerHasBeenPresented = YES;
+    }];
 }
 
 - (void)showDecryptionKeyNotValidAlert {
-    UIAlertView *decryptionKeyNotValidAlertView  = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"decryptionKeyNotValid", nil)
-                                                                              message:nil
-                                                                             delegate:self
-                                                                    cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                                    otherButtonTitles:nil];
-    [decryptionKeyNotValidAlertView setTag:2];
-    [decryptionKeyNotValidAlertView show];
+    UIAlertController *decryptionKeyNotValidAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyNotValid", @"Alert title shown when you have written a decryption key not valid") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    
+    [decryptionKeyNotValidAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"nil") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+         [self showDecryptionAlert];
+    }]];
+    
+    [self presentViewController:decryptionKeyNotValidAlertController animated:YES completion:nil];
 }
 
 - (void)setNodeInfo {
@@ -199,6 +217,19 @@
     }
     
     [self setUIItemsHidden:NO];
+}
+
+- (void)decryptionAlertTextFieldDidChange:(UITextField *)sender {
+    UIAlertController *decryptionAlertController = (UIAlertController *)self.presentedViewController;
+    if (decryptionAlertController) {
+        UITextField *textField = decryptionAlertController.textFields.firstObject;
+        UIAlertAction *rightButtonAction = decryptionAlertController.actions.lastObject;
+        BOOL enableRightButton = NO;
+        if (textField.text.length > 0) {
+            enableRightButton = YES;
+        }
+        rightButtonAction.enabled = enableRightButton;
+    }
 }
 
 #pragma mark - IBActions
@@ -287,101 +318,19 @@
 
 - (void)open {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self.node api:[MEGASdkManager sharedMEGASdk]];
-        
-        NSString *previewDocumentPath = nil;
-        if (offlineNodeExist) {
-            previewDocumentPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
+        BOOL isFolderLink = ((self.fileLinkMode == FileLinkModeNodeFromFolderLink) ? YES : NO);
+        if (self.node.name.mnz_isImagePathExtension) {
+            [self.node mnz_openImageInNavigationController:self.navigationController withNodes:@[self.node] folderLink:isFolderLink displayMode:2];
         } else {
-            NSString *nodeFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[self.node base64Handle]];
-            NSString *tmpFilePath = [nodeFolderPath stringByAppendingPathComponent:self.node.name];
-            if ([[NSFileManager defaultManager] fileExistsAtPath:tmpFilePath isDirectory:nil]) {
-                previewDocumentPath = tmpFilePath;
-            }
-        }
-        
-        if (previewDocumentPath) {
-            MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentPath];
-            [self presentViewController:previewController animated:YES completion:nil];
-        } else {
-            if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"documentOpening_alertTitle", nil)
-                                                                    message:AMLocalizedString(@"documentOpening_alertMessage", nil)
-                                                                   delegate:nil
-                                                          cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                          otherButtonTitles:nil, nil];
-                [alertView show];
-            } else {
-                // There isn't enough space in the device for preview the document
-                if (![Helper isFreeSpaceEnoughToDownloadNode:self.node isFolderLink:NO]) {
-                    return;
-                }
-                
-                PreviewDocumentViewController *previewDocumentVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentID"];
-                [previewDocumentVC setNode:self.node];
-                if (self.fileLinkMode == FileLinkModeDefault) {
-                    [previewDocumentVC setApi:[MEGASdkManager sharedMEGASdk]];
-                } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
-                    [previewDocumentVC setApi:[MEGASdkManager sharedMEGASdkFolder]];
-                }
-                [self.navigationController pushViewController:previewDocumentVC animated:YES];
-            }
+            [self.node mnz_openNodeInNavigationController:self.navigationController folderLink:isFolderLink];
         }
     }
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (alertView.tag == 1) {
-        if (buttonIndex == 0) {
-            [[decryptionAlertView textFieldAtIndex:0] resignFirstResponder];
-            [self dismissViewControllerAnimated:YES completion:nil];
-        } else if (buttonIndex == 1) {
-            NSString *linkString;
-            NSString *key = [[alertView textFieldAtIndex:0] text];
-            if ([[key substringToIndex:1] isEqualToString:@"!"]) {
-                linkString = self.fileLinkString;
-            } else {
-                linkString = [self.fileLinkString stringByAppendingString:@"!"];
-            }
-            linkString = [linkString stringByAppendingString:key];
-            
-            [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:linkString delegate:self];
-        }
-    } else if (alertView.tag == 2) { //Decryption key not valid
-        [self showDecryptionAlert];
-    }
-}
-
-- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
-    if (alertView.tag == 1) {
-        NSString *decryptionKey = [[alertView textFieldAtIndex:0] text];
-        if ([decryptionKey isEqualToString:@""]) {
-            return NO;
-        }
-    }
-    return YES;
 }
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger numberOfRows = 2;
-    
-    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([_node.name pathExtension]), NULL);
-    if (UTTypeConformsTo(fileUTI, kUTTypeImage) || [QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
-        numberOfRows = 3;
-    }
-    if (fileUTI) {
-        CFRelease(fileUTI);
-    }
-    
-    return numberOfRows;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -452,7 +401,7 @@
         switch ([error type]) {
             case MEGAErrorTypeApiEArgs: {
                 if ([request type] == MEGARequestTypeGetPublicNode) {
-                    if (decryptionAlertView.visible) {
+                    if (self.decryptionAlertControllerHasBeenPresented) {
                         [self showDecryptionKeyNotValidAlert];
                     } else {
                         [self showLinkNotValid];
@@ -485,18 +434,13 @@
     switch ([request type]) {
             
         case MEGARequestTypeGetPublicNode: {
-            
             if ([request flag]) {
-                if (decryptionAlertView.visible) { //Link without key, after entering a bad one
+                if (self.decryptionAlertControllerHasBeenPresented) { //Link without key, after entering a bad one
                     [self showDecryptionKeyNotValidAlert];
                 } else { //Link with invalid key
                     [self showLinkNotValid];
                 }
                 return;
-            }
-            
-            if (decryptionAlertView.visible) {
-                [[decryptionAlertView textFieldAtIndex:0] resignFirstResponder];
             }
             
             self.node = [request publicNode];

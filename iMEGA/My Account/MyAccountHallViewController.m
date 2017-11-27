@@ -13,7 +13,7 @@
 #import "TransfersViewController.h"
 #import "UsageViewController.h"
 
-@interface MyAccountHallViewController () <UITableViewDataSource, UITableViewDelegate, MEGAGlobalDelegate>
+@interface MyAccountHallViewController () <UITableViewDataSource, UITableViewDelegate, MEGAGlobalDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *buyPROBarButtonItem;
 
@@ -64,9 +64,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
-    [self initializeStorageInfo];
+    [self reloadUI];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -76,6 +77,13 @@
 }
 
 #pragma mark - Private
+
+- (void)reloadUI {
+    self.nameLabel.text = [[[MEGASdkManager sharedMEGASdk] myUser] mnz_fullName];
+    [self setUserAvatar];
+    
+    [self.tableView reloadData];
+}
 
 - (void)initializeStorageInfo {
     MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
@@ -127,13 +135,20 @@
     switch (indexPath.row) {
         case 0: { // Used Storage
             cell.sectionLabel.text = AMLocalizedString(@"usedStorage", @"Title of the Used Storage section");
-            cell.usedLabel.text = [self.byteCountFormatter stringFromByteCount:[self.usedStorage longLongValue]];
             
-            NSNumber *number = [NSNumber numberWithFloat:(([self.usedStorage floatValue] / [self.maxStorage floatValue]) * 100)];
-            NSString *percentageString = [self.numberFormatter stringFromNumber:number];
-            NSString *ofString = [NSString stringWithFormat:AMLocalizedString(@"of %@", @"Sentece showed under the used space percentage to complete the info with the maximum storage."), [self.byteCountFormatter stringFromByteCount:[self.maxStorage longLongValue]]];
-            cell.usedPercentageLabel.text = [NSString stringWithFormat:@"%@ %% %@", percentageString, ofString];
-            cell.usedProgressView.progress = number.floatValue / 100;
+            if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
+                MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
+                cell.usedLabel.text = [self.byteCountFormatter stringFromByteCount:accountDetails.storageUsed.longLongValue];
+                NSNumber *number = [NSNumber numberWithFloat:((accountDetails.storageUsed.floatValue / accountDetails.storageMax.floatValue) * 100)];
+                NSString *percentageString = [self.numberFormatter stringFromNumber:number];
+                NSString *ofString = [NSString stringWithFormat:AMLocalizedString(@"of %@", @"Sentece showed under the used space percentage to complete the info with the maximum storage."), [self.byteCountFormatter stringFromByteCount:accountDetails.storageMax.longLongValue]];
+                cell.usedPercentageLabel.text = [NSString stringWithFormat:@"%@ %% %@", percentageString, ofString];
+                cell.usedProgressView.progress = number.floatValue / 100;
+            } else {
+                cell.usedLabel.text = @"";
+                cell.usedPercentageLabel.text = @"";
+                cell.usedProgressView.progress = 0;
+            }
             break;
         }
             
@@ -263,7 +278,19 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
-    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+    NSIndexPath *contactsIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+    [self.tableView reloadRowsAtIndexPaths:@[contactsIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+#pragma mark - MEGARequestDelegate
+
+- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    if (error.type)
+        return;
+    
+    if (request.type == MEGARequestTypeAccountDetails) {
+        [self reloadUI];
+    }
 }
 
 @end

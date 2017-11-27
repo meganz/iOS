@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="Открываемый файл занимает больше, чем доступно памяти.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Недоступная ссылка";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="Это может быть вызвано следующими причинами:- Ссылка на файл была удалена из-за нарушения Условий обслуживания/Правил использования.- Недействительный адрес — ссылка, по которой вы пытаетесь перейти, не существует.- Ссылка на файл была удалена пользователем.";
+/* */
+"fileLinkUnavailableText1"="Это может быть по следующим причинам:";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="Переехал из-за нарушения.";
+/* */
+"fileLinkUnavailableText3"="Неверный URL - ссылка, которую вы пытаетесь получить доступ, не существует";
+/* */
+"fileLinkUnavailableText4"="Файл был удален пользователем.";
 /* Message shown when a download starts */
 "downloadStarted"="Загрузка запущена";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="Загружаемая папка занимает больше, чем доступно памяти.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Папка '%@' не может быть создана";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="Это может быть вызвано следующими причинами:- Ссылка на папку была удалена из-за нарушения Условий обслуживания/Правил использования.- Недействительный адрес — ссылка, по которой вы пытаетесь перейти, не существует.- Ссылка на папку была удалена пользователем.";
+/* */
+"folderLinkUnavailableText1"="Это может быть по следующим причинам:";
+/* */
+"folderLinkUnavailableText2"="Файл удален по причине нарушения условий предоставления услуг (ToS) или политики допустимого использования (AUP).";
+/* */
+"folderLinkUnavailableText3"="Неверный URL - ссылка, которую вы пытаетесь получить доступ, не существует";
+/* */
+"folderLinkUnavailableText4"="Ссылка была деактивирована пользователем.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Нет Интернет-соединения";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="Запросы добавления в контакты";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Добавить контакты";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="Полученные";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="Отправлено";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="Запросы";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="Запрос принят";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="Нет ожидающих запросов";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Остановленные передачи";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="Нет передач";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="Нет загрузок с сервера";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="Нет загрузок на сервер";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Облачный диск";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -816,6 +828,10 @@
 "downloadInUppercaseTransfers"="ЗАГРУЗКИ с сервера";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Мой Аккаунт";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="Купить PRO";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="Обновлять";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Посмотреть и изменить профиль.";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -1174,8 +1190,6 @@
 "autorenewableDescription"="Подписки продлеваются автоматически на тот же срок по такой же цене. Вы можете отключить автоматическое продление подписки MEGA PRO не позднее чем за 24 часа до следующего платежа в настройках учётной записи iTunes. Для управления подписками просто нажмите на значок App Store в телефоне, войдите со своим Apple ID внизу страницы (если вы этого ещё не сделали) и нажмите View ID. Вы попадёте на страницу своей учётной записи, прокрутите её вниз до управления подписками приложений. Там вы можете выбрать свою подписку MEGA PRO и посмотреть запланированную дату продления. Выберите другой план подписки или нажмите на переключатель «вкл/выкл» для отключения автоматического продления подписок.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Откройте MEGA и войдите, чтобы продолжить";
-/* Text shown when you try to use Files app while having a passcode */
-"disablePasscodeToUseFiles"="«Файлы» нельзя использовать, если у вас есть код доступа в MEGA. Если вы хотите использовать «Файлы», откройте MEGA и отключите его.";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Отозвать";
 /* Inform user that there were unsupported assets in the share extension */
