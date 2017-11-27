@@ -53,7 +53,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="서버의 SSL 암호를 확인할 수 없습니다. 중간자 공격의 영향을 받았을 수 있습니다.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
+"theContentIsNotAvailableForThisAccount"="접근하려면 항목은 이 계정에서 이용할 수 없습니다. 모바일 웹 클라이언트와 같은 계정으로 로그인하세요.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="과정이 예상보다 오래 걸립니다. 기다려주세요...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="열려는 파일은 사용가능한 메모리보다 큽니다.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="사용할 수 없는 링크";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="다음의 이유로 인해 발생할 수 있습니다:- 파일이 이용 약관/이용 목적 제한 방침을 위반하여 삭제되었습니다.- 잘못된 URL – 접속하려는 링크가 존재하지 않습니다.- 파일이 이용자에 의해 삭제되었습니다.";
+/* */
+"fileLinkUnavailableText1"="이러한 사항은 다음과 같은 이유로 발생할 수 있습니다:";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="이 파일은 이용 약관/용인 가능한 이용 정책 위반으로 삭제되었습니다.";
+/* */
+"fileLinkUnavailableText3"="잘못된 URL - 당신이 접근하려던 링크는 존재하지 않습니다.";
+/* */
+"fileLinkUnavailableText4"="이 파일은 이용자에 의해 삭제되었습니다.";
 /* Message shown when a download starts */
 "downloadStarted"="다운로드가 시작되었습니다";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="다운로드 하려는 폴더가 사용가능한 메모리보다 큽니다.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="'%@' 폴더를 생성할 수 없습니다";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="다음의 이유로 인해 발생할 수 있습니다:- 폴더 링크가 이용 약관/이용 목적 제한 방침을 위반하여 삭제되었습니다.- 잘못된 URL – 접속하려는 링크가 존재하지 않습니다.- 폴더 링크가 이용자에 의해 삭제되었습니다.";
+/* */
+"folderLinkUnavailableText1"="이러한 사항은 다음과 같은 이유로 발생할 수 있습니다:";
+/* */
+"folderLinkUnavailableText2"="이 파일은 이용 약관/용인 가능한 이용 정책 위반으로 삭제되었습니다.";
+/* */
+"folderLinkUnavailableText3"="잘못된 URL - 당신이 접근하려던 링크는 존재하지 않습니다.";
+/* */
+"folderLinkUnavailableText4"="폴더 링크가 이용자에 의해 삭제되었습니다.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="인터넷 연결 없음";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="연락처 요청";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="연락처 추가";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="받음";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="보냄";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="요청";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="요청 승인됨";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="보류중인 요청 없음";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="일시정지된 전송";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="전송 없음";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="다운로드 없음";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="업로드 없음";
 /* Title of the Cloud Drive section */
 "cloudDrive"="클라우드 드라이브";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -319,7 +331,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="링크 복사";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Copy key";
+"copyKey"="키 복사";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="다른 곳에서 열기...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -816,6 +828,10 @@
 "downloadInUppercaseTransfers"="다운로드 전송";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="내 계정";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="PRO 구입";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="업그레이드";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="프로필 보기/수정";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -823,13 +839,13 @@
 /* Title of the Achievements section */
 "achievementsTitle"="도전 과제";
 /* Title of the Used storage section */
-"usedStorage"="Used storage";
+"usedStorage"="이용한 저장 공간";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get bonuses";
+"inviteFriendsAndGetRewards"="친구를 초대하고 보너스를 받으세요";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="친구를 초대하세요";
 /* title of the introduction for the achievements screen */
-"inviteFriendsAndGetForEachReferral"="Get %1$s of storage and %2$s of transfers for each referral";
+"inviteFriendsAndGetForEachReferral"="초대할 때마다 $1s의 저장 공간과 %2s의 전송 할당량을 받습니다";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
 /*  */
@@ -1174,8 +1190,6 @@
 "autorenewableDescription"="구독은 처음 선택했던 기간과 동일한 가격과 동일한 기간으로 자동으로 연장됩니다. 다음 구독 결제 24시간 전에 당신의 iTunes 계정 설정 페이지에서 자동 결제를 제거할 수 있습니다. 구독을 관라허려면, 휴대전화에서 앱 스토어를 클릭하여 페이지 하단에서 애플 ID로 로그인하세요 (만약 하지 않았다면) 그리고 ID 보기를 클릭하세요. 앱 구독 관리 페이지로 내려갈 수 있는 계정 페이지가 보이게 됩니다. 거기서, MEGA PRO 구독을 선택할 수 있고, 예정된 갱신일을 보고, 다른 구독 패키지 선택 또는 구독의 자동 갱신을 해제할 수 있는 스위치를 끌 수 있습니다.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="계속하려면 MEGA를 열고 로그인하세요";
-/* Text shown when you try to use Files app while having a passcode */
-"disablePasscodeToUseFiles"="Files cannot be used if you have a passcode in MEGA. If you want to use Files, please open MEGA and disable it.";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="철회";
 /* Inform user that there were unsupported assets in the share extension */

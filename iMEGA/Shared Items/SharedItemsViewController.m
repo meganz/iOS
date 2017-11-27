@@ -747,6 +747,10 @@
         }
     }
     
+    if (@available(iOS 11.0, *)) {
+        cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
+    }
+    
     return cell;
 }
 

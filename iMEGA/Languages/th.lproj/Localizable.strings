@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="ไฟล์ที่คุณกำลังพยายามเปิด มีขนาดใหญ่กว่าหน่วยความจำที่มีอยู่";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="ลิงก์ใช้งานไม่ได้";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="ซึ่งอาจเป็นเพราะสาเหตุต่อไปนี้:- ไฟล์ถูกลบเนื่องจากมีการละเมิด ToS/AUP- URL ไม่ถูกต้อง - ลิงก์ที่คุณพยายามเข้าถึงไม่มีอยู่- ไฟล์ถูกลบโดยผู้ใช้";
+/* */
+"fileLinkUnavailableText1"="ซึ่งอาจเป็นเพราะเหตุผลดังต่อไปนี้:";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="ไฟล์นี้ถูกลบออกไปแล้ว เนื่องจากละเมิด ToS/AUP";
+/* */
+"fileLinkUnavailableText3"="URL ไม่ถูกต้อง - ไม่พบลิงก์ที่คุณพยายามเข้าถึง";
+/* */
+"fileLinkUnavailableText4"="ไฟล์ถูกลบไปแล้วโดยผู้ใช้";
 /* Message shown when a download starts */
 "downloadStarted"="เริ่มต้นดาวน์โหลด";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="โฟลเดอร์ที่คุณกำลังพยายามดาวน์โหลด มีขนาดใหญ่กว่าหน่วยความจำที่มีอยู่";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="โฟลเดอร์ '%@' ไม่สามารถสร้างได้";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="ซึ่งอาจเป็นเพราะสาเหตุต่อไปนี้:- โฟลเดอร์ถูกลบเนื่องจากมีการละเมิด ToS/AUP- URL ไม่ถูกต้อง - ลิงก์ที่คุณพยายามเข้าถึงไม่มีอยู่- โฟลเดอร์ถูกลบโดยผู้ใช้";
+/* */
+"folderLinkUnavailableText1"="ซึ่งอาจเป็นเพราะเหตุผลดังต่อไปนี้:";
+/* */
+"folderLinkUnavailableText2"="ลิงก์โฟลเดอร์ถูกลบออกแล้ว เนื่องจากละเมิด ToS/AUP";
+/* */
+"folderLinkUnavailableText3"="URL ไม่ถูกต้อง - ไม่พบลิงก์ที่คุณพยายามเข้าถึง";
+/* */
+"folderLinkUnavailableText4"="ลิงก์โฟลเดอร์ถูกปิดใช้งานโดยผู้ใช้";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="ไม่มีการเชื่อมต่ออินเทอร์เน็ต";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="คำขอผู้ติดต่อ";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="เพิ่มผู้ติดต่อ";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="Received";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="ส่ง";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="คำขอ";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="ยอมรับคำขอแล้ว";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="ไม่มีคำขอที่รอดำเนินการ";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="การถ่ายโอนถูกพักชั่วคราว";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="ยังไม่มีการโอนย้าย";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="ยังไม่มีการดาวน์โหลด";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="ยังไม่มีการอัปโหลด";
 /* Title of the Cloud Drive section */
 "cloudDrive"="คลาวด์ไดรฟ์";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -816,6 +828,10 @@
 "downloadInUppercaseTransfers"="โอนย้ายการดาวน์โหลด";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="บัญชีของฉัน";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="Buy PRO";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="อัปเกรด";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="ดูและแก้ไขโปรไฟล์";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -1174,8 +1190,6 @@
 "autorenewableDescription"="การสมัครใช้งานแบบต่ออายุอัตโนมัติอย่างต่อเนื่องนั้น จะถูกกำหนดค่าไม่ว่าจะเป็นระยะเวลาการสมัครใช้งานหรือราคา จะเป็นไปในทิศทางเดียวกันและเป็นค่าแรกเริ่มให้โดยอัตโนมัติ คุณสามารถปิดการใช้งานดังกล่าว แพคเกจ MEGA PRO ได้ไม่เกิน 24 ชั่วโมงก่อนการชำระเงินในรอบถัดไป เนื่องจากเป็นการตั้งค่าผ่านหน้าบัญชี iTunes ของคุณ และเพื่อจัดการกับการสมัครใช้งานของคุณ เพียงแค่แตะที่ไอคอน App Store บนโทรศัพท์ของคุณ ลงชื่อเข้าด้วย Apple ID ของคุณที่ด้านล่างของหน้า (ถ้าคุณยังไม่ได้ดำเนินการ) แล้วคลิกดูรหัส คุณจะถูกนำไปยังหน้าบัญชีของคุณ สามารถเลื่อนลงไปจัดการ การสมัครใช้งานแอปได้ จากนั้น คุณสามารถเลือกการสมัครใช้งาน MEGA PRO และสามารถดูกำหนดการต่ออายุ เลือกแพคเกจสมัครใช้งานต่างๆ หรือสลับสวิทช์เปิด-ปิด เพื่อปิดใช้งาน การสมัครใช้งานแบบต่ออายุอัตโนมัติของคุณได้เช่นเดียวกัน";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="เปิด MEGA และลงชื่อเข้าใช้เพื่อดำเนินการต่อ";
-/* Text shown when you try to use Files app while having a passcode */
-"disablePasscodeToUseFiles"="Files cannot be used if you have a passcode in MEGA. If you want to use Files, please open MEGA and disable it.";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="เพิกถอน";
 /* Inform user that there were unsupported assets in the share extension */

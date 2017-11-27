@@ -95,7 +95,7 @@
         }
     }
     
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0) {
+    if (@available(iOS 9.0, *)) {
         [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
             switch (status) {
                 case PHAuthorizationStatusNotDetermined:

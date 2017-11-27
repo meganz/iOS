@@ -33,6 +33,7 @@
 #import "CloudDriveTableViewController.h"
 #import "ConfirmAccountViewController.h"
 #import "ContactRequestsViewController.h"
+#import "ContactsViewController.h"
 #import "CreateAccountViewController.h"
 #import "FileLinkViewController.h"
 #import "FolderLinkViewController.h"
@@ -103,6 +104,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @property (nonatomic) MEGAIndexer *indexer;
 @property (nonatomic) NSString *nodeToPresentBase64Handle;
 
+@property (nonatomic) NSUInteger megatype; //1 share folder, 2 new message, 3 contact request
+
 @end
 
 @implementation AppDelegate
@@ -119,9 +122,15 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [self migrateLocalCachesLocation];
     
+    if ([launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"]) {
+        _megatype = [[[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"megatype"] unsignedIntegerValue];
+    }
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
         [[MEGALogger sharedLogger] startLogging];
     }
+    
+    MEGALogDebug(@"The launch process is almost done and the app is almost ready to run. Launch options: %@", launchOptions);
     
     _signalActivityRequired = NO;
     
@@ -141,6 +150,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    
+    [[MEGASdkManager sharedMEGASdk] httpServerSetMaxBufferSize:[UIDevice currentDevice].maxBufferSize];
     
     [[LTHPasscodeViewController sharedUser] setDelegate:self];
     
@@ -319,13 +330,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
     }
     
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) {
+    if (@available(iOS 9.0, *)) {} else {
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSavePhotoToGalleryEnabled"];
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSaveVideoToGalleryEnabled"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
-    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"9.0"]) {
+    if (@available(iOS 9.0, *)) {
         self.indexer = [[MEGAIndexer alloc] init];
         [Helper setIndexer:self.indexer];
     }
@@ -489,9 +500,16 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"9.0"]) {
+    if (@available(iOS 9.0, *)) {
         MEGALogWarning(@"Memory warning, stopping spotlight indexing");
         [self.indexer stopIndexing];
+    }
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    if (application.applicationState == UIApplicationStateInactive) {
+        _megatype = [[userInfo objectForKey:@"megatype"] unsignedIntegerValue];
+        [self openTabBasedOnNotificationMegatype];
     }
 }
 
@@ -502,7 +520,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[UINavigationBar appearance] setTintColor:[UIColor mnz_redD90007]];
     [[UINavigationBar appearance] setBackgroundColor:[UIColor mnz_grayF9F9F9]];
     
-    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"10.0"]) {
+    if (@available(iOS 10.0, *)) {
         [[UINavigationBar appearance] setShadowImage:[UIImage mnz_navigationBarShadow]];
         [[UINavigationBar appearance] setBackgroundImage:[UIImage mnz_navigationBarBackground] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsCompact];
     }
@@ -577,7 +595,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
                 return;
             }
-            [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)self.window.rootViewController];
+            [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:self.mainTBC];
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
             [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
             break;
@@ -598,7 +616,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     return;
                 }
             }
-            [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)self.window.rootViewController];
+            [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:self.mainTBC];
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
             for (MEGANode *node in [Helper nodesFromLinkMutableArray]) {
                 [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES];
@@ -1213,10 +1231,39 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if (isAccountFirstLogin) {
         [self registerForNotifications];
     }
+    
+    [self openTabBasedOnNotificationMegatype];
+}
+
+- (void)openTabBasedOnNotificationMegatype {
+    NSUInteger tabTag = 0;
+    switch (self.megatype) {
+        case 1:
+            tabTag = 3;
+            break;
+            
+        case 2:
+            tabTag = 2;
+            break;
+            
+        case 3:
+            tabTag = 4;
+            break;
+            
+        default:
+            return;
+    }
+    NSUInteger tabPosition = [self.mainTBC tabPositionForTag:tabTag];
+    self.mainTBC.selectedIndex = tabPosition;
+    if (self.megatype == 3) {
+        MEGANavigationController *navigationController = [[self.mainTBC viewControllers] objectAtIndex:tabTag];
+        ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
+        [navigationController pushViewController:contactsVC animated:NO];
+    }
 }
 
 - (void)registerForNotifications {
-    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"10.0"]) {
+    if (@available(iOS 10.0, *)) {
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
         center.delegate = self;
         [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert)
@@ -1732,7 +1779,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
         }
     } else {
-        if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"9.0"]) {
+        if (@available(iOS 9.0, *)) {
             NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
             MEGALogDebug(@"Spotlight indexing %lu nodes updated", nodesToIndex.count);
             for (MEGANode *node in nodesToIndex) {
@@ -1958,6 +2005,8 @@ void uncaughtExceptionHandler(NSException *exception) {
             [self requestContactsFullname];
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
+                [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self.mainTBC];
+                
                 [[MEGASdkManager sharedMEGAChatSdk] connect];
                 if (isAccountFirstLogin) {
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
@@ -1965,7 +2014,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
             [self showMainTabBar];
 
-            if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"9.0"]) {
+            if (@available(iOS 9.0, *)) {
                 NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
                     if (![sharedUserDefaults boolForKey:@"treeCompleted"]) {
@@ -2182,6 +2231,8 @@ void uncaughtExceptionHandler(NSException *exception) {
             [[MEGALogger sharedLogger] enableSDKlogs];
         }
         [MEGASdkManager destroySharedMEGAChatSdk];
+        
+        [self.mainTBC setBadgeValueForChats];
     }
     
     MEGALogInfo(@"onChatRequestFinish request type: %ld", request.type);
@@ -2232,7 +2283,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if (error.type == MEGAErrorTypeApiEOverQuota) {
+    if (error.type == MEGAErrorTypeApiEOverQuota && error.value) {
         [SVProgressHUD dismiss];
         WarningTransferQuotaViewController *warningTransferQuotaVC = [[WarningTransferQuotaViewController alloc] init];
         warningTransferQuotaVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;

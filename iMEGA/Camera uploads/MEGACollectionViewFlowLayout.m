@@ -4,7 +4,7 @@
 @implementation MEGACollectionViewFlowLayout
 
 - (void)prepareLayout {
-    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"10.0"]) {
+    if (@available(iOS 10.0, *)) {
         self.collectionView.prefetchingEnabled = false;
     }
 }

@@ -169,6 +169,8 @@
         self.homeQuickActionSearch = NO;
         [self activateSearch];
     }
+    
+    [self requestReview];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -329,6 +331,11 @@
                 [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
         }
+    }
+    
+    if (@available(iOS 11.0, *)) {
+        cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
+        cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     }
     
     return cell;
@@ -1261,6 +1268,29 @@
     self.searchController.active = YES;
 }
 
+- (void)requestReview {
+    if (@available(iOS 10.3, *)) {
+        static BOOL alreadyPresented = NO;
+        if (!alreadyPresented && [[MEGASdkManager sharedMEGASdk] mnz_accountDetails] && [[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
+            alreadyPresented = YES;
+            NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+            NSDate *rateUsDate = [sharedUserDefaults objectForKey:@"rateUsDate"];
+            if (rateUsDate) {
+                NSInteger months = [[NSCalendar currentCalendar] components:NSCalendarUnitMonth
+                                                                   fromDate:rateUsDate
+                                                                     toDate:[NSDate date]
+                                                                    options:NSCalendarWrapComponents].month;
+                if (months < 4) {
+                    return;
+                }
+            }
+            [SKStoreReviewController requestReview];
+            rateUsDate = [NSDate date];
+            [sharedUserDefaults setObject:rateUsDate forKey:@"rateUsDate"];
+        }
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -1315,7 +1345,7 @@
         
         [newFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
         
-        [newFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIAlertAction *createFolderAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 UITextField *textField = [[newFolderAlertController textFields] firstObject];
                 MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:textField.text];
@@ -1326,7 +1356,9 @@
                     [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text parent:self.parentNode delegate:createFolderRequestDelegate];
                 }
             }
-        }]];
+        }];
+        createFolderAlertAction.enabled = NO;
+        [newFolderAlertController addAction:createFolderAlertAction];
         
         [self presentViewController:newFolderAlertController animated:YES completion:nil];
     }];

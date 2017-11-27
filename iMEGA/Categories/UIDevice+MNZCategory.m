@@ -6,6 +6,10 @@
 static NSString *machine;
 static NSString *deviceName;
 
+static const NSUInteger GIBIBYTE = 1073741824;      // 1 GB
+static const NSUInteger MAX_BUFFER_16MB = 16777216; // 16 MB
+static const NSUInteger MAX_BUFFER_32MB = 33554432; // 32 MB
+
 @implementation UIDevice (MNZCategory)
 
 #pragma mark - Class methods
@@ -186,20 +190,16 @@ static NSString *deviceName;
     return NO;
 }
 
+- (NSUInteger)maxBufferSize {
+    return ([NSProcessInfo processInfo].physicalMemory >= GIBIBYTE) ? MAX_BUFFER_32MB : MAX_BUFFER_16MB;
+}
+
 - (NSString *)deviceName {
     if (deviceName == nil) {
         NSString *deviceNameTemp = [[UIDevice devicesDictionary] objectForKey:[[UIDevice currentDevice] hardwareType]];
         deviceName = (deviceNameTemp == nil) ? [self unknownDevice] : deviceNameTemp;
     }
     return deviceName;
-}
-
-- (BOOL)systemVersionLessThanVersion:(NSString *)version {
-    return [[[UIDevice currentDevice] systemVersion] compare:version options:NSNumericSearch] == NSOrderedAscending;
-}
-
-- (BOOL)systemVersionGreaterThanOrEqualVersion:(NSString *)version {
-    return [[[UIDevice currentDevice] systemVersion] compare:version options:NSNumericSearch] != NSOrderedAscending;
 }
 
 @end

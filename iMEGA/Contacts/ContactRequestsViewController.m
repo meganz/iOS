@@ -43,7 +43,7 @@
     
     [self.navigationItem setTitle:AMLocalizedString(@"contactRequests", @"Contact requests")];
     
-    [self.contactRequestsSegmentedControl setTitle:AMLocalizedString(@"requests", nil) forSegmentAtIndex:0];
+    [self.contactRequestsSegmentedControl setTitle:AMLocalizedString(@"received", @"Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved.") forSegmentAtIndex:0];
     [self.contactRequestsSegmentedControl setTitle:AMLocalizedString(@"sent", nil) forSegmentAtIndex:1];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
@@ -214,6 +214,10 @@
     [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
     [cell setSelectedBackgroundView:view];
     cell.separatorInset = UIEdgeInsetsMake(0.0, 58.0, 0.0, 0.0);
+    
+    if (@available(iOS 11.0, *)) {
+        cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
+    }
     
     return cell;
 }
