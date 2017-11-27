@@ -6,3 +6,9 @@
 "NSPhotoLibraryUsageDescription"="MEGA accesses your photos or/and videos when you select some of them to upload or when you have enabled the Camera Uploads.";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSContactsUsageDescription"="MEGA accesses your contacts when you select some of them to save/export.";
+/* Label for any 'Search' button, link, etc. - (String as short as possible). */
+quickActionSearchString="Search";
+/*  */
+quickActionUploadString="Upload";
+/* Title of the Offline section */
+quickActionOfflineString="Offline";

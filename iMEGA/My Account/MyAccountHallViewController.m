@@ -89,6 +89,11 @@
     self.maxStorage = accountDetails.storageMax;
 }
 
+- (void)openOffline {
+    NSIndexPath *offlineIndexPath = [NSIndexPath indexPathForRow:4 inSection:0];
+    [self tableView:self.tableView didSelectRowAtIndexPath:offlineIndexPath];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)viewAndEditProfileTouchUpInside:(UIButton *)sender {
