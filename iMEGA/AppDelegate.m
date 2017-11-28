@@ -351,8 +351,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 } else {
                     self.quickActionType = applicationShortcutItem.type;
                 }
-                
-                return YES;
             }
         }
     }
@@ -495,7 +493,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL succeeded))completionHandler {
     if (isFetchNodesDone) {
-        [self manageQuickActionType:shortcutItem.type] ? completionHandler(YES): completionHandler(NO);
+        completionHandler([self manageQuickActionType:shortcutItem.type]);
     }
 }
 
@@ -575,6 +573,14 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [self processSelectedOptionOnLink];
         }
     }];
+}
+
+- (void)showOffline {
+    [Helper changeToViewController:MyAccountHallViewController.class onTabBarController:self.mainTBC];
+    NSUInteger myAccountHallTabPosition = 4;
+    MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:myAccountHallTabPosition];
+    MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
+    [myAccountHallVC openOffline];
 }
 
 - (void)processSelectedOptionOnLink {
@@ -1019,37 +1025,36 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (BOOL)manageQuickActionType:(NSString *)type {
-    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-        if ([type isEqualToString:@"mega.ios.search"]) {
-            [Helper changeToViewController:CloudDriveTableViewController.class onTabBarController:self.mainTBC];
-            NSUInteger cloudDriveTabPosition = [self.mainTBC tabPositionForTag:0];
-            MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:cloudDriveTabPosition];
-            CloudDriveTableViewController *cloudDriveTVC = navigationController.viewControllers.firstObject;
-            if (self.quickActionType) { //Coming from didFinishLaunchingWithOptions
-                cloudDriveTVC.homeQuickActionSearch = YES; //Search will become active after the Cloud Drive did appear
+    BOOL quickActionManaged = YES;
+    if ([type isEqualToString:@"mega.ios.search"]) {
+        [Helper changeToViewController:CloudDriveTableViewController.class onTabBarController:self.mainTBC];
+        NSUInteger cloudDriveTabPosition = [self.mainTBC tabPositionForTag:0];
+        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:cloudDriveTabPosition];
+        CloudDriveTableViewController *cloudDriveTVC = navigationController.viewControllers.firstObject;
+        if (self.quickActionType) { //Coming from didFinishLaunchingWithOptions
+            if ([LTHPasscodeViewController doesPasscodeExist]) {
+                [cloudDriveTVC activateSearch]; // Cloud Drive already presented, so activate search bar
             } else {
-                [cloudDriveTVC activateSearch];
+                cloudDriveTVC.homeQuickActionSearch = YES; //Search will become active after the Cloud Drive did appear
             }
-        } else if ([type isEqualToString:@"mega.ios.upload"]) {
-            [Helper changeToViewController:CloudDriveTableViewController.class onTabBarController:self.mainTBC];
-            NSUInteger cloudDriveTabPosition = [self.mainTBC tabPositionForTag:0];
-            MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:cloudDriveTabPosition];
-            CloudDriveTableViewController *cloudDriveTVC = navigationController.viewControllers.firstObject;
-            [cloudDriveTVC presentUploadAlertController];
-        } else if ([type isEqualToString:@"mega.ios.offline"]) {
-            [Helper changeToViewController:MyAccountHallViewController.class onTabBarController:self.mainTBC];
-            NSUInteger myAccountHallTabPosition = [self.mainTBC tabPositionForTag:4];
-            MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:myAccountHallTabPosition];
-            MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
-            [myAccountHallVC openOffline];
+        } else {
+            [cloudDriveTVC activateSearch];
         }
-        
-        self.quickActionType = nil;
-        
-        return YES;
+    } else if ([type isEqualToString:@"mega.ios.upload"]) {
+        [Helper changeToViewController:CloudDriveTableViewController.class onTabBarController:self.mainTBC];
+        NSUInteger cloudDriveTabPosition = [self.mainTBC tabPositionForTag:0];
+        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:cloudDriveTabPosition];
+        CloudDriveTableViewController *cloudDriveTVC = navigationController.viewControllers.firstObject;
+        [cloudDriveTVC presentUploadAlertController];
+    } else if ([type isEqualToString:@"mega.ios.offline"]) {
+        [self showOffline];
+    } else {
+        quickActionManaged = NO;
     }
     
-    return NO;
+    self.quickActionType = nil;
+    
+    return quickActionManaged;
 }
 
 - (void)removeUnfinishedTransfersOnFolder:(NSString *)directory {
