@@ -402,13 +402,7 @@
 
 - (void)attachNodes {
     self.selectedNodes(self.selectedNodesMutableDictionary.allValues.copy);
-    if (self.searchController.isActive) {
-        [self.searchController dismissViewControllerAnimated:YES completion:^{
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }];
-    } else {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
+    [self dismiss];
 }
 
 - (void)alertControllerShouldEnableDefaultButtonForTextField:(UITextField *)sender {
@@ -440,6 +434,16 @@
 
 - (MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath {
     return self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+}
+
+- (void)dismiss {
+    if (self.searchController.isActive) {
+        [self.searchController dismissViewControllerAnimated:YES completion:^{
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 #pragma mark - IBActions
@@ -516,13 +520,7 @@
         [self.browserViewControllerDelegate uploadToParentNode:nil];
     }
     
-    if (self.searchController.isActive) {
-        [self.searchController dismissViewControllerAnimated:YES completion:^{
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }];
-    } else {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
+    [self dismiss];
 }
 
 - (IBAction)uploadToMega:(UIBarButtonItem *)sender {
@@ -537,13 +535,8 @@
                 MEGALogError(@"Move item at path failed with error: %@", error);
                 [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"fileTooBigMessage_open", @"Message shown when there are errors trying to copy or move locally a file before being uploaded to MEGA")];
             }
-            if (self.searchController.isActive) {
-                [self.searchController dismissViewControllerAnimated:YES completion:^{
-                    [self dismissViewControllerAnimated:YES completion:nil];
-                }];
-            } else {
-                [self dismissViewControllerAnimated:YES completion:nil];
-            }
+            
+            [self dismiss];
         }
     } else if (self.browserAction == BrowserActionShareExtension) {
         [self.browserViewControllerDelegate uploadToParentNode:self.parentNode];
@@ -845,13 +838,8 @@
                 }
                 [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
                 [SVProgressHUD showSuccessWithStatus:message];
-                if (self.searchController.isActive) {
-                    [self.searchController dismissViewControllerAnimated:YES completion:^{
-                        [self dismissViewControllerAnimated:YES completion:nil];
-                    }];
-                } else {
-                    [self dismissViewControllerAnimated:YES completion:nil];
-                }
+                
+                [self dismiss];
             }
             break;
         }
@@ -877,13 +865,7 @@
                     [[MEGASdkManager sharedMEGASdkFolder] logout];
                 }
                 
-                if (self.searchController.isActive) {
-                    [self.searchController dismissViewControllerAnimated:YES completion:^{
-                        [self dismissViewControllerAnimated:YES completion:nil];
-                    }];
-                } else {
-                    [self dismissViewControllerAnimated:YES completion:nil];
-                }
+                [self dismiss];
             }
             break;
         }
