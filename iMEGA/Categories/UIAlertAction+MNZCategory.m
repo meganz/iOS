@@ -4,7 +4,7 @@
 @implementation UIAlertAction (MNZCategory)
 
 - (void)mnz_setTitleTextColor:(UIColor *)color {
-    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.3"]) {
+    if (@available(iOS 8.3, *)) {
         [self setValue:color forKey:@"titleTextColor"];
     }
 }

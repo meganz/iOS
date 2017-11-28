@@ -2,6 +2,48 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>quickActionSearch</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>quickActionSearchString</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).search</string>
+			<key>UIApplicationShortcutItemUserInfo</key>
+			<dict>
+				<key>version</key>
+				<string>$(PRODUCT_VERSION)</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>quickActionUpload</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>quickActionUploadString</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).upload</string>
+			<key>UIApplicationShortcutItemUserInfo</key>
+			<dict>
+				<key>version</key>
+				<string>$(PRODUCT_VERSION)</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>quickActionOffline</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>quickActionOfflineString</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).offline</string>
+			<key>UIApplicationShortcutItemUserInfo</key>
+			<dict>
+				<key>version</key>
+				<string>$(PRODUCT_VERSION)</string>
+			</dict>
+		</dict>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDocumentTypes</key>
@@ -36,7 +78,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.7.4</string>
+	<string>3.7.6</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -51,7 +93,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>71</string>
+	<string>79</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -65,8 +107,12 @@
 	<string>NSCameraUsageDescription</string>
 	<key>NSContactsUsageDescription</key>
 	<string>NSContactsUsageDescription</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>NSFaceIDUsageDescription</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>NSMicrophoneUsageDescription</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>NSPhotoLibraryAddUsageDescription</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>NSPhotoLibraryUsageDescription</string>
 	<key>UIAppFonts</key>

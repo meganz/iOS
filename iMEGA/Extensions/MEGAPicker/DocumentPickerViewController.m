@@ -71,7 +71,7 @@
 #endif
     
     // Add a observer to get notified when the extension come back to the foreground:
-    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.2"]) {
+    if (@available(iOS 8.2, *)) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActive)
                                                      name:NSExtensionHostWillResignActiveNotification
                                                    object:nil];

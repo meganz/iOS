@@ -85,7 +85,6 @@
     self.howItWorksLabel.hidden = YES;
     self.howItWorksExplanationLabel.hidden = YES;
     self.howItWorksCompletedExplanationLabel.text = howItWorksExplanationLabel;
-    [self.howItWorksCompletedExplanationLabel sizeToFit];
 }
 
 #pragma - Private

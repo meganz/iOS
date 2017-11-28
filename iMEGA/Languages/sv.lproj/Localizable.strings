@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="Filen du försöker öppna är större än det tillgängliga minnet.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Otillgänglig länk";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="Detta skulle kunna bero på följande orsaker:- Filen har tagits bort på grund av en ToS/AUP kränkning.- Ogiltig webbadress - länken du försöker komma åt existerar inte.- Filen har tagits bort av användaren.";
+/* */
+"fileLinkUnavailableText1"="Detta kan vara på grund av följande anledningar: ";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="Filen har blivit borttagen för regelbrott mot ToS (användarvillkor) / AUP (policy för acceptabel användning).";
+/* */
+"fileLinkUnavailableText3"="Ogiltig URL-länken du försöker öppna existerar inte längre.";
+/* */
+"fileLinkUnavailableText4"="Användaren har raderat filen.";
 /* Message shown when a download starts */
 "downloadStarted"="Nedladdning startades!";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="Mappen du försöker ladda ner är större än avaliable minnet.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Mappen '%@' kan inte skapas";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="Detta kan bero på följande orsaker:- Länken mapp har tagits bort på grund av en ToS / AUP kränkning.- Ogiltig webbadress - länken du försöker komma åt existerar inte.- Länken mappen har tagits bort av användaren.";
+/* */
+"folderLinkUnavailableText1"="Detta kan vara på grund av följande anledningar: ";
+/* */
+"folderLinkUnavailableText2"="Länken till mappen har raderats på grund av en överträdelse av våra tjänstevillkor.";
+/* */
+"folderLinkUnavailableText3"="Ogiltig URL-länken du försöker öppna existerar inte längre.";
+/* */
+"folderLinkUnavailableText4"="Länken till mappen har inaktiverats av användaren.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Ingen internetuppkoppling";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="Kontaktförfrågningar";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Lägg till kontakter";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="Received";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="Skickade";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="Förfrågningar";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="Förfrågan accepterad";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="Inga obesvarade förfrågningar";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Pausade överföringar";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="Inga överföringar";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="Inga nedladdningar";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="Inga uppladdningar";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Molnlagring";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -816,6 +828,10 @@
 "downloadInUppercaseTransfers"="LADDA NED överföringar";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Mitt konto";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="Buy PRO";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="Uppgradera";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="View and edit profile";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -1174,8 +1190,6 @@
 "autorenewableDescription"="Abonnemang förnyas automatiskt för efterföljande perioder av samma längd och till samma pris som den inledande perioden som valts. Du kan stänga av automatisk förlängning av din MEGA PRO abonnemang senast 24 timmar innan din nästa prenumeration, betalning sker via din iTunes-sidas kontoinställningar. För att hantera dina prenumerationer, klickar du bara på ikonen App Store på din telefon, logga in med ditt Apple-ID längst ner på sidan (om du inte redan har gjort det) och sedan klicka på Visa ID. Du kommer att tas till ditt konto där du kan bläddra ner till Hantera App prenumerationer. Därifrån kan du välja MEGA PRO abonnemang och visa ditt planerade förnyelsedatum, välja en annan abonnemangspaket eller växla på strömbrytaren till off för att inaktivera automatisk förnyelse av din prenumeration.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
-/* Text shown when you try to use Files app while having a passcode */
-"disablePasscodeToUseFiles"="Files cannot be used if you have a passcode in MEGA. If you want to use Files, please open MEGA and disable it.";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Återkalla";
 /* Inform user that there were unsupported assets in the share extension */

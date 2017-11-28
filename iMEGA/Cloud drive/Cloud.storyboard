@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13526" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="7kf-jp-clj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="7kf-jp-clj">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -406,7 +406,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r08-az-XN8" userLabel="Name Label">
-                                        <rect key="frame" x="30" y="113" width="354" height="18"/>
+                                        <rect key="frame" x="188.33333333333334" y="113" width="38.666666666666657" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="jz7-xx-pbU"/>
                                         </constraints>
@@ -432,27 +432,37 @@
                                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="linked" translatesAutoresizingMaskIntoConstraints="NO" id="1D9-EU-e6K">
+                                        <rect key="frame" x="238" y="116" width="12" height="12"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="12" id="jOY-ko-5HR"/>
+                                            <constraint firstAttribute="width" constant="12" id="qL0-qG-79w"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.9686274528503418" green="0.9686274528503418" blue="0.9686274528503418" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="8Xy-WI-wWd" secondAttribute="bottom" constant="11" id="1N4-Au-aPQ"/>
                                     <constraint firstAttribute="height" constant="180" id="3KA-pz-SCn"/>
+                                    <constraint firstItem="1D9-EU-e6K" firstAttribute="centerY" secondItem="r08-az-XN8" secondAttribute="centerY" id="3SQ-9z-DcZ"/>
                                     <constraint firstItem="r08-az-XN8" firstAttribute="top" secondItem="2zt-gN-F0L" secondAttribute="bottom" constant="5" id="7EG-e2-DRJ"/>
                                     <constraint firstItem="2zt-gN-F0L" firstAttribute="centerY" secondItem="YNO-Cb-1Vd" secondAttribute="centerY" id="7XI-Qv-AcR">
                                         <variation key="heightClass=compact" constant="-22"/>
                                     </constraint>
-                                    <constraint firstItem="r08-az-XN8" firstAttribute="leading" secondItem="YNO-Cb-1Vd" secondAttribute="leading" constant="30" id="9dF-j9-1R5"/>
+                                    <constraint firstItem="r08-az-XN8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="YNO-Cb-1Vd" secondAttribute="leading" constant="30" id="9dF-j9-1R5"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1D9-EU-e6K" secondAttribute="trailing" constant="30" id="B5q-rG-gO1"/>
                                     <constraint firstItem="AaT-lc-NKa" firstAttribute="leading" secondItem="YNO-Cb-1Vd" secondAttribute="leading" constant="30" id="FzU-Uk-LYt"/>
                                     <constraint firstItem="8Xy-WI-wWd" firstAttribute="leading" secondItem="YNO-Cb-1Vd" secondAttribute="leading" constant="30" id="RIK-Jl-z70"/>
                                     <constraint firstItem="2zt-gN-F0L" firstAttribute="top" secondItem="YNO-Cb-1Vd" secondAttribute="top" constant="22" id="ULH-Zd-yIl">
                                         <variation key="heightClass=compact" constant="66"/>
                                     </constraint>
+                                    <constraint firstItem="2zt-gN-F0L" firstAttribute="centerX" secondItem="YNO-Cb-1Vd" secondAttribute="centerX" id="Vru-kf-q3C"/>
                                     <constraint firstItem="8Xy-WI-wWd" firstAttribute="top" secondItem="AaT-lc-NKa" secondAttribute="bottom" constant="4" id="WEV-CW-ZJW"/>
                                     <constraint firstItem="AaT-lc-NKa" firstAttribute="top" secondItem="r08-az-XN8" secondAttribute="bottom" constant="4" id="XUN-pN-rKZ"/>
+                                    <constraint firstItem="1D9-EU-e6K" firstAttribute="leading" secondItem="r08-az-XN8" secondAttribute="trailing" constant="11" id="YXT-uW-rch"/>
                                     <constraint firstItem="r08-az-XN8" firstAttribute="centerX" secondItem="2zt-gN-F0L" secondAttribute="centerX" id="riC-ZC-9Hc"/>
                                     <constraint firstAttribute="trailing" secondItem="8Xy-WI-wWd" secondAttribute="trailing" constant="30" id="tr6-5P-beI"/>
                                     <constraint firstItem="2zt-gN-F0L" firstAttribute="top" secondItem="YNO-Cb-1Vd" secondAttribute="top" constant="22" id="uAs-gd-uF5"/>
-                                    <constraint firstAttribute="trailing" secondItem="r08-az-XN8" secondAttribute="trailing" constant="30" id="wPx-Gm-Yiv"/>
                                     <constraint firstAttribute="trailing" secondItem="AaT-lc-NKa" secondAttribute="trailing" constant="30" id="zIq-9j-EuL"/>
                                 </constraints>
                                 <variation key="default">
@@ -693,6 +703,7 @@
                     <connections>
                         <outlet property="foldersFilesLabel" destination="AaT-lc-NKa" id="MQf-9Q-H3z"/>
                         <outlet property="infoLabel" destination="8Xy-WI-wWd" id="gRr-6G-4QN"/>
+                        <outlet property="linkedImageView" destination="1D9-EU-e6K" id="nLX-pq-aCS"/>
                         <outlet property="nameLabel" destination="r08-az-XN8" id="yQ9-t4-Lro"/>
                         <outlet property="shareBarButtonItem" destination="kBw-p6-aPX" id="qe6-1b-vQe"/>
                         <outlet property="tableView" destination="Thh-CY-kSq" id="b1U-SS-Xrv"/>
@@ -1639,6 +1650,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <image name="icon-key-only" width="24" height="24"/>
         <image name="icon-link-only" width="24" height="24"/>
         <image name="icon-link-w-key" width="24" height="24"/>
+        <image name="linked" width="24" height="24"/>
         <image name="more" width="26" height="6"/>
         <image name="move" width="32" height="32"/>
         <image name="nodeInfo" width="46" height="44"/>
