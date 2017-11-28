@@ -27,7 +27,7 @@
         fullName = nil;
     }
     
-    return fullName;
+    return fullName ? fullName : self.email;
 }
 
 @end

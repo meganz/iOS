@@ -1,7 +1,10 @@
 #import <UIKit/UIKit.h>
 
-@interface MainTabBarController : UITabBarController
+#import "MEGASdkManager.h"
 
+@interface MainTabBarController : UITabBarController <MEGAChatDelegate>
+
+- (void)setBadgeValueForChats;
 - (NSInteger)tabPositionForTag:(NSInteger)tag;
 
 @end

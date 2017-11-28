@@ -130,8 +130,14 @@
 "fileTooBigMessage_open"="Plik, który chcesz otworzyć jest większy niż dostępna pamięć.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Niedostępny link";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="Mogło to nastąpić z następujących powodów:- Podlinkowany plik został usunięty z powodu naruszenia regulaminu- Błędny link - link, który posiadasz nie istnieje- Plik został usunięty przez użytkownika.";
+/* */
+"fileLinkUnavailableText1"="Może to wynikać z następujących przyczyn:";
+/* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
+"fileLinkUnavailableText2"="Plik został usunięty ze względu na naruszenie ToS/AUP.";
+/* */
+"fileLinkUnavailableText3"="Błędny link - podany link nie istnieje";
+/* */
+"fileLinkUnavailableText4"="Plik został usunięty przez użytkownika.";
 /* Message shown when a download starts */
 "downloadStarted"="Pobieranie rozpoczęte";
 /* Title for the folder link view */
@@ -142,8 +148,14 @@
 "folderTooBigMessage"="Katalog, który chcesz pobrać jest większy niż dostępna pamięć.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Katalog '%@' nie może zostać utworzony";
-/* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="Mogło to nastąpić z następujących powodów:- Podlinkowany katalog został usunięty z powodu naruszenia regulaminu- Błędny link - link, który posiadasz nie istnieje- Katalog został usunięty przez użytkownika.";
+/* */
+"folderLinkUnavailableText1"="Może to wynikać z następujących przyczyn:";
+/* */
+"folderLinkUnavailableText2"="Link został usunięty z powodu naruszenia zasad regulaminu lub praw autorskich.";
+/* */
+"folderLinkUnavailableText3"="Błędny link - podany link nie istnieje";
+/* */
+"folderLinkUnavailableText4"="Link został zablokowany przez użytkownika.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Brak połączenia z internetem";
 /* Title shown when a folder doesn't have any files */
@@ -168,10 +180,10 @@
 "contactRequests"="Nowe zaproszenia";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Dodaj kontakty";
-/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+/* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
+"received"="Otrzymane";
+/* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="Wysłane";
-/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="Zgłoszenia";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="Zaproszenie zaakceptowane";
 /* Success message shown when you Cancelled a contact request */
@@ -182,12 +194,12 @@
 "noRequestPending"="Brak zgłoszeń";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Zatrzymaj przesyłanie";
-/* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
-/* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
-/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+/* Title shown when the there is not any transfer and they are not paused */
+"transfersEmptyState_titleAll"="Brak transferów";
+/* Title shown when the there is not any transfer, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="Brak pobrań";
+/* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="Brak plików";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Dysk";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -491,7 +503,7 @@
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareMultipleContactsMessage"="Czy na pewno chcesz usunąć to udostępnienie? (Udostępnione z %d kontaktami)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Czy na pewno chcesz usunąć te udostępnienia? (Udostępnione z 1 kontaktami)";
+"removeMultipleSharesMultipleContactsMessage"="Czy na pewno chcesz usunąć te udostępnienia? (Udostępnione z %d kontaktami)";
 /* Message shown when a share have been removed */
 "shareRemoved"="Udostępnienie zostało usunięte";
 /* Message shown when some shares have been removed */
@@ -816,6 +828,10 @@
 "downloadInUppercaseTransfers"="Transfery POBRAŃ";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Moje konto";
+/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
+"buyPRO"="Kup PRO";
+/* Caption of a button to upgrade the account to Pro status */
+"upgrade"="Wybierz PRO";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Zobacz i edytuj profil";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -1174,8 +1190,6 @@
 "autorenewableDescription"="Sukskrypcja odnawiania jest automatycznie po upływie terminu ważności konta, z zachowaniem identycznego okresu trwania oraz ceny. Możesz wyłączyć automatyczne odnawianie subskrypcji MEGA PRO nie poźniej niż 24 godziny przed terminem wygaśnięcia konta. Datę wygaśnięcia możesz znaleźć na stronach iTunes. Aby zmienić ustawienia subskrypcji, kliknij w App Store a następnie na dole ekranu kliknij \"Zobacz ID\". Zostaniesz przekierowany do strony gdzie na dole znajdziesz link \"Zarządzaj subskrypcjami\". Na tej stronie wybierz MEGA PRO a następnie zmień ustawienia.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Otwórz MEGA i zapisz się aby kontynuować";
-/* Text shown when you try to use Files app while having a passcode */
-"disablePasscodeToUseFiles"="Pliki nie mogą użyte jeżeli masz ustawione hasła w MEGA. Jeżeli chcesz kontynuować, otwórz MEGA i zablokuj tą opcję.";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Odrzuć";
 /* Inform user that there were unsupported assets in the share extension */

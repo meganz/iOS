@@ -52,6 +52,10 @@
                 [self.cachedImageView mnz_setImageForExtension:self.node.name.pathExtension];
             }
         }
+
+        if (@available(iOS 11.0, *)) {
+            self.cachedImageView.accessibilityIgnoresInvertColors = YES;
+        }
     }
     return self;
 }

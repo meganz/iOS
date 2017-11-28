@@ -3,4 +3,6 @@
 
 @interface MyAccountHallViewController : MyAccountBaseViewController
 
+- (void)openOffline;
+
 @end

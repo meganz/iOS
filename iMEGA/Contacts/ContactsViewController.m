@@ -26,7 +26,9 @@
 #import "ContactTableViewCell.h"
 #import "ShareFolderActivity.h"
 
-@interface ContactsViewController () <ABPeoplePickerNavigationControllerDelegate, CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate>
+@interface ContactsViewController () <ABPeoplePickerNavigationControllerDelegate, CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate>
+
+@property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
@@ -148,6 +150,21 @@
     } completion:nil];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
+        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+            if (!self.previewingContext) {
+                self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.view];
+            }
+        } else {
+            [self unregisterForPreviewingWithContext:self.previewingContext];
+            self.previewingContext = nil;
+        }
+    }
+}
+
 #pragma mark - Private
 
 - (void)setupContacts {
@@ -238,18 +255,21 @@
     } else {
         self.users = [[MEGASdkManager sharedMEGASdk] contacts];
         NSInteger count = [[self.users size] integerValue];
+        NSMutableArray *usersArray = [[NSMutableArray alloc] init];
         for (NSInteger i = 0; i < count; i++) {
             MEGAUser *user = [self.users userAtIndex:i];
             if ([user visibility] == MEGAUserVisibilityVisible) {
                 if (self.contactsMode == ContactsModeChatAddParticipant) {
                     if ([self.participantsMutableDictionary objectForKey:[NSNumber numberWithUnsignedLongLong:user.handle]] == nil) {
-                        [self.visibleUsersArray addObject:user];
+                        [usersArray addObject:user];
                     }
                 } else {
-                    [self.visibleUsersArray addObject:user];
+                    [usersArray addObject:user];
                 }
             }
         }
+        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"mnz_fullName" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+        self.visibleUsersArray = [usersArray sortedArrayUsingDescriptors:@[sort]];
     }
     
     if ([self.visibleUsersArray count] == 0) {
@@ -568,18 +588,18 @@
             [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
         }
         
-        if ([[UIDevice currentDevice] systemVersionLessThanVersion:@"9.0"]) {
-            ABPeoplePickerNavigationController *contactsPickerNC = [[ABPeoplePickerNavigationController alloc] init];
-            contactsPickerNC.predicateForEnablingPerson = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
-            contactsPickerNC.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
-            contactsPickerNC.peoplePickerDelegate = self;
-            [self presentViewController:contactsPickerNC animated:YES completion:nil];
-        } else {
+        if (@available(iOS 9.0, *)) {
             CNContactPickerViewController *contactsPickerViewController = [[CNContactPickerViewController alloc] init];
             contactsPickerViewController.predicateForEnablingContact = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
             contactsPickerViewController.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
             contactsPickerViewController.delegate = self;
             [self presentViewController:contactsPickerViewController animated:YES completion:nil];
+        } else {
+            ABPeoplePickerNavigationController *contactsPickerNC = [[ABPeoplePickerNavigationController alloc] init];
+            contactsPickerNC.predicateForEnablingPerson = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
+            contactsPickerNC.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
+            contactsPickerNC.peoplePickerDelegate = self;
+            [self presentViewController:contactsPickerNC animated:YES completion:nil];
         }
     }];
     [addFromContactsAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
@@ -793,6 +813,10 @@
     
     cell.separatorInset = (self.tableView.isEditing) ? UIEdgeInsetsMake(0.0, 96.0, 0.0, 0.0) : UIEdgeInsetsMake(0.0, 58.0, 0.0, 0.0);
     
+    if (@available(iOS 11.0, *)) {
+        cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
+    }
+    
     return cell;
 }
 
@@ -990,6 +1014,32 @@
     return titleForDeleteConfirmationButton;
 }
 
+#pragma mark - UIViewControllerPreviewingDelegate
+
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
+    if (self.contactsMode != ContactDetailsModeDefault) {
+        return nil;
+    }
+    
+    CGPoint rowPoint = [self.tableView convertPoint:location fromView:self.view];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:rowPoint];
+    
+    previewingContext.sourceRect = [self.tableView convertRect:[self.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view];
+    
+    ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
+    contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
+    MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
+    contactDetailsVC.userEmail = user.email;
+    contactDetailsVC.userName = user.mnz_fullName;
+    contactDetailsVC.userHandle = user.handle;
+    
+    return contactDetailsVC;
+}
+
+- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    [self.navigationController pushViewController:viewControllerToCommit animated:YES];
+}
+
 #pragma mark - ABPeoplePickerNavigationControllerDelegate
 
 - (void)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
@@ -1132,6 +1182,22 @@
 }
 
 #pragma mark - MEGAGlobalDelegate
+
+- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
+    if (self.contactsMode != ContactsModeFolderSharedWith) {
+        return;
+    }
+    
+    NSUInteger size = nodeList.size.unsignedIntegerValue;
+    for (NSUInteger i = 0; i < size; i++) {
+        MEGANode *nodeUpdated = [nodeList nodeAtIndex:i];
+        if (nodeUpdated.handle == self.node.handle) {
+            self.node = nodeUpdated;
+            [self reloadUI];
+            break;
+        }
+    }
+}
 
 - (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
     BOOL userAdded = NO;

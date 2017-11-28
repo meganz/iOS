@@ -173,7 +173,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) {
+    if (@available(iOS 9.0, *)) {} else {
         UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
         if(cell == self.savePhotosTableViewCell || cell == self.saveVideosTableViewCell) {
             cell.hidden = YES;
@@ -200,7 +200,11 @@
             break;
             
         case 4: //Downloads
-            titleHeader = ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) ? @"" : AMLocalizedString(@"imageAndVideoDownloadsHeader", @"Title header that refers to where do you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section");
+            if (@available(iOS 9.0, *)) {
+                titleHeader = AMLocalizedString(@"imageAndVideoDownloadsHeader", @"Title header that refers to where do you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section");
+            } else {
+                titleHeader = @"";
+            }
             break;
     }
     return titleHeader;
@@ -239,7 +243,11 @@
         }
             
         case 4: { //Image and videos downloads
-            titleFooter = ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) ? @"" : AMLocalizedString(@"imageAndVideoDownloadsFooter", @"Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled");
+            if (@available(iOS 9.0, *)) {
+                titleFooter = AMLocalizedString(@"imageAndVideoDownloadsFooter", @"Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled");
+            } else {
+                titleFooter = @"";
+            }
             break;
         }
     }

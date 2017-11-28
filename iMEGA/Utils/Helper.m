@@ -18,6 +18,7 @@
 #import "OpenInActivity.h"
 #import "PhotoCollectionViewCell.h"
 #import "RemoveLinkActivity.h"
+#import "RemoveSharingActivity.h"
 #import "ShareFolderActivity.h"
 
 static MEGANode *linkNode;
@@ -47,7 +48,6 @@ static MEGAIndexer *indexer;
                                  @"fi",
                                  @"fr",
                                  @"he",
-                                 @"hu",
                                  @"id",
                                  @"it",
                                  @"ja",
@@ -762,8 +762,11 @@ static MEGAIndexer *indexer;
         [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
         photoCollectionViewCell.thumbnailPlayImageView.hidden = node.name.mnz_videoPathExtension ? NO : YES;
     }
-    if (reindex && [[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"9.0"]) {
-        [indexer index:node];
+    
+    if (@available(iOS 9.0, *)) {
+        if (reindex) {
+            [indexer index:node];
+        }
     }
 }
 
@@ -856,6 +859,11 @@ static MEGAIndexer *indexer;
         [activitiesMutableArray addObject:removeLinkActivity];
     }
     
+    if (NodesAreOutShares == (nodesAre & NodesAreOutShares)) {
+        RemoveSharingActivity *removeSharingActivity = [[RemoveSharingActivity alloc] initWithNodes:nodesArray];
+        [activitiesMutableArray addObject:removeSharingActivity];
+    }
+    
     activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItemsMutableArray applicationActivities:activitiesMutableArray];
     [activityVC setExcludedActivityTypes:excludedActivityTypesMutableArray];
     [activityVC.popoverPresentationController setBarButtonItem:shareBarButtonItem];
@@ -883,6 +891,7 @@ static MEGAIndexer *indexer;
     NSInteger numberOfFolders = 0;
     NSInteger numberOfFiles = 0;
     NSInteger numberOfNodesExported = 0;
+    NSInteger numberOfNodesOutShares = 0;
     for (MEGANode *node in nodesArray) {
         if ([node type] == MEGANodeTypeFolder) {
             numberOfFolders += 1;
@@ -892,6 +901,10 @@ static MEGAIndexer *indexer;
         
         if ([node isExported]) {
             numberOfNodesExported += 1;
+        }
+        
+        if (node.isOutShare) {
+            numberOfNodesOutShares += 1;
         }
     }
     
@@ -904,6 +917,10 @@ static MEGAIndexer *indexer;
     
     if (numberOfNodesExported == nodesArray.count) {
         nodesAre = nodesAre | NodesAreExported;
+    }
+    
+    if (numberOfNodesOutShares == nodesArray.count) {
+        nodesAre = nodesAre | NodesAreOutShares;
     }
     
     return nodesAre;
