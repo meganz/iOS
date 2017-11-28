@@ -8,18 +8,22 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
 #import "MEGAUser+MNZCategory.h"
+#import "MEGARemoveRequestDelegate.h"
 #import "MEGAShareRequestDelegate.h"
+#import "NSMutableArray+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
 #import "DetailsNodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate> {
     
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
 }
+
+@property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
@@ -40,7 +44,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareFolderBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *removeShareBarButtonItem;
 
-@property (nonatomic) NSUInteger remainingOperations;
 @property (nonatomic) NSIndexPath *indexPath;
 
 @property (nonatomic, strong) MEGAShareList *incomingShareList;
@@ -49,8 +52,6 @@
 @property (nonatomic, strong) MEGAShareList *outgoingShareList;
 @property (nonatomic, strong) NSMutableArray *outgoingSharesMutableArray;
 @property (nonatomic, strong) NSMutableArray *outgoingNodesMutableArray;
-
-@property (nonatomic) NSUInteger numberOfShares;
 
 @property (nonatomic, strong) NSMutableArray *selectedNodesMutableArray;
 @property (nonatomic, strong) NSMutableArray *selectedSharesMutableArray;
@@ -93,6 +94,9 @@
     _outgoingNodesForEmailMutableDictionary = [[NSMutableDictionary alloc] init];
     _outgoingIndexPathsMutableDictionary = [[NSMutableDictionary alloc] init];
     
+    // Long press to select:
+    [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
+    
     [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];
 }
 
@@ -129,6 +133,21 @@
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.tableView reloadEmptyDataSet];
     } completion:nil];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
+        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+            if (!self.previewingContext) {
+                self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.view];
+            }
+        } else {
+            [self unregisterForPreviewingWithContext:self.previewingContext];
+            self.previewingContext = nil;
+        }
+    }
 }
 
 #pragma mark - Private
@@ -249,26 +268,22 @@
 }
 
 - (void)removeSelectedIncomingShares {
-    self.remainingOperations = [self.selectedNodesMutableArray count];
-    self.numberOfShares = self.remainingOperations;
+    NSArray *filesAndFolders = self.selectedNodesMutableArray.mnz_numberOfFilesAndFolders;
+    MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:DisplayModeSharedItem files:[filesAndFolders[0] unsignedIntegerValue] folders:[filesAndFolders[1] unsignedIntegerValue] completion:nil];
     for (NSInteger i = 0; i < self.selectedNodesMutableArray.count; i++) {
-        [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesMutableArray objectAtIndex:i] delegate:self];
+        [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesMutableArray objectAtIndex:i] delegate:removeRequestDelegate];
     }
     
     [self setEditing:NO animated:YES];
 }
 
 - (void)selectedSharesOfSelectedNodes {
-    self.numberOfShares = 0;
     self.selectedSharesMutableArray = [[NSMutableArray alloc] init];
     
     for (MEGANode *node in self.selectedNodesMutableArray) {
         NSMutableArray *outSharesOfNodeMutableArray = [self outSharesForNode:node];
-        self.numberOfShares += [outSharesOfNodeMutableArray count];
         [self.selectedSharesMutableArray addObjectsFromArray:outSharesOfNodeMutableArray];
     }
-    
-    self.remainingOperations = self.numberOfShares;
 }
 
 - (void)removeSelectedOutgoingShares {
@@ -901,6 +916,65 @@
     return titleForDeleteConfirmationButton;
 }
 
+#pragma mark - UIViewControllerPreviewingDelegate
+
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
+    CGPoint rowPoint = [self.tableView convertPoint:location fromView:self.view];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:rowPoint];
+    
+    previewingContext.sourceRect = [self.tableView convertRect:[self.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view];
+    
+    MEGANode *node;
+    switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
+        case 0: { //Incoming
+            node = [self.incomingNodesMutableArray objectAtIndex:indexPath.row];
+            break;
+        }
+            
+        case 1: { //Outgoing
+            node = [self.outgoingNodesMutableArray objectAtIndex:indexPath.row];
+            break;
+        }
+    }
+    
+    CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+    cloudDriveTVC.parentNode = node;
+    cloudDriveTVC.displayMode = DisplayModeCloudDrive;
+    
+    return cloudDriveTVC;
+}
+
+- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    [self.navigationController pushViewController:viewControllerToCommit animated:YES];
+}
+
+#pragma mark - UILongPressGestureRecognizer
+
+- (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
+    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
+        
+        if (self.isEditing) {
+            // Only stop editing if long pressed over a cell that is the only one selected or when selected none
+            if (self.selectedNodesMutableArray.count == 0) {
+                [self setEditing:NO animated:YES];
+            }
+            if (self.selectedNodesMutableArray.count == 1) {
+                MEGANode *nodeSelected = self.selectedNodesMutableArray.firstObject;
+                MEGANode *nodePressed = self.sharedItemsSegmentedControl.selectedSegmentIndex == 0 ? [self.incomingNodesMutableArray objectAtIndex:indexPath.row] : [self.outgoingNodesMutableArray objectAtIndex:indexPath.row];
+                if (nodeSelected.handle == nodePressed.handle) {
+                    [self setEditing:NO animated:YES];
+                }
+            }
+        } else {
+            [self setEditing:YES animated:YES];
+            [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+            [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        }
+    }
+}
+
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
@@ -966,36 +1040,6 @@
 
 - (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
     [self reloadUI];
-}
-
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    
-    if ([error type]) {
-        return;
-    }
-    
-    switch ([request type]) {
-        case MEGARequestTypeRemove: {
-            
-            _remainingOperations--;
-            
-            if (_remainingOperations == 0) {
-                
-                if (_numberOfShares > 1) {
-                    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"sharesLeft", nil)];
-                } else {
-                    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"shareLeft", nil)];
-                }
-            }
-            
-            break;
-        }
-            
-        default:
-            break;
-    }
 }
 
 @end

@@ -104,6 +104,16 @@
     self.maxStorage = accountDetails.storageMax;
 }
 
+- (void)openOffline {
+    NSArray *viewControllers = self.navigationController.viewControllers;
+    if (viewControllers.count > 1) {
+        [self.navigationController popToRootViewControllerAnimated:NO];
+    }
+    
+    NSIndexPath *offlineIndexPath = [NSIndexPath indexPathForRow:4 inSection:0];
+    [self tableView:self.tableView didSelectRowAtIndexPath:offlineIndexPath];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)viewAndEditProfileTouchUpInside:(UIButton *)sender {

@@ -42,6 +42,7 @@
 #import "MainTabBarController.h"
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGAPasswordLinkRequestDelegate.h"
+#import "MyAccountHallViewController.h"
 #import "OfflineTableViewController.h"
 #import "SecurityOptionsTableViewController.h"
 #import "SettingsTableViewController.h"
@@ -90,6 +91,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @property (nonatomic, strong) NSURL *link;
 @property (nonatomic) URLType urlType;
 @property (nonatomic, strong) NSString *emailOfNewSignUpLink;
+@property (nonatomic, strong) NSString *quickActionType;
 
 @property (nonatomic, strong) UIAlertView *API_ESIDAlertView;
 
@@ -339,6 +341,20 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [Helper setIndexer:self.indexer];
     }
     
+    if (@available(iOS 9.0, *)) {
+        UIForceTouchCapability forceTouchCapability = self.window.rootViewController.view.traitCollection.forceTouchCapability;
+        if (forceTouchCapability == UIForceTouchCapabilityAvailable) {
+            UIApplicationShortcutItem *applicationShortcutItem = [launchOptions objectForKey:UIApplicationLaunchOptionsShortcutItemKey];
+            if (applicationShortcutItem) {
+                if (isFetchNodesDone) {
+                    [self manageQuickActionType:applicationShortcutItem.type];
+                } else {
+                    self.quickActionType = applicationShortcutItem.type;
+                }
+            }
+        }
+    }
+    
     return YES;
 }
 
@@ -476,6 +492,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
 }
 
+- (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL succeeded))completionHandler {
+    if (isFetchNodesDone) {
+        completionHandler([self manageQuickActionType:shortcutItem.type]);
+    }
+}
+
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
     if (@available(iOS 9.0, *)) {
         MEGALogWarning(@"Memory warning, stopping spotlight indexing");
@@ -554,6 +576,14 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }];
 }
 
+- (void)showOffline {
+    [Helper changeToViewController:MyAccountHallViewController.class onTabBarController:self.mainTBC];
+    NSUInteger myAccountHallTabPosition = 4;
+    MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:myAccountHallTabPosition];
+    MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
+    [myAccountHallVC openOffline];
+}
+
 - (void)processSelectedOptionOnLink {
     switch ([Helper selectedOptionOnLink]) {
         case 1: { //Import file from link
@@ -611,7 +641,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)processLink:(NSURL *)url {
-    
     NSString *afterSlashesString = [[url absoluteString] substringFromIndex:7]; // "mega://" = 7 characters
         
     if (afterSlashesString.length < 2) {
@@ -996,6 +1025,39 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
 }
 
+- (BOOL)manageQuickActionType:(NSString *)type {
+    BOOL quickActionManaged = YES;
+    if ([type isEqualToString:@"mega.ios.search"]) {
+        [Helper changeToViewController:CloudDriveTableViewController.class onTabBarController:self.mainTBC];
+        NSUInteger cloudDriveTabPosition = [self.mainTBC tabPositionForTag:0];
+        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:cloudDriveTabPosition];
+        CloudDriveTableViewController *cloudDriveTVC = navigationController.viewControllers.firstObject;
+        if (self.quickActionType) { //Coming from didFinishLaunchingWithOptions
+            if ([LTHPasscodeViewController doesPasscodeExist]) {
+                [cloudDriveTVC activateSearch]; // Cloud Drive already presented, so activate search bar
+            } else {
+                cloudDriveTVC.homeQuickActionSearch = YES; //Search will become active after the Cloud Drive did appear
+            }
+        } else {
+            [cloudDriveTVC activateSearch];
+        }
+    } else if ([type isEqualToString:@"mega.ios.upload"]) {
+        [Helper changeToViewController:CloudDriveTableViewController.class onTabBarController:self.mainTBC];
+        NSUInteger cloudDriveTabPosition = [self.mainTBC tabPositionForTag:0];
+        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:cloudDriveTabPosition];
+        CloudDriveTableViewController *cloudDriveTVC = navigationController.viewControllers.firstObject;
+        [cloudDriveTVC presentUploadAlertController];
+    } else if ([type isEqualToString:@"mega.ios.offline"]) {
+        [self showOffline];
+    } else {
+        quickActionManaged = NO;
+    }
+    
+    self.quickActionType = nil;
+    
+    return quickActionManaged;
+}
+
 - (void)removeUnfinishedTransfersOnFolder:(NSString *)directory {
     NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directory error:nil];
     for (NSString *item in directoryContents) {
@@ -1166,6 +1228,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
             if (self.link != nil) {
                 [self processLink:self.link];
             }
+            
+            [self manageQuickActionType:self.quickActionType];
         }
     }
     
@@ -1483,6 +1547,8 @@ void uncaughtExceptionHandler(NSException *exception) {
         if (self.nodeToPresentBase64Handle) {
             [self presentNode];
         }
+        
+        [self manageQuickActionType:self.quickActionType];
     }
 }
 

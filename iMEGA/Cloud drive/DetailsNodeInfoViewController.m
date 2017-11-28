@@ -7,7 +7,9 @@
 #import "GetLinkActivity.h"
 #import "Helper.h"
 #import "MEGAActivityItemProvider.h"
+#import "MEGAMoveRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
+#import "MEGARemoveRequestDelegate.h"
 #import "MEGAStore.h"
 #import "UIImageView+MNZCategory.h"
 
@@ -929,7 +931,6 @@
     }
     
     switch ([request type]) {
-            
         case MEGARequestTypeGetAttrFile: {
             if ([request nodeHandle] == [self.node handle]) {
                 MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[request nodeHandle]];
@@ -946,32 +947,6 @@
             [self.tableView reloadData];
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
             break;
-            
-        case MEGARequestTypeMove:
-        case MEGARequestTypeRemove: {
-            [self.navigationController popViewControllerAnimated:YES];
-            
-            if (self.displayMode == DisplayModeCloudDrive) {
-                NSString *message;
-                if ([self.node isFile]) {
-                    message = AMLocalizedString(@"fileMovedToRubbishBinMessage", @"Success message shown when you have moved 1 file to the Rubbish Bin");
-                } else if ([self.node isFolder]) {
-                    message = AMLocalizedString(@"folderMovedToRubbishBinMessage", @"Success message shown when you have moved 1 folder to the Rubbish Bin");
-                }
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudRubbishBin"] status:message];
-            } else if (self.displayMode == DisplayModeRubbishBin) {
-                NSString *message;
-                if ([self.node isFile]) {
-                    message = AMLocalizedString(@"fileRemovedToRubbishBinMessage", @"Success message shown when 1 file has been removed from MEGA");
-                } else if ([self.node isFolder]) {
-                    message = AMLocalizedString(@"folderRemovedToRubbishBinMessage", @"Success message shown when 1 folder has been removed from MEGA");
-                }
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:message];
-            } else if (self.displayMode == DisplayModeSharedItem) {
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"shareLeft", @"Message shown when a share has been left")];
-            }
-            break;
-        }
             
         default:
             break;

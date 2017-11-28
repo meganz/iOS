@@ -26,7 +26,9 @@
 #import "ContactTableViewCell.h"
 #import "ShareFolderActivity.h"
 
-@interface ContactsViewController () <ABPeoplePickerNavigationControllerDelegate, CNContactPickerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate>
+@interface ContactsViewController () <UIViewControllerPreviewingDelegate, ABPeoplePickerNavigationControllerDelegate, CNContactPickerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate>
+
+@property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
@@ -123,6 +125,21 @@
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.tableView reloadEmptyDataSet];
     } completion:nil];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
+        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+            if (!self.previewingContext) {
+                self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.view];
+            }
+        } else {
+            [self unregisterForPreviewingWithContext:self.previewingContext];
+            self.previewingContext = nil;
+        }
+    }
 }
 
 #pragma mark - Private
@@ -948,6 +965,32 @@
     }
     
     return titleForDeleteConfirmationButton;
+}
+
+#pragma mark - UIViewControllerPreviewingDelegate
+
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
+    if (self.contactsMode != ContactDetailsModeDefault) {
+        return nil;
+    }
+    
+    CGPoint rowPoint = [self.tableView convertPoint:location fromView:self.view];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:rowPoint];
+    
+    previewingContext.sourceRect = [self.tableView convertRect:[self.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view];
+    
+    ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
+    contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
+    MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
+    contactDetailsVC.userEmail = user.email;
+    contactDetailsVC.userName = user.mnz_fullName;
+    contactDetailsVC.userHandle = user.handle;
+    
+    return contactDetailsVC;
+}
+
+- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    [self.navigationController pushViewController:viewControllerToCommit animated:YES];
 }
 
 #pragma mark - ABPeoplePickerNavigationControllerDelegate
