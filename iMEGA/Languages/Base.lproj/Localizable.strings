@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="Are you sure you want to leave this share?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Folder left";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Share";
 /* Select all items/elements on the list */
