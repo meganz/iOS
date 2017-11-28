@@ -84,6 +84,8 @@ static NSString *kisDirectory = @"kisDirectory";
     }
     [self.navigationItem setRightBarButtonItems:@[negativeSpaceBarButtonItem, self.editBarButtonItem, self.sortByBarButtonItem]];
     
+    self.navigationController.navigationBar.translucent = YES;
+    
     // Search controller:
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.searchResultsUpdater = self;
@@ -97,8 +99,7 @@ static NSString *kisDirectory = @"kisDirectory";
     searchTextField.textColor = [UIColor mnz_gray999999];
     self.tableView.tableHeaderView = self.searchController.searchBar;
     [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
-    self.definesPresentationContext = NO;
-    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    self.definesPresentationContext = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
