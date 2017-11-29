@@ -25,7 +25,7 @@ static NSString *kModificationDate = @"kModificationDate";
 static NSString *kFileSize = @"kFileSize";
 static NSString *kisDirectory = @"kisDirectory";
 
-@interface OfflineTableViewController () <UIAlertViewDelegate, UIDocumentInteractionControllerDelegate, UIViewControllerPreviewingDelegate, UIViewControllerTransitioningDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate> {
+@interface OfflineTableViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UIAlertViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate> {
     NSString *previewDocumentPath;
     BOOL allItemsSelected;
     BOOL isSwipeEditing;
@@ -50,6 +50,9 @@ static NSString *kisDirectory = @"kisDirectory";
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sortByBarButtonItem;
 
 @property (strong, nonatomic) UIDocumentInteractionController *documentInteractionController;
+
+@property (nonatomic) NSMutableArray *searchItemsArray;
+@property (nonatomic) UISearchController *searchController;
 
 @end
 
@@ -83,6 +86,23 @@ static NSString *kisDirectory = @"kisDirectory";
     }
     [self.navigationItem setRightBarButtonItems:@[negativeSpaceBarButtonItem, self.editBarButtonItem, self.sortByBarButtonItem]];
     
+    self.navigationController.navigationBar.translucent = YES;
+    
+    // Search controller:
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.searchBar.delegate = self;
+    self.searchController.searchBar.barTintColor = [UIColor colorWithWhite:235.0f / 255.0f alpha:1.0f];
+    self.searchController.searchBar.translucent = YES;
+    [self.searchController.searchBar sizeToFit];
+    UITextField *searchTextField = [self.searchController.searchBar valueForKey:@"_searchField"];
+    searchTextField.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
+    searchTextField.textColor = [UIColor mnz_gray999999];
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+    [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
+    self.definesPresentationContext = YES;
+    
     // Long press to select:
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
 }
@@ -112,6 +132,10 @@ static NSString *kisDirectory = @"kisDirectory";
             [fileManager removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:shareExtensionLog] error:nil];
             [fileManager copyItemAtPath:[logsPath stringByAppendingPathComponent:shareExtensionLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:shareExtensionLog] error:nil];
         }
+    }
+    
+    if (!self.tableView.tableHeaderView) {
+        self.tableView.tableHeaderView = self.searchController.searchBar;
     }
     
     [self reloadUI];
@@ -190,7 +214,7 @@ static NSString *kisDirectory = @"kisDirectory";
             BOOL isDirectory;
             [[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDirectory];
             
-            [tempDictionary setValue:[NSNumber numberWithBool:isDirectory ? YES : NO] forKey:kisDirectory];
+            [tempDictionary setValue:[NSNumber numberWithBool:isDirectory] forKey:kisDirectory];
             
             [tempDictionary setValue:[filePropertiesDictionary objectForKey:NSFileSize] forKey:kFileSize];
             [tempDictionary setValue:[filePropertiesDictionary valueForKey:NSFileModificationDate] forKey:kModificationDate];
@@ -235,7 +259,7 @@ static NSString *kisDirectory = @"kisDirectory";
             BOOL isDirectory;
             [[NSFileManager defaultManager] fileExistsAtPath:[fileURL path] isDirectory:&isDirectory];
             
-            [tempDictionary setValue:[NSNumber numberWithBool:isDirectory ? YES : NO] forKey:kisDirectory];
+            [tempDictionary setValue:[NSNumber numberWithBool:isDirectory] forKey:kisDirectory];
             
             [tempDictionary setValue:[filePropertiesDictionary objectForKey:NSFileSize] forKey:kFileSize];
             [tempDictionary setValue:[filePropertiesDictionary valueForKey:NSFileModificationDate] forKey:kModificationDate];
@@ -250,6 +274,14 @@ static NSString *kisDirectory = @"kisDirectory";
                     [self.offlineFiles addObject:[fileURL path]];
                 }
             }
+        }
+    }
+    
+    if ([self.offlineSortedItems count] == 0) {
+        self.tableView.tableHeaderView = nil;
+    } else {
+        if (!self.tableView.tableHeaderView) {
+            self.tableView.tableHeaderView = self.searchController.searchBar;
         }
     }
     
@@ -405,6 +437,18 @@ static NSString *kisDirectory = @"kisDirectory";
     self.offlineItems = [NSMutableArray arrayWithArray:sortedArray];
 }
 
+- (NSDictionary *)itemAtIndexPath:(NSIndexPath *)indexPath {
+    NSDictionary *item = nil;
+    if (indexPath) {
+        if (self.searchController.isActive) {
+            item = [self.searchItemsArray objectAtIndex:indexPath.row];
+        } else {
+            item = [self.offlineSortedItems objectAtIndex:indexPath.row];
+        }
+    }
+    return item;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -412,7 +456,8 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (self.offlineSortedItems.count == 0) {
+    NSInteger rows = self.searchController.isActive ? self.searchItemsArray.count : self.offlineSortedItems.count;
+    if (rows == 0) {
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         self.sortByBarButtonItem.enabled = NO;
         [self.editBarButtonItem setEnabled:NO];
@@ -421,7 +466,7 @@ static NSString *kisDirectory = @"kisDirectory";
         self.sortByBarButtonItem.enabled = YES;
         [self.editBarButtonItem setEnabled:YES];
     }
-    return self.offlineSortedItems.count;
+    return rows;
 }
 
 
@@ -434,7 +479,7 @@ static NSString *kisDirectory = @"kisDirectory";
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
     NSString *directoryPathString = [self currentOfflinePath];
-    NSString *nameString = [[self.offlineSortedItems objectAtIndex:indexPath.row] objectForKey:kFileName];
+    NSString *nameString = [[self itemAtIndexPath:indexPath] objectForKey:kFileName];
     NSString *pathForItem = [directoryPathString stringByAppendingPathComponent:nameString];
     
     [cell setItemNameString:nameString];
@@ -585,7 +630,7 @@ static NSString *kisDirectory = @"kisDirectory";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     if (tableView.isEditing) {
-        NSURL *filePathURL = [[self.offlineSortedItems objectAtIndex: indexPath.row] objectForKey:kPath];
+        NSURL *filePathURL = [[self itemAtIndexPath:indexPath] objectForKey:kPath];
         [self.selectedItems addObject:filePathURL];
         
         if (self.selectedItems.count > 0) {
@@ -613,14 +658,20 @@ static NSString *kisDirectory = @"kisDirectory";
         
         OfflineTableViewController *offlineTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineTableViewControllerID"];
         [offlineTVC setFolderPathFromOffline:folderPathFromOffline];
-        [self.navigationController pushViewController:offlineTVC animated:YES];
+        if (self.searchController.isActive) {
+            [self.searchController dismissViewControllerAnimated:YES completion:^{
+                [self.navigationController pushViewController:offlineTVC animated:YES];
+            }];
+        } else {
+            [self.navigationController pushViewController:offlineTVC animated:YES];
+        }
     } else if (previewDocumentPath.mnz_isMultimediaPathExtension) {
         MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
         [self presentViewController:megaAVViewController animated:YES completion:nil];
     } else {
         MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithArrayOfFiles:self.offlineFiles];
         
-        NSInteger selectedIndexFile = [[[self.offlineSortedItems objectAtIndex:indexPath.row] objectForKey:kIndex] integerValue];
+        NSInteger selectedIndexFile = [[[self itemAtIndexPath:indexPath] objectForKey:kIndex] integerValue];
         
         [previewController setCurrentPreviewItemIndex:selectedIndexFile];
         [self presentViewController:previewController animated:YES completion:nil];
@@ -632,7 +683,7 @@ static NSString *kisDirectory = @"kisDirectory";
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
    
     if (tableView.isEditing) {
-        NSURL *filePathURL = [[self.offlineSortedItems objectAtIndex: indexPath.row] objectForKey:kPath];
+        NSURL *filePathURL = [[self itemAtIndexPath:indexPath] objectForKey:kPath];
         
         NSMutableArray *tempArray = [self.selectedItems copy];
         for (NSURL *url in tempArray) {
@@ -656,7 +707,7 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSURL *fileURL = [[self.offlineSortedItems objectAtIndex:indexPath.row] objectForKey:kPath];
+    NSURL *fileURL = [[self itemAtIndexPath:indexPath] objectForKey:kPath];
     
     self.selectedItems = [[NSMutableArray alloc] init];
     [self.selectedItems addObject:fileURL];
@@ -792,6 +843,28 @@ static NSString *kisDirectory = @"kisDirectory";
     return self;
 }
 
+#pragma mark - UISearchBarDelegate
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    self.searchItemsArray = nil;
+}
+
+#pragma mark - UISearchResultsUpdating
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    NSString *searchString = searchController.searchBar.text;
+    if (searchController.isActive) {
+        if ([searchString isEqualToString:@""]) {
+            self.searchItemsArray = self.offlineSortedItems;
+        } else {
+            NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.kFileName contains[c] %@", searchString];
+            self.searchItemsArray = [[self.offlineSortedItems filteredArrayUsingPredicate:resultPredicate] mutableCopy];
+        }
+    }
+    
+    [self.tableView reloadData];
+}
+
 #pragma mark - UILongPressGestureRecognizer
 
 - (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
@@ -889,12 +962,18 @@ static NSString *kisDirectory = @"kisDirectory";
     
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
-    NSString *text;
+    NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
-        if (self.folderPathFromOffline == nil) {
-            return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"offlineEmptyState_title", @"Title shown when the Offline section is empty, when you don't have download any files. Keep the upper.") sectionTitle:AMLocalizedString(@"offline", @"Title of the Offline section")];
+        if (self.searchController.isActive) {
+            if (self.searchController.searchBar.text.length > 0) {
+                text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
+            }
         } else {
-            text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+            if (self.folderPathFromOffline == nil) {
+                return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"offlineEmptyState_title", @"Title shown when the Offline section is empty, when you don't have download any files. Keep the upper.") sectionTitle:AMLocalizedString(@"offline", @"Title of the Offline section")];
+            } else {
+                text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+            }
         }
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
@@ -908,10 +987,18 @@ static NSString *kisDirectory = @"kisDirectory";
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     UIImage *image;
     if ([MEGAReachabilityManager isReachable]) {
-        if (self.folderPathFromOffline == nil) {
-            image = [UIImage imageNamed:@"emptyOffline"];
+        if (self.searchController.isActive) {
+            if (self.searchController.searchBar.text.length > 0) {
+                return [UIImage imageNamed:@"emptySearch"];
+            } else {
+                return nil;
+            }
         } else {
-            image = [UIImage imageNamed:@"emptyFolder"];
+            if (self.folderPathFromOffline == nil) {
+                image = [UIImage imageNamed:@"emptyOffline"];
+            } else {
+                image = [UIImage imageNamed:@"emptyFolder"];
+            }
         }
     } else {
         image = [UIImage imageNamed:@"noInternetConnection"];
@@ -925,6 +1012,10 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
     return [Helper spaceHeightForEmptyState];
+}
+
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:self.searchController.isActive];
 }
 
 #pragma mark - UIAlertViewDelegate
