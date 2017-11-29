@@ -277,6 +277,14 @@ static NSString *kisDirectory = @"kisDirectory";
         }
     }
     
+    if ([self.offlineSortedItems count] == 0) {
+        self.tableView.tableHeaderView = nil;
+    } else {
+        if (!self.tableView.tableHeaderView) {
+            self.tableView.tableHeaderView = self.searchController.searchBar;
+        }
+    }
+    
     [self.tableView reloadData];
 }
 

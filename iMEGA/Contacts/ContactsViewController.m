@@ -275,9 +275,13 @@
     if ([self.visibleUsersArray count] == 0) {
         [self.editBarButtonItem setEnabled:NO];
         self.addParticipantBarButtonItem.enabled = NO;
+        self.tableView.tableHeaderView = nil;
     } else {
         [self.editBarButtonItem setEnabled:YES];
         self.addParticipantBarButtonItem.enabled = YES;
+        if (!self.tableView.tableHeaderView) {
+            self.tableView.tableHeaderView = self.searchController.searchBar;
+        }
     }
     
     [self.tableView reloadData];
