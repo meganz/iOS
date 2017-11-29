@@ -688,18 +688,6 @@ static MEGAIndexer *indexer;
 
 #pragma mark - Utils
 
-+ (void)changeToViewController:(Class)classOfViewController onTabBarController:(UITabBarController *)tabBarController {
-    NSArray *viewControllersArray = tabBarController.viewControllers;
-    NSUInteger index = 0;
-    for (UINavigationController *navigationController in viewControllersArray) {
-        if ([navigationController.topViewController isKindOfClass:classOfViewController]) {
-            [tabBarController setSelectedIndex:index];
-            break;
-        }
-        index += 1;
-    }
-}
-
 + (unsigned long long)sizeOfFolderAtPath:(NSString *)path {
     unsigned long long folderSize = 0;
     
