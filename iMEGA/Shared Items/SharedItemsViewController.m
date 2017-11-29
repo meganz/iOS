@@ -225,6 +225,14 @@
         MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:share.nodeHandle];
         [self.incomingNodesMutableArray addObject:node];
     }
+    
+    if ([self.incomingNodesMutableArray count] == 0) {
+        self.tableView.tableHeaderView = nil;
+    } else {
+        if (!self.tableView.tableHeaderView) {
+            self.tableView.tableHeaderView = self.searchController.searchBar;
+        }
+    }
 }
 
 - (void)outgoingNodes {
@@ -249,6 +257,14 @@
                 lastBase64Handle = [node base64Handle];
                 [_outgoingNodesMutableArray addObject:node];
             }
+        }
+    }
+    
+    if ([self.outgoingNodesMutableArray count] == 0) {
+        self.tableView.tableHeaderView = nil;
+    } else {
+        if (!self.tableView.tableHeaderView) {
+            self.tableView.tableHeaderView = self.searchController.searchBar;
         }
     }
 }
@@ -1027,7 +1043,7 @@
     
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
-    NSString *text;
+    NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
         if (self.searchController.isActive) {
             if (self.searchController.searchBar.text.length > 0) {
