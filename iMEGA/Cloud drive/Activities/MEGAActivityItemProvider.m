@@ -28,7 +28,7 @@
 - (id)item {
     
     NSString *activityType = [self activityType];
-    BOOL activityValue = !([activityType isEqualToString:@"OpenInActivity"] || [activityType isEqualToString:@"GetLinkActivity"] || [activityType isEqualToString:@"RemoveLinkActivity"] || [activityType isEqualToString:@"ShareFolderActivity"] || [activityType isEqualToString:@"SaveToCameraRollActivity"]);
+    BOOL activityValue = !([activityType isEqualToString:@"OpenInActivity"] || [activityType isEqualToString:@"GetLinkActivity"] || [activityType isEqualToString:@"RemoveLinkActivity"] || [activityType isEqualToString:@"ShareFolderActivity"] || [activityType isEqualToString:@"SaveToCameraRollActivity"] || [activityType isEqualToString:@"RemoveSharingActivity"]);
     if (activityValue) {
         semaphore = dispatch_semaphore_create(0);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -53,7 +53,7 @@
         return [NSURL URLWithString:self.link];
     }
     
-    if ([activityType isEqualToString:@"OpenInActivity"] || [activityType isEqualToString:@"GetLinkActivity"] || [activityType isEqualToString:@"RemoveLinkActivity"] || [activityType isEqualToString:@"ShareFolderActivity"] || [activityType isEqualToString:@"SaveToCameraRollActivity"]) {
+    if ([activityType isEqualToString:@"OpenInActivity"] || [activityType isEqualToString:@"GetLinkActivity"] || [activityType isEqualToString:@"RemoveLinkActivity"] || [activityType isEqualToString:@"ShareFolderActivity"] || [activityType isEqualToString:@"SaveToCameraRollActivity"] || [activityType isEqualToString:@"RemoveSharingActivity"]) {
 
         return nil;
     }

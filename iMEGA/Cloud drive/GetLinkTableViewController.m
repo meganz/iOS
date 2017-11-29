@@ -155,9 +155,9 @@
     
     NSString *title;
     if (self.nodesToExport.count > 1) {
-        title = areExportedNodes ? AMLocalizedString(@"updateLinks", @"A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time.") : AMLocalizedString(@"getLinks", @"Title shown under the action that allows you to get several links to files and/or folders");
+        title = areExportedNodes ? AMLocalizedString(@"manageLinks", @"A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected.") : AMLocalizedString(@"getLinks", @"Title shown under the action that allows you to get several links to files and/or folders");
     } else {
-        title = areExportedNodes ? AMLocalizedString(@"updateLink", @"A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time.") : AMLocalizedString(@"getLink", @"Title shown under the action that allows you to get a link to file or folder");
+        title = areExportedNodes ? AMLocalizedString(@"manageLink", @"Item menu option upon right click on one or multiple files.") : AMLocalizedString(@"getLink", @"Title shown under the action that allows you to get a link to file or folder");
     }
     self.navigationItem.title = title;
 }

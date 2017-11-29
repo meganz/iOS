@@ -121,7 +121,7 @@
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Tienes que liberar espacio";
 /* Title for the file link view */
-"fileLink"="Enlace al archivo";
+"fileLink"="Enlace del Archivo";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Abrir";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -131,13 +131,13 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Enlace no disponible";
 /* */
-"fileLinkUnavailableText1"="Esto podría deberse a los siguientes motivos:";
+"fileLinkUnavailableText1"="Esto puede deberse a las siguientes razones:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="El archivo ha sido eliminado por una violación de los TdS/PUA.";
+"fileLinkUnavailableText2"="Este archivo fue removido por una violación de los términos de servicio y / o condiciones de uso.";
 /* */
-"fileLinkUnavailableText3"="URL no válida - el enlace al que intentas acceder no existe";
+"fileLinkUnavailableText3"="URL Inválida - El enlace al que deseas acceder no existe.";
 /* */
-"fileLinkUnavailableText4"="El archivo ha sido eliminado por el usuario.";
+"fileLinkUnavailableText4"="El archivo ha sido borrado por el usuario.";
 /* Message shown when a download starts */
 "downloadStarted"="Descarga iniciada";
 /* Title for the folder link view */
@@ -149,11 +149,11 @@
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="La carpeta '%@' no puede ser creada";
 /* */
-"folderLinkUnavailableText1"="Esto podría deberse a los siguientes motivos:";
+"folderLinkUnavailableText1"="Esto puede deberse a las siguientes razones:";
 /* */
 "folderLinkUnavailableText2"="El enlace de la carpeta ha sido eliminado debido a una violación de nuestros Términos de servicio.";
 /* */
-"folderLinkUnavailableText3"="URL no válida - el enlace al que intentas acceder no existe";
+"folderLinkUnavailableText3"="URL Inválida - El enlace al que deseas acceder no existe.";
 /* */
 "folderLinkUnavailableText4"="El enlace de la carpeta ha sido desactivado por el usuario.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -277,7 +277,7 @@
 /* List option shown on the details of a file or folder */
 "saveForOffline"="Guardar en Sin conexión";
 /* List option shown on the details of a file or folder */
-"savedForOffline"="Disponible sin conexión";
+"savedForOffline"="Sin conexión";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Inbox es un nombre reservado para uso por Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
@@ -288,10 +288,10 @@
 "getLink"="Obtener enlace";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Obtener enlaces";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="Actualizar enlace";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="Actualizar enlaces";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="Gestionar enlace";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="Gestionar enlaces";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Generando enlace...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="¿Seguro que quieres mover 1 archivo a la Papelera?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="¿Seguro que quieres mover %d archivos a la Papelera?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="¿Seguro que quieres mover 1 carpeta a la Papelera?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="¿Seguro que quieres mover %d carpetas a la Papelera?";
@@ -431,7 +431,7 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Carpeta compartida";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="%d carpetas fueron compartidas";
+"sharedFolders_success"="Se han compartido %d carpetas";
 /* Button title that triggers the importing link action */
 "import"="Importar";
 /* Message shown when a file has been imported */
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="¿Seguro que quieres abandonar esta compartición?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="¿Seguro que quieres abandonar estas comparticiones?";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Carpeta abandonada";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Compartir";
 /* Select all items/elements on the list */
@@ -647,7 +645,7 @@
 /* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
 "emptyRubbishBin" = "Vaciar la Papelera";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="Todos los elementos en la Papelera se eliminarán";
+"emptyRubbishBinAlertTitle"="Todos los elementos de la Papelera se eliminarán.";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="No usar HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -678,11 +676,11 @@
 "remove"="Eliminar";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Confirmar eliminación";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="Estás a punto de eliminar permanentemente 1 archivo. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="Estás a punto de eliminar permanentemente %d archivos. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="Estás a punto de eliminar permanentemente 1 carpeta. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="Estás a punto de eliminar permanentemente %d carpetas. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer)";
@@ -739,9 +737,9 @@
 /*  */
 "yourPasswordHasBeenReset"="Tu contraseña ha sido restablecida con éxito. Por favor accede a tu cuenta.";
 /* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Si tienes una copia de tu Clave de recuperación, puedes restablecer tu contraseña seleccionando SÍ. No se perderá ningún dato.";
+"forgotPassword_firstParagraph"="Si tienes una copia de tu Clave de recuperación, puedes restablecer tu contraseña seleccionando SÍ. Ningún dato se perderá en el proceso.";
 /* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="Aún puedes exportar tu Clave de recuperación si tienes una sesión de MEGA activa en cualquier navegador en este u otro ordenador. Si no, ya no podrás descifrar tu cuenta existente, pero podrás empezar una nueva cuenta utilizando el mismo correo electrónico si seleccionas NO.";
+"forgotPassword_secondParagraph"="Puedes todavía exportar la Clave de recuperación si tienes una sesión de MEGA activa en un navegador en este o en otro ordenador. Si no es así, ya no puedes descifrar tu cuenta existente, pero puedes empezar una nueva cuenta con la misma dirección de correo electrónico seleccionando NO.";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
 "doYouHaveABackupOfYourRecoveryKey"="¿Tienes una copia de tu Clave de recuperación?";
 /* Headline when the user chose YES */
@@ -753,11 +751,11 @@
 /* The title of the screen to park an account. */
 "noMasterKey_title"="¡Vaya!";
 /* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Debido a nuestro a paradigma de encriptación punto a punto, no podrás acceder a tus datos sin tu contraseña o una copia de tu Clave de recuperación.";
+"noMasterKey_firstParagraph"="Debido a nuestro paradigma de cifrado punto a punto, no podrás acceder a tus datos sin tu contraseña o una copia de seguridad de la Clave de recuperación.";
 /* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="Puedes aparcar tu cuenta y empezar una nueva con el mismo correo electrónico. Tus datos se almacenarán durante al menos 60 días. En caso de que recuerdes la contraseña de tu cuenta aparcada, por favor contacta con support@mega.nz";
+"noMasterKey_secondParagraph"="Puedes aparcar tu cuenta existente y empezar con una nueva usando la misma dirección de correo electrónico. Tus datos se conservarán durante al menos 60 días. En caso de que recuerdes la contraseña de la cuenta aparcada, por favor, ponte en contacto con support@mega.nz";
 /* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="Por favor, introduce tu correo electrónico a continuación. Recibirás un enlace de recuperación que te permitirá aparcar tu cuenta.";
+"recoveryLinkToParkYourAccount"="Por favor introduce la dirección de correo electrónico a continuación. Recibirás un enlace que te permitirá aparcar la cuenta.";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Aparcar cuenta";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -915,13 +913,13 @@
 /* Title for MEGA "Available" space. */
 "availableLabel"="Disponible";
 /* title of the My Account screen */
-"accountType"="Tipo de cuenta";
+"accountType"="Tipo de cuenta:";
 /* Text relative to the MEGA account level. UPPER CASE */
 "free"="GRATIS";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="caduca el %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="Historial de Compras";
+"purchaseHistory"="Historial de compra";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Carpetas compartidas";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -1149,7 +1147,7 @@
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Enviar contacto";
 /* */
-"done"="Hecho";
+"done"="Listo";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Enviar archivos";
 /* */
