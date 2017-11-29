@@ -577,9 +577,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)showOffline {
-    [Helper changeToViewController:MyAccountHallViewController.class onTabBarController:self.mainTBC];
-    NSUInteger myAccountHallTabPosition = 4;
-    MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:myAccountHallTabPosition];
+    self.mainTBC.selectedIndex = MYACCOUNT;
+    MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:MYACCOUNT];
     MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
     [myAccountHallVC openOffline];
 }
@@ -602,7 +601,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
                 return;
             }
-            [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:self.mainTBC];
+            [self showOffline];
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
             [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
             break;
@@ -623,7 +622,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     return;
                 }
             }
-            [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:self.mainTBC];
+            [self showOffline];
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
             for (MEGANode *node in [Helper nodesFromLinkMutableArray]) {
                 [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES];
@@ -974,7 +973,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     BOOL isChatLink = [[afterSlashesString substringToIndex:8] isEqualToString:@"#fm/chat"]; //mega://"#fm/chat"
     if (isChatLink) {
-        [Helper changeToViewController:ChatRoomsViewController.class onTabBarController:self.mainTBC];
+        self.mainTBC.selectedIndex = CHAT;
     }
     return isChatLink;
 }
@@ -1028,9 +1027,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (BOOL)manageQuickActionType:(NSString *)type {
     BOOL quickActionManaged = YES;
     if ([type isEqualToString:@"mega.ios.search"]) {
-        [Helper changeToViewController:CloudDriveTableViewController.class onTabBarController:self.mainTBC];
-        NSUInteger cloudDriveTabPosition = [self.mainTBC tabPositionForTag:0];
-        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:cloudDriveTabPosition];
+        self.mainTBC.selectedIndex = CLOUD;
+        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:CLOUD];
         CloudDriveTableViewController *cloudDriveTVC = navigationController.viewControllers.firstObject;
         if (self.quickActionType) { //Coming from didFinishLaunchingWithOptions
             if ([LTHPasscodeViewController doesPasscodeExist]) {
@@ -1042,9 +1040,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [cloudDriveTVC activateSearch];
         }
     } else if ([type isEqualToString:@"mega.ios.upload"]) {
-        [Helper changeToViewController:CloudDriveTableViewController.class onTabBarController:self.mainTBC];
-        NSUInteger cloudDriveTabPosition = [self.mainTBC tabPositionForTag:0];
-        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:cloudDriveTabPosition];
+        self.mainTBC.selectedIndex = CLOUD;
+        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:CLOUD];
         CloudDriveTableViewController *cloudDriveTVC = navigationController.viewControllers.firstObject;
         [cloudDriveTVC presentUploadAlertController];
     } else if ([type isEqualToString:@"mega.ios.offline"]) {
@@ -1245,22 +1242,22 @@ typedef NS_ENUM(NSUInteger, URLType) {
     NSUInteger tabTag = 0;
     switch (self.megatype) {
         case 1:
-            tabTag = 3;
+            tabTag = SHARES;
             break;
             
         case 2:
-            tabTag = 2;
+            tabTag = CHAT;
             break;
             
         case 3:
-            tabTag = 4;
+            tabTag = MYACCOUNT;
             break;
             
         default:
             return;
     }
-    NSUInteger tabPosition = [self.mainTBC tabPositionForTag:tabTag];
-    self.mainTBC.selectedIndex = tabPosition;
+    
+    self.mainTBC.selectedIndex = tabTag;
     if (self.megatype == 3) {
         MEGANavigationController *navigationController = [[self.mainTBC viewControllers] objectAtIndex:tabTag];
         ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
@@ -1303,19 +1300,16 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)presentNode {
     uint64_t handle = [MEGASdk handleForBase64Handle:self.nodeToPresentBase64Handle];
     MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:handle];
-    UINavigationController *navigationController;
-    NSUInteger tabPosition;
     if (node) {
+        UINavigationController *navigationController;
         if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) { // node from inshare
-            [Helper changeToViewController:SharedItemsViewController.class onTabBarController:self.mainTBC];
-            tabPosition = [self.mainTBC tabPositionForTag:3];
-            SharedItemsViewController *sharedItemsVC = self.mainTBC.childViewControllers[tabPosition].childViewControllers[0];
+            self.mainTBC.selectedIndex = SHARES;
+            SharedItemsViewController *sharedItemsVC = self.mainTBC.childViewControllers[SHARES].childViewControllers[0];
             [sharedItemsVC selectSegment:0]; // Incoming
         } else {
-            [Helper changeToViewController:CloudDriveTableViewController.class onTabBarController:self.mainTBC];
-            tabPosition = [self.mainTBC tabPositionForTag:0];
+            self.mainTBC.selectedIndex = CLOUD;
         }
-        navigationController = [self.mainTBC.childViewControllers objectAtIndex:tabPosition];
+        navigationController = [self.mainTBC.childViewControllers objectAtIndex:self.mainTBC.selectedIndex];
         
         [self presentNode:node inNavigationController:navigationController];
     } else {

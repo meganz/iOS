@@ -9,6 +9,7 @@
 #import "Helper.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGASdkManager.h"
+#import "MyAccountHallViewController.h"
 #import "NSString+MNZCategory.h"
 
 #import "LoginViewController.h"
@@ -290,7 +291,11 @@
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             [self dismissViewControllerAnimated:YES completion:^{
                 if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] isKindOfClass:[MainTabBarController class]]) {
-                    [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController]];
+                    MainTabBarController *mainTBC = (MainTabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
+                    mainTBC.selectedIndex = MYACCOUNT;
+                    MEGANavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:MYACCOUNT];
+                    MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
+                    [myAccountHallVC openOffline];
                 }
                 
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];

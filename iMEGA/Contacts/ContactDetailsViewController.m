@@ -113,20 +113,14 @@
 }
 
 - (void)changeToChatTabAndOpenChatId:(uint64_t)chatId {
-    NSInteger chatTabPosition;
-    for (chatTabPosition = 0 ; chatTabPosition < self.tabBarController.viewControllers.count ; chatTabPosition++) {
-        if ([[[self.tabBarController.viewControllers objectAtIndex:chatTabPosition] tabBarItem] tag] == 2) {
-            break;
-        }
-    }
-    
     MEGAChatRoom *chatRoom             = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
     MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
     messagesVC.chatRoom                = chatRoom;
     
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:messagesVC];
     [self presentViewController:navigationController animated:YES completion:^{
-        [Helper changeToViewController:[ChatRoomsViewController class] onTabBarController:self.tabBarController];
+        NSUInteger chatTabPosition = 2;
+        self.tabBarController.selectedIndex = chatTabPosition;
     }];
 }
 
