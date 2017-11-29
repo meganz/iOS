@@ -307,7 +307,7 @@
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Copyright warning to all users";
 /* String already exists: 367, but we need to split paragraphs. */
-"copyrightMessagePart1"="MEGA respects the copyrights of others and requires that users of the MEGA cloud service comply with the laws of copyright.";
+"copyrightMessagePart1"="MEGA respects the copyrights of others and requires that users of the MEGA cloud service comply with the laws of copyright. ";
 /* String already exists: 367, but we need to split paragraphs */
 "copyrightMessagePart2"="You are strictly prohibited from using the MEGA cloud service to infringe copyrights. You may not upload, download, store, share, display, stream, distribute, email, link to, transmit or otherwise make available any files, data or content that infringes any copyright or other proprietary rights of any person or entity.";
 /* button caption text that the user clicks when he agrees */
@@ -855,7 +855,7 @@
 /*  */
 "howItWorksSecondary"="You can notify your friend through any method. You will earn the quota if you have entered your friend's email here prior to them registering with that address.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
-"howItWorksTertiary"="You will not receive credit for inviting someone who has used MEGA previously and you will not be notified about such a rejection. ";
+"howItWorksTertiary"="You will not receive credit for inviting someone who has used MEGA previously and you will not be notified about such a rejection.";
 /* Header of block with achievements bonuses. */
 "unlockedBonuses"="Unlocked bonuses:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
@@ -1177,7 +1177,7 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s is already a contact.";
 /* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="Sent Contact: %s";
+"sentContact"="Sent Contact: %s ";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="Sent %s Contacts.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */

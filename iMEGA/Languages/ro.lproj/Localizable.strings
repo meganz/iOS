@@ -288,10 +288,10 @@
 "getLink"="Obţine linkul";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Obţine linkuri";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="Actualizează linkul";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="Actualizează linkurile";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="Gestionează linkul";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="Gestionează linkurile";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Se generează linkul...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="Sigur doreşti să muţi 1 fişier în coşul de gunoi?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="Sigur doreşti să muţi %d fişiere în coşul de gunoi?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="Sigur doreşti să muţi 1 folder în coşul de gunoi?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="Sigur doreşti să muţi %d foldere în coşul de gunoi?";
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="Sigur doreşti să părăseşti această partajare?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Sigur doreşti să părăseşti aceste partajări?";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Folder părăsit";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Partajează";
 /* Select all items/elements on the list */
@@ -678,11 +676,11 @@
 "remove"="Elimină";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Confirmă eliminarea";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="Eşti pe cale să ştergi definitiv 1 fişier. Doreşti să continui? (Nu poţi anula această acţiune)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="Eşti pe cale să ştergi definitiv %d fişiere. Doreşti să continui? (Nu poţi anula această acţiune.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="Eşti pe cale să ştergi definitiv 1 folder. Doreşti să continui? (Nu poţi anula această acţiune.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="Eşti pe cale să ştergi definitiv %d foldere. Doreşti să continui? (Nu poţi anula această acţiune.)";
