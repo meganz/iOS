@@ -480,6 +480,8 @@
 		94B28C491F0E4865000331E6 /* libsodium.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCE1F0A52E90081BCE3 /* libsodium.a */; };
 		94B28C4A1F0E4865000331E6 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCC1F0A52E90081BCE3 /* libssl.a */; };
 		94B28C4B1F0E4865000331E6 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCD1F0A52E90081BCE3 /* libuv.a */; };
+		94C9D7561FBDC87B008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
+		94C9D7571FBDC87C008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
 		94E62E1A1F3C5252003A8DEF /* LanguageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E62E191F3C5252003A8DEF /* LanguageTableViewController.m */; };
 		A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */; };
 		A819B33F1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m */; };
@@ -3578,6 +3580,7 @@
 				944DF2BD1EF9379E007798DD /* MEGALogger.m in Sources */,
 				9456054E1EDD7DBD0094EF0F /* OpenInActivity.m in Sources */,
 				945605391EDD52C00094EF0F /* SVIndefiniteAnimatedView.m in Sources */,
+				94C9D7571FBDC87C008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */,
 				943229371EDD88B1007DB542 /* SaveToCameraRollActivity.m in Sources */,
 				943229381EDD88BE007DB542 /* MWGridViewController.m in Sources */,
 				9432293E1EDD8903007DB542 /* MWTapDetectingImageView.m in Sources */,
@@ -3628,6 +3631,7 @@
 				5BEACE251FB473A20010E02F /* UIImage+MNZCategory.m in Sources */,
 				94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */,
 				94892CA01EFBF16A00AEAC25 /* UIColor+MNZCategory.m in Sources */,
+				94C9D7561FBDC87B008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */,
 				9411355E1F0100DA00D33428 /* RemoveLinkActivity.m in Sources */,
 				5BA81EA31FC30C8F00C8146C /* MEGAShareRequestDelegate.m in Sources */,
 				943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */,
