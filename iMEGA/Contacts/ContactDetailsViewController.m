@@ -52,6 +52,10 @@
     self.emailLabel.text = self.userEmail;
     
     self.incomingNodeListForUser = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
+    
+    if (@available(iOS 11.0, *)) {
+        self.avatarImageView.accessibilityIgnoresInvertColors = YES;
+    }
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -108,20 +112,14 @@
 }
 
 - (void)changeToChatTabAndOpenChatId:(uint64_t)chatId {
-    NSInteger chatTabPosition;
-    for (chatTabPosition = 0 ; chatTabPosition < self.tabBarController.viewControllers.count ; chatTabPosition++) {
-        if ([[[self.tabBarController.viewControllers objectAtIndex:chatTabPosition] tabBarItem] tag] == 2) {
-            break;
-        }
-    }
-    
     MEGAChatRoom *chatRoom             = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
     MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
     messagesVC.chatRoom                = chatRoom;
     
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:messagesVC];
     [self presentViewController:navigationController animated:YES completion:^{
-        [Helper changeToViewController:[ChatRoomsViewController class] onTabBarController:self.tabBarController];
+        NSUInteger chatTabPosition = 2;
+        self.tabBarController.selectedIndex = chatTabPosition;
     }];
 }
 
@@ -216,6 +214,10 @@
         cell.shareLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
         MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
         cell.permissionsImageView.image = [Helper permissionsButtonImageForShareType:shareType];
+    }
+    
+    if (@available(iOS 11.0, *)) {
+        cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
     
     return cell;

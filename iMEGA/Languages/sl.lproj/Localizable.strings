@@ -288,10 +288,10 @@
 "getLink"="Pridobi povezavo";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Pridobi povezave";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="Obnovi povezavo";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="Obnovi povezave";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="Urejaj povezavo";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="Manage links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Generiram povezavo...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="Ali ste prepričani, da želite premakniti 1 datoteko v koš?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="Ali ste prepričani, da želite premakniti %d datotek v koš?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="Ali ste prepričani, da želite premakniti 1 mapo v koš?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="Ali ste prepričani, da želite premakniti %d map v koš?";
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="Ste prepričani, da želite zapustiti to deljenje?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Ali ste prepričani, da želite zapustiti ta deljenja?";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Mapa zapuščena!";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Deli";
 /* Select all items/elements on the list */
@@ -678,11 +676,11 @@
 "remove"="Odstrani";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Potrdi odstranitev";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="Nameravate trajno odstraniti 1 datoteko. Ali želite nadaljevati? (Tega dejanja ne morete povrniti).";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="Nameravate trajno odstraniti %d datotek. Ali želite nadaljevati? (Tega dejanja ne morete povrniti).";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="Nameravate trajno odstraniti 1 mapo. Ali želite nadaljevati? (Tega dejanja ne morete povrniti).";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="Nameravate trajno odstraniti %d map. Ali želite nadaljevati? (Tega dejanja ne morete povrniti).";

@@ -288,10 +288,10 @@
 "getLink"="Креирај линк";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Направи линкове";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="Освежи линк";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="Освежи линкове";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="Управљање линком";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="Manage links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Генерисање линка...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="Да ли сте сигурно да желите да померите 1 документ у канту за отпатке?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="Да ли сте сигурни да желите да померите %d докумената у канту за отпатке?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="Да ли сте сигурни да желите да померите 1 директоријум у канту за отпатке?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="Да ли сте сигурни да желите да померите %d директоријум у канту за отпатке?";
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="Да ли сте сигурни да желите да напустите ово дељење?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Да ли сте сигурни да желите да напустите ова дељења?";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Директоријум остављен";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Дели";
 /* Select all items/elements on the list */
@@ -678,11 +676,11 @@
 "remove"="Уклони";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Потврдите уклањање";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="Овим ћете трајно уклонити један документ. Потврдите за наставак? (Не можете повратити ову акциу)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="Овим ћете трајно уклонити %d докумената. Потврдите за наставак? (Не можете повратити ову акциу)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="Овим ћете трајно уклонити 1 директоријум. Потврдите за наставак? (Не можете повратити ову акциу)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="Овим ћете трајно уклонити %d директоријума. Потврдите за наставак? (Не можете повратити ову акциу)";

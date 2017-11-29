@@ -1,13 +1,13 @@
 /* Button title to cancel something */
-"cancel"="Отменить";
+"cancel"="Отмена";
 /* Button title to accept something */
-"ok"="ХОРОШО";
+"ok"="ОК";
 /* */
 "yes"="Да";
 /* */
 "no"="Нет";
 /* */
-"upload"="Загрузить";
+"upload"="Загрузка на сервер";
 /*  */
 "error"="Ошибка";
 /*  */
@@ -105,7 +105,7 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Вы должны принять условия предоставления услуг, чтобы зарегистрировать учётную запись в MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Этот адрес электронной почты уже зарегистрирован аккаунт с MEGA.";
+"emailAlreadyRegistered"="На введенный вами электронный адрес уже зарегистрирована учётная запись сервиса MEGA.";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Ожидание подтверждения по электронной почте.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -131,13 +131,13 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Недоступная ссылка";
 /* */
-"fileLinkUnavailableText1"="Это может быть по следующим причинам:";
+"fileLinkUnavailableText1"="Это могло произойти в силу следующих причин:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="Переехал из-за нарушения.";
+"fileLinkUnavailableText2"="Файл удален по причине нарушения условий предоставления услуг (ToS) или политики допустимого использования (AUP)";
 /* */
-"fileLinkUnavailableText3"="Неверный URL - ссылка, которую вы пытаетесь получить доступ, не существует";
+"fileLinkUnavailableText3"="Запрошенная вами страница не существует. Возможно ссылка, по которой вы перешли, не существует";
 /* */
-"fileLinkUnavailableText4"="Файл был удален пользователем.";
+"fileLinkUnavailableText4"="Файл был удалён пользователем.";
 /* Message shown when a download starts */
 "downloadStarted"="Загрузка запущена";
 /* Title for the folder link view */
@@ -149,11 +149,11 @@
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Папка '%@' не может быть создана";
 /* */
-"folderLinkUnavailableText1"="Это может быть по следующим причинам:";
+"folderLinkUnavailableText1"="Это могло произойти в силу следующих причин:";
 /* */
 "folderLinkUnavailableText2"="Файл удален по причине нарушения условий предоставления услуг (ToS) или политики допустимого использования (AUP).";
 /* */
-"folderLinkUnavailableText3"="Неверный URL - ссылка, которую вы пытаетесь получить доступ, не существует";
+"folderLinkUnavailableText3"="Запрошенная вами страница не существует. Возможно ссылка, по которой вы перешли, не существует";
 /* */
 "folderLinkUnavailableText4"="Ссылка была деактивирована пользователем.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -288,10 +288,10 @@
 "getLink"="Получить ссылку";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Получить ссылки";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="Обновить ссылку";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="Обновить ссылки";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="Управление ссылкой";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="Ссылки";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Создание ссылки…";
 /* Message shown when some links to files and/or folders are being generated */
@@ -303,7 +303,7 @@
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="Скопировано в буфер обмена";
 /* A title for the Copyright Warning dialog. */
-"copyrightWarning"="предупреждение авторских правах";
+"copyrightWarning"="Предупреждение об авторском праве";
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Предупреждение о защите авторских прав";
 /* String already exists: 367, but we need to split paragraphs. */
@@ -351,7 +351,7 @@
 /* Text of the button for user to select files in MEGA. */
 "selectFiles"="Выбрать файлы";
 /* Title for the action that allows you to move a file or folder */
-"move"="Двигать";
+"move"="Переместить";
 /* Success message shown when you have moved 1 file */
 "moveFileMessage"="1 файл перемещён";
 /* Success message shown when you have moved {1+} files */
@@ -369,7 +369,7 @@
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
 "moveFilesFoldersMessage"="Перемещено файлов: [A] и папок: [B]";
 /* List option shown on the details of a file or folder */
-"copy"="Скопировать";
+"copy"="Копировать";
 /* Success message shown when you have copied 1 file */
 "copyFileMessage"="1 файл скопирован";
 /* Success message shown when you have copied {1+} files */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="Вы действительно хотите переместить 1 файл в корзину?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="Вы действительно хотите переместить %d файлов в корзину?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="Вы действительно хотите переместить 1 папку в корзину?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="Вы действительно хотите переместить %d папок(и) в корзину?";
@@ -433,7 +433,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="Вы поделились %d папками.";
 /* Button title that triggers the importing link action */
-"import"="Импорт";
+"import"="Импортировать";
 /* Message shown when a file has been imported */
 "fileImported"="Файл импортирован";
 /* Message shown when some files have been imported */
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="Действительно покинуть?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Действительно покинуть?";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Папка покинута";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Общий доступ";
 /* Select all items/elements on the list */
@@ -569,11 +567,11 @@
 /* Button that allows you to select a given folder */
 "select"="Выбрать";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
-"permissions"="Разрешения";
+"permissions"="Права";
 /* Permissions given to the user you share your folder with */
-"readOnly"="Tолько для чтения";
+"readOnly"="Только для чтения";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Чтения и Запись";
+"readAndWrite"="Чтение и запись";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Полный доступ";
 /* Title of the Settings section */
@@ -581,7 +579,7 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Загрузки с камеры";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
-"rubbishBinLabel"="Kорзина";
+"rubbishBinLabel"="Корзина";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
 "advanced"="Продвинутый";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
@@ -601,7 +599,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Политика конфиденциальности";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="Пользовательское соглашение ";
+"termsOfServicesLabel"="Условия предоставления услуг";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Выкл";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -678,11 +676,11 @@
 "remove"="Удалить";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Подтверждение удаления";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="Вы собираетесь навсегда удалить 1 файл. Продолжить? (Вы не сможете отменить это действие.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="Вы собираетесь навсегда удалить %d файлов(а). Продолжить? (Вы не сможете отменить это действие.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="Вы собираетесь навсегда удалить 1 папку. Продолжить? (Вы не сможете отменить это действие.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="Вы собираетесь навсегда удалить %d папок(и). Продолжить? (Вы не сможете отменить это действие.)";
@@ -801,7 +799,7 @@
 /* Menu item */
 "help"="Помощь";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Техническая поддержка ";
+"helpCentreLabel"="Центр помощи";
 /* Title to rate the app */
 "rateUsLabel"="Оценить нас";
 /* Title of the Transfers section */
@@ -827,11 +825,11 @@
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="ЗАГРУЗКИ с сервера";
 /* Title of My Account section. There you can see your account details */
-"myAccount"="Мой Аккаунт";
+"myAccount"="Моя учётная запись";
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
 "buyPRO"="Купить PRO";
 /* Caption of a button to upgrade the account to Pro status */
-"upgrade"="Обновлять";
+"upgrade"="Повысить статус";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Посмотреть и изменить профиль.";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -917,11 +915,11 @@
 /* title of the My Account screen */
 "accountType"="Тип учётной записи:";
 /* Text relative to the MEGA account level. UPPER CASE */
-"free"="БЕСПЛАТНО";
+"free"="БЕСПЛАТНЫЙ";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="истекает %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="История закупки";
+"purchaseHistory"="История покупок";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Входящие общие папки";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -939,7 +937,7 @@
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Ваш аккаунт переполнен.[/S] [A]Улучшите учётную запись[/A] и получите [S]до 4 ТБ (4096 ГБ)[/S] свободного места в облаке.";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="хранение";
+"productSpace"="свободного места";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
 "productBandwidth"="Передача";
 /* Price asociated with the MEGA PRO account level you can subscribe */
