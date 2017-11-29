@@ -33,7 +33,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="Não pode descarregar uma pasta vazia";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="Sua conta já está ativada. Por favor, faça o login.";
+"accountAlreadyConfirmed"="Sua conta já foi ativada. Por favor, faça o login.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link inválido";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -105,7 +105,7 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Você precisa aceitar os termos de serviço para criar uma conta no MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Este endereço de e-mail já registrou uma conta no Mega.";
+"emailAlreadyRegistered"="Este endereço de e-mail já está cadastrado com uma conta MEGA.";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Aguardando email de confirmação.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -133,9 +133,9 @@
 /* */
 "fileLinkUnavailableText1"="Isto pode ser devido às seguintes razões:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="O arquivo foi removido por causa de uma violação ToS/AUP.";
+"fileLinkUnavailableText2"="O arquivo foi removido por causa de uma violação Termos de Serviços / Política de Uso Aceitável.";
 /* */
-"fileLinkUnavailableText3"="URL inválido - o link que você está tentando acessar não existe";
+"fileLinkUnavailableText3"="URL inválida - o link que você está tentando acessar não existe";
 /* */
 "fileLinkUnavailableText4"="O arquivo foi apagado pelo usuário.";
 /* Message shown when a download starts */
@@ -153,7 +153,7 @@
 /* */
 "folderLinkUnavailableText2"="O link desta pasta foi eliminado por uma violação dos nossos Termos de serviço.";
 /* */
-"folderLinkUnavailableText3"="URL inválido - o link que você está tentando acessar não existe";
+"folderLinkUnavailableText3"="URL inválida - o link que você está tentando acessar não existe";
 /* */
 "folderLinkUnavailableText4"="O link desta pasta foi desativado pelo usuário.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -201,7 +201,7 @@
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="Sem Uploads";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Nuvem de Arquivos";
+"cloudDrive"="Unidade em Nuvem (Cloud Drive)";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d arquivo";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -245,7 +245,7 @@
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Captar";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
-"newFolder"="Nova Pasta";
+"newFolder"="Nova pasta";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Nome da nova pasta";
 /* Title button for the create folder alert.  */
@@ -285,13 +285,13 @@
 /* Title shown under the action that allows you to save several images to your camera roll */
 "saveImages"="Salvar imagens";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="Obter Link";
+"getLink"="Obter link";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Obter links";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="Atualizar link";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="Atualizar links";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="Administrar link";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="Gerenciar links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Gerando link...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -303,7 +303,7 @@
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="Copiado ao bloco de notas";
 /* A title for the Copyright Warning dialog. */
-"copyrightWarning"="Aviso de copyright";
+"copyrightWarning"="Aviso de direitos autorais";
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Aviso de direitos autorais a todos os usuários";
 /* String already exists: 367, but we need to split paragraphs. */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="Este aplicativo não tem acesso às suas fotos ou vídeos.";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="Tem a certeza que pretende mover  %d arquivos para a Lixeira?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="Tem a certeza que pretende mover 1 pasta para a Lixeira?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="Tem a certeza que pretende mover %d pastas para  a Lixeira?";
@@ -515,7 +515,7 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Adicionar a partir dos contatos";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Adicionar novo contato";
+"addContact"="Adicionar contato";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="E-mail do contato";
 /* Button title to 'Add' the contact to your contacts list */
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="Você tem certeza de que quer sair deste compartilhamento?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Você tem certeza de que quer sair destes compartilhamentos?";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Esta pasta já não se encontra partilhada";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Partilhar";
 /* Select all items/elements on the list */
@@ -571,9 +569,9 @@
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Permissões";
 /* Permissions given to the user you share your folder with */
-"readOnly"="Somente leitura";
+"readOnly"="Somente-leitura";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Ler & Escrever";
+"readAndWrite"="Ler e Gravar";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Acesso total";
 /* Title of the Settings section */
@@ -621,7 +619,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="Chave de Recuperação";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Mudar senha";
+"changePasswordLabel"="Mudar a senha";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Salvar a chave de recuperação e mantê-la em um local seguro permite que você recupere a sua conta no caso de esquecer a sua senha, sem perda de dados.";
 /* Question button to present a view where it's explained what is the Recovery Key */
@@ -678,11 +676,11 @@
 "remove"="Remover";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Confirmar remoção";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="Você está prestes a remover permanentemente um arquivo. Pretende continuar? (Esta ação é irreversível.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="Você está prestes a remover permanentemente  %d arquivos. Pretende continuar? (Esta ação é irreversível.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="Você está prestes a remover permanentemente 1 arquivo. Pretende continuar? (Esta ação é irreversível.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="Está prestes a remover permanentemente %d pastas. Pretende continuar? (Esta ação é irreversível.)";
@@ -801,7 +799,7 @@
 /* Menu item */
 "help"="Ajuda";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Central de Ajuda";
+"helpCentreLabel"="Centro de Ajuda";
 /* Title to rate the app */
 "rateUsLabel"="Nos avalie";
 /* Title of the Transfers section */
@@ -827,11 +825,11 @@
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="Descarregamento de transferências";
 /* Title of My Account section. There you can see your account details */
-"myAccount"="Minha conta";
+"myAccount"="Minha Conta";
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
 "buyPRO"="Upgrade a PRO";
 /* Caption of a button to upgrade the account to Pro status */
-"upgrade"="Atualizar conta";
+"upgrade"="Assinar";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Ver e editar o perfil";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -917,11 +915,11 @@
 /* title of the My Account screen */
 "accountType"="Tipo da conta:";
 /* Text relative to the MEGA account level. UPPER CASE */
-"free"="GRATUITA";
+"free"="GRÁTIS";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="expira em %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="Histórico de compras";
+"purchaseHistory"="Histórico de Compras";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Compartilhado comigo";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -1069,7 +1067,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Você tem certeza de que quer deletar o histórico de mensagens desta conversa?";
 /* 'Next' button in a dialog */
-"continue"="Continue";
+"continue"="Continuar";
 /* Button title that allows the user to close a chat. */
 "closeChat"="Fechar o chat";
 /* Title of the incoming shared folders of a user. */
@@ -1200,7 +1198,7 @@
 /* Label to show that an SDK operation has been complete successfully. */
 "No error"="Nenhum erro";
 /* Label to show that an Internal error occurs during a SDK operation. */
-"Internal error"="Erro interno";
+"Internal error"="Erro Interno";
 /* Label to show that an error of Invalid argument occurs during a SDK operation. */
 "Invalid argument"="Argumento inválido";
 /* Label to show that a request error occurs during a SDK operation. */

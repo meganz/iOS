@@ -19,7 +19,7 @@
 /*  */
 "passcode"="Passcode";
 /* "Size" of the file or folder you are sharing */
-"size"="Kích thước";
+"size"="Kích cỡ";
 /*  */
 "folder"="Thư mục";
 /* Error message shown when there's no camera available on the device */
@@ -33,7 +33,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="Bạn không thể tải về một thư mục không chứa dữ liệu";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="Tài khoản của bạn đã được kích hoạt rồi. Xin đăng nhập.";
+"accountAlreadyConfirmed"="Tài khoản của bạn vừa được kích hoạt. Vui lòng đăng nhập.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Đường dẫn liên kết không hợp lệ";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -105,7 +105,7 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Bạn cần phải đồng ý với các điều khoản của dịch vụ để đăng ký tài khoản MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Địa chỉ email này đã đăng ký từ trước với MEGA.";
+"emailAlreadyRegistered"="Email này đã được đăng ký.";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Đang chờ việc xác thực email.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -131,29 +131,29 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Đường liên kết không còn tồn tại";
 /* */
-"fileLinkUnavailableText1"="Việc này có thể do các nguyên nhân sau:";
+"fileLinkUnavailableText1"="Điều này có thể do:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="Tệp tin đã bị xóa vì vi phạm Điều khoản DV/Chính sách Sử dụng.";
+"fileLinkUnavailableText2"="Tệp bị xóa vì vi phạm ToS/APU";
 /* */
-"fileLinkUnavailableText3"="URL không hợp lệ - liên kết bạn đang truy cập không tồn tại";
+"fileLinkUnavailableText3"="URL không hợp lệ - đường dẫn không tồn tại";
 /* */
-"fileLinkUnavailableText4"="Tập tin đã bị xóa bởi người cung cấp.";
+"fileLinkUnavailableText4"="Tệp bị người dùng xóa.";
 /* Message shown when a download starts */
 "downloadStarted"="Đang tải xuống";
 /* Title for the folder link view */
 "folderLink"="Đường dẫn liên kết Thư Mục";
 /* Button title which downloads a file/folder to your device */
-"downloadButton"="Tải xuống";
+"downloadButton"="Tải về";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Thư mục bạn đang cố tải về có dung lượng lớn hơn bộ nhớ còn lại trong máy.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Không tạo được thư mục '%@'";
 /* */
-"folderLinkUnavailableText1"="Việc này có thể do các nguyên nhân sau:";
+"folderLinkUnavailableText1"="Điều này có thể do:";
 /* */
 "folderLinkUnavailableText2"="Liên kết thư mục đã bị xóa bỏ bởi vì vi phạm quy định sử dụng DV và chính sách SD.";
 /* */
-"folderLinkUnavailableText3"="URL không hợp lệ - liên kết bạn đang truy cập không tồn tại";
+"folderLinkUnavailableText3"="URL không hợp lệ - đường dẫn không tồn tại";
 /* */
 "folderLinkUnavailableText4"="Liên kết thư mục đã bị vô hiệu hóa bởi chính người sở hữu.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -288,10 +288,10 @@
 "getLink"="Lấy đường dẫn liên kết";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Lấy đường liên kết";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="Cập nhật đường liên kết";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="Cập nhật đường liên kết";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="Quản lý đường liên kết";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="Quản lý đường liên kết";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Đang tạo đường liên kết...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="Bạn có chắc muốn chuyển 1 tệp tin này vào Thùng Rác không?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="Bạn có chắc muốn chuyển %d tệp tin vào Thùng Rác không?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="Bạn có chắc muốn chuyển 1 thư mục vào Thùng Rác không?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="Bạn có chắc muốn chuyển %d thư mục vào Thùng rác không?";
@@ -433,7 +433,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="Đã chia sẻ %d thư mục thành công.";
 /* Button title that triggers the importing link action */
-"import"="Nhập";
+"import"="Lấy nội dung";
 /* Message shown when a file has been imported */
 "fileImported"="Đã nhập tệp tin!";
 /* Message shown when some files have been imported */
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="Bạn có chắc muốn rời khỏi mục chia sẻ này không?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Bạn có chắc muốn rời khỏi các mục chia sẻ này không?";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Đã rời khỏi thư mục";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Chia sẻ";
 /* Select all items/elements on the list */
@@ -569,19 +567,19 @@
 /* Button that allows you to select a given folder */
 "select"="Chọn";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
-"permissions"="Quyền sử dụng";
+"permissions"="Cấp phép";
 /* Permissions given to the user you share your folder with */
 "readOnly"="Chỉ-đọc";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Xem & Sửa";
+"readAndWrite"="Đọc & Ghi";
 /* Permissions given to the user you share your folder with */
-"fullAccess"="Toàn quyền";
+"fullAccess"="Không giới hạn";
 /* Title of the Settings section */
 "settingsTitle"="Thiết Đặt";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Camera Uploads";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
-"rubbishBinLabel"="Thùng Rác";
+"rubbishBinLabel"="Thùng rác";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
 "advanced"="Nâng cao";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
@@ -589,7 +587,7 @@
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="Thông tin";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
-"language"="Language";
+"language"="Ngôn ngữ";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="English (Anh)";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
@@ -601,7 +599,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Chính sách riêng tư";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="Điều khoản Dịch vụ";
+"termsOfServicesLabel"="Điều khoản dịch vụ";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Tắt";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -678,11 +676,11 @@
 "remove"="Xóa";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Xác nhận việc xóa bỏ";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="Bạn đang chuẩn bị tiến hành xóa vĩnh viễn 1 tệp tin. Bạn có muốn xóa không? (Không thể phục hồi sau khi xóa)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="Bạn đang chuẩn bị tiến hành xóa vĩnh viễn %d tệp tin. Bạn có muốn xóa không? (Không thể phục hồi sau khi xóa)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="Bạn đang chuẩn bị tiến hành xóa vĩnh viễn %d thư mục. Bạn có muốn xóa không? (Không thể phục hồi sau khi xóa)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="Bạn đang chuẩn bị tiến hành xóa vĩnh viễn %d thư mục. Bạn có muốn thực hiện không? (Không thể phục hồi sau khi xóa)";
@@ -717,7 +715,7 @@
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Xác nhận mật khẩu";
 /* Success message shown when the password has been changed */
-"passwordChanged"="Mật khẩu của bạn đã được đổi.";
+"passwordChanged"="Mật khẩu đã được thay đổi.";
 /* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
 "oldAndNewPasswordMatch"="Mật khẩu mới và cũ không được giống nhau.";
 /* An option to reset the password. */
@@ -801,7 +799,7 @@
 /* Menu item */
 "help"="Trợ giúp";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Trung tâm Hỗ trợ";
+"helpCentreLabel"="Trung tâm trợ giúp";
 /* Title to rate the app */
 "rateUsLabel"="Đánh giá app";
 /* Title of the Transfers section */
@@ -921,7 +919,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="hết hạn vào %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="Lịch sử mua hàng";
+"purchaseHistory"="Lịch sử thanh toán";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Mục Chia Sẻ Nhận Được";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -1029,7 +1027,7 @@
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Mời thêm người vào trò chuyện...";
 /* Title that refers to the status of the chat (Either Online or Offline) */
-"status"="Tình trạng";
+"status"="Trạng thái";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Gọi Thoại và Video";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1145,7 +1143,7 @@
 /*  */
 "fromDevice"="Lấy từ trong điện thoại";
 /* referring to a contact in the contact list of the user */
-"contact"="Liên lạc";
+"contact"="Danh bạ";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Gửi tên liên lạc";
 /* */
