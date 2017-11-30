@@ -1,8 +1,6 @@
 
 #import "MEGAPhotoMediaItem.h"
 
-#import "JSQMessagesBubbleImageFactory.h"
-#import "JSQMessagesMediaViewBubbleImageMasker.h"
 #import "JSQMessagesMediaPlaceholderView.h"
 
 #import "NSString+MNZCategory.h"
@@ -31,7 +29,7 @@
         _cachedImageView.contentMode = UIViewContentModeScaleAspectFill;
         _cachedImageView.clipsToBounds = YES;
         _cachedImageView.layer.cornerRadius = 5;
-        _cachedImageView.backgroundColor = [UIColor mnz_grayE3E3E3];
+        _cachedImageView.backgroundColor = [UIColor whiteColor];
         
         NSString *previewFilePath = [[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"] stringByAppendingPathComponent:self.node.base64Handle];
         
@@ -76,7 +74,9 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    return CGSizeMake([[UIScreen mainScreen] mnz_screenWidth] * 2/3 + 8, [[UIScreen mainScreen] mnz_screenWidth] * 2/3 + 8);
+    // 84 = 24 (avatar) + 20x2 (edge insets) + 10x2 (bubble insets)
+    const CGFloat displaySize = [[UIScreen mainScreen] mnz_screenWidth] - 84;
+    return CGSizeMake(displaySize, displaySize);
 }
 
 - (UIView *)mediaPlaceholderView {
@@ -90,10 +90,10 @@
 - (void)configureCachedImageViewWithImagePath:(NSString *)imagePath {
     CGSize size = self.cachedImageView.frame.size;
     
-    UIImageView *previewImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width - 8, size.height - 8)];
+    UIImageView *previewImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
     previewImageView.contentMode = UIViewContentModeScaleAspectFill;
     previewImageView.clipsToBounds = YES;
-    previewImageView.layer.cornerRadius = 2.5;
+    previewImageView.layer.cornerRadius = 4;
     previewImageView.backgroundColor = [UIColor grayColor];
     previewImageView.center = [self.cachedImageView convertPoint:self.cachedImageView.center fromView:self.cachedImageView.superview];
     previewImageView.image = [UIImage imageWithContentsOfFile:imagePath];
