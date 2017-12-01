@@ -78,10 +78,12 @@
 		<string>SF-UI-Display-Medium.otf</string>
 		<string>SF-UI-Display-Light.otf</string>
 		<string>SF-UI-Display-Regular.otf</string>
+		<string>SF-UI-Display-Bold.otf</string>
 		<string>SF-UI-Text-Medium.otf</string>
 		<string>SF-UI-Text-Light.otf</string>
 		<string>SF-UI-Text-Regular.otf</string>
 		<string>SF-UI-Text-RegularItalic.otf</string>
+		<string>SF-UI-Text-Bold.otf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
