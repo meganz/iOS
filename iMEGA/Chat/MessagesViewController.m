@@ -921,6 +921,13 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                                               NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
     }
     
+    if ([cell.textView.text mnz_isPureEmojiString]) {
+        cell.messageBubbleImageView.image = nil;
+        if ([cell.textView.text mnz_isPureEmojiString]) {
+            cell.textView.font = [UIFont mnz_defaultFontForPureEmojiStringWithEmojis:[cell.textView.text mnz_emojiCount]];
+        }
+    }
+    
     return cell;
 }
 
