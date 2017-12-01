@@ -443,6 +443,8 @@
 		94624CFF1F50518900D52504 /* MEGABaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AA4F7C1ED433CA00E7BA23 /* MEGABaseRequestDelegate.m */; };
 		946B2D161F46E235009ED32C /* GetLinkTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 946B2D151F46E235009ED32C /* GetLinkTableViewController.m */; };
 		946B2D191F46E5B9009ED32C /* CopyrightWarningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 946B2D181F46E5B9009ED32C /* CopyrightWarningViewController.m */; };
+		947F5DE31FD19AD7004FAC80 /* SF-UI-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 947F5DE11FD19AD6004FAC80 /* SF-UI-Text-Bold.otf */; };
+		947F5DE41FD19AD7004FAC80 /* SF-UI-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 947F5DE21FD19AD7004FAC80 /* SF-UI-Display-Bold.otf */; };
 		94892C901EFBEA1F00AEAC25 /* SAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250101D79E9D400499A6C /* SAMKeychain.m */; };
 		94892C911EFBEA2300AEAC25 /* SAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250121D79E9D400499A6C /* SAMKeychainQuery.m */; };
 		94892C921EFBEA3D00AEAC25 /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
@@ -1195,6 +1197,8 @@
 		946B2D151F46E235009ED32C /* GetLinkTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetLinkTableViewController.m; sourceTree = "<group>"; };
 		946B2D171F46E5B9009ED32C /* CopyrightWarningViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CopyrightWarningViewController.h; sourceTree = "<group>"; };
 		946B2D181F46E5B9009ED32C /* CopyrightWarningViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CopyrightWarningViewController.m; sourceTree = "<group>"; };
+		947F5DE11FD19AD6004FAC80 /* SF-UI-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Text-Bold.otf"; sourceTree = "<group>"; };
+		947F5DE21FD19AD7004FAC80 /* SF-UI-Display-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Display-Bold.otf"; sourceTree = "<group>"; };
 		949CEACD1F05121D00A3A580 /* LoginRequiredViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginRequiredViewController.h; path = iMEGA/Extensions/MEGAShare/LoginRequiredViewController.h; sourceTree = SOURCE_ROOT; };
 		949CEACE1F05121D00A3A580 /* LoginRequiredViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginRequiredViewController.m; path = iMEGA/Extensions/MEGAShare/LoginRequiredViewController.m; sourceTree = SOURCE_ROOT; };
 		94B28C231F0E464C000331E6 /* libKarere.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKarere.a; path = "iMEGA/Vendor/Karere/bindings/Objective-C/build/Release-iphoneos/libKarere.a"; sourceTree = "<group>"; };
@@ -2832,6 +2836,8 @@
 				5B44293F1E6D705D00BCACC0 /* SF-UI-Text-Medium.otf */,
 				E8C289F31BF5F8A200F7A034 /* SF-UI-Text-Light.otf */,
 				E8C289F61BF5FCDD00F7A034 /* SF-UI-Text-Regular.otf */,
+				947F5DE21FD19AD7004FAC80 /* SF-UI-Display-Bold.otf */,
+				947F5DE11FD19AD6004FAC80 /* SF-UI-Text-Bold.otf */,
 			);
 			name = Fonts;
 			sourceTree = "<group>";
@@ -3093,6 +3099,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				947F5DE31FD19AD7004FAC80 /* SF-UI-Text-Bold.otf in Resources */,
 				A82E5BF51F3470B5003C149C /* Spotlight_folder.png in Resources */,
 				41D21E6D1D01AEC3002E6296 /* CTAssetsPickerController.bundle in Resources */,
 				A82E5BCA1F3465A3003C149C /* Spotlight_folder@2x.png in Resources */,
@@ -3113,6 +3120,7 @@
 				4115044B1CEB07C700BF38E3 /* VideoOverlay@3x.png in Resources */,
 				41EABF171DA7C5250087271C /* Chat.storyboard in Resources */,
 				4115043B1CEB07C700BF38E3 /* PlayButtonOverlayLarge@2x.png in Resources */,
+				947F5DE41FD19AD7004FAC80 /* SF-UI-Display-Bold.otf in Resources */,
 				411504311CEB07C700BF38E3 /* ImageSelectedOn.png in Resources */,
 				411504371CEB07C700BF38E3 /* ImageSelectedSmallOn.png in Resources */,
 				E8C289F51BF5F8A200F7A034 /* SF-UI-Text-Light.otf in Resources */,
