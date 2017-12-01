@@ -26,4 +26,8 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 - (NSString *)mnz_removeWebclientFormatters;
 
+- (BOOL)mnz_containsEmoji;
+- (BOOL)mnz_isPureEmojiString;
+- (NSInteger)mnz_emojiCount;
+
 @end
