@@ -42,6 +42,7 @@
 #import "MainTabBarController.h"
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGAPasswordLinkRequestDelegate.h"
+#import "MyAccountHallViewController.h"
 #import "OfflineTableViewController.h"
 #import "SecurityOptionsTableViewController.h"
 #import "SettingsTableViewController.h"
@@ -90,6 +91,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @property (nonatomic, strong) NSURL *link;
 @property (nonatomic) URLType urlType;
 @property (nonatomic, strong) NSString *emailOfNewSignUpLink;
+@property (nonatomic, strong) NSString *quickActionType;
 
 @property (nonatomic, strong) UIAlertView *API_ESIDAlertView;
 
@@ -128,7 +130,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[MEGALogger sharedLogger] startLogging];
     }
     
-    MEGALogDebug(@"The launch process is almost done and the app is almost ready to run. Launch options: %@", launchOptions);
+    MEGALogDebug(@"Application did finish launching with options %@", launchOptions);
     
     _signalActivityRequired = NO;
     
@@ -339,19 +341,37 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [Helper setIndexer:self.indexer];
     }
     
+    if (@available(iOS 9.0, *)) {
+        UIForceTouchCapability forceTouchCapability = self.window.rootViewController.view.traitCollection.forceTouchCapability;
+        if (forceTouchCapability == UIForceTouchCapabilityAvailable) {
+            UIApplicationShortcutItem *applicationShortcutItem = [launchOptions objectForKey:UIApplicationLaunchOptionsShortcutItemKey];
+            if (applicationShortcutItem) {
+                if (isFetchNodesDone) {
+                    [self manageQuickActionType:applicationShortcutItem.type];
+                } else {
+                    self.quickActionType = applicationShortcutItem.type;
+                }
+            }
+        }
+    }
+    
     return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    MEGALogDebug(@"Application will resign active");
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
+    MEGALogDebug(@"Application did enter background");
     
+    [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
+    [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
+
     BOOL pendingTasks = [[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0 || [[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0 || [[[CameraUploads syncManager] assetsOperationQueue] operationCount] > 0;
     if (pendingTasks) {
         [self startBackgroundTask];
@@ -372,6 +392,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    MEGALogDebug(@"Application will enter foreground");
+    
     [[MEGAReachabilityManager sharedManager] reconnectIfIPHasChanged];
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
     
@@ -391,6 +413,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    MEGALogDebug(@"Application did become active");
     
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
@@ -398,6 +421,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    MEGALogDebug(@"Application will terminate");
     
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:[MEGAPurchase sharedInstance]];
     
@@ -420,6 +444,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    MEGALogDebug(@"Application open URL %@, source application %@", url, sourceApplication);
     self.link = url;
     
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
@@ -436,12 +461,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+    MEGALogDebug(@"Application did register user notification settings");
     [application registerForRemoteNotifications];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     if([deviceToken length] == 0) {
-        MEGALogError(@"Token length is 0");
+        MEGALogError(@"Application did register for remote notifications with device token length 0");
         return;
     }
     
@@ -455,15 +481,17 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
     
     NSString *deviceTokenString = [NSString stringWithString:hexString];
-    MEGALogDebug(@"Device token %@", deviceTokenString);
+    MEGALogDebug(@"Application did register for remote notifications with device token %@", deviceTokenString);
     [[MEGASdkManager sharedMEGASdk] registeriOSdeviceToken:deviceTokenString];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-    MEGALogError(@"Failed to register for remote notifications %@", error);
+    MEGALogError(@"Application did fail to register for remote notifications with error %@", error);
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
+    MEGALogDebug(@"Application continue user activity");
+    
     if ([userActivity.activityType isEqualToString:CSSearchableItemActionType] && [MEGAReachabilityManager isReachable]) {
         self.nodeToPresentBase64Handle = userActivity.userInfo[@"kCSSearchableItemActivityIdentifier"];
         if ([self.window.rootViewController isKindOfClass:[MainTabBarController class]] && ![LTHPasscodeViewController doesPasscodeExist]) {
@@ -475,14 +503,25 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
 }
 
+- (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL succeeded))completionHandler {
+    MEGALogDebug(@"Application perform action for shortcut item");
+    
+    if (isFetchNodesDone) {
+        completionHandler([self manageQuickActionType:shortcutItem.type]);
+    }
+}
+
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+    MEGALogWarning(@"Application did receive memory warning");
+    
     if (@available(iOS 9.0, *)) {
-        MEGALogWarning(@"Memory warning, stopping spotlight indexing");
         [self.indexer stopIndexing];
     }
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    MEGALogDebug(@"Application did receive remote notification");
+    
     if (application.applicationState == UIApplicationStateInactive) {
         _megatype = [[userInfo objectForKey:@"megatype"] unsignedIntegerValue];
         [self openTabBasedOnNotificationMegatype];
@@ -529,6 +568,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)startBackgroundTask {
+    MEGALogDebug(@"Start background task");
     bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
         [[UIApplication sharedApplication] endBackgroundTask:bgTask];
         bgTask = UIBackgroundTaskInvalid;
@@ -553,6 +593,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }];
 }
 
+- (void)showOffline {
+    self.mainTBC.selectedIndex = MYACCOUNT;
+    MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:MYACCOUNT];
+    MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
+    [myAccountHallVC openOffline];
+}
+
 - (void)processSelectedOptionOnLink {
     switch ([Helper selectedOptionOnLink]) {
         case 1: { //Import file from link
@@ -571,7 +618,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
                 return;
             }
-            [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:self.mainTBC];
+            [self showOffline];
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
             [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
             break;
@@ -592,7 +639,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     return;
                 }
             }
-            [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:self.mainTBC];
+            [self showOffline];
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
             for (MEGANode *node in [Helper nodesFromLinkMutableArray]) {
                 [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES];
@@ -610,7 +657,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)processLink:(NSURL *)url {
-    
     NSString *afterSlashesString = [[url absoluteString] substringFromIndex:7]; // "mega://" = 7 characters
         
     if (afterSlashesString.length < 2) {
@@ -944,7 +990,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     BOOL isChatLink = [[afterSlashesString substringToIndex:8] isEqualToString:@"#fm/chat"]; //mega://"#fm/chat"
     if (isChatLink) {
-        [Helper changeToViewController:ChatRoomsViewController.class onTabBarController:self.mainTBC];
+        self.mainTBC.selectedIndex = CHAT;
     }
     return isChatLink;
 }
@@ -993,6 +1039,37 @@ typedef NS_ENUM(NSUInteger, URLType) {
         
         self.link = nil;
     }
+}
+
+- (BOOL)manageQuickActionType:(NSString *)type {
+    BOOL quickActionManaged = YES;
+    if ([type isEqualToString:@"mega.ios.search"]) {
+        self.mainTBC.selectedIndex = CLOUD;
+        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:CLOUD];
+        CloudDriveTableViewController *cloudDriveTVC = navigationController.viewControllers.firstObject;
+        if (self.quickActionType) { //Coming from didFinishLaunchingWithOptions
+            if ([LTHPasscodeViewController doesPasscodeExist]) {
+                [cloudDriveTVC activateSearch]; // Cloud Drive already presented, so activate search bar
+            } else {
+                cloudDriveTVC.homeQuickActionSearch = YES; //Search will become active after the Cloud Drive did appear
+            }
+        } else {
+            [cloudDriveTVC activateSearch];
+        }
+    } else if ([type isEqualToString:@"mega.ios.upload"]) {
+        self.mainTBC.selectedIndex = CLOUD;
+        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:CLOUD];
+        CloudDriveTableViewController *cloudDriveTVC = navigationController.viewControllers.firstObject;
+        [cloudDriveTVC presentUploadAlertController];
+    } else if ([type isEqualToString:@"mega.ios.offline"]) {
+        [self showOffline];
+    } else {
+        quickActionManaged = NO;
+    }
+    
+    self.quickActionType = nil;
+    
+    return quickActionManaged;
 }
 
 - (void)removeUnfinishedTransfersOnFolder:(NSString *)directory {
@@ -1165,6 +1242,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
             if (self.link != nil) {
                 [self processLink:self.link];
             }
+            
+            [self manageQuickActionType:self.quickActionType];
         }
     }
     
@@ -1180,22 +1259,22 @@ typedef NS_ENUM(NSUInteger, URLType) {
     NSUInteger tabTag = 0;
     switch (self.megatype) {
         case 1:
-            tabTag = 3;
+            tabTag = SHARES;
             break;
             
         case 2:
-            tabTag = 2;
+            tabTag = CHAT;
             break;
             
         case 3:
-            tabTag = 4;
+            tabTag = MYACCOUNT;
             break;
             
         default:
             return;
     }
-    NSUInteger tabPosition = [self.mainTBC tabPositionForTag:tabTag];
-    self.mainTBC.selectedIndex = tabPosition;
+    
+    self.mainTBC.selectedIndex = tabTag;
     if (self.megatype == 3) {
         MEGANavigationController *navigationController = [[self.mainTBC viewControllers] objectAtIndex:tabTag];
         ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
@@ -1238,19 +1317,16 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)presentNode {
     uint64_t handle = [MEGASdk handleForBase64Handle:self.nodeToPresentBase64Handle];
     MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:handle];
-    UINavigationController *navigationController;
-    NSUInteger tabPosition;
     if (node) {
+        UINavigationController *navigationController;
         if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) { // node from inshare
-            [Helper changeToViewController:SharedItemsViewController.class onTabBarController:self.mainTBC];
-            tabPosition = [self.mainTBC tabPositionForTag:3];
-            SharedItemsViewController *sharedItemsVC = self.mainTBC.childViewControllers[tabPosition].childViewControllers[0];
+            self.mainTBC.selectedIndex = SHARES;
+            SharedItemsViewController *sharedItemsVC = self.mainTBC.childViewControllers[SHARES].childViewControllers[0];
             [sharedItemsVC selectSegment:0]; // Incoming
         } else {
-            [Helper changeToViewController:CloudDriveTableViewController.class onTabBarController:self.mainTBC];
-            tabPosition = [self.mainTBC tabPositionForTag:0];
+            self.mainTBC.selectedIndex = CLOUD;
         }
-        navigationController = [self.mainTBC.childViewControllers objectAtIndex:tabPosition];
+        navigationController = [self.mainTBC.childViewControllers objectAtIndex:self.mainTBC.selectedIndex];
         
         [self presentNode:node inNavigationController:navigationController];
     } else {
@@ -1482,6 +1558,8 @@ void uncaughtExceptionHandler(NSException *exception) {
         if (self.nodeToPresentBase64Handle) {
             [self presentNode];
         }
+        
+        [self manageQuickActionType:self.quickActionType];
     }
 }
 

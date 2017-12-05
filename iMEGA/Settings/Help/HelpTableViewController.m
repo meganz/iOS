@@ -9,6 +9,7 @@
 
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGASDK+MNZCategory.h"
 
 @interface HelpTableViewController () <MFMailComposeViewControllerDelegate>
 
@@ -39,7 +40,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return [[MEGASdkManager sharedMEGASdk] mnz_isProAccount] ? 3 : 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -131,7 +132,8 @@
 }
 
 - (void)rateApp {
-    //TODO: Add logic to allow user rate the app from the app.
+    NSString *appStoreLink = @"https://itunes.apple.com/us/app/mega/id706857885?mt=8&action=write-review";
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appStoreLink]];
 }
 
 #pragma mark - MFMailComposeViewControllerDelegate

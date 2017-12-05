@@ -1,7 +1,7 @@
 /* Button title to cancel something */
 "cancel"="Отказ";
 /* Button title to accept something */
-"ok"="ОК";
+"ok"="Добре";
 /* */
 "yes"="Да";
 /* */
@@ -19,7 +19,7 @@
 /*  */
 "passcode"="Код за достъп";
 /* "Size" of the file or folder you are sharing */
-"size"="Размер";
+"size"="Големина";
 /*  */
 "folder"="Папка";
 /* Error message shown when there's no camera available on the device */
@@ -75,7 +75,7 @@
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
 "megaAccessText"="Получи изцяло криптиран достъп навсякъде,по всяко време.";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="Вход";
+"login"="Влез";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Създаване на профил";
 /* Message shown when the user writes a wrong email or password on login */
@@ -105,7 +105,7 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Необходимо е да се съгласите с условията за ползване за да се регистрирате в MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Този имейл адрес е вече регистриран в Mega.";
+"emailAlreadyRegistered"="Този e-mail адрес вече е регистрирал акаунт с MEGA.";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Изчакване на имейл потвърждение.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -131,11 +131,11 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Неналичен линк";
 /* */
-"fileLinkUnavailableText1"="Това може да се дължи на следните причини:";
+"fileLinkUnavailableText1"="Това може да е поради следните причини:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
 "fileLinkUnavailableText2"="Файлът е бил отстранен поради нарушение на Условията за ползване/Политиката за допустимо използване.";
 /* */
-"fileLinkUnavailableText3"="Невалиден URL - линкът, който се опитвате да отворите не съществува";
+"fileLinkUnavailableText3"="Невалидно URL - линкът, до който се опитвате да стигнете, вече не съществува";
 /* */
 "fileLinkUnavailableText4"="Файлът е бил изтрит от потребителя.";
 /* Message shown when a download starts */
@@ -143,17 +143,17 @@
 /* Title for the folder link view */
 "folderLink"="Линк към папката";
 /* Button title which downloads a file/folder to your device */
-"downloadButton"="Изтегли";
+"downloadButton"="Изтеглете";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Папката, която се опитвате да изтеглите е по-голяма от размера на свободната памет.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Папката '%@' не може да бъде създадена";
 /* */
-"folderLinkUnavailableText1"="Това може да се дължи на следните причини:";
+"folderLinkUnavailableText1"="Това може да е поради следните причини:";
 /* */
 "folderLinkUnavailableText2"="Връзката към папката е премахната поради ToS/AUP нарушение.";
 /* */
-"folderLinkUnavailableText3"="Невалиден URL - линкът, който се опитвате да отворите не съществува";
+"folderLinkUnavailableText3"="Невалидно URL - линкът, до който се опитвате да стигнете, вече не съществува";
 /* */
 "folderLinkUnavailableText4"="Връзката към папката е била прекратена от потребителя.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -285,13 +285,13 @@
 /* Title shown under the action that allows you to save several images to your camera roll */
 "saveImages"="Запази Изображения";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="Вземи линк";
+"getLink"="Вземете линк";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Вземи линкове";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="Обнови линк";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="Обнови линкове";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="Управление на линк";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="Manage links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Генериране на линк...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -351,7 +351,7 @@
 /* Text of the button for user to select files in MEGA. */
 "selectFiles"="Избери файлове";
 /* Title for the action that allows you to move a file or folder */
-"move"="Премести";
+"move"="Измести";
 /* Success message shown when you have moved 1 file */
 "moveFileMessage"="1 файл преместен";
 /* Success message shown when you have moved {1+} files */
@@ -387,7 +387,7 @@
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
 "copyFilesFoldersMessage"="[A] файла и [B] папки бяха копирани";
 /* Title for the action that allows you to rename a file or folder  */
-"rename"="Преименувай";
+"rename"="Преименуване";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Въведете новото име";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="Сигурни ли сте че искате да преместите 1 файл в Кошчето?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="Сигурни ли сте, че искате да преместите %d файла в Кошчето?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="Сигурни ли сте, че искате да преместите 1 папка в Кошчето?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="Сигурни ли сте, че искате да преместите %d папки в Кошчето?";
@@ -433,7 +433,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d папки бяха споделени успешно.";
 /* Button title that triggers the importing link action */
-"import"="Импортирай";
+"import"="Внеси";
 /* Message shown when a file has been imported */
 "fileImported"="Файлът беше импортиран";
 /* Message shown when some files have been imported */
@@ -469,7 +469,7 @@
 /* Title of the Offline section */
 "offline"="Извън линия";
 /* Title of the Contacts section */
-"contactsTitle"="Контакти";
+"contactsTitle"="Абонати";
 /* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
 "noFoldersShared"="Няма споделени папки";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
@@ -515,7 +515,7 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Добави от контакти";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Добави контакт";
+"addContact"="Добавете абонат";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Имейл на контакта";
 /* Button title to 'Add' the contact to your contacts list */
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="Сигурни ли сте, че искате да напуснете това споделяне?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Сигурни ли сте, че искате да напуснете тези споделяния?";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Папката е напусната";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Сподели";
 /* Select all items/elements on the list */
@@ -569,7 +567,7 @@
 /* Button that allows you to select a given folder */
 "select"="Избери";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
-"permissions"="Разрешения";
+"permissions"="Права";
 /* Permissions given to the user you share your folder with */
 "readOnly"="Само четене";
 /* Permissions given to the user you share your folder with */
@@ -621,7 +619,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="Възстановяващ Ключ";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Промени парола";
+"changePasswordLabel"="Смени парола";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Експортирането на Възстановяващия Ключ и съхранението му на сигурно място ви дава възможност да възстановите профила си в случай на загубена парола, без загуба на данни.";
 /* Question button to present a view where it's explained what is the Recovery Key */
@@ -678,11 +676,11 @@
 "remove"="Изтрий";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Потвърди изтриване";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="Вие сте на път трайно да премахнете 1 файл. Бихте ли искали да продължите? (Не можете да отмените това действие.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="Вие сте на път трайно да премахнете %d файла. Бихте ли искали да продължите? (Не можете да отмените това действие.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="Вие сте на път трайно да премахнете 1 папка. Бихте ли искали да продължите? (Не можете да отмените това действие.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="Вие сте на път трайно да премахнете %d папки. Бихте ли искали да продължите? (Не можете да отмените това действие.)";
@@ -717,7 +715,7 @@
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Потвърди парола";
 /* Success message shown when the password has been changed */
-"passwordChanged"="Вашата парола беше променена.";
+"passwordChanged"="Паролата Ви е сменена.";
 /* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
 "oldAndNewPasswordMatch"="Новата и старата парола не трябва да съвпадат.";
 /* An option to reset the password. */
@@ -801,7 +799,7 @@
 /* Menu item */
 "help"="Помощ";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Помощен център";
+"helpCentreLabel"="Помощен Център";
 /* Title to rate the app */
 "rateUsLabel"="Оценете ни";
 /* Title of the Transfers section */
@@ -921,7 +919,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="изтича на %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="История на покупките";
+"purchaseHistory"="История на закупките";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Входящи Споделяния";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -1145,11 +1143,11 @@
 /*  */
 "fromDevice"="From device";
 /* referring to a contact in the contact list of the user */
-"contact"="Контакт";
+"contact"="Абонат";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Изпрати контакт";
 /* */
-"done"="Готово";
+"done"="Готово.";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Изпрати файлове";
 /* */

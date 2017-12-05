@@ -181,7 +181,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="新增聯絡人";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
-"received"="Received";
+"received"="已收到的";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="已寄出";
 /* Success message shown when you acepted a contact request */
@@ -288,10 +288,10 @@
 "getLink"="取得連結";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="取得分享連結";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="更新分享連結";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="更新多個連結";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="管理連接";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="管理連結";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="正在生成連接...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="您確定要移動 1 個檔案至垃圾箱嗎？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="您確定要移動 %d 個檔案至垃圾箱嗎？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="您確定要移動 1 個資料夾至垃圾箱嗎？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="您確定要移動 %d 個資料夾至垃圾箱嗎？";
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="您確定要離開此分享嗎？";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="您確定要離開這些分享嗎？";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="已離開該資料夾";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="共享";
 /* Select all items/elements on the list */
@@ -678,11 +676,11 @@
 "remove"="移除";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="確認移除";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="您即將永久刪除 1 個檔案。您要繼續嗎？（您不能撤銷該操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="您即將永久刪除 %d 個檔案。您要繼續嗎？（您不能撤銷該操作。）";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="您即將永久刪除 1 個資料夾。您要繼續嗎？（您不能撤銷該操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="您即將永久刪除 %d 個資料夾。您要繼續嗎？（您不能撤銷該操作。）";
@@ -829,7 +827,7 @@
 /* Title of My Account section. There you can see your account details */
 "myAccount"="我的帳號";
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
-"buyPRO"="Buy PRO";
+"buyPRO"="購買PRO專業版";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="升級";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */

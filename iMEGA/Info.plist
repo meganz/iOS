@@ -36,7 +36,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.7.6</string>
+	<string>3.7.7</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -51,7 +51,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>79</string>
+	<string>80</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -82,6 +82,48 @@
 		<string>SF-UI-Text-Light.otf</string>
 		<string>SF-UI-Text-Regular.otf</string>
 		<string>SF-UI-Text-RegularItalic.otf</string>
+	</array>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>quickActionSearch</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>quickActionSearchString</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).search</string>
+			<key>UIApplicationShortcutItemUserInfo</key>
+			<dict>
+				<key>version</key>
+				<string>$(PRODUCT_VERSION)</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>quickActionUpload</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>quickActionUploadString</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).upload</string>
+			<key>UIApplicationShortcutItemUserInfo</key>
+			<dict>
+				<key>version</key>
+				<string>$(PRODUCT_VERSION)</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>quickActionOffline</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>quickActionOfflineString</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).offline</string>
+			<key>UIApplicationShortcutItemUserInfo</key>
+			<dict>
+				<key>version</key>
+				<string>$(PRODUCT_VERSION)</string>
+			</dict>
+		</dict>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

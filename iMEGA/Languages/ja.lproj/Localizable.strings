@@ -288,10 +288,10 @@
 "getLink"="リンクを取得";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="リンクを取得する";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="リンクをアップデートする";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="リンクをアップデートする";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="リンク管理";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="リンクを管理";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="リンク作成中";
 /* Message shown when some links to files and/or folders are being generated */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="ファイル１こ、ゴミ箱に移しますね？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="ファイル %dこ、ゴミ箱に移しますね？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="フォルダ１こ、ゴミ箱に移しますね？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="フォルダ%dこ、ゴミ箱に移しますね？";
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="この共有を解除してもよろしいですか？　";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="これらの共有を解除してもよろしいですか？　";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="フォルダは残っています。";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="共有する";
 /* Select all items/elements on the list */
@@ -678,11 +676,11 @@
 "remove"="削除";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="削除を確認";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="ファイル１こ、永久に除去しようとしています。このまま続けますか？（取り戻すことはできません。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="ファイル%d こ、永久に除去しようとしています。このまま続けますか？（取り戻すことはできません。）";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="フォルダ１こ、永久に除去しようとしています。このまま続けますか？（取り戻すことはできません。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="フォルダ%dこ、永久に除去しようとしています。このまま続けますか？（取り戻すことはできません。）";

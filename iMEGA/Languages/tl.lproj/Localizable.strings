@@ -288,10 +288,10 @@
 "getLink"="Kuhanin ang link";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Kumuha ng links";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="I-update ang link";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="I-update ang links";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="I-manage ang link";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="Manage links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Gumagawa ng link...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="Gusto mo bang ilipat ang isang file na ito sa Basurahan?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="Gusto mo bang itapon ang mga %d files na ito sa Basurahan?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="Gusto mo bang itapon ang isang folder na ito sa Basurahan?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="Gusto mo bang ilagay ang %d na folders sa iyong Basurahan?";
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="Gusto mo bang iwan ng binahagi sa'yo?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Gusto mo bang iwan ang mga binahaging ito sa'yo?";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Iniwan ang folder";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Ibahagi";
 /* Select all items/elements on the list */
@@ -678,11 +676,11 @@
 "remove"="Alisin";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="I-confirm ang pag-aalis";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="Tatanggalin mo na ng tuluyan ang isang file. Gusto mo bang magpatuloy? (Hindi mo na pupwedeng bawiin pa ito.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="Tatanggalin mo na ng tuluyan ang %d na files. Gusto mo bang magpatuloy? (Hindi mo na pupwedeng bawiin pa ito.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="Tatanggalin mo na ng tuluyan ang isang folder. Gusto mo bang magpatuloy? (Hindi mo na pupwedeng bawiin pa ito.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="Tatanggalin mo na ng tuluyan ang %d na folders. Gusto mo bang magpatuloy? (Hindi mo na pupwedeng bawiin pa ito.)";
