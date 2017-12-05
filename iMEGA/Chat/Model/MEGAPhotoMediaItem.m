@@ -74,8 +74,8 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    // 84 = 24 (avatar) + 20x2 (edge insets) + 10x2 (bubble insets)
-    const CGFloat displaySize = [[UIScreen mainScreen] mnz_screenWidth] - 84;
+    // 84 = 24 (avatar) + 20x2 (edge insets) + 10 (bubble inset)
+    const CGFloat displaySize = [[UIScreen mainScreen] mnz_screenWidth] - 74;
     return CGSizeMake(displaySize, displaySize);
 }
 
@@ -88,23 +88,13 @@
 #pragma mark - Private
 
 - (void)configureCachedImageViewWithImagePath:(NSString *)imagePath {
-    CGSize size = self.cachedImageView.frame.size;
-    
-    UIImageView *previewImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
-    previewImageView.contentMode = UIViewContentModeScaleAspectFill;
-    previewImageView.clipsToBounds = YES;
-    previewImageView.layer.cornerRadius = 4;
-    previewImageView.backgroundColor = [UIColor grayColor];
-    previewImageView.center = [self.cachedImageView convertPoint:self.cachedImageView.center fromView:self.cachedImageView.superview];
-    previewImageView.image = [UIImage imageWithContentsOfFile:imagePath];
-    
-    [_cachedImageView addSubview:previewImageView];
-    
+    _cachedImageView.image = [UIImage imageWithContentsOfFile:imagePath];
+
     [self.activityIndicator removeFromSuperview];
     if (self.node.name.mnz_isMultimediaPathExtension) {
         UIImageView *playImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"video_list"]];
-        playImageView.center = [previewImageView convertPoint:previewImageView.center fromView:previewImageView.superview];
-        [previewImageView addSubview:playImageView];
+        playImageView.center = _cachedImageView.center;
+        [_cachedImageView addSubview:playImageView];
     }
 }
 
