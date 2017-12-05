@@ -12,6 +12,8 @@
 @property (nonatomic, strong) MEGANode *node;
 @property (nonatomic, assign, getter=isFolderLink) BOOL folderLink;
 
+@property (nonatomic) MPMoviePlayerViewController *moviePlayerViewController;
+
 @end
 
 @implementation MEGAAVViewController
@@ -50,55 +52,60 @@
     [self play];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self.moviePlayerViewController.moviePlayer prepareToPlay];
+    [self.moviePlayerViewController.moviePlayer play];
 }
 
 - (void)play {
     if (_path) {
-        MPMoviePlayerViewController *moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:_path];
+        self.moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:_path];
+
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(movieFinishedCallback:)
                                                      name:MPMoviePlayerPlaybackDidFinishNotification
-                                                   object:moviePlayerViewController.moviePlayer];
+                                                   object:self.moviePlayerViewController.moviePlayer];
         
-        [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController name:UIApplicationDidEnterBackgroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self.moviePlayerViewController name:UIApplicationDidEnterBackgroundNotification object:nil];
         
         if (self.node && !self.node.hasThumbnail && !self.isFolderLink && self.node.name.mnz_isVideoPathExtension) {
             [[NSNotificationCenter defaultCenter] addObserver:self
                                                      selector:@selector(handleThumbnailImageRequestFinishNotification:)
                                                          name:MPMoviePlayerThumbnailImageRequestDidFinishNotification
-                                                       object:moviePlayerViewController.moviePlayer];
+                                                       object:self.moviePlayerViewController.moviePlayer];
             
-            [[moviePlayerViewController moviePlayer] requestThumbnailImagesAtTimes:@[[NSNumber numberWithFloat:0.0]] timeOption:MPMovieTimeOptionExact];
+            [[self.moviePlayerViewController moviePlayer] requestThumbnailImagesAtTimes:@[[NSNumber numberWithFloat:0.0]] timeOption:MPMovieTimeOptionExact];
         }
-
-        [self.view addSubview:moviePlayerViewController.view];
-        [self addChildViewController:moviePlayerViewController];
-        [moviePlayerViewController didMoveToParentViewController:self];
+    
+        [self.view addSubview:self.moviePlayerViewController.view];
+        [self addChildViewController:self.moviePlayerViewController];
+        [self.moviePlayerViewController didMoveToParentViewController:self];
         
-        [moviePlayerViewController.moviePlayer prepareToPlay];
-        [moviePlayerViewController.moviePlayer play];
+        [self.moviePlayerViewController.moviePlayer setShouldAutoplay:NO];
     }
 }
-
 
 #pragma mark - Movie player
 
 - (void)movieFinishedCallback:(NSNotification*)aNotification {
-    MPMoviePlayerController *moviePlayer = [aNotification object];    
-    [moviePlayer cancelAllThumbnailImageRequests];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:MPMoviePlayerPlaybackDidFinishNotification
-                                                  object:moviePlayer];
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-    if (_node) {
-        if (![self isFolderLink]) {
-            [[MEGASdkManager sharedMEGASdk] httpServerStop];
-        } else {
-            [[MEGASdkManager sharedMEGASdkFolder] httpServerStop];
+    NSInteger reason = ((NSNumber *)[aNotification.userInfo objectForKey:@"MPMoviePlayerPlaybackDidFinishReasonUserInfoKey"]).integerValue;
+    if (!self.peekAndPop || reason!=MPMovieFinishReasonPlaybackEnded) {
+        MPMoviePlayerController *moviePlayer = [aNotification object];
+        [moviePlayer cancelAllThumbnailImageRequests];
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:MPMoviePlayerPlaybackDidFinishNotification
+                                                      object:moviePlayer];
+        [self dismissViewControllerAnimated:YES completion:nil];
+        
+        if (_node) {
+            if (![self isFolderLink]) {
+                [[MEGASdkManager sharedMEGASdk] httpServerStop];
+            } else {
+                [[MEGASdkManager sharedMEGASdkFolder] httpServerStop];
+            }
         }
     }
 }

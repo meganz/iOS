@@ -10,3 +10,9 @@
 "NSPhotoLibraryAddUsageDescription"="MEGA accesses your photo library to save your photos or videos in case you do so.";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSFaceIDUsageDescription"="MEGA accesses Face ID to allow you to easily unlock the app's passcode in case you enable this option.";
+/* Label for any 'Search' button, link, etc. - (String as short as possible). */
+"quickActionSearchString"="Zoeken";
+/*  */
+"quickActionUploadString"="Upload";
+/* Title of the Offline section */
+"quickActionOfflineString"="Offline";

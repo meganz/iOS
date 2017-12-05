@@ -288,10 +288,10 @@
 "getLink"="Link al";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Bağlantıları al";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="Bağlantıyı güncelle";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="Bağlantıları güncelle";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="Bağlantıyı yönet";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="Bağlantıları yönet";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Bağlantı oluşturuluyor...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="1 dosyayı Çöp Kutusuna taşımak istediğinizden emin misiniz?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="%d dosyayı Çöp Kutusuna taşımak istediğinizden emin misiniz?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="1 klasörü Çöp Kutusuna taşımak istediğinizden emin misiniz?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="%d klasörü Çöp Kutusuna taşımak istediğinizden emin misiniz?";
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="Bu paylaşımdan ayrılmak istediğine emin misin?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Bu paylaşımlardan ayrılmak istediğine emin misin?";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Klasör kaldı";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Paylaş";
 /* Select all items/elements on the list */
@@ -678,11 +676,11 @@
 "remove"="Sil";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Silmeyi Onayla";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="1 dosyayı kalıcı olarak kaldırmak üzeresiniz. Devam etmek ister misiniz? (Bu eylemi geri alamazsınız.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="%d dosyayı kalıcı olarak kaldırmak üzeresiniz. Devam etmek ister misiniz? (Bu eylemi geri alamazsınız.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="1 klasörü kalıcı olarak kaldırmak üzeresiniz. Devam etmek ister misiniz? (Bu eylemi geri alamazsınız.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="%d klasörü kalıcı olarak kaldırmak üzeresiniz. Devam etmek ister misiniz? (Bu eylemi geri alamazsınız.)";

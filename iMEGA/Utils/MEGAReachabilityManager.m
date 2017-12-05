@@ -133,6 +133,7 @@
     if ([MEGAReachabilityManager isReachable]) {
         NSString *currentIP = [self getIpAddress];
         if (![self.IpAddress isEqualToString:currentIP]) {
+            MEGALogDebug(@"IP has changed (%@ -> %@), reconnecting...", self.IpAddress, currentIP);
             [[MEGASdkManager sharedMEGASdk] reconnect];
             self.IpAddress = currentIP;
         }

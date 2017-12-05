@@ -1,17 +1,17 @@
 /* Button title to cancel something */
 "cancel"="Zrušit";
 /* Button title to accept something */
-"ok"="OK";
+"ok"="Ok";
 /* */
 "yes"="Ano";
 /* */
 "no"="Ne";
 /* */
-"upload"="Nahrávání";
+"upload"="Nahrát";
 /*  */
 "error"="Chyba";
 /*  */
-"name"="Název";
+"name"="Jméno";
 /* Caption of a button to edit the files that are selected */
 "edit"="Upravit";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -105,7 +105,7 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Musíte souhlasit s podmínkami užívání pro registraci účtu na MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Tato e-mailová adresa má již u MEGA registrovaný účet.";
+"emailAlreadyRegistered"="Tento e-mail je již registrovaný s účtem na MEGA.";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Čekání na potvrzení e-mailu.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -131,11 +131,11 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Nedostupný odkaz";
 /* */
-"fileLinkUnavailableText1"="Mohlo by to být kvůli následujícím důvodům:";
+"fileLinkUnavailableText1"="To může být způsobeno následujícími důvody:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
 "fileLinkUnavailableText2"="Soubor byl odebrán z důvodů porušení podmínek užívání nebo použití.";
 /* */
-"fileLinkUnavailableText3"="Neplatná URL – odkaz, ke kterému se pokoušíte získat přístup, neexistuje";
+"fileLinkUnavailableText3"="Neplatná adresa - odkaz neexistuje";
 /* */
 "fileLinkUnavailableText4"="Soubor byl odstraněn uživatelem.";
 /* Message shown when a download starts */
@@ -149,11 +149,11 @@
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Složka '%@' nemůže být vytvořena";
 /* */
-"folderLinkUnavailableText1"="Mohlo by to být kvůli následujícím důvodům:";
+"folderLinkUnavailableText1"="To může být způsobeno následujícími důvody:";
 /* */
 "folderLinkUnavailableText2"="Odkaz na složku byl odebrán z důvodu porušení podmínek užívání nebo použití.";
 /* */
-"folderLinkUnavailableText3"="Neplatná URL – odkaz, ke kterému se pokoušíte získat přístup, neexistuje";
+"folderLinkUnavailableText3"="Neplatná adresa - odkaz neexistuje";
 /* */
 "folderLinkUnavailableText4"="Odkaz na složku byl zakázán uživatelem.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -201,7 +201,7 @@
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="Žádná Nahrávání";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Cloudová jednotka";
+"cloudDrive"="Úložiště cloud";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d soubor";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -288,10 +288,10 @@
 "getLink"="Získat odkaz";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Získat odkazy";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="Aktualizovat odkaz";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="Aktualizovat odkaz";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="Spravovat odkaz";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="Manage links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Generování odkazu...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="Opravdu chcete přesunout 1 soubor do koše?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="Opravdu chcete přesunout %d souborů do koše?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="Opravdu chcete přesunout 1 složku do koše?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="Opravdu chcete přesunout %d složek do koše?";
@@ -433,7 +433,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d složek úspěšně sdíleno.";
 /* Button title that triggers the importing link action */
-"import"="Importovat";
+"import"="Vložit";
 /* Message shown when a file has been imported */
 "fileImported"="Soubor importován!";
 /* Message shown when some files have been imported */
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="Opravdu chcete opustit toto sdílení?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Opravdu chcete opustit tato sdílení?";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Složka opuštěna";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Sdílet";
 /* Select all items/elements on the list */
@@ -573,7 +571,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="Pouze pro čtení";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Čtení a zápis";
+"readAndWrite"="Číst a zapisovat";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Plný přístup";
 /* Title of the Settings section */
@@ -601,7 +599,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Zásady ochrany osobních údajů";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="Podmínky užívání";
+"termsOfServicesLabel"="Podmínky služeb";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Vypnuto";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -678,11 +676,11 @@
 "remove"="Odebrat";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Potvrdit odebrání";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="Chystáte se trvale odebrat 1 soubor. Chcete pokračovat? (Tuto akci nemůžete vrátit zpět.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="Chystáte se trvale odebrat %d souborů. Chcete pokračovat? (Tuto akci nemůžete vrátit zpět.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="Chystáte se trvale odebrat 1 složku. Chcete pokračovat? (Tuto akci nemůžete vrátit zpět.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="Chystáte se trvale odebrat %d složek. Chcete pokračovat? (Tuto akci nemůžete vrátit zpět.)";
@@ -801,7 +799,7 @@
 /* Menu item */
 "help"="Nápověda";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Centrum nápovědy";
+"helpCentreLabel"="Centrum pomoci";
 /* Title to rate the app */
 "rateUsLabel"="Ohodnoťte nás";
 /* Title of the Transfers section */
@@ -831,7 +829,7 @@
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
 "buyPRO"="Buy PRO";
 /* Caption of a button to upgrade the account to Pro status */
-"upgrade"="Upgradovat";
+"upgrade"="Povýšit";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="View and edit profile";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */

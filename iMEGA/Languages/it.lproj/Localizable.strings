@@ -3,11 +3,11 @@
 /* Button title to accept something */
 "ok"="OK";
 /* */
-"yes"="Si";
+"yes"="Sì";
 /* */
 "no"="No";
 /* */
-"upload"="Carica";
+"upload"="Invia";
 /*  */
 "error"="Errore";
 /*  */
@@ -19,7 +19,7 @@
 /*  */
 "passcode"="Codice di accesso";
 /* "Size" of the file or folder you are sharing */
-"size"="Dimensione";
+"size"="Grandezza";
 /*  */
 "folder"="Cartella";
 /* Error message shown when there's no camera available on the device */
@@ -33,7 +33,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="Non è possibile scaricare una cartella vuota";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="Il tuo account è già stato attivato. Ti preghiamo di effettuare il log in.";
+"accountAlreadyConfirmed"="Il tuo account è già stato attivato. Effettua il Log in.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link non valido";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -75,7 +75,7 @@
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
 "megaAccessText"="Accesso crittografato dovunque,a qualunque momento";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="Accesso";
+"login"="Accedi";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Crea Account";
 /* Message shown when the user writes a wrong email or password on login */
@@ -105,7 +105,7 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Devi accettare i termini di servizio per registrare un account su MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Questo indirizzo e-mail è già registrato ad un account MEGA.";
+"emailAlreadyRegistered"="Questo indirizzo e-mail ha già registrato un account Mega.";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="In attesa della conferma dell'email.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -121,7 +121,7 @@
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Hai bisogno di liberare un pò di spazio";
 /* Title for the file link view */
-"fileLink"="Collegamenti di file";
+"fileLink"="Link file";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Apri";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -131,13 +131,13 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Link non raggiungibile";
 /* */
-"fileLinkUnavailableText1"="Questo potrebbe essere dovuto alle seguenti ragioni:";
+"fileLinkUnavailableText1"="Questo potrebbe essere stato causato dai seguenti motivi:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="Il file è stato rimosso a causa di una violazione dei Termini di Servizio/Politica di Utilizzo.";
+"fileLinkUnavailableText2"="Il file è stato rimosso a causa di una violazione ToS/AUP.";
 /* */
-"fileLinkUnavailableText3"="URL non valido - il collegamento cui stai tentando di accedere non esiste";
+"fileLinkUnavailableText3"="URL non valido - il link che stai cercando di aprire non esiste";
 /* */
-"fileLinkUnavailableText4"="Il file è stato eliminato dall'utente.";
+"fileLinkUnavailableText4"="Questo file è stato cancellato dall'utente";
 /* Message shown when a download starts */
 "downloadStarted"="Download avviato!";
 /* Title for the folder link view */
@@ -149,11 +149,11 @@
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="La cartella '%#' non può essere creata";
 /* */
-"folderLinkUnavailableText1"="Questo potrebbe essere dovuto alle seguenti ragioni:";
+"folderLinkUnavailableText1"="Questo potrebbe essere stato causato dai seguenti motivi:";
 /* */
 "folderLinkUnavailableText2"="Il collegamento della cartella è stato rimossa a causa di una violazione dei ToS/AUP.";
 /* */
-"folderLinkUnavailableText3"="URL non valido - il collegamento cui stai tentando di accedere non esiste";
+"folderLinkUnavailableText3"="URL non valido - il link che stai cercando di aprire non esiste";
 /* */
 "folderLinkUnavailableText4"="Il collegamento della cartella è stato disattivato dall'utente.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -201,7 +201,7 @@
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="Nessun Upload";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Cloud Drive";
+"cloudDrive"="Partizione Cloud";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d file";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -288,10 +288,10 @@
 "getLink"="Ottieni link";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Ottieni i link";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="Aggiorna link";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="Aggiorna i link";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="Gestisci link";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="Gestisci i link";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Generando link...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -303,7 +303,7 @@
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="Copiato negli appunti";
 /* A title for the Copyright Warning dialog. */
-"copyrightWarning"="Avviso di Copyright";
+"copyrightWarning"="Avvertenza copyright";
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Avviso di copyright a tutti gli utenti";
 /* String already exists: 367, but we need to split paragraphs. */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="Sei sicuro di voler spostare 1 file nel Cestino?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="Sei sicuro di voler spostare %d files nel Cestino?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="Sei sicuro di voler spostare 1 cartella nel Cestino?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="Sei sicuro di voler spostare %d cartelle nel Cestino?";
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="Sei sicuro di voler abbandonare questa condivisione?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Sei sicuro di voler abbandonare queste condivisioni?";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Uscito dalla cartella";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Condividi";
 /* Select all items/elements on the list */
@@ -571,9 +569,9 @@
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Permessi";
 /* Permissions given to the user you share your folder with */
-"readOnly"="Sola lettura";
+"readOnly"="Solo-lettura";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Lettura & Scrittura";
+"readAndWrite"="Lettura e Scrittura";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Accesso completo";
 /* Title of the Settings section */
@@ -599,7 +597,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Non hai un account e-mail configurato sul dispositivo";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Informativa sulla privacy";
+"privacyPolicyLabel"="Informativa Privacy";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Termini di Servizio";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
@@ -621,7 +619,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="Chiave di recupero";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Modifica password";
+"changePasswordLabel"="Cambia password";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Salvando la Chiave di Recupero e tenendola in un posto sicuro ti permette di recuperare il tuo account nel caso di password dimenticata senza perdita di dati.";
 /* Question button to present a view where it's explained what is the Recovery Key */
@@ -678,11 +676,11 @@
 "remove"="Rimuovi";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Conferma rimozione";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="Stai per rimuovere in modo permanente 1 file. Vuoi continuare? (Non è possibile annullare questa azione.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="Stai per rimuovere definitivamente i file %d. Vuoi continuare? (Non è possibile annullare questa azione.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="Stai per rimuovere in modo permanente 1 cartella. Vuoi continuare? (Non è possibile annullare questa azione.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="Stai per rimuovere definitivamente %d cartelle. Vuoi continuare? (Non è possibile annullare questa azione.)";
@@ -801,7 +799,7 @@
 /* Menu item */
 "help"="Aiuto";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Assistenza";
+"helpCentreLabel"="Servizio Clienti";
 /* Title to rate the app */
 "rateUsLabel"="Votaci";
 /* Title of the Transfers section */
@@ -827,11 +825,11 @@
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="DOWNLOAD trasferimenti";
 /* Title of My Account section. There you can see your account details */
-"myAccount"="Il mio account";
+"myAccount"="Mio profilo";
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
 "buyPRO"="Diventa PRO";
 /* Caption of a button to upgrade the account to Pro status */
-"upgrade"="Aggiorna";
+"upgrade"="Aggiorna account";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Vedi e modifica profilo";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -921,7 +919,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="scade il %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="Cronologia Acquisti";
+"purchaseHistory"="Storico acquisti";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Condivisioni in arrivo";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -939,7 +937,7 @@
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Il tuo account è pieno.[/S] [A]Aggiorna ora[/A] ad un account PRO ora e ottieni [S]fino a 4TB (4000 GB)[/S] di spazio cloud.                ";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Spazio";
+"productSpace"="di spazio d'archiviazione";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
 "productBandwidth"="Larghezza banda";
 /* Price asociated with the MEGA PRO account level you can subscribe */

@@ -119,6 +119,7 @@
 }
 
 - (void)stopIndexing {
+    MEGALogDebug(@"Stopping spotlight indexing");
     self.shouldStop = YES;
 }
 
