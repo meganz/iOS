@@ -22,6 +22,7 @@
 #import "MEGAOpenMessageHeaderView.h"
 #import "MEGAProcessAsset.h"
 #import "MEGAStartUploadTransferDelegate.h"
+#import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 
@@ -923,9 +924,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     if ([cell.textView.text mnz_isPureEmojiString]) {
         cell.messageBubbleImageView.image = nil;
-        if ([cell.textView.text mnz_isPureEmojiString]) {
-            cell.textView.font = [UIFont mnz_defaultFontForPureEmojiStringWithEmojis:[cell.textView.text mnz_emojiCount]];
-        }
+        cell.textView.font = [UIFont mnz_defaultFontForPureEmojiStringWithEmojis:[cell.textView.text mnz_emojiCount]];
+    } else if (message.attributedText.length > 0) {
+        cell.textView.attributedText = message.attributedText;
     }
     
     return cell;

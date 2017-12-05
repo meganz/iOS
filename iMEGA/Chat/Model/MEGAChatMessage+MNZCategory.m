@@ -6,6 +6,7 @@
 
 #import "MEGAPhotoMediaItem.h"
 #import "NSString+MNZCategory.h"
+#import "NSAttributedString+MNZCategory.h"
 
 #import <objc/runtime.h>
 
@@ -42,11 +43,12 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
 
 - (NSString *)text {
     NSString *text;
+    uint64_t myHandle = [[MEGASdkManager sharedMEGAChatSdk] myUserHandle];
+
     if (self.isDeleted) {
         text = AMLocalizedString(@"thisMessageHasBeenDeleted", @"A log message in a chat to indicate that the message has been deleted by the user.");
     } else if (self.isManagementMessage) {
         
-        uint64_t myHandle = [[MEGASdkManager sharedMEGAChatSdk] myUserHandle];
         NSString *fullNameDidAction = @"";
         
         if (myHandle == self.userHandle) {
@@ -199,7 +201,10 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
     } else if (self.type == MEGAChatMessageTypeRevokeAttachment) {
         text = @"MEGAChatMessageTypeRevokeAttachment";
     } else {
-        text = self.content;
+        self.attributedText = [NSAttributedString mnz_attributedStringFromMessage:self.content
+                                                                             font:[UIFont mnz_SFUIRegularWithSize:15.0f]
+                                                                            color:self.userHandle == myHandle ? [UIColor whiteColor] : [UIColor mnz_black333333]];
+        text = self.attributedText.string;
     }
     return text;
 }
