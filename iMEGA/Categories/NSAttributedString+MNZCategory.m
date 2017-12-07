@@ -120,7 +120,7 @@
     static NSMutableDictionary *fonts;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        fonts = NSMutableDictionary.new;
+        fonts = [NSMutableDictionary new];
     });
 
     if (!bold && !italic) {
