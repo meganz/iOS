@@ -295,10 +295,13 @@
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if (error.type)
-        return;
+    [super onRequestFinish:api request:request error:error];
     
     if (request.type == MEGARequestTypeAccountDetails) {
+        if (error.type) {
+            return;
+        }
+        
         [self reloadUI];
     }
 }
