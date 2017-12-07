@@ -8,6 +8,16 @@
 + (NSAttributedString *)mnz_attributedStringFromMessage:(NSString *)message
                                                    font:(UIFont *)font
                                                   color:(UIColor *)color {
+    static NSCache *cache;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        cache = [NSCache new];
+        cache.countLimit = 1000;
+    });
+    NSAttributedString *cachedAttributedString = [cache objectForKey:[NSNumber numberWithUnsignedInteger:message.hash]];
+    if (cachedAttributedString) {
+        return cachedAttributedString;
+    }
     
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:message];
     id base = @{
@@ -100,6 +110,7 @@
         }
     }];
     
+    [cache setObject:attributedString forKey:[NSNumber numberWithUnsignedInteger:message.hash]];
     return attributedString;
 }
 
