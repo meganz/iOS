@@ -1186,6 +1186,14 @@
 "attachedFile"="Adjunto: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s archivos adjuntos.";
+/* A summary message when a user sent the information of one contact through the chat. */
+"sharedContact"="Compartió este contacto:";
+/* A summary message when a user sent the information of some contacts at once through the chat. */
+"sharedContacts"="Compartió estos contactos:";
+/* A summary message when a user has attached one file into the chat. */
+"uploadedFile"="Subió este archivo:";
+/* A summary message when a user has attached many files at once into the chat. */
+"uploadedFiles"="Subió estos archivos:";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="La suscripción se renueva automáticamente con la misma duración y precio elegidos inicialmente. Puedes desactivar la renovación automática de la suscripción A MEGA PRO en la página de ajustes de iTunes hasta 24 horas antes de la renovación programada. Para gestionar tu suscripción, simplemente ve a la App Store, inicia sesión con tu Apple ID al final de la página (si no has hecho esto todavía) y pulsa en “Ver ID de Apple”. Podrás ver la página con los detalles de tu cuenta, donde puedes gestionar las suscripciones que has contratado. Desde aquí, puedes seleccionar la suscripción A MEGA PRO y ver cuando será renovada, cambiar el tipo de suscripción o desactivar la opción de renovación automática para luego cancelar tu suscripción.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
