@@ -543,6 +543,9 @@
 		A88BFFED1F0A56B80081BCE3 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFEC1F0A56B80081BCE3 /* libKarere.a */; };
 		A88BFFEE1F0A56C60081BCE3 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFEC1F0A56B80081BCE3 /* libKarere.a */; };
 		A88BFFEF1F0A56CB0081BCE3 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFEC1F0A56B80081BCE3 /* libKarere.a */; };
+		A89629721FACE30900F02F7A /* MEGAChatCall+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A89629711FACE30900F02F7A /* MEGAChatCall+MNZCategory.m */; };
+		A89629751FACE78B00F02F7A /* MEGACallManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A89629741FACE78B00F02F7A /* MEGACallManager.m */; };
+		A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A89629771FACEAF800F02F7A /* MEGAProviderDelegate.m */; };
 		A89E77441EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A89E77431EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m */; };
 		A89E77471EA6058E00ADC0D2 /* MEGAMessageAttachmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = A89E77461EA6058E00ADC0D2 /* MEGAMessageAttachmentView.m */; };
 		A89E77491EA605A900ADC0D2 /* MEGAMessageAttachmentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A89E77481EA605A900ADC0D2 /* MEGAMessageAttachmentView.xib */; };
@@ -1283,6 +1286,12 @@
 		A88BFFCE1F0A52E90081BCE3 /* libsodium.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsodium.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libsodium.a; sourceTree = "<group>"; };
 		A88BFFE81F0A55E20081BCE3 /* libMEGASDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMEGASDK.a; sourceTree = "<group>"; };
 		A88BFFEC1F0A56B80081BCE3 /* libKarere.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libKarere.a; sourceTree = "<group>"; };
+		A89629701FACE30900F02F7A /* MEGAChatCall+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGAChatCall+MNZCategory.h"; sourceTree = "<group>"; };
+		A89629711FACE30900F02F7A /* MEGAChatCall+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MEGAChatCall+MNZCategory.m"; sourceTree = "<group>"; };
+		A89629731FACE78B00F02F7A /* MEGACallManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGACallManager.h; path = Chat/MEGACallManager.h; sourceTree = "<group>"; };
+		A89629741FACE78B00F02F7A /* MEGACallManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGACallManager.m; path = Chat/MEGACallManager.m; sourceTree = "<group>"; };
+		A89629761FACEAF800F02F7A /* MEGAProviderDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAProviderDelegate.h; path = Chat/MEGAProviderDelegate.h; sourceTree = "<group>"; };
+		A89629771FACEAF800F02F7A /* MEGAProviderDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAProviderDelegate.m; path = Chat/MEGAProviderDelegate.m; sourceTree = "<group>"; };
 		A89E77421EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAAttachmentMediaItem.h; sourceTree = "<group>"; };
 		A89E77431EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAAttachmentMediaItem.m; sourceTree = "<group>"; };
 		A89E77451EA6058E00ADC0D2 /* MEGAMessageAttachmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAMessageAttachmentView.h; sourceTree = "<group>"; };
@@ -2397,6 +2406,8 @@
 				A81A852A1F0F6F5100702353 /* UIScreen+MNZCategory.m */,
 				942F4FD61F500A8F001FC4AC /* MEGASdk+MNZCategory.h */,
 				942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */,
+				A89629701FACE30900F02F7A /* MEGAChatCall+MNZCategory.h */,
+				A89629711FACE30900F02F7A /* MEGAChatCall+MNZCategory.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -2583,6 +2594,10 @@
 				A8C262A81FA0B8F9006172CE /* CallViewController.h */,
 				A8C262A91FA0B8F9006172CE /* CallViewController.m */,
 				A8BB54191FB9ABBD004FD03B /* Audios */,
+				A89629731FACE78B00F02F7A /* MEGACallManager.h */,
+				A89629741FACE78B00F02F7A /* MEGACallManager.m */,
+				A89629761FACEAF800F02F7A /* MEGAProviderDelegate.h */,
+				A89629771FACEAF800F02F7A /* MEGAProviderDelegate.m */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -3513,6 +3528,7 @@
 				41D21DF21D01AE89002E6296 /* NSLayoutConstraint+PureLayout.m in Sources */,
 				E8F791801BC5754A00C58676 /* OpenInActivity.m in Sources */,
 				417279571DB663FA001AC818 /* JSQMessagesLabel.m in Sources */,
+				A89629721FACE30900F02F7A /* MEGAChatCall+MNZCategory.m in Sources */,
 				410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */,
 				417279561DB663FA001AC818 /* JSQMessagesInputToolbar.m in Sources */,
 				A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */,
@@ -3530,6 +3546,7 @@
 				A802B2011FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m in Sources */,
 				5B2E91921F1F98F4003C6920 /* MEGACopyRequestDelegate.m in Sources */,
 				41EC68461D76DA93003EC803 /* UIBarButtonItem+Badge.m in Sources */,
+				A89629751FACE78B00F02F7A /* MEGACallManager.m in Sources */,
 				946B2D161F46E235009ED32C /* GetLinkTableViewController.m in Sources */,
 				41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */,
 				41D21E651D01AEC3002E6296 /* CTAssetsGridViewCell.m in Sources */,
@@ -3605,6 +3622,7 @@
 				415226951A692ECC00EC7BB6 /* MainTabBarController.m in Sources */,
 				41DC6F721D54E7080081832C /* NSFileManager+MNZCategory.m in Sources */,
 				41D21E5F1D01AEC3002E6296 /* CTAssetPlayButton.m in Sources */,
+				A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */,
 				4172794B1DB663FA001AC818 /* JSQMessagesBubbleImage.m in Sources */,
 				41CD14701DB150F600E545BC /* MessagesViewController.m in Sources */,
 				A8F6C5F31FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m in Sources */,

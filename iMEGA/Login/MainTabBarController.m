@@ -1,9 +1,13 @@
 #import "MainTabBarController.h"
 
 #import "CallViewController.h"
+#import "MEGAProviderDelegate.h"
 #import "MessagesViewController.h"
+#import "MEGAChatCall+MNZCategory.h"
 
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate, MEGAChatCallDelegate>
+
+@property (nonatomic, strong) MEGAProviderDelegate *megaProviderDelegate;
 
 @end
 
@@ -68,6 +72,11 @@
     
     [self setBadgeValueForChats];
     [self setBadgeValueForIncomingContactRequests];
+    
+    if (@available(iOS 10.0, *)) {
+        _megaCallManager = [[MEGACallManager alloc] init];
+        _megaProviderDelegate = [[MEGAProviderDelegate alloc] initWithMEGACallManager:self.megaCallManager];
+    }
 }
 
 - (BOOL)shouldAutorotate {
@@ -158,17 +167,28 @@
             break;
             
         case MEGAChatCallStatusRingIn: {
-            CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-            callVC.chatRoom  = [api chatRoomForChatId:call.chatId];
-            callVC.videoCall = NO;
-            callVC.callType = CallTypeIncoming;
-            
-            UIViewController *presentedVC = self.presentedViewController;
-            
-            if (presentedVC) {
-                [presentedVC presentViewController:callVC animated:YES completion:nil];
+            MEGAChatRoom *chatRoom = [api chatRoomForChatId:call.chatId];
+            if (@available(iOS 10.0, *)) {
+                NSUUID *uuid = [[NSUUID alloc] init];
+                call.uuid = uuid;
+                                
+                uint64_t peerHandle = [chatRoom peerHandleAtIndex:0];
+                NSString *email = [chatRoom peerEmailByHandle:peerHandle];
+                
+                [self.megaProviderDelegate reportIncomingCall:call hasVideo:call.hasRemoteVideo email:email];
             } else {
-                [self presentViewController:callVC animated:YES completion:nil];
+                CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
+                callVC.chatRoom  = chatRoom;
+                callVC.videoCall = call.hasRemoteVideo;
+                callVC.callType = CallTypeIncoming;
+                
+                UIViewController *presentedVC = self.presentedViewController;
+                
+                if (presentedVC) {
+                    [presentedVC presentViewController:callVC animated:YES completion:nil];
+                } else {
+                    [self presentViewController:callVC animated:YES completion:nil];
+                }
             }
             break;
         }
@@ -181,6 +201,9 @@
         case MEGAChatCallStatusTerminating:
             break;
         case MEGAChatCallStatusDestroyed:
+            if (@available(iOS 10.0, *)) {
+                [self.megaCallManager endCall:call];
+            }            
             break;
             
         default:

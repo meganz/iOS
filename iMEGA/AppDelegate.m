@@ -2,6 +2,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import <CoreSpotlight/CoreSpotlight.h>
+#import <Intents/Intents.h>
 #import <Photos/Photos.h>
 #import <PushKit/PushKit.h>
 #import <UserNotifications/UserNotifications.h>
@@ -27,6 +28,7 @@
 #import "UIImage+MNZCategory.h"
 
 #import "BrowserViewController.h"
+#import "CallViewController.h"
 #import "CameraUploadsPopUpViewController.h"
 #import "ChangePasswordViewController.h"
 #import "ChatRoomsViewController.h"
@@ -106,6 +108,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @property (nonatomic) NSString *nodeToPresentBase64Handle;
 
 @property (nonatomic) NSUInteger megatype; //1 share folder, 2 new message, 3 contact request
+
+@property (strong, nonatomic) MEGAChatRoom *chatRoom;
+@property (nonatomic, getter=isVideoCall) BOOL videoCall;
 
 @end
 
@@ -492,17 +497,46 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
-    MEGALogDebug(@"Application continue user activity");
+    MEGALogDebug(@"Application continue user activity %@", userActivity.activityType);
     
-    if ([userActivity.activityType isEqualToString:CSSearchableItemActionType] && [MEGAReachabilityManager isReachable]) {
-        self.nodeToPresentBase64Handle = userActivity.userInfo[@"kCSSearchableItemActivityIdentifier"];
-        if ([self.window.rootViewController isKindOfClass:[MainTabBarController class]] && ![LTHPasscodeViewController doesPasscodeExist]) {
-            [self presentNode];
+    if ([MEGAReachabilityManager isReachable]) {
+        if ([userActivity.activityType isEqualToString:CSSearchableItemActionType]) {
+            self.nodeToPresentBase64Handle = userActivity.userInfo[@"kCSSearchableItemActivityIdentifier"];
+            if ([self.window.rootViewController isKindOfClass:[MainTabBarController class]] && ![LTHPasscodeViewController doesPasscodeExist]) {
+                [self presentNode];
+            }
+        } else if ([userActivity.activityType isEqualToString:@"INStartAudioCallIntent"] || [userActivity.activityType isEqualToString:@"INStartVideoCallIntent"]) {
+            INInteraction *interaction = userActivity.interaction;
+            INStartAudioCallIntent *startAudioCallIntent = (INStartAudioCallIntent *)interaction.intent;
+            INPerson *contact = startAudioCallIntent.contacts[0];
+            INPersonHandle *personHandle = contact.personHandle;
+            NSString *email = personHandle.value;
+            self.videoCall = [userActivity.activityType isEqualToString:@"INStartVideoCallIntent"] ? YES : NO;
+            MEGALogDebug(@"Email %@", email);
+            uint64_t userHandle = [[MEGASdkManager sharedMEGAChatSdk] userHandleByEmail:email];
+            self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:userHandle];
+            MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
+            MEGALogDebug(@"Chat %@ connection state: %@", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], chatConnection ? @"Online" : @"Offline");
+            if (chatConnection == MEGAChatConnectionOnline) {
+                [self performCall];
+            }
         }
         return YES;
     } else {
         return NO;
     }
+}
+
+- (void)performCall {
+    CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
+    callVC.chatRoom = self.chatRoom;
+    callVC.videoCall = self.videoCall;
+    callVC.callType = CallTypeOutgoing;
+    if (@available(iOS 10.0, *)) {
+        callVC.megaCallManager = [self.mainTBC megaCallManager];
+    }
+    [self.mainTBC presentViewController:callVC animated:YES completion:nil];
+    
 }
 
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL succeeded))completionHandler {
@@ -1744,7 +1778,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type {
-    MEGALogDebug(@"didReceiveIncomingPushWithPayload: %@", [payload dictionaryPayload]);
+    MEGALogDebug(@"Did receive incoming push with payload: %@", [payload dictionaryPayload]);
 }
 
 #pragma mark - MEGAGlobalDelegate
@@ -2306,6 +2340,14 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)onChatPresenceConfigUpdate:(MEGAChatSdk *)api presenceConfig:(MEGAChatPresenceConfig *)presenceConfig {
     if (!presenceConfig.isPending) {
         self.signalActivityRequired = presenceConfig.isSignalActivityRequired;
+    }
+}
+
+- (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
+    MEGALogInfo(@"onChatConnectionStateUpdate: %@, new state: %@", [MEGASdk base64HandleForUserHandle:chatId], newState ? @"Online" : @"Offline");
+    if (self.chatRoom.chatId == chatId && newState == MEGAChatConnectionOnline) {
+        [self performCall];
+        self.chatRoom = nil;
     }
 }
 
