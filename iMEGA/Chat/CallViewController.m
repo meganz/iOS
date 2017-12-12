@@ -2,7 +2,6 @@
 #import "CallViewController.h"
 #import "MEGARemoteImageView.h"
 #import "MEGALocalImageView.h"
-
 #import "UIImageView+MNZCategory.h"
 
 #import <AVFoundation/AVFoundation.h>
@@ -15,7 +14,6 @@
 
 @interface CallViewController () <MEGAChatRequestDelegate, MEGAChatCallDelegate, MEGAChatVideoDelegate>
 
-@property (nonatomic, strong) MEGAChatCall *chatCall;
 @property (weak, nonatomic) IBOutlet MEGARemoteImageView *remoteVideoImageView;
 @property (weak, nonatomic) IBOutlet MEGALocalImageView *localVideoImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *remoteAvatarImageView;
@@ -46,7 +44,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    _chatCall = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
     
     self.enableDisableVideoButton.selected = self.videoCall;
     self.loudSpeakerEnabled = self.videoCall;
@@ -57,17 +54,34 @@
 
     self.localVideoImageView.layer.masksToBounds = YES;
     self.localVideoImageView.layer.cornerRadius = 4;
-    
-    self.statusCallLabel.text = AMLocalizedString(@"calling...", @"Label shown when you receive an incoming call, before start the call.");
-    
+
     if (self.callType == CallTypeIncoming) {
         self.outgoingCallView.hidden = YES;
+        if (@available(iOS 10.0, *)) {
+            [self acceptCall:nil];
+        } else {
+            _call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+            self.statusCallLabel.text = AMLocalizedString(@"calling...", @"Label shown when you receive an incoming call, before start the call.");
+        }
     } else {
         MEGAChatStartCallRequestDelegate *startCallRequestDelegate = [[MEGAChatStartCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
             if (error.type) {
                 [self dismissViewControllerAnimated:YES completion:nil];
             } else {
+                _call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
                 self.incomingCallView.hidden = YES;
+
+                self.statusCallLabel.text = AMLocalizedString(@"calling...", @"Label shown when you receive an incoming call, before start the call.");
+                
+                if (@available(iOS 10.0, *)) {
+                    NSUUID *uuid = [[NSUUID alloc] init];
+                    self.call.uuid = uuid;
+                    [self.megaCallManager addCall:self.call];
+                    
+                    uint64_t peerHandle = [self.chatRoom peerHandleAtIndex:0];
+                    NSString *peerEmail = [self.chatRoom peerEmailByHandle:peerHandle];
+                    [self.megaCallManager startCall:self.call email:peerEmail];
+                }
             }
         }];
         
@@ -81,13 +95,15 @@
     
     self.nameLabel.text = [self.chatRoom peerFullnameAtIndex:0];
     
-    NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"incoming_voice_video_call" ofType:@"mp3"];
-    NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
-    
-    _player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
-    self.player.numberOfLoops = -1; //Infinite
-    
-    [self.player play];
+    if (@available(iOS 10.0, *)) {} else {
+        NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"incoming_voice_video_call" ofType:@"mp3"];
+        NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
+        
+        _player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
+        self.player.numberOfLoops = -1; //Infinite
+        
+        [self.player play];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -200,13 +216,20 @@
     MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [[MEGAChatAnswerCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
         if (error.type != MEGAChatErrorTypeOk) {
             [self dismissViewControllerAnimated:YES completion:nil];
+        } else {
+            self.incomingCallView.hidden = YES;
+            self.outgoingCallView.hidden = NO;
         }
     }];
-    [[MEGASdkManager sharedMEGAChatSdk] answerChatCall:self.chatRoom.chatId enableVideo:NO delegate:answerCallRequestDelegate];
+    [[MEGASdkManager sharedMEGAChatSdk] answerChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:answerCallRequestDelegate];
 }
 
 - (IBAction)hangCall:(UIButton *)sender {
-    [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:self.chatRoom.chatId];
+    if (@available(iOS 10.0, *)) {
+        [self.megaCallManager endCall:self.call];
+    } else {
+        [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:self.chatRoom.chatId];
+    }
 }
 
 - (IBAction)muteOrUnmuteCall:(UIButton *)sender {

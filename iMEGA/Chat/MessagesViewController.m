@@ -11,6 +11,7 @@
 #import "GroupChatDetailsViewController.h"
 
 #import "Helper.h"
+#import "MainTabBarController.h"
 #import "MEGAAssetsPickerController.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGACopyRequestDelegate.h"
@@ -270,6 +271,9 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
     callVC.chatRoom = self.chatRoom;
     callVC.videoCall = sender.tag;
     callVC.callType = CallTypeOutgoing;
+    if (@available(iOS 10.0, *)) {
+        callVC.megaCallManager = [(MainTabBarController *)self.navigationController.tabBarController megaCallManager];
+    }
     [self presentViewController:callVC animated:YES completion:nil];
 }
 
