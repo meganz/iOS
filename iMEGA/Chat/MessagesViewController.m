@@ -1,6 +1,7 @@
 #import "MessagesViewController.h"
 
 #import "SVProgressHUD.h"
+#import "UIImage+GKContact.h"
 
 #import "BrowserViewController.h"
 #import "ChatAttachedContactsViewController.h"
@@ -66,6 +67,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 @property (nonatomic) JSQMessagesAvatarImageFactory *avatarImageFactory;
 @property (nonatomic) NSMutableDictionary *avatarImages;
+
+@property (nonatomic) NSString *lastChatRoomStateString;
+@property (nonatomic) UIColor *lastChatRoomStateColor;
+@property (nonatomic) UIImage *peerAvatar;
 
 @end
 
@@ -157,6 +162,14 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     // Avatar images
     self.avatarImageFactory = [[JSQMessagesAvatarImageFactory alloc] initWithDiameter:kAvatarImageDiameter];
     self.avatarImages = [[NSMutableDictionary alloc] init];
+    
+    _lastChatRoomStateString = @"";
+    _lastChatRoomStateColor = [UIColor whiteColor];
+    if (self.chatRoom.isGroup) {
+        _peerAvatar = [UIImage imageForName:self.chatRoom.title.uppercaseString size:CGSizeMake(80.0f, 80.0f) backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:40.0f]];
+    } else {
+        _peerAvatar = [UIImage mnz_imageForUserHandle:[self.chatRoom peerHandleAtIndex:0] size:CGSizeMake(80.0f, 80.0f) delegate:nil];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -232,6 +245,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         NSString *chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
         if (chatRoomState) {
             label = [Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:chatRoomState];
+            self.lastChatRoomStateString = chatRoomState;
+            self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
         } else {
             label = [Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:@""];
         }
@@ -444,7 +459,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             participantsNames = [participantsNames stringByAppendingString:[NSString stringWithFormat:@"%@, ", peerName]];
         }
     }
-    self.openMessageHeaderView.conversationWithLabel.text = [NSString stringWithFormat:AMLocalizedString(@"conversationWith", @""), participantsNames];
+    self.openMessageHeaderView.conversationWithLabel.text = participantsNames;
+    self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
+    self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
+    self.openMessageHeaderView.conversationWithAvatar.image = self.peerAvatar;
     self.openMessageHeaderView.introductionLabel.text = AMLocalizedString(@"chatIntroductionMessage", @"Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server.");
     
     NSString *confidentialityExplanationString = AMLocalizedString(@"confidentialityExplanation", @"Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit.");
@@ -747,8 +765,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)jsq_setCollectionViewInsetsTopValue:(CGFloat)top bottomValue:(CGFloat)bottom {
-    CGFloat topInset = ([UIApplication sharedApplication].statusBarFrame.size.height + self.navigationController.navigationBar.frame.size.height);
-    UIEdgeInsets insets = UIEdgeInsetsMake(topInset, 0.0f, bottom, 0.0f);
+    UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, bottom, 0.0f);
     self.collectionView.contentInset = insets;
     self.collectionView.scrollIndicatorInsets = insets;
 }
@@ -950,7 +967,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     BOOL isiPhone4XOr5X = ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]);
-    CGFloat height = (isiPhone4XOr5X ? 340.0f : 320.0f);
+    CGFloat height = (isiPhone4XOr5X ? 490.0f : 470.0f);
     CGFloat minimumHeight = self.isFirstLoad ? 0.0f : height;
     
     return CGSizeMake(self.view.frame.size.width, minimumHeight);
@@ -1460,6 +1477,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     }
     
     [self customNavigationBarLabel];
+    
+    if (self.openMessageHeaderView) {
+        self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
+        self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
+    }
 }
 
 #pragma mark - MEGAChatRequest
