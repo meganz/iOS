@@ -71,7 +71,7 @@
     isPurchased = NO;
     
     [_storageLabel setText:AMLocalizedString(@"productSpace", nil)];
-    [_bandwidthLabel setText:AMLocalizedString(@"productBandwidth", nil)];
+    self.bandwidthLabel.text = AMLocalizedString(@"transferQuota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.");
     [_selectMembershiptLabel setText:AMLocalizedString(@"selectMembership", nil)];
     [_save17Label setText:AMLocalizedString(@"save17", nil)];
     
