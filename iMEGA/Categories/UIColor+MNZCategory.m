@@ -7,6 +7,10 @@
 
 #pragma mark - Black
 
++ (UIColor *)mnz_black262626 {
+    return [UIColor colorWithRed:38.0/255.0 green:38.0/255.0 blue:38.0/255.0 alpha:1.0];
+}
+
 + (UIColor *)mnz_black333333 {
     return [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0];
 }

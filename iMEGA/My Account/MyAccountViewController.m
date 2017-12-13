@@ -3,10 +3,12 @@
 #import "UIImage+GKContact.h"
 
 #import "Helper.h"
+#import "MEGANavigationController.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
+#import "UpgradeTableViewController.h"
 
 @interface MyAccountViewController () <MEGARequestDelegate> {
     BOOL isAccountDetailsAvailable;
@@ -220,6 +222,13 @@
 
 - (IBAction)editTouchUpInside:(UIBarButtonItem *)sender {
     [super presentEditProfileAlertController];
+}
+
+- (IBAction)buyPROTouchUpInside:(UIButton *)sender {
+    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (IBAction)logoutTouchUpInside:(UIButton *)sender {
