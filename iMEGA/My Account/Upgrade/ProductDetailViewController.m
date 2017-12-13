@@ -6,6 +6,7 @@
 
 #import "MEGANavigationController.h"
 #import "MEGAPurchase.h"
+#import "MEGASdk+MNZCategory.h"
 
 @interface ProductDetailViewController () <MEGAPurchaseDelegate, UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate> {
     BOOL isPurchased;
@@ -73,16 +74,18 @@
     [_bandwidthLabel setText:AMLocalizedString(@"productBandwidth", nil)];
     [_selectMembershiptLabel setText:AMLocalizedString(@"selectMembership", nil)];
     [_save17Label setText:AMLocalizedString(@"save17", nil)];
+    
+    if ([[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
+        UIAlertController *youAlreadyHaveAProAccountAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"warning", nil) message:AMLocalizedString(@"youAlreadyHaveAPROAccount", @"Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account)")  preferredStyle:UIAlertControllerStyleAlert];
+        [youAlreadyHaveAProAccountAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"confirm", @"Title text for the account confirmation.") style:UIAlertActionStyleCancel handler:nil]];
+        
+        [self presentViewController:youAlreadyHaveAProAccountAlertController animated:YES completion:nil];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[MEGAPurchase sharedInstance] setDelegate:nil];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Private
@@ -102,10 +105,6 @@
 }
 
 #pragma mark - UITableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 2;
