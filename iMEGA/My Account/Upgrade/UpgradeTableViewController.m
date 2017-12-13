@@ -57,6 +57,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
+    
     self.title = AMLocalizedString(@"upgradeAccount", @"Upgrade account");
     self.chooseFromOneOfThePlansLabel.text = AMLocalizedString(@"choosePlan", @"Header that help you with the upgrading process explaining that you have to choose one of the plans below to continue");
     
@@ -245,7 +247,7 @@
 }
 
 - (NSAttributedString *)bandwidthAttributedStringForProLevelAtIndex:(NSInteger)index {
-    NSMutableAttributedString *bandwidthString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"productBandwidth", @"Bandwich related with the MEGA PRO account level you can subscribe")] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
+    NSMutableAttributedString *bandwidthString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"transferQuota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.")] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
     
     NSString *bandwidthFormattedString = [NSByteCountFormatter stringFromByteCount:((long long)[[MEGAPurchase sharedInstance].pricing transferGBAtProductIndex:index] * TOBYTES) countStyle:NSByteCountFormatterCountStyleMemory];
     NSMutableAttributedString *bandwidthMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:bandwidthFormattedString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
@@ -310,7 +312,10 @@
     cell.productBandwidthLabel.attributedText = [self bandwidthAttributedStringForProLevelAtIndex:proLevelIndexNumber.integerValue];
     
     NSString *productPriceString = [NSString stringWithFormat:AMLocalizedString(@"productPricePerMonth", @"Price asociated with the MEGA PRO account level you can subscribe"), (float)[[MEGAPurchase sharedInstance].pricing amountAtProductIndex:proLevelIndexNumber.integerValue] / 100, [[MEGAPurchase sharedInstance].pricing currencyAtProductIndex:proLevelIndexNumber.integerValue]];
-    cell.productPriceLabel.text = productPriceString;
+    NSAttributedString *asteriskAttributedString = [[NSAttributedString alloc] initWithString:@" *" attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]}];
+    NSMutableAttributedString *productPriceMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:productPriceString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[self colorForProLevel:proLevelNumber.integerValue]}];
+    [productPriceMutableAttributedString appendAttributedString:asteriskAttributedString];
+    cell.productPriceLabel.attributedText = productPriceMutableAttributedString;
     
     return cell;
 }
