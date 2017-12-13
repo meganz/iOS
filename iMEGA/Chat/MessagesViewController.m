@@ -31,6 +31,13 @@ const CGFloat kGroupChatCellLabelHeight = 35.0f;
 const CGFloat k1on1CellLabelHeight = 28.0f;
 const CGFloat kAvatarImageDiameter = 24.0f;
 
+typedef NS_ENUM(NSUInteger, MEGAChatAccessoryButton) {
+    MEGAChatAccessoryButtonText = 10,
+    MEGAChatAccessoryButtonCamera,
+    MEGAChatAccessoryButtonImage,
+    MEGAChatAccessoryButtonUpload
+};
+
 @interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
@@ -493,47 +500,6 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     }
 }
 
-- (void)presentSendMediaAlertController {
-    UIAlertController *sendMediaAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [sendMediaAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-    
-    UIAlertAction *fromPhotosAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"choosePhotoVideo", @"Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-    }];
-    [sendMediaAlertController addAction:fromPhotosAlertAction];
-    
-    UIAlertAction *captureAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"capturePhotoVideo", @"Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType:completionHandler:)]) {
-            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL permissionGranted) {
-                if (permissionGranted) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
-                    });
-                } else {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"cameraPermissions", @"Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it") preferredStyle:UIAlertControllerStyleAlert];
-                        [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-                        
-                        [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-                        }]];
-                        
-                        [self presentViewController:permissionsAlertController animated:YES completion:nil];
-                    });
-                }
-            }];
-        }
-    }];
-    [sendMediaAlertController addAction:captureAlertAction];
-    
-    sendMediaAlertController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    sendMediaAlertController.popoverPresentationController.sourceView = self.view;
-    // TODO: Use the new buttons
-//    sendMediaAlertController.popoverPresentationController.sourceRect = CGRectMake(self.inputToolbar.contentView.leftBarButtonItem.frame.size.width, self.view.frame.size.height, 0.0f, 0.0f);
-    
-    [self presentViewController:sendMediaAlertController animated:YES completion:nil];
-}
-
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType {
     if (sourceType == UIImagePickerControllerSourceTypeCamera) {
         MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToShareThroughChatWithSourceType:sourceType filePathCompletion:^(NSString *filePath, UIImagePickerControllerSourceType sourceType) {
@@ -713,44 +679,84 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)didPressAccessoryButton:(UIButton *)sender {
-    [self.inputToolbar.contentView.textView resignFirstResponder];
-    
-    NSString *alertControllerTitle = AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
-    UIAlertController *selectOptionAlertController = [UIAlertController alertControllerWithTitle:alertControllerTitle message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [selectOptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        [self.inputToolbar.contentView.textView becomeFirstResponder];
-    }]];
-    
-    UIAlertAction *sendMediaAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fromDevice", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self presentSendMediaAlertController];
-    }];
-    [selectOptionAlertController addAction:sendMediaAlertAction];
-    
-    UIAlertAction *sendFromCloudDriveAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fromCloudDrive", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-        [self presentViewController:navigationController animated:YES completion:nil];
-        
-        BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-        browserVC.browserAction = BrowserActionSendFromCloudDrive;
-        browserVC.selectedNodes = ^void(NSArray *selectedNodes) {
-            for (MEGANode *node in selectedNodes) {
-                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:self.chatRoom.chatId node:node.handle delegate:self];
+    switch (sender.tag) {
+        case MEGAChatAccessoryButtonText:
+            if ([self.inputToolbar.contentView.textView isFirstResponder]) {
+                [self.inputToolbar.contentView.textView resignFirstResponder];
+            } else {
+                [self.inputToolbar.contentView.textView becomeFirstResponder];
             }
-        };
-    }];
-    [selectOptionAlertController addAction:sendFromCloudDriveAlertAction];
-    
-    UIAlertAction *sendContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"contact", @"referring to a contact in the contact list of the user") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self presentAddOrAttachParticipantToGroup:nil];
-    }];
-    [selectOptionAlertController addAction:sendContactAlertAction];
-    
-    selectOptionAlertController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    selectOptionAlertController.popoverPresentationController.sourceView = self.view;
-    // TODO: Use the new buttons
-//    selectOptionAlertController.popoverPresentationController.sourceRect = CGRectMake(self.inputToolbar.contentView.leftBarButtonItem.frame.size.width, self.view.frame.size.height, 0.0f, 0.0f);
-    
-    [self presentViewController:selectOptionAlertController animated:YES completion:nil];
+            break;
+            
+        case MEGAChatAccessoryButtonCamera: {
+            if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType:completionHandler:)]) {
+                [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL permissionGranted) {
+                    if (permissionGranted) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                        });
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"cameraPermissions", @"Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it") preferredStyle:UIAlertControllerStyleAlert];
+                            [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+                            
+                            [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                            }]];
+                            
+                            [self presentViewController:permissionsAlertController animated:YES completion:nil];
+                        });
+                    }
+                }];
+            }
+            break;
+        }
+            
+        case MEGAChatAccessoryButtonImage: {
+            [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+            break;
+        }
+            
+        case MEGAChatAccessoryButtonUpload: {
+            [self.inputToolbar.contentView.textView resignFirstResponder];
+            
+            NSString *alertControllerTitle = AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
+            UIAlertController *selectOptionAlertController = [UIAlertController alertControllerWithTitle:alertControllerTitle message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+            [selectOptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                [self.inputToolbar.contentView.textView becomeFirstResponder];
+            }]];
+            
+            UIAlertAction *sendFromCloudDriveAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fromCloudDrive", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+                [self presentViewController:navigationController animated:YES completion:nil];
+                
+                BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+                browserVC.browserAction = BrowserActionSendFromCloudDrive;
+                browserVC.selectedNodes = ^void(NSArray *selectedNodes) {
+                    for (MEGANode *node in selectedNodes) {
+                        [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:self.chatRoom.chatId node:node.handle delegate:self];
+                    }
+                };
+            }];
+            [selectOptionAlertController addAction:sendFromCloudDriveAlertAction];
+            
+            UIAlertAction *sendContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"contact", @"referring to a contact in the contact list of the user") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                [self presentAddOrAttachParticipantToGroup:nil];
+            }];
+            [selectOptionAlertController addAction:sendContactAlertAction];
+            
+            selectOptionAlertController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+            selectOptionAlertController.popoverPresentationController.sourceView = self.view;
+            // TODO: Use the new buttons
+            //    selectOptionAlertController.popoverPresentationController.sourceRect = CGRectMake(self.inputToolbar.contentView.leftBarButtonItem.frame.size.width, self.view.frame.size.height, 0.0f, 0.0f);
+            
+            [self presentViewController:selectOptionAlertController animated:YES completion:nil];
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 - (void)jsq_setCollectionViewInsetsTopValue:(CGFloat)top bottomValue:(CGFloat)bottom {
