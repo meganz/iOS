@@ -330,19 +330,6 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     self.inputToolbar.contentView.textView.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
     self.inputToolbar.contentView.textView.textColor = [UIColor mnz_black333333];
     self.inputToolbar.contentView.textView.tintColor = [UIColor mnz_redD90007];
-    
-    UIImage *image = [UIImage imageNamed:@"add"];
-    UIButton *attachButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [attachButton setImage:image forState:UIControlStateNormal];
-    [attachButton setFrame:CGRectMake(30, 0, 22, 22)];
-    self.inputToolbar.contentView.leftBarButtonItem = attachButton;
-
-    image = [UIImage imageNamed:@"send"];
-    UIButton *sendButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [sendButton setImage:image forState:UIControlStateNormal];
-    [sendButton setFrame:CGRectMake(0, 0, 22, 22)];
-    self.inputToolbar.contentView.rightBarButtonItem = sendButton;
-    self.inputToolbar.contentView.leftContentPadding = self.inputToolbar.contentView.rightContentPadding = 10.0f;
 }
 
 - (BOOL)showDateBetweenMessage:(MEGAChatMessage *)message previousMessage:(MEGAChatMessage *)previousMessage {
@@ -541,7 +528,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     sendMediaAlertController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     sendMediaAlertController.popoverPresentationController.sourceView = self.view;
-    sendMediaAlertController.popoverPresentationController.sourceRect = CGRectMake(self.inputToolbar.contentView.leftBarButtonItem.frame.size.width, self.view.frame.size.height, 0.0f, 0.0f);
+    // TODO: Use the new buttons
+//    sendMediaAlertController.popoverPresentationController.sourceRect = CGRectMake(self.inputToolbar.contentView.leftBarButtonItem.frame.size.width, self.view.frame.size.height, 0.0f, 0.0f);
     
     [self presentViewController:sendMediaAlertController animated:YES completion:nil];
 }
@@ -759,7 +747,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     selectOptionAlertController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     selectOptionAlertController.popoverPresentationController.sourceView = self.view;
-    selectOptionAlertController.popoverPresentationController.sourceRect = CGRectMake(self.inputToolbar.contentView.leftBarButtonItem.frame.size.width, self.view.frame.size.height, 0.0f, 0.0f);
+    // TODO: Use the new buttons
+//    selectOptionAlertController.popoverPresentationController.sourceRect = CGRectMake(self.inputToolbar.contentView.leftBarButtonItem.frame.size.width, self.view.frame.size.height, 0.0f, 0.0f);
     
     [self presentViewController:selectOptionAlertController animated:YES completion:nil];
 }
