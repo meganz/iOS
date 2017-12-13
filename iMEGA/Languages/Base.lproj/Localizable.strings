@@ -946,6 +946,12 @@
 "choosePlan"="Choose one of the plans from below:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="Get two months free if you subscribe to a one-year PRO plan";
+/* Text shown on the upgrade account page above the current PRO plan subscription */
+"currentPlan"="Current Plan:";
+/* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
+"requestAPlan"="Request a plan";
+/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
+"thereAreNoPlansSuitableForYourCurrentUsage"="There are no plans suitable for your current usage. Please [A]contact support[/A] for a custom plan.";
 /* Header shown to help on the purchasin process */
 "selectMembership"="Select membership:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
