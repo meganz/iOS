@@ -1,5 +1,9 @@
 #import "UpgradeTableViewController.h"
 
+#import <MessageUI/MFMailComposeViewController.h>
+
+#import "SVProgressHUD.h"
+
 #import "MEGASdk+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
@@ -11,7 +15,7 @@
 
 #define TOBYTES 1024*1024*1024
 
-@interface UpgradeTableViewController () <UITableViewDataSource, UITableViewDelegate, MEGAPurchasePricingDelegate>
+@interface UpgradeTableViewController () <MFMailComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, MEGAPurchasePricingDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -253,6 +257,28 @@
 #pragma mark - IBActions
 
 - (IBAction)skipTouchUpInside:(UIBarButtonItem *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)requestAPlanTouchUpInside:(UIButton *)sender {
+    if ([MFMailComposeViewController canSendMail]) {
+        MFMailComposeViewController *mailComposeVC = [[MFMailComposeViewController alloc] init];
+        mailComposeVC.mailComposeDelegate = self;
+        mailComposeVC.toRecipients = @[@"support@mega.nz"];
+        
+        mailComposeVC.subject = [NSString stringWithFormat:@"Request a plan"];
+        
+        //TODO: Add a message body to facilitate the transition to a custom plan.
+        
+        [self presentViewController:mailComposeVC animated:YES completion:nil];
+    } else {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"noEmailAccountConfigured", @"Text shown when you want to send feedback of the app and you don't have an email account set up on your device")];
+    }
+}
+    
+#pragma mark - MFMailComposeViewControllerDelegate
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
