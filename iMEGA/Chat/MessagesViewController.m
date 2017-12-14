@@ -23,6 +23,7 @@
 #import "MEGAOpenMessageHeaderView.h"
 #import "MEGAProcessAsset.h"
 #import "MEGAStartUploadTransferDelegate.h"
+#import "MEGAToolbarContentView.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
@@ -30,13 +31,6 @@
 const CGFloat kGroupChatCellLabelHeight = 35.0f;
 const CGFloat k1on1CellLabelHeight = 28.0f;
 const CGFloat kAvatarImageDiameter = 24.0f;
-
-typedef NS_ENUM(NSUInteger, MEGAChatAccessoryButton) {
-    MEGAChatAccessoryButtonText = 10,
-    MEGAChatAccessoryButtonCamera,
-    MEGAChatAccessoryButtonImage,
-    MEGAChatAccessoryButtonUpload
-};
 
 @interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
 
