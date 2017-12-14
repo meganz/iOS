@@ -35,13 +35,10 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *accountTypeLabel;
 
-@property (weak, nonatomic) IBOutlet UIView *freeView;
-@property (weak, nonatomic) IBOutlet UILabel *freeStatusLabel;
-@property (weak, nonatomic) IBOutlet UIButton *upgradeToProButton;
-
 @property (weak, nonatomic) IBOutlet UIView *proView;
 @property (weak, nonatomic) IBOutlet UILabel *proStatusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *proExpiryDateLabel;
+@property (weak, nonatomic) IBOutlet UIButton *upgradeAccountButton;
 
 @property (weak, nonatomic) IBOutlet UIImageView *logoutButtonTopImageView;
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;
@@ -51,9 +48,9 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *usedLabelTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *accountTypeLabelTopLayoutConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *freeViewTopLayoutConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *upgradeAccountTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *proViewTopLayoutConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *proExpiryDateLabelHeightLayoutConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *upgradeAccountTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoutButtonTopLayoutConstraint;
 
 @end
@@ -76,8 +73,7 @@
     NSString *accountTypeString = [AMLocalizedString(@"accountType", @"title of the My Account screen") stringByReplacingOccurrencesOfString:@":" withString:@""];
     self.accountTypeLabel.text = accountTypeString;
     
-    [self.freeStatusLabel setText:AMLocalizedString(@"free", nil)];
-    [self.upgradeToProButton setTitle:AMLocalizedString(@"upgradeAccount", nil) forState:UIControlStateNormal];
+    [self.upgradeAccountButton setTitle:AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level") forState:UIControlStateNormal];
     
     [self.logoutButton setTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") forState:UIControlStateNormal];
     
@@ -85,11 +81,11 @@
     [byteCountFormatter setCountStyle:NSByteCountFormatterCountStyleMemory];
     
     if ([[UIDevice currentDevice] iPhone4X]) {
-        self.usedLabelTopLayoutConstraint.constant = 8.0f;
-        self.accountTypeLabelTopLayoutConstraint.constant = 9.0f;
-        self.freeViewTopLayoutConstraint.constant = 8.0f;
-        self.upgradeAccountTopLayoutConstraint.constant = 8.0f;
-        self.proViewTopLayoutConstraint.constant = 8.0f;
+        float constant = ([[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) ? 4.0f : 8.0f;
+        self.usedLabelTopLayoutConstraint.constant = constant;
+        self.accountTypeLabelTopLayoutConstraint.constant = constant + 1;
+        self.proViewTopLayoutConstraint.constant = constant;
+        self.upgradeAccountTopLayoutConstraint.constant = constant;
         self.logoutButtonTopLayoutConstraint.constant = 0.0f;
         self.logoutButtonTopImageView.backgroundColor = nil;
         self.logoutButtonBottomImageView.backgroundColor = nil;
@@ -166,8 +162,6 @@
         
         NSString *expiresString;
         if (accountDetails.type) {
-            self.freeView.hidden = YES;
-            self.proView.hidden = NO;
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             dateFormatter.dateStyle = NSDateFormatterShortStyle;
             dateFormatter.timeStyle = NSDateFormatterNoStyle;
@@ -176,13 +170,14 @@
             
             NSDate *expireDate = [[NSDate alloc] initWithTimeIntervalSince1970:accountDetails.proExpiration];
             expiresString = [NSString stringWithFormat:AMLocalizedString(@"expiresOn", @"Text that shows the expiry date of the account PRO level"), [dateFormatter stringFromDate:expireDate]];
-        } else {
-            self.proView.hidden = YES;
-            self.freeView.hidden = NO;
         }
         
         switch (accountDetails.type) {
             case MEGAAccountTypeFree: {
+                self.proStatusLabel.text = AMLocalizedString(@"free", @"Text relative to the MEGA account level. UPPER CASE");
+                self.proStatusLabel.textColor = [UIColor mnz_green31B500];
+                
+                self.proExpiryDateLabelHeightLayoutConstraint.constant = 0;
                 break;
             }
                 
