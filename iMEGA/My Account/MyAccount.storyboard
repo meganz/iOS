@@ -473,7 +473,7 @@
                                             <constraint firstAttribute="height" constant="20" id="QBM-Th-bAw"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="20"/>
-                                        <color key="textColor" red="1" green="0.10196078431372549" blue="0.32549019607843138" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e4n-lo-JNP" userLabel="Line Image View">
@@ -559,7 +559,7 @@
                                         </variation>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vxM-hL-36v" userLabel="PRO View">
-                                        <rect key="frame" x="0.0" y="94" width="375" height="101"/>
+                                        <rect key="frame" x="0.0" y="94" width="375" height="103"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HMJ-BG-UeS" userLabel="PRO Status Label">
                                                 <rect key="frame" x="187.5" y="0.0" width="0.0" height="20"/>
@@ -580,11 +580,11 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sru-Nl-WTf" userLabel="Upgrade Account Button">
-                                                <rect key="frame" x="67" y="57" width="240" height="44"/>
+                                                <rect key="frame" x="66" y="57" width="242" height="46"/>
                                                 <color key="backgroundColor" red="1" green="0.30196079609999998" blue="0.32156863810000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="240" id="X5D-NM-9gN"/>
-                                                    <constraint firstAttribute="height" constant="44" id="aUq-q0-1Hr"/>
+                                                    <constraint firstAttribute="width" constant="242" id="X5D-NM-9gN"/>
+                                                    <constraint firstAttribute="height" constant="46" id="aUq-q0-1Hr"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="16"/>
                                                 <inset key="contentEdgeInsets" minX="44" minY="0.0" maxX="44" maxY="0.0"/>
@@ -627,7 +627,7 @@
                                         </variation>
                                     </view>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SC0-BG-hzT" userLabel="Line Image View">
-                                        <rect key="frame" x="0.0" y="257" width="375" height="1"/>
+                                        <rect key="frame" x="0.0" y="259" width="375" height="1"/>
                                         <color key="backgroundColor" red="0.7843137255" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="2" id="EOH-k9-mlx"/>
@@ -640,7 +640,7 @@
                                         </variation>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hdr-nD-Am1">
-                                        <rect key="frame" x="0.0" y="258" width="375" height="33"/>
+                                        <rect key="frame" x="0.0" y="260" width="375" height="33"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                         <state key="normal" title="Logout">
                                             <color key="titleColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -650,7 +650,7 @@
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PAI-nV-qvF" userLabel="Line Image View">
-                                        <rect key="frame" x="0.0" y="291" width="375" height="1"/>
+                                        <rect key="frame" x="0.0" y="293" width="375" height="1"/>
                                         <color key="backgroundColor" red="0.7843137255" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="Fva-ec-Z1R"/>
@@ -714,18 +714,18 @@
                                         <exclude reference="mH4-ah-pVR"/>
                                         <exclude reference="nRs-aa-RpH"/>
                                         <exclude reference="1V6-5T-psI"/>
-                                        <exclude reference="cG6-jq-fjm"/>
-                                        <exclude reference="xoy-N7-oBL"/>
                                         <exclude reference="7KU-6H-ECX"/>
                                         <exclude reference="zym-u0-Mt9"/>
+                                        <exclude reference="cG6-jq-fjm"/>
+                                        <exclude reference="xoy-N7-oBL"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=compact">
                                     <mask key="constraints">
                                         <include reference="nRs-aa-RpH"/>
                                         <exclude reference="Y2Y-vK-vWk"/>
-                                        <include reference="xoy-N7-oBL"/>
                                         <include reference="zym-u0-Mt9"/>
+                                        <include reference="xoy-N7-oBL"/>
                                     </mask>
                                 </variation>
                             </view>
