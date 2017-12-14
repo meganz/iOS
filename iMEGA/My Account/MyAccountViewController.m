@@ -134,9 +134,6 @@
         [secondPartMutableAttributedString addAttribute:NSFontAttributeName
                                                   value:[UIFont mnz_SFUILightWithSize:12.0f]
                                                   range:secondPartRange];
-        [secondPartMutableAttributedString addAttribute:NSForegroundColorAttributeName
-                                                  value:[UIColor mnz_gray777777]
-                                                  range:secondPartRange];
         
         [firstPartMutableAttributedString appendAttributedString:secondPartMutableAttributedString];
     }
@@ -183,6 +180,7 @@
                 
             case MEGAAccountTypeLite: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO LITE"];
+                self.proStatusLabel.textColor = [UIColor mnz_orangeFFA500];
                 self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
                 break;
             }
