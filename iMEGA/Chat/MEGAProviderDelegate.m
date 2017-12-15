@@ -1,6 +1,7 @@
 
 #import "MEGAProviderDelegate.h"
 #import "CallViewController.h"
+#import "UIApplication+MNZCategory.h"
 
 @interface MEGAProviderDelegate ()
 
@@ -85,7 +86,7 @@
         callVC.callType = CallTypeIncoming;
         callVC.megaCallManager = self.megaCallManager;
         callVC.call = call;
-        [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:callVC animated:YES completion:nil];
+        [[UIApplication mnz_visibleViewController] presentViewController:callVC animated:YES completion:nil];
         [action fulfill];
     } else {
         [action fail];

@@ -6,6 +6,7 @@
 #import "UIImageView+MNZCategory.h"
 #import "MEGANavigationController.h"
 #import "MEGARemoveContactRequestDelegate.h"
+#import "MEGAChatCreateChatGroupRequestDelegate.h"
 
 #import "ChatRoomsViewController.h"
 #import "ContactTableViewCell.h"
@@ -14,7 +15,7 @@
 #import "SharedItemsTableViewCell.h"
 #import "VerifyCredentialsViewController.h"
 
-@interface ContactDetailsViewController () <MEGAChatRequestDelegate>
+@interface ContactDetailsViewController ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
@@ -255,7 +256,10 @@
                         } else {
                             MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
                             [peerList addPeerWithHandle:self.userHandle privilege:MEGAChatRoomPrivilegeStandard];
-                            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:self];
+                            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                                [self changeToChatTabAndOpenChatId:chatRoom.chatId];
+                            }];
+                            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
                         }
                     } else {
                         [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"chatIsDisabled", @"Title show when the chat is disabled")];
@@ -287,23 +291,6 @@
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-#pragma mark - MEGAChatRequestDelegate
-
-- (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
-    MEGALogInfo(@"onChatRequestFinish request: %@ \nerror: %@", request, error);
-    if (error.type) return;
-    
-    switch (request.type) {
-        case MEGAChatRequestTypeCreateChatRoom: {
-            [self changeToChatTabAndOpenChatId:request.chatHandle];
-            break;
-        }
-            
-        default:
-            break;
-    }
 }
 
 @end
