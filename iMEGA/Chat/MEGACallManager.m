@@ -28,7 +28,7 @@
     MEGALogDebug(@"[CallKit] Start call %@, uuid: %@, email: %@", call, call.uuid, email);
     CXHandle *handle = [[CXHandle alloc] initWithType:CXHandleTypeEmailAddress value:email];
     CXStartCallAction *startCallAction = [[CXStartCallAction alloc] initWithCallUUID:call.uuid handle:handle];
-    startCallAction.video = NO;
+    startCallAction.video = call.hasLocalVideo;
     
     CXTransaction *transaction = [[CXTransaction alloc] init];
     [transaction addAction:startCallAction];
