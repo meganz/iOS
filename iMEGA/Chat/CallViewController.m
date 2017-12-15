@@ -29,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *remoteMicImageView;
 
 @property BOOL loudSpeakerEnabled;
+@property BOOL statusBarShouldBeHidden;
 
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, strong) NSDate *baseDate;
@@ -44,9 +45,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
     self.enableDisableVideoButton.selected = self.videoCall;
     self.loudSpeakerEnabled = self.videoCall;
+    _statusBarShouldBeHidden = NO;
     
     [self.remoteAvatarImageView mnz_setImageForUserHandle:[self.chatRoom peerHandleAtIndex:0]];
     
@@ -127,6 +128,20 @@
     [[NSNotificationCenter defaultCenter] removeObserver:@"UIDeviceProximityStateDidChangeNotification"];
 }
 
+#pragma mark - Status bar
+
+- (BOOL)prefersStatusBarHidden {
+    return self.statusBarShouldBeHidden;
+}
+
+- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
+    return UIStatusBarAnimationFade;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
 #pragma mark - Private
 
 - (void)sensorStateMonitor:(NSNotificationCenter *)notification {
@@ -190,8 +205,16 @@
         if (self.outgoingCallView.alpha != 1.0f) {
             [self.outgoingCallView setAlpha:1.0f];
             [self.nameLabel setAlpha:1.0f];
+            self.statusBarShouldBeHidden = NO;
+            [UIView animateWithDuration:0.25 animations:^{
+                [self setNeedsStatusBarAppearanceUpdate];
+            }];
         } else {
             [self.outgoingCallView setAlpha:0.0f];
+            self.statusBarShouldBeHidden = YES;
+            [UIView animateWithDuration:0.25 animations:^{
+                [self setNeedsStatusBarAppearanceUpdate];
+            }];
             [self.nameLabel setAlpha:0.0f];
         }
         [self.view layoutIfNeeded];
