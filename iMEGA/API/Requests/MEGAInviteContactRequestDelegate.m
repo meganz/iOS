@@ -1,7 +1,11 @@
 
 #import "MEGAInviteContactRequestDelegate.h"
 
+#import <ContactsUI/ContactsUI.h>
+
 #import "SVProgressHUD.h"
+#import "CustomModalAlertViewController.h"
+#import "UIApplication+MNZCategory.h"
 
 @interface MEGAInviteContactRequestDelegate ()
 
@@ -61,17 +65,32 @@
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
         [SVProgressHUD dismiss];
         
-        NSString *alertTitle;
+        NSString *detailText;
         if (self.totalRequests > 1) {
-            alertTitle = AMLocalizedString(@"theUsersHaveBeenInvited", @"Success message shown when some contacts have been invited");
+            detailText = AMLocalizedString(@"theUsersHaveBeenInvited", @"Success message shown when some contacts have been invited");
         } else {
-            alertTitle = AMLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
-            alertTitle = [alertTitle stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
+            detailText = AMLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
+            detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
         }
         
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+        CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
+        customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+        customModalAlertVC.image = @"inviteSent";
+        customModalAlertVC.viewTitle = AMLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
+        customModalAlertVC.detail = detailText;
+        customModalAlertVC.boldInDetail = request.email;
+        customModalAlertVC.action = AMLocalizedString(@"close", nil);
+        __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
+        customModalAlertVC.completion = ^{
+            [weakCustom dismissViewControllerAnimated:YES completion:nil];
+        };
+        
+        if ([[UIApplication mnz_visibleViewController] isKindOfClass:CNContactPickerViewController.class] ||
+            [[UIApplication mnz_visibleViewController] isKindOfClass:CustomModalAlertViewController.class]) {
+            [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:customModalAlertVC animated:YES completion:nil];
+        } else {
+            [[UIApplication mnz_visibleViewController] presentViewController:customModalAlertVC animated:YES completion:nil];
+        }
     }
 }
 

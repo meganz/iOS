@@ -4,6 +4,7 @@
 #import "MEGAProviderDelegate.h"
 #import "MessagesViewController.h"
 #import "MEGAChatCall+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate, MEGAChatCallDelegate>
 
@@ -181,14 +182,7 @@
                 callVC.chatRoom  = chatRoom;
                 callVC.videoCall = call.hasRemoteVideo;
                 callVC.callType = CallTypeIncoming;
-                
-                UIViewController *presentedVC = self.presentedViewController;
-                
-                if (presentedVC) {
-                    [presentedVC presentViewController:callVC animated:YES completion:nil];
-                } else {
-                    [self presentViewController:callVC animated:YES completion:nil];
-                }
+                [[UIApplication mnz_visibleViewController] presentViewController:callVC animated:YES completion:nil];
             }
             break;
         }

@@ -13,6 +13,7 @@
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+#import "MEGAChatCreateChatGroupRequestDelegate.h"
 
 #import "ChatRoomCell.h"
 #import "ChatSettingsTableViewController.h"
@@ -21,7 +22,7 @@
 #import "GroupChatDetailsViewController.h"
 #import "MessagesViewController.h"
 
-@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatRequestDelegate, MEGAChatDelegate>
+@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate>
 
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
@@ -499,6 +500,7 @@
     MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
     ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
     contactsVC.contactsMode = ContactsModeChatStartConversation;
+    MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
     contactsVC.userSelected =^void(NSArray *users) {
         if (users.count == 1) {
             MEGAUser *user = [users objectAtIndex:0];
@@ -512,16 +514,18 @@
                     }
                 }
                 
-                MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-                messagesVC.chatRoom                = chatRoom;
+                messagesVC.chatRoom = chatRoom;
                 dispatch_async(dispatch_get_main_queue(), ^(void){
                     [self.navigationController pushViewController:messagesVC animated:YES];
                 });
             } else {
                 MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
                 [peerList addPeerWithHandle:user.handle privilege:2];
-                
-                [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:self];
+                MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                    messagesVC.chatRoom = chatRoom;
+                    [self.navigationController pushViewController:messagesVC animated:YES];
+                }];
+                [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
             }
         } else {
             MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
@@ -531,7 +535,11 @@
                 [peerList addPeerWithHandle:user.handle privilege:2];
             }
             
-            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:YES peers:peerList delegate:self];
+            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                messagesVC.chatRoom = chatRoom;
+                [self.navigationController pushViewController:messagesVC animated:YES];                
+            }];
+            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:YES peers:peerList delegate:createChatGroupRequestDelegate];
         }
     };
     
@@ -687,29 +695,6 @@
 
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
     [self.navigationController pushViewController:viewControllerToCommit animated:YES];
-}
-
-#pragma mark - MEGAChatRequestDelegate
-
-- (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
-    MEGALogInfo(@"onChatRequestFinish request: %@ \nerror: %@", request, error);
-    if (error.type) return;
-    
-    switch (request.type) {
-        case MEGAChatRequestTypeCreateChatRoom: {
-            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
-            
-            MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-            messagesVC.chatRoom                = chatRoom;
-            
-            [self.navigationController pushViewController:messagesVC animated:YES];
-            
-            break;
-        }
-            
-        default:
-            break;
-    }
 }
 
 #pragma mark - MEGAChatDelegate
