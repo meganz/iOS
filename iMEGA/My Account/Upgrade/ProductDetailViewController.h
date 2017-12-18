@@ -4,6 +4,8 @@
 
 @interface ProductDetailViewController : UIViewController
 
+@property (nonatomic, getter=isChoosingTheAccountType) BOOL chooseAccountType;
+
 @property (nonatomic) MEGAAccountType megaAccountType;
 @property (nonatomic, strong) NSString *storageString;
 @property (nonatomic, strong) NSString *bandwidthString;

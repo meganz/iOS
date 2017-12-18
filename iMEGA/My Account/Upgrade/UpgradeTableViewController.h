@@ -2,4 +2,6 @@
 
 @interface UpgradeTableViewController : UIViewController
 
+@property (nonatomic, getter=isChoosingTheAccountType) BOOL chooseAccountType;
+
 @end
