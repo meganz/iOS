@@ -44,7 +44,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *requestAPlanDescriptionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *requestAPlanButton;
 
-@property (strong, nonatomic) NSArray *proLevelsMutableArray;
+@property (strong, nonatomic) NSMutableArray *proLevelsMutableArray;
 @property (strong, nonatomic) NSMutableDictionary *proLevelsIndexesMutableDictionary;
 @property (nonatomic) MEGAAccountType userProLevel;
 
@@ -59,8 +59,8 @@
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
     
-    self.title = AMLocalizedString(@"upgradeAccount", @"Upgrade account");
-    self.chooseFromOneOfThePlansLabel.text = AMLocalizedString(@"choosePlan", @"Header that help you with the upgrading process explaining that you have to choose one of the plans below to continue");
+    self.title = (self.isChoosingTheAccountType) ? AMLocalizedString(@"chooseYourAccountType", nil) : AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
+    self.chooseFromOneOfThePlansLabel.text = (self.isChoosingTheAccountType) ? AMLocalizedString(@"selectOneAccountType", @"") : AMLocalizedString(@"choosePlan", @"Header that help you with the upgrading process explaining that you have to choose one of the plans below to continue");
     
     self.currentPlanLabel.text = AMLocalizedString(@"currentPlan", @"Text shown on the upgrade account page above the current PRO plan subscription");
     
@@ -71,7 +71,7 @@
     
     _autorenewableDescriptionLabel.text = AMLocalizedString(@"autorenewableDescription", @"Describe how works auto-renewable subscriptions on the Apple Store");
     
-    self.navigationItem.rightBarButtonItem = self.skipBarButtonItem;
+    self.navigationItem.rightBarButtonItem = (self.isChoosingTheAccountType) ? nil : self.skipBarButtonItem;
     self.skipBarButtonItem.title = AMLocalizedString(@"skipButton", @"Button title that skips the current action");
     
     [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
@@ -100,21 +100,25 @@
     
     switch (self.userProLevel) {
         case MEGAAccountTypeFree:
-            self.proLevelsMutableArray = @[[NSNumber numberWithInteger:MEGAAccountTypeLite], [NSNumber numberWithInteger:MEGAAccountTypeProI], [NSNumber numberWithInteger:MEGAAccountTypeProII], [NSNumber numberWithInteger:MEGAAccountTypeProIII]];
+            self.proLevelsMutableArray = [NSMutableArray arrayWithArray:@[[NSNumber numberWithInteger:MEGAAccountTypeLite], [NSNumber numberWithInteger:MEGAAccountTypeProI], [NSNumber numberWithInteger:MEGAAccountTypeProII], [NSNumber numberWithInteger:MEGAAccountTypeProIII]]];
+            
+            if (self.isChoosingTheAccountType) {
+                [self.proLevelsMutableArray insertObject:[NSNumber numberWithInteger:MEGAAccountTypeFree] atIndex:0];
+            }
             
             self.currentPlanViewHeightLayoutConstraint.constant = 0;
             break;
             
         case MEGAAccountTypeLite:
-            self.proLevelsMutableArray = @[[NSNumber numberWithInteger:MEGAAccountTypeProI], [NSNumber numberWithInteger:MEGAAccountTypeProII], [NSNumber numberWithInteger:MEGAAccountTypeProIII]];
+            self.proLevelsMutableArray = [NSMutableArray arrayWithArray:@[[NSNumber numberWithInteger:MEGAAccountTypeProI], [NSNumber numberWithInteger:MEGAAccountTypeProII], [NSNumber numberWithInteger:MEGAAccountTypeProIII]]];
             break;
             
         case MEGAAccountTypeProI:
-            self.proLevelsMutableArray = @[[NSNumber numberWithInteger:MEGAAccountTypeProII], [NSNumber numberWithInteger:MEGAAccountTypeProIII]];
+            self.proLevelsMutableArray = [NSMutableArray arrayWithArray:@[[NSNumber numberWithInteger:MEGAAccountTypeProII], [NSNumber numberWithInteger:MEGAAccountTypeProIII]]];
             break;
             
         case MEGAAccountTypeProII:
-            self.proLevelsMutableArray = @[[NSNumber numberWithInteger:MEGAAccountTypeProIII]];
+            self.proLevelsMutableArray = [NSMutableArray arrayWithArray:@[[NSNumber numberWithInteger:MEGAAccountTypeProIII]]];
             break;
             
         case MEGAAccountTypeProIII: {
@@ -161,6 +165,10 @@
 - (UIImage *)imageForProLevel:(MEGAAccountType)proLevel {
     UIImage *proLevelImage;
     switch (proLevel) {
+        case MEGAAccountTypeFree:
+            proLevelImage =  [UIImage imageNamed:@"list_crest_FREE"];
+            break;
+            
         case MEGAAccountTypeLite:
             proLevelImage = [UIImage imageNamed:@"list_crest_LITE"];
             break;
@@ -187,6 +195,10 @@
 - (UIColor *)colorForProLevel:(MEGAAccountType)proLevel {
     UIColor *proLevelColor;
     switch (proLevel) {
+        case MEGAAccountTypeFree:
+            proLevelColor = [UIColor mnz_green31B500];
+            break;
+            
         case MEGAAccountTypeLite:
             proLevelColor = [UIColor mnz_orangeFFA500];
             break;
@@ -213,6 +225,10 @@
 - (NSString *)nameForProLevel:(MEGAAccountType)proLevel {
     NSString *proLevelName;
     switch (proLevel) {
+        case MEGAAccountTypeFree:
+            proLevelName = AMLocalizedString(@"free", @"Text relative to the MEGA account level. UPPER CASE");
+            break;
+            
         case MEGAAccountTypeLite:
             proLevelName = @"LITE";
             break;
@@ -256,6 +272,28 @@
     return bandwidthMutableAttributedString;
 }
 
+- (NSAttributedString *)freeStorageAttributedString {
+    NSMutableAttributedString *storageString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"productSpace", @"Storage related with the MEGA PRO account level you can subscribe")] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
+    
+    NSMutableAttributedString *storageMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:@"50 GB" attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+    [storageMutableAttributedString appendAttributedString:storageString];
+    
+    NSAttributedString *superscriptOneAttributedString = [[NSAttributedString alloc] initWithString:@" ¹" attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]}];
+    [storageMutableAttributedString appendAttributedString:superscriptOneAttributedString];
+    
+    return storageMutableAttributedString;
+}
+
+- (NSAttributedString *)freeTransferQuotaAttributedString {
+    NSMutableAttributedString *transferQuotaString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"transferQuota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.")] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
+    
+    NSString *limitedTransferQuotaString = [AMLocalizedString(@"limited", @" Label for any 'Limited' button, link, text, title, etc. - (String as short as possible).") uppercaseString];
+    NSMutableAttributedString *transferQuotaMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:limitedTransferQuotaString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+    [transferQuotaMutableAttributedString appendAttributedString:transferQuotaString];
+    
+    return transferQuotaMutableAttributedString;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)skipTouchUpInside:(UIBarButtonItem *)sender {
@@ -291,7 +329,18 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ProductTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"productCell" forIndexPath:indexPath];
+    ProductTableViewCell *cell;
+    if (self.isChoosingTheAccountType && indexPath.row == 0) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"freeProductCell" forIndexPath:indexPath];
+        NSMutableAttributedString *superscriptOneAttributedString = [[NSMutableAttributedString alloc] initWithString:@"¹ " attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]}];
+        
+        NSAttributedString *subjectToYourParticipationAttributedString = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"subjectToYourParticipationInOurAchievementsProgram", @"") attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black262626]}];
+        [superscriptOneAttributedString appendAttributedString:subjectToYourParticipationAttributedString];
+        
+        cell.subjectToYourParticipationLabel.attributedText = superscriptOneAttributedString;
+    } else {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"productCell" forIndexPath:indexPath];
+    }
     
     NSNumber *proLevelNumber = [self.proLevelsMutableArray objectAtIndex:indexPath.row];
     cell.productImageView.image = [self imageForProLevel:proLevelNumber.integerValue];
@@ -308,8 +357,8 @@
     }
     
     NSNumber *proLevelIndexNumber = [self.proLevelsIndexesMutableDictionary objectForKey:proLevelNumber];
-    cell.productStorageLabel.attributedText = [self storageAttributedStringForProLevelAtIndex:proLevelIndexNumber.integerValue];
-    cell.productBandwidthLabel.attributedText = [self bandwidthAttributedStringForProLevelAtIndex:proLevelIndexNumber.integerValue];
+    cell.productStorageLabel.attributedText = (self.isChoosingTheAccountType && indexPath.row == 0) ? [self freeStorageAttributedString] : [self storageAttributedStringForProLevelAtIndex:proLevelIndexNumber.integerValue];
+    cell.productBandwidthLabel.attributedText = (self.isChoosingTheAccountType && indexPath.row == 0) ? [self freeTransferQuotaAttributedString] :[self bandwidthAttributedStringForProLevelAtIndex:proLevelIndexNumber.integerValue];
     
     NSString *productPriceString = [NSString stringWithFormat:AMLocalizedString(@"productPricePerMonth", @"Price asociated with the MEGA PRO account level you can subscribe"), (float)[[MEGAPurchase sharedInstance].pricing amountAtProductIndex:proLevelIndexNumber.integerValue] / 100, [[MEGAPurchase sharedInstance].pricing currencyAtProductIndex:proLevelIndexNumber.integerValue]];
     NSAttributedString *asteriskAttributedString = [[NSAttributedString alloc] initWithString:@" *" attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]}];
@@ -320,11 +369,28 @@
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat heightForRow;
+    if (self.isChoosingTheAccountType && indexPath.row == 0) {
+        heightForRow = 104.0f;
+    } else {
+        heightForRow = 86.0f;
+    }
+    
+    return heightForRow;
+}
+
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.isChoosingTheAccountType && indexPath.row == 0) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+        return;
+    }
+    
     ProductDetailViewController *productDetailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"productDetailID"];
     NSNumber *proPlanNumber = [self.proLevelsMutableArray objectAtIndex:indexPath.row];
+    productDetailVC.chooseAccountType = self.isChoosingTheAccountType;
     productDetailVC.megaAccountType = proPlanNumber.integerValue;
     
     NSNumber *proLevelIndexNumber = [self.proLevelsIndexesMutableDictionary objectForKey:proPlanNumber];

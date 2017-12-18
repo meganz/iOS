@@ -63,9 +63,11 @@
     [_storageSizeLabel setText:_storageString];
     [_bandwidthSizeLabel setText:_bandwidthString];
     
-    UIBarButtonItem *restoreBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"restore", nil) style:UIBarButtonItemStylePlain target:self action:@selector(restore)];
-    [restoreBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
-    [self.navigationItem setRightBarButtonItem:restoreBarButtonItem];
+    if (!self.isChoosingTheAccountType) {
+        UIBarButtonItem *restoreBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"restore", @"Button title to restore failed purchases") style:UIBarButtonItemStylePlain target:self action:@selector(restore)];
+        [restoreBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItem = restoreBarButtonItem;
+    }
     
     [[MEGAPurchase sharedInstance] setDelegate:self];
     isPurchased = NO;
