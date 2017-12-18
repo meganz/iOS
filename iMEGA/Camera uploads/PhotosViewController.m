@@ -714,6 +714,9 @@
     
     CGPoint itemPoint = [self.photosCollectionView convertPoint:location fromView:self.view];
     NSIndexPath *indexPath = [self.photosCollectionView indexPathForItemAtPoint:itemPoint];
+    if (![self.photosCollectionView numberOfSections] || ![self.photosCollectionView numberOfItemsInSection:indexPath.section]) {
+        return nil;
+    }
     
     previewingContext.sourceRect = [self.photosCollectionView convertRect:[self.photosCollectionView cellForItemAtIndexPath:indexPath].frame toView:self.view];
     
