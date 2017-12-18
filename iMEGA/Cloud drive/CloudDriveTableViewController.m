@@ -223,10 +223,6 @@
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
     if ([MEGAReachabilityManager isReachable]) {
@@ -723,6 +719,10 @@
     if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
         CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
+        
+        if (![self.tableView numberOfRowsInSection:indexPath.section]) {
+            return;
+        }
         
         if (self.isEditing) {
             // Only stop editing if long pressed over a cell that is the only one selected or when selected none
