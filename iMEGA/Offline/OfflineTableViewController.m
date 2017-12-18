@@ -901,6 +901,9 @@ static NSString *kisDirectory = @"kisDirectory";
     
     CGPoint rowPoint = [self.tableView convertPoint:location fromView:self.view];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:rowPoint];
+    if (![self.tableView numberOfRowsInSection:indexPath.section]) {
+        return nil;
+    }
     
     previewingContext.sourceRect = [self.tableView convertRect:[self.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view];
     
