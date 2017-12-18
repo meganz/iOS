@@ -671,6 +671,10 @@
         CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.photosCollectionView];
         NSIndexPath *indexPath = [self.photosCollectionView indexPathForItemAtPoint:touchPoint];
         
+        if (![self.photosCollectionView numberOfSections] || ![self.photosCollectionView numberOfItemsInSection:indexPath.section]) {
+            return;
+        }
+        
         if (self.isEditing) {
             // Only stop editing if long pressed over a cell that is the only one selected or when selected none
             if (self.selectedItemsDictionary.count == 0) {
