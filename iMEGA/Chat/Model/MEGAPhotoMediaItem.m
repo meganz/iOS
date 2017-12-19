@@ -74,8 +74,12 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    // 84 = 24 (avatar) + 20x2 (edge insets) + 10 (bubble inset)
-    const CGFloat displaySize = [[UIScreen mainScreen] mnz_screenWidth] - 74;
+    // 74 = 24 (avatar) + 20x2 (edge insets) + 10 (bubble inset)
+    const CGFloat kMaxBubbleWidth = 566.0f;
+    CGFloat displaySize = [[UIScreen mainScreen] bounds].size.width - 74;
+    if (displaySize > kMaxBubbleWidth) {
+        displaySize = kMaxBubbleWidth;
+    }
     return CGSizeMake(displaySize, displaySize);
 }
 

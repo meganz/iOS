@@ -36,12 +36,12 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        return CGSizeMake(315.0f, 225.0f);
-    }
-    
     // 74 = 24 (avatar) + 20x2 (edge insets) + 10 (bubble inset)
-    const CGFloat displaySize = [[UIScreen mainScreen] mnz_screenWidth] - 74;
+    const CGFloat kMaxBubbleWidth = 566.0f;
+    CGFloat displaySize = [[UIScreen mainScreen] bounds].size.width - 74;
+    if (displaySize > kMaxBubbleWidth) {
+        displaySize = kMaxBubbleWidth;
+    }
     return CGSizeMake(displaySize, 144.0f);
 }
 
