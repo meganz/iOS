@@ -67,6 +67,7 @@
         }
         
         self.moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:_path];
+        self.moviePlayerViewController.moviePlayer.movieSourceType = (self.node) ? MPMovieSourceTypeStreaming : MPMovieSourceTypeFile;
 
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(movieFinishedCallback:)
