@@ -269,7 +269,7 @@
             }
         }
         NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"mnz_fullName" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-        self.visibleUsersArray = [usersArray sortedArrayUsingDescriptors:@[sort]];
+        self.visibleUsersArray = [NSMutableArray arrayWithArray:[usersArray sortedArrayUsingDescriptors:@[sort]]];
     }
     
     if ([self.visibleUsersArray count] == 0) {
