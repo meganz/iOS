@@ -726,11 +726,13 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             [selectOptionAlertController addAction:sendContactAlertAction];
             
             selectOptionAlertController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-            selectOptionAlertController.popoverPresentationController.sourceView = self.view;
-            // TODO: Use the new buttons
-            //    selectOptionAlertController.popoverPresentationController.sourceRect = CGRectMake(self.inputToolbar.contentView.leftBarButtonItem.frame.size.width, self.view.frame.size.height, 0.0f, 0.0f);
+            selectOptionAlertController.popoverPresentationController.sourceView = self.inputToolbar.contentView;
+            selectOptionAlertController.popoverPresentationController.sourceRect = self.inputToolbar.contentView.accessoryUploadButton.frame;
+            selectOptionAlertController.popoverPresentationController.sourceView = self.inputToolbar.contentView;
             
             [self presentViewController:selectOptionAlertController animated:YES completion:nil];
+            selectOptionAlertController.view.tintColor = [UIColor mnz_redD90007];
+
             break;
         }
             
