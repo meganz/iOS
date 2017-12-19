@@ -330,7 +330,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     self.inputToolbar.contentView.textView.placeHolder = AMLocalizedString(@"writeAMessage", @"Message box label which shows that user can type message text in this textview");
     self.inputToolbar.contentView.textView.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
     self.inputToolbar.contentView.textView.textColor = [UIColor mnz_black333333];
-    self.inputToolbar.contentView.textView.tintColor = [UIColor mnz_redD90007];
+    self.inputToolbar.contentView.textView.tintColor = [UIColor mnz_green00BFA5];
 }
 
 - (BOOL)showDateBetweenMessage:(MEGAChatMessage *)message previousMessage:(MEGAChatMessage *)previousMessage {
@@ -502,50 +502,6 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         }];
         
         [self presentViewController:imagePickerController animated:YES completion:nil];
-    } else {
-        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                MEGAAssetsPickerController *pickerViewController = [[MEGAAssetsPickerController alloc] initToUploadToChatWithAssetsCompletion:^(NSArray *assets) {
-                    for (PHAsset *asset in assets) {
-                        MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-                        MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset parentNode:parentNode filePath:^(NSString *filePath) {
-                            [self startUploadAndAttachWithPath:filePath parentNode:parentNode];
-                        } node:^(MEGANode *node) {
-                            [self attachOrCopyAndAttachNode:node toParentNode:parentNode];
-                        } error:^(NSError *error) {
-                            NSString *message;
-                            NSString *title;
-                            switch (error.code) {
-                                case -1:
-                                    title = error.localizedDescription;
-                                    message = error.localizedFailureReason;
-                                    break;
-                                    
-                                case -2:
-                                    title = AMLocalizedString(@"error", nil);
-                                    message = error.localizedDescription;
-                                    break;
-                                    
-                                default:
-                                    title = AMLocalizedString(@"error", nil);
-                                    message = error.localizedDescription;
-                                    break;
-                            }
-                            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-                            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                            [self presentViewController:alertController animated:YES completion:nil];
-                        }];
-                        processAsset.originalName = YES;
-                        [processAsset prepare];
-                    }
-                }];
-                if ([[UIDevice currentDevice] iPadDevice]) {
-                    pickerViewController.modalPresentationStyle = UIModalPresentationFormSheet;
-                }
-                
-                [self presentViewController:pickerViewController animated:YES completion:nil];
-            });
-        }];
     }
 }
 
@@ -672,6 +628,41 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self scrollToBottomAnimated:YES];
 }
 
+- (void)messagesInputToolbar:(MEGAInputToolbar *)toolbar didPressSendButton:(UIButton *)sender toAttachAssets:(NSArray<PHAsset *> *)assets {
+    for (PHAsset *asset in assets) {
+        MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
+        MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset parentNode:parentNode filePath:^(NSString *filePath) {
+            [self startUploadAndAttachWithPath:filePath parentNode:parentNode];
+        } node:^(MEGANode *node) {
+            [self attachOrCopyAndAttachNode:node toParentNode:parentNode];
+        } error:^(NSError *error) {
+            NSString *message;
+            NSString *title;
+            switch (error.code) {
+                case -1:
+                    title = error.localizedDescription;
+                    message = error.localizedFailureReason;
+                    break;
+                    
+                case -2:
+                    title = AMLocalizedString(@"error", nil);
+                    message = error.localizedDescription;
+                    break;
+                    
+                default:
+                    title = AMLocalizedString(@"error", nil);
+                    message = error.localizedDescription;
+                    break;
+            }
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }];
+        processAsset.originalName = YES;
+        [processAsset prepare];
+    }
+}
+
 - (void)didPressAccessoryButton:(UIButton *)sender {
     switch (sender.tag) {
         case MEGAChatAccessoryButtonText:
@@ -703,11 +694,6 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                     }
                 }];
             }
-            break;
-        }
-            
-        case MEGAChatAccessoryButtonImage: {
-            [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
             break;
         }
             
