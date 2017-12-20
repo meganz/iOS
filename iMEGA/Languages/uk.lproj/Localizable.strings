@@ -1,17 +1,17 @@
 /* Button title to cancel something */
 "cancel"="Скасувати";
 /* Button title to accept something */
-"ok"="ОК";
+"ok"="OK";
 /* */
 "yes"="Так";
 /* */
 "no"="Ні";
 /* */
-"upload"="Відвантажити";
+"upload"="Завантажити";
 /*  */
 "error"="Помилка";
 /*  */
-"name"="Назва";
+"name"="Ім’я";
 /* Caption of a button to edit the files that are selected */
 "edit"="Редагувати";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -75,7 +75,7 @@
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
 "megaAccessText"="Отримати повністю шифрований доступ у будь-якому місці, у будь-який час.";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="Вхід";
+"login"="Увійти";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Створити обліковий запис";
 /* Message shown when the user writes a wrong email or password on login */
@@ -105,7 +105,7 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Ви повинні погодитися з умовами користування, щоб зареєструвати обліковий запис на MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Ця адреса електронної пошти вже зареєстрована в Mega.";
+"emailAlreadyRegistered"="Ця e-mail  адреса, вже зареєстрована в Mega.";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Очікування підтвердження е-пошти.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -121,7 +121,7 @@
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Вам потрібно звільнити деякий простір на вашому пристрої";
 /* Title for the file link view */
-"fileLink"="Ланка файлу";
+"fileLink"="Посилання на файл";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Відкрити";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -135,7 +135,7 @@
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
 "fileLinkUnavailableText2"="Файл був видалений через порушення ToS/AUP.";
 /* */
-"fileLinkUnavailableText3"="Невірна URL-адреса — ланка, до якої ви намагаєтесь отримати доступ, не існує";
+"fileLinkUnavailableText3"="Невірний URL - посилання, до якого Ви намагаєтеся отримати доступ, не існує";
 /* */
 "fileLinkUnavailableText4"="Файл був вилучений користувачем.";
 /* Message shown when a download starts */
@@ -143,7 +143,7 @@
 /* Title for the folder link view */
 "folderLink"="Ланка теки";
 /* Button title which downloads a file/folder to your device */
-"downloadButton"="Завантажити";
+"downloadButton"="Скачати";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Тека, яку ви намагаєтеся завантажити більше ніж доступна пам'ять.";
 /* Error message shown when a folder can't be created. */
@@ -153,7 +153,7 @@
 /* */
 "folderLinkUnavailableText2"="Ланку на теку було видалено через порушення ToS/AUP.";
 /* */
-"folderLinkUnavailableText3"="Невірна URL-адреса — ланка, до якої ви намагаєтесь отримати доступ, не існує";
+"folderLinkUnavailableText3"="Невірний URL - посилання, до якого Ви намагаєтеся отримати доступ, не існує";
 /* */
 "folderLinkUnavailableText4"="Ланку на теку було скасовано користувачем.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -201,7 +201,7 @@
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="Немає відвантажень";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Хмарний диск";
+"cloudDrive"="Хмарний Диск";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d файл";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -285,13 +285,13 @@
 /* Title shown under the action that allows you to save several images to your camera roll */
 "saveImages"="Зберегти зображення";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="Отримати ланку";
+"getLink"="Отримати посилання";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Отримати ланку";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="Оновити ланку";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="Оновити ланки";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="Управління ланками";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="Manage links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Створення посилання…";
 /* Message shown when some links to files and/or folders are being generated */
@@ -303,7 +303,7 @@
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="Copied to the clipboard";
 /* A title for the Copyright Warning dialog. */
-"copyrightWarning"="Попередження, щодо авторського права";
+"copyrightWarning"="Попередження про авторські права";
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Попередження усім користувачам про авторське право";
 /* String already exists: 367, but we need to split paragraphs. */
@@ -369,7 +369,7 @@
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
 "moveFilesFoldersMessage"="[A] файли(ів) і [B] тек(и) перенесено";
 /* List option shown on the details of a file or folder */
-"copy"="Копіювати";
+"copy"="Скопіювати";
 /* Success message shown when you have copied 1 file */
 "copyFileMessage"="1 файл скопійовано";
 /* Success message shown when you have copied {1+} files */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="Ви впевнені, що хочете перенести 1 файл у Кошик для сміття?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="Ви впевнені, що бажаєте перенести %d файли у Кошик для сміття?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="Ви впевнені, що бажаєте перенести 1 теку у Кошик для сміття?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="Ви впевнені, що бажаєте перенести %d тек у Кошик для сміття?";
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="Ви впевнені, що бажаєте залишити цей спільний доступ?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Ви впевнені, що бажаєте залишити ці спільні доступи?";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Теку полишено";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Ділитися";
 /* Select all items/elements on the list */
@@ -573,7 +571,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="Тільки для читання";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Читання та запис";
+"readAndWrite"="Читання & Запис";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Повний доступ";
 /* Title of the Settings section */
@@ -581,7 +579,7 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Відвантаження з камери";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
-"rubbishBinLabel"="Кошик";
+"rubbishBinLabel"="Корзина";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
 "advanced"="Додатково";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
@@ -599,9 +597,9 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Не встановлено е-пошти облікового запису на цьому пристрої";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Політика конфіденційності";
+"privacyPolicyLabel"="Політика Конфіденційності";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="Умови надання послуг";
+"termsOfServicesLabel"="Умови Надання Послуг";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Вимк.";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -675,14 +673,14 @@
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Закриття облікового запису";
 /* Title for the action that allows to remove a file or folder */
-"remove"="Видалити";
+"remove"="Видалення";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Підтвердження видалення";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="Ви збираєтесь назавжди видалити 1 файл. Бажаєте продовжити? (Ця дія не зворотня.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="Ви збираєтесь назавжди видалити %d файли(ів). Бажаєте продовжити? (Ця дія не зворотня.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="Ви збираєтесь назавжди видалити 1 теку. Бажаєте продовжити? (Ця дія не зворотня.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="Ви збираєтесь назавжди видалити %d тек(и). Бажаєте продовжити? (Ця дія не зворотня.)";
@@ -801,7 +799,7 @@
 /* Menu item */
 "help"="Допомога";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Центр допомоги";
+"helpCentreLabel"="Центр Допомоги";
 /* Title to rate the app */
 "rateUsLabel"="Оцініть нас";
 /* Title of the Transfers section */
@@ -827,11 +825,11 @@
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="Передача ЗАВАНТАЖЕННЯ";
 /* Title of My Account section. There you can see your account details */
-"myAccount"="Мій обліковий запис";
+"myAccount"="Мій кабінет";
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
 "buyPRO"="Buy PRO";
 /* Caption of a button to upgrade the account to Pro status */
-"upgrade"="Більше місця";
+"upgrade"="Підняти";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="View and edit profile";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -921,7 +919,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="закінчується %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="Історія оплати";
+"purchaseHistory"="Історія покупок";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Спільний доступ";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -939,7 +937,7 @@
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Your account is full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to 4 TB (4096 GB)[/S] of cloud storage space.";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Сховище";
+"productSpace"="Місце";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
 "productBandwidth"="Ширина каналу";
 /* Price asociated with the MEGA PRO account level you can subscribe */
@@ -1029,7 +1027,7 @@
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Додати учасника…";
 /* Title that refers to the status of the chat (Either Online or Offline) */
-"status"="Стан";
+"status"="Статус";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Голосові та відео дзвінки";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1145,11 +1143,11 @@
 /*  */
 "fromDevice"="From device";
 /* referring to a contact in the contact list of the user */
-"contact"="Контакт";
+"contact"="Контакти";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Надіслати контакт";
 /* */
-"done"="Гаразд";
+"done"="Виконано";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Надіслати файли";
 /* */

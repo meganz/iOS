@@ -288,10 +288,10 @@
 "getLink"="الحصول على الرابط";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="احصل على رابط";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="تحديث الرابط";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="تحديث الروابط";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="إدارة الرابط";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="Manage links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="توليد الرابط...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="هل أنت متأكد أنك تريد نقل ملف 1 إلى سلة القمامة؟";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="هل أنت متأكد أنك تريد نقل الملفات %d لسلة القمامة؟";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="هل أنت متأكد أنك تريد نقل مجلد 1 إلى سلة القمامة؟";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="هل أنت متأكد أنك تريد نقل المجلدات %d إلى سلة القمامة؟";
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="هل أنت متأكد من مغادرة هذه المشاركة؟";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="هل أنت متأكد من مغادرة هذه المشاركات؟";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="تم إلغاء مشاركة المجلد";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="مشاركة";
 /* Select all items/elements on the list */
@@ -678,11 +676,11 @@
 "remove"="حذف";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="تأكيد الإزالة";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="أنت على وشك حذف ١ ملف نهائيا. هل تريد الاستمرار؟ (لايمكن التراجع عن هذه الخطوة)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="أنت على وشك حذف %d ملفات ، هل تود الاستمرار؟ (لا تستطيع التراجع عن هذه الخطوة)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="أنت على وشك إزالة ١ مجلد نهائيا، هل تريد الاستمرار؟ (لايمكن التراجع عن هذه الخطوة) ";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="أنت على وشك حذف %d مجلدات ، هل تود الاستمرار؟ (لا تستطيع التراجع عن هذه الخطوة)";

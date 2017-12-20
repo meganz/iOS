@@ -123,9 +123,10 @@
     [previewController setDataSource:self];
     [previewController setTransitioningDelegate:self];
     [previewController setTitle:transfer.fileName];
-    [self presentViewController:previewController animated:YES completion:^{
-        [_progressView setHidden:YES];
-    }];
+    [self addChildViewController:previewController];
+    CGFloat y = [UIApplication sharedApplication].statusBarFrame.size.height + self.navigationController.navigationBar.frame.size.height;
+    previewController.view.frame = CGRectMake(0.0f, y, self.view.frame.size.width, self.view.frame.size.height - y);
+    [self.view addSubview:previewController.view];
 }
 
 @end

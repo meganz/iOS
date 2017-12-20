@@ -2,12 +2,6 @@
 
 #import "MessagesViewController.h"
 
-NSInteger const CLOUD = 0;
-NSInteger const PHOTOS = 1;
-NSInteger const CHAT = 2;
-NSInteger const SHARED = 3;
-NSInteger const MYACCOUNT = 4;
-
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate>
 
 @end
@@ -41,7 +35,7 @@ NSInteger const MYACCOUNT = 4;
                 tabBarItem.title = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
                 break;
                 
-            case SHARED:
+            case SHARES:
                 [tabBarItem setImage:[[UIImage imageNamed:@"sharedItemsIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"sharedItemsSelectedIcon"]];
                 [tabBarItem setTitle:AMLocalizedString(@"shared", nil)];
@@ -103,33 +97,19 @@ NSInteger const MYACCOUNT = 4;
 #pragma mark - Private
 
 - (void)setBadgeValueForIncomingContactRequests {
-    NSInteger contactsTabPosition = [self tabPositionForTag:MYACCOUNT];
-    
     MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
     long incomingContacts = incomingContactsLists.size.longLongValue;
     NSString *badgeValue = incomingContacts ? [NSString stringWithFormat:@"%ld", incomingContacts] : nil;
-    [self setBadgeValue:badgeValue tabPosition:contactsTabPosition];
+    [self setBadgeValue:badgeValue tabPosition:MYACCOUNT];
 }
 
 - (void)setBadgeValueForChats {
-    NSInteger chatTabPosition = [self tabPositionForTag:CHAT];
     NSInteger unreadChats = ([MEGASdkManager sharedMEGAChatSdk] != nil) ? [[MEGASdkManager sharedMEGAChatSdk] unreadChats] : 0;
     
     NSString *badgeValue = unreadChats ? [NSString stringWithFormat:@"%ld", unreadChats] : nil;
-    [self setBadgeValue:badgeValue tabPosition:chatTabPosition];
+    [self setBadgeValue:badgeValue tabPosition:CHAT];
     
     [UIApplication sharedApplication].applicationIconBadgeNumber = unreadChats;
-}
-
-- (NSInteger)tabPositionForTag:(NSInteger)tag {
-    NSInteger tabPosition;
-    for (tabPosition = 0 ; tabPosition < self.viewControllers.count ; tabPosition++) {
-        if ([[[self.viewControllers objectAtIndex:tabPosition] tabBarItem] tag] == tag) {
-            break;
-        }
-    }
-    
-    return tabPosition;
 }
 
 - (void)setBadgeValue:(NSString *)badgeValue tabPosition:(NSInteger)tabPosition {

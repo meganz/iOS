@@ -33,7 +33,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="Vous ne pouvez pas télécharger un dossier vide";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="Votre compte a déjà été activé. Connectez-vous.";
+"accountAlreadyConfirmed"="Votre compte a déjà été activé. Veuillez vous connecter.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Lien invalide";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -57,7 +57,7 @@
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="Le processus prend plus de temps que prévu. Veuillez patienter...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
-"pleaseLogInToYourAccount"="Connectez-vous dans votre compte.";
+"pleaseLogInToYourAccount"="Veuillez vous connecter à votre compte.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="L’ESPACE MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -111,13 +111,13 @@
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Veuillez saisir votre mot de passe pour confirmer votre compte";
 /* Button title that triggers the confirm account action */
-"confirmAccountButton"="Confirmez votre compte";
+"confirmAccountButton"="Confirmer votre compte";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Mot de passe erroné";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertTitle"="Vous êtes connecté avec un autre compte";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertMessage"="Si vous acceptez, le compte actuel sera déconnecté et toutes les données Hors ligne seront effacées. Voulez-vous poursuivre?";
+"alreadyLoggedInAlertMessage"="Si vous acceptez, le compte actuel sera déconnecté et toutes les données Hors ligne seront effacées. Voulez-vous poursuivre ?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Vous devez libérer de l'espace sur votre appareil";
 /* Title for the file link view */
@@ -137,7 +137,7 @@
 /* */
 "fileLinkUnavailableText3"="URL invalide - le lien auquel vous essayez d'accéder n'existe pas";
 /* */
-"fileLinkUnavailableText4"="Le fichier a été supprimé par son utilisateur";
+"fileLinkUnavailableText4"="Le fichier a été supprimé par l'utilisateur.";
 /* Message shown when a download starts */
 "downloadStarted"="Le téléchargement est lancé";
 /* Title for the folder link view */
@@ -155,7 +155,7 @@
 /* */
 "folderLinkUnavailableText3"="URL invalide - le lien auquel vous essayez d'accéder n'existe pas";
 /* */
-"folderLinkUnavailableText4"="Le lien de dossier a été désactivé par l'utilisateur";
+"folderLinkUnavailableText4"="Le lien du dossier a été désactivé par l'utilisateur.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Aucune connexion internet";
 /* Title shown when a folder doesn't have any files */
@@ -288,10 +288,10 @@
 "getLink"="Obtenir le lien";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Obtenir les liens";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="Mettre le lien à jour";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="Mettre les liens à jour";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="Gérer le lien";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="Gérer les liens";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Génération du lien...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -345,7 +345,7 @@
 /* Title show when a file is being downloaded */
 "downloading"="Téléchargement...";
 /* Message shown when you tap on the cancel button of an active transfer */
-"cancelDownloadAlertViewText"="Voulez-vous annuler le téléchargement?";
+"cancelDownloadAlertViewText"="Voulez-vous annuler le téléchargement ?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
 "selectDestination"="Sélectionner la destination";
 /* Text of the button for user to select files in MEGA. */
@@ -393,21 +393,21 @@
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Déplacer vers la corbeille";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
-"moveFileToRubbishBinMessage"="Voulez-vous vraiment déplacer 1 fichier vers la corbeille?";
+"moveFileToRubbishBinMessage"="Voulez-vous vraiment déplacer 1 fichier vers la corbeille ?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
-"moveFilesToRubbishBinMessage"="Voulez-vous vraiment déplacer %d fichiers vers la corbeille?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
-"moveFolderToRubbishBinMessage"="Voulez-vous vraiment déplacer 1 dossier vers la corbeille?";
+"moveFilesToRubbishBinMessage"="Voulez-vous vraiment déplacer %d fichiers vers la corbeille ?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
+"moveFolderToRubbishBinMessage"="Voulez-vous vraiment déplacer 1 dossier vers la corbeille ?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="Voulez-vous vraiment déplacer %d dossiers vers la corbeille?";
+"moveFoldersToRubbishBinMessage"="Voulez-vous vraiment déplacer %d dossiers vers la corbeille ?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="Voulez-vous vraiment déplacer 1 fichier et 1 dossier vers la corbeille?";
+"moveFileFolderToRubbishBinMessage"="Voulez-vous vraiment déplacer 1 fichier et 1 dossier vers la corbeille ?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="Voulez-vous vraiment déplacer 1 fichier et %d dossiers vers la corbeille?";
+"moveFileFoldersToRubbishBinMessage"="Voulez-vous vraiment déplacer 1 fichier et %d dossiers vers la corbeille ?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="Voulez-vous vraiment déplacer %d fichiers et 1 dossier vers la corbeille?";
+"moveFilesFolderToRubbishBinMessage"="Voulez-vous vraiment déplacer %d fichiers et 1 dossier vers la corbeille ?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Voulez-vous vraiment déplacer [A] fichiers et [B] dossiers vers la corbeille?";
+"moveFilesFoldersToRubbishBinMessage"="Voulez-vous vraiment déplacer [A] fichiers et [B] dossiers vers la corbeille ?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 fichier a été déplacé vers la corbeille";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -443,7 +443,7 @@
 /* Alert title shown when the user is overquota */
 "overquotaAlert_title"="Alerte de dépassement de quota !";
 /* Alert message shown when the user is overquota */
-"overquotaAlert_message"="L'opération n'est pas autorisée. Vous dépasseriez la limite de stockage de votre compte. Souhaitez-vous surclasser votre compte?";
+"overquotaAlert_message"="L'opération n'est pas autorisée. Vous dépasseriez la limite de stockage de votre compte. Souhaitez-vous surclasser votre compte ?";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="Choisir des éléments";
 /* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
@@ -499,11 +499,11 @@
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Suppression du partage";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="Voulez-vous vraiment retirer ce partage? (Partagé avec 1 contact)";
+"removeOneShareOneContactMessage"="Voulez-vous vraiment retirer ce partage ? (Partagé avec 1 contact)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="Voulez-vous vraiment retirer ce partage? (Partagé avec %d contacts)";
+"removeOneShareMultipleContactsMessage"="Voulez-vous vraiment retirer ce partage ? (Partagé avec %d contacts)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Voulez-vous vraiment retirer ces partages? (Partagés avec %d contacts)";
+"removeMultipleSharesMultipleContactsMessage"="Voulez-vous vraiment retirer ces partages ? (Partagés avec %d contacts)";
 /* Message shown when a share have been removed */
 "shareRemoved"="Le partage a été retiré";
 /* Message shown when some shares have been removed */
@@ -535,9 +535,9 @@
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="Supprimer les contacts";
 /* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="Voulez-vous vraiment retirer %@ de votre liste de contacts?";
+"removeUserMessage"="Voulez-vous vraiment retirer %@ de votre liste de contacts ?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
-"removeMultipleUsersMessage"="Voulez-vraiment retirer %d utilisateurs de votre liste de contacts?";
+"removeMultipleUsersMessage"="Voulez-vraiment retirer %d utilisateurs de votre liste de contacts ?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d contacts ont été supprimés";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
@@ -549,11 +549,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Quitter";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Voulez-vous vraiment quitter ce partage?";
+"leaveShareAlertMessage"="Voulez-vous vraiment quitter ce partage ?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Voulez-vous vraiment quitter ces partages?";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Le dossier a été quitté";
+"leaveSharesAlertMessage"="Voulez-vous vraiment quitter ces partages ?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Partager";
 /* Select all items/elements on the list */
@@ -577,7 +575,7 @@
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Accès total";
 /* Title of the Settings section */
-"settingsTitle"="Réglages";
+"settingsTitle"="Paramètres";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Téléversement caméra";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
@@ -625,7 +623,7 @@
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="En enregistrant la clé de récupération et en la conservant en lieu sûr, vous pourrez récupérer votre compte sans perte de données en cas de perte de votre mot de passe.";
 /* Question button to present a view where it's explained what is the Recovery Key */
-"whyDoINeedARecoveryKey"="Pourquoi ai-je besoin d'une clé de récupération?";
+"whyDoINeedARecoveryKey"="Pourquoi ai-je besoin d'une clé de récupération ?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
 "masterKey_firstParagraph"="Vos données ne sont lisibles qu'à la suite d'une chaîne d'opérations de déchiffrement qui commence par votre clé maîtresse de chiffrement (clé de récupération), que nous stockons chiffrée avec votre mot de passe. Cela signifie que si vous perdez votre mot de passe, votre clé de récupération ne pourra plus être déchiffrée et que vous ne pourrez plus déchiffrer vos données.";
 /*  */
@@ -665,7 +663,7 @@
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
 "cancelYourAccount"="Annuler votre compte";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
-"youWillLooseAllData"="Vous perdrez toutes les données associées à ce compte. Voulez-vous vraiment continuer?";
+"youWillLooseAllData"="Vous perdrez toutes les données associées à ce compte. Voulez-vous vraiment continuer ?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
 "ifYouCantAccessYourEmailAccount"="Si vous ne pouvez pas accéder à vos courriels veuillez contacter support@mega.nz";
 /* During account cancellation (deletion) */
@@ -678,22 +676,22 @@
 "remove"="Supprimer";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Confirmer la suppression";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
-"removeFileToRubbishBinMessage"="Vous êtes sur le point de supprimer 1 fichier de façon permanente. Voulez-vous continuer? (Cette action est irréversible.)";
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
+"removeFileToRubbishBinMessage"="Vous êtes sur le point de supprimer 1 fichier de façon permanente. Voulez-vous continuer ? (Cette action est irréversible.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
-"removeFilesToRubbishBinMessage"="Vous êtes sur le point de supprimer %d fichiers de façon permanente. Voulez-vous continuer? (Cette action est irréversible.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
-"removeFolderToRubbishBinMessage"="Vous êtes sur le point de supprimer 1 dossier de façon permanente. Voulez-vous continuer? (Cette action est irréversible.)";
+"removeFilesToRubbishBinMessage"="Vous êtes sur le point de supprimer %d fichiers de façon permanente. Voulez-vous continuer ? (Cette action est irréversible.)";
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
+"removeFolderToRubbishBinMessage"="Vous êtes sur le point de supprimer 1 dossier de façon permanente. Voulez-vous continuer ? (Cette action est irréversible.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
-"removeFoldersToRubbishBinMessage"="Vous êtes sur le point de supprimer %d fichiers de façon permanente. Voulez-vous continuer? (Cette action est irréversible.)";
+"removeFoldersToRubbishBinMessage"="Vous êtes sur le point de supprimer %d fichiers de façon permanente. Voulez-vous continuer ? (Cette action est irréversible.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
-"removeFileFolderToRubbishBinMessage"="Vous êtes sur le point de supprimer 1 fichier et 1 dossier de façon permanente. Voulez-vous poursuivre? (Cette action est irréversible.)";
+"removeFileFolderToRubbishBinMessage"="Vous êtes sur le point de supprimer 1 fichier et 1 dossier de façon permanente. Voulez-vous poursuivre ? (Cette action est irréversible.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
-"removeFileFoldersToRubbishBinMessage"="Vous êtes sur le point de supprimer 1 fichier et %d dossiers de façon permanente. Voulez-vous poursuivre? (Cette action est irréversible.)";
+"removeFileFoldersToRubbishBinMessage"="Vous êtes sur le point de supprimer 1 fichier et %d dossiers de façon permanente. Voulez-vous poursuivre ? (Cette action est irréversible.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
-"removeFilesFolderToRubbishBinMessage"="Vous êtes sur le point de supprimer %d fichiers et 1 dossier de façon permanente. Voulez-vous poursuivre? (Cette action est irréversible.)";
+"removeFilesFolderToRubbishBinMessage"="Vous êtes sur le point de supprimer %d fichiers et 1 dossier de façon permanente. Voulez-vous poursuivre ? (Cette action est irréversible.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="Vous êtes sur le point de supprimer [A] fichiers et [B] dossiers de façon permanente. Voulez-vous poursuivre? (Cette action est irréversible.)";
+"removeFilesFoldersToRubbishBinMessage"="Vous êtes sur le point de supprimer [A] fichiers et [B] dossiers de façon permanente. Voulez-vous poursuivre ? (Cette action est irréversible.)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="1 fichier a été supprimé de MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -717,11 +715,11 @@
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Confirmer le mot de passe";
 /* Success message shown when the password has been changed */
-"passwordChanged"="Votre mot de passe a été modifié.";
+"passwordChanged"="Votre mot de passe a été changé.";
 /* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
 "oldAndNewPasswordMatch"="Le nouveau mot de passe et l'anciendoivent être différent.";
 /* An option to reset the password. */
-"forgotPassword"="Mot de passe oublié?";
+"forgotPassword"="Mot de passe oublié ?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
 "youCanResetYourPasswordByFollowing"="Vous pouvez réinitialiser votre mot de passe en suivant le lien de récupération qui vous sera envoyé par courriel.";
 /* Message shown during forgot your password process if the link to reset password has expired */
@@ -743,7 +741,7 @@
 /* Second paragraph of the screen when the password has been forgotten */
 "forgotPassword_secondParagraph"="Vous pouvez encore exporter votre clé de récupération maintenant si vous avez une session MEGA active dans n'importe quel autre navigateur sur cet ordinateur ou sur un autre. Si ce n'est pas le cas, vous ne pourrez plus déchiffrer votre compte actuel, mais vous pourrez en créer un nouveau avec la même adresse courriel en choisissant NON.";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="Avez-vous une sauvegarde de votre clé de récupération?";
+"doYouHaveABackupOfYourRecoveryKey"="Avez-vous une sauvegarde de votre clé de récupération ?";
 /* Headline when the user chose YES */
 "great"="Très bien !";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
@@ -805,7 +803,7 @@
 /* Title to rate the app */
 "rateUsLabel"="Évaluez-nous";
 /* Title of the Transfers section */
-"transfers"="Transferts";
+"transfers"="Tranferts";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Tous";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -819,7 +817,7 @@
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Annuler les transferts";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="Voulez-vous annuler %@?";
+"cancelTransfersText"="Voulez-vous annuler %@ ?";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="TOUS les transferts";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
@@ -995,9 +993,9 @@
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Le journal (MEGAiOS.log) sera supprimé de la section Hors ligne.";
 /* Alert message shown when the user remove one item from the Offline section */
-"removeItemFromOffline"="Voulez-vous vraiment supprimer cet élément hors ligne?";
+"removeItemFromOffline"="Voulez-vous vraiment supprimer cet élément hors ligne ?";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="Voulez-vous vraiment supprimer ces éléments hors ligne?";
+"removeItemsFromOffline"="Voulez-vous vraiment supprimer ces éléments hors ligne ?";
 /* Chat section header */
 "chat"="Clavardage";
 /* Empty Conversations section */
@@ -1067,7 +1065,7 @@
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Effacer l'historique de la conversation";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
-"clearTheFullMessageHistory"="Voulez-vous vraiment effacer l'historique entier des messages de cette conversation?";
+"clearTheFullMessageHistory"="Voulez-vous vraiment effacer l'historique entier des messages de cette conversation ?";
 /* 'Next' button in a dialog */
 "continue"="Poursuivre";
 /* Button title that allows the user to close a chat. */
@@ -1155,7 +1153,7 @@
 /* */
 "warning"="Avertissement";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
-"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Tous les fichiers enregistrés hors ligne seront supprimés de votre appareil. Poursuivre la déconnexion?";
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Tous les fichiers enregistrés hors ligne seront supprimés de votre appareil. Poursuivre la déconnexion ?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Le quota de transfert est épuisé";
 /* Description shown when you almost had used your available transfer quota. */

@@ -288,10 +288,10 @@
 "getLink"="Link exportieren";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Linkexport";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="Link ändern";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="Links ändern";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="Link bearbeiten";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="Manage links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Link generieren...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="Eine Datei in den Papierkorb verschieben?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="%d Dateien in den Papierkorb verschieben?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="Einen Ordner in den Papierkorb verschieben?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="%d Ordner in den Papierkorb verschieben";
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="Wollen Sie diese Ordnerfreigabe wirklich verlassen?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Wollen Sie diese Ordnerfreigaben wirklich verlassen?";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Ordnerfreigabe erfolgreich verlassen";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Freigeben";
 /* Select all items/elements on the list */
@@ -678,11 +676,11 @@
 "remove"="Entfernen";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Löschen bestätigen";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="Diese Datei wird unwiderruflich gelöscht. Fortfahren?";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="%d Dateien werden unwiderruflich gelöscht. Fotfahren?";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="Der Ordner wird unwiderruflich gelöscht. Fortfahren?";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="%d Ordner werden unwiderruflich gelöscht. Fortfahren?";

@@ -5,7 +5,10 @@
 
 #import "Helper.h"
 #import "MEGAAVViewController.h"
+#import "MEGAMoveRequestDelegate.h"
 #import "MEGANavigationController.h"
+#import "MEGANode+MNZCategory.h"
+#import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
@@ -16,11 +19,13 @@
 #import "CameraUploadsTableViewController.h"
 #import "BrowserViewController.h"
 
-@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate> {
+@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate> {
     BOOL allNodesSelected;
 
     NSUInteger remainingOperations;
 }
+
+@property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (nonatomic, strong) MEGANode *parentNode;
 @property (nonatomic, strong) MEGANodeList *nodeList;
@@ -82,6 +87,9 @@
     
     [self calculateSizeForItem];
     
+    // Long press to select:
+    [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
+    
     [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];
 }
 
@@ -133,6 +141,21 @@
             [self.photosCollectionView reloadData];
         }
     } completion:nil];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
+        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+            if (!self.previewingContext) {
+                self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.view];
+            }
+        } else {
+            [self unregisterForPreviewingWithContext:self.previewingContext];
+            self.previewingContext = nil;
+        }
+    }
 }
 
 #pragma mark - Private
@@ -426,8 +449,12 @@
         NSUInteger count = self.selectedItemsDictionary.count;
         NSArray *selectedItemsArray = [self.selectedItemsDictionary allValues];
         MEGANode *rubbishBinNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
+        MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:selectedItemsArray.count folders:0 completion:^{
+            [self setEditing:NO animated:NO];
+        }];
+        
         for (NSUInteger i = 0; i < count; i++) {
-            [[MEGASdkManager sharedMEGASdk] moveNode:[selectedItemsArray objectAtIndex:i] newParent:rubbishBinNode delegate:self];
+            [[MEGASdkManager sharedMEGASdk] moveNode:[selectedItemsArray objectAtIndex:i] newParent:rubbishBinNode delegate:moveRequestDelegate];
         }
         
         [self setEditing:NO animated:YES];
@@ -637,6 +664,88 @@
     return self.sizeForItem;
 }
 
+#pragma mark - UILongPressGestureRecognizer
+
+- (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
+    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.photosCollectionView];
+        NSIndexPath *indexPath = [self.photosCollectionView indexPathForItemAtPoint:touchPoint];
+        
+        if (![self.photosCollectionView numberOfSections] || ![self.photosCollectionView numberOfItemsInSection:indexPath.section]) {
+            return;
+        }
+        
+        if (self.isEditing) {
+            // Only stop editing if long pressed over a cell that is the only one selected or when selected none
+            if (self.selectedItemsDictionary.count == 0) {
+                [self setEditing:NO animated:YES];
+            }
+            if (self.selectedItemsDictionary.count == 1) {
+                NSInteger index = 0;
+                for (NSInteger i = 0; i < indexPath.section; i++) {
+                    NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:i];
+                    NSString *key = [[dict allKeys] objectAtIndex:0];
+                    NSArray *array = [dict objectForKey:key];
+                    index += array.count;
+                }
+                index += indexPath.row;
+                
+                NSDictionary *monthPhotosDictionary = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
+                NSString *monthKey = [monthPhotosDictionary.allKeys objectAtIndex:0];
+                NSArray *monthPhotosArray = [monthPhotosDictionary objectForKey:monthKey];
+                MEGANode *nodeSelected = [monthPhotosArray objectAtIndex:indexPath.row];
+                if ([self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:nodeSelected.handle]]) {
+                    [self setEditing:NO animated:YES];
+                }
+            }
+        } else {
+            [self setEditing:YES animated:YES];
+            [self collectionView:self.photosCollectionView didSelectItemAtIndexPath:indexPath];
+        }
+    }
+}
+
+#pragma mark - UIViewControllerPreviewingDelegate
+
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
+    if ([self.photosCollectionView allowsMultipleSelection]) {
+        return nil;
+    }
+    
+    CGPoint itemPoint = [self.photosCollectionView convertPoint:location fromView:self.view];
+    NSIndexPath *indexPath = [self.photosCollectionView indexPathForItemAtPoint:itemPoint];
+    if (![self.photosCollectionView numberOfSections] || ![self.photosCollectionView numberOfItemsInSection:indexPath.section]) {
+        return nil;
+    }
+    
+    previewingContext.sourceRect = [self.photosCollectionView convertRect:[self.photosCollectionView cellForItemAtIndexPath:indexPath].frame toView:self.view];
+    
+    NSDictionary *monthPhotosDictionary = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
+    NSString *monthKey = [monthPhotosDictionary.allKeys objectAtIndex:0];
+    NSArray *monthPhotosArray = [monthPhotosDictionary objectForKey:monthKey];
+    MEGANode *nodeSelected = [monthPhotosArray objectAtIndex:indexPath.row];
+    if (nodeSelected.name.mnz_isImagePathExtension) {
+        return [nodeSelected mnz_photoBrowserWithNodes:[self.nodeList mnz_nodesArrayFromNodeList] folderLink:NO displayMode:0 enableMoveToRubbishBin:YES hideControls:YES];
+    } else {
+        UIViewController *viewController = [nodeSelected mnz_viewControllerForNodeInFolderLink:NO];
+        if (viewController.class == MEGAAVViewController.class) {
+            ((MEGAAVViewController *)viewController).peekAndPop = YES;
+        }
+        
+        return viewController;
+    }
+    
+    return nil;
+}
+
+- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    if (viewControllerToCommit.class == MWPhotoBrowser.class) {
+        [self.navigationController pushViewController:viewControllerToCommit animated:YES];
+    } else {
+        [self.navigationController presentViewController:viewControllerToCommit animated:YES completion:nil];
+    }
+}
+
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
@@ -738,17 +847,6 @@
                     MEGANode *node = [api nodeForHandle:request.nodeHandle];
                     [Helper setThumbnailForNode:node api:api cell:pcvc reindexNode:YES];
                 }
-            }
-            break;
-        }
-            
-            
-        case MEGARequestTypeMove: {
-            remainingOperations--;
-            if (remainingOperations == 0) {
-                NSString *message = (self.selectedItemsDictionary.count <= 1 ) ? AMLocalizedString(@"fileMovedToRubbishBinMessage", nil) : [NSString stringWithFormat:AMLocalizedString(@"filesMovedToRubbishBinMessage", nil), self.selectedItemsDictionary.count];
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudRubbishBin"] status:message];
-                [self setEditing:NO animated:NO];
             }
             break;
         }

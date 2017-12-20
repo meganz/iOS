@@ -83,7 +83,6 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 #pragma mark - Utils
 
-+ (void)changeToViewController:(Class)classOfViewController onTabBarController:(UITabBarController *)tabBarController;
 + (unsigned long long)sizeOfFolderAtPath:(NSString *)path;
 + (uint64_t)freeDiskSpace;
 

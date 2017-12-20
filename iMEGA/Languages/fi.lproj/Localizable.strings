@@ -288,10 +288,10 @@
 "getLink"="Hanki linkki";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Hanki linkit";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="Päivitä linkki";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="Päivitä linkit";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="Hallinnoi linkkiä";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="Manage links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Luodaan linkkiä...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="Haluatko varmasti siirtää yhden tiedoston roskakoriin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="Haluatko varmasti siirtää %d tiedostoa roskakoriin?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="Haluatko varmasti siirtää yhden kansion roskakoriin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="Haluatko varmasti siirtää %d kansiota roskakoriin?";
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="Haluatko varmasti jättää tämän jaon?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Haluatko varmasti jättää nämä jaot?";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Poistuttu kansiosta";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Jaa";
 /* Select all items/elements on the list */
@@ -678,11 +676,11 @@
 "remove"="Poista";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Vahvista poisto";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="Olet poistamassa lopullisesti yhden tiedoston. Haluatko jatkaa (toimintoa ei voi perua)?";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="Olet poistamassa lopullisesti %d tiedostoa. Haluatko jatkaa (toimintoa ei voi perua)?";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="Olet poistamassa lopullisesti yhden kansion. Haluatko jatkaa (toimintoa ei voi perua)?";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="Olet poistamassa lopullisesti %d kansiota. Haluatko jatkaa (toimintoa ei voi perua)?";
