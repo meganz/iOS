@@ -1,7 +1,7 @@
 /* Button title to cancel something */
 "cancel"="Batal";
 /* Button title to accept something */
-"ok"="OK";
+"ok"="Oke";
 /* */
 "yes"="Ya";
 /* */
@@ -9,7 +9,7 @@
 /* */
 "upload"="Unggah";
 /*  */
-"error"="Error";
+"error"="Kesalahan";
 /*  */
 "name"="Nama";
 /* Caption of a button to edit the files that are selected */
@@ -33,7 +33,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="Anda tidak dapat mendownload folder kosong";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="Akun anda telah di-aktifasi. Silahkan masuk akun anda";
+"accountAlreadyConfirmed"="Akun anda telah aktif. Mohon masuk.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link salah";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -105,7 +105,7 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Anda harus setuju dengan persyaratan layanan untuk mendaftarkan akun MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Alamat e-mail ini telah terhubung dengan akun MEGA yang lain.";
+"emailAlreadyRegistered"="Surel ini telah memiliki akun di Mega.";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Menunggu konfirmasi email.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -121,7 +121,7 @@
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Anda harus mengosongkan tempat pada perangkat anda";
 /* Title for the file link view */
-"fileLink"="Tautan Berkas";
+"fileLink"="Pranala berkas";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Buka";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -131,13 +131,13 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Link tidak tersedia";
 /* */
-"fileLinkUnavailableText1"="Ini dapat terjadi karena alasan berikut:";
+"fileLinkUnavailableText1"="Ini bisa terjadi karena alasan berikut:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="Berkas ini telah dipindahkan karena pelanggaran ToS/AUP.";
+"fileLinkUnavailableText2"="Berkas telah dihapus karena pelanggaran.";
 /* */
-"fileLinkUnavailableText3"="URL yang salah - tautan yang anda coba untuk akses tidak tersedia";
+"fileLinkUnavailableText3"="URL tidak valid - pranala yang anda coba akses tidak ada";
 /* */
-"fileLinkUnavailableText4"="Berkas ini telah dihapus oleh penggunanya.";
+"fileLinkUnavailableText4"="Berkas telah dihapus oleh pengguna.";
 /* Message shown when a download starts */
 "downloadStarted"="Download dimulai";
 /* Title for the folder link view */
@@ -149,11 +149,11 @@
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Folder '%@' tidak dapat dibuat";
 /* */
-"folderLinkUnavailableText1"="Ini dapat terjadi karena alasan berikut:";
+"folderLinkUnavailableText1"="Ini bisa terjadi karena alasan berikut:";
 /* */
 "folderLinkUnavailableText2"="Link / Tautan telah dihapus karena pelanggaran ToS/AUP";
 /* */
-"folderLinkUnavailableText3"="URL yang salah - tautan yang anda coba untuk akses tidak tersedia";
+"folderLinkUnavailableText3"="URL tidak valid - pranala yang anda coba akses tidak ada";
 /* */
 "folderLinkUnavailableText4"="Link / Tautan ke folder telah di non-aktifkan.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -201,7 +201,7 @@
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="Tidak ada upload";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Cloud Drive";
+"cloudDrive"="Cakram Penyimpanan Awan";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d file";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -245,7 +245,7 @@
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Ambil foto";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
-"newFolder"="Folder Baru";
+"newFolder"="Folder baru";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Nama folder baru";
 /* Title button for the create folder alert.  */
@@ -285,13 +285,13 @@
 /* Title shown under the action that allows you to save several images to your camera roll */
 "saveImages"="Simpan gambar";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="Dapatkan tautan";
+"getLink"="Dapatkan pranala";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Dapatkan links";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="Update link";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="Update links";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="Kelola link";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="Manage links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Membuat link...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -387,7 +387,7 @@
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
 "copyFilesFoldersMessage"="[A] file dan [B] folder terkopi";
 /* Title for the action that allows you to rename a file or folder  */
-"rename"="Beri nama";
+"rename"="Ubah nama";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Masukkan nama baru";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="Apakah anda yakin ingin memindahkan 1 file ke Sampah?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="Apakah anda yakin ingin memindahkan %d file ke Sampah?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="Apakah anda yakin ingin memindahkan 1 folder ke Sampah?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="Apakah anda yakin ingin memindahkan %d folder ke Sampah?";
@@ -469,7 +469,7 @@
 /* Title of the Offline section */
 "offline"="Offline";
 /* Title of the Contacts section */
-"contactsTitle"="Daftar Kontak";
+"contactsTitle"="Kontak";
 /* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
 "noFoldersShared"="Tidak ada folder dibagikan";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
@@ -515,7 +515,7 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Tambah dari kontak";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Tambah kontak ";
+"addContact"="Tambah kontak";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Kontak email";
 /* Button title to 'Add' the contact to your contacts list */
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="Anda yakin ingin meninggalkan berbagi ini?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Anda yakin ingin meninggalkan berbagi ini?";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Folder ditinggalkan";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Bagi";
 /* Select all items/elements on the list */
@@ -569,11 +567,11 @@
 /* Button that allows you to select a given folder */
 "select"="Pilih";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
-"permissions"="Hak Akses";
+"permissions"="Izin";
 /* Permissions given to the user you share your folder with */
-"readOnly"="Hanya dapat dibaca";
+"readOnly"="Hanya dibaca";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Dapat Dibaca & Ditulis";
+"readAndWrite"="Baca dan Tulis";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Akses penuh";
 /* Title of the Settings section */
@@ -581,7 +579,7 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Camera Uploads";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
-"rubbishBinLabel"="Sampah";
+"rubbishBinLabel"="Tempat Sampah";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
 "advanced"="Lanjutan";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
@@ -601,7 +599,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Kebijakan Privasi";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="Peraturan Pelayanan";
+"termsOfServicesLabel"="Ketentuan Penggunaan";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Off";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -678,11 +676,11 @@
 "remove"="Hapus";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Konfirmasi penghapusan";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="Anda sedang akan menghapus 1 file secara permanen. Apakah anda ingin melanjutkan? (Anda tidak dapat membalikan aksi ini.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="Anda sedang akan menghapus %d file secara permanen. Apakah anda ingin melanjutkan? (Anda tidak dapat membalikan aksi ini.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="Anda sedang akan menghapus 1 folder secara permanen. Apakah anda ingin melanjutkan? (Anda tidak dapat membalikan aksi ini.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="Anda sedang akan menghapus %d folder secara permanen. Apakah anda tetap ingin melanjutkan? (Anda tidak dapat membalikan aksi ini.)";
@@ -1200,7 +1198,7 @@
 /* Label to show that an SDK operation has been complete successfully. */
 "No error"="Tidak ada error";
 /* Label to show that an Internal error occurs during a SDK operation. */
-"Internal error"="Kesalahan Internal";
+"Internal error"="Kesalahan internal";
 /* Label to show that an error of Invalid argument occurs during a SDK operation. */
 "Invalid argument"="Argumen salah";
 /* Label to show that a request error occurs during a SDK operation. */

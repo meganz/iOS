@@ -288,10 +288,10 @@
 "getLink"="Get link";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Get links";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="Update link";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="Update links";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="Manage link";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="Manage links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Generating link...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="Are you sure you want to move 1 file to the Rubbish Bin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="Are you sure you want to move %d files to the Rubbish Bin?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="Are you sure you want to move 1 folder to the Rubbish Bin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="Are you sure you want to move %d folders to the Rubbish Bin?";
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="Are you sure you want to leave this share?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Folder left";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Share";
 /* Select all items/elements on the list */
@@ -678,11 +676,11 @@
 "remove"="Remove";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Confirm removal";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="You are about to permanently remove 1 file. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="You are about to permanently remove %d files. Would you like to proceed? (You cannot undo this action.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="You are about to permanently remove 1 folder. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="You are about to permanently remove %d folders. Would you like to proceed? (You cannot undo this action.)";

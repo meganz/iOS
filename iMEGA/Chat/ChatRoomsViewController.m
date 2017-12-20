@@ -21,7 +21,9 @@
 #import "GroupChatDetailsViewController.h"
 #import "MessagesViewController.h"
 
-@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatRequestDelegate, MEGAChatDelegate>
+@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatRequestDelegate, MEGAChatDelegate>
+
+@property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
@@ -130,6 +132,21 @@
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     
     [self.chatListItemArray removeAllObjects];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
+        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+            if (!self.previewingContext) {
+                self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.view];
+            }
+        } else {
+            [self unregisterForPreviewingWithContext:self.previewingContext];
+            self.previewingContext = nil;
+        }
+    }
 }
 
 #pragma mark - DZNEmptyDataSetSource
@@ -529,10 +546,6 @@
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     NSInteger numberOfRows = 0;
@@ -655,6 +668,30 @@
     
     [self updateChatIdIndexPathDictionary];
     [self.tableView reloadData];
+}
+
+#pragma mark - UIViewControllerPreviewingDelegate
+
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
+    CGPoint rowPoint = [self.tableView convertPoint:location fromView:self.view];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:rowPoint];
+    if (![self.tableView numberOfRowsInSection:indexPath.section]) {
+        return nil;
+    }
+    
+    previewingContext.sourceRect = [self.tableView convertRect:[self.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view];
+    
+    MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
+    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
+    
+    MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
+    messagesVC.chatRoom = chatRoom;
+    
+    return messagesVC;
+}
+
+- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    [self.navigationController pushViewController:viewControllerToCommit animated:YES];
 }
 
 #pragma mark - MEGAChatRequestDelegate

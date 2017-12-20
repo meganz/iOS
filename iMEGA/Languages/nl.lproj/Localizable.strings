@@ -1,5 +1,5 @@
 /* Button title to cancel something */
-"cancel"="Annuleren";
+"cancel"="Annuleer";
 /* Button title to accept something */
 "ok"="OK";
 /* */
@@ -105,7 +105,7 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="U dient akkoord te gaan met de Algemene Voorwaarden om een account te registreren bij MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Met dit e-mail adres is al een account bij MEGA geregistreerd.";
+"emailAlreadyRegistered"="Met dit e-mail adres werd al een account bij Mega geregistreerd.";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="In afwachting van e-mailbevestiging.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -131,13 +131,13 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Koppeling niet beschikbaar";
 /* */
-"fileLinkUnavailableText1"="Dit kan de volgende redenen hebben:";
+"fileLinkUnavailableText1"="Dit kan zijn omwille van de volgende redenen:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
 "fileLinkUnavailableText2"="Het bestand werd verwijderd door inbreuk op de Algemene Voorwaarden.";
 /* */
 "fileLinkUnavailableText3"="Ongeldige URL - de koppeling die u probeert te bereiken bestaat niet";
 /* */
-"fileLinkUnavailableText4"="Het bestand is door de gebruiker verwijderd.";
+"fileLinkUnavailableText4"="Het bestand werd verwijderd door de gebruiker.";
 /* Message shown when a download starts */
 "downloadStarted"="Download gestart";
 /* Title for the folder link view */
@@ -149,7 +149,7 @@
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="De map '%@' kan niet gecreëerd worden";
 /* */
-"folderLinkUnavailableText1"="Dit kan de volgende redenen hebben:";
+"folderLinkUnavailableText1"="Dit kan zijn omwille van de volgende redenen:";
 /* */
 "folderLinkUnavailableText2"="De koppeling naar de map is verwijderd vanwege een schending van onze gebruikersvoorwaarden.";
 /* */
@@ -288,10 +288,10 @@
 "getLink"="Haal de koppeling op";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Haal koppelingen";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="Update koppeling";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="Update koppelingen";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="Koppeling beheren";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="Beheer koppelingen";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Koppeling creëren";
 /* Message shown when some links to files and/or folders are being generated */
@@ -303,7 +303,7 @@
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="Gekopieerd naar het klembord";
 /* A title for the Copyright Warning dialog. */
-"copyrightWarning"="Copyright waarschuwing";
+"copyrightWarning"="Auteursrecht waarschuwing";
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Waarschuwing over auteursrechten aan alle gebruikers";
 /* String already exists: 367, but we need to split paragraphs. */
@@ -369,7 +369,7 @@
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
 "moveFilesFoldersMessage"="[A] bestanden en [B] mappen verplaatst";
 /* List option shown on the details of a file or folder */
-"copy"="Kopiëren";
+"copy"="Kopiëren ";
 /* Success message shown when you have copied 1 file */
 "copyFileMessage"="1 bestand gekopieërd";
 /* Success message shown when you have copied {1+} files */
@@ -387,7 +387,7 @@
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
 "copyFilesFoldersMessage"="[A] bestanden en [B] mappen gekopieerd";
 /* Title for the action that allows you to rename a file or folder  */
-"rename"="Naam wijzigen";
+"rename"="Hernoemen";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Vul de nieuwe naam in";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="Weet u ezeker dat u 1 bestand naar de Vuilnisbak wilt verplaatsen?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="Weet u zeker dat u %d bestanden naar de Vuilnisbak wilt verplaatsen?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="Weet u zeker dat u 1 map naar de Vuilnisbak wilt verplaatsen?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="Weet u zeker dat u %d mappen naar de Vuilnisbak wilt verplaatsen?";
@@ -433,7 +433,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d mappen met succes gedeeld.";
 /* Button title that triggers the importing link action */
-"import"="Importeren";
+"import"="Importeer";
 /* Message shown when a file has been imported */
 "fileImported"="Bestand geïmporteerd!";
 /* Message shown when some files have been imported */
@@ -519,7 +519,7 @@
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Contact email";
 /* Button title to 'Add' the contact to your contacts list */
-"addContactButton"="Voeg toe";
+"addContactButton"="Toevoegen";
 /* Success message shown when a contact has been invited */
 "requestSent"="Aanvraag verzonden";
 /* Add contacts and share dialog error message when user try to add your own email address */
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="Weet u zeker dat u deze gedeelde map wilt verlaten?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Weet u zeker dat u deze gedeelde mappen wilt verlaten?";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Map verlaten";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Delen";
 /* Select all items/elements on the list */
@@ -571,11 +569,11 @@
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Toestemmingen";
 /* Permissions given to the user you share your folder with */
-"readOnly"="Alleen-lezen";
+"readOnly"="Alleen lezen";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="Lezen & Schrijven";
 /* Permissions given to the user you share your folder with */
-"fullAccess"="Volledige toegang";
+"fullAccess"="volledige toegang";
 /* Title of the Settings section */
 "settingsTitle"="Instellingen";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
@@ -599,7 +597,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Geen email account ingesteld op uw device";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Privacy Policy";
+"privacyPolicyLabel"="Privacybeleid";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Algemene Voorwaarden";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
@@ -675,14 +673,14 @@
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Beëindig account";
 /* Title for the action that allows to remove a file or folder */
-"remove"="Verwijderen";
+"remove"="Verwijder";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Verwijderen bevestigen";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="U staat op het punt om 1 bestand definitief te verwijderen. Wilt u doorgaan? (U kunt deze actie niet ongedaan maken)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="U staat op het punt om %d bestanden definitief te verwijderen. Wilt u doorgaan? (U kunt deze actie niet ongedaan maken)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="U staat op het punt om 1 map definitief te verwijderen. Wilt u doorgaan? (U kunt deze actie niet ongedaan maken)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="U staat op het punt om %d mappen definitief te verwijderen. Wilt u doorgaan? (U kunt deze actie niet ongedaan maken)";
@@ -801,7 +799,7 @@
 /* Menu item */
 "help"="Help";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Help Center";
+"helpCentreLabel"="Helpdesk";
 /* Title to rate the app */
 "rateUsLabel"="Beoordeel ons";
 /* Title of the Transfers section */
@@ -939,7 +937,7 @@
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Uw account is vol.[/S] [A] Upgrade nu[/A] naar een PRO account en krijg [S] tot 4 TB (4096 GB)[/S] aan cloud opslag ruimte.";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Opslagruimte";
+"productSpace"="Opslag";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
 "productBandwidth"="Bandbreedte";
 /* Price asociated with the MEGA PRO account level you can subscribe */
@@ -1105,7 +1103,7 @@
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="Info";
 /* A button label. The button allows the user to close the conversation. */
-"close"="Sluit";
+"close"="Sluiten";
 /* Alert text that explains what means confirming the action 'Leave' */
 "youWillNoLongerHaveAccessToThisConversation"="U heeft niet langer toegang tot dit gesprek";
 /* A button label. The button allows the user to leave the conversation. */

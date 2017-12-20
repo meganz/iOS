@@ -143,7 +143,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self.unreadLabel addGestureRecognizer:singleTap];
     _unreadBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.unreadLabel];
     
-    if (self.presentingViewController) {
+    if (self.presentingViewController && self.parentViewController) {
         UIBarButtonItem *chatBackBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"chat", @"Chat section header") style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
         self.navigationItem.leftBarButtonItems = @[chatBackBarButtonItem, self.unreadBarButtonItem];
     } else {
@@ -233,23 +233,23 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     }
     
     UILabel *label = [[UILabel alloc] init];
+    NSString *chatRoomTitle = self.chatRoom.title ? self.chatRoom.title : @"";
     if (self.chatRoom.isGroup) {
-        NSString *title = self.chatRoom.title;
         if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
-            label = [Helper customNavigationBarLabelWithTitle:title subtitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with")];
+            label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with")];
         } else {
-            NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:self.chatRoom.title attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+            NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:chatRoomTitle attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
             label.textAlignment = NSTextAlignmentCenter;
             label.attributedText = titleMutableAttributedString;
         }
     } else {
         NSString *chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
         if (chatRoomState) {
-            label = [Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:chatRoomState];
+            label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:chatRoomState];
             self.lastChatRoomStateString = chatRoomState;
             self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
         } else {
-            label = [Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:@""];
+            label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:@""];
         }
     }
     

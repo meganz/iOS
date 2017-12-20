@@ -288,10 +288,10 @@
 "getLink"="取得链接";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="创建共享链接";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="更新共享链接";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="更新共享链接";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="管理连接";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="管理链接";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="正在生成连接...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="您确定要移动1 个文件至垃圾箱吗？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="您确定要移动%d 个文件至垃圾箱吗？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="您确定要移动1 个文件夹至垃圾箱吗？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="您确定要移动%d 个文件夹至垃圾箱吗？";
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="您确定要离开此分享吗？";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="您确定要离开这些分享吗？";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="已离开该文件夹";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="共享";
 /* Select all items/elements on the list */
@@ -651,7 +649,7 @@
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="不使用HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
-"transfersSectionFooter"="仅于您的传输未启动时，才激活此选项。正常情况下，HTTP已可为所有传输加密，且成果令人满意。";
+"transfersSectionFooter"="若传输不能正常启动，请尝试启用这个选项。所有传输都已被加密，所以一般情况下HTTP已经足够安全。";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="图片与影片下载";
 /* Section title where you can enable the option 'Save images in gallery' */
@@ -678,11 +676,11 @@
 "remove"="删除";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="确认删除";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="您即将永久删除1 个文件。您要继续吗？ （您不能撤销该操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="您即将永久删除%d 个文件。您要继续吗？ （您不能撤销该操作。）";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="您即将永久删除1 个文件夹。您要继续吗？ （您不能撤销该操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="您即将永久删除%d 个文件夹。您要继续吗？ （您不能撤销该操作。）";
@@ -839,7 +837,7 @@
 /* Title of the Achievements section */
 "achievementsTitle"="成就";
 /* Title of the Used storage section */
-"usedStorage"="已使用容量";
+"usedStorage"="已用容量";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="邀请朋友并获得奖励";
 /* Indicating text for when "you invite your friends" */
@@ -1195,7 +1193,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="某些项目无法与MEGA共享";
 /* Notification message shown when a transfer failed. Keep colon. */
-"Transfer failed:"="转移失败:";
+"Transfer failed:"="传输失败";
 /* MEGAError */
 /* Label to show that an SDK operation has been complete successfully. */
 "No error"="无误";
@@ -1218,7 +1216,7 @@
 /* Label to show that an error related with a resource Not found occurs during a SDK operation. */
 "Not found"="未找到";
 /* Label to show that an error related with a circular linkage occurs during a SDK operation. */
-"Circular linkage detected"="侦测到循环连动SDK";
+"Circular linkage detected"="检测到循环连动SDK";
 /* Label to show that an error related with an denied access occurs during a SDK operation. */
 "Access denied"="进入遭拒";
 /* Label to show that an error related with an existent resource occurs during a SDK operation. */

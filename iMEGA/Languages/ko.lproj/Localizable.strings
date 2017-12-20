@@ -288,10 +288,10 @@
 "getLink"="링크 얻기";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="링크 얻기";
-/* A right click context menu item. This will let the user update a public link with additional information. For example the public link can now be updated with an expiry time. */
-"updateLink"="링크 업데이트";
-/* A right click context menu item. This will let the user update multiple public links with additional information. For example the public links can now be updated with an expiry time. */
-"updateLinks"="링크 업데이트";
+/* Item menu option upon right click on one or multiple files. */
+"manageLink"="링크 관리";
+/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
+"manageLinks"="링크 관리";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="링크 생성중...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -396,7 +396,7 @@
 "moveFileToRubbishBinMessage"="파일 1개를 휴지통으로 이동하시겠습니까?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="파일 %d개를 휴지통으로 이동하시겠습니까?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
 "moveFolderToRubbishBinMessage"="폴더 1개를 휴지통으로 이동하시겠습니까?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
 "moveFoldersToRubbishBinMessage"="폴더 %d개를 휴지통으로 이동하시겠습니까?";
@@ -552,8 +552,6 @@
 "leaveShareAlertMessage"="이 공유를 떠나시겠습니까?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="이 공유들에서 나가시겠습니까?";
-/* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="폴더 떠남";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="공유";
 /* Select all items/elements on the list */
@@ -678,11 +676,11 @@
 "remove"="제거";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="삭제 승인";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="영구적으로 1 파일을 제거하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="영구적으로 %d 파일을 제거하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+/* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="영구적으로 %d 폴더를 제거하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
 "removeFoldersToRubbishBinMessage"="영구적으로 폴더 %d개를 제거하려고 합니다. 진행하시겠습니까? (이 행동은 취소할 수 없습니다)";

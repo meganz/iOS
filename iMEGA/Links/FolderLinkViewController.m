@@ -10,6 +10,7 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MyAccountHallViewController.h"
 #import "NSString+MNZCategory.h"
 
 #import "FileLinkViewController.h"
@@ -125,6 +126,9 @@
     } else {
         [self reloadUI];
     }
+    
+    // Long press to select:
+    [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -422,7 +426,11 @@
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         [self dismissViewControllerAnimated:YES completion:^{
             if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] isKindOfClass:[MainTabBarController class]]) {
-                [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController]];
+                MainTabBarController *mainTBC = (MainTabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
+                mainTBC.selectedIndex = MYACCOUNT;
+                MEGANavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:MYACCOUNT];
+                MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
+                [myAccountHallVC openOffline];
             }
             
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
@@ -522,10 +530,6 @@
 }
 
 #pragma mark - UITableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
@@ -689,6 +693,37 @@
         self.searchNodesArray = [self.nodesArray filteredArrayUsingPredicate:resultPredicate];
     }
     [self.tableView reloadData];
+}
+
+#pragma mark - UILongPressGestureRecognizer
+
+- (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
+    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
+        
+        if (![self.tableView numberOfRowsInSection:indexPath.section]) {
+            return;
+        }
+        
+        if (self.isEditing) {
+            // Only stop editing if long pressed over a cell that is the only one selected or when selected none
+            if (self.selectedNodesArray.count == 0) {
+                [self setEditing:NO animated:YES];
+            }
+            if (self.selectedNodesArray.count == 1) {
+                MEGANode *nodeSelected = self.selectedNodesArray.firstObject;
+                MEGANode *nodePressed = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodeList nodeAtIndex:indexPath.row];
+                if (nodeSelected.handle == nodePressed.handle) {
+                    [self setEditing:NO animated:YES];
+                }
+            }
+        } else {
+            [self setEditing:YES animated:YES];
+            [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+            [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        }
+    }
 }
 
 #pragma mark - DZNEmptyDataSetSource
