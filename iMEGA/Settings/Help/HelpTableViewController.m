@@ -75,7 +75,7 @@
         if ([MFMailComposeViewController canSendMail]) {
             MFMailComposeViewController *mailComposeVC = [[MFMailComposeViewController alloc] init];
             [mailComposeVC setMailComposeDelegate:self];
-            [mailComposeVC setToRecipients:@[@"ios@mega.nz"]];
+            mailComposeVC.toRecipients = @[@"iosfeedback@mega.nz"];
             
             NSString *version = [NSString stringWithFormat:@"%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
             
