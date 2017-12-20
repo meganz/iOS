@@ -317,11 +317,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     self.collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(9.0f, 9.0f, 9.0f, 9.0f);
     
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeMake(kAvatarImageDiameter, kAvatarImageDiameter);
-    self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeMake(kAvatarImageDiameter, kAvatarImageDiameter);
+    self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeMake(0.0f, 0.0f);
     
     self.collectionView.collectionViewLayout.minimumLineSpacing = 5.0f;
     
-    self.collectionView.collectionViewLayout.sectionInset = UIEdgeInsetsMake(10.0f, 20.0f, 10.0f, 20.0f);
+    self.collectionView.collectionViewLayout.sectionInset = UIEdgeInsetsMake(10.0f, 17.0f, 10.0f, 17.0f);
     self.collectionView.collectionViewLayout.messageBubbleLeftRightMargin = 10.0f;
 }
 
@@ -788,6 +788,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
+    if (message.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
+        return nil;
+    }
     if (indexPath.item < self.messages.count-1) {
         MEGAChatMessage *nextMessage = [self.messages objectAtIndex:indexPath.item+1];
         if (nextMessage.userHandle == message.userHandle) {
