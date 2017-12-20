@@ -21,6 +21,7 @@
         CXProviderConfiguration *configuration = [[CXProviderConfiguration alloc] initWithLocalizedName:@"MEGA"];
         configuration.supportsVideo = YES;
         configuration.maximumCallsPerCallGroup = 1;
+        configuration.maximumCallGroups = 1;
         configuration.supportedHandleTypes = [NSSet setWithObject:@(CXHandleTypeEmailAddress)];
         configuration.iconTemplateImageData = UIImagePNGRepresentation([UIImage imageNamed:@"MEGA_icon_call"]);
         _provider = [[CXProvider alloc] initWithConfiguration:configuration];
