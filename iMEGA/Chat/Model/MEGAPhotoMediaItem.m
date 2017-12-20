@@ -5,7 +5,6 @@
 
 #import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
-#import "UIScreen+MNZCategory.h"
 #import "MEGAGetPreviewRequestDelegate.h"
 
 #import <MobileCoreServices/UTCoreTypes.h>

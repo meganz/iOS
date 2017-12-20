@@ -284,8 +284,6 @@
 		5BEACE2A1FB474060010E02F /* MEGAUser+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 411C8B6A1DECBD87006A0D8C /* MEGAUser+MNZCategory.m */; };
 		5BEACE2B1FB4740E0010E02F /* UIAlertAction+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 944B205C1EE55533003C967B /* UIAlertAction+MNZCategory.m */; };
 		5BEACE2C1FB4740F0010E02F /* UIAlertAction+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 944B205C1EE55533003C967B /* UIAlertAction+MNZCategory.m */; };
-		5BEACE2D1FB4741A0010E02F /* UIScreen+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A81A852A1F0F6F5100702353 /* UIScreen+MNZCategory.m */; };
-		5BEACE2E1FB4741B0010E02F /* UIScreen+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A81A852A1F0F6F5100702353 /* UIScreen+MNZCategory.m */; };
 		5BFA346B1FAB4169005BFC4E /* MEGARemoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */; };
 		5BFA346E1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
 		5BFA346F1FAC5850005BFC4E /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
@@ -495,7 +493,6 @@
 		A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */; };
 		A819B33F1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m */; };
 		A819B3421EAFA844004592F9 /* WarningTransferQuotaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* WarningTransferQuotaViewController.xib */; };
-		A81A852B1F0F6F5100702353 /* UIScreen+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A81A852A1F0F6F5100702353 /* UIScreen+MNZCategory.m */; };
 		A81AD7391F3099F800CA4059 /* MEGAProcessAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */; };
 		A81F2C6A1F334FB2008600A5 /* MEGAProcessAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */; };
 		A81F2C6C1F334FF0008600A5 /* MEGAProcessAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */; };
@@ -1239,8 +1236,6 @@
 		A819B33D1EAFA7E2004592F9 /* WarningTransferQuotaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WarningTransferQuotaViewController.h; sourceTree = "<group>"; };
 		A819B33E1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WarningTransferQuotaViewController.m; sourceTree = "<group>"; };
 		A819B3411EAFA844004592F9 /* WarningTransferQuotaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WarningTransferQuotaViewController.xib; sourceTree = "<group>"; };
-		A81A85291F0F6F5100702353 /* UIScreen+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScreen+MNZCategory.h"; sourceTree = "<group>"; };
-		A81A852A1F0F6F5100702353 /* UIScreen+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScreen+MNZCategory.m"; sourceTree = "<group>"; };
 		A81AD7371F3099F800CA4059 /* MEGAProcessAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAProcessAsset.h; sourceTree = "<group>"; };
 		A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAProcessAsset.m; sourceTree = "<group>"; };
 		A820DA3A1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAGetThumbnailRequestDelegate.h; path = API/Requests/MEGAGetThumbnailRequestDelegate.h; sourceTree = "<group>"; };
@@ -2347,8 +2342,6 @@
 				41E150031DB7CB1400383645 /* UIImageView+MNZCategory.m */,
 				4115D6421E718B1F004BB0FF /* UIImage+MNZCategory.h */,
 				4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */,
-				A81A85291F0F6F5100702353 /* UIScreen+MNZCategory.h */,
-				A81A852A1F0F6F5100702353 /* UIScreen+MNZCategory.m */,
 				942F4FD61F500A8F001FC4AC /* MEGASdk+MNZCategory.h */,
 				942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */,
 				949086861FD5482E002B12BD /* NSAttributedString+MNZCategory.h */,
@@ -3401,7 +3394,6 @@
 				5BDE180C1F500EE000CD9F82 /* MyAccountBaseViewController.m in Sources */,
 				41EAAE4D1D06B49400622FAF /* UICollectionView+CTAssetsPickerController.m in Sources */,
 				41D21E6F1D01AEC3002E6296 /* CTAssetsPickerNoAssetsView.m in Sources */,
-				A81A852B1F0F6F5100702353 /* UIScreen+MNZCategory.m in Sources */,
 				415226911A692ECC00EC7BB6 /* ContactsViewController.m in Sources */,
 				E889C9E91B566EC400ECEFDF /* UsageViewController.m in Sources */,
 				417279511DB663FA001AC818 /* JSQMessagesCollectionViewCellIncoming.m in Sources */,
@@ -3618,7 +3610,6 @@
 				94624CFF1F50518900D52504 /* MEGABaseRequestDelegate.m in Sources */,
 				945605501EDD7DD10094EF0F /* MEGAActivityItemProvider.m in Sources */,
 				943229391EDD88CD007DB542 /* MWGridCell.m in Sources */,
-				5BEACE2D1FB4741A0010E02F /* UIScreen+MNZCategory.m in Sources */,
 				9456053B1EDD52C00094EF0F /* SVProgressHUD.m in Sources */,
 				945605511EDD7DF70094EF0F /* PhotoCollectionViewCell.m in Sources */,
 				944DF2BD1EF9379E007798DD /* MEGALogger.m in Sources */,
@@ -3691,7 +3682,6 @@
 				9411355D1F0100CA00D33428 /* CameraUploadsTableViewController.m in Sources */,
 				5BEACE231FB473700010E02F /* NSMutableAttributedString+MNZCategory.m in Sources */,
 				941135641F01071600D33428 /* NSString+MNZCategory.m in Sources */,
-				5BEACE2E1FB4741B0010E02F /* UIScreen+MNZCategory.m in Sources */,
 				941135611F01013F00D33428 /* NodeTableViewCell.m in Sources */,
 				941135551F01002E00D33428 /* OpenInActivity.m in Sources */,
 				94892C981EFBF03800AEAC25 /* SVProgressHUD.m in Sources */,

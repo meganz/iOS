@@ -8,7 +8,6 @@
 #import "UIColor+JSQMessages.h"
 
 #import "UIImageView+MNZCategory.h"
-#import "UIScreen+MNZCategory.h"
 #import "MEGASdkManager.h"
 
 @interface MEGAAttachmentMediaItem ()
