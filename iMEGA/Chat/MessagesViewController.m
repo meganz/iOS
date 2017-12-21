@@ -1241,14 +1241,33 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
 - (void)onMessageReceived:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
     MEGALogInfo(@"onMessageReceived %@", message);
     message.chatRoom = self.chatRoom;
-    if (message.type == MEGAChatMessageTypeTruncate) {
-        [self handleTruncateMessage:message];
-    } else if (message.type != MEGAChatMessageTypeRevokeAttachment) {
-        [self.messages addObject:message];
-        [self finishReceivingMessage];
-        [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId];
-        
-        [self loadNodesFromMessage:message atTheBeginning:YES];
+    
+    switch (message.type) {
+        case MEGAChatMessageTypeInvalid:
+            break;
+            
+        case MEGAChatMessageTypeNormal:
+        case MEGAChatMessageTypeAlterParticipants:
+        case MEGAChatMessageTypePrivilegeChange:
+        case MEGAChatMessageTypeChatTitle:
+        case MEGAChatMessageTypeAttachment:
+        case MEGAChatMessageTypeContact:
+            [self.messages addObject:message];
+            [self finishReceivingMessage];
+            [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId];
+            
+            [self loadNodesFromMessage:message atTheBeginning:YES];
+            break;
+            
+        case MEGAChatMessageTypeTruncate:
+            [self handleTruncateMessage:message];
+            break;
+            
+        case MEGAChatMessageTypeRevokeAttachment:
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -1257,8 +1276,29 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
     
     if (message) {
         message.chatRoom = self.chatRoom;
-        if (message.type != MEGAChatMessageTypeRevokeAttachment && !message.isDeleted) {
-            [self.messages insertObject:message atIndex:0];
+        
+        switch (message.type) {
+            case MEGAChatMessageTypeInvalid:
+                break;
+                
+            case MEGAChatMessageTypeNormal:
+            case MEGAChatMessageTypeAlterParticipants:
+            case MEGAChatMessageTypeTruncate:
+            case MEGAChatMessageTypePrivilegeChange:
+            case MEGAChatMessageTypeChatTitle:
+            case MEGAChatMessageTypeAttachment:
+            case MEGAChatMessageTypeContact: {
+                if (!message.isDeleted) {
+                    [self.messages insertObject:message atIndex:0];
+                }
+                break;
+            }
+                
+            case MEGAChatMessageTypeRevokeAttachment:
+                break;
+                
+            default:
+                break;
         }
         
         [self loadNodesFromMessage:message atTheBeginning:NO];
