@@ -447,6 +447,7 @@
 		9462A1841FDFFD8B00008F32 /* MEGAToolbarContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9462A1831FDFFD8A00008F32 /* MEGAToolbarContentView.m */; };
 		946B2D161F46E235009ED32C /* GetLinkTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 946B2D151F46E235009ED32C /* GetLinkTableViewController.m */; };
 		946B2D191F46E5B9009ED32C /* CopyrightWarningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 946B2D181F46E5B9009ED32C /* CopyrightWarningViewController.m */; };
+		946BD1331FEBBE4E00B76785 /* MEGAToolbarSelectedAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = 946BD1321FEBBE4E00B76785 /* MEGAToolbarSelectedAssets.m */; };
 		947F5DE31FD19AD7004FAC80 /* SF-UI-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 947F5DE11FD19AD6004FAC80 /* SF-UI-Text-Bold.otf */; };
 		947F5DE41FD19AD7004FAC80 /* SF-UI-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 947F5DE21FD19AD7004FAC80 /* SF-UI-Display-Bold.otf */; };
 		94892C901EFBEA1F00AEAC25 /* SAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250101D79E9D400499A6C /* SAMKeychain.m */; };
@@ -1217,6 +1218,8 @@
 		946B2D151F46E235009ED32C /* GetLinkTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetLinkTableViewController.m; sourceTree = "<group>"; };
 		946B2D171F46E5B9009ED32C /* CopyrightWarningViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CopyrightWarningViewController.h; sourceTree = "<group>"; };
 		946B2D181F46E5B9009ED32C /* CopyrightWarningViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CopyrightWarningViewController.m; sourceTree = "<group>"; };
+		946BD1311FEBBE4E00B76785 /* MEGAToolbarSelectedAssets.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAToolbarSelectedAssets.h; sourceTree = "<group>"; };
+		946BD1321FEBBE4E00B76785 /* MEGAToolbarSelectedAssets.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAToolbarSelectedAssets.m; sourceTree = "<group>"; };
 		947F5DE11FD19AD6004FAC80 /* SF-UI-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Text-Bold.otf"; sourceTree = "<group>"; };
 		947F5DE21FD19AD7004FAC80 /* SF-UI-Display-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Display-Bold.otf"; sourceTree = "<group>"; };
 		949086861FD5482E002B12BD /* NSAttributedString+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+MNZCategory.h"; sourceTree = "<group>"; };
@@ -2103,6 +2106,8 @@
 				94B120B91FE2B6CB0099E382 /* MEGAToolbarImagePickerView.xib */,
 				94F376E51FE7C126009AAA10 /* MEGAToolbarAssetPicker.h */,
 				94F376E61FE7C126009AAA10 /* MEGAToolbarAssetPicker.m */,
+				946BD1311FEBBE4E00B76785 /* MEGAToolbarSelectedAssets.h */,
+				946BD1321FEBBE4E00B76785 /* MEGAToolbarSelectedAssets.m */,
 				4172792E1DB663FA001AC818 /* JSQMessagesTypingIndicatorFooterView.h */,
 				4172792F1DB663FA001AC818 /* JSQMessagesTypingIndicatorFooterView.m */,
 				417279301DB663FA001AC818 /* JSQMessagesTypingIndicatorFooterView.xib */,
@@ -3506,6 +3511,7 @@
 				5B40AB321F7A512E0034C3B3 /* AchievementsDetailsViewController.m in Sources */,
 				411E712F1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m in Sources */,
 				4131997B1BD7BD5D002CD6EA /* DTTimePeriodCollection.m in Sources */,
+				946BD1331FEBBE4E00B76785 /* MEGAToolbarSelectedAssets.m in Sources */,
 				41AC33A81A926C27005118AF /* HeaderCollectionReusableView.m in Sources */,
 				E80620AB1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m in Sources */,
 				E8B519271AC9CD8000BB7324 /* TransferTableViewCell.m in Sources */,
