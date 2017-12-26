@@ -105,9 +105,18 @@
     self.localUsedSpaceLabel.attributedText = [self textForSizeLabels:stringFromByteCount];
     
     [self setupWithAccountDetails];
-    [[MEGASdkManager sharedMEGASdk] getAccountDetails];
     
     self.emailLabel.text = [[MEGASdkManager sharedMEGASdk] myEmail];
+    
+    if (self.presentedViewController == nil) {
+        [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    if (self.presentedViewController == nil) {
+        [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
+    }
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -187,18 +196,21 @@
                 
             case MEGAAccountTypeProI: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO I"];
+                self.proStatusLabel.textColor = [UIColor mnz_redE13339];
                 self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
                 break;
             }
                 
             case MEGAAccountTypeProII: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO II"];
+                self.proStatusLabel.textColor = [UIColor mnz_redDC191F];
                 self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
                 break;
             }
                 
             case MEGAAccountTypeProIII: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO III"];
+                self.proStatusLabel.textColor = [UIColor mnz_redD90007];
                 self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
                 break;
             }
