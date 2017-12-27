@@ -171,6 +171,12 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     } else {
         _peerAvatar = [UIImage mnz_imageForUserHandle:[self.chatRoom peerHandleAtIndex:0] size:CGSizeMake(80.0f, 80.0f) delegate:nil];
     }
+    
+    // Add an observer to get notified when coming back to foreground:
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didBecomeActive)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -179,6 +185,14 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self customNavigationBarLabel];
     [self rightBarButtonItems];
     [self updateUnreadLabel];
+}
+
+- (void)didBecomeActive {
+    // Workaround to avoid wrong collection view height when coming back to foreground
+    if ([self.inputToolbar.contentView.textView isFirstResponder]) {
+        [self.inputToolbar.contentView.textView resignFirstResponder];
+        [self.inputToolbar.contentView.textView becomeFirstResponder];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
