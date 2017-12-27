@@ -815,7 +815,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     UIImage *avatar = [self.avatarImages objectForKey:avatarKey];
     if (!avatar) {
         avatar = [UIImage mnz_imageForUserHandle:message.userHandle size:CGSizeMake(kAvatarImageDiameter, kAvatarImageDiameter) delegate:nil];
-        [self.avatarImages setObject:avatar forKey:avatarKey];
+        if (avatar) {
+            [self.avatarImages setObject:avatar forKey:avatarKey];
+        } else {
+            return nil;
+        }
     }
     return [self.avatarImageFactory avatarImageWithImage:avatar];
 }
