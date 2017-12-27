@@ -35,9 +35,8 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    // 44 = 17x2 (edge insets) + 10 (bubble inset)
     const CGFloat kMaxBubbleWidth = 566.0f;
-    CGFloat displaySize = [[UIScreen mainScreen] bounds].size.width - 44;
+    CGFloat displaySize = [[UIScreen mainScreen] bounds].size.width - 92; // 75 + 17, by design
     if (displaySize > kMaxBubbleWidth) {
         displaySize = kMaxBubbleWidth;
     }
