@@ -123,4 +123,29 @@
     }
 }
 
+- (void)mnz_generateThumbnailForVideoAtPath:(NSURL *)path {
+    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:path options:nil];
+    AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+    generator.appliesPreferredTrackTransform = YES;
+    CMTime requestedTime = CMTimeMake(1, 60);
+    CGImageRef imgRef = [generator copyCGImageAtTime:requestedTime actualTime:NULL error:NULL];
+    UIImage *image = [[UIImage alloc] initWithCGImage:imgRef];
+    
+    NSString *tmpImagePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:self.base64Handle] stringByAppendingPathExtension:@"jpg"];
+    
+    [UIImageJPEGRepresentation(image, 1) writeToFile:tmpImagePath atomically:YES];
+    
+    CGImageRelease(imgRef);
+    
+    NSString *thumbnailFilePath = [Helper pathForNode:self inSharedSandboxCacheDirectory:@"thumbnailsV3"];
+    [[MEGASdkManager sharedMEGASdk] createThumbnail:tmpImagePath destinatioPath:thumbnailFilePath];
+    [[MEGASdkManager sharedMEGASdk] setThumbnailNode:self sourceFilePath:thumbnailFilePath];
+    
+    NSString *previewFilePath = [Helper pathForNode:self searchPath:NSCachesDirectory directory:@"previewsV3"];
+    [[MEGASdkManager sharedMEGASdk] createPreview:tmpImagePath destinatioPath:previewFilePath];
+    [[MEGASdkManager sharedMEGASdk] setPreviewNode:self sourceFilePath:previewFilePath];
+    
+    [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
+}
+
 @end
