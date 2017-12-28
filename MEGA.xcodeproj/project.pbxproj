@@ -469,12 +469,6 @@
 		94B28C261F0E464C000331E6 /* libMEGASDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B28C241F0E464C000331E6 /* libMEGASDK.a */; };
 		94B28C3F1F0E4865000331E6 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
 		94B28C401F0E4865000331E6 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCB1F0A52E90081BCE3 /* libcurl.a */; };
-		94B28C411F0E4865000331E6 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAC1F0A52CD0081BCE3 /* libevent_core.a */; };
-		94B28C421F0E4865000331E6 /* libevent_extra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAD1F0A52CD0081BCE3 /* libevent_extra.a */; };
-		94B28C431F0E4865000331E6 /* libevent_openssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAE1F0A52CD0081BCE3 /* libevent_openssl.a */; };
-		94B28C441F0E4865000331E6 /* libevent_pthreads.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAF1F0A52CD0081BCE3 /* libevent_pthreads.a */; };
-		94B28C451F0E4865000331E6 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB01F0A52CD0081BCE3 /* libevent.a */; };
-		94B28C461F0E4865000331E6 /* libws.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB11F0A52CD0081BCE3 /* libws.a */; };
 		94B28C481F0E4865000331E6 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
 		94B28C491F0E4865000331E6 /* libsodium.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCE1F0A52E90081BCE3 /* libsodium.a */; };
 		94B28C4B1F0E4865000331E6 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCD1F0A52E90081BCE3 /* libuv.a */; };
@@ -506,24 +500,6 @@
 		A82E5BF51F3470B5003C149C /* Spotlight_folder.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF31F3470B5003C149C /* Spotlight_folder.png */; };
 		A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */; };
 		A86FC4FC1EBB4999006053A6 /* MEGAPhotoMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A86FC4FB1EBB4999006053A6 /* MEGAPhotoMediaItem.m */; };
-		A88BFFB31F0A52CD0081BCE3 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAC1F0A52CD0081BCE3 /* libevent_core.a */; };
-		A88BFFB41F0A52CD0081BCE3 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAC1F0A52CD0081BCE3 /* libevent_core.a */; };
-		A88BFFB51F0A52CD0081BCE3 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAC1F0A52CD0081BCE3 /* libevent_core.a */; };
-		A88BFFB61F0A52CD0081BCE3 /* libevent_extra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAD1F0A52CD0081BCE3 /* libevent_extra.a */; };
-		A88BFFB71F0A52CD0081BCE3 /* libevent_extra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAD1F0A52CD0081BCE3 /* libevent_extra.a */; };
-		A88BFFB81F0A52CD0081BCE3 /* libevent_extra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAD1F0A52CD0081BCE3 /* libevent_extra.a */; };
-		A88BFFB91F0A52CD0081BCE3 /* libevent_openssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAE1F0A52CD0081BCE3 /* libevent_openssl.a */; };
-		A88BFFBA1F0A52CD0081BCE3 /* libevent_openssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAE1F0A52CD0081BCE3 /* libevent_openssl.a */; };
-		A88BFFBB1F0A52CD0081BCE3 /* libevent_openssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAE1F0A52CD0081BCE3 /* libevent_openssl.a */; };
-		A88BFFBC1F0A52CD0081BCE3 /* libevent_pthreads.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAF1F0A52CD0081BCE3 /* libevent_pthreads.a */; };
-		A88BFFBD1F0A52CD0081BCE3 /* libevent_pthreads.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAF1F0A52CD0081BCE3 /* libevent_pthreads.a */; };
-		A88BFFBE1F0A52CD0081BCE3 /* libevent_pthreads.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAF1F0A52CD0081BCE3 /* libevent_pthreads.a */; };
-		A88BFFBF1F0A52CD0081BCE3 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB01F0A52CD0081BCE3 /* libevent.a */; };
-		A88BFFC01F0A52CD0081BCE3 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB01F0A52CD0081BCE3 /* libevent.a */; };
-		A88BFFC11F0A52CD0081BCE3 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB01F0A52CD0081BCE3 /* libevent.a */; };
-		A88BFFC21F0A52CD0081BCE3 /* libws.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB11F0A52CD0081BCE3 /* libws.a */; };
-		A88BFFC31F0A52CD0081BCE3 /* libws.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB11F0A52CD0081BCE3 /* libws.a */; };
-		A88BFFC41F0A52CD0081BCE3 /* libws.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB11F0A52CD0081BCE3 /* libws.a */; };
 		A88BFFCF1F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
 		A88BFFD01F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
 		A88BFFD11F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
@@ -1476,8 +1452,6 @@
 				A88BFFED1F0A56B80081BCE3 /* libKarere.a in Frameworks */,
 				A88BFFE91F0A55E20081BCE3 /* libMEGASDK.a in Frameworks */,
 				A88BFFDE1F0A52E90081BCE3 /* libuv.a in Frameworks */,
-				A88BFFC21F0A52CD0081BCE3 /* libws.a in Frameworks */,
-				A88BFFB61F0A52CD0081BCE3 /* libevent_extra.a in Frameworks */,
 				A82751161E97AB88007CD9E2 /* libstdc++.tbd in Frameworks */,
 				A88BFFE11F0A52E90081BCE3 /* libsodium.a in Frameworks */,
 				A88BFFD51F0A52E90081BCE3 /* libcryptopp.a in Frameworks */,
@@ -1486,10 +1460,6 @@
 				A82751121E97AB73007CD9E2 /* libresolv.tbd in Frameworks */,
 				A82751101E97AB6E007CD9E2 /* libz.tbd in Frameworks */,
 				A88BFFCF1F0A52E90081BCE3 /* libcares.a in Frameworks */,
-				A88BFFB91F0A52CD0081BCE3 /* libevent_openssl.a in Frameworks */,
-				A88BFFBF1F0A52CD0081BCE3 /* libevent.a in Frameworks */,
-				A88BFFBC1F0A52CD0081BCE3 /* libevent_pthreads.a in Frameworks */,
-				A88BFFB31F0A52CD0081BCE3 /* libevent_core.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1522,21 +1492,15 @@
 				943229111EDD82E2007DB542 /* UIKit.framework in Frameworks */,
 				A88BFFEE1F0A56C60081BCE3 /* libKarere.a in Frameworks */,
 				A88BFFEA1F0A56280081BCE3 /* libMEGASDK.a in Frameworks */,
-				A88BFFB71F0A52CD0081BCE3 /* libevent_extra.a in Frameworks */,
 				A88BFFD01F0A52E90081BCE3 /* libcares.a in Frameworks */,
-				A88BFFC01F0A52CD0081BCE3 /* libevent.a in Frameworks */,
 				A88BFFD91F0A52E90081BCE3 /* libcurl.a in Frameworks */,
 				A88BFFD61F0A52E90081BCE3 /* libcryptopp.a in Frameworks */,
-				A88BFFC31F0A52CD0081BCE3 /* libws.a in Frameworks */,
-				A88BFFB41F0A52CD0081BCE3 /* libevent_core.a in Frameworks */,
 				A88BFFE21F0A52E90081BCE3 /* libsodium.a in Frameworks */,
 				943229141EDD8363007DB542 /* libstdc++.tbd in Frameworks */,
 				943229151EDD836A007DB542 /* libsqlite3.tbd in Frameworks */,
 				943229171EDD837D007DB542 /* libresolv.tbd in Frameworks */,
 				A88BFFDF1F0A52E90081BCE3 /* libuv.a in Frameworks */,
 				943229161EDD836F007DB542 /* libz.tbd in Frameworks */,
-				A88BFFBD1F0A52CD0081BCE3 /* libevent_pthreads.a in Frameworks */,
-				A88BFFBA1F0A52CD0081BCE3 /* libevent_openssl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1553,17 +1517,11 @@
 				A88BFFEB1F0A562D0081BCE3 /* libMEGASDK.a in Frameworks */,
 				942ED2BA1EDEE6A900C9908D /* MobileCoreServices.framework in Frameworks */,
 				942ED2B91EDEE68D00C9908D /* ImageIO.framework in Frameworks */,
-				A88BFFC11F0A52CD0081BCE3 /* libevent.a in Frameworks */,
 				942ED2B81EDEE62800C9908D /* CoreMedia.framework in Frameworks */,
-				A88BFFB51F0A52CD0081BCE3 /* libevent_core.a in Frameworks */,
 				A88BFFDA1F0A52E90081BCE3 /* libcurl.a in Frameworks */,
-				A88BFFBE1F0A52CD0081BCE3 /* libevent_pthreads.a in Frameworks */,
 				A88BFFE31F0A52E90081BCE3 /* libsodium.a in Frameworks */,
 				A88BFFD11F0A52E90081BCE3 /* libcares.a in Frameworks */,
 				942ED2B61EDEE60800C9908D /* AVFoundation.framework in Frameworks */,
-				A88BFFBB1F0A52CD0081BCE3 /* libevent_openssl.a in Frameworks */,
-				A88BFFB81F0A52CD0081BCE3 /* libevent_extra.a in Frameworks */,
-				A88BFFC41F0A52CD0081BCE3 /* libws.a in Frameworks */,
 				942ED2B21EDEE5C900C9908D /* libstdc++.tbd in Frameworks */,
 				942ED2B31EDEE5D800C9908D /* libsqlite3.tbd in Frameworks */,
 				942ED2B41EDEE5EC00C9908D /* libresolv.tbd in Frameworks */,
@@ -1583,12 +1541,6 @@
 				A8C262951FA0B439006172CE /* libwebsockets.a in Frameworks */,
 				94B28C3F1F0E4865000331E6 /* libcares.a in Frameworks */,
 				94B28C401F0E4865000331E6 /* libcurl.a in Frameworks */,
-				94B28C411F0E4865000331E6 /* libevent_core.a in Frameworks */,
-				94B28C421F0E4865000331E6 /* libevent_extra.a in Frameworks */,
-				94B28C431F0E4865000331E6 /* libevent_openssl.a in Frameworks */,
-				94B28C441F0E4865000331E6 /* libevent_pthreads.a in Frameworks */,
-				94B28C451F0E4865000331E6 /* libevent.a in Frameworks */,
-				94B28C461F0E4865000331E6 /* libws.a in Frameworks */,
 				94B28C481F0E4865000331E6 /* libcryptopp.a in Frameworks */,
 				94B28C491F0E4865000331E6 /* libsodium.a in Frameworks */,
 				94B28C4B1F0E4865000331E6 /* libuv.a in Frameworks */,
