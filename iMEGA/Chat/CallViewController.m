@@ -142,13 +142,16 @@
     return UIStatusBarStyleLightContent;
 }
 
+#pragma mark - Public
+
+- (void)tapOnVideoCallkitWhenDeviceIsLocked {
+    self.enableDisableVideoButton.selected = NO;
+    [self enableDisableVideo:self.enableDisableVideoButton];
+}
+
 #pragma mark - Private
 
 - (void)sensorStateMonitor:(NSNotificationCenter *)notification {
-    if (!self.videoCall) {
-        return;
-    }
-    
     if ([[UIDevice currentDevice] proximityState] == YES) {
         [self disableLoudspeaker];
     } else {
@@ -280,6 +283,7 @@
                 [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideoDelegate:self.localVideoImageView];
             }
             sender.selected = !sender.selected;
+            self.loudSpeakerEnabled = sender.selected;
         }
     }];
     if (sender.selected) {

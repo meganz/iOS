@@ -533,10 +533,19 @@ typedef NS_ENUM(NSUInteger, URLType) {
             } else {
                 self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:userHandle];
                 if (self.chatRoom) {
-                    MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
-                    MEGALogDebug(@"Chat %@ connection state: %@", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], chatConnection ? @"Online" : @"Offline");
-                    if (chatConnection == MEGAChatConnectionOnline) {
-                        [self performCall];
+                    MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+                    if (call.status == MEGAChatCallStatusInProgress) {
+                        MEGALogDebug(@"There is a call in progress for this chat %@", call);
+                        CallViewController *callViewController = (CallViewController *) [UIApplication sharedApplication].keyWindow.rootViewController.presentedViewController;
+                        if (!callViewController.videoCall) {
+                            [callViewController tapOnVideoCallkitWhenDeviceIsLocked];
+                        }                        
+                    } else {
+                        MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
+                        MEGALogDebug(@"Chat %@ connection state: %@", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], chatConnection ? @"Online" : @"Offline");
+                        if (chatConnection == MEGAChatConnectionOnline) {
+                            [self performCall];
+                        }
                     }
                 } else {
                     MEGALogDebug(@"There is not a chat with %@, create the chat and inmediatelly perform the call", self.email);
