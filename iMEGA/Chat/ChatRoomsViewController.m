@@ -83,31 +83,37 @@
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
         self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
-        for (NSUInteger i = 0; i < self.chatListItemList.size ; i++) {
-            MEGAChatListItem *chatListItem = [self.chatListItemList chatListItemAtIndex:i];
-            [self.chatListItemArray addObject:chatListItem];
+        if (self.chatListItemList.size) {
+            for (NSUInteger i = 0; i < self.chatListItemList.size ; i++) {
+                MEGAChatListItem *chatListItem = [self.chatListItemList chatListItemAtIndex:i];
+                [self.chatListItemArray addObject:chatListItem];
+            }
+            
+            self.chatListItemArray = [[self.chatListItemArray sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+                NSDate *first  = [(MEGAChatListItem *)a lastMessageDate];
+                NSDate *second = [(MEGAChatListItem *)b lastMessageDate];
+                
+                if (!first) {
+                    first = [NSDate dateWithTimeIntervalSince1970:0];
+                }
+                
+                if (!second) {
+                    second = [NSDate dateWithTimeIntervalSince1970:0];
+                }
+                
+                return [second compare:first];
+            }] mutableCopy];
+            
+            [self updateChatIdIndexPathDictionary];
+            
+            if (!self.tableView.tableHeaderView) {
+                self.tableView.tableHeaderView = self.searchController.searchBar;
+            }
+        } else {
+            self.tableView.tableHeaderView = nil;
         }
         
         self.addBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
-        if (!self.tableView.tableHeaderView) {
-            self.tableView.tableHeaderView = self.searchController.searchBar;
-        }
-        
-        self.chatListItemArray = [[self.chatListItemArray sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-            NSDate *first  = [(MEGAChatListItem *)a lastMessageDate];
-            NSDate *second = [(MEGAChatListItem *)b lastMessageDate];
-            
-            if (!first) {
-                first = [NSDate dateWithTimeIntervalSince1970:0];
-            }
-            if (!second) {
-                second = [NSDate dateWithTimeIntervalSince1970:0];
-            }
-            
-            return [second compare:first];
-        }] mutableCopy];
-        
-        [self updateChatIdIndexPathDictionary];
         
         [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     } else {
