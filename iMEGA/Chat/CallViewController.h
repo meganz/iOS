@@ -16,4 +16,6 @@ typedef NS_ENUM(NSUInteger, CallType) {
 @property (nonatomic, strong) MEGACallManager *megaCallManager;
 @property (nonatomic, strong) MEGAChatCall *call;
 
+- (void)tapOnVideoCallkitWhenDeviceIsLocked;
+
 @end
