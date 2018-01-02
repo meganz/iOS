@@ -930,6 +930,8 @@
 "available of %@"="na voljo od %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Nadgradi račun";
+/*  */
+"chooseYourAccountType"="Izberite tip računa";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Kasneje ga lahko nadgradite v Moj račun";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -938,14 +940,30 @@
 "cloudDriveIsFull"="[S]Vaš račun je poln.[/S] [A]Nadgradite sedaj[/A] v PRO račun in pridobite [S]do 4 TB (4096 GB)[/S] prostora za shranjevanje v oblaku.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Prostora";
-/* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="Pasovna širina";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"transferQuota"="Prenosna kvota";
+/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
+"limited"="Omejena";
+/* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
+"subjectToYourParticipationInOurAchievementsProgram"="Pod pogojem sodelovanja v našem programu dosežkov.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%.2f %@ na mesec";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Izberite enega od načrtov spodaj:";
+/* Text that explains that you have to select the plan you want and/or need after creating an account */
+"selectOneAccountType"="Select one account type:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="Pridobite dva meseca brezplačno, če se naročite na letni PRO plan";
+/* Text shown on the upgrade account page above the current PRO plan subscription */
+"currentPlan"="Current Plan:";
+/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
+"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
+/* Title text for the account confirmation. */
+"confirm"="Potrdi";
+/* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
+"requestAPlan"="Zahtevaj paket";
+/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
+"thereAreNoPlansSuitableForYourCurrentUsage"="Za vašo trenutno porabo ne obstaja standardni Pro paket. Prosim, [A]kontaktirajte podpodo[/A], da vam pripravi paket po meri.";
 /* Header shown to help on the purchasin process */
 "selectMembership"="Izberi članarino:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */

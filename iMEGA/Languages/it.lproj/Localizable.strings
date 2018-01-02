@@ -147,7 +147,7 @@
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="La cartella che si sta tentando di scaricare è più grande rispetto alla memoria disponibile.";
 /* Error message shown when a folder can't be created. */
-"folderCreationError"="La cartella '%#' non può essere creata";
+"folderCreationError"="La cartella '%@' non può essere creata";
 /* */
 "folderLinkUnavailableText1"="Questo potrebbe essere stato causato dai seguenti motivi:";
 /* */
@@ -930,6 +930,8 @@
 "available of %@"="disponibili di %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Aggiorna l'account";
+/*  */
+"chooseYourAccountType"="Scegli il tuo tipo di account";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Puoi aggiornare più tardi in Il Mio Account";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -938,14 +940,30 @@
 "cloudDriveIsFull"="[S]Il tuo account è pieno.[/S] [A]Aggiorna ora[/A] ad un account PRO ora e ottieni [S]fino a 4TB (4000 GB)[/S] di spazio cloud.                ";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="di spazio d'archiviazione";
-/* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="Larghezza banda";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"transferQuota"="Quota di trasferimento";
+/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
+"limited"="Limitata";
+/* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
+"subjectToYourParticipationInOurAchievementsProgram"="Soggetto alla tua partecipazione nel nostro programma di obiettivi.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%.2f %@ per mese";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Scegli uno dei piani elencati sotto:";
+/* Text that explains that you have to select the plan you want and/or need after creating an account */
+"selectOneAccountType"="Select one account type:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="Ottieni due mesi gratis se sottoscrivi un abbonamento PRO da un anno";
+/* Text shown on the upgrade account page above the current PRO plan subscription */
+"currentPlan"="Piano corrente:";
+/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
+"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
+/* Title text for the account confirmation. */
+"confirm"="Conferma";
+/* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
+"requestAPlan"="Richiedi un piano";
+/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
+"thereAreNoPlansSuitableForYourCurrentUsage"="Non ci sono piani adatti per il tuo uso corrente. Si prega di [A]contattare il supporto[/A] per un piano personalizzato.";
 /* Header shown to help on the purchasin process */
 "selectMembership"="Scegli il tipo di abbonamento:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
