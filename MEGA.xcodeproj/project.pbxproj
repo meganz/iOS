@@ -469,16 +469,8 @@
 		94B28C261F0E464C000331E6 /* libMEGASDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B28C241F0E464C000331E6 /* libMEGASDK.a */; };
 		94B28C3F1F0E4865000331E6 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
 		94B28C401F0E4865000331E6 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCB1F0A52E90081BCE3 /* libcurl.a */; };
-		94B28C411F0E4865000331E6 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAC1F0A52CD0081BCE3 /* libevent_core.a */; };
-		94B28C421F0E4865000331E6 /* libevent_extra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAD1F0A52CD0081BCE3 /* libevent_extra.a */; };
-		94B28C431F0E4865000331E6 /* libevent_openssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAE1F0A52CD0081BCE3 /* libevent_openssl.a */; };
-		94B28C441F0E4865000331E6 /* libevent_pthreads.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAF1F0A52CD0081BCE3 /* libevent_pthreads.a */; };
-		94B28C451F0E4865000331E6 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB01F0A52CD0081BCE3 /* libevent.a */; };
-		94B28C461F0E4865000331E6 /* libws.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB11F0A52CD0081BCE3 /* libws.a */; };
-		94B28C471F0E4865000331E6 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC91F0A52E90081BCE3 /* libcrypto.a */; };
 		94B28C481F0E4865000331E6 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
 		94B28C491F0E4865000331E6 /* libsodium.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCE1F0A52E90081BCE3 /* libsodium.a */; };
-		94B28C4A1F0E4865000331E6 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCC1F0A52E90081BCE3 /* libssl.a */; };
 		94B28C4B1F0E4865000331E6 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCD1F0A52E90081BCE3 /* libuv.a */; };
 		94C9D7561FBDC87B008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
 		94C9D7571FBDC87C008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
@@ -502,40 +494,36 @@
 		A82E5BF41F3470B5003C149C /* Spotlight_file.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF21F3470B5003C149C /* Spotlight_file.png */; };
 		A82E5BF51F3470B5003C149C /* Spotlight_folder.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF31F3470B5003C149C /* Spotlight_folder.png */; };
 		A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */; };
+		A86E5E1E1FFBE78400FE8158 /* librtc_sdk_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E1D1FFBE78400FE8158 /* librtc_sdk_objc.a */; };
+		A86E5E1F1FFBE79D00FE8158 /* librtc_sdk_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E1D1FFBE78400FE8158 /* librtc_sdk_objc.a */; };
+		A86E5E201FFBE7B100FE8158 /* librtc_sdk_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E1D1FFBE78400FE8158 /* librtc_sdk_objc.a */; };
+		A86E5E211FFBE7BC00FE8158 /* librtc_sdk_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E1D1FFBE78400FE8158 /* librtc_sdk_objc.a */; };
+		A86E5E231FFBE80D00FE8158 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E221FFBE80D00FE8158 /* libwebsockets.a */; };
+		A86E5E241FFBE81800FE8158 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E221FFBE80D00FE8158 /* libwebsockets.a */; };
+		A86E5E251FFBE82600FE8158 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E221FFBE80D00FE8158 /* libwebsockets.a */; };
+		A86E5E261FFBE83100FE8158 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E221FFBE80D00FE8158 /* libwebsockets.a */; };
+		A86E5E281FFBE85800FE8158 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E271FFBE85700FE8158 /* GLKit.framework */; };
+		A86E5E2A1FFBE86D00FE8158 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E291FFBE86D00FE8158 /* VideoToolbox.framework */; };
+		A86E5E2C1FFBE88700FE8158 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E2B1FFBE88600FE8158 /* AudioToolbox.framework */; };
+		A86E5E2D1FFBE89900FE8158 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E2B1FFBE88600FE8158 /* AudioToolbox.framework */; };
+		A86E5E2E1FFBE89F00FE8158 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E291FFBE86D00FE8158 /* VideoToolbox.framework */; };
+		A86E5E2F1FFBE8AC00FE8158 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E271FFBE85700FE8158 /* GLKit.framework */; };
+		A86E5E301FFBE8B900FE8158 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E2B1FFBE88600FE8158 /* AudioToolbox.framework */; };
+		A86E5E311FFBE8BE00FE8158 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E291FFBE86D00FE8158 /* VideoToolbox.framework */; };
+		A86E5E321FFBE8D600FE8158 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E271FFBE85700FE8158 /* GLKit.framework */; };
+		A86E5E341FFBE90800FE8158 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E331FFBE90800FE8158 /* OpenGLES.framework */; };
+		A86E5E361FFBE93600FE8158 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E351FFBE93600FE8158 /* CoreVideo.framework */; };
+		A86E5E381FFBE95500FE8158 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E371FFBE95500FE8158 /* Metal.framework */; };
 		A86FC4FC1EBB4999006053A6 /* MEGAPhotoMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A86FC4FB1EBB4999006053A6 /* MEGAPhotoMediaItem.m */; };
-		A88BFFB31F0A52CD0081BCE3 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAC1F0A52CD0081BCE3 /* libevent_core.a */; };
-		A88BFFB41F0A52CD0081BCE3 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAC1F0A52CD0081BCE3 /* libevent_core.a */; };
-		A88BFFB51F0A52CD0081BCE3 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAC1F0A52CD0081BCE3 /* libevent_core.a */; };
-		A88BFFB61F0A52CD0081BCE3 /* libevent_extra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAD1F0A52CD0081BCE3 /* libevent_extra.a */; };
-		A88BFFB71F0A52CD0081BCE3 /* libevent_extra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAD1F0A52CD0081BCE3 /* libevent_extra.a */; };
-		A88BFFB81F0A52CD0081BCE3 /* libevent_extra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAD1F0A52CD0081BCE3 /* libevent_extra.a */; };
-		A88BFFB91F0A52CD0081BCE3 /* libevent_openssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAE1F0A52CD0081BCE3 /* libevent_openssl.a */; };
-		A88BFFBA1F0A52CD0081BCE3 /* libevent_openssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAE1F0A52CD0081BCE3 /* libevent_openssl.a */; };
-		A88BFFBB1F0A52CD0081BCE3 /* libevent_openssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAE1F0A52CD0081BCE3 /* libevent_openssl.a */; };
-		A88BFFBC1F0A52CD0081BCE3 /* libevent_pthreads.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAF1F0A52CD0081BCE3 /* libevent_pthreads.a */; };
-		A88BFFBD1F0A52CD0081BCE3 /* libevent_pthreads.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAF1F0A52CD0081BCE3 /* libevent_pthreads.a */; };
-		A88BFFBE1F0A52CD0081BCE3 /* libevent_pthreads.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAF1F0A52CD0081BCE3 /* libevent_pthreads.a */; };
-		A88BFFBF1F0A52CD0081BCE3 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB01F0A52CD0081BCE3 /* libevent.a */; };
-		A88BFFC01F0A52CD0081BCE3 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB01F0A52CD0081BCE3 /* libevent.a */; };
-		A88BFFC11F0A52CD0081BCE3 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB01F0A52CD0081BCE3 /* libevent.a */; };
-		A88BFFC21F0A52CD0081BCE3 /* libws.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB11F0A52CD0081BCE3 /* libws.a */; };
-		A88BFFC31F0A52CD0081BCE3 /* libws.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB11F0A52CD0081BCE3 /* libws.a */; };
-		A88BFFC41F0A52CD0081BCE3 /* libws.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB11F0A52CD0081BCE3 /* libws.a */; };
 		A88BFFCF1F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
 		A88BFFD01F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
 		A88BFFD11F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
-		A88BFFD21F0A52E90081BCE3 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC91F0A52E90081BCE3 /* libcrypto.a */; };
-		A88BFFD31F0A52E90081BCE3 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC91F0A52E90081BCE3 /* libcrypto.a */; };
-		A88BFFD41F0A52E90081BCE3 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC91F0A52E90081BCE3 /* libcrypto.a */; };
 		A88BFFD51F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
 		A88BFFD61F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
 		A88BFFD71F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
 		A88BFFD81F0A52E90081BCE3 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCB1F0A52E90081BCE3 /* libcurl.a */; };
 		A88BFFD91F0A52E90081BCE3 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCB1F0A52E90081BCE3 /* libcurl.a */; };
 		A88BFFDA1F0A52E90081BCE3 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCB1F0A52E90081BCE3 /* libcurl.a */; };
-		A88BFFDB1F0A52E90081BCE3 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCC1F0A52E90081BCE3 /* libssl.a */; };
-		A88BFFDC1F0A52E90081BCE3 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCC1F0A52E90081BCE3 /* libssl.a */; };
-		A88BFFDD1F0A52E90081BCE3 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCC1F0A52E90081BCE3 /* libssl.a */; };
 		A88BFFDE1F0A52E90081BCE3 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCD1F0A52E90081BCE3 /* libuv.a */; };
 		A88BFFDF1F0A52E90081BCE3 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCD1F0A52E90081BCE3 /* libuv.a */; };
 		A88BFFE01F0A52E90081BCE3 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCD1F0A52E90081BCE3 /* libuv.a */; };
@@ -1235,6 +1223,14 @@
 		A82E5BF31F3470B5003C149C /* Spotlight_folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Spotlight_folder.png; path = Spotlight/Spotlight_folder.png; sourceTree = "<group>"; };
 		A83892411EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatMessage+MNZCategory.h"; sourceTree = "<group>"; };
 		A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGAChatMessage+MNZCategory.m"; sourceTree = "<group>"; };
+		A86E5E1D1FFBE78400FE8158 /* librtc_sdk_objc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = librtc_sdk_objc.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/librtc_sdk_objc.a; sourceTree = "<group>"; };
+		A86E5E221FFBE80D00FE8158 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libwebsockets.a; sourceTree = "<group>"; };
+		A86E5E271FFBE85700FE8158 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		A86E5E291FFBE86D00FE8158 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		A86E5E2B1FFBE88600FE8158 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		A86E5E331FFBE90800FE8158 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		A86E5E351FFBE93600FE8158 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		A86E5E371FFBE95500FE8158 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		A86FC4FB1EBB4999006053A6 /* MEGAPhotoMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAPhotoMediaItem.m; sourceTree = "<group>"; };
 		A88BFFAC1F0A52CD0081BCE3 /* libevent_core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_core.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent_core.a; sourceTree = "<group>"; };
 		A88BFFAD1F0A52CD0081BCE3 /* libevent_extra.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_extra.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent_extra.a; sourceTree = "<group>"; };
@@ -1405,25 +1401,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A86E5E231FFBE80D00FE8158 /* libwebsockets.a in Frameworks */,
+				A86E5E1E1FFBE78400FE8158 /* librtc_sdk_objc.a in Frameworks */,
 				A88BFFED1F0A56B80081BCE3 /* libKarere.a in Frameworks */,
 				A88BFFE91F0A55E20081BCE3 /* libMEGASDK.a in Frameworks */,
 				A88BFFDE1F0A52E90081BCE3 /* libuv.a in Frameworks */,
-				A88BFFC21F0A52CD0081BCE3 /* libws.a in Frameworks */,
-				A88BFFB61F0A52CD0081BCE3 /* libevent_extra.a in Frameworks */,
 				A82751161E97AB88007CD9E2 /* libstdc++.tbd in Frameworks */,
 				A88BFFE11F0A52E90081BCE3 /* libsodium.a in Frameworks */,
 				A88BFFD51F0A52E90081BCE3 /* libcryptopp.a in Frameworks */,
 				A88BFFD81F0A52E90081BCE3 /* libcurl.a in Frameworks */,
 				A82751141E97AB79007CD9E2 /* libsqlite3.tbd in Frameworks */,
 				A82751121E97AB73007CD9E2 /* libresolv.tbd in Frameworks */,
-				A88BFFD21F0A52E90081BCE3 /* libcrypto.a in Frameworks */,
 				A82751101E97AB6E007CD9E2 /* libz.tbd in Frameworks */,
 				A88BFFCF1F0A52E90081BCE3 /* libcares.a in Frameworks */,
-				A88BFFDB1F0A52E90081BCE3 /* libssl.a in Frameworks */,
-				A88BFFB91F0A52CD0081BCE3 /* libevent_openssl.a in Frameworks */,
-				A88BFFBF1F0A52CD0081BCE3 /* libevent.a in Frameworks */,
-				A88BFFBC1F0A52CD0081BCE3 /* libevent_pthreads.a in Frameworks */,
-				A88BFFB31F0A52CD0081BCE3 /* libevent_core.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1431,6 +1421,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A86E5E381FFBE95500FE8158 /* Metal.framework in Frameworks */,
+				A86E5E361FFBE93600FE8158 /* CoreVideo.framework in Frameworks */,
+				A86E5E341FFBE90800FE8158 /* OpenGLES.framework in Frameworks */,
+				A86E5E321FFBE8D600FE8158 /* GLKit.framework in Frameworks */,
+				A86E5E311FFBE8BE00FE8158 /* VideoToolbox.framework in Frameworks */,
+				A86E5E301FFBE8B900FE8158 /* AudioToolbox.framework in Frameworks */,
+				A86E5E241FFBE81800FE8158 /* libwebsockets.a in Frameworks */,
+				A86E5E1F1FFBE79D00FE8158 /* librtc_sdk_objc.a in Frameworks */,
 				9432292B1EDD84FD007DB542 /* AssetsLibrary.framework in Frameworks */,
 				9432291A1EDD83B0007DB542 /* AVFoundation.framework in Frameworks */,
 				943229251EDD8479007DB542 /* CoreData.framework in Frameworks */,
@@ -1448,23 +1446,15 @@
 				943229111EDD82E2007DB542 /* UIKit.framework in Frameworks */,
 				A88BFFEE1F0A56C60081BCE3 /* libKarere.a in Frameworks */,
 				A88BFFEA1F0A56280081BCE3 /* libMEGASDK.a in Frameworks */,
-				A88BFFDC1F0A52E90081BCE3 /* libssl.a in Frameworks */,
-				A88BFFB71F0A52CD0081BCE3 /* libevent_extra.a in Frameworks */,
 				A88BFFD01F0A52E90081BCE3 /* libcares.a in Frameworks */,
-				A88BFFC01F0A52CD0081BCE3 /* libevent.a in Frameworks */,
 				A88BFFD91F0A52E90081BCE3 /* libcurl.a in Frameworks */,
 				A88BFFD61F0A52E90081BCE3 /* libcryptopp.a in Frameworks */,
-				A88BFFC31F0A52CD0081BCE3 /* libws.a in Frameworks */,
-				A88BFFD31F0A52E90081BCE3 /* libcrypto.a in Frameworks */,
-				A88BFFB41F0A52CD0081BCE3 /* libevent_core.a in Frameworks */,
 				A88BFFE21F0A52E90081BCE3 /* libsodium.a in Frameworks */,
 				943229141EDD8363007DB542 /* libstdc++.tbd in Frameworks */,
 				943229151EDD836A007DB542 /* libsqlite3.tbd in Frameworks */,
 				943229171EDD837D007DB542 /* libresolv.tbd in Frameworks */,
 				A88BFFDF1F0A52E90081BCE3 /* libuv.a in Frameworks */,
 				943229161EDD836F007DB542 /* libz.tbd in Frameworks */,
-				A88BFFBD1F0A52CD0081BCE3 /* libevent_pthreads.a in Frameworks */,
-				A88BFFBA1F0A52CD0081BCE3 /* libevent_openssl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1472,23 +1462,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A86E5E2C1FFBE88700FE8158 /* AudioToolbox.framework in Frameworks */,
+				A86E5E2A1FFBE86D00FE8158 /* VideoToolbox.framework in Frameworks */,
+				A86E5E281FFBE85800FE8158 /* GLKit.framework in Frameworks */,
+				A86E5E251FFBE82600FE8158 /* libwebsockets.a in Frameworks */,
+				A86E5E201FFBE7B100FE8158 /* librtc_sdk_objc.a in Frameworks */,
 				A88BFFEF1F0A56CB0081BCE3 /* libKarere.a in Frameworks */,
 				A88BFFEB1F0A562D0081BCE3 /* libMEGASDK.a in Frameworks */,
 				942ED2BA1EDEE6A900C9908D /* MobileCoreServices.framework in Frameworks */,
 				942ED2B91EDEE68D00C9908D /* ImageIO.framework in Frameworks */,
-				A88BFFDD1F0A52E90081BCE3 /* libssl.a in Frameworks */,
-				A88BFFC11F0A52CD0081BCE3 /* libevent.a in Frameworks */,
 				942ED2B81EDEE62800C9908D /* CoreMedia.framework in Frameworks */,
-				A88BFFB51F0A52CD0081BCE3 /* libevent_core.a in Frameworks */,
 				A88BFFDA1F0A52E90081BCE3 /* libcurl.a in Frameworks */,
-				A88BFFBE1F0A52CD0081BCE3 /* libevent_pthreads.a in Frameworks */,
 				A88BFFE31F0A52E90081BCE3 /* libsodium.a in Frameworks */,
 				A88BFFD11F0A52E90081BCE3 /* libcares.a in Frameworks */,
 				942ED2B61EDEE60800C9908D /* AVFoundation.framework in Frameworks */,
-				A88BFFD41F0A52E90081BCE3 /* libcrypto.a in Frameworks */,
-				A88BFFBB1F0A52CD0081BCE3 /* libevent_openssl.a in Frameworks */,
-				A88BFFB81F0A52CD0081BCE3 /* libevent_extra.a in Frameworks */,
-				A88BFFC41F0A52CD0081BCE3 /* libws.a in Frameworks */,
 				942ED2B21EDEE5C900C9908D /* libstdc++.tbd in Frameworks */,
 				942ED2B31EDEE5D800C9908D /* libsqlite3.tbd in Frameworks */,
 				942ED2B41EDEE5EC00C9908D /* libresolv.tbd in Frameworks */,
@@ -1502,18 +1489,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A86E5E2F1FFBE8AC00FE8158 /* GLKit.framework in Frameworks */,
+				A86E5E2E1FFBE89F00FE8158 /* VideoToolbox.framework in Frameworks */,
+				A86E5E2D1FFBE89900FE8158 /* AudioToolbox.framework in Frameworks */,
+				A86E5E261FFBE83100FE8158 /* libwebsockets.a in Frameworks */,
+				A86E5E211FFBE7BC00FE8158 /* librtc_sdk_objc.a in Frameworks */,
 				94B28C3F1F0E4865000331E6 /* libcares.a in Frameworks */,
 				94B28C401F0E4865000331E6 /* libcurl.a in Frameworks */,
-				94B28C411F0E4865000331E6 /* libevent_core.a in Frameworks */,
-				94B28C421F0E4865000331E6 /* libevent_extra.a in Frameworks */,
-				94B28C431F0E4865000331E6 /* libevent_openssl.a in Frameworks */,
-				94B28C441F0E4865000331E6 /* libevent_pthreads.a in Frameworks */,
-				94B28C451F0E4865000331E6 /* libevent.a in Frameworks */,
-				94B28C461F0E4865000331E6 /* libws.a in Frameworks */,
-				94B28C471F0E4865000331E6 /* libcrypto.a in Frameworks */,
 				94B28C481F0E4865000331E6 /* libcryptopp.a in Frameworks */,
 				94B28C491F0E4865000331E6 /* libsodium.a in Frameworks */,
-				94B28C4A1F0E4865000331E6 /* libssl.a in Frameworks */,
 				94B28C4B1F0E4865000331E6 /* libuv.a in Frameworks */,
 				94B28C251F0E464C000331E6 /* libKarere.a in Frameworks */,
 				94B28C261F0E464C000331E6 /* libMEGASDK.a in Frameworks */,
@@ -2090,6 +2074,14 @@
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A86E5E371FFBE95500FE8158 /* Metal.framework */,
+				A86E5E351FFBE93600FE8158 /* CoreVideo.framework */,
+				A86E5E331FFBE90800FE8158 /* OpenGLES.framework */,
+				A86E5E2B1FFBE88600FE8158 /* AudioToolbox.framework */,
+				A86E5E291FFBE86D00FE8158 /* VideoToolbox.framework */,
+				A86E5E271FFBE85700FE8158 /* GLKit.framework */,
+				A86E5E221FFBE80D00FE8158 /* libwebsockets.a */,
+				A86E5E1D1FFBE78400FE8158 /* librtc_sdk_objc.a */,
 				9419B6C51F20DC5700FEBE31 /* CoreSpotlight.framework */,
 				94B28C231F0E464C000331E6 /* libKarere.a */,
 				94B28C241F0E464C000331E6 /* libMEGASDK.a */,
@@ -3930,7 +3922,7 @@
 					iMEGA/Vendor/FrameAccessor,
 				);
 				INFOPLIST_FILE = iMEGA/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3979,7 +3971,7 @@
 					iMEGA/Vendor/FrameAccessor,
 				);
 				INFOPLIST_FILE = iMEGA/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4105,7 +4097,7 @@
 					iMEGA/Vendor/SDK/include,
 				);
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPicker/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4153,7 +4145,7 @@
 					iMEGA/Vendor/SDK/include,
 				);
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPicker/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4200,7 +4192,7 @@
 					iMEGA/Vendor/SDK/include,
 				);
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAShare/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4246,7 +4238,7 @@
 					iMEGA/Vendor/SDK/include,
 				);
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAShare/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
