@@ -583,6 +583,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
         if (self.urlType == URLTypeConfirmationLink) {
             UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
             MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+            upgradeTVC.chooseAccountType = YES;
+            
             [self presentLinkViewController:navigationController];
             self.urlType = URLTypeDefault;
         }
@@ -1520,10 +1522,8 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if ((alertView.tag == 0) && (buttonIndex == 1)) {
-        
         UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
         MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-        [upgradeTVC.navigationItem setRightBarButtonItem:[self cancelBarButtonItem]];
         
         [self dismissPresentedViews];
         
