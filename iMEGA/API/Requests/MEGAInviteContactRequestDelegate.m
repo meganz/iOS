@@ -71,7 +71,13 @@
         
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+        
+        UITabBarController *tabBarController = (UITabBarController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+        if (tabBarController.presentedViewController) {
+            [tabBarController.presentedViewController presentViewController:alertController animated:YES completion:nil];
+        } else {
+            [tabBarController presentViewController:alertController animated:YES completion:nil];
+        }
     }
 }
 

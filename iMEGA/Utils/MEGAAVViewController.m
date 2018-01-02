@@ -61,7 +61,13 @@
 
 - (void)play {
     if (_path) {
+        if (self.moviePlayerViewController) {
+            [self.moviePlayerViewController.view removeFromSuperview];
+            self.moviePlayerViewController = nil;
+        }
+        
         self.moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:_path];
+        self.moviePlayerViewController.moviePlayer.movieSourceType = (self.node) ? MPMovieSourceTypeStreaming : MPMovieSourceTypeFile;
 
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(movieFinishedCallback:)
