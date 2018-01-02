@@ -173,12 +173,12 @@
         }
             
         case MEGARequestTypeSetAttrUser: {
-            if (error.type) {
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
-                return;
-            }
-            
-            if (request.paramType  == MEGAUserAttributeAvatar) {
+            if (request.paramType == MEGAUserAttributeAvatar) {
+                if (error.type) {
+                    [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+                    return;
+                }
+                
                 NSString *myUserBase64Handle = [MEGASdk base64HandleForUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
                 NSString *myAvatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:myUserBase64Handle];
                 if (request.file == nil) {
