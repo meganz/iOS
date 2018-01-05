@@ -11,5 +11,6 @@
 - (void)removeCallByUUID:(NSUUID *)uuid;
 - (void)removeAllCalls;
 - (MEGAChatCall *)callForUUID:(NSUUID *)uuid;
+- (NSUUID *)UUIDForCall:(MEGAChatCall *)call;
 
 @end
