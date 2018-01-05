@@ -93,6 +93,13 @@
     return call;
 }
 
+- (NSUUID *)UUIDForCall:(MEGAChatCall *)call {
+    [self printAllCalls];
+    NSUUID *uuid = [[self.callsDictionary allKeysForObject:@(call.callId)] objectAtIndex:0];
+    MEGALogDebug(@"[CallKit] UUID %@ for call: %@", uuid, call);
+    return uuid;
+}
+
 - (void)printAllCalls {
     MEGALogDebug(@"[CallKit] All calls: ");
     for (NSUUID *key in self.callsDictionary) {

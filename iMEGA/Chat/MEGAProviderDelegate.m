@@ -33,7 +33,7 @@
 }
 
 - (void)reportIncomingCall:(MEGAChatCall *)call hasVideo:(BOOL)hasVideo email:(NSString*)email {
-    MEGALogDebug(@"[CallKit] Report incoming call %@ widh uuid %@, video %@ and email %@", call, call.uuid, hasVideo ? @"YES" : @"NO", email);
+    MEGALogDebug(@"[CallKit] Report incoming call %@ with uuid %@, video %@ and email %@", call, call.uuid, hasVideo ? @"YES" : @"NO", email);
     CXCallUpdate *update = [[CXCallUpdate alloc] init];
     update.remoteHandle = [[CXHandle alloc] initWithType:CXHandleTypeEmailAddress value:email];
     update.supportsHolding = NO;
@@ -50,6 +50,11 @@
     }];
 }
 
+- (void)reportOutgoingCall:(MEGAChatCall *)call {
+    NSUUID *uuid = [self.megaCallManager UUIDForCall:call];
+    MEGALogDebug(@"[CallKit] Report outgoing call %@ with uuid %@", call, uuid);
+    [self.provider reportOutgoingCallWithUUID:uuid connectedAtDate:nil];
+}
 
 #pragma mark - CXProviderDelegate
 

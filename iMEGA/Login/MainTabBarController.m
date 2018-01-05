@@ -9,6 +9,9 @@
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate, MEGAChatCallDelegate>
 
 @property (nonatomic, strong) MEGAProviderDelegate *megaProviderDelegate;
+@property (getter=shouldReportOutgoingCall) BOOL reportOutgoingCall;
+
+
 
 @end
 
@@ -165,6 +168,9 @@
             break;
             
         case MEGAChatCallStatusRequestSent:
+            if (@available(iOS 10.0, *)) {
+                self.reportOutgoingCall = YES;
+            }
             break;
             
         case MEGAChatCallStatusRingIn: {
@@ -191,6 +197,12 @@
             break;
             
         case MEGAChatCallStatusInProgress:
+            if (@available(iOS 10.0, *)) {
+                if (self.shouldReportOutgoingCall) {
+                    [self.megaProviderDelegate reportOutgoingCall:call];
+                    self.reportOutgoingCall = NO;
+                }
+            }
             break;
         case MEGAChatCallStatusTerminating:
             break;
