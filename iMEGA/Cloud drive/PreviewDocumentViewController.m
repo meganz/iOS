@@ -88,8 +88,6 @@
 
 - (void)previewControllerWillDismiss:(QLPreviewController *)controller {
     previewDocumentTransfer = nil;
-    
-    [self.navigationController popViewControllerAnimated:NO];
 }
 
 #pragma mark - MEGATransferDelegate
