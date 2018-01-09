@@ -923,8 +923,6 @@ static NSString *kisDirectory = @"kisDirectory";
         return offlineTVC;
     } else if (previewDocumentPath.mnz_isMultimediaPathExtension) {
         MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
-        megaAVViewController.peekAndPop = YES;
-        
         return megaAVViewController;
     } else {
         MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithArrayOfFiles:self.offlineFiles];
