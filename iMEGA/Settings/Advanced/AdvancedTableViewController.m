@@ -172,18 +172,6 @@
     return numberOfRows;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (@available(iOS 9.0, *)) {} else {
-        UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
-        if(cell == self.savePhotosTableViewCell || cell == self.saveVideosTableViewCell) {
-            cell.hidden = YES;
-            return 0;
-        }
-    }
-    
-    return [super tableView:tableView heightForRowAtIndexPath:indexPath];
-}
-
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSString *titleHeader;
     switch (section) {
@@ -200,11 +188,7 @@
             break;
             
         case 4: //Downloads
-            if (@available(iOS 9.0, *)) {
-                titleHeader = AMLocalizedString(@"imageAndVideoDownloadsHeader", @"Title header that refers to where do you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section");
-            } else {
-                titleHeader = @"";
-            }
+            titleHeader = AMLocalizedString(@"imageAndVideoDownloadsHeader", @"Title header that refers to where do you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section");
             break;
     }
     return titleHeader;
@@ -243,11 +227,7 @@
         }
             
         case 4: { //Image and videos downloads
-            if (@available(iOS 9.0, *)) {
-                titleFooter = AMLocalizedString(@"imageAndVideoDownloadsFooter", @"Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled");
-            } else {
-                titleFooter = @"";
-            }
+            titleFooter = AMLocalizedString(@"imageAndVideoDownloadsFooter", @"Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled");
             break;
         }
     }

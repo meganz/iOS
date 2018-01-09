@@ -4,7 +4,6 @@
 #import <SafariServices/SafariServices.h>
 
 #import "SVProgressHUD.h"
-#import "SVWebViewController.h"
 
 #import "Helper.h"
 #import "MEGALogger.h"
@@ -74,18 +73,13 @@
 - (void)acknowledgements {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         NSURL *URL = [NSURL URLWithString:@"https://mega.nz/ios_acknowledgements.html"];
-        if (@available(iOS 9.0, *)) {
-            SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:URL];
-            if (@available(iOS 10.0, *)) {
-                webViewController.preferredControlTintColor = [UIColor mnz_redD90007];
-            } else {
-                webViewController.view.tintColor = [UIColor mnz_redD90007];
-            }
-            [self presentViewController:webViewController animated:YES completion:nil];
+        SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:URL];
+        if (@available(iOS 10.0, *)) {
+            webViewController.preferredControlTintColor = [UIColor mnz_redD90007];
         } else {
-            SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
-            [self.navigationController pushViewController:webViewController animated:YES];
+            webViewController.view.tintColor = [UIColor mnz_redD90007];
         }
+        [self presentViewController:webViewController animated:YES completion:nil];
     }
 }
 
