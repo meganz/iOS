@@ -5,7 +5,7 @@
 
 #import "MEGASdkManager.h"
 
-@interface MEGAAVViewController : UIViewController
+@interface MEGAAVViewController : AVPlayerViewController
 
 - (instancetype)initWithURL:(NSURL *)path;
 - (instancetype)initWithNode:(MEGANode *)node folderLink:(BOOL)folderLink;

@@ -6,13 +6,11 @@
 #import "MEGANode+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
-@interface MEGAAVViewController () <UIViewControllerTransitioningDelegate>
+@interface MEGAAVViewController () <AVPlayerViewControllerDelegate, UIViewControllerTransitioningDelegate>
 
 @property (nonatomic, strong, nonnull) NSURL *path;
 @property (nonatomic, strong) MEGANode *node;
 @property (nonatomic, assign, getter=isFolderLink) BOOL folderLink;
-
-@property (nonatomic) AVPlayerViewController *moviePlayerViewController;
 
 @end
 
@@ -48,35 +46,29 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (!self.path) {
+        return;
+    }
+    
     [self setTransitioningDelegate:self];
-    [self play];
+    
+    self.player = [AVPlayer playerWithURL:self.path];
+    self.delegate = self;
+    
+    if (self.node && !self.node.hasThumbnail && !self.isFolderLink && self.node.name.mnz_isVideoPathExtension) {
+        [self.node mnz_generateThumbnailForVideoAtPath:self.path];
+    }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(movieFinishedCallback:)
+                                                 name:AVPlayerItemDidPlayToEndTimeNotification
+                                               object:self.player.currentItem];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    [self.moviePlayerViewController.player play];
-}
-
-- (void)play {
-    if (self.path) {
-        self.moviePlayerViewController = [AVPlayerViewController new];
-        self.moviePlayerViewController.player = [AVPlayer playerWithURL:self.path];
-        
-        [self addChildViewController:self.moviePlayerViewController];
-        CGFloat y = [UIApplication sharedApplication].statusBarFrame.size.height + self.navigationController.navigationBar.frame.size.height;
-        self.moviePlayerViewController.view.frame = CGRectMake(0.0f, y, self.view.frame.size.width, self.view.frame.size.height - y);
-        [self.view addSubview:self.moviePlayerViewController.view];
-        
-        if (self.node && !self.node.hasThumbnail && !self.isFolderLink && self.node.name.mnz_isVideoPathExtension) {
-            [self.node mnz_generateThumbnailForVideoAtPath:self.path];
-        }
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(movieFinishedCallback:)
-                                                     name:AVPlayerItemDidPlayToEndTimeNotification
-                                                   object:self.moviePlayerViewController.player.currentItem];
-    }
+    [self.player play];
 }
 
 #pragma mark - Notifications
@@ -84,7 +76,7 @@
 - (void)movieFinishedCallback:(NSNotification*)aNotification {
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:AVPlayerItemDidPlayToEndTimeNotification
-                                                  object:self.moviePlayerViewController.player.currentItem];
+                                                  object:self.player.currentItem];
     
     [self dismissViewControllerAnimated:YES completion:nil];
     
@@ -95,6 +87,12 @@
             [[MEGASdkManager sharedMEGASdkFolder] httpServerStop];
         }
     }
+}
+
+#pragma mark - AVPlayerViewControllerDelegate
+
+- (BOOL)playerViewControllerShouldAutomaticallyDismissAtPictureInPictureStart:(AVPlayerViewController *)playerViewController {
+    return NO;
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate
