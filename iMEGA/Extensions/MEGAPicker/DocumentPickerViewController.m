@@ -70,15 +70,13 @@
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
     
-    // Add a observer to get notified when the extension come back to the foreground:
-    if (@available(iOS 8.2, *)) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActive)
-                                                     name:NSExtensionHostWillResignActiveNotification
-                                                   object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActive)
-                                                     name:NSExtensionHostDidBecomeActiveNotification
-                                                   object:nil];
-    }
+    // Add observers to get notified when the extension goes to background and comes back to foreground:
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActive)
+                                                 name:NSExtensionHostWillResignActiveNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActive)
+                                                 name:NSExtensionHostDidBecomeActiveNotification
+                                               object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

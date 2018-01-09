@@ -1,7 +1,6 @@
 
 #import "ContactsViewController.h"
 
-#import <AddressBookUI/AddressBookUI.h>
 #import <ContactsUI/ContactsUI.h>
 
 #import "UIImage+GKContact.h"
@@ -26,7 +25,7 @@
 #import "ContactTableViewCell.h"
 #import "ShareFolderActivity.h"
 
-@interface ContactsViewController () <ABPeoplePickerNavigationControllerDelegate, CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate>
+@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate>
 
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
@@ -596,19 +595,11 @@
             [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
         }
         
-        if (@available(iOS 9.0, *)) {
-            CNContactPickerViewController *contactsPickerViewController = [[CNContactPickerViewController alloc] init];
-            contactsPickerViewController.predicateForEnablingContact = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
-            contactsPickerViewController.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
-            contactsPickerViewController.delegate = self;
-            [self presentViewController:contactsPickerViewController animated:YES completion:nil];
-        } else {
-            ABPeoplePickerNavigationController *contactsPickerNC = [[ABPeoplePickerNavigationController alloc] init];
-            contactsPickerNC.predicateForEnablingPerson = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
-            contactsPickerNC.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
-            contactsPickerNC.peoplePickerDelegate = self;
-            [self presentViewController:contactsPickerNC animated:YES completion:nil];
-        }
+        CNContactPickerViewController *contactsPickerViewController = [[CNContactPickerViewController alloc] init];
+        contactsPickerViewController.predicateForEnablingContact = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
+        contactsPickerViewController.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
+        contactsPickerViewController.delegate = self;
+        [self presentViewController:contactsPickerViewController animated:YES completion:nil];
     }];
     [addFromContactsAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [addContactAlertController addAction:addFromContactsAlertAction];
@@ -1049,35 +1040,6 @@
 
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
     [self.navigationController pushViewController:viewControllerToCommit animated:YES];
-}
-
-#pragma mark - ABPeoplePickerNavigationControllerDelegate
-
-- (void)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
-                         didSelectPerson:(ABRecordRef)person {
-    
-    NSString *email = nil;
-    ABMultiValueRef emails = ABRecordCopyValue(person,
-                                                     kABPersonEmailProperty);
-    if (ABMultiValueGetCount(emails) > 0) {
-        email = (__bridge_transfer NSString*)
-        ABMultiValueCopyValueAtIndex(emails, 0);
-    }
-
-    if (email) {
-        MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1];
-        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
-    } else {
-        UIAlertController *contactHasNoEmailAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"contactWithoutEmail", @"Alert title shown when you add a contact from your device and the selected one doesn't have an email.") message:nil preferredStyle:UIAlertControllerStyleAlert];
-        
-        [contactHasNoEmailAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-        
-        [self presentViewController:contactHasNoEmailAlertController animated:YES completion:nil];
-    }
-    
-    if (emails) {
-        CFRelease(emails);
-    }
 }
 
 #pragma mark - CNContactPickerDelegate

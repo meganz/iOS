@@ -80,48 +80,34 @@
 }
 
 - (IBAction)enableTouchUpInside:(UIButton *)sender {
-    if (@available(iOS 8.0, *)) {
-        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-            switch (status) {
-                case PHAuthorizationStatusNotDetermined:
-                    break;
-                case PHAuthorizationStatusAuthorized: {
-                    MEGALogInfo(@"Enable Camera Uploads");
-                    [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-                    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-                    
-                    [self dismissViewControllerAnimated:YES completion:^{
-                        [SVProgressHUD showImage:[UIImage imageNamed:@"hudCameraUploads"] status:AMLocalizedString(@"cameraUploadsEnabled", nil)];
-                    }];
-                    break;
-                }
-                case PHAuthorizationStatusRestricted:
-                    break;
-                case PHAuthorizationStatusDenied:{
-                    [self dismissViewControllerAnimated:YES completion:nil];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-                        [alert show];
-                    });
-                    break;
-                }
-                default:
-                    break;
+    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+        switch (status) {
+            case PHAuthorizationStatusNotDetermined:
+                break;
+            case PHAuthorizationStatusAuthorized: {
+                MEGALogInfo(@"Enable Camera Uploads");
+                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
+                
+                [self dismissViewControllerAnimated:YES completion:^{
+                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudCameraUploads"] status:AMLocalizedString(@"cameraUploadsEnabled", nil)];
+                }];
+                break;
             }
-        }];
-        
-    } else if ([ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusAuthorized && [ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusNotDetermined) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-        [alert show];
-    } else {
-        MEGALogInfo(@"Enable Camera Uploads");
-        [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-        
-        [self dismissViewControllerAnimated:YES completion:^{
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudCameraUploads"] status:AMLocalizedString(@"cameraUploadsEnabled", nil)];
-        }];
-    }
+            case PHAuthorizationStatusRestricted:
+                break;
+            case PHAuthorizationStatusDenied:{
+                [self dismissViewControllerAnimated:YES completion:nil];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                    [alert show];
+                });
+                break;
+            }
+            default:
+                break;
+        }
+    }];
 }
 
 #pragma mark - UIAlertViewDelegate

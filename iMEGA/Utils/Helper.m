@@ -751,10 +751,8 @@ static MEGAIndexer *indexer;
         photoCollectionViewCell.thumbnailPlayImageView.hidden = node.name.mnz_videoPathExtension ? NO : YES;
     }
     
-    if (@available(iOS 9.0, *)) {
-        if (reindex) {
-            [indexer index:node];
-        }
+    if (reindex) {
+        [indexer index:node];
     }
 }
 
