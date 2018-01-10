@@ -44,6 +44,7 @@
 #import "LaunchViewController.h"
 #import "LoginViewController.h"
 #import "MainTabBarController.h"
+#import "MessagesViewController.h"
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGAPasswordLinkRequestDelegate.h"
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
@@ -1872,6 +1873,25 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type {
     MEGALogDebug(@"Did receive incoming push with payload: %@", [payload dictionaryPayload]);
 }
+
+#pragma mark - UNUserNotificationCenterDelegate
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler {
+    MEGALogDebug(@"userNotificationCenter didReceiveNotificationResponse %@", response);
+    [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[response.notification.request.identifier]];
+    if (response.notification.request.content.userInfo[@"chatId"]) {
+        uint64_t chatId = [response.notification.request.content.userInfo[@"chatId"] unsignedLongLongValue];
+        self.mainTBC.selectedIndex = CHAT;
+        MEGANavigationController *navigationController = [[self.mainTBC viewControllers] objectAtIndex:CHAT];
+        MEGAChatRoom *chatRoom  = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
+        MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
+        messagesVC.chatRoom = chatRoom;
+        [navigationController pushViewController:messagesVC animated:YES];
+    }
+    
+    completionHandler();
+}
+
 
 #pragma mark - MEGAGlobalDelegate
 
