@@ -27,6 +27,8 @@
 #import "MEGAStartUploadTransferDelegate.h"
 #import "NSString+MNZCategory.h"
 
+#import <UserNotifications/UserNotifications.h>
+
 const CGFloat kGroupChatCellLabelHeight = 35.0f;
 const CGFloat k1on1CellLabelHeight = 28.0f;
 
@@ -152,6 +154,11 @@ const CGFloat k1on1CellLabelHeight = 28.0f;
     self.navigationController.interactivePopGestureRecognizer.delegate = nil;
     
     _nodesLoaded = [[NSMutableArray alloc] init];
+    
+    if (@available(iOS 10.0, *)) {
+        [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
+        [[UNUserNotificationCenter currentNotificationCenter] removePendingNotificationRequestsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -4,14 +4,16 @@
 #import "MEGAProviderDelegate.h"
 #import "MessagesViewController.h"
 #import "MEGAChatCall+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+
+#import <UserNotifications/UserNotifications.h>
 
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate, MEGAChatCallDelegate>
 
 @property (nonatomic, strong) MEGAProviderDelegate *megaProviderDelegate;
 @property (getter=shouldReportOutgoingCall) BOOL reportOutgoingCall;
-
-
+@property (nonatomic, strong) NSMutableDictionary *missedCallsDictionary;
 
 @end
 
@@ -81,6 +83,10 @@
         _megaCallManager = [[MEGACallManager alloc] init];
         _megaProviderDelegate = [[MEGAProviderDelegate alloc] initWithMEGACallManager:self.megaCallManager];
     }
+    
+    _missedCallsDictionary = [[NSMutableDictionary alloc] init];
+}
+
 }
 
 - (BOOL)shouldAutorotate {
@@ -174,6 +180,7 @@
             break;
             
         case MEGAChatCallStatusRingIn: {
+            [self.missedCallsDictionary setObject:call forKey:@(call.chatId)];
             MEGAChatRoom *chatRoom = [api chatRoomForChatId:call.chatId];
             if (@available(iOS 10.0, *)) {
                 NSUUID *uuid = [[NSUUID alloc] init];
@@ -203,13 +210,72 @@
                     self.reportOutgoingCall = NO;
                 }
             }
+            [self.missedCallsDictionary removeObjectForKey:@(call.chatId)];
+
             break;
         case MEGAChatCallStatusTerminating:
             break;
         case MEGAChatCallStatusDestroyed:
+            if (call.isLocalTermCode) {
+                [self.missedCallsDictionary removeObjectForKey:@(call.chatId)];
+            }
+            if ([self.missedCallsDictionary objectForKey:@(call.chatId)]) {
+                MEGAChatRoom *chatRoom = [api chatRoomForChatId:call.chatId];
+                if (@available(iOS 10.0, *)) {
+                    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+                    [center getDeliveredNotificationsWithCompletionHandler:^(NSArray<UNNotification *> *notifications) {
+                        NSString *notificationText = [NSString stringWithFormat:@"Missed %@ call", call.hasRemoteVideo ? @"Video" : @"Audio"];
+                        NSInteger missedVideoCalls, missedAudioCalls;
+                        if (call.hasRemoteVideo) {
+                            missedVideoCalls = 1;
+                            missedAudioCalls = 0;
+                        } else {
+                            missedAudioCalls = 1;
+                            missedVideoCalls = 0;
+                        }
+                        BOOL isThereANotificationForThisChatRoom = NO;
+                        
+                        for (UNNotification *notification in notifications) {
+                            if ([[MEGASdk base64HandleForUserHandle:call.chatId] isEqualToString:notification.request.identifier]) {
+                                isThereANotificationForThisChatRoom = YES;
+                                missedAudioCalls = [notification.request.content.userInfo[@"missedAudioCalls"] integerValue];
+                                missedVideoCalls = [notification.request.content.userInfo[@"missedVideoCalls"] integerValue];
+                                if (call.hasRemoteVideo) {
+                                    missedVideoCalls++;
+                                } else {
+                                    missedAudioCalls++;
+                                }
+                                break;
+                            }
+                        }
+                        
+                        notificationText = [NSString mnz_stringByMissedAudioCalls:missedAudioCalls andMissedVideoCalls:missedVideoCalls];
+                        
+                        UNMutableNotificationContent *content = [UNMutableNotificationContent new];
+                        content.title = chatRoom.title;
+                        content.body = notificationText;
+                        content.sound = [UNNotificationSound defaultSound];
+                        content.userInfo = @{@"missedAudioCalls" : @(missedAudioCalls),
+                                             @"missedVideoCalls" : @(missedVideoCalls),
+                                             @"chatId" : @(call.chatId)
+                                             };
+                        content.categoryIdentifier = @"nz.mega.chat.call";
+                        UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
+                        NSString *identifier = [MEGASdk base64HandleForUserHandle:chatRoom.chatId];
+                        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
+                        [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+                            if (error) {
+                                MEGALogError(@"Add NotificationRequest failed with error: %@", error);
+                            }
+                        }];
+                    }];
+                }
+            }
+            
             if (@available(iOS 10.0, *)) {
                 [self.megaCallManager endCall:call];
-            }            
+            }
+                
             break;
             
         default:
