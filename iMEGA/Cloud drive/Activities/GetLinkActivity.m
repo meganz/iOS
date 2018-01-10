@@ -57,6 +57,11 @@
 - (void)performActivity {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if (self.nodes != nil) {
+            if (![[NSUserDefaults standardUserDefaults] boolForKey:@"agreedCopywriteWarning"]) {
+                if ([[MEGASdkManager sharedMEGASdk] publicLinks].size > 0) {
+                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"agreedCopywriteWarning"];
+                }
+            }
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"agreedCopywriteWarning"]) {
                 UINavigationController *getLinkNC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"GetLinkNavigationControllerID"];
                 GetLinkTableViewController *getLinkTVC = getLinkNC.childViewControllers.firstObject;
