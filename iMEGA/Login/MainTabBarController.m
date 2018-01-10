@@ -87,8 +87,6 @@
     _missedCallsDictionary = [[NSMutableDictionary alloc] init];
 }
 
-}
-
 - (BOOL)shouldAutorotate {
     if ([self.selectedViewController respondsToSelector:@selector(shouldAutorotate)]) {
         return [self.selectedViewController shouldAutorotate];
