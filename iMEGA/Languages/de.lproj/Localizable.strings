@@ -53,7 +53,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Der Server-SSL-Schlüssel kann nicht verifiziert werden. Es könnte ein Man-in-the-middle-Angriff vorliegen.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
+"theContentIsNotAvailableForThisAccount"="Dieser Account kann auf die gewünschte Datei nicht zugreifen. Bitte nutzen Sie denselben Account wie im Browser.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="Die Bearbeitung Ihrer Anfrage dauert unerwartet lange. Bitte haben Sie noch etwas Geduld...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -181,7 +181,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Kontakte hinzufügen";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
-"received"="Received";
+"received"="Empfangen";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="Gesendet";
 /* Success message shown when you acepted a contact request */
@@ -291,7 +291,7 @@
 /* Item menu option upon right click on one or multiple files. */
 "manageLink"="Link bearbeiten";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"manageLinks"="Manage links";
+"manageLinks"="Links verwalten";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Link generieren...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -405,7 +405,7 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
 "moveFileFoldersToRubbishBinMessage"="Eine Datei und %d Ordner in den Papierkorb verschieben?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="%d Dateien und %d Ordner in den Papierkorb verschieben?";
+"moveFilesFolderToRubbishBinMessage"="%d Dateien und 1 Ordner in den Papierkorb verschieben?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="[A] Dateien und [B] Ordner in den Papierkorb verschieben?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -625,7 +625,7 @@
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Wozu brauche ich einen Rettungsschlüssel?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
-"masterKey_firstParagraph"="Die Entschlüsselung Ihrer beginnt stets mit dem Hauptschlüssel (dem Rettungschlüssel), den wir mit Ihrem Passwort verschlüsselt bei uns speichern. Bei Verlust Ihres Passworts kann niemand (auch nicht wir) den Hauptschlüssel entschlüsseln. Ihre Daten werden unlesbar.";
+"masterKey_firstParagraph"="Die Entschlüsselung Ihrer Daten beginnt stets mit dem Hauptschlüssel (der auch Ihr Rettungschlüssel ist!), den wir mit Ihrem Passwort verschlüsselt bei uns speichern. Bei Verlust Ihres Passworts kann niemand (auch nicht wir) den Hauptschlüssel entschlüsseln. Ihre Daten werden unlesbar.";
 /*  */
 "masterKey_thirdParagraph"="Ein Angreifer, der sich eine Kopie Ihres Rettungsschlüssels verschafft hat, kann damit trotzdem noch nicht auf Ihre Daten zugreifen, da ein Passwort-Reset zusätzlich den Zugang zu Ihrer E-Mail voraussetzt.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
@@ -827,7 +827,7 @@
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Mein Account";
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
-"buyPRO"="Buy PRO";
+"buyPRO"="PRO kaufen";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Upgrade";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -843,7 +843,7 @@
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="Laden Sie Ihre Freunde und Bekannten ein";
 /* title of the introduction for the achievements screen */
-"inviteFriendsAndGetForEachReferral"="Get %1$s of storage and %2$s of transfers for each referral";
+"inviteFriendsAndGetForEachReferral"="Wir belohnen jede Vermittlung mit %1$s Speicherplatz und %2$s Transfervolumen";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
 /*  */
@@ -930,6 +930,8 @@
 "available of %@"="von %@ verfügbar";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Accountupgrade";
+/*  */
+"chooseYourAccountType"="Wählen Sie Ihre Pro-Stufe";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Sie können dies jederzeit unter Mein Account nachholen";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -938,14 +940,30 @@
 "cloudDriveIsFull"="[S]Ihr Account hat sein Speicherlimit erreicht.[/S] [A]Wechseln Sie jetzt[/A] auf einen PRO-Account und erhalten Sie [S]bis zu 4 TB (4096 GB)[/S] Speicherplatz in der Cloud.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Speicher";
-/* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="Bandbreite";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"transferQuota"="Übertragungsvolumen";
+/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
+"limited"="Begrenzt";
+/* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
+"subjectToYourParticipationInOurAchievementsProgram"="Bei erfolgreicher Teilnahme an unserem Bonusprogramm.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%.2f %@ pro Monat";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Bitte wählen Sie:";
+/* Text that explains that you have to select the plan you want and/or need after creating an account */
+"selectOneAccountType"="Select one account type:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="Zwei Monate kostenlos bei Abschluss eines Jahresvertrages!";
+/* Text shown on the upgrade account page above the current PRO plan subscription */
+"currentPlan"="Current Plan:";
+/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
+"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
+/* Title text for the account confirmation. */
+"confirm"="Bestätigung";
+/* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
+"requestAPlan"="Maßgeschneidertes Angebot";
+/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
+"thereAreNoPlansSuitableForYourCurrentUsage"="Ihr Nutzungsprofil sprengt den Rahmen unseres Standardangebots. Unser [A]Kundenservice[/A] unterbreitet Ihnen gerne ein Angebot.";
 /* Header shown to help on the purchasin process */
 "selectMembership"="Account-Typ auswählen:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */

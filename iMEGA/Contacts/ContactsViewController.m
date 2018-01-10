@@ -269,7 +269,7 @@
             }
         }
         NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"mnz_fullName" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-        self.visibleUsersArray = [usersArray sortedArrayUsingDescriptors:@[sort]];
+        self.visibleUsersArray = [NSMutableArray arrayWithArray:[usersArray sortedArrayUsingDescriptors:@[sort]]];
     }
     
     if ([self.visibleUsersArray count] == 0) {
@@ -282,6 +282,10 @@
         if (!self.tableView.tableHeaderView) {
             self.tableView.tableHeaderView = self.searchController.searchBar;
         }
+    }
+    
+    if (self.contactsMode == ContactsModeChatStartConversation && (self.visibleUsersArray.count == 0 || self.visibleUsersArray.count == 1)) {
+        self.groupBarButtonItem.enabled = NO;
     }
     
     [self.tableView reloadData];
@@ -1027,6 +1031,9 @@
     
     CGPoint rowPoint = [self.tableView convertPoint:location fromView:self.view];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:rowPoint];
+    if (![self.tableView numberOfRowsInSection:indexPath.section]) {
+        return nil;
+    }
     
     previewingContext.sourceRect = [self.tableView convertRect:[self.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view];
     
