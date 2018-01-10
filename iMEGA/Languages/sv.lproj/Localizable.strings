@@ -81,7 +81,7 @@
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Ogiltig e-post och / eller lösenord. Var god försök igen";
 /* Error message when to many attempts to login */
-"tooManyAttemptsLogin"="Du har försökt logga in för många gånger. Vänta tills% @ och försök igen.";
+"tooManyAttemptsLogin"="Du har försökt logga in för många gånger. Vänta tills%@ och försök igen.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="Kontrollera din e-post och följ länken för att bekräfta ditt konto.";
 /* Error message when trying to login and the account is blocked */
@@ -923,13 +923,15 @@
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Inkommande delningar";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="av%&";
+"of %@"="av%@";
 /* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
 "used of %@"="använt %@";
 /* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
 "available of %@"="tillgängligt av %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Uppgradera konto";
+/*  */
+"chooseYourAccountType"="Välj typ av konto";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -938,14 +940,30 @@
 "cloudDriveIsFull"="[S]Your account is full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to 4 TB (4096 GB)[/S] of cloud storage space.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Förvarning ";
-/* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="Bandbredd";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"transferQuota"="Överföringskvot ";
+/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
+"limited"="Begränsad";
+/* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
+"subjectToYourParticipationInOurAchievementsProgram"="Subject to your participation in our achievements program.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%2.f%@ per månad";
+"productPricePerMonth"="%.2f %@ per månad";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Välj en av prenumerationerna nedan:";
+/* Text that explains that you have to select the plan you want and/or need after creating an account */
+"selectOneAccountType"="Select one account type:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="Få två månader gratis om du köper en ett års prenumeration PRO-plan";
+/* Text shown on the upgrade account page above the current PRO plan subscription */
+"currentPlan"="Current Plan:";
+/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
+"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
+/* Title text for the account confirmation. */
+"confirm"="Bekräfta";
+/* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
+"requestAPlan"="Fråga efter en plan";
+/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
+"thereAreNoPlansSuitableForYourCurrentUsage"="Det finns inga planer lämpar sig för din nuvarande användning. Vänligen [A] kontakta supporten [/A] för en anpassad plan.";
 /* Header shown to help on the purchasin process */
 "selectMembership"="Välj medlemskap";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */

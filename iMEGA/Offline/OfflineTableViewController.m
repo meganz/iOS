@@ -451,10 +451,6 @@ static NSString *kisDirectory = @"kisDirectory";
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger rows = self.searchController.isActive ? self.searchItemsArray.count : self.offlineSortedItems.count;
     if (rows == 0) {
@@ -872,6 +868,10 @@ static NSString *kisDirectory = @"kisDirectory";
         CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
         
+        if (![self.tableView numberOfRowsInSection:indexPath.section]) {
+            return;
+        }
+        
         if (self.isEditing) {
             // Only stop editing if long pressed over a cell that is the only one selected or when selected none
             if (self.selectedItems.count == 0) {
@@ -901,6 +901,9 @@ static NSString *kisDirectory = @"kisDirectory";
     
     CGPoint rowPoint = [self.tableView convertPoint:location fromView:self.view];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:rowPoint];
+    if (![self.tableView numberOfRowsInSection:indexPath.section]) {
+        return nil;
+    }
     
     previewingContext.sourceRect = [self.tableView convertRect:[self.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view];
     
