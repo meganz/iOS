@@ -3,10 +3,12 @@
 #import "UIImage+GKContact.h"
 
 #import "Helper.h"
+#import "MEGANavigationController.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
+#import "UpgradeTableViewController.h"
 
 @interface MyAccountViewController () <MEGARequestDelegate> {
     BOOL isAccountDetailsAvailable;
@@ -33,13 +35,10 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *accountTypeLabel;
 
-@property (weak, nonatomic) IBOutlet UIView *freeView;
-@property (weak, nonatomic) IBOutlet UILabel *freeStatusLabel;
-@property (weak, nonatomic) IBOutlet UIButton *upgradeToProButton;
-
 @property (weak, nonatomic) IBOutlet UIView *proView;
 @property (weak, nonatomic) IBOutlet UILabel *proStatusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *proExpiryDateLabel;
+@property (weak, nonatomic) IBOutlet UIButton *upgradeAccountButton;
 
 @property (weak, nonatomic) IBOutlet UIImageView *logoutButtonTopImageView;
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;
@@ -49,9 +48,9 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *usedLabelTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *accountTypeLabelTopLayoutConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *freeViewTopLayoutConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *upgradeAccountTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *proViewTopLayoutConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *proExpiryDateLabelHeightLayoutConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *upgradeAccountTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoutButtonTopLayoutConstraint;
 
 @end
@@ -74,8 +73,7 @@
     NSString *accountTypeString = [AMLocalizedString(@"accountType", @"title of the My Account screen") stringByReplacingOccurrencesOfString:@":" withString:@""];
     self.accountTypeLabel.text = accountTypeString;
     
-    [self.freeStatusLabel setText:AMLocalizedString(@"free", nil)];
-    [self.upgradeToProButton setTitle:AMLocalizedString(@"upgradeAccount", nil) forState:UIControlStateNormal];
+    [self.upgradeAccountButton setTitle:AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level") forState:UIControlStateNormal];
     
     [self.logoutButton setTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") forState:UIControlStateNormal];
     
@@ -83,11 +81,11 @@
     [byteCountFormatter setCountStyle:NSByteCountFormatterCountStyleMemory];
     
     if ([[UIDevice currentDevice] iPhone4X]) {
-        self.usedLabelTopLayoutConstraint.constant = 8.0f;
-        self.accountTypeLabelTopLayoutConstraint.constant = 9.0f;
-        self.freeViewTopLayoutConstraint.constant = 8.0f;
-        self.upgradeAccountTopLayoutConstraint.constant = 8.0f;
-        self.proViewTopLayoutConstraint.constant = 8.0f;
+        float constant = ([[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) ? 4.0f : 8.0f;
+        self.usedLabelTopLayoutConstraint.constant = constant;
+        self.accountTypeLabelTopLayoutConstraint.constant = constant + 1;
+        self.proViewTopLayoutConstraint.constant = constant;
+        self.upgradeAccountTopLayoutConstraint.constant = constant;
         self.logoutButtonTopLayoutConstraint.constant = 0.0f;
         self.logoutButtonTopImageView.backgroundColor = nil;
         self.logoutButtonBottomImageView.backgroundColor = nil;
@@ -107,9 +105,18 @@
     self.localUsedSpaceLabel.attributedText = [self textForSizeLabels:stringFromByteCount];
     
     [self setupWithAccountDetails];
-    [[MEGASdkManager sharedMEGASdk] getAccountDetails];
     
     self.emailLabel.text = [[MEGASdkManager sharedMEGASdk] myEmail];
+    
+    if (self.presentedViewController == nil) {
+        [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    if (self.presentedViewController == nil) {
+        [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
+    }
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -136,9 +143,6 @@
         [secondPartMutableAttributedString addAttribute:NSFontAttributeName
                                                   value:[UIFont mnz_SFUILightWithSize:12.0f]
                                                   range:secondPartRange];
-        [secondPartMutableAttributedString addAttribute:NSForegroundColorAttributeName
-                                                  value:[UIColor mnz_gray777777]
-                                                  range:secondPartRange];
         
         [firstPartMutableAttributedString appendAttributedString:secondPartMutableAttributedString];
     }
@@ -164,8 +168,6 @@
         
         NSString *expiresString;
         if (accountDetails.type) {
-            self.freeView.hidden = YES;
-            self.proView.hidden = NO;
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             dateFormatter.dateStyle = NSDateFormatterShortStyle;
             dateFormatter.timeStyle = NSDateFormatterNoStyle;
@@ -174,36 +176,41 @@
             
             NSDate *expireDate = [[NSDate alloc] initWithTimeIntervalSince1970:accountDetails.proExpiration];
             expiresString = [NSString stringWithFormat:AMLocalizedString(@"expiresOn", @"Text that shows the expiry date of the account PRO level"), [dateFormatter stringFromDate:expireDate]];
-        } else {
-            self.proView.hidden = YES;
-            self.freeView.hidden = NO;
         }
         
         switch (accountDetails.type) {
             case MEGAAccountTypeFree: {
+                self.proStatusLabel.text = AMLocalizedString(@"free", @"Text relative to the MEGA account level. UPPER CASE");
+                self.proStatusLabel.textColor = [UIColor mnz_green31B500];
+                
+                self.proExpiryDateLabelHeightLayoutConstraint.constant = 0;
                 break;
             }
                 
             case MEGAAccountTypeLite: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO LITE"];
+                self.proStatusLabel.textColor = [UIColor mnz_orangeFFA500];
                 self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
                 break;
             }
                 
             case MEGAAccountTypeProI: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO I"];
+                self.proStatusLabel.textColor = [UIColor mnz_redE13339];
                 self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
                 break;
             }
                 
             case MEGAAccountTypeProII: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO II"];
+                self.proStatusLabel.textColor = [UIColor mnz_redDC191F];
                 self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
                 break;
             }
                 
             case MEGAAccountTypeProIII: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO III"];
+                self.proStatusLabel.textColor = [UIColor mnz_redD90007];
                 self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
                 break;
             }
@@ -220,6 +227,13 @@
 
 - (IBAction)editTouchUpInside:(UIBarButtonItem *)sender {
     [super presentEditProfileAlertController];
+}
+
+- (IBAction)buyPROTouchUpInside:(UIButton *)sender {
+    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (IBAction)logoutTouchUpInside:(UIButton *)sender {

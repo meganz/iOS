@@ -930,6 +930,8 @@
 "available of %@"="共 %@ 可用";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="升級帳號";
+/*  */
+"chooseYourAccountType"="選擇您的帳號類型";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="您稍後可在\"我的帳戶\"中進行升級";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -938,14 +940,30 @@
 "cloudDriveIsFull"="[S]您的帳號空間已滿。[/S] [A]立即升級[/A]為PRO專業版帳戶，並可獲得[S]最高4TB (4096 GB)[/S] 的雲端儲存空間。";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="儲存空間";
-/* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="頻寬";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"transferQuota"="傳輸配額";
+/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
+"limited"="有限制的";
+/* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
+"subjectToYourParticipationInOurAchievementsProgram"="取決於您所達成的獎勵挑戰。";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%.2f %@ 每月";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="請從下列選取一個計畫:";
+/* Text that explains that you have to select the plan you want and/or need after creating an account */
+"selectOneAccountType"="Select one account type:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="選購一年期PRO專業版可獲贈兩個月免費";
+/* Text shown on the upgrade account page above the current PRO plan subscription */
+"currentPlan"="目前使用的方案：";
+/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
+"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
+/* Title text for the account confirmation. */
+"confirm"="確認";
+/* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
+"requestAPlan"="洽詢客製化專屬方案";
+/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
+"thereAreNoPlansSuitableForYourCurrentUsage"="如果未找到適合您的專業版方案，請聯繫我們的[A]客服團隊[/A]以協助您客製化專屬方案。";
 /* Header shown to help on the purchasin process */
 "selectMembership"="選擇會員資格:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */

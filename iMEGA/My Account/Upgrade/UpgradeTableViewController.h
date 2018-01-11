@@ -1,5 +1,7 @@
 #import <UIKit/UIKit.h>
 
-@interface UpgradeTableViewController : UITableViewController
+@interface UpgradeTableViewController : UIViewController
+
+@property (nonatomic, getter=isChoosingTheAccountType) BOOL chooseAccountType;
 
 @end
