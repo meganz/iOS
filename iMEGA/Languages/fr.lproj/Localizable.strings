@@ -7,7 +7,7 @@
 /* */
 "no"="Non";
 /* */
-"upload"="Téléversement";
+"upload"="Téléverser";
 /*  */
 "error"="Erreur";
 /*  */
@@ -67,7 +67,7 @@
 /* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
 "megaAccess"="ACCÈS MEGA";
 /* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="Créez un compte maintenant et obtenez 50 Go d'espace gratuits.";
+"megaSpaceText"="Créez un compte maintenant et obtenez 50 Go d’espace gratuits.";
 /* Message shown on the app's start animation to explain what MEGA SPEED means */
 "megaSpeedText"="Les téléversements sont rapides. Partagez rapidement des fichiers avec tout le monde.";
 /* Message shown on the app's start animation to explain what MEGA PRIVACY means */
@@ -225,7 +225,7 @@
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="Ressayer plus tard ou annuler";
 /* Section title of the 'Sort by' */
-"sortTitle"="TRIER";
+"sortTitle"="Trier";
 /* Button title to 'Save' the selected option */
 "save"="Enregistrer";
 /* Sort by option (1/6). This one orders the files alphabethically*/
@@ -363,9 +363,9 @@
 /* Success message shown when you have moved 1 file and 1 folder */
 "moveFileFolderMessage"="1 fichier et 1 dossier ont été déplacés";
 /* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="%d fichier et %d dossiers ont été déplacés";
+"moveFileFoldersMessage"="1 fichier et %d dossiers ont été déplacés";
 /* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="%d fichiers et %d dossier ont été déplacés";
+"moveFilesFolderMessage"="%d fichiers et 1 dossier ont été déplacés";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
 "moveFilesFoldersMessage"="[A] dossiers • [B] fichiers ont été déplacés";
 /* List option shown on the details of a file or folder */
@@ -533,7 +533,7 @@
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Erreur d'ajout de contact";
 /* Alert title shown when you want to remove one or more contacts */
-"removeUserTitle"="Supprimer les contacts";
+"removeUserTitle"="Supprimer le contact";
 /* Alert confirmation message shown when you want to remove one contact from your contacts list */
 "removeUserMessage"="Voulez-vous vraiment retirer %@ de votre liste de contacts ?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
@@ -561,7 +561,7 @@
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
 "XContactsSelected"="[X] contacts";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="Partager le dossier";
+"shareFolder"="Partager un dossier";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="Partager les dossiers";
 /* Button that allows you to select a given folder */
@@ -627,7 +627,7 @@
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
 "masterKey_firstParagraph"="Vos données ne sont lisibles qu'à la suite d'une chaîne d'opérations de déchiffrement qui commence par votre clé maîtresse de chiffrement (clé de récupération), que nous stockons chiffrée avec votre mot de passe. Cela signifie que si vous perdez votre mot de passe, votre clé de récupération ne pourra plus être déchiffrée et que vous ne pourrez plus déchiffrer vos données.";
 /*  */
-"masterKey_thirdParagraph"="Un attaquant externe ne peut pas accéder à votre compte avec seulement votre clé. Une réinitialisation du mot de passe exige à la fois la clé et l'accès à votre compte courriel.";
+"masterKey_thirdParagraph"="Un assaillant externe ne peut pas accéder à votre compte avec seulement votre clé. Une réinitialisation du mot de passe exige à la fois la clé et l’accès à votre compte de courriel.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
 "recoveryKeyCopiedToClipboard"="La clé de récupération a été copiée dans le presse-papiers";
 /* Alert title shown when you have exported your MEGA Recovery Key */
@@ -930,22 +930,40 @@
 "available of %@"="disponible sur %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Surclasser le compte";
+/*  */
+"chooseYourAccountType"="Choisir votre type de compte";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Vous pourrez surclasser votre compte ultérieurement dans Mon compte";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Le disque nuagique est presque plein.[/S] [A]Passez maintenant[/A] à un compte PRO et obtenez [S]jusqu'à 4 To (4 096 Go)[/S] d'espace nuagique de stockage";
+"cloudDriveIsAlmostFull"="[S]Votre disque nuagique est presque plein.[/S] [A]Passez maintenant[/A] à un compte PRO et obtenez [S]jusqu’à 4 To (4 096 Go)[/S] d’espace nuagique de stockage.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Votre compte est plein.[/S] [A]Passez maintenant[/A] à un compte PRO et obtenez [S]jusqu'à 4 To (4 096 Go)[/S] d'espace de stockage nuagique.      ";
+"cloudDriveIsFull"="[S]Votre compte est plein.[/S] [A]Passez maintenant[/A] à un compte PRO et obtenez [S]jusqu’à 4 To (4 096 Go)[/S] d’espace de stockage nuagique.      ";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Espace de stockage";
-/* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="Bande passante";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"transferQuota"="Quota de transfert";
+/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
+"limited"="Limités";
+/* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
+"subjectToYourParticipationInOurAchievementsProgram"="Sous réserve de votre participation au programme d'objectifs.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%.2f %@ par mois";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Choisir une des offres ci-dessous :";
+/* Text that explains that you have to select the plan you want and/or need after creating an account */
+"selectOneAccountType"="Select one account type:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="Obtenez deux mois gratuits si vous vous abonnez à une offre PRO d'un an";
+/* Text shown on the upgrade account page above the current PRO plan subscription */
+"currentPlan"="Abonnement actuel :";
+/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
+"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
+/* Title text for the account confirmation. */
+"confirm"="Confirmer";
+/* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
+"requestAPlan"="Demander une offre";
+/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
+"thereAreNoPlansSuitableForYourCurrentUsage"="Aucune offre ne correspond à votre utilisation actuelle. Veuillez [A]contacter l'assistance[/A] pour obtenir une offre personnalisée.";
 /* Header shown to help on the purchasin process */
 "selectMembership"="Choisir un abonnement : ";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
@@ -1055,7 +1073,7 @@
 /*  */
 "busy"="Occupé";
 /* title of the contact properties screen */
-"contactInfo"="Renseignement sur le contact";
+"contactInfo"="Renseignements sur le contact";
 /*  */
 "notifications"="Notifications";
 /* Title to perform the action of sending a message to a contact. */
@@ -1063,9 +1081,9 @@
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Vérifier les coordonnées";
 /* A button title to delete the history of a chat. */
-"clearChatHistory"="Effacer l'historique de la conversation";
+"clearChatHistory"="Effacer l’historique de la conversation";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
-"clearTheFullMessageHistory"="Voulez-vous vraiment effacer l'historique entier des messages de cette conversation ?";
+"clearTheFullMessageHistory"="Voulez-vous vraiment effacer l’historique entier de cette conversation ?";
 /* 'Next' button in a dialog */
 "continue"="Poursuivre";
 /* Button title that allows the user to close a chat. */
@@ -1145,7 +1163,7 @@
 /* referring to a contact in the contact list of the user */
 "contact"="Contact";
 /* A button label. The button sends contact information to a user in the conversation. */
-"sendContact"="Envoyer le contact";
+"sendContact"="Envoyer un contact";
 /* */
 "done"="Terminé";
 /* Button label for sending file attachments through the chat to another user. */
@@ -1249,7 +1267,7 @@
 "languageRestartNotification"="La langue a été changée. Toucher pour redémarrer.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA est un service de stockage nuagique sécurisé qui vous offre gratuitement 50 Go d'espace de stockage gratuit. Contrairement aux autres fournisseurs de stockage nuagique, vos données sont  seulement chiffrées et déchiffrées par vos appareils client et jamais par nous.";
+"generalDescriptionParagraph1"="MEGA est un service de stockage nuagique sécurisé qui vous offre gratuitement 50 Go d’espace de stockage gratuit. Contrairement aux autres fournisseurs de stockage nuagique, vos données sont seulement chiffrées et déchiffrées par vos appareils client et jamais par nous.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph2"="Téléversez vos fichiers de votre téléphone intelligent ou tablette, puis recherchez, stockez, téléchargez, lisez en continu, visualisez, partagez, renommez ou supprimez vos fichiers n'importe quand, de n'importe quel appareil, n'importe où. Partagez des dossiers avec vos contacts et suivez leurs modifications en temps réel.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
@@ -1257,7 +1275,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="Dans l'appli, vous pouvez surclasser votre espace de stockage et votre quota de transfert grâce à un abonnement mensuel ou annuel.";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Abonnement PRO LÉGER : 4,99 € (4,99 $ USD) par mois ou 49,99 € (49,99 $ USD) par an vous donne 200 Go d'espace de stockage et 1 To de quota de transfert par mois.Abonnement PRO I : 9,99 € (9,99 $ USD) par mois ou 99,99 € (99,99 $ USD) par an vous donne 1 To d'espace de stockage et 2 To de quota de transfert par mois.Abonnement PRO II : 19,99 € (19,99 $ USD) par mois ou 199,99 € (199,99 $ USD) par an vous donne 4 To d'espace de stockage et 8 To de quota de transfert par mois.Abonnement PRO III : 29,99 € (29,99 $ USD) par mois ou 299,99 € (299,99 $ USD) par an vous donne 8 To d'espace de stockage et 16 To de quota de transfert par mois.";
+"generalDescriptionParagraph5"="Abonnement PRO LÉGER : 4,99 € (4,99 USD) par mois ou 49,99 € (49,99 USD) par an vous donne 200 Go d’espace de stockage et 1 To de quota de transfert par mois.Abonnement PRO I : 9,99 € (9,99 USD) par mois ou 99,99 € (99,99 USD) par an vous donne 1 To d’espace de stockage et 2 To de quota de transfert par mois.Abonnement PRO II : 19,99 € (19,99 USD) par mois ou 199,99 € (199,99 USD) par an vous donne 4 To d’espace de stockage et 8 To de quota de transfert par mois.Abonnement PRO III : 29,99 € (29,99 USD) par mois ou 299,99 € (299,99 USD) par an vous donne 8 To d’espace de stockage et 16 To de quota de transfert par mois.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Pour plus d'informations, veuillez consulter notre site :Mobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmlOrdinateur - https://mega.nz/";

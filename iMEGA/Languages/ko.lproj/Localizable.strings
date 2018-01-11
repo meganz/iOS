@@ -843,7 +843,7 @@
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="친구를 초대하세요";
 /* title of the introduction for the achievements screen */
-"inviteFriendsAndGetForEachReferral"="초대할 때마다 $1s의 저장 공간과 %2s의 전송 할당량을 받습니다";
+"inviteFriendsAndGetForEachReferral"="초대할 때마다 %1$s의 저장 공간과 %2$s의 전송 할당량을 받습니다";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
 /*  */
@@ -930,6 +930,8 @@
 "available of %@"="사용가능함. 전체 공간: %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="계정 업그레이드";
+/*  */
+"chooseYourAccountType"="계정 유형을 선택하세요";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="나중에 내 계정에서 업그레이드할 수 있습니다";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -938,14 +940,30 @@
 "cloudDriveIsFull"="[S]계정이 가득 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 4TB (4096 GB)[/S]의 클라우드 저장 공간을 얻으세요.                ";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="저장소";
-/* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="대역폭";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"transferQuota"="전송 할당량";
+/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
+"limited"="제한됨";
+/* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
+"subjectToYourParticipationInOurAchievementsProgram"="도전 과제 프로그램에 참여할 수 있습니다.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="월 %.2f %@";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="아래에서 요금제를 선택하세요:";
+/* Text that explains that you have to select the plan you want and/or need after creating an account */
+"selectOneAccountType"="Select one account type:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="PRO 요금제를 1년 구독하면 2개월을 무료로 드립니다";
+/* Text shown on the upgrade account page above the current PRO plan subscription */
+"currentPlan"="현재 요금제:";
+/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
+"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
+/* Title text for the account confirmation. */
+"confirm"="확인";
+/* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
+"requestAPlan"="요금제 요청";
+/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
+"thereAreNoPlansSuitableForYourCurrentUsage"="현재 사용량에 맞는 요금제가 없습니다. 개인화된 요금제는 [A]지원에 연락[/A]하세요.";
 /* Header shown to help on the purchasin process */
 "selectMembership"="멤버쉽 선택:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
@@ -1251,7 +1269,7 @@
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA는 당신에게 50 GB의 무료 저장 공간을 주는 안전한 클라우드 저장소 서비스입니다. 다른 클라우드 저장소 제공자들과 달리, 당신의 데이터는 우리가 아닌 당신의 클라이언트 기기에서만 암호화되고 해독됩니다.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="당신의 스마트폰이나 타블렛에서 파일을 업로드하고, 어느 기기에서나 어디서든지 당신의 파일을 검색, 보관, 다운로드, 스트림, 보기, 공유, 이름변경 또는 삭제하세요. 당신의 연락처와 폴더를 공유하고 그들의 업데이트를 실시간으로 보세요.";
+"generalDescriptionParagraph2"="당신의 스마트폰이나 태블릿에서 파일을 업로드하고, 어느 기기에서나 어디서든지 당신의 파일을 검색, 보관, 다운로드, 스트림, 보기, 공유, 이름변경 또는 삭제하세요. 당신의 연락처와 폴더를 공유하고 그들의 업데이트를 실시간으로 보세요.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="암호화 과정은 우리가 당신의 비밀번호에 접근하거나 초기화할 수 없기 때문에 반드시 기억해야한다는 것입니다 (복구 키를 백업하지 않는 이상) 그렇지 않으면 저장된 파일에 대한 접근을 잃게 됩니다.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */

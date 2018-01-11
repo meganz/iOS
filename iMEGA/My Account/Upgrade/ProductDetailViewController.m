@@ -6,6 +6,7 @@
 
 #import "MEGANavigationController.h"
 #import "MEGAPurchase.h"
+#import "MEGASdk+MNZCategory.h"
 
 @interface ProductDetailViewController () <MEGAPurchaseDelegate, UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate> {
     BOOL isPurchased;
@@ -62,27 +63,31 @@
     [_storageSizeLabel setText:_storageString];
     [_bandwidthSizeLabel setText:_bandwidthString];
     
-    UIBarButtonItem *restoreBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"restore", nil) style:UIBarButtonItemStylePlain target:self action:@selector(restore)];
-    [restoreBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
-    [self.navigationItem setRightBarButtonItem:restoreBarButtonItem];
+    if (!self.isChoosingTheAccountType) {
+        UIBarButtonItem *restoreBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"restore", @"Button title to restore failed purchases") style:UIBarButtonItemStylePlain target:self action:@selector(restore)];
+        [restoreBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItem = restoreBarButtonItem;
+    }
     
     [[MEGAPurchase sharedInstance] setDelegate:self];
     isPurchased = NO;
     
     [_storageLabel setText:AMLocalizedString(@"productSpace", nil)];
-    [_bandwidthLabel setText:AMLocalizedString(@"productBandwidth", nil)];
+    self.bandwidthLabel.text = AMLocalizedString(@"transferQuota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.");
     [_selectMembershiptLabel setText:AMLocalizedString(@"selectMembership", nil)];
     [_save17Label setText:AMLocalizedString(@"save17", nil)];
+    
+    if ([[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
+        UIAlertController *youAlreadyHaveAProAccountAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"warning", nil) message:AMLocalizedString(@"youAlreadyHaveAPROAccount", @"Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account)")  preferredStyle:UIAlertControllerStyleAlert];
+        [youAlreadyHaveAProAccountAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"confirm", @"Title text for the account confirmation.") style:UIAlertActionStyleCancel handler:nil]];
+        
+        [self presentViewController:youAlreadyHaveAProAccountAlertController animated:YES completion:nil];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[MEGAPurchase sharedInstance] setDelegate:nil];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Private

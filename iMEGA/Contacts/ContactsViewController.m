@@ -284,6 +284,10 @@
         }
     }
     
+    if (self.contactsMode == ContactsModeChatStartConversation && (self.visibleUsersArray.count == 0 || self.visibleUsersArray.count == 1)) {
+        self.groupBarButtonItem.enabled = NO;
+    }
+    
     [self.tableView reloadData];
 }
 

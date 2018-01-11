@@ -331,7 +331,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="คัดลอกลิงก์";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Copy key";
+"copyKey"="คัดลอกคีย์";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="เปิดด้วย...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -839,7 +839,7 @@
 /* Title of the Used storage section */
 "usedStorage"="Used storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get bonuses";
+"inviteFriendsAndGetRewards"="เชิญเพื่อนและรับโบนัส";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="เชิญเพื่อนของคุณ";
 /* title of the introduction for the achievements screen */
@@ -930,6 +930,8 @@
 "available of %@"="ใช้ได้อีก %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="อัปเกรดบัญชี";
+/*  */
+"chooseYourAccountType"="เลือกประเภทบัญชีของคุณ";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="คุณสามารถอัปเกรดภายหลังได้ในบัญชีของฉัน";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -938,14 +940,30 @@
 "cloudDriveIsFull"="[S]บัญชีของคุณเต็มแล้ว[/S] [A]อัปเกรดเดี๋ยวนี้[/A] เป็นบัญชี PRO และเพิ่มพื้นที่เก็บข้อมูลระบบคลาวด์ได้ถึง [S]4 TB (4096 GB)[/S]";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="พื้นที่จัดเก็บข้อมูล";
-/* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="แบนด์วิดธ์";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"transferQuota"="โควต้าการโอน";
+/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
+"limited"="ถูกจำกัด";
+/* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
+"subjectToYourParticipationInOurAchievementsProgram"="ขึ้นอยู่กับการมีส่วนร่วมในโครงการความสำเร็จของเรา";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%.2f %@ ต่อเดือน";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="เลือกแผนใดแผนหนึ่งด้านล่างนี้:";
+/* Text that explains that you have to select the plan you want and/or need after creating an account */
+"selectOneAccountType"="Select one account type:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="รับฟรีสองเดือนทันที เมื่อสมัครใช้งานแบบ PRO 1 ปี";
+/* Text shown on the upgrade account page above the current PRO plan subscription */
+"currentPlan"="Current Plan:";
+/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
+"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
+/* Title text for the account confirmation. */
+"confirm"="ยืนยัน";
+/* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
+"requestAPlan"="ส่งคำขอแผน";
+/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
+"thereAreNoPlansSuitableForYourCurrentUsage"="ยังไม่มีแผนที่เหมาะสมกับการใช้งานปัจจุบันของคุณ กรุณา [A]ติดต่อฝ่ายสนับสนุน[/A] เพื่อกำหนดแผนของคุณเอง";
 /* Header shown to help on the purchasin process */
 "selectMembership"="เลือกประเภทสมาชิก:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */

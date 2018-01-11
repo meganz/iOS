@@ -7,6 +7,7 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 #pragma mark - Black
 
++ (UIColor *)mnz_black262626;
 + (UIColor *)mnz_black333333;
 + (UIColor *)mnz_black333333_02;
 + (UIColor *)mnz_black000000_01;
