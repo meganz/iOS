@@ -36,7 +36,9 @@
 @property (strong, nonatomic) UISearchController *searchController;
 @end
 
-@implementation ChatRoomsViewController
+@implementation ChatRoomsViewController {
+    NSDate *twoDaysAgo;
+}
 
 #pragma mark - Lifecycle
 
@@ -70,6 +72,10 @@
     UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = backBarButton;
 
+    twoDaysAgo = [[NSCalendar currentCalendar] dateByAddingUnit:NSCalendarUnitDay
+                                                         value:-2
+                                                        toDate:[NSDate date]
+                                                       options:0];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -372,8 +378,8 @@
                 lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", componentsArray.count]];
             }
             cell.chatLastMessage.text = lastMessageString;
-            cell.chatLastTime.text = item.lastMessageDate.shortTimeAgoSinceNow;
             cell.chatLastTime.hidden = NO;
+            cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
             break;
         }
             
@@ -388,15 +394,15 @@
                 lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", componentsArray.count]];
             }
             cell.chatLastMessage.text = lastMessageString;
-            cell.chatLastTime.text = item.lastMessageDate.shortTimeAgoSinceNow;
             cell.chatLastTime.hidden = NO;
+            cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
             break;
         }
             
         default: {
             cell.chatLastMessage.text = item.lastMessage;
-            cell.chatLastTime.text = item.lastMessageDate.shortTimeAgoSinceNow;
             cell.chatLastTime.hidden = NO;
+            cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
             break;
         }
     }

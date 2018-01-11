@@ -141,6 +141,18 @@ https://github.com/soffes/SAMKeychain/blob/master/LICENSE
 
 --------------------------------------------------------------------
 
+#### SearchEmojiOnString
+https://github.com/GabrielMassana/SearchEmojiOnString-iOS
+
+Copyright (c) 2016 GabrielMassana
+
+###### License:
+The MIT License (MIT)
+
+https://github.com/GabrielMassana/SearchEmojiOnString-iOS/blob/master/LICENSE.md
+
+--------------------------------------------------------------------
+
 #### SVProgressHUD
 https://github.com/SVProgressHUD/SVProgressHUD
 
