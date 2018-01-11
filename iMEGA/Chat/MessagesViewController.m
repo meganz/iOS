@@ -318,7 +318,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         }
     };
     
-    [self presentViewController:navigationController animated:YES completion:nil];
+    [self presentViewController:navigationController animated:YES completion:^{
+        self.automaticallyScrollsToMostRecentMessage = YES;
+    }];
 }
 
 - (void)updateUnreadLabel {
