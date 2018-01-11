@@ -329,7 +329,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)customiseCollectionViewLayout {
     self.collectionView.collectionViewLayout.messageBubbleFont = [UIFont mnz_SFUIRegularWithSize:15.0f];
-    self.collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(9.0f, 9.0f, 9.0f, 9.0f);
+    self.collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f);
     
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeMake(kAvatarImageDiameter, kAvatarImageDiameter);
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeMake(0.0f, 0.0f);
@@ -921,14 +921,15 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         cell.accessoryButton.hidden = NO;
         
         cell.textView.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
+        cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? [UIColor whiteColor] : [UIColor mnz_black333333];
         if (message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
-            cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? [UIColor mnz_whiteFFFFFF_02] : [UIColor mnz_black333333_02];
+            cell.contentView.alpha = 0.7f;
             if (message.status == MEGAChatMessageStatusSendingManual) {
                 [cell.accessoryButton setImage:[UIImage imageNamed:@"sending_manual"] forState:UIControlStateNormal];
                 cell.accessoryButton.hidden = NO;
             }
         } else {
-            cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? [UIColor whiteColor] : [UIColor mnz_black333333];
+            cell.contentView.alpha = 1.0f;
         }
     } else if (message.isDeleted) {
         cell.textView.font = [UIFont mnz_SFUIRegularItalicWithSize:15.0f];
@@ -937,14 +938,15 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         cell.textView.attributedText = message.attributedText;
     } else if (!message.isMediaMessage) {
         cell.textView.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
+        cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? [UIColor whiteColor] : [UIColor mnz_black333333];
         if (message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
-            cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? [UIColor mnz_whiteFFFFFF_02] : [UIColor mnz_black333333_02];
+            cell.contentView.alpha = 0.7f;
             if (message.status == MEGAChatMessageStatusSendingManual) {
                 [cell.accessoryButton setImage:[UIImage imageNamed:@"sending_manual"] forState:UIControlStateNormal];
                 cell.accessoryButton.hidden = NO;
             }
         } else {
-            cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? [UIColor whiteColor] : [UIColor mnz_black333333];
+            cell.contentView.alpha = 1.0f;
         }
         cell.textView.linkTextAttributes = @{ NSForegroundColorAttributeName : cell.textView.textColor,
                                               NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
