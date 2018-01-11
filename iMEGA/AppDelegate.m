@@ -650,6 +650,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
         if (self.urlType == URLTypeConfirmationLink) {
             UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
             MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+            upgradeTVC.chooseAccountType = YES;
+            
             [self presentLinkViewController:navigationController];
             self.urlType = URLTypeDefault;
         }
@@ -1657,10 +1659,8 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if ((alertView.tag == 0) && (buttonIndex == 1)) {
-        
         UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
         MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-        [upgradeTVC.navigationItem setRightBarButtonItem:[self cancelBarButtonItem]];
         
         [self dismissPresentedViews];
         
@@ -2636,28 +2636,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         
         if (transfer.fileName.mnz_isVideoPathExtension && !node.hasThumbnail) {
             NSURL *videoURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path]];
-            AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:videoURL options:nil];
-            AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
-            generator.appliesPreferredTrackTransform = YES;
-            CMTime requestedTime = CMTimeMake(1, 60);
-            CGImageRef imgRef = [generator copyCGImageAtTime:requestedTime actualTime:NULL error:NULL];
-            UIImage *image = [[UIImage alloc] initWithCGImage:imgRef];
-            
-            NSString *tmpImagePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:node.base64Handle] stringByAppendingPathExtension:@"jpg"];
-            
-            [UIImageJPEGRepresentation(image, 1) writeToFile:tmpImagePath atomically:YES];
-            
-            CGImageRelease(imgRef);
-            
-            NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
-            [api createThumbnail:tmpImagePath destinatioPath:thumbnailFilePath];
-            [api setThumbnailNode:node sourceFilePath:thumbnailFilePath];
-            
-            NSString *previewFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
-            [api createPreview:tmpImagePath destinatioPath:previewFilePath];
-            [api setPreviewNode:node sourceFilePath:previewFilePath];
-            
-            [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
+            [node mnz_generateThumbnailForVideoAtPath:videoURL];
         }
     }
 }

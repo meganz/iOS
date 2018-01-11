@@ -37,7 +37,9 @@
 @property (strong, nonatomic) UISearchController *searchController;
 @end
 
-@implementation ChatRoomsViewController
+@implementation ChatRoomsViewController {
+    NSDate *twoDaysAgo;
+}
 
 #pragma mark - Lifecycle
 
@@ -71,6 +73,10 @@
     UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = backBarButton;
 
+    twoDaysAgo = [[NSCalendar currentCalendar] dateByAddingUnit:NSCalendarUnitDay
+                                                         value:-2
+                                                        toDate:[NSDate date]
+                                                       options:0];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -84,31 +90,37 @@
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
         self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
-        for (NSUInteger i = 0; i < self.chatListItemList.size ; i++) {
-            MEGAChatListItem *chatListItem = [self.chatListItemList chatListItemAtIndex:i];
-            [self.chatListItemArray addObject:chatListItem];
+        if (self.chatListItemList.size) {
+            for (NSUInteger i = 0; i < self.chatListItemList.size ; i++) {
+                MEGAChatListItem *chatListItem = [self.chatListItemList chatListItemAtIndex:i];
+                [self.chatListItemArray addObject:chatListItem];
+            }
+            
+            self.chatListItemArray = [[self.chatListItemArray sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+                NSDate *first  = [(MEGAChatListItem *)a lastMessageDate];
+                NSDate *second = [(MEGAChatListItem *)b lastMessageDate];
+                
+                if (!first) {
+                    first = [NSDate dateWithTimeIntervalSince1970:0];
+                }
+                
+                if (!second) {
+                    second = [NSDate dateWithTimeIntervalSince1970:0];
+                }
+                
+                return [second compare:first];
+            }] mutableCopy];
+            
+            [self updateChatIdIndexPathDictionary];
+            
+            if (!self.tableView.tableHeaderView) {
+                self.tableView.tableHeaderView = self.searchController.searchBar;
+            }
+        } else {
+            self.tableView.tableHeaderView = nil;
         }
         
         self.addBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
-        if (!self.tableView.tableHeaderView) {
-            self.tableView.tableHeaderView = self.searchController.searchBar;
-        }
-        
-        self.chatListItemArray = [[self.chatListItemArray sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-            NSDate *first  = [(MEGAChatListItem *)a lastMessageDate];
-            NSDate *second = [(MEGAChatListItem *)b lastMessageDate];
-            
-            if (!first) {
-                first = [NSDate dateWithTimeIntervalSince1970:0];
-            }
-            if (!second) {
-                second = [NSDate dateWithTimeIntervalSince1970:0];
-            }
-            
-            return [second compare:first];
-        }] mutableCopy];
-        
-        [self updateChatIdIndexPathDictionary];
         
         [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     } else {
@@ -367,8 +379,8 @@
                 lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", componentsArray.count]];
             }
             cell.chatLastMessage.text = lastMessageString;
-            cell.chatLastTime.text = item.lastMessageDate.shortTimeAgoSinceNow;
             cell.chatLastTime.hidden = NO;
+            cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
             break;
         }
             
@@ -383,15 +395,15 @@
                 lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", componentsArray.count]];
             }
             cell.chatLastMessage.text = lastMessageString;
-            cell.chatLastTime.text = item.lastMessageDate.shortTimeAgoSinceNow;
             cell.chatLastTime.hidden = NO;
+            cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
             break;
         }
             
         default: {
             cell.chatLastMessage.text = item.lastMessage;
-            cell.chatLastTime.text = item.lastMessageDate.shortTimeAgoSinceNow;
             cell.chatLastTime.hidden = NO;
+            cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
             break;
         }
     }
@@ -548,10 +560,6 @@
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     NSInteger numberOfRows = 0;
@@ -681,6 +689,9 @@
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
     CGPoint rowPoint = [self.tableView convertPoint:location fromView:self.view];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:rowPoint];
+    if (![self.tableView numberOfRowsInSection:indexPath.section]) {
+        return nil;
+    }
     
     previewingContext.sourceRect = [self.tableView convertRect:[self.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view];
     

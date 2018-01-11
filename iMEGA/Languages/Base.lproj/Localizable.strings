@@ -936,6 +936,8 @@
 "available of %@"="available of %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Upgrade account";
+/*  */
+"chooseYourAccountType"="Choose your account type";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -946,10 +948,16 @@
 "productSpace"="Storage";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "transferQuota"="Transfer quota";
+/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
+"limited"="Limited";
+/* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
+"subjectToYourParticipationInOurAchievementsProgram"="Subject to your participation in our achievements program.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%.2f %@ per month";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Choose one of the plans from below:";
+/* Text that explains that you have to select the plan you want and/or need after creating an account */
+"selectOneAccountType"="Select one account type:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="Get two months free if you subscribe to a one-year PRO plan";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1200,6 +1208,14 @@
 "attachedFile"="Attached: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="Attached %s files.";
+/* A summary message when a user sent the information of one contact through the chat. */
+"sharedContact"="Shared this contact:";
+/* A summary message when a user sent the information of some contacts at once through the chat. */
+"sharedContacts"="Shared these contacts:";
+/* A summary message when a user has attached one file into the chat. */
+"uploadedFile"="Uploaded this file:";
+/* A summary message when a user has attached many files at once into the chat. */
+"uploadedFiles"="Uploaded these files:";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */

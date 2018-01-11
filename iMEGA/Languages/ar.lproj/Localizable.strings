@@ -53,7 +53,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="مفتاح طبقة المنفذ الآمن (SSL) لايمكن توثيقه، ربما تتأثر من هجوم رجل في الوسط.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
+"theContentIsNotAvailableForThisAccount"="المحتوى الذي تحاول الدخول إليه غير متاح لهذا الحساب. حاول تسجيل الدخول بنفس الحساب كما هو الحال في موقع الويب للجوال.";
 /* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
 "takingLongerThanExpected"="تستغرق العملية وقتا أطول من المتوقع. الرجاء الإنتظار...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -181,7 +181,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="أضف جهات اتصال ";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
-"received"="Received";
+"received"="تم الاستلام";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="تم الارسال";
 /* Success message shown when you acepted a contact request */
@@ -291,7 +291,7 @@
 /* Item menu option upon right click on one or multiple files. */
 "manageLink"="إدارة الرابط";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"manageLinks"="Manage links";
+"manageLinks"="إدارة الروابط";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="توليد الرابط...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -331,7 +331,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="نسخ الرابط";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Copy key";
+"copyKey"="انسخ المفتاح";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="فتح في...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -827,7 +827,7 @@
 /* Title of My Account section. There you can see your account details */
 "myAccount"="حسابي";
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
-"buyPRO"="Buy PRO";
+"buyPRO"="اشتر باقة PRO";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="الترقية";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -837,9 +837,9 @@
 /* Title of the Achievements section */
 "achievementsTitle"="الإنجازات";
 /* Title of the Used storage section */
-"usedStorage"="Used storage";
+"usedStorage"="المساحة المستخدمة ";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get bonuses";
+"inviteFriendsAndGetRewards"="ادع أصدقائك واحصل على ترقيات ";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="ادع اصدقائك";
 /* title of the introduction for the achievements screen */
@@ -930,6 +930,8 @@
 "available of %@"="المساحة المتوفرة %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="ترقية الحساب";
+/*  */
+"chooseYourAccountType"="اختر نوع حسابك";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="تستطيع الترقية لاحقا عبر حسابك";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -938,14 +940,30 @@
 "cloudDriveIsFull"="[S]سحابة التخزين ممتلئة بالكامل[/S] [A]رق حسابك الآن إلى[/A] ل PRO واحصل على [S]4 تيرابايت (4000 جيجابايت)[/S] كمساحة تخزين.                ";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="التخزين";
-/* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="نقل البيانات";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"transferQuota"="حصة النقل";
+/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
+"limited"="محدود";
+/* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
+"subjectToYourParticipationInOurAchievementsProgram"="خاضع لمشاركاتك في برنامج إنجازاتنا.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%.2f %@ شهريا";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="اختر احدي الخطط ادناة:";
+/* Text that explains that you have to select the plan you want and/or need after creating an account */
+"selectOneAccountType"="Select one account type:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="احصل على شهرين مجانا إذا قمت بالاشتراك في خطة برو لعام واحد";
+/* Text shown on the upgrade account page above the current PRO plan subscription */
+"currentPlan"="الباقة الحالية:";
+/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
+"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
+/* Title text for the account confirmation. */
+"confirm"="تأكيد";
+/* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
+"requestAPlan"="طلب خطة";
+/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
+"thereAreNoPlansSuitableForYourCurrentUsage"="لا يوجد خطط مناسبة لاستخدامك الحالي. يرجى [A]الاتصال بالدعم[/A] لوضع خطة مخصصة.";
 /* Header shown to help on the purchasin process */
 "selectMembership"="اختر العضوية";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */

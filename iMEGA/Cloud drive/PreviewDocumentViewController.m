@@ -88,16 +88,6 @@
 
 - (void)previewControllerWillDismiss:(QLPreviewController *)controller {
     previewDocumentTransfer = nil;
-    
-    if (@available(iOS 9.0, *)) {
-        [self.navigationController popViewControllerAnimated:NO];
-    }
-}
-
-- (void)previewControllerDidDismiss:(QLPreviewController *)controller {
-    if (@available(iOS 9.0, *)) {} else {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
 }
 
 #pragma mark - MEGATransferDelegate

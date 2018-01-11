@@ -48,4 +48,18 @@
     return font;
 }
 
++ (UIFont *)mnz_defaultFontForPureEmojiStringWithEmojis:(NSUInteger)emojiCount {
+    CGFloat size = 15.0f;
+    
+    if (emojiCount == 1) {
+        size = 45.0f;
+    } else if (emojiCount == 2) {
+        size = 35.0f;
+    } else if (emojiCount == 3) {
+        size = 25.0f;
+    }
+    
+    return [UIFont mnz_SFUIRegularWithSize:size];
+}
+
 @end

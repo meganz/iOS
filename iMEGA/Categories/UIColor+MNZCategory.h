@@ -7,6 +7,7 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 #pragma mark - Black
 
++ (UIColor *)mnz_black262626;
 + (UIColor *)mnz_black333333;
 + (UIColor *)mnz_black333333_02;
 + (UIColor *)mnz_black000000_01;
@@ -22,17 +23,19 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 + (UIColor *)mnz_gray777777;
 + (UIColor *)mnz_gray8A8A8A;
 + (UIColor *)mnz_gray999999;
-+ (UIColor *)mnz_grayEEEEEE;
-+ (UIColor *)mnz_grayE3E3E3;
-+ (UIColor *)mnz_grayF5F5F5;
 + (UIColor *)mnz_grayCCCCCC;
++ (UIColor *)mnz_grayE2EAEA;
++ (UIColor *)mnz_grayE3E3E3;
++ (UIColor *)mnz_grayEEEEEE;
++ (UIColor *)mnz_grayF5F5F5;
 + (UIColor *)mnz_grayF7F7F7;
 + (UIColor *)mnz_grayF9F9F9;
 
 #pragma mark - Green
 
-+ (UIColor *)mnz_green31B500;
++ (UIColor *)mnz_green00BFA5;
 + (UIColor *)mnz_green13E03C;
++ (UIColor *)mnz_green31B500;
 
 #pragma mark - Orange
 
@@ -51,6 +54,10 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 #pragma mark - Pink
 
 + (UIColor *)mnz_pinkFF1A53;
+
+#pragma mark - White
+
++ (UIColor *)mnz_whiteFFFFFF_02;
 
 + (UIColor *)colorFromHexString:(NSString *)hexString;
 
