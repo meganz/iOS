@@ -727,11 +727,7 @@
     if (nodeSelected.name.mnz_isImagePathExtension) {
         return [nodeSelected mnz_photoBrowserWithNodes:[self.nodeList mnz_nodesArrayFromNodeList] folderLink:NO displayMode:0 enableMoveToRubbishBin:YES hideControls:YES];
     } else {
-        UIViewController *viewController = [nodeSelected mnz_viewControllerForNodeInFolderLink:NO];
-        if (viewController.class == MEGAAVViewController.class) {
-            ((MEGAAVViewController *)viewController).peekAndPop = YES;
-        }
-        
+        UIViewController *viewController = [nodeSelected mnz_viewControllerForNodeInFolderLink:NO];        
         return viewController;
     }
     
