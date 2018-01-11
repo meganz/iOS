@@ -671,6 +671,10 @@
         CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.photosCollectionView];
         NSIndexPath *indexPath = [self.photosCollectionView indexPathForItemAtPoint:touchPoint];
         
+        if (![self.photosCollectionView numberOfSections] || ![self.photosCollectionView numberOfItemsInSection:indexPath.section]) {
+            return;
+        }
+        
         if (self.isEditing) {
             // Only stop editing if long pressed over a cell that is the only one selected or when selected none
             if (self.selectedItemsDictionary.count == 0) {
@@ -710,6 +714,9 @@
     
     CGPoint itemPoint = [self.photosCollectionView convertPoint:location fromView:self.view];
     NSIndexPath *indexPath = [self.photosCollectionView indexPathForItemAtPoint:itemPoint];
+    if (![self.photosCollectionView numberOfSections] || ![self.photosCollectionView numberOfItemsInSection:indexPath.section]) {
+        return nil;
+    }
     
     previewingContext.sourceRect = [self.photosCollectionView convertRect:[self.photosCollectionView cellForItemAtIndexPath:indexPath].frame toView:self.view];
     
@@ -720,11 +727,7 @@
     if (nodeSelected.name.mnz_isImagePathExtension) {
         return [nodeSelected mnz_photoBrowserWithNodes:[self.nodeList mnz_nodesArrayFromNodeList] folderLink:NO displayMode:0 enableMoveToRubbishBin:YES hideControls:YES];
     } else {
-        UIViewController *viewController = [nodeSelected mnz_viewControllerForNodeInFolderLink:NO];
-        if (viewController.class == MEGAAVViewController.class) {
-            ((MEGAAVViewController *)viewController).peekAndPop = YES;
-        }
-        
+        UIViewController *viewController = [nodeSelected mnz_viewControllerForNodeInFolderLink:NO];        
         return viewController;
     }
     

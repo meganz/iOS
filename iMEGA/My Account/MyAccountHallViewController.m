@@ -4,6 +4,7 @@
 #import "AchievementsViewController.h"
 #import "ContactsViewController.h"
 #import "OfflineTableViewController.h"
+#import "MEGANavigationController.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
 #import "MEGASdkManager.h"
@@ -11,6 +12,7 @@
 #import "MyAccountViewController.h"
 #import "SettingsTableViewController.h"
 #import "TransfersViewController.h"
+#import "UpgradeTableViewController.h"
 #import "UsageViewController.h"
 
 @interface MyAccountHallViewController () <UITableViewDataSource, UITableViewDelegate, MEGAGlobalDelegate, MEGARequestDelegate>
@@ -43,9 +45,6 @@
     self.navigationItem.title = AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details");
     
     self.buyPROBarButtonItem.title = AMLocalizedString(@"upgrade", @"Caption of a button to upgrade the account to Pro status");
-    if ([[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
-        self.navigationItem.rightBarButtonItems = nil;
-    }
     
     self.viewAndEditProfileLabel.text = AMLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
     
@@ -115,6 +114,13 @@
 }
 
 #pragma mark - IBActions
+
+- (IBAction)buyPROTouchUpInside:(UIBarButtonItem *)sender {
+    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
 
 - (IBAction)viewAndEditProfileTouchUpInside:(UIButton *)sender {
     MyAccountViewController *myAccountVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"MyAccountViewControllerID"];
@@ -295,10 +301,13 @@
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if (error.type)
-        return;
+    [super onRequestFinish:api request:request error:error];
     
     if (request.type == MEGARequestTypeAccountDetails) {
+        if (error.type) {
+            return;
+        }
+        
         [self reloadUI];
     }
 }

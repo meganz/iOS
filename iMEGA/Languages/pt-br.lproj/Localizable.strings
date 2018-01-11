@@ -31,7 +31,7 @@
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Por favor, dê permissão à MEGA para aceder às suas fotos nas Definições";
 /* Alert message shown when the user tries to download an empty folder  */
-"emptyFolderMessage"="Não pode descarregar uma pasta vazia";
+"emptyFolderMessage"="Não é possível baixar uma pasta vazia";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Sua conta já foi ativada. Por favor, faça o login.";
 /* Message shown when the user clicks on an link that is not valid */
@@ -145,7 +145,7 @@
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Baixar";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
-"folderTooBigMessage"="A pasta que você está tentando descarregar é maior do que a memória disponível.";
+"folderTooBigMessage"="A pasta que você está tentando baixar é maior do que a memória disponível.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="O arquivo '%@' não pode ser criado";
 /* */
@@ -195,13 +195,13 @@
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transferências em pausa";
 /* Title shown when the there is not any transfer and they are not paused */
-"transfersEmptyState_titleAll"="Não há Transferências";
+"transfersEmptyState_titleAll"="Não há transferências";
 /* Title shown when the there is not any transfer, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="Não há Descarregamentos";
+"transfersEmptyState_titleDownload"="Não há downloads";
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="Sem Uploads";
+"transfersEmptyState_titleUpload"="Não há uploads";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Unidade em Nuvem (Cloud Drive)";
+"cloudDrive"="Nuvem de arquivos";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d arquivo";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -221,7 +221,7 @@
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Em fila";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertTitle"="Há descarregamentos pendentes";
+"documentOpening_alertTitle"="Há downloads pendentes";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="Tente novamente mais tarde ou cancele";
 /* Section title of the 'Sort by' */
@@ -257,7 +257,7 @@
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A] já carregado com o nome [B]";
 /* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
-"fileAlreadyExistMessage"="Este arquivo já foi carregado com o nome de% @";
+"fileAlreadyExistMessage"="Este arquivo já foi carregado com o nome de %@";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
 "filesAlreadyExistMessage"="%d arquivos selecionados já foram enviados para esta pasta.";
 /* Message shown when a upload starts */
@@ -535,7 +535,7 @@
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="Remover contato";
 /* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="Tem certeza que deseja remover% @ da sua lista de contatos?";
+"removeUserMessage"="Tem certeza que deseja remover %@ da sua lista de contatos?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Tem certeza que deseja remover %d usuários da sua lista de contatos?";
 /* Success message shown when the selected contacts have been removed */
@@ -809,7 +809,7 @@
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="Transferências";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
-"uploads"="Envios";
+"uploads"="Uploads";
 /* Success message shown when one transfer has been cancelled */
 "transferCancelled"="transferência cancelada";
 /* Success message shown when all the transfers have been cancelled */
@@ -821,9 +821,9 @@
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="TODAS as transferências";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
-"uploadInUppercaseTransfers"="Carregamento de transferências";
+"uploadInUppercaseTransfers"="Uploads";
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
-"downloadInUppercaseTransfers"="Descarregamento de transferências";
+"downloadInUppercaseTransfers"="Downloads";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Minha Conta";
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
@@ -930,6 +930,8 @@
 "available of %@"="disponível de %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Atualizar conta";
+/*  */
+"chooseYourAccountType"="Escolha o seu tipo de conta";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Você pode atualizar mais tarde em Minha conta";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -938,14 +940,30 @@
 "cloudDriveIsFull"="[S]A sua conta está cheia.[/S] [A]Faça o upgrade[/A] para uma conta PRO e obtenha [S]até 4TB (4096 GB[/S] de espaço de armazenamento em nuvem.                ";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Armazenamento";
-/* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="Banda";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"transferQuota"="Cota de transferência";
+/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
+"limited"="Limitado";
+/* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
+"subjectToYourParticipationInOurAchievementsProgram"="Sujeito à sua participação no nosso programa de conquistas.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%.2f %@ por mês";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Escolha um dos planos abaixo:";
+/* Text that explains that you have to select the plan you want and/or need after creating an account */
+"selectOneAccountType"="Select one account type:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="Ganhe dois meses gratuitos se você assinar um plano PRO anual";
+/* Text shown on the upgrade account page above the current PRO plan subscription */
+"currentPlan"="Plano atual:";
+/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
+"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
+/* Title text for the account confirmation. */
+"confirm"="Confirmar";
+/* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
+"requestAPlan"="Solicitar um plano";
+/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
+"thereAreNoPlansSuitableForYourCurrentUsage"="Não há nenhum plano disponível para o seu uso atual. Por favor, [A]entre em contato com o nosso suporte[/A] para obter informações sobre um plano customizado.";
 /* Header shown to help on the purchasin process */
 "selectMembership"="Selecionar assinatura:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */

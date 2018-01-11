@@ -331,7 +331,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="Sao chép đường dẫn liên kết";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Copy key";
+"copyKey"="Sao chép mã khóa";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Mở với...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -365,7 +365,7 @@
 /* Success message shown when you have moved 1 file and {1+} folders */
 "moveFileFoldersMessage"="1 tệp tin và %d thư mục đã được chuyển";
 /* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="%d tệp tin và %d thư mục đã được chuyển";
+"moveFilesFolderMessage"="%d tệp tin và 1 thư mục đã được chuyển";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
 "moveFilesFoldersMessage"="[A] tệp tin và [B] thư mục đã bị xóa";
 /* List option shown on the details of a file or folder */
@@ -383,7 +383,7 @@
 /* Success message shown when you have copied 1 file and {1+} folders */
 "copyFileFoldersMessage"="1 tệp tin và %d thư mục đã được sao chép";
 /* Success message shown when you have copied {1+} files and 1 folder */
-"copyFilesFolderMessage"="%d tệp tin và %d thư mục đã được sao chép";
+"copyFilesFolderMessage"="%d tệp tin và 1 thư mục đã được sao chép";
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
 "copyFilesFoldersMessage"="[A] tệp tin và [B] thư mục đã được sao chép";
 /* Title for the action that allows you to rename a file or folder  */
@@ -587,7 +587,7 @@
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="Thông tin";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
-"language"="Ngôn ngữ";
+"language"="Ngôn Ngữ";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="English (Anh)";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
@@ -597,9 +597,9 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Không có tài khoản email nào được thiết lập cho máy này";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Chính sách riêng tư";
+"privacyPolicyLabel"="Chính Sách Quyền Riêng Tư";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="Điều khoản dịch vụ";
+"termsOfServicesLabel"="Điều Khoản Sử Dụng Dịch Vụ";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Tắt";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -689,7 +689,7 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
 "removeFileFoldersToRubbishBinMessage"="Bạn đang chuẩn bị tiến hành xóa vĩnh viễn 1 tệp tin và %d thư mục. Bạn có muốn thực hiện không? (Không thể phục hồi sau khi xóa)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
-"removeFilesFolderToRubbishBinMessage"="Bạn đang chuẩn bị tiến hành xóa vĩnh viễn %d tệp tin và %d thư mục. Bạn có muốn thực hiện không? (Không thể phục hồi sau khi xóa)";
+"removeFilesFolderToRubbishBinMessage"="Bạn đang chuẩn bị tiến hành xóa vĩnh viễn %d tệp tin và 1 thư mục. Bạn có muốn thực hiện không? (Không thể phục hồi sau khi xóa)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="Bạn đang chuẩn bị xóa vĩnh viễn [A] tệp tin và [B] thư mục. Bạn có muốn tiến hành không? (Bạn sẽ không thể khôi phục lại việc làm này.)";
 /* Success message shown when 1 file has been removed from MEGA */
@@ -799,7 +799,7 @@
 /* Menu item */
 "help"="Trợ giúp";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Trung tâm trợ giúp";
+"helpCentreLabel"="Thư viện cách sử dụng và vấn đề";
 /* Title to rate the app */
 "rateUsLabel"="Đánh giá app";
 /* Title of the Transfers section */
@@ -825,9 +825,9 @@
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="phiên TẢI XUỐNG";
 /* Title of My Account section. There you can see your account details */
-"myAccount"="Tài Khoản Của Tôi";
+"myAccount"="Trang Tài Khoản";
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
-"buyPRO"="Buy PRO";
+"buyPRO"="Mua hạng PRO";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Nâng Cấp";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -861,7 +861,7 @@
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="Hạn Mức Lưu Trữ";
 /* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
-"transferQuota"="Lượng Băng Thông";
+"transferQuota"="Lượng băng thông";
 /* The user's achieved base quota */
 "accountBaseQuota"="Băng thông gốc từ tài khoản";
 /* achievement type */
@@ -930,6 +930,8 @@
 "available of %@"="còn lại trong tổng %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Nâng cấp tài khoản";
+/*  */
+"chooseYourAccountType"="Chọn hạng tài khoản";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Nâng cấp bất cứ lúc nào ở mục Tài Khoản Của Tôi";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -938,14 +940,30 @@
 "cloudDriveIsFull"="[S]Tài khoản đã hết không gian lưu trữ.[/S] [A]Nâng cấp ngay[/A] lên hạng PRO và nhận lên [S]đến 4 TB (4096 GB)[/S] không gian lưu trữ.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Lưu trữ";
-/* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="Băng thông";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"transferQuota"="Lượng băng thông";
+/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
+"limited"="Bị giới hạn";
+/* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
+"subjectToYourParticipationInOurAchievementsProgram"="Tùy thuộc vào sự tham gia của người sử dụng dịch vụ để vào chương trình làm nhiệm vụ thưởng.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%.2f %@ mỗi tháng";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Chọn một gói cước ở dưới đây:";
+/* Text that explains that you have to select the plan you want and/or need after creating an account */
+"selectOneAccountType"="Select one account type:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="Nhận thêm hai tháng miễn phí  khi mua thuê bao một năm PRO.";
+/* Text shown on the upgrade account page above the current PRO plan subscription */
+"currentPlan"="Current Plan:";
+/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
+"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
+/* Title text for the account confirmation. */
+"confirm"="Xác nhận";
+/* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
+"requestAPlan"="Đăng ký gói dịch vụ";
+/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
+"thereAreNoPlansSuitableForYourCurrentUsage"="Hiện không có gói thuê bao nào phù hợp cho nhu cầu sử dụng của bạn. Xin [A]liên lạc nhón hỗ trợ[/A] để yêu cầu một gói dịch vụ tùy chỉnh.";
 /* Header shown to help on the purchasin process */
 "selectMembership"="Chọn hạng thành viên:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
@@ -1057,7 +1075,7 @@
 /* title of the contact properties screen */
 "contactInfo"="Thông tin liên lạc";
 /*  */
-"notifications"="Chỉnh thông báo";
+"notifications"="Thông báo";
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Gửi Tin Nhắn";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */

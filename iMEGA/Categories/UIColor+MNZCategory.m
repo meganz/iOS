@@ -7,6 +7,10 @@
 
 #pragma mark - Black
 
++ (UIColor *)mnz_black262626 {
+    return [UIColor colorWithRed:38.0/255.0 green:38.0/255.0 blue:38.0/255.0 alpha:1.0];
+}
+
 + (UIColor *)mnz_black333333 {
     return [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0];
 }
@@ -47,20 +51,24 @@
     return [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0];
 }
 
-+ (UIColor *)mnz_grayEEEEEE {
-    return [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
++ (UIColor *)mnz_grayCCCCCC {
+    return [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0];
+}
+
++ (UIColor *)mnz_grayE2EAEA {
+    return [UIColor colorWithRed:0.89f green:0.92f blue:0.92f alpha:1.0];
 }
 
 + (UIColor *)mnz_grayE3E3E3 {
     return [UIColor colorWithRed:227.0/255.0 green:227.0/255.0 blue:227.0/255.0 alpha:1.0];
 }
 
-+ (UIColor *)mnz_grayF5F5F5 {
-    return [UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0];
++ (UIColor *)mnz_grayEEEEEE {
+    return [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
 }
 
-+ (UIColor *)mnz_grayCCCCCC {
-    return [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0];
++ (UIColor *)mnz_grayF5F5F5 {
+    return [UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0];
 }
 
 + (UIColor *)mnz_grayF7F7F7 {
@@ -73,12 +81,16 @@
 
 #pragma mark - Green
 
-+ (UIColor *)mnz_green31B500 {
-    return [UIColor colorWithRed:49.0/255.0 green:181.0/255.0 blue:0.0 alpha:1.0];
++ (UIColor *)mnz_green00BFA5 {
+    return [UIColor colorWithRed:0.0f green:0.75 blue:0.65 alpha:1.0f];
 }
 
 + (UIColor *)mnz_green13E03C {
     return [UIColor colorWithRed:19.0f / 255.0f green:224.0f / 255.0f blue:60.0f / 255.0f alpha:1.0f];
+}
+
++ (UIColor *)mnz_green31B500 {
+    return [UIColor colorWithRed:49.0/255.0 green:181.0/255.0 blue:0.0 alpha:1.0];
 }
 
 #pragma mark - Orange
@@ -121,6 +133,12 @@
 
 + (UIColor *)mnz_pinkFF1A53 {
     return [UIColor colorWithRed:1.0 green:26.0/255.0 blue:83.0/255.0 alpha:1.0];
+}
+
+#pragma mark - White
+
++ (UIColor *)mnz_whiteFFFFFF_02 {
+    return [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:0.2];
 }
 
 + (UIColor *)colorFromHexString:(NSString *)hexString {

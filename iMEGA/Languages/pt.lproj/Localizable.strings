@@ -535,7 +535,7 @@
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="Remover contacto";
 /* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="Tem a certeza que deseja remover % @ da sua lista de contatos?";
+"removeUserMessage"="Tem a certeza que deseja remover %@ da sua lista de contatos?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Tem a certeza que deseja remover %d utilizadores da sua lista de contatos?";
 /* Success message shown when the selected contacts have been removed */
@@ -930,6 +930,8 @@
 "available of %@"="disponível de %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Fazer upgrade da conta";
+/*  */
+"chooseYourAccountType"="Escolhe o tipo de conta";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -938,14 +940,30 @@
 "cloudDriveIsFull"="[S]Your account is full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to 4 TB (4096 GB)[/S] of cloud storage space.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Armazenamento";
-/* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="Dados";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"transferQuota"="Transfer Quota";
+/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
+"limited"="Limitado";
+/* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
+"subjectToYourParticipationInOurAchievementsProgram"="Subject to your participation in our achievements program.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%.2f %@ por mês";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Escolha um dos planos indicados abaixo:";
+/* Text that explains that you have to select the plan you want and/or need after creating an account */
+"selectOneAccountType"="Select one account type:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="Ganhe dois meses grátis se subscrever um plano PRO com a duração de um ano";
+/* Text shown on the upgrade account page above the current PRO plan subscription */
+"currentPlan"="Current Plan:";
+/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
+"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
+/* Title text for the account confirmation. */
+"confirm"="Confirmar";
+/* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
+"requestAPlan"="Pedir um plano";
+/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
+"thereAreNoPlansSuitableForYourCurrentUsage"="Não existe planos adequados ao seu uso actual. Por favor [A]contacte o apoio[/A] para um plano personalizado.";
 /* Header shown to help on the purchasin process */
 "selectMembership"="Seleccione a modalidade:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */

@@ -930,6 +930,8 @@
 "available of %@"="利用可能枠%@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="アカウントをアップグレードする";
+/*  */
+"chooseYourAccountType"="アカウントのタイプを選択して下さい。";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="マイアカウントで後でアップグレードできます";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -938,14 +940,30 @@
 "cloudDriveIsFull"="[S]あなたのアカウントはいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大4 TB（4096 GB）[/S]のクラウドストレージスペースを取得してください。";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="ストレージ";
-/* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="データ帯域";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"transferQuota"="転送容量制限";
+/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
+"limited"="制限付き";
+/* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
+"subjectToYourParticipationInOurAchievementsProgram"="当社の達成プログラムにご参加いただくことを条件とします。";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="ひと月%.2f %@";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="次のプランのうち、１つお選び下さい:";
+/* Text that explains that you have to select the plan you want and/or need after creating an account */
+"selectOneAccountType"="Select one account type:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="プロプラン１年間契約を購入すると、２ヶ月分無料となります。";
+/* Text shown on the upgrade account page above the current PRO plan subscription */
+"currentPlan"="現在のプラン：";
+/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
+"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
+/* Title text for the account confirmation. */
+"confirm"="確認";
+/* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
+"requestAPlan"="プランをリクエストする";
+/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
+"thereAreNoPlansSuitableForYourCurrentUsage"="現在、あなたの使用量に合ったプランはありません。[A]サポートに連絡[/A] し、特別プランについてお尋ね下さい。";
 /* Header shown to help on the purchasin process */
 "selectMembership"="メンバーシップを選択:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
@@ -1129,7 +1147,7 @@
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="チャットなし";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
-"isTyping"="%1が入力中です...";
+"isTyping"="%@が入力中です...";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="メッセージを入力...";
 /* Information if there are no history messages in current chat conversation */

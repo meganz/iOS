@@ -535,7 +535,7 @@
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="Odstrániť kontakt";
 /* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="Ste si istý, že chcete odstrániť %d z vášho zoznamu kontaktov?";
+"removeUserMessage"="Ste si istý, že chcete odstrániť %@ z vášho zoznamu kontaktov?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Ste si istý, že chcete odstrániť %d užívateľov z vášho zoznamu kontaktov.";
 /* Success message shown when the selected contacts have been removed */
@@ -930,6 +930,8 @@
 "available of %@"="dostupných z %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Upgrade účtu";
+/*  */
+"chooseYourAccountType"="Vyberte si typ účtu";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -938,14 +940,30 @@
 "cloudDriveIsFull"="[S]Your account is full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to 4 TB (4096 GB)[/S] of cloud storage space.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Úložný priestor";
-/* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="Šírka pásma";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"transferQuota"="Transfer Quota";
+/* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
+"limited"="Obmedzená";
+/* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
+"subjectToYourParticipationInOurAchievementsProgram"="Subject to your participation in our achievements program.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%.2f %@ mesačne";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Vyberte si jeden z plánov nižšie:";
+/* Text that explains that you have to select the plan you want and/or need after creating an account */
+"selectOneAccountType"="Select one account type:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="Získajte dva mesiace zdarma, ak si predplatíte PRO plán na rok";
+/* Text shown on the upgrade account page above the current PRO plan subscription */
+"currentPlan"="Current Plan:";
+/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
+"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
+/* Title text for the account confirmation. */
+"confirm"="Potvrdiť";
+/* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
+"requestAPlan"="Požiadať o plán";
+/* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
+"thereAreNoPlansSuitableForYourCurrentUsage"="Pre váš aktuálny prenos nie sú dostupné žiadne aktuálne plány. Prosím [A]kotntaktujte podporu[/A] pre plán šitý na mieru.";
 /* Header shown to help on the purchasin process */
 "selectMembership"="Vyberte členstvo:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
