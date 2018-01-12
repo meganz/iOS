@@ -42,9 +42,9 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Offline" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tay-NU-39O">
-                            <rect key="frame" x="32" y="89" width="268" height="10"/>
+                            <rect key="frame" x="32" y="89" width="268" height="12"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="10" id="9dT-Yk-Glj"/>
+                                <constraint firstAttribute="height" constant="12" id="9dT-Yk-Glj"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                             <color key="textColor" red="0.46666666870000001" green="0.46666666870000001" blue="0.46666666870000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -112,7 +112,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Bu-Yy-k1F">
-                            <rect key="frame" x="20" y="91" width="6" height="6"/>
+                            <rect key="frame" x="20" y="92" width="6" height="6"/>
                             <color key="backgroundColor" red="0.1921568662" green="0.70980393890000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="6" id="G34-Yl-nUa"/>
@@ -143,10 +143,10 @@
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="Tay-NU-39O" secondAttribute="trailing" constant="20" id="0bO-4u-psJ"/>
-                        <constraint firstItem="3Bu-Yy-k1F" firstAttribute="top" secondItem="joY-dJ-MTH" secondAttribute="bottom" constant="14" id="644-eb-cun"/>
+                        <constraint firstItem="3Bu-Yy-k1F" firstAttribute="top" secondItem="joY-dJ-MTH" secondAttribute="bottom" constant="15" id="644-eb-cun"/>
                         <constraint firstItem="H1f-kQ-FKp" firstAttribute="leading" secondItem="LeX-Tk-n6q" secondAttribute="leading" constant="20" id="BUe-ON-dID"/>
                         <constraint firstAttribute="trailing" secondItem="jWR-ma-sGg" secondAttribute="trailing" constant="20" id="CGH-d1-sMc"/>
-                        <constraint firstItem="sbK-Ec-oia" firstAttribute="top" secondItem="Tay-NU-39O" secondAttribute="bottom" constant="20" id="Fsh-vy-x93"/>
+                        <constraint firstItem="sbK-Ec-oia" firstAttribute="top" secondItem="Tay-NU-39O" secondAttribute="bottom" constant="18" id="Fsh-vy-x93"/>
                         <constraint firstItem="joY-dJ-MTH" firstAttribute="top" secondItem="q3q-Xv-Onm" secondAttribute="bottom" constant="12" id="IrQ-NK-iyV"/>
                         <constraint firstItem="IB5-mu-pCz" firstAttribute="leading" secondItem="LeX-Tk-n6q" secondAttribute="leading" constant="20" id="QuB-8N-VND"/>
                         <constraint firstItem="q3q-Xv-Onm" firstAttribute="leading" secondItem="LeX-Tk-n6q" secondAttribute="leading" constant="20" id="TPl-py-ISW"/>
