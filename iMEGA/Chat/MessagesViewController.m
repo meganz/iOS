@@ -366,35 +366,41 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (BOOL)showHourForMessage:(MEGAChatMessage *)message withIndexPath:(NSIndexPath *)indexPath {
-    BOOL showHour = NO;
+    if (message.managementMessage || indexPath.item == 0) {
+        return YES;
+    }
+    
     MEGAChatMessage *previousMessage = [self.messages objectAtIndex:(indexPath.item - 1)];
+    if (previousMessage.isManagementMessage) {
+        return YES;
+    }
+    
+    BOOL showHour = NO;
     if ([message.senderId isEqualToString:previousMessage.senderId]) {
         if ([self showHourBetweenDate:message.date previousDate:previousMessage.date]) {
             showHour = YES;
         } else {
-            //TODO: Improve algorithm it has some issues when going back on the messages history
-            NSUInteger count = self.messages.count;
-            for (NSUInteger i = 1; i < count; i++) {
-                NSInteger index = (indexPath.item - (i + 1));
-                if (index > 0) {
-                    MEGAChatMessage *messagePriorToThePreviousOne = [self.messages objectAtIndex:index];
-                    if (messagePriorToThePreviousOne.messageIndex < 0) {
-                        break;
-                    }
-                    
-                    if ([message.senderId isEqualToString:messagePriorToThePreviousOne.senderId]) {
-                        if ([self showHourBetweenDate:message.date previousDate:messagePriorToThePreviousOne.date]) {
-                            JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
-                            if (cell.messageBubbleTopLabel == nil) {
-                                showHour = NO;
-                            } else {
-                                showHour = YES;
-                            }
+            JSQMessagesCollectionViewCell *previousMessageCell = (JSQMessagesCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:(indexPath.item - 1) inSection:0]];
+            if (previousMessageCell.messageBubbleTopLabel.attributedText == nil) {
+                NSUInteger count = self.messages.count;
+                for (NSUInteger i = 1; i < count; i++) {
+                    NSInteger index = (indexPath.item - (i + 1));
+                    if (index > 0) {
+                        MEGAChatMessage *messagePriorToThePreviousOne = [self.messages objectAtIndex:index];
+                        if (messagePriorToThePreviousOne.messageIndex < 0) {
                             break;
                         }
-                    } else { // The timestamp should not appear because is already shown on the previous message
-                        showHour = NO;
-                        break;
+                        
+                        if ([message.senderId isEqualToString:messagePriorToThePreviousOne.senderId]) {
+                            if ([self showHourBetweenDate:message.date previousDate:messagePriorToThePreviousOne.date]) {
+                                JSQMessagesCollectionViewCell *messagePriorToThePreviousOneCell = (JSQMessagesCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
+                                if (messagePriorToThePreviousOneCell.messageBubbleTopLabel.attributedText) {
+                                    break;
+                                }
+                            }
+                        } else { //The timestamp should not appear because is already shown on the message prior to the previous message, that has a different sender
+                            break;
+                        }
                     }
                 }
             }
@@ -862,22 +868,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     
-    BOOL showMessageBubbleTopLabel = NO;
-    if (indexPath.item == 0) {
-        showMessageBubbleTopLabel = YES;
-    } else {
-        if (message.isManagementMessage) {
-            showMessageBubbleTopLabel = YES;
-        } else {
-            showMessageBubbleTopLabel = [self showHourForMessage:message withIndexPath:indexPath];
-        }
-    }
-
+    BOOL showMessageBubbleTopLabel = [self showHourForMessage:message withIndexPath:indexPath];
     if (showMessageBubbleTopLabel) {
         NSString *hour = [[JSQMessagesTimestampFormatter sharedFormatter] timeForDate:message.date];
         NSAttributedString *hourAttributed = [[NSAttributedString alloc] initWithString:hour attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor grayColor]}];
         NSMutableAttributedString *topCellAttributed = [[NSMutableAttributedString alloc] init];
-        
         
         if (self.chatRoom.isGroup && !message.isManagementMessage) {
             NSString *fullname = [self.chatRoom peerFullnameByHandle:message.userHandle];
@@ -1167,18 +1162,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                    layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat height = 0.0f;
-    BOOL showMessageBubleTopLabel = NO;
-    if (indexPath.item == 0) {
-        showMessageBubleTopLabel = YES;
-    } else {
-        MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
-        if (message.isManagementMessage) {
-            showMessageBubleTopLabel = YES;
-        } else {
-            showMessageBubleTopLabel = [self showHourForMessage:message withIndexPath:indexPath];
-        }
-    }
+    MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     
+    BOOL showMessageBubleTopLabel = [self showHourForMessage:message withIndexPath:indexPath];
     if (showMessageBubleTopLabel) {
         if (self.chatRoom.isGroup) {
             height = kGroupChatCellLabelHeight;
