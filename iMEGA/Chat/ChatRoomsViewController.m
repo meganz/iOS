@@ -413,6 +413,7 @@
     if (onlineStatusString) {
         UILabel *label = [Helper customNavigationBarLabelWithTitle:AMLocalizedString(@"chat", @"Chat section header") subtitle:onlineStatusString];
         label.adjustsFontSizeToFitWidth = YES;
+        label.minimumScaleFactor = 0.8f;
         label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
         label.userInteractionEnabled = YES;
         label.gestureRecognizers = @[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatRoomTitleDidTap)]];
