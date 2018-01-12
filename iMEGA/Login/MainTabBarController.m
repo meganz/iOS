@@ -6,6 +6,7 @@
 #import "MEGAChatCall+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+#import "DevicePermissionsHelper.h"
 
 #import <UserNotifications/UserNotifications.h>
 
@@ -138,6 +139,27 @@
     }
 }
 
+- (void)presentRingingCall:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
+    if (call.status == MEGAChatCallStatusRingIn) {
+        MEGAChatRoom *chatRoom = [api chatRoomForChatId:call.chatId];
+        if (@available(iOS 10.0, *)) {
+            NSUUID *uuid = [[NSUUID alloc] init];
+            call.uuid = uuid;
+            
+            uint64_t peerHandle = [chatRoom peerHandleAtIndex:0];
+            NSString *email = [chatRoom peerEmailByHandle:peerHandle];
+            
+            [self.megaProviderDelegate reportIncomingCall:call hasVideo:call.hasRemoteVideo email:email];
+        } else {
+            CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
+            callVC.chatRoom  = chatRoom;
+            callVC.videoCall = call.hasRemoteVideo;
+            callVC.callType = CallTypeIncoming;
+            [[UIApplication mnz_visibleViewController] presentViewController:callVC animated:YES completion:nil];
+        }
+    }
+}
+
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
@@ -179,22 +201,22 @@
             
         case MEGAChatCallStatusRingIn: {
             [self.missedCallsDictionary setObject:call forKey:@(call.chatId)];
-            MEGAChatRoom *chatRoom = [api chatRoomForChatId:call.chatId];
-            if (@available(iOS 10.0, *)) {
-                NSUUID *uuid = [[NSUUID alloc] init];
-                call.uuid = uuid;
-                                
-                uint64_t peerHandle = [chatRoom peerHandleAtIndex:0];
-                NSString *email = [chatRoom peerEmailByHandle:peerHandle];
-                
-                [self.megaProviderDelegate reportIncomingCall:call hasVideo:call.hasRemoteVideo email:email];
-            } else {
-                CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-                callVC.chatRoom  = chatRoom;
-                callVC.videoCall = call.hasRemoteVideo;
-                callVC.callType = CallTypeIncoming;
-                [[UIApplication mnz_visibleViewController] presentViewController:callVC animated:YES completion:nil];
-            }
+            [DevicePermissionsHelper audioPermissionWithCompletionHandler:^(BOOL granted) {
+                if (granted) {
+                    if (call.hasRemoteVideo) {
+                        [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
+                            if (granted) {
+                                [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
+                            }else {
+                                [self presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
+                            }
+                        }];
+                    }else {
+                        [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
+                    }
+                }else {
+                    [self presentViewController:[DevicePermissionsHelper audioPermisionAlertController] animated:YES completion:nil];                }
+            }];
             break;
         }
             

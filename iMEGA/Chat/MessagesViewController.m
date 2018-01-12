@@ -12,6 +12,7 @@
 #import "GroupChatDetailsViewController.h"
 
 #import "Helper.h"
+#import "DevicePermissionsHelper.h"
 #import "MainTabBarController.h"
 #import "MEGAAssetsPickerController.h"
 #import "MEGAChatMessage+MNZCategory.h"
@@ -315,9 +316,29 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)startAudioVideoCall:(UIBarButtonItem *)sender {
+    [DevicePermissionsHelper audioPermissionWithCompletionHandler:^(BOOL granted) {
+        if (granted) {
+            if (sender.tag) {
+                [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
+                    if (granted) {
+                        [self openCallViewWithVideo:sender.tag];
+                    }else {
+                        [self presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
+                    }
+                }];
+            }else {
+                [self openCallViewWithVideo:sender.tag];
+            }
+        }else {
+            [self presentViewController:[DevicePermissionsHelper audioPermisionAlertController] animated:YES completion:nil];
+        }
+    }];
+}
+
+- (void)openCallViewWithVideo:(BOOL)videoCall {
     CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
     callVC.chatRoom = self.chatRoom;
-    callVC.videoCall = sender.tag;
+    callVC.videoCall = videoCall;
     callVC.callType = CallTypeOutgoing;
     if (@available(iOS 10.0, *)) {
         callVC.megaCallManager = [(MainTabBarController *)self.navigationController.tabBarController megaCallManager];

@@ -12,6 +12,8 @@
 #import "MEGAChatEnableDisableVideoRequestDelegate.h"
 #import "MEGAChatStartCallRequestDelegate.h"
 
+#import "DevicePermissionsHelper.h"
+
 @interface CallViewController () <MEGAChatRequestDelegate, MEGAChatCallDelegate, MEGAChatVideoDelegate>
 
 @property (weak, nonatomic) IBOutlet MEGARemoteImageView *remoteVideoImageView;
@@ -273,24 +275,30 @@
 }
 
 - (IBAction)enableDisableVideo:(UIButton *)sender {
-    MEGAChatEnableDisableVideoRequestDelegate *enableDisableVideoRequestDelegate = [[MEGAChatEnableDisableVideoRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
-        if (error.type == MEGAChatErrorTypeOk) {
+    [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
+        if (granted) {
+            MEGAChatEnableDisableVideoRequestDelegate *enableDisableVideoRequestDelegate = [[MEGAChatEnableDisableVideoRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
+                if (error.type == MEGAChatErrorTypeOk) {
+                    if (sender.selected) {
+                        self.localVideoImageView.hidden = YES;
+                        [[MEGASdkManager sharedMEGAChatSdk] removeChatLocalVideoDelegate:self.localVideoImageView];
+                    } else {
+                        self.localVideoImageView.hidden = NO;
+                        [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideoDelegate:self.localVideoImageView];
+                    }
+                    sender.selected = !sender.selected;
+                    self.loudSpeakerEnabled = sender.selected;
+                }
+            }];
             if (sender.selected) {
-                self.localVideoImageView.hidden = YES;
-                [[MEGASdkManager sharedMEGAChatSdk] removeChatLocalVideoDelegate:self.localVideoImageView];
+                [[MEGASdkManager sharedMEGAChatSdk] disableVideoForChat:self.chatRoom.chatId delegate:enableDisableVideoRequestDelegate];
             } else {
-                self.localVideoImageView.hidden = NO;
-                [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideoDelegate:self.localVideoImageView];
+                [[MEGASdkManager sharedMEGAChatSdk] enableVideoForChat:self.chatRoom.chatId delegate:enableDisableVideoRequestDelegate];
             }
-            sender.selected = !sender.selected;
-            self.loudSpeakerEnabled = sender.selected;
+        }else {
+            [self presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
         }
     }];
-    if (sender.selected) {
-        [[MEGASdkManager sharedMEGAChatSdk] disableVideoForChat:self.chatRoom.chatId delegate:enableDisableVideoRequestDelegate];
-    } else {
-        [[MEGASdkManager sharedMEGAChatSdk] enableVideoForChat:self.chatRoom.chatId delegate:enableDisableVideoRequestDelegate];
-    }
 }
 
 #pragma mark - MEGAChatCallDelegate
