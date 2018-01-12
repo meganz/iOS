@@ -617,15 +617,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                   senderId:(NSString *)senderId
          senderDisplayName:(NSString *)senderDisplayName
                       date:(NSDate *)date {
-    /**
-     *  Sending a message. Your implementation of this method should do *at least* the following:
-     *
-     *  1. Play sound (optional)
-     *  2. Add new id<JSQMessageData> object to your data source
-     *  3. Call `finishSendingMessage`
-     */
     
-    // [JSQSystemSoundPlayer jsq_playMessageSentSound];
+    if (text.mnz_isEmpty) {
+        return;
+    }
+    
     MEGAChatMessage *message;
     if (!self.editMessage) {
         message = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:text];
