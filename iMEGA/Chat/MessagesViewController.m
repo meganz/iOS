@@ -268,6 +268,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         }
     }
     
+    label.adjustsFontSizeToFitWidth = YES;
     label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
     [self.navigationItem setTitleView:label];
     
