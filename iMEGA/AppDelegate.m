@@ -13,6 +13,7 @@
 
 #import "CameraUploads.h"
 #import "Helper.h"
+#import "DevicePermissionsHelper.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAIndexer.h"
 #import "MEGALogger.h"
@@ -266,6 +267,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         
         [self registerForVoIPNotifications];
         [self registerForNotifications];
+        [self requestCameraAndMicPermissions];
         
         isAccountFirstLogin = NO;
         
@@ -545,7 +547,23 @@ typedef NS_ENUM(NSUInteger, URLType) {
                         MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
                         MEGALogDebug(@"Chat %@ connection state: %@", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], chatConnection ? @"Online" : @"Offline");
                         if (chatConnection == MEGAChatConnectionOnline) {
-                            [self performCall];
+                            [DevicePermissionsHelper audioPermissionWithCompletionHandler:^(BOOL granted) {
+                                if (granted) {
+                                    if (self.videoCall) {
+                                        [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
+                                            if (granted) {
+                                                [self performCall];
+                                            }else {
+                                                [[UIApplication mnz_visibleViewController] presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
+                                            }
+                                        }];
+                                    }else {
+                                        [self performCall];
+                                    }
+                                }else {
+                                    [[UIApplication mnz_visibleViewController] presentViewController:[DevicePermissionsHelper audioPermisionAlertController] animated:YES completion:nil];
+                                }
+                            }];
                         }
                     }
                 } else {
@@ -1320,6 +1338,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if (isAccountFirstLogin) {
         [self registerForVoIPNotifications];
         [self registerForNotifications];
+        [self requestCameraAndMicPermissions];
     }
     
     [self openTabBasedOnNotificationMegatype];
@@ -1381,6 +1400,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
                                                                              settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge |
                                                                              UIUserNotificationTypeSound categories:nil]];
     }
+}
+
+- (void)requestCameraAndMicPermissions {
+    [DevicePermissionsHelper audioPermissionWithCompletionHandler:nil];
+    [DevicePermissionsHelper videoPermissionWithCompletionHandler:nil];
 }
 
 - (void)notificationsSettings {
@@ -1872,6 +1896,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type {
     MEGALogDebug(@"Did receive incoming push with payload: %@", [payload dictionaryPayload]);
+    [self startBackgroundTask];
 }
 
 #pragma mark - UNUserNotificationCenterDelegate
