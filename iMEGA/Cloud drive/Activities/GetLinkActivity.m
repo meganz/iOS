@@ -58,7 +58,7 @@
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if (self.nodes != nil) {
             if (![[NSUserDefaults standardUserDefaults] boolForKey:@"agreedCopywriteWarning"]) {
-                if ([[MEGASdkManager sharedMEGASdk] publicLinks].size > 0) {
+                if ([[[MEGASdkManager sharedMEGASdk] publicLinks].size intValue] > 0) {
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"agreedCopywriteWarning"];
                 }
             }
