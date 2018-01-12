@@ -28,6 +28,8 @@
 "attention"="Attention";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="Please give MEGA app permission to access your Camera in your Settings";
+/* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
+"microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Please give MEGA app permission to access your photo library in Settings";
 /* Alert message shown when the user tries to download an empty folder  */
