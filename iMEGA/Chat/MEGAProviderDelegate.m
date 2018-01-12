@@ -129,9 +129,9 @@
     
     if (call) {
         if (call.hasLocalAudio) {
-            [[MEGASdkManager sharedMEGAChatSdk] disableAudioForChat:call.callId];
+            [[MEGASdkManager sharedMEGAChatSdk] disableAudioForChat:call.chatId];
         } else {
-            [[MEGASdkManager sharedMEGAChatSdk] enableAudioForChat:call.callId];
+            [[MEGASdkManager sharedMEGAChatSdk] enableAudioForChat:call.chatId];
         }
         [action fulfill];
     } else {
