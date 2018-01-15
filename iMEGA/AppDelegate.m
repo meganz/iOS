@@ -553,14 +553,14 @@ typedef NS_ENUM(NSUInteger, URLType) {
                                         [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
                                             if (granted) {
                                                 [self performCall];
-                                            }else {
+                                            } else {
                                                 [[UIApplication mnz_visibleViewController] presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
                                             }
                                         }];
-                                    }else {
+                                    } else {
                                         [self performCall];
                                     }
-                                }else {
+                                } else {
                                     [[UIApplication mnz_visibleViewController] presentViewController:[DevicePermissionsHelper audioPermisionAlertController] animated:YES completion:nil];
                                 }
                             }];

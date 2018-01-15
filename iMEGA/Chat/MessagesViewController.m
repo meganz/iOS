@@ -322,14 +322,14 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                 [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
                     if (granted) {
                         [self openCallViewWithVideo:sender.tag];
-                    }else {
+                    } else {
                         [self presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
                     }
                 }];
-            }else {
+            } else {
                 [self openCallViewWithVideo:sender.tag];
             }
-        }else {
+        } else {
             [self presentViewController:[DevicePermissionsHelper audioPermisionAlertController] animated:YES completion:nil];
         }
     }];

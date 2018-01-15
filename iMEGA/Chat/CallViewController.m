@@ -295,7 +295,7 @@
             } else {
                 [[MEGASdkManager sharedMEGAChatSdk] enableVideoForChat:self.chatRoom.chatId delegate:enableDisableVideoRequestDelegate];
             }
-        }else {
+        } else {
             [self presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
         }
     }];
