@@ -762,11 +762,13 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                     }
                 };
             }];
+            [sendFromCloudDriveAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
             [selectOptionAlertController addAction:sendFromCloudDriveAlertAction];
             
             UIAlertAction *sendContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"contact", @"referring to a contact in the contact list of the user") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [self presentAddOrAttachParticipantToGroup:nil];
             }];
+            [sendContactAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
             [selectOptionAlertController addAction:sendContactAlertAction];
             
             selectOptionAlertController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
