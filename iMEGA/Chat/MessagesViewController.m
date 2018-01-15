@@ -698,7 +698,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         message = [[MEGASdkManager sharedMEGAChatSdk] editMessageForChat:self.chatRoom.chatId messageId:self.editMessage.messageId message:text];
         message.chatRoom = self.chatRoom;
         NSUInteger index = [self.messages indexOfObject:self.editMessage];
-        [self.messages replaceObjectAtIndex:index withObject:message];
+        if (index != NSNotFound) {
+            [self.messages replaceObjectAtIndex:index withObject:message];
+        }
         self.editMessage = nil;
     }
     
@@ -1081,7 +1083,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             //Your messages
             if ([message.senderId isEqualToString:self.senderId]) {
                 if (action == @selector(delete:)) {
-                    if (message.isDeletable) return YES;
+                    if (message.isDeletable) {
+                        if (!self.editMessage || self.editMessage.messageId != message.messageId) {
+                            return YES;
+                        }
+                    }
                 }
                 
                 if (action == @selector(edit:message:)) {
