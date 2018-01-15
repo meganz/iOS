@@ -709,14 +709,6 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)didPressAccessoryButton:(UIButton *)sender {
     switch (sender.tag) {
-        case MEGAChatAccessoryButtonText:
-            if ([self.inputToolbar.contentView.textView isFirstResponder]) {
-                [self.inputToolbar.contentView.textView resignFirstResponder];
-            } else {
-                [self.inputToolbar.contentView.textView becomeFirstResponder];
-            }
-            break;
-            
         case MEGAChatAccessoryButtonCamera: {
             if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType:completionHandler:)]) {
                 [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL permissionGranted) {
@@ -742,13 +734,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         }
             
         case MEGAChatAccessoryButtonUpload: {
-            [self.inputToolbar.contentView.textView resignFirstResponder];
-            
             NSString *alertControllerTitle = AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
             UIAlertController *selectOptionAlertController = [UIAlertController alertControllerWithTitle:alertControllerTitle message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-            [selectOptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                [self.inputToolbar.contentView.textView becomeFirstResponder];
-            }]];
+            [selectOptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
             
             UIAlertAction *sendFromCloudDriveAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fromCloudDrive", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
