@@ -483,6 +483,7 @@
 		94C9D7561FBDC87B008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
 		94C9D7571FBDC87C008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
 		94E62E1A1F3C5252003A8DEF /* LanguageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E62E191F3C5252003A8DEF /* LanguageTableViewController.m */; };
+		94F376E71FE7C126009AAA10 /* MEGAToolbarAssetPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F376E61FE7C126009AAA10 /* MEGAToolbarAssetPicker.m */; };
 		A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
 		A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1FC1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m */; };
 		A802B2011FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B2001FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m */; };
@@ -491,8 +492,6 @@
 		A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */; };
 		A819B33F1EAFA7E2004592F9 /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
 		A819B3421EAFA844004592F9 /* CustomModalAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */; };
-		94F376E71FE7C126009AAA10 /* MEGAToolbarAssetPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F376E61FE7C126009AAA10 /* MEGAToolbarAssetPicker.m */; };
-		A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */; };
 		A81AD7391F3099F800CA4059 /* MEGAProcessAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */; };
 		A81F2C6A1F334FB2008600A5 /* MEGAProcessAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */; };
 		A81F2C6C1F334FF0008600A5 /* MEGAProcessAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */; };
@@ -501,6 +500,14 @@
 		A82751121E97AB73007CD9E2 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751111E97AB73007CD9E2 /* libresolv.tbd */; };
 		A82751141E97AB79007CD9E2 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751131E97AB79007CD9E2 /* libsqlite3.tbd */; };
 		A82751161E97AB88007CD9E2 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751151E97AB88007CD9E2 /* libstdc++.tbd */; };
+		A82A38D0200D32BD00883533 /* libzen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38CF200D32BC00883533 /* libzen.a */; };
+		A82A38D1200D32CA00883533 /* libzen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38CF200D32BC00883533 /* libzen.a */; };
+		A82A38D2200D32D500883533 /* libzen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38CF200D32BC00883533 /* libzen.a */; };
+		A82A38D3200D32EB00883533 /* libzen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38CF200D32BC00883533 /* libzen.a */; };
+		A82A38D5200D331700883533 /* libmediainfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38D4200D32EC00883533 /* libmediainfo.a */; };
+		A82A38D6200D332400883533 /* libmediainfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38D4200D32EC00883533 /* libmediainfo.a */; };
+		A82A38D7200D333100883533 /* libmediainfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38D4200D32EC00883533 /* libmediainfo.a */; };
+		A82A38D8200D343E00883533 /* libmediainfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38D4200D32EC00883533 /* libmediainfo.a */; };
 		A82E5BC81F3465A3003C149C /* Spotlight_file@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC41F3465A3003C149C /* Spotlight_file@2x.png */; };
 		A82E5BC91F3465A3003C149C /* Spotlight_file@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC51F3465A3003C149C /* Spotlight_file@3x.png */; };
 		A82E5BCA1F3465A3003C149C /* Spotlight_folder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC61F3465A3003C149C /* Spotlight_folder@2x.png */; };
@@ -508,26 +515,6 @@
 		A82E5BF41F3470B5003C149C /* Spotlight_file.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF21F3470B5003C149C /* Spotlight_file.png */; };
 		A82E5BF51F3470B5003C149C /* Spotlight_folder.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF31F3470B5003C149C /* Spotlight_folder.png */; };
 		A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */; };
-		A86E5E1E1FFBE78400FE8158 /* librtc_sdk_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E1D1FFBE78400FE8158 /* librtc_sdk_objc.a */; };
-		A86E5E1F1FFBE79D00FE8158 /* librtc_sdk_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E1D1FFBE78400FE8158 /* librtc_sdk_objc.a */; };
-		A86E5E201FFBE7B100FE8158 /* librtc_sdk_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E1D1FFBE78400FE8158 /* librtc_sdk_objc.a */; };
-		A86E5E211FFBE7BC00FE8158 /* librtc_sdk_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E1D1FFBE78400FE8158 /* librtc_sdk_objc.a */; };
-		A86E5E231FFBE80D00FE8158 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E221FFBE80D00FE8158 /* libwebsockets.a */; };
-		A86E5E241FFBE81800FE8158 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E221FFBE80D00FE8158 /* libwebsockets.a */; };
-		A86E5E251FFBE82600FE8158 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E221FFBE80D00FE8158 /* libwebsockets.a */; };
-		A86E5E261FFBE83100FE8158 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E221FFBE80D00FE8158 /* libwebsockets.a */; };
-		A86E5E281FFBE85800FE8158 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E271FFBE85700FE8158 /* GLKit.framework */; };
-		A86E5E2A1FFBE86D00FE8158 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E291FFBE86D00FE8158 /* VideoToolbox.framework */; };
-		A86E5E2C1FFBE88700FE8158 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E2B1FFBE88600FE8158 /* AudioToolbox.framework */; };
-		A86E5E2D1FFBE89900FE8158 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E2B1FFBE88600FE8158 /* AudioToolbox.framework */; };
-		A86E5E2E1FFBE89F00FE8158 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E291FFBE86D00FE8158 /* VideoToolbox.framework */; };
-		A86E5E2F1FFBE8AC00FE8158 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E271FFBE85700FE8158 /* GLKit.framework */; };
-		A86E5E301FFBE8B900FE8158 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E2B1FFBE88600FE8158 /* AudioToolbox.framework */; };
-		A86E5E311FFBE8BE00FE8158 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E291FFBE86D00FE8158 /* VideoToolbox.framework */; };
-		A86E5E321FFBE8D600FE8158 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E271FFBE85700FE8158 /* GLKit.framework */; };
-		A86E5E341FFBE90800FE8158 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E331FFBE90800FE8158 /* OpenGLES.framework */; };
-		A86E5E361FFBE93600FE8158 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E351FFBE93600FE8158 /* CoreVideo.framework */; };
-		A86E5E381FFBE95500FE8158 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A86E5E371FFBE95500FE8158 /* Metal.framework */; };
 		A86FC4FC1EBB4999006053A6 /* MEGAPhotoMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A86FC4FB1EBB4999006053A6 /* MEGAPhotoMediaItem.m */; };
 		A88BFFCF1F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
 		A88BFFD01F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
@@ -1261,6 +1248,8 @@
 		94B28C241F0E464C000331E6 /* libMEGASDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMEGASDK.a; path = "iMEGA/Vendor/SDK/bindings/ios/build/Release-iphoneos/libMEGASDK.a"; sourceTree = "<group>"; };
 		94E62E181F3C5252003A8DEF /* LanguageTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LanguageTableViewController.h; sourceTree = "<group>"; };
 		94E62E191F3C5252003A8DEF /* LanguageTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LanguageTableViewController.m; sourceTree = "<group>"; };
+		94F376E51FE7C126009AAA10 /* MEGAToolbarAssetPicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAToolbarAssetPicker.h; sourceTree = "<group>"; };
+		94F376E61FE7C126009AAA10 /* MEGAToolbarAssetPicker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAToolbarAssetPicker.m; sourceTree = "<group>"; };
 		A802B1F81FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAChatBaseRequestDelegate.h; path = iMEGA/API/Chat/MEGAChatBaseRequestDelegate.h; sourceTree = SOURCE_ROOT; };
 		A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAChatBaseRequestDelegate.m; path = iMEGA/API/Chat/MEGAChatBaseRequestDelegate.m; sourceTree = SOURCE_ROOT; };
 		A802B1FB1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAChatStartCallRequestDelegate.h; path = iMEGA/API/Chat/MEGAChatStartCallRequestDelegate.h; sourceTree = SOURCE_ROOT; };
@@ -1276,8 +1265,6 @@
 		A819B33D1EAFA7E2004592F9 /* CustomModalAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomModalAlertViewController.h; sourceTree = "<group>"; };
 		A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomModalAlertViewController.m; sourceTree = "<group>"; };
 		A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomModalAlertViewController.xib; sourceTree = "<group>"; };
-		94F376E51FE7C126009AAA10 /* MEGAToolbarAssetPicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAToolbarAssetPicker.h; sourceTree = "<group>"; };
-		94F376E61FE7C126009AAA10 /* MEGAToolbarAssetPicker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAToolbarAssetPicker.m; sourceTree = "<group>"; };
 		A81AD7371F3099F800CA4059 /* MEGAProcessAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAProcessAsset.h; sourceTree = "<group>"; };
 		A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAProcessAsset.m; sourceTree = "<group>"; };
 		A820DA3A1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAGetThumbnailRequestDelegate.h; path = API/Requests/MEGAGetThumbnailRequestDelegate.h; sourceTree = "<group>"; };
@@ -1286,6 +1273,8 @@
 		A82751111E97AB73007CD9E2 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		A82751131E97AB79007CD9E2 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		A82751151E97AB88007CD9E2 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		A82A38CF200D32BC00883533 /* libzen.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzen.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libzen.a; sourceTree = "<group>"; };
+		A82A38D4200D32EC00883533 /* libmediainfo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmediainfo.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libmediainfo.a; sourceTree = "<group>"; };
 		A82E5BC41F3465A3003C149C /* Spotlight_file@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spotlight_file@2x.png"; path = "Spotlight/Spotlight_file@2x.png"; sourceTree = "<group>"; };
 		A82E5BC51F3465A3003C149C /* Spotlight_file@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spotlight_file@3x.png"; path = "Spotlight/Spotlight_file@3x.png"; sourceTree = "<group>"; };
 		A82E5BC61F3465A3003C149C /* Spotlight_folder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spotlight_folder@2x.png"; path = "Spotlight/Spotlight_folder@2x.png"; sourceTree = "<group>"; };
@@ -1294,14 +1283,6 @@
 		A82E5BF31F3470B5003C149C /* Spotlight_folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Spotlight_folder.png; path = Spotlight/Spotlight_folder.png; sourceTree = "<group>"; };
 		A83892411EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatMessage+MNZCategory.h"; sourceTree = "<group>"; };
 		A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGAChatMessage+MNZCategory.m"; sourceTree = "<group>"; };
-		A86E5E1D1FFBE78400FE8158 /* librtc_sdk_objc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = librtc_sdk_objc.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/librtc_sdk_objc.a; sourceTree = "<group>"; };
-		A86E5E221FFBE80D00FE8158 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libwebsockets.a; sourceTree = "<group>"; };
-		A86E5E271FFBE85700FE8158 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
-		A86E5E291FFBE86D00FE8158 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
-		A86E5E2B1FFBE88600FE8158 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		A86E5E331FFBE90800FE8158 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		A86E5E351FFBE93600FE8158 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
-		A86E5E371FFBE95500FE8158 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		A86FC4FB1EBB4999006053A6 /* MEGAPhotoMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAPhotoMediaItem.m; sourceTree = "<group>"; };
 		A88BFFAC1F0A52CD0081BCE3 /* libevent_core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_core.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent_core.a; sourceTree = "<group>"; };
 		A88BFFAD1F0A52CD0081BCE3 /* libevent_extra.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_extra.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent_extra.a; sourceTree = "<group>"; };
@@ -1496,6 +1477,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A82A38D7200D333100883533 /* libmediainfo.a in Frameworks */,
+				A82A38D0200D32BD00883533 /* libzen.a in Frameworks */,
 				A8F6E8941F9E770C0087859C /* MobileCoreServices.framework in Frameworks */,
 				A8F6E8931F9E75DD0087859C /* GLKit.framework in Frameworks */,
 				A8F6E8911F9E75D00087859C /* VideoToolbox.framework in Frameworks */,
@@ -1519,6 +1502,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A82A38D6200D332400883533 /* libmediainfo.a in Frameworks */,
+				A82A38D1200D32CA00883533 /* libzen.a in Frameworks */,
 				A8C262A71FA0B60B006172CE /* Metal.framework in Frameworks */,
 				A8C262A51FA0B5D9006172CE /* GLKit.framework in Frameworks */,
 				A8C262A41FA0B5CD006172CE /* CoreVideo.framework in Frameworks */,
@@ -1560,6 +1545,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A82A38D5200D331700883533 /* libmediainfo.a in Frameworks */,
+				A82A38D2200D32D500883533 /* libzen.a in Frameworks */,
 				A8C262A11FA0B590006172CE /* GLKit.framework in Frameworks */,
 				A8C2629E1FA0B56E006172CE /* VideoToolbox.framework in Frameworks */,
 				A8C262991FA0B4BA006172CE /* AudioToolbox.framework in Frameworks */,
@@ -1587,6 +1574,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A82A38D8200D343E00883533 /* libmediainfo.a in Frameworks */,
+				A82A38D3200D32EB00883533 /* libzen.a in Frameworks */,
 				A8C262A01FA0B58B006172CE /* GLKit.framework in Frameworks */,
 				A8C2629D1FA0B55E006172CE /* VideoToolbox.framework in Frameworks */,
 				A8C262941FA0B439006172CE /* librtc_sdk_objc.a in Frameworks */,
@@ -2187,6 +2176,8 @@
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A82A38D4200D32EC00883533 /* libmediainfo.a */,
+				A82A38CF200D32BC00883533 /* libzen.a */,
 				A8C262A61FA0B60B006172CE /* Metal.framework */,
 				A8C262A31FA0B5CD006172CE /* CoreVideo.framework */,
 				A8C2629A1FA0B4EA006172CE /* OpenGLES.framework */,
