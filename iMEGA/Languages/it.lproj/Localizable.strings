@@ -28,6 +28,8 @@
 "attention"="Attenzione";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="Dai il permesso all'app MEGA di accedere alla videocamera in Impostazioni";
+/* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
+"microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Dai il permesso all'app MEGA di accedere alle foto in Impostazioni";
 /* Alert message shown when the user tries to download an empty folder  */
@@ -180,6 +182,12 @@
 "contactRequests"="Richieste di contatto";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Aggiungi contatto";
+/* Text shown when the user tries to make a call and the receiver is not a contact */
+"inviteContact"="Invita contatto";
+/* Text shown when the user sends a contact invitation */
+"inviteSent"="Invito spedito";
+/* Button title to allow the user postpone an action */
+"later"="Più tardi";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
 "received"="Ricevuto";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
@@ -951,7 +959,7 @@
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Scegli uno dei piani elencati sotto:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
-"selectOneAccountType"="Select one account type:";
+"selectOneAccountType"="Seleziona un tipo di account:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="Ottieni due mesi gratis se sottoscrivi un abbonamento PRO da un anno";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1202,6 +1210,14 @@
 "attachedFile"="Allegato: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s file allegati.";
+/* A summary message when a user sent the information of one contact through the chat. */
+"sharedContact"="Questo contatto è stato condiviso:";
+/* A summary message when a user sent the information of some contacts at once through the chat. */
+"sharedContacts"="Questi contatti sono stati condivisi:";
+/* A summary message when a user has attached one file into the chat. */
+"uploadedFile"="Questo file è stato caricato:";
+/* A summary message when a user has attached many files at once into the chat. */
+"uploadedFiles"="Questi file sono stati caricati:";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="L’abbonamento si rinnova automaticamente, con la stessa durata e prezzo rispetto a quanto originariamente scelto. È possibile disattivare il rinnovo automatico dell'abbonamento MEGA PRO fino a 24 ore prima del rinnovo programmato nella pagina delle impostazioni di iTunes. Per gestire l’abbonamento, basta andare sull’App Store, ACCEDERE con il tuo ID Apple  in fondo alla pagina (se non lo hai già fatto) e fare clic su \"Visualizza ID Apple.\" Vedrai la pagina con i dettagli dell'account e potrai gestire il tuo abbonamento. Da qui, è possibile abbonarsi a MEGA PRO e vedere quando si rinnova, cambiare il tipo di abbonamento o disattivare l'opzione di rinnovo automatico per poter poi annullare l'abbonamento.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1279,3 +1295,21 @@
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Per più informazioni, per favore visita il nostro sito web:Mobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmlDesktop - https://mega.nz/";
+/* Label shown when you receive an incoming call, before start the call. */
+"calling..."="Chiamata in corso...";
+/* Notification text body shown when you have missed one audio call */
+"missedAudioCall"="Chiamata audio persa";
+/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
+"missedAudioCalls"="[A] ha perso una chiamata audio";
+/* Notification text body shown when you have missed one video call */
+"missedVideoCall"="Chiamata video persa";
+/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
+"missedVideoCalls"="[A] ha perso una chiamata video";
+/* Notification text body shown when you have missed one audio call and one video call */
+"missedAudioCallAndMissedVideoCall"="Chiamata audio e chiamata video persa";
+/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
+"missedAudioCallAndMissedVideoCalls"="Chiamata audio persa e [A] ha perso una chiamata video";
+/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
+"missedAudioCallsAndMissedVideoCall"="[A] ha perso una chiamata audio e una chiamata video";
+/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
+"missedAudioCallsAndMissedVideoCalls"="[A] ha perso una chiamata audio e [B] ha perso una chiamata video";

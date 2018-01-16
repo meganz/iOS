@@ -4,6 +4,7 @@
 #import "UIImage+GKContact.h"
 
 #import "BrowserViewController.h"
+#import "CallViewController.h"
 #import "ChatAttachedContactsViewController.h"
 #import "ChatAttachedNodesViewController.h"
 #import "ContactsViewController.h"
@@ -11,6 +12,8 @@
 #import "GroupChatDetailsViewController.h"
 
 #import "Helper.h"
+#import "DevicePermissionsHelper.h"
+#import "MainTabBarController.h"
 #import "MEGAAssetsPickerController.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGACreateFolderRequestDelegate.h"
@@ -23,11 +26,14 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAOpenMessageHeaderView.h"
 #import "MEGAProcessAsset.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGAStartUploadTransferDelegate.h"
 #import "MEGAToolbarContentView.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
+
+#import <UserNotifications/UserNotifications.h>
 
 const CGFloat kGroupChatCellLabelHeight = 35.0f;
 const CGFloat k1on1CellLabelHeight = 28.0f;
@@ -55,13 +61,15 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 @property (nonatomic, strong) UIBarButtonItem *unreadBarButtonItem;
 @property (nonatomic, strong) UILabel *unreadLabel;
 
-@property (nonatomic, strong) UIBarButtonItem *moreBarButtonItem;
 @property (nonatomic, getter=shouldStopInvitingContacts) BOOL stopInvitingContacts;
 
 @property (strong, nonatomic) NSMutableDictionary *participantsMutableDictionary;
 @property (strong, nonatomic) NSMutableArray *nodesLoaded;
 
 @property (strong, nonatomic) UIProgressView *navigationBarProgressView;
+
+@property (strong, nonatomic) UIBarButtonItem * videoCallBarButtonItem;
+@property (strong, nonatomic) UIBarButtonItem * audioCallBarButtonItem;
 
 @property (nonatomic) long long totalBytesToUpload;
 @property (nonatomic) long long remainingBytesToUpload;
@@ -160,7 +168,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     self.navigationController.interactivePopGestureRecognizer.delegate = nil;
     
     _nodesLoaded = [[NSMutableArray alloc] init];
-    
+
     // Avatar images
     self.avatarImageFactory = [[JSQMessagesAvatarImageFactory alloc] initWithDiameter:kAvatarImageDiameter];
     self.avatarImages = [[NSMutableDictionary alloc] init];
@@ -178,11 +186,20 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                                              selector:@selector(didBecomeActive)
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
+    
+    if (@available(iOS 10.0, *)) {
+        [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
+        [[UNUserNotificationCenter currentNotificationCenter] removePendingNotificationRequestsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+    
     [self customNavigationBarLabel];
     [self rightBarButtonItems];
     [self updateUnreadLabel];
@@ -198,6 +215,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+
     if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound || self.presentingViewController) {
         [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
     }
@@ -282,10 +302,50 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)rightBarButtonItems {
-    if (self.chatRoom.isGroup && (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator)) {
-        self.moreBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"addContact"] style:UIBarButtonItemStyleDone target:self action:@selector(presentAddOrAttachParticipantToGroup:)];
-        self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
+    if (self.chatRoom.isGroup) {
+        if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
+            UIBarButtonItem *addContactBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"addContact"] style:UIBarButtonItemStyleDone target:self action:@selector(presentAddOrAttachParticipantToGroup:)];
+            self.navigationItem.rightBarButtonItem = addContactBarButtonItem;
+        }
+    } else {
+        _videoCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"videoCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
+        _audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audioCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
+        self.videoCallBarButtonItem.tag = 1;
+        self.navigationItem.rightBarButtonItems = @[self.videoCallBarButtonItem, self.audioCallBarButtonItem];
+        self.videoCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
+        self.audioCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
     }
+}
+
+- (void)startAudioVideoCall:(UIBarButtonItem *)sender {
+    [DevicePermissionsHelper audioPermissionWithCompletionHandler:^(BOOL granted) {
+        if (granted) {
+            if (sender.tag) {
+                [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
+                    if (granted) {
+                        [self openCallViewWithVideo:sender.tag];
+                    } else {
+                        [self presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
+                    }
+                }];
+            } else {
+                [self openCallViewWithVideo:sender.tag];
+            }
+        } else {
+            [self presentViewController:[DevicePermissionsHelper audioPermisionAlertController] animated:YES completion:nil];
+        }
+    }];
+}
+
+- (void)openCallViewWithVideo:(BOOL)videoCall {
+    CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
+    callVC.chatRoom = self.chatRoom;
+    callVC.videoCall = videoCall;
+    callVC.callType = CallTypeOutgoing;
+    if (@available(iOS 10.0, *)) {
+        callVC.megaCallManager = [(MainTabBarController *)self.navigationController.tabBarController megaCallManager];
+    }
+    [self presentViewController:callVC animated:YES completion:nil];
 }
 
 - (void)presentAddOrAttachParticipantToGroup:(UIBarButtonItem *)sender {
@@ -622,6 +682,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self.nodesLoaded removeAllObjects];
 }
 
+- (void)internetConnectionChanged {
+    self.videoCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
+    self.audioCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
+}
+
 #pragma mark - Custom menu actions for cells
 
 - (void)didReceiveMenuWillShowNotification:(NSNotification *)notification {
@@ -652,7 +717,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         message = [[MEGASdkManager sharedMEGAChatSdk] editMessageForChat:self.chatRoom.chatId messageId:self.editMessage.messageId message:text];
         message.chatRoom = self.chatRoom;
         NSUInteger index = [self.messages indexOfObject:self.editMessage];
-        [self.messages replaceObjectAtIndex:index withObject:message];
+        if (index != NSNotFound) {
+            [self.messages replaceObjectAtIndex:index withObject:message];
+        }
         self.editMessage = nil;
     }
     
@@ -1022,7 +1089,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             //Your messages
             if ([message.senderId isEqualToString:self.senderId]) {
                 if (action == @selector(delete:)) {
-                    if (message.isDeletable) return YES;
+                    if (message.isDeletable) {
+                        if (!self.editMessage || self.editMessage.messageId != message.messageId) {
+                            return YES;
+                        }
+                    }
                 }
                 
                 if (action == @selector(edit:message:)) {
