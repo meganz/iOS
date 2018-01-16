@@ -500,6 +500,7 @@
 		A82751121E97AB73007CD9E2 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751111E97AB73007CD9E2 /* libresolv.tbd */; };
 		A82751141E97AB79007CD9E2 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751131E97AB79007CD9E2 /* libsqlite3.tbd */; };
 		A82751161E97AB88007CD9E2 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751151E97AB88007CD9E2 /* libstdc++.tbd */; };
+		A8278D7F200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8278D7E200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 */; };
 		A82A38D0200D32BD00883533 /* libzen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38CF200D32BC00883533 /* libzen.a */; };
 		A82A38D1200D32CA00883533 /* libzen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38CF200D32BC00883533 /* libzen.a */; };
 		A82A38D2200D32D500883533 /* libzen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38CF200D32BC00883533 /* libzen.a */; };
@@ -1273,6 +1274,7 @@
 		A82751111E97AB73007CD9E2 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		A82751131E97AB79007CD9E2 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		A82751151E97AB88007CD9E2 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		A8278D7E200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incoming_voice_video_call_iOS9.mp3; sourceTree = "<group>"; };
 		A82A38CF200D32BC00883533 /* libzen.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzen.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libzen.a; sourceTree = "<group>"; };
 		A82A38D4200D32EC00883533 /* libmediainfo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmediainfo.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libmediainfo.a; sourceTree = "<group>"; };
 		A82E5BC41F3465A3003C149C /* Spotlight_file@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spotlight_file@2x.png"; path = "Spotlight/Spotlight_file@2x.png"; sourceTree = "<group>"; };
@@ -2899,6 +2901,7 @@
 		A8BB54191FB9ABBD004FD03B /* Audios */ = {
 			isa = PBXGroup;
 			children = (
+				A8278D7E200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 */,
 				A8F2629B1FA8F82F000B2768 /* hang_out.mp3 */,
 				A8F262991FA8F7C2000B2768 /* incoming_voice_video_call.mp3 */,
 			);
@@ -3292,6 +3295,7 @@
 				E8E3E6FA1E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib in Resources */,
 				411504361CEB07C700BF38E3 /* ImageSelectedSmallOff@3x.png in Resources */,
 				411504301CEB07C700BF38E3 /* ImageSelectedOff@3x.png in Resources */,
+				A8278D7F200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 in Resources */,
 				5B4429431E6D7B7000BCACC0 /* SF-UI-Text-RegularItalic.otf in Resources */,
 				4115043F1CEB07C700BF38E3 /* PlayButtonOverlayLargeTap@3x.png in Resources */,
 				E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */,

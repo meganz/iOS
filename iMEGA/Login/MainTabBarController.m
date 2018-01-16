@@ -15,6 +15,7 @@
 @property (nonatomic, strong) MEGAProviderDelegate *megaProviderDelegate;
 @property (getter=shouldReportOutgoingCall) BOOL reportOutgoingCall;
 @property (nonatomic, strong) NSMutableDictionary *missedCallsDictionary;
+@property (nonatomic, strong) NSMutableArray *currentNotifications;
 
 @end
 
@@ -86,8 +87,17 @@
     }
     
     _missedCallsDictionary = [[NSMutableDictionary alloc] init];
+    _currentNotifications = [[NSMutableArray alloc] init];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (@available(iOS 10.0, *)) {} else {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentCallViewControllerIfThereAreAnIncomingCall) name:UIApplicationDidBecomeActiveNotification object:nil];
+    }
+}
+    
 - (BOOL)shouldAutorotate {
     if ([self.selectedViewController respondsToSelector:@selector(shouldAutorotate)]) {
         return [self.selectedViewController shouldAutorotate];
@@ -152,12 +162,44 @@
             
             [self.megaProviderDelegate reportIncomingCall:call user:user];
         } else {
-            CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-            callVC.chatRoom  = chatRoom;
-            callVC.videoCall = call.hasRemoteVideo;
-            callVC.callType = CallTypeIncoming;
-            [[UIApplication mnz_visibleViewController] presentViewController:callVC animated:YES completion:nil];
+            if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+                CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
+                callVC.chatRoom  = chatRoom;
+                callVC.videoCall = call.hasRemoteVideo;
+                callVC.callType = CallTypeIncoming;
+                [[UIApplication mnz_visibleViewController] presentViewController:callVC animated:YES completion:nil];
+            } else {
+                MEGAChatRoom *chatRoom = [api chatRoomForChatId:call.chatId];
+                UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+                localNotification.alertTitle = @"MEGA";
+                localNotification.soundName = @"incoming_voice_video_call_iOS9.mp3";
+                localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
+                localNotification.alertBody = [NSString stringWithFormat:@"%@: %@", chatRoom.title, AMLocalizedString(@"calling...", @"Label shown when you receive an incoming call, before start the call.")];
+                localNotification.userInfo = @{@"chatId" : @(call.chatId),
+                                               @"callId" : @(call.callId)
+                                               };
+                [self.currentNotifications addObject:localNotification];
+                [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+            }
+
         }
+    }
+}
+
+
+- (void)presentCallViewControllerIfThereAreAnIncomingCall {
+    NSArray *callsKeys = [self.missedCallsDictionary allKeys];
+    if (callsKeys.count > 0) {
+        MEGAChatCall *call = [self.missedCallsDictionary objectForKey:[callsKeys objectAtIndex:0]];
+        
+        [self.missedCallsDictionary removeObjectForKey:@(call.chatId)];
+        
+        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
+        CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
+        callVC.chatRoom  = chatRoom;
+        callVC.videoCall = call.hasRemoteVideo;
+        callVC.callType = CallTypeIncoming;
+        [[UIApplication mnz_visibleViewController] presentViewController:callVC animated:YES completion:nil];
     }
 }
 
@@ -246,7 +288,6 @@
                 if (@available(iOS 10.0, *)) {
                     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
                     [center getDeliveredNotificationsWithCompletionHandler:^(NSArray<UNNotification *> *notifications) {
-                        NSString *notificationText = [NSString stringWithFormat:@"Missed %@ call", call.hasRemoteVideo ? @"Video" : @"Audio"];
                         NSInteger missedVideoCalls, missedAudioCalls;
                         if (call.hasRemoteVideo) {
                             missedVideoCalls = 1;
@@ -271,7 +312,7 @@
                             }
                         }
                         
-                        notificationText = [NSString mnz_stringByMissedAudioCalls:missedAudioCalls andMissedVideoCalls:missedVideoCalls];
+                        NSString *notificationText = [NSString mnz_stringByMissedAudioCalls:missedAudioCalls andMissedVideoCalls:missedVideoCalls];
                         
                         UNMutableNotificationContent *content = [UNMutableNotificationContent new];
                         content.title = chatRoom.title;
@@ -291,6 +332,25 @@
                             }
                         }];
                     }];
+                } else {
+                    [self.missedCallsDictionary removeObjectForKey:@(call.chatId)];
+                    
+                    for(UILocalNotification *notification in self.currentNotifications) {
+                        if([notification.userInfo[@"callId"] unsignedLongLongValue] == call.callId) {
+                            [[UIApplication sharedApplication] cancelLocalNotification:notification];
+                            [self.currentNotifications removeObject:notification];
+                            break;
+                        }
+                    }
+                    
+                    NSString *alertBody = [NSString mnz_stringByMissedAudioCalls:(call.hasRemoteVideo ? 0 : 1) andMissedVideoCalls:(call.hasRemoteVideo ? 1 : 0)];
+                    UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+                    localNotification.alertTitle = @"MEGA";
+                    localNotification.alertBody = [NSString stringWithFormat:@"%@: %@", chatRoom.title, alertBody];
+                    localNotification.userInfo = @{@"chatId" : @(call.chatId),
+                                                   @"callId" : @(call.callId)
+                                                   };
+                    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
                 }
             }
             
