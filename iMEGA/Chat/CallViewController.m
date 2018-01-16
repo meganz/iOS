@@ -38,7 +38,6 @@
 
 @property (strong, nonatomic) AVAudioPlayer *player;
 
-
 @end
 
 @implementation CallViewController
@@ -57,6 +56,8 @@
 
     self.localVideoImageView.layer.masksToBounds = YES;
     self.localVideoImageView.layer.cornerRadius = 4;
+    self.localVideoImageView.corner = CornerTopRight;
+    self.localVideoImageView.visibleControls = YES;
 
     if (self.callType == CallTypeIncoming) {
         self.outgoingCallView.hidden = YES;
@@ -94,7 +95,7 @@
     
     [[UIDevice currentDevice] setProximityMonitoringEnabled:YES];    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSessionRouteChange:) name:AVAudioSessionRouteChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sensorStateMonitor:) name:@"UIDeviceProximityStateDidChangeNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sensorStateMonitor:) name:UIDeviceProximityStateDidChangeNotification object:nil];
     
     self.nameLabel.text = [self.chatRoom peerFullnameAtIndex:0];
     
@@ -126,8 +127,7 @@
     [[MEGASdkManager sharedMEGAChatSdk] removeChatLocalVideoDelegate:self.localVideoImageView];
     
     [[UIDevice currentDevice] setProximityMonitoringEnabled:NO];
-    [[NSNotificationCenter defaultCenter] removeObserver:AVAudioSessionRouteChangeNotification];
-    [[NSNotificationCenter defaultCenter] removeObserver:@"UIDeviceProximityStateDidChangeNotification"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Status bar
@@ -214,6 +214,7 @@
             [UIView animateWithDuration:0.25 animations:^{
                 [self setNeedsStatusBarAppearanceUpdate];
             }];
+            self.localVideoImageView.visibleControls = YES;
         } else {
             [self.outgoingCallView setAlpha:0.0f];
             self.statusBarShouldBeHidden = YES;
@@ -221,7 +222,9 @@
                 [self setNeedsStatusBarAppearanceUpdate];
             }];
             [self.nameLabel setAlpha:0.0f];
+            self.localVideoImageView.visibleControls = NO;
         }
+         
         [self.view layoutIfNeeded];
     }];
 }
