@@ -130,6 +130,10 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+}
+
 #pragma mark - Status bar
 
 - (BOOL)prefersStatusBarHidden {
