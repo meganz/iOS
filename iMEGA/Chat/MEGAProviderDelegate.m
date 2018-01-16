@@ -3,6 +3,8 @@
 #import "CallViewController.h"
 #import "UIApplication+MNZCategory.h"
 
+#import "MEGAUser+MNZCategory.h"
+
 @interface MEGAProviderDelegate ()
 
 @property (nonatomic, copy) MEGACallManager *megaCallManager;
@@ -32,18 +34,19 @@
     return self;
 }
 
-- (void)reportIncomingCall:(MEGAChatCall *)call hasVideo:(BOOL)hasVideo email:(NSString*)email {
-    MEGALogDebug(@"[CallKit] Report incoming call %@ with uuid %@, video %@ and email %@", call, call.uuid, hasVideo ? @"YES" : @"NO", email);
+- (void)reportIncomingCall:(MEGAChatCall *)call user:(MEGAUser *)user {
+    MEGALogDebug(@"[CallKit] Report incoming call %@ with uuid %@, video %@ and email %@", call, call.uuid, call.hasRemoteVideo ? @"YES" : @"NO", user.email);
     CXCallUpdate *update = [[CXCallUpdate alloc] init];
-    update.remoteHandle = [[CXHandle alloc] initWithType:CXHandleTypeEmailAddress value:email];
+    update.remoteHandle = [[CXHandle alloc] initWithType:CXHandleTypeEmailAddress value:user.email];
+    update.localizedCallerName = user.mnz_fullName;
     update.supportsHolding = NO;
     update.supportsGrouping = NO;
     update.supportsUngrouping = NO;
     update.supportsDTMF = NO;
-    update.hasVideo = hasVideo;
+    update.hasVideo = call.hasRemoteVideo;
     [self.provider reportNewIncomingCallWithUUID:call.uuid update:update completion:^(NSError * _Nullable error) {
         if (error) {
-            MEGALogError(@"error");
+            MEGALogError(@"Report new incoming call failed with error: %@", error);
         } else {
             [self.megaCallManager addCall:call];
         }
@@ -73,6 +76,22 @@
     MEGALogDebug(@"[CallKit] Provider perform start call: %@, uuid: %@", call, action.callUUID);
     
     if (call) {
+        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
+        uint64_t peerHandle = [chatRoom peerHandleAtIndex:0];
+        NSString *email = [chatRoom peerEmailByHandle:peerHandle];
+        MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
+        
+        CXCallUpdate *update = [[CXCallUpdate alloc] init];
+        update.remoteHandle = [[CXHandle alloc] initWithType:CXHandleTypeEmailAddress value:user.email];
+        update.localizedCallerName = user.mnz_fullName;
+        update.supportsHolding = NO;
+        update.supportsGrouping = NO;
+        update.supportsUngrouping = NO;
+        update.supportsDTMF = NO;
+        update.hasVideo = call.hasRemoteVideo;
+        
+        [provider reportCallWithUUID:action.callUUID updated:update];
+        
         [provider reportOutgoingCallWithUUID:action.callUUID startedConnectingAtDate:nil];
         [action fulfill];
     } else {
