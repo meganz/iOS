@@ -9,7 +9,7 @@
 
 - (instancetype)initWithMEGACallManager:(MEGACallManager *)megaCallManager;
 
-- (void)reportIncomingCall:(MEGAChatCall *)call hasVideo:(BOOL)hasVideo email:(NSString*)email;
+- (void)reportIncomingCall:(MEGAChatCall *)call user:(MEGAUser *)user;
 - (void)reportOutgoingCall:(MEGAChatCall *)call;
 
 @end

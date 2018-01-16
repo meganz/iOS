@@ -148,8 +148,9 @@
             
             uint64_t peerHandle = [chatRoom peerHandleAtIndex:0];
             NSString *email = [chatRoom peerEmailByHandle:peerHandle];
+            MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
             
-            [self.megaProviderDelegate reportIncomingCall:call hasVideo:call.hasRemoteVideo email:email];
+            [self.megaProviderDelegate reportIncomingCall:call user:user];
         } else {
             CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
             callVC.chatRoom  = chatRoom;
