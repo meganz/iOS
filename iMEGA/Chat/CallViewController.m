@@ -2,6 +2,7 @@
 #import "CallViewController.h"
 #import "MEGARemoteImageView.h"
 #import "MEGALocalImageView.h"
+#import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
 #import <AVFoundation/AVFoundation.h>
@@ -202,11 +203,8 @@
 }
 
 - (void)updateLabel {
-    NSTimeInterval interval = [self.baseDate timeIntervalSinceNow];
-    NSUInteger seconds = ABS((int)interval);
-    NSUInteger minutes = seconds/60;
-    NSUInteger hours = minutes/60;
-    self.statusCallLabel.text = [NSString stringWithFormat:@"%02lu:%02lu:%02lu", (unsigned long)hours, (unsigned long)minutes%60, (unsigned long)seconds%60];
+    NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - self.baseDate.timeIntervalSince1970);
+    self.statusCallLabel.text = [NSString mnz_stringFromTimeInterval:interval];
 }
 
 - (void)showOrHideControls {
@@ -371,7 +369,6 @@
             
         case MEGAChatCallStatusDestroyed: {
             if (self.call.callId == call.callId) {
-                self.statusCallLabel.text = call.duration ? @"Call ended" : @"Call rejected";
                 self.incomingCallView.userInteractionEnabled = NO;
                 
                 [self.timer invalidate];
