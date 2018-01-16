@@ -1667,6 +1667,18 @@ void uncaughtExceptionHandler(NSException *exception) {
     self.presentInviteContactVCLater = NO;
 }
 
+- (void)openChatRoomWithChatNumber:(NSNumber *)chatNumber {
+    if (chatNumber) {
+        uint64_t chatId = [chatNumber unsignedLongLongValue];
+        self.mainTBC.selectedIndex = CHAT;
+        MEGANavigationController *navigationController = [[self.mainTBC viewControllers] objectAtIndex:CHAT];
+        MEGAChatRoom *chatRoom  = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
+        MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
+        messagesVC.chatRoom = chatRoom;
+        [navigationController pushViewController:messagesVC animated:YES];
+    }
+}
+
 #pragma mark - Battery changed
 
 - (void)batteryChanged:(NSNotification *)notification {
@@ -1904,19 +1916,15 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler {
     MEGALogDebug(@"userNotificationCenter didReceiveNotificationResponse %@", response);
     [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[response.notification.request.identifier]];
-    if (response.notification.request.content.userInfo[@"chatId"]) {
-        uint64_t chatId = [response.notification.request.content.userInfo[@"chatId"] unsignedLongLongValue];
-        self.mainTBC.selectedIndex = CHAT;
-        MEGANavigationController *navigationController = [[self.mainTBC viewControllers] objectAtIndex:CHAT];
-        MEGAChatRoom *chatRoom  = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
-        MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-        messagesVC.chatRoom = chatRoom;
-        [navigationController pushViewController:messagesVC animated:YES];
-    }
+    
+    [self openChatRoomWithChatNumber:response.notification.request.content.userInfo[@"chatId"]];
     
     completionHandler();
 }
 
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    [self openChatRoomWithChatNumber:notification.userInfo[@"chatId"]];
+}
 
 #pragma mark - MEGAGlobalDelegate
 
