@@ -288,6 +288,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         }
     }
     
+    label.adjustsFontSizeToFitWidth = YES;
+    label.minimumScaleFactor = 0.8f;
     label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
     [self.navigationItem setTitleView:label];
     
@@ -378,7 +380,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         }
     };
     
-    [self presentViewController:navigationController animated:YES completion:nil];
+    [self presentViewController:navigationController animated:YES completion:^{
+        self.automaticallyScrollsToMostRecentMessage = YES;
+    }];
 }
 
 - (void)updateUnreadLabel {
@@ -389,7 +393,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)customiseCollectionViewLayout {
     self.collectionView.collectionViewLayout.messageBubbleFont = [UIFont mnz_SFUIRegularWithSize:15.0f];
-    self.collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(9.0f, 9.0f, 9.0f, 9.0f);
+    self.collectionView.collectionViewLayout.messageBubbleTextViewFrameInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
+    self.collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f);
     
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeMake(kAvatarImageDiameter, kAvatarImageDiameter);
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeMake(0.0f, 0.0f);
@@ -421,35 +426,41 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (BOOL)showHourForMessage:(MEGAChatMessage *)message withIndexPath:(NSIndexPath *)indexPath {
-    BOOL showHour = NO;
+    if (message.managementMessage || indexPath.item == 0) {
+        return YES;
+    }
+    
     MEGAChatMessage *previousMessage = [self.messages objectAtIndex:(indexPath.item - 1)];
+    if (previousMessage.isManagementMessage) {
+        return YES;
+    }
+    
+    BOOL showHour = NO;
     if ([message.senderId isEqualToString:previousMessage.senderId]) {
         if ([self showHourBetweenDate:message.date previousDate:previousMessage.date]) {
             showHour = YES;
         } else {
-            //TODO: Improve algorithm it has some issues when going back on the messages history
-            NSUInteger count = self.messages.count;
-            for (NSUInteger i = 1; i < count; i++) {
-                NSInteger index = (indexPath.item - (i + 1));
-                if (index > 0) {
-                    MEGAChatMessage *messagePriorToThePreviousOne = [self.messages objectAtIndex:index];
-                    if (messagePriorToThePreviousOne.messageIndex < 0) {
-                        break;
-                    }
-                    
-                    if ([message.senderId isEqualToString:messagePriorToThePreviousOne.senderId]) {
-                        if ([self showHourBetweenDate:message.date previousDate:messagePriorToThePreviousOne.date]) {
-                            JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
-                            if (cell.messageBubbleTopLabel == nil) {
-                                showHour = NO;
-                            } else {
-                                showHour = YES;
-                            }
+            JSQMessagesCollectionViewCell *previousMessageCell = (JSQMessagesCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:(indexPath.item - 1) inSection:0]];
+            if (previousMessageCell.messageBubbleTopLabel.attributedText == nil) {
+                NSUInteger count = self.messages.count;
+                for (NSUInteger i = 1; i < count; i++) {
+                    NSInteger index = (indexPath.item - (i + 1));
+                    if (index > 0) {
+                        MEGAChatMessage *messagePriorToThePreviousOne = [self.messages objectAtIndex:index];
+                        if (messagePriorToThePreviousOne.messageIndex < 0) {
                             break;
                         }
-                    } else { // The timestamp should not appear because is already shown on the previous message
-                        showHour = NO;
-                        break;
+                        
+                        if ([message.senderId isEqualToString:messagePriorToThePreviousOne.senderId]) {
+                            if ([self showHourBetweenDate:message.date previousDate:messagePriorToThePreviousOne.date]) {
+                                JSQMessagesCollectionViewCell *messagePriorToThePreviousOneCell = (JSQMessagesCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
+                                if (messagePriorToThePreviousOneCell.messageBubbleTopLabel.attributedText) {
+                                    break;
+                                }
+                            }
+                        } else { //The timestamp should not appear because is already shown on the message prior to the previous message, that has a different sender
+                            break;
+                        }
                     }
                 }
             }
@@ -522,23 +533,33 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             participantsNames = [participantsNames stringByAppendingString:[NSString stringWithFormat:@"%@, ", peerName]];
         }
     }
+    
+    //TODO: Show text in chattingWithLabel when its string is translated.
+//    self.openMessageHeaderView.chattingWithLabel.text = AMLocalizedString(@"chattingWith", @"Title show above the name of the persons with whom you're chatting");
+    self.openMessageHeaderView.chattingWithLabel.text = nil;
     self.openMessageHeaderView.conversationWithLabel.text = participantsNames;
     self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
     self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
-    self.openMessageHeaderView.conversationWithAvatar.image = self.peerAvatar;
+    self.openMessageHeaderView.conversationWithAvatar.image = self.chatRoom.isGroup ? nil : self.peerAvatar;
     self.openMessageHeaderView.introductionLabel.text = AMLocalizedString(@"chatIntroductionMessage", @"Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server.");
     
     NSString *confidentialityExplanationString = AMLocalizedString(@"confidentialityExplanation", @"Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit.");
     NSString *confidentialityString = [confidentialityExplanationString mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
-    confidentialityExplanationString = [confidentialityExplanationString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"[S]%@[/S] ", confidentialityString] withString:@""];
-    self.openMessageHeaderView.confidentialityLabel.text = confidentialityString;
-    self.openMessageHeaderView.confidentialityExplanationLabel.text = confidentialityExplanationString;
+    confidentialityExplanationString = [confidentialityExplanationString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"[S]%@[/S]", confidentialityString] withString:@""];
+    
+    NSMutableAttributedString *confidentialityAttributedString = [[NSMutableAttributedString alloc] initWithString:confidentialityString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]}];
+    NSMutableAttributedString *confidentialityExplanationAttributedString = [[NSMutableAttributedString alloc] initWithString:confidentialityExplanationString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]}];
+    [confidentialityAttributedString appendAttributedString:confidentialityExplanationAttributedString];
+    self.openMessageHeaderView.confidentialityLabel.attributedText = confidentialityAttributedString;
     
     NSString *authenticityExplanationString = AMLocalizedString(@"authenticityExplanation", @"Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit.");
     NSString *authenticityString = [authenticityExplanationString mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
-    authenticityExplanationString = [authenticityExplanationString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"[S]%@[/S] ", authenticityString] withString:@""];
-    self.openMessageHeaderView.authenticityLabel.text = authenticityString;
-    self.openMessageHeaderView.authenticityExplanationLabel.text = authenticityExplanationString;
+    authenticityExplanationString = [authenticityExplanationString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"[S]%@[/S]", authenticityString] withString:@""];
+
+    NSMutableAttributedString *authenticityAttributedString = [[NSMutableAttributedString alloc] initWithString:authenticityString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]}];
+    NSMutableAttributedString *authenticityExplanationAttributedString = [[NSMutableAttributedString alloc] initWithString:authenticityExplanationString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]}];
+    [authenticityAttributedString appendAttributedString:authenticityExplanationAttributedString];
+    self.openMessageHeaderView.authenticityLabel.attributedText = authenticityAttributedString;
 }
 
 - (void)hideTypingIndicator {
@@ -576,7 +597,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             [self startUploadAndAttachWithPath:filePath parentNode:parentNode];
         }];
         
-        [self presentViewController:imagePickerController animated:YES completion:nil];
+        [self presentViewController:imagePickerController animated:YES completion:^{
+            self.automaticallyScrollsToMostRecentMessage = YES;
+        }];
     }
 }
 
@@ -680,15 +703,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                   senderId:(NSString *)senderId
          senderDisplayName:(NSString *)senderDisplayName
                       date:(NSDate *)date {
-    /**
-     *  Sending a message. Your implementation of this method should do *at least* the following:
-     *
-     *  1. Play sound (optional)
-     *  2. Add new id<JSQMessageData> object to your data source
-     *  3. Call `finishSendingMessage`
-     */
     
-    // [JSQSystemSoundPlayer jsq_playMessageSentSound];
+    if (text.mnz_isEmpty) {
+        return;
+    }
+    
     MEGAChatMessage *message;
     if (!self.editMessage) {
         message = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:text];
@@ -759,14 +778,6 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)didPressAccessoryButton:(UIButton *)sender {
     switch (sender.tag) {
-        case MEGAChatAccessoryButtonText:
-            if ([self.inputToolbar.contentView.textView isFirstResponder]) {
-                [self.inputToolbar.contentView.textView resignFirstResponder];
-            } else {
-                [self.inputToolbar.contentView.textView becomeFirstResponder];
-            }
-            break;
-            
         case MEGAChatAccessoryButtonCamera: {
             if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType:completionHandler:)]) {
                 [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL permissionGranted) {
@@ -792,13 +803,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         }
             
         case MEGAChatAccessoryButtonUpload: {
-            [self.inputToolbar.contentView.textView resignFirstResponder];
-            
             NSString *alertControllerTitle = AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
             UIAlertController *selectOptionAlertController = [UIAlertController alertControllerWithTitle:alertControllerTitle message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-            [selectOptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                [self.inputToolbar.contentView.textView becomeFirstResponder];
-            }]];
+            [selectOptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
             
             UIAlertAction *sendFromCloudDriveAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fromCloudDrive", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
@@ -812,11 +819,13 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                     }
                 };
             }];
+            [sendFromCloudDriveAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
             [selectOptionAlertController addAction:sendFromCloudDriveAlertAction];
             
             UIAlertAction *sendContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"contact", @"referring to a contact in the contact list of the user") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [self presentAddOrAttachParticipantToGroup:nil];
             }];
+            [sendContactAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
             [selectOptionAlertController addAction:sendContactAlertAction];
             
             selectOptionAlertController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
@@ -833,6 +842,12 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         default:
             break;
     }
+}
+
+- (void)didEndAnimatingAfterButton:(UIButton *)sender {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self scrollToBottomAnimated:YES];
+    });
 }
 
 - (void)jsq_setCollectionViewInsetsTopValue:(CGFloat)top bottomValue:(CGFloat)bottom {
@@ -928,22 +943,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     
-    BOOL showMessageBubbleTopLabel = NO;
-    if (indexPath.item == 0) {
-        showMessageBubbleTopLabel = YES;
-    } else {
-        if (message.isManagementMessage) {
-            showMessageBubbleTopLabel = YES;
-        } else {
-            showMessageBubbleTopLabel = [self showHourForMessage:message withIndexPath:indexPath];
-        }
-    }
-
+    BOOL showMessageBubbleTopLabel = [self showHourForMessage:message withIndexPath:indexPath];
     if (showMessageBubbleTopLabel) {
         NSString *hour = [[JSQMessagesTimestampFormatter sharedFormatter] timeForDate:message.date];
         NSAttributedString *hourAttributed = [[NSAttributedString alloc] initWithString:hour attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor grayColor]}];
         NSMutableAttributedString *topCellAttributed = [[NSMutableAttributedString alloc] init];
-        
         
         if (self.chatRoom.isGroup && !message.isManagementMessage) {
             NSString *fullname = [self.chatRoom peerFullnameByHandle:message.userHandle];
@@ -988,14 +992,15 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         cell.accessoryButton.hidden = NO;
         
         cell.textView.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
+        cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? [UIColor whiteColor] : [UIColor mnz_black333333];
         if (message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
-            cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? [UIColor mnz_whiteFFFFFF_02] : [UIColor mnz_black333333_02];
+            cell.contentView.alpha = 0.7f;
             if (message.status == MEGAChatMessageStatusSendingManual) {
                 [cell.accessoryButton setImage:[UIImage imageNamed:@"sending_manual"] forState:UIControlStateNormal];
                 cell.accessoryButton.hidden = NO;
             }
         } else {
-            cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? [UIColor whiteColor] : [UIColor mnz_black333333];
+            cell.contentView.alpha = 1.0f;
         }
     } else if (message.isDeleted) {
         cell.textView.font = [UIFont mnz_SFUIRegularItalicWithSize:15.0f];
@@ -1004,14 +1009,15 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         cell.textView.attributedText = message.attributedText;
     } else if (!message.isMediaMessage) {
         cell.textView.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
+        cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? [UIColor whiteColor] : [UIColor mnz_black333333];
         if (message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
-            cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? [UIColor mnz_whiteFFFFFF_02] : [UIColor mnz_black333333_02];
+            cell.contentView.alpha = 0.7f;
             if (message.status == MEGAChatMessageStatusSendingManual) {
                 [cell.accessoryButton setImage:[UIImage imageNamed:@"sending_manual"] forState:UIControlStateNormal];
                 cell.accessoryButton.hidden = NO;
             }
         } else {
-            cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? [UIColor whiteColor] : [UIColor mnz_black333333];
+            cell.contentView.alpha = 1.0f;
         }
         cell.textView.linkTextAttributes = @{ NSForegroundColorAttributeName : cell.textView.textColor,
                                               NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
@@ -1235,18 +1241,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                    layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat height = 0.0f;
-    BOOL showMessageBubleTopLabel = NO;
-    if (indexPath.item == 0) {
-        showMessageBubleTopLabel = YES;
-    } else {
-        MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
-        if (message.isManagementMessage) {
-            showMessageBubleTopLabel = YES;
-        } else {
-            showMessageBubleTopLabel = [self showHourForMessage:message withIndexPath:indexPath];
-        }
-    }
+    MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     
+    BOOL showMessageBubleTopLabel = [self showHourForMessage:message withIndexPath:indexPath];
     if (showMessageBubleTopLabel) {
         if (self.chatRoom.isGroup) {
             height = kGroupChatCellLabelHeight;

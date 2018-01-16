@@ -497,7 +497,7 @@
 
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
-    if (![self.tableView numberOfRowsInSection:indexPath.section]) {
+    if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
         return nil;
     }
     
@@ -721,7 +721,7 @@
         CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
         
-        if (![self.tableView numberOfRowsInSection:indexPath.section]) {
+        if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
             return;
         }
         
