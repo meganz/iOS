@@ -239,6 +239,7 @@
         case MEGAChatCallStatusRequestSent:
             if (@available(iOS 10.0, *)) {
                 self.reportOutgoingCall = YES;
+                self.megaProviderDelegate.outgoingCall = YES;
             }
             break;
             
@@ -265,6 +266,9 @@
         }
             
         case MEGAChatCallStatusJoining:
+            if (@available(iOS 10.0, *)) {
+                self.megaProviderDelegate.outgoingCall = NO;
+            }
             break;
             
         case MEGAChatCallStatusInProgress:

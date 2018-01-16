@@ -7,6 +7,8 @@
 
 @interface MEGAProviderDelegate : NSObject <CXProviderDelegate>
 
+@property (getter=isOutgoingCall) BOOL outgoingCall;
+
 - (instancetype)initWithMEGACallManager:(MEGACallManager *)megaCallManager;
 
 - (void)reportIncomingCall:(MEGAChatCall *)call user:(MEGAUser *)user;
