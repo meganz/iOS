@@ -1,5 +1,8 @@
 
 #import "MEGAProviderDelegate.h"
+
+#import <AVFoundation/AVFoundation.h>
+
 #import "CallViewController.h"
 #import "UIApplication+MNZCategory.h"
 
@@ -9,6 +12,8 @@
 
 @property (nonatomic, copy) MEGACallManager *megaCallManager;
 @property (nonatomic, strong) CXProvider *provider;
+
+@property (strong, nonatomic) AVAudioPlayer *player;
 
 @end
 
@@ -56,7 +61,13 @@
 - (void)reportOutgoingCall:(MEGAChatCall *)call {
     NSUUID *uuid = [self.megaCallManager UUIDForCall:call];
     MEGALogDebug(@"[CallKit] Report outgoing call %@ with uuid %@", call, uuid);
+    
+    [self stopDialerTone];
     [self.provider reportOutgoingCallWithUUID:uuid connectedAtDate:nil];
+}
+
+- (void)stopDialerTone {
+    [self.player stop];
 }
 
 #pragma mark - CXProviderDelegate
@@ -164,6 +175,16 @@
 
 - (void)provider:(CXProvider *)provider didActivateAudioSession:(AVAudioSession *)audioSession {
     MEGALogDebug(@"[CallKit] Provider did activate audio session");
+    
+    if (self.isOutgoingCall) {
+        NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"incoming_voice_video_call" ofType:@"mp3"];
+        NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
+        
+        _player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
+        self.player.numberOfLoops = -1;
+        
+        [self.player play];
+    }
 }
 
 - (void)provider:(CXProvider *)provider didDeactivateAudioSession:(AVAudioSession *)audioSession {
