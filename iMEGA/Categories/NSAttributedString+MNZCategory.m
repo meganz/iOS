@@ -14,7 +14,7 @@
         cache = [NSCache new];
         cache.countLimit = 1000;
     });
-    NSAttributedString *cachedAttributedString = [cache objectForKey:[NSNumber numberWithUnsignedInteger:message.hash]];
+    NSAttributedString *cachedAttributedString = [cache objectForKey:[NSString stringWithFormat:@"%lu%@", (unsigned long)message.hash, color.description]];
     if (cachedAttributedString) {
         return cachedAttributedString;
     }
@@ -110,7 +110,7 @@
         }
     }];
     
-    [cache setObject:attributedString forKey:[NSNumber numberWithUnsignedInteger:message.hash]];
+    [cache setObject:attributedString forKey:[NSString stringWithFormat:@"%lu%@", (unsigned long)message.hash, color.description]];
     return attributedString;
 }
 

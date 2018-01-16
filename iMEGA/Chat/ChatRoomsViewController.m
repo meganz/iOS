@@ -413,6 +413,8 @@
     NSString *onlineStatusString = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] onlineStatus]];
     if (onlineStatusString) {
         UILabel *label = [Helper customNavigationBarLabelWithTitle:AMLocalizedString(@"chat", @"Chat section header") subtitle:onlineStatusString];
+        label.adjustsFontSizeToFitWidth = YES;
+        label.minimumScaleFactor = 0.8f;
         label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
         label.userInteractionEnabled = YES;
         label.gestureRecognizers = @[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatRoomTitleDidTap)]];
@@ -689,7 +691,7 @@
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
     CGPoint rowPoint = [self.tableView convertPoint:location fromView:self.view];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:rowPoint];
-    if (![self.tableView numberOfRowsInSection:indexPath.section]) {
+    if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
         return nil;
     }
     

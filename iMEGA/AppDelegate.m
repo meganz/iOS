@@ -402,7 +402,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     /* Hide all windows except the keyWindow */
     for (UIWindow *window in application.windows) {
-        if (window != self.window) {
+        if ([NSStringFromClass(window.class) isEqualToString:@"UIRemoteKeyboardWindow"]) {
             window.frame = CGRectMake(0, 0, 0, 0);
         }
     }
@@ -422,7 +422,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [self.privacyView removeFromSuperview];
     self.privacyView = nil;
     for (UIWindow *window in application.windows) {
-        if (window != self.window) {
+        if ([NSStringFromClass(window.class) isEqualToString:@"UIRemoteKeyboardWindow"]) {
             window.frame = [[UIScreen mainScreen] bounds];
         }
     }
