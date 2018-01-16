@@ -2,7 +2,9 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import <CoreSpotlight/CoreSpotlight.h>
+#import <Intents/Intents.h>
 #import <Photos/Photos.h>
+#import <PushKit/PushKit.h>
 #import <UserNotifications/UserNotifications.h>
 
 #import "LTHPasscodeViewController.h"
@@ -11,6 +13,7 @@
 
 #import "CameraUploads.h"
 #import "Helper.h"
+#import "DevicePermissionsHelper.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAIndexer.h"
 #import "MEGALogger.h"
@@ -24,8 +27,10 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 
 #import "BrowserViewController.h"
+#import "CallViewController.h"
 #import "CameraUploadsPopUpViewController.h"
 #import "ChangePasswordViewController.h"
 #import "ChatRoomsViewController.h"
@@ -40,8 +45,11 @@
 #import "LaunchViewController.h"
 #import "LoginViewController.h"
 #import "MainTabBarController.h"
+#import "MessagesViewController.h"
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGAPasswordLinkRequestDelegate.h"
+#import "MEGAChatCreateChatGroupRequestDelegate.h"
+#import "MEGAInviteContactRequestDelegate.h"
 #import "MyAccountHallViewController.h"
 #import "OfflineTableViewController.h"
 #import "SecurityOptionsTableViewController.h"
@@ -49,7 +57,7 @@
 #import "SharedItemsViewController.h"
 #import "UnavailableLinkView.h"
 #import "UpgradeTableViewController.h"
-#import "WarningTransferQuotaViewController.h"
+#import "CustomModalAlertViewController.h"
 
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
@@ -74,7 +82,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeHandleLink
 };
 
-@interface AppDelegate () <UIAlertViewDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate> {
+@interface AppDelegate () <UIAlertViewDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, PKPushRegistryDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
     
@@ -105,6 +113,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @property (nonatomic) NSString *nodeToPresentBase64Handle;
 
 @property (nonatomic) NSUInteger megatype; //1 share folder, 2 new message, 3 contact request
+
+@property (strong, nonatomic) MEGAChatRoom *chatRoom;
+@property (nonatomic, getter=isVideoCall) BOOL videoCall;
+
+@property (strong, nonatomic) NSString *email;
+@property (nonatomic) BOOL presentInviteContactVCLater;
 
 @end
 
@@ -235,6 +249,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     self.link = nil;
     isFetchNodesDone = NO;
+    _presentInviteContactVCLater = NO;
     
     if (sessionV3) {
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TabsOrderInTabBar"];
@@ -250,7 +265,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [sharedUserDefaults setBool:YES forKey:@"extensions-passcode"];
         }
         
+        [self registerForVoIPNotifications];
         [self registerForNotifications];
+        [self requestCameraAndMicPermissions];
         
         isAccountFirstLogin = NO;
         
@@ -490,12 +507,80 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
-    MEGALogDebug(@"Application continue user activity");
+    MEGALogDebug(@"Application continue user activity %@", userActivity.activityType);
     
-    if ([userActivity.activityType isEqualToString:CSSearchableItemActionType] && [MEGAReachabilityManager isReachable]) {
-        self.nodeToPresentBase64Handle = userActivity.userInfo[@"kCSSearchableItemActivityIdentifier"];
-        if ([self.window.rootViewController isKindOfClass:[MainTabBarController class]] && ![LTHPasscodeViewController doesPasscodeExist]) {
-            [self presentNode];
+    if ([MEGAReachabilityManager isReachable]) {
+        if ([userActivity.activityType isEqualToString:CSSearchableItemActionType]) {
+            self.nodeToPresentBase64Handle = userActivity.userInfo[@"kCSSearchableItemActivityIdentifier"];
+            if ([self.window.rootViewController isKindOfClass:[MainTabBarController class]] && ![LTHPasscodeViewController doesPasscodeExist]) {
+                [self presentNode];
+            }
+        } else if ([userActivity.activityType isEqualToString:@"INStartAudioCallIntent"] || [userActivity.activityType isEqualToString:@"INStartVideoCallIntent"]) {
+            INInteraction *interaction = userActivity.interaction;
+            INStartAudioCallIntent *startAudioCallIntent = (INStartAudioCallIntent *)interaction.intent;
+            INPerson *contact = startAudioCallIntent.contacts[0];
+            INPersonHandle *personHandle = contact.personHandle;
+            self.email = personHandle.value;
+            self.videoCall = [userActivity.activityType isEqualToString:@"INStartVideoCallIntent"] ? YES : NO;
+            MEGALogDebug(@"Email %@", self.email);
+            uint64_t userHandle = [[MEGASdkManager sharedMEGAChatSdk] userHandleByEmail:self.email];
+            
+            // INVALID_HANDLE = ~(uint64_t)0
+            if (userHandle == ~(uint64_t)0) {
+                MEGALogDebug(@"Can't start a call because %@ is not your contact", self.email);
+                if (isFetchNodesDone) {
+                    [self presentInviteContactCustomAlertViewController];
+                } else {
+                    _presentInviteContactVCLater = YES;
+                }
+            } else {
+                self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:userHandle];
+                if (self.chatRoom) {
+                    MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+                    if (call.status == MEGAChatCallStatusInProgress) {
+                        MEGALogDebug(@"There is a call in progress for this chat %@", call);
+                        CallViewController *callViewController = (CallViewController *) [UIApplication sharedApplication].keyWindow.rootViewController.presentedViewController;
+                        if (!callViewController.videoCall) {
+                            [callViewController tapOnVideoCallkitWhenDeviceIsLocked];
+                        }                        
+                    } else {
+                        MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
+                        MEGALogDebug(@"Chat %@ connection state: %@", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], chatConnection ? @"Online" : @"Offline");
+                        if (chatConnection == MEGAChatConnectionOnline) {
+                            [DevicePermissionsHelper audioPermissionWithCompletionHandler:^(BOOL granted) {
+                                if (granted) {
+                                    if (self.videoCall) {
+                                        [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
+                                            if (granted) {
+                                                [self performCall];
+                                            } else {
+                                                [[UIApplication mnz_visibleViewController] presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
+                                            }
+                                        }];
+                                    } else {
+                                        [self performCall];
+                                    }
+                                } else {
+                                    [[UIApplication mnz_visibleViewController] presentViewController:[DevicePermissionsHelper audioPermisionAlertController] animated:YES completion:nil];
+                                }
+                            }];
+                        }
+                    }
+                } else {
+                    MEGALogDebug(@"There is not a chat with %@, create the chat and inmediatelly perform the call", self.email);
+                    MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
+                    [peerList addPeerWithHandle:userHandle privilege:MEGAChatRoomPrivilegeStandard];
+                    MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                        self.chatRoom = chatRoom;
+                        MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
+                        MEGALogDebug(@"Chat %@ connection state: %@", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], chatConnection ? @"Online" : @"Offline");
+                        if (chatConnection == MEGAChatConnectionOnline) {
+                            [self performCall];
+                        }
+                    }];
+                    [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
+                }
+            }
         }
         return YES;
     } else {
@@ -1251,10 +1336,16 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [[CameraUploads syncManager] setTabBarController:_mainTBC];
     if (isAccountFirstLogin) {
+        [self registerForVoIPNotifications];
         [self registerForNotifications];
+        [self requestCameraAndMicPermissions];
     }
     
     [self openTabBasedOnNotificationMegatype];
+    
+    if (self.presentInviteContactVCLater) {
+        [self presentInviteContactCustomAlertViewController];
+    }
 }
 
 - (void)openTabBasedOnNotificationMegatype {
@@ -1284,6 +1375,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
 }
 
+- (void)registerForVoIPNotifications {
+    dispatch_queue_t mainQueue = dispatch_get_main_queue();
+    PKPushRegistry *voipRegistry = [[PKPushRegistry alloc] initWithQueue:mainQueue];
+    voipRegistry.delegate = self;
+    voipRegistry.desiredPushTypes = [NSSet setWithObject:PKPushTypeVoIP];
+}
+
 - (void)registerForNotifications {
     if (@available(iOS 10.0, *)) {
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
@@ -1302,6 +1400,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
                                                                              settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge |
                                                                              UIUserNotificationTypeSound categories:nil]];
     }
+}
+
+- (void)requestCameraAndMicPermissions {
+    [DevicePermissionsHelper audioPermissionWithCompletionHandler:nil];
+    [DevicePermissionsHelper videoPermissionWithCompletionHandler:nil];
 }
 
 - (void)notificationsSettings {
@@ -1504,6 +1607,76 @@ typedef NS_ENUM(NSUInteger, URLType) {
 void uncaughtExceptionHandler(NSException *exception) {
     MEGALogError(@"Exception name: %@\nreason: %@\nuser info: %@\n", exception.name, exception.reason, exception.userInfo);
     MEGALogError(@"Stack trace: %@", [exception callStackSymbols]);
+}
+
+
+- (void)performCall {
+    CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
+    callVC.chatRoom = self.chatRoom;
+    callVC.videoCall = self.videoCall;
+    callVC.callType = CallTypeOutgoing;
+    if (@available(iOS 10.0, *)) {
+        callVC.megaCallManager = [self.mainTBC megaCallManager];
+    }
+    [self.mainTBC presentViewController:callVC animated:YES completion:nil];
+    self.chatRoom = nil;
+}
+
+- (void)presentInviteContactCustomAlertViewController {
+    CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
+    customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    
+    BOOL isInOutgoingContactRequest = NO;
+    MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
+    for (NSInteger i = 0; i < [[outgoingContactRequestList size] integerValue]; i++) {
+        MEGAContactRequest *contactRequest = [outgoingContactRequestList contactRequestAtIndex:i];
+        if ([self.email isEqualToString:contactRequest.targetEmail]) {
+            isInOutgoingContactRequest = YES;
+            break;
+        }
+    }
+    
+    customModalAlertVC.boldInDetail = self.email;
+    
+    if (isInOutgoingContactRequest) {
+        customModalAlertVC.image = @"inviteSent";
+        customModalAlertVC.viewTitle = AMLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
+        customModalAlertVC.detail = [NSString stringWithFormat:@"The user %@ has been invited and will appear in your contact list once accepted", self.email];
+        customModalAlertVC.action = AMLocalizedString(@"close", nil);
+        customModalAlertVC.dismiss = nil;
+        __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
+        customModalAlertVC.completion = ^{
+            [weakCustom dismissViewControllerAnimated:YES completion:nil];
+        };
+    } else {
+        customModalAlertVC.image = @"groupChat";
+        customModalAlertVC.viewTitle = AMLocalizedString(@"inviteContact", @"Title shown when the user tries to make a call and the destination is not in the contact list");
+        customModalAlertVC.detail = [NSString stringWithFormat:@"Your contact %@ is not on MEGA. In order to call through MEGA's encrypted chat you need to invite your contact", self.email];
+        customModalAlertVC.action = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
+        customModalAlertVC.dismiss = AMLocalizedString(@"later", @"Button title to allow the user postpone an action");
+        __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
+        customModalAlertVC.completion = ^{
+            MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1];
+            [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:self.email message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+            [weakCustom dismissViewControllerAnimated:YES completion:nil];
+        };
+    }
+    
+    [[UIApplication mnz_visibleViewController] presentViewController:customModalAlertVC animated:YES completion:nil];
+    
+    self.presentInviteContactVCLater = NO;
+}
+
+- (void)openChatRoomWithChatNumber:(NSNumber *)chatNumber {
+    if (chatNumber) {
+        uint64_t chatId = [chatNumber unsignedLongLongValue];
+        self.mainTBC.selectedIndex = CHAT;
+        MEGANavigationController *navigationController = [[self.mainTBC viewControllers] objectAtIndex:CHAT];
+        MEGAChatRoom *chatRoom  = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
+        MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
+        messagesVC.chatRoom = chatRoom;
+        [navigationController pushViewController:messagesVC animated:YES];
+    }
 }
 
 #pragma mark - Battery changed
@@ -1709,6 +1882,48 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)setDefaultLanguage {    
     [[MEGASdkManager sharedMEGASdk] setLanguageCode:@"en"];
     [[LocalizationSystem sharedLocalSystem] setLanguage:@"en"];
+}
+
+#pragma mark - PKPushRegistryDelegate
+
+- (void)pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials:(PKPushCredentials *)credentials forType:(NSString *)type {
+    if([credentials.token length] == 0) {
+        MEGALogError(@"VoIP token length is 0");
+        return;
+    }
+    const unsigned char *dataBuffer = (const unsigned char *)credentials.token.bytes;
+    
+    NSUInteger dataLength = credentials.token.length;
+    NSMutableString *hexString = [NSMutableString stringWithCapacity:(dataLength * 2)];
+    
+    for (int i = 0; i < dataLength; ++i) {
+        [hexString appendString:[NSString stringWithFormat:@"%02lx", (unsigned long)dataBuffer[i]]];
+    }
+    
+    NSString *deviceTokenString = [NSString stringWithString:hexString];
+    MEGALogDebug(@"Device token %@", deviceTokenString);
+    [[MEGASdkManager sharedMEGASdk] registeriOSVoIPdeviceToken:deviceTokenString];
+    
+}
+
+- (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type {
+    MEGALogDebug(@"Did receive incoming push with payload: %@", [payload dictionaryPayload]);
+    [self startBackgroundTask];
+}
+
+#pragma mark - UNUserNotificationCenterDelegate
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler {
+    MEGALogDebug(@"userNotificationCenter didReceiveNotificationResponse %@", response);
+    [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[response.notification.request.identifier]];
+    
+    [self openChatRoomWithChatNumber:response.notification.request.content.userInfo[@"chatId"]];
+    
+    completionHandler();
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    [self openChatRoomWithChatNumber:notification.userInfo[@"chatId"]];
 }
 
 #pragma mark - MEGAGlobalDelegate
@@ -2273,6 +2488,13 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
+- (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
+    MEGALogInfo(@"onChatConnectionStateUpdate: %@, new state: %@", [MEGASdk base64HandleForUserHandle:chatId], newState ? @"Online" : @"Offline");
+    if (self.chatRoom.chatId == chatId && newState == MEGAChatConnectionOnline) {
+        [self performCall];
+    }
+}
+
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
@@ -2302,14 +2524,25 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if (error.type == MEGAErrorTypeApiEOverQuota && error.value) {
         [SVProgressHUD dismiss];
-        WarningTransferQuotaViewController *warningTransferQuotaVC = [[WarningTransferQuotaViewController alloc] init];
-        warningTransferQuotaVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-        [self.mainTBC presentViewController:warningTransferQuotaVC animated:YES completion:nil];
-        warningTransferQuotaVC.imageView.image = [UIImage imageNamed:@"transfer-quota-empty"];
-        warningTransferQuotaVC.titleLabel.text = AMLocalizedString(@"depletedTransferQuota_title", @"Title shown when you almost had used your available transfer quota.");;
-        warningTransferQuotaVC.detailLabel.text = AMLocalizedString(@"depletedTransferQuota_message", @"Description shown when you almost had used your available transfer quota.");
-        [warningTransferQuotaVC.seePlansButton setTitle:AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA") forState:UIControlStateNormal];
-        [warningTransferQuotaVC.dismissButton setTitle:AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).") forState:UIControlStateNormal];
+        
+        CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
+        customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+        customModalAlertVC.image = @"transfer-quota-empty";
+        customModalAlertVC.viewTitle = AMLocalizedString(@"depletedTransferQuota_title", @"Title shown when you almost had used your available transfer quota.");;
+        customModalAlertVC.detail = AMLocalizedString(@"depletedTransferQuota_message", @"Description shown when you almost had used your available transfer quota.");
+        customModalAlertVC.action = AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
+        customModalAlertVC.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+        __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
+        customModalAlertVC.completion = ^{
+            [weakCustom dismissViewControllerAnimated:YES completion:^{
+                UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+                
+                [[UIApplication mnz_visibleViewController] presentViewController:navigationController animated:YES completion:nil];
+            }];
+        };
+        
+        [[UIApplication mnz_visibleViewController] presentViewController:customModalAlertVC animated:YES completion:nil];
     }
 }
 
