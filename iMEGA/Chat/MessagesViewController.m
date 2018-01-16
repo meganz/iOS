@@ -537,7 +537,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             [self startUploadAndAttachWithPath:filePath parentNode:parentNode];
         }];
         
-        [self presentViewController:imagePickerController animated:YES completion:nil];
+        [self presentViewController:imagePickerController animated:YES completion:^{
+            self.automaticallyScrollsToMostRecentMessage = YES;
+        }];
     }
 }
 
@@ -773,6 +775,12 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         default:
             break;
     }
+}
+
+- (void)didEndAnimatingAfterButton:(UIButton *)sender {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self scrollToBottomAnimated:YES];
+    });
 }
 
 - (void)jsq_setCollectionViewInsetsTopValue:(CGFloat)top bottomValue:(CGFloat)bottom {
