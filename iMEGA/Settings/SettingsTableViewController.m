@@ -137,6 +137,7 @@
         } else {
             webViewController.view.tintColor = [UIColor mnz_redD90007];
         }
+        
         [self presentViewController:webViewController animated:YES completion:nil];
     }
 }
