@@ -1006,6 +1006,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         cell.textView.font = [UIFont mnz_SFUIRegularItalicWithSize:15.0f];
         cell.textView.textColor = [UIColor mnz_blue2BA6DE];
     } else if (message.isManagementMessage) {
+        cell.textView.linkTextAttributes = @{NSForegroundColorAttributeName: [UIColor jsq_messageBubbleRedColor],
+                                             NSUnderlineColorAttributeName: [UIColor jsq_messageBubbleRedColor],
+                                             NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)};
         cell.textView.attributedText = message.attributedText;
     } else if (!message.isMediaMessage) {
         cell.textView.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
