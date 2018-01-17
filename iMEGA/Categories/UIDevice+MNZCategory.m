@@ -163,7 +163,7 @@ static const NSUInteger MAX_BUFFER_32MB = 33554432; // 32 MB
 }
 
 - (BOOL)iPadDevice {
-    return ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) ? YES : NO;
+    return ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad);
 }
 
 - (BOOL)iPad {
@@ -200,6 +200,23 @@ static const NSUInteger MAX_BUFFER_32MB = 33554432; // 32 MB
         deviceName = (deviceNameTemp == nil) ? [self unknownDevice] : deviceNameTemp;
     }
     return deviceName;
+}
+
+- (CGFloat)mnz_widthForChatBubble {
+    const CGFloat kMaxBubbleWidth = 566.0f;
+    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
+    CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
+    CGFloat displaySize;
+    if ([self iPhoneDevice] && screenWidth > screenHeight) {
+        displaySize = screenHeight;
+    } else {
+        displaySize = screenWidth;
+    }
+    displaySize -= 92.0f;
+    if (displaySize > kMaxBubbleWidth) {
+        displaySize = kMaxBubbleWidth;
+    }
+    return displaySize;
 }
 
 @end

@@ -7,6 +7,7 @@
 #import "UIImage+GKContact.h"
 #import "UIColor+JSQMessages.h"
 
+#import "UIDevice+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGASdkManager.h"
 
@@ -35,11 +36,7 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    const CGFloat kMaxBubbleWidth = 566.0f;
-    CGFloat displaySize = [[UIScreen mainScreen] bounds].size.width - 92; // 75 + 17, by design
-    if (displaySize > kMaxBubbleWidth) {
-        displaySize = kMaxBubbleWidth;
-    }
+    CGFloat displaySize = [[UIDevice currentDevice] mnz_widthForChatBubble];
     return CGSizeMake(displaySize, 144.0f);
 }
 
