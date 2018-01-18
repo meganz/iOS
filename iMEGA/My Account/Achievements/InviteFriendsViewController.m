@@ -1,7 +1,6 @@
 
 #import "InviteFriendsViewController.h"
 
-#import <AddressBookUI/AddressBookUI.h>
 #import <ContactsUI/ContactsUI.h>
 
 #import "VENTokenField.h"
@@ -14,7 +13,7 @@
 
 #import "HelpModalViewController.h"
 
-@interface InviteFriendsViewController () <ABPeoplePickerNavigationControllerDelegate, CNContactPickerDelegate, VENTokenFieldDataSource, VENTokenFieldDelegate>
+@interface InviteFriendsViewController () <CNContactPickerDelegate, VENTokenFieldDataSource, VENTokenFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
@@ -119,19 +118,11 @@
         [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
     }
     
-    if (@available(iOS 9.0, *)) {
-        CNContactPickerViewController *contactsPickerViewController = [[CNContactPickerViewController alloc] init];
-        contactsPickerViewController.predicateForEnablingContact = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
-        contactsPickerViewController.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
-        contactsPickerViewController.delegate = self;
-        [self presentViewController:contactsPickerViewController animated:YES completion:nil];
-    } else {
-        ABPeoplePickerNavigationController *contactsPickerNC = [[ABPeoplePickerNavigationController alloc] init];
-        contactsPickerNC.predicateForEnablingPerson = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
-        contactsPickerNC.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
-        contactsPickerNC.peoplePickerDelegate = self;
-        [self presentViewController:contactsPickerNC animated:YES completion:nil];
-    }
+    CNContactPickerViewController *contactsPickerViewController = [[CNContactPickerViewController alloc] init];
+    contactsPickerViewController.predicateForEnablingContact = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
+    contactsPickerViewController.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
+    contactsPickerViewController.delegate = self;
+    [self presentViewController:contactsPickerViewController animated:YES completion:nil];
 }
 
 - (IBAction)inviteTouchUpInside:(UIButton *)sender {
@@ -156,31 +147,6 @@
     helpModalVC.thirdParagraph = AMLocalizedString(@"howItWorksTertiary", @"A message which is shown once someone has invited a friend as part of the achievements program.");
     
     [self presentViewController:helpModalVC animated:YES completion:nil];
-}
-
-#pragma mark - ABPeoplePickerNavigationControllerDelegate
-  
-- (void)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker didSelectPerson:(ABRecordRef)person {
-    NSString *email = nil;
-    ABMultiValueRef emails = ABRecordCopyValue(person, kABPersonEmailProperty);
-    if (ABMultiValueGetCount(emails) > 0) {
-        email = (__bridge_transfer NSString *)
-        ABMultiValueCopyValueAtIndex(emails, 0);
-    }
-    
-    if (email) {
-        [self addEmailToTokenList:email];
-    } else {
-        UIAlertController *contactHasNoEmailAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"contactWithoutEmail", @"Alert title shown when you add a contact from your device and the selected one doesn't have an email.") message:nil preferredStyle:UIAlertControllerStyleAlert];
-        
-        [contactHasNoEmailAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-        
-        [self presentViewController:contactHasNoEmailAlertController animated:YES completion:nil];
-    }
-    
-    if (emails) {
-        CFRelease(emails);
-    }
 }
 
 #pragma mark - CNContactPickerDelegate
