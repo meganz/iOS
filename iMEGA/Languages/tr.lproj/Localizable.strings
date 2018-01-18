@@ -28,6 +28,8 @@
 "attention"="Dikkat";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="Ayarlardan MEGA uygulamasının Kamera'ya erişmesi için izin verin lütfen";
+/* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
+"microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Ayarlardan MEGA uygulamasının fotoğraf albümüne erişmesi için izin verin lütfen";
 /* Alert message shown when the user tries to download an empty folder  */
@@ -121,7 +123,7 @@
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Cihazınızda biraz alan boşaltmanız gerekiyor";
 /* Title for the file link view */
-"fileLink"="Dosya linki";
+"fileLink"="Dosya bağlantısı";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Aç";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -135,13 +137,13 @@
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
 "fileLinkUnavailableText2"="Bu dosya Dosya Hizmet Koşulları/Kabul Edilebilir Kullanım İlkeleri ihlali nedeni ile silinmiş.";
 /* */
-"fileLinkUnavailableText3"="Geçersiz URL - erişmek istediğiniz link geçerli değil";
+"fileLinkUnavailableText3"="Geçersiz URL - erişmek istediğiniz bağlantı geçerli değil";
 /* */
 "fileLinkUnavailableText4"="Dosya kullanıcı tarafından silinmiş.";
 /* Message shown when a download starts */
 "downloadStarted"="İndirme başladı";
 /* Title for the folder link view */
-"folderLink"="Klasör linki";
+"folderLink"="Klasör bağlantısı";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="İndir";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -151,11 +153,11 @@
 /* */
 "folderLinkUnavailableText1"="Aşağıdaki nedenlerden ötürü olabilir:";
 /* */
-"folderLinkUnavailableText2"="Bu klasör linki Dosya Hizmet Koşulları/Kabul Edilebilir Kullanım İlkeleri ihlali nedeni ile silinmiş.";
+"folderLinkUnavailableText2"="Bu klasör bağlantısı Hizmet Koşulları/Kabul Edilebilir Kullanım İlkeleri ihlali nedeni ile silinmiş.";
 /* */
-"folderLinkUnavailableText3"="Geçersiz URL - erişmek istediğiniz link geçerli değil";
+"folderLinkUnavailableText3"="Geçersiz URL - erişmek istediğiniz bağlantı geçerli değil";
 /* */
-"folderLinkUnavailableText4"="Klasör linki kullanıcı tarafından geçersiz hale getirildi.";
+"folderLinkUnavailableText4"="Klasör bağlantısı kullanıcı tarafından geçersiz hale getirildi.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="İnternet bağlantısı yok";
 /* Title shown when a folder doesn't have any files */
@@ -180,6 +182,12 @@
 "contactRequests"="İrtibat talepleri";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Kişi ekleyin";
+/* Text shown when the user tries to make a call and the receiver is not a contact */
+"inviteContact"="Kişi Davet Et";
+/* Text shown when the user sends a contact invitation */
+"inviteSent"="Davet Gönderildi";
+/* Button title to allow the user postpone an action */
+"later"="Sonra";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
 "received"="Alınan";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
@@ -285,7 +293,7 @@
 /* Title shown under the action that allows you to save several images to your camera roll */
 "saveImages"="Görselleri Kaydet";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="Link al";
+"getLink"="Bağlantıyı al";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Bağlantıları al";
 /* Item menu option upon right click on one or multiple files. */
@@ -745,7 +753,7 @@
 /* Headline when the user chose YES */
 "great"="Harika!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Lütfen e-posta adresinizi aşağıya girin. Kurtarma Anahtarınızı girip şifrenizi sıfırlayabileceğiniz bir kurtarma linki göndereceğiz.";
+"recoveryLinkToResetYourPassword"="Lütfen e-posta adresinizi aşağıya girin. Kurtarma Anahtarınızı girip şifrenizi sıfırlayabileceğiniz bir kurtarma bağlantısı göndereceğiz.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Gönder";
 /* The title of the screen to park an account. */
@@ -951,7 +959,7 @@
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Aşağıdaki planlardan birini seçin:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
-"selectOneAccountType"="Select one account type:";
+"selectOneAccountType"="Bir hesap türü seçin:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="1 Yıllık PRO planına abone olursanız 2 ay ücretsiz";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1202,6 +1210,14 @@
 "attachedFile"="Ekli: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="Ekli %s dosya.";
+/* A summary message when a user sent the information of one contact through the chat. */
+"sharedContact"="Bu kişiyi paylaştı:";
+/* A summary message when a user sent the information of some contacts at once through the chat. */
+"sharedContacts"="Bu kişileri paylaştı:";
+/* A summary message when a user has attached one file into the chat. */
+"uploadedFile"="Bu dosyayı yükledi:";
+/* A summary message when a user has attached many files at once into the chat. */
+"uploadedFiles"="Bu dosyaları yükledi:";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Abonelikler ardışık abonelik periyotlarında aynı ücret ve süre uzunluğunda otomatik olarak yenilenir. MEGA PRO otomatik abonelik yenilenmesini bir sonraki yenilenme zamanından önce iTunes hesap ayarlarından kapatabilirsiniz. Aboneliklerinizi yönetmek için, App Store ikonuna tıklayın ve Apple ID'niz ile en alttan giriş yapın (önceden yapmadıysanız) ve ID Göster'e basın. Uygulama Aboneliklerini yönetebileceğiniz bir sayfa çıkacaktır. Buradan, MEGA PRO aboneliğinizi seçip yenilenme tarihini görebilirsiniz, veya otomatik yenilenme tarihini kapatabilirsiniz.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1279,3 +1295,21 @@
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Daha fazla bilgi için, lütfen sitemizi ziyaret edin:Mobil - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmlMasaüstü - https://mega.nz/";
+/* Label shown when you receive an incoming call, before start the call. */
+"calling..."="Aranıyor...";
+/* Notification text body shown when you have missed one audio call */
+"missedAudioCall"="Cevapsız sesli arama";
+/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
+"missedAudioCalls"="[A] cevapsız sesli arama";
+/* Notification text body shown when you have missed one video call */
+"missedVideoCall"="Cevapsız görüntülü arama";
+/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
+"missedVideoCalls"="[A] cevapsız görüntülü arama";
+/* Notification text body shown when you have missed one audio call and one video call */
+"missedAudioCallAndMissedVideoCall"="Cevapsız sesli ve görüntülü aramalar";
+/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
+"missedAudioCallAndMissedVideoCalls"="1 cevapsız sesli arama ve [A] cevapsız görüntülü arama";
+/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
+"missedAudioCallsAndMissedVideoCall"="[A] cevapsız sesli arama ve 1 cevapsız görüntülü arama";
+/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
+"missedAudioCallsAndMissedVideoCalls"="[A] cevapsız sesli arama ve [B] cevapsız görüntülü arama";

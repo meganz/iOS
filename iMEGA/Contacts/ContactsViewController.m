@@ -1031,7 +1031,7 @@
     
     CGPoint rowPoint = [self.tableView convertPoint:location fromView:self.view];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:rowPoint];
-    if (![self.tableView numberOfRowsInSection:indexPath.section]) {
+    if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
         return nil;
     }
     

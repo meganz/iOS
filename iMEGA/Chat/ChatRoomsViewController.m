@@ -13,6 +13,7 @@
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+#import "MEGAChatCreateChatGroupRequestDelegate.h"
 
 #import "ChatRoomCell.h"
 #import "ChatSettingsTableViewController.h"
@@ -21,7 +22,7 @@
 #import "GroupChatDetailsViewController.h"
 #import "MessagesViewController.h"
 
-@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatRequestDelegate, MEGAChatDelegate>
+@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate>
 
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
@@ -36,7 +37,9 @@
 @property (strong, nonatomic) UISearchController *searchController;
 @end
 
-@implementation ChatRoomsViewController
+@implementation ChatRoomsViewController {
+    NSDate *twoDaysAgo;
+}
 
 #pragma mark - Lifecycle
 
@@ -70,6 +73,10 @@
     UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = backBarButton;
 
+    twoDaysAgo = [[NSCalendar currentCalendar] dateByAddingUnit:NSCalendarUnitDay
+                                                         value:-2
+                                                        toDate:[NSDate date]
+                                                       options:0];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -372,8 +379,8 @@
                 lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", componentsArray.count]];
             }
             cell.chatLastMessage.text = lastMessageString;
-            cell.chatLastTime.text = item.lastMessageDate.shortTimeAgoSinceNow;
             cell.chatLastTime.hidden = NO;
+            cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
             break;
         }
             
@@ -388,15 +395,15 @@
                 lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", componentsArray.count]];
             }
             cell.chatLastMessage.text = lastMessageString;
-            cell.chatLastTime.text = item.lastMessageDate.shortTimeAgoSinceNow;
             cell.chatLastTime.hidden = NO;
+            cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
             break;
         }
             
         default: {
             cell.chatLastMessage.text = item.lastMessage;
-            cell.chatLastTime.text = item.lastMessageDate.shortTimeAgoSinceNow;
             cell.chatLastTime.hidden = NO;
+            cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
             break;
         }
     }
@@ -406,6 +413,8 @@
     NSString *onlineStatusString = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] onlineStatus]];
     if (onlineStatusString) {
         UILabel *label = [Helper customNavigationBarLabelWithTitle:AMLocalizedString(@"chat", @"Chat section header") subtitle:onlineStatusString];
+        label.adjustsFontSizeToFitWidth = YES;
+        label.minimumScaleFactor = 0.8f;
         label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
         label.userInteractionEnabled = YES;
         label.gestureRecognizers = @[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatRoomTitleDidTap)]];
@@ -505,6 +514,7 @@
     MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
     ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
     contactsVC.contactsMode = ContactsModeChatStartConversation;
+    MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
     contactsVC.userSelected =^void(NSArray *users) {
         if (users.count == 1) {
             MEGAUser *user = [users objectAtIndex:0];
@@ -518,16 +528,18 @@
                     }
                 }
                 
-                MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-                messagesVC.chatRoom                = chatRoom;
+                messagesVC.chatRoom = chatRoom;
                 dispatch_async(dispatch_get_main_queue(), ^(void){
                     [self.navigationController pushViewController:messagesVC animated:YES];
                 });
             } else {
                 MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
                 [peerList addPeerWithHandle:user.handle privilege:2];
-                
-                [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:self];
+                MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                    messagesVC.chatRoom = chatRoom;
+                    [self.navigationController pushViewController:messagesVC animated:YES];
+                }];
+                [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
             }
         } else {
             MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
@@ -537,7 +549,11 @@
                 [peerList addPeerWithHandle:user.handle privilege:2];
             }
             
-            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:YES peers:peerList delegate:self];
+            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                messagesVC.chatRoom = chatRoom;
+                [self.navigationController pushViewController:messagesVC animated:YES];                
+            }];
+            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:YES peers:peerList delegate:createChatGroupRequestDelegate];
         }
     };
     
@@ -675,7 +691,7 @@
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
     CGPoint rowPoint = [self.tableView convertPoint:location fromView:self.view];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:rowPoint];
-    if (![self.tableView numberOfRowsInSection:indexPath.section]) {
+    if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
         return nil;
     }
     
@@ -692,29 +708,6 @@
 
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
     [self.navigationController pushViewController:viewControllerToCommit animated:YES];
-}
-
-#pragma mark - MEGAChatRequestDelegate
-
-- (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
-    MEGALogInfo(@"onChatRequestFinish request: %@ \nerror: %@", request, error);
-    if (error.type) return;
-    
-    switch (request.type) {
-        case MEGAChatRequestTypeCreateChatRoom: {
-            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
-            
-            MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-            messagesVC.chatRoom                = chatRoom;
-            
-            [self.navigationController pushViewController:messagesVC animated:YES];
-            
-            break;
-        }
-            
-        default:
-            break;
-    }
 }
 
 #pragma mark - MEGAChatDelegate
