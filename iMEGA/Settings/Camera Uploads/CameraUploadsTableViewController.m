@@ -8,7 +8,7 @@
 #import "CameraUploads.h"
 #import "Helper.h"
 
-@interface CameraUploadsTableViewController ()  <UIAlertViewDelegate>
+@interface CameraUploadsTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *enableCameraUploadsLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *enableCameraUploadsSwitch;
@@ -24,10 +24,6 @@
 @implementation CameraUploadsTableViewController
 
 #pragma mark - Lifecycle
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -60,11 +56,6 @@
     [super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -125,8 +116,16 @@
             }
             case PHAuthorizationStatusDenied:{
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-                    [alert show];
+                    UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Alert message to explain that the MEGA app needs permission to access your device photos") preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+                    
+                    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                    }]];
+                    
+                    [self presentViewController:permissionsAlertController animated:YES completion:nil];
+                    
                     MEGALogInfo(@"Disable Camera Uploads");
                     [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
                     
@@ -252,14 +251,6 @@
         titleForFooter = AMLocalizedString(@"cameraUploads_footer", @"Footer explicative text to explain the Camera Uploads funtionality");
     }
     return titleForFooter;
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-    }
 }
 
 @end
