@@ -28,6 +28,8 @@
 "attention"="Attentie";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="Geeft u aub de MEGA app toegang tot uw camera in uw inestellingen";
+/* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
+"microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Geeft u aub de MEGA app toegang tot uw foto library in uw instellingen";
 /* Alert message shown when the user tries to download an empty folder  */
@@ -180,6 +182,12 @@
 "contactRequests"="Contact aanvragen";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Contacten toevoegen";
+/* Text shown when the user tries to make a call and the receiver is not a contact */
+"inviteContact"="Contact Uitnodigen";
+/* Text shown when the user sends a contact invitation */
+"inviteSent"="Verzend Uitnodiging";
+/* Button title to allow the user postpone an action */
+"later"="Later";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
 "received"="Ontvangen";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
@@ -951,7 +959,7 @@
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Kies één van de abonnementen hieronder:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
-"selectOneAccountType"="Select one account type:";
+"selectOneAccountType"="Selecteer één account type:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="Ontvang twee maanden gratis als u zich inschrijft voor een jaar PRO abonnement";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1141,9 +1149,9 @@
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA beschermt uw chat met eind-tot-eind codering (gebruiker bestuurd) door het verstrekken van essentiële veiligheidswaarborgen:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"confidentialityExplanation"="[S] Vertrouwelijk.[/ S] Alleen de auteur en de beoogde ontvangers zijn in staat om te ontcijferen en de inhoud te lezen.";
+"confidentialityExplanation"="[S] Vertrouwelijk.[/S] Alleen de auteur en de beoogde ontvangers zijn in staat om te ontcijferen en de inhoud te lezen.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"authenticityExplanation"="[S]Authenticiteit.[/ S] Het systeem zorgt ervoor dat de ontvangen gegevens van de weergegeven zender zijn en dat de inhoud ervan tijdens het transport niet is gemanipuleerd.";
+"authenticityExplanation"="[S]Authenticiteit.[/S] Het systeem zorgt ervoor dat de ontvangen gegevens van de weergegeven zender zijn en dat de inhoud ervan tijdens het transport niet is gemanipuleerd.";
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="Chat niet gevonden";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
@@ -1202,6 +1210,14 @@
 "attachedFile"="Bijlage: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s Bijgevoegde bestanden";
+/* A summary message when a user sent the information of one contact through the chat. */
+"sharedContact"="Dit contact gedeeld:";
+/* A summary message when a user sent the information of some contacts at once through the chat. */
+"sharedContacts"="Deze contacten gedeeld:";
+/* A summary message when a user has attached one file into the chat. */
+"uploadedFile"="Dit bestand geüpload:";
+/* A summary message when a user has attached many files at once into the chat. */
+"uploadedFiles"="Deze bestanden geüpload: ";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Abonnementen worden automatisch verlengd voor opeenvolgende abonnementsperioden van dezelfde duur en voor dezelfde prijs als de gekozen beginperiode.U kunt de automatische verlenging van uw MEGA PRO abonnement uitschakelen uiterlijk 24 uur voordat uw volgende abonnementsbetaling via uw pagina accountinstellingen van uw iTunes-account verschuldigd bent. Om uw abonnementen te beheren, klikt u op het pictogram AppStore op uw toestel, meld u aan met een Apple ID aan de onderkant van de pagina (als u dat nog niet hebt gedaan) en klik vervolgens op Bekijk ID. U komt daarmee op uw accountpagina, waar u naar beneden kunt scrollen naar Beheer Applicatie Abonnementen. Van daaruit kunt u uw MEGA PRO abonnement  kiezen en uw geplande verlengingsdatum, u kunt een ander abonnement kiezen of de aan-uit schakelaar uitschakelen op uit zetten om de automatische verlenging van uw abonnement uit te schakelen.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1279,3 +1295,21 @@
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Voor meer informatie, ga naar onze website:Mobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmlDesktop - https://mega.nz/";
+/* Label shown when you receive an incoming call, before start the call. */
+"calling..."="Bellen...";
+/* Notification text body shown when you have missed one audio call */
+"missedAudioCall"="Gemiste audio oproep";
+/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
+"missedAudioCalls"="[A] gemiste audio oproepen";
+/* Notification text body shown when you have missed one video call */
+"missedVideoCall"="Gemiste video oproep";
+/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
+"missedVideoCalls"="[A] gemiste video oproepen";
+/* Notification text body shown when you have missed one audio call and one video call */
+"missedAudioCallAndMissedVideoCall"="Gemiste audio oproep en gemiste video oproep";
+/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
+"missedAudioCallAndMissedVideoCalls"="Gemiste audio oproep en [A] gemiste video oproep";
+/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
+"missedAudioCallsAndMissedVideoCall"="[A] gemiste audio oproepen en gemiste video oproepen";
+/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
+"missedAudioCallsAndMissedVideoCalls"="[A] gemiste audio oproepen en [B] gemiste video oproepen";

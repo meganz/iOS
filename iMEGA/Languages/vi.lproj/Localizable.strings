@@ -28,6 +28,8 @@
 "attention"="Chú Ý";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="Xin cho MEGA quyền truy cập vào Camera trong phần Thiết đặt của máy";
+/* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
+"microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Xin cho MEGA quyền truy cập vào thư viện ảnh trong phần Thiết đặt của máy";
 /* Alert message shown when the user tries to download an empty folder  */
@@ -167,7 +169,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Không có Kết quả";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Thùng Rác trống";
+"cloudDriveEmptyState_titleRubbishBin"="Dọn Thùng Rác";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Không có tệp tin nào được Lưu về Ngoại Tuyến";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -180,6 +182,12 @@
 "contactRequests"="Các yêu cầu thêm danh bạ";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Thêm tên danh bạ";
+/* Text shown when the user tries to make a call and the receiver is not a contact */
+"inviteContact"="Mời vào Danh Bạ";
+/* Text shown when the user sends a contact invitation */
+"inviteSent"="Lời Mời Đã Gửi";
+/* Button title to allow the user postpone an action */
+"later"="Later";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
 "received"="Received";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
@@ -191,11 +199,11 @@
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Đã xóa bỏ yêu cầu";
 /* Title shown when there's no pending contact requests */
-"noRequestPending"="Không có lời mời nào cần xem";
+"noRequestPending"="Không có lời yêu cầu nào đang chờ";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Các Truyền Tải Bị Dừng";
 /* Title shown when the there is not any transfer and they are not paused */
-"transfersEmptyState_titleAll"="Không có truyền tải";
+"transfersEmptyState_titleAll"="Không Có Truyền Tải Nào";
 /* Title shown when the there is not any transfer, and the filter "Download" option is selected */
 "transfersEmptyState_titleDownload"="Không có phiên tải xuống";
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
@@ -309,7 +317,7 @@
 /* String already exists: 367, but we need to split paragraphs. */
 "copyrightMessagePart1"="MEGA tôn trọng luật bản quyền của người khác và yêu cầu người sử dụng dịch vụ đám mây MEGA nên thực hiện theo quy định của pháp luật về quyền tác giả.";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="Bạn hiện đang bị giám sát chặt chẽ khi sử dụng dịch vụ đám mây của MEGA để tránh lưu trữ và phân phát nội dung vi phạm bản quyền. Bạn giờ không được phép đăng tải, tải xuống, lưu trữ, chia sẻ, cho xem, truyền nội dung, quản lưu thư mục từ bạn bè, gửi email, lấy liên kết từ các tệp tin, dữ liệu có chứa nội dung vi phạm bản quyền hoặc tài sản độc quyền của cá nhân hay tập thể khác có trong tài khoản của bạn.";
+"copyrightMessagePart2"="Tất cả các người sử dụng đều bị giám sát chặt chẽ khi dùng dịch vụ đám mây của MEGA nhằm để tránh việc lưu trữ và phân phát nội dung vi phạm bản quyền. Bạn (khách hàng hay người sử dụng) không được phép đăng tải, tải xuống, lưu trữ, chia sẻ, cho xem, truyền nội dung, quản lý thư mục từ bạn bè, gửi email, lấy liên kết từ các tệp tin, dữ liệu có chứa nội dung vi phạm bản quyền hoặc tài sản độc quyền của cá nhân hay tập thể khác trong tài khoản của mình.";
 /* button caption text that the user clicks when he agrees */
 "agree"="Đồng ý";
 /* button caption text that the user clicks when he disagrees */
@@ -513,11 +521,11 @@
 /* Title of the view where you see with who you have shared a folder */
 "sharedWith"="Được chia sẻ với";
 /* Item menu option to add a contact through your device app Contacts */
-"addFromContacts"="Chọn từ danh bạ của điện thoại";
+"addFromContacts"="Lấy từ danh bạ trong iPhone";
 /* Alert title shown when you select to add a contact inserting his/her email */
 "addContact"="Thêm liên lạc";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
-"contactEmail"="Email của người này";
+"contactEmail"="Email của người muốn thêm";
 /* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Thêm";
 /* Success message shown when a contact has been invited */
@@ -569,11 +577,11 @@
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Cấp phép";
 /* Permissions given to the user you share your folder with */
-"readOnly"="Chỉ-đọc";
+"readOnly"="Chỉ được xem";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="Đọc & Ghi";
 /* Permissions given to the user you share your folder with */
-"fullAccess"="Không giới hạn";
+"fullAccess"="Toàn quyền truy cập";
 /* Title of the Settings section */
 "settingsTitle"="Thiết Đặt";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
@@ -581,17 +589,17 @@
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Thùng rác";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
-"advanced"="Nâng cao";
+"advanced"="Nâng Cao";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Tùy Chọn Bảo Mật";
 /* Title of one of the Settings sections where you can see things 'About' the app */
-"about"="Thông tin";
+"about"="Thông Tin";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Ngôn Ngữ";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="English (Anh)";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
-"sendFeedbackLabel"="Gửi phản hồi";
+"sendFeedbackLabel"="Gửi Phản Hồi";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="(Vietnamese - Feedback)Xin điền lời phản hồi của bạn ở đây:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
@@ -615,7 +623,7 @@
 /* Label for the "Version" number of the app */
 "version"="Phiên bản";
 /* Title for the section "Acknowledgements" of the app */
-"acknowledgements"="Thỏa thuận";
+"acknowledgements"="Thỏa Thuận";
 /* Title for the MEGA Recovery Key */
 "masterKey"="Mã Khóa Phục Hồi";
 /* Section title where you can change your MEGA's password */
@@ -643,7 +651,7 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Trên mạng MEGA";
 /* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="Thùng Rác trống";
+"emptyRubbishBin"="Dọn Thùng Rác";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Tất cả các mục trong thùng rác sẽ bị xóa";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -893,9 +901,9 @@
 /* String shown when you are logging out of your account. */
 "loggingOut"="Đang đăng xuất";
 /* Button to remove avatar. Try to keep the text short (as in English) */
-"removeAvatar"="Xóa avatar";
+"removeAvatar"="Xóa ảnh đại diện";
 /* button that allows the user the change his avatar */
-"changeAvatar"="Thay ảnh đại diện";
+"changeAvatar"="Thay Ảnh Đại Diện";
 /* Button title that allows the user change his name */
 "changeName"="Đổi Tên";
 /* Success message when changing profile information. */
@@ -1051,7 +1059,7 @@
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Dùng Mạng Điện Thoại";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
-"autoAway"="Tự động vắng mặt";
+"autoAway"="Tự Động Vắng Mặt";
 /* */
 "xMinutes"="[X] phút";
 /* */
@@ -1059,7 +1067,7 @@
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Tự chuyển trạng thái thành \"Vắng mặt\" sau [X] phút không hoạt động";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfter1MinuteOfInactivity"="Tự chuyển trạng thái thành \"Vắng mặt\" sau 1 phút không hoạt động";
+"showMeAwayAfter1MinuteOfInactivity"="Tự chuyển trạng thái thành \"Vắng mặt\" sau vài phút không hoạt động";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Bảo Toàn Trạng Thái";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1202,6 +1210,14 @@
 "attachedFile"="Gửi kèm: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="Gửi kèm %s tệp tin.";
+/* A summary message when a user sent the information of one contact through the chat. */
+"sharedContact"="Shared this contact:";
+/* A summary message when a user sent the information of some contacts at once through the chat. */
+"sharedContacts"="Shared these contacts:";
+/* A summary message when a user has attached one file into the chat. */
+"uploadedFile"="Uploaded this file:";
+/* A summary message when a user has attached many files at once into the chat. */
+"uploadedFiles"="Uploaded these files:";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Các gói cước đăng ký sẽ được tự động gia hạn chu kỳ thuê bao kế tiếp vào cùng thời gian và cùng mức giá như thời gian ban đầu khi gói cước được mua lần đầu tiên. Quý khách có thể tắt tự động gia hạn thuê bao MEGA PRO ít nhất trước 24 giờ trước thời điểm thanh toán đăng ký tiếp theo thông qua trang cài đặt tài khoản iTunes của quý khách. Để quản lý đăng ký, chỉ cần nhấp vào biểu tượng App Store trên điện thoại, đăng nhập với Apple ID của quý khách, ở dưới cùng của trang. Sau đó bấm Xem ID (View ID). Quý khách sẽ được đưa đến trang tài khoản, rồi di chuyển xuống đến mục Manage App Subscriptions. Từ đó, chọn vào thuê bao MEGA PRO của quý khách và xem ngày gia hạn dự kiến tiếp theo, chọn một gói thuê bao khác hoặc chuyển đổi chuyển đổi on-off (bật-tắt) để ngắt việc tự động gia hạn thuê bao.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1279,3 +1295,21 @@
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Để biết thêm thông tin, xin truy cập:Trên điện thoại - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmltrên máy tính - https://mega.nz/";
+/* Label shown when you receive an incoming call, before start the call. */
+"calling..."="Đang gọi...";
+/* Notification text body shown when you have missed one audio call */
+"missedAudioCall"="Missed audio call";
+/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
+"missedAudioCalls"="[A] missed audio calls";
+/* Notification text body shown when you have missed one video call */
+"missedVideoCall"="Missed video call";
+/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
+"missedVideoCalls"="[A] missed video calls";
+/* Notification text body shown when you have missed one audio call and one video call */
+"missedAudioCallAndMissedVideoCall"="Missed audio call and missed video call";
+/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
+"missedAudioCallAndMissedVideoCalls"="Missed audio call and [A] missed video calls";
+/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
+"missedAudioCallsAndMissedVideoCall"="[A] missed audio calls and missed video call";
+/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
+"missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";

@@ -1,13 +1,11 @@
 
 #import "MEGAPhotoMediaItem.h"
 
-#import "JSQMessagesBubbleImageFactory.h"
-#import "JSQMessagesMediaViewBubbleImageMasker.h"
 #import "JSQMessagesMediaPlaceholderView.h"
 
 #import "NSString+MNZCategory.h"
+#import "UIDevice+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
-#import "UIScreen+MNZCategory.h"
 #import "MEGAGetPreviewRequestDelegate.h"
 
 #import <MobileCoreServices/UTCoreTypes.h>
@@ -31,7 +29,7 @@
         _cachedImageView.contentMode = UIViewContentModeScaleAspectFill;
         _cachedImageView.clipsToBounds = YES;
         _cachedImageView.layer.cornerRadius = 5;
-        _cachedImageView.backgroundColor = [UIColor mnz_grayE3E3E3];
+        _cachedImageView.backgroundColor = [UIColor whiteColor];
         
         NSString *previewFilePath = [[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"] stringByAppendingPathComponent:self.node.base64Handle];
         
@@ -76,7 +74,8 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    return CGSizeMake([[UIScreen mainScreen] mnz_screenWidth] * 2/3 + 8, [[UIScreen mainScreen] mnz_screenWidth] * 2/3 + 8);
+    CGFloat displaySize = [[UIDevice currentDevice] mnz_widthForChatBubble];
+    return CGSizeMake(displaySize, displaySize);
 }
 
 - (UIView *)mediaPlaceholderView {
@@ -88,23 +87,13 @@
 #pragma mark - Private
 
 - (void)configureCachedImageViewWithImagePath:(NSString *)imagePath {
-    CGSize size = self.cachedImageView.frame.size;
-    
-    UIImageView *previewImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width - 8, size.height - 8)];
-    previewImageView.contentMode = UIViewContentModeScaleAspectFill;
-    previewImageView.clipsToBounds = YES;
-    previewImageView.layer.cornerRadius = 2.5;
-    previewImageView.backgroundColor = [UIColor grayColor];
-    previewImageView.center = [self.cachedImageView convertPoint:self.cachedImageView.center fromView:self.cachedImageView.superview];
-    previewImageView.image = [UIImage imageWithContentsOfFile:imagePath];
-    
-    [_cachedImageView addSubview:previewImageView];
-    
+    _cachedImageView.image = [UIImage imageWithContentsOfFile:imagePath];
+
     [self.activityIndicator removeFromSuperview];
     if (self.node.name.mnz_isMultimediaPathExtension) {
         UIImageView *playImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"video_list"]];
-        playImageView.center = [previewImageView convertPoint:previewImageView.center fromView:previewImageView.superview];
-        [previewImageView addSubview:playImageView];
+        playImageView.center = _cachedImageView.center;
+        [_cachedImageView addSubview:playImageView];
     }
 }
 

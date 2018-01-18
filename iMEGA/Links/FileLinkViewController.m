@@ -22,7 +22,6 @@
 #import "MEGANavigationController.h"
 #import "MEGAQLPreviewController.h"
 #import "MEGAStore.h"
-#import "PreviewDocumentViewController.h"
 
 @interface FileLinkViewController () <UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate>
 

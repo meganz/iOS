@@ -671,7 +671,7 @@
         CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.photosCollectionView];
         NSIndexPath *indexPath = [self.photosCollectionView indexPathForItemAtPoint:touchPoint];
         
-        if (![self.photosCollectionView numberOfSections] || ![self.photosCollectionView numberOfItemsInSection:indexPath.section]) {
+        if (!indexPath || ![self.photosCollectionView numberOfSections] || ![self.photosCollectionView numberOfItemsInSection:indexPath.section]) {
             return;
         }
         
@@ -714,7 +714,7 @@
     
     CGPoint itemPoint = [self.photosCollectionView convertPoint:location fromView:self.view];
     NSIndexPath *indexPath = [self.photosCollectionView indexPathForItemAtPoint:itemPoint];
-    if (![self.photosCollectionView numberOfSections] || ![self.photosCollectionView numberOfItemsInSection:indexPath.section]) {
+    if (!indexPath || ![self.photosCollectionView numberOfSections] || ![self.photosCollectionView numberOfItemsInSection:indexPath.section]) {
         return nil;
     }
     
@@ -727,11 +727,7 @@
     if (nodeSelected.name.mnz_isImagePathExtension) {
         return [nodeSelected mnz_photoBrowserWithNodes:[self.nodeList mnz_nodesArrayFromNodeList] folderLink:NO displayMode:0 enableMoveToRubbishBin:YES hideControls:YES];
     } else {
-        UIViewController *viewController = [nodeSelected mnz_viewControllerForNodeInFolderLink:NO];
-        if (viewController.class == MEGAAVViewController.class) {
-            ((MEGAAVViewController *)viewController).peekAndPop = YES;
-        }
-        
+        UIViewController *viewController = [nodeSelected mnz_viewControllerForNodeInFolderLink:NO];        
         return viewController;
     }
     
