@@ -28,6 +28,8 @@
 "attention"="Atenção";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="Por favor, dê permissão à MEGA para aceder à sua Câmera nas suas Definições";
+/* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
+"microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Por favor, dê permissão à MEGA para aceder às suas fotos nas Definições";
 /* Alert message shown when the user tries to download an empty folder  */
@@ -180,6 +182,12 @@
 "contactRequests"="solicitações de contato";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Add contatos";
+/* Text shown when the user tries to make a call and the receiver is not a contact */
+"inviteContact"="Convidar contato";
+/* Text shown when the user sends a contact invitation */
+"inviteSent"="Convite enviado";
+/* Button title to allow the user postpone an action */
+"later"="Depois";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
 "received"="Recebidos";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
@@ -951,7 +959,7 @@
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Escolha um dos planos abaixo:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
-"selectOneAccountType"="Select one account type:";
+"selectOneAccountType"="Selecione um tipo de conta:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="Ganhe dois meses gratuitos se você assinar um plano PRO anual";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1202,6 +1210,14 @@
 "attachedFile"="Em anexo: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="Em anexo %s arquivos.";
+/* A summary message when a user sent the information of one contact through the chat. */
+"sharedContact"="Compartilhou o seguinte contato:";
+/* A summary message when a user sent the information of some contacts at once through the chat. */
+"sharedContacts"="Compartilhou os seguintes contatos:";
+/* A summary message when a user has attached one file into the chat. */
+"uploadedFile"="Enviou o seguinte arquivo:";
+/* A summary message when a user has attached many files at once into the chat. */
+"uploadedFiles"="Enviou os seguintes arquivos:";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="As assinaturas são automaticamente renovadas por períodos iguais, de igual duração e ao mesmo preço que o período inicial escolhido. Você pode anular a renovação automática da sua assinatura MEGA até 24 horas antes DO próximo pagamento da assinatura fazendo-o através da página de configurações da sua conta iTunes. Para gerenciar suas assinaturas basta clicar no ícone da App Store no seu aparelho, entrar com seu ID da Apple na parte inferior da página (se você ainda não o tiver feito) e, em seguida, clicar em Ver ID. Você será levado à página da sua conta onde rolando para baixo pode gerenciar as suas assinaturas. A partir daqui, você pode selecionar sua assinatura MEGA Pro e ver a sua data de renovação programada, escolher um pacote de assinatura diferente ou puxar o botão on-off para fora para desativar a renovação automática da sua assinatura.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1279,3 +1295,21 @@
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Para mais informações, por favor visite o nosso site:Móvel - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmlDesktop - https://mega.nz/";
+/* Label shown when you receive an incoming call, before start the call. */
+"calling..."="Chamada recebida...";
+/* Notification text body shown when you have missed one audio call */
+"missedAudioCall"="Uma chamada de áudio perdida";
+/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
+"missedAudioCalls"="[A] chamadas de áudio perdidas";
+/* Notification text body shown when you have missed one video call */
+"missedVideoCall"="Uma chamada de vídeo perdida";
+/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
+"missedVideoCalls"="[A] chamadas de vídeo perdidas";
+/* Notification text body shown when you have missed one audio call and one video call */
+"missedAudioCallAndMissedVideoCall"="Uma chamada de áudio e uma chamada de vídeo perdidas";
+/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
+"missedAudioCallAndMissedVideoCalls"="Uma chamada de áudio e [A] chamadas de vídeo perdidas";
+/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
+"missedAudioCallsAndMissedVideoCall"="[A] chamadas de áudio e uma chamada de vídeo perdida";
+/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
+"missedAudioCallsAndMissedVideoCalls"="[A] chamadas de áudio e [B] chamadas de vídeo perdidas";

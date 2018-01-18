@@ -28,6 +28,8 @@
 "attention"="주목";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="설정에서 MEGA 앱에 카메라 접근 권한을 주세요";
+/* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
+"microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="설정에서 MEGA 앱이 사진 라이브러리에 접근할 수 있는 권한을 주세요";
 /* Alert message shown when the user tries to download an empty folder  */
@@ -180,6 +182,12 @@
 "contactRequests"="연락처 요청";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="연락처 추가";
+/* Text shown when the user tries to make a call and the receiver is not a contact */
+"inviteContact"="지인 초대";
+/* Text shown when the user sends a contact invitation */
+"inviteSent"="초대 발송됨";
+/* Button title to allow the user postpone an action */
+"later"="나중에";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
 "received"="받음";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
@@ -951,7 +959,7 @@
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="아래에서 요금제를 선택하세요:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
-"selectOneAccountType"="Select one account type:";
+"selectOneAccountType"="계정 유형 하나를 선택하세요:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="PRO 요금제를 1년 구독하면 2개월을 무료로 드립니다";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1202,6 +1210,14 @@
 "attachedFile"="첨부됨: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s개의 파일 첨부함.";
+/* A summary message when a user sent the information of one contact through the chat. */
+"sharedContact"="Shared this contact:";
+/* A summary message when a user sent the information of some contacts at once through the chat. */
+"sharedContacts"="Shared these contacts:";
+/* A summary message when a user has attached one file into the chat. */
+"uploadedFile"="Uploaded this file:";
+/* A summary message when a user has attached many files at once into the chat. */
+"uploadedFiles"="Uploaded these files:";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="구독은 처음 선택했던 기간과 동일한 가격과 동일한 기간으로 자동으로 연장됩니다. 다음 구독 결제 24시간 전에 당신의 iTunes 계정 설정 페이지에서 자동 결제를 제거할 수 있습니다. 구독을 관라허려면, 휴대전화에서 앱 스토어를 클릭하여 페이지 하단에서 애플 ID로 로그인하세요 (만약 하지 않았다면) 그리고 ID 보기를 클릭하세요. 앱 구독 관리 페이지로 내려갈 수 있는 계정 페이지가 보이게 됩니다. 거기서, MEGA PRO 구독을 선택할 수 있고, 예정된 갱신일을 보고, 다른 구독 패키지 선택 또는 구독의 자동 갱신을 해제할 수 있는 스위치를 끌 수 있습니다.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1279,3 +1295,21 @@
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="자세한 정보는 저희 홈페이지를 참고하세요:모바일 - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html데스크톱 - https://mega.nz/";
+/* Label shown when you receive an incoming call, before start the call. */
+"calling..."="통화중...";
+/* Notification text body shown when you have missed one audio call */
+"missedAudioCall"="Missed audio call";
+/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
+"missedAudioCalls"="[A] missed audio calls";
+/* Notification text body shown when you have missed one video call */
+"missedVideoCall"="Missed video call";
+/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
+"missedVideoCalls"="[A] missed video calls";
+/* Notification text body shown when you have missed one audio call and one video call */
+"missedAudioCallAndMissedVideoCall"="Missed audio call and missed video call";
+/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
+"missedAudioCallAndMissedVideoCalls"="Missed audio call and [A] missed video calls";
+/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
+"missedAudioCallsAndMissedVideoCall"="[A] missed audio calls and missed video call";
+/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
+"missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";

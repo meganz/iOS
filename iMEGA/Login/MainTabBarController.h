@@ -1,6 +1,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MEGASdkManager.h"
+#import "MEGACallManager.h"
 
 static NSInteger const CLOUD = 0;
 static NSInteger const PHOTOS = 1;
@@ -11,5 +12,7 @@ static NSInteger const MYACCOUNT = 4;
 @interface MainTabBarController : UITabBarController <MEGAChatDelegate>
 
 - (void)setBadgeValueForChats;
+
+@property (nonatomic, strong) MEGACallManager *megaCallManager;
 
 @end

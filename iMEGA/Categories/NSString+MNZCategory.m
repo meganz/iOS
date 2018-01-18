@@ -87,10 +87,9 @@ static NSString* const B = @"[B]";
 }
 
 + (NSString *)mnz_stringByFiles:(NSInteger)files andFolders:(NSInteger)folders {
-    NSString *filesString = [NSString stringWithFormat:@"%ld", (long)files];
-    NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)folders];
-    
     if (files > 1 && folders > 1) {
+        NSString *filesString = [NSString stringWithFormat:@"%ld", (long)files];
+        NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)folders];
         NSString *filesAndFoldersString = AMLocalizedString(@"foldersAndFiles", @"Subtitle shown on folders that gives you information about its content. This case \"[A] = {1+} folders ‚ [B] = {1+} files\"");
         filesAndFoldersString = [filesAndFoldersString stringByReplacingOccurrencesOfString:A withString:foldersString];
         filesAndFoldersString = [filesAndFoldersString stringByReplacingOccurrencesOfString:B withString:filesString];
@@ -126,6 +125,43 @@ static NSString* const B = @"[B]";
     }
     
     return AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+}
+
++ (NSString *)mnz_stringByMissedAudioCalls:(NSInteger)missedAudioCalls andMissedVideoCalls:(NSInteger)missedVideoCalls {
+    NSString *missedAudioCallsString = [NSString stringWithFormat:@"%ld", (long)missedAudioCalls];
+    NSString *missedVideoCallsString = [NSString stringWithFormat:@"%ld", (long)missedVideoCalls];
+    NSString *missedString;
+    if (missedVideoCalls == 0) {
+        if (missedAudioCalls == 1) {
+            missedString = AMLocalizedString(@"missedAudioCall", @"Notification text body shown when you have missed one audio call");
+        } else { //missedAudioCalls > 1
+            missedString = AMLocalizedString(@"missedAudioCalls", @"Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls}");
+            missedString = [missedString stringByReplacingOccurrencesOfString:A withString:missedAudioCallsString];
+        }
+    } else if (missedVideoCalls == 1) {
+        if (missedAudioCalls == 0) {
+            missedString = AMLocalizedString(@"missedVideoCall", @"Notification text body shown when you have missed one video call");
+        } else if (missedAudioCalls == 1) {
+            missedString = AMLocalizedString(@"missedAudioCallAndMissedVideoCall", @"Notification text body shown when you have missed one audio call and one video call");
+        } else { //missedAudioCalls > 1
+            missedString = AMLocalizedString(@"missedAudioCallsAndMissedVideoCall", @"Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls}");
+            missedString = [missedString stringByReplacingOccurrencesOfString:A withString:missedAudioCallsString];
+        }
+    } else { // missedVideoCalls > 1
+        if (missedAudioCalls == 0) {
+            missedString = AMLocalizedString(@"missedVideoCalls", @"Notification text body shown when you have missed several video calls. [A] = {number of missed video calls}");
+            missedString = [missedString stringByReplacingOccurrencesOfString:A withString:missedVideoCallsString];
+        } else if (missedAudioCalls == 1) {
+            missedString = AMLocalizedString(@"missedAudioCallAndMissedVideoCalls", @"Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls}");
+            missedString = [missedString stringByReplacingOccurrencesOfString:A withString:missedVideoCallsString];
+        } else { //missedAudioCalls > 1
+            missedString = AMLocalizedString(@"missedAudioCallsAndMissedVideoCalls", @"Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls}");
+            missedString = [missedString stringByReplacingOccurrencesOfString:A withString:missedString];
+            missedString = [missedString stringByReplacingOccurrencesOfString:B withString:missedString];            
+        }
+    }
+    
+    return missedString;
 }
 
 + (NSString *)chatStatusString:(MEGAChatStatus)onlineStatus {
@@ -182,6 +218,270 @@ static NSString* const B = @"[B]";
     string = [string stringByReplacingOccurrencesOfString:@"[/S]" withString:@""];
     
     return string;
+}
+
++ (NSString *)mnz_stringFromTimeInterval:(NSTimeInterval)interval {
+    NSInteger ti = (NSInteger)interval;
+    NSInteger seconds = ti % 60;
+    NSInteger minutes = (ti / 60) % 60;
+    NSInteger hours = (ti / 3600);
+    if (hours > 0) {
+        return [NSString stringWithFormat:@"%02ld:%02ld:%02ld", (long)hours, (long)minutes, (long)seconds];
+    } else {
+        return [NSString stringWithFormat:@"%02ld:%02ld", (long)minutes, (long)seconds];
+    }
+}
+
+#pragma mark - Emoji utils
+
+- (BOOL)mnz_containsEmoji
+{
+    __block BOOL containsEmoji = NO;
+    
+    [self enumerateSubstringsInRange:NSMakeRange(0,
+                                                 [self length])
+                             options:NSStringEnumerationByComposedCharacterSequences
+                          usingBlock:^(NSString *substring,
+                                       NSRange substringRange,
+                                       NSRange enclosingRange,
+                                       BOOL *stop)
+     {
+         const unichar hs = [substring characterAtIndex:0];
+         // surrogate pair
+         if (0xd800 <= hs &&
+             hs <= 0xdbff)
+         {
+             if (substring.length > 1)
+             {
+                 const unichar ls = [substring characterAtIndex:1];
+                 const int uc = ((hs - 0xd800) * 0x400) + (ls - 0xdc00) + 0x10000;
+                 if (0x1d000 <= uc &&
+                     uc <= 0x1f9c0)
+                 {
+                     containsEmoji = YES;
+                 }
+             }
+         }
+         else if (substring.length > 1)
+         {
+             const unichar ls = [substring characterAtIndex:1];
+             if (ls == 0x20e3 ||
+                 ls == 0xfe0f ||
+                 ls == 0xd83c)
+             {
+                 containsEmoji = YES;
+             }
+         }
+         else
+         {
+             // non surrogate
+             if (0x2100 <= hs &&
+                 hs <= 0x27ff)
+             {
+                 containsEmoji = YES;
+             }
+             else if (0x2B05 <= hs &&
+                      hs <= 0x2b07)
+             {
+                 containsEmoji = YES;
+             }
+             else if (0x2934 <= hs &&
+                      hs <= 0x2935)
+             {
+                 containsEmoji = YES;
+             }
+             else if (0x3297 <= hs &&
+                      hs <= 0x3299)
+             {
+                 containsEmoji = YES;
+             }
+             else if (hs == 0xa9 ||
+                      hs == 0xae ||
+                      hs == 0x303d ||
+                      hs == 0x3030 ||
+                      hs == 0x2b55 ||
+                      hs == 0x2b1c ||
+                      hs == 0x2b1b ||
+                      hs == 0x2b50)
+             {
+                 containsEmoji = YES;
+             }
+         }
+         
+         if (containsEmoji)
+         {
+             *stop = YES;
+         }
+     }];
+    
+    return containsEmoji;
+}
+
+- (BOOL)mnz_isPureEmojiString
+{
+    if (self.length == 0) {
+        return NO;
+    }
+    
+    __block BOOL isPureEmojiString = YES;
+    
+    [self enumerateSubstringsInRange:NSMakeRange(0,
+                                                 [self length])
+                             options:NSStringEnumerationByComposedCharacterSequences
+                          usingBlock:^(NSString *substring,
+                                       NSRange substringRange,
+                                       NSRange enclosingRange,
+                                       BOOL *stop)
+     {
+         BOOL containsEmoji = NO;
+         const unichar hs = [substring characterAtIndex:0];
+         // surrogate pair
+         if (0xd800 <= hs &&
+             hs <= 0xdbff)
+         {
+             if (substring.length > 1)
+             {
+                 const unichar ls = [substring characterAtIndex:1];
+                 const int uc = ((hs - 0xd800) * 0x400) + (ls - 0xdc00) + 0x10000;
+                 if (0x1d000 <= uc &&
+                     uc <= 0x1f9c0)
+                 {
+                     containsEmoji = YES;
+                 }
+             }
+         }
+         else if (substring.length > 1)
+         {
+             const unichar ls = [substring characterAtIndex:1];
+             if (ls == 0x20e3 ||
+                 ls == 0xfe0f ||
+                 ls == 0xd83c)
+             {
+                 containsEmoji = YES;
+             }
+         }
+         else
+         {
+             // non surrogate
+             if (0x2100 <= hs &&
+                 hs <= 0x27ff)
+             {
+                 containsEmoji = YES;
+             }
+             else if (0x2B05 <= hs &&
+                      hs <= 0x2b07)
+             {
+                 containsEmoji = YES;
+             }
+             else if (0x2934 <= hs &&
+                      hs <= 0x2935)
+             {
+                 containsEmoji = YES;
+             }
+             else if (0x3297 <= hs &&
+                      hs <= 0x3299)
+             {
+                 containsEmoji = YES;
+             }
+             else if (hs == 0xa9 ||
+                      hs == 0xae ||
+                      hs == 0x303d ||
+                      hs == 0x3030 ||
+                      hs == 0x2b55 ||
+                      hs == 0x2b1c ||
+                      hs == 0x2b1b ||
+                      hs == 0x2b50)
+             {
+                 containsEmoji = YES;
+             }
+         }
+         
+         if (!containsEmoji)
+         {
+             isPureEmojiString = NO;
+             *stop = YES;
+         }
+     }];
+    
+    return isPureEmojiString;
+}
+
+- (NSInteger)mnz_emojiCount
+{
+    __block NSInteger emojiCount = 0;
+    
+    [self enumerateSubstringsInRange:NSMakeRange(0,
+                                                 [self length])
+                             options:NSStringEnumerationByComposedCharacterSequences
+                          usingBlock:^(NSString *substring,
+                                       NSRange substringRange,
+                                       NSRange enclosingRange,
+                                       BOOL *stop)
+     {
+         const unichar hs = [substring characterAtIndex:0];
+         // surrogate pair
+         if (0xd800 <= hs &&
+             hs <= 0xdbff)
+         {
+             if (substring.length > 1)
+             {
+                 const unichar ls = [substring characterAtIndex:1];
+                 const int uc = ((hs - 0xd800) * 0x400) + (ls - 0xdc00) + 0x10000;
+                 if (0x1d000 <= uc &&
+                     uc <= 0x1f9c0)
+                 {
+                     emojiCount = emojiCount + 1;
+                 }
+             }
+         }
+         else if (substring.length > 1)
+         {
+             const unichar ls = [substring characterAtIndex:1];
+             if (ls == 0x20e3 ||
+                 ls == 0xfe0f ||
+                 ls == 0xd83c)
+             {
+                 emojiCount = emojiCount + 1;
+             }
+         }
+         else
+         {
+             // non surrogate
+             if (0x2100 <= hs &&
+                 hs <= 0x27ff)
+             {
+                 emojiCount = emojiCount + 1;
+             }
+             else if (0x2B05 <= hs &&
+                      hs <= 0x2b07)
+             {
+                 emojiCount = emojiCount + 1;
+             }
+             else if (0x2934 <= hs &&
+                      hs <= 0x2935)
+             {
+                 emojiCount = emojiCount + 1;
+             }
+             else if (0x3297 <= hs &&
+                      hs <= 0x3299)
+             {
+                 emojiCount = emojiCount + 1;
+             }
+             else if (hs == 0xa9 ||
+                      hs == 0xae ||
+                      hs == 0x303d ||
+                      hs == 0x3030 ||
+                      hs == 0x2b55 ||
+                      hs == 0x2b1c ||
+                      hs == 0x2b1b ||
+                      hs == 0x2b50)
+             {
+                 emojiCount = emojiCount + 1;
+             }
+         }
+     }];
+    
+    return emojiCount;
 }
 
 @end

@@ -868,7 +868,7 @@ static NSString *kisDirectory = @"kisDirectory";
         CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
         
-        if (![self.tableView numberOfRowsInSection:indexPath.section]) {
+        if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
             return;
         }
         
@@ -901,7 +901,7 @@ static NSString *kisDirectory = @"kisDirectory";
     
     CGPoint rowPoint = [self.tableView convertPoint:location fromView:self.view];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:rowPoint];
-    if (![self.tableView numberOfRowsInSection:indexPath.section]) {
+    if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
         return nil;
     }
     
@@ -923,8 +923,6 @@ static NSString *kisDirectory = @"kisDirectory";
         return offlineTVC;
     } else if (previewDocumentPath.mnz_isMultimediaPathExtension) {
         MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
-        megaAVViewController.peekAndPop = YES;
-        
         return megaAVViewController;
     } else {
         MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithArrayOfFiles:self.offlineFiles];

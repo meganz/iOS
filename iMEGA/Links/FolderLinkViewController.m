@@ -702,7 +702,7 @@
         CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
         
-        if (![self.tableView numberOfRowsInSection:indexPath.section]) {
+        if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
             return;
         }
         

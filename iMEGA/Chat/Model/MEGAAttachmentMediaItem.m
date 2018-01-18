@@ -7,6 +7,7 @@
 #import "UIImage+GKContact.h"
 #import "UIColor+JSQMessages.h"
 
+#import "UIDevice+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGASdkManager.h"
 
@@ -35,12 +36,8 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        return CGSizeMake(315.0f, 225.0f);
-    }
-    
-    // TODO: make width based on screen width?
-    return CGSizeMake(250.0f, 77.0f);
+    CGFloat displaySize = [[UIDevice currentDevice] mnz_widthForChatBubble];
+    return CGSizeMake(displaySize, 144.0f);
 }
 
 #pragma mark - Setters
@@ -64,11 +61,37 @@
     
     if (self.cachedContactView == nil) {
         MEGAMessageAttachmentView *contactView = [[[NSBundle bundleForClass:[MEGAMessageAttachmentView class]] loadNibNamed:@"MEGAMessageAttachmentView" owner:self options:nil] objectAtIndex:0];
+        // Sizes:
+        CGSize contactViewSize = [self mediaViewDisplaySize];
+        contactView.frame = CGRectMake(contactView.frame.origin.x,
+                                       contactView.frame.origin.y,
+                                       contactViewSize.width,
+                                       contactViewSize.height);
+        contactView.headingLabel.frame = CGRectMake(contactView.headingLabel.frame.origin.x,
+                                                    contactView.headingLabel.frame.origin.y,
+                                                    contactViewSize.width - 32.0f,
+                                                    contactView.headingLabel.frame.size.height);
+        contactView.attachBackground.frame = CGRectMake(contactView.attachBackground.frame.origin.x,
+                                                        contactView.attachBackground.frame.origin.y,
+                                                        contactViewSize.width - 6.0f,
+                                                        contactView.attachBackground.frame.size.height);
+        contactView.titleLabel.frame = CGRectMake(contactView.titleLabel.frame.origin.x,
+                                                  contactView.titleLabel.frame.origin.y,
+                                                  contactViewSize.width - 118.0f,
+                                                  contactView.titleLabel.frame.size.height);
+        contactView.detailLabel.frame = CGRectMake(contactView.detailLabel.frame.origin.x,
+                                                   contactView.detailLabel.frame.origin.y,
+                                                   contactViewSize.width - 118.0f,
+                                                   contactView.detailLabel.frame.size.height);
+        
+        // Colors:
         if (self.message.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-            contactView.backgroundColor = [UIColor mnz_grayE3E3E3];
+            contactView.backgroundColor = [UIColor mnz_green00BFA5];
+            contactView.headingLabel.textColor = [UIColor whiteColor];
         } else {
-            contactView.backgroundColor = [UIColor whiteColor];
+            contactView.backgroundColor = [UIColor mnz_grayE2EAEA];
         }
+        
         if (self.message.type == MEGAChatMessageTypeAttachment) {
             NSUInteger totalNodes = [self.message.nodeList.size unsignedIntegerValue];
             NSString *filename;
@@ -78,6 +101,7 @@
                 filename = node.name;
                 size = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory];
                 [contactView.avatarImage mnz_setImageForExtension:filename.pathExtension];
+                contactView.headingLabel.text = AMLocalizedString(@"uploadedFile", @"A summary message when a user has attached one file into the chat.");
             } else {
                 filename = [NSString stringWithFormat:AMLocalizedString(@"files", nil), totalNodes];
                 NSUInteger totalSize = 0;
@@ -87,6 +111,7 @@
                 size = [NSByteCountFormatter stringFromByteCount:totalSize  countStyle:NSByteCountFormatterCountStyleMemory];
                 UIImage *avatar = [UIImage imageForName:[NSString stringWithFormat:@"%lu", totalNodes] size:contactView.avatarImage.frame.size backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(contactView.avatarImage.frame.size.width/2.0f)]];
                 contactView.avatarImage.image = avatar;
+                contactView.headingLabel.text = AMLocalizedString(@"uploadedFiles", @"A summary message when a user has attached many files at once into the chat.");
             }
             contactView.titleLabel.text = filename;
             contactView.detailLabel.text = size;
@@ -95,6 +120,7 @@
                 [contactView.avatarImage mnz_setImageForUserHandle:[self.message userHandleAtIndex:0]];
                 contactView.titleLabel.text = [self.message userNameAtIndex:0];
                 contactView.detailLabel.text = [self.message userEmailAtIndex:0];
+                contactView.headingLabel.text = AMLocalizedString(@"sharedContact", @"A summary message when a user sent the information of one contact through the chat.");
             } else {
                 NSNumber *users = [NSNumber numberWithUnsignedInteger:self.message.usersCount];
                 NSString *usersString = AMLocalizedString(@"XContactsSelected", nil);
@@ -107,6 +133,7 @@
                     emails = [NSString stringWithFormat:@"%@ %@", emails, [self.message userEmailAtIndex:i]];
                 }
                 contactView.detailLabel.text = emails;
+                contactView.headingLabel.text = AMLocalizedString(@"sharedContacts", @"A summary message when a user sent the information of some contacts at once through the chat.");
             }
         }
         
