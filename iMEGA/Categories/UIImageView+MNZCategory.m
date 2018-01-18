@@ -14,6 +14,23 @@
     self.image = [UIImage mnz_imageForUserHandle:userHandle size:self.frame.size delegate:self];
 }
 
+- (void)mnz_setThumbnailByNodeHandle:(uint64_t)nodeHandle {
+    MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:nodeHandle];
+    if (node.hasThumbnail) {
+        NSString *thumbnailFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:node.base64Handle];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
+            self.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
+        } else {            
+            [self mnz_setImageForExtension:node.name.pathExtension];
+            if (node) {
+                [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:self];
+            }
+        }
+    } else {
+        [self mnz_setImageForExtension:node.name.pathExtension];
+    }
+}
+
 - (void)mnz_setImageForExtension:(NSString *)extension {
     NSDictionary *fileTypesDictionary = @{@"3ds":@"3d",
                                 @"3dm":@"3d",
@@ -210,7 +227,7 @@
         return;
     }
     
-    if (request.type == MEGARequestTypeGetAttrUser) {
+    if (request.type == MEGARequestTypeGetAttrUser || request.type == MEGARequestTypeGetAttrFile) {
         self.image = [UIImage imageWithContentsOfFile:request.file];
     }
 }
