@@ -28,6 +28,8 @@
 "attention"="ประกาศ";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="กรุณาอนุญาตให้แอป MEGA สามารถเข้าถึงการตั้งค่าของกล้องคุณได้";
+/* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
+"microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="กรุณาอนุญาตให้แอป MEGA สามารถเข้าถึงการตั้งค่าไลบรารีรูปถ่ายของคุณได้";
 /* Alert message shown when the user tries to download an empty folder  */
@@ -180,6 +182,12 @@
 "contactRequests"="คำขอผู้ติดต่อ";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="เพิ่มผู้ติดต่อ";
+/* Text shown when the user tries to make a call and the receiver is not a contact */
+"inviteContact"="Invite Contact";
+/* Text shown when the user sends a contact invitation */
+"inviteSent"="Invite Sent";
+/* Button title to allow the user postpone an action */
+"later"="Later";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
 "received"="Received";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
@@ -1202,6 +1210,14 @@
 "attachedFile"="ที่แนบมา: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="ที่แนบมา %s ไฟล์";
+/* A summary message when a user sent the information of one contact through the chat. */
+"sharedContact"="Shared this contact:";
+/* A summary message when a user sent the information of some contacts at once through the chat. */
+"sharedContacts"="Shared these contacts:";
+/* A summary message when a user has attached one file into the chat. */
+"uploadedFile"="Uploaded this file:";
+/* A summary message when a user has attached many files at once into the chat. */
+"uploadedFiles"="Uploaded these files:";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="การสมัครใช้งานแบบต่ออายุอัตโนมัติอย่างต่อเนื่องนั้น จะถูกกำหนดค่าไม่ว่าจะเป็นระยะเวลาการสมัครใช้งานหรือราคา จะเป็นไปในทิศทางเดียวกันและเป็นค่าแรกเริ่มให้โดยอัตโนมัติ คุณสามารถปิดการใช้งานดังกล่าว แพคเกจ MEGA PRO ได้ไม่เกิน 24 ชั่วโมงก่อนการชำระเงินในรอบถัดไป เนื่องจากเป็นการตั้งค่าผ่านหน้าบัญชี iTunes ของคุณ และเพื่อจัดการกับการสมัครใช้งานของคุณ เพียงแค่แตะที่ไอคอน App Store บนโทรศัพท์ของคุณ ลงชื่อเข้าด้วย Apple ID ของคุณที่ด้านล่างของหน้า (ถ้าคุณยังไม่ได้ดำเนินการ) แล้วคลิกดูรหัส คุณจะถูกนำไปยังหน้าบัญชีของคุณ สามารถเลื่อนลงไปจัดการ การสมัครใช้งานแอปได้ จากนั้น คุณสามารถเลือกการสมัครใช้งาน MEGA PRO และสามารถดูกำหนดการต่ออายุ เลือกแพคเกจสมัครใช้งานต่างๆ หรือสลับสวิทช์เปิด-ปิด เพื่อปิดใช้งาน การสมัครใช้งานแบบต่ออายุอัตโนมัติของคุณได้เช่นเดียวกัน";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1279,3 +1295,21 @@
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="สำหรับข้อมูลเพิ่มเติม กรุณาตรวจสอบเว็บไซต์ของเรา:มือถือ - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmlดสก์ทอป - https://mega.nz/";
+/* Label shown when you receive an incoming call, before start the call. */
+"calling..."="Calling...";
+/* Notification text body shown when you have missed one audio call */
+"missedAudioCall"="Missed audio call";
+/* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
+"missedAudioCalls"="[A] missed audio calls";
+/* Notification text body shown when you have missed one video call */
+"missedVideoCall"="Missed video call";
+/* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
+"missedVideoCalls"="[A] missed video calls";
+/* Notification text body shown when you have missed one audio call and one video call */
+"missedAudioCallAndMissedVideoCall"="Missed audio call and missed video call";
+/* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
+"missedAudioCallAndMissedVideoCalls"="Missed audio call and [A] missed video calls";
+/* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
+"missedAudioCallsAndMissedVideoCall"="[A] missed audio calls and missed video call";
+/* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
+"missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";
