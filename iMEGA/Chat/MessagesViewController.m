@@ -376,6 +376,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] attachContactsToChat:self.chatRoom.chatId contacts:users];
             message.chatRoom = self.chatRoom;
             [self.messages addObject:message];
+            [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];
             [self finishSendingMessageAnimated:YES];
         }
     };
@@ -725,6 +726,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     MEGALogInfo(@"didPressSendButton %@", message);
     
+    [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];
     [self finishSendingMessageAnimated:YES];
     [self scrollToBottomAnimated:YES];
 }
