@@ -261,6 +261,18 @@
 
 #pragma mark - Private
 
+- (void)openChatRoomWithID:(uint64_t)chatID {
+    NSArray *viewControllers = self.navigationController.viewControllers;
+    if (viewControllers.count > 1) {
+        [self.navigationController popToRootViewControllerAnimated:NO];
+    }
+    
+    MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
+    messagesVC.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatID];
+    
+    [self.navigationController pushViewController:messagesVC animated:YES];
+}
+
 - (void)internetConnectionChanged {
     BOOL boolValue = [MEGAReachabilityManager isReachable];
     self.addBarButtonItem.enabled = boolValue;
