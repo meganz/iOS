@@ -117,7 +117,8 @@
             contactView.detailLabel.text = size;
         } else { // MEGAChatMessageTypeContact
             if (self.message.usersCount == 1) {
-                [contactView.avatarImage mnz_setImageForUserHandle:[self.message userHandleAtIndex:0]];
+                NSString *userNameInitial = [NSString stringWithFormat:@"%@", [[self.message userNameAtIndex:0].uppercaseString substringToIndex:1]];
+                [contactView.avatarImage mnz_setImageForChatSharedContactHandle:[self.message userHandleAtIndex:0] initial:userNameInitial];
                 contactView.titleLabel.text = [self.message userNameAtIndex:0];
                 contactView.detailLabel.text = [self.message userEmailAtIndex:0];
                 contactView.headingLabel.text = AMLocalizedString(@"sharedContact", @"A summary message when a user sent the information of one contact through the chat.");
