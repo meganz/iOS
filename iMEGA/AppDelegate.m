@@ -1658,13 +1658,10 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)openChatRoomWithChatNumber:(NSNumber *)chatNumber {
     if (chatNumber) {
-        uint64_t chatId = [chatNumber unsignedLongLongValue];
         self.mainTBC.selectedIndex = CHAT;
         MEGANavigationController *navigationController = [[self.mainTBC viewControllers] objectAtIndex:CHAT];
-        MEGAChatRoom *chatRoom  = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
-        MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-        messagesVC.chatRoom = chatRoom;
-        [navigationController pushViewController:messagesVC animated:YES];
+        ChatRoomsViewController *chatRoomsVC = navigationController.viewControllers.firstObject;
+        [chatRoomsVC openChatRoomWithID:chatNumber.unsignedLongLongValue];
     }
 }
 
