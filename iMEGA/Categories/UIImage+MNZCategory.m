@@ -132,10 +132,10 @@
         MOUser *user = [[MEGAStore shareInstance] fetchUserWithUserHandle:userHandle];
         NSString *initialsForAvatar = nil;
         if (user) {
-            if (user.email.length) {
-                initialsForAvatar = user.email.uppercaseString;
+            if (user.fullName.length) {
+                initialsForAvatar = user.fullName.uppercaseString;
             } else {
-                initialsForAvatar = [NSString stringWithFormat:@"%@ %@", user.firstname, user.lastname];
+                initialsForAvatar = user.email.uppercaseString;
             }
         } else {
             initialsForAvatar = @"?";
