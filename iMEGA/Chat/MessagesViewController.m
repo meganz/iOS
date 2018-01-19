@@ -1548,9 +1548,18 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             [self updateUnreadLabel];
             break;
             
-        case MEGAChatRoomChangeTypeParticipans:
+        case MEGAChatRoomChangeTypeParticipans: {
             [self customNavigationBarLabel];
+            
+            [self.collectionView performBatchUpdates:^{
+                [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
+                [self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
+            } completion:^(BOOL finished) {
+                [self scrollToBottomAnimated:YES];
+            }];
+            
             break;
+        }
             
         case MEGAChatRoomChangeTypeTitle:
             [self customNavigationBarLabel];
