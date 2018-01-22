@@ -714,19 +714,20 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         message = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:text];
         message.chatRoom = self.chatRoom;
         [self.messages addObject:message];
+        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];
     } else {
         message = [[MEGASdkManager sharedMEGAChatSdk] editMessageForChat:self.chatRoom.chatId messageId:self.editMessage.messageId message:text];
         message.chatRoom = self.chatRoom;
         NSUInteger index = [self.messages indexOfObject:self.editMessage];
         if (index != NSNotFound) {
             [self.messages replaceObjectAtIndex:index withObject:message];
+            [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
         }
         self.editMessage = nil;
     }
     
     MEGALogInfo(@"didPressSendButton %@", message);
     
-    [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];
     [self finishSendingMessageAnimated:YES];
     [self scrollToBottomAnimated:YES];
 }
