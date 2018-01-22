@@ -391,12 +391,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
     [self.window addSubview:self.privacyView];
     
-    /* Hide all windows except the keyWindow */
-    for (UIWindow *window in application.windows) {
-        if ([NSStringFromClass(window.class) isEqualToString:@"UIRemoteKeyboardWindow"]) {
-            window.frame = CGRectMake(0, 0, 0, 0);
-        }
-    }
+    [self application:application shouldHideWindows:YES];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -412,11 +407,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [self.privacyView removeFromSuperview];
     self.privacyView = nil;
-    for (UIWindow *window in application.windows) {
-        if ([NSStringFromClass(window.class) isEqualToString:@"UIRemoteKeyboardWindow"]) {
-            window.frame = [[UIScreen mainScreen] bounds];
-        }
-    }
+    
+    [self application:application shouldHideWindows:NO];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -1676,6 +1668,18 @@ void uncaughtExceptionHandler(NSException *exception) {
                 LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
                 [loginVC performSegueWithIdentifier:@"CreateAccountStoryboardSegueID" sender:_emailOfNewSignUpLink];
                 _emailOfNewSignUpLink = nil;
+            }
+        }
+    }
+}
+
+- (void)application:(UIApplication *)application shouldHideWindows:(BOOL)shouldHide {
+    for (UIWindow *window in application.windows) {
+        if ([NSStringFromClass(window.class) isEqualToString:@"UIRemoteKeyboardWindow"] || [NSStringFromClass(window.class) isEqualToString:@"UITextEffectsWindow"]) {
+            if (shouldHide) {
+                window.frame = CGRectMake(0, 0, 0, 0);
+            } else {
+                window.frame = [[UIScreen mainScreen] bounds];
             }
         }
     }
