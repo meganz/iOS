@@ -119,6 +119,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 @property (strong, nonatomic) NSString *email;
 @property (nonatomic) BOOL presentInviteContactVCLater;
+@property (nonatomic, getter=shouldWaitForChatLogout) BOOL waitForChatLogout;
 
 @end
 
@@ -347,31 +348,21 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
     }
     
-    if (@available(iOS 9.0, *)) {} else {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSavePhotoToGalleryEnabled"];
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSaveVideoToGalleryEnabled"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
+    self.indexer = [[MEGAIndexer alloc] init];
+    [Helper setIndexer:self.indexer];
     
-    if (@available(iOS 9.0, *)) {
-        self.indexer = [[MEGAIndexer alloc] init];
-        [Helper setIndexer:self.indexer];
-    }
-    
-    if (@available(iOS 9.0, *)) {
-        UIForceTouchCapability forceTouchCapability = self.window.rootViewController.view.traitCollection.forceTouchCapability;
-        if (forceTouchCapability == UIForceTouchCapabilityAvailable) {
-            UIApplicationShortcutItem *applicationShortcutItem = [launchOptions objectForKey:UIApplicationLaunchOptionsShortcutItemKey];
-            if (applicationShortcutItem) {
-                if (isFetchNodesDone) {
-                    [self manageQuickActionType:applicationShortcutItem.type];
-                } else {
-                    self.quickActionType = applicationShortcutItem.type;
-                }
+    UIForceTouchCapability forceTouchCapability = self.window.rootViewController.view.traitCollection.forceTouchCapability;
+    if (forceTouchCapability == UIForceTouchCapabilityAvailable) {
+        UIApplicationShortcutItem *applicationShortcutItem = [launchOptions objectForKey:UIApplicationLaunchOptionsShortcutItemKey];
+        if (applicationShortcutItem) {
+            if (isFetchNodesDone) {
+                [self manageQuickActionType:applicationShortcutItem.type];
+            } else {
+                self.quickActionType = applicationShortcutItem.type;
             }
         }
     }
-    
+
     return YES;
 }
 
@@ -599,9 +590,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
     MEGALogWarning(@"Application did receive memory warning");
     
-    if (@available(iOS 9.0, *)) {
-        [self.indexer stopIndexing];
-    }
+    [self.indexer stopIndexing];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
@@ -1669,13 +1658,26 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)openChatRoomWithChatNumber:(NSNumber *)chatNumber {
     if (chatNumber) {
-        uint64_t chatId = [chatNumber unsignedLongLongValue];
         self.mainTBC.selectedIndex = CHAT;
         MEGANavigationController *navigationController = [[self.mainTBC viewControllers] objectAtIndex:CHAT];
-        MEGAChatRoom *chatRoom  = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
-        MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-        messagesVC.chatRoom = chatRoom;
-        [navigationController pushViewController:messagesVC animated:YES];
+        ChatRoomsViewController *chatRoomsVC = navigationController.viewControllers.firstObject;
+        [chatRoomsVC openChatRoomWithID:chatNumber.unsignedLongLongValue];
+    }
+}
+
+- (void)showLoginViewController {
+    [SVProgressHUD dismiss];
+    
+    if ((self.urlType == URLTypeNewSignUpLink) && (_emailOfNewSignUpLink != nil)) {
+        if ([self.window.rootViewController isKindOfClass:[MEGANavigationController class]]) {
+            MEGANavigationController *navigationController = (MEGANavigationController *)self.window.rootViewController;
+            
+            if ([navigationController.topViewController isKindOfClass:[LoginViewController class]]) {
+                LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
+                [loginVC performSegueWithIdentifier:@"CreateAccountStoryboardSegueID" sender:_emailOfNewSignUpLink];
+                _emailOfNewSignUpLink = nil;
+            }
+        }
     }
 }
 
@@ -2011,12 +2013,10 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
         }
     } else {
-        if (@available(iOS 9.0, *)) {
-            NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
-            MEGALogDebug(@"Spotlight indexing %lu nodes updated", nodesToIndex.count);
-            for (MEGANode *node in nodesToIndex) {
-                [self.indexer index:node];
-            }
+        NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
+        MEGALogDebug(@"Spotlight indexing %lu nodes updated", nodesToIndex.count);
+        for (MEGANode *node in nodesToIndex) {
+            [self.indexer index:node];
         }
     }
 }
@@ -2246,19 +2246,17 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
             [self showMainTabBar];
 
-            if (@available(iOS 9.0, *)) {
-                NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-                    if (![sharedUserDefaults boolForKey:@"treeCompleted"]) {
-                        [self.indexer generateAndSaveTree];
-                    }
-                    @try {
-                        [self.indexer indexTree];
-                    } @catch (NSException *exception) {
-                        MEGALogError(@"Exception during spotlight indexing: %@", exception);
-                    }
-                });
-            }
+            NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                if (![sharedUserDefaults boolForKey:@"treeCompleted"]) {
+                    [self.indexer generateAndSaveTree];
+                }
+                @try {
+                    [self.indexer indexTree];
+                } @catch (NSException *exception) {
+                    MEGALogError(@"Exception during spotlight indexing: %@", exception);
+                }
+            });
             
             isOverquota = NO;
             [[MEGASdkManager sharedMEGASdk] getAccountDetails];
@@ -2330,24 +2328,13 @@ void uncaughtExceptionHandler(NSException *exception) {
         }
             
         case MEGARequestTypeLogout: {
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-                [[MEGASdkManager sharedMEGAChatSdk] logout];
-            }
-            
             [Helper logout];
-            [SVProgressHUD dismiss];
-            
-            if ((self.urlType == URLTypeNewSignUpLink) && (_emailOfNewSignUpLink != nil)) {
-                if ([self.window.rootViewController isKindOfClass:[MEGANavigationController class]]) {
-                    MEGANavigationController *navigationController = (MEGANavigationController *)self.window.rootViewController;
-                    
-                    if ([navigationController.topViewController isKindOfClass:[LoginViewController class]]) {
-                        LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
-                        [loginVC performSegueWithIdentifier:@"CreateAccountStoryboardSegueID" sender:_emailOfNewSignUpLink];
-                        _emailOfNewSignUpLink = nil;
-                    }
-                }
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+                _waitForChatLogout = YES;
+            } else {
+                [self showLoginViewController];
             }
+            
             break;
         }
             
@@ -2459,12 +2446,16 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
     
     if (request.type == MEGAChatRequestTypeLogout) {
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-            [[MEGALogger sharedLogger] enableSDKlogs];
+        if (self.shouldWaitForChatLogout) {
+            [self showLoginViewController];
+        } else {
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
+                [[MEGALogger sharedLogger] enableSDKlogs];
+            }
+            
+            [self.mainTBC setBadgeValueForChats];
         }
         [MEGASdkManager destroySharedMEGAChatSdk];
-        
-        [self.mainTBC setBadgeValueForChats];
     }
     
     MEGALogInfo(@"onChatRequestFinish request type: %ld", request.type);

@@ -261,6 +261,18 @@
 
 #pragma mark - Private
 
+- (void)openChatRoomWithID:(uint64_t)chatID {
+    NSArray *viewControllers = self.navigationController.viewControllers;
+    if (viewControllers.count > 1) {
+        [self.navigationController popToRootViewControllerAnimated:NO];
+    }
+    
+    MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
+    messagesVC.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatID];
+    
+    [self.navigationController pushViewController:messagesVC animated:YES];
+}
+
 - (void)internetConnectionChanged {
     BOOL boolValue = [MEGAReachabilityManager isReachable];
     self.addBarButtonItem.enabled = boolValue;
@@ -735,7 +747,9 @@
                     
                 case MEGAChatListItemChangeTypeTitle:
                     [self.chatListItemArray replaceObjectAtIndex:indexPath.row withObject:item];
-                    cell.chatTitle.text = item.title;
+                    [self.tableView beginUpdates];
+                    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                    [self.tableView endUpdates];
                     break;
                     
                 case MEGAChatListItemChangeTypeClosed:

@@ -1,9 +1,9 @@
+
 #import "PreviewDocumentViewController.h"
 
 #import <QuickLook/QuickLook.h>
 
 #import "Helper.h"
-#import "MEGAQLPreviewControllerTransitionAnimator.h"
 
 @interface PreviewDocumentViewController () <UIViewControllerTransitioningDelegate, QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate> {
     MEGATransfer *previewDocumentTransfer;
@@ -12,6 +12,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
+@property (nonatomic) QLPreviewController *previewController;
+
 @end
 
 @implementation PreviewDocumentViewController
@@ -46,24 +48,25 @@
     }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+        
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        [self updatePreviewControllerFrameToSize:size];
+//        [self.previewController refreshCurrentPreviewItem];
+    } completion:nil];
+    
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskAll;
 }
 
-#pragma mark - UIViewControllerTransitioningDelegate
+#pragma mark - Private
 
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
-    
-    if ([presented isKindOfClass:[QLPreviewController class]]) {
-        return [[MEGAQLPreviewControllerTransitionAnimator alloc] init];
-    }
-    
-    return nil;
+- (void)updatePreviewControllerFrameToSize:(CGSize)size {
+    CGFloat y = [UIApplication sharedApplication].statusBarFrame.size.height + self.navigationController.navigationBar.frame.size.height;
+    self.previewController.view.frame = CGRectMake(0.0f, y, size.width, size.height - y);
 }
 
 #pragma mark - QLPreviewControllerDataSource
@@ -81,10 +84,6 @@
 }
 
 #pragma mark - QLPreviewControllerDelegate
-
-- (BOOL)previewController:(QLPreviewController *)controller shouldOpenURL:(NSURL *)url forPreviewItem:(id <QLPreviewItem>)item {
-    return YES;
-}
 
 - (void)previewControllerWillDismiss:(QLPreviewController *)controller {
     previewDocumentTransfer = nil;
@@ -108,15 +107,12 @@
         return;
     }
     
-    QLPreviewController *previewController = [[QLPreviewController alloc] init];
-    [previewController setDelegate:self];
-    [previewController setDataSource:self];
-    [previewController setTransitioningDelegate:self];
-    [previewController setTitle:transfer.fileName];
-    [self addChildViewController:previewController];
-    CGFloat y = [UIApplication sharedApplication].statusBarFrame.size.height + self.navigationController.navigationBar.frame.size.height;
-    previewController.view.frame = CGRectMake(0.0f, y, self.view.frame.size.width, self.view.frame.size.height - y);
-    [self.view addSubview:previewController.view];
+    self.previewController = [[QLPreviewController alloc] init];
+    [self.previewController setDelegate:self];
+    [self.previewController setDataSource:self];
+    [self.previewController setTitle:transfer.fileName];
+    [self updatePreviewControllerFrameToSize:self.view.frame.size];
+    [self.view addSubview:self.previewController.view];
 }
 
 @end

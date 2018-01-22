@@ -54,5 +54,6 @@
 @property (nonatomic, readonly) NSUInteger maxBufferSize;
 
 - (NSString *)deviceName;
+- (CGFloat)mnz_widthForChatBubble;
 
 @end

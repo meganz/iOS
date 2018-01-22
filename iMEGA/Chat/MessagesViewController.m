@@ -376,6 +376,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] attachContactsToChat:self.chatRoom.chatId contacts:users];
             message.chatRoom = self.chatRoom;
             [self.messages addObject:message];
+            [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];
             [self finishSendingMessageAnimated:YES];
         }
     };
@@ -725,6 +726,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     MEGALogInfo(@"didPressSendButton %@", message);
     
+    [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];
     [self finishSendingMessageAnimated:YES];
     [self scrollToBottomAnimated:YES];
 }
@@ -1006,6 +1008,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         cell.textView.font = [UIFont mnz_SFUIRegularItalicWithSize:15.0f];
         cell.textView.textColor = [UIColor mnz_blue2BA6DE];
     } else if (message.isManagementMessage) {
+        cell.textView.linkTextAttributes = @{NSForegroundColorAttributeName: [UIColor mnz_black333333],
+                                             NSUnderlineColorAttributeName: [UIColor mnz_black333333],
+                                             NSUnderlineStyleAttributeName: @(NSUnderlineStyleNone)};
         cell.textView.attributedText = message.attributedText;
     } else if (!message.isMediaMessage) {
         cell.textView.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
@@ -1543,9 +1548,18 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             [self updateUnreadLabel];
             break;
             
-        case MEGAChatRoomChangeTypeParticipans:
+        case MEGAChatRoomChangeTypeParticipans: {
             [self customNavigationBarLabel];
+            
+            [self.collectionView performBatchUpdates:^{
+                [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
+                [self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
+            } completion:^(BOOL finished) {
+                [self scrollToBottomAnimated:YES];
+            }];
+            
             break;
+        }
             
         case MEGAChatRoomChangeTypeTitle:
             [self customNavigationBarLabel];
