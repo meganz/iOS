@@ -7,6 +7,7 @@
 #import "UIImage+GKContact.h"
 #import "UIColor+JSQMessages.h"
 
+#import "UIDevice+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGASdkManager.h"
 
@@ -35,11 +36,7 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    const CGFloat kMaxBubbleWidth = 566.0f;
-    CGFloat displaySize = [[UIScreen mainScreen] bounds].size.width - 92; // 75 + 17, by design
-    if (displaySize > kMaxBubbleWidth) {
-        displaySize = kMaxBubbleWidth;
-    }
+    CGFloat displaySize = [[UIDevice currentDevice] mnz_widthForChatBubble];
     return CGSizeMake(displaySize, 144.0f);
 }
 
@@ -103,7 +100,7 @@
                 MEGANode *node = [self.message.nodeList nodeAtIndex:0];
                 filename = node.name;
                 size = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory];
-                [contactView.avatarImage mnz_setImageForExtension:filename.pathExtension];
+                [contactView.avatarImage mnz_setThumbnailByNodeHandle:node.handle];
                 contactView.headingLabel.text = AMLocalizedString(@"uploadedFile", @"A summary message when a user has attached one file into the chat.");
             } else {
                 filename = [NSString stringWithFormat:AMLocalizedString(@"files", nil), totalNodes];
@@ -120,7 +117,8 @@
             contactView.detailLabel.text = size;
         } else { // MEGAChatMessageTypeContact
             if (self.message.usersCount == 1) {
-                [contactView.avatarImage mnz_setImageForUserHandle:[self.message userHandleAtIndex:0]];
+                NSString *userNameInitial = [NSString stringWithFormat:@"%@", [[self.message userNameAtIndex:0].uppercaseString substringToIndex:1]];
+                [contactView.avatarImage mnz_setImageForChatSharedContactHandle:[self.message userHandleAtIndex:0] initial:userNameInitial];
                 contactView.titleLabel.text = [self.message userNameAtIndex:0];
                 contactView.detailLabel.text = [self.message userEmailAtIndex:0];
                 contactView.headingLabel.text = AMLocalizedString(@"sharedContact", @"A summary message when a user sent the information of one contact through the chat.");

@@ -150,19 +150,6 @@
 		41AC33A81A926C27005118AF /* HeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC33A71A926C27005118AF /* HeaderCollectionReusableView.m */; };
 		41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC66471AB1D493003FE8DA /* AboutTableViewController.m */; };
 		41ADA9F21ADE7AC100641BB4 /* HelpTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41ADA9F11ADE7AC100641BB4 /* HelpTableViewController.m */; };
-		41ADAA131ADE8B8800641BB4 /* SVWebViewController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41ADA9F41ADE8B8800641BB4 /* SVWebViewController.strings */; };
-		41ADAA141ADE8B8800641BB4 /* SVModalWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41ADA9FE1ADE8B8800641BB4 /* SVModalWebViewController.m */; };
-		41ADAA151ADE8B8800641BB4 /* SVWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 41ADA9FF1ADE8B8800641BB4 /* SVWebViewController.bundle */; };
-		41ADAA161ADE8B8800641BB4 /* SVWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41ADAA011ADE8B8800641BB4 /* SVWebViewController.m */; };
-		41ADAA171ADE8B8800641BB4 /* SVWebViewControllerActivityChrome-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 41ADAA041ADE8B8800641BB4 /* SVWebViewControllerActivityChrome-iPad.png */; };
-		41ADAA181ADE8B8800641BB4 /* SVWebViewControllerActivityChrome-iPad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41ADAA051ADE8B8800641BB4 /* SVWebViewControllerActivityChrome-iPad@2x.png */; };
-		41ADAA191ADE8B8800641BB4 /* SVWebViewControllerActivityChrome.m in Sources */ = {isa = PBXBuildFile; fileRef = 41ADAA071ADE8B8800641BB4 /* SVWebViewControllerActivityChrome.m */; };
-		41ADAA1A1ADE8B8800641BB4 /* SVWebViewControllerActivityChrome@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41ADAA081ADE8B8800641BB4 /* SVWebViewControllerActivityChrome@2x.png */; };
-		41ADAA1B1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 41ADAA0A1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari-iPad.png */; };
-		41ADAA1C1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari-iPad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41ADAA0B1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari-iPad@2x.png */; };
-		41ADAA1D1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari.m in Sources */ = {isa = PBXBuildFile; fileRef = 41ADAA0D1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari.m */; };
-		41ADAA1E1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41ADAA0E1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari@2x.png */; };
-		41ADAA1F1ADE8B8800641BB4 /* SVWebViewControllerActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 41ADAA101ADE8B8800641BB4 /* SVWebViewControllerActivity.m */; };
 		41B2D41C1A6D06780002E29E /* UIImage+GKContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B2D41B1A6D06780002E29E /* UIImage+GKContact.m */; };
 		41B3B8301AD591A80093A88D /* PasscodeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B3B82F1AD591A80093A88D /* PasscodeTableViewController.m */; };
 		41BADDAD1A8E1659008408B3 /* NSString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */; };
@@ -930,32 +917,6 @@
 		41AC66471AB1D493003FE8DA /* AboutTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutTableViewController.m; sourceTree = "<group>"; };
 		41ADA9F01ADE7AC100641BB4 /* HelpTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpTableViewController.h; sourceTree = "<group>"; };
 		41ADA9F11ADE7AC100641BB4 /* HelpTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpTableViewController.m; sourceTree = "<group>"; };
-		41ADA9F51ADE8B8800641BB4 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
-		41ADA9F61ADE8B8800641BB4 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
-		41ADA9F71ADE8B8800641BB4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
-		41ADA9F91ADE8B8800641BB4 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
-		41ADA9FA1ADE8B8800641BB4 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
-		41ADA9FB1ADE8B8800641BB4 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
-		41ADA9FC1ADE8B8800641BB4 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
-		41ADA9FD1ADE8B8800641BB4 /* SVModalWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVModalWebViewController.h; sourceTree = "<group>"; };
-		41ADA9FE1ADE8B8800641BB4 /* SVModalWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVModalWebViewController.m; sourceTree = "<group>"; };
-		41ADA9FF1ADE8B8800641BB4 /* SVWebViewController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVWebViewController.bundle; sourceTree = "<group>"; };
-		41ADAA001ADE8B8800641BB4 /* SVWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebViewController.h; sourceTree = "<group>"; };
-		41ADAA011ADE8B8800641BB4 /* SVWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebViewController.m; sourceTree = "<group>"; };
-		41ADAA041ADE8B8800641BB4 /* SVWebViewControllerActivityChrome-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SVWebViewControllerActivityChrome-iPad.png"; sourceTree = "<group>"; };
-		41ADAA051ADE8B8800641BB4 /* SVWebViewControllerActivityChrome-iPad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SVWebViewControllerActivityChrome-iPad@2x.png"; sourceTree = "<group>"; };
-		41ADAA061ADE8B8800641BB4 /* SVWebViewControllerActivityChrome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebViewControllerActivityChrome.h; sourceTree = "<group>"; };
-		41ADAA071ADE8B8800641BB4 /* SVWebViewControllerActivityChrome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebViewControllerActivityChrome.m; sourceTree = "<group>"; };
-		41ADAA081ADE8B8800641BB4 /* SVWebViewControllerActivityChrome@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SVWebViewControllerActivityChrome@2x.png"; sourceTree = "<group>"; };
-		41ADAA0A1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SVWebViewControllerActivitySafari-iPad.png"; sourceTree = "<group>"; };
-		41ADAA0B1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari-iPad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SVWebViewControllerActivitySafari-iPad@2x.png"; sourceTree = "<group>"; };
-		41ADAA0C1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebViewControllerActivitySafari.h; sourceTree = "<group>"; };
-		41ADAA0D1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebViewControllerActivitySafari.m; sourceTree = "<group>"; };
-		41ADAA0E1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SVWebViewControllerActivitySafari@2x.png"; sourceTree = "<group>"; };
-		41ADAA0F1ADE8B8800641BB4 /* SVWebViewControllerActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebViewControllerActivity.h; sourceTree = "<group>"; };
-		41ADAA101ADE8B8800641BB4 /* SVWebViewControllerActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebViewControllerActivity.m; sourceTree = "<group>"; };
-		41ADAA111ADE8B8800641BB4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/SVWebViewController.strings"; sourceTree = "<group>"; };
-		41ADAA121ADE8B8800641BB4 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/SVWebViewController.strings"; sourceTree = "<group>"; };
 		41B2D41A1A6D06780002E29E /* UIImage+GKContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+GKContact.h"; sourceTree = "<group>"; };
 		41B2D41B1A6D06780002E29E /* UIImage+GKContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GKContact.m"; sourceTree = "<group>"; };
 		41B3B82E1AD591A80093A88D /* PasscodeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasscodeTableViewController.h; sourceTree = "<group>"; };
@@ -1828,7 +1789,6 @@
 				413199651BD7BD5D002CD6EA /* DateTools */,
 				4122C0E31B274E6A001CE833 /* AMLocalizedString */,
 				41AC2ABD1AE67D8E003C09E5 /* DZNEmptyDataSet */,
-				41ADA9F31ADE8B8800641BB4 /* SVWebViewController */,
 				4156C8071AD7E79A00F5E818 /* LTHPasscodeViewController */,
 				41FC83A51AA732DC008FA551 /* Reachability */,
 				41B2D4191A6D06780002E29E /* GKContactImage */,
@@ -2313,56 +2273,6 @@
 				41ADA9F11ADE7AC100641BB4 /* HelpTableViewController.m */,
 			);
 			path = Help;
-			sourceTree = "<group>";
-		};
-		41ADA9F31ADE8B8800641BB4 /* SVWebViewController */ = {
-			isa = PBXGroup;
-			children = (
-				41ADA9F41ADE8B8800641BB4 /* SVWebViewController.strings */,
-				41ADA9FD1ADE8B8800641BB4 /* SVModalWebViewController.h */,
-				41ADA9FE1ADE8B8800641BB4 /* SVModalWebViewController.m */,
-				41ADA9FF1ADE8B8800641BB4 /* SVWebViewController.bundle */,
-				41ADAA001ADE8B8800641BB4 /* SVWebViewController.h */,
-				41ADAA011ADE8B8800641BB4 /* SVWebViewController.m */,
-				41ADAA021ADE8B8800641BB4 /* UIActivities */,
-			);
-			name = SVWebViewController;
-			path = Vendor/SVWebViewController/SVWebViewController;
-			sourceTree = "<group>";
-		};
-		41ADAA021ADE8B8800641BB4 /* UIActivities */ = {
-			isa = PBXGroup;
-			children = (
-				41ADAA031ADE8B8800641BB4 /* Chrome */,
-				41ADAA091ADE8B8800641BB4 /* Safari */,
-				41ADAA0F1ADE8B8800641BB4 /* SVWebViewControllerActivity.h */,
-				41ADAA101ADE8B8800641BB4 /* SVWebViewControllerActivity.m */,
-			);
-			path = UIActivities;
-			sourceTree = "<group>";
-		};
-		41ADAA031ADE8B8800641BB4 /* Chrome */ = {
-			isa = PBXGroup;
-			children = (
-				41ADAA041ADE8B8800641BB4 /* SVWebViewControllerActivityChrome-iPad.png */,
-				41ADAA051ADE8B8800641BB4 /* SVWebViewControllerActivityChrome-iPad@2x.png */,
-				41ADAA061ADE8B8800641BB4 /* SVWebViewControllerActivityChrome.h */,
-				41ADAA071ADE8B8800641BB4 /* SVWebViewControllerActivityChrome.m */,
-				41ADAA081ADE8B8800641BB4 /* SVWebViewControllerActivityChrome@2x.png */,
-			);
-			path = Chrome;
-			sourceTree = "<group>";
-		};
-		41ADAA091ADE8B8800641BB4 /* Safari */ = {
-			isa = PBXGroup;
-			children = (
-				41ADAA0A1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari-iPad.png */,
-				41ADAA0B1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari-iPad@2x.png */,
-				41ADAA0C1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari.h */,
-				41ADAA0D1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari.m */,
-				41ADAA0E1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari@2x.png */,
-			);
-			path = Safari;
 			sourceTree = "<group>";
 		};
 		41B2D4191A6D06780002E29E /* GKContactImage */ = {
@@ -3263,11 +3173,9 @@
 				415226961A692ECC00EC7BB6 /* Offline.storyboard in Resources */,
 				4115043E1CEB07C700BF38E3 /* PlayButtonOverlayLargeTap@2x.png in Resources */,
 				A8F2629C1FA8F82F000B2768 /* hang_out.mp3 in Resources */,
-				41ADAA171ADE8B8800641BB4 /* SVWebViewControllerActivityChrome-iPad.png in Resources */,
 				A8F2629A1FA8F7C3000B2768 /* incoming_voice_video_call.mp3 in Resources */,
 				E8D36F791AD677C6006D4D40 /* Transfers.storyboard in Resources */,
 				411504391CEB07C700BF38E3 /* ImageSelectedSmallOn@3x.png in Resources */,
-				41ADAA151ADE8B8800641BB4 /* SVWebViewController.bundle in Resources */,
 				A82E5BF41F3470B5003C149C /* Spotlight_file.png in Resources */,
 				4152268B1A692ECC00EC7BB6 /* Cloud.storyboard in Resources */,
 				411504351CEB07C700BF38E3 /* ImageSelectedSmallOff@2x.png in Resources */,
@@ -3281,7 +3189,6 @@
 				411504381CEB07C700BF38E3 /* ImageSelectedSmallOn@2x.png in Resources */,
 				4115043A1CEB07C700BF38E3 /* PlayButtonOverlayLarge.png in Resources */,
 				411504321CEB07C700BF38E3 /* ImageSelectedOn@2x.png in Resources */,
-				41ADAA181ADE8B8800641BB4 /* SVWebViewControllerActivityChrome-iPad@2x.png in Resources */,
 				41A72F1F1C22EA1600516603 /* LTHPasscodeViewController.bundle in Resources */,
 				E8CD198A1A9270CB00CB8B2A /* UnavailableLinkView.xib in Resources */,
 				417279331DB663FA001AC818 /* JSQMessagesAssets.bundle in Resources */,
@@ -3307,7 +3214,6 @@
 				5B5B50011E684FDC00DBEB3B /* SF-UI-Display-Regular.otf in Resources */,
 				41136FBE1E1693410031C516 /* MEGAMessagesTypingIndicatorFoorterView.xib in Resources */,
 				411504481CEB07C700BF38E3 /* UIBarButtonItemGrid@3x.png in Resources */,
-				41ADAA1B1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari-iPad.png in Resources */,
 				A82E5BC81F3465A3003C149C /* Spotlight_file@2x.png in Resources */,
 				4115042B1CEB07C700BF38E3 /* ImageError.png in Resources */,
 				411504451CEB07C700BF38E3 /* UIBarButtonItemArrowRight@3x.png in Resources */,
@@ -3327,10 +3233,8 @@
 				5B4429411E6D705D00BCACC0 /* SF-UI-Text-Medium.otf in Resources */,
 				413199761BD7BD5D002CD6EA /* DateTools.bundle in Resources */,
 				4115043C1CEB07C700BF38E3 /* PlayButtonOverlayLarge@3x.png in Resources */,
-				41ADAA131ADE8B8800641BB4 /* SVWebViewController.strings in Resources */,
 				415226981A692ECC00EC7BB6 /* Settings.storyboard in Resources */,
 				1373619E1A6664C300B740E8 /* Images.xcassets in Resources */,
-				41ADAA1C1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari-iPad@2x.png in Resources */,
 				411504341CEB07C700BF38E3 /* ImageSelectedSmallOff.png in Resources */,
 				4115042F1CEB07C700BF38E3 /* ImageSelectedOff@2x.png in Resources */,
 				41D77EA91A6E8E6300818BE8 /* LaunchScreen.xib in Resources */,
@@ -3338,9 +3242,7 @@
 				411504431CEB07C700BF38E3 /* UIBarButtonItemArrowRight.png in Resources */,
 				417279541DB663FA001AC818 /* JSQMessagesCollectionViewCellOutgoing.xib in Resources */,
 				4115042C1CEB07C700BF38E3 /* ImageError@2x.png in Resources */,
-				41ADAA1E1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari@2x.png in Resources */,
 				5B22F97C1F8374C500D2B156 /* VENToken.xib in Resources */,
-				41ADAA1A1ADE8B8800641BB4 /* SVWebViewControllerActivityChrome@2x.png in Resources */,
 				411504471CEB07C700BF38E3 /* UIBarButtonItemGrid@2x.png in Resources */,
 				417279591DB663FA001AC818 /* JSQMessagesLoadEarlierHeaderView.xib in Resources */,
 				E8C289F71BF5FCDD00F7A034 /* SF-UI-Text-Regular.otf in Resources */,
@@ -3494,8 +3396,6 @@
 				5B0C55AE1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m in Sources */,
 				E889C9E21B55657E00ECEFDF /* MyAccountViewController.m in Sources */,
 				5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */,
-				41ADAA1F1ADE8B8800641BB4 /* SVWebViewControllerActivity.m in Sources */,
-				41ADAA161ADE8B8800641BB4 /* SVWebViewController.m in Sources */,
 				412EB2661C6E52AA001EA6D6 /* MEGAAssetOperation.m in Sources */,
 				945E1F0C1FE10CE8000C5E21 /* MEGAInputToolbar.m in Sources */,
 				41ADA9F21ADE7AC100641BB4 /* HelpTableViewController.m in Sources */,
@@ -3615,7 +3515,6 @@
 				417279481DB663FA001AC818 /* JSQMediaItem.m in Sources */,
 				41A66D071AE7900F007D7E20 /* UpgradeTableViewController.m in Sources */,
 				4172794E1DB663FA001AC818 /* JSQMessagesCellTextView.m in Sources */,
-				41ADAA141ADE8B8800641BB4 /* SVModalWebViewController.m in Sources */,
 				41E88F111CF451B000BD3B79 /* MWTapDetectingView.m in Sources */,
 				4180727A1AA5BBA00078D950 /* MEGAReachabilityManager.m in Sources */,
 				41D21E611D01AEC3002E6296 /* CTAssetSelectionButton.m in Sources */,
@@ -3667,7 +3566,6 @@
 				417840A01AC328A600713F3C /* ChangePasswordViewController.m in Sources */,
 				E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */,
 				E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */,
-				41ADAA191ADE8B8800641BB4 /* SVWebViewControllerActivityChrome.m in Sources */,
 				41E88F0E1CF451B000BD3B79 /* MWPhoto.m in Sources */,
 				5B39DAA21EF916D900BC2319 /* ChatAttachedContactsViewController.m in Sources */,
 				5BB50E091F20E840000CA24D /* MEGACreateFolderRequestDelegate.m in Sources */,
@@ -3691,7 +3589,6 @@
 				94F376E71FE7C126009AAA10 /* MEGAToolbarAssetPicker.m in Sources */,
 				41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */,
 				944B205D1EE55533003C967B /* UIAlertAction+MNZCategory.m in Sources */,
-				41ADAA1D1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari.m in Sources */,
 				415DCF241BF48EFA00914A1E /* ContactRequestsViewController.m in Sources */,
 				4172794C1DB663FA001AC818 /* JSQPhotoMediaItem.m in Sources */,
 				41E88F0C1CF451B000BD3B79 /* MWGridCell.m in Sources */,
@@ -3890,22 +3787,6 @@
 			);
 			name = Localizable.strings;
 			path = Languages;
-			sourceTree = "<group>";
-		};
-		41ADA9F41ADE8B8800641BB4 /* SVWebViewController.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				41ADA9F51ADE8B8800641BB4 /* da */,
-				41ADA9F61ADE8B8800641BB4 /* de */,
-				41ADA9F71ADE8B8800641BB4 /* en */,
-				41ADA9F91ADE8B8800641BB4 /* es */,
-				41ADA9FA1ADE8B8800641BB4 /* fr */,
-				41ADA9FB1ADE8B8800641BB4 /* ja */,
-				41ADA9FC1ADE8B8800641BB4 /* pt */,
-				41ADAA111ADE8B8800641BB4 /* zh-Hans */,
-				41ADAA121ADE8B8800641BB4 /* zh-Hant */,
-			);
-			name = SVWebViewController.strings;
 			sourceTree = "<group>";
 		};
 		9422550A1EDC04DC0074C51A /* MainInterface.storyboard */ = {

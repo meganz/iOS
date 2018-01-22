@@ -62,8 +62,7 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
                 if (moUser) {
                     fullNameDidAction = moUser.fullName;
                 } else {
-                    // TODO: request firstname and lastname
-                    fullNameDidAction = @"Unknown user";
+                    fullNameDidAction = @"";
                 }
             }
         }
@@ -86,8 +85,7 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
                 if (moUser) {
                     fullNameReceiveAction = moUser.fullName;
                 } else {
-                    // TODO: request firstname and lastname
-                    fullNameReceiveAction = @"Unknown user";
+                    fullNameReceiveAction = @"";
                 }
             }
         }

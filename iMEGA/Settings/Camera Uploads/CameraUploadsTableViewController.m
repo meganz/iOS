@@ -8,7 +8,7 @@
 #import "CameraUploads.h"
 #import "Helper.h"
 
-@interface CameraUploadsTableViewController ()  <UIAlertViewDelegate>
+@interface CameraUploadsTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *enableCameraUploadsLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *enableCameraUploadsSwitch;
@@ -24,10 +24,6 @@
 @implementation CameraUploadsTableViewController
 
 #pragma mark - Lifecycle
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -62,11 +58,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskAll;
 }
@@ -95,76 +86,60 @@
         }
     }
     
-    if (@available(iOS 9.0, *)) {
-        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-            switch (status) {
-                case PHAuthorizationStatusNotDetermined:
-                    break;
-                case PHAuthorizationStatusAuthorized: {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        BOOL isCameraUploadsEnabled = ![CameraUploads syncManager].isCameraUploadsEnabled;
-                        if (isCameraUploadsEnabled) {
-                            MEGALogInfo(@"Enable Camera Uploads");
-                            [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-                            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-                        } else {
-                            MEGALogInfo(@"Disable Camera Uploads");
-                            [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
-                            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-                            
-                            [self.uploadVideosSwitch setOn:isCameraUploadsEnabled animated:YES];
-                            [self.useCellularConnectionSwitch setOn:isCameraUploadsEnabled animated:YES];
-                            [self.onlyWhenChargingSwitch setOn:isCameraUploadsEnabled animated:YES];
-                        }
-                        
-                        [self.tableView reloadData];
-                    });
-                    break;
-                }
-                case PHAuthorizationStatusRestricted: {
-                    break;
-                }
-                case PHAuthorizationStatusDenied:{
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-                        [alert show];
+    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+        switch (status) {
+            case PHAuthorizationStatusNotDetermined:
+                break;
+            case PHAuthorizationStatusAuthorized: {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    BOOL isCameraUploadsEnabled = ![CameraUploads syncManager].isCameraUploadsEnabled;
+                    if (isCameraUploadsEnabled) {
+                        MEGALogInfo(@"Enable Camera Uploads");
+                        [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+                        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
+                    } else {
                         MEGALogInfo(@"Disable Camera Uploads");
                         [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
-                            
-                        [self.uploadVideosSwitch setOn:NO animated:YES];
-                        [self.useCellularConnectionSwitch setOn:NO animated:YES];
-                        [self.onlyWhenChargingSwitch setOn:NO animated:YES];
-                        [self.tableView reloadData];
-                    });
-                    break;
-                }
-                default:
-                    break;
+                        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
+                        
+                        [self.uploadVideosSwitch setOn:isCameraUploadsEnabled animated:YES];
+                        [self.useCellularConnectionSwitch setOn:isCameraUploadsEnabled animated:YES];
+                        [self.onlyWhenChargingSwitch setOn:isCameraUploadsEnabled animated:YES];
+                    }
+                    
+                    [self.tableView reloadData];
+                });
+                break;
             }
-        }];
-        
-    } else if ([ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusAuthorized && [ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusNotDetermined && [self.enableCameraUploadsSwitch isOn]) {
-        [self.enableCameraUploadsSwitch setOn:!self.enableCameraUploadsSwitch.isOn animated:YES];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-        [alert show];
-    } else {
-        BOOL isCameraUploadsEnabled = ![CameraUploads syncManager].isCameraUploadsEnabled;
-        if (isCameraUploadsEnabled) {
-            MEGALogInfo(@"Enable Camera Uploads");
-            [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-        } else {
-            MEGALogInfo(@"Disable Camera Uploads");
-            [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-            
-            [self.uploadVideosSwitch setOn:isCameraUploadsEnabled animated:YES];
-            [self.useCellularConnectionSwitch setOn:isCameraUploadsEnabled animated:YES];
-            [self.onlyWhenChargingSwitch setOn:isCameraUploadsEnabled animated:YES];
+            case PHAuthorizationStatusRestricted: {
+                break;
+            }
+            case PHAuthorizationStatusDenied:{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Alert message to explain that the MEGA app needs permission to access your device photos") preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+                    
+                    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                    }]];
+                    
+                    [self presentViewController:permissionsAlertController animated:YES completion:nil];
+                    
+                    MEGALogInfo(@"Disable Camera Uploads");
+                    [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
+                    
+                    [self.uploadVideosSwitch setOn:NO animated:YES];
+                    [self.useCellularConnectionSwitch setOn:NO animated:YES];
+                    [self.onlyWhenChargingSwitch setOn:NO animated:YES];
+                    [self.tableView reloadData];
+                });
+                break;
+            }
+            default:
+                break;
         }
-        
-        [self.tableView reloadData];
-    }
+    }];
 }
 
 - (IBAction)uploadVideosSwitchValueChanged:(UISwitch *)sender {
@@ -276,14 +251,6 @@
         titleForFooter = AMLocalizedString(@"cameraUploads_footer", @"Footer explicative text to explain the Camera Uploads funtionality");
     }
     return titleForFooter;
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-    }
 }
 
 @end

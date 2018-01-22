@@ -16,9 +16,6 @@
 [submodule "iMEGA/Vendor/LTHPasscodeViewController"]
 	path = iMEGA/Vendor/LTHPasscodeViewController
 	url = https://github.com/rolandleth/LTHPasscodeViewController.git
-[submodule "iMEGA/Vendor/SVWebViewController"]
-	path = iMEGA/Vendor/SVWebViewController
-	url = https://github.com/TransitApp/SVWebViewController.git
 [submodule "iMEGA/Vendor/DZNEmptyDataSet"]
 	path = iMEGA/Vendor/DZNEmptyDataSet
 	url = https://github.com/dzenbot/DZNEmptyDataSet.git
