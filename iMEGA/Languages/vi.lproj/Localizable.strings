@@ -620,8 +620,10 @@
 "onlyWhenChargingLabel"="Chỉ được tải lúc sạc pin";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Nếu Camera Uploads được bật, các hình ảnh mới chụp hoặc các video mới quay sẽ được tải và lưu lên Ổ Mây MEGA của bạn.";
-/* Label for the "Version" number of the app */
-"version"="Phiên bản";
+/* Title of the label where the SDK version is shown */
+"sdkVersion"="Phiên bản MEGA SDK";
+/* Title of the label where the MEGAchat SDK version is shown */
+"megachatSdkVersion"="Phiên bản SDK MEGAchat";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Thỏa Thuận";
 /* Title for the MEGA Recovery Key */
@@ -1146,6 +1148,8 @@
 "removeParticipant"="Loại Bỏ Thành Viên";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="Cuộc trò chuyện với %@";
+/* Title show above the name of the persons with whom you're chatting */
+"chattingWith"="Chatting with";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA bảo vệ các cuộc trò chuyện của bạn nghiêm ngặt với công nghệ bảo mật đầu-cuối cung cấp sự đảm bảo an toàn cần thiết:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */

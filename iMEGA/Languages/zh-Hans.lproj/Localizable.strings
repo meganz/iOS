@@ -620,8 +620,10 @@
 "onlyWhenChargingLabel"="只在充电状态下";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="开启后将上传新的照片和视频。";
-/* Label for the "Version" number of the app */
-"version"="版本";
+/* Title of the label where the SDK version is shown */
+"sdkVersion"="MEGA SDK软件开发包版本";
+/* Title of the label where the MEGAchat SDK version is shown */
+"megachatSdkVersion"="MEGAchat软件开发包版本";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="感谢";
 /* Title for the MEGA Recovery Key */
@@ -1001,7 +1003,7 @@
 /* Alert title shown when a purchase has stopped because some error between the process */
 "failedPurchase_title"="购买停止";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message"="亦是您取消需求或是Apple回报传输错误。请晚点再试一次或联系ios@mega.nz";
+"failedPurchase_message"="也许您取消了请求或是Apple回报传输错误。请稍后再试或联系ios@mega.nz";
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="恢复出错";
 /* Alert message shown when a restore hasn't been completed correctly */
@@ -1009,7 +1011,7 @@
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="恢复停止";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="亦是需求已取消或是先前的购买未能恢复。请晚点再试一次或联系ios@mega.nz";
+"failedRestore_message"="也许请求已取消或是先前的购买未能恢复。请稍后再试或联系ios@mega.nz";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="开启调试模式";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1146,6 +1148,8 @@
 "removeParticipant"="删除该成员";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="与%@的对话";
+/* Title show above the name of the persons with whom you're chatting */
+"chattingWith"="Chatting with";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA提供安全加密保障，完全保护您的聊天隐私（保障使用者终端到终端，用户控制之隐私）：";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1298,18 +1302,18 @@
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="呼叫中...";
 /* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="Missed audio call";
+"missedAudioCall"="一个未接语音通话";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A] missed audio calls";
+"missedAudioCalls"="[A] 个未接语音通话";
 /* Notification text body shown when you have missed one video call */
-"missedVideoCall"="Missed video call";
+"missedVideoCall"="一个未接语视频话";
 /* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A] missed video calls";
+"missedVideoCalls"="[A] 个未接视频通话";
 /* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="Missed audio call and missed video call";
+"missedAudioCallAndMissedVideoCall"="一个未接语音通话和一个未接视频通话";
 /* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="Missed audio call and [A] missed video calls";
+"missedAudioCallAndMissedVideoCalls"="一个未接语音通话和 [A] 个未接视频通话";
 /* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A] missed audio calls and missed video call";
+"missedAudioCallsAndMissedVideoCall"="[A] 个未接语音通话和一个未接视频通话";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";
+"missedAudioCallsAndMissedVideoCalls"="[A] 个未接语音通话 和[B] 个未接视频通话";
