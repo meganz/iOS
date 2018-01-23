@@ -257,6 +257,10 @@
         [self.view addSubview:navigationController.view];
         self.pickerPresented = YES;
     }
+    if (self.launchVC) {
+        [self.launchVC.view removeFromSuperview];
+        self.launchVC = nil;
+    }    
 }
 
 - (void)presentPasscode {
