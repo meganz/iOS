@@ -556,6 +556,13 @@
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
         [SVProgressHUD show];
         
+        if (self.extensionContext.inputItems.count == 0) {
+            self.unsupportedAssets = 1;
+            [self alertIfNeededAndDismiss];
+            
+            return;
+        }
+        
         NSExtensionItem *content = self.extensionContext.inputItems[0];
         self.totalAssets = self.pendingAssets = content.attachments.count;
         self.progress = 0;
