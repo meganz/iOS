@@ -620,8 +620,10 @@
 "onlyWhenChargingLabel"="Apenas quando estiver carregando";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Quando ativado novas fotos e vídeos serão carregados.";
-/* Label for the "Version" number of the app */
-"version"="Versão";
+/* Title of the label where the SDK version is shown */
+"sdkVersion"="Versão do MEGA SDK";
+/* Title of the label where the MEGAchat SDK version is shown */
+"megachatSdkVersion"="MEGAchat - versão do SDK";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Agradecimentos";
 /* Title for the MEGA Recovery Key */
@@ -807,7 +809,7 @@
 /* Menu item */
 "help"="Ajuda";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Centro de Ajuda";
+"helpCentreLabel"="Centro de ajuda";
 /* Title to rate the app */
 "rateUsLabel"="Nos avalie";
 /* Title of the Transfers section */
@@ -833,7 +835,7 @@
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="Downloads";
 /* Title of My Account section. There you can see your account details */
-"myAccount"="Minha Conta";
+"myAccount"="Minha conta";
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
 "buyPRO"="Upgrade a PRO";
 /* Caption of a button to upgrade the account to Pro status */
@@ -1146,6 +1148,8 @@
 "removeParticipant"="Remover participante";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="Conversando com %@";
+/* Title show above the name of the persons with whom you're chatting */
+"chattingWith"="Chatting with";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="O MEGA protege o seu chat com criptografia de ponta a ponta (controlada pelo usuário), proporcionando garantias de segurança essenciais:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */

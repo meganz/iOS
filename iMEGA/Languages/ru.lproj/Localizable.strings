@@ -620,8 +620,10 @@
 "onlyWhenChargingLabel"="Только при зарядке";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Если включено, то новые фото и видео будут загружаться.";
-/* Label for the "Version" number of the app */
-"version"="Версия";
+/* Title of the label where the SDK version is shown */
+"sdkVersion"="Версия MEGA SDK";
+/* Title of the label where the MEGAchat SDK version is shown */
+"megachatSdkVersion"="Версия MEGAchat SDK";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Благодарности";
 /* Title for the MEGA Recovery Key */
@@ -1146,6 +1148,8 @@
 "removeParticipant"="Удалить участника";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="Разговор с %@";
+/* Title show above the name of the persons with whom you're chatting */
+"chattingWith"="Chatting with";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA защищает ваши разговоры сквозным (контролируемым пользователем) шифрованием, предоставляя необходимые гарантии безопасности:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1211,13 +1215,13 @@
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="Прикреплено файлов: %s.";
 /* A summary message when a user sent the information of one contact through the chat. */
-"sharedContact"="Shared this contact:";
+"sharedContact"="Поделился контактом:";
 /* A summary message when a user sent the information of some contacts at once through the chat. */
-"sharedContacts"="Shared these contacts:";
+"sharedContacts"="Поделился контактами:";
 /* A summary message when a user has attached one file into the chat. */
-"uploadedFile"="Uploaded this file:";
+"uploadedFile"="Загрузил файл:";
 /* A summary message when a user has attached many files at once into the chat. */
-"uploadedFiles"="Uploaded these files:";
+"uploadedFiles"="Загрузил файлы:";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Подписки продлеваются автоматически на тот же срок по такой же цене. Вы можете отключить автоматическое продление подписки MEGA PRO не позднее чем за 24 часа до следующего платежа в настройках учётной записи iTunes. Для управления подписками просто нажмите на значок App Store в телефоне, войдите со своим Apple ID внизу страницы (если вы этого ещё не сделали) и нажмите View ID. Вы попадёте на страницу своей учётной записи, прокрутите её вниз до управления подписками приложений. Там вы можете выбрать свою подписку MEGA PRO и посмотреть запланированную дату продления. Выберите другой план подписки или нажмите на переключатель «вкл/выкл» для отключения автоматического продления подписок.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1298,18 +1302,18 @@
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="Вызов…";
 /* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="Missed audio call";
+"missedAudioCall"="Пропущенный аудиозвонок";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A] missed audio calls";
+"missedAudioCalls"="Пропущенные аудиозвонки ([A])";
 /* Notification text body shown when you have missed one video call */
-"missedVideoCall"="Missed video call";
+"missedVideoCall"="Пропущенный видеозвонок";
 /* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A] missed video calls";
+"missedVideoCalls"="Пропущенные видеозвонки ([A])";
 /* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="Missed audio call and missed video call";
+"missedAudioCallAndMissedVideoCall"="Пропущен аудиозвонок и видеозвонок";
 /* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="Missed audio call and [A] missed video calls";
+"missedAudioCallAndMissedVideoCalls"="Пропущены аудиозвонок и видеозвонки ([A])";
 /* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A] missed audio calls and missed video call";
+"missedAudioCallsAndMissedVideoCall"="Пропущены аудиозвонки ([A]) и видеозвонок";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";
+"missedAudioCallsAndMissedVideoCalls"="Пропущены аудиозвонки ([A]) и видеозвонки ([B])";

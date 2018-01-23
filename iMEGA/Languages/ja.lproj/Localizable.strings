@@ -620,8 +620,10 @@
 "onlyWhenChargingLabel"="チャージ中のみ";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="有効にすると、フォトやビデオがアップロードされます。";
-/* Label for the "Version" number of the app */
-"version"="版";
+/* Title of the label where the SDK version is shown */
+"sdkVersion"="MEGA SDK版";
+/* Title of the label where the MEGAchat SDK version is shown */
+"megachatSdkVersion"="MEGAchat SDKバージョン";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="謝意";
 /* Title for the MEGA Recovery Key */
@@ -1146,6 +1148,8 @@
 "removeParticipant"="参加者を削除する";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="%@さんとの会話";
+/* Title show above the name of the persons with whom you're chatting */
+"chattingWith"="Chatting with";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGAは、必須の安全保証をご提供するエンドツーエンド（ユーザー制御の）暗号化を使用してチャットを保護いたします：";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1211,13 +1215,13 @@
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s個のファイルを添付しました。";
 /* A summary message when a user sent the information of one contact through the chat. */
-"sharedContact"="Shared this contact:";
+"sharedContact"="この連絡先を共有しました：";
 /* A summary message when a user sent the information of some contacts at once through the chat. */
-"sharedContacts"="Shared these contacts:";
+"sharedContacts"="これらの連絡先を共有しました：";
 /* A summary message when a user has attached one file into the chat. */
-"uploadedFile"="Uploaded this file:";
+"uploadedFile"="このファイルをアップロードしました：";
 /* A summary message when a user has attached many files at once into the chat. */
-"uploadedFiles"="Uploaded these files:";
+"uploadedFiles"="これらのファイルをアップロードしました：";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="サブスクリプションは、選択した最初の期間と同じ期間の連続したサブスクリプション期間を対象に、および同じ価格で、自動的に更新されます。あなたのiTunesアカウントの設定ページから、次回のサブスクリプションのお支払い期限が切れる24時間前までに、MEGA PROサブスクリプションの自動更新をオフにすることができます。サブスクリプションを管理するには、携帯端末のApp Storeアイコンをクリックし、ページの下部にあるあなたのApple IDでサインインしてから（まだそのように行っていない場合）、「IDを表示」をクリックします。すると、アカウントのページに移動し、そこで「アプリサブスクリプションの管理]まで下にスクロールします。そこから、MEGA PROのサブスクリプションを選択したり、あなたの予定されている更新日を確認したり、別のサブスクリプションパッケージを選択したり、オン/オフスイッチをオフに切り替えて、サブスクリプションの自動更新を無効にしたりできます。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1298,18 +1302,18 @@
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="着信中…";
 /* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="Missed audio call";
+"missedAudioCall"="不在音声着信";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A] missed audio calls";
+"missedAudioCalls"="[A]件の不在音声着信";
 /* Notification text body shown when you have missed one video call */
-"missedVideoCall"="Missed video call";
+"missedVideoCall"="不在ビデオ着信";
 /* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A] missed video calls";
+"missedVideoCalls"="[A]件の不在ビデオ着信";
 /* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="Missed audio call and missed video call";
+"missedAudioCallAndMissedVideoCall"="不在音声着信および不在ビデオ着信";
 /* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="Missed audio call and [A] missed video calls";
+"missedAudioCallAndMissedVideoCalls"="不在音声着信および[A]件の不在ビデオ着信";
 /* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A] missed audio calls and missed video call";
+"missedAudioCallsAndMissedVideoCall"="[A]件の不在音声着信および不在ビデオ着信";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";
+"missedAudioCallsAndMissedVideoCalls"="[A]件の不在音声着信および[B]件の不在ビデオ着信";

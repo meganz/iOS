@@ -620,8 +620,10 @@
 "onlyWhenChargingLabel"="충전중일 때만";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="활성화하면 새 사진과 동영상이 업로드됩니다.";
-/* Label for the "Version" number of the app */
-"version"="버전";
+/* Title of the label where the SDK version is shown */
+"sdkVersion"="MEGA SDK 버전";
+/* Title of the label where the MEGAchat SDK version is shown */
+"megachatSdkVersion"="MEGAchat SDK 버전";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="통지";
 /* Title for the MEGA Recovery Key */
@@ -1146,6 +1148,8 @@
 "removeParticipant"="참가자 제거";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="%@님과 대화";
+/* Title show above the name of the persons with whom you're chatting */
+"chattingWith"="Chatting with";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA는 당신의 대화 근본적 안전 보증을 제공하는 종단간 (이용자가 통제하는) 암호화를 통해 보호합니다.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1211,13 +1215,13 @@
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s개의 파일 첨부함.";
 /* A summary message when a user sent the information of one contact through the chat. */
-"sharedContact"="Shared this contact:";
+"sharedContact"="이 연락처 공유함:";
 /* A summary message when a user sent the information of some contacts at once through the chat. */
-"sharedContacts"="Shared these contacts:";
+"sharedContacts"="이 연락처들 공유함:";
 /* A summary message when a user has attached one file into the chat. */
-"uploadedFile"="Uploaded this file:";
+"uploadedFile"="이 파일 업로드함:";
 /* A summary message when a user has attached many files at once into the chat. */
-"uploadedFiles"="Uploaded these files:";
+"uploadedFiles"="이 파일들 업로드함:";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="구독은 처음 선택했던 기간과 동일한 가격과 동일한 기간으로 자동으로 연장됩니다. 다음 구독 결제 24시간 전에 당신의 iTunes 계정 설정 페이지에서 자동 결제를 제거할 수 있습니다. 구독을 관라허려면, 휴대전화에서 앱 스토어를 클릭하여 페이지 하단에서 애플 ID로 로그인하세요 (만약 하지 않았다면) 그리고 ID 보기를 클릭하세요. 앱 구독 관리 페이지로 내려갈 수 있는 계정 페이지가 보이게 됩니다. 거기서, MEGA PRO 구독을 선택할 수 있고, 예정된 갱신일을 보고, 다른 구독 패키지 선택 또는 구독의 자동 갱신을 해제할 수 있는 스위치를 끌 수 있습니다.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1298,18 +1302,18 @@
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="통화중...";
 /* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="Missed audio call";
+"missedAudioCall"="부재중 전화";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A] missed audio calls";
+"missedAudioCalls"="[A]개의 부재중 전화";
 /* Notification text body shown when you have missed one video call */
-"missedVideoCall"="Missed video call";
+"missedVideoCall"="부재중 영상통화";
 /* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A] missed video calls";
+"missedVideoCalls"="[A]개의 부재중 영상통화";
 /* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="Missed audio call and missed video call";
+"missedAudioCallAndMissedVideoCall"="부재중 전화와 영상통화";
 /* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="Missed audio call and [A] missed video calls";
+"missedAudioCallAndMissedVideoCalls"="부재중 전화와 [A]개의 영상통화";
 /* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A] missed audio calls and missed video call";
+"missedAudioCallsAndMissedVideoCall"="[A]개의 부재중 전화와 영상통화";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";
+"missedAudioCallsAndMissedVideoCalls"="[A]개의 부재중 전화와 [B]개의 부재중 영상통화";

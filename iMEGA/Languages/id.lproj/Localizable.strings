@@ -620,8 +620,10 @@
 "onlyWhenChargingLabel"="Hanya saat sedang men-cas";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Saat diaktifkan foto dan video baru akan terupload.";
-/* Label for the "Version" number of the app */
-"version"="Versi";
+/* Title of the label where the SDK version is shown */
+"sdkVersion"="Versi MEGA SDK";
+/* Title of the label where the MEGAchat SDK version is shown */
+"megachatSdkVersion"="Versi MEGAchat SDK";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Pengakuan";
 /* Title for the MEGA Recovery Key */
@@ -1146,6 +1148,8 @@
 "removeParticipant"="Hapus Partisipan";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="Percakapan dengan %@";
+/* Title show above the name of the persons with whom you're chatting */
+"chattingWith"="Chatting with";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA melindungi chat anda dengan enkripsi menyeluruh (diatur oleh pengguna) yang memberikan jaminan keamanan:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */

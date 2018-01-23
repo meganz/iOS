@@ -1,15 +1,15 @@
 /* Microphone usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSMicrophoneUsageDescription"="MEGA เข้าถึงไมโครโฟนของคุณเมื่อจับภาพวิดีโอภายในแอปพลิเคชัน";
+"NSMicrophoneUsageDescription"="MEGA เข้าถึงไมโครโฟนของคุณเมื่อจับภาพวิดีโอหรือโทรออกภายในแอปพลิเคชัน";
 /* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSCameraUsageDescription"="MEGA เข้าถึงกล้องของคุณเมื่อคุณถ่ายวิดีโอหรือรูปภาพภายในแอปพลิเคชัน";
+"NSCameraUsageDescription"="MEGA เข้าถึงกล้องของคุณเมื่อถ่ายวิดีโอ ถ่ายรูปหรือโทรออกภายในแอปพลิเคชัน";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryUsageDescription"="MEGA เข้าถึงรูปภาพและ/หรือวิดีโอของคุณ เมื่อคุณเลือกบางส่วนเพื่ออัปโหลดหรือเมื่อคุณเปิดใช้งานการอัปโหลดจากกล้อง";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSContactsUsageDescription"="MEGA accesses your contacts when you select some of them to save/export.";
+"NSContactsUsageDescription"="MEGA จะเข้าถึงที่อยู่ติดต่อของคุณเมื่อคุณเลือกบางส่วนเพื่อบันทึก/ส่งออก";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSPhotoLibraryAddUsageDescription"="MEGA requires access to your photo library to add photos and videos to your device gallery";
+"NSPhotoLibraryAddUsageDescription"="MEGA ต้องการเข้าถึงไลบรารีรูปภาพของคุณเพื่อเพิ่มรูปภาพและวิดีโอลงในแกลเลอรีอุปกรณ์ของคุณ";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSFaceIDUsageDescription"="MEGA accesses Face ID to allow you to easily unlock the app's passcode in case you enable this option.";
+"NSFaceIDUsageDescription"="MEGA เข้าถึง Face ID เพื่อให้คุณสามารถปลดล็อกรหัสผ่านของแอปได้อย่างง่ายดายในกรณีที่คุณเปิดใช้งานตัวเลือกนี้";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
 "quickActionSearchString"="ค้นหา";
 /*  */
