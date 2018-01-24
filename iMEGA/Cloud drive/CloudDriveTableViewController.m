@@ -1600,6 +1600,7 @@
     DetailsNodeInfoViewController *detailsNodeInfoVC = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
     [detailsNodeInfoVC setNode:node];
     [detailsNodeInfoVC setDisplayMode:self.displayMode];
+    detailsNodeInfoVC.incomingShareChildView = self.isIncomingShareChildView;
     [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
 }
 
