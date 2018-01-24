@@ -16,7 +16,6 @@
 #import "FileLinkViewController.h"
 #import "NodeTableViewCell.h"
 #import "MainTabBarController.h"
-#import "DetailsNodeInfoViewController.h"
 #import "UnavailableLinkView.h"
 #import "LoginViewController.h"
 #import "OfflineTableViewController.h"
@@ -666,14 +665,6 @@
         
         return;
     }
-}
-
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodeList nodeAtIndex:indexPath.row];
-    
-    DetailsNodeInfoViewController *nodeInfoDetailsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
-    [nodeInfoDetailsVC setNode:node];
-    [self.navigationController pushViewController:nodeInfoDetailsVC animated:YES];
 }
 
 #pragma mark - UISearchBarDelegate

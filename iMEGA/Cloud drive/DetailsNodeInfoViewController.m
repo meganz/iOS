@@ -241,10 +241,15 @@
         [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 self.isOwnChange = YES;
+                void (^completion)(void) = ^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                };
                 if (self.displayMode == DisplayModeCloudDrive) {
-                    [[MEGASdkManager sharedMEGASdk] moveNode:self.node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
-                } else { //DisplayModeRubbishBin (Remove), DisplayModeSharedItem (Remove share)
-                    [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
+                    MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:(self.node.isFile ? 1 : 0) folders:(self.node.isFolder ? 1 : 0) completion:completion];
+                    [[MEGASdkManager sharedMEGASdk] moveNode:self.node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode] delegate:moveRequestDelegate];
+                } else { //DisplayModeRubbishBin (Remove), DisplayModeSharedItem (Leave share)
+                    MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:self.displayMode files:(self.node.isFile ? 1 : 0) folders:(self.node.isFolder ? 1 : 0) completion:completion];
+                    [[MEGASdkManager sharedMEGASdk] removeNode:self.node delegate:removeRequestDelegate];
                 }
             }
         }]];
