@@ -6,6 +6,7 @@
 
 @property (nonatomic, strong) MEGANode *node;
 @property (nonatomic) DisplayMode displayMode;
+@property (nonatomic, getter=isIncomingShareChildView) BOOL incomingShareChildView;
 
 @property (nonatomic, strong) NSString *userName;
 @property (nonatomic, strong) NSString *email;
