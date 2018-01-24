@@ -496,7 +496,6 @@
     
     node = [array objectAtIndex:indexPath.row];
     
-    [cell.thumbnailPlayImageView setHidden:YES];
     if ([node hasThumbnail]) {
         [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdk] cell:cell];
     } else {
@@ -505,14 +504,12 @@
     
     cell.nodeHandle = [node handle];
     
-    if ([self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]]) {
-        cell.thumbnailImageView.layer.borderColor = [[UIColor mnz_redD90007] CGColor];
-        cell.thumbnailImageView.layer.borderWidth = 3.0;
-        [cell.thumbnailImageView.layer setOpacity:0.6];
-    } else {
-        cell.thumbnailImageView.layer.borderColor = nil;
-        cell.thumbnailImageView.layer.borderWidth = 0.0;
-        [cell.thumbnailImageView.layer setOpacity:1.0];
+    cell.thumbnailSelectionOverlayView.layer.borderColor = [[UIColor mnz_redFF333A] CGColor];
+    cell.thumbnailSelectionOverlayView.layer.borderWidth = 2.0;
+    cell.thumbnailSelectionOverlayView.hidden = [self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]] == nil;
+
+    if (node.name.mnz_videoPathExtension) {
+        cell.thumbnailVideoDurationLabel.text = [NSString mnz_stringFromTimeInterval:node.duration];
     }
     
     if (@available(iOS 11.0, *)) {
@@ -534,18 +531,9 @@
         
         NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
         NSString *month = [[dict allKeys] objectAtIndex:0];
-        
-        NSString *itemsPerMonth = nil;
-        NSInteger numberPhotosPerMonth = [[dict objectForKey:month] count];
-        if ( numberPhotosPerMonth > 1) {
-            itemsPerMonth = [NSString stringWithFormat:AMLocalizedString(@"photosPerMonth", @"Number of photos by section"), numberPhotosPerMonth];
-        } else {
-            itemsPerMonth = [NSString stringWithFormat:AMLocalizedString(@"photoPerMonth", @"Number of photos by section"), numberPhotosPerMonth];
-        }
-        
+                
         NSString *dateString = [NSString stringWithFormat:@"%@", month];
         [headerView.dateLabel setText:dateString];
-        [headerView.itemsLabel setText:itemsPerMonth];
         
         return headerView;
     } else {
