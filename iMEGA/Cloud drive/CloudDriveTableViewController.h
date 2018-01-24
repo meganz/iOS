@@ -12,6 +12,7 @@ typedef NS_ENUM (NSInteger, DisplayMode) {
 @property (nonatomic, strong) MEGANode *parentNode;
 @property (nonatomic, strong) MEGAUser *user;
 @property (nonatomic) DisplayMode displayMode;
+@property (nonatomic, getter=isIncomingShareChildView) BOOL incomingShareChildView;
 @property (nonatomic) BOOL homeQuickActionSearch;
 
 - (void)activateSearch;
