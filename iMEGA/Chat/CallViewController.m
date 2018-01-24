@@ -97,6 +97,7 @@
     [[UIDevice currentDevice] setProximityMonitoringEnabled:YES];    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSessionRouteChange:) name:AVAudioSessionRouteChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sensorStateMonitor:) name:UIDeviceProximityStateDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rotated) name:UIDeviceOrientationDidChangeNotification object:nil];
     
     self.nameLabel.text = [self.chatRoom peerFullnameAtIndex:0];
     
@@ -133,8 +134,16 @@
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+- (void)rotated {
+    if (self.call.hasLocalVideo) {
+        if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
+            [self.localVideoImageView rotateToLandscape];
+        }
+        
+        if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
+            [self.localVideoImageView rotateToPortrait];
+        }
+    }
 }
 
 #pragma mark - Status bar

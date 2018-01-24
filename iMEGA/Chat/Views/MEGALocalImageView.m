@@ -55,7 +55,28 @@ static const CGFloat BOTTOM_HEIGHT = 123;
             self.corner = CornerTopLeft;
         }
     }
+
+    CGPoint point = [self startingPointOrientationDidChanage:NO];
+    self.frame = CGRectMake(point.x, point.y, self.frame.size.width, self.frame.size.height);
+    [UIView commitAnimations];
     
+}
+
+- (void)rotateToLandscape {
+    CGPoint point = [self startingPointOrientationDidChanage:YES];
+    [UIView animateWithDuration:0.5f animations:^{
+        self.frame = CGRectMake(point.x, point.y, 160, 120);
+    }];
+}
+
+- (void)rotateToPortrait {
+    CGPoint point = [self startingPointOrientationDidChanage:YES];
+    [UIView animateWithDuration:0.5f animations:^{
+        self.frame = CGRectMake(point.x, point.y, 120, 160);
+    }];
+}
+
+- (CGFloat)variableHeightMargin {
     CGFloat variableHeightMargin = FIXED_MARGIN;
     if (self.areControlsVisible) {
         if (self.corner == CornerTopLeft || self.corner == CornerTopRight) {
@@ -68,28 +89,53 @@ static const CGFloat BOTTOM_HEIGHT = 123;
             variableHeightMargin += (TOP_HEIGHT - 40);
         }
     }
+    return variableHeightMargin;
+}
+
+- (CGPoint)startingPointOrientationDidChanage:(BOOL)orientationDidChange {
+    CGFloat variableHeightMargin = [self variableHeightMargin];
+    CGFloat x,y;
     
     switch (self.corner) {
         case CornerTopLeft:
-            self.frame = CGRectMake(FIXED_MARGIN, variableHeightMargin, self.frame.size.width, self.frame.size.height);
+            x = FIXED_MARGIN;
+            y = variableHeightMargin;
             break;
         case CornerTopRight:
-            self.frame = CGRectMake(self.superview.frame.size.width - self.frame.size.width - FIXED_MARGIN, variableHeightMargin, self.frame.size.width, self.frame.size.height);
+            if (orientationDidChange) {
+                x = self.superview.frame.size.width - self.frame.size.height - FIXED_MARGIN;
+            } else {
+                x = self.superview.frame.size.width - self.frame.size.width - FIXED_MARGIN;
+            }
+            y = variableHeightMargin;
             break;
             
         case CornerBottonLeft:
-            self.frame = CGRectMake(FIXED_MARGIN, self.superview.frame.size.height - self.frame.size.height - variableHeightMargin, self.frame.size.width, self.frame.size.height);
+            x = FIXED_MARGIN;
+            if (orientationDidChange) {
+                y = self.superview.frame.size.height - self.frame.size.width - variableHeightMargin;
+            } else {
+                y = self.superview.frame.size.height - self.frame.size.height - variableHeightMargin;
+            }
             break;
             
         case CornerBottonRight:
-            self.frame = CGRectMake(self.superview.frame.size.width - self.frame.size.width - FIXED_MARGIN, self.superview.frame.size.height - self.frame.size.height - variableHeightMargin, self.frame.size.width, self.frame.size.height);
+            if (orientationDidChange) {
+                x = self.superview.frame.size.width - self.frame.size.height - FIXED_MARGIN;
+                y = self.superview.frame.size.height - self.frame.size.width - variableHeightMargin;
+            } else {
+                x = self.superview.frame.size.width - self.frame.size.width - FIXED_MARGIN;
+                y = self.superview.frame.size.height - self.frame.size.height - variableHeightMargin;
+                
+            }
             break;
             
         default:
             break;
     }
-    [UIView commitAnimations];
     
+    CGPoint point = CGPointMake(x, y);
+    return point;
 }
 
 #pragma mark - MEGAChatVideoDelegate
