@@ -373,6 +373,11 @@
 }
 
 - (void)updateCell:(ChatRoomCell *)cell forChatListItem:(MEGAChatListItem *)item {
+    NSString *senderString;
+    if(item.isGroup && item.lastMessageSender != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
+        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
+        senderString = [chatRoom peerFullnameByHandle:item.lastMessageSender];
+    }
     switch (item.lastMessageType) {
         case MEGAChatMessageTypeInvalid: {
             cell.chatLastMessage.text = AMLocalizedString(@"noConversationHistory", @"Information if there are no history messages in current chat conversation");
@@ -390,7 +395,7 @@
                 lastMessageString = AMLocalizedString(@"attachedXFiles", @"A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files.");
                 lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", componentsArray.count]];
             }
-            cell.chatLastMessage.text = lastMessageString;
+            cell.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, lastMessageString] : lastMessageString;
             cell.chatLastTime.hidden = NO;
             cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
             break;
@@ -406,14 +411,14 @@
                 lastMessageString = AMLocalizedString(@"sentXContacts", @"A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent.");
                 lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", componentsArray.count]];
             }
-            cell.chatLastMessage.text = lastMessageString;
+            cell.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, lastMessageString] : lastMessageString;
             cell.chatLastTime.hidden = NO;
             cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
             break;
         }
             
         default: {
-            cell.chatLastMessage.text = item.lastMessage;
+            cell.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, item.lastMessage] : item.lastMessage;
             cell.chatLastTime.hidden = NO;
             cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
             break;
