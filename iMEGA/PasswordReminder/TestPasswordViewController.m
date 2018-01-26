@@ -12,6 +12,9 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButton;
 @property (weak, nonatomic) IBOutlet PasswordView *passwordView;
 @property (weak, nonatomic) IBOutlet UIView *wrongPasswordView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionLabelHeightConstraint;
+
+@property (assign, nonatomic) float descriptionLabelHeight;
 
 @end
 
@@ -24,13 +27,24 @@
     // Do any additional setup after loading the view.
     [self configureUI];
     [self resetUI];
+    self.descriptionLabelHeight = self.descriptionLabelHeightConstraint.constant;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShow:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidHide:)
+                                                 name:UIKeyboardDidHideNotification
+                                               object:nil];
 }
 
 #pragma mark - IBActions
 
 - (IBAction)tapConfirm:(id)sender {
     [self.passwordView hideKeyboard];
-    //TODO: call sdk to test password
+    //TODO: call sdk to test password, next line is just for testing
     [self passwordTestSuccess];
 }
 
@@ -85,6 +99,18 @@
     [self.confirmButton setTitleColor:[UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1.0] forState:UIControlStateNormal];
     [self.wrongPasswordView setHidden:YES];
     [self.passwordView passwordTextFieldColor:[UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1.0]];
+}
+
+- (void)keyboardDidShow: (NSNotification *) notif{
+    if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation) && (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)) {
+        self.descriptionLabelHeightConstraint.constant = 0;
+    }
+}
+
+- (void)keyboardDidHide: (NSNotification *) notif{
+    if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation) && (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)) {
+        self.descriptionLabelHeightConstraint.constant = self.descriptionLabelHeight;
+    }
 }
 
 #pragma mark - PasswordViewDelegate
