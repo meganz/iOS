@@ -2003,9 +2003,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                                 [api cancelTransfer:transfer];
                             } else {
                                 MEGALogInfo(@"Camera Upload should be delayed");
-                                MEGALogInfo(@"Set badge value to %@", transfer.appData);
                                 [CameraUploads syncManager].shouldCameraUploadsBeDelayed = YES;
-                                [[CameraUploads syncManager] setBadgeValue:transfer.appData];
                             }
                         } else {
                             [api cancelTransfer:transfer];

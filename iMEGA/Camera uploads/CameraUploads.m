@@ -66,8 +66,6 @@ static CameraUploads *instance = nil;
     self.assetsOperationQueue.qualityOfService = NSOperationQualityOfServiceUtility;
     self.assetsOperationQueue.maxConcurrentOperationCount = 1;
     
-    [self setBadgeValue:nil];
-    
     if (_isCameraUploadsEnabled) {
         if (_isUseCellularConnectionEnabled || [MEGAReachabilityManager isReachableViaWiFi]) {
             MEGALogInfo(@"Enable Camera Uploads");
@@ -188,23 +186,7 @@ static CameraUploads *instance = nil;
     }];
     
     MEGALogInfo(@"Assets in the operation queue %ld", _assetsOperationQueue.operationCount);
-    
-    [self setBadgeValue:[NSString stringWithFormat:@"%ld", [self.assetsOperationQueue operationCount]]];
 }
-
-#pragma mark - Utils
-
-- (void)setBadgeValue:(NSString *)value {
-    if (![value boolValue]) {
-        value = nil;
-    }
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSInteger cameraUploadsTabPosition = 1;
-        [[self.tabBarController.viewControllers objectAtIndex:cameraUploadsTabPosition] tabBarItem].badgeValue = value;
-    });
-}
-
 
 #pragma mark - UIAlertViewDelegate
 
