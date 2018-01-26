@@ -32,26 +32,19 @@
 @property (nonatomic, strong) NSMutableArray *photosByMonthYearArray;
 @property (nonatomic, strong) NSMutableArray *previewsArray;
 
-@property (weak, nonatomic) IBOutlet UICollectionView *photosCollectionView;
-
 @property (nonatomic) CGSize sizeForItem;
 @property (nonatomic) CGFloat portraitThumbnailSize;
 @property (nonatomic) CGFloat landscapeThumbnailSize;
 
-@property (weak, nonatomic) IBOutlet UIView *uploadProgressView;
-@property (weak, nonatomic) IBOutlet UILabel *photoNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *speedLabel;
-@property (weak, nonatomic) IBOutlet UIProgressView *progressView;
-@property (weak, nonatomic) IBOutlet UILabel *transferredBytesLabel;
-@property (weak, nonatomic) IBOutlet UILabel *totalBytesLabel;
-
-@property (weak, nonatomic) IBOutlet UIButton *enableCameraUploadsButton;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *uploadProgressViewTopLayoutConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *photosCollectionViewTopLayoutConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *photosCollectionViewBottonLayoutConstraint;
-
 @property (nonatomic, strong) NSMutableDictionary *selectedItemsDictionary;
+
+@property (weak, nonatomic) IBOutlet UIView *stateView;
+@property (weak, nonatomic) IBOutlet UIButton *toggleCameraUploadsButton;
+@property (weak, nonatomic) IBOutlet UIProgressView *photosUploadedProgressView;
+@property (weak, nonatomic) IBOutlet UILabel *photosUploadedLabel;
+@property (weak, nonatomic) IBOutlet UILabel *stateLabel;
+
+@property (weak, nonatomic) IBOutlet UICollectionView *photosCollectionView;
 
 @property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
@@ -59,8 +52,11 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *carbonCopyBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
-
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
+
+@property (nonatomic) MEGACameraUploadsState currentState;
+@property (nonatomic) NSUInteger totalPhotosUploading;
+@property (nonatomic) NSUInteger currentPhotosUploaded;
 
 @end
 
@@ -99,8 +95,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
     [self setEditing:NO animated:NO];
-    
-    [self.enableCameraUploadsButton setTitle:AMLocalizedString(@"enableCameraUploadsButton", @"Enable Camera Uploads") forState:UIControlStateNormal];
     
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
@@ -158,6 +152,59 @@
     }
 }
 
+- (void)setCurrentState:(MEGACameraUploadsState)currentState {
+    switch (currentState) {
+        case MEGACameraUploadsStateDisabled:
+            self.stateView.hidden = NO;
+            self.photosUploadedProgressView.hidden = YES;
+            self.photosUploadedLabel.hidden = YES;
+            self.stateLabel.hidden = NO;
+            self.stateLabel.text = AMLocalizedString(@"enableCameraUploadsButton", nil);
+            [self.toggleCameraUploadsButton setTitle:AMLocalizedString(@"enable", nil) forState:UIControlStateNormal];
+            self.toggleCameraUploadsButton.hidden = NO;
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            break;
+            
+        case MEGACameraUploadsStateUploading:
+            self.stateView.hidden = NO;
+            self.photosUploadedProgressView.hidden = NO;
+            self.photosUploadedLabel.hidden = NO;
+            self.stateLabel.hidden = YES;
+            [self.toggleCameraUploadsButton setTitle:AMLocalizedString(@"disable", @"Text button shown when an option is enabled, to allow to disable it. String as sort as possible.") forState:UIControlStateNormal];
+            self.toggleCameraUploadsButton.hidden = NO;
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+            break;
+            
+        case MEGACameraUploadsStateCompleted:
+            self.stateView.hidden = NO;
+            self.photosUploadedProgressView.hidden = YES;
+            self.photosUploadedLabel.hidden = YES;
+            self.stateLabel.hidden = NO;
+            self.stateLabel.text = AMLocalizedString(@"cameraUploadsComplete", @"Message shown when the camera uploads have been completed");
+            [self.toggleCameraUploadsButton setTitle:AMLocalizedString(@"disable", @"Text button shown when an option is enabled, to allow to disable it. String as sort as possible.") forState:UIControlStateNormal];
+            self.toggleCameraUploadsButton.hidden = NO;
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            break;
+            
+        case MEGACameraUploadsStateDisconnected:
+            self.stateView.hidden = NO;
+            self.photosUploadedProgressView.hidden = YES;
+            self.photosUploadedLabel.hidden = YES;
+            self.stateLabel.hidden = NO;
+            self.stateLabel.text = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+            self.toggleCameraUploadsButton.hidden = YES;
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            break;
+            
+        case MEGACameraUploadsStateEmpty:
+            self.stateView.hidden = YES;
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            break;
+    }
+    
+    _currentState = currentState;
+}
+
 #pragma mark - Private
 
 - (void)reloadUI {
@@ -207,46 +254,22 @@
     [self.photosCollectionView reloadData];
     
     if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        [self.enableCameraUploadsButton setHidden:YES];
-        [self.enableCameraUploadsButton setFrame:CGRectMake(0, 0, 0, 0)];
-        
-        self.photosCollectionViewBottonLayoutConstraint.constant = -49;
+        if (self.currentState != MEGACameraUploadsStateUploading) {
+            self.currentState = MEGACameraUploadsStateCompleted;
+        }
     } else {
         if ([self.photosByMonthYearArray count] == 0) {
-            [self.enableCameraUploadsButton setHidden:YES];
+            self.currentState = MEGACameraUploadsStateEmpty;
         } else {
-            [self.enableCameraUploadsButton setHidden:NO];
+            self.currentState = MEGACameraUploadsStateDisabled;
         }
-        
-        self.uploadProgressViewTopLayoutConstraint.constant = -60;
-        self.photosCollectionViewTopLayoutConstraint.constant = 0;
-        self.photosCollectionViewBottonLayoutConstraint.constant = 0;
     }
     
     if ([self.photosCollectionView allowsMultipleSelection]) {
-        [self.navigationItem setTitle:AMLocalizedString(@"selectTitle", @"Select items")];
+        self.navigationItem.title = AMLocalizedString(@"selectTitle", @"Select items");
     } else {
         self.navigationItem.title = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
     }
-    
-}
-
-- (void)showProgressView {
-    [UIView animateWithDuration:1 animations:^{
-        self.uploadProgressViewTopLayoutConstraint.constant = 0;
-        self.photosCollectionViewTopLayoutConstraint.constant = 60;
-        
-        [self.view layoutIfNeeded];
-    }];
-}
-
-- (void)hideProgressView {
-    [UIView animateWithDuration:1 animations:^{
-        self.uploadProgressViewTopLayoutConstraint.constant = -60;
-        self.photosCollectionViewTopLayoutConstraint.constant = 0;
-        
-        [self.view layoutIfNeeded];
-    }];
 }
 
 - (void)internetConnectionChanged {
@@ -254,7 +277,7 @@
     
     if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
         if (![MEGAReachabilityManager isReachable]) {
-            [self hideProgressView];
+            self.currentState = MEGACameraUploadsStateDisconnected;
         }
     }
 }
@@ -263,7 +286,7 @@
     [self.editButtonItem setEnabled:boolValue];
 }
 
-- (void)enableCameraUploadsAndShowItsSettings {
+- (void)pushCameraUploadSettings {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
     CameraUploadsTableViewController *cameraUploadsTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"CameraUploadsSettingsID"];
     [self.navigationController pushViewController:cameraUploadsTableViewController animated:YES];
@@ -327,10 +350,33 @@
     self.sizeForItem = CGSizeMake(minimumThumbnailSize, minimumThumbnailSize);
 }
 
+- (void)updateProgressData {
+    if ([CameraUploads syncManager].assetsOperationQueue.operationCount > 0) {
+        self.totalPhotosUploading = [CameraUploads syncManager].assetsOperationQueue.operationCount + self.currentPhotosUploaded;
+        [self updateProgressUI];
+        self.currentState = MEGACameraUploadsStateUploading;
+    }
+}
+
+- (void)updateProgressUI {
+    self.photosUploadedProgressView.progress = (float)((float)self.currentPhotosUploaded/(float)self.totalPhotosUploading);
+
+    NSString *progressText;
+    if (self.totalPhotosUploading == 1) {
+        progressText = AMLocalizedString(@"cameraUploadsUploadingFile", @"Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file.");
+    } else {
+        progressText = AMLocalizedString(@"cameraUploadsUploadingFiles", @"Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files.");
+    }
+    progressText = [progressText stringByReplacingOccurrencesOfString:@"%1$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.currentPhotosUploaded]];
+    progressText = [progressText stringByReplacingOccurrencesOfString:@"%2$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.totalPhotosUploading]];
+    
+    self.photosUploadedLabel.text = progressText;
+}
+
 #pragma mark - IBAction
 
 - (IBAction)enableCameraUploadsTouchUpInside:(UIButton *)sender {
-    [self enableCameraUploadsAndShowItsSettings];
+    [self pushCameraUploadSettings];
 }
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -814,7 +860,7 @@
 #pragma mark - DZNEmptyDataSetDelegate Methods
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
-    [self enableCameraUploadsAndShowItsSettings];
+    [self pushCameraUploadSettings];
 }
 
 #pragma mark - MEGARequestDelegate
@@ -848,23 +894,22 @@
 
 #pragma mark - MEGATransferDelegate
 
+- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+    [self updateProgressData];
+}
+
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if ([transfer type] == MEGATransferTypeUpload) {
-        if (self.uploadProgressViewTopLayoutConstraint.constant == -60) {
-            [self showProgressView];
-        }
-        [self.photoNameLabel setText:[transfer fileName]];
-        float percentage = [[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue];
-        [self.transferredBytesLabel setText:[NSByteCountFormatter stringFromByteCount:[[transfer transferredBytes] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory]];
-        [self.totalBytesLabel setText:[NSByteCountFormatter stringFromByteCount:[[transfer totalBytes] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory]];
-        [self.speedLabel setText:[NSString stringWithFormat:@"%@/s", [NSByteCountFormatter stringFromByteCount:[[transfer speed] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory]]];
-        [self.progressView setProgress:percentage];
-    }
+    [self updateProgressData];
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if ([[[CameraUploads syncManager] assetsOperationQueue] operationCount] == 1) {
-        [self hideProgressView];
+    if ([CameraUploads syncManager].assetsOperationQueue.operationCount == 1) {
+        self.totalPhotosUploading = 0;
+        self.currentPhotosUploaded = 0;
+        self.currentState = MEGACameraUploadsStateCompleted;
+    } else {
+        self.currentPhotosUploaded++;
+        [self updateProgressUI];
     }
 }
 
