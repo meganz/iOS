@@ -29,7 +29,11 @@
 
 - (IBAction)tapToggleSecureTextEntry:(id)sender {
     self.passwordTextField.secureTextEntry = !self.passwordTextField.secureTextEntry;
-    //TODO:set eye image color to red if not secure text entry
+    if (self.passwordTextField.secureTextEntry) {
+        [self.rightImageView setImage:[UIImage imageNamed:@"showHidePassword"] forState:UIControlStateNormal];
+    } else {
+        [self.rightImageView setImage:[UIImage imageNamed:@"showHidePassword_active"] forState:UIControlStateNormal];
+    }
 }
 
 #pragma mark - Public
@@ -40,6 +44,10 @@
 
 - (void)hideKeyboard {
     [self.passwordTextField resignFirstResponder];
+}
+
+- (BOOL)isFirstResponder {
+    return [self.passwordTextField isFirstResponder];
 }
 
 #pragma mark - UITextFieldDelegate

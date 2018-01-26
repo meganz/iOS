@@ -19,5 +19,6 @@
 
 - (void)passwordTextFieldColor:(UIColor *)color;
 - (void)hideKeyboard;
+- (BOOL)isFirstResponder;
 
 @end
