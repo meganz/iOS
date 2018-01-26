@@ -466,6 +466,12 @@
 "enableCameraUploadsButton"="Enable Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Camera Uploads enabled";
+/* Message shown when the camera uploads have been completed */
+"cameraUploadsComplete"="Camera uploads complete";
+/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
+"cameraUploadsUploadingFile"="Uploading %1$d of %2$d file";
+/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
+"cameraUploadsUploadingFiles"="Uploading %1$d of %2$d files";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu item selected";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -1032,6 +1038,8 @@
 "chatIsDisabled"="Chat is disabled";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Enable";
+/* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
+"disable"="Disable";
 /* Conversations section */
 "conversations"="Conversations";
 /* A button on a dialog which invites a contact to join MEGA. */
