@@ -528,7 +528,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                         }                        
                     } else {
                         MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
-                        MEGALogDebug(@"Chat %@ connection state: %@", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], chatConnection ? @"Online" : @"Offline");
+                        MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
                         if (chatConnection == MEGAChatConnectionOnline) {
                             [DevicePermissionsHelper audioPermissionWithCompletionHandler:^(BOOL granted) {
                                 if (granted) {
@@ -556,7 +556,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
                         self.chatRoom = chatRoom;
                         MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
-                        MEGALogDebug(@"Chat %@ connection state: %@", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], chatConnection ? @"Online" : @"Offline");
+                        MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
                         if (chatConnection == MEGAChatConnectionOnline) {
                             [self performCall];
                         }
@@ -2484,7 +2484,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
-    MEGALogInfo(@"onChatConnectionStateUpdate: %@, new state: %@", [MEGASdk base64HandleForUserHandle:chatId], newState ? @"Online" : @"Offline");
+    MEGALogInfo(@"onChatConnectionStateUpdate: %@, new state: %d", [MEGASdk base64HandleForUserHandle:chatId], newState);
     if (self.chatRoom.chatId == chatId && newState == MEGAChatConnectionOnline) {
         [self performCall];
     }
