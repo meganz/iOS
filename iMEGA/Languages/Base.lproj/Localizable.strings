@@ -1317,3 +1317,15 @@
 "missedAudioCallsAndMissedVideoCall"="[A] missed audio calls and missed video call";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
 "missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";
+/* Title for Remind Password View, inviting user to test password */
+"remindPasswordTitle"="Do you remember your password?";
+/* Text for Remind Password View, explainig why user should test password */
+"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+/* Text for don't show again Remind Password View option */
+"dontShowAgain"="Don’t show me again";
+/* Label for test password button and titles */
+"testPassword"="Test Password";
+/* Label for recovery key button */
+"backupRecoveryKey"="Backup Recovery Key";
+/* Text to describe why user should test password */
+"testPasswordText"="Please test your password below to ensure you remember it. If you lose your password, you will lose access to your data.";

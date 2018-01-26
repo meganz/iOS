@@ -25,6 +25,7 @@
     [self addSubview:self.customView];
     self.customView.frame = self.bounds;
     self.passwordTextField.delegate = self;
+    [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password")];
 }
 
 - (IBAction)tapToggleSecureTextEntry:(id)sender {

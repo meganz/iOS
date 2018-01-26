@@ -76,9 +76,13 @@
 #pragma mark - Private
 
 - (void)configureUI {
-    self.title = @"Test Password";
+    self.title = AMLocalizedString(@"testPassword", @"Label for test password button");
     self.confirmButton.layer.borderWidth = 2.0;
     self.confirmButton.layer.borderColor = [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1.0].CGColor;
+    [self.confirmButton setTitle:AMLocalizedString(@"confirm", @"Title text for the account confirmation.") forState:UIControlStateNormal];
+    [self.backupKeyButton setTitle:AMLocalizedString(@"backupRecoveryKey", @"Label for recovery key button") forState:UIControlStateNormal];
+    [self.closeBarButton setTitle:AMLocalizedString(@"close", @"A button label.")];
+    self.descriptionLabel.text = AMLocalizedString(@"testPasswordText", @"Text to describe why user should test password");
 }
 
 - (void)passwordTestFailed {
