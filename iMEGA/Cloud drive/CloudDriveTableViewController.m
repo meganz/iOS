@@ -107,7 +107,8 @@
     
     [self setNavigationBarButtonItems];
     [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];
-    
+    self.toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
             if (!self.parentNode) {
