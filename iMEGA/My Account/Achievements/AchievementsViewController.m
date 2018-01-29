@@ -56,6 +56,14 @@
     self.transferQuotaLabel.text = AMLocalizedString(@"transferQuota", @"The header/title of a block/section which contains information about the user's used/available transfer allowance for their account.");
     
     [[MEGASdkManager sharedMEGASdk] getAccountAchievementsWithDelegate:self];
+    
+    if (self.enableCloseBarButton) { //For modal presentations
+        UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"skipButton", @"Button title that skips the current action")
+                                                                           style:UIBarButtonItemStyleDone
+                                                                          target:self
+                                                                          action:@selector(dismissViewController)];
+        self.navigationItem.rightBarButtonItem = rightButtonItem;
+    }
 }
 
 #pragma mark - Private
@@ -137,6 +145,10 @@
     inviteFriendsViewController.inviteYourFriendsSubtitleString = self.inviteYourFriendsSubtitleLabel.text;
     
     [self.navigationController pushViewController:inviteFriendsViewController animated:YES];
+}
+
+- (void)dismissViewController {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource
