@@ -62,17 +62,10 @@ static const CGFloat BOTTOM_HEIGHT = 123;
     
 }
 
-- (void)rotateToLandscape {
+- (void)rotate {
     CGPoint point = [self startingPointOrientationDidChanage:YES];
     [UIView animateWithDuration:0.5f animations:^{
-        self.frame = CGRectMake(point.x, point.y, 160, 120);
-    }];
-}
-
-- (void)rotateToPortrait {
-    CGPoint point = [self startingPointOrientationDidChanage:YES];
-    [UIView animateWithDuration:0.5f animations:^{
-        self.frame = CGRectMake(point.x, point.y, 120, 160);
+        self.frame = CGRectMake(point.x, point.y, self.frame.size.height, self.frame.size.width);
     }];
 }
 

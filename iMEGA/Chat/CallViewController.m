@@ -39,6 +39,8 @@
 
 @property (strong, nonatomic) AVAudioPlayer *player;
 
+@property (nonatomic, getter=isInPortrait) BOOL inPortrait;
+
 @end
 
 @implementation CallViewController
@@ -120,6 +122,8 @@
         [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideoDelegate:self.localVideoImageView];
     }
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+    
+    _inPortrait = UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation]) ? YES : NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -132,18 +136,6 @@
     [[UIDevice currentDevice] setProximityMonitoringEnabled:NO];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
-}
-
-- (void)rotated {
-    if (self.call.hasLocalVideo) {
-        if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
-            [self.localVideoImageView rotateToLandscape];
-        }
-        
-        if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
-            [self.localVideoImageView rotateToPortrait];
-        }
-    }
 }
 
 #pragma mark - Status bar
@@ -240,6 +232,22 @@
          
         [self.view layoutIfNeeded];
     }];
+}
+
+- (void)rotated {
+    if (self.call.hasLocalVideo) {
+        if (self.isInPortrait) {
+            if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
+                self.inPortrait = NO;
+                [self.localVideoImageView rotate];
+            }
+        } else {
+            if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
+                self.inPortrait = YES;
+                [self.localVideoImageView rotate];
+            }
+        }
+    }
 }
 
 #pragma mark - IBActions

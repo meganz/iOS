@@ -15,7 +15,6 @@ typedef NS_ENUM(NSUInteger, Corner) {
 @property (nonatomic) Corner corner;
 @property (nonatomic, setter=setVisibleControls:, getter=areControlsVisible) BOOL visibleControls;
 
-- (void)rotateToLandscape;
-- (void)rotateToPortrait;
+- (void)rotate;
 
 @end
