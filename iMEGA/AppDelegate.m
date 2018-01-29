@@ -2527,6 +2527,9 @@ void uncaughtExceptionHandler(NSException *exception) {
         customModalAlertVC.detail = AMLocalizedString(@"depletedTransferQuota_message", @"Description shown when you almost had used your available transfer quota.");
         customModalAlertVC.action = AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
         customModalAlertVC.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+        if ([[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
+            customModalAlertVC.bonus = AMLocalizedString(@"getBonus", @"Button title to see the available bonus");
+        }
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
         customModalAlertVC.completion = ^{
             [weakCustom dismissViewControllerAnimated:YES completion:^{
