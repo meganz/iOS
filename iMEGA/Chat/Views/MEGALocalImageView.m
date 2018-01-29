@@ -29,7 +29,7 @@ static const CGFloat BOTTOM_HEIGHT = 123;
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView:self.superview];
     [UIView beginAnimations:@"Dragging" context:nil];
-    self.frame = CGRectMake(location.x - self.offset.x, location.y - self.offset.y, self.frame.size.width, self.frame.size.height);
+    self.center = CGPointMake(location.x - self.offset.x + self.frame.size.width / 2, location.y - self.offset.y + self.frame.size.height / 2);
     [UIView commitAnimations];
 }
 
@@ -57,7 +57,7 @@ static const CGFloat BOTTOM_HEIGHT = 123;
     }
 
     CGPoint point = [self startingPointOrientationDidChanage:NO];
-    self.frame = CGRectMake(point.x, point.y, self.frame.size.width, self.frame.size.height);
+    self.center = CGPointMake(point.x + self.frame.size.width / 2, point.y + self.frame.size.height / 2);
     [UIView commitAnimations];
     
 }
