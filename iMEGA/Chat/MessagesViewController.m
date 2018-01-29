@@ -710,26 +710,34 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     }
     
     MEGAChatMessage *message;
-    if (!self.editMessage) {
+    if (self.editMessage) {
+        if ([self.editMessage.text isEqualToString:self.inputToolbar.contentView.textView.text]) {
+            //If the user didn't change anything on the message that was editing, just go out of edit mode.
+        } else {
+            message = [[MEGASdkManager sharedMEGAChatSdk] editMessageForChat:self.chatRoom.chatId messageId:self.editMessage.messageId message:text];
+            message.chatRoom = self.chatRoom;
+            NSUInteger index = [self.messages indexOfObject:self.editMessage];
+            if (index != NSNotFound) {
+                [self.messages replaceObjectAtIndex:index withObject:message];
+                [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
+            }
+        }
+        
+        self.automaticallyScrollsToMostRecentMessage = NO;
+        
+        self.editMessage = nil;
+    } else {
         message = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:text];
         message.chatRoom = self.chatRoom;
         [self.messages addObject:message];
         [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];
-    } else {
-        message = [[MEGASdkManager sharedMEGAChatSdk] editMessageForChat:self.chatRoom.chatId messageId:self.editMessage.messageId message:text];
-        message.chatRoom = self.chatRoom;
-        NSUInteger index = [self.messages indexOfObject:self.editMessage];
-        if (index != NSNotFound) {
-            [self.messages replaceObjectAtIndex:index withObject:message];
-            [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
-        }
-        self.editMessage = nil;
+        
+        self.automaticallyScrollsToMostRecentMessage = YES;
     }
     
     MEGALogInfo(@"didPressSendButton %@", message);
     
     [self finishSendingMessageAnimated:YES];
-    [self scrollToBottomAnimated:YES];
 }
 
 - (void)messagesInputToolbar:(MEGAInputToolbar *)toolbar didPressSendButton:(UIButton *)sender toAttachAssets:(NSArray<PHAsset *> *)assets {
