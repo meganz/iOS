@@ -21,6 +21,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomModalAlertViewController">
             <connections>
                 <outlet property="actionButton" destination="RVu-6u-5sa" id="gji-p3-kqw"/>
+                <outlet property="alphaView" destination="9or-B3-Uwe" id="qpS-9D-s6I"/>
                 <outlet property="bonusButton" destination="3Tk-m3-ghO" id="hHc-8Q-XNs"/>
                 <outlet property="detailLabel" destination="KXA-VS-o9F" id="Eng-gX-Ta8"/>
                 <outlet property="dismissButton" destination="9dp-dd-BzY" id="xT4-l8-g4A"/>
@@ -34,7 +35,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view alpha="0.46999999999999997" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9or-B3-Uwe">
+                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9or-B3-Uwe">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 </view>

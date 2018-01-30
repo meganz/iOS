@@ -12,6 +12,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *actionButton;
 @property (weak, nonatomic) IBOutlet UIButton *dismissButton;
 @property (weak, nonatomic) IBOutlet UIButton *bonusButton;
+@property (weak, nonatomic) IBOutlet UIView *alphaView;
 
 @end
 
@@ -50,22 +51,55 @@
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self fadeInBackgroundCompletion:nil];
+}
+
+#pragma mark - Private
+
+- (void)fadeInBackgroundCompletion:(void (^ __nullable)(BOOL finished))completion {
+    [UIView animateWithDuration:.2 animations:^{
+        [self.alphaView setAlpha:0.5];
+    } completion:^(BOOL finished) {
+        if (completion) {
+            completion(YES);
+        }
+    }];
+}
+
+- (void)fadeOutBackgroundCompletion:(void (^ __nullable)(BOOL finished))completion {
+    [UIView animateWithDuration:.2 animations:^{
+        [self.alphaView setAlpha:.0];
+    } completion:^(BOOL finished) {
+        if (completion) {
+            completion(YES);
+        }
+    }];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)actionTouchUpInside:(UIButton *)sender {
-    if (self.completion) self.completion();
+    [self fadeOutBackgroundCompletion:^(BOOL finished) {
+        if (self.completion) self.completion();
+    }];
 }
 
 - (IBAction)dismissTouchUpInside:(UIButton *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self fadeOutBackgroundCompletion:^(BOOL finished) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
 }
 
 - (IBAction)bonusTouchUpInside:(UIButton *)sender {
-    [self dismissViewControllerAnimated:YES completion:^{
-        AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
-        achievementsVC.enableCloseBarButton = YES;
-        UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:achievementsVC];
-        [[UIApplication mnz_visibleViewController] presentViewController:navigation animated:YES completion:nil];
+    [self fadeOutBackgroundCompletion:^(BOOL finished) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
+            achievementsVC.enableCloseBarButton = YES;
+            UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:achievementsVC];
+            [[UIApplication mnz_visibleViewController] presentViewController:navigation animated:YES completion:nil];
+        }];
     }];
 }
 
