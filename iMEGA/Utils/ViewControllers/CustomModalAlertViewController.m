@@ -48,7 +48,9 @@
         self.dismissButton.hidden = YES;
     }
     
-    if (!self.bonus) {
+    if (self.bonus) {
+        [self.bonusButton setTitle:self.bonus forState:UIControlStateNormal];
+    } else {
         self.bonusButton.hidden = YES;
     }
 }
