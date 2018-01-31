@@ -711,7 +711,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     MEGAChatMessage *message;
     if (self.editMessage) {
-        if ([self.editMessage.text isEqualToString:self.inputToolbar.contentView.textView.text]) {
+        if ([self.editMessage.content isEqualToString:self.inputToolbar.contentView.textView.text]) {
             //If the user didn't change anything on the message that was editing, just go out of edit mode.
         } else {
             message = [[MEGASdkManager sharedMEGAChatSdk] editMessageForChat:self.chatRoom.chatId messageId:self.editMessage.messageId message:text];
@@ -997,23 +997,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     cell.accessoryButton.hidden = YES;
     
-    if (message.isEdited) {
-        [cell.accessoryButton setImage:nil forState:UIControlStateNormal];
-        [cell.accessoryButton setAttributedTitle:[[NSAttributedString alloc] initWithString:AMLocalizedString(@"edited", @"A log message in a chat to indicate that the message has been edited by the user.") attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_blue2BA6DE]}] forState:UIControlStateNormal];
-        cell.accessoryButton.hidden = NO;
-        
-        cell.textView.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
-        cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? [UIColor whiteColor] : [UIColor mnz_black333333];
-        if (message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
-            cell.contentView.alpha = 0.7f;
-            if (message.status == MEGAChatMessageStatusSendingManual) {
-                [cell.accessoryButton setImage:[UIImage imageNamed:@"sending_manual"] forState:UIControlStateNormal];
-                cell.accessoryButton.hidden = NO;
-            }
-        } else {
-            cell.contentView.alpha = 1.0f;
-        }
-    } else if (message.isDeleted) {
+    if (message.isDeleted) {
         cell.textView.font = [UIFont mnz_SFUIRegularItalicWithSize:15.0f];
         cell.textView.textColor = [UIColor mnz_blue2BA6DE];
     } else if (message.isManagementMessage) {
@@ -1192,7 +1176,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)edit:(id)sender message:(MEGAChatMessage *)message {
     [self.inputToolbar.contentView.textView becomeFirstResponder];
-    self.inputToolbar.contentView.textView.text = message.text;
+    self.inputToolbar.contentView.textView.text = message.content;
     self.editMessage = message;
 }
 
