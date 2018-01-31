@@ -278,11 +278,17 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             label.attributedText = titleMutableAttributedString;
         }
     } else {
-        NSString *chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+        NSString *chatRoomState;
+        if ([MEGAReachabilityManager isReachable]) {
+            chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+            self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+        } else {
+            chatRoomState = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+            self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:MEGAChatStatusOffline];
+        }
         if (chatRoomState) {
             label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:chatRoomState];
             self.lastChatRoomStateString = chatRoomState;
-            self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
         } else {
             label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:@""];
         }
@@ -686,6 +692,13 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 - (void)internetConnectionChanged {
     self.videoCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
     self.audioCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
+    
+    [self customNavigationBarLabel];
+
+    if (self.openMessageHeaderView) {
+        self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
+        self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
+    }
 }
 
 #pragma mark - Custom menu actions for cells
