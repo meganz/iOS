@@ -42,7 +42,9 @@
     
     [self.actionButton setTitle:self.action forState:UIControlStateNormal];
     
-    if (!self.dismiss) {
+    if (self.dismiss) {
+        [self.dismissButton setTitle:self.dismiss forState:UIControlStateNormal];
+    } else {
         self.dismissButton.hidden = YES;
     }
     
