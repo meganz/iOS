@@ -201,9 +201,20 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
     } else if (self.type == MEGAChatMessageTypeRevokeAttachment) {
         text = @"MEGAChatMessageTypeRevokeAttachment";
     } else {
+        UIColor *textColor = self.userHandle == myHandle ? [UIColor whiteColor] : [UIColor mnz_black333333];
+        
         self.attributedText = [NSAttributedString mnz_attributedStringFromMessage:self.content
                                                                              font:[UIFont mnz_SFUIRegularWithSize:fontSize]
-                                                                            color:self.userHandle == myHandle ? [UIColor whiteColor] : [UIColor mnz_black333333]];
+                                                                            color:textColor];
+        
+        if (self.isEdited) {
+            NSAttributedString *edited = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"edited", @"A log message in a chat to indicate that the message has been edited by the user.") attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularItalicWithSize:12.0f], NSForegroundColorAttributeName:textColor}];
+            NSMutableAttributedString *attributedText = [self.attributedText mutableCopy];
+            [attributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
+            [attributedText appendAttributedString:edited];
+            self.attributedText = attributedText;
+        }
+        
         text = self.attributedText.string;
     }
     return text;
