@@ -35,6 +35,9 @@
 @property (nonatomic, strong) NSMutableDictionary *chatIdIndexPathDictionary;
 
 @property (strong, nonatomic) UISearchController *searchController;
+
+@property (nonatomic) BOOL shouldReorderList;
+
 @end
 
 @implementation ChatRoomsViewController {
@@ -77,6 +80,8 @@
                                                          value:-2
                                                         toDate:[NSDate date]
                                                        options:0];
+    
+    _shouldReorderList = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -91,25 +96,7 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
         self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
         if (self.chatListItemList.size) {
-            for (NSUInteger i = 0; i < self.chatListItemList.size ; i++) {
-                MEGAChatListItem *chatListItem = [self.chatListItemList chatListItemAtIndex:i];
-                [self.chatListItemArray addObject:chatListItem];
-            }
-            
-            self.chatListItemArray = [[self.chatListItemArray sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-                NSDate *first  = [(MEGAChatListItem *)a lastMessageDate];
-                NSDate *second = [(MEGAChatListItem *)b lastMessageDate];
-                
-                if (!first) {
-                    first = [NSDate dateWithTimeIntervalSince1970:0];
-                }
-                
-                if (!second) {
-                    second = [NSDate dateWithTimeIntervalSince1970:0];
-                }
-                
-                return [second compare:first];
-            }] mutableCopy];
+            [self reorderList];
             
             [self updateChatIdIndexPathDictionary];
             
@@ -320,17 +307,22 @@
 
 - (void)moveRowByChatListItem:(MEGAChatListItem *)item {
     NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(item.chatId)];
-    if (self.searchController.isActive) {
-        [self.searchChatListItemArray removeObjectAtIndex:indexPath.row];
-        [self.searchChatListItemArray insertObject:item atIndex:0];
-    } else {
-        [self.chatListItemArray removeObjectAtIndex:indexPath.row];
-        [self.chatListItemArray insertObject:item atIndex:0];
+    NSIndexPath *newIndexPath;
+    NSMutableArray *tempArray = self.searchController.isActive ? self.searchChatListItemArray : self.chatListItemArray;
+    for (MEGAChatListItem *chatListItem in tempArray) {
+        if ([item.lastMessageDate compare:chatListItem.lastMessageDate]>=NSOrderedSame) {
+            newIndexPath = [self.chatIdIndexPathDictionary objectForKey:@(chatListItem.chatId)];
+            [tempArray removeObjectAtIndex:indexPath.row];
+            [tempArray insertObject:item atIndex:newIndexPath.row];
+            break;
+        }
     }
-    
+
     [self updateChatIdIndexPathDictionary];
     
-    [self.tableView moveRowAtIndexPath:indexPath toIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    if (newIndexPath) {
+        [self.tableView moveRowAtIndexPath:indexPath toIndexPath:newIndexPath];
+    }
 }
 
 - (void)updateChatIdIndexPathDictionary {
@@ -523,6 +515,26 @@
         contactDetailsVC.userHandle         = peerHandle;
         [self.navigationController pushViewController:contactDetailsVC animated:YES];
     }
+}
+
+- (void)reorderList {
+    for (NSUInteger i = 0; i < self.chatListItemList.size ; i++) {
+        MEGAChatListItem *chatListItem = [self.chatListItemList chatListItemAtIndex:i];
+        [self.chatListItemArray addObject:chatListItem];
+    }
+    self.chatListItemArray = [[self.chatListItemArray sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        NSDate *first  = [(MEGAChatListItem *)a lastMessageDate];
+        NSDate *second = [(MEGAChatListItem *)b lastMessageDate];
+        
+        if (!first) {
+            first = [NSDate dateWithTimeIntervalSince1970:0];
+        }
+        if (!second) {
+            second = [NSDate dateWithTimeIntervalSince1970:0];
+        }
+        
+        return [second compare:first];
+    }] mutableCopy];
 }
 
 #pragma mark - IBActions
@@ -774,7 +786,7 @@
             }
         }
         
-        if (item.changes == MEGAChatListItemChangeTypeLastTs) {
+        if (item.changes == MEGAChatListItemChangeTypeLastTs && self.shouldReorderList) {
             if ([indexPath compare:[NSIndexPath indexPathForRow:0 inSection:0]] != NSOrderedSame) {
                 [self moveRowByChatListItem:item];
             }
@@ -799,6 +811,18 @@
             ChatRoomCell *cell = (ChatRoomCell *)[self.tableView cellForRowAtIndexPath:indexPath];
             cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:userHandle]];
         }
+    }
+}
+
+- (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
+    // INVALID_HANDLE = ~(uint64_t)0
+    if (chatId == ~(uint64_t)0 && newState == MEGAChatConnectionOnline) {
+        // Now it's safe to trigger a reordering of the list:
+        self.chatListItemArray = [NSMutableArray new];
+        self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
+        [self reorderList];
+        [self.tableView reloadData];
+        self.shouldReorderList = YES;
     }
 }
 
