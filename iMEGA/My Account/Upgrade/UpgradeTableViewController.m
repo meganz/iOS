@@ -1,6 +1,7 @@
 #import "UpgradeTableViewController.h"
 
 #import <MessageUI/MFMailComposeViewController.h>
+#import <SafariServices/SafariServices.h>
 
 #import "SVProgressHUD.h"
 
@@ -10,6 +11,7 @@
 #import "Helper.h"
 #import "MEGAPurchase.h"
 #import "MEGASdkManager.h"
+#import "MEGAReachabilityManager.h"
 #import "ProductDetailViewController.h"
 #import "ProductTableViewCell.h"
 
@@ -79,6 +81,14 @@
     [self getIndexPositionsForProLevels];
     
     [self initCurrentPlan];
+    
+    [self setupToolbar];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.navigationController.toolbarHidden = NO;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -292,6 +302,40 @@
     [transferQuotaMutableAttributedString appendAttributedString:transferQuotaString];
     
     return transferQuotaMutableAttributedString;
+}
+
+- (void)setupToolbar {
+    self.navigationController.toolbarHidden = NO;
+    
+    UIBarButtonItem *termsOfServiceBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"termsOfServicesLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Terms of Service'") style:UIBarButtonItemStylePlain target:self action:@selector(showTermsOfService)];
+    UIBarButtonItem *flexibleBarButtomItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem *privacyPolicyBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"privacyPolicyLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy'") style:UIBarButtonItemStylePlain target:self action:@selector(showPrivacyPolicy)];
+    
+    [self setToolbarItems:@[termsOfServiceBarButtonItem, flexibleBarButtomItem, privacyPolicyBarButtonItem]];
+}
+
+- (void)showTermsOfService {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        [self showURL:@"https://mega.nz/ios_terms.html"];
+    }
+}
+
+- (void)showPrivacyPolicy {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        [self showURL:@"https://mega.nz/ios_privacy.html"];
+    }
+}
+
+- (void)showURL:(NSString *)urlString {
+    NSURL *url = [NSURL URLWithString:urlString];
+    SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:url];
+    if (@available(iOS 10.0, *)) {
+        safariViewController.preferredControlTintColor = [UIColor mnz_redD90007];
+    } else {
+        safariViewController.view.tintColor = [UIColor mnz_redD90007];
+    }
+    
+    [self presentViewController:safariViewController animated:YES completion:nil];
 }
 
 #pragma mark - IBActions
