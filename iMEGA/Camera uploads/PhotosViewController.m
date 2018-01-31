@@ -509,7 +509,7 @@
     [self presentViewController:moveToTheRubbishBinAlertController animated:YES completion:nil];
 }
 
-#pragma mark - UICollectioViewDataSource
+#pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     if ([self.photosByMonthYearArray count] == 0) {
@@ -601,7 +601,7 @@
     }
 }
 
-#pragma mark - UICollectioViewDelegate
+#pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger index = 0;
@@ -689,6 +689,12 @@
         }
         
         [self.photosCollectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]]];
+    }
+}
+
+- (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
+    if (@available(iOS 11.0, *)) {
+        view.layer.zPosition = 0.0;
     }
 }
 
