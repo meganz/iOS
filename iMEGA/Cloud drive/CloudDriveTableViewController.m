@@ -86,7 +86,7 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
-    self.tableView.estimatedRowHeight = 44.0;
+    self.tableView.estimatedRowHeight = 60.0;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
