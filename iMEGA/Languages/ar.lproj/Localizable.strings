@@ -857,7 +857,7 @@
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="ادع اصدقائك";
 /* title of the introduction for the achievements screen */
-"inviteFriendsAndGetForEachReferral"="احصل %1$s من المساحة و %2$s من عمليات النقل لكل دعوة";
+"inviteFriendsAndGetForEachReferral"="Get %1$s of storage and %2$s of transfers for each referral";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
 /*  */
