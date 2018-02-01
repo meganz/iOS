@@ -744,11 +744,12 @@ static MEGAIndexer *indexer;
     if ([cell isKindOfClass:[NodeTableViewCell class]]) {
         NodeTableViewCell *nodeTableViewCell = cell;
         [nodeTableViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-        nodeTableViewCell.thumbnailPlayImageView.hidden = node.name.mnz_videoPathExtension ? NO : YES;
+        nodeTableViewCell.thumbnailPlayImageView.hidden = !node.name.mnz_videoPathExtension;
     } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
         PhotoCollectionViewCell *photoCollectionViewCell = cell;
         [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-        photoCollectionViewCell.thumbnailPlayImageView.hidden = node.name.mnz_videoPathExtension ? NO : YES;
+        photoCollectionViewCell.thumbnailPlayImageView.hidden = !node.name.mnz_videoPathExtension;
+        photoCollectionViewCell.thumbnailVideoOverlayView.hidden = !(node.name.mnz_videoPathExtension && node.duration>-1);
     }
     
     if (reindex) {
