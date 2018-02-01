@@ -456,10 +456,6 @@
 "overquotaAlert_message"="Operation not allowed, you will exceed the storage limit of your account. Do you want to upgrade your account?";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="Select items";
-/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
-"photosPerMonth"="%lu items";
-/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1} photo" */
-"photoPerMonth"="%lu item";
 /* Button title that skips the current action */
 "skipButton"="Skip";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */

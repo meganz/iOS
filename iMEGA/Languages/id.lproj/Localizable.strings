@@ -28,6 +28,8 @@
 "attention"="Perhatian";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="Harap berikan MEGA app permission untuk meng-akses Kamera anda pada Settings";
+/* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
+"cameraPermissionsInCall"="Please give MEGA app permission to access your Camera in your Settings. In case you proceed the call will end because the app will be restarted.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
@@ -454,10 +456,6 @@
 "overquotaAlert_message"="Operasi tidak diizinkan, anda akan melebih batas storage akun anda. Apakah anda ingin upgrade akun anda?";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="Pilih item";
-/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
-"photosPerMonth"="%lu foto";
-/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1} photo" */
-"photoPerMonth"="%lu foto";
 /* Button title that skips the current action */
 "skipButton"="Lewati";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
@@ -466,6 +464,12 @@
 "enableCameraUploadsButton"="Aktifkan Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Camera Uploads diaktifkan";
+/* Message shown when the camera uploads have been completed */
+"cameraUploadsComplete"="Upload kamera selesai";
+/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
+"cameraUploadsUploadingFile"="Mengupload %1$d dari %2$d file";
+/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
+"cameraUploadsUploadingFiles"="Mengupload %1$d dari %2$d file";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu item terpilih";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -1032,6 +1036,8 @@
 "chatIsDisabled"="Percakapan dinonaktifkan";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Aktifkan";
+/* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
+"disable"="Matikan";
 /* Conversations section */
 "conversations"="Percakapan";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1317,3 +1323,5 @@
 "missedAudioCallsAndMissedVideoCall"="[A] missed audio calls and missed video call";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
 "missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";
+/* Button title to see the available bonus */
+"getBonus"="Get Bonus";

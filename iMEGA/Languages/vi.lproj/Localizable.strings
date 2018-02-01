@@ -28,6 +28,8 @@
 "attention"="Chú Ý";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="Xin cho MEGA quyền truy cập vào Camera trong phần Thiết đặt của máy";
+/* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
+"cameraPermissionsInCall"="Please give MEGA app permission to access your Camera in your Settings. In case you proceed the call will end because the app will be restarted.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
@@ -454,10 +456,6 @@
 "overquotaAlert_message"="Thao tác bị từ chối, vì bạn sẽ vượt mức không gian lưu trữ. Bạn có muốn nâng cấp tài khoản để thêm không gian không?";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="Lựa chọn mục";
-/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
-"photosPerMonth"="%lu hình ảnh";
-/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1} photo" */
-"photoPerMonth"="%lu hình";
 /* Button title that skips the current action */
 "skipButton"="Bỏ qua";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
@@ -466,6 +464,12 @@
 "enableCameraUploadsButton"="Bật Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Chế độ Camera Uploads đang hoạt động";
+/* Message shown when the camera uploads have been completed */
+"cameraUploadsComplete"="Camera uploads đã đăng tải xong";
+/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
+"cameraUploadsUploadingFile"="Đang tải lên %1$d trong tổng %2$d tệp";
+/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
+"cameraUploadsUploadingFiles"="Đang tải lên %1$d trong tổng %2$d tệp";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu mục đã được chọn";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -1032,6 +1036,8 @@
 "chatIsDisabled"="Chat bị tắt";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Bật";
+/* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
+"disable"="Tắt";
 /* Conversations section */
 "conversations"="Các cuộc trò chuyện";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1317,3 +1323,5 @@
 "missedAudioCallsAndMissedVideoCall"="[A] missed audio calls and missed video call";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
 "missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";
+/* Button title to see the available bonus */
+"getBonus"="Get Bonus";
