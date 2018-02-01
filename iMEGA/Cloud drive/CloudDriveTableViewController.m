@@ -40,7 +40,7 @@
 #import "UpgradeTableViewController.h"
 #import "CustomModalAlertViewController.h"
 
-@interface CloudDriveTableViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate> {
+@interface CloudDriveTableViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeTableViewCellDelegate> {
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
     
@@ -73,6 +73,8 @@
 @property (nonatomic, strong) NSMutableDictionary *nodesIndexPathMutableDictionary;
 
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
+
+@property (nonatomic, getter=isPseudoEditing) BOOL pseudoEdit;
 
 @end
 
@@ -336,11 +338,18 @@
         cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     }
     
+    cell.customEditDelegate = self;
+    [cell setEditing:self.isEditing];
+
     return cell;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
 }
 
 #pragma mark - UITableViewDelegate
@@ -1410,6 +1419,8 @@
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    self.pseudoEdit = YES;
+
     [super setEditing:editing animated:animated];
     
     [self updateNavigationBarTitle];
@@ -1795,6 +1806,35 @@
         NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
         if (indexPath != nil) {
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        }
+    }
+}
+
+#pragma mark - CustomTableViewCellDelegate
+
+- (void)selectCell:(NodeTableViewCell *)cell {
+    NSIndexPath *indexPath =  [self.tableView indexPathForCell:cell];
+    UITableView *tableView = self.tableView;
+    
+    if (!!cell.selected) {
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
+        
+        // Above method will not call the below delegate methods
+        if ([tableView.delegate respondsToSelector:@selector(tableView:willSelectRowAtIndexPath:)]) {
+            [tableView.delegate tableView:tableView willSelectRowAtIndexPath:indexPath];
+        }
+        if ([tableView.delegate respondsToSelector:@selector(tableView:didSelectRowAtIndexPath:)]) {
+            [tableView.delegate tableView:tableView didSelectRowAtIndexPath:indexPath];
+        }
+    } else {
+        [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+        
+        // Above method will not call the below delegate methods
+        if ([tableView.delegate respondsToSelector:@selector(tableView:willDeselectRowAtIndexPath:)]) {
+            [tableView.delegate tableView:tableView willDeselectRowAtIndexPath:indexPath];
+        }
+        if ([tableView.delegate respondsToSelector:@selector(tableView:didDeselectRowAtIndexPath:)]) {
+            [tableView.delegate tableView:tableView didDeselectRowAtIndexPath:indexPath];
         }
     }
 }

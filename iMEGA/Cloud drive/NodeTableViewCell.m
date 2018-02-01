@@ -2,7 +2,54 @@
 #import "MEGASdkManager.h"
 #import "Helper.h"
 
+static NSInteger const kCustomEditControlWidth=50;
+
+@interface NodeTableViewCell ()
+
+@property (nonatomic, getter=isPseudoEditing) BOOL pseudoEdit;
+@property (weak, nonatomic) IBOutlet UIView *mainView;
+@property (weak, nonatomic) IBOutlet UIButton *customEditControl;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leadingSpaceMainViewConstraint;
+
+@end
+
 @implementation NodeTableViewCell
+
+#pragma mark - Life Cycle
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    if ([self.customEditDelegate isPseudoEditing]) {
+        self.pseudoEdit = editing;
+        [self beginEditMode];
+    } else {
+        [super setEditing:editing animated:animated];
+    }
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+    
+    self.customEditControl.selected = selected;
+}
+
+#pragma mark - Cell custom edit control Action
+
+- (IBAction)customEditControlPressed:(id)sender {
+    // [self setSelected:YES animated:YES];
+    [self.customEditDelegate selectCell:self];
+}
+
+
+#pragma mark - Private Method
+
+// Animate view to show/hide custom edit control/button
+- (void)beginEditMode {
+    self.leadingSpaceMainViewConstraint.constant = self.isPseudoEditing ? 0 : -kCustomEditControlWidth;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.mainView.superview layoutIfNeeded];
+    }];
+}
 
 - (IBAction)cancelTransfer:(id)sender {
     NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:[MEGASdk base64HandleForHandle:self.nodeHandle]];
