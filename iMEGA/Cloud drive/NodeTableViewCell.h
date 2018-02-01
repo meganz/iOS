@@ -1,5 +1,16 @@
 #import <UIKit/UIKit.h>
 
+@class NodeTableViewCell;
+
+@protocol NodeTableViewCellDelegate
+
+@optional
+
+@property (nonatomic, readonly, getter=isPseudoEditing) BOOL pseudoEdit;
+- (void)selectCell:(NodeTableViewCell *)cell;
+
+@end
+
 @interface NodeTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *upImageView;
@@ -18,5 +29,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailPlayImageView;
 
 @property (nonatomic) uint64_t nodeHandle;
+
+@property (nonatomic, assign) id <NodeTableViewCellDelegate> customEditDelegate;
 
 @end
