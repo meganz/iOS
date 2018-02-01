@@ -62,22 +62,22 @@
 
 #pragma mark - Private
 
-- (void)fadeInBackgroundCompletion:(void (^ __nullable)(BOOL finished))completion {
-    [UIView animateWithDuration:.2 animations:^{
+- (void)fadeInBackgroundCompletion:(void (^ __nullable)(void))fadeInCompletion {
+    [UIView animateWithDuration:.3 animations:^{
         [self.alphaView setAlpha:0.5];
     } completion:^(BOOL finished) {
-        if (completion) {
-            completion(YES);
+        if (fadeInCompletion && finished) {
+            fadeInCompletion();
         }
     }];
 }
 
-- (void)fadeOutBackgroundCompletion:(void (^ __nullable)(BOOL finished))completion {
+- (void)fadeOutBackgroundCompletion:(void (^ __nullable)(void))fadeOutCompletion {
     [UIView animateWithDuration:.2 animations:^{
         [self.alphaView setAlpha:.0];
     } completion:^(BOOL finished) {
-        if (completion) {
-            completion(YES);
+        if (fadeOutCompletion && finished) {
+            fadeOutCompletion();
         }
     }];
 }
@@ -85,19 +85,19 @@
 #pragma mark - IBActions
 
 - (IBAction)actionTouchUpInside:(UIButton *)sender {
-    [self fadeOutBackgroundCompletion:^(BOOL finished) {
+    [self fadeOutBackgroundCompletion:^ {
         if (self.completion) self.completion();
     }];
 }
 
 - (IBAction)dismissTouchUpInside:(UIButton *)sender {
-    [self fadeOutBackgroundCompletion:^(BOOL finished) {
+    [self fadeOutBackgroundCompletion:^ {
         [self dismissViewControllerAnimated:YES completion:nil];
     }];
 }
 
 - (IBAction)bonusTouchUpInside:(UIButton *)sender {
-    [self fadeOutBackgroundCompletion:^(BOOL finished) {
+    [self fadeOutBackgroundCompletion:^ {
         [self dismissViewControllerAnimated:YES completion:^{
             AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
             achievementsVC.enableCloseBarButton = YES;
