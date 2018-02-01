@@ -7,7 +7,7 @@ typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
     MEGACameraUploadsStateDisabled,
     MEGACameraUploadsStateUploading,
     MEGACameraUploadsStateCompleted,
-    MEGACameraUploadsStateDisconnected,
+    MEGACameraUploadsStateNoInternetConnection,
     MEGACameraUploadsStateEmpty
 };
 
