@@ -186,7 +186,7 @@
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             break;
             
-        case MEGACameraUploadsStateDisconnected:
+        case MEGACameraUploadsStateNoInternetConnection:
             self.stateView.hidden = NO;
             self.photosUploadedProgressView.hidden = YES;
             self.photosUploadedLabel.hidden = YES;
@@ -253,17 +253,7 @@
     
     [self.photosCollectionView reloadData];
     
-    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        if (self.currentState != MEGACameraUploadsStateUploading) {
-            self.currentState = MEGACameraUploadsStateCompleted;
-        }
-    } else {
-        if ([self.photosByMonthYearArray count] == 0) {
-            self.currentState = MEGACameraUploadsStateEmpty;
-        } else {
-            self.currentState = MEGACameraUploadsStateDisabled;
-        }
-    }
+    [self updateCurrentState];
     
     if ([self.photosCollectionView allowsMultipleSelection]) {
         self.navigationItem.title = AMLocalizedString(@"selectTitle", @"Select items");
@@ -275,11 +265,7 @@
 - (void)internetConnectionChanged {
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     
-    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        if (![MEGAReachabilityManager isReachable]) {
-            self.currentState = MEGACameraUploadsStateDisconnected;
-        }
-    }
+    [self updateCurrentState];
 }
 
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
@@ -371,6 +357,24 @@
     progressText = [progressText stringByReplacingOccurrencesOfString:@"%2$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.totalPhotosUploading]];
     
     self.photosUploadedLabel.text = progressText;
+}
+
+- (void)updateCurrentState {
+    if ([MEGAReachabilityManager isReachable]) {
+        if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+            if (self.currentState != MEGACameraUploadsStateUploading) {
+                self.currentState = MEGACameraUploadsStateCompleted;
+            }
+        } else {
+            if (self.photosByMonthYearArray.count == 0) {
+                self.currentState = MEGACameraUploadsStateEmpty;
+            } else {
+                self.currentState = MEGACameraUploadsStateDisabled;
+            }
+        }
+    } else {
+        self.currentState = MEGACameraUploadsStateNoInternetConnection;
+    }
 }
 
 #pragma mark - IBAction

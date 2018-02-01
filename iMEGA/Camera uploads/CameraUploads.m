@@ -12,7 +12,7 @@
 
 #define kCameraUploads @"Camera Uploads"
 
-@interface CameraUploads () <UIAlertViewDelegate> {
+@interface CameraUploads () {
     MEGANode *cameraUploadsNode;
     int64_t cameraUploadHandle;
 }
@@ -186,16 +186,6 @@ static CameraUploads *instance = nil;
     }];
     
     MEGALogInfo(@"Assets in the operation queue %ld", _assetsOperationQueue.operationCount);
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if ([[(UINavigationController *)[(UITabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController] selectedViewController] visibleViewController] isKindOfClass:[CameraUploadsTableViewController class]]) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[(UINavigationController *)[(UITabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController] selectedViewController] visibleViewController] viewWillAppear:YES];
-        });
-    }
 }
 
 #pragma mark - MEGATransferDelegate
