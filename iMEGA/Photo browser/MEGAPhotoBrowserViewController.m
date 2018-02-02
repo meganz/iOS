@@ -15,6 +15,8 @@
 
 @property (nonatomic) NSMutableArray<MEGANode *> *mediaNodes;
 
+@property (nonatomic) CGPoint panGestureInitialPoint;
+
 @end
 
 @implementation MEGAPhotoBrowserViewController
@@ -32,6 +34,9 @@
             [self.mediaNodes addObject:currentNode];
         }
     }
+    
+    self.panGestureInitialPoint = CGPointMake(0.0f, 0.0f);
+    [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -110,6 +115,43 @@
 
 - (IBAction)didPressCloseButton:(UIBarButtonItem *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Gesture recognizers
+
+- (void)panGesture:(UIPanGestureRecognizer *)panGestureRecognizer {
+    CGPoint touchPoint = [panGestureRecognizer translationInView:self.view];
+    CGFloat verticalIncrement = touchPoint.y - self.panGestureInitialPoint.y;
+    
+    switch (panGestureRecognizer.state) {
+        case UIGestureRecognizerStateBegan:
+            self.panGestureInitialPoint = touchPoint;
+            break;
+            
+        case UIGestureRecognizerStateChanged: {
+            if (verticalIncrement > 0) {
+                self.view.frame = CGRectMake(0.0f, verticalIncrement, self.view.frame.size.width, self.view.frame.size.height);
+            }
+            
+            break;
+        }
+            
+        case UIGestureRecognizerStateEnded:
+        case UIGestureRecognizerStateCancelled: {
+            if (verticalIncrement > 200.0f) {
+                [self dismissViewControllerAnimated:YES completion:nil];
+            } else {
+                [UIView animateWithDuration:0.3 animations:^{
+                    self.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+                }];
+            }
+            
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 @end
