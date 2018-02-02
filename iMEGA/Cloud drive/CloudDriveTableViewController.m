@@ -436,6 +436,7 @@
     }
 }
 
+/*
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
     
@@ -505,6 +506,36 @@
         }
     }
 }
+*/
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView leadingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NodeTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.isSwiping = YES;
+    UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Download" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        NSLog(@"download tapped");
+        [self setEditing:NO animated:YES];
+    }];
+    downloadAction.image = [UIImage imageNamed:@"infoDownload"];
+    downloadAction.backgroundColor = [UIColor colorWithRed:0 green:0.75 blue:0.65 alpha:1];
+    return [UISwipeActionsConfiguration configurationWithActions:@[downloadAction]];
+}
+
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NodeTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.isSwiping = YES;
+    UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Share" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        NSLog(@"share tapped");
+        [self setEditing:NO animated:YES];
+    }];
+    shareAction.image = [UIImage imageNamed:@"shareGray"];
+    shareAction.backgroundColor = [UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1];
+    return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
+}
+
+#pragma clang diagnostic pop
 
 #pragma mark - UIViewControllerPreviewingDelegate
 
