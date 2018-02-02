@@ -20,6 +20,7 @@ static NSInteger const kCustomEditControlWidth=50;
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     if ([self.customEditDelegate isPseudoEditing]) {
         self.pseudoEdit = editing;
+        [self setSwipeOffset:0];
         [self beginEditMode];
     } else {
         [super setEditing:editing animated:animated];
@@ -35,16 +36,18 @@ static NSInteger const kCustomEditControlWidth=50;
 #pragma mark - Cell custom edit control Action
 
 - (IBAction)customEditControlPressed:(id)sender {
-    // [self setSelected:YES animated:YES];
     [self.customEditDelegate selectCell:self];
 }
-
 
 #pragma mark - Private Method
 
 // Animate view to show/hide custom edit control/button
 - (void)beginEditMode {
-    self.leadingSpaceMainViewConstraint.constant = self.isPseudoEditing ? 0 : -kCustomEditControlWidth;
+    if (!self.isSwiping) {
+        self.leadingSpaceMainViewConstraint.constant = self.isPseudoEditing ? 0 : -kCustomEditControlWidth;
+    } else {
+        self.isSwiping = NO;
+    }
     
     [UIView animateWithDuration:0.3 animations:^{
         [self.mainView.superview layoutIfNeeded];

@@ -40,7 +40,7 @@
 #import "UpgradeTableViewController.h"
 #import "CustomModalAlertViewController.h"
 
-@interface CloudDriveTableViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeTableViewCellDelegate> {
+@interface CloudDriveTableViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeTableViewCellDelegate, MGSwipeTableCellDelegate> {
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
     
@@ -276,7 +276,9 @@
                 isDownloaded = YES;
             }
         }
-        
+    
+        cell.delegate = self;
+
         cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdk]];
     }
     
@@ -1836,6 +1838,60 @@
         if ([tableView.delegate respondsToSelector:@selector(tableView:didDeselectRowAtIndexPath:)]) {
             [tableView.delegate tableView:tableView didDeselectRowAtIndexPath:indexPath];
         }
+    }
+}
+
+#pragma mark Swipe Delegate
+
+-(BOOL) swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction {
+    if (@available(iOS 11.0, *)) {
+        return NO;
+    }
+    
+    if (self.isEditing) {
+        return NO;
+    }
+    return YES;
+}
+
+-(NSArray*) swipeTableCell:(MGSwipeTableCell*) cell swipeButtonsForDirection:(MGSwipeDirection)direction
+             swipeSettings:(MGSwipeSettings*) swipeSettings expansionSettings:(MGSwipeExpansionSettings*) expansionSettings {
+    
+    swipeSettings.transition = MGSwipeTransitionDrag;
+    expansionSettings.buttonIndex = 0;
+    expansionSettings.expansionLayout = MGSwipeExpansionLayoutCenter;
+    
+    if (direction == MGSwipeDirectionLeftToRight) {
+        
+        expansionSettings.fillOnTrigger = NO;
+        expansionSettings.threshold = 2;
+        
+        MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"Download" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor colorWithRed:0.0 green:0.75 blue:0.65 alpha:1.0] padding:5 callback:^BOOL(MGSwipeTableCell *sender) {
+            
+            NSLog(@"tapped download");
+            
+            return YES;
+        }];
+        [downloadButton iconTintColor:[UIColor whiteColor]];
+        [downloadButton.titleLabel setFont:[UIFont mnz_SFUIRegularWithSize:12]];
+        [downloadButton centerIconOverText];
+
+        return @[downloadButton];
+    }
+    else {
+        expansionSettings.fillOnTrigger = NO;
+        expansionSettings.threshold = 2;
+        MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"Share" icon:[UIImage imageNamed:@"shareGray"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:5 callback:^BOOL(MGSwipeTableCell *sender) {
+            
+            NSLog(@"tapped share");
+            
+            return YES;
+        }];
+        [shareButton iconTintColor:[UIColor whiteColor]];
+        [shareButton.titleLabel setFont:[UIFont mnz_SFUIRegularWithSize:12]];
+        [shareButton centerIconOverText];
+
+        return @[shareButton];
     }
 }
 
