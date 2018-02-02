@@ -60,6 +60,7 @@
                     <connections>
                         <outlet property="backgroundView" destination="dyC-bj-6Ub" id="ZZY-Wg-mmK"/>
                         <outlet property="navigationBar" destination="FGv-7h-IkY" id="T9E-zi-bd6"/>
+                        <outlet property="navigationItem" destination="u26-RZ-kaH" id="Kj4-LD-0cj"/>
                         <outlet property="scrollView" destination="ulA-CI-VZp" id="oyd-Da-pqT"/>
                         <outlet property="toolbar" destination="Z54-Be-FUS" id="BbJ-Aa-yik"/>
                     </connections>

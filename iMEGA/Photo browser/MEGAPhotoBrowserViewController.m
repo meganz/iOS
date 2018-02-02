@@ -14,12 +14,14 @@
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @property (nonatomic) NSMutableArray<MEGANode *> *mediaNodes;
 
 @property (nonatomic) CGPoint panGestureInitialPoint;
 @property (nonatomic, getter=isInterfaceHidden) BOOL interfaceHidden;
+@property (nonatomic) NSUInteger currentIndex;
 
 @end
 
@@ -42,6 +44,8 @@
     self.panGestureInitialPoint = CGPointMake(0.0f, 0.0f);
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)]];
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGesture:)]];
+    
+    self.scrollView.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -56,7 +60,7 @@
     
     NSUInteger i = 0;
     for (MEGANode *node in self.mediaNodes) {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.scrollView.frame.size.width * i++, 0.0f, self.scrollView.frame.size.width, self.scrollView.frame.size.height)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.scrollView.frame.size.width * i, 0.0f, self.scrollView.frame.size.width, self.scrollView.frame.size.height)];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         NSString *previewPath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
         if ([[NSFileManager defaultManager] fileExistsAtPath:previewPath]) {
@@ -67,8 +71,32 @@
         [self.scrollView addSubview:imageView];
         if (node.handle == self.node.handle) {
             [self.scrollView scrollRectToVisible:imageView.frame animated:NO];
+            self.currentIndex = i;
         }
+        i++;
     }
+    
+    [self reloadTitle];
+}
+
+- (void)reloadTitle {
+    NSString *subtitle;
+    if (self.mediaNodes.count == 1) {
+        subtitle = AMLocalizedString(@"indexOfTotalFile", @"Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file.");
+    } else {
+        subtitle = AMLocalizedString(@"indexOfTotalFiles", @"Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files.");
+    }
+    subtitle = [subtitle stringByReplacingOccurrencesOfString:@"%1$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.currentIndex+1]];
+    subtitle = [subtitle stringByReplacingOccurrencesOfString:@"%2$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.mediaNodes.count]];
+    
+    self.navigationItem.titleView = [Helper customNavigationBarLabelWithTitle:[self.mediaNodes objectAtIndex:self.currentIndex].name subtitle:subtitle];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    self.currentIndex = scrollView.contentOffset.x/scrollView.frame.size.width;
+    [self reloadTitle];
 }
 
 #pragma mark - Getting the images
