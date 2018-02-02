@@ -966,8 +966,8 @@
 "choosePlan"="아래에서 요금제를 선택하세요:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="계정 유형 하나를 선택하세요:";
-/* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
-"twoMonthsFree"="PRO 요금제를 1년 구독하면 2개월을 무료로 드립니다";
+/* Text shown in the purchase plan view to explain that annual subscription is 16% cheaper than 12 monthly payments */
+"twoMonthsFree"="Annual subscription is 16% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="현재 요금제:";
 /* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
