@@ -966,8 +966,8 @@
 "choosePlan"="Choisir une des offres ci-dessous :";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Sélectionner un type de compte :";
-/* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
-"twoMonthsFree"="Obtenez deux mois gratuits si vous vous abonnez à une offre PRO d’un an";
+/* Text shown in the purchase plan view to explain that annual subscription is 16% cheaper than 12 monthly payments */
+"twoMonthsFree"="Annual subscription is 16% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Abonnement actuel :";
 /* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
