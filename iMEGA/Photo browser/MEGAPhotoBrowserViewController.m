@@ -11,11 +11,15 @@
 
 @interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @property (nonatomic) NSMutableArray<MEGANode *> *mediaNodes;
 
 @property (nonatomic) CGPoint panGestureInitialPoint;
+@property (nonatomic, getter=isInterfaceHidden) BOOL interfaceHidden;
 
 @end
 
@@ -37,6 +41,7 @@
     
     self.panGestureInitialPoint = CGPointMake(0.0f, 0.0f);
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)]];
+    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGesture:)]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -152,6 +157,22 @@
         default:
             break;
     }
+}
+
+- (void)tapGesture:(UITapGestureRecognizer *)tapGestureRecognizer {
+    [UIView animateWithDuration:0.3 animations:^{
+        if (self.isInterfaceHidden) {
+            self.view.backgroundColor = [UIColor clearColor];
+            self.backgroundView.backgroundColor = [UIColor whiteColor];
+            self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 1.0f;
+            self.navigationBar.hidden = self.toolbar.hidden = self.interfaceHidden = NO;
+        } else {
+            self.view.backgroundColor = [UIColor blackColor];
+            self.backgroundView.backgroundColor = [UIColor blackColor];
+            self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
+            self.navigationBar.hidden = self.toolbar.hidden = self.interfaceHidden = YES;
+        }
+    }];
 }
 
 @end
