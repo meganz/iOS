@@ -71,11 +71,17 @@
     for (MEGANode *node in self.mediaNodes) {
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.scrollView.frame.size.width * i, 0.0f, self.scrollView.frame.size.width, self.scrollView.frame.size.height)];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
-        NSString *previewPath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
-        if ([[NSFileManager defaultManager] fileExistsAtPath:previewPath]) {
-            imageView.image = [UIImage imageWithContentsOfFile:previewPath];
+        
+        NSString *offlineImagePath = [[Helper pathForOffline] stringByAppendingPathComponent:[self.api escapeFsIncompatible:node.name]];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:offlineImagePath]) {
+            imageView.image = [UIImage imageWithContentsOfFile:offlineImagePath];
         } else {
-            [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
+            NSString *previewPath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
+            if ([[NSFileManager defaultManager] fileExistsAtPath:previewPath]) {
+                imageView.image = [UIImage imageWithContentsOfFile:previewPath];
+            } else {
+                [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
+            }
         }
         [self.scrollView addSubview:imageView];
         if (node.handle == self.node.handle) {
@@ -143,9 +149,7 @@
             
         case MEGAPhotoModeFull: {
             MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithCompletion:transferCompletion];
-            NSString *offlineImagePath = [[NSFileManager defaultManager] downloadsDirectory];
-            offlineImagePath = [offlineImagePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
-            offlineImagePath = [offlineImagePath stringByAppendingPathComponent:[self.api escapeFsIncompatible:node.name]];
+            NSString *offlineImagePath = [[Helper pathForOffline] stringByAppendingPathComponent:[self.api escapeFsIncompatible:node.name]];
             [self.api startDownloadNode:node localPath:offlineImagePath appData:@"generate_fa" delegate:delegate];
 
             break;
