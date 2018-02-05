@@ -4,12 +4,13 @@
 #import "Helper.h"
 #import "MEGAGetPreviewRequestDelegate.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
+#import "MEGAPhotoBrowserAnimator.h"
 #import "MEGAStartDownloadTransferDelegate.h"
 
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
-@interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate>
+@interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -45,11 +46,20 @@
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGesture:)]];
     
     self.scrollView.delegate = self;
+    self.transitioningDelegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self reloadUI];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.view.backgroundColor = [UIColor clearColor];
+    self.backgroundView.backgroundColor = [UIColor clearColor];
+    self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
+    self.navigationBar.hidden = self.toolbar.hidden = self.interfaceHidden = YES;
 }
 
 #pragma mark - UI
@@ -161,7 +171,7 @@
             break;
             
         case UIGestureRecognizerStateChanged: {
-            if (verticalIncrement > 0) {
+            if (ABS(verticalIncrement) > 0) {
                 self.view.frame = CGRectMake(0.0f, verticalIncrement, self.view.frame.size.width, self.view.frame.size.height);
             }
             
@@ -170,7 +180,7 @@
             
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled: {
-            if (verticalIncrement > 200.0f) {
+            if (ABS(verticalIncrement) > 100.0f) {
                 [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 [UIView animateWithDuration:0.3 animations:^{
@@ -200,6 +210,24 @@
             self.navigationBar.hidden = self.toolbar.hidden = self.interfaceHidden = YES;
         }
     }];
+}
+
+#pragma mark - UIViewControllerTransitioningDelegate
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
+    if (!CGRectIsEmpty(self.originFrame)) {
+        return [[MEGAPhotoBrowserAnimator alloc] initWithMode:MEGAPhotoBrowserAnimatorModePresent originFrame:self.originFrame];
+    } else {
+        return nil;
+    }
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
+    if (!CGRectIsEmpty(self.originFrame)) {
+        return [[MEGAPhotoBrowserAnimator alloc] initWithMode:MEGAPhotoBrowserAnimatorModeDismiss originFrame:self.originFrame];
+    } else {
+        return nil;
+    }
 }
 
 @end
