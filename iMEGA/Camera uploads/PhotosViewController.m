@@ -631,11 +631,15 @@
     
     if (![self.photosCollectionView allowsMultipleSelection]) {
         if (node.name.mnz_isImagePathExtension) {
+            UICollectionViewCell *cell = [self collectionView:collectionView cellForItemAtIndexPath:indexPath];
+            CGRect cellFrame = [collectionView convertRect:cell.frame toView:nil];
+
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
             MEGAPhotoBrowserViewController *photoBrowserViewController = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
             photoBrowserViewController.api = [MEGASdkManager sharedMEGASdk];
             photoBrowserViewController.node = node;
             photoBrowserViewController.nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
+            photoBrowserViewController.originFrame = cellFrame;
             
             [self presentViewController:photoBrowserViewController animated:YES completion:nil];
         } else {

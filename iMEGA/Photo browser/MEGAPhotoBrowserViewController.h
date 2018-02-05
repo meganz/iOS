@@ -12,5 +12,6 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 @property (nonatomic) MEGANode *node;
 @property (nonatomic) NSArray<MEGANode *> *nodesArray;
 @property (nonatomic) MEGASdk *api;
+@property (nonatomic) CGRect originFrame;
 
 @end
