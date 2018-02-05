@@ -34,10 +34,9 @@
     
     self.mediaNodes = [[NSMutableArray<MEGANode *> alloc] init];
     
-    for (NSUInteger i=0; i<self.nodeList.size.unsignedIntegerValue; i++) {
-        MEGANode *currentNode = [self.nodeList nodeAtIndex:i];
-        if (currentNode.name.mnz_isImagePathExtension || currentNode.name.mnz_isVideoPathExtension) {
-            [self.mediaNodes addObject:currentNode];
+    for (MEGANode *node in self.nodesArray) {
+        if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+            [self.mediaNodes addObject:node];
         }
     }
     

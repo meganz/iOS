@@ -4,6 +4,7 @@
 #import "Helper.h"
 #import "MEGAAVViewController.h"
 #import "MEGANode.h"
+#import "MEGANodeList+MNZCategory.h"
 #import "MEGAQLPreviewController.h"
 #import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
@@ -12,56 +13,27 @@
 
 @implementation MEGANode (MNZCategory)
 
-- (void)mnz_openImageInNavigationController:(UINavigationController *)navigationController withNodes:(NSArray *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(NSUInteger)displayMode {
+- (void)mnz_openImageInNavigationController:(UINavigationController *)navigationController withNodes:(NSArray<MEGANode *> *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(NSUInteger)displayMode {
     [self mnz_openImageInNavigationController:navigationController withNodes:nodesArray folderLink:isFolderLink displayMode:displayMode enableMoveToRubbishBin:YES];
 }
 
-- (void)mnz_openImageInNavigationController:(UINavigationController *)navigationController withNodes:(NSArray *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(NSUInteger)displayMode enableMoveToRubbishBin:(BOOL)enableMoveToRubbishBin {
-    MWPhotoBrowser *photoBrowser = [self mnz_photoBrowserWithNodes:nodesArray folderLink:isFolderLink displayMode:displayMode enableMoveToRubbishBin:enableMoveToRubbishBin];
-    [navigationController pushViewController:photoBrowser animated:YES];
+- (void)mnz_openImageInNavigationController:(UINavigationController *)navigationController withNodes:(NSArray<MEGANode *> *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(NSUInteger)displayMode enableMoveToRubbishBin:(BOOL)enableMoveToRubbishBin {
+    MEGAPhotoBrowserViewController *photoBrowserVC = [self mnz_photoBrowserWithNodes:nodesArray folderLink:isFolderLink displayMode:displayMode enableMoveToRubbishBin:enableMoveToRubbishBin];
+    [navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
 }
 
-- (MWPhotoBrowser *)mnz_photoBrowserWithNodes:(NSArray *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(NSUInteger)displayMode enableMoveToRubbishBin:(BOOL)enableMoveToRubbishBin {
+- (MEGAPhotoBrowserViewController *)mnz_photoBrowserWithNodes:(NSArray<MEGANode *> *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(NSUInteger)displayMode enableMoveToRubbishBin:(BOOL)enableMoveToRubbishBin {
     return [self mnz_photoBrowserWithNodes:nodesArray folderLink:isFolderLink displayMode:displayMode enableMoveToRubbishBin:enableMoveToRubbishBin hideControls:NO];
 }
 
-- (MWPhotoBrowser *)mnz_photoBrowserWithNodes:(NSArray *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(NSUInteger)displayMode enableMoveToRubbishBin:(BOOL)enableMoveToRubbishBin hideControls:(BOOL)hideControls {
-    NSInteger offsetIndex = 0;
-    NSMutableArray *imagesMutableArray = [[NSMutableArray alloc] init];
+- (MEGAPhotoBrowserViewController *)mnz_photoBrowserWithNodes:(NSArray<MEGANode *> *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(NSUInteger)displayMode enableMoveToRubbishBin:(BOOL)enableMoveToRubbishBin hideControls:(BOOL)hideControls {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
+    MEGAPhotoBrowserViewController *photoBrowserVC = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
+    photoBrowserVC.api = isFolderLink ? [MEGASdkManager sharedMEGASdkFolder] : [MEGASdkManager sharedMEGASdk];;
+    photoBrowserVC.node = self;
+    photoBrowserVC.nodesArray = nodesArray;
     
-    NSUInteger nodesCount = nodesArray.count;
-    for (NSUInteger i = 0; i < nodesCount; i++) {
-        MEGANode *node = [nodesArray objectAtIndex:i];
-        if (node.name.mnz_isImagePathExtension && node.isFile) {
-            MWPhoto *photo = [[MWPhoto alloc] initWithNode:node];
-            photo.isFromFolderLink = isFolderLink;
-            [imagesMutableArray addObject:photo];
-            if (node.handle == self.handle) {
-                offsetIndex = imagesMutableArray.count - 1;
-            }
-        }
-    }
-    
-    MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithPhotos:imagesMutableArray];
-    photoBrowser.displayActionButton = YES;
-    photoBrowser.displayNavArrows = YES;
-    photoBrowser.displaySelectionButtons = NO;
-    photoBrowser.zoomPhotosToFill = YES;
-    photoBrowser.alwaysShowControls = NO;
-    photoBrowser.enableGrid = (imagesMutableArray.count > 1);
-    photoBrowser.startOnGrid = NO;
-    photoBrowser.displayMode = displayMode;
-    photoBrowser.enableMoveToRubbishBin = enableMoveToRubbishBin;
-    
-    [photoBrowser showNextPhotoAnimated:YES];
-    [photoBrowser showPreviousPhotoAnimated:YES];
-    [photoBrowser setCurrentPhotoIndex:offsetIndex];
-    
-    if (hideControls) {
-        [photoBrowser setControlsHidden:YES animated:NO permanent:NO];
-    }
-    
-    return photoBrowser;
+    return photoBrowserVC;
 }
 
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink {
