@@ -1847,35 +1847,6 @@
     }
 }
 
-#pragma mark - CustomTableViewCellDelegate
-
-- (void)selectCell:(NodeTableViewCell *)cell {
-    NSIndexPath *indexPath =  [self.tableView indexPathForCell:cell];
-    UITableView *tableView = self.tableView;
-    
-    if (!!cell.selected) {
-        [tableView deselectRowAtIndexPath:indexPath animated:NO];
-        
-        // Above method will not call the below delegate methods
-        if ([tableView.delegate respondsToSelector:@selector(tableView:willSelectRowAtIndexPath:)]) {
-            [tableView.delegate tableView:tableView willSelectRowAtIndexPath:indexPath];
-        }
-        if ([tableView.delegate respondsToSelector:@selector(tableView:didSelectRowAtIndexPath:)]) {
-            [tableView.delegate tableView:tableView didSelectRowAtIndexPath:indexPath];
-        }
-    } else {
-        [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-        
-        // Above method will not call the below delegate methods
-        if ([tableView.delegate respondsToSelector:@selector(tableView:willDeselectRowAtIndexPath:)]) {
-            [tableView.delegate tableView:tableView willDeselectRowAtIndexPath:indexPath];
-        }
-        if ([tableView.delegate respondsToSelector:@selector(tableView:didDeselectRowAtIndexPath:)]) {
-            [tableView.delegate tableView:tableView didDeselectRowAtIndexPath:indexPath];
-        }
-    }
-}
-
 #pragma mark Swipe Delegate
 
 -(BOOL) swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction {

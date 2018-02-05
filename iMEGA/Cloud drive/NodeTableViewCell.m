@@ -33,12 +33,6 @@ static NSInteger const kCustomEditControlWidth=50;
     self.customEditControl.selected = selected;
 }
 
-#pragma mark - Cell custom edit control Action
-
-- (IBAction)customEditControlPressed:(id)sender {
-    [self.customEditDelegate selectCell:self];
-}
-
 #pragma mark - Private Method
 
 // Animate view to show/hide custom edit control/button
