@@ -67,30 +67,14 @@
 - (void)reloadUI {
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.mediaNodes.count, self.scrollView.frame.size.height);
     
-    NSUInteger i = 0;
-    for (MEGANode *node in self.mediaNodes) {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.scrollView.frame.size.width * i, 0.0f, self.scrollView.frame.size.width, self.scrollView.frame.size.height)];
-        imageView.contentMode = UIViewContentModeScaleAspectFit;
-        
-        NSString *offlineImagePath = [[Helper pathForOffline] stringByAppendingPathComponent:[self.api escapeFsIncompatible:node.name]];
-        if ([[NSFileManager defaultManager] fileExistsAtPath:offlineImagePath]) {
-            imageView.image = [UIImage imageWithContentsOfFile:offlineImagePath];
-        } else {
-            NSString *previewPath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
-            if ([[NSFileManager defaultManager] fileExistsAtPath:previewPath]) {
-                imageView.image = [UIImage imageWithContentsOfFile:previewPath];
-            } else {
-                [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
-            }
-        }
-        [self.scrollView addSubview:imageView];
-        if (node.handle == self.node.handle) {
-            [self.scrollView scrollRectToVisible:imageView.frame animated:NO];
+    for (NSUInteger i = 0; i<self.mediaNodes.count; i++) {
+        if (self.mediaNodes[i].handle == self.node.handle) {
             self.currentIndex = i;
+            break;
         }
-        i++;
     }
     
+    [self loadNearbyImagesFromIndex:self.currentIndex];
     [self reloadTitle];
 }
 
@@ -111,10 +95,40 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     self.currentIndex = scrollView.contentOffset.x/scrollView.frame.size.width;
+    [self loadNearbyImagesFromIndex:self.currentIndex];
     [self reloadTitle];
 }
 
 #pragma mark - Getting the images
+
+- (void)loadNearbyImagesFromIndex:(NSUInteger)index {
+    if (self.mediaNodes.count>0) {
+        NSUInteger initialIndex = index == 0 ? 0 : index-1;
+        NSUInteger finalIndex = index == self.mediaNodes.count-1 ? self.mediaNodes.count-1 : index+1;
+        for (NSUInteger i = initialIndex; i<=finalIndex; i++) {
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.scrollView.frame.size.width * i, 0.0f, self.scrollView.frame.size.width, self.scrollView.frame.size.height)];
+            imageView.contentMode = UIViewContentModeScaleAspectFit;
+            
+            MEGANode *node = [self.mediaNodes objectAtIndex:i];
+            
+            NSString *offlineImagePath = [[Helper pathForOffline] stringByAppendingPathComponent:[self.api escapeFsIncompatible:node.name]];
+            if ([[NSFileManager defaultManager] fileExistsAtPath:offlineImagePath]) {
+                imageView.image = [UIImage imageWithContentsOfFile:offlineImagePath];
+            } else {
+                NSString *previewPath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
+                if ([[NSFileManager defaultManager] fileExistsAtPath:previewPath]) {
+                    imageView.image = [UIImage imageWithContentsOfFile:previewPath];
+                } else {
+                    [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
+                }
+            }
+            [self.scrollView addSubview:imageView];
+            if (i==index) {
+                [self.scrollView scrollRectToVisible:imageView.frame animated:NO];
+            }
+        }
+    }
+}
 
 - (void)setupNode:(MEGANode *)node forImageView:(UIImageView *)imageView withMode:(MEGAPhotoMode)mode {
     void (^requestCompletion)(MEGARequest *request) = ^(MEGARequest *request) {
