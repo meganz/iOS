@@ -10,7 +10,7 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 @interface MEGAPhotoBrowserViewController : UIViewController
 
 @property (nonatomic) MEGANode *node;
-@property (nonatomic) MEGANodeList *nodeList;
+@property (nonatomic) NSArray<MEGANode *> *nodesArray;
 @property (nonatomic) MEGASdk *api;
 
 @end

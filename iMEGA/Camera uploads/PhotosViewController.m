@@ -12,6 +12,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
+#import "MEGAPhotoBrowserViewController.h"
 
 #import "PhotoCollectionViewCell.h"
 #import "HeaderCollectionReusableView.h"
@@ -30,7 +31,6 @@
 @property (nonatomic, strong) MEGANode *parentNode;
 @property (nonatomic, strong) MEGANodeList *nodeList;
 @property (nonatomic, strong) NSMutableArray *photosByMonthYearArray;
-@property (nonatomic, strong) NSMutableArray *previewsArray;
 
 @property (nonatomic) CGSize sizeForItem;
 @property (nonatomic) CGFloat portraitThumbnailSize;
@@ -222,16 +222,9 @@
     df.timeStyle = NSDateFormatterNoStyle;
     df.locale = [NSLocale currentLocale];
     df.dateFormat = @"LLLL yyyy";
-    
-    self.previewsArray = [[NSMutableArray alloc] init];
-    
+        
     for (NSInteger i = 0; i < [self.nodeList.size integerValue]; i++) {
         MEGANode *node = [self.nodeList nodeAtIndex:i];
-        
-        if (node.name.mnz_isImagePathExtension) {
-            MWPhoto *preview = [[MWPhoto alloc] initWithNode:node];
-            [self.previewsArray addObject:preview];
-        }
         
         if (!node.name.mnz_isImagePathExtension && !node.name.mnz_isVideoPathExtension) {
             continue;
@@ -638,20 +631,13 @@
     
     if (![self.photosCollectionView allowsMultipleSelection]) {
         if (node.name.mnz_isImagePathExtension) {
-            MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithPhotos:self.previewsArray];            
-            photoBrowser.displayActionButton = YES;
-            photoBrowser.displayNavArrows = YES;
-            photoBrowser.displaySelectionButtons = NO;
-            photoBrowser.zoomPhotosToFill = YES;
-            photoBrowser.alwaysShowControls = NO;
-            photoBrowser.enableGrid = YES;
-            photoBrowser.startOnGrid = NO;
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
+            MEGAPhotoBrowserViewController *photoBrowserViewController = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
+            photoBrowserViewController.api = [MEGASdkManager sharedMEGASdk];
+            photoBrowserViewController.node = node;
+            photoBrowserViewController.nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
             
-            [self.navigationController pushViewController:photoBrowser animated:YES];
-            
-            [photoBrowser showNextPhotoAnimated:YES];
-            [photoBrowser showPreviousPhotoAnimated:YES];
-            [photoBrowser setCurrentPhotoIndex:index];
+            [self presentViewController:photoBrowserViewController animated:YES completion:nil];
         } else {
             MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
             
@@ -779,7 +765,7 @@
 }
 
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
-    if (viewControllerToCommit.class == MWPhotoBrowser.class) {
+    if (viewControllerToCommit.class == MEGAPhotoBrowserViewController.class) {
         [self.navigationController pushViewController:viewControllerToCommit animated:YES];
     } else {
         [self.navigationController presentViewController:viewControllerToCommit animated:YES completion:nil];

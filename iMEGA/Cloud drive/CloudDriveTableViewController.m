@@ -32,6 +32,7 @@
 #import "ContactsViewController.h"
 #import "DetailsNodeInfoViewController.h"
 #import "MEGAAVViewController.h"
+#import "MEGAPhotoBrowserViewController.h"
 #import "NodeTableViewCell.h"
 #import "PhotosViewController.h"
 #import "PreviewDocumentViewController.h"
@@ -540,7 +541,7 @@
 }
 
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
-    if (viewControllerToCommit.class == CloudDriveTableViewController.class || viewControllerToCommit.class == MWPhotoBrowser.class || viewControllerToCommit.class == PreviewDocumentViewController.class) {
+    if (viewControllerToCommit.class == CloudDriveTableViewController.class || viewControllerToCommit.class == MEGAPhotoBrowserViewController.class || viewControllerToCommit.class == PreviewDocumentViewController.class) {
         [self.navigationController pushViewController:viewControllerToCommit animated:YES];
     } else {
         [self.navigationController presentViewController:viewControllerToCommit animated:YES completion:nil];
