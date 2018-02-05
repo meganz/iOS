@@ -1873,7 +1873,7 @@
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
     self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
     
-    if (direction == MGSwipeDirectionLeftToRight) {
+    if (direction == MGSwipeDirectionLeftToRight && [[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {
         
         MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor colorWithRed:0.0 green:0.75 blue:0.65 alpha:1.0] padding:50 callback:^BOOL(MGSwipeTableCell *sender) {
             [self downloadAction:nil];
@@ -1883,7 +1883,7 @@
 
         return @[downloadButton];
     }
-    else {
+    else if (direction == MGSwipeDirectionRightToLeft) {
         
         MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"shareGray"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:50 callback:^BOOL(MGSwipeTableCell *sender) {
             [self shareAction:nil];
@@ -1892,6 +1892,9 @@
         [shareButton iconTintColor:[UIColor whiteColor]];
 
         return @[shareButton];
+    }
+    else {
+        return nil;
     }
 }
 
