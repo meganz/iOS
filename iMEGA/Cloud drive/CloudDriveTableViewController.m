@@ -514,8 +514,10 @@
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView leadingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     NodeTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.isSwiping = YES;
+    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+    self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
     UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Download" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        NSLog(@"download tapped");
+        [self downloadAction:nil];
         [self setEditing:NO animated:YES];
     }];
     downloadAction.image = [UIImage imageNamed:@"infoDownload"];
@@ -526,8 +528,10 @@
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     NodeTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.isSwiping = YES;
+    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+    self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
     UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Share" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        NSLog(@"share tapped");
+        [self shareAction:nil];
         [self setEditing:NO animated:YES];
     }];
     shareAction.image = [UIImage imageNamed:@"shareGray"];
@@ -1891,36 +1895,30 @@
     swipeSettings.transition = MGSwipeTransitionDrag;
     expansionSettings.buttonIndex = 0;
     expansionSettings.expansionLayout = MGSwipeExpansionLayoutCenter;
+    expansionSettings.fillOnTrigger = NO;
+    expansionSettings.threshold = 2;
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+    self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
     
     if (direction == MGSwipeDirectionLeftToRight) {
         
-        expansionSettings.fillOnTrigger = NO;
-        expansionSettings.threshold = 2;
-        
-        MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"Download" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor colorWithRed:0.0 green:0.75 blue:0.65 alpha:1.0] padding:5 callback:^BOOL(MGSwipeTableCell *sender) {
-            
-            NSLog(@"tapped download");
-            
+        MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor colorWithRed:0.0 green:0.75 blue:0.65 alpha:1.0] padding:50 callback:^BOOL(MGSwipeTableCell *sender) {
+            [self downloadAction:nil];
             return YES;
         }];
         [downloadButton iconTintColor:[UIColor whiteColor]];
-        [downloadButton.titleLabel setFont:[UIFont mnz_SFUIRegularWithSize:12]];
-        [downloadButton centerIconOverText];
 
         return @[downloadButton];
     }
     else {
-        expansionSettings.fillOnTrigger = NO;
-        expansionSettings.threshold = 2;
-        MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"Share" icon:[UIImage imageNamed:@"shareGray"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:5 callback:^BOOL(MGSwipeTableCell *sender) {
-            
-            NSLog(@"tapped share");
-            
+        
+        MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"shareGray"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:50 callback:^BOOL(MGSwipeTableCell *sender) {
+            [self shareAction:nil];
             return YES;
         }];
         [shareButton iconTintColor:[UIColor whiteColor]];
-        [shareButton.titleLabel setFont:[UIFont mnz_SFUIRegularWithSize:12]];
-        [shareButton centerIconOverText];
 
         return @[shareButton];
     }
