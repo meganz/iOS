@@ -8,8 +8,6 @@
 
 @property (nonatomic, readonly, getter=isPseudoEditing) BOOL pseudoEdit;
 
-- (void)selectCell:(NodeTableViewCell *)cell;
-
 @end
 
 @interface NodeTableViewCell : MGSwipeTableCell
