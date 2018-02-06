@@ -39,38 +39,33 @@
             case CLOUD:
                 [tabBarItem setImage:[[UIImage imageNamed:@"cloudDriveIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"cloudDriveSelectedIcon"]];
-                tabBarItem.title = AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
                 break;
                 
             case PHOTOS:
                 [tabBarItem setImage:[[UIImage imageNamed:@"cameraUploadsIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"cameraUploadsSelectedIcon"]];
-                tabBarItem.title = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
                 break;
                 
             case SHARES:
                 [tabBarItem setImage:[[UIImage imageNamed:@"sharedItemsIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"sharedItemsSelectedIcon"]];
-                [tabBarItem setTitle:AMLocalizedString(@"shared", nil)];
                 break;
                 
             case MYACCOUNT:
                 [tabBarItem setImage:[[UIImage imageNamed:@"myAccountIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"myAccountSelectedIcon"]];
-                [tabBarItem setTitle:AMLocalizedString(@"myAccount", nil)];
                 break;
                 
             case CHAT:
                 [tabBarItem setImage:[[UIImage imageNamed:@"chatIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"chatSelectedIcon"]];
-                tabBarItem.title = AMLocalizedString(@"chat", @"Chat section header");
                 break;
         }
     }
     
     self.viewControllers = defaultViewControllersMutableArray;
     
-    [self.view setTintColor:[UIColor mnz_redD90007]];
+    self.view.tintColor = [UIColor mnz_redF0373A];
     
     [self setDelegate:self];
     
@@ -123,6 +118,10 @@
     } else {
         return UIInterfaceOrientationMaskAll;
     }
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 #pragma mark - Private

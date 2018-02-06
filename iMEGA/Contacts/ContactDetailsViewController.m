@@ -191,7 +191,7 @@
                 case 1: //Remove Contact
                     cell.nameLabel.text = AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
                     cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
-                    cell.nameLabel.textColor = [UIColor mnz_redD90007];
+                    cell.nameLabel.textColor = [UIColor mnz_redF0373A];
                     break;
             }
         } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
@@ -205,7 +205,7 @@
                     break;
             }
             cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
-            cell.nameLabel.textColor = [UIColor mnz_redD90007];
+            cell.nameLabel.textColor = [UIColor mnz_redF0373A];
         }
     } else if (indexPath.section == 1) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsSharedFolderTypeID" forIndexPath:indexPath];

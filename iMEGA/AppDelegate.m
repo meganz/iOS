@@ -596,30 +596,41 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 #pragma mark - Private
 
-- (void)setupAppearance {    
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]}];
-    [[UINavigationBar appearance] setTintColor:[UIColor mnz_redD90007]];
-    [[UINavigationBar appearance] setBackgroundColor:[UIColor mnz_grayF9F9F9]];
+- (void)setupAppearance {
+    
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor mnz_redF0373A]];
+    [[UINavigationBar appearance] setTranslucent:NO];
+    
+    //To tint the color of the prompt.
+    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:[UIColor whiteColor]];
     
     if (@available(iOS 10.0, *)) {
         [[UINavigationBar appearance] setShadowImage:[UIImage mnz_navigationBarShadow]];
         [[UINavigationBar appearance] setBackgroundImage:[UIImage mnz_navigationBarBackground] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsCompact];
     }
     
+    [[UISearchBar appearance] setTranslucent:NO];
+    [[UISearchBar appearance] setBackgroundColor:[UIColor mnz_grayF1F1F2]];
+    [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:[UIColor mnz_grayF1F1F2]];
+    
+    [[UISegmentedControl appearance] setTintColor:[UIColor mnz_redF0373A]];
+    
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
     
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:[UIColor whiteColor]];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UIToolbar class]]] setTintColor:[UIColor mnz_redF0373A]];
+    
     [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"backArrow"]];
     [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backArrow"]];
-    [UIBarButtonItem appearance].tintColor = [UIColor mnz_redD90007];
     
-    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:8.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]} forState:UIControlStateNormal];
-    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:8.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateSelected];
+    [[UITextField appearance] setTintColor:[UIColor mnz_green00BFA5]];
     
-    [[UITextField appearance] setTintColor:[UIColor mnz_redD90007]];
-    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:[UIColor mnz_grayF9F9F9]];
+    [[UIView appearanceWhenContainedInInstancesOfClasses:@[[UIAlertController class]]] setTintColor:[UIColor mnz_redF0373A]];
     
-    [[UIView appearanceWhenContainedIn:[UIAlertController class], nil] setTintColor:[UIColor mnz_redD90007]];
+    [[UIProgressView appearance] setTintColor:[UIColor mnz_redF0373A]];
     
     [SVProgressHUD setFont:[UIFont mnz_SFUIRegularWithSize:12.0f]];
     [SVProgressHUD setRingThickness:2.0];
@@ -1218,7 +1229,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (UIBarButtonItem *)cancelBarButtonItem {
     UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStylePlain target:nil action:@selector(dismissPresentedViews)];
-    [cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
+    [cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]} forState:UIControlStateNormal];
     return cancelBarButtonItem;
 }
 
