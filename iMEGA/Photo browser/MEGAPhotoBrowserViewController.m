@@ -2,10 +2,12 @@
 #import "MEGAPhotoBrowserViewController.h"
 
 #import "Helper.h"
+#import "MEGAActivityItemProvider.h"
 #import "MEGAGetPreviewRequestDelegate.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGAPhotoBrowserAnimator.h"
 #import "MEGAStartDownloadTransferDelegate.h"
+#import "SaveToCameraRollActivity.h"
 
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -243,6 +245,25 @@
 
 - (IBAction)didPressCloseButton:(UIBarButtonItem *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)didPressThumbnailsButton:(UIBarButtonItem *)sender {
+    
+}
+
+- (IBAction)didPressOpenIn:(UIBarButtonItem *)sender {
+    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    
+    MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
+    NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
+    SaveToCameraRollActivity *saveToCameraRollActivity = [[SaveToCameraRollActivity alloc] initWithNode:node];
+    [activitiesMutableArray addObject:saveToCameraRollActivity];
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[activityItemProvider] applicationActivities:activitiesMutableArray];
+    
+    [activityViewController setExcludedActivityTypes:@[UIActivityTypeSaveToCameraRoll, UIActivityTypeCopyToPasteboard]];
+    activityViewController.popoverPresentationController.barButtonItem = sender;
+    
+    [self presentViewController:activityViewController animated:YES completion:nil];
 }
 
 #pragma mark - Gesture recognizers
