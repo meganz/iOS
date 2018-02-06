@@ -19,7 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @property (nonatomic) NSMutableArray<MEGANode *> *mediaNodes;
-@property (nonatomic) NSCache<NSString *, UIImageView *> *imageViewsCache;
+@property (nonatomic) NSCache<NSString *, UIScrollView *> *imageViewsCache;
 
 @property (nonatomic) CGPoint panGestureInitialPoint;
 @property (nonatomic, getter=isInterfaceHidden) BOOL interfaceHidden;
@@ -42,14 +42,23 @@
         }
     }
     
-    self.imageViewsCache = [[NSCache<NSString *, UIImageView *> alloc] init];
+    self.imageViewsCache = [[NSCache<NSString *, UIScrollView *> alloc] init];
     self.imageViewsCache.countLimit = 1000;
     
     self.panGestureInitialPoint = CGPointMake(0.0f, 0.0f);
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)]];
-    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGesture:)]];
+    
+    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGesture:)];
+    doubleTap.numberOfTapsRequired = 2;
+    [self.view addGestureRecognizer:doubleTap];
+
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGesture:)];
+    singleTap.numberOfTapsRequired = 1;
+    [singleTap requireGestureRecognizerToFail:doubleTap];
+    [self.view addGestureRecognizer:singleTap];
     
     self.scrollView.delegate = self;
+    self.scrollView.tag = 1;
     self.transitioningDelegate = self;
 }
 
@@ -79,6 +88,8 @@
     }
     
     [self loadNearbyImagesFromIndex:self.currentIndex];
+    UIScrollView *zoomableViewForInitialNode = [self.imageViewsCache objectForKey:self.node.base64Handle];
+    [self.scrollView scrollRectToVisible:zoomableViewForInitialNode.frame animated:NO];
     [self reloadTitle];
 }
 
@@ -95,18 +106,50 @@
     self.navigationItem.titleView = [Helper customNavigationBarLabelWithTitle:[self.mediaNodes objectAtIndex:self.currentIndex].name subtitle:subtitle];
 }
 
+- (void)resetZooms {
+    for (MEGANode *node in self.mediaNodes) {
+        UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
+        if (zoomableView) {
+            zoomableView.zoomScale = 1.0f;
+        }
+    }
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    [self reloadTitle];
+    if (scrollView.tag == 1) {
+        [self reloadTitle];
+        [self resetZooms];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    CGFloat newIndexFloat = scrollView.contentOffset.x/scrollView.frame.size.width;
-    NSUInteger newIndex = newIndexFloat < self.currentIndex ? floor(newIndexFloat) : ceil(newIndexFloat);
-    if (newIndex != self.currentIndex) {
-        self.currentIndex = newIndex;
-        [self loadNearbyImagesFromIndex:self.currentIndex];
+    if (scrollView.tag == 1) {
+        CGFloat newIndexFloat = scrollView.contentOffset.x/scrollView.frame.size.width;
+        NSUInteger newIndex = newIndexFloat < self.currentIndex ? floor(newIndexFloat) : ceil(newIndexFloat);
+        if (newIndex != self.currentIndex) {
+            self.currentIndex = newIndex;
+            [self loadNearbyImagesFromIndex:self.currentIndex];
+        }
+    }
+}
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+    if (scrollView.tag != 1) {
+        return scrollView.subviews.firstObject;
+    } else {
+        return nil;
+    }
+}
+
+- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
+    if (scrollView.tag != 1) {
+        MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+        NSString *offlineImagePath = [[Helper pathForOffline] stringByAppendingPathComponent:[self.api escapeFsIncompatible:node.name]];
+        if (![[NSFileManager defaultManager] fileExistsAtPath:offlineImagePath]) {
+            [self setupNode:node forImageView:(UIImageView *)view withMode:MEGAPhotoModeFull];
+        }
     }
 }
 
@@ -122,7 +165,7 @@
                 continue;
             }
             
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.scrollView.frame.size.width * i, 0.0f, self.scrollView.frame.size.width, self.scrollView.frame.size.height)];
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.scrollView.frame.size.width, self.scrollView.frame.size.height)];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
             NSString *offlineImagePath = [[Helper pathForOffline] stringByAppendingPathComponent:[self.api escapeFsIncompatible:node.name]];
@@ -137,13 +180,20 @@
                 }
             }
             
-            [self.scrollView addSubview:imageView];
+            UIScrollView *zoomableView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.scrollView.frame.size.width * i, 0.0f, self.scrollView.frame.size.width, self.scrollView.frame.size.height)];
+            zoomableView.minimumZoomScale = 1.0f;
+            zoomableView.maximumZoomScale = 5.0f;
+            zoomableView.zoomScale = 1.0f;
+            zoomableView.contentSize = imageView.bounds.size;
+            zoomableView.delegate = self;
+            zoomableView.showsHorizontalScrollIndicator = NO;
+            zoomableView.showsVerticalScrollIndicator = NO;
+            zoomableView.tag = 2;
+            [zoomableView addSubview:imageView];
             
-            if (i==index) {
-                [self.scrollView scrollRectToVisible:imageView.frame animated:NO];
-            }
+            [self.scrollView addSubview:zoomableView];
             
-            [self.imageViewsCache setObject:imageView forKey:node.base64Handle];
+            [self.imageViewsCache setObject:zoomableView forKey:node.base64Handle];
         }
     }
 }
@@ -153,7 +203,7 @@
         imageView.image = [UIImage imageWithContentsOfFile:request.file];
     };
     void (^transferCompletion)(MEGATransfer *transfer) = ^(MEGATransfer *transfer) {
-        imageView.image = [UIImage imageWithContentsOfFile:transfer.fileName];
+        imageView.image = [UIImage imageWithContentsOfFile:transfer.path];
     };
     
     switch (mode) {
@@ -232,7 +282,18 @@
     }
 }
 
-- (void)tapGesture:(UITapGestureRecognizer *)tapGestureRecognizer {
+- (void)doubleTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer {
+    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
+    if (zoomableView) {
+        [self scrollViewWillBeginZooming:zoomableView withView:zoomableView.subviews.firstObject];
+        [UIView animateWithDuration:0.3 animations:^{
+            zoomableView.zoomScale = zoomableView.zoomScale > 1.0f ? 1.0f : 5.0f;
+        }];
+    }
+}
+
+- (void)singleTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer {
     [UIView animateWithDuration:0.3 animations:^{
         if (self.isInterfaceHidden) {
             self.view.backgroundColor = [UIColor clearColor];
