@@ -98,9 +98,16 @@
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    self.currentIndex = scrollView.contentOffset.x/scrollView.frame.size.width;
-    [self loadNearbyImagesFromIndex:self.currentIndex];
     [self reloadTitle];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat newIndexFloat = scrollView.contentOffset.x/scrollView.frame.size.width;
+    NSUInteger newIndex = newIndexFloat < self.currentIndex ? floor(newIndexFloat) : ceil(newIndexFloat);
+    if (newIndex != self.currentIndex) {
+        self.currentIndex = newIndex;
+        [self loadNearbyImagesFromIndex:self.currentIndex];
+    }
 }
 
 #pragma mark - Getting the images
@@ -209,7 +216,7 @@
             
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled: {
-            if (ABS(verticalIncrement) > 100.0f) {
+            if (ABS(verticalIncrement) > 50.0f) {
                 [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 [UIView animateWithDuration:0.3 animations:^{
