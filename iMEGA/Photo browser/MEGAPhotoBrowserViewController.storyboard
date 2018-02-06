@@ -31,8 +31,18 @@
                                         <rect key="frame" x="0.0" y="603" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                         <items>
-                                            <barButtonItem systemItem="organize" id="xTs-Xs-c6Q">
+                                            <barButtonItem title="Item" image="thumbnailsView" id="xTs-Xs-c6Q">
                                                 <color key="tintColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <connections>
+                                                    <action selector="didPressThumbnailsButton:" destination="yD8-RT-K0O" id="ZOX-jv-VVR"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem width="297" style="plain" systemItem="fixedSpace" id="TgI-ki-qDj"/>
+                                            <barButtonItem title="Item" image="openWith" id="Rck-W5-yGE">
+                                                <color key="tintColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <connections>
+                                                    <action selector="didPressOpenIn:" destination="yD8-RT-K0O" id="08B-ip-amX"/>
+                                                </connections>
                                             </barButtonItem>
                                         </items>
                                     </toolbar>
@@ -71,4 +81,8 @@
             <point key="canvasLocation" x="173.59999999999999" y="162.3688155922039"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="openWith" width="24" height="24"/>
+        <image name="thumbnailsView" width="24" height="24"/>
+    </resources>
 </document>
