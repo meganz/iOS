@@ -2,6 +2,7 @@
 #import "MNZActionViewController.h"
 #import "Helper.h"
 #import "MEGASdkManager.h"
+#import "MEGAStore.h"
 
 #define kCollectionViewHeaderHeight 80
 #define kCollectionViewCellHeight 60
@@ -115,18 +116,72 @@
     }
 }
 
+#pragma mark MegaActions
+
 - (NSArray<MegaActionNode *>*)getActions {
     NSMutableArray *actions = [NSMutableArray new];
     
-    [actions addObject:[self actionShare]];
-    [actions addObject:[self actionDownload]];
+    switch (self.accessType) {
+        case MEGAShareTypeAccessRead:
+        case MEGAShareTypeAccessReadWrite: {
+            [actions addObject:[self actionDownload]];
+            [actions addObject:[self actionFileInfo]];
+            [actions addObject:[self actionCopy]];
+            if (self.isIncomingShareChildView) {
+                [actions addObject:[self actionLeaveSharing]];
+            }
+            break;
+        }
+            
+        case MEGAShareTypeAccessFull:
+            [actions addObject:[self actionDownload]];
+            [actions addObject:[self actionFileInfo]];
+            [actions addObject:[self actionCopy]];
+            [actions addObject:[self actionRename]];
+            if (self.isIncomingShareChildView) {
+                [actions addObject:[self actionLeaveSharing]];
+            }
+            break;
+            
+        case MEGAShareTypeAccessOwner:
+            if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeRubbishBin) {
+                [actions addObject:[self actionShare]];
+                [actions addObject:[self actionDownload]];
+                [actions addObject:[self actionFileInfo]];
+                [actions addObject:[self actionCopy]];
+                [actions addObject:[self actionMove]];
+                [actions addObject:[self actionRename]];
+                if (self.node.publicLink) {
+                    [actions addObject:[self actionRemoveLink]];
+                }
+                if (self.isIncomingShareChildView) {
+                    [actions addObject:[self actionLeaveSharing]];
+                }
+                if (self.displayMode == DisplayModeCloudDrive) {
+                    [actions addObject:[self actionMoveToRubbishBin]];
+                } else if (self.displayMode == DisplayModeRubbishBin) {
+                    [actions addObject:[self actionRemove]];
+                }
+            } else {
+                [actions addObject:[self actionShare]];
+                [actions addObject:[self actionDownload]];
+                [actions addObject:[self actionFileInfo]];
+                [actions addObject:[self actionCopy]];
+                [actions addObject:[self actionRename]];
+                [actions addObject:[self actionRemoveSharing]];
+            }
+            break;
+            
+        default:
+            break;
+    }
     
     return actions;
 }
 
 - (MegaActionNode *)actionShare {
     MegaActionNode *action = [[MegaActionNode alloc] init];
-    action.title = @"Share";
+    action.title = @"Localizar Share";
     action.iconName = @"shareGray";
     [action setActionBlock:^{
         NSLog(@"share pulsada");
@@ -136,54 +191,86 @@
 
 - (MegaActionNode *)actionDownload {
     MegaActionNode *action = [[MegaActionNode alloc] init];
-    action.title = @"Download";
-    action.iconName = @"download";
+    if ([[Helper downloadingNodes] objectForKey:self.node.base64Handle] != nil) {
+        action.iconName = @"download";
+        action.title = AMLocalizedString(@"queued", @"Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download");
+    } else {
+        MOOfflineNode *offlineNode = [[MEGAStore shareInstance] offlineNodeWithNode:self.node api:[MEGASdkManager sharedMEGASdk]];
+        if (offlineNode != nil) {
+            action.iconName = @"downloaded";
+            action.title = AMLocalizedString(@"savedForOffline", @"List option shown on the details of a file or folder");
+        } else {
+            action.iconName = @"download";
+            action.title = AMLocalizedString(@"saveForOffline", @"List option shown on the details of a file or folder");
+        }
+    }
     return action;
 }
 
 - (MegaActionNode *)actionFileInfo {
     MegaActionNode *action = [[MegaActionNode alloc] init];
-    action.title = @"Download";
-    action.iconName = @"download";
+    action.title = @"Localizar File Info";
+    action.iconName = @"nodeInfo";
     return action;
 }
 
 - (MegaActionNode *)actionRename {
     MegaActionNode *action = [[MegaActionNode alloc] init];
-    action.title = @"Download";
-    action.iconName = @"download";
+    action.title = AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder");
+    action.iconName = @"rename";
     return action;
 }
 
 - (MegaActionNode *)actionCopy {
     MegaActionNode *action = [[MegaActionNode alloc] init];
-    action.title = @"Download";
-    action.iconName = @"download";
+    action.title = AMLocalizedString(@"copy", @"List option shown on the details of a file or folder");
+    action.iconName = @"copy";
     return action;
 }
 
 - (MegaActionNode *)actionMove {
     MegaActionNode *action = [[MegaActionNode alloc] init];
-    action.title = @"Download";
-    action.iconName = @"download";
+    action.title = AMLocalizedString(@"move", @"Title for the action that allows you to move a file or folder");
+    action.iconName = @"move";
     return action;
 }
 
 - (MegaActionNode *)actionMoveToRubbishBin {
     MegaActionNode *action = [[MegaActionNode alloc] init];
-    action.title = @"Download";
-    action.iconName = @"download";
+    action.title = AMLocalizedString(@"moveToTheRubbishBin", @"Title for the action that allows you to 'Move to the Rubbish Bin' files or folders");
+    action.iconName = @"rubbishBin";
     return action;
 }
 
 - (MegaActionNode *)actionRemove {
     MegaActionNode *action = [[MegaActionNode alloc] init];
-    action.title = @"Download";
-    action.iconName = @"download";
+    action.title = AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
+    action.iconName = @"remove";
     return action;
 }
 
-#pragma mark Actions
+- (MegaActionNode *)actionLeaveSharing {
+    MegaActionNode *action = [[MegaActionNode alloc] init];
+    action.title = AMLocalizedString(@"leaveFolder", @"Button title of the action that allows to leave a shared folder");
+    action.iconName = @"leaveShare";
+    return action;
+}
+
+- (MegaActionNode *)actionRemoveLink {
+    MegaActionNode *action = [[MegaActionNode alloc] init];
+    action.title = AMLocalizedString(@"removeLink", @"Message shown when there is an active link that can be removed or disabled");
+    action.iconName = @"removeLink";
+    return action;
+}
+
+- (MegaActionNode *)actionRemoveSharing {
+    MegaActionNode *action = [[MegaActionNode alloc] init];
+    action.title = AMLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share");
+    action.iconName = @"removeShare";
+    return action;
+}
+
+#pragma mark IBActions
 
 - (IBAction)tapCancel:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
