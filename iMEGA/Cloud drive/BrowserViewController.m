@@ -124,7 +124,7 @@
     self.parentBrowser = !self.isChildBrowser;
     
     self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", nil);
-    [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
+    [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]} forState:UIControlStateNormal];
     
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
@@ -433,21 +433,11 @@
 }
 
 - (void)addSearchController {
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchResultsUpdater = self;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.searchBar.delegate = self;
-    self.searchController.searchBar.barTintColor = [UIColor colorWithWhite:235.0f / 255.0f alpha:1.0f];
-    self.searchController.searchBar.translucent = YES;
-    [self.searchController.searchBar sizeToFit];
-    self.searchController.searchBar.tintColor = [UIColor mnz_redD90007];
-    UITextField *searchTextField = [self.searchController.searchBar valueForKey:@"_searchField"];
-    searchTextField.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
-    searchTextField.textColor = [UIColor mnz_gray999999];
+    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.tableView.tableHeaderView = self.searchController.searchBar;
     [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
     self.definesPresentationContext = NO;
-    self.searchController.hidesNavigationBarDuringPresentation = NO;
 }
 
 - (MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath {

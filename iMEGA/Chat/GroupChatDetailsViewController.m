@@ -213,7 +213,7 @@
             case MEGAChatRoomPrivilegeRo:
             case MEGAChatRoomPrivilegeStandard: {
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsLeaveGroupTypeID" forIndexPath:indexPath];
-                NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]};
+                NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]};
                 cell.nameLabel.attributedText = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.") attributes:attributes];
                 break;
             }
@@ -241,7 +241,7 @@
                         } else if (indexPath.row == 2) {
                             text = AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
                         }
-                        NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]};
+                        NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]};
                         cell.nameLabel.attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
                         break;
                     }
@@ -381,7 +381,7 @@
 
             UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
             UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil];
-            [cancelAlertAction mnz_setTitleTextColor:[UIColor mnz_redD90007]];
+            [cancelAlertAction mnz_setTitleTextColor:[UIColor mnz_redF0373A]];
             [permissionsAlertController addAction:cancelAlertAction];
             
             if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {

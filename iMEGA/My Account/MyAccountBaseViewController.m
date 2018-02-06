@@ -80,7 +80,7 @@
         UIAlertAction *removeAvatarAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"removeAvatar", @"Button to remove avatar. Try to keep the text short (as in English)") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[MEGASdkManager sharedMEGASdk] setAvatarUserWithSourceFilePath:nil];
         }];
-        [removeAvatarAlertAction mnz_setTitleTextColor:[UIColor mnz_redD90007]];
+        [removeAvatarAlertAction mnz_setTitleTextColor:[UIColor mnz_redF0373A]];
         [editProfileAlertController addAction:removeAvatarAlertAction];
     }
     

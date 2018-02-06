@@ -433,7 +433,7 @@
     
     NSString *owner = [NSString stringWithFormat:@" (%@)", AMLocalizedString(@"owner", @"Text shown next to name of the 'Owner' of the folder that is being shared")];
     NSMutableAttributedString *ownerMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:owner];
-    [ownerMutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor mnz_redD90007] range:[owner rangeOfString:owner]];
+    [ownerMutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor mnz_redF0373A] range:[owner rangeOfString:owner]];
     
     NSMutableAttributedString *userNameMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:self.userName];
     [userNameMutableAttributedString appendAttributedString:ownerMutableAttributedString];
@@ -462,7 +462,7 @@
         cell.nameLabel.text = sharedWithXContacts;
     } else {
         NSMutableAttributedString *sharedWithXContactsMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:sharedWithXContacts];
-        [sharedWithXContactsMutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor mnz_redD90007] range:range];
+        [sharedWithXContactsMutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor mnz_redF0373A] range:range];
         cell.nameLabel.attributedText = sharedWithXContactsMutableAttributedString;
     }
     

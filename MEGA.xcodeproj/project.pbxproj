@@ -245,8 +245,16 @@
 		5B48F8031F4C73FE001E3A29 /* AchievementsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B48F8021F4C73FE001E3A29 /* AchievementsViewController.m */; };
 		5B48F8061F4C80F4001E3A29 /* AchievementsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B48F8051F4C80F4001E3A29 /* AchievementsTableViewCell.m */; };
 		5B5737D61EFBE6410027ECCD /* MEGANode+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5737D51EFBE6410027ECCD /* MEGANode+MNZCategory.m */; };
+		5B5974E4202859400011E819 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B5974E2202858050011E819 /* SafariServices.framework */; };
 		5B5B4FFF1E681BAC00DBEB3B /* UIFont+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */; };
 		5B5B50011E684FDC00DBEB3B /* SF-UI-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B5B50001E684FDC00DBEB3B /* SF-UI-Display-Regular.otf */; };
+		5B6429DD2020A8CB000E0DCB /* SF-UI-Display-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429DC2020A5E7000E0DCB /* SF-UI-Display-Semibold.otf */; };
+		5B6429DE2020A8CB000E0DCB /* SF-UI-Display-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429DC2020A5E7000E0DCB /* SF-UI-Display-Semibold.otf */; };
+		5B6429DF2020A8CC000E0DCB /* SF-UI-Display-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429DC2020A5E7000E0DCB /* SF-UI-Display-Semibold.otf */; };
+		5B6429E02020A8CF000E0DCB /* SF-UI-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429DB2020A5E6000E0DCB /* SF-UI-Text-Semibold.otf */; };
+		5B6429E12020A8CF000E0DCB /* SF-UI-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429DB2020A5E6000E0DCB /* SF-UI-Text-Semibold.otf */; };
+		5B6429E22020A8D0000E0DCB /* SF-UI-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429DB2020A5E6000E0DCB /* SF-UI-Text-Semibold.otf */; };
+		5B6429E42020A9A3000E0DCB /* SF-UI-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429E32020A9A2000E0DCB /* SF-UI-Display-Bold.otf */; };
 		5B78F0B21F3C5362007ED721 /* MyAccountHallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B78F0B11F3C5362007ED721 /* MyAccountHallViewController.m */; };
 		5B7B4CA21EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B4C9F1EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m */; };
 		5B7B4CA31EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B4CA11EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m */; };
@@ -437,7 +445,6 @@
 		946B2D191F46E5B9009ED32C /* CopyrightWarningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 946B2D181F46E5B9009ED32C /* CopyrightWarningViewController.m */; };
 		946BD1331FEBBE4E00B76785 /* MEGAToolbarSelectedAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = 946BD1321FEBBE4E00B76785 /* MEGAToolbarSelectedAssets.m */; };
 		947F5DE31FD19AD7004FAC80 /* SF-UI-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 947F5DE11FD19AD6004FAC80 /* SF-UI-Text-Bold.otf */; };
-		947F5DE41FD19AD7004FAC80 /* SF-UI-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 947F5DE21FD19AD7004FAC80 /* SF-UI-Display-Bold.otf */; };
 		94892C901EFBEA1F00AEAC25 /* SAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250101D79E9D400499A6C /* SAMKeychain.m */; };
 		94892C911EFBEA2300AEAC25 /* SAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250121D79E9D400499A6C /* SAMKeychainQuery.m */; };
 		94892C921EFBEA3D00AEAC25 /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
@@ -1106,9 +1113,13 @@
 		5B48F8051F4C80F4001E3A29 /* AchievementsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AchievementsTableViewCell.m; sourceTree = "<group>"; };
 		5B5737D41EFBE6410027ECCD /* MEGANode+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGANode+MNZCategory.h"; sourceTree = "<group>"; };
 		5B5737D51EFBE6410027ECCD /* MEGANode+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGANode+MNZCategory.m"; sourceTree = "<group>"; };
+		5B5974E2202858050011E819 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		5B5B4FFD1E681BAC00DBEB3B /* UIFont+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+MNZCategory.h"; sourceTree = "<group>"; };
 		5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+MNZCategory.m"; sourceTree = "<group>"; };
 		5B5B50001E684FDC00DBEB3B /* SF-UI-Display-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Display-Regular.otf"; path = "Fonts/SF-UI-Display-Regular.otf"; sourceTree = "<group>"; };
+		5B6429DB2020A5E6000E0DCB /* SF-UI-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Text-Semibold.otf"; path = "Fonts/SF-UI-Text-Semibold.otf"; sourceTree = "<group>"; };
+		5B6429DC2020A5E7000E0DCB /* SF-UI-Display-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Display-Semibold.otf"; path = "Fonts/SF-UI-Display-Semibold.otf"; sourceTree = "<group>"; };
+		5B6429E32020A9A2000E0DCB /* SF-UI-Display-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Display-Bold.otf"; path = "Fonts/SF-UI-Display-Bold.otf"; sourceTree = "<group>"; };
 		5B78F0B01F3C5362007ED721 /* MyAccountHallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAccountHallViewController.h; sourceTree = "<group>"; };
 		5B78F0B11F3C5362007ED721 /* MyAccountHallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAccountHallViewController.m; sourceTree = "<group>"; };
 		5B7B4C9E1EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAInviteContactRequestDelegate.h; path = API/Requests/MEGAInviteContactRequestDelegate.h; sourceTree = "<group>"; };
@@ -1198,13 +1209,12 @@
 		946B2D181F46E5B9009ED32C /* CopyrightWarningViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CopyrightWarningViewController.m; sourceTree = "<group>"; };
 		946BD1311FEBBE4E00B76785 /* MEGAToolbarSelectedAssets.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAToolbarSelectedAssets.h; sourceTree = "<group>"; };
 		946BD1321FEBBE4E00B76785 /* MEGAToolbarSelectedAssets.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAToolbarSelectedAssets.m; sourceTree = "<group>"; };
-		947F5DE11FD19AD6004FAC80 /* SF-UI-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Text-Bold.otf"; sourceTree = "<group>"; };
-		947F5DE21FD19AD7004FAC80 /* SF-UI-Display-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Display-Bold.otf"; sourceTree = "<group>"; };
+		947F5DE11FD19AD6004FAC80 /* SF-UI-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Text-Bold.otf"; path = "Fonts/SF-UI-Text-Bold.otf"; sourceTree = "<group>"; };
 		949086861FD5482E002B12BD /* NSAttributedString+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+MNZCategory.h"; sourceTree = "<group>"; };
 		949086871FD5482E002B12BD /* NSAttributedString+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+MNZCategory.m"; sourceTree = "<group>"; };
 		949CEACD1F05121D00A3A580 /* LoginRequiredViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginRequiredViewController.h; path = iMEGA/Extensions/MEGAShare/LoginRequiredViewController.h; sourceTree = SOURCE_ROOT; };
 		949CEACE1F05121D00A3A580 /* LoginRequiredViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginRequiredViewController.m; path = iMEGA/Extensions/MEGAShare/LoginRequiredViewController.m; sourceTree = SOURCE_ROOT; };
-		94AAA9A91FD6D1C20029D6EB /* SF-UI-Text-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Text-BoldItalic.otf"; sourceTree = "<group>"; };
+		94AAA9A91FD6D1C20029D6EB /* SF-UI-Text-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Text-BoldItalic.otf"; path = "Fonts/SF-UI-Text-BoldItalic.otf"; sourceTree = "<group>"; };
 		94B120B91FE2B6CB0099E382 /* MEGAToolbarImagePickerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGAToolbarImagePickerView.xib; sourceTree = "<group>"; };
 		94B28C231F0E464C000331E6 /* libKarere.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKarere.a; path = "iMEGA/Vendor/Karere/bindings/Objective-C/build/Release-iphoneos/libKarere.a"; sourceTree = "<group>"; };
 		94B28C241F0E464C000331E6 /* libMEGASDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMEGASDK.a; path = "iMEGA/Vendor/SDK/bindings/ios/build/Release-iphoneos/libMEGASDK.a"; sourceTree = "<group>"; };
@@ -1465,6 +1475,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B5974E4202859400011E819 /* SafariServices.framework in Frameworks */,
 				A82A38D6200D332400883533 /* libmediainfo.a in Frameworks */,
 				A82A38D1200D32CA00883533 /* libzen.a in Frameworks */,
 				A8C262A71FA0B60B006172CE /* Metal.framework in Frameworks */,
@@ -2138,6 +2149,7 @@
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5B5974E2202858050011E819 /* SafariServices.framework */,
 				A82A38D4200D32EC00883533 /* libmediainfo.a */,
 				A82A38CF200D32BC00883533 /* libzen.a */,
 				A8C262A61FA0B60B006172CE /* Metal.framework */,
@@ -2189,11 +2201,11 @@
 		41A602971A8A5CF9001AE538 /* Camera uploads */ = {
 			isa = PBXGroup;
 			children = (
+				41BADDAE1A8E28FD008408B3 /* Photos.storyboard */,
 				41A602981A8A5D11001AE538 /* CameraUploads.h */,
 				41A602991A8A5D11001AE538 /* CameraUploads.m */,
 				E8ED84D91B010BDF008FCDDC /* CameraUploadsPopUpViewController.h */,
 				E8ED84DA1B010BDF008FCDDC /* CameraUploadsPopUpViewController.m */,
-				41BADDAE1A8E28FD008408B3 /* Photos.storyboard */,
 				41BADDB41A8E2E92008408B3 /* PhotosViewController.h */,
 				41BADDB51A8E2E92008408B3 /* PhotosViewController.m */,
 				41AC33A21A926B55005118AF /* PhotoCollectionViewCell.h */,
@@ -2890,6 +2902,7 @@
 		E8C289F01BF5F81300F7A034 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				5B6429E32020A9A2000E0DCB /* SF-UI-Display-Bold.otf */,
 				5B4429421E6D7B7000BCACC0 /* SF-UI-Text-RegularItalic.otf */,
 				5B44293E1E6D705D00BCACC0 /* SF-UI-Display-Medium.otf */,
 				5B5B50001E684FDC00DBEB3B /* SF-UI-Display-Regular.otf */,
@@ -2897,9 +2910,10 @@
 				5B44293F1E6D705D00BCACC0 /* SF-UI-Text-Medium.otf */,
 				E8C289F31BF5F8A200F7A034 /* SF-UI-Text-Light.otf */,
 				E8C289F61BF5FCDD00F7A034 /* SF-UI-Text-Regular.otf */,
-				947F5DE21FD19AD7004FAC80 /* SF-UI-Display-Bold.otf */,
 				947F5DE11FD19AD6004FAC80 /* SF-UI-Text-Bold.otf */,
 				94AAA9A91FD6D1C20029D6EB /* SF-UI-Text-BoldItalic.otf */,
+				5B6429DC2020A5E7000E0DCB /* SF-UI-Display-Semibold.otf */,
+				5B6429DB2020A5E6000E0DCB /* SF-UI-Text-Semibold.otf */,
 			);
 			name = Fonts;
 			sourceTree = "<group>";
@@ -3182,7 +3196,7 @@
 				4115044B1CEB07C700BF38E3 /* VideoOverlay@3x.png in Resources */,
 				41EABF171DA7C5250087271C /* Chat.storyboard in Resources */,
 				4115043B1CEB07C700BF38E3 /* PlayButtonOverlayLarge@2x.png in Resources */,
-				947F5DE41FD19AD7004FAC80 /* SF-UI-Display-Bold.otf in Resources */,
+				5B6429E42020A9A3000E0DCB /* SF-UI-Display-Bold.otf in Resources */,
 				411504311CEB07C700BF38E3 /* ImageSelectedOn.png in Resources */,
 				411504371CEB07C700BF38E3 /* ImageSelectedSmallOn.png in Resources */,
 				E8C289F51BF5F8A200F7A034 /* SF-UI-Text-Light.otf in Resources */,
@@ -3217,12 +3231,14 @@
 				A82E5BC81F3465A3003C149C /* Spotlight_file@2x.png in Resources */,
 				4115042B1CEB07C700BF38E3 /* ImageError.png in Resources */,
 				411504451CEB07C700BF38E3 /* UIBarButtonItemArrowRight@3x.png in Resources */,
+				5B6429E02020A8CF000E0DCB /* SF-UI-Text-Semibold.otf in Resources */,
 				A82E5BCB1F3465A3003C149C /* Spotlight_folder@3x.png in Resources */,
 				E8C289FF1BF65BAB00F7A034 /* Launch.storyboard in Resources */,
 				4172793A1DB663FA001AC818 /* JSQMessagesViewController.xib in Resources */,
 				E8E1D2D51AFA860E00A9BD5B /* Main.storyboard in Resources */,
 				411504331CEB07C700BF38E3 /* ImageSelectedOn@3x.png in Resources */,
 				41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */,
+				5B6429DD2020A8CB000E0DCB /* SF-UI-Display-Semibold.otf in Resources */,
 				E889C9E61B5565C900ECEFDF /* MyAccount.storyboard in Resources */,
 				94AAA9AA1FD6D1C20029D6EB /* SF-UI-Text-BoldItalic.otf in Resources */,
 				411504461CEB07C700BF38E3 /* UIBarButtonItemGrid.png in Resources */,
@@ -3257,8 +3273,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B6429E12020A8CF000E0DCB /* SF-UI-Text-Semibold.otf in Resources */,
 				945605411EDD65490094EF0F /* Cloud.storyboard in Resources */,
 				944B205F1EE5C6CE003C967B /* Launch.storyboard in Resources */,
+				5B6429DE2020A8CB000E0DCB /* SF-UI-Display-Semibold.otf in Resources */,
 				9422550C1EDC04E00074C51A /* MainInterface.storyboard in Resources */,
 				943229351EDD886B007DB542 /* Images.xcassets in Resources */,
 				9456054C1EDD7ADB0094EF0F /* LTHPasscodeViewController.bundle in Resources */,
@@ -3285,8 +3303,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B6429E22020A8D0000E0DCB /* SF-UI-Text-Semibold.otf in Resources */,
 				9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */,
 				943F8B3D1EF2888000AFD89F /* Launch.storyboard in Resources */,
+				5B6429DF2020A8CC000E0DCB /* SF-UI-Display-Semibold.otf in Resources */,
 				94892C9C1EFBF0C900AEAC25 /* SF-UI-Display-Light.otf in Resources */,
 				941135651F011C8400D33428 /* Localizable.strings in Resources */,
 				94892C9A1EFBF0C900AEAC25 /* SF-UI-Display-Medium.otf in Resources */,

@@ -27,7 +27,7 @@
     UIGraphicsBeginImageContext(rect.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    UIColor *color = [UIColor mnz_grayF9F9F9];
+    UIColor *color = [UIColor mnz_redF0373A];
     CGContextSetFillColorWithColor(context, [color CGColor]);
     CGContextFillRect(context, rect);
     
