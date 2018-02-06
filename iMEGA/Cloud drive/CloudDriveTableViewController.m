@@ -40,7 +40,7 @@
 #import "UpgradeTableViewController.h"
 #import "CustomModalAlertViewController.h"
 
-@interface CloudDriveTableViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate> {
+@interface CloudDriveTableViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeTableViewCellDelegate, MGSwipeTableCellDelegate> {
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
     
@@ -74,6 +74,8 @@
 
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
+@property (nonatomic, getter=isPseudoEditing) BOOL pseudoEdit;
+
 @end
 
 @implementation CloudDriveTableViewController
@@ -86,7 +88,7 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
-    self.tableView.estimatedRowHeight = 44.0;
+    self.tableView.estimatedRowHeight = 60.0;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
@@ -266,7 +268,9 @@
                 isDownloaded = YES;
             }
         }
-        
+    
+        cell.delegate = self;
+
         cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdk]];
     }
     
@@ -328,11 +332,18 @@
         cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     }
     
+    cell.customEditDelegate = self;
+    [cell setEditing:self.isEditing];
+
     return cell;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
 }
 
 #pragma mark - UITableViewDelegate
@@ -417,6 +428,7 @@
     }
 }
 
+/*
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
     
@@ -486,6 +498,40 @@
         }
     }
 }
+*/
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView leadingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NodeTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.isSwiping = YES;
+    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+    self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+    UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Download" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        [self downloadAction:nil];
+        [self setEditing:NO animated:YES];
+    }];
+    downloadAction.image = [UIImage imageNamed:@"infoDownload"];
+    downloadAction.backgroundColor = [UIColor colorWithRed:0 green:0.75 blue:0.65 alpha:1];
+    return [UISwipeActionsConfiguration configurationWithActions:@[downloadAction]];
+}
+
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NodeTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.isSwiping = YES;
+    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+    self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+    UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Share" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        [self shareAction:nil];
+        [self setEditing:NO animated:YES];
+    }];
+    shareAction.image = [UIImage imageNamed:@"shareGray"];
+    shareAction.backgroundColor = [UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1];
+    return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
+}
+
+#pragma clang diagnostic pop
 
 #pragma mark - UIViewControllerPreviewingDelegate
 
@@ -1402,6 +1448,8 @@
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    self.pseudoEdit = YES;
+
     [super setEditing:editing animated:animated];
     
     [self updateNavigationBarTitle];
@@ -1788,6 +1836,57 @@
         if (indexPath != nil) {
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }
+    }
+}
+
+#pragma mark Swipe Delegate
+
+-(BOOL) swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction {
+    if (@available(iOS 11.0, *)) {
+        return NO;
+    }
+    
+    if (self.isEditing) {
+        return NO;
+    }
+    return YES;
+}
+
+-(NSArray*) swipeTableCell:(MGSwipeTableCell*) cell swipeButtonsForDirection:(MGSwipeDirection)direction
+             swipeSettings:(MGSwipeSettings*) swipeSettings expansionSettings:(MGSwipeExpansionSettings*) expansionSettings {
+    
+    swipeSettings.transition = MGSwipeTransitionDrag;
+    expansionSettings.buttonIndex = 0;
+    expansionSettings.expansionLayout = MGSwipeExpansionLayoutCenter;
+    expansionSettings.fillOnTrigger = NO;
+    expansionSettings.threshold = 2;
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+    self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+    
+    if (direction == MGSwipeDirectionLeftToRight && [[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {
+        
+        MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor colorWithRed:0.0 green:0.75 blue:0.65 alpha:1.0] padding:50 callback:^BOOL(MGSwipeTableCell *sender) {
+            [self downloadAction:nil];
+            return YES;
+        }];
+        [downloadButton iconTintColor:[UIColor whiteColor]];
+
+        return @[downloadButton];
+    }
+    else if (direction == MGSwipeDirectionRightToLeft) {
+        
+        MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"shareGray"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:50 callback:^BOOL(MGSwipeTableCell *sender) {
+            [self shareAction:nil];
+            return YES;
+        }];
+        [shareButton iconTintColor:[UIColor whiteColor]];
+
+        return @[shareButton];
+    }
+    else {
+        return nil;
     }
 }
 

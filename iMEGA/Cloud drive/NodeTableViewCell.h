@@ -1,6 +1,16 @@
-#import <UIKit/UIKit.h>
+#import "MGSwipeTableCell.h"
 
-@interface NodeTableViewCell : UITableViewCell
+@class NodeTableViewCell;
+
+@protocol NodeTableViewCellDelegate
+
+@optional
+
+@property (nonatomic, readonly, getter=isPseudoEditing) BOOL pseudoEdit;
+
+@end
+
+@interface NodeTableViewCell : MGSwipeTableCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *upImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *middleImageView;
@@ -18,5 +28,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailPlayImageView;
 
 @property (nonatomic) uint64_t nodeHandle;
+
+@property (nonatomic, assign) id <NodeTableViewCellDelegate> customEditDelegate;
+
+@property (assign, nonatomic) BOOL isSwiping;
 
 @end
