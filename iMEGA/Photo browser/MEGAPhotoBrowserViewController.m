@@ -9,6 +9,7 @@
 #import "MEGAStartDownloadTransferDelegate.h"
 #import "SaveToCameraRollActivity.h"
 
+#import "MEGANode+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
@@ -38,9 +39,14 @@
     
     self.mediaNodes = [[NSMutableArray<MEGANode *> alloc] init];
     
+    NSUInteger i = 0;
     for (MEGANode *node in self.nodesArray) {
         if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
             [self.mediaNodes addObject:node];
+            if (node.handle == self.node.handle) {
+                self.currentIndex = i;
+            }
+            i++;
         }
     }
     
@@ -69,28 +75,14 @@
     [self reloadUI];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    self.view.backgroundColor = [UIColor clearColor];
-    self.backgroundView.backgroundColor = [UIColor clearColor];
-    self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
-    self.navigationBar.hidden = self.toolbar.hidden = self.interfaceHidden = YES;
-}
-
 #pragma mark - UI
 
 - (void)reloadUI {
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.mediaNodes.count, self.scrollView.frame.size.height);
     
-    for (NSUInteger i = 0; i<self.mediaNodes.count; i++) {
-        if (self.mediaNodes[i].handle == self.node.handle) {
-            self.currentIndex = i;
-            break;
-        }
-    }
-    
     [self loadNearbyImagesFromIndex:self.currentIndex];
-    UIScrollView *zoomableViewForInitialNode = [self.imageViewsCache objectForKey:self.node.base64Handle];
+    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    UIScrollView *zoomableViewForInitialNode = [self.imageViewsCache objectForKey:node.base64Handle];
     [self.scrollView scrollRectToVisible:zoomableViewForInitialNode.frame animated:NO];
     [self reloadTitle];
 }
@@ -148,9 +140,22 @@
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
     if (scrollView.tag != 1) {
         MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
-        NSString *offlineImagePath = [[Helper pathForOffline] stringByAppendingPathComponent:[self.api escapeFsIncompatible:node.name]];
-        if (![[NSFileManager defaultManager] fileExistsAtPath:offlineImagePath]) {
-            [self setupNode:node forImageView:(UIImageView *)view withMode:MEGAPhotoModeFull];
+        if (node.name.mnz_isImagePathExtension) {
+            NSString *offlineImagePath = [[Helper pathForOffline] stringByAppendingPathComponent:[self.api escapeFsIncompatible:node.name]];
+            if (![[NSFileManager defaultManager] fileExistsAtPath:offlineImagePath]) {
+                [self setupNode:node forImageView:(UIImageView *)view withMode:MEGAPhotoModeFull];
+            }
+        } else {
+            scrollView.subviews.lastObject.hidden = YES;
+        }
+    }
+}
+
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
+    if (scrollView.tag != 1) {
+        MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+        if (node.name.mnz_isVideoPathExtension && scale == 1.0f) {
+            scrollView.subviews.lastObject.hidden = NO;
         }
     }
 }
@@ -171,7 +176,7 @@
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
             NSString *offlineImagePath = [[Helper pathForOffline] stringByAppendingPathComponent:[self.api escapeFsIncompatible:node.name]];
-            if ([[NSFileManager defaultManager] fileExistsAtPath:offlineImagePath]) {
+            if ([[NSFileManager defaultManager] fileExistsAtPath:offlineImagePath] && node.name.mnz_isImagePathExtension) {
                 imageView.image = [UIImage imageWithContentsOfFile:offlineImagePath];
             } else {
                 NSString *previewPath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
@@ -192,6 +197,16 @@
             zoomableView.showsVerticalScrollIndicator = NO;
             zoomableView.tag = 2;
             [zoomableView addSubview:imageView];
+            
+            if (node.name.mnz_isVideoPathExtension) {
+                CGFloat playButtonSize = 100.0f;
+                UIButton *playButton = [[UIButton alloc] initWithFrame:CGRectMake((imageView.frame.size.width-playButtonSize)/2, (imageView.frame.size.height-playButtonSize)/2, playButtonSize, playButtonSize)];
+                [playButton setImage:[UIImage imageNamed:@"video_list"] forState:UIControlStateNormal];
+                playButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
+                playButton.contentVerticalAlignment = UIControlContentHorizontalAlignmentFill;
+                [playButton addTarget:self action:@selector(playVideo:) forControlEvents:UIControlEventTouchUpInside];
+                [zoomableView addSubview:playButton];
+            }
             
             [self.scrollView addSubview:zoomableView];
             
@@ -288,6 +303,10 @@
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled: {
             if (ABS(verticalIncrement) > 50.0f) {
+                self.view.backgroundColor = [UIColor clearColor];
+                self.backgroundView.backgroundColor = [UIColor clearColor];
+                self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
+                self.navigationBar.hidden = self.toolbar.hidden = self.interfaceHidden = YES;
                 [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 [UIView animateWithDuration:0.3 animations:^{
@@ -310,6 +329,8 @@
         [self scrollViewWillBeginZooming:zoomableView withView:zoomableView.subviews.firstObject];
         [UIView animateWithDuration:0.3 animations:^{
             zoomableView.zoomScale = zoomableView.zoomScale > 1.0f ? 1.0f : 5.0f;
+        } completion:^(BOOL finished) {
+            [self scrollViewDidEndZooming:zoomableView withView:zoomableView.subviews.firstObject atScale:zoomableView.zoomScale];
         }];
     }
 }
@@ -328,6 +349,13 @@
             self.navigationBar.hidden = self.toolbar.hidden = self.interfaceHidden = YES;
         }
     }];
+}
+
+#pragma mark - Targets
+
+- (void)playVideo:(UIButton *)sender {
+    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    [node mnz_openNodeInNavigationController:self folderLink:NO];
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate
