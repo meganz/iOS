@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @property (nonatomic) NSMutableArray<MEGANode *> *mediaNodes;
+@property (nonatomic) NSCache<NSString *, UIImageView *> *imageViewsCache;
 
 @property (nonatomic) CGPoint panGestureInitialPoint;
 @property (nonatomic, getter=isInterfaceHidden) BOOL interfaceHidden;
@@ -40,6 +41,9 @@
             [self.mediaNodes addObject:node];
         }
     }
+    
+    self.imageViewsCache = [[NSCache<NSString *, UIImageView *> alloc] init];
+    self.imageViewsCache.countLimit = 1000;
     
     self.panGestureInitialPoint = CGPointMake(0.0f, 0.0f);
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)]];
@@ -106,10 +110,13 @@
         NSUInteger initialIndex = index == 0 ? 0 : index-1;
         NSUInteger finalIndex = index == self.mediaNodes.count-1 ? self.mediaNodes.count-1 : index+1;
         for (NSUInteger i = initialIndex; i<=finalIndex; i++) {
+            MEGANode *node = [self.mediaNodes objectAtIndex:i];
+            if ([self.imageViewsCache objectForKey:node.base64Handle]) {
+                continue;
+            }
+            
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.scrollView.frame.size.width * i, 0.0f, self.scrollView.frame.size.width, self.scrollView.frame.size.height)];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
-            
-            MEGANode *node = [self.mediaNodes objectAtIndex:i];
             
             NSString *offlineImagePath = [[Helper pathForOffline] stringByAppendingPathComponent:[self.api escapeFsIncompatible:node.name]];
             if ([[NSFileManager defaultManager] fileExistsAtPath:offlineImagePath]) {
@@ -122,10 +129,14 @@
                     [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
                 }
             }
+            
             [self.scrollView addSubview:imageView];
+            
             if (i==index) {
                 [self.scrollView scrollRectToVisible:imageView.frame animated:NO];
             }
+            
+            [self.imageViewsCache setObject:imageView forKey:node.base64Handle];
         }
     }
 }
