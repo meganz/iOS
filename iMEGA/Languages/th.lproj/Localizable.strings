@@ -966,8 +966,8 @@
 "choosePlan"="เลือกแผนใดแผนหนึ่งด้านล่างนี้:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="เลือกบัญชีหนึ่งประเภท:";
-/* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
-"twoMonthsFree"="รับฟรีสองเดือนทันที เมื่อสมัครใช้งานแบบ PRO 1 ปี";
+/* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
+"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="แผนปัจจุบัน:";
 /* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
