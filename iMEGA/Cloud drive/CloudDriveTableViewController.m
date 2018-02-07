@@ -40,7 +40,9 @@
 #import "UpgradeTableViewController.h"
 #import "CustomModalAlertViewController.h"
 
-@interface CloudDriveTableViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeTableViewCellDelegate, MGSwipeTableCellDelegate> {
+#import "CustomActionViewController.h"
+
+@interface CloudDriveTableViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeTableViewCellDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate, UITextFieldDelegate> {
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
     
@@ -75,6 +77,8 @@
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (nonatomic, getter=isPseudoEditing) BOOL pseudoEdit;
+
+@property (nonatomic, strong) MEGANode *nodeRenaming;
 
 @end
 
@@ -1342,6 +1346,14 @@
     }
 }
 
+- (void)showNodeDetails:(MEGANode *)node {
+    DetailsNodeInfoViewController *detailsNodeInfoVC = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
+    [detailsNodeInfoVC setNode:node];
+    [detailsNodeInfoVC setDisplayMode:self.displayMode];
+    detailsNodeInfoVC.incomingShareChildView = self.isIncomingShareChildView;
+    [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -1494,17 +1506,12 @@
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
-    for (MEGANode *n in self.selectedNodesArray) {
-        if (![Helper isFreeSpaceEnoughToDownloadNode:n isFolderLink:NO]) {
-            [self setEditing:NO animated:YES];
-            return;
-        }
-    }
-    
     [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
     
-    for (MEGANode *n in self.selectedNodesArray) {
-        [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO];
+    for (MEGANode *node in self.selectedNodesArray) {
+        if (![node mnz_downloadNode]) {
+            return;
+        }
     }
     
     [self setEditing:NO animated:YES];
@@ -1649,11 +1656,13 @@
     
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
     
-    DetailsNodeInfoViewController *detailsNodeInfoVC = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
-    [detailsNodeInfoVC setNode:node];
-    [detailsNodeInfoVC setDisplayMode:self.displayMode];
-    detailsNodeInfoVC.incomingShareChildView = self.isIncomingShareChildView;
-    [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
+    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
+    actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    [actionController setNode:node];
+    [actionController setDisplayMode:self.displayMode];
+    [actionController setIncomingShareChildView:self.isIncomingShareChildView];
+    [actionController setActionDelegate:self];
+    [self presentViewController:actionController animated:YES completion:nil];
 }
 
 #pragma mark - UISearchBarDelegate
@@ -1839,7 +1848,7 @@
     }
 }
 
-#pragma mark Swipe Delegate
+#pragma mark - Swipe Delegate
 
 -(BOOL) swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction {
     if (@available(iOS 11.0, *)) {
@@ -1890,4 +1899,120 @@
     }
 }
 
+#pragma mark - CustomActionViewControllerDelegate
+
+- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node {
+    switch (action) {
+        case MegaNodeActionTypeDownload:
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
+            [node mnz_downloadNode];
+            break;
+        case MegaNodeActionTypeCopy:
+            self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+            [self copyAction:nil];
+            break;
+        case MegaNodeActionTypeMove:
+            self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+            [self moveAction:nil];
+            break;
+        case MegaNodeActionTypeRename:
+            self.nodeRenaming = node;
+            [node mnz_renameNodeInViewController:self];
+            break;
+        case MegaNodeActionTypeShare:
+            self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+            [self shareAction:nil];
+            break;
+        case MegaNodeActionTypeFileInfo:
+            [self showNodeDetails:node];
+            break;
+        case MegaNodeActionTypeLeaveSharing:
+            [node mnz_leaveSharingInViewController:self];
+            break;
+        case MegaNodeActionTypeRemoveLink:
+            break;
+        case MegaNodeActionTypeMoveToRubbishBin:
+            [node mnz_moveToTheRubbishBinInViewController:self];
+            break;
+        case MegaNodeActionTypeRemove:
+            [node mnz_removeInViewController:self];
+            break;
+        case MegaNodeActionTypeRemoveSharing:
+            [node mnz_removeSharing];
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    NSString *nodeName = [textField text];
+    UITextPosition *beginning = textField.beginningOfDocument;
+    UITextRange *textRange;
+    
+    switch ([self.nodeRenaming type]) {
+        case MEGANodeTypeFile: {
+            if ([[nodeName pathExtension] isEqualToString:@""] && [nodeName isEqualToString:[nodeName stringByDeletingPathExtension]]) { //File without extension
+                UITextPosition *end = textField.endOfDocument;
+                textRange = [textField textRangeFromPosition:beginning  toPosition:end];
+            } else {
+                NSRange filenameRange = [nodeName rangeOfString:@"." options:NSBackwardsSearch];
+                UITextPosition *beforeExtension = [textField positionFromPosition:beginning offset:filenameRange.location];
+                textRange = [textField textRangeFromPosition:beginning  toPosition:beforeExtension];
+            }
+            [textField setSelectedTextRange:textRange];
+            break;
+        }
+            
+        case MEGANodeTypeFolder: {
+            UITextPosition *end = textField.endOfDocument;
+            textRange = [textField textRangeFromPosition:beginning  toPosition:end];
+            [textField setSelectedTextRange:textRange];
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    BOOL shouldChangeCharacters = YES;
+    switch ([self.nodeRenaming type]) {
+        case MEGANodeTypeFile:
+        case MEGANodeTypeFolder:
+            shouldChangeCharacters = YES;
+            break;
+            
+        default:
+            shouldChangeCharacters = NO;
+            break;
+    }
+    
+    return shouldChangeCharacters;
+}
+
+- (void)renameAlertTextFieldDidChange:(UITextField *)sender {
+    UIAlertController *renameAlertController = (UIAlertController *)self.presentedViewController;
+    if (renameAlertController) {
+        UITextField *textField = renameAlertController.textFields.firstObject;
+        UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
+        BOOL enableRightButton = NO;
+        
+        NSString *newName = textField.text;
+        NSString *nodeNameString = self.nodeRenaming.name;
+        
+        if (self.nodeRenaming.isFile || self.nodeRenaming.isFolder) {
+            if ([newName isEqualToString:@""] || [newName isEqualToString:nodeNameString] || newName.mnz_isEmpty) {
+                enableRightButton = NO;
+            } else {
+                enableRightButton = YES;
+            }
+        }
+        
+        rightButtonAction.enabled = enableRightButton;
+    }
+}
 @end
