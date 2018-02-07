@@ -287,9 +287,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [[MEGALogger sharedLogger] enableChatlogs];
             
             MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:sessionV3];
-            if (chatInit == MEGAChatInitNoCache) {
-                [[MEGASdkManager sharedMEGASdk] invalidateCache];
-            } else if (chatInit == MEGAChatInitError) {
+            if (chatInit == MEGAChatInitError) {
                 MEGALogError(@"Init Karere with session failed");
                 NSString *message = [NSString stringWithFormat:@"Error (%ld) initializing the chat", (long)chatInit];
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
