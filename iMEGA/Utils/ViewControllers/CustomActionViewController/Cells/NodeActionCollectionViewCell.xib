@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-UI-Text-Regular.otf">
+            <string>SFUIText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="actionCell" id="J2X-AN-QQf" userLabel="Node Action Collection View Cell">
+            <rect key="frame" x="0.0" y="0.0" width="359" height="60"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                <rect key="frame" x="0.0" y="0.0" width="359" height="60"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" tag="100" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shareGray" translatesAutoresizingMaskIntoConstraints="NO" id="NQI-fA-1eC">
+                        <rect key="frame" x="15" y="15" width="30" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="XFP-bV-c5i"/>
+                            <constraint firstAttribute="width" constant="30" id="xaV-Ut-q37"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="4"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecQ-N2-aKK">
+                        <rect key="frame" x="60" y="21" width="278" height="18"/>
+                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GTQ-Cr-NGe">
+                        <rect key="frame" x="60" y="59" width="299" height="1"/>
+                        <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="WWs-oX-opM"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <color key="tintColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="GTQ-Cr-NGe" secondAttribute="trailing" id="8pE-cM-OuY"/>
+                <constraint firstAttribute="trailingMargin" secondItem="ecQ-N2-aKK" secondAttribute="trailing" constant="5" id="Ebk-tZ-uWb"/>
+                <constraint firstItem="NQI-fA-1eC" firstAttribute="leading" secondItem="J2X-AN-QQf" secondAttribute="leading" constant="15" id="NHm-fx-Bd1"/>
+                <constraint firstItem="ecQ-N2-aKK" firstAttribute="leading" secondItem="NQI-fA-1eC" secondAttribute="trailing" constant="15" id="hAJ-Ii-wKb"/>
+                <constraint firstAttribute="bottom" secondItem="GTQ-Cr-NGe" secondAttribute="bottom" id="o91-eY-HkB"/>
+                <constraint firstItem="ecQ-N2-aKK" firstAttribute="centerY" secondItem="J2X-AN-QQf" secondAttribute="centerY" id="qzD-3h-uSr"/>
+                <constraint firstItem="GTQ-Cr-NGe" firstAttribute="leading" secondItem="J2X-AN-QQf" secondAttribute="leading" constant="60" id="zTz-hh-mjx"/>
+                <constraint firstItem="NQI-fA-1eC" firstAttribute="centerY" secondItem="J2X-AN-QQf" secondAttribute="centerY" id="zZl-gF-Sco"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="uZ2-iL-tno"/>
+            <size key="customSize" width="359" height="60"/>
+            <point key="canvasLocation" x="509" y="609"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="shareGray" width="32" height="32"/>
+    </resources>
+</document>
