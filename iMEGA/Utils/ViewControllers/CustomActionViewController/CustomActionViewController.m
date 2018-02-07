@@ -33,6 +33,9 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionViewHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionViewLeading;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionViewTrailing;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionViewBottom;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (strong, nonatomic) NSArray<MegaActionNode *> *actions;
 
@@ -208,7 +211,11 @@
 }
 
 - (MegaActionNode *)actionFileInfo {
-    return [[MegaActionNode alloc] initWithTitle:@"Localizar File Info" iconName: @"nodeInfo" andActionType:MegaNodeActionTypeFileInfo];
+    if (self.node.isFolder) {
+        return [[MegaActionNode alloc] initWithTitle:@"Localizar Folder Info" iconName: @"nodeInfo" andActionType:MegaNodeActionTypeFileInfo];
+    } else {
+        return [[MegaActionNode alloc] initWithTitle:@"Localizar File Info" iconName: @"nodeInfo" andActionType:MegaNodeActionTypeFileInfo];
+    }
 }
 
 - (MegaActionNode *)actionRename {
@@ -252,7 +259,13 @@
 #pragma mark - PopOverDelegate
 
 - (void)prepareForPopoverPresentation:(UIPopoverPresentationController *)popoverPresentationController {
-    float collectionMaxHeight = 164 + kCollectionViewCellHeight*[self getActions].count;
+    [self.cancelButton setHidden:YES];
+    self.collectionViewBottom.constant = 0;
+    self.collectionViewLeading.constant = 0;
+    self.collectionViewLeading.priority = 1000;
+    self.collectionViewTrailing.constant = 0;
+    self.collectionViewTrailing.priority = 1000;
+    float collectionMaxHeight = kCollectionViewHeaderHeight + kCollectionViewCellHeight*[self getActions].count;
     self.preferredContentSize = CGSizeMake(self.collectionView.bounds.size.width, collectionMaxHeight);
 }
 
