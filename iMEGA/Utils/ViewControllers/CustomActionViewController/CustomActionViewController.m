@@ -1,8 +1,7 @@
-
-#import "MNZActionViewController.h"
+#import "CustomActionViewController.h"
 #import "Helper.h"
 #import "MEGASdkManager.h"
-#import "MEGAStore.h"
+#import "MEGANode+MNZCategory.h"
 
 #define kCollectionViewHeaderHeight 80
 #define kCollectionViewCellHeight 60
@@ -12,25 +11,33 @@
 
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *iconName;
-@property (nonatomic, copy) void (^actionBlock)(void);
+@property (assign, nonatomic) MegaNodeActionType actionType;
 
 @end
 
 @implementation MegaActionNode
 
+- (instancetype)initWithTitle:(NSString *)title iconName:(NSString*)iconName andActionType:(MegaNodeActionType)actionType {
+    self = [super init];
+    if (self) {
+        _title = title;
+        _iconName = iconName;
+        _actionType = actionType;
+    }
+    return self;
+}
+
 @end
 
-@interface MNZActionViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface CustomActionViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionViewHeight;
 @property (strong, nonatomic) NSArray<MegaActionNode *> *actions;
 
-@property (nonatomic) MEGAShareType accessType;
-
 @end
 
-@implementation MNZActionViewController
+@implementation CustomActionViewController
 
 #pragma mark Lifecycle
 
@@ -38,11 +45,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node];
-
+    [self registerCells];
     self.actions = [self getActions];
     [self redrawCollectionView];
+}
 
+- (void)registerCells {
+    [self.collectionView registerNib:[UINib nibWithNibName:@"NodeActionCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"actionCell"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"NodeActionHeaderCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"actionHeader"];
 }
 
 #pragma mark Layout
@@ -81,7 +91,7 @@
     title.text = self.node.name;
     UILabel *info = [header viewWithTag:2];
     info.text = [Helper sizeAndDateForNode:self.node api:[MEGASdkManager sharedMEGASdk]];
-
+    
     UIImageView *imageView = [header viewWithTag:100];
     if ([self.node type] == MEGANodeTypeFile) {
         if ([self.node hasThumbnail]) {
@@ -100,7 +110,9 @@
 #pragma mark CollectionView Delegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [self.actions objectAtIndex:indexPath.row].actionBlock();
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.actionDelegate performAction:[self.actions objectAtIndex:indexPath.row].actionType inNode:self.node];
+    }];
 }
 
 #pragma mark Private
@@ -119,9 +131,11 @@
 #pragma mark MegaActions
 
 - (NSArray<MegaActionNode *>*)getActions {
+    MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node];
+    
     NSMutableArray *actions = [NSMutableArray new];
     
-    switch (self.accessType) {
+    switch (accessType) {
         case MEGAShareTypeAccessRead:
         case MEGAShareTypeAccessReadWrite: {
             [actions addObject:[self actionDownload]];
@@ -151,7 +165,7 @@
                 [actions addObject:[self actionCopy]];
                 [actions addObject:[self actionMove]];
                 [actions addObject:[self actionRename]];
-                if (self.node.publicLink) {
+                if (self.node.isExported) {
                     [actions addObject:[self actionRemoveLink]];
                 }
                 if (self.isIncomingShareChildView) {
@@ -180,94 +194,47 @@
 }
 
 - (MegaActionNode *)actionShare {
-    MegaActionNode *action = [[MegaActionNode alloc] init];
-    action.title = @"Localizar Share";
-    action.iconName = @"shareGray";
-    [action setActionBlock:^{
-        NSLog(@"share pulsada");
-    }];
-    return action;
+    return [[MegaActionNode alloc] initWithTitle:@"Localizar Share" iconName: @"shareGray" andActionType:MegaNodeActionTypeShare];
 }
 
 - (MegaActionNode *)actionDownload {
-    MegaActionNode *action = [[MegaActionNode alloc] init];
-    if ([[Helper downloadingNodes] objectForKey:self.node.base64Handle] != nil) {
-        action.iconName = @"download";
-        action.title = AMLocalizedString(@"queued", @"Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download");
-    } else {
-        MOOfflineNode *offlineNode = [[MEGAStore shareInstance] offlineNodeWithNode:self.node api:[MEGASdkManager sharedMEGASdk]];
-        if (offlineNode != nil) {
-            action.iconName = @"downloaded";
-            action.title = AMLocalizedString(@"savedForOffline", @"List option shown on the details of a file or folder");
-        } else {
-            action.iconName = @"download";
-            action.title = AMLocalizedString(@"saveForOffline", @"List option shown on the details of a file or folder");
-        }
-    }
-    return action;
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"saveForOffline", @"List option shown on the details of a file or folder") iconName: @"download" andActionType:MegaNodeActionTypeDownload];
 }
 
 - (MegaActionNode *)actionFileInfo {
-    MegaActionNode *action = [[MegaActionNode alloc] init];
-    action.title = @"Localizar File Info";
-    action.iconName = @"nodeInfo";
-    return action;
+    return [[MegaActionNode alloc] initWithTitle:@"Localizar File Info" iconName: @"nodeInfo" andActionType:MegaNodeActionTypeFileInfo];
 }
 
 - (MegaActionNode *)actionRename {
-    MegaActionNode *action = [[MegaActionNode alloc] init];
-    action.title = AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder");
-    action.iconName = @"rename";
-    return action;
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") iconName: @"rename" andActionType:MegaNodeActionTypeRename];
 }
 
 - (MegaActionNode *)actionCopy {
-    MegaActionNode *action = [[MegaActionNode alloc] init];
-    action.title = AMLocalizedString(@"copy", @"List option shown on the details of a file or folder");
-    action.iconName = @"copy";
-    return action;
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"copy", @"List option shown on the details of a file or folder") iconName: @"copy" andActionType:MegaNodeActionTypeCopy];
 }
 
 - (MegaActionNode *)actionMove {
-    MegaActionNode *action = [[MegaActionNode alloc] init];
-    action.title = AMLocalizedString(@"move", @"Title for the action that allows you to move a file or folder");
-    action.iconName = @"move";
-    return action;
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"move", @"Title for the action that allows you to move a file or folder") iconName: @"move" andActionType:MegaNodeActionTypeMove];
 }
 
 - (MegaActionNode *)actionMoveToRubbishBin {
-    MegaActionNode *action = [[MegaActionNode alloc] init];
-    action.title = AMLocalizedString(@"moveToTheRubbishBin", @"Title for the action that allows you to 'Move to the Rubbish Bin' files or folders");
-    action.iconName = @"rubbishBin";
-    return action;
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"moveToTheRubbishBin", @"Title for the action that allows you to 'Move to the Rubbish Bin' files or folders") iconName: @"rubbishBin" andActionType:MegaNodeActionTypeMoveToRubbishBin];
 }
 
 - (MegaActionNode *)actionRemove {
-    MegaActionNode *action = [[MegaActionNode alloc] init];
-    action.title = AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
-    action.iconName = @"remove";
-    return action;
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder") iconName: @"remove" andActionType:MegaNodeActionTypeRemove];
 }
 
 - (MegaActionNode *)actionLeaveSharing {
-    MegaActionNode *action = [[MegaActionNode alloc] init];
-    action.title = AMLocalizedString(@"leaveFolder", @"Button title of the action that allows to leave a shared folder");
-    action.iconName = @"leaveShare";
-    return action;
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"leaveFolder", @"Button title of the action that allows to leave a shared folder") iconName: @"leaveShare" andActionType:MegaNodeActionTypeLeaveSharing];
 }
 
 - (MegaActionNode *)actionRemoveLink {
-    MegaActionNode *action = [[MegaActionNode alloc] init];
-    action.title = AMLocalizedString(@"removeLink", @"Message shown when there is an active link that can be removed or disabled");
-    action.iconName = @"removeLink";
-    return action;
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"removeLink", @"Message shown when there is an active link that can be removed or disabled") iconName: @"removeLink" andActionType:MegaNodeActionTypeRemoveLink];
 }
 
 - (MegaActionNode *)actionRemoveSharing {
-    MegaActionNode *action = [[MegaActionNode alloc] init];
-    action.title = AMLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share");
-    action.iconName = @"removeShare";
-    return action;
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share") iconName: @"removeShare" andActionType:MegaNodeActionTypeRemoveSharing];
 }
 
 #pragma mark IBActions
@@ -277,3 +244,4 @@
 }
 
 @end
+
