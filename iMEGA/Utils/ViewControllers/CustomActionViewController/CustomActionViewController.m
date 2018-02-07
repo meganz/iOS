@@ -33,6 +33,7 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionViewHeight;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (strong, nonatomic) NSArray<MegaActionNode *> *actions;
 
 @end
@@ -47,6 +48,7 @@
     
     [self registerCells];
     self.actions = [self getActions];
+    [self configureView];
     [self redrawCollectionView];
 }
 
@@ -56,6 +58,10 @@
 }
 
 #pragma mark Layout
+
+- (void)configureView {
+    [self.cancelButton setTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") forState:UIControlStateNormal];
+}
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];

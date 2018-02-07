@@ -17,6 +17,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomActionViewController">
             <connections>
+                <outlet property="cancelButton" destination="T9Y-IU-A0H" id="Jwa-1v-0q2"/>
                 <outlet property="collectionView" destination="O7H-6P-95d" id="rMF-CI-zfc"/>
                 <outlet property="collectionViewHeight" destination="R3e-83-tD0" id="p7u-5s-FF1"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -31,10 +32,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DqT-Ae-diR">
-                            <rect key="frame" x="27.666666666666657" y="520" width="359" height="208"/>
+                            <rect key="frame" x="27.333333333333343" y="520" width="360" height="208"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T9Y-IU-A0H">
-                                    <rect key="frame" x="0.0" y="148" width="359" height="60"/>
+                                    <rect key="frame" x="0.0" y="148" width="360" height="60"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="60" id="HAE-b6-3Za"/>
@@ -53,7 +54,7 @@
                                     </connections>
                                 </button>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="O7H-6P-95d">
-                                    <rect key="frame" x="0.0" y="0.0" width="359" height="140"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="360" height="140"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="140" id="R3e-83-tD0"/>
@@ -71,6 +72,7 @@
                                     </userDefinedRuntimeAttributes>
                                     <connections>
                                         <outlet property="dataSource" destination="-1" id="YF4-41-GLO"/>
+                                        <outlet property="delegate" destination="-1" id="Pjc-Cl-9TM"/>
                                     </connections>
                                 </collectionView>
                             </subviews>
@@ -80,7 +82,7 @@
                                 <constraint firstAttribute="trailing" secondItem="T9Y-IU-A0H" secondAttribute="trailing" id="GzZ-XZ-YOc"/>
                                 <constraint firstAttribute="bottom" secondItem="T9Y-IU-A0H" secondAttribute="bottom" id="QeB-pJ-drf"/>
                                 <constraint firstItem="O7H-6P-95d" firstAttribute="top" secondItem="DqT-Ae-diR" secondAttribute="top" id="YhV-Qo-hCJ"/>
-                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="359" id="bdc-OI-28K"/>
+                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="360" id="bdc-OI-28K"/>
                                 <constraint firstItem="T9Y-IU-A0H" firstAttribute="top" secondItem="O7H-6P-95d" secondAttribute="bottom" constant="8" id="hfG-vY-4dv"/>
                                 <constraint firstAttribute="trailing" secondItem="O7H-6P-95d" secondAttribute="trailing" id="kz8-U0-xiV"/>
                                 <constraint firstItem="T9Y-IU-A0H" firstAttribute="leading" secondItem="DqT-Ae-diR" secondAttribute="leading" id="xNZ-2j-PKX"/>
