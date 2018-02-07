@@ -752,11 +752,7 @@
 }
 
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
-    if (viewControllerToCommit.class == MEGAPhotoBrowserViewController.class) {
-        [self.navigationController pushViewController:viewControllerToCommit animated:YES];
-    } else {
-        [self.navigationController presentViewController:viewControllerToCommit animated:YES completion:nil];
-    }
+    [self.navigationController presentViewController:viewControllerToCommit animated:YES completion:nil];
 }
 
 #pragma mark - DZNEmptyDataSetSource
