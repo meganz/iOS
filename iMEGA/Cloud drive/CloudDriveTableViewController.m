@@ -1657,11 +1657,19 @@
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
     
     CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
-    actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
     [actionController setNode:node];
     [actionController setDisplayMode:self.displayMode];
     [actionController setIncomingShareChildView:self.isIncomingShareChildView];
     [actionController setActionDelegate:self];
+    if ([[UIDevice currentDevice] iPadDevice]) {
+        actionController.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
+        popController.delegate = actionController;
+        popController.sourceView = sender;
+        popController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
+    } else {
+        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    }
     [self presentViewController:actionController animated:YES completion:nil];
 }
 

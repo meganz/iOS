@@ -243,10 +243,17 @@
     return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share") iconName: @"removeShare" andActionType:MegaNodeActionTypeRemoveSharing];
 }
 
-#pragma mark IBActions
+#pragma mark - IBActions
 
 - (IBAction)tapCancel:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - PopOverDelegate
+
+- (void)prepareForPopoverPresentation:(UIPopoverPresentationController *)popoverPresentationController {
+    float collectionMaxHeight = 164 + kCollectionViewCellHeight*[self getActions].count;
+    self.preferredContentSize = CGSizeMake(self.collectionView.bounds.size.width, collectionMaxHeight);
 }
 
 @end
