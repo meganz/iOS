@@ -313,7 +313,7 @@
         
         return;
     } else {
-        if (nodeSelected.name.mnz_isImagePathExtension) {
+        if (nodeSelected.name.mnz_isImagePathExtension || nodeSelected.name.mnz_isVideoPathExtension) {
             [nodeSelected mnz_openImageInNavigationController:self.navigationController withNodes:self.nodesLoadedInChatroom folderLink:NO displayMode:2 enableMoveToRubbishBin:NO];
         } else {
             [nodeSelected mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
