@@ -176,7 +176,7 @@
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
             NSString *offlineImagePath = [[Helper pathForOffline] stringByAppendingPathComponent:[self.api escapeFsIncompatible:node.name]];
-            if ([[NSFileManager defaultManager] fileExistsAtPath:offlineImagePath] && node.name.mnz_isImagePathExtension) {
+            if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:offlineImagePath]) {
                 imageView.image = [UIImage imageWithContentsOfFile:offlineImagePath];
             } else {
                 NSString *previewPath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
@@ -239,7 +239,7 @@
             if([node hasPreview]) {
                 MEGAGetPreviewRequestDelegate *delegate = [[MEGAGetPreviewRequestDelegate alloc] initWithCompletion:requestCompletion];
                 NSString *path = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
-                [self.api getThumbnailNode:node destinationFilePath:path delegate:delegate];
+                [self.api getPreviewNode:node destinationFilePath:path delegate:delegate];
             } else {
                 [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeFull];
             }
@@ -355,7 +355,8 @@
 
 - (void)playVideo:(UIButton *)sender {
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
-    [node mnz_openNodeInNavigationController:self folderLink:NO];
+    UIViewController *playerVC = [node mnz_viewControllerForNodeInFolderLink:(self.api==[MEGASdkManager sharedMEGASdkFolder])];
+    [self presentViewController:playerVC animated:YES completion:nil];
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate
