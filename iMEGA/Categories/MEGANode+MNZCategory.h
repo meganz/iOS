@@ -9,5 +9,11 @@
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink;
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink;
 - (void)mnz_generateThumbnailForVideoAtPath:(NSURL *)path;
+- (BOOL)mnz_downloadNode;
+- (void)mnz_renameNodeInViewController:(UIViewController<UITextFieldDelegate> *)viewController;
+- (void)mnz_moveToTheRubbishBinInViewController:(UIViewController *)viewController;
+- (void)mnz_removeInViewController:(UIViewController *)viewController;
+- (void)mnz_leaveSharingInViewController:(UIViewController *)viewController;
+- (void)mnz_removeSharing;
 
 @end
