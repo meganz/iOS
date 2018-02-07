@@ -143,25 +143,26 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     self.areAllMessagesSeen = NO;
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popViewController)];
-    UITapGestureRecognizer *singleTap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popViewController)];
     
-    _unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    _unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 6, 30, 30)];
     self.unreadLabel.font = [UIFont mnz_SFUIMediumWithSize:12.0f];
     self.unreadLabel.textColor = [UIColor mnz_redD90007];
     self.unreadLabel.userInteractionEnabled = YES;
-    [self.unreadLabel addGestureRecognizer:singleTap];
-    _unreadBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.unreadLabel];
     
     if (self.presentingViewController && self.parentViewController) {
         UIBarButtonItem *chatBackBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"chat", @"Chat section header") style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
         self.navigationItem.leftBarButtonItems = @[chatBackBarButtonItem, self.unreadBarButtonItem];
     } else {
+        //TODO: leftItemsSupplementBackButton
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 66, 44)];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backArrow"]];
-        imageView.frame = CGRectMake(0, 0, 22, 22);
-        [imageView addGestureRecognizer:singleTap2];
+        imageView.frame = CGRectMake(0, 10, 22, 22);
+        [view addGestureRecognizer:singleTap];
+        [view addSubview:imageView];
+        [view addSubview:self.unreadLabel];
         
-        UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageView];
-        self.navigationItem.leftBarButtonItems = @[backBarButtonItem, self.unreadBarButtonItem];
+        UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:view];
+        self.navigationItem.leftBarButtonItems = @[backBarButtonItem];
     }
     self.stopInvitingContacts = NO;
     
@@ -768,7 +769,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)uploadAssets:(NSArray<PHAsset *> *)assets toParentNode:(MEGANode *)parentNode {
     for (PHAsset *asset in assets) {
-        MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset parentNode:parentNode filePath:^(NSString *filePath) {
+        MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initToShareThroughChatWithAsset:asset filePath:^(NSString *filePath) {
             [self startUploadAndAttachWithPath:filePath parentNode:parentNode];
         } node:^(MEGANode *node) {
             [self attachOrCopyAndAttachNode:node toParentNode:parentNode];
@@ -795,7 +796,6 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
             [self presentViewController:alertController animated:YES completion:nil];
         }];
-        processAsset.originalName = YES;
         [processAsset prepare];
     }
 }

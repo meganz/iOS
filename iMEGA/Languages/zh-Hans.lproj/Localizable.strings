@@ -966,8 +966,8 @@
 "choosePlan"="请从下列选取一个计划:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="选择一个帐户类型：";
-/* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
-"twoMonthsFree"="选购一年期PRO专业版可获赠两个月免费";
+/* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
+"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="当前计划：";
 /* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
