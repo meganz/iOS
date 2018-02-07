@@ -19,7 +19,10 @@
             <connections>
                 <outlet property="cancelButton" destination="T9Y-IU-A0H" id="Jwa-1v-0q2"/>
                 <outlet property="collectionView" destination="O7H-6P-95d" id="rMF-CI-zfc"/>
+                <outlet property="collectionViewBottom" destination="i81-ne-vj4" id="I8W-ce-IUN"/>
                 <outlet property="collectionViewHeight" destination="R3e-83-tD0" id="p7u-5s-FF1"/>
+                <outlet property="collectionViewLeading" destination="JJH-e3-KiA" id="Lua-Ce-5dm"/>
+                <outlet property="collectionViewTrailing" destination="ALh-ww-jbA" id="cbM-T7-2Ev"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -31,28 +34,9 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="687-UI-C6k">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DqT-Ae-diR">
-                            <rect key="frame" x="27.333333333333343" y="520" width="360" height="208"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="vYu-bp-31B">
+                            <rect key="frame" x="27" y="520" width="360" height="208"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T9Y-IU-A0H">
-                                    <rect key="frame" x="0.0" y="148" width="360" height="60"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="60" id="HAE-b6-3Za"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" name="SFUIDisplay-Medium" family="SF UI Display" pointSize="20"/>
-                                    <state key="normal" title="Cancel">
-                                        <color key="titleColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
-                                    </state>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                            <integer key="value" value="13"/>
-                                        </userDefinedRuntimeAttribute>
-                                    </userDefinedRuntimeAttributes>
-                                    <connections>
-                                        <action selector="tapCancel:" destination="-1" eventType="touchUpInside" id="ek2-Nr-HY1"/>
-                                    </connections>
-                                </button>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="O7H-6P-95d">
                                     <rect key="frame" x="0.0" y="0.0" width="360" height="140"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -75,26 +59,37 @@
                                         <outlet property="delegate" destination="-1" id="Pjc-Cl-9TM"/>
                                     </connections>
                                 </collectionView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T9Y-IU-A0H">
+                                    <rect key="frame" x="0.0" y="148" width="360" height="60"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="60" id="HAE-b6-3Za"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="SFUIDisplay-Medium" family="SF UI Display" pointSize="20"/>
+                                    <state key="normal" title="Cancel">
+                                        <color key="titleColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="13"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="tapCancel:" destination="-1" eventType="touchUpInside" id="ek2-Nr-HY1"/>
+                                    </connections>
+                                </button>
                             </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstItem="O7H-6P-95d" firstAttribute="leading" secondItem="DqT-Ae-diR" secondAttribute="leading" id="1XN-fv-inl"/>
-                                <constraint firstAttribute="trailing" secondItem="T9Y-IU-A0H" secondAttribute="trailing" id="GzZ-XZ-YOc"/>
-                                <constraint firstAttribute="bottom" secondItem="T9Y-IU-A0H" secondAttribute="bottom" id="QeB-pJ-drf"/>
-                                <constraint firstItem="O7H-6P-95d" firstAttribute="top" secondItem="DqT-Ae-diR" secondAttribute="top" id="YhV-Qo-hCJ"/>
-                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="360" id="bdc-OI-28K"/>
-                                <constraint firstItem="T9Y-IU-A0H" firstAttribute="top" secondItem="O7H-6P-95d" secondAttribute="bottom" constant="8" id="hfG-vY-4dv"/>
-                                <constraint firstAttribute="trailing" secondItem="O7H-6P-95d" secondAttribute="trailing" id="kz8-U0-xiV"/>
-                                <constraint firstItem="T9Y-IU-A0H" firstAttribute="leading" secondItem="DqT-Ae-diR" secondAttribute="leading" id="xNZ-2j-PKX"/>
+                                <constraint firstAttribute="width" relation="lessThanOrEqual" priority="999" constant="360" id="Cde-cf-hJ0"/>
                             </constraints>
-                        </view>
+                        </stackView>
                     </subviews>
                     <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.5" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="DqT-Ae-diR" secondAttribute="trailing" priority="999" constant="8" id="1a2-Dk-87t"/>
-                        <constraint firstAttribute="bottom" secondItem="DqT-Ae-diR" secondAttribute="bottom" constant="8" id="Hsv-0p-gPY"/>
-                        <constraint firstItem="DqT-Ae-diR" firstAttribute="leading" secondItem="687-UI-C6k" secondAttribute="leading" priority="999" constant="8" id="MuT-QD-z0h"/>
-                        <constraint firstItem="DqT-Ae-diR" firstAttribute="centerX" secondItem="687-UI-C6k" secondAttribute="centerX" id="vgN-Ue-K0K"/>
+                        <constraint firstAttribute="trailing" secondItem="vYu-bp-31B" secondAttribute="trailing" priority="998" constant="8" id="ALh-ww-jbA"/>
+                        <constraint firstItem="vYu-bp-31B" firstAttribute="leading" secondItem="687-UI-C6k" secondAttribute="leading" priority="998" constant="8" id="JJH-e3-KiA"/>
+                        <constraint firstAttribute="bottom" secondItem="vYu-bp-31B" secondAttribute="bottom" constant="8" id="i81-ne-vj4"/>
+                        <constraint firstItem="vYu-bp-31B" firstAttribute="centerX" secondItem="687-UI-C6k" secondAttribute="centerX" id="qsH-Ge-uNj"/>
                     </constraints>
                 </view>
             </subviews>
