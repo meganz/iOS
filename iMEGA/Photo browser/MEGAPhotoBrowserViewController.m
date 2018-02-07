@@ -75,6 +75,14 @@
     [self reloadUI];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.view layoutIfNeeded];
+    [UIView animateWithDuration:0.1 animations:^{
+        [self reframeViews];
+    }];
+}
+
 #pragma mark - UI
 
 - (void)reloadUI {
@@ -106,6 +114,22 @@
         if (zoomableView) {
             zoomableView.zoomScale = 1.0f;
         }
+    }
+}
+
+- (void)reframeViews {
+    NSUInteger i = 0;
+    for (MEGANode *node in self.mediaNodes) {
+        UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
+        if (zoomableView) {
+            zoomableView.frame = CGRectMake(self.scrollView.frame.size.width * i, 0.0f, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
+            UIView *imageView = zoomableView.subviews.firstObject;
+            if (imageView) {
+                imageView.frame = CGRectMake(0.0f, 0.0f, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
+            }
+            zoomableView.contentSize = imageView.bounds.size;
+        }
+        i++;
     }
 }
 
@@ -371,11 +395,11 @@
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
-    if (!CGRectIsEmpty(self.originFrame)) {
-        return [[MEGAPhotoBrowserAnimator alloc] initWithMode:MEGAPhotoBrowserAnimatorModeDismiss originFrame:self.originFrame];
-    } else {
-        return nil;
-    }
+    // TODO: To properly dismiss the view controller with the same animation as in the presentation, the previous
+    // view controller should scroll to the node corresponding to the node at the current index in this view
+    // controller, and then send its frame here. The code to animate de dismissal is the same as in the preious
+    // method, with MEGAPhotoBrowserAnimatorModeDismiss mode.
+    return nil;
 }
 
 @end
