@@ -1163,6 +1163,7 @@
 		834AD6042024694200D2527F /* MGSwipeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeButton.h; sourceTree = "<group>"; };
 		8368156E2028679700CA8EFC /* MNZActionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MNZActionViewController.h; sourceTree = "<group>"; };
 		8368156F2028679700CA8EFC /* MNZActionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MNZActionViewController.m; sourceTree = "<group>"; };
+		83681574202AFA1700CA8EFC /* MegaNodeActionType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MegaNodeActionType.h; sourceTree = "<group>"; };
 		9419B6BE1F20D1D700FEBE31 /* MEGAIndexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAIndexer.h; path = Spotlight/MEGAIndexer.h; sourceTree = "<group>"; };
 		9419B6BF1F20D1D700FEBE31 /* MEGAIndexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAIndexer.m; path = Spotlight/MEGAIndexer.m; sourceTree = "<group>"; };
 		9419B6C51F20DC5700FEBE31 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
@@ -1951,6 +1952,7 @@
 				A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */,
 				830EF9A220062F3800FAA947 /* DevicePermissionsHelper.h */,
 				830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */,
+				83681574202AFA1700CA8EFC /* MegaNodeActionType.h */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
