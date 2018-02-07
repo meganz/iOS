@@ -10,7 +10,7 @@
 
 @end
 
-@interface CustomActionViewController : UIViewController
+@interface CustomActionViewController : UIViewController <UIPopoverPresentationControllerDelegate>
 
 @property (strong, nonatomic) MEGANode *node;
 @property (nonatomic) DisplayMode displayMode;
