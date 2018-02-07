@@ -1496,7 +1496,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [navigationController pushViewController:cloudDriveTVC animated:NO];
     }
     
-    switch ([node type]) {
+    switch (node.type) {
         case MEGANodeTypeFolder:
         case MEGANodeTypeRubbish: {
             CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
@@ -1506,7 +1506,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
             
         case MEGANodeTypeFile: {
-            if (node.name.mnz_isImagePathExtension) {
+            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.parentHandle];
                 NSArray *nodes = [[[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode] mnz_nodesArrayFromNodeList];
                 [node mnz_openImageInNavigationController:navigationController withNodes:nodes folderLink:NO displayMode:DisplayModeCloudDrive];

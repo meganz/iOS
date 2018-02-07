@@ -113,6 +113,7 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView.tag == 1) {
+        self.currentIndex = scrollView.contentOffset.x/scrollView.frame.size.width;
         [self reloadTitle];
         [self resetZooms];
     }
@@ -165,7 +166,7 @@
 - (void)loadNearbyImagesFromIndex:(NSUInteger)index {
     if (self.mediaNodes.count>0) {
         NSUInteger initialIndex = index == 0 ? 0 : index-1;
-        NSUInteger finalIndex = index == self.mediaNodes.count-1 ? self.mediaNodes.count-1 : index+1;
+        NSUInteger finalIndex = index >= self.mediaNodes.count-1 ? self.mediaNodes.count-1 : index+1;
         for (NSUInteger i = initialIndex; i<=finalIndex; i++) {
             MEGANode *node = [self.mediaNodes objectAtIndex:i];
             if ([self.imageViewsCache objectForKey:node.base64Handle]) {

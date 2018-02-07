@@ -4,7 +4,6 @@
 #import "UIScrollView+EmptyDataSet.h"
 
 #import "Helper.h"
-#import "MEGAAVViewController.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
@@ -630,32 +629,17 @@
     MEGANode *node = [array objectAtIndex:indexPath.row];
     
     if (![self.photosCollectionView allowsMultipleSelection]) {
-        if (node.name.mnz_isImagePathExtension) {
-            UICollectionViewCell *cell = [self collectionView:collectionView cellForItemAtIndexPath:indexPath];
-            CGRect cellFrame = [collectionView convertRect:cell.frame toView:nil];
-
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
-            MEGAPhotoBrowserViewController *photoBrowserViewController = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
-            photoBrowserViewController.api = [MEGASdkManager sharedMEGASdk];
-            photoBrowserViewController.node = node;
-            photoBrowserViewController.nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
-            photoBrowserViewController.originFrame = cellFrame;
-            
-            [self presentViewController:photoBrowserViewController animated:YES completion:nil];
-        } else {
-            MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
-            
-            if (offlineNodeExist) {
-                NSURL *path = [NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingString:offlineNodeExist.localPath]];
-                MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:path];
-                [self presentViewController:megaAVViewController animated:YES completion:nil];
-                return;
-            } else if ([[MEGASdkManager sharedMEGASdk] httpServerStart:YES port:4443]) {
-                MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:node folderLink:NO];
-                [self presentViewController:megaAVViewController animated:YES completion:nil];
-                return;
-            }
-        }
+        UICollectionViewCell *cell = [self collectionView:collectionView cellForItemAtIndexPath:indexPath];
+        CGRect cellFrame = [collectionView convertRect:cell.frame toView:nil];
+        
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
+        MEGAPhotoBrowserViewController *photoBrowserViewController = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
+        photoBrowserViewController.api = [MEGASdkManager sharedMEGASdk];
+        photoBrowserViewController.node = node;
+        photoBrowserViewController.nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
+        photoBrowserViewController.originFrame = cellFrame;
+        
+        [self presentViewController:photoBrowserViewController animated:YES completion:nil];
     } else {
         if ([self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]]) {
             [self.selectedItemsDictionary removeObjectForKey:[NSNumber numberWithLongLong:node.handle]];
@@ -758,11 +742,10 @@
     NSString *monthKey = [monthPhotosDictionary.allKeys objectAtIndex:0];
     NSArray *monthPhotosArray = [monthPhotosDictionary objectForKey:monthKey];
     MEGANode *nodeSelected = [monthPhotosArray objectAtIndex:indexPath.row];
-    if (nodeSelected.name.mnz_isImagePathExtension) {
+    if (nodeSelected.name.mnz_isImagePathExtension || nodeSelected.name.mnz_isVideoPathExtension) {
         return [nodeSelected mnz_photoBrowserWithNodes:[self.nodeList mnz_nodesArrayFromNodeList] folderLink:NO displayMode:0 enableMoveToRubbishBin:YES hideControls:YES];
     } else {
-        UIViewController *viewController = [nodeSelected mnz_viewControllerForNodeInFolderLink:NO];        
-        return viewController;
+        return [nodeSelected mnz_viewControllerForNodeInFolderLink:NO];
     }
     
     return nil;

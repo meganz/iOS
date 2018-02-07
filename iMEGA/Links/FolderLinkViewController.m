@@ -317,7 +317,7 @@
                     [self.navigationController pushViewController:folderLinkVC animated:NO];
 
                 } else {
-                    if (node.name.mnz_isImagePathExtension) {
+                    if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                         NSArray *nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
                         [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:YES displayMode:DisplayModeSharedItem];
                     } else {
@@ -633,7 +633,7 @@
         }
 
         case MEGANodeTypeFile: {
-            if (node.name.mnz_isImagePathExtension) {
+            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 NSArray *nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
                 [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:YES displayMode:2];
             } else {
