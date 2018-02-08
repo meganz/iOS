@@ -233,6 +233,10 @@
                 if ([[NSFileManager defaultManager] fileExistsAtPath:previewPath]) {
                     imageView.image = [UIImage imageWithContentsOfFile:previewPath];
                 } else {
+                    NSString *thumbnailPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
+                    if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailPath]) {
+                        imageView.image = [UIImage imageWithContentsOfFile:thumbnailPath];
+                    }
                     [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
                 }
             }
