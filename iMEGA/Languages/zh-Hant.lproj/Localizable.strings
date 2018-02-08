@@ -961,7 +961,7 @@
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="取決於您所達成的獎勵挑戰。";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%.2f %@ 每月";
+"productPricePerMonth"="%@ 每月";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="請從下列選取一個計畫:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
