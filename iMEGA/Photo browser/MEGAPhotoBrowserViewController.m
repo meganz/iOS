@@ -30,6 +30,8 @@
 @property (nonatomic, getter=isInterfaceHidden) BOOL interfaceHidden;
 @property (nonatomic) CGFloat playButtonSize;
 
+@property (nonatomic) UIWindow *secondWindow;
+
 @end
 
 @implementation MEGAPhotoBrowserViewController
@@ -90,6 +92,14 @@
     } else {
         [self reloadUI];
     }
+    [self airplayDisplayCurrentImage];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self airplayClear];
+    self.secondWindow.hidden = YES;
+    self.secondWindow = nil;
 }
 
 #pragma mark - UI
@@ -153,6 +163,7 @@
         self.currentIndex = scrollView.contentOffset.x/scrollView.frame.size.width;
         [self reloadTitle];
         [self resetZooms];
+        [self airplayDisplayCurrentImage];
     }
 }
 
@@ -394,6 +405,34 @@
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
     UIViewController *playerVC = [node mnz_viewControllerForNodeInFolderLink:(self.api==[MEGASdkManager sharedMEGASdkFolder])];
     [self presentViewController:playerVC animated:YES completion:nil];
+}
+
+#pragma mark - AirPlay
+
+- (void)airplayDisplayCurrentImage {
+    if ([[UIScreen screens] count] > 1) {
+        if (!self.secondWindow) {
+            UIScreen *secondScreen = [[UIScreen screens] objectAtIndex:1];
+            CGRect screenBounds = secondScreen.bounds;
+            self.secondWindow = [[UIWindow alloc] initWithFrame:screenBounds];
+            self.secondWindow.screen = secondScreen;
+            self.secondWindow.hidden = NO;
+        }
+        MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+        UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
+        UIImageView *imageView = (UIImageView *)zoomableView.subviews.firstObject;
+        UIImageView *airplayImageView = [[UIImageView alloc] initWithFrame:self.secondWindow.frame];
+        airplayImageView.image = imageView.image;
+        airplayImageView.contentMode = UIViewContentModeScaleAspectFit;
+        [self airplayClear];
+        [self.secondWindow addSubview:airplayImageView];
+    }
+}
+
+- (void)airplayClear {
+    for (UIView *subview in self.secondWindow.subviews) {
+        [subview removeFromSuperview];
+    }
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate
