@@ -6,6 +6,7 @@
 #import "MEGAGetPreviewRequestDelegate.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGAPhotoBrowserAnimator.h"
+#import "MEGAPhotoBrowserPickerViewController.h"
 #import "MEGAStartDownloadTransferDelegate.h"
 #import "SaveToCameraRollActivity.h"
 
@@ -14,7 +15,7 @@
 #import "NSString+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
 
-@interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate>
+@interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, MEGAPhotoBrowserPickerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -311,7 +312,10 @@
 }
 
 - (IBAction)didPressThumbnailsButton:(UIBarButtonItem *)sender {
-    
+    MEGAPhotoBrowserPickerViewController *pickerVC = [[UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil] instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserPickerViewControllerID"];
+    pickerVC.mediaNodes = self.mediaNodes;
+    pickerVC.delegate = self;
+    [self presentViewController:pickerVC animated:YES completion:nil];
 }
 
 - (IBAction)didPressOpenIn:(UIBarButtonItem *)sender {
@@ -451,6 +455,21 @@
     // controller, and then send its frame here. The code to animate de dismissal is the same as in the preious
     // method, with MEGAPhotoBrowserAnimatorModeDismiss mode.
     return nil;
+}
+
+#pragma mark - MEGAPhotoBrowserPickerDelegate
+
+- (void)updateCurrentIndexTo:(NSUInteger)newIndex {
+    self.currentIndex = newIndex;
+    [self loadNearbyImagesFromIndex:self.currentIndex];
+    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    UIScrollView *zoomableViewForInitialNode = [self.imageViewsCache objectForKey:node.base64Handle];
+    [self.scrollView scrollRectToVisible:zoomableViewForInitialNode.frame animated:NO];
+    [self reloadTitle];
+}
+
+- (void)updateImageView:(UIImageView *)imageView withThumbnailOfNode:(MEGANode *)node {
+    [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeThumbnail];
 }
 
 @end
