@@ -18,6 +18,13 @@
 @property (weak, nonatomic) IBOutlet UITextField *lastNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordStrengthIndicatorViewHeightLayoutConstraint;
+@property (weak, nonatomic) IBOutlet UIView *passwordStrengthIndicatorView;
+@property (weak, nonatomic) IBOutlet UIImageView *passwordStrengthIndicatorImageView;
+@property (weak, nonatomic) IBOutlet UILabel *passwordStrengthIndicatorLabel;
+@property (weak, nonatomic) IBOutlet UILabel *passwordStrengthIndicatorDescriptionLabel;
+
 @property (weak, nonatomic) IBOutlet UITextField *retypePasswordTextField;
 
 @property (weak, nonatomic) IBOutlet UIButton *termsCheckboxButton;
@@ -27,6 +34,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end
 
@@ -36,6 +44,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
     
     self.nameTextField.placeholder = AMLocalizedString(@"firstName", @"Hint text for the first name (Placeholder)");
     self.lastNameTextField.placeholder = AMLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)");
@@ -102,7 +112,11 @@
     } else if (![self.termsCheckboxButton isSelected]) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"termsCheckboxUnselected", nil)];
         return NO;
+    } else if ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordTextField.text] == PasswordStrengthVeryWeak) {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"yourPasswordIsTooWeakToProceed", @"")];
+        return NO;
     }
+    
     return YES;
 }
 
@@ -162,6 +176,40 @@
     }
     
     return isAnyTextFieldEmpty;
+}
+
+- (void)updatePasswordStrengthIndicatorViewWith:(PasswordStrength)passwordStrength {
+    switch (passwordStrength) {
+        case PasswordStrengthVeryWeak:
+            self.passwordStrengthIndicatorImageView.image = [UIImage imageNamed:@"indicatorVeryWeak"];
+            self.passwordStrengthIndicatorLabel.text = AMLocalizedString(@"veryWeak", @"Label displayed during checking the strength of the password introduced. Represents Very Weak security");
+            self.passwordStrengthIndicatorDescriptionLabel.text = AMLocalizedString(@"passwordVeryWeakOrWeak", @"");
+            break;
+            
+        case PasswordStrengthWeak:
+            self.passwordStrengthIndicatorImageView.image = [UIImage imageNamed:@"indicatorWeak"];
+            self.passwordStrengthIndicatorLabel.text = AMLocalizedString(@"weak", @"");
+            self.passwordStrengthIndicatorDescriptionLabel.text = AMLocalizedString(@"passwordVeryWeakOrWeak", @"");
+            break;
+            
+        case PasswordStrengthMedium:
+            self.passwordStrengthIndicatorImageView.image = [UIImage imageNamed:@"indicatorMedium"];
+            self.passwordStrengthIndicatorLabel.text = AMLocalizedString(@"medium", @"Label displayed during checking the strength of the password introduced. Represents Medium security");
+            self.passwordStrengthIndicatorDescriptionLabel.text = AMLocalizedString(@"passwordMedium", @"");
+            break;
+            
+        case PasswordStrengthGood:
+            self.passwordStrengthIndicatorImageView.image = [UIImage imageNamed:@"indicatorGood"];
+            self.passwordStrengthIndicatorLabel.text = AMLocalizedString(@"good", @"");
+            self.passwordStrengthIndicatorDescriptionLabel.text = AMLocalizedString(@"passwordGood", @"");
+            break;
+            
+        case PasswordStrengthStrong:
+            self.passwordStrengthIndicatorImageView.image = [UIImage imageNamed:@"indicatorStrong"];
+            self.passwordStrengthIndicatorLabel.text = AMLocalizedString(@"strong", @"Label displayed during checking the strength of the password introduced. Represents Strong security");
+            self.passwordStrengthIndicatorDescriptionLabel.text = AMLocalizedString(@"passwordStrong", @"");
+            break;
+    }
 }
 
 #pragma mark - UIResponder
@@ -233,10 +281,27 @@
     
     shoulBeCreateAccountButtonGray ? [self.createAccountButton setBackgroundColor:[UIColor mnz_grayCCCCCC]] : [self.createAccountButton setBackgroundColor:[UIColor mnz_redFF4D52]];
     
+    if (textField.tag == 3) {
+        if (text.length == 0) {
+            self.passwordStrengthIndicatorView.hidden = YES;
+            self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
+        } else {
+            self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 112.0f;
+            self.passwordStrengthIndicatorView.hidden = NO;
+            
+            [self updatePasswordStrengthIndicatorViewWith:[[MEGASdkManager sharedMEGASdk] passwordStrength:text]];
+        }
+    }
+    
     return YES;
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
+    if (textField.tag == 3) {
+        self.passwordStrengthIndicatorView.hidden = YES;
+        self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
+    }
+    
     self.createAccountButton.backgroundColor = [UIColor mnz_grayCCCCCC];
     
     return YES;
