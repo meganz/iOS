@@ -16,8 +16,9 @@
 #import "ContactsViewController.h"
 #import "DetailsNodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"
+#import "CustomActionViewController.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, SharedItemsTableViewCellDelegate, MGSwipeTableCellDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, SharedItemsTableViewCellDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate> {
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
 }
@@ -354,6 +355,45 @@
     return self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : self.sharedItemsSegmentedControl.selectedSegmentIndex == 0 ? [self.incomingNodesMutableArray objectAtIndex:indexPath.row] : [self.outgoingNodesMutableArray objectAtIndex:indexPath.row];
 }
 
+- (void)showNodeDetails:(MEGANode *)node {
+    MEGAShare *share = nil;
+    switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
+        case 0: { //Incoming
+            for (NSUInteger i=0; i<[self.incomingShareList.size unsignedIntegerValue]; i++) {
+                MEGAShare *s = [self.incomingShareList shareAtIndex:i];
+                if (s.nodeHandle == node.handle) {
+                    share = s;
+                    break;
+                }
+            }
+            break;
+        }
+            
+        case 1: { //Outgoing
+            for (NSUInteger i=0; i<self.outgoingSharesMutableArray.count; i++) {
+                MEGAShare *s = self.outgoingSharesMutableArray[i];
+                if (s.nodeHandle == node.handle) {
+                    share = s;
+                    break;
+                }
+            }
+            break;
+        }
+    }
+    DetailsNodeInfoViewController *detailsNodeInfoVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
+    [detailsNodeInfoVC setDisplayMode:DisplayModeSharedItem];
+    
+    NSString *email = [share user];
+    
+    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
+    
+    detailsNodeInfoVC.userName = user.mnz_fullName ? user.mnz_fullName : email;
+    detailsNodeInfoVC.email    = email;
+    detailsNodeInfoVC.node     = node;
+    
+    [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
+}
+
 #pragma mark - Utils
 
 - (void)selectSegment:(NSUInteger)index {
@@ -525,43 +565,20 @@
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     
     MEGANode *node = [self nodeAtIndexPath:indexPath];
-    MEGAShare *share = nil;
-    switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
-        case 0: { //Incoming
-            for (NSUInteger i=0; i<[self.incomingShareList.size unsignedIntegerValue]; i++) {
-                MEGAShare *s = [self.incomingShareList shareAtIndex:i];
-                if (s.nodeHandle == node.handle) {
-                    share = s;
-                    break;
-                }
-            }
-            break;
-        }
-            
-        case 1: { //Outgoing
-            for (NSUInteger i=0; i<self.outgoingSharesMutableArray.count; i++) {
-                MEGAShare *s = self.outgoingSharesMutableArray[i];
-                if (s.nodeHandle == node.handle) {
-                    share = s;
-                    break;
-                }
-            }
-            break;
-        }
+    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
+    [actionController setNode:node];
+    [actionController setDisplayMode:DisplayModeSharedItem];
+    [actionController setActionDelegate:self];
+    if ([[UIDevice currentDevice] iPadDevice]) {
+        actionController.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
+        popController.delegate = actionController;
+        popController.sourceView = sender;
+        popController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
+    } else {
+        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }
-    
-    DetailsNodeInfoViewController *detailsNodeInfoVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
-    [detailsNodeInfoVC setDisplayMode:DisplayModeSharedItem];
-    
-    NSString *email = [share user];
-    
-    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
-    
-    detailsNodeInfoVC.userName = user.mnz_fullName ? user.mnz_fullName : email;
-    detailsNodeInfoVC.email    = email;
-    detailsNodeInfoVC.node     = node;
-
-    [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
+    [self presentViewController:actionController animated:YES completion:nil];
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
@@ -1170,6 +1187,44 @@
     }
     else {
         return nil;
+    }
+}
+
+#pragma mark - CustomActionViewControllerDelegate
+
+- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node {
+    switch (action) {
+        case MegaNodeActionTypeDownload:
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
+            [node mnz_downloadNode];
+            break;
+        case MegaNodeActionTypeCopy:
+            self.selectedNodesMutableArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+            [self copyAction:nil];
+            break;
+        case MegaNodeActionTypeRename:
+            [node mnz_renameNodeInViewController:self];
+            break;
+        case MegaNodeActionTypeShare:
+            self.selectedNodesMutableArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+            [self shareAction:nil];
+            break;
+        case MegaNodeActionTypeFileInfo:
+            [self showNodeDetails:node];
+            break;
+        case MegaNodeActionTypeLeaveSharing:
+            [node mnz_leaveSharingInViewController:self];
+            break;
+        case MegaNodeActionTypeRemoveSharing:
+            [node mnz_removeSharing];
+            break;
+        case MegaNodeActionTypeRemoveLink:
+        case MegaNodeActionTypeMove:
+        case MegaNodeActionTypeMoveToRubbishBin:
+        case MegaNodeActionTypeRemove:
+            break;
+        default:
+            break;
     }
 }
 
