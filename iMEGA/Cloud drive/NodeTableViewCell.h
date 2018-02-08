@@ -1,7 +1,5 @@
 #import "MGSwipeTableCell.h"
 
-@class NodeTableViewCell;
-
 @protocol NodeTableViewCellDelegate
 
 @optional
