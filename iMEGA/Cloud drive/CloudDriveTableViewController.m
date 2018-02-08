@@ -42,7 +42,7 @@
 
 #import "CustomActionViewController.h"
 
-@interface CloudDriveTableViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeTableViewCellDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate, UITextFieldDelegate> {
+@interface CloudDriveTableViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeTableViewCellDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate> {
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
     
@@ -77,8 +77,6 @@
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (nonatomic, getter=isPseudoEditing) BOOL pseudoEdit;
-
-@property (nonatomic, strong) MEGANode *nodeRenaming;
 
 @end
 
@@ -1852,7 +1850,6 @@
             [self moveAction:nil];
             break;
         case MegaNodeActionTypeRename:
-            self.nodeRenaming = node;
             [node mnz_renameNodeInViewController:self];
             break;
         case MegaNodeActionTypeShare:
@@ -1881,74 +1878,4 @@
     }
 }
 
-#pragma mark - UITextFieldDelegate
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    NSString *nodeName = [textField text];
-    UITextPosition *beginning = textField.beginningOfDocument;
-    UITextRange *textRange;
-    
-    switch ([self.nodeRenaming type]) {
-        case MEGANodeTypeFile: {
-            if ([[nodeName pathExtension] isEqualToString:@""] && [nodeName isEqualToString:[nodeName stringByDeletingPathExtension]]) { //File without extension
-                UITextPosition *end = textField.endOfDocument;
-                textRange = [textField textRangeFromPosition:beginning  toPosition:end];
-            } else {
-                NSRange filenameRange = [nodeName rangeOfString:@"." options:NSBackwardsSearch];
-                UITextPosition *beforeExtension = [textField positionFromPosition:beginning offset:filenameRange.location];
-                textRange = [textField textRangeFromPosition:beginning  toPosition:beforeExtension];
-            }
-            [textField setSelectedTextRange:textRange];
-            break;
-        }
-            
-        case MEGANodeTypeFolder: {
-            UITextPosition *end = textField.endOfDocument;
-            textRange = [textField textRangeFromPosition:beginning  toPosition:end];
-            [textField setSelectedTextRange:textRange];
-            break;
-        }
-            
-        default:
-            break;
-    }
-}
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    BOOL shouldChangeCharacters = YES;
-    switch ([self.nodeRenaming type]) {
-        case MEGANodeTypeFile:
-        case MEGANodeTypeFolder:
-            shouldChangeCharacters = YES;
-            break;
-            
-        default:
-            shouldChangeCharacters = NO;
-            break;
-    }
-    
-    return shouldChangeCharacters;
-}
-
-- (void)renameAlertTextFieldDidChange:(UITextField *)sender {
-    UIAlertController *renameAlertController = (UIAlertController *)self.presentedViewController;
-    if (renameAlertController) {
-        UITextField *textField = renameAlertController.textFields.firstObject;
-        UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
-        BOOL enableRightButton = NO;
-        
-        NSString *newName = textField.text;
-        NSString *nodeNameString = self.nodeRenaming.name;
-        
-        if (self.nodeRenaming.isFile || self.nodeRenaming.isFolder) {
-            if ([newName isEqualToString:@""] || [newName isEqualToString:nodeNameString] || newName.mnz_isEmpty) {
-                enableRightButton = NO;
-            } else {
-                enableRightButton = YES;
-            }
-        }
-        
-        rightButtonAction.enabled = enableRightButton;
-    }
-}
 @end
