@@ -1,9 +1,6 @@
 [submodule "iMEGA/Vendor/SDK"]
 	path = iMEGA/Vendor/SDK
 	url = https://github.com/meganz/sdk.git
-[submodule "iMEGA/Vendor/MWPhotoBrowser"]
-	path = iMEGA/Vendor/MWPhotoBrowser
-	url = https://github.com/meganz/MWPhotoBrowser.git
 [submodule "iMEGA/Vendor/SVProgressHUD"]
 	path = iMEGA/Vendor/SVProgressHUD
 	url = https://github.com/SVProgressHUD/SVProgressHUD.git
