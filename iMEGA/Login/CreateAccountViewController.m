@@ -15,6 +15,7 @@
 @interface CreateAccountViewController () <UINavigationControllerDelegate, UITextFieldDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *lastNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *retypePasswordTextField;
@@ -36,7 +37,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.nameTextField setPlaceholder:AMLocalizedString(@"name", nil)];
+    self.nameTextField.placeholder = AMLocalizedString(@"firstName", @"Hint text for the first name (Placeholder)");
+    self.lastNameTextField.placeholder = AMLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)");
     
     if (self.emailString == nil) {
         [_emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", nil)];
@@ -75,9 +77,14 @@
 #pragma mark - Private
 
 - (BOOL)validateForm {
-    if (![self validateName:self.nameTextField.text]) {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"nameInvalidFormat", @"Enter a valid name")];
-        [self.nameTextField becomeFirstResponder];
+    if (![self validateName:self.nameTextField.text] || ![self validateName:self.lastNameTextField.text]) {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"invalidFirstNameAndLastName", @"")];
+        if (![self validateName:self.nameTextField.text]) {
+            [self.nameTextField becomeFirstResponder];
+        } else {
+            [self.lastNameTextField becomeFirstResponder];
+        }
+        
         return NO;
     } else if (![self.emailTextField.text mnz_isValidEmail]) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
@@ -119,28 +126,35 @@
     BOOL isAnyTextFieldEmpty = NO;
     switch (tag) {
         case 0: {
-            if ([self.emailTextField.text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""] || [self.retypePasswordTextField.text isEqualToString:@""]) {
+            if ([self.lastNameTextField.text isEqualToString:@""] || [self.emailTextField.text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""] || [self.retypePasswordTextField.text isEqualToString:@""]) {
                 isAnyTextFieldEmpty = YES;
             }
             break;
         }
             
         case 1: {
-            if ([self.nameTextField.text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""] || [self.retypePasswordTextField.text isEqualToString:@""]) {
+            if ([self.nameTextField.text isEqualToString:@""] || [self.lastNameTextField.text isEqualToString:@""] || [self.emailTextField.text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""] || [self.retypePasswordTextField.text isEqualToString:@""]) {
                 isAnyTextFieldEmpty = YES;
             }
             break;
         }
             
         case 2: {
-            if ([self.nameTextField.text isEqualToString:@""] || [self.emailTextField.text isEqualToString:@""] || [self.retypePasswordTextField.text isEqualToString:@""]) {
+            if ([self.nameTextField.text isEqualToString:@""] || [self.lastNameTextField.text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""] || [self.retypePasswordTextField.text isEqualToString:@""]) {
                 isAnyTextFieldEmpty = YES;
             }
             break;
         }
             
         case 3: {
-            if ([self.nameTextField.text isEqualToString:@""] || [self.emailTextField.text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""]) {
+            if ([self.nameTextField.text isEqualToString:@""] || [self.lastNameTextField.text isEqualToString:@""] || [self.emailTextField.text isEqualToString:@""] || [self.retypePasswordTextField.text isEqualToString:@""]) {
+                isAnyTextFieldEmpty = YES;
+            }
+            break;
+        }
+            
+        case 4: {
+            if ([self.nameTextField.text isEqualToString:@""] || [self.lastNameTextField.text isEqualToString:@""] || [self.emailTextField.text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""]) {
                 isAnyTextFieldEmpty = YES;
             }
             break;
@@ -162,6 +176,7 @@
     self.termsCheckboxButton.selected = !self.termsCheckboxButton.selected;
     
     [self.nameTextField resignFirstResponder];
+    [self.lastNameTextField resignFirstResponder];
     [self.emailTextField resignFirstResponder];
     [self.passwordTextField resignFirstResponder];
     [self.retypePasswordTextField resignFirstResponder];
@@ -199,7 +214,7 @@
                 }
             }];
             createAccountRequestDelegate.resumeCreateAccount = NO;
-            [[MEGASdkManager sharedMEGASdk] createAccountWithEmail:self.emailTextField.text password:self.passwordTextField.text firstname:self.nameTextField.text lastname:NULL delegate:createAccountRequestDelegate];
+            [[MEGASdkManager sharedMEGASdk] createAccountWithEmail:self.emailTextField.text password:self.passwordTextField.text firstname:self.nameTextField.text lastname:self.lastNameTextField.text delegate:createAccountRequestDelegate];
             [self.createAccountButton setEnabled:NO];
         }
     }
@@ -230,18 +245,22 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     switch ([textField tag]) {
         case 0:
-            [self.emailTextField becomeFirstResponder];
+            [self.lastNameTextField becomeFirstResponder];
             break;
             
         case 1:
-            [self.passwordTextField becomeFirstResponder];
+            [self.emailTextField becomeFirstResponder];
             break;
             
         case 2:
-            [self.retypePasswordTextField becomeFirstResponder];
+            [self.passwordTextField becomeFirstResponder];
             break;
             
         case 3:
+            [self.retypePasswordTextField becomeFirstResponder];
+            break;
+            
+        case 4:
             [self.retypePasswordTextField resignFirstResponder];
             break;
             

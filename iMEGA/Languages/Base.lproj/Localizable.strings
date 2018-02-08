@@ -104,6 +104,8 @@
 "termsOfServiceButton"="I agree with the MEGA Terms of Service";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Enter a valid name";
+/*  */
+"invalidFirstNameAndLastName"="Invalid first name and/or last name.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Passwords do not match";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
