@@ -17,7 +17,7 @@
 #import "DetailsNodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, SharedItemsTableViewCellDelegate> {
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
 }
@@ -62,6 +62,8 @@
 
 @property (nonatomic) NSMutableArray *searchNodesArray;
 @property (nonatomic) UISearchController *searchController;
+
+@property (nonatomic, getter=isPseudoEditing) BOOL pseudoEdit;
 
 @end
 
@@ -374,6 +376,8 @@
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    self.pseudoEdit = YES;
+
     [super setEditing:editing animated:animated];
     
     [self.tableView setEditing:editing animated:animated];
@@ -800,6 +804,8 @@
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
     }
     
+    cell.customEditDelegate = self;
+    
     return cell;
 }
 
@@ -818,6 +824,10 @@
             }
         }
     }
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
 }
 
 #pragma mark - UITableViewDelegate
