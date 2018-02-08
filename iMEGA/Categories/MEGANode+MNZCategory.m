@@ -16,6 +16,8 @@
 #import "MEGARemoveRequestDelegate.h"
 #import "MEGAShareRequestDelegate.h"
 
+#import "UIApplication+MNZCategory.h"
+
 @implementation MEGANode (MNZCategory)
 
 - (void)mnz_openImageInNavigationController:(UINavigationController *)navigationController withNodes:(NSArray *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(NSUInteger)displayMode {
@@ -172,14 +174,14 @@
     }
 }
 
-- (void)mnz_renameNodeInViewController:(UIViewController<UITextFieldDelegate> *)viewController {
+- (void)mnz_renameNodeInViewController:(UIViewController *)viewController {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         UIAlertController *renameAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") message:AMLocalizedString(@"renameNodeMessage", @"Hint text to suggest that the user have to write the new name for the file or folder") preferredStyle:UIAlertControllerStyleAlert];
         
         [renameAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-            textField.delegate = viewController;
+            textField.delegate = self;
             textField.text = self.name;
-            [textField addTarget:viewController action:@selector(renameAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+            [textField addTarget:self action:@selector(renameAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         }];
         
         [renameAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -281,6 +283,78 @@
     MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:outSharesForNodeMutableArray.count completion:nil];
     for (MEGAShare *share in outSharesForNodeMutableArray) {
         [[MEGASdkManager sharedMEGASdk] shareNode:self withEmail:share.user level:MEGAShareTypeAccessUnkown delegate:shareRequestDelegate];
+    }
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    NSString *nodeName = [textField text];
+    UITextPosition *beginning = textField.beginningOfDocument;
+    UITextRange *textRange;
+    
+    switch ([self type]) {
+        case MEGANodeTypeFile: {
+            if ([[nodeName pathExtension] isEqualToString:@""] && [nodeName isEqualToString:[nodeName stringByDeletingPathExtension]]) { //File without extension
+                UITextPosition *end = textField.endOfDocument;
+                textRange = [textField textRangeFromPosition:beginning  toPosition:end];
+            } else {
+                NSRange filenameRange = [nodeName rangeOfString:@"." options:NSBackwardsSearch];
+                UITextPosition *beforeExtension = [textField positionFromPosition:beginning offset:filenameRange.location];
+                textRange = [textField textRangeFromPosition:beginning  toPosition:beforeExtension];
+            }
+            [textField setSelectedTextRange:textRange];
+            break;
+        }
+            
+        case MEGANodeTypeFolder: {
+            UITextPosition *end = textField.endOfDocument;
+            textRange = [textField textRangeFromPosition:beginning  toPosition:end];
+            [textField setSelectedTextRange:textRange];
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    BOOL shouldChangeCharacters = YES;
+    switch ([self type]) {
+        case MEGANodeTypeFile:
+        case MEGANodeTypeFolder:
+            shouldChangeCharacters = YES;
+            break;
+            
+        default:
+            shouldChangeCharacters = NO;
+            break;
+    }
+    
+    return shouldChangeCharacters;
+}
+
+- (void)renameAlertTextFieldDidChange:(UITextField *)sender {
+    
+    UIAlertController *renameAlertController = (UIAlertController*)[UIApplication mnz_visibleViewController];
+    if (renameAlertController) {
+        UITextField *textField = renameAlertController.textFields.firstObject;
+        UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
+        BOOL enableRightButton = NO;
+        
+        NSString *newName = textField.text;
+        NSString *nodeNameString = self.name;
+        
+        if (self.isFile || self.isFolder) {
+            if ([newName isEqualToString:@""] || [newName isEqualToString:nodeNameString] || newName.mnz_isEmpty) {
+                enableRightButton = NO;
+            } else {
+                enableRightButton = YES;
+            }
+        }
+        
+        rightButtonAction.enabled = enableRightButton;
     }
 }
 
