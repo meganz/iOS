@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina3_5" orientation="landscape">
+    <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -9,6 +9,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-UI-Text-Regular.otf">
+            <string>SFUIText-Regular</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Photo Browser View Controller-->
         <scene sceneID="Ac4-T8-3JK">
@@ -100,9 +105,114 @@
             </objects>
             <point key="canvasLocation" x="173.59999999999999" y="161.46926536731635"/>
         </scene>
+        <!--Photo Browser Picker View Controller-->
+        <scene sceneID="uqH-OG-t1m">
+            <objects>
+                <viewController storyboardIdentifier="MEGAPhotoBrowserPickerViewControllerID" id="p3Y-sw-UEZ" customClass="MEGAPhotoBrowserPickerViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9j1-4H-Rhj">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dht-79-RjI">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="GuB-ux-wda"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem id="iZJ-x1-GIX">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="vUv-17-6IT">
+                                            <color key="tintColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <connections>
+                                                <action selector="didPressClose:" destination="p3Y-sw-UEZ" id="Zz4-LR-U1a"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="70h-sa-EZW">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1SO-Az-bk2">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoBrowserPickerCellId" id="NeK-HK-M8J" customClass="MEGAPhotoBrowserPickerCollectionViewCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="93" height="93"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="93" height="93"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" tag="9" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TSB-k8-0WJ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="93" height="93"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aQu-2K-0VD">
+                                                    <rect key="frame" x="0.0" y="0.0" width="93" height="93"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T0U-Ph-qtC">
+                                                            <rect key="frame" x="2" y="76" width="40" height="15"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
+                                                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </view>
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="video_list" translatesAutoresizingMaskIntoConstraints="NO" id="1KU-gq-FxY">
+                                                    <rect key="frame" x="35" y="35" width="22" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="22" id="B3l-NC-USQ"/>
+                                                        <constraint firstAttribute="width" constant="22" id="iwr-Q3-AVM"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="1KU-gq-FxY" firstAttribute="centerX" secondItem="NeK-HK-M8J" secondAttribute="centerX" id="XG9-G4-I4w"/>
+                                            <constraint firstItem="1KU-gq-FxY" firstAttribute="centerY" secondItem="NeK-HK-M8J" secondAttribute="centerY" id="YFE-k6-YQP"/>
+                                        </constraints>
+                                        <size key="customSize" width="93" height="93"/>
+                                        <connections>
+                                            <outlet property="imageView" destination="TSB-k8-0WJ" id="BWN-zQ-en5"/>
+                                            <outlet property="playView" destination="1KU-gq-FxY" id="R4V-df-ZqO"/>
+                                            <outlet property="videoDurationLabel" destination="T0U-Ph-qtC" id="LL8-PP-QLy"/>
+                                            <outlet property="videoOverlay" destination="aQu-2K-0VD" id="NWm-pl-lnq"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="p3Y-sw-UEZ" id="295-04-rsM"/>
+                                    <outlet property="delegate" destination="p3Y-sw-UEZ" id="sr3-90-EPS"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="70h-sa-EZW" firstAttribute="top" secondItem="dht-79-RjI" secondAttribute="bottom" id="7ls-Ck-kwW"/>
+                            <constraint firstItem="dht-79-RjI" firstAttribute="trailing" secondItem="HRi-IQ-AyN" secondAttribute="trailing" id="8Sc-Oo-OZE"/>
+                            <constraint firstItem="70h-sa-EZW" firstAttribute="bottom" secondItem="HRi-IQ-AyN" secondAttribute="bottom" id="UFg-AP-Fum"/>
+                            <constraint firstItem="70h-sa-EZW" firstAttribute="trailing" secondItem="HRi-IQ-AyN" secondAttribute="trailing" id="WPt-yQ-TBC"/>
+                            <constraint firstItem="dht-79-RjI" firstAttribute="leading" secondItem="HRi-IQ-AyN" secondAttribute="leading" id="bFB-hW-4GW"/>
+                            <constraint firstItem="dht-79-RjI" firstAttribute="top" secondItem="HRi-IQ-AyN" secondAttribute="top" id="bMF-Kw-LE7"/>
+                            <constraint firstItem="70h-sa-EZW" firstAttribute="leading" secondItem="HRi-IQ-AyN" secondAttribute="leading" id="gJw-FY-mh2"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="HRi-IQ-AyN"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ruh-y3-u8z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="997.60000000000002" y="160.56971514242881"/>
+        </scene>
     </scenes>
     <resources>
         <image name="openWith" width="24" height="24"/>
         <image name="thumbnailsView" width="24" height="24"/>
+        <image name="video_list" width="22" height="22"/>
     </resources>
 </document>

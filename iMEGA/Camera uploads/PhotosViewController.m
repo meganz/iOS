@@ -550,7 +550,7 @@
     cell.thumbnailSelectionOverlayView.layer.borderWidth = 2.0;
     cell.thumbnailSelectionOverlayView.hidden = [self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]] == nil;
 
-    if (node.name.mnz_videoPathExtension) {
+    if (node.name.mnz_videoPathExtension && node.duration>-1) {
         cell.thumbnailVideoDurationLabel.text = [NSString mnz_stringFromTimeInterval:node.duration];
     }
     
