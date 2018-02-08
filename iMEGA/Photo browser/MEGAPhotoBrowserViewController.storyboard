@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina5_9" orientation="portrait">
+    <device id="retina3_5" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dyC-bj-6Ub">
-                                <rect key="frame" x="0.0" y="44" width="375" height="589"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
                                     <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FGv-7h-IkY">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -38,7 +38,7 @@
                                         </items>
                                     </navigationBar>
                                     <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z54-Be-FUS">
-                                        <rect key="frame" x="0.0" y="545" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="603" width="375" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="PY4-3Y-qBx"/>
                                         </constraints>
@@ -49,7 +49,7 @@
                                                     <action selector="didPressThumbnailsButton:" destination="yD8-RT-K0O" id="ZOX-jv-VVR"/>
                                                 </connections>
                                             </barButtonItem>
-                                            <barButtonItem width="297" style="plain" systemItem="fixedSpace" id="TgI-ki-qDj"/>
+                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="9ow-6i-pKC"/>
                                             <barButtonItem title="Item" image="openWith" id="Rck-W5-yGE">
                                                 <color key="tintColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <connections>
@@ -59,7 +59,7 @@
                                         </items>
                                     </toolbar>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ulA-CI-VZp">
-                                        <rect key="frame" x="0.0" y="44" width="375" height="501"/>
+                                        <rect key="frame" x="0.0" y="44" width="375" height="559"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </scrollView>
                                 </subviews>

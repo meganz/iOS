@@ -12,6 +12,7 @@
 #import "MEGANode+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "UIDevice+MNZCategory.h"
 
 @interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate>
 
@@ -23,10 +24,11 @@
 
 @property (nonatomic) NSMutableArray<MEGANode *> *mediaNodes;
 @property (nonatomic) NSCache<NSString *, UIScrollView *> *imageViewsCache;
+@property (nonatomic) NSUInteger currentIndex;
 
 @property (nonatomic) CGPoint panGestureInitialPoint;
 @property (nonatomic, getter=isInterfaceHidden) BOOL interfaceHidden;
-@property (nonatomic) NSUInteger currentIndex;
+@property (nonatomic) CGFloat playButtonSize;
 
 @end
 
@@ -68,19 +70,26 @@
     self.scrollView.delegate = self;
     self.scrollView.tag = 1;
     self.transitioningDelegate = self;
+    self.playButtonSize = 100.0f;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self reloadUI];
+    if ([[UIDevice currentDevice] iPhoneDevice]) {
+        [self reloadUI];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.view layoutIfNeeded];
-    [UIView animateWithDuration:0.1 animations:^{
-        [self reframeViews];
-    }];
+    if ([[UIDevice currentDevice] iPhoneDevice]) {
+        [self.view layoutIfNeeded];
+        [UIView animateWithDuration:0.1 animations:^{
+            [self reframeViews];
+        }];
+    } else {
+        [self reloadUI];
+    }
 }
 
 #pragma mark - UI
@@ -126,6 +135,10 @@
             UIView *imageView = zoomableView.subviews.firstObject;
             if (imageView) {
                 imageView.frame = CGRectMake(0.0f, 0.0f, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
+            }
+            UIView *playButton = zoomableView.subviews.lastObject;
+            if (playButton && playButton!=imageView) {
+                playButton.frame = CGRectMake((imageView.frame.size.width-self.playButtonSize)/2, (imageView.frame.size.height-self.playButtonSize)/2, self.playButtonSize, self.playButtonSize);
             }
             zoomableView.contentSize = imageView.bounds.size;
         }
@@ -224,8 +237,7 @@
             [zoomableView addSubview:imageView];
             
             if (node.name.mnz_isVideoPathExtension) {
-                CGFloat playButtonSize = 100.0f;
-                UIButton *playButton = [[UIButton alloc] initWithFrame:CGRectMake((imageView.frame.size.width-playButtonSize)/2, (imageView.frame.size.height-playButtonSize)/2, playButtonSize, playButtonSize)];
+                UIButton *playButton = [[UIButton alloc] initWithFrame:CGRectMake((imageView.frame.size.width-self.playButtonSize)/2, (imageView.frame.size.height-self.playButtonSize)/2, self.playButtonSize, self.playButtonSize)];
                 [playButton setImage:[UIImage imageNamed:@"video_list"] forState:UIControlStateNormal];
                 playButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
                 playButton.contentVerticalAlignment = UIControlContentHorizontalAlignmentFill;
