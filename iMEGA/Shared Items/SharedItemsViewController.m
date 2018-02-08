@@ -17,7 +17,7 @@
 #import "DetailsNodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, SharedItemsTableViewCellDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, SharedItemsTableViewCellDelegate, MGSwipeTableCellDelegate> {
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
 }
@@ -804,26 +804,14 @@
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
     }
     
+    cell.delegate = self;
     cell.customEditDelegate = self;
     
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
-            case 0: { //Incoming
-                [self removeSelectedIncomingShares];
-                break;
-            }
-                
-            case 1: { //Outgoing
-                [self selectedSharesOfSelectedNodes];
-                [self removeSelectedOutgoingShares];
-                break;
-            }
-        }
-    }
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -914,35 +902,34 @@
     [self setEditing:NO animated:YES];
 }
 
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+    SharedItemsTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.isSwiping = YES;
     MEGANode *node = [self nodeAtIndexPath:indexPath];
-    
-    self.selectedNodesMutableArray = [[NSMutableArray alloc] init];
-    if (node != nil) {
-        [self.selectedNodesMutableArray addObject:node];
+    self.selectedNodesMutableArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+    if (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0) { //incoming
+        UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Share" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            [self leaveShareAction:nil];
+            [self setEditing:NO animated:YES];
+        }];
+        shareAction.image = [UIImage imageNamed:@"leaveShare"];
+        shareAction.backgroundColor = [UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1];
+        return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
+    } else { //outcoming
+        UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Share" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            [self removeShareAction:nil];
+            [self setEditing:NO animated:YES];
+        }];
+        shareAction.image = [UIImage imageNamed:@"removeShare"];
+        shareAction.backgroundColor = [UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1];
+        return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
     }
-    
-    [self toolbarItemsSetEnabled:YES];
-    
-    isSwipeEditing = YES;
-    
-    return UITableViewCellEditingStyleDelete;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *titleForDeleteConfirmationButton;
-    switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
-        case 0: //Incoming
-            titleForDeleteConfirmationButton = AMLocalizedString(@"leaveFolder", @"Button title of the action that allows to leave a shared folder");
-            break;
-            
-        case 1: //Outgoing
-            titleForDeleteConfirmationButton = AMLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share");
-            break;
-    }
-    
-    return titleForDeleteConfirmationButton;
-}
+#pragma clang diagnostic pop
 
 #pragma mark - UISearchBarDelegate
 
@@ -1038,6 +1025,7 @@
         } else {
             [self setEditing:YES animated:YES];
             [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+            [self toolbarItemsForSharedItems];
             [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
         }
     }
@@ -1126,6 +1114,63 @@
 
 - (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
     [self reloadUI];
+}
+
+
+#pragma mark - Swipe Delegate
+
+-(BOOL) swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction {
+    if (@available(iOS 11.0, *)) {
+        return NO;
+    }
+    
+    if (self.isEditing) {
+        return NO;
+    }
+    
+    if (direction == MGSwipeDirectionLeftToRight) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+-(NSArray*) swipeTableCell:(MGSwipeTableCell*) cell swipeButtonsForDirection:(MGSwipeDirection)direction
+             swipeSettings:(MGSwipeSettings*) swipeSettings expansionSettings:(MGSwipeExpansionSettings*) expansionSettings {
+    
+    swipeSettings.transition = MGSwipeTransitionDrag;
+    expansionSettings.buttonIndex = 0;
+    expansionSettings.expansionLayout = MGSwipeExpansionLayoutCenter;
+    expansionSettings.fillOnTrigger = NO;
+    expansionSettings.threshold = 2;
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    self.selectedNodesMutableArray = [[NSMutableArray alloc] initWithObjects:[self nodeAtIndexPath:indexPath], nil];
+    
+    if (direction == MGSwipeDirectionRightToLeft) {
+        
+        if (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0) { //incoming
+            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"leaveShare"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:50 callback:^BOOL(MGSwipeTableCell *sender) {
+                [self leaveShareAction:nil];
+                return YES;
+            }];
+            [shareButton iconTintColor:[UIColor whiteColor]];
+            
+            return @[shareButton];
+        } else { //outcoming
+            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"removeShare"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:50 callback:^BOOL(MGSwipeTableCell *sender) {
+                [self removeShareAction:nil];
+                return YES;
+            }];
+            [shareButton iconTintColor:[UIColor whiteColor]];
+            
+            return @[shareButton];
+        }
+        
+    }
+    else {
+        return nil;
+    }
 }
 
 @end
