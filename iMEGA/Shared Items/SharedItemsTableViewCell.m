@@ -18,7 +18,7 @@ static NSInteger const kCustomEditControlWidth=50;
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     if ([self.customEditDelegate isPseudoEditing]) {
         self.pseudoEdit = editing;
-//        [self setSwipeOffset:0];
+        [self setSwipeOffset:0];
         [self beginEditMode];
     } else {
         [super setEditing:editing animated:animated];
