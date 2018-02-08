@@ -47,6 +47,10 @@
     
     self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
     
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    tapGesture.cancelsTouchesInView = NO;
+    [self.scrollView addGestureRecognizer:tapGesture];
+    
     self.nameTextField.placeholder = AMLocalizedString(@"firstName", @"Hint text for the first name (Placeholder)");
     self.lastNameTextField.placeholder = AMLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)");
     
@@ -183,39 +187,46 @@
         case PasswordStrengthVeryWeak:
             self.passwordStrengthIndicatorImageView.image = [UIImage imageNamed:@"indicatorVeryWeak"];
             self.passwordStrengthIndicatorLabel.text = AMLocalizedString(@"veryWeak", @"Label displayed during checking the strength of the password introduced. Represents Very Weak security");
+            self.passwordStrengthIndicatorLabel.textColor = [UIColor mnz_redF0373A];
             self.passwordStrengthIndicatorDescriptionLabel.text = AMLocalizedString(@"passwordVeryWeakOrWeak", @"");
             break;
             
         case PasswordStrengthWeak:
             self.passwordStrengthIndicatorImageView.image = [UIImage imageNamed:@"indicatorWeak"];
             self.passwordStrengthIndicatorLabel.text = AMLocalizedString(@"weak", @"");
+            self.passwordStrengthIndicatorLabel.textColor = [UIColor colorWithRed:1.0 green:165.0/255.0 blue:0 alpha:1.0];
             self.passwordStrengthIndicatorDescriptionLabel.text = AMLocalizedString(@"passwordVeryWeakOrWeak", @"");
             break;
             
         case PasswordStrengthMedium:
             self.passwordStrengthIndicatorImageView.image = [UIImage imageNamed:@"indicatorMedium"];
             self.passwordStrengthIndicatorLabel.text = AMLocalizedString(@"medium", @"Label displayed during checking the strength of the password introduced. Represents Medium security");
+            self.passwordStrengthIndicatorLabel.textColor = [UIColor mnz_green31B500];
             self.passwordStrengthIndicatorDescriptionLabel.text = AMLocalizedString(@"passwordMedium", @"");
             break;
             
         case PasswordStrengthGood:
             self.passwordStrengthIndicatorImageView.image = [UIImage imageNamed:@"indicatorGood"];
             self.passwordStrengthIndicatorLabel.text = AMLocalizedString(@"good", @"");
+            self.passwordStrengthIndicatorLabel.textColor = [UIColor colorWithRed:18.0/255.0 green:210.0/255.0 blue:56.0/255.0 alpha:1.0];
             self.passwordStrengthIndicatorDescriptionLabel.text = AMLocalizedString(@"passwordGood", @"");
             break;
             
         case PasswordStrengthStrong:
             self.passwordStrengthIndicatorImageView.image = [UIImage imageNamed:@"indicatorStrong"];
             self.passwordStrengthIndicatorLabel.text = AMLocalizedString(@"strong", @"Label displayed during checking the strength of the password introduced. Represents Strong security");
+            self.passwordStrengthIndicatorLabel.textColor = [UIColor mnz_blue2BA6DE];
             self.passwordStrengthIndicatorDescriptionLabel.text = AMLocalizedString(@"passwordStrong", @"");
             break;
     }
 }
 
-#pragma mark - UIResponder
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self.view endEditing:YES];
+- (void)hideKeyboard {
+    [self.nameTextField resignFirstResponder];
+    [self.lastNameTextField resignFirstResponder];
+    [self.emailTextField resignFirstResponder];
+    [self.passwordTextField resignFirstResponder];
+    [self.retypePasswordTextField resignFirstResponder];
 }
 
 #pragma mark - IBActions
@@ -223,11 +234,7 @@
 - (IBAction)termsCheckboxTouchUpInside:(id)sender {
     self.termsCheckboxButton.selected = !self.termsCheckboxButton.selected;
     
-    [self.nameTextField resignFirstResponder];
-    [self.lastNameTextField resignFirstResponder];
-    [self.emailTextField resignFirstResponder];
-    [self.passwordTextField resignFirstResponder];
-    [self.retypePasswordTextField resignFirstResponder];
+    [self hideKeyboard];
 }
 
 - (IBAction)termOfServiceTouchUpInside:(UIButton *)sender {
