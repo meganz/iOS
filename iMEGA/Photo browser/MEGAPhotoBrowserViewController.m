@@ -176,8 +176,8 @@
     if (scrollView.tag != 1) {
         MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
         if (node.name.mnz_isImagePathExtension) {
-            NSString *offlineImagePath = [[Helper pathForOffline] stringByAppendingPathComponent:[self.api escapeFsIncompatible:node.name]];
-            if (![[NSFileManager defaultManager] fileExistsAtPath:offlineImagePath]) {
+            NSString *temporaryImagePath = [self temporatyPathForNode:node];
+            if (![[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                 [self setupNode:node forImageView:(UIImageView *)view withMode:MEGAPhotoModeFull];
             }
         } else {
@@ -210,9 +210,9 @@
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.scrollView.frame.size.width, self.scrollView.frame.size.height)];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
-            NSString *offlineImagePath = [[Helper pathForOffline] stringByAppendingPathComponent:[self.api escapeFsIncompatible:node.name]];
-            if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:offlineImagePath]) {
-                imageView.image = [UIImage imageWithContentsOfFile:offlineImagePath];
+            NSString *temporaryImagePath = [self temporatyPathForNode:node];
+            if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
+                imageView.image = [UIImage imageWithContentsOfFile:temporaryImagePath];
             } else {
                 NSString *previewPath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
                 if ([[NSFileManager defaultManager] fileExistsAtPath:previewPath]) {
@@ -294,8 +294,8 @@
             
         case MEGAPhotoModeFull: {
             MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithCompletion:transferCompletion];
-            NSString *offlineImagePath = [[Helper pathForOffline] stringByAppendingPathComponent:[self.api escapeFsIncompatible:node.name]];
-            [self.api startDownloadNode:node localPath:offlineImagePath appData:@"generate_fa" delegate:delegate];
+            NSString *temporaryImagePath = [self temporatyPathForNode:node];
+            [self.api startDownloadNode:node localPath:temporaryImagePath appData:@"generate_fa" delegate:delegate];
 
             break;
         }
@@ -308,6 +308,20 @@
             [subview removeFromSuperview];
         }
     }
+}
+
+- (NSString *)temporatyPathForNode:(MEGANode *)node {
+    NSString *nodeFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[node base64Handle]];
+    NSString *nodeFilePath = [nodeFolderPath stringByAppendingPathComponent:node.name];
+    
+    NSError *error;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:nodeFolderPath isDirectory:nil]) {
+        if (![[NSFileManager defaultManager] createDirectoryAtPath:nodeFolderPath withIntermediateDirectories:YES attributes:nil error:&error]) {
+            MEGALogError(@"Create directory at path failed with error: %@", error);
+        }
+    }
+    
+    return nodeFilePath;
 }
 
 #pragma mark - IBActions
