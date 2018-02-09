@@ -100,6 +100,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @property (nonatomic) URLType urlType;
 @property (nonatomic, strong) NSString *emailOfNewSignUpLink;
 @property (nonatomic, strong) NSString *quickActionType;
+@property (nonatomic, strong) NSString *messageForSuspendedAccount;
+
 
 @property (nonatomic, strong) UIAlertView *API_ESIDAlertView;
 
@@ -119,7 +121,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 @property (strong, nonatomic) NSString *email;
 @property (nonatomic) BOOL presentInviteContactVCLater;
-@property (nonatomic, getter=shouldWaitForChatLogout) BOOL waitForChatLogout;
 
 @end
 
@@ -1655,22 +1656,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
-- (void)showLoginViewController {
-    [SVProgressHUD dismiss];
-    
-    if ((self.urlType == URLTypeNewSignUpLink) && (_emailOfNewSignUpLink != nil)) {
-        if ([self.window.rootViewController isKindOfClass:[MEGANavigationController class]]) {
-            MEGANavigationController *navigationController = (MEGANavigationController *)self.window.rootViewController;
-            
-            if ([navigationController.topViewController isKindOfClass:[LoginViewController class]]) {
-                LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
-                [loginVC performSegueWithIdentifier:@"CreateAccountStoryboardSegueID" sender:_emailOfNewSignUpLink];
-                _emailOfNewSignUpLink = nil;
-            }
-        }
-    }
-}
-
 - (void)application:(UIApplication *)application shouldHideWindows:(BOOL)shouldHide {
     for (UIWindow *window in application.windows) {
         if ([NSStringFromClass(window.class) isEqualToString:@"UIRemoteKeyboardWindow"] || [NSStringFromClass(window.class) isEqualToString:@"UITextEffectsWindow"]) {
@@ -2026,8 +2011,17 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onEvent:(MEGASdk *)api event:(MEGAEvent *)event {
-    if (event.type == EventChangeToHttps) {
-        [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"useHttpsOnly"];
+    switch (event.type) {
+        case EventChangeToHttps:
+            [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"useHttpsOnly"];
+            break;
+            
+        case EventAccountBlocked:
+            _messageForSuspendedAccount = event.text;
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -2327,14 +2321,27 @@ void uncaughtExceptionHandler(NSException *exception) {
             break;
         }
             
-        case MEGARequestTypeLogout: {
+        case MEGARequestTypeLogout: {            
             [Helper logout];
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-                _waitForChatLogout = YES;
-            } else {
-                [self showLoginViewController];
+            [SVProgressHUD dismiss];
+            
+            if (self.messageForSuspendedAccount) {
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:self.messageForSuspendedAccount preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
             }
             
+            if ((self.urlType == URLTypeNewSignUpLink) && (_emailOfNewSignUpLink != nil)) {
+                if ([self.window.rootViewController isKindOfClass:[MEGANavigationController class]]) {
+                    MEGANavigationController *navigationController = (MEGANavigationController *)self.window.rootViewController;
+                    
+                    if ([navigationController.topViewController isKindOfClass:[LoginViewController class]]) {
+                        LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
+                        [loginVC performSegueWithIdentifier:@"CreateAccountStoryboardSegueID" sender:_emailOfNewSignUpLink];
+                        _emailOfNewSignUpLink = nil;
+                    }
+                }
+            }
             break;
         }
             
@@ -2446,16 +2453,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
     
     if (request.type == MEGAChatRequestTypeLogout) {
-        if (self.shouldWaitForChatLogout) {
-            [self showLoginViewController];
-        } else {
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-                [[MEGALogger sharedLogger] enableSDKlogs];
-            }
-            
-            [self.mainTBC setBadgeValueForChats];
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
+            [[MEGALogger sharedLogger] enableSDKlogs];
         }
         [MEGASdkManager destroySharedMEGAChatSdk];
+        
+        [self.mainTBC setBadgeValueForChats];
     }
     
     MEGALogInfo(@"onChatRequestFinish request type: %ld", request.type);
