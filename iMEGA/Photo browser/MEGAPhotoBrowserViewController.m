@@ -319,6 +319,7 @@
     MEGAPhotoBrowserPickerViewController *pickerVC = [[UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil] instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserPickerViewControllerID"];
     pickerVC.mediaNodes = self.mediaNodes;
     pickerVC.delegate = self;
+    pickerVC.api = self.api;
     [self presentViewController:pickerVC animated:YES completion:nil];
 }
 
@@ -470,10 +471,6 @@
     UIScrollView *zoomableViewForInitialNode = [self.imageViewsCache objectForKey:node.base64Handle];
     [self.scrollView scrollRectToVisible:zoomableViewForInitialNode.frame animated:NO];
     [self reloadTitle];
-}
-
-- (void)updateImageView:(UIImageView *)imageView withThumbnailOfNode:(MEGANode *)node {
-    [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeThumbnail];
 }
 
 @end
