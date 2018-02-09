@@ -55,9 +55,6 @@
         }
     }
     
-    self.imageViewsCache = [[NSCache<NSString *, UIScrollView *> alloc] init];
-    self.imageViewsCache.countLimit = 1000;
-    
     self.panGestureInitialPoint = CGPointMake(0.0f, 0.0f);
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)]];
     
@@ -78,22 +75,23 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if ([[UIDevice currentDevice] iPhoneDevice]) {
-        [self reloadUI];
-    }
+    [self.view layoutIfNeeded];
+    [self reloadUI];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if ([[UIDevice currentDevice] iPhoneDevice]) {
+    [self.view layoutIfNeeded];
+    [self reloadUI];
+}
+
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         [self.view layoutIfNeeded];
-        [UIView animateWithDuration:0.1 animations:^{
-            [self reframeViews];
-        }];
-    } else {
         [self reloadUI];
-    }
-    [self airplayDisplayCurrentImage];
+    } completion:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -106,6 +104,12 @@
 #pragma mark - UI
 
 - (void)reloadUI {
+    for (UIView *subview in self.scrollView.subviews) {
+        [subview removeFromSuperview];
+    }
+    self.imageViewsCache = [[NSCache<NSString *, UIScrollView *> alloc] init];
+    self.imageViewsCache.countLimit = 1000;
+    
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.mediaNodes.count, self.scrollView.frame.size.height);
     
     [self loadNearbyImagesFromIndex:self.currentIndex];
@@ -126,6 +130,7 @@
     subtitle = [subtitle stringByReplacingOccurrencesOfString:@"%2$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.mediaNodes.count]];
     
     self.navigationItem.titleView = [Helper customNavigationBarLabelWithTitle:[self.mediaNodes objectAtIndex:self.currentIndex].name subtitle:subtitle];
+    [self.navigationItem.titleView sizeToFit];
 }
 
 - (void)resetZooms {
@@ -134,26 +139,6 @@
         if (zoomableView) {
             zoomableView.zoomScale = 1.0f;
         }
-    }
-}
-
-- (void)reframeViews {
-    NSUInteger i = 0;
-    for (MEGANode *node in self.mediaNodes) {
-        UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
-        if (zoomableView) {
-            zoomableView.frame = CGRectMake(self.scrollView.frame.size.width * i, 0.0f, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
-            UIView *imageView = zoomableView.subviews.firstObject;
-            if (imageView) {
-                imageView.frame = CGRectMake(0.0f, 0.0f, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
-            }
-            UIView *playButton = zoomableView.subviews.lastObject;
-            if (playButton && playButton!=imageView) {
-                playButton.frame = CGRectMake((imageView.frame.size.width-self.playButtonSize)/2, (imageView.frame.size.height-self.playButtonSize)/2, self.playButtonSize, self.playButtonSize);
-            }
-            zoomableView.contentSize = imageView.bounds.size;
-        }
-        i++;
     }
 }
 

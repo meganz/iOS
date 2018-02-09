@@ -9,6 +9,8 @@
 
 @interface MEGAPhotoBrowserPickerViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+
 @property (nonatomic) CGFloat cellInset;
 @property (nonatomic) CGFloat cellSquareSize;
 
@@ -16,11 +18,18 @@
 
 @implementation MEGAPhotoBrowserPickerViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
     self.cellInset = 1.0f;
-    self.cellSquareSize = ((self.view.frame.size.width-5*self.cellInset) / 4);
+    [self calculateCellSize];
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        [self calculateCellSize];
+    } completion:nil];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -103,6 +112,18 @@
         NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
         [self.api getThumbnailNode:node destinationFilePath:path delegate:delegate];
     }
+}
+
+#pragma mark - Private
+
+- (void)calculateCellSize {
+    CGRect collectionViewFrame = self.collectionView.frame;
+    NSUInteger cellsInRow = collectionViewFrame.size.width < collectionViewFrame.size.height ? 4 : 8;
+    if ([[UIDevice currentDevice] iPadDevice]) {
+        cellsInRow *= 1.5;
+    }
+    self.cellSquareSize = ((collectionViewFrame.size.width-(cellsInRow+1)*self.cellInset) / cellsInRow);
+    [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 @end
