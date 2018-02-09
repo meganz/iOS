@@ -99,14 +99,14 @@
                 </view>
             </subviews>
             <constraints>
-                <constraint firstItem="kfn-cn-egu" firstAttribute="bottom" secondItem="Q5M-cg-NOt" secondAttribute="bottom" id="CdN-jr-7OW"/>
-                <constraint firstItem="kfn-cn-egu" firstAttribute="trailing" secondItem="Q5M-cg-NOt" secondAttribute="trailing" id="E67-uQ-MEI"/>
+                <constraint firstItem="kfn-cn-egu" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="CdN-jr-7OW"/>
+                <constraint firstItem="kfn-cn-egu" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="E67-uQ-MEI"/>
                 <constraint firstItem="687-UI-C6k" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="FKd-Yu-gEs"/>
                 <constraint firstItem="687-UI-C6k" firstAttribute="bottom" secondItem="Q5M-cg-NOt" secondAttribute="bottom" id="XC9-Pe-SSw"/>
                 <constraint firstItem="kfn-cn-egu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="YZy-VH-pQ9"/>
                 <constraint firstItem="687-UI-C6k" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="hL7-tL-Vvh"/>
                 <constraint firstItem="687-UI-C6k" firstAttribute="trailing" secondItem="Q5M-cg-NOt" secondAttribute="trailing" id="lsM-GN-rOZ"/>
-                <constraint firstItem="kfn-cn-egu" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="wjP-fO-ydb"/>
+                <constraint firstItem="kfn-cn-egu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="wjP-fO-ydb"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
         </view>
