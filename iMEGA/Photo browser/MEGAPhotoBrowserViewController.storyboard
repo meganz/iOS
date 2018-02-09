@@ -62,6 +62,7 @@
                                                 </connections>
                                             </barButtonItem>
                                         </items>
+                                        <color key="tintColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </toolbar>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ulA-CI-VZp">
                                         <rect key="frame" x="0.0" y="44" width="375" height="559"/>
@@ -148,7 +149,7 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="9" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TSB-k8-0WJ">
                                                     <rect key="frame" x="0.0" y="0.0" width="93" height="93"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
                                                 <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aQu-2K-0VD">
                                                     <rect key="frame" x="0.0" y="0.0" width="93" height="93"/>
@@ -204,6 +205,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="HRi-IQ-AyN"/>
                     </view>
+                    <connections>
+                        <outlet property="collectionView" destination="70h-sa-EZW" id="ZF1-jf-5no"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ruh-y3-u8z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
