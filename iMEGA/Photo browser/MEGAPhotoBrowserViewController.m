@@ -269,11 +269,19 @@
 }
 
 - (void)setupNode:(MEGANode *)node forImageView:(UIImageView *)imageView withMode:(MEGAPhotoMode)mode {
+    [self removeActivityIndicatorsFromView:imageView];
+    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityIndicator.frame = CGRectMake((imageView.frame.size.width-activityIndicator.frame.size.width)/2, (imageView.frame.size.height-activityIndicator.frame.size.height)/2, activityIndicator.frame.size.width, activityIndicator.frame.size.height);
+    [activityIndicator startAnimating];
+    [imageView addSubview:activityIndicator];
+
     void (^requestCompletion)(MEGARequest *request) = ^(MEGARequest *request) {
         imageView.image = [UIImage imageWithContentsOfFile:request.file];
+        [activityIndicator removeFromSuperview];
     };
     void (^transferCompletion)(MEGATransfer *transfer) = ^(MEGATransfer *transfer) {
         imageView.image = [UIImage imageWithContentsOfFile:transfer.path];
+        [self removeActivityIndicatorsFromView:imageView];
     };
     
     switch (mode) {
@@ -305,6 +313,14 @@
             [self.api startDownloadNode:node localPath:offlineImagePath appData:@"generate_fa" delegate:delegate];
 
             break;
+        }
+    }
+}
+
+- (void)removeActivityIndicatorsFromView:(UIView *)view {
+    for (UIView *subview in view.subviews) {
+        if ([subview isKindOfClass:UIActivityIndicatorView.class]) {
+            [subview removeFromSuperview];
         }
     }
 }
