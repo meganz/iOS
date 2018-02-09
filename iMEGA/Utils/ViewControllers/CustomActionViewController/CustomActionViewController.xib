@@ -17,6 +17,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomActionViewController">
             <connections>
+                <outlet property="alphaView" destination="kfn-cn-egu" id="5ma-lt-guF"/>
                 <outlet property="cancelButton" destination="T9Y-IU-A0H" id="Jwa-1v-0q2"/>
                 <outlet property="collectionView" destination="O7H-6P-95d" id="rMF-CI-zfc"/>
                 <outlet property="collectionViewBottom" destination="i81-ne-vj4" id="I8W-ce-IUN"/>
@@ -31,6 +32,10 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kfn-cn-egu">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="687-UI-C6k">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                     <subviews>
@@ -84,7 +89,7 @@
                             </constraints>
                         </stackView>
                     </subviews>
-                    <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.5" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="vYu-bp-31B" secondAttribute="trailing" priority="998" constant="8" id="ALh-ww-jbA"/>
                         <constraint firstItem="vYu-bp-31B" firstAttribute="leading" secondItem="687-UI-C6k" secondAttribute="leading" priority="998" constant="8" id="JJH-e3-KiA"/>
@@ -93,12 +98,15 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="kfn-cn-egu" firstAttribute="bottom" secondItem="Q5M-cg-NOt" secondAttribute="bottom" id="CdN-jr-7OW"/>
+                <constraint firstItem="kfn-cn-egu" firstAttribute="trailing" secondItem="Q5M-cg-NOt" secondAttribute="trailing" id="E67-uQ-MEI"/>
                 <constraint firstItem="687-UI-C6k" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="FKd-Yu-gEs"/>
                 <constraint firstItem="687-UI-C6k" firstAttribute="bottom" secondItem="Q5M-cg-NOt" secondAttribute="bottom" id="XC9-Pe-SSw"/>
+                <constraint firstItem="kfn-cn-egu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="YZy-VH-pQ9"/>
                 <constraint firstItem="687-UI-C6k" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="hL7-tL-Vvh"/>
                 <constraint firstItem="687-UI-C6k" firstAttribute="trailing" secondItem="Q5M-cg-NOt" secondAttribute="trailing" id="lsM-GN-rOZ"/>
+                <constraint firstItem="kfn-cn-egu" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="wjP-fO-ydb"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
         </view>

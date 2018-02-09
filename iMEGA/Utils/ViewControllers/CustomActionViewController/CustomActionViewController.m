@@ -31,6 +31,7 @@
 
 @interface CustomActionViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 
+@property (weak, nonatomic) IBOutlet UIView *alphaView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionViewHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionViewLeading;
@@ -55,9 +56,9 @@
     [self redrawCollectionView];
 }
 
-- (void)registerCells {
-    [self.collectionView registerNib:[UINib nibWithNibName:@"NodeActionCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"actionCell"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"NodeActionHeaderCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"actionHeader"];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self fadeInBackgroundCompletion:nil];
 }
 
 #pragma mark Layout
@@ -119,8 +120,10 @@
 #pragma mark CollectionView Delegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [self dismissViewControllerAnimated:YES completion:^{
-        [self.actionDelegate performAction:[self.actions objectAtIndex:indexPath.row].actionType inNode:self.node];
+    [self fadeOutBackgroundCompletion:^{
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self.actionDelegate performAction:[self.actions objectAtIndex:indexPath.row].actionType inNode:self.node];
+        }];
     }];
 }
 
@@ -135,6 +138,31 @@
     } else {
         self.collectionViewHeight.constant = collectionMaxHeight;
     }
+}
+
+- (void)fadeInBackgroundCompletion:(void (^ __nullable)(void))fadeInCompletion {
+    [UIView animateWithDuration:.3 animations:^{
+        [self.alphaView setAlpha:0.5];
+    } completion:^(BOOL finished) {
+        if (fadeInCompletion && finished) {
+            fadeInCompletion();
+        }
+    }];
+}
+
+- (void)fadeOutBackgroundCompletion:(void (^ __nullable)(void))fadeOutCompletion {
+    [UIView animateWithDuration:.2 animations:^{
+        [self.alphaView setAlpha:.0];
+    } completion:^(BOOL finished) {
+        if (fadeOutCompletion && finished) {
+            fadeOutCompletion();
+        }
+    }];
+}
+
+- (void)registerCells {
+    [self.collectionView registerNib:[UINib nibWithNibName:@"NodeActionCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"actionCell"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"NodeActionHeaderCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"actionHeader"];
 }
 
 #pragma mark MegaActions
@@ -253,7 +281,9 @@
 #pragma mark - IBActions
 
 - (IBAction)tapCancel:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self fadeOutBackgroundCompletion:^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
 }
 
 #pragma mark - PopOverDelegate
