@@ -117,6 +117,7 @@
     UIScrollView *zoomableViewForInitialNode = [self.imageViewsCache objectForKey:node.base64Handle];
     [self.scrollView scrollRectToVisible:zoomableViewForInitialNode.frame animated:NO];
     [self reloadTitle];
+    [self airplayDisplayCurrentImage];
 }
 
 - (void)reloadTitle {
@@ -147,8 +148,8 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView.tag == 1) {
         self.currentIndex = scrollView.contentOffset.x/scrollView.frame.size.width;
-        [self reloadTitle];
         [self resetZooms];
+        [self reloadTitle];
         [self airplayDisplayCurrentImage];
     }
 }
@@ -486,6 +487,7 @@
     UIScrollView *zoomableViewForInitialNode = [self.imageViewsCache objectForKey:node.base64Handle];
     [self.scrollView scrollRectToVisible:zoomableViewForInitialNode.frame animated:NO];
     [self reloadTitle];
+    [self airplayDisplayCurrentImage];
 }
 
 @end
