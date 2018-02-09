@@ -6,7 +6,6 @@
 @protocol MEGAPhotoBrowserPickerDelegate
 
 - (void)updateCurrentIndexTo:(NSUInteger)newIndex;
-- (void)updateImageView:(UIImageView *)imageView withThumbnailOfNode:(MEGANode *)node;
 
 @end
 
@@ -14,5 +13,6 @@
 
 @property (nonatomic) NSMutableArray<MEGANode *> *mediaNodes;
 @property (nonatomic) id<MEGAPhotoBrowserPickerDelegate> delegate;
+@property (nonatomic) MEGASdk *api;
 
 @end
