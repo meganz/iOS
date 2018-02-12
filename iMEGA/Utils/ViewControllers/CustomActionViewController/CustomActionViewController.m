@@ -202,9 +202,6 @@
                 [actions addObject:[self actionCopy]];
                 [actions addObject:[self actionMove]];
                 [actions addObject:[self actionRename]];
-                if (self.node.isExported) {
-                    [actions addObject:[self actionRemoveLink]];
-                }
                 if (self.isIncomingShareChildView) {
                     [actions addObject:[self actionLeaveSharing]];
                 }
@@ -231,7 +228,7 @@
 }
 
 - (MegaActionNode *)actionShare {
-    return [[MegaActionNode alloc] initWithTitle:@"Localizar Share" iconName: @"shareGray" andActionType:MegaNodeActionTypeShare];
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected") iconName: @"shareGray" andActionType:MegaNodeActionTypeShare];
 }
 
 - (MegaActionNode *)actionDownload {
@@ -239,11 +236,7 @@
 }
 
 - (MegaActionNode *)actionFileInfo {
-    if (self.node.isFolder) {
-        return [[MegaActionNode alloc] initWithTitle:@"Localizar Folder Info" iconName: @"nodeInfo" andActionType:MegaNodeActionTypeFileInfo];
-    } else {
-        return [[MegaActionNode alloc] initWithTitle:@"Localizar File Info" iconName: @"nodeInfo" andActionType:MegaNodeActionTypeFileInfo];
-    }
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") iconName: @"nodeInfo" andActionType:MegaNodeActionTypeFileInfo];
 }
 
 - (MegaActionNode *)actionRename {
