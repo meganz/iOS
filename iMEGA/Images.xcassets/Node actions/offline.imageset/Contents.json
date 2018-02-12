@@ -2,7 +2,8 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "more.pdf"
+      "filename" : "offline.pdf",
+      "scale" : "1x"
     }
   ],
   "info" : {

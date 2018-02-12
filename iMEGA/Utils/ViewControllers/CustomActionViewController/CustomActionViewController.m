@@ -90,6 +90,10 @@
     UIImageView *imageView = [cell viewWithTag:100];
     [imageView setImage:[UIImage imageNamed:action.iconName]];
     
+    if (indexPath.row == self.actions.count-1) {
+        UIView *separatorView = [cell viewWithTag:101];
+        [separatorView setHidden:YES];
+    }
     return cell;
 }
 
@@ -228,19 +232,19 @@
 }
 
 - (MegaActionNode *)actionShare {
-    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected") iconName: @"shareGray" andActionType:MegaNodeActionTypeShare];
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected") iconName: @"share" andActionType:MegaNodeActionTypeShare];
 }
 
 - (MegaActionNode *)actionDownload {
-    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"saveForOffline", @"List option shown on the details of a file or folder") iconName: @"download" andActionType:MegaNodeActionTypeDownload];
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"saveForOffline", @"List option shown on the details of a file or folder") iconName: @"offline" andActionType:MegaNodeActionTypeDownload];
 }
 
 - (MegaActionNode *)actionFileInfo {
-    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") iconName: @"nodeInfo" andActionType:MegaNodeActionTypeFileInfo];
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") iconName: @"info" andActionType:MegaNodeActionTypeFileInfo];
 }
 
 - (MegaActionNode *)actionRename {
-    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") iconName: @"rename" andActionType:MegaNodeActionTypeRename];
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") iconName: @"rename_node" andActionType:MegaNodeActionTypeRename];
 }
 
 - (MegaActionNode *)actionCopy {
@@ -252,7 +256,7 @@
 }
 
 - (MegaActionNode *)actionMoveToRubbishBin {
-    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"moveToTheRubbishBin", @"Title for the action that allows you to 'Move to the Rubbish Bin' files or folders") iconName: @"rubbishBin" andActionType:MegaNodeActionTypeMoveToRubbishBin];
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"moveToTheRubbishBin", @"Title for the action that allows you to 'Move to the Rubbish Bin' files or folders") iconName: @"rubbishBin2" andActionType:MegaNodeActionTypeMoveToRubbishBin];
 }
 
 - (MegaActionNode *)actionRemove {
@@ -277,6 +281,10 @@
     [self fadeOutBackgroundCompletion:^{
         [self dismissViewControllerAnimated:YES completion:nil];
     }];
+}
+
+- (IBAction)touchUpOutside:(id)sender {
+    [self tapCancel:sender];
 }
 
 #pragma mark - PopOverDelegate
