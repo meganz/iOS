@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina5_5" orientation="portrait">
+    <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -20,100 +20,98 @@
                 <outlet property="alphaView" destination="kfn-cn-egu" id="5ma-lt-guF"/>
                 <outlet property="cancelButton" destination="T9Y-IU-A0H" id="Jwa-1v-0q2"/>
                 <outlet property="collectionView" destination="O7H-6P-95d" id="rMF-CI-zfc"/>
-                <outlet property="collectionViewBottom" destination="i81-ne-vj4" id="I8W-ce-IUN"/>
                 <outlet property="collectionViewHeight" destination="R3e-83-tD0" id="p7u-5s-FF1"/>
-                <outlet property="collectionViewLeading" destination="JJH-e3-KiA" id="Lua-Ce-5dm"/>
-                <outlet property="collectionViewTrailing" destination="ALh-ww-jbA" id="cbM-T7-2Ev"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kfn-cn-egu">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="eUn-O4-Dlv" appends="YES" id="Hdo-WS-aB2"/>
+                    </connections>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="687-UI-C6k">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="vYu-bp-31B">
+                    <rect key="frame" x="8" y="451" width="359" height="208"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="vYu-bp-31B">
-                            <rect key="frame" x="27" y="520" width="360" height="208"/>
-                            <subviews>
-                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="O7H-6P-95d">
-                                    <rect key="frame" x="0.0" y="0.0" width="360" height="140"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="140" id="R3e-83-tD0"/>
-                                    </constraints>
-                                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="NKP-5W-zu2">
-                                        <size key="itemSize" width="359" height="60"/>
-                                        <size key="headerReferenceSize" width="50" height="80"/>
-                                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    </collectionViewFlowLayout>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                            <integer key="value" value="13"/>
-                                        </userDefinedRuntimeAttribute>
-                                    </userDefinedRuntimeAttributes>
-                                    <connections>
-                                        <outlet property="dataSource" destination="-1" id="YF4-41-GLO"/>
-                                        <outlet property="delegate" destination="-1" id="Pjc-Cl-9TM"/>
-                                    </connections>
-                                </collectionView>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T9Y-IU-A0H">
-                                    <rect key="frame" x="0.0" y="148" width="360" height="60"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="60" id="HAE-b6-3Za"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" name="SFUIDisplay-Medium" family="SF UI Display" pointSize="20"/>
-                                    <state key="normal" title="Cancel">
-                                        <color key="titleColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
-                                    </state>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                            <integer key="value" value="13"/>
-                                        </userDefinedRuntimeAttribute>
-                                    </userDefinedRuntimeAttributes>
-                                    <connections>
-                                        <action selector="tapCancel:" destination="-1" eventType="touchUpInside" id="ek2-Nr-HY1"/>
-                                    </connections>
-                                </button>
-                            </subviews>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="O7H-6P-95d">
+                            <rect key="frame" x="0.0" y="0.0" width="359" height="140"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="width" relation="lessThanOrEqual" priority="999" constant="360" id="Cde-cf-hJ0"/>
+                                <constraint firstAttribute="height" constant="140" id="R3e-83-tD0"/>
                             </constraints>
-                        </stackView>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="NKP-5W-zu2">
+                                <size key="itemSize" width="359" height="60"/>
+                                <size key="headerReferenceSize" width="50" height="80"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="13"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="YF4-41-GLO"/>
+                                <outlet property="delegate" destination="-1" id="Pjc-Cl-9TM"/>
+                            </connections>
+                        </collectionView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T9Y-IU-A0H">
+                            <rect key="frame" x="0.0" y="148" width="359" height="60"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="HAE-b6-3Za"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SFUIDisplay-Medium" family="SF UI Display" pointSize="20"/>
+                            <state key="normal" title="Cancel">
+                                <color key="titleColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="13"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="tapCancel:" destination="-1" eventType="touchUpInside" id="ek2-Nr-HY1"/>
+                            </connections>
+                        </button>
                     </subviews>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" priority="999" constant="360" id="Cde-cf-hJ0"/>
+                    </constraints>
+                </stackView>
+                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="687-UI-C6k">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <gestureRecognizers/>
-                    <constraints>
-                        <constraint firstAttribute="trailing" secondItem="vYu-bp-31B" secondAttribute="trailing" priority="998" constant="8" id="ALh-ww-jbA"/>
-                        <constraint firstItem="vYu-bp-31B" firstAttribute="leading" secondItem="687-UI-C6k" secondAttribute="leading" priority="998" constant="8" id="JJH-e3-KiA"/>
-                        <constraint firstAttribute="bottom" secondItem="vYu-bp-31B" secondAttribute="bottom" constant="8" id="i81-ne-vj4"/>
-                        <constraint firstItem="vYu-bp-31B" firstAttribute="centerX" secondItem="687-UI-C6k" secondAttribute="centerX" id="qsH-Ge-uNj"/>
-                    </constraints>
-                    <connections>
-                        <outletCollection property="gestureRecognizers" destination="eUn-O4-Dlv" appends="YES" id="8OL-kE-gB8"/>
-                    </connections>
                 </view>
             </subviews>
             <gestureRecognizers/>
             <constraints>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="vYu-bp-31B" secondAttribute="bottom" constant="8" id="2sO-Mk-2tA"/>
                 <constraint firstItem="kfn-cn-egu" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="CdN-jr-7OW"/>
                 <constraint firstItem="kfn-cn-egu" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="E67-uQ-MEI"/>
                 <constraint firstItem="687-UI-C6k" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="FKd-Yu-gEs"/>
+                <constraint firstItem="vYu-bp-31B" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="G67-ql-ELU"/>
                 <constraint firstItem="687-UI-C6k" firstAttribute="bottom" secondItem="Q5M-cg-NOt" secondAttribute="bottom" id="XC9-Pe-SSw"/>
                 <constraint firstItem="kfn-cn-egu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="YZy-VH-pQ9"/>
+                <constraint firstItem="vYu-bp-31B" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" priority="998" constant="8" id="aye-Vx-4Ob"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="vYu-bp-31B" secondAttribute="trailing" priority="998" constant="8" id="b15-de-48b"/>
                 <constraint firstItem="687-UI-C6k" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="hL7-tL-Vvh"/>
                 <constraint firstItem="687-UI-C6k" firstAttribute="trailing" secondItem="Q5M-cg-NOt" secondAttribute="trailing" id="lsM-GN-rOZ"/>
                 <constraint firstItem="kfn-cn-egu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="wjP-fO-ydb"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="687-UI-C6k"/>
+                </mask>
+            </variation>
         </view>
         <tapGestureRecognizer id="eUn-O4-Dlv">
             <connections>
