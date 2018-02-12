@@ -100,15 +100,16 @@
                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iUC-Ic-ezX" userLabel="Info Button">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iUC-Ic-ezX" userLabel="Info Button">
                                                     <rect key="frame" x="418" y="8" width="46" height="44"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="46" id="Aoh-Kb-QBM"/>
                                                         <constraint firstAttribute="height" constant="44" id="ZY6-Tt-FNj"/>
                                                     </constraints>
-                                                    <state key="normal" image="nodeInfo">
-                                                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </state>
+                                                    <color key="tintColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <state key="normal" image="more"/>
+                                                    <state key="selected" image="moreSelected"/>
+                                                    <state key="highlighted" image="moreSelected"/>
                                                     <connections>
                                                         <action selector="infoTouchUpInside:" destination="KWY-Kr-BLD" eventType="touchUpInside" id="0Jb-V9-43r"/>
                                                     </connections>
@@ -1953,9 +1954,9 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <image name="icon-link-only" width="24" height="24"/>
         <image name="icon-link-w-key" width="24" height="24"/>
         <image name="linked" width="12" height="12"/>
+        <image name="more" width="26" height="6"/>
         <image name="moreSelected" width="26" height="6"/>
         <image name="move" width="32" height="32"/>
-        <image name="nodeInfo" width="46" height="44"/>
         <image name="readPermissions" width="46" height="44"/>
         <image name="red_checkmark" width="22" height="22"/>
         <image name="rubbishBin" width="32" height="32"/>
