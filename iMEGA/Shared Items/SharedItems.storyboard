@@ -110,8 +110,8 @@
                                                                         <constraint firstAttribute="height" constant="22" id="N3F-oY-YqA"/>
                                                                         <constraint firstAttribute="width" constant="22" id="djM-DD-J8W"/>
                                                                     </constraints>
-                                                                    <state key="normal" image="checkBoxOff"/>
-                                                                    <state key="selected" image="checkBoxOn"/>
+                                                                    <state key="normal" image="unSelected"/>
+                                                                    <state key="selected" image="selected"/>
                                                                 </button>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -312,8 +312,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="checkBoxOff" width="22" height="22"/>
-        <image name="checkBoxOn" width="22" height="22"/>
         <image name="check_mark" width="29" height="29"/>
         <image name="copy" width="32" height="32"/>
         <image name="download" width="32" height="32"/>
@@ -322,8 +320,10 @@
         <image name="nodeInfo" width="46" height="44"/>
         <image name="readPermissions" width="46" height="44"/>
         <image name="removeShare" width="32" height="32"/>
+        <image name="selected" width="24" height="24"/>
         <image name="shareGray" width="32" height="32"/>
         <image name="shareWith" width="38" height="32"/>
         <image name="sharedItemsIcon" width="29" height="26"/>
+        <image name="unSelected" width="24" height="24"/>
     </resources>
 </document>
