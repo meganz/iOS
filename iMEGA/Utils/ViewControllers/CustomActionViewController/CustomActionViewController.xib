@@ -90,14 +90,19 @@
                         </stackView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <gestureRecognizers/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="vYu-bp-31B" secondAttribute="trailing" priority="998" constant="8" id="ALh-ww-jbA"/>
                         <constraint firstItem="vYu-bp-31B" firstAttribute="leading" secondItem="687-UI-C6k" secondAttribute="leading" priority="998" constant="8" id="JJH-e3-KiA"/>
                         <constraint firstAttribute="bottom" secondItem="vYu-bp-31B" secondAttribute="bottom" constant="8" id="i81-ne-vj4"/>
                         <constraint firstItem="vYu-bp-31B" firstAttribute="centerX" secondItem="687-UI-C6k" secondAttribute="centerX" id="qsH-Ge-uNj"/>
                     </constraints>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="eUn-O4-Dlv" appends="YES" id="8OL-kE-gB8"/>
+                    </connections>
                 </view>
             </subviews>
+            <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="kfn-cn-egu" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="CdN-jr-7OW"/>
                 <constraint firstItem="kfn-cn-egu" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="E67-uQ-MEI"/>
@@ -110,5 +115,10 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
         </view>
+        <tapGestureRecognizer id="eUn-O4-Dlv">
+            <connections>
+                <action selector="touchUpOutside:" destination="-1" id="nJG-cK-eAc"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
 </document>
