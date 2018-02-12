@@ -51,8 +51,8 @@
                                                                 <constraint firstAttribute="height" constant="22" id="jyX-hd-VqK"/>
                                                                 <constraint firstAttribute="width" constant="22" id="kuA-AA-ywh"/>
                                                             </constraints>
-                                                            <state key="normal" image="checkBoxOff"/>
-                                                            <state key="selected" image="checkBoxOn"/>
+                                                            <state key="normal" image="unSelected"/>
+                                                            <state key="selected" image="selected"/>
                                                             <connections>
                                                                 <action selector="customEditControlPressed:" destination="bGI-9o-2Bo" eventType="touchUpInside" id="j3k-mm-Eme"/>
                                                             </connections>
@@ -1959,9 +1959,11 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <image name="readPermissions" width="46" height="44"/>
         <image name="red_checkmark" width="22" height="22"/>
         <image name="rubbishBin" width="32" height="32"/>
+        <image name="selected" width="24" height="24"/>
         <image name="shareGray" width="32" height="32"/>
         <image name="shareRed" width="16" height="22"/>
         <image name="sortBy" width="22" height="22"/>
+        <image name="unSelected" width="24" height="24"/>
         <image name="video_list" width="22" height="22"/>
     </resources>
 </document>
