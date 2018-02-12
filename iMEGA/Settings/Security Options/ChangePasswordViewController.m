@@ -4,8 +4,9 @@
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "NSString+MNZCategory.h"
-
 #import "SVProgressHUD.h"
+
+#import "PasswordStrengthIndicatorView.h"
 
 @interface ChangePasswordViewController () <MEGARequestDelegate>
 
@@ -13,6 +14,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *currentPasswordTextField;
 @property (weak, nonatomic) IBOutlet UIImageView *theNewPasswordImageView;
 @property (weak, nonatomic) IBOutlet UITextField *theNewPasswordTextField;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordStrengthIndicatorViewHeightLayoutConstraint;
+@property (weak, nonatomic) IBOutlet PasswordStrengthIndicatorView *passwordStrengthIndicatorView;
 @property (weak, nonatomic) IBOutlet UIImageView *confirmPasswordImageView;
 @property (weak, nonatomic) IBOutlet UITextField *confirmPasswordTextField;
 
@@ -28,6 +31,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
     
     if (self.changeType == ChangeTypePassword) {
         self.navigationItem.title = AMLocalizedString(@"changePasswordLabel", @"Section title where you can change your MEGA's password");
@@ -269,10 +274,27 @@
     
     shoulBeCreateAccountButtonGray ? [self.changePasswordButton setBackgroundColor:[UIColor mnz_grayCCCCCC]] : [self.changePasswordButton setBackgroundColor:[UIColor mnz_redFF4C52]];
     
+    if (textField.tag == 1 && self.changeType == ChangeTypePassword) {
+        if (text.length == 0) {
+            self.passwordStrengthIndicatorView.customView.hidden = YES;
+            self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
+        } else {
+            self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 112.0f;
+            self.passwordStrengthIndicatorView.customView.hidden = NO;
+            
+            [self.passwordStrengthIndicatorView updateViewWith:[[MEGASdkManager sharedMEGASdk] passwordStrength:text]];
+        }
+    }
+    
     return YES;
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
+    if (textField.tag == 1 && self.changeType == ChangeTypePassword) {
+        self.passwordStrengthIndicatorView.customView.hidden = YES;
+        self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
+    }
+    
     self.changePasswordButton.backgroundColor = [UIColor mnz_grayCCCCCC];
     
     return YES;
