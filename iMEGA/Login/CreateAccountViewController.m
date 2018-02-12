@@ -11,6 +11,7 @@
 #import "NSString+MNZCategory.h"
 
 #import "CheckEmailAndFollowTheLinkViewController.h"
+#import "PasswordStrengthIndicatorView.h"
 
 @interface CreateAccountViewController () <UINavigationControllerDelegate, UITextFieldDelegate, MEGARequestDelegate>
 
@@ -20,10 +21,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordStrengthIndicatorViewHeightLayoutConstraint;
-@property (weak, nonatomic) IBOutlet UIView *passwordStrengthIndicatorView;
-@property (weak, nonatomic) IBOutlet UIImageView *passwordStrengthIndicatorImageView;
-@property (weak, nonatomic) IBOutlet UILabel *passwordStrengthIndicatorLabel;
-@property (weak, nonatomic) IBOutlet UILabel *passwordStrengthIndicatorDescriptionLabel;
+@property (weak, nonatomic) IBOutlet PasswordStrengthIndicatorView *passwordStrengthIndicatorView;
 
 @property (weak, nonatomic) IBOutlet UITextField *retypePasswordTextField;
 
@@ -182,45 +180,6 @@
     return isAnyTextFieldEmpty;
 }
 
-- (void)updatePasswordStrengthIndicatorViewWith:(PasswordStrength)passwordStrength {
-    switch (passwordStrength) {
-        case PasswordStrengthVeryWeak:
-            self.passwordStrengthIndicatorImageView.image = [UIImage imageNamed:@"indicatorVeryWeak"];
-            self.passwordStrengthIndicatorLabel.text = AMLocalizedString(@"veryWeak", @"Label displayed during checking the strength of the password introduced. Represents Very Weak security");
-            self.passwordStrengthIndicatorLabel.textColor = [UIColor mnz_redF0373A];
-            self.passwordStrengthIndicatorDescriptionLabel.text = AMLocalizedString(@"passwordVeryWeakOrWeak", @"");
-            break;
-            
-        case PasswordStrengthWeak:
-            self.passwordStrengthIndicatorImageView.image = [UIImage imageNamed:@"indicatorWeak"];
-            self.passwordStrengthIndicatorLabel.text = AMLocalizedString(@"weak", @"");
-            self.passwordStrengthIndicatorLabel.textColor = [UIColor colorWithRed:1.0 green:165.0/255.0 blue:0 alpha:1.0];
-            self.passwordStrengthIndicatorDescriptionLabel.text = AMLocalizedString(@"passwordVeryWeakOrWeak", @"");
-            break;
-            
-        case PasswordStrengthMedium:
-            self.passwordStrengthIndicatorImageView.image = [UIImage imageNamed:@"indicatorMedium"];
-            self.passwordStrengthIndicatorLabel.text = AMLocalizedString(@"medium", @"Label displayed during checking the strength of the password introduced. Represents Medium security");
-            self.passwordStrengthIndicatorLabel.textColor = [UIColor mnz_green31B500];
-            self.passwordStrengthIndicatorDescriptionLabel.text = AMLocalizedString(@"passwordMedium", @"");
-            break;
-            
-        case PasswordStrengthGood:
-            self.passwordStrengthIndicatorImageView.image = [UIImage imageNamed:@"indicatorGood"];
-            self.passwordStrengthIndicatorLabel.text = AMLocalizedString(@"good", @"");
-            self.passwordStrengthIndicatorLabel.textColor = [UIColor colorWithRed:18.0/255.0 green:210.0/255.0 blue:56.0/255.0 alpha:1.0];
-            self.passwordStrengthIndicatorDescriptionLabel.text = AMLocalizedString(@"passwordGood", @"");
-            break;
-            
-        case PasswordStrengthStrong:
-            self.passwordStrengthIndicatorImageView.image = [UIImage imageNamed:@"indicatorStrong"];
-            self.passwordStrengthIndicatorLabel.text = AMLocalizedString(@"strong", @"Label displayed during checking the strength of the password introduced. Represents Strong security");
-            self.passwordStrengthIndicatorLabel.textColor = [UIColor mnz_blue2BA6DE];
-            self.passwordStrengthIndicatorDescriptionLabel.text = AMLocalizedString(@"passwordStrong", @"");
-            break;
-    }
-}
-
 - (void)hideKeyboard {
     [self.nameTextField resignFirstResponder];
     [self.lastNameTextField resignFirstResponder];
@@ -290,13 +249,13 @@
     
     if (textField.tag == 3) {
         if (text.length == 0) {
-            self.passwordStrengthIndicatorView.hidden = YES;
+            self.passwordStrengthIndicatorView.customView.hidden = YES;
             self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
         } else {
             self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 112.0f;
-            self.passwordStrengthIndicatorView.hidden = NO;
+            self.passwordStrengthIndicatorView.customView.hidden = NO;
             
-            [self updatePasswordStrengthIndicatorViewWith:[[MEGASdkManager sharedMEGASdk] passwordStrength:text]];
+            [self.passwordStrengthIndicatorView updateViewWith:[[MEGASdkManager sharedMEGASdk] passwordStrength:text]];
         }
     }
     
@@ -305,7 +264,7 @@
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
     if (textField.tag == 3) {
-        self.passwordStrengthIndicatorView.hidden = YES;
+        self.passwordStrengthIndicatorView.customView.hidden = YES;
         self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
     }
     
