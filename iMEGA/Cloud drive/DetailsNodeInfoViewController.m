@@ -300,6 +300,9 @@
         if (nodeUpdated.parentHandle == self.node.parentHandle) { //Same place as before
             //Node renamed, update UI with the new info.
             //Also when you get link, share folder or remove link
+            if (self.displayMode == DisplayModeSharedItem && self.node.isOutShare && !nodeUpdated.isOutShare) {
+                self.displayMode = DisplayModeCloudDrive;
+            }
             self.node = nodeUpdated;
             [self reloadUI];
         } else {
