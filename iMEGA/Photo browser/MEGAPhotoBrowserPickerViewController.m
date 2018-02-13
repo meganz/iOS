@@ -10,6 +10,7 @@
 @interface MEGAPhotoBrowserPickerViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
 
 @property (nonatomic) CGFloat cellInset;
 @property (nonatomic) CGFloat cellSquareSize;
@@ -23,6 +24,16 @@
     
     self.cellInset = 1.0f;
     [self calculateCellSize];
+    
+    NSString *folderName = [self.api nodeForHandle:self.mediaNodes.firstObject.parentHandle].name;
+    NSString *numberOfFiles;
+    if (self.mediaNodes.count==1) {
+        numberOfFiles = [NSString stringWithFormat:AMLocalizedString(@"oneFile", @"Subtitle shown on folders that gives you information about its content. This case \"{1} file\""), 1];
+    } else {
+        numberOfFiles = [NSString stringWithFormat:AMLocalizedString(@"files", @"Subtitle shown on folders that gives you information about its content. This case \"{1+} files\""), self.mediaNodes.count];
+    }
+    self.navigationItem.titleView = [Helper customNavigationBarLabelWithTitle:folderName subtitle:numberOfFiles];
+    [self.navigationItem.titleView sizeToFit];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
