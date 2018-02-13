@@ -3,6 +3,7 @@
 #import "MEGASdkManager.h"
 #import "MOOfflineNode.h"
 #import "MOUser.h"
+#import "MOChatDraft+CoreDataProperties.h"
 
 @interface MEGAStore : NSObject
 
@@ -29,5 +30,10 @@
 - (void)updateUserWithUserHandle:(uint64_t)userHandle lastname:(NSString *)lastname;
 - (void)updateUserWithUserHandle:(uint64_t)userHandle email:(NSString *)email;
 - (MOUser *)fetchUserWithUserHandle:(uint64_t)userHandle;
+
+#pragma mark - MOChatDraft entity
+
+- (void)insertOrUpdateChatDraftWithChatId:(uint64_t)chatId text:(NSString *)text;
+- (MOChatDraft *)fetchChatDraftWithChatId:(uint64_t)chatId;
 
 @end
