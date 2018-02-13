@@ -21,6 +21,7 @@ static NSInteger const kCustomEditControlWidth=50;
         [self setSwipeOffset:0];
         [self beginEditMode];
     } else {
+        [self endEditMode];
         [super setEditing:editing animated:animated];
     }
 }
@@ -44,6 +45,10 @@ static NSInteger const kCustomEditControlWidth=50;
     [UIView animateWithDuration:0.3 animations:^{
         [self.mainView.superview layoutIfNeeded];
     }];
+}
+
+- (void)endEditMode {
+    self.leadingSpaceMainViewConstraint.constant = -kCustomEditControlWidth;
 }
 
 @end

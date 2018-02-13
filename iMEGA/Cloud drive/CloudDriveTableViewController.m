@@ -1386,10 +1386,11 @@
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-    self.pseudoEdit = YES;
+
+    self.pseudoEdit = editing;
 
     [super setEditing:editing animated:animated];
-    
+
     [self updateNavigationBarTitle];
     
     if (editing) {
