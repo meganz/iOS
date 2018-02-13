@@ -26,11 +26,12 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dyC-bj-6Ub">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ulA-CI-VZp">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </scrollView>
                                     <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FGv-7h-IkY">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="44" id="Ptg-gg-xt7"/>
-                                        </constraints>
                                         <items>
                                             <navigationItem title="Title" id="u26-RZ-kaH">
                                                 <barButtonItem key="leftBarButtonItem" style="plain" systemItem="stop" id="Bfh-QP-H1o">
@@ -64,23 +65,19 @@
                                         </items>
                                         <color key="tintColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </toolbar>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ulA-CI-VZp">
-                                        <rect key="frame" x="0.0" y="44" width="375" height="559"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </scrollView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="ulA-CI-VZp" firstAttribute="top" secondItem="dyC-bj-6Ub" secondAttribute="top" id="4eK-63-4pu"/>
                                     <constraint firstItem="ulA-CI-VZp" firstAttribute="leading" secondItem="dyC-bj-6Ub" secondAttribute="leading" id="6lR-Gr-OTt"/>
                                     <constraint firstItem="FGv-7h-IkY" firstAttribute="top" secondItem="dyC-bj-6Ub" secondAttribute="top" id="9f7-AN-YAt"/>
                                     <constraint firstAttribute="trailing" secondItem="ulA-CI-VZp" secondAttribute="trailing" id="ABD-fC-P2n"/>
                                     <constraint firstItem="Z54-Be-FUS" firstAttribute="leading" secondItem="dyC-bj-6Ub" secondAttribute="leading" id="D83-nP-mdy"/>
-                                    <constraint firstItem="ulA-CI-VZp" firstAttribute="top" secondItem="FGv-7h-IkY" secondAttribute="bottom" id="Nbu-EU-PYx"/>
                                     <constraint firstItem="FGv-7h-IkY" firstAttribute="leading" secondItem="dyC-bj-6Ub" secondAttribute="leading" id="VAa-b6-zQc"/>
                                     <constraint firstAttribute="trailing" secondItem="Z54-Be-FUS" secondAttribute="trailing" id="dBj-3f-UBc"/>
                                     <constraint firstAttribute="bottom" secondItem="Z54-Be-FUS" secondAttribute="bottom" id="gyk-9P-2cm"/>
                                     <constraint firstAttribute="trailing" secondItem="FGv-7h-IkY" secondAttribute="trailing" id="qaG-Ml-A9o"/>
-                                    <constraint firstItem="Z54-Be-FUS" firstAttribute="top" secondItem="ulA-CI-VZp" secondAttribute="bottom" id="uEi-jz-c17"/>
+                                    <constraint firstAttribute="bottom" secondItem="ulA-CI-VZp" secondAttribute="bottom" id="whT-y7-zJa"/>
                                 </constraints>
                             </view>
                         </subviews>
