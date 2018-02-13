@@ -229,7 +229,7 @@
             
             UIScrollView *zoomableView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.scrollView.frame.size.width * i, 0.0f, self.scrollView.frame.size.width, self.scrollView.frame.size.height)];
             zoomableView.minimumZoomScale = 1.0f;
-            zoomableView.maximumZoomScale = 5.0f;
+            zoomableView.maximumZoomScale = node.name.mnz_isImagePathExtension ? 5.0f : 1.0f;
             zoomableView.zoomScale = 1.0f;
             zoomableView.contentSize = imageView.bounds.size;
             zoomableView.delegate = self;
