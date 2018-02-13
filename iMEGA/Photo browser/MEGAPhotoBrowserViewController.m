@@ -112,28 +112,34 @@
     self.imageViewsCache = [[NSCache<NSString *, UIScrollView *> alloc] init];
     self.imageViewsCache.countLimit = 1000;
     
-    self.scrollView.frame = CGRectMake(self.scrollView.frame.origin.x, self.scrollView.frame.origin.y, self.scrollView.frame.size.width + self.gapBetweenPages, self.scrollView.frame.size.height);
-    self.scrollView.contentSize = CGSizeMake((self.scrollView.frame.size.width + self.gapBetweenPages) * self.mediaNodes.count, self.scrollView.frame.size.height);
+    self.scrollView.frame = CGRectMake(self.backgroundView.frame.origin.x, self.backgroundView.frame.origin.y, self.backgroundView.frame.size.width + self.gapBetweenPages, self.backgroundView.frame.size.height);
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.mediaNodes.count, self.scrollView.frame.size.height);
     
     [self loadNearbyImagesFromIndex:self.currentIndex];
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
     UIScrollView *zoomableViewForInitialNode = [self.imageViewsCache objectForKey:node.base64Handle];
-    [self.scrollView scrollRectToVisible:zoomableViewForInitialNode.frame animated:NO];
+    CGRect targetFrame = zoomableViewForInitialNode.frame;
+    targetFrame.origin.x += self.gapBetweenPages;
+    [self.scrollView scrollRectToVisible:targetFrame animated:NO];
     [self reloadTitle];
     [self airplayDisplayCurrentImage];
 }
 
 - (void)reloadTitle {
+    [self reloadTitleForIndex:self.currentIndex];
+}
+
+- (void)reloadTitleForIndex:(NSUInteger)newIndex {
     NSString *subtitle;
     if (self.mediaNodes.count == 1) {
         subtitle = AMLocalizedString(@"indexOfTotalFile", @"Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file.");
     } else {
         subtitle = AMLocalizedString(@"indexOfTotalFiles", @"Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files.");
     }
-    subtitle = [subtitle stringByReplacingOccurrencesOfString:@"%1$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.currentIndex+1]];
+    subtitle = [subtitle stringByReplacingOccurrencesOfString:@"%1$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)newIndex+1]];
     subtitle = [subtitle stringByReplacingOccurrencesOfString:@"%2$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.mediaNodes.count]];
     
-    self.navigationItem.titleView = [Helper customNavigationBarLabelWithTitle:[self.mediaNodes objectAtIndex:self.currentIndex].name subtitle:subtitle];
+    self.navigationItem.titleView = [Helper customNavigationBarLabelWithTitle:[self.mediaNodes objectAtIndex:newIndex].name subtitle:subtitle];
     [self.navigationItem.titleView sizeToFit];
 }
 
@@ -150,7 +156,7 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView.tag == 1) {
-        self.currentIndex = scrollView.contentOffset.x/scrollView.frame.size.width;
+        self.currentIndex = (scrollView.contentOffset.x + self.gapBetweenPages) / scrollView.frame.size.width;
         [self resetZooms];
         [self reloadTitle];
         [self airplayDisplayCurrentImage];
@@ -159,11 +165,11 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView.tag == 1) {
-        CGFloat newIndexFloat = scrollView.contentOffset.x/scrollView.frame.size.width;
-        NSUInteger newIndex = newIndexFloat < self.currentIndex ? floor(newIndexFloat) : ceil(newIndexFloat);
+        CGFloat newIndexFloat = (scrollView.contentOffset.x + self.gapBetweenPages) / scrollView.frame.size.width;
+        NSUInteger newIndex = floor(newIndexFloat);
         if (newIndex != self.currentIndex) {
-            self.currentIndex = newIndex;
-            [self loadNearbyImagesFromIndex:self.currentIndex];
+            [self reloadTitleForIndex:newIndex];
+            [self loadNearbyImagesFromIndex:newIndex];
         }
     }
 }
@@ -211,7 +217,7 @@
                 continue;
             }
             
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.scrollView.frame.size.width - self.gapBetweenPages, self.scrollView.frame.size.height)];
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.backgroundView.frame.size.width, self.backgroundView.frame.size.height)];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
             NSString *temporaryImagePath = [self temporatyPathForNode:node];
@@ -230,7 +236,7 @@
                 }
             }
             
-            UIScrollView *zoomableView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.scrollView.frame.size.width * i, 0.0f, self.scrollView.frame.size.width, self.scrollView.frame.size.height)];
+            UIScrollView *zoomableView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.scrollView.frame.size.width * i, 0.0f, self.backgroundView.frame.size.width, self.backgroundView.frame.size.height)];
             zoomableView.minimumZoomScale = 1.0f;
             zoomableView.maximumZoomScale = node.name.mnz_isImagePathExtension ? 5.0f : 1.0f;
             zoomableView.zoomScale = 1.0f;
@@ -485,12 +491,6 @@
 
 - (void)updateCurrentIndexTo:(NSUInteger)newIndex {
     self.currentIndex = newIndex;
-    [self loadNearbyImagesFromIndex:self.currentIndex];
-    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
-    UIScrollView *zoomableViewForInitialNode = [self.imageViewsCache objectForKey:node.base64Handle];
-    [self.scrollView scrollRectToVisible:zoomableViewForInitialNode.frame animated:NO];
-    [self reloadTitle];
-    [self airplayDisplayCurrentImage];
 }
 
 @end
