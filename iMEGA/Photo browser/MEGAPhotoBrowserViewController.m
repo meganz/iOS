@@ -30,6 +30,7 @@
 @property (nonatomic) CGPoint panGestureInitialPoint;
 @property (nonatomic, getter=isInterfaceHidden) BOOL interfaceHidden;
 @property (nonatomic) CGFloat playButtonSize;
+@property (nonatomic) CGFloat gapBetweenPages;
 
 @property (nonatomic) UIWindow *secondWindow;
 
@@ -71,6 +72,7 @@
     self.scrollView.tag = 1;
     self.transitioningDelegate = self;
     self.playButtonSize = 100.0f;
+    self.gapBetweenPages = 10.0f;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -110,7 +112,8 @@
     self.imageViewsCache = [[NSCache<NSString *, UIScrollView *> alloc] init];
     self.imageViewsCache.countLimit = 1000;
     
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.mediaNodes.count, self.scrollView.frame.size.height);
+    self.scrollView.frame = CGRectMake(self.scrollView.frame.origin.x, self.scrollView.frame.origin.y, self.scrollView.frame.size.width + self.gapBetweenPages, self.scrollView.frame.size.height);
+    self.scrollView.contentSize = CGSizeMake((self.scrollView.frame.size.width + self.gapBetweenPages) * self.mediaNodes.count, self.scrollView.frame.size.height);
     
     [self loadNearbyImagesFromIndex:self.currentIndex];
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
@@ -208,7 +211,7 @@
                 continue;
             }
             
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.scrollView.frame.size.width, self.scrollView.frame.size.height)];
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.scrollView.frame.size.width - self.gapBetweenPages, self.scrollView.frame.size.height)];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
             NSString *temporaryImagePath = [self temporatyPathForNode:node];
