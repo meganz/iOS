@@ -20,7 +20,10 @@
                 <outlet property="alphaView" destination="kfn-cn-egu" id="5ma-lt-guF"/>
                 <outlet property="cancelButton" destination="T9Y-IU-A0H" id="Jwa-1v-0q2"/>
                 <outlet property="collectionView" destination="O7H-6P-95d" id="rMF-CI-zfc"/>
+                <outlet property="collectionViewBottom" destination="2sO-Mk-2tA" id="EqH-FG-jF9"/>
                 <outlet property="collectionViewHeight" destination="R3e-83-tD0" id="p7u-5s-FF1"/>
+                <outlet property="collectionViewLeading" destination="aye-Vx-4Ob" id="Hpz-sf-lPO"/>
+                <outlet property="collectionViewTrailing" destination="b15-de-48b" id="O8K-q8-zDq"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
