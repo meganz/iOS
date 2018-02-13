@@ -393,6 +393,8 @@
             } else {
                 [UIView animateWithDuration:0.3 animations:^{
                     self.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+                } completion:^(BOOL finished) {
+                    [self reloadUI];
                 }];
             }
             
