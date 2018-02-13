@@ -203,4 +203,35 @@ static MEGAStore *_megaStore = nil;
     return [array firstObject];
 }
 
+#pragma mark - MOChatDraft entity
+
+- (void)insertOrUpdateChatDraftWithChatId:(uint64_t)chatId text:(NSString *)text {
+    MOChatDraft *moChatDraft = [self fetchChatDraftWithChatId:chatId];
+    if (moChatDraft) {
+        moChatDraft.text = text;
+        
+        MEGALogDebug(@"Save context - update chat draft with chatId %@ and text %@", moChatDraft.chatId, moChatDraft.text);
+    } else {
+        MOChatDraft *moChatDraft = [NSEntityDescription insertNewObjectForEntityForName:@"ChatDraft" inManagedObjectContext:self.managedObjectContext];
+        moChatDraft.chatId = [NSNumber numberWithUnsignedLongLong:chatId];
+        moChatDraft.text = text;
+        
+        MEGALogDebug(@"Save context - insert chat draft with chatId %@ and text %@", moChatDraft.chatId, moChatDraft.text);
+    }
+
+    [self saveContext];
+}
+
+- (MOChatDraft *)fetchChatDraftWithChatId:(uint64_t)chatId {
+    NSFetchRequest *request = [MOChatDraft fetchRequest];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"chatId == %@", [NSNumber numberWithUnsignedLongLong:chatId]];
+    [request setPredicate:predicate];
+    
+    NSError *error;
+    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    return [array firstObject];
+}
+
 @end
