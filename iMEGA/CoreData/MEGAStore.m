@@ -1,4 +1,7 @@
+
 #import "MEGAStore.h"
+
+#import "NSString+MNZCategory.h"
 
 @interface MEGAStore ()
 
@@ -207,16 +210,22 @@ static MEGAStore *_megaStore = nil;
 
 - (void)insertOrUpdateChatDraftWithChatId:(uint64_t)chatId text:(NSString *)text {
     MOChatDraft *moChatDraft = [self fetchChatDraftWithChatId:chatId];
-    if (moChatDraft) {
-        moChatDraft.text = text;
+    if (!text.mnz_isEmpty) {
+        if (moChatDraft) {
+            moChatDraft.text = text;
+            
+            MEGALogDebug(@"Save context - update chat draft with chatId %@ and text %@", moChatDraft.chatId, moChatDraft.text);
+        } else {
+            MOChatDraft *moChatDraft = [NSEntityDescription insertNewObjectForEntityForName:@"ChatDraft" inManagedObjectContext:self.managedObjectContext];
+            moChatDraft.chatId = [NSNumber numberWithUnsignedLongLong:chatId];
+            moChatDraft.text = text;
+            
+            MEGALogDebug(@"Save context - insert chat draft with chatId %@ and text %@", moChatDraft.chatId, moChatDraft.text);
+        }
+    } else if (moChatDraft) {
+        [self.managedObjectContext deleteObject:moChatDraft];
         
-        MEGALogDebug(@"Save context - update chat draft with chatId %@ and text %@", moChatDraft.chatId, moChatDraft.text);
-    } else {
-        MOChatDraft *moChatDraft = [NSEntityDescription insertNewObjectForEntityForName:@"ChatDraft" inManagedObjectContext:self.managedObjectContext];
-        moChatDraft.chatId = [NSNumber numberWithUnsignedLongLong:chatId];
-        moChatDraft.text = text;
-        
-        MEGALogDebug(@"Save context - insert chat draft with chatId %@ and text %@", moChatDraft.chatId, moChatDraft.text);
+        MEGALogDebug(@"Save context - remove chat draft with chatId %@", moChatDraft.chatId);
     }
 
     [self saveContext];
@@ -226,12 +235,12 @@ static MEGAStore *_megaStore = nil;
     NSFetchRequest *request = [MOChatDraft fetchRequest];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"chatId == %@", [NSNumber numberWithUnsignedLongLong:chatId]];
-    [request setPredicate:predicate];
+    request.predicate = predicate;
     
     NSError *error;
     NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
     
-    return [array firstObject];
+    return array.firstObject;
 }
 
 @end
