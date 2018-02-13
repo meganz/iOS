@@ -113,9 +113,6 @@
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dht-79-RjI">
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="GuB-ux-wda"/>
-                                </constraints>
                                 <items>
                                     <navigationItem id="iZJ-x1-GIX">
                                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="vUv-17-6IT">
@@ -204,6 +201,7 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="70h-sa-EZW" id="ZF1-jf-5no"/>
+                        <outlet property="navigationItem" destination="iZJ-x1-GIX" id="h4W-IZ-kid"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ruh-y3-u8z" userLabel="First Responder" sceneMemberID="firstResponder"/>
