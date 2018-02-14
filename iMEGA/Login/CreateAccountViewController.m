@@ -1,11 +1,10 @@
 
 #import "CreateAccountViewController.h"
 
-#import <SafariServices/SafariServices.h>
-
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
+#import "Helper.h"
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "NSString+MNZCategory.h"
@@ -168,17 +167,7 @@
 }
 
 - (IBAction)termOfServiceTouchUpInside:(UIButton *)sender {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        NSURL *URL = [NSURL URLWithString:@"https://mega.nz/ios_terms.html"];
-        UIViewController *webViewController = [[SFSafariViewController alloc] initWithURL:URL];
-        ((SFSafariViewController *)webViewController).modalPresentationStyle = UIModalPresentationOverFullScreen;
-        if (@available(iOS 10.0, *)) {
-            ((SFSafariViewController *)webViewController).preferredControlTintColor = [UIColor mnz_redD90007];
-        } else {
-            webViewController.view.tintColor = [UIColor mnz_redD90007];
-        }
-        [self presentViewController:webViewController animated:YES completion:nil];
-    }
+    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://mega.nz/ios_terms.html"]];
 }
 
 - (IBAction)createAccountTouchUpInside:(id)sender {

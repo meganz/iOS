@@ -2,14 +2,17 @@
 
 #import <CoreSpotlight/CoreSpotlight.h>
 #import "LTHPasscodeViewController.h"
+#import <SafariServices/SafariServices.h>
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 
 #import "MEGAActivityItemProvider.h"
 #import "MEGANode+MNZCategory.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 
@@ -1002,10 +1005,10 @@ static MEGAIndexer *indexer;
 #pragma mark - Utils for UI
 
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
-    NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+    NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title attributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
     subtitle = [NSString stringWithFormat:@"\n%@", subtitle];
-    NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
+    NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
     [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
     
@@ -1015,6 +1018,38 @@ static MEGAIndexer *indexer;
     [label setAttributedText:titleMutableAttributedString];
     
     return label;
+}
+
++ (UISearchController *)customSearchControllerWithSearchResultsUpdaterDelegate:(id<UISearchResultsUpdating>)searchResultsUpdaterDelegate searchBarDelegate:(id<UISearchBarDelegate>)searchBarDelegate {
+    UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    searchController.searchResultsUpdater = searchResultsUpdaterDelegate;
+    searchController.searchBar.delegate = searchBarDelegate;
+    searchController.dimsBackgroundDuringPresentation = NO;
+    
+    searchController.searchBar.translucent = NO;
+    searchController.searchBar.barTintColor = [UIColor mnz_grayF1F1F2];
+    searchController.searchBar.tintColor = [UIColor mnz_redF0373A];
+    
+    UITextField *searchTextField = [searchController.searchBar valueForKey:@"_searchField"];
+    searchTextField.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
+    searchTextField.backgroundColor = [UIColor whiteColor];
+    searchTextField.textColor = [UIColor mnz_black333333];
+    searchTextField.tintColor = [UIColor mnz_green00BFA5];
+    
+    return searchController;
+}
+
++ (void)presentSafariViewControllerWithURL:(NSURL *)url {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:url];
+        if (@available(iOS 10.0, *)) {
+            safariViewController.preferredControlTintColor = [UIColor mnz_redF0373A];
+        } else {
+            safariViewController.view.tintColor = [UIColor mnz_redF0373A];
+        }
+        
+        [[UIApplication mnz_visibleViewController] presentViewController:safariViewController animated:YES completion:nil];
+    }
 }
 
 #pragma mark - Logout

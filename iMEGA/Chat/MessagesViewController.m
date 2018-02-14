@@ -146,7 +146,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     _unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 6, 30, 30)];
     self.unreadLabel.font = [UIFont mnz_SFUIMediumWithSize:12.0f];
-    self.unreadLabel.textColor = [UIColor mnz_redD90007];
+    self.unreadLabel.textColor = [UIColor mnz_redF0373A];
     self.unreadLabel.userInteractionEnabled = YES;
     
     if (self.presentingViewController && self.parentViewController) {
@@ -274,7 +274,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
             label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with")];
         } else {
-            NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:chatRoomTitle attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+            NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:chatRoomTitle attributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor whiteColor]}];
             label.textAlignment = NSTextAlignmentCenter;
             label.attributedText = titleMutableAttributedString;
         }
@@ -667,7 +667,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         self.navigationBarProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
         self.navigationBarProgressView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
         self.navigationBarProgressView.frame = CGRectMake(self.navigationController.navigationBar.bounds.origin.x, self.navigationController.navigationBar.bounds.size.height, self.navigationController.navigationBar.bounds.size.width, 2.0f);
-        self.navigationBarProgressView.progressTintColor = [UIColor mnz_redD90007];
+        self.navigationBarProgressView.progressTintColor = [UIColor mnz_green00BFA5];
         self.navigationBarProgressView.trackTintColor = [UIColor clearColor];
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -858,7 +858,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             selectOptionAlertController.popoverPresentationController.sourceView = self.inputToolbar.contentView;
             
             [self presentViewController:selectOptionAlertController animated:YES completion:nil];
-            selectOptionAlertController.view.tintColor = [UIColor mnz_redD90007];
+            selectOptionAlertController.view.tintColor = [UIColor mnz_redF0373A];
 
             break;
         }

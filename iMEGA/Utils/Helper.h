@@ -114,6 +114,10 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
 
++ (UISearchController *)customSearchControllerWithSearchResultsUpdaterDelegate:(id<UISearchResultsUpdating>)searchResultsUpdaterDelegate searchBarDelegate:(id<UISearchBarDelegate>)searchBarDelegate;
+
++ (void)presentSafariViewControllerWithURL:(NSURL *)url;
+
 #pragma mark - Logout
 
 + (void)logout;
