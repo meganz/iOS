@@ -6,14 +6,15 @@
 #import "MEGAGetThumbnailRequestDelegate.h"
 
 #import "NSString+MNZCategory.h"
+#import "UICollectionView+MNZCategory.h"
 
 @interface MEGAPhotoBrowserPickerViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
 
+@property (nonatomic) CGSize cellSize;
 @property (nonatomic) CGFloat cellInset;
-@property (nonatomic) CGFloat cellSquareSize;
 
 @end
 
@@ -23,7 +24,8 @@
     [super viewDidAppear:animated];
     
     self.cellInset = 1.0f;
-    [self calculateCellSize];
+    self.cellSize = [self.collectionView mnz_calculateCellSizeForInset:self.cellInset];
+    [self.collectionView.collectionViewLayout invalidateLayout];
     
     NSString *folderName = [self.api nodeForHandle:self.mediaNodes.firstObject.parentHandle].name;
     NSString *numberOfFiles;
@@ -39,7 +41,8 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-        [self calculateCellSize];
+        self.cellSize = [self.collectionView mnz_calculateCellSizeForInset:self.cellInset];
+        [self.collectionView.collectionViewLayout invalidateLayout];
     } completion:nil];
 }
 
@@ -86,7 +89,7 @@
 #pragma mark - UICollectionViewDelegateFlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(self.cellSquareSize, self.cellSquareSize);
+    return self.cellSize;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
@@ -123,18 +126,6 @@
         NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
         [self.api getThumbnailNode:node destinationFilePath:path delegate:delegate];
     }
-}
-
-#pragma mark - Private
-
-- (void)calculateCellSize {
-    CGRect collectionViewFrame = self.collectionView.frame;
-    NSUInteger cellsInRow = collectionViewFrame.size.width < collectionViewFrame.size.height ? 4 : 8;
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        cellsInRow *= 1.5;
-    }
-    self.cellSquareSize = ((collectionViewFrame.size.width-(cellsInRow+1)*self.cellInset) / cellsInRow);
-    [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 @end

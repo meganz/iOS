@@ -12,6 +12,7 @@
 #import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
 #import "MEGAPhotoBrowserViewController.h"
+#import "UICollectionView+MNZCategory.h"
 
 #import "PhotoCollectionViewCell.h"
 #import "HeaderCollectionReusableView.h"
@@ -31,9 +32,8 @@
 @property (nonatomic, strong) MEGANodeList *nodeList;
 @property (nonatomic, strong) NSMutableArray *photosByMonthYearArray;
 
-@property (nonatomic) CGSize sizeForItem;
-@property (nonatomic) CGFloat portraitThumbnailSize;
-@property (nonatomic) CGFloat landscapeThumbnailSize;
+@property (nonatomic) CGSize cellSize;
+@property (nonatomic) CGFloat cellInset;
 
 @property (nonatomic, strong) NSMutableDictionary *selectedItemsDictionary;
 
@@ -80,12 +80,14 @@
     [self.navigationItem setRightBarButtonItems:@[negativeSpaceBarButtonItem, self.editButtonItem]];
     [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
     
-    [self calculateSizeForItem];
-    
     // Long press to select:
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
     
     [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];
+    
+    self.cellInset = 1.0f;
+    self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
+    [self reloadUI];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -101,8 +103,6 @@
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
-    
-    [self reloadUI];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -113,6 +113,12 @@
     [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] removeMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
+    [self reloadUI];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -130,7 +136,7 @@
         if (self.photosByMonthYearArray.count == 0) {
             [self.photosCollectionView reloadEmptyDataSet];
         } else {
-            [self calculateSizeForItem];
+            self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
             [self.photosCollectionView reloadData];
         }
     } completion:nil];
@@ -276,56 +282,6 @@
     self.moveBarButtonItem.enabled = boolValue;
     self.carbonCopyBarButtonItem.enabled = boolValue;
     self.deleteBarButtonItem.enabled = boolValue;
-}
-
-- (void)calculateSizeForItem {
-    UIInterfaceOrientation interfaceOrientation = [UIApplication sharedApplication].statusBarOrientation;
-    if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
-        if (self.portraitThumbnailSize) {
-            self.sizeForItem = CGSizeMake(self.portraitThumbnailSize, self.portraitThumbnailSize);
-        } else {
-            [self calculateMinimumThumbnailSizeForInterfaceOrientation:interfaceOrientation];
-        }
-    } else {
-        if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
-            if (self.landscapeThumbnailSize) {
-                self.sizeForItem = CGSizeMake(self.landscapeThumbnailSize, self.landscapeThumbnailSize);
-            } else {
-                [self calculateMinimumThumbnailSizeForInterfaceOrientation:interfaceOrientation];
-            }
-        }
-    }
-}
-
-- (void)calculateMinimumThumbnailSizeForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    CGFloat screenWidth = CGRectGetWidth([UIScreen mainScreen].bounds);
-    CGFloat minimumThumbnailSize = [[UIDevice currentDevice] iPadDevice] ? 100.0f : 93.0f;
-    NSUInteger minimumNumberOfItemsPerRow = (screenWidth / minimumThumbnailSize);
-    CGFloat sizeNeededToFitMinimums = (((minimumThumbnailSize + 1) * minimumNumberOfItemsPerRow) - 1);
-    CGFloat incrementForThumbnailSize = 0.1f;
-    while (screenWidth > sizeNeededToFitMinimums) {
-        minimumThumbnailSize += incrementForThumbnailSize;
-        NSUInteger minimumItemsPerRowWithCurrentMinimum = (screenWidth / minimumThumbnailSize);
-        if (minimumItemsPerRowWithCurrentMinimum < minimumNumberOfItemsPerRow) {
-            minimumThumbnailSize -= incrementForThumbnailSize;
-            break;
-        }
-        sizeNeededToFitMinimums = (((minimumThumbnailSize + 1) * minimumNumberOfItemsPerRow) - 1);
-        if (sizeNeededToFitMinimums >= screenWidth) {
-            minimumThumbnailSize -= incrementForThumbnailSize;
-            break;
-        }
-    }
-    
-    if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
-        self.portraitThumbnailSize = minimumThumbnailSize;
-    } else {
-        if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
-            self.landscapeThumbnailSize = minimumThumbnailSize;
-        }
-    }
-    
-    self.sizeForItem = CGSizeMake(minimumThumbnailSize, minimumThumbnailSize);
 }
 
 - (void)updateProgressData {
@@ -679,7 +635,19 @@
 #pragma mark - UICollectionViewDelegateFlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return self.sizeForItem;
+    return self.cellSize;
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    return UIEdgeInsetsMake(self.cellInset, self.cellInset, self.cellInset, self.cellInset);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return self.cellInset;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    return self.cellInset/2;
 }
 
 #pragma mark - UILongPressGestureRecognizer
