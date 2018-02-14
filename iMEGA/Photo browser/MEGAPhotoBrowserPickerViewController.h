@@ -12,7 +12,7 @@
 @interface MEGAPhotoBrowserPickerViewController : UIViewController
 
 @property (nonatomic) NSMutableArray<MEGANode *> *mediaNodes;
-@property (nonatomic) id<MEGAPhotoBrowserPickerDelegate> delegate;
+@property (nonatomic, weak) id<MEGAPhotoBrowserPickerDelegate> delegate;
 @property (nonatomic) MEGASdk *api;
 
 @end
