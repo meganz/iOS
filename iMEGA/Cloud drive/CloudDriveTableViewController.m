@@ -89,21 +89,9 @@
     self.tableView.estimatedRowHeight = 44.0;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
-    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchResultsUpdater = self;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.searchBar.delegate = self;
-    self.searchController.searchBar.barTintColor = [UIColor colorWithWhite:235.0f / 255.0f alpha:1.0f];
-    self.searchController.searchBar.translucent = YES;
-    [self.searchController.searchBar sizeToFit];
-    
-    UITextField *searchTextField = [self.searchController.searchBar valueForKey:@"_searchField"];
-    searchTextField.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
-    searchTextField.textColor = [UIColor mnz_gray999999];
-    
+    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.definesPresentationContext = YES;
-    
     self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
     
     [self setNavigationBarButtonItems];
@@ -198,6 +186,10 @@
     }
     
     return UIInterfaceOrientationMaskAll;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return self.searchController.isActive ? UIStatusBarStyleDefault : UIStatusBarStyleLightContent;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

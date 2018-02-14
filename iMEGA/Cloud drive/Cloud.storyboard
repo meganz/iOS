@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="7kf-jp-clj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="7kf-jp-clj">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -26,7 +26,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="CloudDriveID" id="KWY-Kr-BLD" customClass="CloudDriveTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ufJ-uN-NFo">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="sectionIndexBackgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -322,7 +322,7 @@
                         <action selector="selectAllAction:" destination="KWY-Kr-BLD" id="FQc-xa-aUj"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="more" width="22" id="swl-67-V4v" userLabel="More Bar Button Item">
+                <barButtonItem image="moreSelected" width="22" id="swl-67-V4v" userLabel="More Bar Button Item">
                     <connections>
                         <action selector="moreAction:" destination="KWY-Kr-BLD" id="R6g-6W-6R3"/>
                     </connections>
@@ -386,11 +386,11 @@
                         <viewControllerLayoutGuide type="bottom" id="rue-95-cLa"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="NEO-Fs-8vu">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="YNO-Cb-1Vd">
-                                <rect key="frame" x="0.0" y="64" width="414" height="180"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="180"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2zt-gN-F0L">
                                         <rect key="frame" x="164" y="22" width="86" height="86"/>
@@ -406,7 +406,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r08-az-XN8" userLabel="Name Label">
-                                        <rect key="frame" x="188.33333333333334" y="113" width="38.666666666666657" height="18"/>
+                                        <rect key="frame" x="188.66666666666666" y="113" width="38.333333333333343" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="jz7-xx-pbU"/>
                                         </constraints>
@@ -482,7 +482,7 @@
                                 </variation>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="65" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="Thh-CY-kSq">
-                                <rect key="frame" x="0.0" y="244" width="414" height="492"/>
+                                <rect key="frame" x="0.0" y="180" width="414" height="492"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SharedItemContactTableViewCellID" rowHeight="66" id="AFc-JO-XUC" customClass="NodeTableViewCell">
@@ -791,14 +791,12 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="reU-k6-eBZ">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="FjZ-ex-ZPN">
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="FjZ-ex-ZPN">
                         <rect key="frame" x="0.0" y="692" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.85098039215686272" green="0.0" blue="0.027450980392156862" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="barTintColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </toolbar>
                     <connections>
                         <segue destination="Z2F-Nr-ypX" kind="relationship" relationship="rootViewController" id="IhL-6R-Qbh"/>
@@ -817,7 +815,7 @@
                         <viewControllerLayoutGuide type="bottom" id="sx2-EY-zn3"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ZhJ-Cr-fyv">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="628"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xgk-U1-gTo">
@@ -832,7 +830,7 @@
                                             <segment title="Cloud Drive"/>
                                             <segment title="Incoming"/>
                                         </segments>
-                                        <color key="tintColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <action selector="browserSegmentedControl:" destination="Z2F-Nr-ypX" eventType="valueChanged" id="ZrO-H8-3Ox"/>
                                         </connections>
@@ -880,13 +878,13 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="icS-K3-BvR">
-                                                    <rect key="frame" x="67" y="9" width="43.666666666666657" height="18"/>
+                                                    <rect key="frame" x="67" y="9" width="44" height="18"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="cd8-yG-jq7">
-                                                    <rect key="frame" x="67" y="27" width="43.666666666666657" height="14"/>
+                                                    <rect key="frame" x="67" y="27" width="44" height="14"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1019,7 +1017,7 @@
                     <navigationItem key="navigationItem" id="dJb-Gj-wJR">
                         <barButtonItem key="backBarButtonItem" title=" " id="S50-6X-Rph"/>
                         <barButtonItem key="rightBarButtonItem" title="Cancel" id="eAY-hb-l2Q">
-                            <color key="tintColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="cancel:" destination="Z2F-Nr-ypX" id="fg9-2M-mjr"/>
                             </connections>
@@ -1124,20 +1122,21 @@
                         <viewControllerLayoutGuide type="bottom" id="Mfa-Dj-had"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="be2-KZ-HQH">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="PvF-fF-Mki">
-                                <rect key="frame" x="197" y="358" width="20" height="20"/>
+                                <rect key="frame" x="197" y="326" width="20" height="20"/>
                             </activityIndicatorView>
                             <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VYB-69-jRQ">
-                                <rect key="frame" x="132" y="367" width="150" height="2"/>
+                                <rect key="frame" x="132" y="335" width="150" height="2"/>
+                                <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="aBH-9X-cH8"/>
                                 </constraints>
                             </progressView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VJh-z4-8vz">
-                                <rect key="frame" x="164" y="252" width="86" height="86"/>
+                                <rect key="frame" x="164" y="220" width="86" height="86"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="86" id="7a7-jd-lI6"/>
                                     <constraint firstAttribute="height" constant="86" id="hRE-m5-OgP"/>
@@ -1169,7 +1168,7 @@
             <objects>
                 <tableViewController id="Lpo-hP-uLZ" customClass="GetLinkTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="CGQ-JP-dBX">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
@@ -1283,7 +1282,7 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="yUx-GY-JjA">
                                                     <rect key="frame" x="347" y="6" width="49" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                                    <color key="onTintColor" red="0.80392156859999997" green="0.0" blue="0.043137254899999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="onTintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="expireSwitchChanged:" destination="Lpo-hP-uLZ" eventType="valueChanged" id="w61-6M-qoT"/>
                                                     </connections>
@@ -1360,7 +1359,7 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="bx9-nj-PEb">
                                                     <rect key="frame" x="347" y="6" width="49" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                                    <color key="onTintColor" red="0.80392156859999997" green="0.0" blue="0.043137254899999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="onTintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="passwordProtectionSwitchChanged:" destination="Lpo-hP-uLZ" eventType="valueChanged" id="pte-PZ-m2D"/>
                                                     </connections>
@@ -1416,7 +1415,7 @@
                                         <rect key="frame" x="0.0" y="757" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iUt-RW-oyu" id="a7U-lv-GJL">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Encrypt" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1bQ-hV-GnF">
@@ -1493,7 +1492,6 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="AV6-ax-FbG">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1509,7 +1507,7 @@
             <objects>
                 <navigationController storyboardIdentifier="navCloudDriveID" automaticallyAdjustsScrollViewInsets="NO" id="7kf-jp-clj" userLabel="Cloud Drive" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="HQ3-f6-vEh">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="HQ3-f6-vEh">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1531,7 +1529,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Ww9-kQ-AA1"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="hnD-Vv-4wn">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="©" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0jk-v8-5fM">
@@ -1542,7 +1540,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1HV-OI-YFL">
-                                <rect key="frame" x="0.0" y="692" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="628" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <items>
@@ -1563,7 +1561,7 @@
                                 <color key="tintColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="FJn-Vd-V47">
-                                <rect key="frame" x="20" y="390" width="374" height="302"/>
+                                <rect key="frame" x="20" y="354" width="374" height="274"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                 <string key="text">MEGA respects the copyrights of others and requires that users of the MEGA cloud service comply with the laws of copyright.
 
@@ -1573,7 +1571,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Copyright warning to all users" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="i9P-WD-gV6" userLabel="Copyright warning to all users">
-                                <rect key="frame" x="63" y="343" width="288" height="25"/>
+                                <rect key="frame" x="63" y="312" width="288" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -1599,9 +1597,9 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <!--Navigation Controller-->
         <scene sceneID="FQk-Ve-k32">
             <objects>
-                <navigationController storyboardIdentifier="GetLinkNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="iMG-2S-S3v" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="GetLinkNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="iMG-2S-S3v" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="LfT-FE-imI">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="LfT-FE-imI">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1623,9 +1621,9 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <!--Navigation Controller-->
         <scene sceneID="Tjv-hu-zdo">
             <objects>
-                <navigationController storyboardIdentifier="CopywriteWarningNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" id="G9N-xa-ji2" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="CopywriteWarningNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" id="G9N-xa-ji2" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="HL8-Pt-2nJ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="HL8-Pt-2nJ">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1650,8 +1648,8 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <image name="icon-key-only" width="24" height="24"/>
         <image name="icon-link-only" width="24" height="24"/>
         <image name="icon-link-w-key" width="24" height="24"/>
-        <image name="linked" width="24" height="24"/>
-        <image name="more" width="26" height="6"/>
+        <image name="linked" width="12" height="12"/>
+        <image name="moreSelected" width="26" height="6"/>
         <image name="move" width="32" height="32"/>
         <image name="nodeInfo" width="46" height="44"/>
         <image name="readPermissions" width="46" height="44"/>

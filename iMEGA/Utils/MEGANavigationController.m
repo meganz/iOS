@@ -27,4 +27,8 @@
     return UIInterfaceOrientationMaskAll;
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
 @end

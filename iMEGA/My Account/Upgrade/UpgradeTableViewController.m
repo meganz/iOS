@@ -1,7 +1,6 @@
 #import "UpgradeTableViewController.h"
 
 #import <MessageUI/MFMailComposeViewController.h>
-#import <SafariServices/SafariServices.h>
 
 #import "SVProgressHUD.h"
 
@@ -66,8 +65,8 @@
     
     self.currentPlanLabel.text = AMLocalizedString(@"currentPlan", @"Text shown on the upgrade account page above the current PRO plan subscription");
     
-    NSMutableAttributedString *asteriskMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes: @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]}];
-    NSAttributedString *twoMonthsFreeAttributedString = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"twoMonthsFree", @"Text shown in the purchase plan view to explain that annual subscription is 16% cheaper than 12 monthly payments") attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black262626]}];
+    NSMutableAttributedString *asteriskMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes: @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]}];
+    NSAttributedString *twoMonthsFreeAttributedString = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"twoMonthsFree", @"Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money") attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black262626]}];
     [asteriskMutableAttributedString appendAttributedString:twoMonthsFreeAttributedString];
     self.twoMonthsFreeLabel.attributedText = asteriskMutableAttributedString;
     
@@ -288,7 +287,7 @@
     NSMutableAttributedString *storageMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:@"50 GB" attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
     [storageMutableAttributedString appendAttributedString:storageString];
     
-    NSAttributedString *superscriptOneAttributedString = [[NSAttributedString alloc] initWithString:@" ¹" attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]}];
+    NSAttributedString *superscriptOneAttributedString = [[NSAttributedString alloc] initWithString:@" ¹" attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]}];
     [storageMutableAttributedString appendAttributedString:superscriptOneAttributedString];
     
     return storageMutableAttributedString;
@@ -327,15 +326,7 @@
 }
 
 - (void)showURL:(NSString *)urlString {
-    NSURL *url = [NSURL URLWithString:urlString];
-    SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:url];
-    if (@available(iOS 10.0, *)) {
-        safariViewController.preferredControlTintColor = [UIColor mnz_redD90007];
-    } else {
-        safariViewController.view.tintColor = [UIColor mnz_redD90007];
-    }
-    
-    [self presentViewController:safariViewController animated:YES completion:nil];
+    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:urlString]];
 }
 
 #pragma mark - IBActions
@@ -376,7 +367,7 @@
     ProductTableViewCell *cell;
     if (self.isChoosingTheAccountType && indexPath.row == 0) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"freeProductCell" forIndexPath:indexPath];
-        NSMutableAttributedString *superscriptOneAttributedString = [[NSMutableAttributedString alloc] initWithString:@"¹ " attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]}];
+        NSMutableAttributedString *superscriptOneAttributedString = [[NSMutableAttributedString alloc] initWithString:@"¹ " attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]}];
         
         NSAttributedString *subjectToYourParticipationAttributedString = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"subjectToYourParticipationInOurAchievementsProgram", @"") attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black262626]}];
         [superscriptOneAttributedString appendAttributedString:subjectToYourParticipationAttributedString];
@@ -405,7 +396,7 @@
     cell.productBandwidthLabel.attributedText = (self.isChoosingTheAccountType && indexPath.row == 0) ? [self freeTransferQuotaAttributedString] :[self bandwidthAttributedStringForProLevelAtIndex:proLevelIndexNumber.integerValue];
     
     NSString *productPriceString = [NSString stringWithFormat:AMLocalizedString(@"productPricePerMonth", @"Price asociated with the MEGA PRO account level you can subscribe"), (float)[[MEGAPurchase sharedInstance].pricing amountAtProductIndex:proLevelIndexNumber.integerValue] / 100, [[MEGAPurchase sharedInstance].pricing currencyAtProductIndex:proLevelIndexNumber.integerValue]];
-    NSAttributedString *asteriskAttributedString = [[NSAttributedString alloc] initWithString:@" *" attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]}];
+    NSAttributedString *asteriskAttributedString = [[NSAttributedString alloc] initWithString:@" *" attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]}];
     NSMutableAttributedString *productPriceMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:productPriceString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[self colorForProLevel:proLevelNumber.integerValue]}];
     [productPriceMutableAttributedString appendAttributedString:asteriskAttributedString];
     cell.productPriceLabel.attributedText = productPriceMutableAttributedString;
