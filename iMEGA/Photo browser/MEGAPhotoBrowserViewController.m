@@ -123,6 +123,7 @@
     [self.scrollView scrollRectToVisible:targetFrame animated:NO];
     [self reloadTitle];
     [self airplayDisplayCurrentImage];
+    [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
 }
 
 - (void)reloadTitle {
@@ -160,6 +161,7 @@
         [self resetZooms];
         [self reloadTitle];
         [self airplayDisplayCurrentImage];
+        [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
     }
 }
 
@@ -500,11 +502,11 @@
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
-    // TODO: To properly dismiss the view controller with the same animation as in the presentation, the previous
-    // view controller should scroll to the node corresponding to the node at the current index in this view
-    // controller, and then send its frame here. The code to animate de dismissal is the same as in the preious
-    // method, with MEGAPhotoBrowserAnimatorModeDismiss mode.
-    return nil;
+    if (!CGRectIsEmpty(self.originFrame)) {
+        return [[MEGAPhotoBrowserAnimator alloc] initWithMode:MEGAPhotoBrowserAnimatorModeDismiss originFrame:self.originFrame];
+    } else {
+        return nil;
+    }
 }
 
 #pragma mark - MEGAPhotoBrowserPickerDelegate

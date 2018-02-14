@@ -20,7 +20,7 @@
 #import "CameraUploadsTableViewController.h"
 #import "BrowserViewController.h"
 
-@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate> {
+@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate> {
     BOOL allNodesSelected;
 
     NSUInteger remainingOperations;
@@ -243,7 +243,6 @@
             [photosArray addObject:node];
             [photosByMonthYearDictionary setObject:photosArray forKey:currentMonthYearString];
             [self.photosByMonthYearArray addObject:photosByMonthYearDictionary];
-            
         } else {
             [photosArray addObject:node];
         }
@@ -323,6 +322,22 @@
     } else {
         self.currentState = MEGACameraUploadsStateNoInternetConnection;
     }
+}
+
+- (NSIndexPath *)indexPathForNode:(MEGANode *)node {
+    NSUInteger section = 0;
+    for (NSDictionary *sectionInArray in self.photosByMonthYearArray) {
+        NSUInteger item = 0;
+        NSArray *nodesInSection = [sectionInArray objectForKey:[[sectionInArray allKeys] objectAtIndex:0]];
+        for (MEGANode *n in nodesInSection) {
+            if (n.handle == node.handle) {
+                return [NSIndexPath indexPathForItem:item inSection:section];
+            }
+            item++;
+        }
+        section++;
+    }
+    return nil;
 }
 
 #pragma mark - IBAction
@@ -594,7 +609,8 @@
         photoBrowserViewController.node = node;
         photoBrowserViewController.nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
         photoBrowserViewController.originFrame = cellFrame;
-        
+        photoBrowserViewController.delegate = self;
+
         [self presentViewController:photoBrowserViewController animated:YES completion:nil];
     } else {
         if ([self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]]) {
@@ -808,6 +824,18 @@
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
     [self pushCameraUploadSettings];
+}
+
+#pragma mark - MEGAPhotoBrowserDelegate
+
+- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser didPresentNode:(MEGANode *)node {
+    NSIndexPath *indexPath = [self indexPathForNode:node];
+    if (indexPath) {
+        [self.photosCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
+        UICollectionViewCell *cell = [self collectionView:self.photosCollectionView cellForItemAtIndexPath:indexPath];
+        CGRect cellFrame = [self.photosCollectionView convertRect:cell.frame toView:nil];
+        photoBrowser.originFrame = cellFrame;
+    }
 }
 
 #pragma mark - MEGARequestDelegate
