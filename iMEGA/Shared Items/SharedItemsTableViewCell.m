@@ -1,8 +1,6 @@
 #import "SharedItemsTableViewCell.h"
 
-static NSInteger const kCustomEditControlWidth=50;
-
-@interface SharedItemsTableViewCell ()
+@interface SharedItemsTableViewCell () <CustomEditCellAnimations>
 
 @property (nonatomic, getter=isPseudoEditing) BOOL pseudoEdit;
 @property (weak, nonatomic) IBOutlet UIView *mainView;
@@ -32,9 +30,8 @@ static NSInteger const kCustomEditControlWidth=50;
     self.customEditControl.selected = selected;
 }
 
-#pragma mark - Private Method
+#pragma mark - CustomEditCellAnimations
 
-// Animate view to show/hide custom edit control/button
 - (void)beginEditMode {
     if (!self.isSwiping) {
         self.leadingSpaceMainViewConstraint.constant = self.isPseudoEditing ? 0 : -kCustomEditControlWidth;

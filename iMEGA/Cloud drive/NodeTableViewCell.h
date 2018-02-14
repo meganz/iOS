@@ -1,12 +1,5 @@
 #import "MGSwipeTableCell.h"
-
-@protocol NodeTableViewCellDelegate
-
-@optional
-
-@property (nonatomic, readonly, getter=isPseudoEditing) BOOL pseudoEdit;
-
-@end
+#import "CustomEditCellDelegate.h"
 
 @interface NodeTableViewCell : MGSwipeTableCell
 
@@ -27,7 +20,7 @@
 
 @property (nonatomic) uint64_t nodeHandle;
 
-@property (nonatomic, assign) id <NodeTableViewCellDelegate> customEditDelegate;
+@property (nonatomic, assign) id <CustomEditCellDelegate> customEditDelegate;
 
 @property (assign, nonatomic) BOOL isSwiping;
 

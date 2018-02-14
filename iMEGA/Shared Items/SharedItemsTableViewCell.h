@@ -1,12 +1,5 @@
 #import "MGSwipeTableCell.h"
-
-@protocol SharedItemsTableViewCellDelegate
-
-@optional
-
-@property (nonatomic, readonly, getter=isPseudoEditing) BOOL pseudoEdit;
-
-@end
+#import "CustomEditCellDelegate.h"
 
 @interface SharedItemsTableViewCell : MGSwipeTableCell
 
@@ -18,7 +11,7 @@
 
 @property (nonatomic) uint64_t nodeHandle;
 
-@property (nonatomic, assign) id <SharedItemsTableViewCellDelegate> customEditDelegate;
+@property (nonatomic, assign) id <CustomEditCellDelegate> customEditDelegate;
 
 @property (assign, nonatomic) BOOL isSwiping;
 
