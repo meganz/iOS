@@ -1,6 +1,8 @@
 
 #import "MEGANode+MNZCategory.h"
 
+#import <Photos/Photos.h>
+
 #import "Helper.h"
 #import "MEGAAVViewController.h"
 #import "MEGANode.h"
@@ -118,6 +120,35 @@
     [[MEGASdkManager sharedMEGASdk] setPreviewNode:self sourceFilePath:previewFilePath];
     
     [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
+}
+
+- (void)mnz_copyToGalleryFromTemporaryPath:(NSString *)path {
+    if (self.name.mnz_isVideoPathExtension && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(path)) {
+        UISaveVideoAtPathToSavedPhotosAlbum(path, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
+    }
+    
+    if (self.name.mnz_isImagePathExtension) {
+        NSURL *imageURL = [NSURL fileURLWithPath:path];
+        
+        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+            PHAssetCreationRequest *assetCreationRequest = [PHAssetCreationRequest creationRequestForAsset];
+            [assetCreationRequest addResourceWithType:PHAssetResourceTypePhoto fileURL:imageURL options:nil];
+            
+        } completionHandler:^(BOOL success, NSError * _Nullable nserror) {
+            [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+            if (nserror) {
+                MEGALogError(@"Add asset to camera roll: %@ (Domain: %@ - Code:%ld)", nserror.localizedDescription, nserror.domain, nserror.code);
+            }
+        }];
+    }
+}
+
+- (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+    if (!error) {
+        [[NSFileManager defaultManager] removeItemAtPath:videoPath error:nil];
+    } else {
+        MEGALogError(@"Save video to Camera roll: %@ (Domain: %@ - Code:%ld)", error.localizedDescription, error.domain, error.code);
+    }
 }
 
 @end
