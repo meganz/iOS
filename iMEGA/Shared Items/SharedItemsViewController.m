@@ -18,7 +18,7 @@
 #import "SharedItemsTableViewCell.h"
 #import "CustomActionViewController.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, SharedItemsTableViewCellDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, CustomEditCellDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate> {
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
 }

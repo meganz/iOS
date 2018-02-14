@@ -42,7 +42,7 @@
 
 #import "CustomActionViewController.h"
 
-@interface CloudDriveTableViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeTableViewCellDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate> {
+@interface CloudDriveTableViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, CustomEditCellDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate> {
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
     

@@ -2,9 +2,7 @@
 #import "MEGASdkManager.h"
 #import "Helper.h"
 
-static NSInteger const kCustomEditControlWidth=50;
-
-@interface NodeTableViewCell ()
+@interface NodeTableViewCell () <CustomEditCellAnimations>
 
 @property (nonatomic, getter=isPseudoEditing) BOOL pseudoEdit;
 @property (weak, nonatomic) IBOutlet UIView *mainView;
@@ -34,9 +32,8 @@ static NSInteger const kCustomEditControlWidth=50;
     self.customEditControl.selected = selected;
 }
 
-#pragma mark - Private Method
+#pragma mark - CustomEditCellAnimations
 
-// Animate view to show/hide custom edit control/button
 - (void)beginEditMode {
     if (!self.isSwiping) {
         self.leadingSpaceMainViewConstraint.constant = self.isPseudoEditing ? 0 : -kCustomEditControlWidth;
@@ -51,7 +48,10 @@ static NSInteger const kCustomEditControlWidth=50;
 
 - (void)endEditMode {
     self.leadingSpaceMainViewConstraint.constant = -kCustomEditControlWidth;
+    self.isSwiping = NO;
 }
+
+#pragma mark - Private
 
 - (IBAction)cancelTransfer:(id)sender {
     NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:[MEGASdk base64HandleForHandle:self.nodeHandle]];
