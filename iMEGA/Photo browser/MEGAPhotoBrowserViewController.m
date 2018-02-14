@@ -271,11 +271,23 @@
     [imageView addSubview:activityIndicator];
 
     void (^requestCompletion)(MEGARequest *request) = ^(MEGARequest *request) {
-        imageView.image = [UIImage imageWithContentsOfFile:request.file];
+        [UIView transitionWithView:imageView
+                          duration:0.2
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            imageView.image = [UIImage imageWithContentsOfFile:request.file];
+                        }
+                        completion:nil];
         [activityIndicator removeFromSuperview];
     };
     void (^transferCompletion)(MEGATransfer *transfer) = ^(MEGATransfer *transfer) {
-        imageView.image = [UIImage imageWithContentsOfFile:transfer.path];
+        [UIView transitionWithView:imageView
+                          duration:0.2
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            imageView.image = [UIImage imageWithContentsOfFile:transfer.path];
+                        }
+                        completion:nil];
         [self removeActivityIndicatorsFromView:imageView];
     };
     
