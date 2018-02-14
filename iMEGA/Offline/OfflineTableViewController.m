@@ -25,7 +25,7 @@ static NSString *kModificationDate = @"kModificationDate";
 static NSString *kFileSize = @"kFileSize";
 static NSString *kisDirectory = @"kisDirectory";
 
-@interface OfflineTableViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UIAlertViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, CustomEditCellDelegate, MGSwipeTableCellDelegate> {
+@interface OfflineTableViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, CustomEditCellDelegate, MGSwipeTableCellDelegate> {
     NSString *previewDocumentPath;
     BOOL allItemsSelected;
     BOOL isSwipeEditing;
@@ -820,12 +820,16 @@ static NSString *kisDirectory = @"kisDirectory";
         message = AMLocalizedString(@"removeItemsFromOffline", nil);
     }
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"remove", nil)
-                                                        message:message
-                                                       delegate:self
-                                              cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                              otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-    [alertView show];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"remove", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        for (NSURL *url in self.selectedItems) {
+            [self removeOfflineNodeCell:url.path];
+        }
+        [self reloadUI];
+        [self setEditing:NO animated:YES];
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (IBAction)sortByTapped:(UIBarButtonItem *)sender {
@@ -1016,18 +1020,6 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
     return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:self.searchController.isActive];
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        for (NSURL *url in self.selectedItems) {
-            [self removeOfflineNodeCell:url.path];
-        }
-        [self reloadUI];
-        [self setEditing:NO animated:YES];
-    }
 }
 
 #pragma mark - MEGATransferDelegate
