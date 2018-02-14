@@ -363,14 +363,20 @@
 - (IBAction)didPressOpenIn:(UIBarButtonItem *)sender {
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
     
-    MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
-    NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
-    SaveToCameraRollActivity *saveToCameraRollActivity = [[SaveToCameraRollActivity alloc] initWithNode:node];
-    [activitiesMutableArray addObject:saveToCameraRollActivity];
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[activityItemProvider] applicationActivities:activitiesMutableArray];
-    
-    [activityViewController setExcludedActivityTypes:@[UIActivityTypeSaveToCameraRoll, UIActivityTypeCopyToPasteboard]];
-    activityViewController.popoverPresentationController.barButtonItem = sender;
+    UIActivityViewController *activityViewController;
+    if (node.name.mnz_videoPathExtension) {
+        activityViewController = [Helper activityViewControllerForNodes:@[node] button:sender];
+    } else {
+        MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
+        NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
+        if (node.name.mnz_imagePathExtension) {
+            SaveToCameraRollActivity *saveToCameraRollActivity = [[SaveToCameraRollActivity alloc] initWithNode:node];
+            [activitiesMutableArray addObject:saveToCameraRollActivity];
+        }
+        activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[activityItemProvider] applicationActivities:activitiesMutableArray];
+        [activityViewController setExcludedActivityTypes:@[UIActivityTypeSaveToCameraRoll, UIActivityTypeCopyToPasteboard]];
+        activityViewController.popoverPresentationController.barButtonItem = sender;
+    }
     
     [self presentViewController:activityViewController animated:YES completion:nil];
 }
