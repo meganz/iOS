@@ -9,6 +9,7 @@
 #import "NSString+MNZCategory.h"
 
 #import "MEGAActivityItemProvider.h"
+#import "MEGANode+MNZCategory.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 
@@ -648,15 +649,19 @@ static MEGAIndexer *indexer;
     
     if (node.type == MEGANodeTypeFile) {
         if (![[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath]]) {
-            MOOfflineNode *offlineNodeExist =  [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
+            MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:api];
+            
+            NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:[node base64Handle]] stringByAppendingPathComponent:node.name];
+            NSString *temporaryFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:temporaryPath];
             
             if (offlineNodeExist) {
-                NSRange replaceRange = [relativeFilePath rangeOfString:@"Documents/"];
-                if (replaceRange.location != NSNotFound) {
-                    NSString *result = [relativeFilePath stringByReplacingCharactersInRange:replaceRange withString:@""];
-                    NSString *itemPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
-                    [[NSFileManager defaultManager] copyItemAtPath:itemPath toPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath] error:nil];
-                    [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[result decomposedStringWithCanonicalMapping]];
+                NSString *itemPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
+                [Helper copyNode:node from:itemPath to:relativeFilePath api:api];
+            } else if ([temporaryFingerprint isEqualToString:[api fingerprintForNode:node]]) {
+                if ((node.name.mnz_isImagePathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (node.name.mnz_videoPathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
+                    [node mnz_copyToGalleryFromTemporaryPath:temporaryPath];
+                } else {
+                    [Helper copyNode:node from:temporaryPath to:relativeFilePath api:api];
                 }
             } else {
                 NSString *appData = nil;
@@ -683,6 +688,15 @@ static MEGAIndexer *indexer;
             MEGANode *child = [nList nodeAtIndex:i];
             [self downloadNode:child folderPath:relativeFilePath isFolderLink:isFolderLink];
         }
+    }
+}
+
++ (void)copyNode:(MEGANode *)node from:(NSString *)itemPath to:(NSString *)relativeFilePath api:(MEGASdk *)api {
+    NSRange replaceRange = [relativeFilePath rangeOfString:@"Documents/"];
+    if (replaceRange.location != NSNotFound) {
+        NSString *result = [relativeFilePath stringByReplacingCharactersInRange:replaceRange withString:@""];
+        [[NSFileManager defaultManager] copyItemAtPath:itemPath toPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath] error:nil];
+        [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[result decomposedStringWithCanonicalMapping]];
     }
 }
 
