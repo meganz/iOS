@@ -101,7 +101,7 @@
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Password";
 /*  */
-"yourPasswordIsTooWeakToProceed"="your password is too weak to proceed";
+"pleaseStrengthenYourPassword"="Please strengthen your password.";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
 "veryWeak"="Very Weak";
 /*  */
