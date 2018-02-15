@@ -1229,7 +1229,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (UIBarButtonItem *)cancelBarButtonItem {
     UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStylePlain target:nil action:@selector(dismissPresentedViews)];
-    [cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]} forState:UIControlStateNormal];
     return cancelBarButtonItem;
 }
 
