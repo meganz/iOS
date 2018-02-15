@@ -11,6 +11,7 @@
 #import "NSString+MNZCategory.h"
 
 #import "CheckEmailAndFollowTheLinkViewController.h"
+#import "PasswordStrengthIndicatorView.h"
 
 @interface CreateAccountViewController () <UINavigationControllerDelegate, UITextFieldDelegate, MEGARequestDelegate>
 
@@ -18,6 +19,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *lastNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordStrengthIndicatorViewHeightLayoutConstraint;
+@property (weak, nonatomic) IBOutlet PasswordStrengthIndicatorView *passwordStrengthIndicatorView;
+
 @property (weak, nonatomic) IBOutlet UITextField *retypePasswordTextField;
 
 @property (weak, nonatomic) IBOutlet UIButton *termsCheckboxButton;
@@ -27,6 +32,8 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UITextField *activeTextField;
 
 @end
 
@@ -36,6 +43,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    tapGesture.cancelsTouchesInView = NO;
+    [self.scrollView addGestureRecognizer:tapGesture];
     
     self.nameTextField.placeholder = AMLocalizedString(@"firstName", @"Hint text for the first name (Placeholder)");
     self.lastNameTextField.placeholder = AMLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)");
@@ -58,6 +71,8 @@
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Create Account") forState:UIControlStateNormal];
     
     [self.loginButton setTitle:AMLocalizedString(@"login", nil) forState:UIControlStateNormal];
+    
+    [self registerForKeyboardNotifications];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -86,11 +101,16 @@
         }
         
         return NO;
-    } else if (![self.emailTextField.text mnz_isValidEmail]) {
+    }
+    
+    if (!self.emailTextField.text.mnz_isValidEmail) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
         [self.emailTextField becomeFirstResponder];
+        
         return NO;
-    } else if (![self validatePassword]) {
+    }
+    
+    if (![self validatePassword]) {
         if ([self.passwordTextField.text length] == 0) {
             [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
             [self.passwordTextField becomeFirstResponder];
@@ -98,11 +118,22 @@
             [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordsDoNotMatch", @"Passwords do not match")];
             [self.retypePasswordTextField becomeFirstResponder];
         }
-        return NO;
-    } else if (![self.termsCheckboxButton isSelected]) {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"termsCheckboxUnselected", nil)];
+        
         return NO;
     }
+    
+    if ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordTextField.text] == PasswordStrengthVeryWeak) {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"pleaseStrengthenYourPassword", @"")];
+        
+        return NO;
+    }
+    
+    if (!self.termsCheckboxButton.isSelected) {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"termsCheckboxUnselected", @"Error text shown when you don't have selected the checkbox to agree with the Terms of Service")];
+        
+        return NO;
+    }
+    
     return YES;
 }
 
@@ -164,10 +195,40 @@
     return isAnyTextFieldEmpty;
 }
 
-#pragma mark - UIResponder
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)hideKeyboard {
     [self.view endEditing:YES];
+}
+
+- (void)registerForKeyboardNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+}
+
+- (void)keyboardWasShown:(NSNotification*)aNotification {
+    NSDictionary *info = aNotification.userInfo;
+    CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+
+    CGFloat bottomSpaceToLineSeparator = 14.0f;
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height + (bottomSpaceToLineSeparator * 2), 0.0);
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
+
+    CGRect viewFrame = self.view.frame;
+    viewFrame.size.height -= keyboardSize.height;
+    if (!CGRectContainsPoint(viewFrame, self.activeTextField.frame.origin)) {
+        [self.scrollView scrollRectToVisible:self.activeTextField.frame animated:YES];
+    }
+}
+
+- (void)keyboardWillBeHidden:(NSNotification *)aNotification {
+    self.scrollView.contentInset = UIEdgeInsetsZero;
+    self.scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
 }
 
 #pragma mark - IBActions
@@ -175,11 +236,7 @@
 - (IBAction)termsCheckboxTouchUpInside:(id)sender {
     self.termsCheckboxButton.selected = !self.termsCheckboxButton.selected;
     
-    [self.nameTextField resignFirstResponder];
-    [self.lastNameTextField resignFirstResponder];
-    [self.emailTextField resignFirstResponder];
-    [self.passwordTextField resignFirstResponder];
-    [self.retypePasswordTextField resignFirstResponder];
+    [self hideKeyboard];
 }
 
 - (IBAction)termOfServiceTouchUpInside:(UIButton *)sender {
@@ -222,10 +279,18 @@
 
 #pragma mark - UITextFieldDelegate
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    self.activeTextField = textField;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    self.activeTextField = nil;
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     BOOL shoulBeCreateAccountButtonGray = NO;
-    if ([text isEqualToString:@""] || (![self.emailTextField.text mnz_isValidEmail])) {
+    if ([text isEqualToString:@""] || (![self.emailTextField.text mnz_isValidEmail]) || ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordTextField.text] == PasswordStrengthVeryWeak)) {
         shoulBeCreateAccountButtonGray = YES;
     } else {
         shoulBeCreateAccountButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
@@ -233,10 +298,29 @@
     
     shoulBeCreateAccountButtonGray ? [self.createAccountButton setBackgroundColor:[UIColor mnz_grayCCCCCC]] : [self.createAccountButton setBackgroundColor:[UIColor mnz_redFF4D52]];
     
+    if (textField.tag == 3) {
+        if (text.length == 0) {
+            self.passwordStrengthIndicatorView.customView.hidden = YES;
+            self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
+        } else {
+            self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 112.0f;
+            self.passwordStrengthIndicatorView.customView.hidden = NO;
+            
+            [self.scrollView scrollRectToVisible:self.passwordStrengthIndicatorView.frame animated:YES];
+            
+            [self.passwordStrengthIndicatorView updateViewWithPasswordStrength:[[MEGASdkManager sharedMEGASdk] passwordStrength:text]];
+        }
+    }
+    
     return YES;
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
+    if (textField.tag == 3) {
+        self.passwordStrengthIndicatorView.customView.hidden = YES;
+        self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
+    }
+    
     self.createAccountButton.backgroundColor = [UIColor mnz_grayCCCCCC];
     
     return YES;
