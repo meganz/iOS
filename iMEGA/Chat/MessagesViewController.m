@@ -28,6 +28,7 @@
 #import "MEGAProcessAsset.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStartUploadTransferDelegate.h"
+#import "MEGAStore.h"
 #import "MEGAToolbarContentView.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -182,6 +183,12 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         _peerAvatar = [UIImage mnz_imageForUserHandle:[self.chatRoom peerHandleAtIndex:0] size:CGSizeMake(80.0f, 80.0f) delegate:nil];
     }
     
+    // Add an observer to get notified when going to background:
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(willResignActive)
+                                                 name:UIApplicationWillResignActiveNotification
+                                               object:nil];
+    
     // Add an observer to get notified when coming back to foreground:
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didBecomeActive)
@@ -204,6 +211,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self customNavigationBarLabel];
     [self rightBarButtonItems];
     [self updateUnreadLabel];
+    
+    self.inputToolbar.contentView.textView.text = [[MEGAStore shareInstance] fetchChatDraftWithChatId:self.chatRoom.chatId].text;
 }
 
 - (void)didBecomeActive {
@@ -212,6 +221,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         [self.inputToolbar.contentView.textView resignFirstResponder];
         [self.inputToolbar.contentView.textView becomeFirstResponder];
     }
+}
+
+- (void)willResignActive {
+    [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -225,6 +238,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     
     self.automaticallyScrollsToMostRecentMessage = NO;
+    
+    [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
 }
 
 - (BOOL)hidesBottomBarWhenPushed {
