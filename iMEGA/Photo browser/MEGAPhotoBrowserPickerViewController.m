@@ -7,10 +7,12 @@
 
 #import "NSString+MNZCategory.h"
 #import "UICollectionView+MNZCategory.h"
+#import "UIColor+MNZCategory.h"
 
 @interface MEGAPhotoBrowserPickerViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
 
 @property (nonatomic) CGSize cellSize;
@@ -34,8 +36,14 @@
     } else {
         numberOfFiles = [NSString stringWithFormat:AMLocalizedString(@"files", @"Subtitle shown on folders that gives you information about its content. This case \"{1+} files\""), self.mediaNodes.count];
     }
-    self.navigationItem.titleView = [Helper customNavigationBarLabelWithTitle:folderName subtitle:numberOfFiles];
+    self.navigationItem.titleView = [Helper customNavigationBarLabelWithTitle:folderName subtitle:numberOfFiles color:[UIColor mnz_black333333]];
     [self.navigationItem.titleView sizeToFit];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.navigationBar.barTintColor = [UIColor whiteColor];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

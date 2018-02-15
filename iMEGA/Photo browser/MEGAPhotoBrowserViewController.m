@@ -13,14 +13,15 @@
 #import "MEGANode+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "UIColor+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
 
 @interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, MEGAPhotoBrowserPickerDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
+@property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @property (nonatomic) NSMutableArray<MEGANode *> *mediaNodes;
@@ -43,6 +44,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.modalPresentationCapturesStatusBarAppearance = YES;
+
     self.mediaNodes = [[NSMutableArray<MEGANode *> alloc] init];
     
     NSUInteger i = 0;
@@ -77,12 +80,16 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    self.navigationBar.barTintColor = [UIColor whiteColor];
+
     [self.view layoutIfNeeded];
     [self reloadUI];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
     [self.view layoutIfNeeded];
     [self reloadUI];
 }
@@ -112,7 +119,7 @@
     self.imageViewsCache = [[NSCache<NSString *, UIScrollView *> alloc] init];
     self.imageViewsCache.countLimit = 1000;
     
-    self.scrollView.frame = CGRectMake(self.backgroundView.frame.origin.x, self.backgroundView.frame.origin.y, self.backgroundView.frame.size.width + self.gapBetweenPages, self.backgroundView.frame.size.height);
+    self.scrollView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width + self.gapBetweenPages, self.view.frame.size.height);
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.mediaNodes.count, self.scrollView.frame.size.height);
     
     [self loadNearbyImagesFromIndex:self.currentIndex];
@@ -140,7 +147,7 @@
     subtitle = [subtitle stringByReplacingOccurrencesOfString:@"%1$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)newIndex+1]];
     subtitle = [subtitle stringByReplacingOccurrencesOfString:@"%2$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.mediaNodes.count]];
     
-    self.navigationItem.titleView = [Helper customNavigationBarLabelWithTitle:[self.mediaNodes objectAtIndex:newIndex].name subtitle:subtitle];
+    self.navigationItem.titleView = [Helper customNavigationBarLabelWithTitle:[self.mediaNodes objectAtIndex:newIndex].name subtitle:subtitle color:[UIColor mnz_black333333]];
     [self.navigationItem.titleView sizeToFit];
 }
 
@@ -219,7 +226,7 @@
                 continue;
             }
             
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.backgroundView.frame.size.width, self.backgroundView.frame.size.height)];
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
             NSString *temporaryImagePath = [self temporatyPathForNode:node];
@@ -238,7 +245,7 @@
                 }
             }
             
-            UIScrollView *zoomableView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.scrollView.frame.size.width * i, 0.0f, self.backgroundView.frame.size.width, self.backgroundView.frame.size.height)];
+            UIScrollView *zoomableView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.scrollView.frame.size.width * i, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
             zoomableView.minimumZoomScale = 1.0f;
             zoomableView.maximumZoomScale = node.name.mnz_isImagePathExtension ? 5.0f : 1.0f;
             zoomableView.zoomScale = 1.0f;
@@ -406,7 +413,6 @@
         case UIGestureRecognizerStateCancelled: {
             if (ABS(verticalIncrement) > 50.0f) {
                 self.view.backgroundColor = [UIColor clearColor];
-                self.backgroundView.backgroundColor = [UIColor clearColor];
                 self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
                 self.navigationBar.hidden = self.toolbar.hidden = self.interfaceHidden = YES;
                 [self dismissViewControllerAnimated:YES completion:nil];
@@ -442,15 +448,13 @@
 - (void)singleTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer {
     [UIView animateWithDuration:0.3 animations:^{
         if (self.isInterfaceHidden) {
-            self.view.backgroundColor = [UIColor clearColor];
-            self.backgroundView.backgroundColor = [UIColor whiteColor];
-            self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 1.0f;
-            self.navigationBar.hidden = self.toolbar.hidden = self.interfaceHidden = NO;
+            self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 1.0f;
+            self.view.backgroundColor = [UIColor whiteColor];
+            self.interfaceHidden = NO;
         } else {
             self.view.backgroundColor = [UIColor blackColor];
-            self.backgroundView.backgroundColor = [UIColor blackColor];
-            self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
-            self.navigationBar.hidden = self.toolbar.hidden = self.interfaceHidden = YES;
+            self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
+            self.interfaceHidden = YES;
         }
     }];
 }
