@@ -100,10 +100,32 @@
 "emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Password";
+/*  */
+"pleaseStrengthenYourPassword"="Please strengthen your password.";
+/* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
+"veryWeak"="Very Weak";
+/*  */
+"weak"="Weak";
+/*  */
+"passwordVeryWeakOrWeak"="Your password is easily guessed. Try making your password longer. Combine uppercase & lowercase letters. Add special characters. Do not use names or dictionary words.";
+/* Label displayed during checking the strength of the password introduced. Represents Medium security */
+"medium"="Medium";
+/*  */
+"passwordMedium"="Your password is good enough to proceed, but it is recommended to strengthen your password further.";
+/*  */
+"good"="Good";
+/*  */
+"passwordGood"="This password will withstand most typical brute-force attacks. Please ensure that you will remember it.";
+/* Label displayed during checking the strength of the password introduced. Represents Strong security */
+"strong"="Strong";
+/*  */
+"passwordStrong"="This password will withstand most sophisticated brute-force attacks. Please ensure that you will remember it.";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
 "termsOfServiceButton"="I agree with the MEGA Terms of Service";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Enter a valid name";
+/*  */
+"invalidFirstNameAndLastName"="Invalid first name and/or last name.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Passwords do not match";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -966,8 +988,8 @@
 "choosePlan"="Choose one of the plans from below:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Select one account type:";
-/* Text shown in the purchase plan view to explain that annual subscription is 16% cheaper than 12 monthly payments */
-"twoMonthsFree"="Annual subscription is 16% cheaper than 12 monthly payments";
+/* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
+"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Current Plan:";
 /* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
