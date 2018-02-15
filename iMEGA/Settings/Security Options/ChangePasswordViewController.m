@@ -101,6 +101,7 @@
         [_currentPasswordTextField becomeFirstResponder];
         return NO;
     }
+    
     if (![self validatePassword:self.theNewPasswordTextField.text]) {
         if ([self.theNewPasswordTextField.text length] == 0) {
             [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
@@ -111,6 +112,12 @@
             [self.confirmPasswordTextField setText:@""];
             [self.theNewPasswordTextField becomeFirstResponder];
         }
+        return NO;
+    }
+    
+    if (([[MEGASdkManager sharedMEGASdk] passwordStrength:self.theNewPasswordTextField.text] == PasswordStrengthVeryWeak) && (self.changeType == ChangeTypePassword)) {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"pleaseStrengthenYourPassword", @"")];
+        
         return NO;
     }
     
@@ -266,7 +273,7 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     BOOL shoulBeCreateAccountButtonGray = NO;
-    if ([text isEqualToString:@""]) {
+    if ([text isEqualToString:@""] || (([[MEGASdkManager sharedMEGASdk] passwordStrength:self.theNewPasswordTextField.text] == PasswordStrengthVeryWeak) && self.changeType == ChangeTypePassword)) {
         shoulBeCreateAccountButtonGray = YES;
     } else {
         shoulBeCreateAccountButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
@@ -282,7 +289,7 @@
             self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 112.0f;
             self.passwordStrengthIndicatorView.customView.hidden = NO;
             
-            [self.passwordStrengthIndicatorView updateViewWith:[[MEGASdkManager sharedMEGASdk] passwordStrength:text]];
+            [self.passwordStrengthIndicatorView updateViewWithPasswordStrength:[[MEGASdkManager sharedMEGASdk] passwordStrength:text]];
         }
     }
     

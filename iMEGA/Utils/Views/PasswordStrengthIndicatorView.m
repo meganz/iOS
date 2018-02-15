@@ -11,7 +11,7 @@
 
 @implementation PasswordStrengthIndicatorView
 
-- (id)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         [self customInit];
@@ -20,7 +20,7 @@
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
         [self customInit];
@@ -37,7 +37,7 @@
 
 #pragma mark - Public
 
-- (void)updateViewWith:(PasswordStrength)passwordStrength {
+- (void)updateViewWithPasswordStrength:(PasswordStrength)passwordStrength {
     switch (passwordStrength) {
         case PasswordStrengthVeryWeak:
             self.imageView.image = [UIImage imageNamed:@"indicatorVeryWeak"];
