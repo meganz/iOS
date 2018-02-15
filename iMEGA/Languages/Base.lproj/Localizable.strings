@@ -100,6 +100,26 @@
 "emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Password";
+/*  */
+"pleaseStrengthenYourPassword"="Please strengthen your password.";
+/* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
+"veryWeak"="Very Weak";
+/*  */
+"weak"="Weak";
+/*  */
+"passwordVeryWeakOrWeak"="Your password is easily guessed. Try making your password longer. Combine uppercase & lowercase letters. Add special characters. Do not use names or dictionary words.";
+/* Label displayed during checking the strength of the password introduced. Represents Medium security */
+"medium"="Medium";
+/*  */
+"passwordMedium"="Your password is good enough to proceed, but it is recommended to strengthen your password further.";
+/*  */
+"good"="Good";
+/*  */
+"passwordGood"="This password will withstand most typical brute-force attacks. Please ensure that you will remember it.";
+/* Label displayed during checking the strength of the password introduced. Represents Strong security */
+"strong"="Strong";
+/*  */
+"passwordStrong"="This password will withstand most sophisticated brute-force attacks. Please ensure that you will remember it.";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
 "termsOfServiceButton"="I agree with the MEGA Terms of Service";
 /* Error text shown when you have not entered a correct name  */
