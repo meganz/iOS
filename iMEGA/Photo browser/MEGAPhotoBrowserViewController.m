@@ -1,6 +1,8 @@
 
 #import "MEGAPhotoBrowserViewController.h"
 
+#import "PieChartView.h"
+
 #import "Helper.h"
 #import "MEGAActivityItemProvider.h"
 #import "MEGAGetPreviewRequestDelegate.h"
@@ -16,13 +18,14 @@
 #import "UIColor+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
 
-@interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, MEGAPhotoBrowserPickerDelegate>
+@interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, MEGAPhotoBrowserPickerDelegate, PieChartViewDelegate, PieChartViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (weak, nonatomic) IBOutlet PieChartView *pieChartView;
 
 @property (nonatomic) NSMutableArray<MEGANode *> *mediaNodes;
 @property (nonatomic) NSCache<NSString *, UIScrollView *> *imageViewsCache;
@@ -32,6 +35,7 @@
 @property (nonatomic, getter=isInterfaceHidden) BOOL interfaceHidden;
 @property (nonatomic) CGFloat playButtonSize;
 @property (nonatomic) CGFloat gapBetweenPages;
+@property (nonatomic) double transferProgress;
 
 @property (nonatomic) UIWindow *secondWindow;
 
@@ -76,6 +80,11 @@
     self.transitioningDelegate = self;
     self.playButtonSize = 100.0f;
     self.gapBetweenPages = 10.0f;
+    
+    self.pieChartView.delegate = self;
+    self.pieChartView.datasource = self;
+    self.pieChartView.layer.cornerRadius = self.pieChartView.frame.size.width/2;
+    self.pieChartView.layer.masksToBounds = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -177,6 +186,9 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView.tag == 1) {
+        if (self.pieChartView.alpha > 0.0f) {
+            self.pieChartView.alpha = 0.0f;
+        }
         CGFloat newIndexFloat = (scrollView.contentOffset.x + self.gapBetweenPages) / scrollView.frame.size.width;
         NSUInteger newIndex = floor(newIndexFloat);
         if (newIndex != self.currentIndex) {
@@ -277,10 +289,6 @@
 
 - (void)setupNode:(MEGANode *)node forImageView:(UIImageView *)imageView withMode:(MEGAPhotoMode)mode {
     [self removeActivityIndicatorsFromView:imageView];
-    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    activityIndicator.frame = CGRectMake((imageView.frame.size.width-activityIndicator.frame.size.width)/2, (imageView.frame.size.height-activityIndicator.frame.size.height)/2, activityIndicator.frame.size.width, activityIndicator.frame.size.height);
-    [activityIndicator startAnimating];
-    [imageView addSubview:activityIndicator];
 
     void (^requestCompletion)(MEGARequest *request) = ^(MEGARequest *request) {
         [UIView transitionWithView:imageView
@@ -290,17 +298,33 @@
                             imageView.image = [UIImage imageWithContentsOfFile:request.file];
                         }
                         completion:nil];
-        [activityIndicator removeFromSuperview];
+        [self removeActivityIndicatorsFromView:imageView];
     };
+    
     void (^transferCompletion)(MEGATransfer *transfer) = ^(MEGATransfer *transfer) {
         [UIView transitionWithView:imageView
                           duration:0.2
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
                             imageView.image = [UIImage imageWithContentsOfFile:transfer.path];
+                            if (transfer.nodeHandle == [self.mediaNodes objectAtIndex:self.currentIndex].handle) {
+                                self.pieChartView.alpha = 0.0f;
+                            }
                         }
                         completion:nil];
         [self removeActivityIndicatorsFromView:imageView];
+    };
+    
+    void (^transferProgress)(MEGATransfer *transfer) = ^(MEGATransfer *transfer) {
+        if (transfer.nodeHandle == [self.mediaNodes objectAtIndex:self.currentIndex].handle) {
+            self.transferProgress = transfer.transferredBytes.doubleValue / transfer.totalBytes.doubleValue;
+            [self.pieChartView reloadData];
+            if (self.pieChartView.alpha < 1.0f) {
+                [UIView animateWithDuration:0.2 animations:^{
+                    self.pieChartView.alpha = 1.0f;
+                }];
+            }
+        }
     };
     
     switch (mode) {
@@ -320,6 +344,7 @@
                 MEGAGetPreviewRequestDelegate *delegate = [[MEGAGetPreviewRequestDelegate alloc] initWithCompletion:requestCompletion];
                 NSString *path = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
                 [self.api getPreviewNode:node destinationFilePath:path delegate:delegate];
+                [self addActivityIndicatorToView:imageView];
             } else {
                 [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeFull];
             }
@@ -327,13 +352,20 @@
             break;
             
         case MEGAPhotoModeFull: {
-            MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithCompletion:transferCompletion];
+            MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithProgress:transferProgress completion:transferCompletion];
             NSString *temporaryImagePath = [self temporatyPathForNode:node];
             [self.api startDownloadNode:node localPath:temporaryImagePath appData:@"generate_fa" delegate:delegate];
 
             break;
         }
     }
+}
+
+- (void)addActivityIndicatorToView:(UIView *)view {
+    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityIndicator.frame = CGRectMake((view.frame.size.width-activityIndicator.frame.size.width)/2, (view.frame.size.height-activityIndicator.frame.size.height)/2, activityIndicator.frame.size.width, activityIndicator.frame.size.height);
+    [activityIndicator startAnimating];
+    [view addSubview:activityIndicator];
 }
 
 - (void)removeActivityIndicatorsFromView:(UIView *)view {
@@ -520,6 +552,47 @@
 
 - (void)updateCurrentIndexTo:(NSUInteger)newIndex {
     self.currentIndex = newIndex;
+}
+
+#pragma mark - PieChartViewDelegate
+
+- (CGFloat)centerCircleRadius {
+    return 0.0f;
+}
+
+#pragma mark - PieChartViewDataSource
+
+- (int)numberOfSlicesInPieChartView:(PieChartView *)pieChartView {
+    return 2;
+}
+
+- (UIColor *)pieChartView:(PieChartView *)pieChartView colorForSliceAtIndex:(NSUInteger)index {
+    UIColor *color;
+    switch (index) {
+        case 0:
+            color = [UIColor mnz_whiteFFFFFF_02];
+            break;
+ 
+        default:
+            color = [UIColor mnz_black000000_01];
+            break;
+    }
+    return color;
+}
+
+- (double)pieChartView:(PieChartView *)pieChartView valueForSliceAtIndex:(NSUInteger)index {
+    double valueForSlice;
+    switch (index) {
+        case 0:
+            valueForSlice = self.transferProgress;
+            break;
+
+        default:
+            valueForSlice = 1 - self.transferProgress;
+            break;
+    }
+    
+    return valueForSlice < 0 ? 0 : valueForSlice;
 }
 
 @end

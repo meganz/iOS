@@ -4,6 +4,6 @@
 @interface MEGAStartDownloadTransferDelegate : NSObject <MEGATransferDelegate>
 
 - (id)init NS_UNAVAILABLE;
-- (instancetype)initWithCompletion:(void (^)(MEGATransfer *transfer))completion;
+- (instancetype)initWithProgress:(void (^)(MEGATransfer *))progress completion:(void (^)(MEGATransfer *))completion;
 
 @end
