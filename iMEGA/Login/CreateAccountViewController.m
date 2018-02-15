@@ -101,11 +101,16 @@
         }
         
         return NO;
-    } else if (![self.emailTextField.text mnz_isValidEmail]) {
+    }
+    
+    if (!self.emailTextField.text.mnz_isValidEmail) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
         [self.emailTextField becomeFirstResponder];
+        
         return NO;
-    } else if (![self validatePassword]) {
+    }
+    
+    if (![self validatePassword]) {
         if ([self.passwordTextField.text length] == 0) {
             [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
             [self.passwordTextField becomeFirstResponder];
@@ -113,12 +118,19 @@
             [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordsDoNotMatch", @"Passwords do not match")];
             [self.retypePasswordTextField becomeFirstResponder];
         }
+        
         return NO;
-    } else if (![self.termsCheckboxButton isSelected]) {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"termsCheckboxUnselected", nil)];
-        return NO;
-    } else if ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordTextField.text] == PasswordStrengthVeryWeak) {
+    }
+    
+    if ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordTextField.text] == PasswordStrengthVeryWeak) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"pleaseStrengthenYourPassword", @"")];
+        
+        return NO;
+    }
+    
+    if (!self.termsCheckboxButton.isSelected) {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"termsCheckboxUnselected", @"Error text shown when you don't have selected the checkbox to agree with the Terms of Service")];
+        
         return NO;
     }
     
@@ -296,7 +308,7 @@
             
             [self.scrollView scrollRectToVisible:self.passwordStrengthIndicatorView.frame animated:YES];
             
-            [self.passwordStrengthIndicatorView updateViewWith:[[MEGASdkManager sharedMEGASdk] passwordStrength:text]];
+            [self.passwordStrengthIndicatorView updateViewWithPasswordStrength:[[MEGASdkManager sharedMEGASdk] passwordStrength:text]];
         }
     }
     

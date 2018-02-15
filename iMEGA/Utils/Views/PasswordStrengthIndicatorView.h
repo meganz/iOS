@@ -5,6 +5,6 @@
 
 @property (weak, nonatomic) IBOutlet UIView *customView;
 
-- (void)updateViewWith:(PasswordStrength)passwordStrength;
+- (void)updateViewWithPasswordStrength:(PasswordStrength)passwordStrength;
 
 @end
