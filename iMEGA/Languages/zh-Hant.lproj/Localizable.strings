@@ -966,8 +966,8 @@
 "choosePlan"="請從下列選取一個計畫:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="選擇帳戶類型：";
-/* Text shown in the purchase plan view to explain that annual subscription is 16% cheaper than 12 monthly payments */
-"twoMonthsFree"="Annual subscription is 16% cheaper than 12 monthly payments";
+/* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
+"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="目前使用的方案：";
 /* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
