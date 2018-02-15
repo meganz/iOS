@@ -25,7 +25,7 @@ static NSString *kModificationDate = @"kModificationDate";
 static NSString *kFileSize = @"kFileSize";
 static NSString *kisDirectory = @"kisDirectory";
 
-@interface OfflineTableViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, CustomEditCellDelegate, MGSwipeTableCellDelegate> {
+@interface OfflineTableViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, MGSwipeTableCellDelegate> {
     NSString *previewDocumentPath;
     BOOL allItemsSelected;
     BOOL isSwipeEditing;
@@ -53,8 +53,6 @@ static NSString *kisDirectory = @"kisDirectory";
 
 @property (nonatomic) NSMutableArray *searchItemsArray;
 @property (nonatomic) UISearchController *searchController;
-
-@property (nonatomic, getter=isPseudoEditing) BOOL pseudoEdit;
 
 @end
 
@@ -598,17 +596,9 @@ static NSString *kisDirectory = @"kisDirectory";
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
         cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     }
-    cell.customEditDelegate = self;
+//    cell.customEditDelegate = self;
     cell.delegate = self;
     return cell;
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
-- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    return NO;
 }
 
 #pragma mark - UITableViewDelegate
@@ -692,21 +682,19 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-    self.pseudoEdit = editing;
     
     [super setEditing:editing animated:animated];
     
     if (editing) {
-        [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
         if (!isSwipeEditing) {
+            [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
             self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+            [self.toolbar setAlpha:0.0];
+            [self.tabBarController.tabBar addSubview:self.toolbar];
+            [UIView animateWithDuration:0.33f animations:^ {
+                [self.toolbar setAlpha:1.0];
+            }];
         }
-        
-        [self.toolbar setAlpha:0.0];
-        [self.tabBarController.tabBar addSubview:self.toolbar];
-        [UIView animateWithDuration:0.33f animations:^ {
-            [self.toolbar setAlpha:1.0];
-        }];
     } else {
         [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
         allItemsSelected = NO;
@@ -730,19 +718,22 @@ static NSString *kisDirectory = @"kisDirectory";
     }
     
     isSwipeEditing = NO;
+}
 
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
 }
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    cell.isSwiping = YES;
+    isSwipeEditing = YES;
     UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Share" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
         NSString *itemPath = [[self currentOfflinePath] stringByAppendingPathComponent:[cell itemNameString]];
         [self removeOfflineNodeCell:itemPath];
-        [self setEditing:NO animated:YES];
     }];
     deleteAction.image = [UIImage imageNamed:@"delete"];
     deleteAction.backgroundColor = [UIColor colorWithRed:0.94 green:0.22 blue:0.23 alpha:1];
@@ -750,15 +741,6 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 #pragma clang diagnostic pop
-
-- (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(nullable NSIndexPath *)indexPath {
-    isSwipeEditing = NO;
-}
-
-- (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    isSwipeEditing = cell.isSwiping;
-}
 
 #pragma mark - IBActions
 
@@ -1063,7 +1045,7 @@ static NSString *kisDirectory = @"kisDirectory";
     
     if (direction == MGSwipeDirectionRightToLeft) {
         
-            MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:[UIColor colorWithRed:0.93 green:0.22 blue:0.23 alpha:1.0] padding:50 callback:^BOOL(MGSwipeTableCell *sender) {
+            MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:[UIColor colorWithRed:0.93 green:0.22 blue:0.23 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
                 OfflineTableViewCell *offlineCell = (OfflineTableViewCell *)cell;
                 NSString *itemPath = [[self currentOfflinePath] stringByAppendingPathComponent:[offlineCell itemNameString]];
                 [self removeOfflineNodeCell:itemPath];

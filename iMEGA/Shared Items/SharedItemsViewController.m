@@ -18,7 +18,7 @@
 #import "SharedItemsTableViewCell.h"
 #import "CustomActionViewController.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, CustomEditCellDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate> {
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
 }
@@ -63,8 +63,6 @@
 
 @property (nonatomic) NSMutableArray *searchNodesArray;
 @property (nonatomic) UISearchController *searchController;
-
-@property (nonatomic, getter=isPseudoEditing) BOOL pseudoEdit;
 
 @end
 
@@ -416,23 +414,21 @@
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-    self.pseudoEdit = editing;
 
     [super setEditing:editing animated:animated];
     
     [self.tableView setEditing:editing animated:animated];
     
     if (editing) {
-        [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
         if (!isSwipeEditing) {
+            [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
             self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+            [self.toolbar setAlpha:0.0];
+            [self.tabBarController.tabBar addSubview:self.toolbar];
+            [UIView animateWithDuration:0.33f animations:^ {
+                [self.toolbar setAlpha:1.0];
+            }];
         }
-        
-        [self.toolbar setAlpha:0.0];
-        [self.tabBarController.tabBar addSubview:self.toolbar];
-        [UIView animateWithDuration:0.33f animations:^ {
-            [self.toolbar setAlpha:1.0];
-        }];
     } else {
         [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
         allNodesSelected = NO;
@@ -822,17 +818,12 @@
     }
     
     cell.delegate = self;
-    cell.customEditDelegate = self;
     
     return cell;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
-}
-
-- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    return NO;
 }
 
 #pragma mark - UITableViewDelegate
@@ -923,9 +914,8 @@
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    SharedItemsTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    cell.isSwiping = YES;
     MEGANode *node = [self nodeAtIndexPath:indexPath];
+    isSwipeEditing = YES;
     self.selectedNodesMutableArray = [[NSMutableArray alloc] initWithObjects:node, nil];
     if (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0) { //incoming
         UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Share" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
@@ -1167,7 +1157,7 @@
     if (direction == MGSwipeDirectionRightToLeft) {
         
         if (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0) { //incoming
-            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"leaveShare"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:50 callback:^BOOL(MGSwipeTableCell *sender) {
+            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"leaveShare"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
                 [self leaveShareAction:nil];
                 return YES;
             }];
@@ -1175,7 +1165,7 @@
             
             return @[shareButton];
         } else { //outcoming
-            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"removeShare"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:50 callback:^BOOL(MGSwipeTableCell *sender) {
+            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"removeShare"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
                 [self removeShareAction:nil];
                 return YES;
             }];
