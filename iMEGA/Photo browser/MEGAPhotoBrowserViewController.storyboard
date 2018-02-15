@@ -67,15 +67,25 @@
                                 </items>
                                 <color key="tintColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HQW-yX-2Zj" customClass="PieChartView">
+                                <rect key="frame" x="335" y="583" width="30" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.19836258561643835" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="13M-em-UuB"/>
+                                    <constraint firstAttribute="height" constant="30" id="EK4-6Z-vPM"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Z54-Be-FUS" firstAttribute="trailing" secondItem="mor-0x-30S" secondAttribute="trailing" id="4Er-s0-s8R"/>
                             <constraint firstItem="mor-0x-30S" firstAttribute="bottom" secondItem="Z54-Be-FUS" secondAttribute="bottom" id="4GG-tp-7bl"/>
                             <constraint firstItem="ulA-CI-VZp" firstAttribute="trailing" secondItem="mor-0x-30S" secondAttribute="trailing" id="74B-e7-8rm"/>
+                            <constraint firstItem="Z54-Be-FUS" firstAttribute="top" secondItem="HQW-yX-2Zj" secondAttribute="bottom" constant="10" id="9AJ-ew-sHN"/>
                             <constraint firstItem="FGv-7h-IkY" firstAttribute="top" secondItem="mor-0x-30S" secondAttribute="top" id="Ccj-LW-kNM"/>
                             <constraint firstItem="PCJ-Sw-nnM" firstAttribute="leading" secondItem="BIU-zX-lhe" secondAttribute="leading" id="F23-Kd-UgU"/>
                             <constraint firstItem="Z54-Be-FUS" firstAttribute="leading" secondItem="mor-0x-30S" secondAttribute="leading" id="F4o-oR-80c"/>
+                            <constraint firstItem="mor-0x-30S" firstAttribute="trailing" secondItem="HQW-yX-2Zj" secondAttribute="trailing" constant="10" id="Ijr-xN-ugC"/>
                             <constraint firstItem="ulA-CI-VZp" firstAttribute="top" secondItem="BIU-zX-lhe" secondAttribute="top" id="PO2-iB-xVb"/>
                             <constraint firstItem="ulA-CI-VZp" firstAttribute="leading" secondItem="mor-0x-30S" secondAttribute="leading" id="ZMn-FE-FkQ"/>
                             <constraint firstItem="PCJ-Sw-nnM" firstAttribute="top" secondItem="BIU-zX-lhe" secondAttribute="top" id="ayh-99-brh"/>
@@ -90,6 +100,7 @@
                     <connections>
                         <outlet property="navigationBar" destination="FGv-7h-IkY" id="T9E-zi-bd6"/>
                         <outlet property="navigationItem" destination="u26-RZ-kaH" id="Kj4-LD-0cj"/>
+                        <outlet property="pieChartView" destination="HQW-yX-2Zj" id="ee7-TH-eQk"/>
                         <outlet property="scrollView" destination="ulA-CI-VZp" id="oyd-Da-pqT"/>
                         <outlet property="statusBarBackground" destination="PCJ-Sw-nnM" id="QXl-Rh-SvD"/>
                         <outlet property="toolbar" destination="Z54-Be-FUS" id="BbJ-Aa-yik"/>
