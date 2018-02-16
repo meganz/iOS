@@ -24,6 +24,7 @@
         _iconName = iconName;
         _actionType = actionType;
     }
+    
     return self;
 }
 
@@ -44,11 +45,10 @@
 
 @implementation CustomActionViewController
 
-#pragma mark Lifecycle
+#pragma mark - Lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [self registerCells];
     self.actions = [self getActions];
@@ -58,10 +58,11 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
     [self fadeInBackgroundCompletion:nil];
 }
 
-#pragma mark Layout
+#pragma mark - Layout
 
 - (void)configureView {
     [self.cancelButton setTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") forState:UIControlStateNormal];
@@ -75,7 +76,7 @@
     } completion:nil];
 }
 
-#pragma mark CollectionView DataSource
+#pragma mark - CollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
@@ -88,11 +89,11 @@
     UILabel *title = [cell viewWithTag:1];
     title.text = action.title;
     UIImageView *imageView = [cell viewWithTag:100];
-    [imageView setImage:[UIImage imageNamed:action.iconName]];
+    imageView.image = [UIImage imageNamed:action.iconName];
     
     if (indexPath.row == self.actions.count-1) {
         UIView *separatorView = [cell viewWithTag:101];
-        [separatorView setHidden:YES];
+        separatorView.hidden = YES;
     }
     return cell;
 }
@@ -107,21 +108,21 @@
     info.text = [Helper sizeAndDateForNode:self.node api:[MEGASdkManager sharedMEGASdk]];
     
     UIImageView *imageView = [header viewWithTag:100];
-    if ([self.node type] == MEGANodeTypeFile) {
-        if ([self.node hasThumbnail]) {
+    if (self.node.isFile) {
+        if (self.node.hasThumbnail) {
             [Helper thumbnailForNode:self.node api:[MEGASdkManager sharedMEGASdk] cell:header];
         } else {
-            [imageView setImage:[Helper imageForNode:self.node]];
+            imageView.image = [Helper imageForNode:self.node];
         }
-    } else if ([self.node type] == MEGANodeTypeFolder) {
-        [imageView setImage:[Helper imageForNode:self.node]];
+    } else if (self.node.isFolder) {
+        imageView.image = [Helper imageForNode:self.node];
         info.text = [Helper filesAndFoldersInFolderNode:self.node api:[MEGASdkManager sharedMEGASdk]];
     }
     
     return header;
 }
 
-#pragma mark CollectionView Delegate
+#pragma mark - CollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [self fadeOutBackgroundCompletion:^{
@@ -131,10 +132,10 @@
     }];
 }
 
-#pragma mark Private
+#pragma mark - Private
 
 - (void)redrawCollectionView {
-    float collectionMaxHeight = kCollectionViewHeaderHeight + kCollectionViewCellHeight*[self.collectionView numberOfItemsInSection:0];
+    float collectionMaxHeight = kCollectionViewHeaderHeight + kCollectionViewCellHeight * [self.collectionView numberOfItemsInSection:0];
     float screenHeight = kCollectionViewMaxHeight;
     
     if (collectionMaxHeight > screenHeight) {
@@ -146,7 +147,7 @@
 
 - (void)fadeInBackgroundCompletion:(void (^ __nullable)(void))fadeInCompletion {
     [UIView animateWithDuration:.3 animations:^{
-        [self.alphaView setAlpha:0.5];
+        self.alphaView.alpha = 0.5;
     } completion:^(BOOL finished) {
         if (fadeInCompletion && finished) {
             fadeInCompletion();
@@ -156,7 +157,7 @@
 
 - (void)fadeOutBackgroundCompletion:(void (^ __nullable)(void))fadeOutCompletion {
     [UIView animateWithDuration:.2 animations:^{
-        [self.alphaView setAlpha:.0];
+        self.alphaView.alpha = 0;
     } completion:^(BOOL finished) {
         if (fadeOutCompletion && finished) {
             fadeOutCompletion();
@@ -171,7 +172,7 @@
 
 #pragma mark MegaActions
 
-- (NSArray<MegaActionNode *>*)getActions {
+- (NSArray<MegaActionNode *> *)getActions {
     MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node];
     
     NSMutableArray *actions = [NSMutableArray new];
@@ -290,13 +291,13 @@
 #pragma mark - PopOverDelegate
 
 - (void)prepareForPopoverPresentation:(UIPopoverPresentationController *)popoverPresentationController {
-    [self.cancelButton setHidden:YES];
+    self.cancelButton.hidden = YES;
     self.collectionViewBottom.constant = 0;
     self.collectionViewLeading.constant = 0;
     self.collectionViewLeading.priority = 1000;
     self.collectionViewTrailing.constant = 0;
     self.collectionViewTrailing.priority = 1000;
-    float collectionMaxHeight = kCollectionViewHeaderHeight + kCollectionViewCellHeight*[self getActions].count;
+    float collectionMaxHeight = kCollectionViewHeaderHeight + kCollectionViewCellHeight * [self getActions].count;
     self.preferredContentSize = CGSizeMake(self.collectionView.bounds.size.width, collectionMaxHeight);
 }
 

@@ -480,7 +480,7 @@
         UITextField *textField = addContactFromEmailAlertController.textFields.firstObject;
         UIAlertAction *rightButtonAction = addContactFromEmailAlertController.actions.lastObject;
         NSString *email = textField.text;
-        rightButtonAction.enabled = (email.length > 0) ? [email mnz_isValidEmail] : NO;;
+        rightButtonAction.enabled = (email.length > 0) ? [email mnz_isValidEmail] : NO;
     }
 }
 
