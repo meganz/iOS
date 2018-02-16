@@ -2,13 +2,19 @@
 #import "MEGAPhotoBrowserViewController.h"
 
 #import "PieChartView.h"
+#import "SVProgressHUD.h"
 
+#import "BrowserViewController.h"
+#import "CustomActionViewController.h"
+#import "DetailsNodeInfoViewController.h"
 #import "Helper.h"
 #import "MEGAActivityItemProvider.h"
 #import "MEGAGetPreviewRequestDelegate.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
+#import "MEGANavigationController.h"
 #import "MEGAPhotoBrowserAnimator.h"
 #import "MEGAPhotoBrowserPickerViewController.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGAStartDownloadTransferDelegate.h"
 #import "SaveToCameraRollActivity.h"
 
@@ -18,7 +24,7 @@
 #import "UIColor+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
 
-@interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, MEGAPhotoBrowserPickerDelegate, PieChartViewDelegate, PieChartViewDataSource>
+@interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, MEGAPhotoBrowserPickerDelegate, PieChartViewDelegate, PieChartViewDataSource, CustomActionViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
@@ -26,6 +32,7 @@
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet PieChartView *pieChartView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *customActionsButton;
 
 @property (nonatomic) NSMutableArray<MEGANode *> *mediaNodes;
 @property (nonatomic) NSCache<NSString *, UIScrollView *> *imageViewsCache;
@@ -191,7 +198,7 @@
         }
         CGFloat newIndexFloat = (scrollView.contentOffset.x + self.gapBetweenPages) / scrollView.frame.size.width;
         NSUInteger newIndex = floor(newIndexFloat);
-        if (newIndex != self.currentIndex) {
+        if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
             [self reloadTitleForIndex:newIndex];
             [self loadNearbyImagesFromIndex:newIndex];
         }
@@ -396,6 +403,22 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)didPressActionsButton:(UIBarButtonItem *)sender {
+    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
+    actionController.node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    actionController.actionDelegate = self;
+    if ([[UIDevice currentDevice] iPadDevice]) {
+        actionController.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
+        popController.delegate = actionController;
+        popController.barButtonItem = sender;
+    } else {
+        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    }
+    
+    [self presentViewController:actionController animated:YES completion:nil];
+}
+
 - (IBAction)didPressThumbnailsButton:(UIBarButtonItem *)sender {
     MEGAPhotoBrowserPickerViewController *pickerVC = [[UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil] instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserPickerViewControllerID"];
     pickerVC.mediaNodes = self.mediaNodes;
@@ -596,6 +619,68 @@
     }
     
     return valueForSlice < 0 ? 0 : valueForSlice;
+}
+
+#pragma mark - CustomActionViewControllerDelegate
+
+- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node {
+    switch (action) {
+        case MegaNodeActionTypeShare:
+            [self didPressOpenIn:self.customActionsButton];
+            break;
+
+        case MegaNodeActionTypeDownload:
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+            [node mnz_downloadNode];
+            break;
+            
+        case MegaNodeActionTypeFileInfo: {
+            DetailsNodeInfoViewController *detailsNodeInfoVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
+            detailsNodeInfoVC.node = node;
+            
+            // TODO: details view should have a way to be closed when it is presented (not pushed)
+            [self presentViewController:detailsNodeInfoVC animated:YES completion:nil];
+            break;
+        }
+            
+        case MegaNodeActionTypeCopy:
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+                [self presentViewController:navigationController animated:YES completion:nil];
+                
+                BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+                browserVC.selectedNodesArray = @[node];
+                [browserVC setBrowserAction:BrowserActionCopy];
+            }
+            break;
+            
+        case MegaNodeActionTypeMove: {
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+            [self presentViewController:navigationController animated:YES completion:nil];
+            
+            BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+            browserVC.selectedNodesArray = @[node];
+            if ([self.api accessLevelForNode:node] == MEGAShareTypeAccessOwner) {
+                [browserVC setBrowserAction:BrowserActionMove];
+            }
+            break;
+        }
+            
+        case MegaNodeActionTypeRename: {
+            [node mnz_renameNodeInViewController:self completion:^(MEGARequest *request) {
+                [self.mediaNodes replaceObjectAtIndex:self.currentIndex withObject:[self.api nodeForHandle:request.nodeHandle]];
+                [self reloadUI];
+            }];
+            break;
+        }
+            
+        case MegaNodeActionTypeMoveToRubbishBin:
+            [node mnz_moveToTheRubbishBinInViewController:self];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 @end

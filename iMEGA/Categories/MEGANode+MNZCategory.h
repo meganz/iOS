@@ -11,6 +11,7 @@
 - (void)mnz_generateThumbnailForVideoAtPath:(NSURL *)path;
 - (BOOL)mnz_downloadNode;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController;
+- (void)mnz_renameNodeInViewController:(UIViewController *)viewController completion:(void(^)(MEGARequest *request))completion;
 - (void)mnz_moveToTheRubbishBinInViewController:(UIViewController *)viewController;
 - (void)mnz_removeInViewController:(UIViewController *)viewController;
 - (void)mnz_leaveSharingInViewController:(UIViewController *)viewController;

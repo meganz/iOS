@@ -244,6 +244,7 @@
 		5BFA346F1FAC5850005BFC4E /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
 		5BFA34701FAC5857005BFC4E /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
 		5BFA34711FAC5BFB005BFC4E /* MEGARemoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */; };
+		77519C36203707F600FDF92B /* MEGARenameRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77519C35203707F600FDF92B /* MEGARenameRequestDelegate.m */; };
 		77C544FF2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C544FE2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m */; };
 		77CAAAE0202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CAAADF202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m */; };
 		77CAAAE3202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CAAAE2202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m */; };
@@ -1076,6 +1077,8 @@
 		5BFA346A1FAB4169005BFC4E /* MEGARemoveRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGARemoveRequestDelegate.h; path = API/Requests/MEGARemoveRequestDelegate.h; sourceTree = "<group>"; };
 		5BFA346C1FAB6282005BFC4E /* MEGAMoveRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAMoveRequestDelegate.h; path = API/Requests/MEGAMoveRequestDelegate.h; sourceTree = "<group>"; };
 		5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAMoveRequestDelegate.m; path = API/Requests/MEGAMoveRequestDelegate.m; sourceTree = "<group>"; };
+		77519C34203707F600FDF92B /* MEGARenameRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGARenameRequestDelegate.h; path = API/Requests/MEGARenameRequestDelegate.h; sourceTree = "<group>"; };
+		77519C35203707F600FDF92B /* MEGARenameRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGARenameRequestDelegate.m; path = API/Requests/MEGARenameRequestDelegate.m; sourceTree = "<group>"; };
 		77C544FD2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAPhotoBrowserAnimator.h; sourceTree = "<group>"; };
 		77C544FE2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAPhotoBrowserAnimator.m; sourceTree = "<group>"; };
 		77CAAADE202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAPhotoBrowserPickerViewController.h; sourceTree = "<group>"; };
@@ -2540,6 +2543,22 @@
 			path = Vendor/FrameAccessor/FrameAccessor;
 			sourceTree = "<group>";
 		};
+		77D9A5692023538600B48470 /* Photo browser */ = {
+			isa = PBXGroup;
+			children = (
+				77D9A56A2023547900B48470 /* MEGAPhotoBrowserViewController.h */,
+				77D9A56B2023547900B48470 /* MEGAPhotoBrowserViewController.m */,
+				77D9A56D202355F800B48470 /* MEGAPhotoBrowserViewController.storyboard */,
+				77C544FD2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.h */,
+				77C544FE2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m */,
+				77CAAADE202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.h */,
+				77CAAADF202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m */,
+				77CAAAE1202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.h */,
+				77CAAAE2202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m */,
+			);
+			path = "Photo browser";
+			sourceTree = "<group>";
+		};
 		832E1020202B097900BDD30F /* CustomActionViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -2574,22 +2593,6 @@
 			);
 			name = MGSwipeTableCell;
 			path = Vendor/MGSwipeTableCell/MGSwipeTableCell;
-            sourceTree = "<group>";
-        };
-		77D9A5692023538600B48470 /* Photo browser */ = {
-			isa = PBXGroup;
-			children = (
-				77D9A56A2023547900B48470 /* MEGAPhotoBrowserViewController.h */,
-				77D9A56B2023547900B48470 /* MEGAPhotoBrowserViewController.m */,
-				77D9A56D202355F800B48470 /* MEGAPhotoBrowserViewController.storyboard */,
-				77C544FD2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.h */,
-				77C544FE2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m */,
-				77CAAADE202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.h */,
-				77CAAADF202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m */,
-				77CAAAE1202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.h */,
-				77CAAAE2202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m */,
-			);
-			path = "Photo browser";
 			sourceTree = "<group>";
 		};
 		9419B6BD1F20D18300FEBE31 /* Spotlight */ = {
@@ -2770,6 +2773,8 @@
 				94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */,
 				9437B93D1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.h */,
 				9437B93E1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m */,
+				77519C34203707F600FDF92B /* MEGARenameRequestDelegate.h */,
+				77519C35203707F600FDF92B /* MEGARenameRequestDelegate.m */,
 			);
 			name = Requests;
 			sourceTree = "<group>";
@@ -3145,19 +3150,11 @@
 				A82E5BF41F3470B5003C149C /* Spotlight_file.png in Resources */,
 				832E102B202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.xib in Resources */,
 				4152268B1A692ECC00EC7BB6 /* Cloud.storyboard in Resources */,
-				411504351CEB07C700BF38E3 /* ImageSelectedSmallOff@2x.png in Resources */,
-				4115044B1CEB07C700BF38E3 /* VideoOverlay@3x.png in Resources */,
 				83681579202AFBC000CA8EFC /* CustomActionViewController.xib in Resources */,
 				41EABF171DA7C5250087271C /* Chat.storyboard in Resources */,
-				4115043B1CEB07C700BF38E3 /* PlayButtonOverlayLarge@2x.png in Resources */,
 				5B6429E42020A9A3000E0DCB /* SF-UI-Display-Bold.otf in Resources */,
-				411504311CEB07C700BF38E3 /* ImageSelectedOn.png in Resources */,
-				411504371CEB07C700BF38E3 /* ImageSelectedSmallOn.png in Resources */,
 				E8C289F51BF5F8A200F7A034 /* SF-UI-Text-Light.otf in Resources */,
-				411504381CEB07C700BF38E3 /* ImageSelectedSmallOn@2x.png in Resources */,
-				4115043A1CEB07C700BF38E3 /* PlayButtonOverlayLarge.png in Resources */,
 				5BB68CA220359B5400B03C00 /* PasswordStrengthIndicatorView.xib in Resources */,
-				411504321CEB07C700BF38E3 /* ImageSelectedOn@2x.png in Resources */,
 				41A72F1F1C22EA1600516603 /* LTHPasscodeViewController.bundle in Resources */,
 				E8CD198A1A9270CB00CB8B2A /* UnavailableLinkView.xib in Resources */,
 				417279331DB663FA001AC818 /* JSQMessagesAssets.bundle in Resources */,
@@ -3177,8 +3174,6 @@
 				5B5B50011E684FDC00DBEB3B /* SF-UI-Display-Regular.otf in Resources */,
 				41136FBE1E1693410031C516 /* MEGAMessagesTypingIndicatorFoorterView.xib in Resources */,
 				A82E5BC81F3465A3003C149C /* Spotlight_file@2x.png in Resources */,
-				4115042B1CEB07C700BF38E3 /* ImageError.png in Resources */,
-				411504451CEB07C700BF38E3 /* UIBarButtonItemArrowRight@3x.png in Resources */,
 				5B6429E02020A8CF000E0DCB /* SF-UI-Text-Semibold.otf in Resources */,
 				A82E5BCB1F3465A3003C149C /* Spotlight_folder@3x.png in Resources */,
 				E8C289FF1BF65BAB00F7A034 /* Launch.storyboard in Resources */,
@@ -3200,7 +3195,6 @@
 				5B22F97C1F8374C500D2B156 /* VENToken.xib in Resources */,
 				417279591DB663FA001AC818 /* JSQMessagesLoadEarlierHeaderView.xib in Resources */,
 				E8C289F71BF5FCDD00F7A034 /* SF-UI-Text-Regular.otf in Resources */,
-				4115042D1CEB07C700BF38E3 /* ImageError@3x.png in Resources */,
 				832E1026202B09AE00BDD30F /* NodeActionCollectionViewCell.xib in Resources */,
 				E84CDB011A7292C9003F4C77 /* Links.storyboard in Resources */,
 			);
@@ -3300,6 +3294,7 @@
 				5B7B4CA21EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m in Sources */,
 				413199781BD7BD5D002CD6EA /* DTError.m in Sources */,
 				41EAAE4B1D06B49400622FAF /* PHAssetCollection+CTAssetsPickerController.m in Sources */,
+				77519C36203707F600FDF92B /* MEGARenameRequestDelegate.m in Sources */,
 				E8130A3C1DA64E1500B1AD67 /* ParkAccountViewController.m in Sources */,
 				E8BD127F1DB76E03003DC53F /* MasterKeyViewController.m in Sources */,
 				41D21E691D01AEC3002E6296 /* CTAssetsNavigationController.m in Sources */,
