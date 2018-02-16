@@ -232,7 +232,7 @@
                                                         <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="infoTouchUpInside:" destination="KWY-Kr-BLD" eventType="touchUpInside" id="25s-Th-pLe"/>
+                                                        <action selector="cancelTransfer:" destination="d7K-nv-YuC" eventType="touchUpInside" id="GUX-N0-33J"/>
                                                     </connections>
                                                 </button>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ro-Op-bYg">
