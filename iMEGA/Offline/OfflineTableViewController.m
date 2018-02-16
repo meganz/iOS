@@ -595,9 +595,10 @@ static NSString *kisDirectory = @"kisDirectory";
     if (@available(iOS 11.0, *)) {
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
         cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
+    } else {
+        cell.delegate = self;
     }
-//    cell.customEditDelegate = self;
-    cell.delegate = self;
+    
     return cell;
 }
 
@@ -1018,11 +1019,7 @@ static NSString *kisDirectory = @"kisDirectory";
 
 #pragma mark - Swipe Delegate
 
--(BOOL) swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction {
-    if (@available(iOS 11.0, *)) {
-        return NO;
-    }
-    
+- (BOOL)swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction {
     if (self.isEditing) {
         return NO;
     }
@@ -1034,7 +1031,7 @@ static NSString *kisDirectory = @"kisDirectory";
     return YES;
 }
 
--(NSArray*) swipeTableCell:(MGSwipeTableCell*) cell swipeButtonsForDirection:(MGSwipeDirection)direction
+- (NSArray*)swipeTableCell:(MGSwipeTableCell*) cell swipeButtonsForDirection:(MGSwipeDirection)direction
              swipeSettings:(MGSwipeSettings*) swipeSettings expansionSettings:(MGSwipeExpansionSettings*) expansionSettings {
     
     swipeSettings.transition = MGSwipeTransitionDrag;
