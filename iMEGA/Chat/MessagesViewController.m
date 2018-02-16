@@ -238,7 +238,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - Private methods
+#pragma mark - Private
 
 - (void)loadMessages {
     NSInteger loadMessage = [[MEGASdkManager sharedMEGAChatSdk] loadMessagesForChat:self.chatRoom.chatId count:32];

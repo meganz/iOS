@@ -385,7 +385,7 @@
 }
 
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];;
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodeList nodeAtIndex:indexPath.row];

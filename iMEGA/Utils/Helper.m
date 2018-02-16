@@ -738,10 +738,10 @@ static MEGAIndexer *indexer;
         } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
             PhotoCollectionViewCell *photoCollectionViewCell = cell;
             [photoCollectionViewCell.thumbnailImageView setImage:[Helper imageForNode:node]];
-        } else if ([cell isKindOfClass:[UICollectionReusableView class]]) {
+        } else if ([cell isKindOfClass:UICollectionReusableView.class]) {
             UICollectionReusableView *headerAction = cell;
             UIImageView *imageView = [headerAction viewWithTag:100];
-            [imageView setImage:[Helper imageForNode:node]];
+            imageView.image = [Helper imageForNode:node];
         }
     }
 }
@@ -760,7 +760,7 @@ static MEGAIndexer *indexer;
     } else if ([cell isKindOfClass:[UICollectionReusableView class]]) {
         UICollectionReusableView *headerAction = cell;
         UIImageView *imageView = [headerAction viewWithTag:100];
-        [imageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+        imageView.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
     }
     
     if (reindex) {

@@ -224,7 +224,7 @@
                                 @"xml":@"web_data",
                                 @"zip":@"compressed"};
     
-    extension = extension.lowercaseString;;
+    extension = extension.lowercaseString;
     UIImage *image;
     if ([extension isEqualToString:@"jpg"] || [extension isEqualToString:@"jpeg"]) {
         image = [UIImage imageNamed:@"info_image"];
