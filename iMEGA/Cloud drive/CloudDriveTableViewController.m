@@ -31,7 +31,7 @@
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
 #import "DetailsNodeInfoViewController.h"
-#import "MEGAAVViewController.h"
+#import "MEGAPhotoBrowserViewController.h"
 #import "NodeTableViewCell.h"
 #import "PhotosViewController.h"
 #import "PreviewDocumentViewController.h"
@@ -365,7 +365,7 @@
         return;
     }
     
-    switch ([node type]) {
+    switch (node.type) {
         case MEGANodeTypeFolder: {
             CloudDriveTableViewController *cdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             [cdvc setParentNode:node];
@@ -379,7 +379,7 @@
         }
             
         case MEGANodeTypeFile: {
-            if (node.name.mnz_isImagePathExtension) {
+            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList]);
                 [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:NO displayMode:self.displayMode];
             } else {
@@ -483,7 +483,7 @@
         }
             
         case MEGANodeTypeFile: {
-            if (node.name.mnz_isImagePathExtension) {
+            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList]);
                 return [node mnz_photoBrowserWithNodes:nodesArray folderLink:NO displayMode:self.displayMode enableMoveToRubbishBin:YES hideControls:YES];
             } else {
@@ -501,7 +501,7 @@
 }
 
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
-    if (viewControllerToCommit.class == CloudDriveTableViewController.class || viewControllerToCommit.class == MWPhotoBrowser.class || viewControllerToCommit.class == PreviewDocumentViewController.class) {
+    if (viewControllerToCommit.class == CloudDriveTableViewController.class || viewControllerToCommit.class == PreviewDocumentViewController.class) {
         [self.navigationController pushViewController:viewControllerToCommit animated:YES];
     } else {
         [self.navigationController presentViewController:viewControllerToCommit animated:YES completion:nil];

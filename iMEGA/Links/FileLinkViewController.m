@@ -57,7 +57,6 @@
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     if (self.fileLinkMode == FileLinkModeDefault) {
         [_cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
-        [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]} forState:UIControlStateNormal];
         [self.navigationItem setRightBarButtonItem:_cancelBarButtonItem];
         
         [self setUIItemsHidden:YES];
@@ -323,7 +322,7 @@
 - (void)open {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         BOOL isFolderLink = ((self.fileLinkMode == FileLinkModeNodeFromFolderLink) ? YES : NO);
-        if (self.node.name.mnz_isImagePathExtension) {
+        if (self.node.name.mnz_isImagePathExtension || self.node.name.mnz_isVideoPathExtension) {
             [self.node mnz_openImageInNavigationController:self.navigationController withNodes:@[self.node] folderLink:isFolderLink displayMode:2];
         } else {
             [self.node mnz_openNodeInNavigationController:self.navigationController folderLink:isFolderLink];
