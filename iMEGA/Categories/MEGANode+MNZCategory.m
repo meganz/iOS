@@ -188,7 +188,7 @@
         
         UIAlertAction *renameAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                UITextField *alertViewTextField = [[renameAlertController textFields] firstObject];
+                UITextField *alertViewTextField = renameAlertController.textFields.firstObject;
                 [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text];
             }
         }];
@@ -272,10 +272,10 @@
     NSMutableArray *outSharesForNodeMutableArray = [[NSMutableArray alloc] init];
     
     MEGAShareList *outSharesForNodeShareList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:self];
-    NSUInteger outSharesForNodeCount = [[outSharesForNodeShareList size] unsignedIntegerValue];
+    NSUInteger outSharesForNodeCount = outSharesForNodeShareList.size.unsignedIntegerValue;
     for (NSInteger i = 0; i < outSharesForNodeCount; i++) {
         MEGAShare *share = [outSharesForNodeShareList shareAtIndex:i];
-        if ([share user] != nil) {
+        if (share.user != nil) {
             [outSharesForNodeMutableArray addObject:share];
         }
     }
@@ -289,13 +289,13 @@
 #pragma mark - UITextFieldDelegate
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    NSString *nodeName = [textField text];
+    NSString *nodeName = textField.text;
     UITextPosition *beginning = textField.beginningOfDocument;
     UITextRange *textRange;
     
-    switch ([self type]) {
+    switch (self.type) {
         case MEGANodeTypeFile: {
-            if ([[nodeName pathExtension] isEqualToString:@""] && [nodeName isEqualToString:[nodeName stringByDeletingPathExtension]]) { //File without extension
+            if ([nodeName.pathExtension isEqualToString:@""] && [nodeName isEqualToString:nodeName.stringByDeletingPathExtension]) { //File without extension
                 UITextPosition *end = textField.endOfDocument;
                 textRange = [textField textRangeFromPosition:beginning  toPosition:end];
             } else {
@@ -303,7 +303,7 @@
                 UITextPosition *beforeExtension = [textField positionFromPosition:beginning offset:filenameRange.location];
                 textRange = [textField textRangeFromPosition:beginning  toPosition:beforeExtension];
             }
-            [textField setSelectedTextRange:textRange];
+            textField.selectedTextRange = textRange;
             break;
         }
             
@@ -321,7 +321,7 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     BOOL shouldChangeCharacters = YES;
-    switch ([self type]) {
+    switch (self.type) {
         case MEGANodeTypeFile:
         case MEGANodeTypeFolder:
             shouldChangeCharacters = YES;
