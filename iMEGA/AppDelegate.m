@@ -100,6 +100,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @property (nonatomic) URLType urlType;
 @property (nonatomic, strong) NSString *emailOfNewSignUpLink;
 @property (nonatomic, strong) NSString *quickActionType;
+@property (nonatomic, strong) NSString *messageForSuspendedAccount;
+
 
 @property (nonatomic, strong) UIAlertView *API_ESIDAlertView;
 
@@ -119,7 +121,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 @property (strong, nonatomic) NSString *email;
 @property (nonatomic) BOOL presentInviteContactVCLater;
-@property (nonatomic, getter=shouldWaitForChatLogout) BOOL waitForChatLogout;
 
 @end
 
@@ -287,9 +288,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [[MEGALogger sharedLogger] enableChatlogs];
             
             MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:sessionV3];
-            if (chatInit == MEGAChatInitNoCache) {
-                [[MEGASdkManager sharedMEGASdk] invalidateCache];
-            } else if (chatInit == MEGAChatInitError) {
+            if (chatInit == MEGAChatInitError) {
                 MEGALogError(@"Init Karere with session failed");
                 NSString *message = [NSString stringWithFormat:@"Error (%ld) initializing the chat", (long)chatInit];
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
@@ -1229,16 +1228,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (UIBarButtonItem *)cancelBarButtonItem {
     UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStylePlain target:nil action:@selector(dismissPresentedViews)];
-    [cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]} forState:UIControlStateNormal];
     return cancelBarButtonItem;
-}
-
-- (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
-    if (!error) {
-        [[NSFileManager defaultManager] removeItemAtPath:videoPath error:nil];
-    } else {
-        MEGALogError(@"Save video to Camera roll: %@ (Domain: %@ - Code:%ld)", error.localizedDescription, error.domain, error.code);
-    }
 }
 
 - (void)showPleaseLogInToYourAccountAlert {
@@ -1507,7 +1497,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [navigationController pushViewController:cloudDriveTVC animated:NO];
     }
     
-    switch ([node type]) {
+    switch (node.type) {
         case MEGANodeTypeFolder:
         case MEGANodeTypeRubbish: {
             CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
@@ -1517,7 +1507,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
             
         case MEGANodeTypeFile: {
-            if (node.name.mnz_isImagePathExtension) {
+            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.parentHandle];
                 NSArray *nodes = [[[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode] mnz_nodesArrayFromNodeList];
                 [node mnz_openImageInNavigationController:navigationController withNodes:nodes folderLink:NO displayMode:DisplayModeCloudDrive];
@@ -1665,22 +1655,6 @@ void uncaughtExceptionHandler(NSException *exception) {
         MEGANavigationController *navigationController = [[self.mainTBC viewControllers] objectAtIndex:CHAT];
         ChatRoomsViewController *chatRoomsVC = navigationController.viewControllers.firstObject;
         [chatRoomsVC openChatRoomWithID:chatNumber.unsignedLongLongValue];
-    }
-}
-
-- (void)showLoginViewController {
-    [SVProgressHUD dismiss];
-    
-    if ((self.urlType == URLTypeNewSignUpLink) && (_emailOfNewSignUpLink != nil)) {
-        if ([self.window.rootViewController isKindOfClass:[MEGANavigationController class]]) {
-            MEGANavigationController *navigationController = (MEGANavigationController *)self.window.rootViewController;
-            
-            if ([navigationController.topViewController isKindOfClass:[LoginViewController class]]) {
-                LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
-                [loginVC performSegueWithIdentifier:@"CreateAccountStoryboardSegueID" sender:_emailOfNewSignUpLink];
-                _emailOfNewSignUpLink = nil;
-            }
-        }
     }
 }
 
@@ -2039,8 +2013,17 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onEvent:(MEGASdk *)api event:(MEGAEvent *)event {
-    if (event.type == EventChangeToHttps) {
-        [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"useHttpsOnly"];
+    switch (event.type) {
+        case EventChangeToHttps:
+            [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"useHttpsOnly"];
+            break;
+            
+        case EventAccountBlocked:
+            _messageForSuspendedAccount = event.text;
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -2340,14 +2323,27 @@ void uncaughtExceptionHandler(NSException *exception) {
             break;
         }
             
-        case MEGARequestTypeLogout: {
+        case MEGARequestTypeLogout: {            
             [Helper logout];
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-                _waitForChatLogout = YES;
-            } else {
-                [self showLoginViewController];
+            [SVProgressHUD dismiss];
+            
+            if (self.messageForSuspendedAccount) {
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:self.messageForSuspendedAccount preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
             }
             
+            if ((self.urlType == URLTypeNewSignUpLink) && (_emailOfNewSignUpLink != nil)) {
+                if ([self.window.rootViewController isKindOfClass:[MEGANavigationController class]]) {
+                    MEGANavigationController *navigationController = (MEGANavigationController *)self.window.rootViewController;
+                    
+                    if ([navigationController.topViewController isKindOfClass:[LoginViewController class]]) {
+                        LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
+                        [loginVC performSegueWithIdentifier:@"CreateAccountStoryboardSegueID" sender:_emailOfNewSignUpLink];
+                        _emailOfNewSignUpLink = nil;
+                    }
+                }
+            }
             break;
         }
             
@@ -2459,16 +2455,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
     
     if (request.type == MEGAChatRequestTypeLogout) {
-        if (self.shouldWaitForChatLogout) {
-            [self showLoginViewController];
-        } else {
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-                [[MEGALogger sharedLogger] enableSDKlogs];
-            }
-            
-            [self.mainTBC setBadgeValueForChats];
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
+            [[MEGALogger sharedLogger] enableSDKlogs];
         }
         [MEGASdkManager destroySharedMEGAChatSdk];
+        
+        [self.mainTBC setBadgeValueForChats];
     }
     
     MEGALogInfo(@"onChatRequestFinish request type: %ld", request.type);
@@ -2625,24 +2617,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     if ([transfer type] == MEGATransferTypeDownload) {
         // Don't add to the database files saved in others applications
         if ([transfer.appData isEqualToString:@"SaveInPhotosApp"]) {
-            if (node.name.mnz_isVideoPathExtension && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum([NSHomeDirectory() stringByAppendingPathComponent:transfer.path])) {
-                UISaveVideoAtPathToSavedPhotosAlbum([NSHomeDirectory() stringByAppendingPathComponent:transfer.path], self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
-            }
-            
-            if (transfer.fileName.mnz_isImagePathExtension) {
-                NSURL *imageURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path]];
-                
-                [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-                    PHAssetCreationRequest *assetCreationRequest = [PHAssetCreationRequest creationRequestForAsset];
-                    [assetCreationRequest addResourceWithType:PHAssetResourceTypePhoto fileURL:imageURL options:nil];
-                    
-                } completionHandler:^(BOOL success, NSError * _Nullable nserror) {
-                    [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] error:nil];
-                    if (nserror) {
-                        MEGALogError(@"Add asset to camera roll: %@ (Domain: %@ - Code:%ld)", nserror.localizedDescription, nserror.domain, nserror.code);
-                    }
-                }];
-            }
+            [node mnz_copyToGalleryFromTemporaryPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path]];
             return;
         }
         
