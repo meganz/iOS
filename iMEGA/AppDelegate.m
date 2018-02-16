@@ -1231,14 +1231,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     return cancelBarButtonItem;
 }
 
-- (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
-    if (!error) {
-        [[NSFileManager defaultManager] removeItemAtPath:videoPath error:nil];
-    } else {
-        MEGALogError(@"Save video to Camera roll: %@ (Domain: %@ - Code:%ld)", error.localizedDescription, error.domain, error.code);
-    }
-}
-
 - (void)showPleaseLogInToYourAccountAlert {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"pleaseLogInToYourAccount", nil)
                                                     message:nil
@@ -1505,7 +1497,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [navigationController pushViewController:cloudDriveTVC animated:NO];
     }
     
-    switch ([node type]) {
+    switch (node.type) {
         case MEGANodeTypeFolder:
         case MEGANodeTypeRubbish: {
             CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
@@ -1515,7 +1507,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
             
         case MEGANodeTypeFile: {
-            if (node.name.mnz_isImagePathExtension) {
+            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.parentHandle];
                 NSArray *nodes = [[[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode] mnz_nodesArrayFromNodeList];
                 [node mnz_openImageInNavigationController:navigationController withNodes:nodes folderLink:NO displayMode:DisplayModeCloudDrive];
@@ -2625,24 +2617,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     if ([transfer type] == MEGATransferTypeDownload) {
         // Don't add to the database files saved in others applications
         if ([transfer.appData isEqualToString:@"SaveInPhotosApp"]) {
-            if (node.name.mnz_isVideoPathExtension && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum([NSHomeDirectory() stringByAppendingPathComponent:transfer.path])) {
-                UISaveVideoAtPathToSavedPhotosAlbum([NSHomeDirectory() stringByAppendingPathComponent:transfer.path], self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
-            }
-            
-            if (transfer.fileName.mnz_isImagePathExtension) {
-                NSURL *imageURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path]];
-                
-                [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-                    PHAssetCreationRequest *assetCreationRequest = [PHAssetCreationRequest creationRequestForAsset];
-                    [assetCreationRequest addResourceWithType:PHAssetResourceTypePhoto fileURL:imageURL options:nil];
-                    
-                } completionHandler:^(BOOL success, NSError * _Nullable nserror) {
-                    [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] error:nil];
-                    if (nserror) {
-                        MEGALogError(@"Add asset to camera roll: %@ (Domain: %@ - Code:%ld)", nserror.localizedDescription, nserror.domain, nserror.code);
-                    }
-                }];
-            }
+            [node mnz_copyToGalleryFromTemporaryPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path]];
             return;
         }
         

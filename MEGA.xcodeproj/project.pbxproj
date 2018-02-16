@@ -14,39 +14,6 @@
 		410B42451D9D375E00B540DE /* MEGAQLPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B42441D9D375E00B540DE /* MEGAQLPreviewController.m */; };
 		41136FBC1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41136FBB1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.m */; };
 		41136FBE1E1693410031C516 /* MEGAMessagesTypingIndicatorFoorterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41136FBD1E1693410031C516 /* MEGAMessagesTypingIndicatorFoorterView.xib */; };
-		4115042B1CEB07C700BF38E3 /* ImageError.png in Resources */ = {isa = PBXBuildFile; fileRef = 411503F21CEB07C700BF38E3 /* ImageError.png */; };
-		4115042C1CEB07C700BF38E3 /* ImageError@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411503F31CEB07C700BF38E3 /* ImageError@2x.png */; };
-		4115042D1CEB07C700BF38E3 /* ImageError@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411503F41CEB07C700BF38E3 /* ImageError@3x.png */; };
-		4115042E1CEB07C700BF38E3 /* ImageSelectedOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 411503F51CEB07C700BF38E3 /* ImageSelectedOff.png */; };
-		4115042F1CEB07C700BF38E3 /* ImageSelectedOff@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411503F61CEB07C700BF38E3 /* ImageSelectedOff@2x.png */; };
-		411504301CEB07C700BF38E3 /* ImageSelectedOff@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411503F71CEB07C700BF38E3 /* ImageSelectedOff@3x.png */; };
-		411504311CEB07C700BF38E3 /* ImageSelectedOn.png in Resources */ = {isa = PBXBuildFile; fileRef = 411503F81CEB07C700BF38E3 /* ImageSelectedOn.png */; };
-		411504321CEB07C700BF38E3 /* ImageSelectedOn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411503F91CEB07C700BF38E3 /* ImageSelectedOn@2x.png */; };
-		411504331CEB07C700BF38E3 /* ImageSelectedOn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411503FA1CEB07C700BF38E3 /* ImageSelectedOn@3x.png */; };
-		411504341CEB07C700BF38E3 /* ImageSelectedSmallOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 411503FB1CEB07C700BF38E3 /* ImageSelectedSmallOff.png */; };
-		411504351CEB07C700BF38E3 /* ImageSelectedSmallOff@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411503FC1CEB07C700BF38E3 /* ImageSelectedSmallOff@2x.png */; };
-		411504361CEB07C700BF38E3 /* ImageSelectedSmallOff@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411503FD1CEB07C700BF38E3 /* ImageSelectedSmallOff@3x.png */; };
-		411504371CEB07C700BF38E3 /* ImageSelectedSmallOn.png in Resources */ = {isa = PBXBuildFile; fileRef = 411503FE1CEB07C700BF38E3 /* ImageSelectedSmallOn.png */; };
-		411504381CEB07C700BF38E3 /* ImageSelectedSmallOn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411503FF1CEB07C700BF38E3 /* ImageSelectedSmallOn@2x.png */; };
-		411504391CEB07C700BF38E3 /* ImageSelectedSmallOn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411504001CEB07C700BF38E3 /* ImageSelectedSmallOn@3x.png */; };
-		4115043A1CEB07C700BF38E3 /* PlayButtonOverlayLarge.png in Resources */ = {isa = PBXBuildFile; fileRef = 411504011CEB07C700BF38E3 /* PlayButtonOverlayLarge.png */; };
-		4115043B1CEB07C700BF38E3 /* PlayButtonOverlayLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411504021CEB07C700BF38E3 /* PlayButtonOverlayLarge@2x.png */; };
-		4115043C1CEB07C700BF38E3 /* PlayButtonOverlayLarge@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411504031CEB07C700BF38E3 /* PlayButtonOverlayLarge@3x.png */; };
-		4115043D1CEB07C700BF38E3 /* PlayButtonOverlayLargeTap.png in Resources */ = {isa = PBXBuildFile; fileRef = 411504041CEB07C700BF38E3 /* PlayButtonOverlayLargeTap.png */; };
-		4115043E1CEB07C700BF38E3 /* PlayButtonOverlayLargeTap@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411504051CEB07C700BF38E3 /* PlayButtonOverlayLargeTap@2x.png */; };
-		4115043F1CEB07C700BF38E3 /* PlayButtonOverlayLargeTap@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411504061CEB07C700BF38E3 /* PlayButtonOverlayLargeTap@3x.png */; };
-		411504401CEB07C700BF38E3 /* UIBarButtonItemArrowLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 411504071CEB07C700BF38E3 /* UIBarButtonItemArrowLeft.png */; };
-		411504411CEB07C700BF38E3 /* UIBarButtonItemArrowLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411504081CEB07C700BF38E3 /* UIBarButtonItemArrowLeft@2x.png */; };
-		411504421CEB07C700BF38E3 /* UIBarButtonItemArrowLeft@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411504091CEB07C700BF38E3 /* UIBarButtonItemArrowLeft@3x.png */; };
-		411504431CEB07C700BF38E3 /* UIBarButtonItemArrowRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4115040A1CEB07C700BF38E3 /* UIBarButtonItemArrowRight.png */; };
-		411504441CEB07C700BF38E3 /* UIBarButtonItemArrowRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4115040B1CEB07C700BF38E3 /* UIBarButtonItemArrowRight@2x.png */; };
-		411504451CEB07C700BF38E3 /* UIBarButtonItemArrowRight@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4115040C1CEB07C700BF38E3 /* UIBarButtonItemArrowRight@3x.png */; };
-		411504461CEB07C700BF38E3 /* UIBarButtonItemGrid.png in Resources */ = {isa = PBXBuildFile; fileRef = 4115040D1CEB07C700BF38E3 /* UIBarButtonItemGrid.png */; };
-		411504471CEB07C700BF38E3 /* UIBarButtonItemGrid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4115040E1CEB07C700BF38E3 /* UIBarButtonItemGrid@2x.png */; };
-		411504481CEB07C700BF38E3 /* UIBarButtonItemGrid@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4115040F1CEB07C700BF38E3 /* UIBarButtonItemGrid@3x.png */; };
-		411504491CEB07C700BF38E3 /* VideoOverlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 411504101CEB07C700BF38E3 /* VideoOverlay.png */; };
-		4115044A1CEB07C700BF38E3 /* VideoOverlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411504111CEB07C700BF38E3 /* VideoOverlay@2x.png */; };
-		4115044B1CEB07C700BF38E3 /* VideoOverlay@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411504121CEB07C700BF38E3 /* VideoOverlay@3x.png */; };
 		411504941CEB183600BF38E3 /* SaveToCameraRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */; };
 		4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */; };
 		411C8B6B1DECBD87006A0D8C /* MEGAUser+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 411C8B6A1DECBD87006A0D8C /* MEGAUser+MNZCategory.m */; };
@@ -196,15 +163,6 @@
 		41E150041DB7CB1400383645 /* UIImageView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E150031DB7CB1400383645 /* UIImageView+MNZCategory.m */; };
 		41E250131D79E9D400499A6C /* SAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250101D79E9D400499A6C /* SAMKeychain.m */; };
 		41E250141D79E9D400499A6C /* SAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250121D79E9D400499A6C /* SAMKeychainQuery.m */; };
-		41E88F0B1CF451B000BD3B79 /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88EF71CF451B000BD3B79 /* MWCaptionView.m */; };
-		41E88F0C1CF451B000BD3B79 /* MWGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88EFA1CF451B000BD3B79 /* MWGridCell.m */; };
-		41E88F0D1CF451B000BD3B79 /* MWGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88EFC1CF451B000BD3B79 /* MWGridViewController.m */; };
-		41E88F0E1CF451B000BD3B79 /* MWPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88EFE1CF451B000BD3B79 /* MWPhoto.m */; };
-		41E88F0F1CF451B000BD3B79 /* MWPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88F001CF451B000BD3B79 /* MWPhotoBrowser.m */; };
-		41E88F101CF451B000BD3B79 /* MWTapDetectingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88F041CF451B000BD3B79 /* MWTapDetectingImageView.m */; };
-		41E88F111CF451B000BD3B79 /* MWTapDetectingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88F061CF451B000BD3B79 /* MWTapDetectingView.m */; };
-		41E88F121CF451B000BD3B79 /* MWZoomingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88F081CF451B000BD3B79 /* MWZoomingScrollView.m */; };
-		41E88F131CF451B000BD3B79 /* UIImage+MWPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88F0A1CF451B000BD3B79 /* UIImage+MWPhotoBrowser.m */; };
 		41EAAE461D06B49400622FAF /* NSBundle+CTAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41EAAE351D06B49400622FAF /* NSBundle+CTAssetsPickerController.m */; };
 		41EAAE471D06B49400622FAF /* NSDateFormatter+CTAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41EAAE371D06B49400622FAF /* NSDateFormatter+CTAssetsPickerController.m */; };
 		41EAAE481D06B49400622FAF /* NSIndexSet+CTAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41EAAE391D06B49400622FAF /* NSIndexSet+CTAssetsPickerController.m */; };
@@ -286,6 +244,13 @@
 		5BFA346F1FAC5850005BFC4E /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
 		5BFA34701FAC5857005BFC4E /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
 		5BFA34711FAC5BFB005BFC4E /* MEGARemoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */; };
+		77C544FF2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C544FE2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m */; };
+		77CAAAE0202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CAAADF202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m */; };
+		77CAAAE3202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CAAAE2202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m */; };
+		77D9A56C2023547900B48470 /* MEGAPhotoBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9A56B2023547900B48470 /* MEGAPhotoBrowserViewController.m */; };
+		77D9A56E202355F800B48470 /* MEGAPhotoBrowserViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77D9A56D202355F800B48470 /* MEGAPhotoBrowserViewController.storyboard */; };
+		77D9A5712023814800B48470 /* MEGAStartDownloadTransferDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9A5702023814800B48470 /* MEGAStartDownloadTransferDelegate.m */; };
+		77F43DD92034637300AE4F42 /* UICollectionView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */; };
 		830EF9A420062F3800FAA947 /* DevicePermissionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */; };
 		9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226691A692ECC00EC7BB6 /* Cloud.storyboard */; };
 		941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
@@ -353,15 +318,8 @@
 		943229331EDD86C3007DB542 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229321EDD86C3007DB542 /* SystemConfiguration.framework */; };
 		943229341EDD8823007DB542 /* MEGANavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C8D73E1B1DCB4000BCDBA4 /* MEGANavigationController.m */; };
 		943229351EDD886B007DB542 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
-		943229361EDD8898007DB542 /* MWPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88F001CF451B000BD3B79 /* MWPhotoBrowser.m */; };
 		943229371EDD88B1007DB542 /* SaveToCameraRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */; };
-		943229381EDD88BE007DB542 /* MWGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88EFC1CF451B000BD3B79 /* MWGridViewController.m */; };
-		943229391EDD88CD007DB542 /* MWGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88EFA1CF451B000BD3B79 /* MWGridCell.m */; };
 		9432293B1EDD88E3007DB542 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432293A1EDD88E3007DB542 /* MediaPlayer.framework */; };
-		9432293C1EDD88F5007DB542 /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88EF71CF451B000BD3B79 /* MWCaptionView.m */; };
-		9432293D1EDD88F5007DB542 /* MWZoomingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88F081CF451B000BD3B79 /* MWZoomingScrollView.m */; };
-		9432293E1EDD8903007DB542 /* MWTapDetectingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88F041CF451B000BD3B79 /* MWTapDetectingImageView.m */; };
-		9432293F1EDD8903007DB542 /* MWTapDetectingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88F061CF451B000BD3B79 /* MWTapDetectingView.m */; };
 		943229401EDD8969007DB542 /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC2ABF1AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m */; };
 		943229431EDD97D2007DB542 /* SF-UI-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B4429421E6D7B7000BCACC0 /* SF-UI-Text-RegularItalic.otf */; };
 		943229441EDD97D2007DB542 /* SF-UI-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B44293E1E6D705D00BCACC0 /* SF-UI-Display-Medium.otf */; };
@@ -693,39 +651,6 @@
 		41136FBA1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAMessagesTypingIndicatorFoorterView.h; sourceTree = "<group>"; };
 		41136FBB1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAMessagesTypingIndicatorFoorterView.m; sourceTree = "<group>"; };
 		41136FBD1E1693410031C516 /* MEGAMessagesTypingIndicatorFoorterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MEGAMessagesTypingIndicatorFoorterView.xib; sourceTree = "<group>"; };
-		411503F21CEB07C700BF38E3 /* ImageError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageError.png; sourceTree = "<group>"; };
-		411503F31CEB07C700BF38E3 /* ImageError@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageError@2x.png"; sourceTree = "<group>"; };
-		411503F41CEB07C700BF38E3 /* ImageError@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageError@3x.png"; sourceTree = "<group>"; };
-		411503F51CEB07C700BF38E3 /* ImageSelectedOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageSelectedOff.png; sourceTree = "<group>"; };
-		411503F61CEB07C700BF38E3 /* ImageSelectedOff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageSelectedOff@2x.png"; sourceTree = "<group>"; };
-		411503F71CEB07C700BF38E3 /* ImageSelectedOff@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageSelectedOff@3x.png"; sourceTree = "<group>"; };
-		411503F81CEB07C700BF38E3 /* ImageSelectedOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageSelectedOn.png; sourceTree = "<group>"; };
-		411503F91CEB07C700BF38E3 /* ImageSelectedOn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageSelectedOn@2x.png"; sourceTree = "<group>"; };
-		411503FA1CEB07C700BF38E3 /* ImageSelectedOn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageSelectedOn@3x.png"; sourceTree = "<group>"; };
-		411503FB1CEB07C700BF38E3 /* ImageSelectedSmallOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageSelectedSmallOff.png; sourceTree = "<group>"; };
-		411503FC1CEB07C700BF38E3 /* ImageSelectedSmallOff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageSelectedSmallOff@2x.png"; sourceTree = "<group>"; };
-		411503FD1CEB07C700BF38E3 /* ImageSelectedSmallOff@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageSelectedSmallOff@3x.png"; sourceTree = "<group>"; };
-		411503FE1CEB07C700BF38E3 /* ImageSelectedSmallOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageSelectedSmallOn.png; sourceTree = "<group>"; };
-		411503FF1CEB07C700BF38E3 /* ImageSelectedSmallOn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageSelectedSmallOn@2x.png"; sourceTree = "<group>"; };
-		411504001CEB07C700BF38E3 /* ImageSelectedSmallOn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageSelectedSmallOn@3x.png"; sourceTree = "<group>"; };
-		411504011CEB07C700BF38E3 /* PlayButtonOverlayLarge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlayButtonOverlayLarge.png; sourceTree = "<group>"; };
-		411504021CEB07C700BF38E3 /* PlayButtonOverlayLarge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PlayButtonOverlayLarge@2x.png"; sourceTree = "<group>"; };
-		411504031CEB07C700BF38E3 /* PlayButtonOverlayLarge@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PlayButtonOverlayLarge@3x.png"; sourceTree = "<group>"; };
-		411504041CEB07C700BF38E3 /* PlayButtonOverlayLargeTap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlayButtonOverlayLargeTap.png; sourceTree = "<group>"; };
-		411504051CEB07C700BF38E3 /* PlayButtonOverlayLargeTap@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PlayButtonOverlayLargeTap@2x.png"; sourceTree = "<group>"; };
-		411504061CEB07C700BF38E3 /* PlayButtonOverlayLargeTap@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PlayButtonOverlayLargeTap@3x.png"; sourceTree = "<group>"; };
-		411504071CEB07C700BF38E3 /* UIBarButtonItemArrowLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UIBarButtonItemArrowLeft.png; sourceTree = "<group>"; };
-		411504081CEB07C700BF38E3 /* UIBarButtonItemArrowLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIBarButtonItemArrowLeft@2x.png"; sourceTree = "<group>"; };
-		411504091CEB07C700BF38E3 /* UIBarButtonItemArrowLeft@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIBarButtonItemArrowLeft@3x.png"; sourceTree = "<group>"; };
-		4115040A1CEB07C700BF38E3 /* UIBarButtonItemArrowRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UIBarButtonItemArrowRight.png; sourceTree = "<group>"; };
-		4115040B1CEB07C700BF38E3 /* UIBarButtonItemArrowRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIBarButtonItemArrowRight@2x.png"; sourceTree = "<group>"; };
-		4115040C1CEB07C700BF38E3 /* UIBarButtonItemArrowRight@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIBarButtonItemArrowRight@3x.png"; sourceTree = "<group>"; };
-		4115040D1CEB07C700BF38E3 /* UIBarButtonItemGrid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UIBarButtonItemGrid.png; sourceTree = "<group>"; };
-		4115040E1CEB07C700BF38E3 /* UIBarButtonItemGrid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIBarButtonItemGrid@2x.png"; sourceTree = "<group>"; };
-		4115040F1CEB07C700BF38E3 /* UIBarButtonItemGrid@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIBarButtonItemGrid@3x.png"; sourceTree = "<group>"; };
-		411504101CEB07C700BF38E3 /* VideoOverlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VideoOverlay.png; sourceTree = "<group>"; };
-		411504111CEB07C700BF38E3 /* VideoOverlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VideoOverlay@2x.png"; sourceTree = "<group>"; };
-		411504121CEB07C700BF38E3 /* VideoOverlay@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VideoOverlay@3x.png"; sourceTree = "<group>"; };
 		411504921CEB183600BF38E3 /* SaveToCameraRollActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveToCameraRollActivity.h; sourceTree = "<group>"; };
 		411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveToCameraRollActivity.m; sourceTree = "<group>"; };
 		4115D6421E718B1F004BB0FF /* UIImage+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MNZCategory.h"; sourceTree = "<group>"; };
@@ -1029,26 +954,6 @@
 		41E250111D79E9D400499A6C /* SAMKeychainQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAMKeychainQuery.h; sourceTree = "<group>"; };
 		41E250121D79E9D400499A6C /* SAMKeychainQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAMKeychainQuery.m; sourceTree = "<group>"; };
 		41E250171D79EA0200499A6C /* SAMKeychainQuery.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SAMKeychainQuery.h; sourceTree = "<group>"; };
-		41E88EF61CF451B000BD3B79 /* MWCaptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCaptionView.h; sourceTree = "<group>"; };
-		41E88EF71CF451B000BD3B79 /* MWCaptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWCaptionView.m; sourceTree = "<group>"; };
-		41E88EF91CF451B000BD3B79 /* MWGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWGridCell.h; sourceTree = "<group>"; };
-		41E88EFA1CF451B000BD3B79 /* MWGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWGridCell.m; sourceTree = "<group>"; };
-		41E88EFB1CF451B000BD3B79 /* MWGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWGridViewController.h; sourceTree = "<group>"; };
-		41E88EFC1CF451B000BD3B79 /* MWGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWGridViewController.m; sourceTree = "<group>"; };
-		41E88EFD1CF451B000BD3B79 /* MWPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhoto.h; sourceTree = "<group>"; };
-		41E88EFE1CF451B000BD3B79 /* MWPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWPhoto.m; sourceTree = "<group>"; };
-		41E88EFF1CF451B000BD3B79 /* MWPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhotoBrowser.h; sourceTree = "<group>"; };
-		41E88F001CF451B000BD3B79 /* MWPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWPhotoBrowser.m; sourceTree = "<group>"; };
-		41E88F011CF451B000BD3B79 /* MWPhotoBrowserPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhotoBrowserPrivate.h; sourceTree = "<group>"; };
-		41E88F021CF451B000BD3B79 /* MWPhotoProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhotoProtocol.h; sourceTree = "<group>"; };
-		41E88F031CF451B000BD3B79 /* MWTapDetectingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWTapDetectingImageView.h; sourceTree = "<group>"; };
-		41E88F041CF451B000BD3B79 /* MWTapDetectingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWTapDetectingImageView.m; sourceTree = "<group>"; };
-		41E88F051CF451B000BD3B79 /* MWTapDetectingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWTapDetectingView.h; sourceTree = "<group>"; };
-		41E88F061CF451B000BD3B79 /* MWTapDetectingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWTapDetectingView.m; sourceTree = "<group>"; };
-		41E88F071CF451B000BD3B79 /* MWZoomingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZoomingScrollView.h; sourceTree = "<group>"; };
-		41E88F081CF451B000BD3B79 /* MWZoomingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWZoomingScrollView.m; sourceTree = "<group>"; };
-		41E88F091CF451B000BD3B79 /* UIImage+MWPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MWPhotoBrowser.h"; sourceTree = "<group>"; };
-		41E88F0A1CF451B000BD3B79 /* UIImage+MWPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MWPhotoBrowser.m"; sourceTree = "<group>"; };
 		41EAAE321D06B49400622FAF /* CTAssetsPageViewController+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CTAssetsPageViewController+Internal.h"; sourceTree = "<group>"; };
 		41EAAE331D06B49400622FAF /* CTAssetsPickerController+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CTAssetsPickerController+Internal.h"; sourceTree = "<group>"; };
 		41EAAE341D06B49400622FAF /* NSBundle+CTAssetsPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+CTAssetsPickerController.h"; sourceTree = "<group>"; };
@@ -1159,6 +1064,19 @@
 		5BFA346A1FAB4169005BFC4E /* MEGARemoveRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGARemoveRequestDelegate.h; path = API/Requests/MEGARemoveRequestDelegate.h; sourceTree = "<group>"; };
 		5BFA346C1FAB6282005BFC4E /* MEGAMoveRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAMoveRequestDelegate.h; path = API/Requests/MEGAMoveRequestDelegate.h; sourceTree = "<group>"; };
 		5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAMoveRequestDelegate.m; path = API/Requests/MEGAMoveRequestDelegate.m; sourceTree = "<group>"; };
+		77C544FD2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAPhotoBrowserAnimator.h; sourceTree = "<group>"; };
+		77C544FE2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAPhotoBrowserAnimator.m; sourceTree = "<group>"; };
+		77CAAADE202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAPhotoBrowserPickerViewController.h; sourceTree = "<group>"; };
+		77CAAADF202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAPhotoBrowserPickerViewController.m; sourceTree = "<group>"; };
+		77CAAAE1202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAPhotoBrowserPickerCollectionViewCell.h; sourceTree = "<group>"; };
+		77CAAAE2202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAPhotoBrowserPickerCollectionViewCell.m; sourceTree = "<group>"; };
+		77D9A56A2023547900B48470 /* MEGAPhotoBrowserViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAPhotoBrowserViewController.h; sourceTree = "<group>"; };
+		77D9A56B2023547900B48470 /* MEGAPhotoBrowserViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAPhotoBrowserViewController.m; sourceTree = "<group>"; };
+		77D9A56D202355F800B48470 /* MEGAPhotoBrowserViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MEGAPhotoBrowserViewController.storyboard; sourceTree = "<group>"; };
+		77D9A56F2023814800B48470 /* MEGAStartDownloadTransferDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAStartDownloadTransferDelegate.h; sourceTree = "<group>"; };
+		77D9A5702023814800B48470 /* MEGAStartDownloadTransferDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAStartDownloadTransferDelegate.m; sourceTree = "<group>"; };
+		77F43DD72034637300AE4F42 /* UICollectionView+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+MNZCategory.h"; sourceTree = "<group>"; };
+		77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+MNZCategory.m"; sourceTree = "<group>"; };
 		830EF9A220062F3800FAA947 /* DevicePermissionsHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DevicePermissionsHelper.h; sourceTree = "<group>"; };
 		830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DevicePermissionsHelper.m; sourceTree = "<group>"; };
 		9419B6BE1F20D1D700FEBE31 /* MEGAIndexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAIndexer.h; path = Spotlight/MEGAIndexer.h; sourceTree = "<group>"; };
@@ -1636,6 +1554,7 @@
 				41A602971A8A5CF9001AE538 /* Camera uploads */,
 				4152267E1A692ECC00EC7BB6 /* Offline */,
 				E8D5BF631BF359A000955550 /* Shared Items */,
+				77D9A5692023538600B48470 /* Photo browser */,
 				415226721A692ECC00EC7BB6 /* Contacts */,
 				415226821A692ECC00EC7BB6 /* Settings */,
 				E8B5191F1AC9C43B00BB7324 /* Transfers */,
@@ -1686,75 +1605,6 @@
 			name = Views;
 			path = Chat/Views;
 			sourceTree = "<group>";
-		};
-		411503F01CEB07C700BF38E3 /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-				411503F21CEB07C700BF38E3 /* ImageError.png */,
-				411503F31CEB07C700BF38E3 /* ImageError@2x.png */,
-				411503F41CEB07C700BF38E3 /* ImageError@3x.png */,
-				411503F51CEB07C700BF38E3 /* ImageSelectedOff.png */,
-				411503F61CEB07C700BF38E3 /* ImageSelectedOff@2x.png */,
-				411503F71CEB07C700BF38E3 /* ImageSelectedOff@3x.png */,
-				411503F81CEB07C700BF38E3 /* ImageSelectedOn.png */,
-				411503F91CEB07C700BF38E3 /* ImageSelectedOn@2x.png */,
-				411503FA1CEB07C700BF38E3 /* ImageSelectedOn@3x.png */,
-				411503FB1CEB07C700BF38E3 /* ImageSelectedSmallOff.png */,
-				411503FC1CEB07C700BF38E3 /* ImageSelectedSmallOff@2x.png */,
-				411503FD1CEB07C700BF38E3 /* ImageSelectedSmallOff@3x.png */,
-				411503FE1CEB07C700BF38E3 /* ImageSelectedSmallOn.png */,
-				411503FF1CEB07C700BF38E3 /* ImageSelectedSmallOn@2x.png */,
-				411504001CEB07C700BF38E3 /* ImageSelectedSmallOn@3x.png */,
-				411504011CEB07C700BF38E3 /* PlayButtonOverlayLarge.png */,
-				411504021CEB07C700BF38E3 /* PlayButtonOverlayLarge@2x.png */,
-				411504031CEB07C700BF38E3 /* PlayButtonOverlayLarge@3x.png */,
-				411504041CEB07C700BF38E3 /* PlayButtonOverlayLargeTap.png */,
-				411504051CEB07C700BF38E3 /* PlayButtonOverlayLargeTap@2x.png */,
-				411504061CEB07C700BF38E3 /* PlayButtonOverlayLargeTap@3x.png */,
-				411504071CEB07C700BF38E3 /* UIBarButtonItemArrowLeft.png */,
-				411504081CEB07C700BF38E3 /* UIBarButtonItemArrowLeft@2x.png */,
-				411504091CEB07C700BF38E3 /* UIBarButtonItemArrowLeft@3x.png */,
-				4115040A1CEB07C700BF38E3 /* UIBarButtonItemArrowRight.png */,
-				4115040B1CEB07C700BF38E3 /* UIBarButtonItemArrowRight@2x.png */,
-				4115040C1CEB07C700BF38E3 /* UIBarButtonItemArrowRight@3x.png */,
-				4115040D1CEB07C700BF38E3 /* UIBarButtonItemGrid.png */,
-				4115040E1CEB07C700BF38E3 /* UIBarButtonItemGrid@2x.png */,
-				4115040F1CEB07C700BF38E3 /* UIBarButtonItemGrid@3x.png */,
-				411504101CEB07C700BF38E3 /* VideoOverlay.png */,
-				411504111CEB07C700BF38E3 /* VideoOverlay@2x.png */,
-				411504121CEB07C700BF38E3 /* VideoOverlay@3x.png */,
-			);
-			name = Assets;
-			path = iMEGA/Vendor/MWPhotoBrowser/Pod/Assets;
-			sourceTree = SOURCE_ROOT;
-		};
-		411504131CEB07C700BF38E3 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				41E88EF61CF451B000BD3B79 /* MWCaptionView.h */,
-				41E88EF71CF451B000BD3B79 /* MWCaptionView.m */,
-				41E88EF91CF451B000BD3B79 /* MWGridCell.h */,
-				41E88EFA1CF451B000BD3B79 /* MWGridCell.m */,
-				41E88EFB1CF451B000BD3B79 /* MWGridViewController.h */,
-				41E88EFC1CF451B000BD3B79 /* MWGridViewController.m */,
-				41E88EFD1CF451B000BD3B79 /* MWPhoto.h */,
-				41E88EFE1CF451B000BD3B79 /* MWPhoto.m */,
-				41E88EFF1CF451B000BD3B79 /* MWPhotoBrowser.h */,
-				41E88F001CF451B000BD3B79 /* MWPhotoBrowser.m */,
-				41E88F011CF451B000BD3B79 /* MWPhotoBrowserPrivate.h */,
-				41E88F021CF451B000BD3B79 /* MWPhotoProtocol.h */,
-				41E88F031CF451B000BD3B79 /* MWTapDetectingImageView.h */,
-				41E88F041CF451B000BD3B79 /* MWTapDetectingImageView.m */,
-				41E88F051CF451B000BD3B79 /* MWTapDetectingView.h */,
-				41E88F061CF451B000BD3B79 /* MWTapDetectingView.m */,
-				41E88F071CF451B000BD3B79 /* MWZoomingScrollView.h */,
-				41E88F081CF451B000BD3B79 /* MWZoomingScrollView.m */,
-				41E88F091CF451B000BD3B79 /* UIImage+MWPhotoBrowser.h */,
-				41E88F0A1CF451B000BD3B79 /* UIImage+MWPhotoBrowser.m */,
-			);
-			name = Classes;
-			path = iMEGA/Vendor/MWPhotoBrowser/Pod/Classes;
-			sourceTree = SOURCE_ROOT;
 		};
 		4122C0E31B274E6A001CE833 /* AMLocalizedString */ = {
 			isa = PBXGroup;
@@ -1819,7 +1669,6 @@
 				41FC83A51AA732DC008FA551 /* Reachability */,
 				41B2D4191A6D06780002E29E /* GKContactImage */,
 				415227351A692EEF00EC7BB6 /* SVProgressHUD */,
-				4152269C1A692EDC00EC7BB6 /* MWPhotoBrowser */,
 			);
 			name = Vendor;
 			sourceTree = "<group>";
@@ -1953,16 +1802,6 @@
 				830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		4152269C1A692EDC00EC7BB6 /* MWPhotoBrowser */ = {
-			isa = PBXGroup;
-			children = (
-				411503F01CEB07C700BF38E3 /* Assets */,
-				411504131CEB07C700BF38E3 /* Classes */,
-			);
-			name = MWPhotoBrowser;
-			path = Vendor/MWPhotoBrowser;
 			sourceTree = "<group>";
 		};
 		415227351A692EEF00EC7BB6 /* SVProgressHUD */ = {
@@ -2359,6 +2198,8 @@
 				A815FCE91FE2AD080075AC29 /* UIApplication+MNZCategory.m */,
 				949086861FD5482E002B12BD /* NSAttributedString+MNZCategory.h */,
 				949086871FD5482E002B12BD /* NSAttributedString+MNZCategory.m */,
+				77F43DD72034637300AE4F42 /* UICollectionView+MNZCategory.h */,
+				77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -2614,6 +2455,8 @@
 			children = (
 				5B2E918B1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.h */,
 				5B2E918C1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.m */,
+				77D9A56F2023814800B48470 /* MEGAStartDownloadTransferDelegate.h */,
+				77D9A5702023814800B48470 /* MEGAStartDownloadTransferDelegate.m */,
 			);
 			name = Transfers;
 			path = API/Transfers;
@@ -2667,6 +2510,22 @@
 			);
 			name = FrameAccessor;
 			path = Vendor/FrameAccessor/FrameAccessor;
+			sourceTree = "<group>";
+		};
+		77D9A5692023538600B48470 /* Photo browser */ = {
+			isa = PBXGroup;
+			children = (
+				77D9A56A2023547900B48470 /* MEGAPhotoBrowserViewController.h */,
+				77D9A56B2023547900B48470 /* MEGAPhotoBrowserViewController.m */,
+				77D9A56D202355F800B48470 /* MEGAPhotoBrowserViewController.storyboard */,
+				77C544FD2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.h */,
+				77C544FE2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m */,
+				77CAAADE202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.h */,
+				77CAAADF202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m */,
+				77CAAAE1202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.h */,
+				77CAAAE2202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m */,
+			);
+			path = "Photo browser";
 			sourceTree = "<group>";
 		};
 		9419B6BD1F20D18300FEBE31 /* Spotlight */ = {
@@ -3215,15 +3074,11 @@
 				5B82814A1E7BE8300079C1BB /* SelectableTableViewCell.xib in Resources */,
 				415226901A692ECC00EC7BB6 /* Contacts.storyboard in Resources */,
 				415226961A692ECC00EC7BB6 /* Offline.storyboard in Resources */,
-				4115043E1CEB07C700BF38E3 /* PlayButtonOverlayLargeTap@2x.png in Resources */,
 				A8F2629C1FA8F82F000B2768 /* hang_out.mp3 in Resources */,
 				A8F2629A1FA8F7C3000B2768 /* incoming_voice_video_call.mp3 in Resources */,
 				E8D36F791AD677C6006D4D40 /* Transfers.storyboard in Resources */,
-				411504391CEB07C700BF38E3 /* ImageSelectedSmallOn@3x.png in Resources */,
 				A82E5BF41F3470B5003C149C /* Spotlight_file.png in Resources */,
 				4152268B1A692ECC00EC7BB6 /* Cloud.storyboard in Resources */,
-				411504351CEB07C700BF38E3 /* ImageSelectedSmallOff@2x.png in Resources */,
-				4115044B1CEB07C700BF38E3 /* VideoOverlay@3x.png in Resources */,
 				41EABF171DA7C5250087271C /* Chat.storyboard in Resources */,
 				4115043B1CEB07C700BF38E3 /* PlayButtonOverlayLarge@2x.png in Resources */,
 				5B6429E42020A9A3000E0DCB /* SF-UI-Display-Bold.otf in Resources */,
@@ -3238,27 +3093,20 @@
 				E8CD198A1A9270CB00CB8B2A /* UnavailableLinkView.xib in Resources */,
 				417279331DB663FA001AC818 /* JSQMessagesAssets.bundle in Resources */,
 				9462A1811FDFFD4800008F32 /* MEGAToolbarTextContentView.xib in Resources */,
-				4115044A1CEB07C700BF38E3 /* VideoOverlay@2x.png in Resources */,
 				A89E77491EA605A900ADC0D2 /* MEGAMessageAttachmentView.xib in Resources */,
 				4152273A1A692EEF00EC7BB6 /* SVProgressHUD.bundle in Resources */,
 				94B120BA1FE2B6CB0099E382 /* MEGAToolbarImagePickerView.xib in Resources */,
 				4152273F1A692F8D00EC7BB6 /* Localizable.strings in Resources */,
-				411504441CEB07C700BF38E3 /* UIBarButtonItemArrowRight@2x.png in Resources */,
 				E8E3E6FA1E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib in Resources */,
-				411504361CEB07C700BF38E3 /* ImageSelectedSmallOff@3x.png in Resources */,
-				411504301CEB07C700BF38E3 /* ImageSelectedOff@3x.png in Resources */,
+				77D9A56E202355F800B48470 /* MEGAPhotoBrowserViewController.storyboard in Resources */,
 				A8278D7F200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 in Resources */,
 				5B4429431E6D7B7000BCACC0 /* SF-UI-Text-RegularItalic.otf in Resources */,
-				4115043F1CEB07C700BF38E3 /* PlayButtonOverlayLargeTap@3x.png in Resources */,
 				E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */,
 				417279521DB663FA001AC818 /* JSQMessagesCollectionViewCellIncoming.xib in Resources */,
-				4115042E1CEB07C700BF38E3 /* ImageSelectedOff.png in Resources */,
-				4115043D1CEB07C700BF38E3 /* PlayButtonOverlayLargeTap.png in Resources */,
 				4172795C1DB663FA001AC818 /* JSQMessagesToolbarContentView.xib in Resources */,
 				4172795E1DB663FA001AC818 /* JSQMessagesTypingIndicatorFooterView.xib in Resources */,
 				5B5B50011E684FDC00DBEB3B /* SF-UI-Display-Regular.otf in Resources */,
 				41136FBE1E1693410031C516 /* MEGAMessagesTypingIndicatorFoorterView.xib in Resources */,
-				411504481CEB07C700BF38E3 /* UIBarButtonItemGrid@3x.png in Resources */,
 				A82E5BC81F3465A3003C149C /* Spotlight_file@2x.png in Resources */,
 				4115042B1CEB07C700BF38E3 /* ImageError.png in Resources */,
 				411504451CEB07C700BF38E3 /* UIBarButtonItemArrowRight@3x.png in Resources */,
@@ -3267,36 +3115,23 @@
 				E8C289FF1BF65BAB00F7A034 /* Launch.storyboard in Resources */,
 				4172793A1DB663FA001AC818 /* JSQMessagesViewController.xib in Resources */,
 				E8E1D2D51AFA860E00A9BD5B /* Main.storyboard in Resources */,
-				411504331CEB07C700BF38E3 /* ImageSelectedOn@3x.png in Resources */,
 				41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */,
 				5B6429DD2020A8CB000E0DCB /* SF-UI-Display-Semibold.otf in Resources */,
 				E889C9E61B5565C900ECEFDF /* MyAccount.storyboard in Resources */,
 				94AAA9AA1FD6D1C20029D6EB /* SF-UI-Text-BoldItalic.otf in Resources */,
-				411504461CEB07C700BF38E3 /* UIBarButtonItemGrid.png in Resources */,
 				A82E5BC91F3465A3003C149C /* Spotlight_file@3x.png in Resources */,
 				A819B3421EAFA844004592F9 /* CustomModalAlertViewController.xib in Resources */,
 				E8D5BF661BF35A4B00955550 /* SharedItems.storyboard in Resources */,
-				411504401CEB07C700BF38E3 /* UIBarButtonItemArrowLeft.png in Resources */,
 				5B4429411E6D705D00BCACC0 /* SF-UI-Text-Medium.otf in Resources */,
 				413199761BD7BD5D002CD6EA /* DateTools.bundle in Resources */,
-				4115043C1CEB07C700BF38E3 /* PlayButtonOverlayLarge@3x.png in Resources */,
 				415226981A692ECC00EC7BB6 /* Settings.storyboard in Resources */,
 				1373619E1A6664C300B740E8 /* Images.xcassets in Resources */,
-				411504341CEB07C700BF38E3 /* ImageSelectedSmallOff.png in Resources */,
-				4115042F1CEB07C700BF38E3 /* ImageSelectedOff@2x.png in Resources */,
 				41D77EA91A6E8E6300818BE8 /* LaunchScreen.xib in Resources */,
-				411504411CEB07C700BF38E3 /* UIBarButtonItemArrowLeft@2x.png in Resources */,
-				411504431CEB07C700BF38E3 /* UIBarButtonItemArrowRight.png in Resources */,
 				417279541DB663FA001AC818 /* JSQMessagesCollectionViewCellOutgoing.xib in Resources */,
-				4115042C1CEB07C700BF38E3 /* ImageError@2x.png in Resources */,
 				5B22F97C1F8374C500D2B156 /* VENToken.xib in Resources */,
-				411504471CEB07C700BF38E3 /* UIBarButtonItemGrid@2x.png in Resources */,
 				417279591DB663FA001AC818 /* JSQMessagesLoadEarlierHeaderView.xib in Resources */,
 				E8C289F71BF5FCDD00F7A034 /* SF-UI-Text-Regular.otf in Resources */,
-				4115042D1CEB07C700BF38E3 /* ImageError@3x.png in Resources */,
 				E84CDB011A7292C9003F4C77 /* Links.storyboard in Resources */,
-				411504491CEB07C700BF38E3 /* VideoOverlay.png in Resources */,
-				411504421CEB07C700BF38E3 /* UIBarButtonItemArrowLeft@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3386,9 +3221,9 @@
 				41AB8EC11A7103B300E40A39 /* BrowserViewController.m in Sources */,
 				417279371DB663FA001AC818 /* UIImage+JSQMessages.m in Sources */,
 				4172794D1DB663FA001AC818 /* JSQVideoMediaItem.m in Sources */,
+				77C544FF2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m in Sources */,
 				415226971A692ECC00EC7BB6 /* OfflineTableViewController.m in Sources */,
 				5B22F97F1F8374C500D2B156 /* VENBackspaceTextField.m in Sources */,
-				41E88F131CF451B000BD3B79 /* UIImage+MWPhotoBrowser.m in Sources */,
 				41A4204F1C4EA02C002E192E /* MEGALogger.m in Sources */,
 				5B7B4CA21EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m in Sources */,
 				413199781BD7BD5D002CD6EA /* DTError.m in Sources */,
@@ -3412,13 +3247,13 @@
 				41AC2AC01AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m in Sources */,
 				E8534D4B1E15231C00911C40 /* ChatSettingsTableViewController.m in Sources */,
 				E8F791811BC5754A00C58676 /* RemoveLinkActivity.m in Sources */,
+				77D9A56C2023547900B48470 /* MEGAPhotoBrowserViewController.m in Sources */,
 				417279361DB663FA001AC818 /* UIColor+JSQMessages.m in Sources */,
 				137361931A6664C300B740E8 /* AppDelegate.m in Sources */,
 				5BFA346E1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m in Sources */,
 				4172793B1DB663FA001AC818 /* JSQMessagesAvatarImageFactory.m in Sources */,
 				41D21E711D01AEC3002E6296 /* CTAssetThumbnailOverlay.m in Sources */,
 				41D21DF01D01AE89002E6296 /* ALView+PureLayout.m in Sources */,
-				41E88F0F1CF451B000BD3B79 /* MWPhotoBrowser.m in Sources */,
 				946B2D191F46E5B9009ED32C /* CopyrightWarningViewController.m in Sources */,
 				410B42451D9D375E00B540DE /* MEGAQLPreviewController.m in Sources */,
 				4131997D1BD7BD5D002CD6EA /* NSDate+DateTools.m in Sources */,
@@ -3451,9 +3286,9 @@
 				412EB2661C6E52AA001EA6D6 /* MEGAAssetOperation.m in Sources */,
 				945E1F0C1FE10CE8000C5E21 /* MEGAInputToolbar.m in Sources */,
 				41ADA9F21ADE7AC100641BB4 /* HelpTableViewController.m in Sources */,
-				41E88F101CF451B000BD3B79 /* MWTapDetectingImageView.m in Sources */,
 				A8F5D67D1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m in Sources */,
 				4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */,
+				77F43DD92034637300AE4F42 /* UICollectionView+MNZCategory.m in Sources */,
 				41EAAE461D06B49400622FAF /* NSBundle+CTAssetsPickerController.m in Sources */,
 				A85740C42032F6B80033034C /* MOChatDraft+CoreDataProperties.m in Sources */,
 				413199791BD7BD5D002CD6EA /* DTTimePeriod.m in Sources */,
@@ -3492,12 +3327,12 @@
 				41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */,
 				41D21E6A1D01AEC3002E6296 /* CTAssetsPageView.m in Sources */,
 				41A6029A1A8A5D11001AE538 /* CameraUploads.m in Sources */,
-				41E88F0B1CF451B000BD3B79 /* MWCaptionView.m in Sources */,
 				E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */,
 				A8C262AD1FA1D85E006172CE /* MEGARemoteImageView.m in Sources */,
 				E8CA8AB11DF17F7500C205DE /* ContactDetailsViewController.m in Sources */,
 				5B8499091F13DBCE0034A36E /* MEGAAssetsPickerController.m in Sources */,
 				41D21E5E1D01AEC3002E6296 /* CTAssetItemViewController.m in Sources */,
+				77D9A5712023814800B48470 /* MEGAStartDownloadTransferDelegate.m in Sources */,
 				5BD4A0211F838606000E24E6 /* ViewFrameAccessor.m in Sources */,
 				417279501DB663FA001AC818 /* JSQMessagesCollectionViewCell.m in Sources */,
 				5B48F8031F4C73FE001E3A29 /* AchievementsViewController.m in Sources */,
@@ -3538,6 +3373,7 @@
 				94E62E1A1F3C5252003A8DEF /* LanguageTableViewController.m in Sources */,
 				5B7B4CA31EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m in Sources */,
 				A86FC4FC1EBB4999006053A6 /* MEGAPhotoMediaItem.m in Sources */,
+				77CAAAE3202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m in Sources */,
 				E879DFDA1D12A31D009B74FD /* UIDevice+MNZCategory.m in Sources */,
 				41EAAE4A1D06B49400622FAF /* PHAsset+CTAssetsPickerController.m in Sources */,
 				41D21E6B1D01AEC3002E6296 /* CTAssetsPageViewController.m in Sources */,
@@ -3558,7 +3394,6 @@
 				E8F7917F1BC5754A00C58676 /* MEGAActivityItemProvider.m in Sources */,
 				A8EC55B41F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m in Sources */,
 				5B0062C61F3DBA16008B7A91 /* MyAccountHallTableViewCell.m in Sources */,
-				41E88F0D1CF451B000BD3B79 /* MWGridViewController.m in Sources */,
 				E8ED84DB1B010BDF008FCDDC /* CameraUploadsPopUpViewController.m in Sources */,
 				415226931A692ECC00EC7BB6 /* LoginViewController.m in Sources */,
 				419A02751DACE848000B9DC9 /* ChatRoomCell.m in Sources */,
@@ -3569,7 +3404,6 @@
 				417279481DB663FA001AC818 /* JSQMediaItem.m in Sources */,
 				41A66D071AE7900F007D7E20 /* UpgradeTableViewController.m in Sources */,
 				4172794E1DB663FA001AC818 /* JSQMessagesCellTextView.m in Sources */,
-				41E88F111CF451B000BD3B79 /* MWTapDetectingView.m in Sources */,
 				4180727A1AA5BBA00078D950 /* MEGAReachabilityManager.m in Sources */,
 				41D21E611D01AEC3002E6296 /* CTAssetSelectionButton.m in Sources */,
 				5BD4A0221F838606000E24E6 /* ScrollViewFrameAccessor.m in Sources */,
@@ -3592,7 +3426,6 @@
 				E80620AB1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m in Sources */,
 				E8B519271AC9CD8000BB7324 /* TransferTableViewCell.m in Sources */,
 				4172793C1DB663FA001AC818 /* JSQMessagesBubbleImageFactory.m in Sources */,
-				41E88F121CF451B000BD3B79 /* MWZoomingScrollView.m in Sources */,
 				9437B93F1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m in Sources */,
 				41D14F711B8603AF0005A27A /* ProductDetailTableViewCell.m in Sources */,
 				E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */,
@@ -3620,7 +3453,6 @@
 				417840A01AC328A600713F3C /* ChangePasswordViewController.m in Sources */,
 				E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */,
 				E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */,
-				41E88F0E1CF451B000BD3B79 /* MWPhoto.m in Sources */,
 				5B39DAA21EF916D900BC2319 /* ChatAttachedContactsViewController.m in Sources */,
 				5BB50E091F20E840000CA24D /* MEGACreateFolderRequestDelegate.m in Sources */,
 				A81AD7391F3099F800CA4059 /* MEGAProcessAsset.m in Sources */,
@@ -3635,6 +3467,7 @@
 				5B5B4FFF1E681BAC00DBEB3B /* UIFont+MNZCategory.m in Sources */,
 				417B5AAF1DEC792400A193D5 /* MOUser.m in Sources */,
 				41D1E0BB1B58F0B800982830 /* MOOfflineNode.m in Sources */,
+				77CAAAE0202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m in Sources */,
 				41EAAE4C1D06B49400622FAF /* PHImageManager+CTAssetsPickerController.m in Sources */,
 				A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */,
 				41EAAE4E1D06B49400622FAF /* UIImage+CTAssetsPickerController.m in Sources */,
@@ -3645,7 +3478,6 @@
 				944B205D1EE55533003C967B /* UIAlertAction+MNZCategory.m in Sources */,
 				415DCF241BF48EFA00914A1E /* ContactRequestsViewController.m in Sources */,
 				4172794C1DB663FA001AC818 /* JSQPhotoMediaItem.m in Sources */,
-				41E88F0C1CF451B000BD3B79 /* MWGridCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3658,16 +3490,13 @@
 				9432294B1EDD9CE5007DB542 /* MEGAUser+MNZCategory.m in Sources */,
 				9456054B1EDD7AD70094EF0F /* LTHPasscodeViewController.m in Sources */,
 				944B205E1EE5C6C2003C967B /* LaunchViewController.m in Sources */,
-				9432293C1EDD88F5007DB542 /* MWCaptionView.m in Sources */,
 				942255091EDC04CD0074C51A /* DocumentPickerViewController.m in Sources */,
 				9456054D1EDD7DB20094EF0F /* RemoveLinkActivity.m in Sources */,
-				943229361EDD8898007DB542 /* MWPhotoBrowser.m in Sources */,
 				945605451EDD66DA0094EF0F /* UIFont+MNZCategory.m in Sources */,
 				943229401EDD8969007DB542 /* UIScrollView+EmptyDataSet.m in Sources */,
 				9456054F1EDD7DBD0094EF0F /* ShareFolderActivity.m in Sources */,
 				9432294F1EDD9CF6007DB542 /* UIImageView+MNZCategory.m in Sources */,
 				9456054A1EDD7AD70094EF0F /* LTHKeychainUtils.m in Sources */,
-				9432293D1EDD88F5007DB542 /* MWZoomingScrollView.m in Sources */,
 				945605481EDD6F9B0094EF0F /* MEGAReachabilityManager.m in Sources */,
 				943229341EDD8823007DB542 /* MEGANavigationController.m in Sources */,
 				5BA81EA41FC30C9A00C8146C /* MEGAShareRequestDelegate.m in Sources */,
@@ -3693,7 +3522,6 @@
 				5BFA34711FAC5BFB005BFC4E /* MEGARemoveRequestDelegate.m in Sources */,
 				94624CFF1F50518900D52504 /* MEGABaseRequestDelegate.m in Sources */,
 				945605501EDD7DD10094EF0F /* MEGAActivityItemProvider.m in Sources */,
-				943229391EDD88CD007DB542 /* MWGridCell.m in Sources */,
 				9456053B1EDD52C00094EF0F /* SVProgressHUD.m in Sources */,
 				945605511EDD7DF70094EF0F /* PhotoCollectionViewCell.m in Sources */,
 				944DF2BD1EF9379E007798DD /* MEGALogger.m in Sources */,
@@ -3701,8 +3529,6 @@
 				945605391EDD52C00094EF0F /* SVIndefiniteAnimatedView.m in Sources */,
 				94C9D7571FBDC87C008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */,
 				943229371EDD88B1007DB542 /* SaveToCameraRollActivity.m in Sources */,
-				943229381EDD88BE007DB542 /* MWGridViewController.m in Sources */,
-				9432293E1EDD8903007DB542 /* MWTapDetectingImageView.m in Sources */,
 				945605401EDD65400094EF0F /* BrowserViewController.m in Sources */,
 				9456053E1EDD54F10094EF0F /* SAMKeychainQuery.m in Sources */,
 				9456053A1EDD52C00094EF0F /* SVRadialGradientLayer.m in Sources */,
@@ -3710,7 +3536,6 @@
 				943229231EDD845E007DB542 /* MEGAStore.m in Sources */,
 				945605421EDD65960094EF0F /* LocalizationSystem.m in Sources */,
 				5B2E78CE1FA0C3450096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
-				9432293F1EDD8903007DB542 /* MWTapDetectingView.m in Sources */,
 				94624CFD1F50517700D52504 /* MEGAExportRequestDelegate.m in Sources */,
 				9432294C1EDD9CE9007DB542 /* NSFileManager+MNZCategory.m in Sources */,
 			);
@@ -4028,7 +3853,6 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					iMEGA/Vendor/SSKeychain,
 					iMEGA/Vendor/PureLayout/PureLayout,
-					"iMEGA/Vendor/MWPhotoBrowser/**",
 					iMEGA/Vendor/Import,
 					iMEGA/Vendor/SDK/include,
 					iMEGA/Vendor/FrameAccessor,
@@ -4077,7 +3901,6 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					iMEGA/Vendor/SSKeychain,
 					iMEGA/Vendor/PureLayout/PureLayout,
-					"iMEGA/Vendor/MWPhotoBrowser/**",
 					iMEGA/Vendor/Import,
 					iMEGA/Vendor/SDK/include,
 					iMEGA/Vendor/FrameAccessor,
@@ -4118,7 +3941,6 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					iMEGA/Vendor/SSKeychain,
 					iMEGA/Vendor/PureLayout/PureLayout,
-					"iMEGA/Vendor/MWPhotoBrowser/**",
 					iMEGA/Vendor/Import,
 					iMEGA/Vendor/SDK/include,
 				);
@@ -4156,7 +3978,6 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					iMEGA/Vendor/SSKeychain,
 					iMEGA/Vendor/PureLayout/PureLayout,
-					"iMEGA/Vendor/MWPhotoBrowser/**",
 					iMEGA/Vendor/Import,
 					iMEGA/Vendor/SDK/include,
 				);
@@ -4204,7 +4025,6 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					iMEGA/Vendor/SSKeychain,
 					iMEGA/Vendor/PureLayout/PureLayout,
-					"iMEGA/Vendor/MWPhotoBrowser/**",
 					iMEGA/Vendor/Import,
 					iMEGA/Vendor/SDK/include,
 				);
@@ -4252,7 +4072,6 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					iMEGA/Vendor/SSKeychain,
 					iMEGA/Vendor/PureLayout/PureLayout,
-					"iMEGA/Vendor/MWPhotoBrowser/**",
 					iMEGA/Vendor/Import,
 					iMEGA/Vendor/SDK/include,
 				);
@@ -4299,7 +4118,6 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					iMEGA/Vendor/SSKeychain,
 					iMEGA/Vendor/PureLayout/PureLayout,
-					"iMEGA/Vendor/MWPhotoBrowser/**",
 					iMEGA/Vendor/Import,
 					iMEGA/Vendor/SDK/include,
 				);
@@ -4345,7 +4163,6 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					iMEGA/Vendor/SSKeychain,
 					iMEGA/Vendor/PureLayout/PureLayout,
-					"iMEGA/Vendor/MWPhotoBrowser/**",
 					iMEGA/Vendor/Import,
 					iMEGA/Vendor/SDK/include,
 				);

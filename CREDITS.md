@@ -84,17 +84,6 @@ https://github.com/rolandleth/LTHPasscodeViewController/blob/master/LICENSE.txt
 
 --------------------------------------------------------------------
 
-#### MWPhotoBrowser
-https://github.com/meganz/MWPhotoBrowser
-
-Copyright (c) 2010 Michael Waterfall <michaelwaterfall@gmail.com>
-
-###### License:
-The MIT License (MIT)
-
-https://github.com/mwaterfall/MWPhotoBrowser/blob/master/LICENSE
---------------------------------------------------------------------
-
 #### PieChart
 https://github.com/astrokin/PieChart
 

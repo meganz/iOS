@@ -1298,7 +1298,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     if (message.type == MEGAChatMessageTypeAttachment) {
         if (message.nodeList.size.unsignedIntegerValue == 1) {
             MEGANode *node = [message.nodeList nodeAtIndex:0];
-            if (node.name.mnz_isImagePathExtension) {
+            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 NSArray *reverseArray = [[[self.nodesLoaded reverseObjectEnumerator] allObjects] mutableCopy];
                 [node mnz_openImageInNavigationController:self.navigationController withNodes:reverseArray folderLink:NO displayMode:2 enableMoveToRubbishBin:NO];
             } else {
