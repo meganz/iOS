@@ -1,6 +1,6 @@
-#import <UIKit/UIKit.h>
+#import "MGSwipeTableCell.h"
 
-@interface NodeTableViewCell : UITableViewCell
+@interface NodeTableViewCell : MGSwipeTableCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *upImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *middleImageView;

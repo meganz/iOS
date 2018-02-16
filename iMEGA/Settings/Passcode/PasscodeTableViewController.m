@@ -36,7 +36,7 @@
 
     self.biometricsLabel.text = @"Touch ID";
     
-    LAContext *context = [[LAContext alloc] init];;
+    LAContext *context = [[LAContext alloc] init];
     
     if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:nil]) {
         if (@available(iOS 11.0, *)) {

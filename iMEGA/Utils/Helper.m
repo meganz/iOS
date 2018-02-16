@@ -752,6 +752,10 @@ static MEGAIndexer *indexer;
         } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
             PhotoCollectionViewCell *photoCollectionViewCell = cell;
             [photoCollectionViewCell.thumbnailImageView setImage:[Helper imageForNode:node]];
+        } else if ([cell isKindOfClass:UICollectionReusableView.class]) {
+            UICollectionReusableView *headerAction = cell;
+            UIImageView *imageView = [headerAction viewWithTag:100];
+            imageView.image = [Helper imageForNode:node];
         }
     }
 }
@@ -767,6 +771,10 @@ static MEGAIndexer *indexer;
         [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
         photoCollectionViewCell.thumbnailPlayImageView.hidden = !node.name.mnz_videoPathExtension;
         photoCollectionViewCell.thumbnailVideoOverlayView.hidden = !(node.name.mnz_videoPathExtension && node.duration>-1);
+    } else if ([cell isKindOfClass:[UICollectionReusableView class]]) {
+        UICollectionReusableView *headerAction = cell;
+        UIImageView *imageView = [headerAction viewWithTag:100];
+        imageView.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
     }
     
     if (reindex) {

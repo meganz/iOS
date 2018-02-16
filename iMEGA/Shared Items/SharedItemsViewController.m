@@ -16,8 +16,9 @@
 #import "ContactsViewController.h"
 #import "DetailsNodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"
+#import "CustomActionViewController.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate> {
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
 }
@@ -352,6 +353,45 @@
     return self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : self.sharedItemsSegmentedControl.selectedSegmentIndex == 0 ? [self.incomingNodesMutableArray objectAtIndex:indexPath.row] : [self.outgoingNodesMutableArray objectAtIndex:indexPath.row];
 }
 
+- (void)showNodeDetails:(MEGANode *)node {
+    MEGAShare *share = nil;
+    switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
+        case 0: { //Incoming
+            for (NSUInteger i = 0; i < self.incomingShareList.size.unsignedIntegerValue; i++) {
+                MEGAShare *s = [self.incomingShareList shareAtIndex:i];
+                if (s.nodeHandle == node.handle) {
+                    share = s;
+                    break;
+                }
+            }
+            break;
+        }
+            
+        case 1: { //Outgoing
+            for (NSUInteger i = 0; i < self.outgoingSharesMutableArray.count; i++) {
+                MEGAShare *s = self.outgoingSharesMutableArray[i];
+                if (s.nodeHandle == node.handle) {
+                    share = s;
+                    break;
+                }
+            }
+            break;
+        }
+    }
+    
+    DetailsNodeInfoViewController *detailsNodeInfoVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
+    detailsNodeInfoVC.displayMode = DisplayModeSharedItem;
+    
+    NSString *email = share.user;
+    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
+    
+    detailsNodeInfoVC.userName = user.mnz_fullName ? user.mnz_fullName : email;
+    detailsNodeInfoVC.email    = email;
+    detailsNodeInfoVC.node     = node;
+    
+    [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
+}
+
 #pragma mark - Utils
 
 - (void)selectSegment:(NSUInteger)index {
@@ -374,21 +414,21 @@
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+
     [super setEditing:editing animated:animated];
     
     [self.tableView setEditing:editing animated:animated];
     
     if (editing) {
-        [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
         if (!isSwipeEditing) {
+            [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
             self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+            [self.toolbar setAlpha:0.0];
+            [self.tabBarController.tabBar addSubview:self.toolbar];
+            [UIView animateWithDuration:0.33f animations:^ {
+                [self.toolbar setAlpha:1.0];
+            }];
         }
-        
-        [self.toolbar setAlpha:0.0];
-        [self.tabBarController.tabBar addSubview:self.toolbar];
-        [UIView animateWithDuration:0.33f animations:^ {
-            [self.toolbar setAlpha:1.0];
-        }];
     } else {
         [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
         allNodesSelected = NO;
@@ -521,43 +561,20 @@
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     
     MEGANode *node = [self nodeAtIndexPath:indexPath];
-    MEGAShare *share = nil;
-    switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
-        case 0: { //Incoming
-            for (NSUInteger i=0; i<[self.incomingShareList.size unsignedIntegerValue]; i++) {
-                MEGAShare *s = [self.incomingShareList shareAtIndex:i];
-                if (s.nodeHandle == node.handle) {
-                    share = s;
-                    break;
-                }
-            }
-            break;
-        }
-            
-        case 1: { //Outgoing
-            for (NSUInteger i=0; i<self.outgoingSharesMutableArray.count; i++) {
-                MEGAShare *s = self.outgoingSharesMutableArray[i];
-                if (s.nodeHandle == node.handle) {
-                    share = s;
-                    break;
-                }
-            }
-            break;
-        }
+    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
+    actionController.node = node;
+    actionController.displayMode = DisplayModeSharedItem;
+    actionController.actionDelegate = self;
+    if ([[UIDevice currentDevice] iPadDevice]) {
+        actionController.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
+        popController.delegate = actionController;
+        popController.sourceView = sender;
+        popController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
+    } else {
+        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }
-    
-    DetailsNodeInfoViewController *detailsNodeInfoVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
-    [detailsNodeInfoVC setDisplayMode:DisplayModeSharedItem];
-    
-    NSString *email = [share user];
-    
-    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
-    
-    detailsNodeInfoVC.userName = user.mnz_fullName ? user.mnz_fullName : email;
-    detailsNodeInfoVC.email    = email;
-    detailsNodeInfoVC.node     = node;
-
-    [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
+    [self presentViewController:actionController animated:YES completion:nil];
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
@@ -798,26 +815,15 @@
     
     if (@available(iOS 11.0, *)) {
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
+    } else {
+        cell.delegate = self;
     }
     
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
-            case 0: { //Incoming
-                [self removeSelectedIncomingShares];
-                break;
-            }
-                
-            case 1: { //Outgoing
-                [self selectedSharesOfSelectedNodes];
-                [self removeSelectedOutgoingShares];
-                break;
-            }
-        }
-    }
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
 }
 
 #pragma mark - UITableViewDelegate
@@ -904,36 +910,34 @@
     [self setEditing:NO animated:YES];
 }
 
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+    
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = [self nodeAtIndexPath:indexPath];
-    
-    self.selectedNodesMutableArray = [[NSMutableArray alloc] init];
-    if (node != nil) {
-        [self.selectedNodesMutableArray addObject:node];
-    }
-    
-    [self toolbarItemsSetEnabled:YES];
-    
     isSwipeEditing = YES;
-    
-    return UITableViewCellEditingStyleDelete;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *titleForDeleteConfirmationButton;
-    switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
-        case 0: //Incoming
-            titleForDeleteConfirmationButton = AMLocalizedString(@"leaveFolder", @"Button title of the action that allows to leave a shared folder");
-            break;
-            
-        case 1: //Outgoing
-            titleForDeleteConfirmationButton = AMLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share");
-            break;
+    self.selectedNodesMutableArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+    if (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0) { //incoming
+        UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            [self leaveShareAction:nil];
+            [self setEditing:NO animated:YES];
+        }];
+        shareAction.image = [UIImage imageNamed:@"leaveShare"];
+        shareAction.backgroundColor = [UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1];
+        return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
+    } else { //outcoming
+        UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            [self removeShareAction:nil];
+            [self setEditing:NO animated:YES];
+        }];
+        shareAction.image = [UIImage imageNamed:@"removeShare"];
+        shareAction.backgroundColor = [UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1];
+        return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
     }
-    
-    return titleForDeleteConfirmationButton;
 }
 
+#pragma clang diagnostic pop
+    
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
@@ -1028,6 +1032,7 @@
         } else {
             [self setEditing:YES animated:YES];
             [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+            [self toolbarItemsForSharedItems];
             [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
         }
     }
@@ -1116,6 +1121,100 @@
 
 - (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
     [self reloadUI];
+}
+
+
+#pragma mark - Swipe Delegate
+
+- (BOOL)swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction {
+    if (direction == MGSwipeDirectionLeftToRight) {
+        return NO;
+    }
+    
+    return !self.isEditing;
+}
+
+- (NSArray *)swipeTableCell:(MGSwipeTableCell *)cell swipeButtonsForDirection:(MGSwipeDirection)direction
+             swipeSettings:(MGSwipeSettings *)swipeSettings expansionSettings:(MGSwipeExpansionSettings *)expansionSettings {
+    
+    swipeSettings.transition = MGSwipeTransitionDrag;
+    expansionSettings.buttonIndex = 0;
+    expansionSettings.expansionLayout = MGSwipeExpansionLayoutCenter;
+    expansionSettings.fillOnTrigger = NO;
+    expansionSettings.threshold = 2;
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    self.selectedNodesMutableArray = [[NSMutableArray alloc] initWithObjects:[self nodeAtIndexPath:indexPath], nil];
+    
+    if (direction == MGSwipeDirectionRightToLeft) {
+        if (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0) { //incoming
+            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"leaveShare"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+                [self leaveShareAction:nil];
+                return YES;
+            }];
+            [shareButton iconTintColor:[UIColor whiteColor]];
+            
+            return @[shareButton];
+        } else { //outcoming
+            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"removeShare"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+                [self removeShareAction:nil];
+                return YES;
+            }];
+            [shareButton iconTintColor:[UIColor whiteColor]];
+            
+            return @[shareButton];
+        }
+        
+    }
+    else {
+        return nil;
+    }
+}
+
+#pragma mark - CustomActionViewControllerDelegate
+
+- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node {
+    switch (action) {
+        case MegaNodeActionTypeDownload:
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
+            [node mnz_downloadNode];
+            break;
+            
+        case MegaNodeActionTypeCopy:
+            self.selectedNodesMutableArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+            [self copyAction:nil];
+            break;
+            
+        case MegaNodeActionTypeRename:
+            [node mnz_renameNodeInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeShare:
+            self.selectedNodesMutableArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+            [self shareAction:nil];
+            break;
+            
+        case MegaNodeActionTypeFileInfo:
+            [self showNodeDetails:node];
+            break;
+            
+        case MegaNodeActionTypeLeaveSharing:
+            [node mnz_leaveSharingInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeRemoveSharing:
+            [node mnz_removeSharing];
+            break;
+            
+        case MegaNodeActionTypeRemoveLink:
+        case MegaNodeActionTypeMove:
+        case MegaNodeActionTypeMoveToRubbishBin:
+        case MegaNodeActionTypeRemove:
+            break;
+            
+        default:
+            break;
+    }
 }
 
 @end

@@ -1,6 +1,6 @@
-#import <UIKit/UIKit.h>
+#import "MGSwipeTableCell.h"
 
-@interface SharedItemsTableViewCell : UITableViewCell
+@interface SharedItemsTableViewCell : MGSwipeTableCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;

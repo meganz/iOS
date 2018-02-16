@@ -4,6 +4,8 @@
 
 @implementation NodeTableViewCell
 
+#pragma mark - Private
+
 - (IBAction)cancelTransfer:(id)sender {
     NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:[MEGASdk base64HandleForHandle:self.nodeHandle]];
     if ([[MEGASdkManager sharedMEGASdk] transferByTag:transferTag.integerValue] != nil) {

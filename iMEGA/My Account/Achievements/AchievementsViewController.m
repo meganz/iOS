@@ -76,7 +76,7 @@
     
     NSString *stringFromByteCount;
     NSRange firstPartRange = NSMakeRange(0, 0);
-    NSRange secondPartRange  = NSMakeRange(0, 0);;
+    NSRange secondPartRange  = NSMakeRange(0, 0);
     
     stringFromByteCount = [self.byteCountFormatter stringFromByteCount:quota];
 

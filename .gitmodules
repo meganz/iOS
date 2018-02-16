@@ -49,3 +49,6 @@ url=https://github.com/meganz/CTAssetsPickerController.git
 [submodule "iMEGA/Vendor/FrameAccessor"]
 	path = iMEGA/Vendor/FrameAccessor
 	url = https://github.com/AlexDenisov/FrameAccessor.git
+[submodule "iMEGA/Vendor/MGSwipeTableCell"]
+	path = iMEGA/Vendor/MGSwipeTableCell
+	url = https://github.com/MortimerGoro/MGSwipeTableCell.git

@@ -25,7 +25,7 @@ static NSString *kModificationDate = @"kModificationDate";
 static NSString *kFileSize = @"kFileSize";
 static NSString *kisDirectory = @"kisDirectory";
 
-@interface OfflineTableViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UIAlertViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate> {
+@interface OfflineTableViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, MGSwipeTableCellDelegate> {
     NSString *previewDocumentPath;
     BOOL allItemsSelected;
     BOOL isSwipeEditing;
@@ -436,6 +436,46 @@ static NSString *kisDirectory = @"kisDirectory";
     return item;
 }
 
+- (BOOL)removeOfflineNodeCell:(NSString *)itemPath {
+    NSArray *offlinePathsOnFolderArray;
+    MOOfflineNode *offlineNode;
+    
+    BOOL isDirectory;
+    [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
+    if (isDirectory) {
+        if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] != 0) {
+            [self cancelPendingTransfersOnFolder:itemPath folderLink:NO];
+        }
+        if ([[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] != 0) {
+            [self cancelPendingTransfersOnFolder:itemPath folderLink:YES];
+        }
+        offlinePathsOnFolderArray = [self offlinePathOnFolder:itemPath];
+    }
+    
+    NSError *error = nil;
+    BOOL success = [ [NSFileManager defaultManager] removeItemAtPath:itemPath error:&error];
+    offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:itemPath]];
+    if (!success || error) {
+        [SVProgressHUD showErrorWithStatus:@""];
+        return NO;
+    } else {
+        if (isDirectory) {
+            for (NSString *localPathAux in offlinePathsOnFolderArray) {
+                offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:localPathAux];
+                if (offlineNode) {
+                    [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
+                }
+            }
+        } else {
+            if (offlineNode) {
+                [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
+            }
+        }
+        [self reloadUI];
+        return YES;
+    }
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -555,57 +595,11 @@ static NSString *kisDirectory = @"kisDirectory";
     if (@available(iOS 11.0, *)) {
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
         cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
+    } else {
+        cell.delegate = self;
     }
     
     return cell;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle==UITableViewCellEditingStyleDelete) {
-        OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-        NSString *itemPath = [[self currentOfflinePath] stringByAppendingPathComponent:[cell itemNameString]];
-        NSArray *offlinePathsOnFolderArray;
-        MOOfflineNode *offlineNode;
-        
-        BOOL isDirectory;
-        [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
-        if (isDirectory) {
-            if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] != 0) {
-                [self cancelPendingTransfersOnFolder:itemPath folderLink:NO];
-            }
-            if ([[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] != 0) {
-                [self cancelPendingTransfersOnFolder:itemPath folderLink:YES];
-            }
-            offlinePathsOnFolderArray = [self offlinePathOnFolder:itemPath];
-        }
-        
-        NSError *error = nil;
-        BOOL success = [ [NSFileManager defaultManager] removeItemAtPath:itemPath error:&error];
-        offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:itemPath]];
-        if (!success || error) {
-            [SVProgressHUD showErrorWithStatus:@""];
-            return;
-        } else {
-            if (isDirectory) {
-                for (NSString *localPathAux in offlinePathsOnFolderArray) {
-                    offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:localPathAux];
-                    if (offlineNode) {
-                        [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
-                    }
-                }
-            } else {
-                if (offlineNode) {
-                    [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
-                }
-            }
-            [self reloadUI];
-        }
-    }
-    [self setEditing:NO animated:YES];
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
 }
 
 #pragma mark - UITableViewDelegate
@@ -662,7 +656,6 @@ static NSString *kisDirectory = @"kisDirectory";
     }
 }
 
-
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
    
     if (tableView.isEditing) {
@@ -689,34 +682,20 @@ static NSString *kisDirectory = @"kisDirectory";
     }
 }
 
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSURL *fileURL = [[self itemAtIndexPath:indexPath] objectForKey:kPath];
-    
-    self.selectedItems = [[NSMutableArray alloc] init];
-    [self.selectedItems addObject:fileURL];
-    [self.deleteBarButtonItem setEnabled:YES];
-    [self.activityBarButtonItem setEnabled:![self isDirectorySelected]];
-    
-    isSwipeEditing = YES;
-    
-    return UITableViewCellEditingStyleDelete;
-}
-
-
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    
     [super setEditing:editing animated:animated];
     
     if (editing) {
-        [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
         if (!isSwipeEditing) {
+            [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
             self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+            [self.toolbar setAlpha:0.0];
+            [self.tabBarController.tabBar addSubview:self.toolbar];
+            [UIView animateWithDuration:0.33f animations:^ {
+                [self.toolbar setAlpha:1.0];
+            }];
         }
-        
-        [self.toolbar setAlpha:0.0];
-        [self.tabBarController.tabBar addSubview:self.toolbar];
-        [UIView animateWithDuration:0.33f animations:^ {
-            [self.toolbar setAlpha:1.0];
-        }];
     } else {
         [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
         allItemsSelected = NO;
@@ -741,6 +720,28 @@ static NSString *kisDirectory = @"kisDirectory";
     
     isSwipeEditing = NO;
 }
+
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+    isSwipeEditing = YES;
+    UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Share" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+        NSString *itemPath = [[self currentOfflinePath] stringByAppendingPathComponent:[cell itemNameString]];
+        [self removeOfflineNodeCell:itemPath];
+    }];
+    deleteAction.image = [UIImage imageNamed:@"delete"];
+    deleteAction.backgroundColor = [UIColor colorWithRed:0.94 green:0.22 blue:0.23 alpha:1];
+    return [UISwipeActionsConfiguration configurationWithActions:@[deleteAction]];
+}
+
+#pragma clang diagnostic pop
 
 #pragma mark - IBActions
 
@@ -802,12 +803,16 @@ static NSString *kisDirectory = @"kisDirectory";
         message = AMLocalizedString(@"removeItemsFromOffline", nil);
     }
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"remove", nil)
-                                                        message:message
-                                                       delegate:self
-                                              cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                              otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-    [alertView show];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"remove", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        for (NSURL *url in self.selectedItems) {
+            [self removeOfflineNodeCell:url.path];
+        }
+        [self reloadUI];
+        [self setEditing:NO animated:YES];
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (IBAction)sortByTapped:(UIBarButtonItem *)sender {
@@ -1000,53 +1005,6 @@ static NSString *kisDirectory = @"kisDirectory";
     return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:self.searchController.isActive];
 }
 
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        for (NSURL *url in self.selectedItems) {
-            
-            NSArray *offlinePathsOnFolderArray;
-            MOOfflineNode *offlineNode;
-            
-            BOOL isDirectory;
-            [[NSFileManager defaultManager] fileExistsAtPath:url.path isDirectory:&isDirectory];
-            if (isDirectory) {
-                if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] != 0) {
-                    [self cancelPendingTransfersOnFolder:url.path folderLink:NO];
-                }
-                if ([[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] != 0) {
-                    [self cancelPendingTransfersOnFolder:url.path folderLink:YES];
-                }
-                offlinePathsOnFolderArray = [self offlinePathOnFolder:url.path];
-            }
-            
-            NSError *error = nil;
-            BOOL success = [ [NSFileManager defaultManager] removeItemAtPath:url.path error:&error];
-            offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:url.path]];
-            if (!success || error) {
-                [SVProgressHUD showErrorWithStatus:@""];
-                return;
-            } else {
-                if (isDirectory) {
-                    for (NSString *localPathAux in offlinePathsOnFolderArray) {
-                        offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:localPathAux];
-                        if (offlineNode) {
-                            [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
-                        }
-                    }
-                } else {
-                    if (offlineNode) {
-                        [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
-                    }
-                }
-            }
-        }
-        [self reloadUI];
-        [self setEditing:NO animated:YES];
-    }
-}
-
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
@@ -1056,6 +1014,46 @@ static NSString *kisDirectory = @"kisDirectory";
     
     if ([transfer type] == MEGATransferTypeDownload) {
         [self reloadUI];
+    }
+}
+
+#pragma mark - Swipe Delegate
+
+- (BOOL)swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction {
+    if (self.isEditing) {
+        return NO;
+    }
+    
+    if (direction == MGSwipeDirectionLeftToRight) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (NSArray*)swipeTableCell:(MGSwipeTableCell*) cell swipeButtonsForDirection:(MGSwipeDirection)direction
+             swipeSettings:(MGSwipeSettings*) swipeSettings expansionSettings:(MGSwipeExpansionSettings*) expansionSettings {
+    
+    swipeSettings.transition = MGSwipeTransitionDrag;
+    expansionSettings.buttonIndex = 0;
+    expansionSettings.expansionLayout = MGSwipeExpansionLayoutCenter;
+    expansionSettings.fillOnTrigger = NO;
+    expansionSettings.threshold = 2;
+    
+    if (direction == MGSwipeDirectionRightToLeft) {
+        
+            MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:[UIColor colorWithRed:0.93 green:0.22 blue:0.23 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+                OfflineTableViewCell *offlineCell = (OfflineTableViewCell *)cell;
+                NSString *itemPath = [[self currentOfflinePath] stringByAppendingPathComponent:[offlineCell itemNameString]];
+                [self removeOfflineNodeCell:itemPath];
+                return YES;
+            }];
+            [deleteButton iconTintColor:[UIColor whiteColor]];
+            
+            return @[deleteButton];
+    }
+    else {
+        return nil;
     }
 }
 

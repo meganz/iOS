@@ -13,6 +13,14 @@
 
 #import "PreviewDocumentViewController.h"
 
+#import "MEGAReachabilityManager.h"
+
+#import "MEGAMoveRequestDelegate.h"
+#import "MEGARemoveRequestDelegate.h"
+#import "MEGAShareRequestDelegate.h"
+
+#import "UIApplication+MNZCategory.h"
+
 @implementation MEGANode (MNZCategory)
 
 - (void)mnz_openImageInNavigationController:(UINavigationController *)navigationController withNodes:(NSArray<MEGANode *> *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(NSUInteger)displayMode {
@@ -122,6 +130,208 @@
     [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
 }
 
+- (BOOL)mnz_downloadNode {
+    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self api:[MEGASdkManager sharedMEGASdk]];
+    if (!offlineNodeExist) {
+        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+            if (![Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:NO]) {
+                return NO;
+            } else {
+                [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:NO];
+                return YES;
+            }
+        } else {
+            return NO;
+        }
+    } else {
+        return YES;
+    }
+}
+
+- (void)mnz_renameNodeInViewController:(UIViewController *)viewController {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        UIAlertController *renameAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") message:AMLocalizedString(@"renameNodeMessage", @"Hint text to suggest that the user have to write the new name for the file or folder") preferredStyle:UIAlertControllerStyleAlert];
+        
+        [renameAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.delegate = self;
+            textField.text = self.name;
+            [textField addTarget:self action:@selector(renameAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        }];
+        
+        [renameAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        
+        UIAlertAction *renameAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                UITextField *alertViewTextField = renameAlertController.textFields.firstObject;
+                [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text];
+            }
+        }];
+        renameAlertAction.enabled = NO;
+        [renameAlertController addAction:renameAlertAction];
+        
+        [viewController presentViewController:renameAlertController animated:YES completion:nil];
+    }
+}
+
+- (void)mnz_moveToTheRubbishBinInViewController:(UIViewController *)viewController {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        NSString *alertTitle = AMLocalizedString(@"moveToTheRubbishBin", @"Title for the action that allows you to 'Move to the Rubbish Bin' files or folders");
+        NSString *alertMessage = (self.type == MEGANodeTypeFolder) ? AMLocalizedString(@"moveFolderToRubbishBinMessage", @"Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder'") : AMLocalizedString(@"moveFileToRubbishBinMessage", @"Alert message to confirm if the user wants to move to the Rubbish Bin '1 file'");
+        
+        UIAlertController *moveRemoveLeaveAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+        
+        [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        
+        [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                void (^completion)(void) = ^{
+                    [viewController dismissViewControllerAnimated:YES completion:nil];
+                };
+                MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:completion];
+                [[MEGASdkManager sharedMEGASdk] moveNode:self newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode] delegate:moveRequestDelegate];
+            }
+        }]];
+        
+        [viewController presentViewController:moveRemoveLeaveAlertController animated:YES completion:nil];
+    }
+}
+
+- (void)mnz_removeInViewController:(UIViewController *)viewController {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        NSString *alertTitle = AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
+        NSString *alertMessage = (self.type == MEGANodeTypeFolder) ? AMLocalizedString(@"removeFolderToRubbishBinMessage", @"Alert message shown on the Rubbish Bin when you want to remove '1 folder'") : AMLocalizedString(@"removeFileToRubbishBinMessage", @"Alert message shown on the Rubbish Bin when you want to remove '1 file'");
+        
+        UIAlertController *moveRemoveLeaveAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+        
+        [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        
+        [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                void (^completion)(void) = ^{
+                    [viewController dismissViewControllerAnimated:YES completion:nil];
+                };
+                MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:1 files:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:completion];
+                [[MEGASdkManager sharedMEGASdk] removeNode:self delegate:removeRequestDelegate];
+            }
+        }]];
+        
+        [viewController presentViewController:moveRemoveLeaveAlertController animated:YES completion:nil];
+    }
+}
+
+- (void)mnz_leaveSharingInViewController:(UIViewController *)viewController {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        NSString *alertTitle = AMLocalizedString(@"leaveFolder", @"Button title of the action that allows to leave a shared folder");
+        NSString *alertMessage = AMLocalizedString(@"leaveShareAlertMessage", @"Alert message shown when the user tap on the leave share action for one inshare");
+        
+        UIAlertController *moveRemoveLeaveAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+        
+        [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        
+        [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                void (^completion)(void) = ^{
+                    [viewController dismissViewControllerAnimated:YES completion:nil];
+                };
+                MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:2 files:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:completion];
+                [[MEGASdkManager sharedMEGASdk] removeNode:self delegate:removeRequestDelegate];
+            }
+        }]];
+        
+        [viewController presentViewController:moveRemoveLeaveAlertController animated:YES completion:nil];
+    }
+}
+
+- (void)mnz_removeSharing {
+    NSMutableArray *outSharesForNodeMutableArray = [[NSMutableArray alloc] init];
+    
+    MEGAShareList *outSharesForNodeShareList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:self];
+    NSUInteger outSharesForNodeCount = outSharesForNodeShareList.size.unsignedIntegerValue;
+    for (NSInteger i = 0; i < outSharesForNodeCount; i++) {
+        MEGAShare *share = [outSharesForNodeShareList shareAtIndex:i];
+        if (share.user != nil) {
+            [outSharesForNodeMutableArray addObject:share];
+        }
+    }
+    
+    MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:outSharesForNodeMutableArray.count completion:nil];
+    for (MEGAShare *share in outSharesForNodeMutableArray) {
+        [[MEGASdkManager sharedMEGASdk] shareNode:self withEmail:share.user level:MEGAShareTypeAccessUnkown delegate:shareRequestDelegate];
+    }
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    NSString *nodeName = textField.text;
+    UITextPosition *beginning = textField.beginningOfDocument;
+    UITextRange *textRange;
+    
+    switch (self.type) {
+        case MEGANodeTypeFile: {
+            if ([nodeName.pathExtension isEqualToString:@""] && [nodeName isEqualToString:nodeName.stringByDeletingPathExtension]) { //File without extension
+                UITextPosition *end = textField.endOfDocument;
+                textRange = [textField textRangeFromPosition:beginning  toPosition:end];
+            } else {
+                NSRange filenameRange = [nodeName rangeOfString:@"." options:NSBackwardsSearch];
+                UITextPosition *beforeExtension = [textField positionFromPosition:beginning offset:filenameRange.location];
+                textRange = [textField textRangeFromPosition:beginning  toPosition:beforeExtension];
+            }
+            textField.selectedTextRange = textRange;
+            break;
+        }
+            
+        case MEGANodeTypeFolder: {
+            UITextPosition *end = textField.endOfDocument;
+            textRange = [textField textRangeFromPosition:beginning  toPosition:end];
+            [textField setSelectedTextRange:textRange];
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    BOOL shouldChangeCharacters = YES;
+    switch (self.type) {
+        case MEGANodeTypeFile:
+        case MEGANodeTypeFolder:
+            shouldChangeCharacters = YES;
+            break;
+            
+        default:
+            shouldChangeCharacters = NO;
+            break;
+    }
+    
+    return shouldChangeCharacters;
+}
+
+- (void)renameAlertTextFieldDidChange:(UITextField *)sender {
+    
+    UIAlertController *renameAlertController = (UIAlertController*)[UIApplication mnz_visibleViewController];
+    if (renameAlertController) {
+        UITextField *textField = renameAlertController.textFields.firstObject;
+        UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
+        BOOL enableRightButton = NO;
+        
+        NSString *newName = textField.text;
+        NSString *nodeNameString = self.name;
+        
+        if (self.isFile || self.isFolder) {
+            if ([newName isEqualToString:@""] || [newName isEqualToString:nodeNameString] || newName.mnz_isEmpty) {
+                enableRightButton = NO;
+            } else {
+                enableRightButton = YES;
+            }
+        }
+        
+        rightButtonAction.enabled = enableRightButton;
+    }
+}
+    
 - (void)mnz_copyToGalleryFromTemporaryPath:(NSString *)path {
     if (self.name.mnz_isVideoPathExtension && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(path)) {
         UISaveVideoAtPathToSavedPhotosAlbum(path, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
