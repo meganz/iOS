@@ -52,6 +52,7 @@
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         self.cellSize = [self.collectionView mnz_calculateCellSizeForInset:self.cellInset];
         [self.collectionView.collectionViewLayout invalidateLayout];
@@ -77,9 +78,9 @@
         cell.imageView.image = [Helper imageForNode:node];
         [self updateCollectionView:collectionView withThumbnailOfNode:node];
     }
-    // Video
+    
     if (node.name.mnz_isVideoPathExtension) {
-        cell.videoDurationLabel.text = node.duration>-1 ? [NSString mnz_stringFromTimeInterval:node.duration] : @"";
+        cell.videoDurationLabel.text = node.duration > -1 ? [NSString mnz_stringFromTimeInterval:node.duration] : @"";
         cell.videoOverlay.hidden = NO;
         cell.playView.hidden = NO;
     } else {
@@ -133,7 +134,7 @@
         }
     };
 
-    if([node hasThumbnail]) {
+    if (node.hasThumbnail) {
         MEGAGetThumbnailRequestDelegate *delegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:requestCompletion];
         NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
         [self.api getThumbnailNode:node destinationFilePath:path delegate:delegate];

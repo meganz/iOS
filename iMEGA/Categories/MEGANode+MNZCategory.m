@@ -144,10 +144,10 @@
 }
 
 - (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
-    if (!error) {
-        [[NSFileManager defaultManager] removeItemAtPath:videoPath error:nil];
-    } else {
+    if (error) {
         MEGALogError(@"Save video to Camera roll: %@ (Domain: %@ - Code:%ld)", error.localizedDescription, error.domain, error.code);
+    } else {
+        [[NSFileManager defaultManager] removeItemAtPath:videoPath error:nil];
     }
 }
 

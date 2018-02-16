@@ -199,10 +199,10 @@
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
-    if (scrollView.tag != 1) {
-        return scrollView.subviews.firstObject;
-    } else {
+    if (scrollView.tag == 1) {
         return nil;
+    } else {
+        return scrollView.subviews.firstObject;
     }
 }
 
@@ -212,7 +212,7 @@
         if (node.name.mnz_isImagePathExtension) {
             NSString *temporaryImagePath = [self temporatyPathForNode:node];
             if (![[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
-                [self setupNode:node forImageView:(UIImageView *)view withMode:MEGAPhotoModeFull];
+                [self setupNode:node forImageView:(UIImageView *)view withMode:MEGAPhotoModeOriginal];
             }
         } else {
             scrollView.subviews.lastObject.hidden = YES;
@@ -232,10 +232,10 @@
 #pragma mark - Getting the images
 
 - (void)loadNearbyImagesFromIndex:(NSUInteger)index {
-    if (self.mediaNodes.count>0) {
+    if (self.mediaNodes.count > 0) {
         NSUInteger initialIndex = index == 0 ? 0 : index-1;
-        NSUInteger finalIndex = index >= self.mediaNodes.count-1 ? self.mediaNodes.count-1 : index+1;
-        for (NSUInteger i = initialIndex; i<=finalIndex; i++) {
+        NSUInteger finalIndex = index >= self.mediaNodes.count - 1 ? self.mediaNodes.count - 1 : index + 1;
+        for (NSUInteger i = initialIndex; i <= finalIndex; i++) {
             MEGANode *node = [self.mediaNodes objectAtIndex:i];
             if ([self.imageViewsCache objectForKey:node.base64Handle]) {
                 continue;
@@ -272,7 +272,7 @@
             [zoomableView addSubview:imageView];
             
             if (node.name.mnz_isVideoPathExtension) {
-                UIButton *playButton = [[UIButton alloc] initWithFrame:CGRectMake((imageView.frame.size.width-self.playButtonSize)/2, (imageView.frame.size.height-self.playButtonSize)/2, self.playButtonSize, self.playButtonSize)];
+                UIButton *playButton = [[UIButton alloc] initWithFrame:CGRectMake((imageView.frame.size.width - self.playButtonSize) / 2, (imageView.frame.size.height - self.playButtonSize) / 2, self.playButtonSize, self.playButtonSize)];
                 [playButton setImage:[UIImage imageNamed:@"video_list"] forState:UIControlStateNormal];
                 playButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
                 playButton.contentVerticalAlignment = UIControlContentHorizontalAlignmentFill;
@@ -329,29 +329,29 @@
     
     switch (mode) {
         case MEGAPhotoModeThumbnail:
-            if([node hasThumbnail]) {
+            if (node.hasThumbnail) {
                 MEGAGetThumbnailRequestDelegate *delegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:requestCompletion];
                 NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
                 [self.api getThumbnailNode:node destinationFilePath:path delegate:delegate];
             } else {
-                [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeFull];
+                [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
             }
             
             break;
             
         case MEGAPhotoModePreview:
-            if([node hasPreview]) {
+            if (node.hasPreview) {
                 MEGAGetPreviewRequestDelegate *delegate = [[MEGAGetPreviewRequestDelegate alloc] initWithCompletion:requestCompletion];
                 NSString *path = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
                 [self.api getPreviewNode:node destinationFilePath:path delegate:delegate];
                 [self addActivityIndicatorToView:imageView];
             } else {
-                [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeFull];
+                [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
             }
             
             break;
             
-        case MEGAPhotoModeFull: {
+        case MEGAPhotoModeOriginal: {
             MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithProgress:transferProgress completion:transferCompletion];
             NSString *temporaryImagePath = [self temporatyPathForNode:node];
             [self.api startDownloadNode:node localPath:temporaryImagePath appData:@"generate_fa" delegate:delegate];
@@ -533,18 +533,18 @@
 #pragma mark - UIViewControllerTransitioningDelegate
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
-    if (!CGRectIsEmpty(self.originFrame)) {
-        return [[MEGAPhotoBrowserAnimator alloc] initWithMode:MEGAPhotoBrowserAnimatorModePresent originFrame:self.originFrame];
-    } else {
+    if (CGRectIsEmpty(self.originFrame)) {
         return nil;
+    } else {
+        return [[MEGAPhotoBrowserAnimator alloc] initWithMode:MEGAPhotoBrowserAnimatorModePresent originFrame:self.originFrame];
     }
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
-    if (!CGRectIsEmpty(self.originFrame)) {
-        return [[MEGAPhotoBrowserAnimator alloc] initWithMode:MEGAPhotoBrowserAnimatorModeDismiss originFrame:self.originFrame];
-    } else {
+    if (CGRectIsEmpty(self.originFrame)) {
         return nil;
+    } else {
+        return [[MEGAPhotoBrowserAnimator alloc] initWithMode:MEGAPhotoBrowserAnimatorModeDismiss originFrame:self.originFrame];
     }
 }
 

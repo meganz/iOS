@@ -6,7 +6,7 @@
 typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
     MEGAPhotoModeThumbnail = 0,
     MEGAPhotoModePreview,
-    MEGAPhotoModeFull
+    MEGAPhotoModeOriginal
 };
 
 @protocol MEGAPhotoBrowserDelegate
