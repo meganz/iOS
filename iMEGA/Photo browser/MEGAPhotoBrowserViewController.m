@@ -422,6 +422,10 @@
         activityViewController.popoverPresentationController.barButtonItem = sender;
     }
     
+    activityViewController.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
+        [self reloadUI];
+    };
+    
     [self presentViewController:activityViewController animated:YES completion:nil];
 }
 
@@ -448,8 +452,7 @@
         case UIGestureRecognizerStateCancelled: {
             if (ABS(verticalIncrement) > 50.0f) {
                 self.view.backgroundColor = [UIColor clearColor];
-                self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
-                self.navigationBar.hidden = self.toolbar.hidden = self.interfaceHidden = YES;
+                self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
                 [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 [UIView animateWithDuration:0.3 animations:^{
