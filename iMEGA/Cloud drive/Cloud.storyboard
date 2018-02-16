@@ -1766,9 +1766,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1HV-OI-YFL">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1HV-OI-YFL">
                                 <rect key="frame" x="0.0" y="628" width="414" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <items>
                                     <barButtonItem title="Disagree" id="3yM-Mt-swH" userLabel="Disagree">
@@ -1806,6 +1805,11 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Ww9-kQ-AA1" firstAttribute="top" secondItem="1HV-OI-YFL" secondAttribute="bottom" id="bjX-cD-8YN"/>
+                            <constraint firstItem="1HV-OI-YFL" firstAttribute="leading" secondItem="hnD-Vv-4wn" secondAttribute="leading" id="niE-bm-N3I"/>
+                            <constraint firstAttribute="trailing" secondItem="1HV-OI-YFL" secondAttribute="trailing" id="zis-wP-JN5"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Copyright Warning" id="uYa-3A-h7U" userLabel="Copyright Warning"/>
                     <nil key="simulatedBottomBarMetrics"/>
