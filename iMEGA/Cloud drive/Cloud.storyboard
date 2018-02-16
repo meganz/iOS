@@ -295,18 +295,26 @@
                                                 <constraint firstItem="4ro-Op-bYg" firstAttribute="centerY" secondItem="EMi-li-Ltt" secondAttribute="centerY" id="zki-u5-OTE"/>
                                             </constraints>
                                         </view>
+                                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="144-OX-zhZ">
+                                            <rect key="frame" x="0.0" y="57" width="414" height="2"/>
+                                            <color key="tintColor" red="0.94117647058823528" green="0.21568627450980393" blue="0.22745098039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </progressView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="EMi-li-Ltt" secondAttribute="trailing" id="10M-nJ-dmG"/>
+                                        <constraint firstAttribute="bottom" secondItem="144-OX-zhZ" secondAttribute="bottom" id="DQ8-Jq-SxH"/>
+                                        <constraint firstItem="144-OX-zhZ" firstAttribute="leading" secondItem="OBe-Lo-3gN" secondAttribute="leading" id="ECc-Vv-ypB"/>
                                         <constraint firstItem="EMi-li-Ltt" firstAttribute="leading" secondItem="OBe-Lo-3gN" secondAttribute="leading" id="R4B-qe-0hQ"/>
                                         <constraint firstAttribute="bottom" secondItem="EMi-li-Ltt" secondAttribute="bottom" id="aKh-UF-yd0"/>
                                         <constraint firstItem="EMi-li-Ltt" firstAttribute="top" secondItem="OBe-Lo-3gN" secondAttribute="top" id="nCF-eX-qIc"/>
+                                        <constraint firstAttribute="trailing" secondItem="144-OX-zhZ" secondAttribute="trailing" id="v3v-HJ-gGm"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="tintColor" red="0.0" green="0.74901960784313726" blue="0.6470588235294118" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="cancelButton" destination="Lwe-vA-2SA" id="sv4-o5-ueo"/>
                                     <outlet property="downImageView" destination="edw-94-97B" id="y7Q-bK-XmM"/>
+                                    <outlet property="downloadProgressView" destination="144-OX-zhZ" id="TaA-RU-y1e"/>
                                     <outlet property="downloadingArrowImageView" destination="By5-Ht-cmV" id="743-wA-rZ2"/>
                                     <outlet property="infoLabel" destination="YAt-yu-1FL" id="DdS-r1-Uwf"/>
                                     <outlet property="middleImageView" destination="1z8-YJ-EDi" id="l9k-h4-aFx"/>
