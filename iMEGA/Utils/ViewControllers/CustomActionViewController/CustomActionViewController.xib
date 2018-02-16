@@ -88,33 +88,19 @@
                         <constraint firstAttribute="width" relation="lessThanOrEqual" priority="999" constant="360" id="Cde-cf-hJ0"/>
                     </constraints>
                 </stackView>
-                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="687-UI-C6k">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <gestureRecognizers/>
-                </view>
             </subviews>
             <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="vYu-bp-31B" secondAttribute="bottom" constant="8" id="2sO-Mk-2tA"/>
                 <constraint firstItem="kfn-cn-egu" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="CdN-jr-7OW"/>
                 <constraint firstItem="kfn-cn-egu" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="E67-uQ-MEI"/>
-                <constraint firstItem="687-UI-C6k" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="FKd-Yu-gEs"/>
                 <constraint firstItem="vYu-bp-31B" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="G67-ql-ELU"/>
-                <constraint firstItem="687-UI-C6k" firstAttribute="bottom" secondItem="Q5M-cg-NOt" secondAttribute="bottom" id="XC9-Pe-SSw"/>
                 <constraint firstItem="kfn-cn-egu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="YZy-VH-pQ9"/>
                 <constraint firstItem="vYu-bp-31B" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" priority="998" constant="8" id="aye-Vx-4Ob"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="vYu-bp-31B" secondAttribute="trailing" priority="998" constant="8" id="b15-de-48b"/>
-                <constraint firstItem="687-UI-C6k" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="hL7-tL-Vvh"/>
-                <constraint firstItem="687-UI-C6k" firstAttribute="trailing" secondItem="Q5M-cg-NOt" secondAttribute="trailing" id="lsM-GN-rOZ"/>
                 <constraint firstItem="kfn-cn-egu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="wjP-fO-ydb"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
-            <variation key="default">
-                <mask key="subviews">
-                    <exclude reference="687-UI-C6k"/>
-                </mask>
-            </variation>
         </view>
         <tapGestureRecognizer id="eUn-O4-Dlv">
             <connections>

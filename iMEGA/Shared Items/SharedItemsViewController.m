@@ -815,9 +815,9 @@
     
     if (@available(iOS 11.0, *)) {
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
+    } else {
+        cell.delegate = self;
     }
-    
-    cell.delegate = self;
     
     return cell;
 }
@@ -910,6 +910,9 @@
     [self setEditing:NO animated:YES];
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+    
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = [self nodeAtIndexPath:indexPath];
     isSwipeEditing = YES;
@@ -933,6 +936,8 @@
     }
 }
 
+#pragma clang diagnostic pop
+    
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
@@ -1121,11 +1126,7 @@
 
 #pragma mark - Swipe Delegate
 
--(BOOL) swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction {
-    if (@available(iOS 11.0, *)) {
-        return NO;
-    }
-    
+- (BOOL)swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction {
     if (direction == MGSwipeDirectionLeftToRight) {
         return NO;
     }

@@ -268,8 +268,6 @@
                 isDownloaded = YES;
             }
         }
-    
-        cell.delegate = self;
 
         cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdk]];
     }
@@ -330,6 +328,8 @@
     if (@available(iOS 11.0, *)) {
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
         cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
+    } else {
+        cell.delegate = self;
     }
     
     [cell setEditing:self.isEditing];
@@ -441,6 +441,10 @@
     return [UISwipeActionsConfiguration configurationWithActions:@[downloadAction]];
 }
 
+    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+    
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     isSwipeEditing = YES;
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
@@ -456,6 +460,8 @@
     
     return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
 }
+    
+#pragma clang diagnostic pop
 
 #pragma mark - UIViewControllerPreviewingDelegate
 
@@ -1779,10 +1785,6 @@
 #pragma mark - Swipe Delegate
 
 - (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction {
-    if (@available(iOS 11.0, *)) {
-        return NO;
-    }
-    
     return !self.isEditing;
 }
 
