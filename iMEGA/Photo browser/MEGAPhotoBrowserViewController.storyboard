@@ -45,6 +45,12 @@
                                                 <action selector="didPressCloseButton:" destination="yD8-RT-K0O" id="y4q-pJ-tUt"/>
                                             </connections>
                                         </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Item" image="more" id="YVt-M3-aSH">
+                                            <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <connections>
+                                                <action selector="didPressActionsButton:" destination="yD8-RT-K0O" id="cLN-7K-Wry"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -98,6 +104,7 @@
                     </view>
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
+                        <outlet property="customActionsButton" destination="YVt-M3-aSH" id="YEr-Op-Iyv"/>
                         <outlet property="navigationBar" destination="FGv-7h-IkY" id="T9E-zi-bd6"/>
                         <outlet property="navigationItem" destination="u26-RZ-kaH" id="Kj4-LD-0cj"/>
                         <outlet property="pieChartView" destination="HQW-yX-2Zj" id="ee7-TH-eQk"/>
@@ -219,6 +226,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="more" width="26" height="6"/>
         <image name="openWith" width="24" height="24"/>
         <image name="thumbnailsView" width="24" height="24"/>
         <image name="video_list" width="22" height="22"/>

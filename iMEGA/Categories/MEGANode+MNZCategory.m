@@ -17,6 +17,7 @@
 
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGARemoveRequestDelegate.h"
+#import "MEGARenameRequestDelegate.h"
 #import "MEGAShareRequestDelegate.h"
 
 #import "UIApplication+MNZCategory.h"
@@ -149,6 +150,10 @@
 }
 
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController {
+    [self mnz_renameNodeInViewController:viewController completion:nil];
+}
+
+- (void)mnz_renameNodeInViewController:(UIViewController *)viewController completion:(void(^)(MEGARequest *request))completion {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         UIAlertController *renameAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") message:AMLocalizedString(@"renameNodeMessage", @"Hint text to suggest that the user have to write the new name for the file or folder") preferredStyle:UIAlertControllerStyleAlert];
         
@@ -163,7 +168,8 @@
         UIAlertAction *renameAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 UITextField *alertViewTextField = renameAlertController.textFields.firstObject;
-                [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text];
+                MEGARenameRequestDelegate *delegate = [[MEGARenameRequestDelegate alloc] initWithCompletion:completion];
+                [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text delegate:delegate];
             }
         }];
         renameAlertAction.enabled = NO;
