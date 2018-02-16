@@ -328,7 +328,7 @@
     NSUInteger section = 0;
     for (NSDictionary *sectionInArray in self.photosByMonthYearArray) {
         NSUInteger item = 0;
-        NSArray *nodesInSection = [sectionInArray objectForKey:[[sectionInArray allKeys] objectAtIndex:0]];
+        NSArray *nodesInSection = [sectionInArray objectForKey:[sectionInArray.allKeys objectAtIndex:0]];
         for (MEGANode *n in nodesInSection) {
             if (n.handle == node.handle) {
                 return [NSIndexPath indexPathForItem:item inSection:section];
@@ -337,6 +337,7 @@
         }
         section++;
     }
+    
     return nil;
 }
 
@@ -521,7 +522,7 @@
     cell.thumbnailSelectionOverlayView.layer.borderWidth = 2.0;
     cell.thumbnailSelectionOverlayView.hidden = [self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]] == nil;
 
-    if (node.name.mnz_videoPathExtension && node.duration>-1) {
+    if (node.name.mnz_videoPathExtension && node.duration > -1) {
         cell.thumbnailVideoDurationLabel.text = [NSString mnz_stringFromTimeInterval:node.duration];
     }
     
@@ -603,8 +604,7 @@
         UICollectionViewCell *cell = [self collectionView:collectionView cellForItemAtIndexPath:indexPath];
         CGRect cellFrame = [collectionView convertRect:cell.frame toView:nil];
         
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
-        MEGAPhotoBrowserViewController *photoBrowserViewController = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
+        MEGAPhotoBrowserViewController *photoBrowserViewController = [[UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil] instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
         photoBrowserViewController.api = [MEGASdkManager sharedMEGASdk];
         photoBrowserViewController.node = node;
         photoBrowserViewController.nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];

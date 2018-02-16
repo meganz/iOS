@@ -27,7 +27,11 @@
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if (!error.type && self.completion) {
+    if (error.type) {
+        return;
+    }
+    
+    if (self.completion) {
         self.completion(transfer);
     }
 }
