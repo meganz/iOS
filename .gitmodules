@@ -52,3 +52,6 @@ url=https://github.com/meganz/CTAssetsPickerController.git
 [submodule "iMEGA/Vendor/MGSwipeTableCell"]
 	path = iMEGA/Vendor/MGSwipeTableCell
 	url = https://github.com/MortimerGoro/MGSwipeTableCell.git
+[submodule "iMEGA/Vendor/SDAVAssetExportSession"]
+	path = iMEGA/Vendor/SDAVAssetExportSession
+	url = https://github.com/rs/SDAVAssetExportSession.git
