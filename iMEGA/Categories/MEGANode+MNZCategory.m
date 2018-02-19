@@ -367,4 +367,16 @@
     }
 }
 
+- (BOOL)hasVersions {
+    return [[MEGASdkManager sharedMEGASdk] hasVersionsForNode:self];
+}
+
+- (NSInteger)numberOfVersions {
+    if ([self hasVersions]) {
+        return [[MEGASdkManager sharedMEGASdk] numberOfVersionsForNode:self];
+    } else {
+        return 0;
+    }
+}
+
 @end
