@@ -257,6 +257,9 @@
 		832E1026202B09AE00BDD30F /* NodeActionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832E1024202B09AE00BDD30F /* NodeActionCollectionViewCell.xib */; };
 		832E102A202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E1028202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.m */; };
 		832E102B202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832E1029202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.xib */; };
+		832E102F202CB8AE00BDD30F /* NodeInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E102E202CB8AE00BDD30F /* NodeInfoViewController.m */; };
+		832E1032202D8E6900BDD30F /* NodePropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E1031202D8E6900BDD30F /* NodePropertyTableViewCell.m */; };
+		832E1035202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E1034202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m */; };
 		834AD6052024694200D2527F /* MGSwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 834AD6012024694200D2527F /* MGSwipeButton.m */; };
 		834AD6062024694200D2527F /* MGSwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 834AD6032024694200D2527F /* MGSwipeTableCell.m */; };
 		834AD6072024697200D2527F /* MGSwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 834AD6012024694200D2527F /* MGSwipeButton.m */; };
@@ -1100,6 +1103,12 @@
 		832E1027202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeActionHeaderCollectionReusableView.h; sourceTree = "<group>"; };
 		832E1028202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeActionHeaderCollectionReusableView.m; sourceTree = "<group>"; };
 		832E1029202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NodeActionHeaderCollectionReusableView.xib; sourceTree = "<group>"; };
+		832E102D202CB8AE00BDD30F /* NodeInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeInfoViewController.h; sourceTree = "<group>"; };
+		832E102E202CB8AE00BDD30F /* NodeInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeInfoViewController.m; sourceTree = "<group>"; };
+		832E1030202D8E6900BDD30F /* NodePropertyTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodePropertyTableViewCell.h; sourceTree = "<group>"; };
+		832E1031202D8E6900BDD30F /* NodePropertyTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodePropertyTableViewCell.m; sourceTree = "<group>"; };
+		832E1033202DE10500BDD30F /* NodeTappablePropertyTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeTappablePropertyTableViewCell.h; sourceTree = "<group>"; };
+		832E1034202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeTappablePropertyTableViewCell.m; sourceTree = "<group>"; };
 		834AD6012024694200D2527F /* MGSwipeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSwipeButton.m; sourceTree = "<group>"; };
 		834AD6022024694200D2527F /* MGSwipeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeTableCell.h; sourceTree = "<group>"; };
 		834AD6032024694200D2527F /* MGSwipeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSwipeTableCell.m; sourceTree = "<group>"; };
@@ -1706,6 +1715,7 @@
 		415226681A692ECC00EC7BB6 /* Cloud drive */ = {
 			isa = PBXGroup;
 			children = (
+				832E102C202CB21700BDD30F /* Cells */,
 				E8F791731BC5754A00C58676 /* Activities */,
 				415226691A692ECC00EC7BB6 /* Cloud.storyboard */,
 				4152266A1A692ECC00EC7BB6 /* CloudDriveTableViewController.h */,
@@ -1724,6 +1734,8 @@
 				946B2D181F46E5B9009ED32C /* CopyrightWarningViewController.m */,
 				946B2D141F46E235009ED32C /* GetLinkTableViewController.h */,
 				946B2D151F46E235009ED32C /* GetLinkTableViewController.m */,
+				832E102D202CB8AE00BDD30F /* NodeInfoViewController.h */,
+				832E102E202CB8AE00BDD30F /* NodeInfoViewController.m */,
 			);
 			path = "Cloud drive";
 			sourceTree = "<group>";
@@ -2583,6 +2595,17 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		832E102C202CB21700BDD30F /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				832E1030202D8E6900BDD30F /* NodePropertyTableViewCell.h */,
+				832E1031202D8E6900BDD30F /* NodePropertyTableViewCell.m */,
+				832E1033202DE10500BDD30F /* NodeTappablePropertyTableViewCell.h */,
+				832E1034202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		834AD6002024692200D2527F /* MGSwipeTableCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -3309,6 +3332,7 @@
 				41D21E6C1D01AEC3002E6296 /* CTAssetsPickerAccessDeniedView.m in Sources */,
 				41A66D0D1AE7A0FE007D7E20 /* ProductTableViewCell.m in Sources */,
 				E8E3E6F91E0939BE00D45F45 /* MEGAOpenMessageHeaderView.m in Sources */,
+				832E1035202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m in Sources */,
 				41EAAE481D06B49400622FAF /* NSIndexSet+CTAssetsPickerController.m in Sources */,
 				A8AA4F7A1ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m in Sources */,
 				41AC2AC01AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m in Sources */,
@@ -3477,6 +3501,7 @@
 				4180727A1AA5BBA00078D950 /* MEGAReachabilityManager.m in Sources */,
 				41D21E611D01AEC3002E6296 /* CTAssetSelectionButton.m in Sources */,
 				5BD4A0221F838606000E24E6 /* ScrollViewFrameAccessor.m in Sources */,
+				832E102F202CB8AE00BDD30F /* NodeInfoViewController.m in Sources */,
 				417279431DB663FA001AC818 /* JSQMessagesCollectionViewFlowLayout.m in Sources */,
 				4172794A1DB663FA001AC818 /* JSQMessagesAvatarImage.m in Sources */,
 				417279461DB663FA001AC818 /* JSQAudioMediaItem.m in Sources */,
@@ -3511,6 +3536,7 @@
 				41CD14701DB150F600E545BC /* MessagesViewController.m in Sources */,
 				A8F6C5F31FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m in Sources */,
 				413199771BD7BD5D002CD6EA /* DTConstants.m in Sources */,
+				832E1032202D8E6900BDD30F /* NodePropertyTableViewCell.m in Sources */,
 				4172795A1DB663FA001AC818 /* JSQMessagesMediaPlaceholderView.m in Sources */,
 				415E690A1DABCDF90043B75F /* ChatRoomsViewController.m in Sources */,
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,

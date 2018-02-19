@@ -42,6 +42,8 @@
 
 #import "CustomActionViewController.h"
 
+#import "NodeInfoViewController.h"
+
 @interface CloudDriveTableViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate> {
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
@@ -1268,12 +1270,15 @@
 }
 
 - (void)showNodeDetails:(MEGANode *)node {
-    DetailsNodeInfoViewController *detailsNodeInfoVC = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
-    detailsNodeInfoVC.node = node;
-    detailsNodeInfoVC.displayMode = self.displayMode;
-    detailsNodeInfoVC.incomingShareChildView = self.isIncomingShareChildView;
-    
-    [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
+    UINavigationController *nodeInfoNavigation = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfo"];
+    NodeInfoViewController *nodeInfoVC = (NodeInfoViewController*)[nodeInfoNavigation.viewControllers firstObject];
+    nodeInfoVC.node = node;
+    [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
+//    DetailsNodeInfoViewController *detailsNodeInfoVC = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
+//    [detailsNodeInfoVC setNode:node];
+//    [detailsNodeInfoVC setDisplayMode:self.displayMode];
+//    detailsNodeInfoVC.incomingShareChildView = self.isIncomingShareChildView;
+//    [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
 }
 
 #pragma mark - IBActions
