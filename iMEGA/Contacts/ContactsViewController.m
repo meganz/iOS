@@ -22,6 +22,7 @@
 #import "UIImageView+MNZCategory.h"
 
 #import "ContactDetailsViewController.h"
+#import "ContactLinkQRViewController.h"
 #import "ContactTableViewCell.h"
 #import "ShareFolderActivity.h"
 
@@ -593,6 +594,13 @@
     }];
     [addFromContactsAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [addContactAlertController addAction:addFromContactsAlertAction];
+    
+    UIAlertAction *scanCodeAlertAction = [UIAlertAction actionWithTitle:@"Scan Code" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
+        [self.navigationController pushViewController:contactLinkVC animated:YES];
+    }];
+    [scanCodeAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [addContactAlertController addAction:scanCodeAlertAction];
     
     addContactAlertController.modalPresentationStyle = UIModalPresentationPopover;
     if (self.addBarButtonItem) {
