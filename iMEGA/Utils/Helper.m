@@ -814,9 +814,12 @@ static MEGAIndexer *indexer;
 }
 
 + (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray button:(UIBarButtonItem *)shareBarButtonItem {
+    return [self activityViewControllerForNodes:nodesArray sender:shareBarButtonItem];
+}
+
++ (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id)sender {
     totalOperations = nodesArray.count;
     
-    UIActivityViewController *activityVC;
     NSMutableArray *activityItemsMutableArray = [[NSMutableArray alloc] init];
     NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
     
@@ -827,6 +830,7 @@ static MEGAIndexer *indexer;
     [Helper setCopyToPasteboard:NO];
     
     NodesAre nodesAre = [Helper checkPropertiesForSharingNodes:nodesArray];
+    
     
     BOOL allNodesExistInOffline = NO;
     NSMutableArray *filesURLMutableArray;
@@ -852,7 +856,7 @@ static MEGAIndexer *indexer;
         }
         
         if (nodesArray.count == 1) {
-            OpenInActivity *openInActivity = [[OpenInActivity alloc] initOnBarButtonItem:shareBarButtonItem];
+            OpenInActivity *openInActivity = [[OpenInActivity alloc] initOnView:sender];
             [activitiesMutableArray addObject:openInActivity];
         }
     } else {
@@ -876,9 +880,16 @@ static MEGAIndexer *indexer;
         [activitiesMutableArray addObject:removeSharingActivity];
     }
     
-    activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItemsMutableArray applicationActivities:activitiesMutableArray];
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItemsMutableArray applicationActivities:activitiesMutableArray];
     [activityVC setExcludedActivityTypes:excludedActivityTypesMutableArray];
-    [activityVC.popoverPresentationController setBarButtonItem:shareBarButtonItem];
+    
+    if ([[sender class] isEqual:[UIBarButtonItem class]]) {
+        activityVC.popoverPresentationController.barButtonItem = sender;
+    }else {
+        UIView *presentationView = (UIView*)sender;
+        activityVC.popoverPresentationController.sourceView = presentationView;
+        activityVC.popoverPresentationController.sourceRect = CGRectMake(0, 0, presentationView.frame.size.width/2, presentationView.frame.size.height/2);
+    }
     
     return activityVC;
 }

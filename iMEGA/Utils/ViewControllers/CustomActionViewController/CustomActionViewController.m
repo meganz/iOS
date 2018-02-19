@@ -127,7 +127,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [self fadeOutBackgroundCompletion:^{
         [self dismissViewControllerAnimated:YES completion:^{
-            [self.actionDelegate performAction:[self.actions objectAtIndex:indexPath.row].actionType inNode:self.node];
+            [self.actionDelegate performAction:[self.actions objectAtIndex:indexPath.row].actionType inNode:self.node fromSender:self.actionSender];
         }];
     }];
 }
