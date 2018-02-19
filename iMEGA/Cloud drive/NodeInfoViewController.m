@@ -7,9 +7,14 @@
 #import "NodeTappablePropertyTableViewCell.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGAExportRequestDelegate.h"
+#import "MEGANavigationController.h"
+
 #import "SVProgressHUD.h"
 #import "ContactsViewController.h"
 #import "GetLinkTableViewController.h"
+#import "CloudDriveTableViewController.h"
+#import "CustomActionViewController.h"
+#import "BrowserViewController.h"
 
 @interface MegaNodeProperty : NSObject
 
@@ -31,7 +36,7 @@
 
 @end
 
-@interface NodeInfoViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface NodeInfoViewController () <UITableViewDelegate, UITableViewDataSource, CustomActionViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
@@ -134,12 +139,16 @@
     switch (indexPath.section) {
         case 0:
             switch (indexPath.row) {
-                case 1:
-                    //TODO: open parent folder
+                case 1: {
+                    CloudDriveTableViewController *cdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                    [cdvc setParentNode:[[MEGASdkManager sharedMEGASdk] parentNodeForNode:self.node]];
+                    [self.navigationController pushViewController:cdvc animated:YES];
                     break;
+                }
                 default:
                     break;
             }
+            break;
         case 1:
             switch (indexPath.row) {
                 case 0:
@@ -225,6 +234,26 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)infoTouchUpInside:(UIButton *)sender {
+    
+    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
+    actionController.node = self.node;
+    actionController.displayMode = DisplayModeNodeInfo;
+    actionController.actionDelegate = self;
+    actionController.actionSender = sender;
+    
+    if ([[UIDevice currentDevice] iPadDevice]) {
+        actionController.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
+        popController.delegate = actionController;
+        popController.sourceView = sender;
+        popController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
+    } else {
+        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    }
+    [self presentViewController:actionController animated:YES completion:nil];
+}
+
 #pragma mark - Private
 
 - (NSArray<MegaNodeProperty *> *)nodePropertyCells {
@@ -308,6 +337,69 @@
     GetLinkTableViewController *getLinkTVC = getLinkNavigationController.childViewControllers[0];
     getLinkTVC.nodesToExport = @[self.node];
     [self presentViewController:getLinkNavigationController animated:YES completion:nil];
+}
+
+- (void)browserWithAction:(BrowserAction)action {
+    MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+    [self presentViewController:navigationController animated:YES completion:nil];
+    
+    BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+    browserVC.selectedNodesArray = @[self.node];
+    [browserVC setBrowserAction:action];
+}
+
+#pragma mark - CustomActionViewControllerDelegate
+
+- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender{
+    switch (action) {
+        case MegaNodeActionTypeDownload:
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+            [node mnz_downloadNode];
+            break;
+            
+        case MegaNodeActionTypeCopy:
+            [self browserWithAction:BrowserActionCopy];
+            break;
+            
+        case MegaNodeActionTypeMove:
+            [self browserWithAction:BrowserActionMove];
+            break;
+            
+        case MegaNodeActionTypeRename:
+            [node mnz_renameNodeInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeShare: {
+            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[self.node] sender:sender];
+            [self presentViewController:activityVC animated:YES completion:nil];
+        }
+            break;
+            
+        case MegaNodeActionTypeFileInfo:
+            break;
+            
+        case MegaNodeActionTypeLeaveSharing:
+            [node mnz_leaveSharingInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeRemoveLink:
+            break;
+            
+        case MegaNodeActionTypeMoveToRubbishBin:
+            [node mnz_moveToTheRubbishBinInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeRemove:
+            [node mnz_removeInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeRemoveSharing:
+            [node mnz_removeSharing];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 @end

@@ -72,7 +72,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="pYs-tw-MqB">
-                                                    <rect key="frame" x="110" y="32.333333333333336" width="297" height="14.333333333333336"/>
+                                                    <rect key="frame" x="60" y="32.333333333333336" width="297" height="14.333333333333336"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -126,7 +126,7 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s8l-oP-Zn8">
-                                                    <rect key="frame" x="110" y="12.333333333333336" width="297" height="18"/>
+                                                    <rect key="frame" x="60" y="12.333333333333336" width="297" height="18"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -217,7 +217,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="YAt-yu-1FL">
-                                                    <rect key="frame" x="129" y="32.333333333333336" width="278" height="14.333333333333336"/>
+                                                    <rect key="frame" x="79" y="32.333333333333336" width="278" height="14.333333333333336"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -270,7 +270,7 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ba8-9h-aHq">
-                                                    <rect key="frame" x="110" y="12.333333333333336" width="297" height="18"/>
+                                                    <rect key="frame" x="60" y="12.333333333333336" width="297" height="18"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -808,7 +808,7 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ycy-Ze-mmm">
-                                                    <rect key="frame" x="58" y="21" width="328" height="18"/>
+                                                    <rect key="frame" x="58" y="21" width="290" height="18"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -821,6 +821,20 @@
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="TMh-9W-YB7"/>
                                                     </constraints>
                                                 </view>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Baz-DZ-Xbc" userLabel="Info Button">
+                                                    <rect key="frame" x="356" y="8" width="46" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="44" id="1gb-yD-MBU"/>
+                                                        <constraint firstAttribute="width" constant="46" id="6R7-B7-9MC"/>
+                                                    </constraints>
+                                                    <color key="tintColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <state key="normal" image="more"/>
+                                                    <state key="selected" image="moreSelected"/>
+                                                    <state key="highlighted" image="moreSelected"/>
+                                                    <connections>
+                                                        <action selector="infoTouchUpInside:" destination="beR-bU-NFp" eventType="touchUpInside" id="yav-gn-vpy"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
@@ -831,10 +845,12 @@
                                                 <constraint firstItem="Ycy-Ze-mmm" firstAttribute="leading" secondItem="8C6-zG-1Xz" secondAttribute="trailing" constant="8" id="Ghm-nm-LKg"/>
                                                 <constraint firstAttribute="bottom" secondItem="fk1-c5-qj7" secondAttribute="bottom" id="Hq4-aM-zqF"/>
                                                 <constraint firstItem="fk1-c5-qj7" firstAttribute="leading" secondItem="1iO-8E-8dg" secondAttribute="leading" id="KDp-Ll-UBF"/>
+                                                <constraint firstAttribute="trailing" secondItem="Baz-DZ-Xbc" secondAttribute="trailing" constant="12" id="TLM-aI-lwK"/>
                                                 <constraint firstItem="eQf-Bm-KJS" firstAttribute="top" secondItem="1iO-8E-8dg" secondAttribute="top" id="WOD-be-7D6"/>
                                                 <constraint firstAttribute="trailing" secondItem="eQf-Bm-KJS" secondAttribute="trailing" id="WvF-lT-gEa"/>
                                                 <constraint firstItem="Ycy-Ze-mmm" firstAttribute="centerY" secondItem="1iO-8E-8dg" secondAttribute="centerY" id="brn-4D-nBV"/>
-                                                <constraint firstAttribute="trailing" secondItem="Ycy-Ze-mmm" secondAttribute="trailing" constant="28" id="qlO-Aq-9As"/>
+                                                <constraint firstItem="Baz-DZ-Xbc" firstAttribute="centerY" secondItem="1iO-8E-8dg" secondAttribute="centerY" id="jEJ-KT-N6S"/>
+                                                <constraint firstItem="Baz-DZ-Xbc" firstAttribute="leading" secondItem="Ycy-Ze-mmm" secondAttribute="trailing" constant="8" id="qlO-Aq-9As"/>
                                                 <constraint firstItem="eQf-Bm-KJS" firstAttribute="leading" secondItem="1iO-8E-8dg" secondAttribute="leading" id="tDY-mh-5Me"/>
                                             </constraints>
                                         </view>

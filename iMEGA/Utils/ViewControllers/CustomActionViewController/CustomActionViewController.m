@@ -181,7 +181,9 @@
         case MEGAShareTypeAccessRead:
         case MEGAShareTypeAccessReadWrite: {
             [actions addObject:[self actionDownload]];
-            [actions addObject:[self actionFileInfo]];
+            if (self.displayMode != DisplayModeNodeInfo) {
+                [actions addObject:[self actionFileInfo]];
+            }
             [actions addObject:[self actionCopy]];
             if (self.isIncomingShareChildView) {
                 [actions addObject:[self actionLeaveSharing]];
@@ -191,7 +193,9 @@
             
         case MEGAShareTypeAccessFull:
             [actions addObject:[self actionDownload]];
-            [actions addObject:[self actionFileInfo]];
+            if (self.displayMode != DisplayModeNodeInfo) {
+                [actions addObject:[self actionFileInfo]];
+            }
             [actions addObject:[self actionCopy]];
             [actions addObject:[self actionRename]];
             if (self.isIncomingShareChildView) {
@@ -200,10 +204,12 @@
             break;
             
         case MEGAShareTypeAccessOwner:
-            if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeRubbishBin) {
+            if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeRubbishBin || self.displayMode == DisplayModeNodeInfo) {
                 [actions addObject:[self actionShare]];
                 [actions addObject:[self actionDownload]];
-                [actions addObject:[self actionFileInfo]];
+                if (self.displayMode != DisplayModeNodeInfo) {
+                    [actions addObject:[self actionFileInfo]];
+                }
                 [actions addObject:[self actionCopy]];
                 [actions addObject:[self actionMove]];
                 [actions addObject:[self actionRename]];
@@ -218,7 +224,9 @@
             } else {
                 [actions addObject:[self actionShare]];
                 [actions addObject:[self actionDownload]];
-                [actions addObject:[self actionFileInfo]];
+                if (self.displayMode != DisplayModeNodeInfo) {
+                    [actions addObject:[self actionFileInfo]];
+                }
                 [actions addObject:[self actionCopy]];
                 [actions addObject:[self actionRename]];
                 [actions addObject:[self actionRemoveSharing]];
