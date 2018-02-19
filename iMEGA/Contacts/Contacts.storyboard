@@ -988,6 +988,52 @@
             </objects>
             <point key="canvasLocation" x="2334" y="-858"/>
         </scene>
+        <!--Contact LinkQR View Controller-->
+        <scene sceneID="W96-X9-4n1">
+            <objects>
+                <viewController storyboardIdentifier="ContactLinkQRViewControllerID" id="lRr-EZ-fCk" customClass="ContactLinkQRViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6GY-JJ-jXB"/>
+                        <viewControllerLayoutGuide type="bottom" id="RzH-fB-ztS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="l1U-26-tIN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vid-Qw-MNw">
+                                <rect key="frame" x="63" y="209" width="248" height="248"/>
+                                <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="248" id="eDR-4f-K8a"/>
+                                    <constraint firstAttribute="height" constant="248" id="spu-CN-Fam"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GWN-sM-tLO">
+                                <rect key="frame" x="150" y="296" width="74" height="74"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="74" id="LRg-Ki-0He"/>
+                                    <constraint firstAttribute="width" constant="74" id="eYm-VM-0ch"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="GWN-sM-tLO" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="CTp-8v-EIQ"/>
+                            <constraint firstItem="vid-Qw-MNw" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="IER-3L-Nfb"/>
+                            <constraint firstItem="GWN-sM-tLO" firstAttribute="centerY" secondItem="l1U-26-tIN" secondAttribute="centerY" id="WAb-LV-q0d"/>
+                            <constraint firstItem="vid-Qw-MNw" firstAttribute="centerY" secondItem="l1U-26-tIN" secondAttribute="centerY" id="bq7-UU-mdd"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="cTK-Ww-gUJ"/>
+                    <connections>
+                        <outlet property="avatarImageView" destination="GWN-sM-tLO" id="AF0-7A-jRQ"/>
+                        <outlet property="qrImageView" destination="vid-Qw-MNw" id="SvK-bV-L0F"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xXf-8Q-HHn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3078" y="-154"/>
+        </scene>
         <!--Verify Credentials View Controller-->
         <scene sceneID="XMA-q0-YdU">
             <objects>
@@ -1397,6 +1443,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aS7-pb-krh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3324" y="-1593"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="bn8-y8-bB4">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sq7-Ix-pnr" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="n3j-bR-RFi">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="lRr-EZ-fCk" kind="relationship" relationship="rootViewController" id="Gd0-MV-Xve"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jYj-PI-e6z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2334" y="-154"/>
         </scene>
     </scenes>
     <resources>
