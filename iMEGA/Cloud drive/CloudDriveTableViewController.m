@@ -448,8 +448,9 @@
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
     self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
 
-    UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        [self shareAction:nil];
+    UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Share" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+        [self presentViewController:activityVC animated:YES completion:nil];
         [self setEditing:NO animated:YES];
     }];
     shareAction.image = [UIImage imageNamed:@"shareGray"];
@@ -1587,6 +1588,8 @@
     actionController.displayMode = self.displayMode;
     actionController.incomingShareChildView = self.isIncomingShareChildView;
     actionController.actionDelegate = self;
+    actionController.actionSender = sender;
+    
     if ([[UIDevice currentDevice] iPadDevice]) {
         actionController.modalPresentationStyle = UIModalPresentationPopover;
         UIPopoverPresentationController *popController = [actionController popoverPresentationController];
@@ -1814,7 +1817,8 @@
     } else if (direction == MGSwipeDirectionRightToLeft) {
         
         MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"shareGray"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-            [self shareAction:nil];
+            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+            [self presentViewController:activityVC animated:YES completion:nil];
             return YES;
         }];
         [shareButton iconTintColor:[UIColor whiteColor]];
@@ -1827,7 +1831,7 @@
 
 #pragma mark - CustomActionViewControllerDelegate
 
-- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node {
+- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender{
     switch (action) {
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
@@ -1847,10 +1851,12 @@
         case MegaNodeActionTypeRename:
             [node mnz_renameNodeInViewController:self];
             break;
-            
-        case MegaNodeActionTypeShare:
+
+        case MegaNodeActionTypeShare: {
             self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
-            [self shareAction:nil];
+            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:sender];
+            [self presentViewController:activityVC animated:YES completion:nil];
+        }
             break;
             
         case MegaNodeActionTypeFileInfo:
