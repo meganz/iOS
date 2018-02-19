@@ -18,4 +18,9 @@
 - (void)mnz_removeSharing;
 - (void)mnz_copyToGalleryFromTemporaryPath:(NSString *)path;
 
+#pragma mark - Versions
+
+- (BOOL)hasVersions;
+- (NSInteger)numberOfVersions;
+
 @end
