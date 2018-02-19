@@ -113,11 +113,7 @@
             titleSection.text = AMLocalizedString(@"details", @"Label title header of node details").uppercaseString;
             break;
         case 1:
-            if (section == 1 && self.node.isExported) {
-                titleSection.text = AMLocalizedString(@"sharing", @"Label title header of node sharing").uppercaseString;
-            } else {
-                titleSection.text = AMLocalizedString(@"versions", @"Label title header of node details").uppercaseString;
-            }
+            titleSection.text = AMLocalizedString(@"sharing", @"Label title header of node sharing").uppercaseString;
             break;
         case 2:
             titleSection.text = AMLocalizedString(@"versions", @"Label title header of node versions").uppercaseString;
@@ -259,23 +255,25 @@
 - (NSArray<MegaNodeProperty *> *)nodePropertyCells {
     NSMutableArray<MegaNodeProperty *> *propertiesNode = [NSMutableArray new];
     
-    [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"size", @"Size of the file or folder you are sharing") value:[Helper sizeForNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
-    [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"location", @"localizar location") value:[NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] parentNodeForNode:self.node].name]]];
+    [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[Helper sizeForNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
+    [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"location", @"Title label of a node property.") value:[NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] parentNodeForNode:self.node].name]]];
     if (self.node.type == MEGANodeTypeFolder) {
-        if ([self.node isInShare]) {
-            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:@"localizar type" value:@"localizar folder incoming"]];
-        } else if ([self.node isOutShare]) {
-            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:@"localizar type" value:@"localizar folder outcomin"]];
+        if (self.node.isShared) {
+            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"type", @"Refers to the type of a file or folder.") value:AMLocalizedString(@"sharedFolder", @"Title of the incoming shared folders of a user in singular.")]];
+        }  else if ([[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:self.node] + [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:self.node] == 0){
+            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"type", @"Refers to the type of a file or folder.") value:AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files")]];
         } else {
-            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:@"localizar type" value:@"localizar folder"]];
+            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"type", @"Refers to the type of a file or folder.") value:AMLocalizedString(@"folder", nil)]];
         }
     } else {
-        [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:@"localizar type" value:@"de donde saco el tipo de archivo"]];
+        [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"type", @"Refers to the type of a file or folder.") value:@"de donde saco el tipo de archivo"]];
     }
-    [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:@"localizar created" value:[Helper dateWithISO8601FormatOfRawTime:self.node.creationTime.timeIntervalSince1970]]];
-    [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:@"localizar modified" value:[Helper dateWithISO8601FormatOfRawTime:self.node.modificationTime.timeIntervalSince1970]]];
+    [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"created", @"The label of the folder creation time.") value:[Helper dateWithISO8601FormatOfRawTime:self.node.creationTime.timeIntervalSince1970]]];
+    if (!self.node.isFolder) {
+        [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"modified", @"A label for any 'Modified' text or title.") value:[Helper dateWithISO8601FormatOfRawTime:self.node.modificationTime.timeIntervalSince1970]]];
+    }
     if (self.node.type == MEGANodeTypeFolder) {
-        [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:@"localizar contains" value:[Helper filesAndFoldersInFolderNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
+        [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"contains", @"Label for what a selection contains.") value:[Helper filesAndFoldersInFolderNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
     }
     
     return [propertiesNode copy];
@@ -284,7 +282,7 @@
 - (NodeTappablePropertyTableViewCell *)versionCellForIndexPath:(NSIndexPath *)indexPath {
     NodeTappablePropertyTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeTappablePropertyCell" forIndexPath:indexPath];
     cell.iconImageView.image = [UIImage imageNamed:@"versions"];
-    cell.titleLabel.text = [NSString stringWithFormat:@"%ld localizar Versiones", (long)[self.node numberOfVersions]];
+    cell.titleLabel.text = [AMLocalizedString(@"xVersions", @"Message to display the number of historical versions of files.") stringByReplacingOccurrencesOfString:@"[X]" withString: [NSString stringWithFormat:@"%ld",(long)[self.node numberOfVersions]]];
     return cell;
 }
 
@@ -293,7 +291,8 @@
     cell.iconImageView.image = [UIImage imageNamed:@"share"];
     if (self.node.isShared) {
         cell.titleLabel.text = AMLocalizedString(@"sharedWidth", @"Label title indicating the number of users having a node shared");
-        cell.subtitleLabel.text = [NSString stringWithFormat:@"%lu localizar users",(unsigned long)[self outSharesForNode:self.node].count];
+        NSString *usersString = [self outSharesForNode:self.node].count > 1 ? AMLocalizedString(@"users", @"used for example when a folder is shared with 2 or more users") : AMLocalizedString(@"user", @"user (singular) label indicating is receiving some info");
+        cell.subtitleLabel.text = [NSString stringWithFormat:@"%lu %@",(unsigned long)[self outSharesForNode:self.node].count, usersString];
         [cell.subtitleLabel setHidden:NO];
     } else {
         cell.titleLabel.text = AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected");
