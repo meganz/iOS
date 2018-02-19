@@ -132,6 +132,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"%@", indexPath);
     switch (indexPath.section) {
+        case 0:
+            switch (indexPath.row) {
+                case 1:
+                    //TODO: open parent folder
+                    break;
+                default:
+                    break;
+            }
         case 1:
             switch (indexPath.row) {
                 case 0:
@@ -184,6 +192,9 @@
         NodePropertyTableViewCell *propertyCell = [self.tableView dequeueReusableCellWithIdentifier:@"nodePropertyCell" forIndexPath:indexPath];
         propertyCell.keyLabel.text = [self.nodeProperties objectAtIndex:indexPath.row].title;
         propertyCell.valueLabel.text = [self.nodeProperties objectAtIndex:indexPath.row].value;
+        if (indexPath.row == 1) {
+            propertyCell.valueLabel.textColor = [UIColor mnz_green00BFA5];
+        }
         return propertyCell;
     } else if (indexPath.section == 1) {
         if (self.node.isFolder) {
@@ -220,6 +231,7 @@
     NSMutableArray<MegaNodeProperty *> *propertiesNode = [NSMutableArray new];
     
     [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"size", @"Size of the file or folder you are sharing") value:[Helper sizeForNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
+    [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"location", @"localizar location") value:[NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] parentNodeForNode:self.node].name]]];
     if (self.node.type == MEGANodeTypeFolder) {
         if ([self.node isInShare]) {
             [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:@"localizar type" value:@"localizar folder incoming"]];
