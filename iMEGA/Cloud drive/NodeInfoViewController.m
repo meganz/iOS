@@ -150,12 +150,10 @@
     switch (indexPath.section) {
         case 0:
             switch (indexPath.row) {
-                case 1: {
-                    CloudDriveTableViewController *cdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                    [cdvc setParentNode:[[MEGASdkManager sharedMEGASdk] parentNodeForNode:self.node]];
-                    [self.navigationController pushViewController:cdvc animated:YES];
+                case 1:
+                    [self showParentNode];
                     break;
-                }
+                
                 default:
                     break;
             }
@@ -361,6 +359,12 @@
 - (void)showShareActivityFromSender:(id)sender {
     UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[self.node] sender:sender];
     [self presentViewController:activityVC animated:YES completion:nil];
+}
+
+- (void)showParentNode {
+    if ([self.nodeInfoDelegate respondsToSelector:@selector(presentParentNode:inNavigation:)]) {
+        [self.nodeInfoDelegate presentParentNode:[[MEGASdkManager sharedMEGASdk] parentNodeForNode:self.node] inNavigation:self.navigationController];
+    }
 }
 
 #pragma mark - CustomActionViewControllerDelegate

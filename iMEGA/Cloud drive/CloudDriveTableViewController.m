@@ -44,7 +44,7 @@
 
 #import "NodeInfoViewController.h"
 
-@interface CloudDriveTableViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate> {
+@interface CloudDriveTableViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate> {
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
     
@@ -1274,6 +1274,7 @@
     UINavigationController *nodeInfoNavigation = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfo"];
     NodeInfoViewController *nodeInfoVC = (NodeInfoViewController*)[nodeInfoNavigation.viewControllers firstObject];
     nodeInfoVC.node = node;
+    nodeInfoVC.nodeInfoDelegate = self;
     [self.navigationController pushViewController:nodeInfoVC animated:YES];
 }
 
@@ -1882,4 +1883,35 @@
     }
 }
 
+#pragma mark - NodeInfoViewControllerDelegate
+
+- (void)presentParentNode:(MEGANode *)node inNavigation:(UINavigationController *)navigationController{
+    
+    NSMutableArray *nodes = node.mnz_parentNodes;
+    
+    [navigationController popToRootViewControllerAnimated:NO];
+    
+    for (MEGANode *node in nodes) {
+        CloudDriveTableViewController *cloudDriveTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+        cloudDriveTVC.parentNode = node;
+        [navigationController pushViewController:cloudDriveTVC animated:NO];
+    }
+
+    switch (node.type) {
+        case MEGANodeTypeFolder:
+        case MEGANodeTypeRubbish: {
+            CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveTVC.parentNode = node;
+            [navigationController pushViewController:cloudDriveTVC animated:NO];
+            break;
+        }
+            
+        case MEGANodeTypeFile:
+        default:
+            break;
+    }
+}
+
 @end
+
+
