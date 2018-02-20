@@ -36,7 +36,7 @@
 
 @end
 
-@interface NodeInfoViewController () <UITableViewDelegate, UITableViewDataSource, CustomActionViewControllerDelegate>
+@interface NodeInfoViewController () <UITableViewDelegate, UITableViewDataSource, CustomActionViewControllerDelegate, MEGADelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
@@ -53,11 +53,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [self configureView];
-    
-    self.nodeProperties = [self nodePropertyCells];
     
     self.exportDelegate = [[MEGAExportRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
         [SVProgressHUD dismiss];
@@ -67,23 +64,42 @@
     } multipleLinks:NO];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
+}
+
 #pragma mark - Layout
 
 - (void)configureView {
+    self.cancelBarButtonItem.title = AMLocalizedString(@"close", nil);
+    [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem];
+    
+    [self reloadUI];
+}
+
+- (void)reloadUI {
+    self.nodeProperties = [self nodePropertyCells];
+
     self.title = AMLocalizedString(@"info", nil);
     self.nameLabel.text = self.node.name;
-    if ([self.node type] == MEGANodeTypeFile) {
-        if ([self.node hasThumbnail]) {
+    if (self.node.type == MEGANodeTypeFile) {
+        if (self.node.hasThumbnail) {
             [Helper thumbnailForNode:self.node api:[MEGASdkManager sharedMEGASdk] cell:self.thumbnailImageView];
         } else {
             [self.thumbnailImageView setImage:[Helper imageForNode:self.node]];
         }
-    } else if ([self.node type] == MEGANodeTypeFolder) {
+    } else if (self.node.type == MEGANodeTypeFolder) {
         [self.thumbnailImageView setImage:[Helper imageForNode:self.node]];
     }
-    self.cancelBarButtonItem.title = AMLocalizedString(@"close", nil);
-    [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
-    self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem];
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - TableViewDelegate
@@ -218,7 +234,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     int sections = 2;
-    if ([self.node hasVersions]) {
+    if (self.node.hasVersions) {
         sections++;
     }
     return sections;
@@ -344,13 +360,14 @@
     
     BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
     browserVC.selectedNodesArray = @[self.node];
-    [browserVC setBrowserAction:action];
+    browserVC.browserAction = action;
 }
 
 #pragma mark - CustomActionViewControllerDelegate
 
 - (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender{
     switch (action) {
+            
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
             [node mnz_downloadNode];
@@ -399,6 +416,14 @@
         default:
             break;
     }
+}
+
+#pragma mark - MEGAGlobalDelegate
+
+- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
+    self.node = [nodeList nodeAtIndex:0];
+    
+    [self reloadUI];
 }
 
 @end
