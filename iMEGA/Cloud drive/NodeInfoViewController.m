@@ -170,8 +170,7 @@
                             contactsVC.node = self.node;
                             [self.navigationController pushViewController:contactsVC animated:YES];
                         } else {
-                            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[self.node] sender:self.thumbnailImageView];
-                            [self presentViewController:activityVC animated:YES completion:nil];
+                            [self showShareActivityFromSender:self.thumbnailImageView];
                         }
                     } else {
                         [self showManageLinkView];
