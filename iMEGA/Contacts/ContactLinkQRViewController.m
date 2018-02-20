@@ -3,11 +3,12 @@
 
 #import <AVKit/AVKit.h>
 
+#import "CustomModalAlertViewController.h"
 #import "MEGASdkManager.h"
 
 #import "UIImageView+MNZCategory.h"
 
-@interface ContactLinkQRViewController () <AVCaptureMetadataOutputObjectsDelegate>
+@interface ContactLinkQRViewController () <AVCaptureMetadataOutputObjectsDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 @property (weak, nonatomic) IBOutlet UIImageView *qrImageView;
@@ -16,6 +17,8 @@
 
 @property (nonatomic) AVCaptureSession *captureSession;
 @property (nonatomic) AVCaptureVideoPreviewLayer *videoPreviewLayer;
+
+@property (nonatomic) BOOL queryInProgress;
 
 @end
 
@@ -27,13 +30,10 @@
     [self.segmentedControl setTitle:@"My Code" forSegmentAtIndex:0];
     [self.segmentedControl setTitle:@"Scan Code" forSegmentAtIndex:1];
 
-    UIImage *qrImage = [self qrImageFromString:@"mega.nz" withSize:self.qrImageView.frame.size];
-    self.qrImageView.image = qrImage;
-    
-    [self setUserAvatar];
+    [[MEGASdkManager sharedMEGASdk] contactLinkCreateWithDelegate:self];
 }
 
-#pragma mark - QR
+#pragma mark - QR generation
 
 - (UIImage *)qrImageFromString:(NSString *)qrString withSize:(CGSize)size {
     NSData *qrData = [qrString dataUsingEncoding: NSISOLatin1StringEncoding];
@@ -68,9 +68,42 @@
     [self.avatarImageView mnz_setImageForUserHandle:myUser.handle];
 }
 
+#pragma mark - IBActions
+
+- (IBAction)valueChangedAtSegmentedControl:(UISegmentedControl *)sender {
+    switch (sender.selectedSegmentIndex) {
+        case 0:
+            [self stopRecognizingCodes];
+            self.view.backgroundColor = [UIColor whiteColor];
+            self.avatarImageView.hidden = self.qrImageView.hidden = NO;
+            self.cameraView.hidden = YES;
+            break;
+            
+        case 1:
+            if ([self startRecognizingCodes]) {
+                self.view.backgroundColor = [UIColor clearColor];
+                self.avatarImageView.hidden = self.qrImageView.hidden = YES;
+                self.cameraView.hidden = NO;
+                self.queryInProgress = NO;
+            } else {
+                sender.selectedSegmentIndex = 0;
+            }
+            
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (IBAction)backButtonTapped:(UIButton *)sender {
+    [self stopRecognizingCodes];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - QR recognizing
 
-- (BOOL)recognizeCodes {
+- (BOOL)startRecognizingCodes {
     NSError *error;
     AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&error];
@@ -100,34 +133,11 @@
     }
 }
 
-#pragma mark - IBActions
-
-- (IBAction)valueChangedAtSegmentedControl:(UISegmentedControl *)sender {
-    switch (sender.selectedSegmentIndex) {
-        case 0:
-            if (self.captureSession) {
-                [self.captureSession stopRunning];
-                self.captureSession = nil;
-                [self.videoPreviewLayer removeFromSuperlayer];
-            }
-            self.view.backgroundColor = [UIColor whiteColor];
-            self.avatarImageView.hidden = self.qrImageView.hidden = NO;
-            self.cameraView.hidden = YES;
-            break;
-            
-        case 1:
-            if ([self recognizeCodes]) {
-                self.view.backgroundColor = [UIColor clearColor];
-                self.avatarImageView.hidden = self.qrImageView.hidden = YES;
-                self.cameraView.hidden = NO;
-            } else {
-                sender.selectedSegmentIndex = 0;
-            }
-
-            break;
-            
-        default:
-            break;
+- (void)stopRecognizingCodes {
+    if (self.captureSession) {
+        [self.captureSession stopRunning];
+        self.captureSession = nil;
+        [self.videoPreviewLayer removeFromSuperlayer];
     }
 }
 
@@ -137,7 +147,70 @@
     if (metadataObjects && metadataObjects.count > 0) {
         AVMetadataMachineReadableCodeObject *metadata = metadataObjects.firstObject;
         if ([metadata.type isEqualToString:AVMetadataObjectTypeQRCode]) {
-            NSLog(@">>> QR: %@", metadata.stringValue);
+            if (!self.queryInProgress) {
+                NSString *detectedString = metadata.stringValue;
+                NSString *baseString = @"https://mega.nz/C!";
+                if ([detectedString containsString:baseString]) {
+                    self.queryInProgress = YES;
+                    NSString *base64Handle = [detectedString stringByReplacingOccurrencesOfString:baseString withString:@""];
+                    [[MEGASdkManager sharedMEGASdk] contactLinkQueryWithHandle:[MEGASdk handleForBase64Handle:base64Handle] delegate:self];
+                }
+            }
+        }
+    }
+}
+
+#pragma mark - QR recognized
+
+- (void)presentInviteModalForEmail:(NSString *)email contactLinkHandle:(uint64_t)contactLinkHandle {
+    CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
+    customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    customModalAlertVC.initialsForAvatar = email.uppercaseString; // TODO: Use fullName.uppercaseString when available
+    customModalAlertVC.viewTitle = @""; // TODO: Set here the fullName
+    customModalAlertVC.detail = email;
+    customModalAlertVC.action = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
+    customModalAlertVC.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+    
+    __weak ContactLinkQRViewController *weakSelf = self;
+    __weak CustomModalAlertViewController *weakModal = customModalAlertVC;
+    customModalAlertVC.completion = ^{
+        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd handle:contactLinkHandle delegate:weakSelf];
+        [weakModal dismissViewControllerAnimated:YES completion:^{
+            weakSelf.queryInProgress = NO;
+        }];
+    };
+    
+    customModalAlertVC.onDismiss = ^{
+        [weakModal dismissViewControllerAnimated:YES completion:^{
+            weakSelf.queryInProgress = NO;
+        }];
+    };
+    
+    [self presentViewController:customModalAlertVC animated:YES completion:nil];
+}
+
+#pragma mark - MEGARequestDelegate
+
+- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    if (!error.type) {
+        switch (request.type) {
+            case MEGARequestTypeContactLinkCreate: {
+                NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
+                
+                self.qrImageView.image = [self qrImageFromString:destination withSize:self.qrImageView.frame.size];
+                [self setUserAvatar];
+                
+                break;
+            }
+                
+            case MEGARequestTypeContactLinkQuery: {
+                [self presentInviteModalForEmail:request.email contactLinkHandle:request.nodeHandle];
+                
+                break;
+            }
+                
+            default:
+                break;
         }
     }
 }
