@@ -1173,7 +1173,7 @@
 
 #pragma mark - CustomActionViewControllerDelegate
 
-- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node {
+- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender{
     switch (action) {
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
@@ -1189,9 +1189,10 @@
             [node mnz_renameNodeInViewController:self];
             break;
             
-        case MegaNodeActionTypeShare:
-            self.selectedNodesMutableArray = [[NSMutableArray alloc] initWithObjects:node, nil];
-            [self shareAction:nil];
+        case MegaNodeActionTypeShare:{
+            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[node] sender:sender];
+            [self presentViewController:activityVC animated:YES completion:nil];
+        }
             break;
             
         case MegaNodeActionTypeFileInfo:

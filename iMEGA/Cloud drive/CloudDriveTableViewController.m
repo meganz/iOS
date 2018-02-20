@@ -1849,8 +1849,7 @@
             break;
 
         case MegaNodeActionTypeShare: {
-            self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
-            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:sender];
+            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[node] sender:sender];
             [self presentViewController:activityVC animated:YES completion:nil];
         }
             break;
