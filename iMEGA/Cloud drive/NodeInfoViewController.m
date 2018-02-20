@@ -299,6 +299,7 @@
     NodeTappablePropertyTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeTappablePropertyCell" forIndexPath:indexPath];
     cell.iconImageView.image = [UIImage imageNamed:@"versions"];
     cell.titleLabel.text = [AMLocalizedString(@"xVersions", @"Message to display the number of historical versions of files.") stringByReplacingOccurrencesOfString:@"[X]" withString: [NSString stringWithFormat:@"%ld",(long)[self.node numberOfVersions]]];
+    cell.separatorView.hidden = YES;
     return cell;
 }
 
@@ -324,11 +325,7 @@
     } else {
         cell.titleLabel.text = AMLocalizedString(@"getLink", @"Title shown under the action that allows you to get a link to file or folder");
     }
-    if (self.node.isFolder && indexPath.row == 1) {
-        [cell.separatorView setHidden:YES];
-    } else {
-        [cell.separatorView setHidden:YES];
-    }
+    cell.separatorView.hidden = YES;
     return cell;
 }
 
@@ -363,6 +360,11 @@
     browserVC.browserAction = action;
 }
 
+- (void)showShareActivityFromSender:(id)sender {
+    UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[self.node] sender:sender];
+    [self presentViewController:activityVC animated:YES completion:nil];
+}
+
 #pragma mark - CustomActionViewControllerDelegate
 
 - (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender{
@@ -385,10 +387,8 @@
             [node mnz_renameNodeInViewController:self];
             break;
             
-        case MegaNodeActionTypeShare: {
-            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[self.node] sender:sender];
-            [self presentViewController:activityVC animated:YES completion:nil];
-        }
+        case MegaNodeActionTypeShare:
+            [self showShareActivityFromSender:sender];
             break;
             
         case MegaNodeActionTypeFileInfo:
