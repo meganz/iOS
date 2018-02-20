@@ -1270,16 +1270,11 @@
     }
 }
 
-- (void)showNodeDetails:(MEGANode *)node {
+- (void)showNodeInfo:(MEGANode *)node {
     UINavigationController *nodeInfoNavigation = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfo"];
     NodeInfoViewController *nodeInfoVC = (NodeInfoViewController*)[nodeInfoNavigation.viewControllers firstObject];
     nodeInfoVC.node = node;
-    [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
-//    DetailsNodeInfoViewController *detailsNodeInfoVC = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
-//    [detailsNodeInfoVC setNode:node];
-//    [detailsNodeInfoVC setDisplayMode:self.displayMode];
-//    detailsNodeInfoVC.incomingShareChildView = self.isIncomingShareChildView;
-//    [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
+    [self.navigationController pushViewController:nodeInfoVC animated:YES];
 }
 
 #pragma mark - IBActions
@@ -1860,7 +1855,7 @@
             break;
             
         case MegaNodeActionTypeFileInfo:
-            [self showNodeDetails:node];
+            [self showNodeInfo:node];
             break;
             
         case MegaNodeActionTypeLeaveSharing:

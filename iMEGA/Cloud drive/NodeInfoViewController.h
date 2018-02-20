@@ -7,4 +7,6 @@
 
 @property (strong, nonatomic) MEGANode *node;
 
+- (void)configureCloseBarButton;
+
 @end
