@@ -17,8 +17,9 @@
 #import "DetailsNodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"
 #import "CustomActionViewController.h"
+#import "NodeInfoViewController.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate> {
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
 }
@@ -353,43 +354,13 @@
     return self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : self.sharedItemsSegmentedControl.selectedSegmentIndex == 0 ? [self.incomingNodesMutableArray objectAtIndex:indexPath.row] : [self.outgoingNodesMutableArray objectAtIndex:indexPath.row];
 }
 
-- (void)showNodeDetails:(MEGANode *)node {
-    MEGAShare *share = nil;
-    switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
-        case 0: { //Incoming
-            for (NSUInteger i = 0; i < self.incomingShareList.size.unsignedIntegerValue; i++) {
-                MEGAShare *s = [self.incomingShareList shareAtIndex:i];
-                if (s.nodeHandle == node.handle) {
-                    share = s;
-                    break;
-                }
-            }
-            break;
-        }
-            
-        case 1: { //Outgoing
-            for (NSUInteger i = 0; i < self.outgoingSharesMutableArray.count; i++) {
-                MEGAShare *s = self.outgoingSharesMutableArray[i];
-                if (s.nodeHandle == node.handle) {
-                    share = s;
-                    break;
-                }
-            }
-            break;
-        }
-    }
+- (void)showNodeInfo:(MEGANode *)node {
     
-    DetailsNodeInfoViewController *detailsNodeInfoVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
-    detailsNodeInfoVC.displayMode = DisplayModeSharedItem;
-    
-    NSString *email = share.user;
-    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
-    
-    detailsNodeInfoVC.userName = user.mnz_fullName ? user.mnz_fullName : email;
-    detailsNodeInfoVC.email    = email;
-    detailsNodeInfoVC.node     = node;
-    
-    [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
+    UINavigationController *nodeInfoNavigation = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfo"];
+    NodeInfoViewController *nodeInfoVC = (NodeInfoViewController*)[nodeInfoNavigation.viewControllers firstObject];
+    nodeInfoVC.node = node;
+    nodeInfoVC.nodeInfoDelegate = self;
+    [self.navigationController pushViewController:nodeInfoVC animated:YES];
 }
 
 #pragma mark - Utils
@@ -1196,7 +1167,7 @@
             break;
             
         case MegaNodeActionTypeFileInfo:
-            [self showNodeDetails:node];
+            [self showNodeInfo:node];
             break;
             
         case MegaNodeActionTypeLeaveSharing:
@@ -1213,6 +1184,35 @@
         case MegaNodeActionTypeRemove:
             break;
             
+        default:
+            break;
+    }
+}
+
+#pragma mark - NodeInfoViewControllerDelegate
+
+- (void)presentParentNode:(MEGANode *)node inNavigation:(UINavigationController *)navigationController{
+    
+    NSMutableArray *nodes = node.mnz_parentNodes;
+    
+    [navigationController popToRootViewControllerAnimated:NO];
+    
+    for (MEGANode *node in nodes) {
+        CloudDriveTableViewController *cloudDriveTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"SharedItemsViewControllerID"];
+        cloudDriveTVC.parentNode = node;
+        [navigationController pushViewController:cloudDriveTVC animated:NO];
+    }
+    
+    switch (node.type) {
+        case MEGANodeTypeFolder:
+        case MEGANodeTypeRubbish: {
+            CloudDriveTableViewController *cloudDriveTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"SharedItemsViewControllerID"];
+            cloudDriveTVC.parentNode = node;
+            [navigationController pushViewController:cloudDriveTVC animated:NO];
+            break;
+        }
+            
+        case MEGANodeTypeFile:
         default:
             break;
     }
