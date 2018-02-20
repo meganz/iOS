@@ -367,16 +367,48 @@
     }
 }
 
-- (BOOL)hasVersions {
+- (BOOL)mnz_hasVersions {
     return [[MEGASdkManager sharedMEGASdk] hasVersionsForNode:self];
 }
 
-- (NSInteger)numberOfVersions {
-    if ([self hasVersions]) {
+- (NSInteger)mnz_numberOfVersions {
+    if (self.mnz_hasVersions) {
         return [[MEGASdkManager sharedMEGASdk] numberOfVersionsForNode:self];
     } else {
         return 0;
     }
 }
+
+- (NSMutableArray *)mnz_parentNodes {
+    NSMutableArray *nodes = [[NSMutableArray alloc] init];
+    
+    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self] != MEGAShareTypeAccessOwner) { // node from inshare
+        MEGANode *tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.parentHandle];
+        while (tempNode != nil) {
+            [nodes insertObject:tempNode atIndex:0];
+            tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:tempNode.parentHandle];
+        }
+    } else {
+        uint64_t rootHandle;
+        if ([[[MEGASdkManager sharedMEGASdk] nodePathForNode:self] hasPrefix:@"//bin"]) {
+            rootHandle = [[MEGASdkManager sharedMEGASdk] rubbishNode].parentHandle;
+        } else {
+            rootHandle = [[MEGASdkManager sharedMEGASdk] rootNode].handle;
+        }
+        uint64_t tempHandle = self.parentHandle;
+        while (tempHandle != rootHandle) {
+            MEGANode *tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:tempHandle];
+            if (tempNode) {
+                [nodes insertObject:tempNode atIndex:0];
+                tempHandle = tempNode.parentHandle;
+            } else {
+                break;
+            }
+        }
+    }
+    
+    return nodes;
+}
+
 
 @end

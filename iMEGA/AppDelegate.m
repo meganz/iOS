@@ -1462,32 +1462,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)presentNode:(MEGANode *)node inNavigationController:(UINavigationController *)navigationController {
-    NSMutableArray *nodes = [[NSMutableArray alloc] init];
-    
-    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) { // node from inshare
-        MEGANode *tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.parentHandle];
-        while (tempNode != nil) {
-            [nodes insertObject:tempNode atIndex:0];
-            tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:tempNode.parentHandle];
-        }
-    } else {
-        uint64_t rootHandle;
-        if ([[[MEGASdkManager sharedMEGASdk] nodePathForNode:node] hasPrefix:@"//bin"]) {
-            rootHandle = [[MEGASdkManager sharedMEGASdk] rubbishNode].parentHandle;
-        } else {
-            rootHandle = [[MEGASdkManager sharedMEGASdk] rootNode].handle;
-        }
-        uint64_t tempHandle = node.parentHandle;
-        while (tempHandle != rootHandle) {
-            MEGANode *tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:tempHandle];
-            if (tempNode) {
-                [nodes insertObject:tempNode atIndex:0];
-                tempHandle = tempNode.parentHandle;
-            } else {
-                break;
-            }
-        }
-    }
+    NSMutableArray *nodes = node.mnz_parentNodes;
     
     [navigationController popToRootViewControllerAnimated:NO];
     

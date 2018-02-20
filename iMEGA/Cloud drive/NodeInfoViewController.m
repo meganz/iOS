@@ -232,7 +232,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     int sections = 2;
-    if (self.node.hasVersions) {
+    if (self.node.mnz_hasVersions) {
         sections++;
     }
     return sections;
@@ -296,7 +296,7 @@
 - (NodeTappablePropertyTableViewCell *)versionCellForIndexPath:(NSIndexPath *)indexPath {
     NodeTappablePropertyTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeTappablePropertyCell" forIndexPath:indexPath];
     cell.iconImageView.image = [UIImage imageNamed:@"versions"];
-    cell.titleLabel.text = [AMLocalizedString(@"xVersions", @"Message to display the number of historical versions of files.") stringByReplacingOccurrencesOfString:@"[X]" withString: [NSString stringWithFormat:@"%ld",(long)[self.node numberOfVersions]]];
+    cell.titleLabel.text = [AMLocalizedString(@"xVersions", @"Message to display the number of historical versions of files.") stringByReplacingOccurrencesOfString:@"[X]" withString: [NSString stringWithFormat:@"%ld",(long)self.node.mnz_numberOfVersions]];
     cell.separatorView.hidden = YES;
     return cell;
 }
