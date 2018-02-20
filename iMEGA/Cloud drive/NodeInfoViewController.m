@@ -41,7 +41,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 @property (strong, nonatomic) NSArray<MegaNodeProperty *> *nodeProperties;
 @property (nonatomic) MEGAExportRequestDelegate *exportDelegate;
 
@@ -54,8 +53,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self configureView];
-    
+    [self reloadUI];
+
     self.exportDelegate = [[MEGAExportRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
         [SVProgressHUD dismiss];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(self.node.isFolder ? 1 : 0) inSection:1];
@@ -74,15 +73,15 @@
     [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
 }
 
-#pragma mark - Layout
+#pragma mark - Public
 
-- (void)configureView {
-    self.cancelBarButtonItem.title = AMLocalizedString(@"close", nil);
-    [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
-    self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem];
-    
-    [self reloadUI];
+- (void)configureCloseBarButton {
+    UIBarButtonItem *closeBarButton = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(closeTapped:)];
+    [closeBarButton setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItems = @[closeBarButton];
 }
+
+#pragma mark - Layout
 
 - (void)reloadUI {
     self.nodeProperties = [self nodePropertyCells];

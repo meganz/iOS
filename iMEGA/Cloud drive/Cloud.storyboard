@@ -1033,19 +1033,12 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="QIl-8C-DgX"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="cancelBarButtonItem" destination="Ea9-d1-b7D" id="xrM-nV-OEC"/>
                         <outlet property="nameLabel" destination="Ycy-Ze-mmm" id="h7B-4R-PK4"/>
                         <outlet property="tableView" destination="DfQ-WB-Lb3" id="80y-0K-pXm"/>
                         <outlet property="thumbnailImageView" destination="EpE-BU-Aq2" id="LCC-5K-Xq6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h3T-5n-ShB" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <barButtonItem title="localize" id="Ea9-d1-b7D">
-                    <color key="tintColor" red="0.98823529409999999" green="0.98823529409999999" blue="0.98823529409999999" alpha="1" colorSpace="calibratedRGB"/>
-                    <connections>
-                        <action selector="closeTapped:" destination="beR-bU-NFp" id="Iyw-1w-1Bi"/>
-                    </connections>
-                </barButtonItem>
             </objects>
             <point key="canvasLocation" x="4798.5507246376819" y="-3514.402173913044"/>
         </scene>
