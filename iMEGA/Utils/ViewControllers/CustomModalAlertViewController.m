@@ -3,6 +3,7 @@
 
 #import "AchievementsViewController.h"
 #import "UIApplication+MNZCategory.h"
+#import "UIImage+GKContact.h"
 
 @interface CustomModalAlertViewController ()
 
@@ -20,7 +21,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.imageView.image = [UIImage imageNamed:self.image];
+    if (self.image) {
+        self.imageView.image = [UIImage imageNamed:self.image];
+    } else if (self.initialsForAvatar) {
+        self.imageView.image = [UIImage imageForName:self.initialsForAvatar size:self.imageView.frame.size backgroundColor:[UIColor colorFromHexString:@"#C51162"] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(self.imageView.frame.size.width/2.0f)]];
+    }
+    
     self.titleLabel.text = self.viewTitle;
     
     if (self.boldInDetail) {
@@ -92,7 +98,11 @@
 
 - (IBAction)dismissTouchUpInside:(UIButton *)sender {
     [self fadeOutBackgroundCompletion:^ {
-        [self dismissViewControllerAnimated:YES completion:nil];
+        if (self.onDismiss) {
+            self.onDismiss();
+        } else {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
     }];
 }
 

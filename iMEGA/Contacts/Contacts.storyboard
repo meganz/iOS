@@ -1012,6 +1012,9 @@
                                 </constraints>
                                 <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="backArrow"/>
+                                <connections>
+                                    <action selector="backButtonTapped:" destination="lRr-EZ-fCk" eventType="touchUpInside" id="q8Z-mf-Pv0"/>
+                                </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="D3t-9X-3oi">
                                 <rect key="frame" x="87" y="28" width="200" height="30"/>
