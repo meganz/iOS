@@ -17,10 +17,11 @@
 - (void)mnz_leaveSharingInViewController:(UIViewController *)viewController;
 - (void)mnz_removeSharing;
 - (void)mnz_copyToGalleryFromTemporaryPath:(NSString *)path;
+- (NSMutableArray *)mnz_parentNodes;
 
 #pragma mark - Versions
 
-- (BOOL)hasVersions;
-- (NSInteger)numberOfVersions;
+- (BOOL)mnz_hasVersions;
+- (NSInteger)mnz_numberOfVersions;
 
 @end
