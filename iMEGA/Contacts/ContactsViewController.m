@@ -597,7 +597,7 @@
     
     UIAlertAction *scanCodeAlertAction = [UIAlertAction actionWithTitle:@"Scan Code" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
-        [self.navigationController pushViewController:contactLinkVC animated:YES];
+        [self presentViewController:contactLinkVC animated:YES completion:nil];
     }];
     [scanCodeAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [addContactAlertController addAction:scanCodeAlertAction];
