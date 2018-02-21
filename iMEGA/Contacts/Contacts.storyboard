@@ -1046,26 +1046,62 @@
                                     <constraint firstAttribute="height" constant="74" id="hr6-Nx-r3d"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0up-4b-k8w">
+                                <rect key="frame" x="63.5" y="515" width="248" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="2MS-mn-KbX"/>
+                                    <constraint firstAttribute="width" constant="248" id="PHh-dX-YTd"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A7t-aZ-ziV">
+                                <rect key="frame" x="127" y="552" width="121" height="46"/>
+                                <color key="backgroundColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="46" id="afg-xo-jFM"/>
+                                    <constraint firstAttribute="width" constant="121" id="yUK-zX-R1u"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="16"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="linkCopyButtonTapped:" destination="lRr-EZ-fCk" eventType="touchUpInside" id="Az0-7y-Ic5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="vid-Qw-MNw" firstAttribute="centerY" secondItem="l1U-26-tIN" secondAttribute="centerY" id="0ZP-Um-xo4"/>
                             <constraint firstItem="2Wz-hl-Go6" firstAttribute="top" secondItem="l1U-26-tIN" secondAttribute="top" id="138-1C-49b"/>
                             <constraint firstItem="GWN-sM-tLO" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="1kU-i9-0Fg"/>
+                            <constraint firstItem="A7t-aZ-ziV" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="6JD-ZG-scX"/>
                             <constraint firstItem="pfM-gn-rhH" firstAttribute="top" secondItem="6GY-JJ-jXB" secondAttribute="bottom" constant="12" id="HX7-9d-dSF"/>
                             <constraint firstItem="vid-Qw-MNw" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="IPd-mJ-8Gf"/>
+                            <constraint firstItem="0up-4b-k8w" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="Io7-Qm-ZfO"/>
                             <constraint firstItem="RzH-fB-ztS" firstAttribute="top" secondItem="2Wz-hl-Go6" secondAttribute="bottom" id="WJt-9N-zJh"/>
                             <constraint firstItem="D3t-9X-3oi" firstAttribute="top" secondItem="6GY-JJ-jXB" secondAttribute="bottom" constant="8" id="cW7-JH-dEG"/>
                             <constraint firstItem="2Wz-hl-Go6" firstAttribute="leading" secondItem="l1U-26-tIN" secondAttribute="leading" id="iBn-Vc-htj"/>
                             <constraint firstAttribute="trailing" secondItem="2Wz-hl-Go6" secondAttribute="trailing" id="mpE-BV-NAI"/>
+                            <constraint firstItem="RzH-fB-ztS" firstAttribute="top" secondItem="A7t-aZ-ziV" secondAttribute="bottom" constant="69" id="nXt-np-awe"/>
                             <constraint firstItem="pfM-gn-rhH" firstAttribute="leading" secondItem="l1U-26-tIN" secondAttribute="leadingMargin" id="ryR-md-Iyf"/>
                             <constraint firstItem="GWN-sM-tLO" firstAttribute="centerY" secondItem="l1U-26-tIN" secondAttribute="centerY" id="x2A-0c-fjd"/>
                             <constraint firstItem="D3t-9X-3oi" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="zDi-CW-7ig"/>
+                            <constraint firstItem="RzH-fB-ztS" firstAttribute="top" secondItem="0up-4b-k8w" secondAttribute="bottom" constant="131" id="zyt-lI-5oJ"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="avatarImageView" destination="GWN-sM-tLO" id="AF0-7A-jRQ"/>
                         <outlet property="cameraView" destination="2Wz-hl-Go6" id="W42-69-8CO"/>
+                        <outlet property="contactLinkLabel" destination="0up-4b-k8w" id="aOt-g3-HgT"/>
+                        <outlet property="linkCopyButton" destination="A7t-aZ-ziV" id="qwl-cl-vn9"/>
                         <outlet property="qrImageView" destination="vid-Qw-MNw" id="SvK-bV-L0F"/>
                         <outlet property="segmentedControl" destination="D3t-9X-3oi" id="rYY-KP-0Ve"/>
                     </connections>
