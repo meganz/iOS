@@ -363,8 +363,8 @@
 
 - (void)showParentNode {
     [self dismissViewControllerAnimated:YES completion:^{
-        if ([self.nodeInfoDelegate respondsToSelector:@selector(presentParentNode:inNavigation:)]) {
-            [self.nodeInfoDelegate presentParentNode:[[MEGASdkManager sharedMEGASdk] parentNodeForNode:self.node] inNavigation:self.navigationController];
+        if ([self.nodeInfoDelegate respondsToSelector:@selector(presentParentNode:)]) {
+            [self.nodeInfoDelegate presentParentNode:[[MEGASdkManager sharedMEGASdk] parentNodeForNode:self.node]];
         }
     }];
 }

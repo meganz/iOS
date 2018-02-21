@@ -1191,16 +1191,17 @@
 
 #pragma mark - NodeInfoViewControllerDelegate
 
-- (void)presentParentNode:(MEGANode *)node inNavigation:(UINavigationController *)navigationController{
+- (void)presentParentNode:(MEGANode *)node {
     
     NSMutableArray *nodes = node.mnz_parentNodes;
     
-    [navigationController popToRootViewControllerAnimated:NO];
+    UINavigationController *navigation = self.navigationController;
+    [self.navigationController popToRootViewControllerAnimated:NO];
     
     for (MEGANode *node in nodes) {
         CloudDriveTableViewController *cloudDriveTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"SharedItemsViewControllerID"];
         cloudDriveTVC.parentNode = node;
-        [navigationController pushViewController:cloudDriveTVC animated:NO];
+        [navigation pushViewController:cloudDriveTVC animated:NO];
     }
     
     switch (node.type) {
@@ -1208,7 +1209,7 @@
         case MEGANodeTypeRubbish: {
             CloudDriveTableViewController *cloudDriveTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"SharedItemsViewControllerID"];
             cloudDriveTVC.parentNode = node;
-            [navigationController pushViewController:cloudDriveTVC animated:NO];
+            [navigation pushViewController:cloudDriveTVC animated:NO];
             break;
         }
             
