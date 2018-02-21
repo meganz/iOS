@@ -3,4 +3,6 @@
 
 @interface ContactLinkQRViewController : UIViewController
 
+@property (nonatomic) BOOL scanCode;
+
 @end
