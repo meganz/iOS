@@ -1031,6 +1031,17 @@
                                     <action selector="valueChangedAtSegmentedControl:" destination="lRr-EZ-fCk" eventType="valueChanged" id="XzR-Ix-IQa"/>
                                 </connections>
                             </segmentedControl>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3eo-nP-4lO">
+                                <rect key="frame" x="335" y="31" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="chP-XE-zpU"/>
+                                    <constraint firstAttribute="width" constant="24" id="nxE-5y-FeU"/>
+                                </constraints>
+                                <state key="normal" image="openWith"/>
+                                <connections>
+                                    <action selector="openInButtonTapped:" destination="lRr-EZ-fCk" eventType="touchUpInside" id="EDn-w9-N5b"/>
+                                </connections>
+                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vid-Qw-MNw">
                                 <rect key="frame" x="63" y="209" width="248" height="248"/>
                                 <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1083,6 +1094,8 @@
                             <constraint firstItem="2Wz-hl-Go6" firstAttribute="top" secondItem="l1U-26-tIN" secondAttribute="top" id="138-1C-49b"/>
                             <constraint firstItem="GWN-sM-tLO" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="1kU-i9-0Fg"/>
                             <constraint firstItem="A7t-aZ-ziV" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="6JD-ZG-scX"/>
+                            <constraint firstItem="3eo-nP-4lO" firstAttribute="top" secondItem="6GY-JJ-jXB" secondAttribute="bottom" constant="11" id="7IJ-6z-9XC"/>
+                            <constraint firstItem="3eo-nP-4lO" firstAttribute="trailing" secondItem="l1U-26-tIN" secondAttribute="trailingMargin" id="Gof-12-hGV"/>
                             <constraint firstItem="pfM-gn-rhH" firstAttribute="top" secondItem="6GY-JJ-jXB" secondAttribute="bottom" constant="12" id="HX7-9d-dSF"/>
                             <constraint firstItem="vid-Qw-MNw" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="IPd-mJ-8Gf"/>
                             <constraint firstItem="0up-4b-k8w" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="Io7-Qm-ZfO"/>
@@ -1104,6 +1117,7 @@
                         <outlet property="linkCopyButton" destination="A7t-aZ-ziV" id="qwl-cl-vn9"/>
                         <outlet property="qrImageView" destination="vid-Qw-MNw" id="SvK-bV-L0F"/>
                         <outlet property="segmentedControl" destination="D3t-9X-3oi" id="rYY-KP-0Ve"/>
+                        <outlet property="shareButton" destination="3eo-nP-4lO" id="o7O-Rq-MmW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xXf-8Q-HHn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1531,6 +1545,7 @@
         <image name="contactsIcon" width="32" height="24"/>
         <image name="edit" width="22" height="22"/>
         <image name="nodeInfo" width="46" height="44"/>
+        <image name="openWith" width="24" height="24"/>
         <image name="readPermissions" width="46" height="44"/>
         <image name="readWritePermissions" width="46" height="44"/>
     </resources>
