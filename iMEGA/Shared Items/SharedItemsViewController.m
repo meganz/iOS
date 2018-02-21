@@ -1213,7 +1213,6 @@
             break;
         }
             
-        case MEGANodeTypeFile:
         default:
             break;
     }

@@ -755,7 +755,7 @@ static MEGAIndexer *indexer;
         } else if ([cell isKindOfClass:UICollectionReusableView.class]) {
             UICollectionReusableView *headerAction = cell;
             UIImageView *imageView = [headerAction viewWithTag:100];
-            [imageView setImage:[Helper imageForNode:node]];
+            imageView.image = [Helper imageForNode:node];
         }  else if ([cell isKindOfClass:[UIImageView class]]) {
             [cell setImage:[Helper imageForNode:node]];
         }
@@ -776,7 +776,7 @@ static MEGAIndexer *indexer;
     } else if ([cell isKindOfClass:[UICollectionReusableView class]]) {
         UICollectionReusableView *headerAction = cell;
         UIImageView *imageView = [headerAction viewWithTag:100];
-        [imageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+        imageView.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
     } else if ([cell isKindOfClass:[UIImageView class]]) {
         [cell setImage:[Helper imageForNode:node]];
     }
@@ -887,7 +887,7 @@ static MEGAIndexer *indexer;
     
     if ([[sender class] isEqual:[UIBarButtonItem class]]) {
         activityVC.popoverPresentationController.barButtonItem = sender;
-    }else {
+    } else {
         UIView *presentationView = (UIView*)sender;
         activityVC.popoverPresentationController.sourceView = presentationView;
         activityVC.popoverPresentationController.sourceRect = CGRectMake(0, 0, presentationView.frame.size.width/2, presentationView.frame.size.height/2);

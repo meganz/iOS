@@ -272,7 +272,7 @@
     if (self.node.type == MEGANodeTypeFolder) {
         if (self.node.isShared) {
             [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"type", @"Refers to the type of a file or folder.") value:AMLocalizedString(@"sharedFolder", @"Title of the incoming shared folders of a user in singular.")]];
-        }  else if ([[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:self.node] + [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:self.node] == 0){
+        }  else if ([[MEGASdkManager sharedMEGASdk] numberChildrenForParent:self.node] == 0){
             [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"type", @"Refers to the type of a file or folder.") value:AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files")]];
         } else {
             [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"type", @"Refers to the type of a file or folder.") value:AMLocalizedString(@"folder", nil)]];
@@ -288,13 +288,13 @@
         [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"contains", @"Label for what a selection contains.") value:[Helper filesAndFoldersInFolderNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
     }
     
-    return [propertiesNode copy];
+    return propertiesNode;
 }
 
 - (NodeTappablePropertyTableViewCell *)versionCellForIndexPath:(NSIndexPath *)indexPath {
     NodeTappablePropertyTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeTappablePropertyCell" forIndexPath:indexPath];
     cell.iconImageView.image = [UIImage imageNamed:@"versions"];
-    cell.titleLabel.text = [AMLocalizedString(@"xVersions", @"Message to display the number of historical versions of files.") stringByReplacingOccurrencesOfString:@"[X]" withString: [NSString stringWithFormat:@"%ld",(long)self.node.mnz_numberOfVersions]];
+    cell.titleLabel.text = [AMLocalizedString(@"xVersions", @"Message to display the number of historical versions of files.") stringByReplacingOccurrencesOfString:@"[X]" withString: [NSString stringWithFormat:@"%ld", (long)self.node.mnz_numberOfVersions]];
     cell.separatorView.hidden = YES;
     return cell;
 }
