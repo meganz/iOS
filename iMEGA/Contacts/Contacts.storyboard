@@ -1004,6 +1004,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kQ2-dK-rKs">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.58050620719178081" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pfM-gn-rhH">
                                 <rect key="frame" x="16" y="32" width="22" height="22"/>
                                 <constraints>
@@ -1095,11 +1099,15 @@
                             <constraint firstItem="GWN-sM-tLO" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="1kU-i9-0Fg"/>
                             <constraint firstItem="A7t-aZ-ziV" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="6JD-ZG-scX"/>
                             <constraint firstItem="3eo-nP-4lO" firstAttribute="top" secondItem="6GY-JJ-jXB" secondAttribute="bottom" constant="11" id="7IJ-6z-9XC"/>
+                            <constraint firstItem="kQ2-dK-rKs" firstAttribute="leading" secondItem="l1U-26-tIN" secondAttribute="leading" id="B4s-yg-TsM"/>
+                            <constraint firstAttribute="trailing" secondItem="kQ2-dK-rKs" secondAttribute="trailing" id="Evb-2L-Wpm"/>
                             <constraint firstItem="3eo-nP-4lO" firstAttribute="trailing" secondItem="l1U-26-tIN" secondAttribute="trailingMargin" id="Gof-12-hGV"/>
                             <constraint firstItem="pfM-gn-rhH" firstAttribute="top" secondItem="6GY-JJ-jXB" secondAttribute="bottom" constant="12" id="HX7-9d-dSF"/>
                             <constraint firstItem="vid-Qw-MNw" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="IPd-mJ-8Gf"/>
                             <constraint firstItem="0up-4b-k8w" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="Io7-Qm-ZfO"/>
                             <constraint firstItem="RzH-fB-ztS" firstAttribute="top" secondItem="2Wz-hl-Go6" secondAttribute="bottom" id="WJt-9N-zJh"/>
+                            <constraint firstItem="RzH-fB-ztS" firstAttribute="top" secondItem="kQ2-dK-rKs" secondAttribute="bottom" id="Wyg-Uh-TNa"/>
+                            <constraint firstItem="kQ2-dK-rKs" firstAttribute="top" secondItem="l1U-26-tIN" secondAttribute="top" id="XFQ-Cx-9n4"/>
                             <constraint firstItem="D3t-9X-3oi" firstAttribute="top" secondItem="6GY-JJ-jXB" secondAttribute="bottom" constant="8" id="cW7-JH-dEG"/>
                             <constraint firstItem="2Wz-hl-Go6" firstAttribute="leading" secondItem="l1U-26-tIN" secondAttribute="leading" id="iBn-Vc-htj"/>
                             <constraint firstAttribute="trailing" secondItem="2Wz-hl-Go6" secondAttribute="trailing" id="mpE-BV-NAI"/>
@@ -1113,6 +1121,7 @@
                     <connections>
                         <outlet property="avatarImageView" destination="GWN-sM-tLO" id="AF0-7A-jRQ"/>
                         <outlet property="backButton" destination="pfM-gn-rhH" id="lXJ-ot-Cwg"/>
+                        <outlet property="cameraMaskView" destination="kQ2-dK-rKs" id="dxi-nG-VXL"/>
                         <outlet property="cameraView" destination="2Wz-hl-Go6" id="W42-69-8CO"/>
                         <outlet property="contactLinkLabel" destination="0up-4b-k8w" id="aOt-g3-HgT"/>
                         <outlet property="linkCopyButton" destination="A7t-aZ-ziV" id="qwl-cl-vn9"/>

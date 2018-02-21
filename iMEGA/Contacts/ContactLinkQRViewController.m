@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *linkCopyButton;
 
 @property (weak, nonatomic) IBOutlet UIView *cameraView;
+@property (weak, nonatomic) IBOutlet UIView *cameraMaskView;
 
 @property (nonatomic) AVCaptureSession *captureSession;
 @property (nonatomic) AVCaptureVideoPreviewLayer *videoPreviewLayer;
@@ -41,6 +42,19 @@
     [self.linkCopyButton setTitle:AMLocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard") forState:UIControlStateNormal];
 
     [[MEGASdkManager sharedMEGASdk] contactLinkCreateWithDelegate:self];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    CGMutablePathRef mutablePath = CGPathCreateMutable();
+    CGPathAddRect(mutablePath, nil, self.cameraMaskView.frame);
+    CGPathAddRoundedRect(mutablePath, nil, self.qrImageView.frame, 46.0f, 46.0f);
+    CAShapeLayer *mask = [[CAShapeLayer alloc] init];
+    mask.path = mutablePath;
+    mask.fillRule = kCAFillRuleEvenOdd;
+    self.cameraMaskView.layer.mask = mask;
+    CGPathRelease(mutablePath);
 }
 
 #pragma mark - QR generation
@@ -87,7 +101,7 @@
             self.view.backgroundColor = [UIColor whiteColor];
             self.qrImageView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = NO;
             self.linkCopyButton.hidden = self.shareButton.hidden = self.contactLinkLabel.text.length==0;
-            self.cameraView.hidden = YES;
+            self.cameraView.hidden = self.cameraMaskView.hidden = YES;
             self.backButton.tintColor = self.segmentedControl.tintColor = [UIColor mnz_redF0373A];
             break;
             
@@ -95,7 +109,7 @@
             if ([self startRecognizingCodes]) {
                 self.view.backgroundColor = [UIColor clearColor];
                 self.qrImageView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = self.linkCopyButton.hidden = self.shareButton.hidden = YES;
-                self.cameraView.hidden = NO;
+                self.cameraView.hidden = self.cameraMaskView.hidden = NO;
                 self.queryInProgress = NO;
                 self.backButton.tintColor = self.segmentedControl.tintColor = [UIColor whiteColor];
             } else {
