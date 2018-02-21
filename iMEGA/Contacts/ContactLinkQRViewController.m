@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIView *cameraView;
 @property (weak, nonatomic) IBOutlet UILabel *contactLinkLabel;
 @property (weak, nonatomic) IBOutlet UIButton *linkCopyButton;
+@property (weak, nonatomic) IBOutlet UIButton *shareButton;
 
 @property (nonatomic) AVCaptureSession *captureSession;
 @property (nonatomic) AVCaptureVideoPreviewLayer *videoPreviewLayer;
@@ -82,14 +83,14 @@
             [self stopRecognizingCodes];
             self.view.backgroundColor = [UIColor whiteColor];
             self.qrImageView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = NO;
-            self.linkCopyButton.hidden = self.contactLinkLabel.text.length==0;
+            self.linkCopyButton.hidden = self.shareButton.hidden = self.contactLinkLabel.text.length==0;
             self.cameraView.hidden = YES;
             break;
             
         case 1:
             if ([self startRecognizingCodes]) {
                 self.view.backgroundColor = [UIColor clearColor];
-                self.qrImageView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = self.linkCopyButton.hidden = YES;
+                self.qrImageView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = self.linkCopyButton.hidden = self.shareButton.hidden = YES;
                 self.cameraView.hidden = NO;
                 self.queryInProgress = NO;
             } else {
@@ -111,6 +112,14 @@
 - (IBAction)linkCopyButtonTapped:(UIButton *)sender {
     [UIPasteboard generalPasteboard].string = self.contactLinkLabel.text;
     [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"copiedToTheClipboard", @"Text of the button after the links were copied to the clipboard")];
+}
+
+- (IBAction)openInButtonTapped:(UIButton *)sender {
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.contactLinkLabel.text] applicationActivities:nil];
+    [activityVC.popoverPresentationController setSourceView:self.view];
+    [activityVC.popoverPresentationController setSourceRect:sender.frame];
+
+    [self presentViewController:activityVC animated:YES completion:nil];
 }
 
 #pragma mark - QR recognizing
@@ -210,7 +219,7 @@
                 NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
                 self.contactLinkLabel.text = destination;
                 if (self.segmentedControl.selectedSegmentIndex == 0) {
-                    self.linkCopyButton.hidden = NO;
+                    self.linkCopyButton.hidden = self.shareButton.hidden = NO;
                 }
                 
                 self.qrImageView.image = [self qrImageFromString:destination withSize:self.qrImageView.frame.size];
