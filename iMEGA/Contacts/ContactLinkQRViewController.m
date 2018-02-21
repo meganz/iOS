@@ -6,6 +6,7 @@
 #import "SVProgressHUD.h"
 
 #import "CustomModalAlertViewController.h"
+#import "MEGAInviteContactRequestDelegate.h"
 #import "MEGASdkManager.h"
 
 #import "UIImage+GKContact.h"
@@ -41,6 +42,11 @@
     [self.segmentedControl setTitle:@"My Code" forSegmentAtIndex:0];
     [self.segmentedControl setTitle:@"Scan Code" forSegmentAtIndex:1];
     [self.linkCopyButton setTitle:AMLocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard") forState:UIControlStateNormal];
+    
+    if (self.scanCode) {
+        self.segmentedControl.selectedSegmentIndex = 1;
+        [self valueChangedAtSegmentedControl:self.segmentedControl];
+    }
 
     [[MEGASdkManager sharedMEGASdk] contactLinkCreateWithDelegate:self];
 }
@@ -119,6 +125,7 @@
                 self.backButton.tintColor = self.segmentedControl.tintColor = [UIColor whiteColor];
             } else {
                 sender.selectedSegmentIndex = 0;
+                [self valueChangedAtSegmentedControl:sender];
             }
             
             break;
@@ -208,30 +215,60 @@
 #pragma mark - QR recognized
 
 - (void)presentInviteModalForEmail:(NSString *)email contactLinkHandle:(uint64_t)contactLinkHandle {
-    CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-    customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    customModalAlertVC.image = [UIImage imageForName:email.uppercaseString size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor colorFromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:64.0f]]; // TODO: Use fullName.uppercaseString when available
-    customModalAlertVC.viewTitle = @""; // TODO: Set here the fullName
-    customModalAlertVC.detail = email;
-    customModalAlertVC.action = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
-    customModalAlertVC.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+    CustomModalAlertViewController *inviteOrDismissModal = [[CustomModalAlertViewController alloc] init];
+    inviteOrDismissModal.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    inviteOrDismissModal.image = [UIImage imageForName:email.uppercaseString size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor colorFromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:64.0f]]; // TODO: Use fullName.uppercaseString when available
+    inviteOrDismissModal.viewTitle = @""; // TODO: Set here the fullName
+    inviteOrDismissModal.detail = email;
+    inviteOrDismissModal.action = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
+    inviteOrDismissModal.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
     
     __weak ContactLinkQRViewController *weakSelf = self;
-    __weak CustomModalAlertViewController *weakModal = customModalAlertVC;
-    customModalAlertVC.completion = ^{
-        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd handle:contactLinkHandle delegate:weakSelf];
-        [weakModal dismissViewControllerAnimated:YES completion:^{
+    __weak CustomModalAlertViewController *weakInviteOrDismissModal = inviteOrDismissModal;
+    inviteOrDismissModal.completion = ^{
+        BOOL isInOutgoingContactRequest = NO;
+        MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
+        for (NSInteger i = 0; i < [[outgoingContactRequestList size] integerValue]; i++) {
+            MEGAContactRequest *contactRequest = [outgoingContactRequestList contactRequestAtIndex:i];
+            if ([email isEqualToString:contactRequest.targetEmail]) {
+                isInOutgoingContactRequest = YES;
+                break;
+            }
+        }
+        if (isInOutgoingContactRequest) {
+            CustomModalAlertViewController *inviteSentModal = [[CustomModalAlertViewController alloc] init];
+            inviteSentModal.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+            inviteSentModal.image = [UIImage imageNamed:@"inviteSent"];
+            inviteSentModal.viewTitle = AMLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
+            inviteSentModal.detail = [NSString stringWithFormat:@"The user %@ has been invited and will appear in your contact list once accepted", email];
+            inviteSentModal.boldInDetail = email;
+            inviteSentModal.action = AMLocalizedString(@"close", nil);
+            inviteSentModal.dismiss = nil;
+            
+            __weak typeof(CustomModalAlertViewController) *weakInviteSentModal = inviteSentModal;
+            inviteSentModal.completion = ^{
+                [weakInviteSentModal dismissViewControllerAnimated:YES completion:nil];
+                weakSelf.queryInProgress = NO;
+            };
+            [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:^{
+                [weakSelf presentViewController:inviteSentModal animated:YES completion:nil];
+            }];
+        } else {
+            MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1];
+            [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+            [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:^{
+                weakSelf.queryInProgress = NO;
+            }];
+        }
+    };
+    
+    inviteOrDismissModal.onDismiss = ^{
+        [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:^{
             weakSelf.queryInProgress = NO;
         }];
     };
     
-    customModalAlertVC.onDismiss = ^{
-        [weakModal dismissViewControllerAnimated:YES completion:^{
-            weakSelf.queryInProgress = NO;
-        }];
-    };
-    
-    [self presentViewController:customModalAlertVC animated:YES completion:nil];
+    [self presentViewController:inviteOrDismissModal animated:YES completion:nil];
 }
 
 #pragma mark - MEGARequestDelegate
