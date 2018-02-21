@@ -55,6 +55,8 @@
     
     [self reloadUI];
 
+    [self configureCloseBarButton];
+    
     self.exportDelegate = [[MEGAExportRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
         [SVProgressHUD dismiss];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(self.node.isFolder ? 1 : 0) inSection:1];
@@ -73,15 +75,13 @@
     [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
 }
 
-#pragma mark - Public
+#pragma mark - Layout
 
 - (void)configureCloseBarButton {
     UIBarButtonItem *closeBarButton = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(closeTapped:)];
     [closeBarButton setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItems = @[closeBarButton];
 }
-
-#pragma mark - Layout
 
 - (void)reloadUI {
     self.nodeProperties = [self nodePropertyCells];
@@ -362,9 +362,11 @@
 }
 
 - (void)showParentNode {
-    if ([self.nodeInfoDelegate respondsToSelector:@selector(presentParentNode:inNavigation:)]) {
-        [self.nodeInfoDelegate presentParentNode:[[MEGASdkManager sharedMEGASdk] parentNodeForNode:self.node] inNavigation:self.navigationController];
-    }
+    [self dismissViewControllerAnimated:YES completion:^{
+        if ([self.nodeInfoDelegate respondsToSelector:@selector(presentParentNode:inNavigation:)]) {
+            [self.nodeInfoDelegate presentParentNode:[[MEGASdkManager sharedMEGASdk] parentNodeForNode:self.node] inNavigation:self.navigationController];
+        }
+    }];
 }
 
 #pragma mark - CustomActionViewControllerDelegate

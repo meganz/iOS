@@ -9,8 +9,10 @@
     
     if (editing) {
         [self setSeparatorInset:UIEdgeInsetsMake(0, 100, 0, 0)];
+        self.cancelButton.hidden = YES;
     } else {
         [self setSeparatorInset:UIEdgeInsetsMake(0, 60, 0, 0)];
+        self.cancelButton.hidden = NO;
     }
 }
 

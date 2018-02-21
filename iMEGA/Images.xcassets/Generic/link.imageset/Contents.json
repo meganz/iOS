@@ -4,6 +4,10 @@
       "idiom" : "universal",
       "filename" : "link.pdf",
       "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
     }
   ],
   "info" : {

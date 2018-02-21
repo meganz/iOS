@@ -360,7 +360,7 @@
     NodeInfoViewController *nodeInfoVC = (NodeInfoViewController*)[nodeInfoNavigation.viewControllers firstObject];
     nodeInfoVC.node = node;
     nodeInfoVC.nodeInfoDelegate = self;
-    [self.navigationController pushViewController:nodeInfoVC animated:YES];
+    [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
 }
 
 #pragma mark - Utils
