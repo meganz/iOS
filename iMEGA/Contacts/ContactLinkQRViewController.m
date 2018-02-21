@@ -6,6 +6,7 @@
 #import "CustomModalAlertViewController.h"
 #import "MEGASdkManager.h"
 
+#import "UIImage+GKContact.h"
 #import "UIImageView+MNZCategory.h"
 
 @interface ContactLinkQRViewController () <AVCaptureMetadataOutputObjectsDelegate, MEGARequestDelegate>
@@ -165,7 +166,7 @@
 - (void)presentInviteModalForEmail:(NSString *)email contactLinkHandle:(uint64_t)contactLinkHandle {
     CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
     customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    customModalAlertVC.initialsForAvatar = email.uppercaseString; // TODO: Use fullName.uppercaseString when available
+    customModalAlertVC.image = [UIImage imageForName:email.uppercaseString size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor colorFromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:64.0f]]; // TODO: Use fullName.uppercaseString when available
     customModalAlertVC.viewTitle = @""; // TODO: Set here the fullName
     customModalAlertVC.detail = email;
     customModalAlertVC.action = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");

@@ -2,6 +2,7 @@
 #import "CustomModalAlertViewController.h"
 
 #import "AchievementsViewController.h"
+#import "MEGASdkManager.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImage+GKContact.h"
 
@@ -22,9 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     if (self.image) {
-        self.imageView.image = [UIImage imageNamed:self.image];
-    } else if (self.initialsForAvatar) {
-        self.imageView.image = [UIImage imageForName:self.initialsForAvatar size:self.imageView.frame.size backgroundColor:[UIColor colorFromHexString:@"#C51162"] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(self.imageView.frame.size.width/2.0f)]];
+        self.imageView.image = self.image;
     }
     
     self.titleLabel.text = self.viewTitle;

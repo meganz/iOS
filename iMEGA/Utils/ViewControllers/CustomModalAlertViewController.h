@@ -6,8 +6,7 @@
 @property (nonatomic, strong) void (^completion)(void);
 @property (nonatomic, strong) void (^onDismiss)(void);
 
-@property (nonatomic) NSString *image;
-@property (nonatomic) NSString *initialsForAvatar;
+@property (nonatomic) UIImage *image;
 @property (nonatomic) NSString *viewTitle;
 @property (nonatomic) NSString *detail;
 @property (nonatomic) NSString *boldInDetail;

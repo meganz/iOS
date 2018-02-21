@@ -1621,7 +1621,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     customModalAlertVC.boldInDetail = self.email;
     
     if (isInOutgoingContactRequest) {
-        customModalAlertVC.image = @"inviteSent";
+        customModalAlertVC.image = [UIImage imageNamed:@"inviteSent"];
         customModalAlertVC.viewTitle = AMLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
         customModalAlertVC.detail = [NSString stringWithFormat:@"The user %@ has been invited and will appear in your contact list once accepted", self.email];
         customModalAlertVC.action = AMLocalizedString(@"close", nil);
@@ -1631,7 +1631,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             [weakCustom dismissViewControllerAnimated:YES completion:nil];
         };
     } else {
-        customModalAlertVC.image = @"groupChat";
+        customModalAlertVC.image = [UIImage imageNamed:@"groupChat"];
         customModalAlertVC.viewTitle = AMLocalizedString(@"inviteContact", @"Title shown when the user tries to make a call and the destination is not in the contact list");
         customModalAlertVC.detail = [NSString stringWithFormat:@"Your contact %@ is not on MEGA. In order to call through MEGA's encrypted chat you need to invite your contact", self.email];
         customModalAlertVC.action = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
@@ -2523,7 +2523,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
         customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-        customModalAlertVC.image = @"transfer-quota-empty";
+        customModalAlertVC.image = [UIImage imageNamed:@"transfer-quota-empty"];
         customModalAlertVC.viewTitle = AMLocalizedString(@"depletedTransferQuota_title", @"Title shown when you almost had used your available transfer quota.");
         customModalAlertVC.detail = AMLocalizedString(@"depletedTransferQuota_message", @"Description shown when you almost had used your available transfer quota.");
         customModalAlertVC.action = AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
