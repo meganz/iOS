@@ -1379,7 +1379,3 @@
 "user"="user";
 /* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
 "xVersions"="[X] versions";
-
-
-
-
