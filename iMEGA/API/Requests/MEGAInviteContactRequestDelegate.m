@@ -75,7 +75,7 @@
         
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
         customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-        customModalAlertVC.image = @"inviteSent";
+        customModalAlertVC.image = [UIImage imageNamed:@"inviteSent"];
         customModalAlertVC.viewTitle = AMLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
         customModalAlertVC.detail = detailText;
         customModalAlertVC.boldInDetail = request.email;
