@@ -15,6 +15,4 @@
 
 @property (weak, nonatomic) id<NodeInfoViewControllerDelegate> nodeInfoDelegate;
 
-- (void)configureCloseBarButton;
-
 @end
