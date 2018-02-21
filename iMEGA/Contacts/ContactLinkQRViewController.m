@@ -3,6 +3,8 @@
 
 #import <AVKit/AVKit.h>
 
+#import "SVProgressHUD.h"
+
 #import "CustomModalAlertViewController.h"
 #import "MEGASdkManager.h"
 
@@ -15,6 +17,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *qrImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIView *cameraView;
+@property (weak, nonatomic) IBOutlet UILabel *contactLinkLabel;
+@property (weak, nonatomic) IBOutlet UIButton *linkCopyButton;
 
 @property (nonatomic) AVCaptureSession *captureSession;
 @property (nonatomic) AVCaptureVideoPreviewLayer *videoPreviewLayer;
@@ -30,6 +34,7 @@
     
     [self.segmentedControl setTitle:@"My Code" forSegmentAtIndex:0];
     [self.segmentedControl setTitle:@"Scan Code" forSegmentAtIndex:1];
+    [self.linkCopyButton setTitle:AMLocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard") forState:UIControlStateNormal];
 
     [[MEGASdkManager sharedMEGASdk] contactLinkCreateWithDelegate:self];
 }
@@ -76,14 +81,15 @@
         case 0:
             [self stopRecognizingCodes];
             self.view.backgroundColor = [UIColor whiteColor];
-            self.avatarImageView.hidden = self.qrImageView.hidden = NO;
+            self.qrImageView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = NO;
+            self.linkCopyButton.hidden = self.contactLinkLabel.text.length==0;
             self.cameraView.hidden = YES;
             break;
             
         case 1:
             if ([self startRecognizingCodes]) {
                 self.view.backgroundColor = [UIColor clearColor];
-                self.avatarImageView.hidden = self.qrImageView.hidden = YES;
+                self.qrImageView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = self.linkCopyButton.hidden = YES;
                 self.cameraView.hidden = NO;
                 self.queryInProgress = NO;
             } else {
@@ -100,6 +106,11 @@
 - (IBAction)backButtonTapped:(UIButton *)sender {
     [self stopRecognizingCodes];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)linkCopyButtonTapped:(UIButton *)sender {
+    [UIPasteboard generalPasteboard].string = self.contactLinkLabel.text;
+    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"copiedToTheClipboard", @"Text of the button after the links were copied to the clipboard")];
 }
 
 #pragma mark - QR recognizing
@@ -197,6 +208,10 @@
         switch (request.type) {
             case MEGARequestTypeContactLinkCreate: {
                 NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
+                self.contactLinkLabel.text = destination;
+                if (self.segmentedControl.selectedSegmentIndex == 0) {
+                    self.linkCopyButton.hidden = NO;
+                }
                 
                 self.qrImageView.image = [self qrImageFromString:destination withSize:self.qrImageView.frame.size];
                 [self setUserAvatar];
