@@ -13,13 +13,16 @@
 
 @interface ContactLinkQRViewController () <AVCaptureMetadataOutputObjectsDelegate, MEGARequestDelegate>
 
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+@property (weak, nonatomic) IBOutlet UIButton *shareButton;
+
 @property (weak, nonatomic) IBOutlet UIImageView *qrImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
-@property (weak, nonatomic) IBOutlet UIView *cameraView;
 @property (weak, nonatomic) IBOutlet UILabel *contactLinkLabel;
 @property (weak, nonatomic) IBOutlet UIButton *linkCopyButton;
-@property (weak, nonatomic) IBOutlet UIButton *shareButton;
+
+@property (weak, nonatomic) IBOutlet UIView *cameraView;
 
 @property (nonatomic) AVCaptureSession *captureSession;
 @property (nonatomic) AVCaptureVideoPreviewLayer *videoPreviewLayer;
@@ -85,6 +88,7 @@
             self.qrImageView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = NO;
             self.linkCopyButton.hidden = self.shareButton.hidden = self.contactLinkLabel.text.length==0;
             self.cameraView.hidden = YES;
+            self.backButton.tintColor = self.segmentedControl.tintColor = [UIColor mnz_redF0373A];
             break;
             
         case 1:
@@ -93,6 +97,7 @@
                 self.qrImageView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = self.linkCopyButton.hidden = self.shareButton.hidden = YES;
                 self.cameraView.hidden = NO;
                 self.queryInProgress = NO;
+                self.backButton.tintColor = self.segmentedControl.tintColor = [UIColor whiteColor];
             } else {
                 sender.selectedSegmentIndex = 0;
             }
