@@ -1008,6 +1008,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.58050620719178081" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Klt-b6-DBf">
+                                <rect key="frame" x="63.5" y="209.5" width="248" height="248"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="248" id="Qjp-B0-bhp"/>
+                                    <constraint firstAttribute="width" constant="248" id="nQE-49-HHQ"/>
+                                </constraints>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pfM-gn-rhH">
                                 <rect key="frame" x="16" y="32" width="22" height="22"/>
                                 <constraints>
@@ -1091,6 +1099,16 @@
                                     <action selector="linkCopyButtonTapped:" destination="lRr-EZ-fCk" eventType="touchUpInside" id="Az0-7y-Ic5"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Line up the QR code to scan it with your device’s camera" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TpU-vV-XNa">
+                                <rect key="frame" x="63.5" y="106" width="248" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="41" id="XTQ-Hq-wyE"/>
+                                    <constraint firstAttribute="width" constant="248" id="lyr-nm-8UC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -1103,24 +1121,29 @@
                             <constraint firstAttribute="trailing" secondItem="kQ2-dK-rKs" secondAttribute="trailing" id="Evb-2L-Wpm"/>
                             <constraint firstItem="3eo-nP-4lO" firstAttribute="trailing" secondItem="l1U-26-tIN" secondAttribute="trailingMargin" id="Gof-12-hGV"/>
                             <constraint firstItem="pfM-gn-rhH" firstAttribute="top" secondItem="6GY-JJ-jXB" secondAttribute="bottom" constant="12" id="HX7-9d-dSF"/>
+                            <constraint firstItem="Klt-b6-DBf" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="Hx5-PL-qfr"/>
                             <constraint firstItem="vid-Qw-MNw" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="IPd-mJ-8Gf"/>
                             <constraint firstItem="0up-4b-k8w" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="Io7-Qm-ZfO"/>
+                            <constraint firstItem="TpU-vV-XNa" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="UP9-ZJ-hjP"/>
                             <constraint firstItem="RzH-fB-ztS" firstAttribute="top" secondItem="2Wz-hl-Go6" secondAttribute="bottom" id="WJt-9N-zJh"/>
                             <constraint firstItem="RzH-fB-ztS" firstAttribute="top" secondItem="kQ2-dK-rKs" secondAttribute="bottom" id="Wyg-Uh-TNa"/>
                             <constraint firstItem="kQ2-dK-rKs" firstAttribute="top" secondItem="l1U-26-tIN" secondAttribute="top" id="XFQ-Cx-9n4"/>
                             <constraint firstItem="D3t-9X-3oi" firstAttribute="top" secondItem="6GY-JJ-jXB" secondAttribute="bottom" constant="8" id="cW7-JH-dEG"/>
                             <constraint firstItem="2Wz-hl-Go6" firstAttribute="leading" secondItem="l1U-26-tIN" secondAttribute="leading" id="iBn-Vc-htj"/>
+                            <constraint firstItem="Klt-b6-DBf" firstAttribute="centerY" secondItem="l1U-26-tIN" secondAttribute="centerY" id="jfe-KN-QCx"/>
                             <constraint firstAttribute="trailing" secondItem="2Wz-hl-Go6" secondAttribute="trailing" id="mpE-BV-NAI"/>
                             <constraint firstItem="RzH-fB-ztS" firstAttribute="top" secondItem="A7t-aZ-ziV" secondAttribute="bottom" constant="69" id="nXt-np-awe"/>
                             <constraint firstItem="pfM-gn-rhH" firstAttribute="leading" secondItem="l1U-26-tIN" secondAttribute="leadingMargin" id="ryR-md-Iyf"/>
                             <constraint firstItem="GWN-sM-tLO" firstAttribute="centerY" secondItem="l1U-26-tIN" secondAttribute="centerY" id="x2A-0c-fjd"/>
                             <constraint firstItem="D3t-9X-3oi" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="zDi-CW-7ig"/>
+                            <constraint firstItem="TpU-vV-XNa" firstAttribute="top" secondItem="l1U-26-tIN" secondAttribute="top" constant="106" id="zjN-SY-vhs"/>
                             <constraint firstItem="RzH-fB-ztS" firstAttribute="top" secondItem="0up-4b-k8w" secondAttribute="bottom" constant="131" id="zyt-lI-5oJ"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="avatarImageView" destination="GWN-sM-tLO" id="AF0-7A-jRQ"/>
                         <outlet property="backButton" destination="pfM-gn-rhH" id="lXJ-ot-Cwg"/>
+                        <outlet property="cameraMaskBorderView" destination="Klt-b6-DBf" id="gXO-Og-NI1"/>
                         <outlet property="cameraMaskView" destination="kQ2-dK-rKs" id="dxi-nG-VXL"/>
                         <outlet property="cameraView" destination="2Wz-hl-Go6" id="W42-69-8CO"/>
                         <outlet property="contactLinkLabel" destination="0up-4b-k8w" id="aOt-g3-HgT"/>

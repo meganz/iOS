@@ -24,6 +24,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *cameraView;
 @property (weak, nonatomic) IBOutlet UIView *cameraMaskView;
+@property (weak, nonatomic) IBOutlet UIView *cameraMaskBorderView;
 
 @property (nonatomic) AVCaptureSession *captureSession;
 @property (nonatomic) AVCaptureVideoPreviewLayer *videoPreviewLayer;
@@ -55,6 +56,10 @@
     mask.fillRule = kCAFillRuleEvenOdd;
     self.cameraMaskView.layer.mask = mask;
     CGPathRelease(mutablePath);
+    
+    self.cameraMaskBorderView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.cameraMaskBorderView.layer.borderWidth = 2.0f;
+    self.cameraMaskBorderView.layer.cornerRadius = 46.0f;
 }
 
 #pragma mark - QR generation
@@ -101,7 +106,7 @@
             self.view.backgroundColor = [UIColor whiteColor];
             self.qrImageView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = NO;
             self.linkCopyButton.hidden = self.shareButton.hidden = self.contactLinkLabel.text.length==0;
-            self.cameraView.hidden = self.cameraMaskView.hidden = YES;
+            self.cameraView.hidden = self.cameraMaskView.hidden = self.cameraMaskBorderView.hidden = YES;
             self.backButton.tintColor = self.segmentedControl.tintColor = [UIColor mnz_redF0373A];
             break;
             
@@ -109,7 +114,7 @@
             if ([self startRecognizingCodes]) {
                 self.view.backgroundColor = [UIColor clearColor];
                 self.qrImageView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = self.linkCopyButton.hidden = self.shareButton.hidden = YES;
-                self.cameraView.hidden = self.cameraMaskView.hidden = NO;
+                self.cameraView.hidden = self.cameraMaskView.hidden = self.cameraMaskBorderView.hidden = NO;
                 self.queryInProgress = NO;
                 self.backButton.tintColor = self.segmentedControl.tintColor = [UIColor whiteColor];
             } else {
