@@ -3,7 +3,7 @@
 
 @protocol NodeInfoViewControllerDelegate <NSObject>
 
-- (void)presentParentNode:(MEGANode *)node inNavigation:(UINavigationController *)navigationController;
+- (void)presentParentNode:(MEGANode *)node;
 
 @end
 
