@@ -201,12 +201,14 @@
         AVMetadataMachineReadableCodeObject *metadata = metadataObjects.firstObject;
         if ([metadata.type isEqualToString:AVMetadataObjectTypeQRCode]) {
             if (!self.queryInProgress) {
+                self.queryInProgress = YES;
                 NSString *detectedString = metadata.stringValue;
                 NSString *baseString = @"https://mega.nz/C!";
                 if ([detectedString containsString:baseString]) {
-                    self.queryInProgress = YES;
                     NSString *base64Handle = [detectedString stringByReplacingOccurrencesOfString:baseString withString:@""];
                     [[MEGASdkManager sharedMEGASdk] contactLinkQueryWithHandle:[MEGASdk handleForBase64Handle:base64Handle] delegate:self];
+                } else {
+                    [self wrongCode];
                 }
             }
         }
@@ -272,10 +274,28 @@
     [self presentViewController:inviteOrDismissModal animated:YES completion:nil];
 }
 
+- (void)wrongCode {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        CABasicAnimation *colorAnimation = [CABasicAnimation animationWithKeyPath:@"borderColor"];
+        colorAnimation.fromValue = (id)[UIColor redColor].CGColor;
+        colorAnimation.toValue = (id)[UIColor whiteColor].CGColor;
+        colorAnimation.duration = 1;
+        self.cameraMaskBorderView.layer.borderColor = [UIColor whiteColor].CGColor;
+        [self.cameraMaskBorderView.layer addAnimation:colorAnimation forKey:@"borderColor"];
+    });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.queryInProgress = NO;
+    });
+}
+
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if (!error.type) {
+    if (error.type) {
+        if (request.type == MEGARequestTypeContactLinkQuery && error.type == MEGAErrorTypeApiENoent) {
+            [self wrongCode];
+        }
+    } else {
         switch (request.type) {
             case MEGARequestTypeContactLinkCreate: {
                 NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
