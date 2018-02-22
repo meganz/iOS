@@ -10,6 +10,7 @@
 #import "MEGASdkManager.h"
 
 #import "UIImage+GKContact.h"
+#import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
 @interface ContactLinkQRViewController () <AVCaptureMetadataOutputObjectsDelegate, MEGARequestDelegate>
@@ -68,39 +69,14 @@
     self.cameraMaskBorderView.layer.cornerRadius = 46.0f;
 }
 
-#pragma mark - QR generation
-
-- (UIImage *)qrImageFromString:(NSString *)qrString withSize:(CGSize)size {
-    NSData *qrData = [qrString dataUsingEncoding: NSISOLatin1StringEncoding];
-    NSString *qrCorrectionLevel = @"H";
-    
-    CIFilter *qrFilter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
-    [qrFilter setValue:qrData forKey:@"inputMessage"];
-    [qrFilter setValue:qrCorrectionLevel forKey:@"inputCorrectionLevel"];
-    
-    CIFilter *colorFilter = [CIFilter filterWithName:@"CIFalseColor"];
-    [colorFilter setValue:qrFilter.outputImage forKey:@"inputImage"];
-    [colorFilter setValue:[CIColor colorWithRed:0.94 green:0.22 blue:0.23] forKey:@"inputColor0"];
-    [colorFilter setValue:[CIColor whiteColor] forKey:@"inputColor1"];
-    
-    CIImage *ciImage = colorFilter.outputImage;
-    float scaleX = size.width / ciImage.extent.size.width;
-    float scaleY = size.height / ciImage.extent.size.height;
-    
-    ciImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeScale(scaleX, scaleY)];
-    
-    UIImage *image = [UIImage imageWithCIImage:ciImage
-                                         scale:UIScreen.mainScreen.scale
-                                   orientation:UIImageOrientationUp];
-    
-    return image;
-}
-
 #pragma mark - User avatar
 
 - (void)setUserAvatar {
     MEGAUser *myUser = [[MEGASdkManager sharedMEGASdk] myUser];
     [self.avatarImageView mnz_setImageForUserHandle:myUser.handle];
+    self.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.avatarImageView.layer.borderWidth = 6.0f;
+    self.avatarImageView.layer.cornerRadius = 40.0f;
 }
 
 #pragma mark - IBActions
@@ -283,7 +259,7 @@
                     self.linkCopyButton.hidden = self.shareButton.hidden = NO;
                 }
                 
-                self.qrImageView.image = [self qrImageFromString:destination withSize:self.qrImageView.frame.size];
+                self.qrImageView.image = [UIImage mnz_qrImageFromString:destination withSize:self.qrImageView.frame.size];
                 [self setUserAvatar];
                 
                 break;

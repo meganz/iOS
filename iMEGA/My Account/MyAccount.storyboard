@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14087.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="goA-hy-Wkg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="goA-hy-Wkg">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14075.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -282,6 +282,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eYn-oF-AZu">
                                 <rect key="frame" x="-4" y="0.0" width="383" height="180"/>
                                 <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7za-S6-P7g">
+                                        <rect key="frame" x="260" y="37" width="106" height="106"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="106" id="KFM-CD-tKb"/>
+                                            <constraint firstAttribute="height" constant="106" id="y89-d6-XLT"/>
+                                        </constraints>
+                                    </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wKG-M1-Umc">
                                         <rect key="frame" x="273" y="50" width="80" height="80"/>
                                         <constraints>
@@ -322,9 +329,11 @@
                                     <constraint firstItem="Zd2-ds-fPD" firstAttribute="centerY" secondItem="fZw-YY-bXH" secondAttribute="centerY" id="4Zp-P0-ghe"/>
                                     <constraint firstItem="Zd2-ds-fPD" firstAttribute="leading" secondItem="fZw-YY-bXH" secondAttribute="trailing" constant="2" id="8fN-zn-Pxz"/>
                                     <constraint firstItem="Hcr-fM-O6t" firstAttribute="leading" secondItem="YqG-fz-6ti" secondAttribute="leading" id="G6j-a6-0tP"/>
+                                    <constraint firstItem="7za-S6-P7g" firstAttribute="centerY" secondItem="eYn-oF-AZu" secondAttribute="centerY" id="IiH-QK-kgj"/>
                                     <constraint firstAttribute="bottom" secondItem="Hcr-fM-O6t" secondAttribute="bottom" constant="47" id="LKo-LZ-nFG"/>
                                     <constraint firstItem="fZw-YY-bXH" firstAttribute="top" secondItem="eYn-oF-AZu" secondAttribute="top" constant="106" id="LZq-bT-aMi"/>
                                     <constraint firstItem="YqG-fz-6ti" firstAttribute="leading" secondItem="eYn-oF-AZu" secondAttribute="leading" constant="30" id="MLA-ly-quH"/>
+                                    <constraint firstItem="wKG-M1-Umc" firstAttribute="centerX" secondItem="7za-S6-P7g" secondAttribute="centerX" id="O7V-Mv-VzI"/>
                                     <constraint firstAttribute="trailing" secondItem="wKG-M1-Umc" secondAttribute="trailing" constant="30" id="Pc3-Zs-V7B"/>
                                     <constraint firstItem="fZw-YY-bXH" firstAttribute="leading" secondItem="eYn-oF-AZu" secondAttribute="leading" constant="30" id="ZuE-3x-9BH"/>
                                     <constraint firstItem="YqG-fz-6ti" firstAttribute="top" relation="lessThanOrEqual" secondItem="eYn-oF-AZu" secondAttribute="top" constant="70" id="fzI-v0-gMp"/>
@@ -361,6 +370,7 @@
                         <outlet property="buyPROBarButtonItem" destination="yAq-Z4-Blx" id="LGG-fY-4Dv"/>
                         <outlet property="nameLabel" destination="YqG-fz-6ti" id="ONK-2v-2hU"/>
                         <outlet property="profileView" destination="eYn-oF-AZu" id="wui-te-f6l"/>
+                        <outlet property="qrCodeImageView" destination="7za-S6-P7g" id="zDD-j2-EzC"/>
                         <outlet property="tableView" destination="Yui-UF-WIL" id="dT7-Ok-gtJ"/>
                         <outlet property="viewAndEditProfileLabel" destination="fZw-YY-bXH" id="OMf-Ef-rGd"/>
                     </connections>
