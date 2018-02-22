@@ -1361,9 +1361,39 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         UIAlertAction *retryAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"retry", @"Button which allows to retry send message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             NSLog(@"retry tapped"); // sent message + discard || delete
             [[MEGASdkManager sharedMEGAChatSdk] removeUnsentMessageForChat:self.chatRoom.chatId rowId:message.rowId];
-            MEGAChatMessage *retryMessage = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:message.text];
-            retryMessage.chatRoom = self.chatRoom;
-            [self.messages replaceObjectAtIndex:path.item withObject:retryMessage];
+            
+            switch (message.type) {
+                case MEGAChatMessageTypeNormal: {
+                    MEGAChatMessage *retryMessage = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:message.text];
+                    [self.messages replaceObjectAtIndex:path.item withObject:retryMessage];
+                    break;
+                }
+                    
+                case MEGAChatMessageTypeAttachment: {
+                    MEGANode *node = [message.nodeList nodeAtIndex:0];
+                    [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:self.chatRoom.chatId node:node.handle delegate:self];
+                    [self.messages removeObjectAtIndex:path.item];
+                    [self.collectionView deleteItemsAtIndexPaths:@[path]];
+                    break;
+                }
+                    
+                case MEGAChatMessageTypeContact: {
+                    NSMutableArray *users = [[NSMutableArray alloc] init];
+                    for (NSUInteger i = 0; i < message.usersCount; i++) {
+                        MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[message userEmailAtIndex:i]];
+                        if (user) {
+                            [users addObject:user];
+                        }
+                    }
+                    
+                    MEGAChatMessage *retryMessage = [[MEGASdkManager sharedMEGAChatSdk] attachContactsToChat:self.chatRoom.chatId contacts:users];
+                    [self.messages replaceObjectAtIndex:path.item withObject:retryMessage];
+                    break;
+                }
+                    
+                default:
+                    break;
+            }
         }];
         [retryAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
         [alertController addAction:retryAlertAction];
