@@ -1,7 +1,9 @@
 #import "CustomActionViewController.h"
+
 #import "Helper.h"
 #import "MEGASdkManager.h"
 #import "MEGANode+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 
 #define kCollectionViewHeaderHeight 80
 #define kCollectionViewCellHeight 60
@@ -109,11 +111,7 @@
     
     UIImageView *imageView = [header viewWithTag:100];
     if (self.node.isFile) {
-        if (self.node.hasThumbnail) {
-            [Helper thumbnailForNode:self.node api:[MEGASdkManager sharedMEGASdk] cell:header];
-        } else {
-            imageView.image = [Helper imageForNode:self.node];
-        }
+        [imageView mnz_setThumbnailByNodeHandle:self.node.handle];
     } else if (self.node.isFolder) {
         imageView.image = [Helper imageForNode:self.node];
         info.text = [Helper filesAndFoldersInFolderNode:self.node api:[MEGASdkManager sharedMEGASdk]];
@@ -224,9 +222,6 @@
             } else {
                 [actions addObject:[self actionShare]];
                 [actions addObject:[self actionDownload]];
-                if (self.displayMode != DisplayModeNodeInfo) {
-                    [actions addObject:[self actionFileInfo]];
-                }
                 [actions addObject:[self actionCopy]];
                 [actions addObject:[self actionRename]];
                 [actions addObject:[self actionRemoveSharing]];

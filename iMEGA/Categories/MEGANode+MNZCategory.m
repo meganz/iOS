@@ -131,6 +131,8 @@
     [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
 }
 
+#pragma mark - Actions
+
 - (BOOL)mnz_downloadNode {
     MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self api:[MEGASdkManager sharedMEGASdk]];
     if (!offlineNodeExist) {
@@ -266,6 +268,46 @@
     }
 }
 
+#pragma mark - Utils
+
+- (NSMutableArray *)mnz_parentTreeArray {
+    NSMutableArray *parentTreeArray = [[NSMutableArray alloc] init];
+    
+    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self] == MEGAShareTypeAccessOwner) {
+        uint64_t rootHandle;
+        if ([[[MEGASdkManager sharedMEGASdk] nodePathForNode:self] hasPrefix:@"//bin"]) {
+            rootHandle = [[MEGASdkManager sharedMEGASdk] rubbishNode].parentHandle;
+        } else {
+            rootHandle = [[MEGASdkManager sharedMEGASdk] rootNode].handle;
+        }
+        
+        uint64_t tempHandle = self.parentHandle;
+        while (tempHandle != rootHandle) {
+            MEGANode *tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:tempHandle];
+            if (tempNode) {
+                [parentTreeArray insertObject:tempNode atIndex:0];
+                tempHandle = tempNode.parentHandle;
+            } else {
+                break;
+            }
+        }
+    } else {
+        MEGANode *tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.parentHandle];
+        while (tempNode != nil) {
+            [parentTreeArray insertObject:tempNode atIndex:0];
+            tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:tempNode.parentHandle];
+        }
+    }
+    
+    return parentTreeArray;
+}
+
+#pragma mark - Versions
+
+- (NSInteger)mnz_numberOfVersions {
+    return ([[MEGASdkManager sharedMEGASdk] hasVersionsForNode:self]) ? ([[MEGASdkManager sharedMEGASdk] numberOfVersionsForNode:self]) : 0;
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
@@ -337,7 +379,7 @@
         rightButtonAction.enabled = enableRightButton;
     }
 }
-    
+
 - (void)mnz_copyToGalleryFromTemporaryPath:(NSString *)path {
     if (self.name.mnz_isVideoPathExtension && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(path)) {
         UISaveVideoAtPathToSavedPhotosAlbum(path, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
@@ -366,49 +408,5 @@
         [[NSFileManager defaultManager] removeItemAtPath:videoPath error:nil];
     }
 }
-
-- (BOOL)mnz_hasVersions {
-    return [[MEGASdkManager sharedMEGASdk] hasVersionsForNode:self];
-}
-
-- (NSInteger)mnz_numberOfVersions {
-    if (self.mnz_hasVersions) {
-        return [[MEGASdkManager sharedMEGASdk] numberOfVersionsForNode:self];
-    } else {
-        return 0;
-    }
-}
-
-- (NSMutableArray *)mnz_parentNodes {
-    NSMutableArray *nodes = [[NSMutableArray alloc] init];
-    
-    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self] != MEGAShareTypeAccessOwner) { // node from inshare
-        MEGANode *tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.parentHandle];
-        while (tempNode != nil) {
-            [nodes insertObject:tempNode atIndex:0];
-            tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:tempNode.parentHandle];
-        }
-    } else {
-        uint64_t rootHandle;
-        if ([[[MEGASdkManager sharedMEGASdk] nodePathForNode:self] hasPrefix:@"//bin"]) {
-            rootHandle = [[MEGASdkManager sharedMEGASdk] rubbishNode].parentHandle;
-        } else {
-            rootHandle = [[MEGASdkManager sharedMEGASdk] rootNode].handle;
-        }
-        uint64_t tempHandle = self.parentHandle;
-        while (tempHandle != rootHandle) {
-            MEGANode *tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:tempHandle];
-            if (tempNode) {
-                [nodes insertObject:tempNode atIndex:0];
-                tempHandle = tempNode.parentHandle;
-            } else {
-                break;
-            }
-        }
-    }
-    
-    return nodes;
-}
-
 
 @end

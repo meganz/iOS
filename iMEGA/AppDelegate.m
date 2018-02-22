@@ -1462,13 +1462,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)presentNode:(MEGANode *)node inNavigationController:(UINavigationController *)navigationController {
-    NSMutableArray *nodes = node.mnz_parentNodes;
-    
     [navigationController popToRootViewControllerAnimated:NO];
     
-    for (MEGANode *node in nodes) {
+    NSArray *parentTreeArray = node.mnz_parentTreeArray;
+    for (MEGANode *node in parentTreeArray) {
         CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-        [cloudDriveTVC setParentNode:node];
+        cloudDriveTVC.parentNode = node;
         [navigationController pushViewController:cloudDriveTVC animated:NO];
     }
     
@@ -1484,8 +1483,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
         case MEGANodeTypeFile: {
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.parentHandle];
-                NSArray *nodes = [[[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode] mnz_nodesArrayFromNodeList];
-                [node mnz_openImageInNavigationController:navigationController withNodes:nodes folderLink:NO displayMode:DisplayModeCloudDrive];
+                NSArray *childNodes = [[[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode] mnz_nodesArrayFromNodeList];
+                [node mnz_openImageInNavigationController:navigationController withNodes:childNodes folderLink:NO displayMode:DisplayModeCloudDrive];
             } else {
                 [node mnz_openNodeInNavigationController:navigationController folderLink:NO];
             }
