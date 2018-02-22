@@ -30,7 +30,6 @@
 
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
-#import "DetailsNodeInfoViewController.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeTableViewCell.h"
 #import "PhotosViewController.h"
@@ -448,7 +447,7 @@
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
     self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
 
-    UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Share" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+    UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:[self.tableView cellForRowAtIndexPath:indexPath]];
         [self presentViewController:activityVC animated:YES completion:nil];
         [self setEditing:NO animated:YES];
@@ -1271,10 +1270,11 @@
 }
 
 - (void)showNodeInfo:(MEGANode *)node {
-    UINavigationController *nodeInfoNavigation = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfo"];
-    NodeInfoViewController *nodeInfoVC = (NodeInfoViewController*)[nodeInfoNavigation.viewControllers firstObject];
+    UINavigationController *nodeInfoNavigation = [self.storyboard instantiateViewControllerWithIdentifier:@"NodeInfoNavigationControllerID"];
+    NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
     nodeInfoVC.node = node;
     nodeInfoVC.nodeInfoDelegate = self;
+    
     [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
 }
 
@@ -1886,12 +1886,12 @@
 
 - (void)presentParentNode:(MEGANode *)node {
     
-    NSMutableArray *nodes = node.mnz_parentNodes;
+    NSArray *parentTreeArray = node.mnz_parentTreeArray;
     
     UINavigationController *navigation = self.navigationController;
     [self.navigationController popToRootViewControllerAnimated:NO];
     
-    for (MEGANode *node in nodes) {
+    for (MEGANode *node in parentTreeArray) {
         CloudDriveTableViewController *cloudDriveTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
         cloudDriveTVC.parentNode = node;
         [navigation pushViewController:cloudDriveTVC animated:NO];
@@ -1912,5 +1912,3 @@
 }
 
 @end
-
-

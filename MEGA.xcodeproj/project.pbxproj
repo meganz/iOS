@@ -213,6 +213,8 @@
 		5B6429E12020A8CF000E0DCB /* SF-UI-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429DB2020A5E6000E0DCB /* SF-UI-Text-Semibold.otf */; };
 		5B6429E22020A8D0000E0DCB /* SF-UI-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429DB2020A5E6000E0DCB /* SF-UI-Text-Semibold.otf */; };
 		5B6429E42020A9A3000E0DCB /* SF-UI-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429E32020A9A2000E0DCB /* SF-UI-Display-Bold.otf */; };
+		5B71631D203D9CE1001E5FBC /* NodeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226711A692ECC00EC7BB6 /* NodeTableViewCell.m */; };
+		5B71631E203D9D28001E5FBC /* NodeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226711A692ECC00EC7BB6 /* NodeTableViewCell.m */; };
 		5B78F0B21F3C5362007ED721 /* MyAccountHallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B78F0B11F3C5362007ED721 /* MyAccountHallViewController.m */; };
 		5B7B4CA21EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B4C9F1EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m */; };
 		5B7B4CA31EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B4CA11EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m */; };
@@ -286,7 +288,6 @@
 		9411355E1F0100DA00D33428 /* RemoveLinkActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F7917B1BC5754A00C58676 /* RemoveLinkActivity.m */; };
 		9411355F1F0100F600D33428 /* MEGAAssetOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 412EB2651C6E52AA001EA6D6 /* MEGAAssetOperation.m */; };
 		941135601F01011B00D33428 /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */; };
-		941135611F01013F00D33428 /* NodeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226711A692ECC00EC7BB6 /* NodeTableViewCell.m */; };
 		941135621F01015700D33428 /* LocalizationSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4122C0E51B274E8C001CE833 /* LocalizationSystem.m */; };
 		941135631F0106DC00D33428 /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC2ABF1AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m */; };
 		941135641F01071600D33428 /* NSString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */; };
@@ -394,7 +395,6 @@
 		945605421EDD65960094EF0F /* LocalizationSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4122C0E51B274E8C001CE833 /* LocalizationSystem.m */; };
 		945605441EDD66CE0094EF0F /* UIColor+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E88E6D7F1CF355FA00C9AD9E /* UIColor+MNZCategory.m */; };
 		945605451EDD66DA0094EF0F /* UIFont+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */; };
-		945605461EDD673D0094EF0F /* NodeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226711A692ECC00EC7BB6 /* NodeTableViewCell.m */; };
 		945605471EDD67520094EF0F /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
 		945605481EDD6F9B0094EF0F /* MEGAReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */; };
 		945605491EDD6FAC0094EF0F /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226881A692ECC00EC7BB6 /* Helper.m */; };
@@ -1722,8 +1722,6 @@
 				4152266B1A692ECC00EC7BB6 /* CloudDriveTableViewController.m */,
 				4152266C1A692ECC00EC7BB6 /* DetailsNodeInfoViewController.h */,
 				4152266D1A692ECC00EC7BB6 /* DetailsNodeInfoViewController.m */,
-				415226701A692ECC00EC7BB6 /* NodeTableViewCell.h */,
-				415226711A692ECC00EC7BB6 /* NodeTableViewCell.m */,
 				41AB8EBF1A7103B300E40A39 /* BrowserViewController.h */,
 				41AB8EC01A7103B300E40A39 /* BrowserViewController.m */,
 				41319F531B14968600696BA8 /* SortByTableViewController.h */,
@@ -2598,6 +2596,8 @@
 		832E102C202CB21700BDD30F /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				415226701A692ECC00EC7BB6 /* NodeTableViewCell.h */,
+				415226711A692ECC00EC7BB6 /* NodeTableViewCell.m */,
 				832E1030202D8E6900BDD30F /* NodePropertyTableViewCell.h */,
 				832E1031202D8E6900BDD30F /* NodePropertyTableViewCell.m */,
 				832E1033202DE10500BDD30F /* NodeTappablePropertyTableViewCell.h */,
@@ -3588,6 +3588,7 @@
 				9432294B1EDD9CE5007DB542 /* MEGAUser+MNZCategory.m in Sources */,
 				9456054B1EDD7AD70094EF0F /* LTHPasscodeViewController.m in Sources */,
 				944B205E1EE5C6C2003C967B /* LaunchViewController.m in Sources */,
+				5B71631D203D9CE1001E5FBC /* NodeTableViewCell.m in Sources */,
 				942255091EDC04CD0074C51A /* DocumentPickerViewController.m in Sources */,
 				9456054D1EDD7DB20094EF0F /* RemoveLinkActivity.m in Sources */,
 				945605451EDD66DA0094EF0F /* UIFont+MNZCategory.m in Sources */,
@@ -3605,7 +3606,6 @@
 				A85740C72032F6E70033034C /* MOChatDraft+CoreDataProperties.m in Sources */,
 				9432294A1EDD9CAA007DB542 /* UIDevice+MNZCategory.m in Sources */,
 				945605491EDD6FAC0094EF0F /* Helper.m in Sources */,
-				945605461EDD673D0094EF0F /* NodeTableViewCell.m in Sources */,
 				9432294E1EDD9CEE007DB542 /* NSString+MNZCategory.m in Sources */,
 				A81F2C6C1F334FF0008600A5 /* MEGAProcessAsset.m in Sources */,
 				943229311EDD8696007DB542 /* Reachability.m in Sources */,
@@ -3687,12 +3687,12 @@
 				941135521F00FFE400D33428 /* MEGAReachabilityManager.m in Sources */,
 				941135621F01015700D33428 /* LocalizationSystem.m in Sources */,
 				941135591F01006A00D33428 /* LTHKeychainUtils.m in Sources */,
+				5B71631E203D9D28001E5FBC /* NodeTableViewCell.m in Sources */,
 				9411355A1F01006A00D33428 /* LTHPasscodeViewController.m in Sources */,
 				94892C941EFBF02A00AEAC25 /* SVProgressAnimatedView.m in Sources */,
 				9411355D1F0100CA00D33428 /* CameraUploadsTableViewController.m in Sources */,
 				5BEACE231FB473700010E02F /* NSMutableAttributedString+MNZCategory.m in Sources */,
 				941135641F01071600D33428 /* NSString+MNZCategory.m in Sources */,
-				941135611F01013F00D33428 /* NodeTableViewCell.m in Sources */,
 				941135551F01002E00D33428 /* OpenInActivity.m in Sources */,
 				94892C981EFBF03800AEAC25 /* SVProgressHUD.m in Sources */,
 				5B2E78CD1FA0C3310096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,

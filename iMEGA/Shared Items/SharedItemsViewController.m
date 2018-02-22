@@ -14,7 +14,6 @@
 
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
-#import "DetailsNodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"
 #import "CustomActionViewController.h"
 #import "NodeInfoViewController.h"
@@ -355,11 +354,11 @@
 }
 
 - (void)showNodeInfo:(MEGANode *)node {
-    
-    UINavigationController *nodeInfoNavigation = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfo"];
-    NodeInfoViewController *nodeInfoVC = (NodeInfoViewController*)[nodeInfoNavigation.viewControllers firstObject];
+    UINavigationController *nodeInfoNavigation = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"NodeInfoNavigationControllerID"];
+    NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
     nodeInfoVC.node = node;
     nodeInfoVC.nodeInfoDelegate = self;
+    
     [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
 }
 
@@ -1193,12 +1192,12 @@
 
 - (void)presentParentNode:(MEGANode *)node {
     
-    NSMutableArray *nodes = node.mnz_parentNodes;
+    NSMutableArray *parentTreeArray = node.mnz_parentTreeArray;
     
     UINavigationController *navigation = self.navigationController;
     [self.navigationController popToRootViewControllerAnimated:NO];
     
-    for (MEGANode *node in nodes) {
+    for (MEGANode *node in parentTreeArray) {
         CloudDriveTableViewController *cloudDriveTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"SharedItemsViewControllerID"];
         cloudDriveTVC.parentNode = node;
         [navigation pushViewController:cloudDriveTVC animated:NO];

@@ -16,6 +16,7 @@
     if (self) {
         _shareBarButtonItem = barButtonItem;
     }
+    
     return self;
 }
 
@@ -24,6 +25,7 @@
     if (self) {
         _view = view;
     }
+    
     return self;
 }
 
