@@ -222,6 +222,7 @@
             } else {
                 [actions addObject:[self actionShare]];
                 [actions addObject:[self actionDownload]];
+                [actions addObject:[self actionFileInfo]];
                 [actions addObject:[self actionCopy]];
                 [actions addObject:[self actionRename]];
                 [actions addObject:[self actionRemoveSharing]];
