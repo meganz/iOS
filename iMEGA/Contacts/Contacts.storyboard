@@ -1099,13 +1099,23 @@
                                     <action selector="linkCopyButtonTapped:" destination="lRr-EZ-fCk" eventType="touchUpInside" id="Az0-7y-Ic5"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Line up the QR code to scan it with your device’s camera" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TpU-vV-XNa">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Line up the QR code to scan it with your device’s camera" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TpU-vV-XNa">
                                 <rect key="frame" x="63.5" y="106" width="248" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="41" id="XTQ-Hq-wyE"/>
                                     <constraint firstAttribute="width" constant="248" id="lyr-nm-8UC"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eNJ-w3-5Ia">
+                                <rect key="frame" x="63.5" y="521" width="248" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="248" id="aV8-OX-S4P"/>
+                                    <constraint firstAttribute="height" constant="29" id="eOB-MF-UHs"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="24"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -1118,6 +1128,7 @@
                             <constraint firstItem="A7t-aZ-ziV" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="6JD-ZG-scX"/>
                             <constraint firstItem="3eo-nP-4lO" firstAttribute="top" secondItem="6GY-JJ-jXB" secondAttribute="bottom" constant="11" id="7IJ-6z-9XC"/>
                             <constraint firstItem="kQ2-dK-rKs" firstAttribute="leading" secondItem="l1U-26-tIN" secondAttribute="leading" id="B4s-yg-TsM"/>
+                            <constraint firstAttribute="bottom" secondItem="eNJ-w3-5Ia" secondAttribute="bottom" constant="117" id="ESt-ex-Lg3"/>
                             <constraint firstAttribute="trailing" secondItem="kQ2-dK-rKs" secondAttribute="trailing" id="Evb-2L-Wpm"/>
                             <constraint firstItem="3eo-nP-4lO" firstAttribute="trailing" secondItem="l1U-26-tIN" secondAttribute="trailingMargin" id="Gof-12-hGV"/>
                             <constraint firstItem="pfM-gn-rhH" firstAttribute="top" secondItem="6GY-JJ-jXB" secondAttribute="bottom" constant="12" id="HX7-9d-dSF"/>
@@ -1129,6 +1140,7 @@
                             <constraint firstItem="RzH-fB-ztS" firstAttribute="top" secondItem="kQ2-dK-rKs" secondAttribute="bottom" id="Wyg-Uh-TNa"/>
                             <constraint firstItem="kQ2-dK-rKs" firstAttribute="top" secondItem="l1U-26-tIN" secondAttribute="top" id="XFQ-Cx-9n4"/>
                             <constraint firstItem="D3t-9X-3oi" firstAttribute="top" secondItem="6GY-JJ-jXB" secondAttribute="bottom" constant="8" id="cW7-JH-dEG"/>
+                            <constraint firstItem="eNJ-w3-5Ia" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="hGY-Fy-vbs"/>
                             <constraint firstItem="2Wz-hl-Go6" firstAttribute="leading" secondItem="l1U-26-tIN" secondAttribute="leading" id="iBn-Vc-htj"/>
                             <constraint firstItem="Klt-b6-DBf" firstAttribute="centerY" secondItem="l1U-26-tIN" secondAttribute="centerY" id="jfe-KN-QCx"/>
                             <constraint firstAttribute="trailing" secondItem="2Wz-hl-Go6" secondAttribute="trailing" id="mpE-BV-NAI"/>
@@ -1147,6 +1159,8 @@
                         <outlet property="cameraMaskView" destination="kQ2-dK-rKs" id="dxi-nG-VXL"/>
                         <outlet property="cameraView" destination="2Wz-hl-Go6" id="W42-69-8CO"/>
                         <outlet property="contactLinkLabel" destination="0up-4b-k8w" id="aOt-g3-HgT"/>
+                        <outlet property="errorLabel" destination="eNJ-w3-5Ia" id="n7P-Yb-6iG"/>
+                        <outlet property="hintLabel" destination="TpU-vV-XNa" id="LXJ-Rf-Y3a"/>
                         <outlet property="linkCopyButton" destination="A7t-aZ-ziV" id="qwl-cl-vn9"/>
                         <outlet property="moreButton" destination="3eo-nP-4lO" id="G6s-gF-IkV"/>
                         <outlet property="qrImageView" destination="vid-Qw-MNw" id="SvK-bV-L0F"/>
