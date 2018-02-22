@@ -54,7 +54,6 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sortByBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *negativeSpaceBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
@@ -1017,20 +1016,19 @@
 }
 
 - (void)setNavigationBarButtonItems {
-    [self createNegativeSpaceBarButtonItem];
     
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
             if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode] == MEGAShareTypeAccessRead) {
-                self.navigationItem.rightBarButtonItems = @[self.negativeSpaceBarButtonItem, self.editBarButtonItem, self.sortByBarButtonItem];
+                self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem, self.sortByBarButtonItem];
             } else {
-                self.navigationItem.rightBarButtonItems = @[self.negativeSpaceBarButtonItem, self.moreBarButtonItem];
+                self.navigationItem.rightBarButtonItems = @[self.moreBarButtonItem];
             }
             break;
         }
             
         case DisplayModeRubbishBin:
-            self.navigationItem.rightBarButtonItems = @[self.negativeSpaceBarButtonItem, self.editBarButtonItem, self.sortByBarButtonItem];
+            self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem, self.sortByBarButtonItem];
             break;
             
         default:
@@ -1053,17 +1051,6 @@
             
         default:
             break;
-    }
-}
-
-- (void)createNegativeSpaceBarButtonItem {
-    if (self.negativeSpaceBarButtonItem == nil) {
-        self.negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-        if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
-            self.negativeSpaceBarButtonItem.width = -8.0;
-        } else {
-            self.negativeSpaceBarButtonItem.width = -4.0;
-        }
     }
 }
 
@@ -1393,8 +1380,8 @@
     if (editing) {
         if (!isSwipeEditing) {
             [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
-            self.navigationItem.rightBarButtonItems = @[self.negativeSpaceBarButtonItem, self.editBarButtonItem];
-            self.navigationItem.leftBarButtonItems = @[self.negativeSpaceBarButtonItem, self.selectAllBarButtonItem];
+            self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
+            self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
             [self.toolbar setAlpha:0.0];
             [self.tabBarController.tabBar addSubview:self.toolbar];
             [UIView animateWithDuration:0.33f animations:^ {
@@ -1788,6 +1775,16 @@
     return !self.isEditing;
 }
 
+-(void) swipeTableCellWillBeginSwiping:(nonnull MGSwipeTableCell *) cell {
+    NodeTableViewCell *nodeCell = (NodeTableViewCell *)cell;
+    [nodeCell hideCancelButton:YES];
+}
+
+-(void) swipeTableCellWillEndSwiping:(nonnull MGSwipeTableCell *) cell {
+    NodeTableViewCell *nodeCell = (NodeTableViewCell *)cell;
+    [nodeCell hideCancelButton:NO];
+}
+
 - (NSArray *)swipeTableCell:(MGSwipeTableCell *)cell swipeButtonsForDirection:(MGSwipeDirection)direction
              swipeSettings:(MGSwipeSettings *)swipeSettings expansionSettings:(MGSwipeExpansionSettings *)expansionSettings {
     
@@ -1886,28 +1883,31 @@
 
 - (void)presentParentNode:(MEGANode *)node {
     
-    NSArray *parentTreeArray = node.mnz_parentTreeArray;
-    
-    UINavigationController *navigation = self.navigationController;
-    [self.navigationController popToRootViewControllerAnimated:NO];
-    
-    for (MEGANode *node in parentTreeArray) {
-        CloudDriveTableViewController *cloudDriveTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-        cloudDriveTVC.parentNode = node;
-        [navigation pushViewController:cloudDriveTVC animated:NO];
-    }
-
-    switch (node.type) {
-        case MEGANodeTypeFolder:
-        case MEGANodeTypeRubbish: {
-            CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+    if (self.searchController.isActive) {
+        NSArray *parentTreeArray = node.mnz_parentTreeArray;
+        
+        //Created a reference to self.navigationController because if the presented view is not the root controller and search is active, the 'popToRootViewControllerAnimated' makes nil the self.navigationController and therefore the parentTreeArray nodes can't be pushed
+        UINavigationController *navigation = self.navigationController;
+        [navigation popToRootViewControllerAnimated:NO];
+        
+        for (MEGANode *node in parentTreeArray) {
+            CloudDriveTableViewController *cloudDriveTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             cloudDriveTVC.parentNode = node;
             [navigation pushViewController:cloudDriveTVC animated:NO];
-            break;
         }
-            
-        default:
-            break;
+        
+        switch (node.type) {
+            case MEGANodeTypeFolder:
+            case MEGANodeTypeRubbish: {
+                CloudDriveTableViewController *cloudDriveTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                cloudDriveTVC.parentNode = node;
+                [navigation pushViewController:cloudDriveTVC animated:NO];
+                break;
+            }
+                
+            default:
+                break;
+        }
     }
 }
 

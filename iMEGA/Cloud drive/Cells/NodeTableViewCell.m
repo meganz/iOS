@@ -4,6 +4,16 @@
 
 @implementation NodeTableViewCell
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    
+    if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhonePlus]) {
+        self.cancelButtonTrailingConstraint.constant = 10;
+    } else {
+        self.cancelButtonTrailingConstraint.constant = 6;
+    }
+}
+
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
@@ -14,6 +24,10 @@
         [self setSeparatorInset:UIEdgeInsetsMake(0, 60, 0, 0)];
         self.cancelButton.hidden = NO;
     }
+}
+
+- (void)hideCancelButton:(BOOL)hide {
+    self.cancelButton.hidden = hide;
 }
 
 #pragma mark - Private

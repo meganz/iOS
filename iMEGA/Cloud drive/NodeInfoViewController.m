@@ -78,7 +78,8 @@
 - (void)reloadUI {
     self.nodeProperties = [self nodePropertyCells];
 
-    self.title = AMLocalizedString(@"info", nil);
+    self.title = self.node.isFile ? AMLocalizedString(@"fileInfo", @"Label of the option menu. When clicking this button, the app shows the info of the file.") : AMLocalizedString(@"folderInfo", @"Label of the option menu. When clicking this button, the app shows the info of the folder.");
+
     self.nameLabel.text = self.node.name;
     if (self.node.type == MEGANodeTypeFile) {
         [self.thumbnailImageView mnz_setThumbnailByNodeHandle:self.node.handle];
@@ -97,14 +98,6 @@
     } else {
         return 60;
     }
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 60;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 1;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -386,6 +379,45 @@
     }];
 }
 
+- (void)reloadOrShowWarningAfterActionOnNode:(MEGANode *)nodeUpdated {
+    nodeUpdated = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[self.node handle]];
+    if (nodeUpdated != nil) { //Is nil if you don't have access to it
+        if (nodeUpdated.parentHandle == self.node.parentHandle) { //Same place as before
+            //Node renamed, update UI with the new info.
+            //Also when you get link, share folder or remove link
+//            if (self.displayMode == DisplayModeSharedItem && self.node.isOutShare && !nodeUpdated.isOutShare) {
+//                self.displayMode = DisplayModeCloudDrive;
+//            }
+            self.node = nodeUpdated;
+            [self reloadUI];
+        } else {
+            //Node moved to the Rubbish Bin or moved inside the same shared folder
+            NSString *alertTitle;
+            if (nodeUpdated.parentHandle == [[[MEGASdkManager sharedMEGASdk] rubbishNode] handle]) {
+                alertTitle = (self.node.isFolder) ? AMLocalizedString(@"folderMovedToTheRubbishBin_alertTitle", @"Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location") : AMLocalizedString(@"fileMovedToTheRubbishBin_alertTitle", @"Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location");
+            } else {
+                alertTitle = (self.node.isFolder) ? AMLocalizedString(@"folderMoved_alertTitle", @"Alert title shown when you are seeing the details of a folder and you moved it from another location") : AMLocalizedString(@"fileMoved_alertTitle", @"Alert title shown when you are seeing the details of a file and you moved it from another location");
+            }
+            
+            UIAlertController *warningAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
+            [warningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }]];
+            
+            [self presentViewController:warningAlertController animated:YES completion:nil];
+        }
+    } else {
+        //Node removed from the Rubbish Bin or moved outside of the shared folder
+        NSString *alertTitle = (self.node.isFolder) ? AMLocalizedString(@"youNoLongerHaveAccessToThisFolder_alertTitle", @"Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be") : AMLocalizedString(@"youNoLongerHaveAccessToThisFile_alertTitle", @"Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be");
+        UIAlertController *warningAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [warningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }]];
+        
+        [self presentViewController:warningAlertController animated:YES completion:nil];
+    }
+}
+
 #pragma mark - CustomActionViewControllerDelegate
 
 - (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender {
@@ -442,9 +474,18 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    self.node = [nodeList nodeAtIndex:0];
     
-    [self reloadUI];
+    MEGANode *nodeUpdated;
+    
+    NSUInteger size = [[nodeList size] unsignedIntegerValue];
+    for (NSUInteger i = 0; i < size; i++) {
+        nodeUpdated = [nodeList nodeAtIndex:i];
+        
+        if ([nodeUpdated handle] == [self.node handle]) {
+            [self reloadOrShowWarningAfterActionOnNode:nodeUpdated];
+            break;
+        }
+    }
 }
 
 @end
