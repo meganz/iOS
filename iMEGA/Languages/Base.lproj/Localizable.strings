@@ -1379,3 +1379,7 @@
 "user"="user";
 /* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
 "xVersions"="[X] versions";
+/* Label of the option menu. When clicking this button, the app shows the info of the file */
+"fileInfo"="File info";
+/* Label of the option menu. When clicking this button, the app shows the info of the folder */
+"folderInfo"="Folder info";

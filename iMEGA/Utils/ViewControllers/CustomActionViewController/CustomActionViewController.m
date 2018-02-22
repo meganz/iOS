@@ -244,7 +244,8 @@
 }
 
 - (MegaActionNode *)actionFileInfo {
-    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") iconName: @"info" andActionType:MegaNodeActionTypeFileInfo];
+    NSString *infoTitle = self.node.isFile ? AMLocalizedString(@"fileInfo", @"Label of the option menu. When clicking this button, the app shows the info of the file.") : AMLocalizedString(@"folderInfo", @"Label of the option menu. When clicking this button, the app shows the info of the folder.");
+    return [[MegaActionNode alloc] initWithTitle:infoTitle iconName: @"info" andActionType:MegaNodeActionTypeFileInfo];
 }
 
 - (MegaActionNode *)actionRename {
