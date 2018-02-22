@@ -14,6 +14,8 @@
 
 @interface CreateAccountViewController () <UINavigationControllerDelegate, UITextFieldDelegate, MEGARequestDelegate>
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
+
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *lastNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
@@ -28,8 +30,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *termsOfServiceButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
-
-@property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITextField *activeTextField;
@@ -48,6 +48,8 @@
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     tapGesture.cancelsTouchesInView = NO;
     [self.scrollView addGestureRecognizer:tapGesture];
+    
+    self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
     
     self.nameTextField.placeholder = AMLocalizedString(@"firstName", @"Hint text for the first name (Placeholder)");
     self.lastNameTextField.placeholder = AMLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)");
@@ -69,8 +71,6 @@
     self.createAccountButton.backgroundColor = [UIColor mnz_grayCCCCCC];
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Create Account") forState:UIControlStateNormal];
     
-    [self.loginButton setTitle:AMLocalizedString(@"login", nil) forState:UIControlStateNormal];
-    
     [self registerForKeyboardNotifications];
 }
 
@@ -89,6 +89,10 @@
 }
 
 #pragma mark - Private
+
+- (IBAction)cancel:(UIBarButtonItem *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (BOOL)validateForm {
     if (![self validateName:self.nameTextField.text] || ![self validateName:self.lastNameTextField.text]) {

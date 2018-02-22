@@ -12,6 +12,7 @@
 
 #import "MEGAActivityItemProvider.h"
 #import "MEGANode+MNZCategory.h"
+#import "MEGALogger.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
@@ -1256,18 +1257,19 @@ static MEGAIndexer *indexer;
 
 #pragma mark - Log
 
-+ (UIAlertView *)logAlertView:(BOOL)enableLog {
-    UIAlertView *logAlertView;
-    NSString *title = enableLog ? AMLocalizedString(@"enableDebugMode_title", nil) :AMLocalizedString(@"disableDebugMode_title", nil);
-    NSString *message = enableLog ? AMLocalizedString(@"enableDebugMode_message", nil) :AMLocalizedString(@"disableDebugMode_message", nil);
-    logAlertView = [[UIAlertView alloc] initWithTitle:title
-                                              message:message
-                                             delegate:nil
-                                    cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                    otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-    logAlertView.tag = enableLog ? 1 : 0;
++ (void)enableOrDisableLog {
+    BOOL enableLog = ![[NSUserDefaults standardUserDefaults] boolForKey:@"logging"];
+    NSString *alertTitle = enableLog ? AMLocalizedString(@"enableDebugMode_title", @"Alert title shown when the DEBUG mode is enabled") :AMLocalizedString(@"disableDebugMode_title", @"Alert title shown when the DEBUG mode is disabled");
+    NSString *alertMessage = enableLog ? AMLocalizedString(@"enableDebugMode_message", @"Alert message shown when the DEBUG mode is enabled") :AMLocalizedString(@"disableDebugMode_message", @"Alert message shown when the DEBUG mode is disabled");
     
-    return logAlertView;
+    UIAlertController *logAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+    [logAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
+    [logAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        enableLog ? [[MEGALogger sharedLogger] startLogging] : [[MEGALogger sharedLogger] stopLogging];
+    }]];
+    
+    [[UIApplication mnz_visibleViewController] presentViewController:logAlertController animated:YES completion:nil];
 }
 
 @end

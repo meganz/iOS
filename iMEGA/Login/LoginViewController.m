@@ -15,6 +15,7 @@
 @interface LoginViewController () <UITextFieldDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoTopLayoutConstraint;
 
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
@@ -35,6 +36,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (([[UIDevice currentDevice] iPhone4X])) {
+        self.logoTopLayoutConstraint.constant = 24.f;
+    }
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(logoTappedFiveTimes:)];
     tapGestureRecognizer.numberOfTapsRequired = 5;
@@ -106,10 +111,7 @@
 
 - (void)logoTappedFiveTimes:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
-        BOOL enableLogging = ![[NSUserDefaults standardUserDefaults] boolForKey:@"logging"];
-        UIAlertView *logAlertView = [Helper logAlertView:enableLogging];
-        logAlertView.delegate = self;
-        [logAlertView show];
+        [Helper enableOrDisableLog];
     }
 }
 
@@ -192,14 +194,6 @@
     if ([segue.identifier isEqualToString:@"CreateAccountStoryboardSegueID"] && [sender isKindOfClass:[NSString class]]) {
         CreateAccountViewController *createAccountVC = (CreateAccountViewController *)segue.destinationViewController;
         [createAccountVC setEmailString:sender];
-    }
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        (alertView.tag == 0) ? [[MEGALogger sharedLogger] stopLogging] : [[MEGALogger sharedLogger] startLogging];
     }
 }
 
