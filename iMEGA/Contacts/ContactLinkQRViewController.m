@@ -9,6 +9,7 @@
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGASdkManager.h"
 
+#import "UIAlertAction+MNZCategory.h"
 #import "UIImage+GKContact.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
@@ -17,7 +18,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
-@property (weak, nonatomic) IBOutlet UIButton *shareButton;
+@property (weak, nonatomic) IBOutlet UIButton *moreButton;
 
 @property (weak, nonatomic) IBOutlet UIImageView *qrImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
@@ -32,6 +33,8 @@
 @property (nonatomic) AVCaptureVideoPreviewLayer *videoPreviewLayer;
 
 @property (nonatomic) BOOL queryInProgress;
+
+@property (nonatomic) uint64_t contactLinkHandle; // TODO: Delete this property as it is going to be useless
 
 @end
 
@@ -87,7 +90,7 @@
             [self stopRecognizingCodes];
             self.view.backgroundColor = [UIColor whiteColor];
             self.qrImageView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = NO;
-            self.linkCopyButton.hidden = self.shareButton.hidden = self.contactLinkLabel.text.length==0;
+            self.linkCopyButton.hidden = self.moreButton.hidden = self.contactLinkLabel.text.length==0;
             self.cameraView.hidden = self.cameraMaskView.hidden = self.cameraMaskBorderView.hidden = YES;
             self.backButton.tintColor = self.segmentedControl.tintColor = [UIColor mnz_redF0373A];
             break;
@@ -95,7 +98,7 @@
         case 1:
             if ([self startRecognizingCodes]) {
                 self.view.backgroundColor = [UIColor clearColor];
-                self.qrImageView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = self.linkCopyButton.hidden = self.shareButton.hidden = YES;
+                self.qrImageView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = self.linkCopyButton.hidden = self.moreButton.hidden = YES;
                 self.cameraView.hidden = self.cameraMaskView.hidden = self.cameraMaskBorderView.hidden = NO;
                 self.queryInProgress = NO;
                 self.backButton.tintColor = self.segmentedControl.tintColor = [UIColor whiteColor];
@@ -121,12 +124,34 @@
     [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"copiedToTheClipboard", @"Text of the button after the links were copied to the clipboard")];
 }
 
-- (IBAction)openInButtonTapped:(UIButton *)sender {
-    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.contactLinkLabel.text] applicationActivities:nil];
-    [activityVC.popoverPresentationController setSourceView:self.view];
-    [activityVC.popoverPresentationController setSourceRect:sender.frame];
+- (IBAction)moreButtonTapped:(UIButton *)sender {
+    UIAlertController *moreAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [moreAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
+    if (self.contactLinkLabel.text.length>0) {
+        UIAlertAction *shareAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"share", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.contactLinkLabel.text] applicationActivities:nil];
+            [activityVC.popoverPresentationController setSourceView:self.view];
+            [activityVC.popoverPresentationController setSourceRect:sender.frame];
+            
+            [self presentViewController:activityVC animated:YES completion:nil];
+        }];
+        [shareAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+        [moreAlertController addAction:shareAlertAction];
+    }
+    
+    UIAlertAction *resetAlertAction = [UIAlertAction actionWithTitle:@"Reset QR Code" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        self.qrImageView.image = nil;
+        [[MEGASdkManager sharedMEGASdk] contactLinkDeleteWithHandle:self.contactLinkHandle delegate:self];
+    }];
+    [resetAlertAction mnz_setTitleTextColor:[UIColor redColor]];
+    [moreAlertController addAction:resetAlertAction];
+    
+    moreAlertController.modalPresentationStyle = UIModalPresentationPopover;
+    moreAlertController.popoverPresentationController.sourceRect = sender.frame;
+    moreAlertController.popoverPresentationController.sourceView = sender.superview;
 
-    [self presentViewController:activityVC animated:YES completion:nil];
+    [self presentViewController:moreAlertController animated:YES completion:nil];
 }
 
 #pragma mark - QR recognizing
@@ -190,11 +215,11 @@
 
 #pragma mark - QR recognized
 
-- (void)presentInviteModalForEmail:(NSString *)email contactLinkHandle:(uint64_t)contactLinkHandle {
+- (void)presentInviteModalForEmail:(NSString *)email fullName:(NSString *)fullName contactLinkHandle:(uint64_t)contactLinkHandle {
     CustomModalAlertViewController *inviteOrDismissModal = [[CustomModalAlertViewController alloc] init];
     inviteOrDismissModal.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    inviteOrDismissModal.image = [UIImage imageForName:email.uppercaseString size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor colorFromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:64.0f]]; // TODO: Use fullName.uppercaseString when available
-    inviteOrDismissModal.viewTitle = @""; // TODO: Set here the fullName
+    inviteOrDismissModal.image = [UIImage imageForName:fullName.uppercaseString size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor colorFromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:64.0f]];
+    inviteOrDismissModal.viewTitle = fullName;
     inviteOrDismissModal.detail = email;
     inviteOrDismissModal.action = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
     inviteOrDismissModal.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
@@ -254,9 +279,10 @@
         switch (request.type) {
             case MEGARequestTypeContactLinkCreate: {
                 NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
+                self.contactLinkHandle = request.nodeHandle;
                 self.contactLinkLabel.text = destination;
                 if (self.segmentedControl.selectedSegmentIndex == 0) {
-                    self.linkCopyButton.hidden = self.shareButton.hidden = NO;
+                    self.linkCopyButton.hidden = self.moreButton.hidden = NO;
                 }
                 
                 self.qrImageView.image = [UIImage mnz_qrImageFromString:destination withSize:self.qrImageView.frame.size];
@@ -266,8 +292,15 @@
             }
                 
             case MEGARequestTypeContactLinkQuery: {
-                [self presentInviteModalForEmail:request.email contactLinkHandle:request.nodeHandle];
+                NSString *fullName = [NSString stringWithFormat:@"%@ %@", request.name, request.text];
+                [self presentInviteModalForEmail:request.email fullName:fullName contactLinkHandle:request.nodeHandle];
                 
+                break;
+            }
+                
+            case MEGARequestTypeContactLinkDelete: {
+                [[MEGASdkManager sharedMEGASdk] contactLinkCreateWithDelegate:self];
+
                 break;
             }
                 
