@@ -6,8 +6,10 @@
 #import "SVProgressHUD.h"
 
 #import "CustomModalAlertViewController.h"
+#import "MainTabBarController.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGASdkManager.h"
+#import "QRSettingsTableViewController.h"
 
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImage+GKContact.h"
@@ -140,6 +142,13 @@
         [moreAlertController addAction:shareAlertAction];
     }
     
+    UIAlertAction *settingsAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"settingsTitle", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UINavigationController *qrSettingsNC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"QRSettingsNavigationControllerID"];
+        [self presentViewController:qrSettingsNC animated:YES completion:nil];
+    }];
+    [settingsAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [moreAlertController addAction:settingsAlertAction];
+    
     UIAlertAction *resetAlertAction = [UIAlertAction actionWithTitle:@"Reset QR Code" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         self.qrImageView.image = nil;
         [[MEGASdkManager sharedMEGASdk] contactLinkDeleteWithHandle:self.contactLinkHandle delegate:self];
@@ -257,11 +266,8 @@
                 [weakSelf presentViewController:inviteSentModal animated:YES completion:nil];
             }];
         } else {
-            MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1];
-            [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
-            [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:^{
-                weakSelf.queryInProgress = NO;
-            }];
+            [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd handle:contactLinkHandle delegate:self];
+            [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:nil];
         }
     };
     
@@ -320,6 +326,28 @@
                 
             case MEGARequestTypeContactLinkDelete: {
                 [[MEGASdkManager sharedMEGASdk] contactLinkCreateWithDelegate:self];
+
+                break;
+            }
+                
+            case MEGARequestTypeInviteContact: {
+                CustomModalAlertViewController *inviteSentModal = [[CustomModalAlertViewController alloc] init];
+                inviteSentModal.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+                inviteSentModal.image = [UIImage imageNamed:@"inviteSent"];
+                inviteSentModal.viewTitle = AMLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
+                inviteSentModal.detail = [NSString stringWithFormat:@"The user %@ has been invited and will appear in your contact list once accepted", request.email];
+                inviteSentModal.boldInDetail = request.email;
+                inviteSentModal.action = AMLocalizedString(@"close", nil);
+                inviteSentModal.dismiss = nil;
+                
+                __weak ContactLinkQRViewController *weakSelf = self;
+                __weak typeof(CustomModalAlertViewController) *weakInviteSentModal = inviteSentModal;
+                inviteSentModal.completion = ^{
+                    [weakInviteSentModal dismissViewControllerAnimated:YES completion:^{
+                        weakSelf.queryInProgress = NO;
+                    }];
+                };
+                [self presentViewController:inviteSentModal animated:YES completion:nil];
 
                 break;
             }
