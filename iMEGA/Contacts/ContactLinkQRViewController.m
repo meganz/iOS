@@ -30,6 +30,8 @@
 @property (weak, nonatomic) IBOutlet UIView *cameraView;
 @property (weak, nonatomic) IBOutlet UIView *cameraMaskView;
 @property (weak, nonatomic) IBOutlet UIView *cameraMaskBorderView;
+@property (weak, nonatomic) IBOutlet UILabel *hintLabel;
+@property (weak, nonatomic) IBOutlet UILabel *errorLabel;
 
 @property (nonatomic) AVCaptureSession *captureSession;
 @property (nonatomic) AVCaptureVideoPreviewLayer *videoPreviewLayer;
@@ -93,7 +95,7 @@
             self.view.backgroundColor = [UIColor whiteColor];
             self.qrImageView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = NO;
             self.linkCopyButton.hidden = self.moreButton.hidden = self.contactLinkLabel.text.length==0;
-            self.cameraView.hidden = self.cameraMaskView.hidden = self.cameraMaskBorderView.hidden = YES;
+            self.cameraView.hidden = self.cameraMaskView.hidden = self.cameraMaskBorderView.hidden = self.hintLabel.hidden = self.errorLabel.hidden = YES;
             self.backButton.tintColor = self.segmentedControl.tintColor = [UIColor mnz_redF0373A];
             break;
             
@@ -101,7 +103,7 @@
             if ([self startRecognizingCodes]) {
                 self.view.backgroundColor = [UIColor clearColor];
                 self.qrImageView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = self.linkCopyButton.hidden = self.moreButton.hidden = YES;
-                self.cameraView.hidden = self.cameraMaskView.hidden = self.cameraMaskBorderView.hidden = NO;
+                self.cameraView.hidden = self.cameraMaskView.hidden = self.cameraMaskBorderView.hidden = self.hintLabel.hidden = self.errorLabel.hidden = NO;
                 self.queryInProgress = NO;
                 self.backButton.tintColor = self.segmentedControl.tintColor = [UIColor whiteColor];
             } else {
@@ -214,10 +216,11 @@
                 NSString *detectedString = metadata.stringValue;
                 NSString *baseString = @"https://mega.nz/C!";
                 if ([detectedString containsString:baseString]) {
+                    [self feedbackWithMessage:@"Code scanned" andColor:[UIColor greenColor]];
                     NSString *base64Handle = [detectedString stringByReplacingOccurrencesOfString:baseString withString:@""];
                     [[MEGASdkManager sharedMEGASdk] contactLinkQueryWithHandle:[MEGASdk handleForBase64Handle:base64Handle] delegate:self];
                 } else {
-                    [self wrongCode];
+                    [self feedbackWithMessage:@"Invalid code" andColor:[UIColor redColor]];
                 }
             }
         }
@@ -280,10 +283,11 @@
     [self presentViewController:inviteOrDismissModal animated:YES completion:nil];
 }
 
-- (void)wrongCode {
+- (void)feedbackWithMessage:(NSString *)message andColor:(UIColor *)color {
     dispatch_async(dispatch_get_main_queue(), ^{
+        self.errorLabel.text = message;
         CABasicAnimation *colorAnimation = [CABasicAnimation animationWithKeyPath:@"borderColor"];
-        colorAnimation.fromValue = (id)[UIColor redColor].CGColor;
+        colorAnimation.fromValue = (id)color.CGColor;
         colorAnimation.toValue = (id)[UIColor whiteColor].CGColor;
         colorAnimation.duration = 1;
         self.cameraMaskBorderView.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -291,6 +295,7 @@
     });
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.queryInProgress = NO;
+        self.errorLabel.text = @"";
     });
 }
 
@@ -299,7 +304,7 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if (error.type) {
         if (request.type == MEGARequestTypeContactLinkQuery && error.type == MEGAErrorTypeApiENoent) {
-            [self wrongCode];
+            [self feedbackWithMessage:@"Invalid code" andColor:[UIColor redColor]];
         }
     } else {
         switch (request.type) {
