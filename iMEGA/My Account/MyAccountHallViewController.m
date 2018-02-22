@@ -12,6 +12,7 @@
 #import "MyAccountViewController.h"
 #import "SettingsTableViewController.h"
 #import "TransfersViewController.h"
+#import "UIImage+MNZCategory.h"
 #import "UpgradeTableViewController.h"
 #import "UsageViewController.h"
 
@@ -303,12 +304,32 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     [super onRequestFinish:api request:request error:error];
     
-    if (request.type == MEGARequestTypeAccountDetails) {
-        if (error.type) {
-            return;
+    switch (request.type) {
+        case MEGARequestTypeAccountDetails:
+            if (error.type) {
+                return;
+            }
+            
+            [self reloadUI];
+            
+            break;
+            
+        case MEGARequestTypeContactLinkCreate: {
+            if (error.type) {
+                return;
+            }
+            
+            NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
+            self.qrCodeImageView.image = [UIImage mnz_qrImageFromString:destination withSize:self.qrCodeImageView.frame.size];
+            self.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+            self.avatarImageView.layer.borderWidth = 6.0f;
+            self.avatarImageView.layer.cornerRadius = 40.0f;
+            
+            break;
         }
-        
-        [self reloadUI];
+            
+        default:
+            break;
     }
 }
 

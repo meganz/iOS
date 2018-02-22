@@ -6,6 +6,7 @@
 
 #import "SVProgressHUD.h"
 
+#import "ContactLinkQRViewController.h"
 #import "Helper.h"
 #import "MEGAImagePickerController.h"
 #import "MEGANavigationController.h"
@@ -15,8 +16,6 @@
 #import "UIImageView+MNZCategory.h"
 
 @interface MyAccountBaseViewController ()
-
-@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 
 @end
 
@@ -34,6 +33,8 @@
     if (@available(iOS 11.0, *)) {
         self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
+    
+    [[MEGASdkManager sharedMEGASdk] contactLinkCreateWithDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -73,6 +74,14 @@
     }];
     [changeAvatarAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
     [editProfileAlertController addAction:changeAvatarAlertAction];
+    
+    UIAlertAction *scanCodeAlertAction = [UIAlertAction actionWithTitle:@"My Code" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
+        contactLinkVC.scanCode = NO;
+        [self presentViewController:contactLinkVC animated:YES completion:nil];
+    }];
+    [scanCodeAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [editProfileAlertController addAction:scanCodeAlertAction];
     
     NSString *myUserBase64Handle = [MEGASdk base64HandleForUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
     NSString *myAvatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:myUserBase64Handle];

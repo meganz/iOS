@@ -1063,10 +1063,10 @@
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GWN-sM-tLO">
-                                <rect key="frame" x="150" y="296" width="74" height="74"/>
+                                <rect key="frame" x="147" y="293" width="80" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="74" id="Tno-WG-8hv"/>
-                                    <constraint firstAttribute="height" constant="74" id="hr6-Nx-r3d"/>
+                                    <constraint firstAttribute="width" constant="80" id="Tno-WG-8hv"/>
+                                    <constraint firstAttribute="height" constant="80" id="hr6-Nx-r3d"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0up-4b-k8w">
