@@ -15,6 +15,7 @@
 @interface LoginViewController () <UITextFieldDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoTopLayoutConstraint;
 
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
@@ -36,6 +37,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if (([[UIDevice currentDevice] iPhone4X])) {
+        self.logoTopLayoutConstraint.constant = 24.f;
+    }
+    
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(logoTappedFiveTimes:)];
     tapGestureRecognizer.numberOfTapsRequired = 5;
     self.logoImageView.gestureRecognizers = @[tapGestureRecognizer];
@@ -44,7 +49,7 @@
     [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Password")];
     
     [self.loginButton setTitle:AMLocalizedString(@"login", @"Login") forState:UIControlStateNormal];
-    [self.loginButton setBackgroundColor:[UIColor mnz_grayCCCCCC]];
+    self.loginButton.backgroundColor = [UIColor mnz_grayEEEEEE];
     
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", nil) forState:UIControlStateNormal];
     NSString *forgotPasswordString = AMLocalizedString(@"forgotPassword", @"An option to reset the password.");
@@ -106,10 +111,7 @@
 
 - (void)logoTappedFiveTimes:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
-        BOOL enableLogging = ![[NSUserDefaults standardUserDefaults] boolForKey:@"logging"];
-        UIAlertView *logAlertView = [Helper logAlertView:enableLogging];
-        logAlertView.delegate = self;
-        [logAlertView show];
+        [Helper enableOrDisableLog];
     }
 }
 
@@ -195,14 +197,6 @@
     }
 }
 
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        (alertView.tag == 0) ? [[MEGALogger sharedLogger] stopLogging] : [[MEGALogger sharedLogger] startLogging];
-    }
-}
-
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
@@ -214,7 +208,7 @@
         shoulBeLoginButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
     }
     
-    shoulBeLoginButtonGray ? [self.loginButton setBackgroundColor:[UIColor mnz_grayCCCCCC]] : [self.loginButton setBackgroundColor:[UIColor mnz_redFF4D52]];
+    self.loginButton.backgroundColor = shoulBeLoginButtonGray ? [UIColor mnz_grayEEEEEE] : [UIColor mnz_redFF4D52];
     
     return YES;
 }
