@@ -55,7 +55,12 @@
     if (self.scanCode) {
         self.segmentedControl.selectedSegmentIndex = 1;
         [self valueChangedAtSegmentedControl:self.segmentedControl];
+        [self stopRecognizingCodes];
     }
+    
+    self.cameraMaskBorderView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.cameraMaskBorderView.layer.borderWidth = 2.0f;
+    self.cameraMaskBorderView.layer.cornerRadius = 46.0f;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -66,7 +71,44 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+
+    [self setupCameraMask];
+    if (self.scanCode) {
+        [self startRecognizingCodes];
+    }
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [self stopRecognizingCodes];
+    self.cameraMaskView.hidden = YES;
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        [self.videoPreviewLayer.connection setVideoOrientation:(AVCaptureVideoOrientation)[[UIApplication sharedApplication] statusBarOrientation]];
+        [self setupCameraMask];
+        [self startRecognizingCodes];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        self.cameraMaskView.hidden = self.segmentedControl.selectedSegmentIndex==0;
+    }];
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    if ([[UIDevice currentDevice] iPhoneDevice]) {
+        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+    }
     
+    return UIInterfaceOrientationMaskAll;
+}
+
+#pragma mark - User avatar and camera mask
+
+- (void)setUserAvatar {
+    MEGAUser *myUser = [[MEGASdkManager sharedMEGASdk] myUser];
+    [self.avatarImageView mnz_setImageForUserHandle:myUser.handle];
+    self.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.avatarImageView.layer.borderWidth = 6.0f;
+    self.avatarImageView.layer.cornerRadius = 40.0f;
+}
+
+- (void)setupCameraMask {
     CGMutablePathRef mutablePath = CGPathCreateMutable();
     CGPathAddRect(mutablePath, nil, self.cameraMaskView.frame);
     CGPathAddRoundedRect(mutablePath, nil, self.qrImageView.frame, 46.0f, 46.0f);
@@ -75,20 +117,6 @@
     mask.fillRule = kCAFillRuleEvenOdd;
     self.cameraMaskView.layer.mask = mask;
     CGPathRelease(mutablePath);
-    
-    self.cameraMaskBorderView.layer.borderColor = [UIColor whiteColor].CGColor;
-    self.cameraMaskBorderView.layer.borderWidth = 2.0f;
-    self.cameraMaskBorderView.layer.cornerRadius = 46.0f;
-}
-
-#pragma mark - User avatar
-
-- (void)setUserAvatar {
-    MEGAUser *myUser = [[MEGASdkManager sharedMEGASdk] myUser];
-    [self.avatarImageView mnz_setImageForUserHandle:myUser.handle];
-    self.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
-    self.avatarImageView.layer.borderWidth = 6.0f;
-    self.avatarImageView.layer.cornerRadius = 40.0f;
 }
 
 #pragma mark - IBActions
@@ -191,6 +219,7 @@
 
         self.videoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.captureSession];
         [self.videoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+        [self.videoPreviewLayer.connection setVideoOrientation:(AVCaptureVideoOrientation)[[UIApplication sharedApplication] statusBarOrientation]];
         [self.videoPreviewLayer setFrame:self.cameraView.layer.bounds];
         [self.cameraView.layer addSublayer:self.videoPreviewLayer];
         
