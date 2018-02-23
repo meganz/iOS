@@ -753,10 +753,6 @@ static MEGAIndexer *indexer;
         } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
             PhotoCollectionViewCell *photoCollectionViewCell = cell;
             [photoCollectionViewCell.thumbnailImageView setImage:[Helper imageForNode:node]];
-        } else if ([cell isKindOfClass:UICollectionReusableView.class]) {
-            UICollectionReusableView *headerAction = cell;
-            UIImageView *imageView = [headerAction viewWithTag:100];
-            imageView.image = [Helper imageForNode:node];
         }
     }
 }
@@ -772,10 +768,6 @@ static MEGAIndexer *indexer;
         [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
         photoCollectionViewCell.thumbnailPlayImageView.hidden = !node.name.mnz_videoPathExtension;
         photoCollectionViewCell.thumbnailVideoOverlayView.hidden = !(node.name.mnz_videoPathExtension && node.duration>-1);
-    } else if ([cell isKindOfClass:[UICollectionReusableView class]]) {
-        UICollectionReusableView *headerAction = cell;
-        UIImageView *imageView = [headerAction viewWithTag:100];
-        imageView.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
     }
     
     if (reindex) {
@@ -784,19 +776,17 @@ static MEGAIndexer *indexer;
 }
 
 + (NSString *)sizeAndDateForNode:(MEGANode *)node api:(MEGASdk *)api {
+    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], [self dateWithISO8601FormatOfRawTime:node.creationTime.timeIntervalSince1970]];
+}
+
++ (NSString *)sizeForNode:(MEGANode *)node api:(MEGASdk *)api {
     NSString *size;
-    time_t rawtime;
     if ([node isFile]) {
         size = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory];
-        rawtime = [[node modificationTime] timeIntervalSince1970];
     } else {
         size = [NSByteCountFormatter stringFromByteCount:[[api sizeForNode:node] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
-        rawtime = [[node creationTime] timeIntervalSince1970];
     }
-    
-    NSString *date = [self dateWithISO8601FormatOfRawTime:rawtime];
-    
-    return [NSString stringWithFormat:@"%@ • %@", size, date];
+    return size;
 }
 
 + (NSString *)dateWithISO8601FormatOfRawTime:(time_t)rawtime {
@@ -884,9 +874,9 @@ static MEGAIndexer *indexer;
     UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItemsMutableArray applicationActivities:activitiesMutableArray];
     [activityVC setExcludedActivityTypes:excludedActivityTypesMutableArray];
     
-    if ([[sender class] isEqual:[UIBarButtonItem class]]) {
+    if ([[sender class] isEqual:UIBarButtonItem.class]) {
         activityVC.popoverPresentationController.barButtonItem = sender;
-    }else {
+    } else {
         UIView *presentationView = (UIView*)sender;
         activityVC.popoverPresentationController.sourceView = presentationView;
         activityVC.popoverPresentationController.sourceRect = CGRectMake(0, 0, presentationView.frame.size.width/2, presentationView.frame.size.height/2);

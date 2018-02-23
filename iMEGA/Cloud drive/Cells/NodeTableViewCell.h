@@ -14,10 +14,13 @@
 @property (weak, nonatomic) IBOutlet UIImageView *arrowImageView;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *horizontalLineLayoutConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cancelButtonTrailingConstraint;
 
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailPlayImageView;
 @property (weak, nonatomic) IBOutlet UIProgressView *downloadProgressView;
 
 @property (nonatomic) uint64_t nodeHandle;
+
+- (void)hideCancelButton:(BOOL)hide;
 
 @end

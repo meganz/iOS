@@ -9,6 +9,9 @@
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink;
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink;
 - (void)mnz_generateThumbnailForVideoAtPath:(NSURL *)path;
+
+#pragma mark - Actions
+
 - (BOOL)mnz_downloadNode;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController completion:(void(^)(MEGARequest *request))completion;
@@ -17,5 +20,13 @@
 - (void)mnz_leaveSharingInViewController:(UIViewController *)viewController;
 - (void)mnz_removeSharing;
 - (void)mnz_copyToGalleryFromTemporaryPath:(NSString *)path;
+
+#pragma mark - Utils
+
+- (NSMutableArray *)mnz_parentTreeArray;
+
+#pragma mark - Versions
+
+- (NSInteger)mnz_numberOfVersions;
 
 @end
