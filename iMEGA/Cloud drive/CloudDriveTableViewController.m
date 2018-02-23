@@ -1775,12 +1775,12 @@
     return !self.isEditing;
 }
 
--(void) swipeTableCellWillBeginSwiping:(nonnull MGSwipeTableCell *) cell {
+- (void)swipeTableCellWillBeginSwiping:(nonnull MGSwipeTableCell *)cell {
     NodeTableViewCell *nodeCell = (NodeTableViewCell *)cell;
     [nodeCell hideCancelButton:YES];
 }
 
--(void) swipeTableCellWillEndSwiping:(nonnull MGSwipeTableCell *) cell {
+- (void)swipeTableCellWillEndSwiping:(nonnull MGSwipeTableCell *)cell {
     NodeTableViewCell *nodeCell = (NodeTableViewCell *)cell;
     [nodeCell hideCancelButton:NO];
 }
