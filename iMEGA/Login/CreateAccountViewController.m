@@ -63,12 +63,9 @@
     [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Password")];
     [self.retypePasswordTextField setPlaceholder:AMLocalizedString(@"confirmPassword", nil)];
     
-    [self.termsOfServiceButton setTitle:AMLocalizedString(@"termsOfServiceButton", @"I agree with the MEGA Terms of Service") forState:UIControlStateNormal];
-    if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
-        self.termsOfServiceButton.titleLabel.font = [UIFont mnz_SFUIRegularWithSize:11.0f];
-    }
+    [self setTermsOfServiceAttributedTitle];
     
-    self.createAccountButton.backgroundColor = [UIColor mnz_grayCCCCCC];
+    self.createAccountButton.backgroundColor = [UIColor mnz_grayEEEEEE];
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Create Account") forState:UIControlStateNormal];
     
     [self registerForKeyboardNotifications];
@@ -91,6 +88,8 @@
 #pragma mark - Private
 
 - (IBAction)cancel:(UIBarButtonItem *)sender {
+    [self hideKeyboard];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -234,6 +233,20 @@
     self.scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
 }
 
+- (void)setTermsOfServiceAttributedTitle {
+    NSString *agreeWithTheMEGATermsOfService = AMLocalizedString(@"agreeWithTheMEGATermsOfService", @"");
+    NSString *termsOfServiceString = [agreeWithTheMEGATermsOfService mnz_stringBetweenString:@"[A]" andString:@"[/A]"];
+    agreeWithTheMEGATermsOfService = [agreeWithTheMEGATermsOfService mnz_removeWebclientFormatters];
+    
+    NSMutableAttributedString *termsOfServiceMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:agreeWithTheMEGATermsOfService attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
+    [termsOfServiceMutableAttributedString setAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]} range:[agreeWithTheMEGATermsOfService rangeOfString:@"MEGA"]];
+    if (termsOfServiceString) {
+        [termsOfServiceMutableAttributedString setAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]} range:[agreeWithTheMEGATermsOfService rangeOfString:termsOfServiceString]];
+    }
+    
+    [self.termsOfServiceButton setAttributedTitle:termsOfServiceMutableAttributedString forState:UIControlStateNormal];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)termsCheckboxTouchUpInside:(id)sender {
@@ -283,13 +296,13 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     BOOL shoulBeCreateAccountButtonGray = NO;
-    if ([text isEqualToString:@""] || (![self.emailTextField.text mnz_isValidEmail]) || ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordTextField.text] == PasswordStrengthVeryWeak)) {
+    if ([text isEqualToString:@""] || (![self.emailTextField.text mnz_isValidEmail]) || ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordTextField.text] == PasswordStrengthVeryWeak) || !self.termsCheckboxButton.isSelected) {
         shoulBeCreateAccountButtonGray = YES;
     } else {
         shoulBeCreateAccountButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
     }
     
-    shoulBeCreateAccountButtonGray ? [self.createAccountButton setBackgroundColor:[UIColor mnz_grayCCCCCC]] : [self.createAccountButton setBackgroundColor:[UIColor mnz_redFF4D52]];
+    self.createAccountButton.backgroundColor = shoulBeCreateAccountButtonGray ? [UIColor mnz_grayEEEEEE] : [UIColor mnz_redFF4D52];
     
     if (textField.tag == 3) {
         if (text.length == 0) {
