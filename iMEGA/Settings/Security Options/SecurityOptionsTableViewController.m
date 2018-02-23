@@ -40,7 +40,7 @@
     [self.changePasswordLabel setText:AMLocalizedString(@"changePasswordLabel", @"The name for the change password label")];
     self.resetPasswordLabel.text = AMLocalizedString(@"forgotPassword", @"An option to reset the password.");
     
-    self.qrCodeLabel.text = @"QR Code";
+    self.qrCodeLabel.text = AMLocalizedString(@"qrCode", @"QR Code label, used in Settings as title. String as short as possible");
     
     self.changeEmailLabel.text = AMLocalizedString(@"changeEmail", @"The title of the alert dialog to change the email associated to an account.");
     

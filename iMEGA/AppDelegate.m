@@ -1623,7 +1623,9 @@ void uncaughtExceptionHandler(NSException *exception) {
     if (isInOutgoingContactRequest) {
         customModalAlertVC.image = [UIImage imageNamed:@"inviteSent"];
         customModalAlertVC.viewTitle = AMLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
-        customModalAlertVC.detail = [NSString stringWithFormat:@"The user %@ has been invited and will appear in your contact list once accepted", self.email];
+        NSString *detailText = AMLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
+        detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:self.email];
+        customModalAlertVC.detail = detailText;
         customModalAlertVC.action = AMLocalizedString(@"close", nil);
         customModalAlertVC.dismiss = nil;
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;

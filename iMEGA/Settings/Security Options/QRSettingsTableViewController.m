@@ -20,9 +20,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"QR Code";
-    self.autoAcceptLabel.text = @"Auto-Accept";
-    self.resetQRCodeLabel.text = @"Reset QR Code";
+    self.navigationItem.title = AMLocalizedString(@"qrCode", @"QR Code label, used in Settings as title. String as short as possible");
+    self.autoAcceptLabel.text = AMLocalizedString(@"autoAccept", @"Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible.");
+    self.resetQRCodeLabel.text = AMLocalizedString(@"resetQrCode", @"Action to reset the current valid QR code of the user");
     self.closeBarButtonItem.title = AMLocalizedString(@"close", nil);
     
     [[MEGASdkManager sharedMEGASdk] getContactLinksOptionWithDelegate:self];
@@ -34,11 +34,11 @@
     NSString *footer = @"";
     switch (section) {
         case 0:
-            footer = @"Contacts that scan your QR Code will be automatically added to your contact list.";
+            footer = AMLocalizedString(@"autoAcceptFooter", @"Footer that explains the way Auto-Accept works for QR codes");
             break;
             
         case 1:
-            footer = @"Previous QR Codes will no longer be valid.";
+            footer = AMLocalizedString(@"resetQrCodeFooter", @"Footer that explains what would happen if the user resets his/her QR code");
             break;
             
         default:
@@ -73,7 +73,7 @@
     if (!error.type) {
         switch (request.type) {
             case MEGARequestTypeContactLinkDelete:
-                [SVProgressHUD showSuccessWithStatus:@"Previous QR Codes will no longer be valid."];
+                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"resetQrCodeFooter", @"Footer that explains what would happen if the user resets his/her QR code")];
                 break;
                 
             case MEGARequestTypeGetAttrUser:
