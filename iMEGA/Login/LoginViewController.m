@@ -49,7 +49,7 @@
     [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Password")];
     
     [self.loginButton setTitle:AMLocalizedString(@"login", @"Login") forState:UIControlStateNormal];
-    [self.loginButton setBackgroundColor:[UIColor mnz_grayCCCCCC]];
+    self.loginButton.backgroundColor = [UIColor mnz_grayEEEEEE];
     
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", nil) forState:UIControlStateNormal];
     NSString *forgotPasswordString = AMLocalizedString(@"forgotPassword", @"An option to reset the password.");
@@ -208,7 +208,7 @@
         shoulBeLoginButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
     }
     
-    shoulBeLoginButtonGray ? [self.loginButton setBackgroundColor:[UIColor mnz_grayCCCCCC]] : [self.loginButton setBackgroundColor:[UIColor mnz_redFF4D52]];
+    self.loginButton.backgroundColor = shoulBeLoginButtonGray ? [UIColor mnz_grayEEEEEE] : [UIColor mnz_redFF4D52];
     
     return YES;
 }
