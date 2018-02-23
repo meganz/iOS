@@ -1351,4 +1351,23 @@
 "missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";
 /* Button title to see the available bonus */
 "getBonus"="Get Bonus";
-
+/* QR Code label, used in Settings as title. String as short as possible */
+"qrCode"="QR Code";
+/* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
+"autoAccept"="Auto-Accept";
+/* Footer that explains the way Auto-Accept works for QR codes */
+"autoAcceptFooter"="Contacts that scan your QR Code will be automatically added to your contact list.";
+/* Action to reset the current valid QR code of the user */
+"resetQrCode"="Reset QR Code";
+/* Footer that explains what would happen if the user resets his/her QR code */
+"resetQrCodeFooter"="Previous QR Codes will no longer be valid.";
+/* Title for view that displays the QR code of the user. String as short as possible. */
+"myCode"="My Code";
+/* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
+"scanCode"="Scan Code";
+/* Label that encourage the user to line the QR to scan with the camera */
+"lineCodeWithCamera"="Line up the QR code to scan it with your device’s camera";
+/* Error text shown when the user scans a QR that is not valid. String as short as possible. */
+"invalidCode"="Invalid code";
+/* Success text shown in a label when the user scans a valid QR. String as short as possible. */
+"codeScanned"="Code scanned";

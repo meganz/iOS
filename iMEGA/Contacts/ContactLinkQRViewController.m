@@ -48,10 +48,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.segmentedControl setTitle:@"My Code" forSegmentAtIndex:0];
-    [self.segmentedControl setTitle:@"Scan Code" forSegmentAtIndex:1];
+    [self.segmentedControl setTitle:AMLocalizedString(@"myCode", @"Title for view that displays the QR code of the user. String as short as possible.") forSegmentAtIndex:0];
+    [self.segmentedControl setTitle:AMLocalizedString(@"scanCode", @"Segmented control title for view that allows the user to scan QR codes. String as short as possible.") forSegmentAtIndex:1];
     [self.linkCopyButton setTitle:AMLocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard") forState:UIControlStateNormal];
     
+    self.hintLabel.text = AMLocalizedString(@"lineCodeWithCamera", @"Label that encourage the user to line the QR to scan with the camera");
+
     if (self.scanCode) {
         self.segmentedControl.selectedSegmentIndex = 1;
         [self valueChangedAtSegmentedControl:self.segmentedControl];
@@ -185,7 +187,7 @@
     [settingsAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [moreAlertController addAction:settingsAlertAction];
     
-    UIAlertAction *resetAlertAction = [UIAlertAction actionWithTitle:@"Reset QR Code" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *resetAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"resetQrCode", @"Action to reset the current valid QR code of the user") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         self.qrImageView.image = nil;
         [[MEGASdkManager sharedMEGASdk] contactLinkDeleteWithHandle:self.contactLinkHandle delegate:self];
     }];
@@ -289,7 +291,9 @@
             inviteSentModal.modalPresentationStyle = UIModalPresentationOverCurrentContext;
             inviteSentModal.image = [UIImage imageNamed:@"inviteSent"];
             inviteSentModal.viewTitle = AMLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
-            inviteSentModal.detail = [NSString stringWithFormat:@"The user %@ has been invited and will appear in your contact list once accepted", email];
+            NSString *detailText = AMLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
+            detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:email];
+            inviteSentModal.detail = detailText;
             inviteSentModal.boldInDetail = email;
             inviteSentModal.action = AMLocalizedString(@"close", nil);
             inviteSentModal.dismiss = nil;
@@ -318,7 +322,7 @@
 }
 
 - (void)feedbackWithSuccess:(BOOL)success {
-    NSString *message = success ? @"Code scanned" : @"Invalid code";
+    NSString *message = success ? AMLocalizedString(@"codeScanned", @"Success text shown in a label when the user scans a valid QR. String as short as possible.") : AMLocalizedString(@"invalidCode", @"Error text shown when the user scans a QR that is not valid. String as short as possible.");
     UIColor *color = success ? [UIColor greenColor] : [UIColor redColor];
     dispatch_async(dispatch_get_main_queue(), ^{
         self.errorLabel.text = message;
@@ -377,7 +381,9 @@
                 inviteSentModal.modalPresentationStyle = UIModalPresentationOverCurrentContext;
                 inviteSentModal.image = [UIImage imageNamed:@"inviteSent"];
                 inviteSentModal.viewTitle = AMLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
-                inviteSentModal.detail = [NSString stringWithFormat:@"The user %@ has been invited and will appear in your contact list once accepted", request.email];
+                NSString *detailText = AMLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
+                detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
+                inviteSentModal.detail = detailText;
                 inviteSentModal.boldInDetail = request.email;
                 inviteSentModal.action = AMLocalizedString(@"close", nil);
                 inviteSentModal.dismiss = nil;

@@ -75,7 +75,7 @@
     [changeAvatarAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
     [editProfileAlertController addAction:changeAvatarAlertAction];
     
-    UIAlertAction *scanCodeAlertAction = [UIAlertAction actionWithTitle:@"My Code" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *scanCodeAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"myCode", @"Title for view that displays the QR code of the user. String as short as possible.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
         contactLinkVC.scanCode = NO;
         [self presentViewController:contactLinkVC animated:YES completion:nil];
