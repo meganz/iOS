@@ -6,6 +6,7 @@
 #import "SVProgressHUD.h"
 
 #import "CustomModalAlertViewController.h"
+#import "DevicePermissionsHelper.h"
 #import "MainTabBarController.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGASdkManager.h"
@@ -113,6 +114,7 @@
             } else {
                 sender.selectedSegmentIndex = 0;
                 [self valueChangedAtSegmentedControl:sender];
+                [self presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
             }
             
             break;
