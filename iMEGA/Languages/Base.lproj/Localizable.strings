@@ -120,8 +120,8 @@
 "strong"="Strong";
 /*  */
 "passwordStrong"="This password will withstand most sophisticated brute-force attacks. Please ensure that you will remember it.";
-/* Text shown on a button that if clicked shows the MEGA Terms of Service */
-"termsOfServiceButton"="I agree with the MEGA Terms of Service";
+/*  */
+"agreeWithTheMEGATermsOfService"="I agree with the MEGA [A]Terms of Service[/A]";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Enter a valid name";
 /*  */
