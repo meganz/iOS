@@ -55,7 +55,11 @@
         self.segmentedControl.selectedSegmentIndex = 1;
         [self valueChangedAtSegmentedControl:self.segmentedControl];
     }
+}
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     [[MEGASdkManager sharedMEGASdk] contactLinkCreateWithDelegate:self];
 }
 
@@ -216,11 +220,10 @@
                 NSString *detectedString = metadata.stringValue;
                 NSString *baseString = @"https://mega.nz/C!";
                 if ([detectedString containsString:baseString]) {
-                    [self feedbackWithMessage:@"Code scanned" andColor:[UIColor greenColor]];
                     NSString *base64Handle = [detectedString stringByReplacingOccurrencesOfString:baseString withString:@""];
                     [[MEGASdkManager sharedMEGASdk] contactLinkQueryWithHandle:[MEGASdk handleForBase64Handle:base64Handle] delegate:self];
                 } else {
-                    [self feedbackWithMessage:@"Invalid code" andColor:[UIColor redColor]];
+                    [self feedbackWithSuccess:NO];
                 }
             }
         }
@@ -283,7 +286,9 @@
     [self presentViewController:inviteOrDismissModal animated:YES completion:nil];
 }
 
-- (void)feedbackWithMessage:(NSString *)message andColor:(UIColor *)color {
+- (void)feedbackWithSuccess:(BOOL)success {
+    NSString *message = success ? @"Code scanned" : @"Invalid code";
+    UIColor *color = success ? [UIColor greenColor] : [UIColor redColor];
     dispatch_async(dispatch_get_main_queue(), ^{
         self.errorLabel.text = message;
         CABasicAnimation *colorAnimation = [CABasicAnimation animationWithKeyPath:@"borderColor"];
@@ -294,7 +299,7 @@
         [self.cameraMaskBorderView.layer addAnimation:colorAnimation forKey:@"borderColor"];
     });
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.queryInProgress = NO;
+        self.queryInProgress = success; // If success, queryInProgress will be NO later
         self.errorLabel.text = @"";
     });
 }
@@ -304,7 +309,7 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if (error.type) {
         if (request.type == MEGARequestTypeContactLinkQuery && error.type == MEGAErrorTypeApiENoent) {
-            [self feedbackWithMessage:@"Invalid code" andColor:[UIColor redColor]];
+            [self feedbackWithSuccess:NO];
         }
     } else {
         switch (request.type) {
@@ -323,6 +328,7 @@
             }
                 
             case MEGARequestTypeContactLinkQuery: {
+                [self feedbackWithSuccess:YES];
                 NSString *fullName = [NSString stringWithFormat:@"%@ %@", request.name, request.text];
                 [self presentInviteModalForEmail:request.email fullName:fullName contactLinkHandle:request.nodeHandle];
                 
