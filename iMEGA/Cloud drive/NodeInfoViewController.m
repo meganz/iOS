@@ -388,6 +388,9 @@
 //            if (self.displayMode == DisplayModeSharedItem && self.node.isOutShare && !nodeUpdated.isOutShare) {
 //                self.displayMode = DisplayModeCloudDrive;
 //            }
+            
+            //TODO: ^ Take into account this case when applying changes related with versioning.
+            
             self.node = nodeUpdated;
             [self reloadUI];
         } else {
@@ -474,14 +477,13 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    
     MEGANode *nodeUpdated;
     
-    NSUInteger size = [[nodeList size] unsignedIntegerValue];
+    NSUInteger size = nodeList.size.unsignedIntegerValue;
     for (NSUInteger i = 0; i < size; i++) {
         nodeUpdated = [nodeList nodeAtIndex:i];
         
-        if ([nodeUpdated handle] == [self.node handle]) {
+        if (nodeUpdated.handle == self.node.handle) {
             [self reloadOrShowWarningAfterActionOnNode:nodeUpdated];
             break;
         }

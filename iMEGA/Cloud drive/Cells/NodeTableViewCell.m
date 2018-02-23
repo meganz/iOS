@@ -7,21 +7,17 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhonePlus]) {
-        self.cancelButtonTrailingConstraint.constant = 10;
-    } else {
-        self.cancelButtonTrailingConstraint.constant = 6;
-    }
+    self.cancelButtonTrailingConstraint.constant =  ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhonePlus]) ? 10 : 6;
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
     if (editing) {
-        [self setSeparatorInset:UIEdgeInsetsMake(0, 100, 0, 0)];
+        self.separatorInset = UIEdgeInsetsMake(0, 100, 0, 0);
         self.cancelButton.hidden = YES;
     } else {
-        [self setSeparatorInset:UIEdgeInsetsMake(0, 60, 0, 0)];
+        self.separatorInset = UIEdgeInsetsMake(0, 60, 0, 0);
         self.cancelButton.hidden = NO;
     }
 }
