@@ -151,7 +151,7 @@
 #pragma mark - QR generation
 
 + (UIImage *)mnz_qrImageFromString:(NSString *)qrString withSize:(CGSize)size {
-    NSData *qrData = [qrString dataUsingEncoding: NSISOLatin1StringEncoding];
+    NSData *qrData = [qrString dataUsingEncoding:NSISOLatin1StringEncoding];
     NSString *qrCorrectionLevel = @"H";
     
     CIFilter *qrFilter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
