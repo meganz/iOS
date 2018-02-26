@@ -30,7 +30,6 @@
 
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
-#import "MEGAPhotoBrowserViewController.h"
 #import "NodeTableViewCell.h"
 #import "PhotosViewController.h"
 #import "PreviewDocumentViewController.h"

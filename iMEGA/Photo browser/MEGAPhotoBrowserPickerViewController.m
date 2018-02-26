@@ -37,6 +37,11 @@
         numberOfFiles = [NSString stringWithFormat:AMLocalizedString(@"files", @"Subtitle shown on folders that gives you information about its content. This case \"{1+} files\""), self.mediaNodes.count];
     }
     
+    if (!folderName) {
+        folderName = numberOfFiles;
+        numberOfFiles = @"";
+    }
+    
     UILabel *titleLabel = [Helper customNavigationBarLabelWithTitle:folderName subtitle:numberOfFiles color:[UIColor mnz_black333333]];
     titleLabel.adjustsFontSizeToFitWidth = YES;
     titleLabel.minimumScaleFactor = 0.8f;
