@@ -320,7 +320,7 @@
             }
             
             NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
-            self.qrCodeImageView.image = [UIImage mnz_qrImageFromString:destination withSize:self.qrCodeImageView.frame.size];
+            self.qrCodeImageView.image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:self.qrCodeImageView.frame.size];
             self.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
             self.avatarImageView.layer.borderWidth = 6.0f;
             self.avatarImageView.layer.cornerRadius = 40.0f;

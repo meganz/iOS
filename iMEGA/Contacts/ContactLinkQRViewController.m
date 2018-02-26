@@ -357,7 +357,7 @@
                     self.linkCopyButton.hidden = self.moreButton.hidden = NO;
                 }
                 
-                self.qrImageView.image = [UIImage mnz_qrImageFromString:destination withSize:self.qrImageView.frame.size];
+                self.qrImageView.image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:self.qrImageView.frame.size];
                 [self setUserAvatar];
                 
                 break;
