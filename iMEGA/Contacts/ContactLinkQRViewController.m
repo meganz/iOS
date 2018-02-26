@@ -129,7 +129,7 @@
             [self stopRecognizingCodes];
             self.view.backgroundColor = [UIColor whiteColor];
             self.qrImageView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = NO;
-            self.linkCopyButton.hidden = self.moreButton.hidden = self.contactLinkLabel.text.length==0;
+            self.linkCopyButton.hidden = self.moreButton.hidden = (self.contactLinkLabel.text.length == 0);
             self.cameraView.hidden = self.cameraMaskView.hidden = self.cameraMaskBorderView.hidden = self.hintLabel.hidden = self.errorLabel.hidden = YES;
             self.backButton.tintColor = self.segmentedControl.tintColor = [UIColor mnz_redF0373A];
             break;
@@ -217,12 +217,12 @@
         
         dispatch_queue_t qrDispatchQueue = dispatch_queue_create("qrDispatchQueue", NULL);
         [captureMetadataOutput setMetadataObjectsDelegate:self queue:qrDispatchQueue];
-        [captureMetadataOutput setMetadataObjectTypes:[NSArray<AVMetadataObjectType> arrayWithObject:AVMetadataObjectTypeQRCode]];
+        captureMetadataOutput.metadataObjectTypes = [NSArray<AVMetadataObjectType> arrayWithObject:AVMetadataObjectTypeQRCode];
 
         self.videoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.captureSession];
-        [self.videoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
-        [self.videoPreviewLayer.connection setVideoOrientation:(AVCaptureVideoOrientation)[[UIApplication sharedApplication] statusBarOrientation]];
-        [self.videoPreviewLayer setFrame:self.cameraView.layer.bounds];
+        self.videoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+        self.videoPreviewLayer.connection.videoOrientation = (AVCaptureVideoOrientation)[[UIApplication sharedApplication] statusBarOrientation];
+        self.videoPreviewLayer.frame = self.cameraView.layer.bounds;
         [self.cameraView.layer addSublayer:self.videoPreviewLayer];
         
         [self.captureSession startRunning];
@@ -279,7 +279,7 @@
     inviteOrDismissModal.completion = ^{
         BOOL isInOutgoingContactRequest = NO;
         MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
-        for (NSInteger i = 0; i < [[outgoingContactRequestList size] integerValue]; i++) {
+        for (NSInteger i = 0; i < outgoingContactRequestList.size.integerValue; i++) {
             MEGAContactRequest *contactRequest = [outgoingContactRequestList contactRequestAtIndex:i];
             if ([email isEqualToString:contactRequest.targetEmail]) {
                 isInOutgoingContactRequest = YES;
@@ -333,6 +333,7 @@
         self.cameraMaskBorderView.layer.borderColor = [UIColor whiteColor].CGColor;
         [self.cameraMaskBorderView.layer addAnimation:colorAnimation forKey:@"borderColor"];
     });
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.queryInProgress = success; // If success, queryInProgress will be NO later
         self.errorLabel.text = @"";

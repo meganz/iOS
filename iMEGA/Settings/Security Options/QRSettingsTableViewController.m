@@ -70,19 +70,21 @@
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if (!error.type) {
-        switch (request.type) {
-            case MEGARequestTypeContactLinkDelete:
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"resetQrCodeFooter", @"Footer that explains what would happen if the user resets his/her QR code")];
-                break;
-                
-            case MEGARequestTypeGetAttrUser:
-                self.autoAcceptSwitch.on = request.flag;
-                break;
-                
-            default:
-                break;
-        }
+    if (error.type) {
+        return;
+    }
+    
+    switch (request.type) {
+        case MEGARequestTypeContactLinkDelete:
+            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"resetQrCodeFooter", @"Footer that explains what would happen if the user resets his/her QR code")];
+            break;
+            
+        case MEGARequestTypeGetAttrUser:
+            self.autoAcceptSwitch.on = request.flag;
+            break;
+            
+        default:
+            break;
     }
 }
 

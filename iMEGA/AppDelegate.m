@@ -614,8 +614,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[UISearchBar appearance] setBackgroundColor:[UIColor mnz_grayF1F1F2]];
     [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:[UIColor mnz_grayF1F1F2]];
     
-    [[UISegmentedControl appearance] setTintColor:[UIColor mnz_redF0373A]];
-    
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
     
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
