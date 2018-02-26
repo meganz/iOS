@@ -29,14 +29,6 @@
     return self;
 }
 
-- (instancetype)initOnView:(UIView *)view {
-    self = [super init];
-    if (self) {
-        _view = view;
-    }
-    return self;
-}
-
 - (NSString *)activityType {
     return @"OpenInActivity";
 }
