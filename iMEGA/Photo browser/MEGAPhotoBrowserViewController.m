@@ -6,8 +6,8 @@
 
 #import "BrowserViewController.h"
 #import "CustomActionViewController.h"
-#import "DetailsNodeInfoViewController.h"
 #import "Helper.h"
+#import "MainTabBarController.h"
 #import "MEGAActivityItemProvider.h"
 #import "MEGAGetPreviewRequestDelegate.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
@@ -16,15 +16,17 @@
 #import "MEGAPhotoBrowserPickerViewController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStartDownloadTransferDelegate.h"
+#import "NodeInfoViewController.h"
 #import "SaveToCameraRollActivity.h"
 
 #import "MEGANode+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
 
-@interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, MEGAPhotoBrowserPickerDelegate, PieChartViewDelegate, PieChartViewDataSource, CustomActionViewControllerDelegate>
+@interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, MEGAPhotoBrowserPickerDelegate, PieChartViewDelegate, PieChartViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
@@ -635,11 +637,12 @@
             break;
             
         case MegaNodeActionTypeFileInfo: {
-            DetailsNodeInfoViewController *detailsNodeInfoVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
-            detailsNodeInfoVC.node = node;
-            
-            // TODO: details view should have a way to be closed when it is presented (not pushed)
-            [self presentViewController:detailsNodeInfoVC animated:YES completion:nil];
+            UINavigationController *nodeInfoNavigation = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"NodeInfoNavigationControllerID"];
+            NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
+            nodeInfoVC.node = [self.mediaNodes objectAtIndex:self.currentIndex];
+            nodeInfoVC.nodeInfoDelegate = self;
+
+            [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
             break;
         }
             
@@ -682,5 +685,40 @@
             break;
     }
 }
+
+#pragma mark - NodeInfoViewControllerDelegate
+
+- (void)presentParentNode:(MEGANode *)node {
+    [self dismissViewControllerAnimated:YES completion:^{
+        UIViewController *visibleViewController = [UIApplication mnz_visibleViewController];
+        if ([visibleViewController isKindOfClass:MainTabBarController.class]) {
+            NSArray *parentTreeArray = node.mnz_parentTreeArray;
+
+            UINavigationController *navigationController = (UINavigationController *)((MainTabBarController *)visibleViewController).viewControllers[((MainTabBarController *)visibleViewController).selectedIndex];
+            [navigationController popToRootViewControllerAnimated:NO];
+            
+            for (MEGANode *node in parentTreeArray) {
+                CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                cloudDriveTVC.parentNode = node;
+                [navigationController pushViewController:cloudDriveTVC animated:NO];
+            }
+            
+            switch (node.type) {
+                case MEGANodeTypeFolder:
+                case MEGANodeTypeRubbish: {
+                    CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                    cloudDriveTVC.parentNode = node;
+                    [navigationController pushViewController:cloudDriveTVC animated:NO];
+                    break;
+                }
+                    
+                default:
+                    break;
+            }
+
+        }
+    }];
+}
+
 
 @end
