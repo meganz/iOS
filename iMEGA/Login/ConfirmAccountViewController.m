@@ -9,11 +9,18 @@
 
 @interface ConfirmAccountViewController () <UIAlertViewDelegate, UITextFieldDelegate, MEGARequestDelegate>
 
+@property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoTopLayoutConstraint;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *confirmTextTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *confirmTextLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *confirmTextBottomLayoutConstraint;
 
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+
 @property (weak, nonatomic) IBOutlet UIButton *confirmAccountButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *confirmAccountButtonTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
 @end
@@ -24,6 +31,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if ([[UIDevice currentDevice] iPhone4X]) {
+        self.logoTopLayoutConstraint.constant = 24.f;
+        self.confirmTextTopLayoutConstraint.constant = 24.f;
+        self.confirmTextBottomLayoutConstraint.constant = 55.f;
+        self.confirmAccountButtonTopLayoutConstraint.constant = 70.f;
+    } else if ([[UIDevice currentDevice] iPhone5X]) {
+        self.logoTopLayoutConstraint.constant = 24.f;
+    }
     
     if (self.confirmType == ConfirmTypeAccount) {
         self.confirmTextLabel.text = AMLocalizedString(@"confirmText", @"Text shown on the confirm account view to remind the user what to do");
