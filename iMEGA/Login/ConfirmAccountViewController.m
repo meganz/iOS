@@ -7,7 +7,7 @@
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 
-@interface ConfirmAccountViewController () <UIAlertViewDelegate, UITextFieldDelegate, MEGARequestDelegate>
+@interface ConfirmAccountViewController () <UITextFieldDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoTopLayoutConstraint;
@@ -130,20 +130,6 @@
     [self.view endEditing:YES];
 }
 
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if ([alertView tag] == 0) {
-        if (buttonIndex == 0) {
-            [self lockUI:NO];
-        } else if (buttonIndex == 1) {
-            [self lockUI:YES];
-            [SVProgressHUD show];
-            [[MEGASdkManager sharedMEGASdk] logoutWithDelegate:self];
-        }
-    }
-}
-
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -166,13 +152,22 @@
             case MEGAErrorTypeApiEAccess: {
                 [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
                 [SVProgressHUD dismiss];
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"alreadyLoggedInAlertTitle", @"You are logged with another account")
-                                                                    message:AMLocalizedString(@"alreadyLoggedInAlertMessage", @"If you agree, the current account will be logged out and all Offline data will be erased. Do you want to continue?")
-                                                                   delegate:self
-                                                          cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                                          otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-                [alertView setTag:0];
-                [alertView show];
+                
+                UIAlertController *alreadyLoggedInAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"alreadyLoggedInAlertTitle", @"Warning title shown when you try to confirm an account but you are logged in with another one") message:AMLocalizedString(@"alreadyLoggedInAlertMessage", @"Warning message shown when you try to confirm an account but you are logged in with another one") preferredStyle:UIAlertControllerStyleAlert];
+                
+                [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                    [self lockUI:NO];
+                }]];
+                
+                [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                        [self lockUI:YES];
+                        [SVProgressHUD show];
+                        [[MEGASdkManager sharedMEGASdk] logoutWithDelegate:self];
+                    }
+                }]];
+                
+                [self presentViewController:alreadyLoggedInAlertController animated:YES completion:nil];
                 break;
             }
 
@@ -224,12 +219,11 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:@"emailHasChanged" object:nil];
             
             NSString *alertMessage = [AMLocalizedString(@"congratulationsNewEmailAddress", @"The [X] will be replaced with the e-mail address.") stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"newEmail", @"Hint text to suggest that the user have to write the new email on it")
-                                                                message:alertMessage
-                                                               delegate:nil
-                                                      cancelButtonTitle:nil
-                                                      otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-            [alertView show];
+            UIAlertController *newEmailAddressAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"newEmail", @"Hint text to suggest that the user have to write the new email on it") message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+            
+            [newEmailAddressAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:nil]];
+            
+            [self presentViewController:newEmailAddressAlertController animated:YES completion:nil];
             break;
         }
             
