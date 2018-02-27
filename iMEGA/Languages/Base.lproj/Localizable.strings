@@ -1351,4 +1351,11 @@
 "missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";
 /* Button title to see the available bonus */
 "getBonus"="Get Bonus";
-
+/* Text shown under the title 'Video quality' that explains what it means */
+"qualityOfVideosUploadedToAChat"="Quality of videos uploaded to a chat";
+/* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
+"videoQuality"="Video quality";
+/* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
+"low"="Low";
+/* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
+"original"="Original";

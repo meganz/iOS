@@ -464,6 +464,8 @@
 		A81F2C6C1F334FF0008600A5 /* MEGAProcessAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */; };
 		A820DA3C1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
 		A824A9192039ECD700D777D2 /* SDAVAssetExportSession.m in Sources */ = {isa = PBXBuildFile; fileRef = A824A9182039ECD700D777D2 /* SDAVAssetExportSession.m */; };
+		A824A91C2039F50B00D777D2 /* SDAVAssetExportSession.m in Sources */ = {isa = PBXBuildFile; fileRef = A824A9182039ECD700D777D2 /* SDAVAssetExportSession.m */; };
+		A824A91D2039F50C00D777D2 /* SDAVAssetExportSession.m in Sources */ = {isa = PBXBuildFile; fileRef = A824A9182039ECD700D777D2 /* SDAVAssetExportSession.m */; };
 		A82751101E97AB6E007CD9E2 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A827510F1E97AB6E007CD9E2 /* libz.tbd */; };
 		A82751121E97AB73007CD9E2 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751111E97AB73007CD9E2 /* libresolv.tbd */; };
 		A82751141E97AB79007CD9E2 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751131E97AB79007CD9E2 /* libsqlite3.tbd */; };
@@ -490,6 +492,7 @@
 		A85740C72032F6E70033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
 		A85740C82032F6E80033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
 		A85740C92032F6E80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
+		A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */; };
 		A86FC4FC1EBB4999006053A6 /* MEGAPhotoMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A86FC4FB1EBB4999006053A6 /* MEGAPhotoMediaItem.m */; };
 		A88BFFCF1F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
 		A88BFFD01F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
@@ -1209,6 +1212,7 @@
 		A8278D7E200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incoming_voice_video_call_iOS9.mp3; sourceTree = "<group>"; };
 		A82A38CF200D32BC00883533 /* libzen.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzen.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libzen.a; sourceTree = "<group>"; };
 		A82A38D4200D32EC00883533 /* libmediainfo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmediainfo.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libmediainfo.a; sourceTree = "<group>"; };
+		A82C176120346DF60084126E /* SDAVAssetExportSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDAVAssetExportSession.m; sourceTree = "<group>"; };
 		A82E5BC41F3465A3003C149C /* Spotlight_file@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spotlight_file@2x.png"; path = "Spotlight/Spotlight_file@2x.png"; sourceTree = "<group>"; };
 		A82E5BC51F3465A3003C149C /* Spotlight_file@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spotlight_file@3x.png"; path = "Spotlight/Spotlight_file@3x.png"; sourceTree = "<group>"; };
 		A82E5BC61F3465A3003C149C /* Spotlight_folder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spotlight_folder@2x.png"; path = "Spotlight/Spotlight_folder@2x.png"; sourceTree = "<group>"; };
@@ -1221,6 +1225,9 @@
 		A85740C12032F6B80033034C /* MOChatDraft+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOChatDraft+CoreDataProperties.h"; sourceTree = "<group>"; };
 		A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOChatDraft+CoreDataClass.m"; sourceTree = "<group>"; };
 		A85740C32032F6B80033034C /* MOChatDraft+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOChatDraft+CoreDataClass.h"; sourceTree = "<group>"; };
+		A85D93BA2045751E0066F45B /* ChatVideoQualityTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatVideoQualityTableViewController.h; sourceTree = "<group>"; };
+		A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatVideoQualityTableViewController.m; sourceTree = "<group>"; };
+		A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatVideoUploadQuality.h; sourceTree = "<group>"; };
 		A86FC4FB1EBB4999006053A6 /* MEGAPhotoMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAPhotoMediaItem.m; sourceTree = "<group>"; };
 		A88BFFAC1F0A52CD0081BCE3 /* libevent_core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_core.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent_core.a; sourceTree = "<group>"; };
 		A88BFFAD1F0A52CD0081BCE3 /* libevent_extra.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_extra.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent_extra.a; sourceTree = "<group>"; };
@@ -1557,6 +1564,7 @@
 				942254D71EDC02CB0074C51A /* Extensions */,
 				418851EE1A66826800FDBA15 /* Frameworks */,
 				1373618B1A6664C300B740E8 /* Products */,
+				A824A91B2039EFF300D777D2 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1809,6 +1817,7 @@
 			children = (
 				E8C8D7821B219BBA00BCDBA4 /* Animators */,
 				5B8281451E7BE7FA0079C1BB /* Cells */,
+				A85D93BE20457E3F0066F45B /* Enums */,
 				5BB68C9D203599EC00B03C00 /* Views */,
 				A819B3401EAFA7E7004592F9 /* ViewControllers */,
 				415226871A692ECC00EC7BB6 /* Helper.h */,
@@ -1834,7 +1843,6 @@
 				A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */,
 				830EF9A220062F3800FAA947 /* DevicePermissionsHelper.h */,
 				830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */,
-				83681574202AFA1700CA8EFC /* MegaNodeActionType.h */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2744,6 +2752,23 @@
 			path = Vendor/SDAVAssetExportSession;
 			sourceTree = "<group>";
 		};
+		A824A91B2039EFF300D777D2 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				A82C176120346DF60084126E /* SDAVAssetExportSession.m */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		A85D93BE20457E3F0066F45B /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				83681574202AFA1700CA8EFC /* MegaNodeActionType.h */,
+				A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
 		A8AA4F6D1ED4295800E7BA23 /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -2825,6 +2850,8 @@
 				E8534D4A1E15231C00911C40 /* ChatSettingsTableViewController.m */,
 				E83E10281E1582E8002F3E2E /* ChatStatusTableViewController.h */,
 				E83E10291E1582E8002F3E2E /* ChatStatusTableViewController.m */,
+				A85D93BA2045751E0066F45B /* ChatVideoQualityTableViewController.h */,
+				A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -3538,6 +3565,7 @@
 				41D21E671D01AEC3002E6296 /* CTAssetsGridViewFooter.m in Sources */,
 				417840A01AC328A600713F3C /* ChangePasswordViewController.m in Sources */,
 				E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */,
+				A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */,
 				E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */,
 				5B39DAA21EF916D900BC2319 /* ChatAttachedContactsViewController.m in Sources */,
 				5BB50E091F20E840000CA24D /* MEGACreateFolderRequestDelegate.m in Sources */,
@@ -3575,6 +3603,7 @@
 				9432294D1EDD9CEB007DB542 /* NSMutableAttributedString+MNZCategory.m in Sources */,
 				5BFA34701FAC5857005BFC4E /* MEGAMoveRequestDelegate.m in Sources */,
 				9432294B1EDD9CE5007DB542 /* MEGAUser+MNZCategory.m in Sources */,
+				A824A91D2039F50C00D777D2 /* SDAVAssetExportSession.m in Sources */,
 				9456054B1EDD7AD70094EF0F /* LTHPasscodeViewController.m in Sources */,
 				944B205E1EE5C6C2003C967B /* LaunchViewController.m in Sources */,
 				942255091EDC04CD0074C51A /* DocumentPickerViewController.m in Sources */,
@@ -3659,6 +3688,7 @@
 				941135511F00FFC700D33428 /* Helper.m in Sources */,
 				834AD6082024697300D2527F /* MGSwipeButton.m in Sources */,
 				94892C911EFBEA2300AEAC25 /* SAMKeychainQuery.m in Sources */,
+				A824A91C2039F50B00D777D2 /* SDAVAssetExportSession.m in Sources */,
 				A81F2C6A1F334FB2008600A5 /* MEGAProcessAsset.m in Sources */,
 				943F8B281EF283D300AFD89F /* UIDevice+MNZCategory.m in Sources */,
 				5BEACE251FB473A20010E02F /* UIImage+MNZCategory.m in Sources */,
