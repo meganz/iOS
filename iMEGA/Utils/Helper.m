@@ -633,7 +633,7 @@ static MEGAIndexer *indexer;
     return YES;
 }
 
-+ (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink {
++ (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink shouldOverwrite:(BOOL)overwrite {
     MEGASdk *api;
     
     // Can't create Inbox folder on documents folder, Inbox is reserved for use by Apple
@@ -652,7 +652,14 @@ static MEGAIndexer *indexer;
     NSString *relativeFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
     
     if (node.type == MEGANodeTypeFile) {
-        if (![[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath]]) {
+        if (![[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath]] || overwrite) {
+            if (overwrite) { //For node versions
+                [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath] error:nil];
+                MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:offlineNameString];
+                if (offlineNode) {
+                    [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
+                }
+            }
             MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:api];
             
             NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:[node base64Handle]] stringByAppendingPathComponent:node.name];
@@ -690,7 +697,7 @@ static MEGAIndexer *indexer;
         MEGANodeList *nList = [api childrenForParent:node];
         for (NSInteger i = 0; i < nList.size.integerValue; i++) {
             MEGANode *child = [nList nodeAtIndex:i];
-            [self downloadNode:child folderPath:relativeFilePath isFolderLink:isFolderLink];
+            [self downloadNode:child folderPath:relativeFilePath isFolderLink:isFolderLink shouldOverwrite:overwrite];
         }
     }
 }

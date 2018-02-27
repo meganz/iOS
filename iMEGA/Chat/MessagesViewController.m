@@ -1226,7 +1226,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 - (void)download:(id)sender message:(MEGAChatMessage *)message {
     for (NSUInteger i = 0; i < message.nodeList.size.unsignedIntegerValue; i++) {
         MEGANode *node = [message.nodeList nodeAtIndex:i];
-        [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
+        [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:NO];
     }
     [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
 }

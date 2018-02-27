@@ -16,6 +16,7 @@
 #import "CloudDriveTableViewController.h"
 #import "CustomActionViewController.h"
 #import "BrowserViewController.h"
+#import "NodeVersionsViewController.h"
 
 @interface MegaNodeProperty : NSObject
 
@@ -64,13 +65,18 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
+    if (!self.presentedViewController) {
+        [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
+    }
+    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
+    if (!self.presentedViewController) {
+        [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
+    }
 }
 
 #pragma mark - Layout
@@ -133,6 +139,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"%@", indexPath);
     switch (indexPath.section) {
+            
         case 0:
             switch (indexPath.row) {
                 case 1:
@@ -169,7 +176,7 @@
             break;
             
         case 2:
-            //TODO: show versions view
+            [self showNodeVersions];
             break;
             
         default:
@@ -380,35 +387,10 @@
 }
 
 - (void)reloadOrShowWarningAfterActionOnNode:(MEGANode *)nodeUpdated {
-    nodeUpdated = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[self.node handle]];
+    nodeUpdated = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.node.handle];
     if (nodeUpdated != nil) { //Is nil if you don't have access to it
-        if (nodeUpdated.parentHandle == self.node.parentHandle) { //Same place as before
-            //Node renamed, update UI with the new info.
-            //Also when you get link, share folder or remove link
-//            if (self.displayMode == DisplayModeSharedItem && self.node.isOutShare && !nodeUpdated.isOutShare) {
-//                self.displayMode = DisplayModeCloudDrive;
-//            }
-            
-            //TODO: ^ Take into account this case when applying changes related with versioning.
-            
-            self.node = nodeUpdated;
-            [self reloadUI];
-        } else {
-            //Node moved to the Rubbish Bin or moved inside the same shared folder
-            NSString *alertTitle;
-            if (nodeUpdated.parentHandle == [[[MEGASdkManager sharedMEGASdk] rubbishNode] handle]) {
-                alertTitle = (self.node.isFolder) ? AMLocalizedString(@"folderMovedToTheRubbishBin_alertTitle", @"Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location") : AMLocalizedString(@"fileMovedToTheRubbishBin_alertTitle", @"Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location");
-            } else {
-                alertTitle = (self.node.isFolder) ? AMLocalizedString(@"folderMoved_alertTitle", @"Alert title shown when you are seeing the details of a folder and you moved it from another location") : AMLocalizedString(@"fileMoved_alertTitle", @"Alert title shown when you are seeing the details of a file and you moved it from another location");
-            }
-            
-            UIAlertController *warningAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
-            [warningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                [self.navigationController popViewControllerAnimated:YES];
-            }]];
-            
-            [self presentViewController:warningAlertController animated:YES completion:nil];
-        }
+        self.node = nodeUpdated;
+        [self reloadUI];
     } else {
         //Node removed from the Rubbish Bin or moved outside of the shared folder
         NSString *alertTitle = (self.node.isFolder) ? AMLocalizedString(@"youNoLongerHaveAccessToThisFolder_alertTitle", @"Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be") : AMLocalizedString(@"youNoLongerHaveAccessToThisFile_alertTitle", @"Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be");
@@ -421,6 +403,39 @@
     }
 }
 
+- (void)currentVersionRemovedOnNodeList:(MEGANodeList *)nodeList {
+    MEGANode *newCurrentNode;
+    
+    NSUInteger size = nodeList.size.unsignedIntegerValue;
+    for (NSUInteger i = 0; i < size; i++) {
+        newCurrentNode = [nodeList nodeAtIndex:i];
+        if (newCurrentNode.getChanges == MEGANodeChangeTypeParent) {
+            self.node = newCurrentNode;
+            [self reloadUI];
+        }
+    }
+}
+
+- (void)checkIfNodeVersionWasRemoved:(MEGANode *)deletedNode {
+    MEGANode *newCurrentNode;
+    
+    NSUInteger size = self.node.mnz_numberOfVersions;
+    for (NSUInteger i = 0; i < size; i++) {
+        newCurrentNode = [self.node.mnz_versions objectAtIndex:i];
+        if (newCurrentNode.handle == deletedNode.handle) {
+            self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.node.handle];
+            [self  reloadUI];
+            break;
+        }
+    }
+}
+
+- (void)showNodeVersions {
+    NodeVersionsViewController *nodeVersions = [self.storyboard instantiateViewControllerWithIdentifier:@"NodeVersionsVC"];
+    nodeVersions.node = self.node;
+    [self.navigationController pushViewController:nodeVersions animated:YES];
+}
+
 #pragma mark - CustomActionViewControllerDelegate
 
 - (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender {
@@ -428,7 +443,7 @@
             
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-            [node mnz_downloadNode];
+            [node mnz_downloadNodeOverwriting:NO];
             break;
             
         case MegaNodeActionTypeCopy:
@@ -484,8 +499,19 @@
         nodeUpdated = [nodeList nodeAtIndex:i];
         
         if (nodeUpdated.handle == self.node.handle) {
-            [self reloadOrShowWarningAfterActionOnNode:nodeUpdated];
-            break;
+            if (nodeUpdated.getChanges == MEGANodeChangeTypeRemoved) {
+                [self currentVersionRemovedOnNodeList:nodeList];
+                break;
+            } else if (nodeUpdated.getChanges == MEGANodeChangeTypeParent && self.node.mnz_numberOfVersions < size) {
+                self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:nodeUpdated.parentHandle];
+                [self reloadUI];
+                break;
+            } else {
+                [self reloadOrShowWarningAfterActionOnNode:nodeUpdated];
+                break;
+            }
+        } else {
+            [self checkIfNodeVersionWasRemoved:nodeUpdated];
         }
     }
 }

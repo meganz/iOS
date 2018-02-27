@@ -633,7 +633,7 @@
 
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-            [node mnz_downloadNode];
+            [node mnz_downloadNodeOverwriting:NO];
             break;
             
         case MegaNodeActionTypeFileInfo: {

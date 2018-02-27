@@ -133,14 +133,14 @@
 
 #pragma mark - Actions
 
-- (BOOL)mnz_downloadNode {
+- (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite {
     MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self api:[MEGASdkManager sharedMEGASdk]];
-    if (!offlineNodeExist) {
+    if (!offlineNodeExist || overwrite) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             if (![Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:NO]) {
                 return NO;
             } else {
-                [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:NO];
+                [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:overwrite];
                 return YES;
             }
         } else {
@@ -306,6 +306,20 @@
 
 - (NSInteger)mnz_numberOfVersions {
     return ([[MEGASdkManager sharedMEGASdk] hasVersionsForNode:self]) ? ([[MEGASdkManager sharedMEGASdk] numberOfVersionsForNode:self]) : 0;
+}
+
+
+- (NSArray *)mnz_versions {
+    return [[[MEGASdkManager sharedMEGASdk] versionsForNode:self] mnz_nodesArrayFromNodeList];
+}
+
+- (NSNumber *)mnz_versionsSize {
+    float totalSize = 0;
+    NSArray *versions = [self mnz_versions];
+    for (MEGANode *versionNode in versions) {
+        totalSize += [versionNode.size floatValue];
+    }
+    return [NSNumber numberWithFloat:totalSize];
 }
 
 #pragma mark - UITextFieldDelegate
