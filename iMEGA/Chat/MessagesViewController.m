@@ -730,14 +730,15 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         if ([[self.collectionView indexPathsForVisibleItems] containsObject:secondByTheEndIndexPath]) {
             [self hideJumpToBottom];
         } else {
-            [self showJumpToBottomWithMessage:@"Jump to latest"];
+            [self showJumpToBottomWithMessage:AMLocalizedString(@"jumpToLatest", @"Label in a button that allows to jump to the latest item")];
         }
     }
 }
 
 - (void)showJumpToBottomWithMessage:(NSString *)message {
-    UILabel *label = self.jumpToBottomView.subviews.firstObject;
+    UILabel *label = self.jumpToBottomView.subviews.lastObject;
     label.text = message;
+    [label sizeToFit];
     if (self.jumpToBottomView.alpha > 0) {
         return;
     }
@@ -747,7 +748,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)hideJumpToBottom {
-    UILabel *label = self.jumpToBottomView.subviews.firstObject;
+    UILabel *label = self.jumpToBottomView.subviews.lastObject;
     label.text = @"";
     if (self.jumpToBottomView.alpha < 1) {
         return;
@@ -1503,7 +1504,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                     [self scrollToBottomAnimated:YES];
                     [self hideJumpToBottom];
                 } else {
-                    [self showJumpToBottomWithMessage:@"New messages"];
+                    [self showJumpToBottomWithMessage:AMLocalizedString(@"newMessages", @"Label in a button that allows to jump to the latest message")];
                 }
             });
             
