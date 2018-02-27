@@ -219,6 +219,10 @@
                 } else if (self.displayMode == DisplayModeRubbishBin) {
                     [actions addObject:[self actionRemove]];
                 }
+            } else if (self.displayMode == DisplayModeNodeVersions) {
+                [actions addObject:[self actionDownload]];
+                [actions addObject:[self actionRevertVersion]];
+                [actions addObject:[self actionRemove]];
             } else {
                 [actions addObject:[self actionShare]];
                 [actions addObject:[self actionDownload]];
@@ -241,7 +245,7 @@
 }
 
 - (MegaActionNode *)actionDownload {
-    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"saveForOffline", @"List option shown on the details of a file or folder") iconName: @"offline" andActionType:MegaNodeActionTypeDownload];
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"download", nil) iconName: @"offline" andActionType:MegaNodeActionTypeDownload];
 }
 
 - (MegaActionNode *)actionFileInfo {
@@ -279,6 +283,14 @@
 
 - (MegaActionNode *)actionRemoveSharing {
     return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share") iconName: @"removeShare" andActionType:MegaNodeActionTypeRemoveSharing];
+}
+
+- (MegaActionNode *)actionRevertVersion {
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"revert", @"A button label which reverts a certain version of a file to be the current version of the selected file.") iconName: @"history" andActionType:MegaNodeActionTypeRevertVersion];
+}
+
+- (MegaActionNode *)actionRemoveVersion {
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"delete", nil) iconName: @"remove" andActionType:MegaNodeActionTypeRemove];
 }
 
 #pragma mark - IBActions

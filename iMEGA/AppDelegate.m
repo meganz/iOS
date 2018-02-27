@@ -698,7 +698,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
             [self showOffline];
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
+            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:NO];
             break;
         }
             
@@ -720,7 +720,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [self showOffline];
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
             for (MEGANode *node in [Helper nodesFromLinkMutableArray]) {
-                [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES];
+                [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES shouldOverwrite:NO];
             }
             break;
         }

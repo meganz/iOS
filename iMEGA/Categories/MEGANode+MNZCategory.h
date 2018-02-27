@@ -12,7 +12,7 @@
 
 #pragma mark - Actions
 
-- (BOOL)mnz_downloadNode;
+- (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController completion:(void(^)(MEGARequest *request))completion;
 - (void)mnz_moveToTheRubbishBinInViewController:(UIViewController *)viewController;
@@ -28,5 +28,7 @@
 #pragma mark - Versions
 
 - (NSInteger)mnz_numberOfVersions;
+- (NSArray *)mnz_versions;
+- (NSNumber *)mnz_versionsSize;
 
 @end

@@ -431,7 +431,7 @@
     self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
 
     UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        [node mnz_downloadNode];
+        [node mnz_downloadNodeOverwriting:NO];
         [self setEditing:NO animated:YES];
     }];
     downloadAction.image = [UIImage imageNamed:@"infoDownload"];
@@ -1418,7 +1418,7 @@
     [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
     
     for (MEGANode *node in self.selectedNodesArray) {
-        if (![node mnz_downloadNode]) {
+        if (![node mnz_downloadNodeOverwriting:NO]) {
             return;
         }
     }
@@ -1827,7 +1827,7 @@
     switch (action) {
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-            [node mnz_downloadNode];
+            [node mnz_downloadNodeOverwriting:NO];
             break;
             
         case MegaNodeActionTypeCopy:
