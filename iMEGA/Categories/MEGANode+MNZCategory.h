@@ -24,6 +24,7 @@
 #pragma mark - Utils
 
 - (NSMutableArray *)mnz_parentTreeArray;
+- (NSString *)mnz_fileType;
 
 #pragma mark - Versions
 
