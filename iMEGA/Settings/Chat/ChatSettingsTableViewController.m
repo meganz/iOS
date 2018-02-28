@@ -92,6 +92,7 @@
             case MEGAChatInitNoCache: {
                 [[MEGASdkManager sharedMEGASdk] fetchNodes];
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
+                [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateInProgress;
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 break;
             }
@@ -227,6 +228,7 @@
             if (error.type) return;
             
             [self.tableView reloadData];
+            [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateOffline;
             break;
         }
             

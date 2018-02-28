@@ -36,8 +36,6 @@
 
 @property (strong, nonatomic) UISearchController *searchController;
 
-@property (nonatomic) BOOL shouldReorderList;
-
 @end
 
 @implementation ChatRoomsViewController {
@@ -80,8 +78,6 @@
                                                          value:-2
                                                         toDate:[NSDate date]
                                                        options:0];
-    
-    _shouldReorderList = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -93,7 +89,7 @@
     
     [self customNavigationBarLabel];
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] && [MEGAReachabilityManager sharedManager].chatRoomListState!=MEGAChatRoomListStateInProgress) {
         self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
         if (self.chatListItemList.size) {
             [self reorderList];
@@ -108,13 +104,12 @@
         }
         
         self.addBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
-        
-        [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     } else {
         self.addBarButtonItem.enabled = NO;
         self.tableView.tableHeaderView = nil;
     }
     
+    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [self.tableView reloadData];
 }
 
@@ -225,7 +220,7 @@
 - (UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
     if ([MEGAReachabilityManager isReachable]) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-            if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitWaitingNewSession || [[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitNoCache) {
+            if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitWaitingNewSession || [[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitNoCache || [MEGAReachabilityManager sharedManager].chatRoomListState==MEGAChatRoomListStateInProgress) {
                 UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                 [indicator startAnimating];
                 return indicator;
@@ -746,7 +741,9 @@
     
     // New chat 1on1 or group
     if (item.changes == 0) {
-        [self insertRowByChatListItem:item];
+        if ([MEGAReachabilityManager sharedManager].chatRoomListState==MEGAChatRoomListStateOnline) {
+            [self insertRowByChatListItem:item];
+        }
     } else {
         NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(item.chatId)];
         if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
@@ -786,7 +783,7 @@
             }
         }
         
-        if (item.changes == MEGAChatListItemChangeTypeLastTs && self.shouldReorderList) {
+        if (item.changes == MEGAChatListItemChangeTypeLastTs && [MEGAReachabilityManager sharedManager].chatRoomListState==MEGAChatRoomListStateOnline) {
             if ([indexPath compare:[NSIndexPath indexPathForRow:0 inSection:0]] != NSOrderedSame) {
                 [self moveRowByChatListItem:item];
             }
@@ -822,7 +819,6 @@
         self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
         [self reorderList];
         [self.tableView reloadData];
-        self.shouldReorderList = YES;
     }
 }
 

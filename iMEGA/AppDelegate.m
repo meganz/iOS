@@ -2488,6 +2488,13 @@ void uncaughtExceptionHandler(NSException *exception) {
     if (self.chatRoom.chatId == chatId && newState == MEGAChatConnectionOnline) {
         [self performCall];
     }
+    // INVALID_HANDLE = ~(uint64_t)0
+    if (chatId == ~(uint64_t)0 && newState == MEGAChatConnectionOnline) {
+        [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateOnline;
+    }
+    if (newState != MEGAChatConnectionOnline) {
+        [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateInProgress;
+    }
 }
 
 #pragma mark - MEGATransferDelegate

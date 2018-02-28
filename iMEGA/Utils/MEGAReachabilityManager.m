@@ -158,6 +158,12 @@
             }
         }
     }
+    
+    if ([MEGAReachabilityManager isReachable]) {
+        self.chatRoomListState = MEGAChatRoomListStateInProgress;
+    } else {
+        self.chatRoomListState = MEGAChatRoomListStateOffline;
+    }
 }
 
 @end
