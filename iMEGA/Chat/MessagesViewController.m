@@ -677,15 +677,17 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)showProgressViewUnderNavigationBar {
     if (self.navigationBarProgressView) {
-        self.navigationBarProgressView.hidden = NO;
-    } else {
-        self.navigationBarProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
-        self.navigationBarProgressView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
-        self.navigationBarProgressView.frame = CGRectMake(self.navigationController.navigationBar.bounds.origin.x, self.navigationController.navigationBar.bounds.size.height, self.navigationController.navigationBar.bounds.size.width, 2.0f);
-        self.navigationBarProgressView.progressTintColor = [UIColor mnz_green00BFA5];
-        self.navigationBarProgressView.trackTintColor = [UIColor clearColor];
-        
         dispatch_async(dispatch_get_main_queue(), ^{
+            self.navigationBarProgressView.hidden = NO;
+        });
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.navigationBarProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
+            self.navigationBarProgressView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
+            self.navigationBarProgressView.frame = CGRectMake(self.navigationController.navigationBar.bounds.origin.x, self.navigationController.navigationBar.bounds.size.height, self.navigationController.navigationBar.bounds.size.width, 2.0f);
+            self.navigationBarProgressView.progressTintColor = [UIColor mnz_green00BFA5];
+            self.navigationBarProgressView.trackTintColor = [UIColor clearColor];
+            
             [self.navigationController.navigationBar addSubview:self.navigationBarProgressView];
         });
     }
