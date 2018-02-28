@@ -218,7 +218,7 @@
         propertyCell.keyLabel.text = [self.nodeProperties objectAtIndex:indexPath.row].title;
         propertyCell.valueLabel.text = [self.nodeProperties objectAtIndex:indexPath.row].value;
         if (indexPath.row == 1) {
-            propertyCell.valueLabel.textColor = [UIColor mnz_green00BFA5];
+            propertyCell.valueLabel.textColor = UIColor.mnz_green00BFA5;
         }
         return propertyCell;
     } else if (indexPath.section == 1) {
@@ -488,6 +488,7 @@
         nodeUpdated = [nodeList nodeAtIndex:i];
         
         switch (nodeUpdated.getChanges) {
+                
             case MEGANodeChangeTypeRemoved:
                 if (nodeUpdated.handle == self.node.handle) {
                     [self currentVersionRemovedOnNodeList:nodeList];
