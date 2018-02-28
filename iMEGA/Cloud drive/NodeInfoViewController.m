@@ -57,14 +57,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self reloadUI];
-    
     self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label. The button allows the user to close the conversation.");
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [self reloadUI];
+
     if (!self.presentedViewController) {
         [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
     }
@@ -82,6 +82,8 @@
 #pragma mark - Layout
 
 - (void)reloadUI {
+    self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.node.handle];
+
     self.nodeProperties = [self nodePropertyCells];
 
     self.title = self.node.isFile ? AMLocalizedString(@"fileInfo", @"Label of the option menu. When clicking this button, the app shows the info of the file.") : AMLocalizedString(@"folderInfo", @"Label of the option menu. When clicking this button, the app shows the info of the folder.");
@@ -167,6 +169,7 @@
                         [self showManageLinkView];
                     }
                     break;
+                    
                 case 1:
                     [self showManageLinkView];
                     break;
