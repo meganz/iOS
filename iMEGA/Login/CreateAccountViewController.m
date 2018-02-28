@@ -14,6 +14,8 @@
 
 @interface CreateAccountViewController () <UINavigationControllerDelegate, UITextFieldDelegate, MEGARequestDelegate>
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
+
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *lastNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
@@ -28,8 +30,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *termsOfServiceButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
-
-@property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITextField *activeTextField;
@@ -49,6 +49,8 @@
     tapGesture.cancelsTouchesInView = NO;
     [self.scrollView addGestureRecognizer:tapGesture];
     
+    self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+    
     self.nameTextField.placeholder = AMLocalizedString(@"firstName", @"Hint text for the first name (Placeholder)");
     self.lastNameTextField.placeholder = AMLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)");
     
@@ -61,15 +63,10 @@
     [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Password")];
     [self.retypePasswordTextField setPlaceholder:AMLocalizedString(@"confirmPassword", nil)];
     
-    [self.termsOfServiceButton setTitle:AMLocalizedString(@"termsOfServiceButton", @"I agree with the MEGA Terms of Service") forState:UIControlStateNormal];
-    if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
-        self.termsOfServiceButton.titleLabel.font = [UIFont mnz_SFUIRegularWithSize:11.0f];
-    }
+    [self setTermsOfServiceAttributedTitle];
     
-    self.createAccountButton.backgroundColor = [UIColor mnz_grayCCCCCC];
+    self.createAccountButton.backgroundColor = [UIColor mnz_grayEEEEEE];
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Create Account") forState:UIControlStateNormal];
-    
-    [self.loginButton setTitle:AMLocalizedString(@"login", nil) forState:UIControlStateNormal];
     
     [self registerForKeyboardNotifications];
 }
@@ -89,6 +86,12 @@
 }
 
 #pragma mark - Private
+
+- (IBAction)cancel:(UIBarButtonItem *)sender {
+    [self hideKeyboard];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (BOOL)validateForm {
     if (![self validateName:self.nameTextField.text] || ![self validateName:self.lastNameTextField.text]) {
@@ -230,10 +233,32 @@
     self.scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
 }
 
+- (void)setTermsOfServiceAttributedTitle {
+    NSString *agreeWithTheMEGATermsOfService = AMLocalizedString(@"agreeWithTheMEGATermsOfService", @"");
+    NSString *termsOfServiceString = [agreeWithTheMEGATermsOfService mnz_stringBetweenString:@"[A]" andString:@"[/A]"];
+    agreeWithTheMEGATermsOfService = [agreeWithTheMEGATermsOfService mnz_removeWebclientFormatters];
+    
+    NSMutableAttributedString *termsOfServiceMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:agreeWithTheMEGATermsOfService attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
+    [termsOfServiceMutableAttributedString setAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]} range:[agreeWithTheMEGATermsOfService rangeOfString:@"MEGA"]];
+    if (termsOfServiceString) {
+        [termsOfServiceMutableAttributedString setAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]} range:[agreeWithTheMEGATermsOfService rangeOfString:termsOfServiceString]];
+    }
+    
+    [self.termsOfServiceButton setAttributedTitle:termsOfServiceMutableAttributedString forState:UIControlStateNormal];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)termsCheckboxTouchUpInside:(id)sender {
     self.termsCheckboxButton.selected = !self.termsCheckboxButton.selected;
+    
+    BOOL shoulBeCreateAccountButtonGray = NO;
+    if ((![self.emailTextField.text mnz_isValidEmail]) || ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordTextField.text] == PasswordStrengthVeryWeak) || !self.termsCheckboxButton.selected) {
+        shoulBeCreateAccountButtonGray = YES;
+    } else {
+        shoulBeCreateAccountButtonGray = [self isEmptyAnyTextFieldForTag:self.retypePasswordTextField.tag];
+    }
+    self.createAccountButton.backgroundColor = shoulBeCreateAccountButtonGray ? [UIColor mnz_grayEEEEEE] : [UIColor mnz_redFF4D52];
     
     [self hideKeyboard];
 }
@@ -279,13 +304,13 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     BOOL shoulBeCreateAccountButtonGray = NO;
-    if ([text isEqualToString:@""] || (![self.emailTextField.text mnz_isValidEmail]) || ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordTextField.text] == PasswordStrengthVeryWeak)) {
+    if ([text isEqualToString:@""] || (![self.emailTextField.text mnz_isValidEmail]) || ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordTextField.text] == PasswordStrengthVeryWeak) || !self.termsCheckboxButton.isSelected) {
         shoulBeCreateAccountButtonGray = YES;
     } else {
         shoulBeCreateAccountButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
     }
     
-    shoulBeCreateAccountButtonGray ? [self.createAccountButton setBackgroundColor:[UIColor mnz_grayCCCCCC]] : [self.createAccountButton setBackgroundColor:[UIColor mnz_redFF4D52]];
+    self.createAccountButton.backgroundColor = shoulBeCreateAccountButtonGray ? [UIColor mnz_grayEEEEEE] : [UIColor mnz_redFF4D52];
     
     if (textField.tag == 3) {
         if (text.length == 0) {
@@ -310,7 +335,7 @@
         self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
     }
     
-    self.createAccountButton.backgroundColor = [UIColor mnz_grayCCCCCC];
+    self.createAccountButton.backgroundColor = [UIColor mnz_grayEEEEEE];
     
     return YES;
 }
