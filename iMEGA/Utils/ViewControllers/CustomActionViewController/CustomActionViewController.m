@@ -1,7 +1,9 @@
 #import "CustomActionViewController.h"
+
 #import "Helper.h"
 #import "MEGASdkManager.h"
 #import "MEGANode+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 
 #define kCollectionViewHeaderHeight 80
 #define kCollectionViewCellHeight 60
@@ -109,11 +111,7 @@
     
     UIImageView *imageView = [header viewWithTag:100];
     if (self.node.isFile) {
-        if (self.node.hasThumbnail) {
-            [Helper thumbnailForNode:self.node api:[MEGASdkManager sharedMEGASdk] cell:header];
-        } else {
-            imageView.image = [Helper imageForNode:self.node];
-        }
+        [imageView mnz_setThumbnailByNodeHandle:self.node.handle];
     } else if (self.node.isFolder) {
         imageView.image = [Helper imageForNode:self.node];
         info.text = [Helper filesAndFoldersInFolderNode:self.node api:[MEGASdkManager sharedMEGASdk]];
@@ -127,7 +125,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [self fadeOutBackgroundCompletion:^{
         [self dismissViewControllerAnimated:YES completion:^{
-            [self.actionDelegate performAction:[self.actions objectAtIndex:indexPath.row].actionType inNode:self.node];
+            [self.actionDelegate performAction:[self.actions objectAtIndex:indexPath.row].actionType inNode:self.node fromSender:self.actionSender];
         }];
     }];
 }
@@ -181,7 +179,9 @@
         case MEGAShareTypeAccessRead:
         case MEGAShareTypeAccessReadWrite: {
             [actions addObject:[self actionDownload]];
-            [actions addObject:[self actionFileInfo]];
+            if (self.displayMode != DisplayModeNodeInfo) {
+                [actions addObject:[self actionFileInfo]];
+            }
             [actions addObject:[self actionCopy]];
             if (self.isIncomingShareChildView) {
                 [actions addObject:[self actionLeaveSharing]];
@@ -191,7 +191,9 @@
             
         case MEGAShareTypeAccessFull:
             [actions addObject:[self actionDownload]];
-            [actions addObject:[self actionFileInfo]];
+            if (self.displayMode != DisplayModeNodeInfo) {
+                [actions addObject:[self actionFileInfo]];
+            }
             [actions addObject:[self actionCopy]];
             [actions addObject:[self actionRename]];
             if (self.isIncomingShareChildView) {
@@ -200,10 +202,12 @@
             break;
             
         case MEGAShareTypeAccessOwner:
-            if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeRubbishBin) {
+            if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeRubbishBin || self.displayMode == DisplayModeNodeInfo) {
                 [actions addObject:[self actionShare]];
                 [actions addObject:[self actionDownload]];
-                [actions addObject:[self actionFileInfo]];
+                if (self.displayMode != DisplayModeNodeInfo) {
+                    [actions addObject:[self actionFileInfo]];
+                }
                 [actions addObject:[self actionCopy]];
                 [actions addObject:[self actionMove]];
                 [actions addObject:[self actionRename]];
@@ -241,7 +245,8 @@
 }
 
 - (MegaActionNode *)actionFileInfo {
-    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") iconName: @"info" andActionType:MegaNodeActionTypeFileInfo];
+    NSString *infoTitle = self.node.isFile ? AMLocalizedString(@"fileInfo", @"Label of the option menu. When clicking this button, the app shows the info of the file.") : AMLocalizedString(@"folderInfo", @"Label of the option menu. When clicking this button, the app shows the info of the folder.");
+    return [[MegaActionNode alloc] initWithTitle:infoTitle iconName: @"info" andActionType:MegaNodeActionTypeFileInfo];
 }
 
 - (MegaActionNode *)actionRename {

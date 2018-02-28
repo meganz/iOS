@@ -6,8 +6,8 @@
 
 #import "BrowserViewController.h"
 #import "CustomActionViewController.h"
-#import "DetailsNodeInfoViewController.h"
 #import "Helper.h"
+#import "MainTabBarController.h"
 #import "MEGAActivityItemProvider.h"
 #import "MEGAGetPreviewRequestDelegate.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
@@ -16,15 +16,17 @@
 #import "MEGAPhotoBrowserPickerViewController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStartDownloadTransferDelegate.h"
+#import "NodeInfoViewController.h"
 #import "SaveToCameraRollActivity.h"
 
 #import "MEGANode+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
 
-@interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, MEGAPhotoBrowserPickerDelegate, PieChartViewDelegate, PieChartViewDataSource, CustomActionViewControllerDelegate>
+@interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, MEGAPhotoBrowserPickerDelegate, PieChartViewDelegate, PieChartViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
@@ -217,7 +219,7 @@
     if (scrollView.tag != 1) {
         MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
         if (node.name.mnz_isImagePathExtension) {
-            NSString *temporaryImagePath = [self temporatyPathForNode:node];
+            NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:NO];
             if (![[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                 [self setupNode:node forImageView:(UIImageView *)view withMode:MEGAPhotoModeOriginal];
             }
@@ -251,7 +253,7 @@
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
-            NSString *temporaryImagePath = [self temporatyPathForNode:node];
+            NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:NO];
             if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                 imageView.image = [UIImage imageWithContentsOfFile:temporaryImagePath];
             } else {
@@ -360,7 +362,7 @@
             
         case MEGAPhotoModeOriginal: {
             MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithProgress:transferProgress completion:transferCompletion];
-            NSString *temporaryImagePath = [self temporatyPathForNode:node];
+            NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:YES];
             [self.api startDownloadNode:node localPath:temporaryImagePath appData:@"generate_fa" delegate:delegate];
 
             break;
@@ -383,12 +385,12 @@
     }
 }
 
-- (NSString *)temporatyPathForNode:(MEGANode *)node {
+- (NSString *)temporatyPathForNode:(MEGANode *)node createDirectories:(BOOL)createDirectories {
     NSString *nodeFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[node base64Handle]];
     NSString *nodeFilePath = [nodeFolderPath stringByAppendingPathComponent:node.name];
-    
+
     NSError *error;
-    if (![[NSFileManager defaultManager] fileExistsAtPath:nodeFolderPath isDirectory:nil]) {
+    if (createDirectories && ![[NSFileManager defaultManager] fileExistsAtPath:nodeFolderPath isDirectory:nil]) {
         if (![[NSFileManager defaultManager] createDirectoryAtPath:nodeFolderPath withIntermediateDirectories:YES attributes:nil error:&error]) {
             MEGALogError(@"Create directory at path failed with error: %@", error);
         }
@@ -623,7 +625,7 @@
 
 #pragma mark - CustomActionViewControllerDelegate
 
-- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node {
+- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender{
     switch (action) {
         case MegaNodeActionTypeShare:
             [self didPressOpenIn:self.customActionsButton];
@@ -635,11 +637,12 @@
             break;
             
         case MegaNodeActionTypeFileInfo: {
-            DetailsNodeInfoViewController *detailsNodeInfoVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
-            detailsNodeInfoVC.node = node;
-            
-            // TODO: details view should have a way to be closed when it is presented (not pushed)
-            [self presentViewController:detailsNodeInfoVC animated:YES completion:nil];
+            UINavigationController *nodeInfoNavigation = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"NodeInfoNavigationControllerID"];
+            NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
+            nodeInfoVC.node = [self.mediaNodes objectAtIndex:self.currentIndex];
+            nodeInfoVC.nodeInfoDelegate = self;
+
+            [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
             break;
         }
             
@@ -682,5 +685,40 @@
             break;
     }
 }
+
+#pragma mark - NodeInfoViewControllerDelegate
+
+- (void)presentParentNode:(MEGANode *)node {
+    [self dismissViewControllerAnimated:YES completion:^{
+        UIViewController *visibleViewController = [UIApplication mnz_visibleViewController];
+        if ([visibleViewController isKindOfClass:MainTabBarController.class]) {
+            NSArray *parentTreeArray = node.mnz_parentTreeArray;
+
+            UINavigationController *navigationController = (UINavigationController *)((MainTabBarController *)visibleViewController).viewControllers[((MainTabBarController *)visibleViewController).selectedIndex];
+            [navigationController popToRootViewControllerAnimated:NO];
+            
+            for (MEGANode *node in parentTreeArray) {
+                CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                cloudDriveTVC.parentNode = node;
+                [navigationController pushViewController:cloudDriveTVC animated:NO];
+            }
+            
+            switch (node.type) {
+                case MEGANodeTypeFolder:
+                case MEGANodeTypeRubbish: {
+                    CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                    cloudDriveTVC.parentNode = node;
+                    [navigationController pushViewController:cloudDriveTVC animated:NO];
+                    break;
+                }
+                    
+                default:
+                    break;
+            }
+
+        }
+    }];
+}
+
 
 @end

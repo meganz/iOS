@@ -61,23 +61,12 @@
 
 - (void)logoTappedFiveTimes:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
-        BOOL enableLogging = ![[NSUserDefaults standardUserDefaults] boolForKey:@"logging"];
-        UIAlertView *logAlertView = [Helper logAlertView:enableLogging];
-        logAlertView.delegate = self;
-        [logAlertView show];
+        [Helper enableOrDisableLog];
     }
 }
 
 - (void)acknowledgements {
     [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://mega.nz/ios_acknowledgements.html"]];
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        (alertView.tag == 0) ? [[MEGALogger sharedLogger] stopLogging] : [[MEGALogger sharedLogger] startLogging];
-    }
 }
 
 #pragma mark - UITableViewDataSource

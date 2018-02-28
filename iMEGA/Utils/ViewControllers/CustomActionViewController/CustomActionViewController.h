@@ -6,7 +6,7 @@
 
 @protocol CustomActionViewControllerDelegate <NSObject>
 
-- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node;
+- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender;
 
 @end
 
@@ -16,6 +16,7 @@
 @property (nonatomic) DisplayMode displayMode;
 @property (nonatomic, getter=isIncomingShareChildView) BOOL incomingShareChildView;
 @property (weak, nonatomic) id<CustomActionViewControllerDelegate> actionDelegate;
+@property (nonatomic, strong) id actionSender;
 
 @end
 
