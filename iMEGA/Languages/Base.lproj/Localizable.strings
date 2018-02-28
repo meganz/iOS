@@ -120,8 +120,8 @@
 "strong"="Strong";
 /*  */
 "passwordStrong"="This password will withstand most sophisticated brute-force attacks. Please ensure that you will remember it.";
-/* Text shown on a button that if clicked shows the MEGA Terms of Service */
-"termsOfServiceButton"="I agree with the MEGA Terms of Service";
+/*  */
+"agreeWithTheMEGATermsOfService"="I agree with the MEGA [A]Terms of Service[/A]";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Enter a valid name";
 /*  */
@@ -1361,4 +1361,35 @@
 "original"="Original";
 /* Status text at the end of an upload */
 "processingFile"="Processing file";
-
+/* title of the screen that shows the users with whom the user has shared a folder */
+"sharedWidth"="Shared with:";
+/*   */
+"details"="Details";
+/* Item menu option upon right click on one or multiple files. */
+"sharing"="Sharing";
+/* Title of section to display number of all historical versions of files. */
+"versions"="Versions";
+/* Title label of a node property. */
+"location"="Location";
+/* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
+"totalSize"="Total size";
+/* Refers to the type of a file or folder. */
+"type"="Type";
+/* Title of the incoming shared folders of a user in singular */
+"sharedFolder"="Shared Folder";
+/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
+"created"="Created";
+/* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
+"contains"="Contains";
+/* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
+"modified"="Modified";
+/* used for example when a folder is shared with 2 or more users */
+"users"="users";
+/* user (singular) label indicating is receiving some info, for example shared folders */
+"user"="user";
+/* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
+"xVersions"="[X] versions";
+/* Label of the option menu. When clicking this button, the app shows the info of the file */
+"fileInfo"="File info";
+/* Label of the option menu. When clicking this button, the app shows the info of the folder */
+"folderInfo"="Folder info";

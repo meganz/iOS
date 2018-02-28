@@ -3,11 +3,12 @@
 #import "SVProgressHUD.h"
 
 #import "NSString+MNZCategory.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 
 #import "ChangePasswordViewController.h"
 
-@interface ParkAccountViewController () <UIAlertViewDelegate, MEGARequestDelegate>
+@interface ParkAccountViewController () <MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *firstParagraphLabel;
 @property (weak, nonatomic) IBOutlet UILabel *secondParagraphLabel;
@@ -39,43 +40,44 @@
     return UIInterfaceOrientationMaskAll;
 }
 
+#pragma mark - Private
+
+- (void)emailAlertTextFieldDidChange:(UITextField *)sender {
+    UIAlertController *emailAlertController = (UIAlertController *)self.presentedViewController;
+    if (emailAlertController) {
+        UITextField *textField = emailAlertController.textFields.firstObject;
+        UIAlertAction *rightButtonAction = emailAlertController.actions.lastObject;
+        rightButtonAction.enabled = !textField.text.mnz_isEmpty;
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)parkAccountTouchUpInside:(UIButton *)sender {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"parkAccount", @"Headline for parking an account (basically restarting from scratch)") message:AMLocalizedString(@"recoveryLinkToParkYourAccount", @"Text of the dialog message to ask for the link to park the account") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"") otherButtonTitles:AMLocalizedString(@"ok", @""), nil];
-    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-    UITextField *textField = [alertView textFieldAtIndex:0];
-    textField.placeholder = AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email");
-    [alertView show];
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
-    BOOL shouldEnable = YES;
-    if (alertView.tag == 0) {
-        UITextField *textField = [alertView textFieldAtIndex:0];
-        NSString *text = [textField text];
-        if (text.length == 0) {
-            shouldEnable = NO;
-        }
-    }
+    UIAlertController *emailAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"parkAccount", @"Headline for parking an account (basically restarting from scratch)") message:AMLocalizedString(@"recoveryLinkToParkYourAccount", @"Text of the dialog message to ask for the link to park the account") preferredStyle:UIAlertControllerStyleAlert];
     
-    return shouldEnable;
-}
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if (alertView.tag == 0) {
-        if (buttonIndex == 1) {
-            UITextField *textField = [alertView textFieldAtIndex:0];
-            NSString *email = [textField text];
-            if ([email mnz_isValidEmail]) {
+    [emailAlertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email");
+        [textField addTarget:self action:@selector(emailAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    }];
+    
+    [emailAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
+    UIAlertAction *okAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+            UITextField *textField = emailAlertController.textFields.firstObject;
+            NSString *email = textField.text;
+            if (email.mnz_isValidEmail) {
                 [[MEGASdkManager sharedMEGASdk] resetPasswordWithEmail:email hasMasterKey:NO delegate:self];
             } else {
                 [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Message shown when the user writes an invalid format in the email field")];
             }
         }
-    }
+    }];
+    okAlertAction.enabled = NO;
+    [emailAlertController addAction:okAlertAction];
+    
+    [self presentViewController:emailAlertController animated:YES completion:nil];
 }
 
 #pragma mark - MEGARequestDelegate

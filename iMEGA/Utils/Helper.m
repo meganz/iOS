@@ -12,6 +12,7 @@
 
 #import "MEGAActivityItemProvider.h"
 #import "MEGANode+MNZCategory.h"
+#import "MEGALogger.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
@@ -752,10 +753,6 @@ static MEGAIndexer *indexer;
         } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
             PhotoCollectionViewCell *photoCollectionViewCell = cell;
             [photoCollectionViewCell.thumbnailImageView setImage:[Helper imageForNode:node]];
-        } else if ([cell isKindOfClass:UICollectionReusableView.class]) {
-            UICollectionReusableView *headerAction = cell;
-            UIImageView *imageView = [headerAction viewWithTag:100];
-            imageView.image = [Helper imageForNode:node];
         }
     }
 }
@@ -771,10 +768,6 @@ static MEGAIndexer *indexer;
         [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
         photoCollectionViewCell.thumbnailPlayImageView.hidden = !node.name.mnz_videoPathExtension;
         photoCollectionViewCell.thumbnailVideoOverlayView.hidden = !(node.name.mnz_videoPathExtension && node.duration>-1);
-    } else if ([cell isKindOfClass:[UICollectionReusableView class]]) {
-        UICollectionReusableView *headerAction = cell;
-        UIImageView *imageView = [headerAction viewWithTag:100];
-        imageView.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
     }
     
     if (reindex) {
@@ -783,19 +776,17 @@ static MEGAIndexer *indexer;
 }
 
 + (NSString *)sizeAndDateForNode:(MEGANode *)node api:(MEGASdk *)api {
+    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], [self dateWithISO8601FormatOfRawTime:node.creationTime.timeIntervalSince1970]];
+}
+
++ (NSString *)sizeForNode:(MEGANode *)node api:(MEGASdk *)api {
     NSString *size;
-    time_t rawtime;
     if ([node isFile]) {
         size = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory];
-        rawtime = [[node modificationTime] timeIntervalSince1970];
     } else {
         size = [NSByteCountFormatter stringFromByteCount:[[api sizeForNode:node] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
-        rawtime = [[node creationTime] timeIntervalSince1970];
     }
-    
-    NSString *date = [self dateWithISO8601FormatOfRawTime:rawtime];
-    
-    return [NSString stringWithFormat:@"%@ • %@", size, date];
+    return size;
 }
 
 + (NSString *)dateWithISO8601FormatOfRawTime:(time_t)rawtime {
@@ -814,9 +805,12 @@ static MEGAIndexer *indexer;
 }
 
 + (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray button:(UIBarButtonItem *)shareBarButtonItem {
+    return [self activityViewControllerForNodes:nodesArray sender:shareBarButtonItem];
+}
+
++ (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id)sender {
     totalOperations = nodesArray.count;
     
-    UIActivityViewController *activityVC;
     NSMutableArray *activityItemsMutableArray = [[NSMutableArray alloc] init];
     NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
     
@@ -827,6 +821,7 @@ static MEGAIndexer *indexer;
     [Helper setCopyToPasteboard:NO];
     
     NodesAre nodesAre = [Helper checkPropertiesForSharingNodes:nodesArray];
+    
     
     BOOL allNodesExistInOffline = NO;
     NSMutableArray *filesURLMutableArray;
@@ -852,7 +847,7 @@ static MEGAIndexer *indexer;
         }
         
         if (nodesArray.count == 1) {
-            OpenInActivity *openInActivity = [[OpenInActivity alloc] initOnBarButtonItem:shareBarButtonItem];
+            OpenInActivity *openInActivity = [[OpenInActivity alloc] initOnView:sender];
             [activitiesMutableArray addObject:openInActivity];
         }
     } else {
@@ -876,9 +871,16 @@ static MEGAIndexer *indexer;
         [activitiesMutableArray addObject:removeSharingActivity];
     }
     
-    activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItemsMutableArray applicationActivities:activitiesMutableArray];
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItemsMutableArray applicationActivities:activitiesMutableArray];
     [activityVC setExcludedActivityTypes:excludedActivityTypesMutableArray];
-    [activityVC.popoverPresentationController setBarButtonItem:shareBarButtonItem];
+    
+    if ([[sender class] isEqual:UIBarButtonItem.class]) {
+        activityVC.popoverPresentationController.barButtonItem = sender;
+    } else {
+        UIView *presentationView = (UIView*)sender;
+        activityVC.popoverPresentationController.sourceView = presentationView;
+        activityVC.popoverPresentationController.sourceRect = CGRectMake(0, 0, presentationView.frame.size.width/2, presentationView.frame.size.height/2);
+    }
     
     return activityVC;
 }
@@ -1245,18 +1247,19 @@ static MEGAIndexer *indexer;
 
 #pragma mark - Log
 
-+ (UIAlertView *)logAlertView:(BOOL)enableLog {
-    UIAlertView *logAlertView;
-    NSString *title = enableLog ? AMLocalizedString(@"enableDebugMode_title", nil) :AMLocalizedString(@"disableDebugMode_title", nil);
-    NSString *message = enableLog ? AMLocalizedString(@"enableDebugMode_message", nil) :AMLocalizedString(@"disableDebugMode_message", nil);
-    logAlertView = [[UIAlertView alloc] initWithTitle:title
-                                              message:message
-                                             delegate:nil
-                                    cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                    otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-    logAlertView.tag = enableLog ? 1 : 0;
++ (void)enableOrDisableLog {
+    BOOL enableLog = ![[NSUserDefaults standardUserDefaults] boolForKey:@"logging"];
+    NSString *alertTitle = enableLog ? AMLocalizedString(@"enableDebugMode_title", @"Alert title shown when the DEBUG mode is enabled") :AMLocalizedString(@"disableDebugMode_title", @"Alert title shown when the DEBUG mode is disabled");
+    NSString *alertMessage = enableLog ? AMLocalizedString(@"enableDebugMode_message", @"Alert message shown when the DEBUG mode is enabled") :AMLocalizedString(@"disableDebugMode_message", @"Alert message shown when the DEBUG mode is disabled");
     
-    return logAlertView;
+    UIAlertController *logAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+    [logAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
+    [logAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        enableLog ? [[MEGALogger sharedLogger] startLogging] : [[MEGALogger sharedLogger] stopLogging];
+    }]];
+    
+    [[UIApplication mnz_visibleViewController] presentViewController:logAlertController animated:YES completion:nil];
 }
 
 @end

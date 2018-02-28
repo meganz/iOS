@@ -156,7 +156,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     } else {
         //TODO: leftItemsSupplementBackButton
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 66, 44)];
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backArrow"]];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"backArrow"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
         imageView.frame = CGRectMake(0, 10, 22, 22);
         [view addGestureRecognizer:singleTap];
         [view addSubview:imageView];
@@ -1038,17 +1038,19 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     } else if (!message.isMediaMessage) {
         cell.textView.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
         cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? [UIColor whiteColor] : [UIColor mnz_black333333];
-        if (message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
-            cell.contentView.alpha = 0.7f;
-            if (message.status == MEGAChatMessageStatusSendingManual) {
-                [cell.accessoryButton setImage:[UIImage imageNamed:@"sending_manual"] forState:UIControlStateNormal];
-                cell.accessoryButton.hidden = NO;
-            }
-        } else {
-            cell.contentView.alpha = 1.0f;
-        }
+        
         cell.textView.linkTextAttributes = @{ NSForegroundColorAttributeName : cell.textView.textColor,
                                               NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
+    }
+    
+    if (message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
+        cell.contentView.alpha = 0.7f;
+        if (message.status == MEGAChatMessageStatusSendingManual) {
+            [cell.accessoryButton setImage:[UIImage imageNamed:@"sending_manual"] forState:UIControlStateNormal];
+            cell.accessoryButton.hidden = NO;
+        }
+    } else {
+        cell.contentView.alpha = 1.0f;
     }
     
     if ([cell.textView.text mnz_isPureEmojiString]) {
@@ -1358,13 +1360,46 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
         
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"retry", @"Button which allows to retry send message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIAlertAction *retryAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"retry", @"Button which allows to retry send message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             NSLog(@"retry tapped"); // sent message + discard || delete
             [[MEGASdkManager sharedMEGAChatSdk] removeUnsentMessageForChat:self.chatRoom.chatId rowId:message.rowId];
-            MEGAChatMessage *retryMessage = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:message.text];
-            retryMessage.chatRoom = self.chatRoom;
-            [self.messages replaceObjectAtIndex:path.item withObject:retryMessage];
-        }]];
+            
+            switch (message.type) {
+                case MEGAChatMessageTypeNormal: {
+                    MEGAChatMessage *retryMessage = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:message.text];
+                    [self.messages replaceObjectAtIndex:path.item withObject:retryMessage];
+                    break;
+                }
+                    
+                case MEGAChatMessageTypeAttachment: {
+                    MEGANode *node = [message.nodeList nodeAtIndex:0];
+                    [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:self.chatRoom.chatId node:node.handle delegate:self];
+                    [self.messages removeObjectAtIndex:path.item];
+                    [self.collectionView deleteItemsAtIndexPaths:@[path]];
+                    break;
+                }
+                    
+                case MEGAChatMessageTypeContact: {
+                    NSMutableArray *users = [[NSMutableArray alloc] init];
+                    for (NSUInteger i = 0; i < message.usersCount; i++) {
+                        MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[message userEmailAtIndex:i]];
+                        if (user) {
+                            [users addObject:user];
+                        }
+                    }
+                    
+                    MEGAChatMessage *retryMessage = [[MEGASdkManager sharedMEGAChatSdk] attachContactsToChat:self.chatRoom.chatId contacts:users];
+                    [self.messages replaceObjectAtIndex:path.item withObject:retryMessage];
+                    break;
+                }
+                    
+                default:
+                    break;
+            }
+        }];
+        [retryAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+        [alertController addAction:retryAlertAction];
+        
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"deleteMessage", @"Button which allows to delete message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[MEGASdkManager sharedMEGAChatSdk] removeUnsentMessageForChat:self.chatRoom.chatId rowId:message.rowId];
             [self.messages removeObjectAtIndex:path.item];
