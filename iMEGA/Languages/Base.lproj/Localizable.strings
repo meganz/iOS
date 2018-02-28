@@ -1393,3 +1393,9 @@
 "revert"="Revert";
 /*  */
 "download"="Download";
+/* Singular of file. 1 file */
+"file"="file";
+/* Title of section to display information of the current version of a file. */
+"currentVersion"="Current Version";
+/* A button label which opens a dialog to display the full version history of the selected file. */
+"previousVersions"="Previous Versions";
