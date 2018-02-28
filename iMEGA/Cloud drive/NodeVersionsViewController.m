@@ -8,7 +8,7 @@
 #import "MEGANode+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "MegaRemoveVersionRequestDelegate.h"
-
+#import "NSString+MNZCategory.h"
 #import "Helper.h"
 #import "NodeTableViewCell.h"
 #import "CustomActionViewController.h"
@@ -221,6 +221,12 @@
         }
         
         return;
+    }
+    
+    if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+        [node mnz_openImageInNavigationController:self.navigationController withNodes:self.node.mnz_versions folderLink:NO displayMode:DisplayModeNodeVersions];
+    } else {
+        [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
     }
 }
 
