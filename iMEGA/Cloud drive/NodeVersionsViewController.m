@@ -46,7 +46,7 @@
     [super viewDidLoad];
 
     self.title = AMLocalizedString(@"versions", @"Title of section to display number of all historical versions of files.");
-    self.currentVersionLabel.text = AMLocalizedString(@"currentVersion", @"Label header for versions view").uppercaseString;
+    self.currentVersionLabel.text = AMLocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file").uppercaseString;
     
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [self setToolbarItems:@[self.downloadBarButtonItem, flexibleItem, self.revertBarButtonItem, flexibleItem, self.removeBarButtonItem] animated:YES];
@@ -255,7 +255,7 @@
     UITableViewCell *sectionHeader = [self.tableView dequeueReusableCellWithIdentifier:@"nodeInfoHeader"];
     
     UILabel *titleSection = (UILabel*)[sectionHeader viewWithTag:1];
-    titleSection.text = AMLocalizedString(@"previousVersions", @"Label header for previous versions").uppercaseString;
+    titleSection.text = AMLocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file").uppercaseString;
     UILabel *versionsSize = (UILabel*)[sectionHeader viewWithTag:2];
     versionsSize.text = [NSByteCountFormatter stringFromByteCount:self.node.mnz_versionsSize.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory];
     
