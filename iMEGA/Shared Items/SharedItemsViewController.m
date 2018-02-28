@@ -14,11 +14,11 @@
 
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
-#import "DetailsNodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"
 #import "CustomActionViewController.h"
+#import "NodeInfoViewController.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate> {
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
 }
@@ -353,43 +353,13 @@
     return self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : self.sharedItemsSegmentedControl.selectedSegmentIndex == 0 ? [self.incomingNodesMutableArray objectAtIndex:indexPath.row] : [self.outgoingNodesMutableArray objectAtIndex:indexPath.row];
 }
 
-- (void)showNodeDetails:(MEGANode *)node {
-    MEGAShare *share = nil;
-    switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
-        case 0: { //Incoming
-            for (NSUInteger i = 0; i < self.incomingShareList.size.unsignedIntegerValue; i++) {
-                MEGAShare *s = [self.incomingShareList shareAtIndex:i];
-                if (s.nodeHandle == node.handle) {
-                    share = s;
-                    break;
-                }
-            }
-            break;
-        }
-            
-        case 1: { //Outgoing
-            for (NSUInteger i = 0; i < self.outgoingSharesMutableArray.count; i++) {
-                MEGAShare *s = self.outgoingSharesMutableArray[i];
-                if (s.nodeHandle == node.handle) {
-                    share = s;
-                    break;
-                }
-            }
-            break;
-        }
-    }
+- (void)showNodeInfo:(MEGANode *)node {
+    UINavigationController *nodeInfoNavigation = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"NodeInfoNavigationControllerID"];
+    NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
+    nodeInfoVC.node = node;
+    nodeInfoVC.nodeInfoDelegate = self;
     
-    DetailsNodeInfoViewController *detailsNodeInfoVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
-    detailsNodeInfoVC.displayMode = DisplayModeSharedItem;
-    
-    NSString *email = share.user;
-    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
-    
-    detailsNodeInfoVC.userName = user.mnz_fullName ? user.mnz_fullName : email;
-    detailsNodeInfoVC.email    = email;
-    detailsNodeInfoVC.node     = node;
-    
-    [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
+    [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
 }
 
 #pragma mark - Utils
@@ -1173,7 +1143,7 @@
 
 #pragma mark - CustomActionViewControllerDelegate
 
-- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node {
+- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender{
     switch (action) {
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
@@ -1189,13 +1159,14 @@
             [node mnz_renameNodeInViewController:self];
             break;
             
-        case MegaNodeActionTypeShare:
-            self.selectedNodesMutableArray = [[NSMutableArray alloc] initWithObjects:node, nil];
-            [self shareAction:nil];
+        case MegaNodeActionTypeShare:{
+            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[node] sender:sender];
+            [self presentViewController:activityVC animated:YES completion:nil];
+        }
             break;
             
         case MegaNodeActionTypeFileInfo:
-            [self showNodeDetails:node];
+            [self showNodeInfo:node];
             break;
             
         case MegaNodeActionTypeLeaveSharing:
@@ -1214,6 +1185,38 @@
             
         default:
             break;
+    }
+}
+
+#pragma mark - NodeInfoViewControllerDelegate
+
+- (void)presentParentNode:(MEGANode *)node {
+    
+    if (self.searchController.isActive) {
+        NSArray *parentTreeArray = node.mnz_parentTreeArray;
+        
+        //Created a reference to self.navigationController because if the presented view is not the root controller and search is active, the 'popToRootViewControllerAnimated' makes nil the self.navigationController and therefore the parentTreeArray nodes can't be pushed
+        UINavigationController *navigation = self.navigationController;
+        [navigation popToRootViewControllerAnimated:NO];
+        
+        for (MEGANode *node in parentTreeArray) {
+            CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveTVC.parentNode = node;
+            [navigation pushViewController:cloudDriveTVC animated:NO];
+        }
+        
+        switch (node.type) {
+            case MEGANodeTypeFolder:
+            case MEGANodeTypeRubbish: {
+                CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                cloudDriveTVC.parentNode = node;
+                [navigation pushViewController:cloudDriveTVC animated:NO];
+                break;
+            }
+                
+            default:
+                break;
+        }
     }
 }
 
