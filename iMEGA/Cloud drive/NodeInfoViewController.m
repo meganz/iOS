@@ -416,20 +416,6 @@
     }
 }
 
-- (void)checkIfNodeVersionWasRemoved:(MEGANode *)deletedNode {
-    MEGANode *newCurrentNode;
-    
-    NSUInteger size = self.node.mnz_numberOfVersions;
-    for (NSUInteger i = 0; i < size; i++) {
-        newCurrentNode = [self.node.mnz_versions objectAtIndex:i];
-        if (newCurrentNode.handle == deletedNode.handle) {
-            self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.node.handle];
-            [self  reloadUI];
-            break;
-        }
-    }
-}
-
 - (void)showNodeVersions {
     NodeVersionsViewController *nodeVersions = [self.storyboard instantiateViewControllerWithIdentifier:@"NodeVersionsVC"];
     nodeVersions.node = self.node;
@@ -498,20 +484,28 @@
     for (NSUInteger i = 0; i < size; i++) {
         nodeUpdated = [nodeList nodeAtIndex:i];
         
-        if (nodeUpdated.handle == self.node.handle) {
-            if (nodeUpdated.getChanges == MEGANodeChangeTypeRemoved) {
-                [self currentVersionRemovedOnNodeList:nodeList];
+        switch (nodeUpdated.getChanges) {
+            case MEGANodeChangeTypeRemoved:
+                if (nodeUpdated.handle == self.node.handle) {
+                    [self currentVersionRemovedOnNodeList:nodeList];
+                } else {
+                    self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.node.handle];
+                    [self  reloadUI];
+                }
                 break;
-            } else if (nodeUpdated.getChanges == MEGANodeChangeTypeParent && self.node.mnz_numberOfVersions < size) {
-                self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:nodeUpdated.parentHandle];
-                [self reloadUI];
+                
+            case MEGANodeChangeTypeParent:
+                if (nodeUpdated.handle == self.node.handle) {
+                    self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:nodeUpdated.parentHandle];
+                    [self reloadUI];
+                }
                 break;
-            } else {
-                [self reloadOrShowWarningAfterActionOnNode:nodeUpdated];
+                
+            default:
+                if (nodeUpdated.handle == self.node.handle) {
+                    [self reloadOrShowWarningAfterActionOnNode:nodeUpdated];
+                }
                 break;
-            }
-        } else {
-            [self checkIfNodeVersionWasRemoved:nodeUpdated];
         }
     }
 }
