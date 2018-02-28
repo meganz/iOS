@@ -1359,3 +1359,6 @@
 "low"="Low";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="Original";
+/* Status text at the end of an upload */
+"processingFile"="Processing file";
+
