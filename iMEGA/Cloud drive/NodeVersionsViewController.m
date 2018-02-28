@@ -5,14 +5,13 @@
 
 #import "MEGAStore.h"
 #import "MEGASdkManager.h"
+#import "MEGANode+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
+#import "MegaRemoveVersionRequestDelegate.h"
 
 #import "Helper.h"
 #import "NodeTableViewCell.h"
 #import "CustomActionViewController.h"
-#import "MEGANode+MNZCategory.h"
-#import "UIImageView+MNZCategory.h"
-#import "MEGASdkManager.h"
-#import "MegaRemoveVersionRequestDelegate.h"
 
 @interface NodeVersionsViewController () <UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate, MEGADelegate> {
     BOOL allNodesSelected;
@@ -81,12 +80,11 @@
 
 - (void)reloadUI {
     self.titleLabel.text = self.node.name;
-    self.thumbnailImageView.hidden = YES;
     
     if (self.node.isFile) {
         [self.thumbnailImageView mnz_setThumbnailByNodeHandle:self.node.handle];
     } else if (self.node.isFolder) {
-        [self.thumbnailImageView setImage:[Helper imageForNode:self.node]];
+        self.thumbnailImageView.image = [Helper imageForNode:self.node];
     }
     self.subtitleLabel.text = [Helper sizeAndDateForNode:self.node api:[MEGASdkManager sharedMEGASdk]];
     
@@ -115,8 +113,8 @@
             cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"downloadingNodeCell"];
         }
         
-        [cell.downloadingArrowImageView setImage:[UIImage imageNamed:@"downloadQueued"]];
-        [cell.infoLabel setText:AMLocalizedString(@"queued", @"Queued")];
+        cell.downloadingArrowImageView.image = [UIImage imageNamed:@"downloadQueued"];
+        cell.infoLabel.text = AMLocalizedString(@"queued", @"Queued");
     } else {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
         if (cell == nil) {
@@ -136,27 +134,27 @@
     
     if ([node isExported]) {
         if (isDownloaded) {
-            [cell.upImageView setImage:[UIImage imageNamed:@"linked"]];
-            [cell.middleImageView setImage:nil];
-            [cell.downImageView setImage:[Helper downloadedArrowImage]];
+            cell.upImageView.image = [UIImage imageNamed:@"linked"];
+            cell.middleImageView.image = nil;
+            cell.downImageView.image = [Helper downloadedArrowImage];
         } else {
-            [cell.upImageView setImage:nil];
-            [cell.middleImageView setImage:[UIImage imageNamed:@"linked"]];
-            [cell.downImageView setImage:nil];
+            cell.upImageView.image = nil;
+            cell.middleImageView.image = [UIImage imageNamed:@"linked"];
+            cell.downImageView.image = nil;
         }
     } else {
-        [cell.upImageView setImage:nil];
-        [cell.downImageView setImage:nil];
+        cell.upImageView.image = nil;
+        cell.downImageView.image = nil;
         
         if (isDownloaded) {
-            [cell.middleImageView setImage:[Helper downloadedArrowImage]];
+            cell.middleImageView.image = [Helper downloadedArrowImage];
         } else {
-            [cell.middleImageView setImage:nil];
+            cell.middleImageView.image = nil;
         }
     }
     
     UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
+    [view setBackgroundColor:UIColor.mnz_grayF7F7F7];
     [cell setSelectedBackgroundView:view];
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
@@ -302,7 +300,7 @@
         [self setEditing:NO animated:YES];
     }];
     revertAction.image = [UIImage imageNamed:@"history"];
-    revertAction.backgroundColor = [UIColor darkGrayColor];
+    revertAction.backgroundColor = UIColor.darkGrayColor;
     
     UIContextualAction *removeAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Share" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         self.selectedNodesArray = [NSMutableArray arrayWithObject:[self.node.mnz_versions objectAtIndex:indexPath.row]];
@@ -310,7 +308,7 @@
         [self setEditing:NO animated:YES];
     }];
     removeAction.image = [UIImage imageNamed:@"delete"];
-    removeAction.backgroundColor = [UIColor mnz_redF0373A];
+    removeAction.backgroundColor = UIColor.mnz_redF0373A;
     
     return [UISwipeActionsConfiguration configurationWithActions:@[revertAction, removeAction]];
 }
@@ -408,17 +406,15 @@
 #pragma mark - IBActions
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
-    if (self.selectedNodesArray.count != 1) {
-        return;
+    if (self.selectedNodesArray.count == 1) {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
+        
+        [self.selectedNodesArray.firstObject mnz_downloadNodeOverwriting:YES];
+        
+        [self setEditing:NO animated:YES];
+        
+        [self.tableView reloadData];
     }
-    
-    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-    
-    [[self.selectedNodesArray firstObject] mnz_downloadNodeOverwriting:YES];
-    
-    [self setEditing:NO animated:YES];
-    
-    [self.tableView reloadData];
 }
 
 - (IBAction)revertAction:(id)sender {
@@ -532,24 +528,24 @@
             [node mnz_downloadNodeOverwriting:YES];
             return YES;
         }];
-        [downloadButton iconTintColor:[UIColor whiteColor]];
+        downloadButton.tintColor = UIColor.whiteColor;
         
         return @[downloadButton];
     } else if (direction == MGSwipeDirectionRightToLeft) {
         
-        MGSwipeButton *revertButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"history"] backgroundColor:[UIColor darkGrayColor] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+        MGSwipeButton *revertButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"history"] backgroundColor:UIColor.darkGrayColor padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
             self.selectedNodesArray = [NSMutableArray arrayWithObject:[self.node.mnz_versions objectAtIndex:indexPath.row]];
             [self revertAction:nil];
             return YES;
         }];
-        [revertButton iconTintColor:[UIColor whiteColor]];
+        revertButton.tintColor = UIColor.whiteColor;
         
-        MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:[UIColor mnz_redF0373A] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+        MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:UIColor.mnz_redF0373A padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
             self.selectedNodesArray = [NSMutableArray arrayWithObject:[self.node.mnz_versions objectAtIndex:indexPath.row]];
             [self removeAction:nil];
             return YES;
         }];
-        [deleteButton iconTintColor:[UIColor whiteColor]];
+        deleteButton.tintColor = UIColor.whiteColor;
         
         return @[deleteButton, revertButton];
     } else {
@@ -592,6 +588,7 @@
         nodeUpdated = [nodeList nodeAtIndex:i];
         
         switch (nodeUpdated.getChanges) {
+                
             case MEGANodeChangeTypeRemoved:
                 if (nodeUpdated.handle == self.node.handle) {
                     [self currentVersionRemovedOnNodeList:nodeList];
@@ -620,10 +617,10 @@
     NSUInteger size = nodeList.size.unsignedIntegerValue;
     for (NSUInteger i = 0; i < size; i++) {
         newCurrentNode = [nodeList nodeAtIndex:i];
-            if (newCurrentNode.getChanges == MEGANodeChangeTypeParent) {
-                self.node = newCurrentNode;
-                [self reloadUI];
-            }
+        if (newCurrentNode.getChanges == MEGANodeChangeTypeParent) {
+            self.node = newCurrentNode;
+            [self reloadUI];
+        }
     }
 }
 
@@ -658,8 +655,8 @@
         NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
         if (indexPath != nil) {
             NodeTableViewCell *cell = (NodeTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-            [cell.infoLabel setText:[NSString stringWithFormat:@"%@ • %@", percentageCompleted, speed]];
-            cell.downloadProgressView.progress = [[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue];
+            cell.infoLabel.text = [NSString stringWithFormat:@"%@ • %@", percentageCompleted, speed];
+            cell.downloadProgressView.progress = transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue;
         }
     }
 }
