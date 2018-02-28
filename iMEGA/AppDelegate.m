@@ -416,6 +416,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
+    
+    if (self.isSignalActivityRequired) {
+        [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
