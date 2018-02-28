@@ -63,13 +63,18 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
+    if (!self.presentedViewController) {
+        [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
+    }
+    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
+    if (!self.presentedViewController) {
+        [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
+    }
 }
 
 #pragma mark - Layout
@@ -585,15 +590,26 @@
     NSUInteger size = nodeList.size.unsignedIntegerValue;
     for (NSUInteger i = 0; i < size; i++) {
         nodeUpdated = [nodeList nodeAtIndex:i];
-        if (nodeUpdated.handle == self.node.handle) {
-            if (nodeUpdated.getChanges == MEGANodeChangeTypeRemoved) {
-                [self currentVersionRemovedOnNodeList:nodeList];
+        
+        switch (nodeUpdated.getChanges) {
+            case MEGANodeChangeTypeRemoved:
+                if (nodeUpdated.handle == self.node.handle) {
+                    [self currentVersionRemovedOnNodeList:nodeList];
+                } else {
+                    self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.node.handle];
+                    [self  reloadUI];
+                }
                 break;
-            } else if (nodeUpdated.getChanges == MEGANodeChangeTypeParent && self.node.mnz_numberOfVersions < size) {
-                self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:nodeUpdated.parentHandle];
-                [self reloadUI];
+                
+            case MEGANodeChangeTypeParent:
+                if (nodeUpdated.handle == self.node.handle) {
+                    self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:nodeUpdated.parentHandle];
+                    [self reloadUI];
+                }
                 break;
-            }
+                
+            default:
+                break;
         }
     }
 }
