@@ -100,6 +100,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @property (nonatomic) URLType urlType;
 @property (nonatomic, strong) NSString *emailOfNewSignUpLink;
 @property (nonatomic, strong) NSString *quickActionType;
+@property (nonatomic, strong) NSString *messageForSuspendedAccount;
+
 
 @property (nonatomic, strong) UIAlertView *API_ESIDAlertView;
 
@@ -119,7 +121,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 @property (strong, nonatomic) NSString *email;
 @property (nonatomic) BOOL presentInviteContactVCLater;
-@property (nonatomic, getter=shouldWaitForChatLogout) BOOL waitForChatLogout;
 
 @end
 
@@ -287,9 +288,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [[MEGALogger sharedLogger] enableChatlogs];
             
             MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:sessionV3];
-            if (chatInit == MEGAChatInitNoCache) {
-                [[MEGASdkManager sharedMEGASdk] invalidateCache];
-            } else if (chatInit == MEGAChatInitError) {
+            if (chatInit == MEGAChatInitError) {
                 MEGALogError(@"Init Karere with session failed");
                 NSString *message = [NSString stringWithFormat:@"Error (%ld) initializing the chat", (long)chatInit];
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
@@ -417,6 +416,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
+    
+    if (self.isSignalActivityRequired) {
+        [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -528,7 +531,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                         }                        
                     } else {
                         MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
-                        MEGALogDebug(@"Chat %@ connection state: %@", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], chatConnection ? @"Online" : @"Offline");
+                        MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
                         if (chatConnection == MEGAChatConnectionOnline) {
                             [DevicePermissionsHelper audioPermissionWithCompletionHandler:^(BOOL granted) {
                                 if (granted) {
@@ -556,7 +559,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
                         self.chatRoom = chatRoom;
                         MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
-                        MEGALogDebug(@"Chat %@ connection state: %@", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], chatConnection ? @"Online" : @"Offline");
+                        MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
                         if (chatConnection == MEGAChatConnectionOnline) {
                             [self performCall];
                         }
@@ -1657,22 +1660,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
-- (void)showLoginViewController {
-    [SVProgressHUD dismiss];
-    
-    if ((self.urlType == URLTypeNewSignUpLink) && (_emailOfNewSignUpLink != nil)) {
-        if ([self.window.rootViewController isKindOfClass:[MEGANavigationController class]]) {
-            MEGANavigationController *navigationController = (MEGANavigationController *)self.window.rootViewController;
-            
-            if ([navigationController.topViewController isKindOfClass:[LoginViewController class]]) {
-                LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
-                [loginVC performSegueWithIdentifier:@"CreateAccountStoryboardSegueID" sender:_emailOfNewSignUpLink];
-                _emailOfNewSignUpLink = nil;
-            }
-        }
-    }
-}
-
 - (void)application:(UIApplication *)application shouldHideWindows:(BOOL)shouldHide {
     for (UIWindow *window in application.windows) {
         if ([NSStringFromClass(window.class) isEqualToString:@"UIRemoteKeyboardWindow"] || [NSStringFromClass(window.class) isEqualToString:@"UITextEffectsWindow"]) {
@@ -2003,9 +1990,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                                 [api cancelTransfer:transfer];
                             } else {
                                 MEGALogInfo(@"Camera Upload should be delayed");
-                                MEGALogInfo(@"Set badge value to %@", transfer.appData);
                                 [CameraUploads syncManager].shouldCameraUploadsBeDelayed = YES;
-                                [[CameraUploads syncManager] setBadgeValue:transfer.appData];
                             }
                         } else {
                             [api cancelTransfer:transfer];
@@ -2030,8 +2015,17 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onEvent:(MEGASdk *)api event:(MEGAEvent *)event {
-    if (event.type == EventChangeToHttps) {
-        [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"useHttpsOnly"];
+    switch (event.type) {
+        case EventChangeToHttps:
+            [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"useHttpsOnly"];
+            break;
+            
+        case EventAccountBlocked:
+            _messageForSuspendedAccount = event.text;
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -2331,14 +2325,27 @@ void uncaughtExceptionHandler(NSException *exception) {
             break;
         }
             
-        case MEGARequestTypeLogout: {
+        case MEGARequestTypeLogout: {            
             [Helper logout];
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-                _waitForChatLogout = YES;
-            } else {
-                [self showLoginViewController];
+            [SVProgressHUD dismiss];
+            
+            if (self.messageForSuspendedAccount) {
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:self.messageForSuspendedAccount preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
             }
             
+            if ((self.urlType == URLTypeNewSignUpLink) && (_emailOfNewSignUpLink != nil)) {
+                if ([self.window.rootViewController isKindOfClass:[MEGANavigationController class]]) {
+                    MEGANavigationController *navigationController = (MEGANavigationController *)self.window.rootViewController;
+                    
+                    if ([navigationController.topViewController isKindOfClass:[LoginViewController class]]) {
+                        LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
+                        [loginVC performSegueWithIdentifier:@"CreateAccountStoryboardSegueID" sender:_emailOfNewSignUpLink];
+                        _emailOfNewSignUpLink = nil;
+                    }
+                }
+            }
             break;
         }
             
@@ -2450,16 +2457,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
     
     if (request.type == MEGAChatRequestTypeLogout) {
-        if (self.shouldWaitForChatLogout) {
-            [self showLoginViewController];
-        } else {
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-                [[MEGALogger sharedLogger] enableSDKlogs];
-            }
-            
-            [self.mainTBC setBadgeValueForChats];
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
+            [[MEGALogger sharedLogger] enableSDKlogs];
         }
         [MEGASdkManager destroySharedMEGAChatSdk];
+        
+        [self.mainTBC setBadgeValueForChats];
     }
     
     MEGALogInfo(@"onChatRequestFinish request type: %ld", request.type);
@@ -2484,7 +2487,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
-    MEGALogInfo(@"onChatConnectionStateUpdate: %@, new state: %@", [MEGASdk base64HandleForUserHandle:chatId], newState ? @"Online" : @"Offline");
+    MEGALogInfo(@"onChatConnectionStateUpdate: %@, new state: %d", [MEGASdk base64HandleForUserHandle:chatId], newState);
     if (self.chatRoom.chatId == chatId && newState == MEGAChatConnectionOnline) {
         [self performCall];
     }
@@ -2527,6 +2530,9 @@ void uncaughtExceptionHandler(NSException *exception) {
         customModalAlertVC.detail = AMLocalizedString(@"depletedTransferQuota_message", @"Description shown when you almost had used your available transfer quota.");
         customModalAlertVC.action = AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
         customModalAlertVC.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+        if ([[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
+            customModalAlertVC.bonus = AMLocalizedString(@"getBonus", @"Button title to see the available bonus");
+        }
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
         customModalAlertVC.completion = ^{
             [weakCustom dismissViewControllerAnimated:YES completion:^{

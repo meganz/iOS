@@ -870,6 +870,8 @@
             CloudDriveTableViewController *cloudTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             [cloudTVC setParentNode:node];
             [cloudTVC setDisplayMode:DisplayModeCloudDrive];
+            cloudTVC.incomingShareChildView = (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0);
+            
             [self.navigationController pushViewController:cloudTVC animated:YES];
             break;
         }
@@ -1001,6 +1003,7 @@
     CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
     cloudDriveTVC.parentNode = node;
     cloudDriveTVC.displayMode = DisplayModeCloudDrive;
+    cloudDriveTVC.incomingShareChildView = (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0);
     
     return cloudDriveTVC;
 }

@@ -28,6 +28,8 @@
 "attention"="ประกาศ";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="กรุณาอนุญาตให้แอป MEGA สามารถเข้าถึงการตั้งค่าของกล้องคุณได้";
+/* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
+"cameraPermissionsInCall"="Please give MEGA app permission to access your Camera in your Settings. In case you proceed the call will end because the app will be restarted.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
@@ -454,10 +456,6 @@
 "overquotaAlert_message"="ไม่อนุญาตให้ดำเนินการ พื้นที่จัดเก็บในบัญชีของคุณเกินขีดจำกัดแล้ว คุณต้องการอัปเกรดบัญชีของคุณหรือไม่";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="เลือกรายการ";
-/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
-"photosPerMonth"="%lu รูปถ่าย";
-/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1} photo" */
-"photoPerMonth"="%lu รูปถ่าย";
 /* Button title that skips the current action */
 "skipButton"="ข้าม";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
@@ -466,6 +464,12 @@
 "enableCameraUploadsButton"="เปิดใช้งานอัปโหลดจากกล้อง";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="อัปโหลดจากกล้องถูกเปิดใช้งาน";
+/* Message shown when the camera uploads have been completed */
+"cameraUploadsComplete"="การอัปโหลดกล้องเสร็จสมบูรณ์";
+/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
+"cameraUploadsUploadingFile"="กำลังอัปโหลดไฟล์ %1$d จาก %2$d ไฟล์";
+/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
+"cameraUploadsUploadingFiles"="กำลังอัปโหลดไฟล์ %1$d จาก %2$d ไฟล์";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu รายการที่เลือกแล้ว";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -962,14 +966,10 @@
 "choosePlan"="เลือกแผนใดแผนหนึ่งด้านล่างนี้:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="เลือกบัญชีหนึ่งประเภท:";
-/* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
-"twoMonthsFree"="รับฟรีสองเดือนทันที เมื่อสมัครใช้งานแบบ PRO 1 ปี";
+/* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
+"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="แผนปัจจุบัน:";
-/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
-"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
-/* Title text for the account confirmation. */
-"confirm"="ยืนยัน";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="ส่งคำขอแผน";
 /* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
@@ -1032,6 +1032,8 @@
 "chatIsDisabled"="แชทถูกปิดใช้งาน";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="เปิดการใช้งาน";
+/* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
+"disable"="ปิดการใช้งาน";
 /* Conversations section */
 "conversations"="การสนทนา";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1149,7 +1151,7 @@
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="สนทนาอยู่กับ %@";
 /* Title show above the name of the persons with whom you're chatting */
-"chattingWith"="Chatting with";
+"chattingWith"="กำลังสนทนากับ";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA ปกป้องแชทของคุณด้วยกระบวนการเข้ารหัสตั้งแต่ต้นทางถึงปลายทาง (ผู้ใช้เป็นผู้ควบคุม) การเข้ารหัสจะเป็นการรับรองความปลอดภัยที่สำคัญ:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1317,3 +1319,5 @@
 "missedAudioCallsAndMissedVideoCall"="[A] สายสนทนาและสายวิดีโอที่ไม่ได้รับ";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
 "missedAudioCallsAndMissedVideoCalls"="[A] สายที่ไม่ได้รับและอีก [B] สายวิดีโอที่ไม่ได้รับ";
+/* Button title to see the available bonus */
+"getBonus"="Get Bonus";

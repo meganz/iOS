@@ -250,6 +250,17 @@
     }
 }
 
+- (UIAlertController *)videoPermisionHangCallAlertController {
+    UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"cameraPermissions", @"Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it") preferredStyle:UIAlertControllerStyleAlert];
+    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    __weak __typeof(self) weakSelf = self;
+    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [weakSelf hangCall:nil];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+    }]];
+    return permissionsAlertController;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)acceptCallWithVideo:(UIButton *)sender {
@@ -320,7 +331,7 @@
                 [[MEGASdkManager sharedMEGAChatSdk] enableVideoForChat:self.chatRoom.chatId delegate:enableDisableVideoRequestDelegate];
             }
         } else {
-            [self presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
+            [self presentViewController:[self videoPermisionHangCallAlertController] animated:YES completion:nil];
         }
     }];
 }
