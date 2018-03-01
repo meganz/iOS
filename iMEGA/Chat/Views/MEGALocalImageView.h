@@ -16,5 +16,6 @@ typedef NS_ENUM(NSUInteger, Corner) {
 @property (nonatomic, setter=setVisibleControls:, getter=areControlsVisible) BOOL visibleControls;
 
 - (void)rotate;
+- (void)remoteVideoEnable:(BOOL)enable;
 
 @end
