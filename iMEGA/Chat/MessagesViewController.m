@@ -748,8 +748,6 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)hideJumpToBottom {
-    UILabel *label = self.jumpToBottomView.subviews.lastObject;
-    label.text = @"";
     if (self.jumpToBottomView.alpha < 1) {
         return;
     }
@@ -937,7 +935,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, bottom, 0.0f);
     self.collectionView.contentInset = insets;
     self.collectionView.scrollIndicatorInsets = insets;
-    self.jumpToBottomConstraint.constant = bottom + 7.0f;
+    self.jumpToBottomConstraint.constant = bottom + 27.0f;
 }
 
 #pragma mark - JSQMessages CollectionView DataSource
@@ -1581,7 +1579,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                 }
                 NSIndexPath *lastUnreadIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
                 [self.collectionView scrollToItemAtIndexPath:lastUnreadIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
-                [self showOrHideJumpToBottom];
+                if (self.unreadMessages) {
+                    [self showOrHideJumpToBottom];
+                }
             });
         } else {
             // TODO: improve load earlier messages
