@@ -28,6 +28,7 @@
 #import "MEGAProcessAsset.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStartUploadTransferDelegate.h"
+#import "MEGAStore.h"
 #import "MEGAToolbarContentView.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -143,25 +144,26 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     self.areAllMessagesSeen = NO;
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popViewController)];
-    UITapGestureRecognizer *singleTap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popViewController)];
     
-    _unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    _unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 6, 30, 30)];
     self.unreadLabel.font = [UIFont mnz_SFUIMediumWithSize:12.0f];
     self.unreadLabel.textColor = [UIColor mnz_redD90007];
     self.unreadLabel.userInteractionEnabled = YES;
-    [self.unreadLabel addGestureRecognizer:singleTap];
-    _unreadBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.unreadLabel];
     
     if (self.presentingViewController && self.parentViewController) {
         UIBarButtonItem *chatBackBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"chat", @"Chat section header") style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
         self.navigationItem.leftBarButtonItems = @[chatBackBarButtonItem, self.unreadBarButtonItem];
     } else {
+        //TODO: leftItemsSupplementBackButton
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 66, 44)];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backArrow"]];
-        imageView.frame = CGRectMake(0, 0, 22, 22);
-        [imageView addGestureRecognizer:singleTap2];
+        imageView.frame = CGRectMake(0, 10, 22, 22);
+        [view addGestureRecognizer:singleTap];
+        [view addSubview:imageView];
+        [view addSubview:self.unreadLabel];
         
-        UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageView];
-        self.navigationItem.leftBarButtonItems = @[backBarButtonItem, self.unreadBarButtonItem];
+        UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:view];
+        self.navigationItem.leftBarButtonItems = @[backBarButtonItem];
     }
     self.stopInvitingContacts = NO;
     
@@ -180,6 +182,12 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     } else {
         _peerAvatar = [UIImage mnz_imageForUserHandle:[self.chatRoom peerHandleAtIndex:0] size:CGSizeMake(80.0f, 80.0f) delegate:nil];
     }
+    
+    // Add an observer to get notified when going to background:
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(willResignActive)
+                                                 name:UIApplicationWillResignActiveNotification
+                                               object:nil];
     
     // Add an observer to get notified when coming back to foreground:
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -203,6 +211,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self customNavigationBarLabel];
     [self rightBarButtonItems];
     [self updateUnreadLabel];
+    
+    self.inputToolbar.contentView.textView.text = [[MEGAStore shareInstance] fetchChatDraftWithChatId:self.chatRoom.chatId].text;
 }
 
 - (void)didBecomeActive {
@@ -211,6 +221,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         [self.inputToolbar.contentView.textView resignFirstResponder];
         [self.inputToolbar.contentView.textView becomeFirstResponder];
     }
+}
+
+- (void)willResignActive {
+    [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -224,6 +238,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     
     self.automaticallyScrollsToMostRecentMessage = NO;
+    
+    [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
 }
 
 - (BOOL)hidesBottomBarWhenPushed {
@@ -278,11 +294,17 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             label.attributedText = titleMutableAttributedString;
         }
     } else {
-        NSString *chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+        NSString *chatRoomState;
+        if ([MEGAReachabilityManager isReachable]) {
+            chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+            self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+        } else {
+            chatRoomState = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+            self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:MEGAChatStatusOffline];
+        }
         if (chatRoomState) {
             label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:chatRoomState];
             self.lastChatRoomStateString = chatRoomState;
-            self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
         } else {
             label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:@""];
         }
@@ -686,6 +708,13 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 - (void)internetConnectionChanged {
     self.videoCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
     self.audioCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
+    
+    [self customNavigationBarLabel];
+
+    if (self.openMessageHeaderView) {
+        self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
+        self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
+    }
 }
 
 #pragma mark - Custom menu actions for cells
@@ -710,26 +739,34 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     }
     
     MEGAChatMessage *message;
-    if (!self.editMessage) {
+    if (self.editMessage) {
+        if ([self.editMessage.content isEqualToString:self.inputToolbar.contentView.textView.text]) {
+            //If the user didn't change anything on the message that was editing, just go out of edit mode.
+        } else {
+            message = [[MEGASdkManager sharedMEGAChatSdk] editMessageForChat:self.chatRoom.chatId messageId:self.editMessage.messageId message:text];
+            message.chatRoom = self.chatRoom;
+            NSUInteger index = [self.messages indexOfObject:self.editMessage];
+            if (index != NSNotFound) {
+                [self.messages replaceObjectAtIndex:index withObject:message];
+                [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
+            }
+        }
+        
+        self.automaticallyScrollsToMostRecentMessage = NO;
+        
+        self.editMessage = nil;
+    } else {
         message = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:text];
         message.chatRoom = self.chatRoom;
         [self.messages addObject:message];
         [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];
-    } else {
-        message = [[MEGASdkManager sharedMEGAChatSdk] editMessageForChat:self.chatRoom.chatId messageId:self.editMessage.messageId message:text];
-        message.chatRoom = self.chatRoom;
-        NSUInteger index = [self.messages indexOfObject:self.editMessage];
-        if (index != NSNotFound) {
-            [self.messages replaceObjectAtIndex:index withObject:message];
-            [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
-        }
-        self.editMessage = nil;
+        
+        self.automaticallyScrollsToMostRecentMessage = YES;
     }
     
     MEGALogInfo(@"didPressSendButton %@", message);
     
     [self finishSendingMessageAnimated:YES];
-    [self scrollToBottomAnimated:YES];
 }
 
 - (void)messagesInputToolbar:(MEGAInputToolbar *)toolbar didPressSendButton:(UIButton *)sender toAttachAssets:(NSArray<PHAsset *> *)assets {
@@ -747,7 +784,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)uploadAssets:(NSArray<PHAsset *> *)assets toParentNode:(MEGANode *)parentNode {
     for (PHAsset *asset in assets) {
-        MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset parentNode:parentNode filePath:^(NSString *filePath) {
+        MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initToShareThroughChatWithAsset:asset filePath:^(NSString *filePath) {
             [self startUploadAndAttachWithPath:filePath parentNode:parentNode];
         } node:^(MEGANode *node) {
             [self attachOrCopyAndAttachNode:node toParentNode:parentNode];
@@ -774,7 +811,6 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
             [self presentViewController:alertController animated:YES completion:nil];
         }];
-        processAsset.originalName = YES;
         [processAsset prepare];
     }
 }
@@ -989,23 +1025,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     cell.accessoryButton.hidden = YES;
     
-    if (message.isEdited) {
-        [cell.accessoryButton setImage:nil forState:UIControlStateNormal];
-        [cell.accessoryButton setAttributedTitle:[[NSAttributedString alloc] initWithString:AMLocalizedString(@"edited", @"A log message in a chat to indicate that the message has been edited by the user.") attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_blue2BA6DE]}] forState:UIControlStateNormal];
-        cell.accessoryButton.hidden = NO;
-        
-        cell.textView.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
-        cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? [UIColor whiteColor] : [UIColor mnz_black333333];
-        if (message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
-            cell.contentView.alpha = 0.7f;
-            if (message.status == MEGAChatMessageStatusSendingManual) {
-                [cell.accessoryButton setImage:[UIImage imageNamed:@"sending_manual"] forState:UIControlStateNormal];
-                cell.accessoryButton.hidden = NO;
-            }
-        } else {
-            cell.contentView.alpha = 1.0f;
-        }
-    } else if (message.isDeleted) {
+    if (message.isDeleted) {
         cell.textView.font = [UIFont mnz_SFUIRegularItalicWithSize:15.0f];
         cell.textView.textColor = [UIColor mnz_blue2BA6DE];
     } else if (message.isManagementMessage) {
@@ -1016,17 +1036,19 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     } else if (!message.isMediaMessage) {
         cell.textView.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
         cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? [UIColor whiteColor] : [UIColor mnz_black333333];
-        if (message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
-            cell.contentView.alpha = 0.7f;
-            if (message.status == MEGAChatMessageStatusSendingManual) {
-                [cell.accessoryButton setImage:[UIImage imageNamed:@"sending_manual"] forState:UIControlStateNormal];
-                cell.accessoryButton.hidden = NO;
-            }
-        } else {
-            cell.contentView.alpha = 1.0f;
-        }
+        
         cell.textView.linkTextAttributes = @{ NSForegroundColorAttributeName : cell.textView.textColor,
                                               NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
+    }
+    
+    if (message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
+        cell.contentView.alpha = 0.7f;
+        if (message.status == MEGAChatMessageStatusSendingManual) {
+            [cell.accessoryButton setImage:[UIImage imageNamed:@"sending_manual"] forState:UIControlStateNormal];
+            cell.accessoryButton.hidden = NO;
+        }
+    } else {
+        cell.contentView.alpha = 1.0f;
     }
     
     if ([cell.textView.text mnz_isPureEmojiString]) {
@@ -1184,7 +1206,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)edit:(id)sender message:(MEGAChatMessage *)message {
     [self.inputToolbar.contentView.textView becomeFirstResponder];
-    self.inputToolbar.contentView.textView.text = message.text;
+    self.inputToolbar.contentView.textView.text = message.content;
     self.editMessage = message;
 }
 
@@ -1336,13 +1358,46 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
         
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"retry", @"Button which allows to retry send message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIAlertAction *retryAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"retry", @"Button which allows to retry send message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             NSLog(@"retry tapped"); // sent message + discard || delete
             [[MEGASdkManager sharedMEGAChatSdk] removeUnsentMessageForChat:self.chatRoom.chatId rowId:message.rowId];
-            MEGAChatMessage *retryMessage = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:message.text];
-            retryMessage.chatRoom = self.chatRoom;
-            [self.messages replaceObjectAtIndex:path.item withObject:retryMessage];
-        }]];
+            
+            switch (message.type) {
+                case MEGAChatMessageTypeNormal: {
+                    MEGAChatMessage *retryMessage = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:message.text];
+                    [self.messages replaceObjectAtIndex:path.item withObject:retryMessage];
+                    break;
+                }
+                    
+                case MEGAChatMessageTypeAttachment: {
+                    MEGANode *node = [message.nodeList nodeAtIndex:0];
+                    [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:self.chatRoom.chatId node:node.handle delegate:self];
+                    [self.messages removeObjectAtIndex:path.item];
+                    [self.collectionView deleteItemsAtIndexPaths:@[path]];
+                    break;
+                }
+                    
+                case MEGAChatMessageTypeContact: {
+                    NSMutableArray *users = [[NSMutableArray alloc] init];
+                    for (NSUInteger i = 0; i < message.usersCount; i++) {
+                        MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[message userEmailAtIndex:i]];
+                        if (user) {
+                            [users addObject:user];
+                        }
+                    }
+                    
+                    MEGAChatMessage *retryMessage = [[MEGASdkManager sharedMEGAChatSdk] attachContactsToChat:self.chatRoom.chatId contacts:users];
+                    [self.messages replaceObjectAtIndex:path.item withObject:retryMessage];
+                    break;
+                }
+                    
+                default:
+                    break;
+            }
+        }];
+        [retryAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+        [alertController addAction:retryAlertAction];
+        
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"deleteMessage", @"Button which allows to delete message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[MEGASdkManager sharedMEGAChatSdk] removeUnsentMessageForChat:self.chatRoom.chatId rowId:message.rowId];
             [self.messages removeObjectAtIndex:path.item];

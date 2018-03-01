@@ -833,12 +833,6 @@ static NSString *kisDirectory = @"kisDirectory";
     [self presentViewController:megaNavigationController animated:YES completion:nil];
 }
 
-#pragma mark - UIDocumentInteractionController
-
-- (UIViewController *)documentInteractionControllerViewControllerForPreview:(UIDocumentInteractionController *)controller {
-    return self;
-}
-
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {

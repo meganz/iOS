@@ -133,9 +133,9 @@
         NSString *initialsForAvatar = nil;
         if (user) {
             if (user.fullName.length) {
-                initialsForAvatar = user.fullName.uppercaseString;
+                initialsForAvatar = [user.fullName substringToIndex:1].uppercaseString;
             } else {
-                initialsForAvatar = user.email.uppercaseString;
+                initialsForAvatar = [user.email substringToIndex:1].uppercaseString;
             }
         } else {
             initialsForAvatar = @"?";
