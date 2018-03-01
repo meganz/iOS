@@ -39,8 +39,6 @@
 
 @property (strong, nonatomic) AVAudioPlayer *player;
 
-@property (nonatomic, getter=isInPortrait) BOOL inPortrait;
-
 @end
 
 @implementation CallViewController
@@ -60,8 +58,8 @@
     self.localVideoImageView.layer.masksToBounds = YES;
     self.localVideoImageView.layer.cornerRadius = 4;
     self.localVideoImageView.corner = CornerTopRight;
-    self.localVideoImageView.visibleControls = YES;
-
+    self.localVideoImageView.userInteractionEnabled = self.call.hasRemoteVideo;
+    
     if (self.callType == CallTypeIncoming) {
         self.outgoingCallView.hidden = YES;
         if (@available(iOS 10.0, *)) {
@@ -99,7 +97,6 @@
     [[UIDevice currentDevice] setProximityMonitoringEnabled:YES];    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSessionRouteChange:) name:AVAudioSessionRouteChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sensorStateMonitor:) name:UIDeviceProximityStateDidChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rotated) name:UIDeviceOrientationDidChangeNotification object:nil];
     
     self.nameLabel.text = [self.chatRoom peerFullnameAtIndex:0];
     
@@ -122,8 +119,6 @@
         [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideoDelegate:self.localVideoImageView];
     }
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
-    
-    _inPortrait = UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation]) ? YES : NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -136,6 +131,16 @@
     [[UIDevice currentDevice] setProximityMonitoringEnabled:NO];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {    
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        if (self.call.hasLocalVideo && self.call.hasRemoteVideo) {
+            [self.localVideoImageView rotate];
+        }
+    } completion:nil];
 }
 
 #pragma mark - Status bar
@@ -234,22 +239,6 @@
     }];
 }
 
-- (void)rotated {
-    if (self.call.hasLocalVideo) {
-        if (self.isInPortrait) {
-            if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
-                self.inPortrait = NO;
-                [self.localVideoImageView rotate];
-            }
-        } else {
-            if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
-                self.inPortrait = YES;
-                [self.localVideoImageView rotate];
-            }
-        }
-    }
-}
-
 - (UIAlertController *)videoPermisionHangCallAlertController {
     UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"cameraPermissions", @"Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it") preferredStyle:UIAlertControllerStyleAlert];
     [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -340,7 +329,7 @@
 
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
     MEGALogDebug(@"onChatCallUpdate %@", call);
-    
+    self.call = call;
     switch (call.status) {
         case MEGAChatCallStatusInitial:
             break;
@@ -373,11 +362,13 @@
                     
                     [self showOrHideControls];
                 });
+
             }
             self.outgoingCallView.hidden = NO;
             self.incomingCallView.hidden = YES;
             
             if ([call hasChangedForType:MEGAChatCallChangeTypeRemoteAVFlags]) {
+                self.localVideoImageView.userInteractionEnabled = call.hasRemoteVideo;
                 if (call.hasRemoteVideo) {
                     self.remoteVideoImageView.hidden = NO;
                     [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideoDelegate:self.remoteVideoImageView];
@@ -388,7 +379,7 @@
                     self.remoteAvatarImageView.hidden = NO;
                     [self.remoteAvatarImageView mnz_setImageForUserHandle:[self.chatRoom peerHandleAtIndex:0]];
                 }
-                
+                [self.localVideoImageView remoteVideoEnable:call.remoteVideo];
                 self.remoteMicImageView.hidden = call.hasRemoteAudio;
             }
             break;

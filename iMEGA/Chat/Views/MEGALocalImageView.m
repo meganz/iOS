@@ -9,6 +9,8 @@ static const CGFloat BOTTOM_HEIGHT = 123;
 @interface MEGALocalImageView ()
 
 @property (nonatomic) CGPoint offset;
+@property (nonatomic) NSInteger customWidth;
+@property (nonatomic) NSInteger customHeight;
 
 @end
 
@@ -16,7 +18,9 @@ static const CGFloat BOTTOM_HEIGHT = 123;
 
 - (void)setVisibleControls:(BOOL)visibleControls {
     _visibleControls = visibleControls;
-    [self positionViewByCenter:self.center];
+    if (self.userInteractionEnabled) {
+        [self positionViewByCenter:self.center];
+    }
 }
 
 
@@ -56,17 +60,42 @@ static const CGFloat BOTTOM_HEIGHT = 123;
         }
     }
 
-    CGPoint point = [self startingPointOrientationDidChanage:NO];
+    CGPoint point = [self startingPoint];
     self.center = CGPointMake(point.x + self.frame.size.width / 2, point.y + self.frame.size.height / 2);
     [UIView commitAnimations];
     
 }
 
 - (void)rotate {
-    CGPoint point = [self startingPointOrientationDidChanage:YES];
     [UIView animateWithDuration:0.5f animations:^{
-        self.frame = CGRectMake(point.x, point.y, self.frame.size.height, self.frame.size.width);
+        self.customWidth = self.frame.size.height;
+        self.customHeight = self.frame.size.width;
+        CGPoint point = [self startingPoint];
+        self.frame = CGRectMake(point.x, point.y, self.customWidth, self.customHeight);
     }];
+}
+
+- (void)remoteVideoEnable:(BOOL)enable {
+    if (enable) {
+        self.autoresizingMask = UIViewAutoresizingNone;
+        [UIView animateWithDuration:0.5f animations:^{
+            BOOL portrait = [[UIScreen mainScreen] bounds].size.height > [[UIScreen mainScreen] bounds].size.width;
+            if (portrait) {
+                self.customHeight = self.superview.frame.size.height * 20 / 100;
+                self.customWidth = self.customHeight * 3 / 4;
+            } else {
+                self.customWidth = self.superview.frame.size.width * 20 / 100;
+                self.customHeight = self.customWidth * 3 / 4;
+            }
+            CGPoint point = [self startingPoint];
+            self.frame = CGRectMake(point.x, point.y, self.customWidth, self.customHeight);
+        }];
+    } else {
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [UIView animateWithDuration:0.5f animations:^{
+            self.frame = CGRectMake(0, 0, self.superview.frame.size.width, self.superview.frame.size.height);
+        }];
+    }
 }
 
 - (CGFloat)variableHeightMargin {
@@ -85,7 +114,7 @@ static const CGFloat BOTTOM_HEIGHT = 123;
     return variableHeightMargin;
 }
 
-- (CGPoint)startingPointOrientationDidChanage:(BOOL)orientationDidChange {
+- (CGPoint)startingPoint {
     CGFloat variableHeightMargin = [self variableHeightMargin];
     CGFloat x,y;
     
@@ -95,32 +124,18 @@ static const CGFloat BOTTOM_HEIGHT = 123;
             y = variableHeightMargin;
             break;
         case CornerTopRight:
-            if (orientationDidChange) {
-                x = self.superview.frame.size.width - self.frame.size.height - FIXED_MARGIN;
-            } else {
-                x = self.superview.frame.size.width - self.frame.size.width - FIXED_MARGIN;
-            }
+            x = self.superview.frame.size.width - self.customWidth - FIXED_MARGIN;
             y = variableHeightMargin;
             break;
             
         case CornerBottonLeft:
             x = FIXED_MARGIN;
-            if (orientationDidChange) {
-                y = self.superview.frame.size.height - self.frame.size.width - variableHeightMargin;
-            } else {
-                y = self.superview.frame.size.height - self.frame.size.height - variableHeightMargin;
-            }
+            y = self.superview.frame.size.height - self.customHeight - variableHeightMargin;
             break;
             
         case CornerBottonRight:
-            if (orientationDidChange) {
-                x = self.superview.frame.size.width - self.frame.size.height - FIXED_MARGIN;
-                y = self.superview.frame.size.height - self.frame.size.width - variableHeightMargin;
-            } else {
-                x = self.superview.frame.size.width - self.frame.size.width - FIXED_MARGIN;
-                y = self.superview.frame.size.height - self.frame.size.height - variableHeightMargin;
-                
-            }
+            x = self.superview.frame.size.width - self.customWidth - FIXED_MARGIN;
+            y = self.superview.frame.size.height - self.customHeight - variableHeightMargin;
             break;
             
         default:

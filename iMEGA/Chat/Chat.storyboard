@@ -52,7 +52,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7PO-mE-tsu">
-                                                    <rect key="frame" x="64" y="17" width="37" height="18"/>
+                                                    <rect key="frame" x="64" y="17" width="38.666666666666657" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="RVg-bm-9hG"/>
                                                     </constraints>
@@ -61,7 +61,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lpz-9f-lNv">
-                                                    <rect key="frame" x="63.999999999999993" y="38" width="29.666666666666664" height="14"/>
+                                                    <rect key="frame" x="64" y="38" width="31" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="14" id="iGr-wS-hxg"/>
                                                     </constraints>
@@ -70,7 +70,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lRT-kC-JWt">
-                                                    <rect key="frame" x="105" y="23" width="6" height="6"/>
+                                                    <rect key="frame" x="106.66666666666667" y="23" width="6" height="6"/>
                                                     <color key="backgroundColor" red="0.1921568662" green="0.70980393890000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="6" id="2b8-Mc-Zyu"/>
@@ -83,7 +83,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6xG-n6-aut">
-                                                    <rect key="frame" x="379.66666666666669" y="15" width="19.333333333333314" height="12"/>
+                                                    <rect key="frame" x="378.33333333333331" y="15" width="20.666666666666686" height="12"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="12" id="SeZ-yc-RTT"/>
                                                     </constraints>
@@ -215,8 +215,8 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                             <imageView alpha="0.94999999999999996" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XBi-5G-ZJL" customClass="MEGALocalImageView">
-                                <rect key="frame" x="274" y="90" width="120" height="160"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zo2-s1-xCp" userLabel="outgoingCallView">
                                 <rect key="frame" x="61" y="613" width="294" height="100"/>
@@ -373,7 +373,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3ui-lT-2Za" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1080.8" y="1452.3238380809596"/>
+            <point key="canvasLocation" x="1079.7101449275362" y="1451.9021739130435"/>
         </scene>
         <!--Chat Attached Contacts View Controller-->
         <scene sceneID="CPH-wX-UXf">
@@ -498,7 +498,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W71-dB-C1l">
-                                        <rect key="frame" x="187" y="113" width="40" height="18"/>
+                                        <rect key="frame" x="186.33333333333334" y="113" width="41.333333333333343" height="18"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                         <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -563,7 +563,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JW3-U7-IQu" userLabel="Notifications Label">
-                                                    <rect key="frame" x="59.999999999999993" y="12" width="95.333333333333314" height="20"/>
+                                                    <rect key="frame" x="60.000000000000007" y="12" width="101.66666666666669" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="AyC-JU-ITg"/>
                                                     </constraints>
@@ -624,7 +624,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Leave group" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SIl-mU-b9o" userLabel="Leave group Label">
-                                                    <rect key="frame" x="60.000000000000007" y="12" width="94.666666666666686" height="20"/>
+                                                    <rect key="frame" x="59.999999999999993" y="12" width="98.333333333333314" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="KTZ-gp-BKF"/>
                                                     </constraints>
@@ -671,13 +671,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5zE-El-ibr">
-                                                    <rect key="frame" x="64" y="12.666666666666664" width="41.666666666666657" height="20"/>
+                                                    <rect key="frame" x="64" y="12.666666666666664" width="43.666666666666657" height="20"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.46666666870000001" green="0.46666666870000001" blue="0.46666666870000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="smg-gq-BPa">
-                                                    <rect key="frame" x="109.66666666666667" y="19" width="6" height="6"/>
+                                                    <rect key="frame" x="111.66666666666667" y="19" width="6" height="6"/>
                                                     <color key="backgroundColor" red="0.1921568662" green="0.70980393890000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="6" id="D6K-WI-rvK"/>
@@ -781,13 +781,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DXU-jt-Kcb">
-                                                    <rect key="frame" x="64" y="5" width="37" height="14"/>
+                                                    <rect key="frame" x="64" y="5" width="38.666666666666657" height="14"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                                     <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E8z-Hv-3OF">
-                                                    <rect key="frame" x="105" y="9" width="6" height="6"/>
+                                                    <rect key="frame" x="106.66666666666667" y="9" width="6" height="6"/>
                                                     <color key="backgroundColor" red="0.1921568662" green="0.70980393890000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="6" id="JVL-3Y-8PB"/>
@@ -800,7 +800,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wWg-gs-M5w">
-                                                    <rect key="frame" x="63.999999999999993" y="19" width="29.666666666666664" height="14"/>
+                                                    <rect key="frame" x="64" y="19" width="31" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="14" id="LCv-DM-p3r"/>
                                                     </constraints>
