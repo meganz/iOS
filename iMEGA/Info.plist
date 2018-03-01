@@ -85,6 +85,7 @@
 		<string>SF-UI-Text-RegularItalic.otf</string>
 		<string>SF-UI-Text-Bold.otf</string>
 		<string>SF-UI-Text-BoldItalic.otf</string>
+		<string>SF-UI-Text-Semibold.otf</string>
 	</array>
 	<key>UIApplicationShortcutItems</key>
 	<array>
