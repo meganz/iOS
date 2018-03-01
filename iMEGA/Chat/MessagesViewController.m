@@ -95,7 +95,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [super viewDidLoad];
     
     _messages = [[NSMutableArray alloc] init];
-    self.unreadMessages = self.chatRoom.unreadCount;
+    self.unreadMessages = ABS(self.chatRoom.unreadCount);
     
     if ([[MEGASdkManager sharedMEGAChatSdk] openChatRoom:self.chatRoom.chatId delegate:self]) {
         MEGALogDebug(@"Chat room opened: %@", self.chatRoom);
@@ -1581,6 +1581,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                 }
                 NSIndexPath *lastUnreadIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
                 [self.collectionView scrollToItemAtIndexPath:lastUnreadIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+                [self showOrHideJumpToBottom];
             });
         } else {
             // TODO: improve load earlier messages
