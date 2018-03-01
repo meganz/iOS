@@ -391,12 +391,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
     [self.window addSubview:self.privacyView];
     
-    /* Hide all windows except the keyWindow */
-    for (UIWindow *window in application.windows) {
-        if ([NSStringFromClass(window.class) isEqualToString:@"UIRemoteKeyboardWindow"]) {
-            window.frame = CGRectMake(0, 0, 0, 0);
-        }
-    }
+    [self application:application shouldHideWindows:YES];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -412,11 +407,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [self.privacyView removeFromSuperview];
     self.privacyView = nil;
-    for (UIWindow *window in application.windows) {
-        if ([NSStringFromClass(window.class) isEqualToString:@"UIRemoteKeyboardWindow"]) {
-            window.frame = [[UIScreen mainScreen] bounds];
-        }
-    }
+    
+    [self application:application shouldHideWindows:NO];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -536,7 +528,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                         }                        
                     } else {
                         MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
-                        MEGALogDebug(@"Chat %@ connection state: %@", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], chatConnection ? @"Online" : @"Offline");
+                        MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
                         if (chatConnection == MEGAChatConnectionOnline) {
                             [DevicePermissionsHelper audioPermissionWithCompletionHandler:^(BOOL granted) {
                                 if (granted) {
@@ -564,7 +556,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
                         self.chatRoom = chatRoom;
                         MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
-                        MEGALogDebug(@"Chat %@ connection state: %@", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], chatConnection ? @"Online" : @"Offline");
+                        MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
                         if (chatConnection == MEGAChatConnectionOnline) {
                             [self performCall];
                         }
@@ -1681,6 +1673,18 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
+- (void)application:(UIApplication *)application shouldHideWindows:(BOOL)shouldHide {
+    for (UIWindow *window in application.windows) {
+        if ([NSStringFromClass(window.class) isEqualToString:@"UIRemoteKeyboardWindow"] || [NSStringFromClass(window.class) isEqualToString:@"UITextEffectsWindow"]) {
+            if (shouldHide) {
+                window.frame = CGRectMake(0, 0, 0, 0);
+            } else {
+                window.frame = [[UIScreen mainScreen] bounds];
+            }
+        }
+    }
+}
+
 #pragma mark - Battery changed
 
 - (void)batteryChanged:(NSNotification *)notification {
@@ -1999,9 +2003,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                                 [api cancelTransfer:transfer];
                             } else {
                                 MEGALogInfo(@"Camera Upload should be delayed");
-                                MEGALogInfo(@"Set badge value to %@", transfer.appData);
                                 [CameraUploads syncManager].shouldCameraUploadsBeDelayed = YES;
-                                [[CameraUploads syncManager] setBadgeValue:transfer.appData];
                             }
                         } else {
                             [api cancelTransfer:transfer];
@@ -2480,7 +2482,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
-    MEGALogInfo(@"onChatConnectionStateUpdate: %@, new state: %@", [MEGASdk base64HandleForUserHandle:chatId], newState ? @"Online" : @"Offline");
+    MEGALogInfo(@"onChatConnectionStateUpdate: %@, new state: %d", [MEGASdk base64HandleForUserHandle:chatId], newState);
     if (self.chatRoom.chatId == chatId && newState == MEGAChatConnectionOnline) {
         [self performCall];
     }
@@ -2523,6 +2525,9 @@ void uncaughtExceptionHandler(NSException *exception) {
         customModalAlertVC.detail = AMLocalizedString(@"depletedTransferQuota_message", @"Description shown when you almost had used your available transfer quota.");
         customModalAlertVC.action = AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
         customModalAlertVC.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+        if ([[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
+            customModalAlertVC.bonus = AMLocalizedString(@"getBonus", @"Button title to see the available bonus");
+        }
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
         customModalAlertVC.completion = ^{
             [weakCustom dismissViewControllerAnimated:YES completion:^{

@@ -1,7 +1,7 @@
 /* Microphone usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSMicrophoneUsageDescription"="MEGA ma dostęp do mikrofonu podczas nagrywania wideo w aplikacji.";
+"NSMicrophoneUsageDescription"="MEGA posiada dostęp do mikrofonu aby umożliwić ci przeprowadzanie rozmów wideo.";
 /* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSCameraUsageDescription"="MEGA ma dostęp do aparatu podczas nagrywania filmu, lub robienia zdjęć. ";
+"NSCameraUsageDescription"="MEGA posiada dostęp do mikrofonu aby umożliwić ci przeprowadzanie rozmów wideo.";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryUsageDescription"="MEGA ma dostęp do Twoich zdjęć i/lub filmów, jeżeli je wcześniej wgrasz lub masz uruchomioną funkcję wgrywania zdjęć.";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */

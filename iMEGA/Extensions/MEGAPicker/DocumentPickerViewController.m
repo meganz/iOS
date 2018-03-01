@@ -77,6 +77,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActive)
                                                  name:NSExtensionHostDidBecomeActiveNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground)
+                                                 name:NSExtensionHostDidEnterBackgroundNotification
+                                               object:nil];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -110,12 +114,16 @@
     }
     
     if (self.session) {
-        if ([LTHPasscodeViewController doesPasscodeExist]) {
+        if ([LTHPasscodeViewController doesPasscodeExist] && !self.passcodePresented) {
             [self presentPasscode];
         }
     } else {
         [self configureUI];
     }
+}
+
+- (void)didEnterBackground {
+    self.passcodePresented = NO;
 }
 
 #pragma mark - Language
@@ -257,6 +265,10 @@
         [self.view addSubview:navigationController.view];
         self.pickerPresented = YES;
     }
+    if (self.launchVC) {
+        [self.launchVC.view removeFromSuperview];
+        self.launchVC = nil;
+    }    
 }
 
 - (void)presentPasscode {
@@ -467,7 +479,7 @@
 
 - (void)passcodeWasEnteredSuccessfully {
     [self dismissViewControllerAnimated:YES completion:^{
-        self.passcodePresented = NO;
+        self.passcodePresented = YES;
         if ([MEGAReachabilityManager isReachable]) {
             [self loginToMEGA];
         } else {

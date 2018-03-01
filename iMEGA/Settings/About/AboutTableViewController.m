@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *versionNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sdkVersionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sdkVersionSHALabel;
+@property (weak, nonatomic) IBOutlet UILabel *megachatSdkVersionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *megachatSdkSHALabel;
 @property (weak, nonatomic) IBOutlet UILabel *acknowledgementsLabel;
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *versionCell;
@@ -37,8 +39,11 @@
     tapGestureRecognizer.numberOfTapsRequired = 5;
     self.versionCell.gestureRecognizers = @[tapGestureRecognizer];
     
-    [self.sdkVersionLabel setText:[NSString stringWithFormat:@"MEGA SDK %@", AMLocalizedString(@"version", nil)]];
+    self.sdkVersionLabel.text = AMLocalizedString(@"sdkVersion", @"Title of the label where the SDK version is shown");
     self.sdkVersionSHALabel.text = @"8aff409";
+    
+    self.megachatSdkVersionLabel.text = AMLocalizedString(@"megachatSdkVersion", @"Title of the label where the MEGAchat SDK version is shown");
+    self.megachatSdkSHALabel.text = @"fe15554";
     
     [self.acknowledgementsLabel setText:AMLocalizedString(@"acknowledgements", nil)];
 }
@@ -97,7 +102,7 @@
     NSInteger numberOfRows = 0;
     switch (section) {
         case 0:
-            numberOfRows = 2;
+            numberOfRows = 3;
             break;
             
         case 1:

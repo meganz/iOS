@@ -28,6 +28,8 @@
 "attention"="Attentie";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="Geeft u aub de MEGA app toegang tot uw camera in uw inestellingen";
+/* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
+"cameraPermissionsInCall"="Please give MEGA app permission to access your Camera in your Settings. In case you proceed the call will end because the app will be restarted.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
@@ -454,10 +456,6 @@
 "overquotaAlert_message"="Handeling niet toegestaan, u zult het opslag limiet van van uw rekening overschrijden. Wilt u uw account upgraden?";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="Geselecteerde items";
-/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
-"photosPerMonth"="%lu foto's";
-/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1} photo" */
-"photoPerMonth"="%lu foto";
 /* Button title that skips the current action */
 "skipButton"="Overslaan";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
@@ -466,6 +464,12 @@
 "enableCameraUploadsButton"="Schakel Camera Uploads in";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Camera Uploads ingeschakeld";
+/* Message shown when the camera uploads have been completed */
+"cameraUploadsComplete"="Camera uploads voltooid";
+/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
+"cameraUploadsUploadingFile"="Uploaden van %1$d of %2$d bestand";
+/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
+"cameraUploadsUploadingFiles"="Uploaden van %1$d of %2$d bestanden";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu item geselecteerd";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -620,8 +624,10 @@
 "onlyWhenChargingLabel"="Alleen tijden het laden";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Wanneer ingeschakeld zullen uw foto's en video's automatisch worden geüpload. ";
-/* Label for the "Version" number of the app */
-"version"="Versie";
+/* Title of the label where the SDK version is shown */
+"sdkVersion"="MEGA SDK versie";
+/* Title of the label where the MEGAchat SDK version is shown */
+"megachatSdkVersion"="MEGAchat SDK versie";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Dankwoord";
 /* Title for the MEGA Recovery Key */
@@ -960,8 +966,8 @@
 "choosePlan"="Kies één van de abonnementen hieronder:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Selecteer één account type:";
-/* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
-"twoMonthsFree"="Ontvang twee maanden gratis als u zich inschrijft voor een jaar PRO abonnement";
+/* Text shown in the purchase plan view to explain that annual subscription is 16% cheaper than 12 monthly payments */
+"twoMonthsFree"="Annual subscription is 16% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Huidig Abonnement:";
 /* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
@@ -1030,6 +1036,8 @@
 "chatIsDisabled"="Chat is uitgeschakeld";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Inschakelen";
+/* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
+"disable"="Uitschakelen";
 /* Conversations section */
 "conversations"="Gesprekken";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1146,6 +1154,8 @@
 "removeParticipant"="Verwijder Deelnemer";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="Gesprek met %@";
+/* Title show above the name of the persons with whom you're chatting */
+"chattingWith"="Chatting with";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA beschermt uw chat met eind-tot-eind codering (gebruiker bestuurd) door het verstrekken van essentiële veiligheidswaarborgen:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1313,3 +1323,5 @@
 "missedAudioCallsAndMissedVideoCall"="[A] gemiste audio oproepen en gemiste video oproepen";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
 "missedAudioCallsAndMissedVideoCalls"="[A] gemiste audio oproepen en [B] gemiste video oproepen";
+/* Button title to see the available bonus */
+"getBonus"="Get Bonus";

@@ -29,32 +29,12 @@
         _cachedImageView.contentMode = UIViewContentModeScaleAspectFill;
         _cachedImageView.clipsToBounds = YES;
         _cachedImageView.layer.cornerRadius = 5;
-        _cachedImageView.backgroundColor = [UIColor whiteColor];
         
-        NSString *previewFilePath = [[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"] stringByAppendingPathComponent:self.node.base64Handle];
-        
-        if ([[NSFileManager defaultManager] fileExistsAtPath:previewFilePath]) {
-            [self configureCachedImageViewWithImagePath:previewFilePath];
-        } else {
-            if ([self.node hasPreview]) {
-                _activityIndicator = [JSQMessagesMediaPlaceholderView viewWithActivityIndicator];
-                _activityIndicator.frame = _cachedImageView.frame;
-                [_cachedImageView addSubview:_activityIndicator];
-                MEGAGetPreviewRequestDelegate *getPreviewRequestDelegate = [[MEGAGetPreviewRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                    [self configureCachedImageViewWithImagePath:request.file];
-                    [_activityIndicator removeFromSuperview];
-                }];
-                [self.cachedImageView mnz_setImageForExtension:self.node.name.pathExtension];
-                [[MEGASdkManager sharedMEGASdk] getPreviewNode:self.node destinationFilePath:previewFilePath delegate:getPreviewRequestDelegate];
-            } else {
-                [self.cachedImageView mnz_setImageForExtension:self.node.name.pathExtension];
-            }
-        }
-
         if (@available(iOS 11.0, *)) {
             self.cachedImageView.accessibilityIgnoresInvertColors = YES;
         }
     }
+    
     return self;
 }
 
@@ -87,19 +67,41 @@
 #pragma mark - Private
 
 - (void)configureCachedImageViewWithImagePath:(NSString *)imagePath {
-    _cachedImageView.image = [UIImage imageWithContentsOfFile:imagePath];
-
-    [self.activityIndicator removeFromSuperview];
-    if (self.node.name.mnz_isMultimediaPathExtension) {
-        UIImageView *playImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"video_list"]];
-        playImageView.center = _cachedImageView.center;
-        [_cachedImageView addSubview:playImageView];
+    UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
+    if (image) {
+        self.cachedImageView.image = image;
+        
+        if (self.node.name.mnz_isMultimediaPathExtension) {
+            UIImageView *playImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"video_list"]];
+            playImageView.center = _cachedImageView.center;
+            [self.cachedImageView addSubview:playImageView];
+        }
     }
 }
 
 #pragma mark - JSQMessageMediaData protocol
 
 - (UIView *)mediaView {
+    if (self.node.hasPreview) {
+        NSString *previewFilePath = [[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"] stringByAppendingPathComponent:self.node.base64Handle];
+        
+        if ([[NSFileManager defaultManager] fileExistsAtPath:previewFilePath]) {
+            [self configureCachedImageViewWithImagePath:previewFilePath];
+        } else {
+            self.activityIndicator = [JSQMessagesMediaPlaceholderView viewWithActivityIndicator];
+            self.activityIndicator.frame = self.cachedImageView.frame;
+            [self.cachedImageView addSubview:self.activityIndicator];
+            MEGAGetPreviewRequestDelegate *getPreviewRequestDelegate = [[MEGAGetPreviewRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                [self configureCachedImageViewWithImagePath:request.file];
+                [self.activityIndicator removeFromSuperview];
+            }];
+            
+            [[MEGASdkManager sharedMEGASdk] getPreviewNode:self.node destinationFilePath:previewFilePath delegate:getPreviewRequestDelegate];
+        }
+    } else {
+        [self.cachedImageView mnz_setImageForExtension:self.node.name.pathExtension];
+    }
+    
     return self.cachedImageView;
 }
 
