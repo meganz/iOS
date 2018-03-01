@@ -15,7 +15,7 @@
 	url = https://github.com/tonymillion/Reachability.git
 [submodule "iMEGA/Vendor/LTHPasscodeViewController"]
 	path = iMEGA/Vendor/LTHPasscodeViewController
-	url = https://github.com/rolandleth/LTHPasscodeViewController.git
+url=https://github.com/meganz/LTHPasscodeViewController.git
 [submodule "iMEGA/Vendor/DZNEmptyDataSet"]
 	path = iMEGA/Vendor/DZNEmptyDataSet
 	url = https://github.com/dzenbot/DZNEmptyDataSet.git

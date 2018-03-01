@@ -149,13 +149,15 @@
         NSData *imageData = UIImageJPEGRepresentation(image, 1);
         [imageData writeToFile:imagePath atomically:YES];
         
-        self.filePath = [imagePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
         if (self.toUploadSomething) {
+            self.filePath = [imagePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:YES];
         } else if (self.toChangeAvatar) {
             NSString *avatarFilePath = [self createAvatarWithImagePath:imagePath];
             [[MEGASdkManager sharedMEGASdk] setAvatarUserWithSourceFilePath:avatarFilePath];
         } else if (self.toShareThroughChat) {
+            [[MEGASdkManager sharedMEGASdk] createPreview:imagePath destinatioPath:imagePath];
+            self.filePath = [imagePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
             [self prepareUploadDestination];
             return;
         }

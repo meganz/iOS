@@ -86,6 +86,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActive)
                                                  name:NSExtensionHostDidBecomeActiveNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground)
+                                                 name:NSExtensionHostDidEnterBackgroundNotification
+                                               object:nil];
+
     
     [self setupAppearance];
     [SVProgressHUD setViewForExtension:self.view];
@@ -143,7 +147,7 @@
         if (self.loginRequiredNC) {
             [self.loginRequiredNC dismissViewControllerAnimated:YES completion:nil];
         }
-        if ([LTHPasscodeViewController doesPasscodeExist]) {
+        if ([LTHPasscodeViewController doesPasscodeExist] && !self.passcodePresented) {
             [self presentPasscode];
         } else {
             if (!self.fetchNodesDone) {
@@ -153,6 +157,10 @@
     } else {
         [self requireLogin];
     }
+}
+
+- (void)didEnterBackground {
+    self.passcodePresented = NO;
 }
 
 #pragma mark - Language
@@ -556,6 +564,13 @@
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
         [SVProgressHUD show];
         
+        if (self.extensionContext.inputItems.count == 0) {
+            self.unsupportedAssets = 1;
+            [self alertIfNeededAndDismiss];
+            
+            return;
+        }
+        
         NSExtensionItem *content = self.extensionContext.inputItems[0];
         self.totalAssets = self.pendingAssets = content.attachments.count;
         self.progress = 0;
@@ -734,7 +749,7 @@
 
 - (void)passcodeWasEnteredSuccessfully {
     [self dismissViewControllerAnimated:YES completion:^{
-        self.passcodePresented = NO;
+        self.passcodePresented = YES;
         if ([MEGAReachabilityManager isReachable]) {
             if (!self.fetchNodesDone) {
                 [self loginToMEGA];

@@ -28,6 +28,8 @@
 "attention"="請注意";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="請在設置中允許 MEGA App 訪問您的相機。";
+/* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
+"cameraPermissionsInCall"="Please give MEGA app permission to access your Camera in your Settings. In case you proceed the call will end because the app will be restarted.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
@@ -454,10 +456,6 @@
 "overquotaAlert_message"="操作被禁，您將超過您的賬戶儲存限額。您要升級賬戶嗎？";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="選擇項目";
-/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
-"photosPerMonth"="%lu 張照片";
-/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1} photo" */
-"photoPerMonth"="%lu 張照片";
 /* Button title that skips the current action */
 "skipButton"="跳過";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
@@ -466,6 +464,12 @@
 "enableCameraUploadsButton"="啟用相機上傳";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="照片上傳已啟用";
+/* Message shown when the camera uploads have been completed */
+"cameraUploadsComplete"="相機上傳完成";
+/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
+"cameraUploadsUploadingFile"="正在上傳 %2$d 個檔案中的第 %1$d 個檔案";
+/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
+"cameraUploadsUploadingFiles"="正在上傳 %2$d 個檔案中的第 %1$d 個檔案";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="已選中 %lu 個項目";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -620,8 +624,10 @@
 "onlyWhenChargingLabel"="只在充電狀態下";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="開啟后將上傳新的照片和影片。";
-/* Label for the "Version" number of the app */
-"version"="版本";
+/* Title of the label where the SDK version is shown */
+"sdkVersion"="MEGA SDK軟體開發包版本";
+/* Title of the label where the MEGAchat SDK version is shown */
+"megachatSdkVersion"="MEGA聊天 SDK版本";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="感謝";
 /* Title for the MEGA Recovery Key */
@@ -960,8 +966,8 @@
 "choosePlan"="請從下列選取一個計畫:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="選擇帳戶類型：";
-/* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
-"twoMonthsFree"="選購一年期PRO專業版可獲贈兩個月免費";
+/* Text shown in the purchase plan view to explain that annual subscription is 16% cheaper than 12 monthly payments */
+"twoMonthsFree"="Annual subscription is 16% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="目前使用的方案：";
 /* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
@@ -1030,6 +1036,8 @@
 "chatIsDisabled"="聊天功能已停用";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="啟用";
+/* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
+"disable"="停用";
 /* Conversations section */
 "conversations"="通話";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1146,6 +1154,8 @@
 "removeParticipant"="移除此位成員";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="與%@的對話";
+/* Title show above the name of the persons with whom you're chatting */
+"chattingWith"="聊天對象";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA提供安全加密保障，完全保護您的聊天隱私（保障使用者終端到終端，用戶控制之隱私）：";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1211,13 +1221,13 @@
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="已附加 %s 個檔案。";
 /* A summary message when a user sent the information of one contact through the chat. */
-"sharedContact"="Shared this contact:";
+"sharedContact"="已分享這位聯絡人的資訊：";
 /* A summary message when a user sent the information of some contacts at once through the chat. */
-"sharedContacts"="Shared these contacts:";
+"sharedContacts"="已分享這些聯絡人的資訊：";
 /* A summary message when a user has attached one file into the chat. */
-"uploadedFile"="Uploaded this file:";
+"uploadedFile"="已上傳這份檔案：";
 /* A summary message when a user has attached many files at once into the chat. */
-"uploadedFiles"="Uploaded these files:";
+"uploadedFiles"="已上傳這些檔案：";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="此訂閱將會自動更新續訂，續訂內容與您一開始選擇的訂閱時間與價格一致。您可以於您的iTunes帳戶設定頁面關閉MEGA PRO的訂閱自動更新續訂，必須於您的下一個訂閱繳款期限的24小時之前執行此操作。欲管理您的訂閱內容，只需點擊您手機上的App Store圖標，可以在頁面下方以您的Apple帳號登入（如果您還沒有這樣做），然後點擊查看帳號。您會被帶到您的帳戶頁面，就可以向下滾動到管理應用程序訂閱。在那裡，您可以選擇你的MEGA PRO訂閱和查看您預定的續約日期，選擇不同的訂閱專案或切換開關至關閉以停用您的自動續訂。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1298,18 +1308,20 @@
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="撥號中...";
 /* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="Missed audio call";
+"missedAudioCall"="一通未接語音來電";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A] missed audio calls";
+"missedAudioCalls"="[A]通未接語音來電";
 /* Notification text body shown when you have missed one video call */
-"missedVideoCall"="Missed video call";
+"missedVideoCall"="一通未接視訊來電";
 /* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A] missed video calls";
+"missedVideoCalls"="[A]通未接視訊來電";
 /* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="Missed audio call and missed video call";
+"missedAudioCallAndMissedVideoCall"="一通未接語音來電 和 一通未接視訊來電";
 /* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="Missed audio call and [A] missed video calls";
+"missedAudioCallAndMissedVideoCalls"="一通未接語音來電 和 [A]通未接視訊來電";
 /* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A] missed audio calls and missed video call";
+"missedAudioCallsAndMissedVideoCall"="[A]通未接語音來電 和 一通未接視訊來電";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";
+"missedAudioCallsAndMissedVideoCalls"="[A]通未接語音來電 和 [B]通未接視訊來電";
+/* Button title to see the available bonus */
+"getBonus"="Get Bonus";

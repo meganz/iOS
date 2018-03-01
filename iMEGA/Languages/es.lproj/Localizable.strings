@@ -28,6 +28,8 @@
 "attention"="Atención";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="Por favor dale permisos a la aplicación de MEGA para acceder a tu cámara en Ajustes";
+/* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
+"cameraPermissionsInCall"="Please give MEGA app permission to access your Camera in your Settings. In case you proceed the call will end because the app will be restarted.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
@@ -454,10 +456,6 @@
 "overquotaAlert_message"="Operación no permitida, se superará el límite de almacenamiento disponible. ¿Quieres ampliar tu cuenta?";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="Seleccionar elementos";
-/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
-"photosPerMonth"="%lu elementos";
-/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1} photo" */
-"photoPerMonth"="%lu elemento";
 /* Button title that skips the current action */
 "skipButton"="Saltar";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
@@ -466,6 +464,12 @@
 "enableCameraUploadsButton"="Activar Subidas de la cámara";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Subidas de la cámara activadas";
+/* Message shown when the camera uploads have been completed */
+"cameraUploadsComplete"="Subidas de la cámara completadas";
+/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
+"cameraUploadsUploadingFile"="Subiendo %1$d de %2$d archivo";
+/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
+"cameraUploadsUploadingFiles"="Subiendo %1$d de %2$d archivos";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu elemento seleccionado";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -573,7 +577,7 @@
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="Compartir carpetas";
 /* Button that allows you to select a given folder */
-"select"="Seleccionar ";
+"select"="Seleccionar";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Permisos";
 /* Permissions given to the user you share your folder with */
@@ -620,8 +624,10 @@
 "onlyWhenChargingLabel"="Solo cargando";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Si está activado, se subirán nuevas fotos y vídeos.";
-/* Label for the "Version" number of the app */
-"version"="Versión";
+/* Title of the label where the SDK version is shown */
+"sdkVersion"="Versión del SDK de MEGA";
+/* Title of the label where the MEGAchat SDK version is shown */
+"megachatSdkVersion"="Versión del SDK de MEGAchat";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Agradecimientos";
 /* Title for the MEGA Recovery Key */
@@ -960,8 +966,8 @@
 "choosePlan"="Elige un plan:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Selecciona el tipo de cuenta:";
-/* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
-"twoMonthsFree"="Obtén dos meses gratis si te subscribes a un plan PRO anual";
+/* Text shown in the purchase plan view to explain that annual subscription is 16% cheaper than 12 monthly payments */
+"twoMonthsFree"="Annual subscription is 16% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Plan actual:";
 /* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
@@ -1030,6 +1036,8 @@
 "chatIsDisabled"="Chat desactivado";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Activar";
+/* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
+"disable"="Desactivar";
 /* Conversations section */
 "conversations"="Conversaciones";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1146,6 +1154,8 @@
 "removeParticipant"="Eliminar participante";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="Conversación con %@";
+/* Title show above the name of the persons with whom you're chatting */
+"chattingWith"="Chateando con";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA protege tus comunicaciones con cifrado punto a punto (controlado por el usuario), proporcionando garantías esenciales de seguridad:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1313,3 +1323,5 @@
 "missedAudioCallsAndMissedVideoCall"="[A] llamadas y una videollamada perdidas";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
 "missedAudioCallsAndMissedVideoCalls"="[A] llamadas perdidas y [B] videollamadas perdidas";
+/* Button title to see the available bonus */
+"getBonus"="Get Bonus";
