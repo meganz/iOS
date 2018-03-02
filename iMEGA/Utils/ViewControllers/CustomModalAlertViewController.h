@@ -11,5 +11,6 @@
 @property (nonatomic)  NSString *boldInDetail;
 @property (nonatomic)  NSString *action;
 @property (nonatomic)  NSString *dismiss;
+@property (nonatomic)  NSString *bonus;
 
 @end
