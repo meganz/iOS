@@ -295,13 +295,29 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         }
     } else {
         NSString *chatRoomState;
-        if ([MEGAReachabilityManager isReachable]) {
-            chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
-            self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
-        } else {
-            chatRoomState = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
-            self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:MEGAChatStatusOffline];
+        
+        MEGAChatConnection connectionState = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
+        switch (connectionState) {
+            case MEGAChatConnectionOffline:
+            case MEGAChatConnectionInProgress:
+                chatRoomState = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+                self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:MEGAChatStatusOffline];
+
+                break;
+                
+            case MEGAChatConnectionLogging:
+                chatRoomState = AMLocalizedString(@"connecting", nil);
+                self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:MEGAChatStatusOffline];
+
+                break;
+                
+            case MEGAChatConnectionOnline:
+                chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+                self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+
+                break;
         }
+        
         if (chatRoomState) {
             label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:chatRoomState];
             self.lastChatRoomStateString = chatRoomState;
@@ -1670,6 +1686,12 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     if (self.openMessageHeaderView) {
         self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
         self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
+    }
+}
+
+- (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
+    if (chatId == self.chatRoom.chatId) {
+        [self customNavigationBarLabel];
     }
 }
 

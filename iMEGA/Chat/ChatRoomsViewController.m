@@ -416,10 +416,18 @@
 
 - (void)customNavigationBarLabel {
     NSString *onlineStatusString;
-    if ([MEGAReachabilityManager isReachable]) {
-        onlineStatusString = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] onlineStatus]];
-    } else {
-        onlineStatusString = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+    switch ([MEGAReachabilityManager sharedManager].chatRoomListState) {
+        case MEGAChatRoomListStateOffline:
+            onlineStatusString = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+            break;
+            
+        case MEGAChatRoomListStateInProgress:
+            onlineStatusString = AMLocalizedString(@"connecting", nil);
+            break;
+            
+        case MEGAChatRoomListStateOnline:
+            onlineStatusString = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] onlineStatus]];
+            break;
     }
     if (onlineStatusString) {
         UILabel *label = [Helper customNavigationBarLabelWithTitle:AMLocalizedString(@"chat", @"Chat section header") subtitle:onlineStatusString];
@@ -826,6 +834,7 @@
         [self reorderList];
         [self.tableView reloadData];
     }
+    [self customNavigationBarLabel];
 }
 
 @end
