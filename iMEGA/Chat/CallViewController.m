@@ -133,14 +133,19 @@
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 }
 
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskAll;
+}
+
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {    
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
-    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        if (self.call.hasLocalVideo && self.call.hasRemoteVideo) {
+    BOOL viewWillChangeOrientation = (size.height != self.view.bounds.size.height);
+    if (viewWillChangeOrientation && self.call.hasLocalVideo && self.call.hasRemoteVideo) {
+        [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
             [self.localVideoImageView rotate];
-        }
-    } completion:nil];
+        } completion:nil];
+    }
 }
 
 #pragma mark - Status bar
