@@ -2494,8 +2494,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     // INVALID_HANDLE = ~(uint64_t)0
     if (chatId == ~(uint64_t)0 && newState == MEGAChatConnectionOnline) {
         [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateOnline;
-    }
-    if (newState != MEGAChatConnectionOnline) {
+    } else if (newState >= MEGAChatConnectionLogging) {
         [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateInProgress;
     }
 }
