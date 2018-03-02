@@ -422,9 +422,6 @@
             break;
             
         case MEGAChatRoomListStateInProgress:
-            onlineStatusString = AMLocalizedString(@"connecting", nil);
-            break;
-            
         case MEGAChatRoomListStateOnline:
             onlineStatusString = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] onlineStatus]];
             break;
@@ -755,9 +752,7 @@
     
     // New chat 1on1 or group
     if (item.changes == 0) {
-        if ([MEGAReachabilityManager sharedManager].chatRoomListState==MEGAChatRoomListStateOnline) {
-            [self insertRowByChatListItem:item];
-        }
+        [self insertRowByChatListItem:item];
     } else {
         NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(item.chatId)];
         if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
@@ -797,7 +792,7 @@
             }
         }
         
-        if (item.changes == MEGAChatListItemChangeTypeLastTs && [MEGAReachabilityManager sharedManager].chatRoomListState==MEGAChatRoomListStateOnline) {
+        if (item.changes == MEGAChatListItemChangeTypeLastTs) {
             if ([indexPath compare:[NSIndexPath indexPathForRow:0 inSection:0]] != NSOrderedSame) {
                 [self moveRowByChatListItem:item];
             }

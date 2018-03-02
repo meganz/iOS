@@ -285,45 +285,41 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     UILabel *label = [[UILabel alloc] init];
     NSString *chatRoomTitle = self.chatRoom.title ? self.chatRoom.title : @"";
-    if (self.chatRoom.isGroup) {
-        if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
-            label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with")];
-        } else {
-            NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:chatRoomTitle attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-            label.textAlignment = NSTextAlignmentCenter;
-            label.attributedText = titleMutableAttributedString;
-        }
-    } else {
-        NSString *chatRoomState;
-        
-        MEGAChatConnection connectionState = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
-        switch (connectionState) {
-            case MEGAChatConnectionOffline:
-            case MEGAChatConnectionInProgress:
-                chatRoomState = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
-                self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:MEGAChatStatusOffline];
-
-                break;
-                
-            case MEGAChatConnectionLogging:
-                chatRoomState = AMLocalizedString(@"connecting", nil);
-                self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:MEGAChatStatusOffline];
-
-                break;
-                
-            case MEGAChatConnectionOnline:
+    NSString *chatRoomState;
+    
+    MEGAChatConnection connectionState = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
+    switch (connectionState) {
+        case MEGAChatConnectionOffline:
+        case MEGAChatConnectionInProgress:
+            chatRoomState = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+            self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:MEGAChatStatusOffline];
+            
+            break;
+            
+        case MEGAChatConnectionLogging:
+            chatRoomState = AMLocalizedString(@"connecting", nil);
+            self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:MEGAChatStatusOffline];
+            
+            break;
+            
+        case MEGAChatConnectionOnline:
+            if (self.chatRoom.isGroup) {
+                if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
+                    chatRoomState = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
+                }
+            } else {
                 chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
                 self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
-
-                break;
-        }
-        
-        if (chatRoomState) {
-            label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:chatRoomState];
-            self.lastChatRoomStateString = chatRoomState;
-        } else {
-            label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:@""];
-        }
+            }
+            
+            break;
+    }
+    
+    if (chatRoomState) {
+        label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:chatRoomState];
+        self.lastChatRoomStateString = chatRoomState;
+    } else {
+        label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:@""];
     }
     
     label.adjustsFontSizeToFitWidth = YES;
