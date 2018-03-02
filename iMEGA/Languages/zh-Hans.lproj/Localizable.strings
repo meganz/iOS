@@ -28,6 +28,8 @@
 "attention"="请注意";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="请在设置中允许MEGA App 访问您的相机。";
+/* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
+"cameraPermissionsInCall"="Please give MEGA app permission to access your Camera in your Settings. In case you proceed the call will end because the app will be restarted.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
@@ -137,7 +139,7 @@
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
 "fileLinkUnavailableText2"="这个文件因违反ToS服务条款或AUP可接受的使用政策而被移除。";
 /* */
-"fileLinkUnavailableText3"="无效的链接-你尝试链接的文件不存在";
+"fileLinkUnavailableText3"="无效的链接-您尝试链接的文件不存在";
 /* */
 "fileLinkUnavailableText4"="此文件已被使用者删除。";
 /* Message shown when a download starts */
@@ -155,7 +157,7 @@
 /* */
 "folderLinkUnavailableText2"="该文件夹链接因违反ToS/AUP使用条款已被移除。";
 /* */
-"folderLinkUnavailableText3"="无效的链接-你尝试链接的文件不存在";
+"folderLinkUnavailableText3"="无效的链接-您尝试链接的文件不存在";
 /* */
 "folderLinkUnavailableText4"="该文件夹链接被使用者关闭。";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -454,10 +456,6 @@
 "overquotaAlert_message"="操作被禁，您将超过您的账户储存限额。您要升级账户吗？";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="选择项目";
-/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
-"photosPerMonth"="%lu 张图片";
-/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1} photo" */
-"photoPerMonth"="%lu 张图片";
 /* Button title that skips the current action */
 "skipButton"="跳过";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
@@ -466,6 +464,12 @@
 "enableCameraUploadsButton"="激活相机上传";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="照片上传已激活";
+/* Message shown when the camera uploads have been completed */
+"cameraUploadsComplete"="从相机上传成功";
+/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
+"cameraUploadsUploadingFile"="正在上传 %1$d 个文件，共%2$d个文件中。";
+/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
+"cameraUploadsUploadingFiles"="正在上传 %1$d 个文件，共%2$d个文件中。";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="已选中%lu 个项目";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -725,7 +729,7 @@
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="确认密码";
 /* Success message shown when the password has been changed */
-"passwordChanged"="你的密码已变更。";
+"passwordChanged"="您的密码已变更。";
 /* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
 "oldAndNewPasswordMatch"="新的密码不能与您现在的密码相同。";
 /* An option to reset the password. */
@@ -962,14 +966,10 @@
 "choosePlan"="请从下列选取一个计划:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="选择一个帐户类型：";
-/* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
-"twoMonthsFree"="选购一年期PRO专业版可获赠两个月免费";
+/* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
+"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="当前计划：";
-/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
-"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
-/* Title text for the account confirmation. */
-"confirm"="确认";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="洽询定制专属方案";
 /* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
@@ -1032,6 +1032,8 @@
 "chatIsDisabled"="聊天功能已停用";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="激活";
+/* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
+"disable"="停用";
 /* Conversations section */
 "conversations"="通话";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1149,7 +1151,7 @@
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="与%@的对话";
 /* Title show above the name of the persons with whom you're chatting */
-"chattingWith"="Chatting with";
+"chattingWith"="。。。";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA提供安全加密保障，完全保护您的聊天隐私（保障使用者终端到终端，用户控制之隐私）：";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1215,13 +1217,13 @@
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="已附加%s 个文件。";
 /* A summary message when a user sent the information of one contact through the chat. */
-"sharedContact"="Shared this contact:";
+"sharedContact"="联系人已被分享：";
 /* A summary message when a user sent the information of some contacts at once through the chat. */
-"sharedContacts"="Shared these contacts:";
+"sharedContacts"="这些联系人已被分享：";
 /* A summary message when a user has attached one file into the chat. */
-"uploadedFile"="Uploaded this file:";
+"uploadedFile"="文件已被上传：";
 /* A summary message when a user has attached many files at once into the chat. */
-"uploadedFiles"="Uploaded these files:";
+"uploadedFiles"="这些文件已被上传：";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="此订阅将会自动更新续订，续订内容与您一开始选择的订阅时间与价格一致。您可以于您的iTunes帐户设定页面关闭MEGA PRO的订阅自动更新续订，必须于您的下一个订阅缴款期限的24小时之前执行此操作。欲管理您的订阅内容，只需点击您手机上的App Store图标，可以在页面下方以您的Apple帐号登入（如果您还没有这样做），然后点击查看帐号。您会被带到您的帐户页面，就可以向下滚动到管理应用程序订阅。在那里，您可以选择你的MEGA PRO订阅和查看您预定的续约日期，选择不同的计划或切换开关至关闭以停用您的自动续订。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1317,3 +1319,5 @@
 "missedAudioCallsAndMissedVideoCall"="[A] 个未接语音通话和一个未接视频通话";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
 "missedAudioCallsAndMissedVideoCalls"="[A] 个未接语音通话 和[B] 个未接视频通话";
+/* Button title to see the available bonus */
+"getBonus"="Get Bonus";

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qvR-uV-YnP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14087.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qvR-uV-YnP">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14075.4"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -762,15 +762,22 @@
                                                     <constraint firstAttribute="height" constant="1" id="WcG-9h-yi5"/>
                                                 </constraints>
                                             </imageView>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WOV-1d-qrc" customClass="PasswordStrengthIndicatorView">
+                                                <rect key="frame" x="30" y="130" width="315" height="116"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="116" id="7uD-tO-OUK"/>
+                                                </constraints>
+                                            </view>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="keyDouble" translatesAutoresizingMaskIntoConstraints="NO" id="fp2-Td-e9h" userLabel="Confirm Password Image View">
-                                                <rect key="frame" x="30" y="156" width="32" height="32"/>
+                                                <rect key="frame" x="30" y="272" width="32" height="32"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="32" id="8G8-kU-3g1"/>
                                                     <constraint firstAttribute="height" constant="32" id="TXR-3z-paU"/>
                                                 </constraints>
                                             </imageView>
                                             <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" minimumFontSize="15" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bX8-QE-I91">
-                                                <rect key="frame" x="74" y="157" width="271" height="30"/>
+                                                <rect key="frame" x="74" y="273" width="271" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="opE-ii-KYc"/>
                                                 </constraints>
@@ -782,14 +789,14 @@
                                                 </connections>
                                             </textField>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="py9-Rd-k8X" userLabel="Line Image View">
-                                                <rect key="frame" x="30" y="194" width="315" height="1"/>
+                                                <rect key="frame" x="30" y="310" width="315" height="1"/>
                                                 <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="0mf-nX-0hg"/>
                                                 </constraints>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ugg-UB-5iL" userLabel="Change password Button">
-                                                <rect key="frame" x="30" y="239" width="315" height="64"/>
+                                                <rect key="frame" x="30" y="355" width="315" height="64"/>
                                                 <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="740" id="4g8-fc-ieD">
@@ -825,12 +832,14 @@
                                             <constraint firstAttribute="bottom" secondItem="Ugg-UB-5iL" secondAttribute="bottom" constant="274" id="2os-9a-lsZ"/>
                                             <constraint firstItem="ddP-st-5kT" firstAttribute="leading" secondItem="Kgp-GT-dsf" secondAttribute="leading" id="3Vc-gC-Heh"/>
                                             <constraint firstItem="u9b-Zu-Ewc" firstAttribute="leading" secondItem="cAv-zt-lSj" secondAttribute="leading" constant="30" id="5O7-gp-HJo"/>
+                                            <constraint firstItem="WOV-1d-qrc" firstAttribute="top" secondItem="u9b-Zu-Ewc" secondAttribute="bottom" id="5qA-s6-xk1"/>
                                             <constraint firstAttribute="trailing" secondItem="u9b-Zu-Ewc" secondAttribute="trailing" constant="30" id="6Pn-Xh-F31"/>
                                             <constraint firstItem="fp2-Td-e9h" firstAttribute="leading" secondItem="py9-Rd-k8X" secondAttribute="leading" id="7fb-2A-Bkm"/>
                                             <constraint firstItem="bX8-QE-I91" firstAttribute="width" secondItem="py9-Rd-k8X" secondAttribute="width" id="7pR-5a-YbL"/>
                                             <constraint firstItem="u9b-Zu-Ewc" firstAttribute="top" secondItem="Ryf-7d-GGn" secondAttribute="bottom" constant="15" id="7to-0s-0vt"/>
                                             <constraint firstAttribute="trailing" secondItem="Ugg-UB-5iL" secondAttribute="trailing" constant="30" id="9ku-VO-vLS"/>
                                             <constraint firstAttribute="trailing" secondItem="Kgp-GT-dsf" secondAttribute="trailing" constant="30" id="ABQ-UX-253"/>
+                                            <constraint firstItem="WOV-1d-qrc" firstAttribute="trailing" secondItem="u9b-Zu-Ewc" secondAttribute="trailing" id="Bqp-LO-Isg"/>
                                             <constraint firstItem="bX8-QE-I91" firstAttribute="leading" secondItem="fp2-Td-e9h" secondAttribute="trailing" constant="12" id="CZV-lU-GTc"/>
                                             <constraint firstItem="bX8-QE-I91" firstAttribute="trailing" secondItem="py9-Rd-k8X" secondAttribute="trailing" id="Cg9-qA-akc"/>
                                             <constraint firstItem="u9b-Zu-Ewc" firstAttribute="trailing" secondItem="py9-Rd-k8X" secondAttribute="trailing" id="ELC-K1-avX"/>
@@ -853,7 +862,6 @@
                                             <constraint firstItem="u9b-Zu-Ewc" firstAttribute="width" secondItem="py9-Rd-k8X" secondAttribute="width" id="Z8S-F8-JOJ"/>
                                             <constraint firstItem="u9b-Zu-Ewc" firstAttribute="top" secondItem="Kgp-GT-dsf" secondAttribute="bottom" constant="64" id="aYP-9b-W2C"/>
                                             <constraint firstItem="ftC-bG-Jrj" firstAttribute="leading" secondItem="cAv-zt-lSj" secondAttribute="leading" constant="30" id="blB-rh-bHd"/>
-                                            <constraint firstItem="py9-Rd-k8X" firstAttribute="top" secondItem="u9b-Zu-Ewc" secondAttribute="bottom" constant="64" id="gDb-pb-Nzf"/>
                                             <constraint firstItem="Kgp-GT-dsf" firstAttribute="top" secondItem="cAv-zt-lSj" secondAttribute="top" constant="64" id="gvU-66-et8"/>
                                             <constraint firstItem="u9b-Zu-Ewc" firstAttribute="leading" secondItem="py9-Rd-k8X" secondAttribute="leading" id="hqo-bk-w0z"/>
                                             <constraint firstItem="py9-Rd-k8X" firstAttribute="trailing" secondItem="Ugg-UB-5iL" secondAttribute="trailing" id="iID-u5-Ddc"/>
@@ -865,8 +873,10 @@
                                             <constraint firstItem="ftC-bG-Jrj" firstAttribute="leading" secondItem="Ryf-7d-GGn" secondAttribute="leading" id="nej-Xi-7xM"/>
                                             <constraint firstItem="bX8-QE-I91" firstAttribute="centerY" secondItem="fp2-Td-e9h" secondAttribute="centerY" id="qJN-H9-UZd"/>
                                             <constraint firstItem="py9-Rd-k8X" firstAttribute="width" secondItem="Ugg-UB-5iL" secondAttribute="width" id="sVF-Si-0YU"/>
+                                            <constraint firstItem="py9-Rd-k8X" firstAttribute="top" secondItem="WOV-1d-qrc" secondAttribute="bottom" constant="64" id="syV-Js-tdT"/>
                                             <constraint firstItem="Kgp-GT-dsf" firstAttribute="top" secondItem="ddP-st-5kT" secondAttribute="bottom" constant="6" id="syf-YK-1ss"/>
                                             <constraint firstItem="Ryf-7d-GGn" firstAttribute="leading" secondItem="ftC-bG-Jrj" secondAttribute="trailing" constant="12" id="uIL-il-S9o"/>
+                                            <constraint firstItem="WOV-1d-qrc" firstAttribute="leading" secondItem="u9b-Zu-Ewc" secondAttribute="leading" id="uPe-tJ-sAD"/>
                                             <constraint firstItem="py9-Rd-k8X" firstAttribute="top" secondItem="bX8-QE-I91" secondAttribute="bottom" constant="15" id="wwd-fs-Jcv"/>
                                             <constraint firstItem="py9-Rd-k8X" firstAttribute="top" secondItem="fp2-Td-e9h" secondAttribute="bottom" constant="6" id="xJA-kC-UXk"/>
                                             <constraint firstItem="ftC-bG-Jrj" firstAttribute="leading" secondItem="u9b-Zu-Ewc" secondAttribute="leading" id="xq4-aB-hyM"/>
@@ -967,6 +977,8 @@
                         <outlet property="emailIsChangingDescriptionLabel" destination="Gh4-XS-wZS" id="crs-Hs-zMx"/>
                         <outlet property="emailIsChangingTitleLabel" destination="HrE-UQ-dj9" id="E0a-rs-GSg"/>
                         <outlet property="emailIsChangingView" destination="1oP-CL-t7s" id="sWg-G5-Y2m"/>
+                        <outlet property="passwordStrengthIndicatorView" destination="WOV-1d-qrc" id="eNj-B7-g6C"/>
+                        <outlet property="passwordStrengthIndicatorViewHeightLayoutConstraint" destination="7uD-tO-OUK" id="Dvd-Rx-TAA"/>
                         <outlet property="theNewPasswordImageView" destination="ftC-bG-Jrj" id="yss-Fl-twN"/>
                         <outlet property="theNewPasswordTextField" destination="Ryf-7d-GGn" id="104-mQ-F3V"/>
                     </connections>

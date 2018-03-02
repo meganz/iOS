@@ -38,6 +38,7 @@
 #import "SortByTableViewController.h"
 #import "SharedItemsViewController.h"
 #import "UpgradeTableViewController.h"
+#import "CustomModalAlertViewController.h"
 
 @interface CloudDriveTableViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate> {
     BOOL allNodesSelected;
@@ -1239,14 +1240,24 @@
             alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"4096" withString:maxStorage];
             alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"4" withString:maxStorageTB];
             
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level") message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"skipButton", @"Button title that skips the current action") style:UIAlertActionStyleCancel handler:nil]];
+            CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
+            customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+            customModalAlertVC.image = @"storage_almost_full";
+            customModalAlertVC.viewTitle = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
+            customModalAlertVC.detail = alertMessage;
+            customModalAlertVC.action = AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
+            if ([[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
+                customModalAlertVC.bonus = AMLocalizedString(@"getBonus", @"Button title to see the available bonus");
+            }
+            customModalAlertVC.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+            __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
+            customModalAlertVC.completion = ^{
+                [weakCustom dismissViewControllerAnimated:YES completion:^{
+                    [self showUpgradeTVC];
+                }];
+            };
             
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                [self showUpgradeTVC];
-            }]];
-            
-            [self presentViewController:alertController animated:YES completion:nil];
+            [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:customModalAlertVC animated:YES completion:nil];
             
             alreadyPresented = YES;
         } else {

@@ -112,9 +112,6 @@
         if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == self.parentNode.handle) {
             MEGALogDebug(@"The asset exists in MEGA in the parent folder");
             [self completeOperation];
-            if (![[[CameraUploads syncManager] assetsOperationQueue] operationCount]) {
-                [[CameraUploads syncManager] setBadgeValue:[NSString stringWithFormat:@"%ld", [[[CameraUploads syncManager] assetsOperationQueue] operationCount]]];
-            }
             if ([[[CameraUploads syncManager] assetsOperationQueue] operationCount] == 1 && self.automatically) {
                 [[CameraUploads syncManager] resetOperationQueue];
             }
@@ -156,9 +153,6 @@
     finished = YES;
     
     if (self.automatically) {
-        NSUInteger newBadgeValue = [[[CameraUploads syncManager] assetsOperationQueue] operationCount];
-        newBadgeValue = newBadgeValue > 1 ? newBadgeValue - 1 : 0;
-        [[CameraUploads syncManager] setBadgeValue:[NSString stringWithFormat:@"%ld", newBadgeValue]];
         if (self.phasset) {
             if (self.phasset.mediaType == PHAssetMediaTypeImage) {
                 [[NSUserDefaults standardUserDefaults] setObject:self.phasset.creationDate forKey:kLastUploadPhotoDate];
