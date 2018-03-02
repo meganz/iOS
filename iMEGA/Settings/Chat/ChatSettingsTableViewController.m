@@ -90,6 +90,7 @@
         MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:session];
         switch (chatInit) {
             case MEGAChatInitNoCache: {
+                [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
                 [[MEGASdkManager sharedMEGASdk] fetchNodes];
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
                 [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateInProgress;
@@ -218,6 +219,7 @@
     }
     
     [self onlineStatus];
+    [self.tableView reloadData];
 }
 
 #pragma mark - MEGAChatRequestDelegate
