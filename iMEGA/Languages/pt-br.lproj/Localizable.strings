@@ -29,9 +29,9 @@
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="Por favor, dê permissão à MEGA para aceder à sua Câmera nas suas Definições";
 /* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
-"cameraPermissionsInCall"="Please give MEGA app permission to access your Camera in your Settings. In case you proceed the call will end because the app will be restarted.";
+"cameraPermissionsInCall"="Acesse as Configurações do seu dispositivo para permitir que o app MEGA acesse a sua câmera. Ao fazer isso, a chamada terminará, porque o aplicativo se reiniciará.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
+"microphonePermissions"="Acesse as Configurações do seu dispositivo para permitir que o app MEGA acesse o seu microfone.";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Por favor, dê permissão à MEGA para aceder às suas fotos nas Definições";
 /* Alert message shown when the user tries to download an empty folder  */
@@ -100,10 +100,32 @@
 "emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Senha";
+/*  */
+"pleaseStrengthenYourPassword"="Por favor deixe sua senha mais forte";
+/* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
+"veryWeak"="Muito fraco";
+/*  */
+"weak"="Fraca";
+/*  */
+"passwordVeryWeakOrWeak"="A sua senha é muito fácil de adivinhar. Tente deixá-la mais longa, incluir maiúsculas e minúsculas e adicionar caracteres especiais. Não utilize nomes ou palavras do dicionário.";
+/* Label displayed during checking the strength of the password introduced. Represents Medium security */
+"medium"="Médio";
+/*  */
+"passwordMedium"="A sua senha é suficientemente boa para prosseguir, mas recomendamos alterá-la para algo mais forte no futuro.";
+/*  */
+"good"="Boa";
+/*  */
+"passwordGood"="Esta senha vai resistir aos ataques de força-bruta mais comuns. Por favor, certifique-se de que você vai lembrar dela.";
+/* Label displayed during checking the strength of the password introduced. Represents Strong security */
+"strong"="Forte";
+/*  */
+"passwordStrong"="Esta senha vai resistir aos ataques de força-bruta mais sofisticados. Por favor, certifique-se de que você vai lembrar dela.";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
 "termsOfServiceButton"="Concordo com os Termos de Serviço do MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Digite um nome válido";
+/*  */
+"invalidFirstNameAndLastName"="Nome e/ou sobrenome inválido.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="As senhas não são iguais";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -933,7 +955,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="expira em %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="Histórico de Compras";
+"purchaseHistory"="Histórico de compras";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Compartilhado comigo";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -1230,6 +1252,8 @@
 "openMEGAAndSignInToContinue"="Abra o MEGA e faça o login para continuar";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Revogar";
+/* Label in login screen to inform about the chat initialization proccess */
+"connecting"="Conectando...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Não foi possível compartilhar alguns dos itens com o MEGA.";
 /* Notification message shown when a transfer failed. Keep colon. */
@@ -1320,4 +1344,4 @@
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
 "missedAudioCallsAndMissedVideoCalls"="[A] chamadas de áudio e [B] chamadas de vídeo perdidas";
 /* Button title to see the available bonus */
-"getBonus"="Get Bonus";
+"getBonus"="Consiga bônus";

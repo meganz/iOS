@@ -100,10 +100,32 @@
 "emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Lösenord";
+/*  */
+"pleaseStrengthenYourPassword"="Vänligen skapa ett starkare lösenord. ";
+/* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
+"veryWeak"="Väldigt svagt";
+/*  */
+"weak"="Svagt";
+/*  */
+"passwordVeryWeakOrWeak"="Lösenordet är för lätt att gissa. Försök att skapa ett längre lösenord. Kombinera gärna stora och små bokstäver. Lägg till specialtecken. Använd ej namn eller uppslagsord.";
+/* Label displayed during checking the strength of the password introduced. Represents Medium security */
+"medium"="Mellan";
+/*  */
+"passwordMedium"="Ert lösenord är tillräckligt bra att fortsätta, men det är rekommenderat att Ni skapar ett starkare lösenord.";
+/*  */
+"good"="Bra";
+/*  */
+"passwordGood"="Detta lösenord kommer att hålla för de mest typiska brute-force attacker. Vänligen säkerställ att Ni kan minnas det.";
+/* Label displayed during checking the strength of the password introduced. Represents Strong security */
+"strong"="Starkt";
+/*  */
+"passwordStrong"="Detta lösenord kommer att hålla för de flesta sofistikerade brute-force attacker. Vänligen säkerställ att Ni kan minnas det.";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
 "termsOfServiceButton"="Jag godkänner MEGA service vilkor";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Skriv in ett korrekt namn";
+/*  */
+"invalidFirstNameAndLastName"="Ogiltigt namn och/eller efternamn.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Lösenorden överensstämmer inte";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -1230,6 +1252,8 @@
 "openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Återkalla";
+/* Label in login screen to inform about the chat initialization proccess */
+"connecting"="Connecting…";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Some items could not be shared with MEGA";
 /* Notification message shown when a transfer failed. Keep colon. */
@@ -1297,10 +1321,10 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="Inside the app you can upgrade your storage space and transfer quota with a monthly or yearly subscription.";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITE subscription: €4.99 (US$4.99) per month or €49.99 (US$49.99) per year gives you 200 GB of storage space and 1 TB of transfer quota per month.PRO I subscription: €9.99 (US$9.99) per month or €99.99 (US$99.99) per year gives you 1 TB of storage space and 2 TB of transfer quota per month.PRO II subscription: €19.99 (US$19.99) per month or €199.99 (US$199.99) per year gives you 4 TB of storage space and 8 TB of transfer quota per month.PRO III subscription: €29.99 (US$29.99) per month or €299.99 (US$299.99) per year gives you 8 TB of storage space and 16 TB of transfer quota per month.";
+"generalDescriptionParagraph5"="PRO LITE subscription: €4.99 (US$4.99) per month or €49.99 (US$49.99) per year gives you 200 GB of storage space and 1 TB of transfer quota per month.\nPRO I subscription: €9.99 (US$9.99) per month or €99.99 (US$99.99) per year gives you 1 TB of storage space and 2 TB of transfer quota per month.\nPRO II subscription: €19.99 (US$19.99) per month or €199.99 (US$199.99) per year gives you 4 TB of storage space and 8 TB of transfer quota per month.\nPRO III subscription: €29.99 (US$29.99) per month or €299.99 (US$299.99) per year gives you 8 TB of storage space and 16 TB of transfer quota per month.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="For more info, please check our website:Mobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmlDesktop - https://mega.nz/";
+"generalDescriptionParagraph6"="For more info, please check our website:\nMobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nDesktop - https://mega.nz/";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="Calling...";
 /* Notification text body shown when you have missed one audio call */

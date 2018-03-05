@@ -100,10 +100,32 @@
 "emailPlaceholder"="E-mail";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Parolă";
+/*  */
+"pleaseStrengthenYourPassword"="Te rugăm să introduci o parolă mai puternică.";
+/* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
+"veryWeak"="Foarte slabă";
+/*  */
+"weak"="Slabă";
+/*  */
+"passwordVeryWeakOrWeak"="Parola ta e uşor de ghicit. Încearcă să faci parola mai lungă. Combină litere mari şi litere mici. Adaugă caractere speciale. Nu folosi nume sau cuvinte din dicţionar.";
+/* Label displayed during checking the strength of the password introduced. Represents Medium security */
+"medium"="Medie";
+/*  */
+"passwordMedium"="Parola ta este suficientă de bună pentru a continua, dar este recomandat să o faci mai puternică parola pe viitor.";
+/*  */
+"good"="Bună";
+/*  */
+"passwordGood"="Această parolă va rezista în faţa celor mai tipice atacuri de tip „brute-force”. Te rugăm să te asiguri că o vei reţine.";
+/* Label displayed during checking the strength of the password introduced. Represents Strong security */
+"strong"="Puternică";
+/*  */
+"passwordStrong"="Această parolă va rezista în faţa celor mai sofisticate atacuri de tip „brute-force”.  Te rugăm să te asiguri că o vei reţine.";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
 "termsOfServiceButton"="Sunt de acord cu Termenii de utilizare a serviciului MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Introdu un nume valid";
+/*  */
+"invalidFirstNameAndLastName"="Prenume şi/sau numele invalide.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Parolele nu se potrivesc";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -1230,6 +1252,8 @@
 "openMEGAAndSignInToContinue"="Deschide MEGA şi autentifică-te pentru a continua";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Revocă";
+/* Label in login screen to inform about the chat initialization proccess */
+"connecting"="Se conectează…";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Unele elemente nu au putut fi partajate cu MEGA";
 /* Notification message shown when a transfer failed. Keep colon. */

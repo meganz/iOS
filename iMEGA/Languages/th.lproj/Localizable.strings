@@ -100,10 +100,32 @@
 "emailPlaceholder"="อีเมล";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="รหัสผ่าน";
+/*  */
+"pleaseStrengthenYourPassword"="กรุณาใช้รหัสผ่านที่คาดเดาได้ยากแต่ง่ายต่อการจดจำของคุณ";
+/* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
+"veryWeak"="คาดเดาได้ง่ายมาก";
+/*  */
+"weak"="คาดเดาได้ง่าย";
+/*  */
+"passwordVeryWeakOrWeak"="รหัสผ่านของคุณอาจถูกคาดเดาได้ง่าย กรุณากรอกรหัสผ่านให้ยาวขึ้นกว่าเดิม และควรมีการใช้ตัวอักษรที่เป็นตัวพิมพ์ใหญ่, ตัวพิมพ์เล็กและเพิ่มอักขระพิเศษลงไปด้วย ที่สำคัญอย่าใช้ชื่อหรือคำที่มีอยู่ในพจนานุกรมเด็ดขาด";
+/* Label displayed during checking the strength of the password introduced. Represents Medium security */
+"medium"="คาดเดาได้ปานกลาง";
+/*  */
+"passwordMedium"="รหัสผ่านของคุณพร้อมที่จะดำเนินการต่อไปแล้ว แต่เราก็ยังคงแนะนำให้คุณใช้รหัสผ่านที่คาดเดาได้ยากต่อไปอีก";
+/*  */
+"good"="คาดเดาได้ยาก";
+/*  */
+"passwordGood"="รหัสผ่านนี้จะสามารถป้องกันการโจมตีแบบ brute-force ได้ กรุณาตรวจสอบอีกครั้งว่าคุณจะสามารถจำรหัสผ่านเหล่านี้ได้";
+/* Label displayed during checking the strength of the password introduced. Represents Strong security */
+"strong"="คาดเดาได้ยากมาก";
+/*  */
+"passwordStrong"="รหัสผ่านนี้จะสามารถป้องกันการโจมตีแบบ brute-force ที่มีความซับซ้อนได้ กรุณาตรวจสอบอีกครั้งว่าคุณจะสามารถจำรหัสผ่านเหล่านี้ได้";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
 "termsOfServiceButton"="ฉันเห็นด้วยกับข้อกำหนดในการบริการของ MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="กรอกชื่อให้ถูกต้อง";
+/*  */
+"invalidFirstNameAndLastName"="ชื่อและ/หรือนามสกุลไม่ถูกต้อง";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="รหัสผ่านไม่ตรงกัน";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -1230,6 +1252,8 @@
 "openMEGAAndSignInToContinue"="เปิด MEGA และลงชื่อเข้าใช้เพื่อดำเนินการต่อ";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="เพิกถอน";
+/* Label in login screen to inform about the chat initialization proccess */
+"connecting"="กำลังเชื่อมต่อ...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="ไม่สามารถแชร์บางรายการกับ MEGA";
 /* Notification message shown when a transfer failed. Keep colon. */
