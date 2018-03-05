@@ -17,7 +17,9 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *cancelButtonTrailingConstraint;
 
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailPlayImageView;
+
 @property (weak, nonatomic) IBOutlet UIProgressView *downloadProgressView;
+@property (weak, nonatomic) IBOutlet UIView *lineView;
 
 @property (nonatomic) uint64_t nodeHandle;
 

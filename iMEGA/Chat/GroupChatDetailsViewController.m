@@ -7,7 +7,6 @@
 #import "UIImageView+MNZCategory.h"
 
 #import "ChatRoomsViewController.h"
-#import "ContactTableViewCell.h"
 #import "GroupChatDetailsViewTableViewCell.h"
 
 #import "MEGAInviteContactRequestDelegate.h"

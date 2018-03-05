@@ -363,10 +363,6 @@
             break;
         }
     }
-    UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
-    [cell setSelectedBackgroundView:view];
-    [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
     if ([self isFolderEmpty]) {
         [cell.thumbnailImageView setAlpha:0.4];

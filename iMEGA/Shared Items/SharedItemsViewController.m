@@ -81,13 +81,8 @@
     
     self.navigationItem.title = AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
     
-    UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
-        [negativeSpaceBarButtonItem setWidth:-8.0];
-    } else {
-        [negativeSpaceBarButtonItem setWidth:-4.0];
-    }
-    [self.navigationItem setRightBarButtonItems:@[negativeSpaceBarButtonItem, self.editBarButtonItem] animated:YES];
+    self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
+    self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
     
     [_sharedItemsSegmentedControl setTitle:AMLocalizedString(@"incoming", nil) forSegmentAtIndex:0];
     [_sharedItemsSegmentedControl setTitle:AMLocalizedString(@"outgoing", nil) forSegmentAtIndex:1];
@@ -97,7 +92,6 @@
     _outgoingNodesForEmailMutableDictionary = [[NSMutableDictionary alloc] init];
     _outgoingIndexPathsMutableDictionary = [[NSMutableDictionary alloc] init];
     
-    // Long press to select:
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
     
     [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];
@@ -189,7 +183,6 @@
 }
 
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
-    
     [self.editBarButtonItem setEnabled:boolValue];
 }
 
@@ -384,14 +377,13 @@
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-
     [super setEditing:editing animated:animated];
     
     [self.tableView setEditing:editing animated:animated];
     
     if (editing) {
         if (!isSwipeEditing) {
-            [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
+            self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
             self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
             [self.toolbar setAlpha:0.0];
             [self.tabBarController.tabBar addSubview:self.toolbar];
@@ -400,7 +392,7 @@
             }];
         }
     } else {
-        [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
+        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
         allNodesSelected = NO;
         [_selectedNodesMutableArray removeAllObjects];
         [_selectedSharesMutableArray removeAllObjects];
@@ -680,10 +672,8 @@
     if (numberOfRows == 0) {
         [self setEditing:NO animated:NO];
         [self setNavigationBarButtonItemsEnabled:NO];
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     } else {
         [self setNavigationBarButtonItemsEnabled:YES];
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     }
     
     return numberOfRows;
@@ -769,11 +759,6 @@
             break;
         }
     }
-    
-    UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
-    [cell setSelectedBackgroundView:view];
-    [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
     if ([tableView isEditing]) {
         for (MEGANode *n in _selectedNodesMutableArray) {
@@ -1011,9 +996,6 @@
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
-    
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
         if (self.searchController.isActive) {

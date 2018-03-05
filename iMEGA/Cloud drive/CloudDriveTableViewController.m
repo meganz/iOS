@@ -51,6 +51,7 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *moreMinimizedBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sortByBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
@@ -136,7 +137,6 @@
     
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
     
-    // Long press to select:
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
 }
 
@@ -228,12 +228,6 @@
         }
     }
     
-    if (numberOfRows == 0) {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    } else {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-    }
-    
     return numberOfRows;
 }
 
@@ -292,11 +286,6 @@
         }
     }
     
-    UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
-    [cell setSelectedBackgroundView:view];
-    [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
-    
     cell.nameLabel.text = [node name];
     
     [cell.thumbnailPlayImageView setHidden:YES];
@@ -343,7 +332,6 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
     
     if (tableView.isEditing) {
@@ -390,6 +378,8 @@
         default:
             break;
     }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -1015,11 +1005,10 @@
 }
 
 - (void)setNavigationBarButtonItems {
-    
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
             if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode] == MEGAShareTypeAccessRead) {
-                self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem, self.sortByBarButtonItem];
+                self.navigationItem.rightBarButtonItems = @[self.moreMinimizedBarButtonItem];
             } else {
                 self.navigationItem.rightBarButtonItems = @[self.moreBarButtonItem];
             }
@@ -1027,7 +1016,7 @@
         }
             
         case DisplayModeRubbishBin:
-            self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem, self.sortByBarButtonItem];
+            self.navigationItem.rightBarButtonItems = @[self.moreMinimizedBarButtonItem];
             break;
             
         default:
@@ -1364,21 +1353,47 @@
     [self presentFromMoreBarButtonItemTheAlertController:moreAlertController];
 }
 
+- (IBAction)moreMinimizedAction:(UIBarButtonItem *)sender {
+    UIAlertController *moreMinimizedAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [moreMinimizedAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
+    UIAlertAction *sortByAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self presentSortByViewController];
+    }];
+    [sortByAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [moreMinimizedAlertController addAction:sortByAlertAction];
+    
+    UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        BOOL enableEditing = !self.tableView.isEditing;
+        [self setEditing:enableEditing animated:YES];
+    }];
+    [selectAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [moreMinimizedAlertController addAction:selectAlertAction];
+    
+    if ([[UIDevice currentDevice] iPadDevice]) {
+        moreMinimizedAlertController.modalPresentationStyle = UIModalPresentationPopover;
+        moreMinimizedAlertController.popoverPresentationController.barButtonItem = self.moreMinimizedBarButtonItem;
+        moreMinimizedAlertController.popoverPresentationController.sourceView = self.view;
+    }
+    
+    [self presentViewController:moreMinimizedAlertController animated:YES completion:nil];
+}
+
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
     BOOL enableEditing = !self.tableView.isEditing;
     [self setEditing:enableEditing animated:YES];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-
     [super setEditing:editing animated:animated];
 
     if (!isSwipeEditing) {
         [self updateNavigationBarTitle];
     }
+    
     if (editing) {
         if (!isSwipeEditing) {
-            [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
+            self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
             self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
             self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
             [self.toolbar setAlpha:0.0];
@@ -1388,10 +1403,8 @@
             }];
         }
     } else {
-        [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
-        
+        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
         [self setNavigationBarButtonItems];
-        
         allNodesSelected = NO;
         self.selectedNodesArray = nil;
         self.navigationItem.leftBarButtonItems = @[];

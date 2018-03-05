@@ -42,12 +42,14 @@ static NSString *kisDirectory = @"kisDirectory";
 
 @property (nonatomic, strong) NSMutableArray *selectedItems;
 
-@property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sortByBarButtonItem;
+
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *activityBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *sortByBarButtonItem;
 
 @property (strong, nonatomic) UIDocumentInteractionController *documentInteractionController;
 
@@ -78,19 +80,13 @@ static NSString *kisDirectory = @"kisDirectory";
     [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];    
     [self.toolbar setItems:@[self.activityBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
     
-    UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
-        [negativeSpaceBarButtonItem setWidth:-8.0];
-    } else {
-        [negativeSpaceBarButtonItem setWidth:-4.0];
-    }
-    [self.navigationItem setRightBarButtonItems:@[negativeSpaceBarButtonItem, self.editBarButtonItem, self.sortByBarButtonItem]];
+    self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+    self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
     self.definesPresentationContext = YES;
     
-    // Long press to select:
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
 }
 
@@ -481,11 +477,9 @@ static NSString *kisDirectory = @"kisDirectory";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger rows = self.searchController.isActive ? self.searchItemsArray.count : self.offlineSortedItems.count;
     if (rows == 0) {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         self.sortByBarButtonItem.enabled = NO;
         [self.editBarButtonItem setEnabled:NO];
     } else {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
         self.sortByBarButtonItem.enabled = YES;
         [self.editBarButtonItem setEnabled:YES];
     }
@@ -495,11 +489,6 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     OfflineTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"offlineTableViewCell" forIndexPath:indexPath];
-    
-    UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
-    [cell setSelectedBackgroundView:view];
-    [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
     NSString *directoryPathString = [self currentOfflinePath];
     NSString *nameString = [[self itemAtIndexPath:indexPath] objectForKey:kFileName];
@@ -688,7 +677,9 @@ static NSString *kisDirectory = @"kisDirectory";
     
     if (editing) {
         if (!isSwipeEditing) {
-            [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
+            self.navigationItem.rightBarButtonItem = self.editBarButtonItem;
+            self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+            
             self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
             [self.toolbar setAlpha:0.0];
             [self.tabBarController.tabBar addSubview:self.toolbar];
@@ -697,7 +688,9 @@ static NSString *kisDirectory = @"kisDirectory";
             }];
         }
     } else {
-        [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
+        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+        self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
+        
         allItemsSelected = NO;
         self.selectedItems = nil;
         self.navigationItem.leftBarButtonItems = @[];
@@ -825,6 +818,31 @@ static NSString *kisDirectory = @"kisDirectory";
     [self presentViewController:megaNavigationController animated:YES completion:nil];
 }
 
+- (IBAction)moreAction:(UIBarButtonItem *)sender {
+    UIAlertController *moreAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [moreAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
+    UIAlertAction *sortByAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self sortByTapped:self.sortByBarButtonItem];
+    }];
+    [sortByAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    [moreAlertController addAction:sortByAlertAction];
+    
+    UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self editTapped:self.editButtonItem];
+    }];
+    [selectAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    [moreAlertController addAction:selectAlertAction];
+    
+    if ([[UIDevice currentDevice] iPadDevice]) {
+        moreAlertController.modalPresentationStyle = UIModalPresentationPopover;
+        moreAlertController.popoverPresentationController.barButtonItem = self.moreBarButtonItem;
+        moreAlertController.popoverPresentationController.sourceView = self.view;
+    }
+    
+    [self presentViewController:moreAlertController animated:YES completion:nil];
+}
+
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
@@ -946,9 +964,6 @@ static NSString *kisDirectory = @"kisDirectory";
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
-    
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
         if (self.searchController.isActive) {
