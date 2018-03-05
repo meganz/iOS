@@ -83,6 +83,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 @property (nonatomic) UIColor *lastChatRoomStateColor;
 @property (nonatomic) UIImage *peerAvatar;
 
+@property (nonatomic) CGFloat lastBottomInset;
+@property (nonatomic) CGFloat lastVerticalOffset;
+
 @end
 
 @implementation MessagesViewController
@@ -191,8 +194,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     // Add an observer to get notified when coming back to foreground:
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didBecomeActive)
-                                                 name:UIApplicationDidBecomeActiveNotification
+                                             selector:@selector(willEnterForeground)
+                                                 name:UIApplicationWillEnterForegroundNotification
                                                object:nil];
     
     if (@available(iOS 10.0, *)) {
@@ -215,16 +218,20 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     self.inputToolbar.contentView.textView.text = [[MEGAStore shareInstance] fetchChatDraftWithChatId:self.chatRoom.chatId].text;
 }
 
-- (void)didBecomeActive {
+- (void)willEnterForeground {
     // Workaround to avoid wrong collection view height when coming back to foreground
     if ([self.inputToolbar.contentView.textView isFirstResponder]) {
-        [self.inputToolbar.contentView.textView resignFirstResponder];
-        [self.inputToolbar.contentView.textView becomeFirstResponder];
+        [self jsq_setCollectionViewInsetsTopValue:0.0f bottomValue:self.lastBottomInset];
+        CGPoint offset = self.collectionView.contentOffset;
+        offset.y = self.lastVerticalOffset;
+        self.collectionView.contentOffset = offset;
     }
 }
 
 - (void)willResignActive {
     [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
+    self.lastBottomInset = self.collectionView.scrollIndicatorInsets.bottom;
+    self.lastVerticalOffset = self.collectionView.contentOffset.y;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
