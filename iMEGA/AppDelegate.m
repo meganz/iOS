@@ -2237,7 +2237,11 @@ void uncaughtExceptionHandler(NSException *exception) {
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
                 [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self.mainTBC];
                 
-                [[MEGASdkManager sharedMEGAChatSdk] connect];
+                if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
+                    [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
+                } else {
+                    [[MEGASdkManager sharedMEGAChatSdk] connect];
+                }
                 if (isAccountFirstLogin) {
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
                 }
