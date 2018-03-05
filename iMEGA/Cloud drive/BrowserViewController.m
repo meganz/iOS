@@ -394,7 +394,6 @@
 
 - (void)setNodeTableViewCell:(NodeTableViewCell *)cell selected:(BOOL)boolValue {
     cell.checkImageView.hidden = boolValue ? NO : YES;
-    cell.backgroundColor = boolValue ? [UIColor mnz_grayF9F9F9] : nil;
 }
 
 - (void)pushBrowserWithParentNode:(MEGANode *)parentNode {
@@ -579,17 +578,10 @@
         numberOfRows = self.searchController.isActive ? self.searchNodesArray.count : self.nodes.size.integerValue;
     }
     
-    if (numberOfRows == 0) {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    } else {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-    }
-    
     return numberOfRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     NSString *cellIdentifier;
     if (self.browserSegmentedControl.selectedSegmentIndex == 0) {
         cellIdentifier = @"nodeCell";
@@ -642,11 +634,6 @@
         cell.infoLabel.text = [share user];
         [cell.cancelButton setImage:[Helper permissionsButtonImageForShareType:shareType] forState:UIControlStateNormal];
     }
-    
-    UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
-    [cell setSelectedBackgroundView:view];
-    [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
     if (@available(iOS 11.0, *)) {
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
