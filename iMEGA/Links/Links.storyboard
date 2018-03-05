@@ -102,7 +102,7 @@
                                                                 <constraint firstAttribute="height" constant="44" id="tmz-Oz-mBC"/>
                                                             </constraints>
                                                             <color key="tintColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <state key="normal" image="nodeInfo"/>
+                                                            <state key="normal" image="more"/>
                                                             <state key="selected" image="moreSelected"/>
                                                             <state key="highlighted" image="moreSelected"/>
                                                             <connections>
@@ -652,8 +652,8 @@
         <image name="cancelIcon" width="16" height="16"/>
         <image name="check_mark" width="29" height="29"/>
         <image name="edit" width="22" height="22"/>
+        <image name="more" width="26" height="6"/>
         <image name="moreSelected" width="26" height="6"/>
-        <image name="nodeInfo" width="46" height="44"/>
         <image name="video_list" width="22" height="22"/>
     </resources>
 </document>

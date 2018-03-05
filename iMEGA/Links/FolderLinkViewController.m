@@ -21,8 +21,9 @@
 #import "LoginViewController.h"
 #import "OfflineTableViewController.h"
 #import "BrowserViewController.h"
+#import "CustomActionViewController.h"
 
-@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate> {
+@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, CustomActionViewControllerDelegate> {
     
     BOOL isLoginDone;
     BOOL isFetchNodesDone;
@@ -390,16 +391,28 @@
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodeList nodeAtIndex:indexPath.row];
+        
+    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
+    actionController.node = node;
+    actionController.displayMode = DisplayModeFolderLink;
+    actionController.actionDelegate = self;
+    actionController.actionSender = sender;
     
-    FileLinkViewController *fileLinkVC = [self.storyboard instantiateViewControllerWithIdentifier:@"FileLinkViewControllerID"];
-    [fileLinkVC setFileLinkMode:FileLinkModeNodeFromFolderLink];
-    [fileLinkVC setNodeFromFolderLink:node];
-    [self.navigationController pushViewController:fileLinkVC animated:YES];
+    if ([[UIDevice currentDevice] iPadDevice]) {
+        actionController.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
+        popController.delegate = actionController;
+        popController.sourceView = sender;
+        popController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
+    } else {
+        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    }
+    [self presentViewController:actionController animated:YES completion:nil];
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
     //TODO: If documents have been opened for preview and the user download the folder link after that, move the dowloaded documents to Offline and avoid re-downloading.
-    if ([_tableView isEditing]) {
+    if (self.selectedNodesArray.count != 0) {
         for (MEGANode *node in _selectedNodesArray) {
             if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:YES]) {
                 [self setEditing:NO animated:YES];
@@ -424,7 +437,7 @@
             
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
             
-            if ([_tableView isEditing]) {
+            if (self.selectedNodesArray.count != 0) {
                 for (MEGANode *node in _selectedNodesArray) {
                     [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES];
                 }
@@ -433,7 +446,7 @@
             }
         }];
     } else {
-        if ([_tableView isEditing]) {
+        if (self.selectedNodesArray.count != 0) {
             [[Helper nodesFromLinkMutableArray] addObjectsFromArray:_selectedNodesArray];
         } else {
             [[Helper nodesFromLinkMutableArray] addObject:_parentNode];
@@ -453,7 +466,7 @@
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
             BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
             [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
-            if ([_tableView isEditing]) {
+            if (self.selectedNodesArray.count != 0) {
                 browserVC.selectedNodesArray = [NSArray arrayWithArray:_selectedNodesArray];
             } else {
                 if (self.parentNode == nil) {
@@ -465,7 +478,7 @@
             [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
         }];
     } else {
-        if ([_tableView isEditing]) {
+        if (self.selectedNodesArray.count != 0) {
             [[Helper nodesFromLinkMutableArray] addObjectsFromArray:_selectedNodesArray];
         } else {
             if (self.parentNode == nil) {
@@ -480,6 +493,16 @@
     }
     
     return;
+}
+
+- (void)openNode:(MEGANode *)node {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+            [node mnz_openImageInNavigationController:self.navigationController withNodes:@[node] folderLink:YES displayMode:2];
+        } else {
+            [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
+        }
+    }
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -892,6 +915,29 @@
             }
             break;
         }
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - CustomActionViewControllerDelegate
+
+- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender{
+    switch (action) {
+        case MegaNodeActionTypeDownload:
+            self.selectedNodesArray = [NSMutableArray arrayWithObject:node];
+            [self downloadAction:nil];
+            break;
+            
+        case MegaNodeActionTypeOpen:
+            [self openNode:node];
+            break;
+            
+        case MegaNodeActionTypeImport:
+            self.selectedNodesArray = [NSMutableArray arrayWithObject:node];
+            [self importAction:nil];
+            break;
             
         default:
             break;
