@@ -134,7 +134,7 @@
                                  self.node(node);
                              }
                              if (![[NSFileManager defaultManager] removeItemAtPath:filePath error:&error]) {
-                                 MEGALogError(@"Remove item at path failed with error: %@", error)
+                                 MEGALogError(@"Remove item at path failed with error: %@", error);
                              }
                          } else {
                              if (self.filePath) {

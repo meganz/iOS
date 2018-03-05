@@ -146,8 +146,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[MEGALogger sharedLogger] startLogging];
     }
     
-    MEGALogDebug(@"Application did finish launching with options %@", launchOptions);
-    
     _signalActivityRequired = NO;
     
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
@@ -361,7 +359,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
         }
     }
-
+    
+    MEGALogDebug(@"Application did finish launching with options %@", launchOptions);
+    
     return YES;
 }
 
@@ -437,11 +437,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         
         NSError *error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:[[NSFileManager defaultManager] downloadsDirectory] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error)
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
         
         if (![[NSFileManager defaultManager] removeItemAtPath:[[NSFileManager defaultManager] uploadsDirectory] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error)
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
 }
@@ -1153,7 +1153,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             if ([item.pathExtension.lowercaseString isEqualToString:@"mega"]) {
                 NSError *error = nil;
                 if (![[NSFileManager defaultManager] removeItemAtPath:[directory stringByAppendingPathComponent:item] error:&error]) {
-                    MEGALogError(@"Remove item at path failed with error: %@", error)
+                    MEGALogError(@"Remove item at path failed with error: %@", error);
                 }
             }
         }
