@@ -175,64 +175,72 @@
     
     NSMutableArray *actions = [NSMutableArray new];
     
-    switch (accessType) {
-        case MEGAShareTypeAccessRead:
-        case MEGAShareTypeAccessReadWrite: {
-            [actions addObject:[self actionDownload]];
-            if (self.displayMode != DisplayModeNodeInfo) {
-                [actions addObject:[self actionFileInfo]];
-            }
-            [actions addObject:[self actionCopy]];
-            if (self.isIncomingShareChildView) {
-                [actions addObject:[self actionLeaveSharing]];
-            }
-            break;
+    if (self.displayMode == DisplayModeFolderLink) {
+        [actions addObject:[self actionImport]];
+        [actions addObject:[self actionDownload]];
+        if (self.node.isFile) {
+            [actions addObject:[self actionOpen]];
         }
-            
-        case MEGAShareTypeAccessFull:
-            [actions addObject:[self actionDownload]];
-            if (self.displayMode != DisplayModeNodeInfo) {
-                [actions addObject:[self actionFileInfo]];
-            }
-            [actions addObject:[self actionCopy]];
-            [actions addObject:[self actionRename]];
-            if (self.isIncomingShareChildView) {
-                [actions addObject:[self actionLeaveSharing]];
-            }
-            break;
-            
-        case MEGAShareTypeAccessOwner:
-            if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeRubbishBin || self.displayMode == DisplayModeNodeInfo) {
-                [actions addObject:[self actionShare]];
+    } else {
+        
+        switch (accessType) {
+            case MEGAShareTypeAccessRead:
+            case MEGAShareTypeAccessReadWrite: {
                 [actions addObject:[self actionDownload]];
                 if (self.displayMode != DisplayModeNodeInfo) {
                     [actions addObject:[self actionFileInfo]];
                 }
                 [actions addObject:[self actionCopy]];
-                [actions addObject:[self actionMove]];
+                if (self.isIncomingShareChildView) {
+                    [actions addObject:[self actionLeaveSharing]];
+                }
+                break;
+            }
+                
+            case MEGAShareTypeAccessFull:
+                [actions addObject:[self actionDownload]];
+                if (self.displayMode != DisplayModeNodeInfo) {
+                    [actions addObject:[self actionFileInfo]];
+                }
+                [actions addObject:[self actionCopy]];
                 [actions addObject:[self actionRename]];
                 if (self.isIncomingShareChildView) {
                     [actions addObject:[self actionLeaveSharing]];
                 }
-                if (self.displayMode == DisplayModeCloudDrive) {
-                    [actions addObject:[self actionMoveToRubbishBin]];
-                } else if (self.displayMode == DisplayModeRubbishBin) {
-                    [actions addObject:[self actionRemove]];
+                break;
+                
+            case MEGAShareTypeAccessOwner:
+                if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeRubbishBin || self.displayMode == DisplayModeNodeInfo) {
+                    [actions addObject:[self actionShare]];
+                    [actions addObject:[self actionDownload]];
+                    if (self.displayMode != DisplayModeNodeInfo) {
+                        [actions addObject:[self actionFileInfo]];
+                    }
+                    [actions addObject:[self actionCopy]];
+                    [actions addObject:[self actionMove]];
+                    [actions addObject:[self actionRename]];
+                    if (self.isIncomingShareChildView) {
+                        [actions addObject:[self actionLeaveSharing]];
+                    }
+                    if (self.displayMode == DisplayModeCloudDrive) {
+                        [actions addObject:[self actionMoveToRubbishBin]];
+                    } else if (self.displayMode == DisplayModeRubbishBin) {
+                        [actions addObject:[self actionRemove]];
+                    }
+                } else {
+                    [actions addObject:[self actionShare]];
+                    [actions addObject:[self actionDownload]];
+                    [actions addObject:[self actionFileInfo]];
+                    [actions addObject:[self actionCopy]];
+                    [actions addObject:[self actionRename]];
+                    [actions addObject:[self actionRemoveSharing]];
                 }
-            } else {
-                [actions addObject:[self actionShare]];
-                [actions addObject:[self actionDownload]];
-                [actions addObject:[self actionFileInfo]];
-                [actions addObject:[self actionCopy]];
-                [actions addObject:[self actionRename]];
-                [actions addObject:[self actionRemoveSharing]];
-            }
-            break;
-            
-        default:
-            break;
+                break;
+                
+            default:
+                break;
+        }
     }
-    
     return actions;
 }
 
@@ -241,7 +249,7 @@
 }
 
 - (MegaActionNode *)actionDownload {
-    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"saveForOffline", @"List option shown on the details of a file or folder") iconName: @"offline" andActionType:MegaNodeActionTypeDownload];
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"downloadButton", @"Button title which downloads a file/folder to your device") iconName: @"offline" andActionType:MegaNodeActionTypeDownload];
 }
 
 - (MegaActionNode *)actionFileInfo {
@@ -279,6 +287,14 @@
 
 - (MegaActionNode *)actionRemoveSharing {
     return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share") iconName: @"removeShare" andActionType:MegaNodeActionTypeRemoveSharing];
+}
+
+- (MegaActionNode *)actionImport {
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"import", nil) iconName: @"infoImport" andActionType:MegaNodeActionTypeImport];
+}
+
+- (MegaActionNode *)actionOpen {
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"openButton", nil) iconName: @"infoOpen" andActionType:MegaNodeActionTypeOpen];
 }
 
 #pragma mark - IBActions

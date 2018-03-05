@@ -1998,7 +1998,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <image name="icon-key-only" width="24" height="24"/>
         <image name="icon-link-only" width="24" height="24"/>
         <image name="icon-link-w-key" width="24" height="24"/>
-        <image name="linked" width="24" height="24"/>
+        <image name="linked" width="12" height="12"/>
         <image name="more" width="26" height="6"/>
         <image name="moreSelected" width="26" height="6"/>
         <image name="move" width="32" height="32"/>
