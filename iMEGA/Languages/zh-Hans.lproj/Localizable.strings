@@ -100,10 +100,32 @@
 "emailPlaceholder"="邮箱地址";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="密码";
+/*  */
+"pleaseStrengthenYourPassword"="请强化您的密码。";
+/* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
+"veryWeak"="非常弱";
+/*  */
+"weak"="弱";
+/*  */
+"passwordVeryWeakOrWeak"="您的密码太容易被猜到了。请尝试增加密码长度。结合大小写。添加特殊字元。不要使用名字或单词。";
+/* Label displayed during checking the strength of the password introduced. Represents Medium security */
+"medium"="中等";
+/*  */
+"passwordMedium"="您的密码已足以继续，但仍建议可再加强密码强度。";
+/*  */
+"good"="好";
+/*  */
+"passwordGood"="这个密码将可承受最典型的暴力破解攻击。请确保您会好好记牢。";
+/* Label displayed during checking the strength of the password introduced. Represents Strong security */
+"strong"="强";
+/*  */
+"passwordStrong"="这个密码将可承受最典型的暴力破解攻击。请确保您会好好记牢。";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
 "termsOfServiceButton"="我同意MEGA 的服务条款";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="请输入有效的名字";
+/*  */
+"invalidFirstNameAndLastName"="无效的名或姓。";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="密码不匹配";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -1151,7 +1173,7 @@
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="与%@的对话";
 /* Title show above the name of the persons with whom you're chatting */
-"chattingWith"="。。。";
+"chattingWith"="聊天对象";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA提供安全加密保障，完全保护您的聊天隐私（保障使用者终端到终端，用户控制之隐私）：";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1230,6 +1252,8 @@
 "openMEGAAndSignInToContinue"="开启MEGA并登入以继续";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="撤除";
+/* Label in login screen to inform about the chat initialization proccess */
+"connecting"="正在连接...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="某些项目无法与MEGA共享";
 /* Notification message shown when a transfer failed. Keep colon. */
