@@ -201,6 +201,7 @@
     CGFloat dotSize = dotHeight > dotWidth ? dotWidth : dotHeight;
     CGFloat padding = dotSize/8;
     
+    NSUInteger maxHorizontalPoints = 0;
     // Draw dots:
     for(unsigned int i=0; i<rows; i++) {
         // columns-1 because there is a last column of points with invalid data
@@ -208,9 +209,16 @@
             if (buf[(i*columns+j)*4]==0) {
                 CGRect rect = CGRectMake(j*dotWidth+padding, i*dotHeight+padding, dotSize - (2 * padding), dotSize - (2 * padding));
                 CGContextFillEllipseInRect(ctx, rect);
+                if (j > maxHorizontalPoints) {
+                    maxHorizontalPoints = j;
+                }
             }
         }
     }
+    // For some unknown reason, sometimes the generated QR has an extra column
+    // without points at the end. So, it is needed to add (or not) a trailing
+    // padding for the top right reference square.
+    NSUInteger trailingPoints = (columns - 1) - (maxHorizontalPoints + 1);
     
     // The following bunch of code is used to draw the reference squares that
     // appear in three corners of the QR code:
@@ -261,21 +269,21 @@
     
     // Draw reference squares at the top right corner:
     // (The horizontal padding here is the double for the same reason that before we had columns-1)
-    CGRect rectTR0 = CGRectMake(size.width-referencePaddingX-referencePaddingX-(dotWidth * referenceSize), referencePaddingY, dotWidth * referenceSize, dotHeight * referenceSize);
+    CGRect rectTR0 = CGRectMake(size.width-referencePaddingX-(trailingPoints * referencePaddingX)-(dotWidth * referenceSize), referencePaddingY, dotWidth * referenceSize, dotHeight * referenceSize);
     CGContextSetFillColorWithColor(ctx, [UIColor whiteColor].CGColor);
     CGContextFillRect(ctx, rectTR0);
 
-    CGRect rectTR1 = CGRectMake(size.width-referencePaddingX-referencePaddingX-(dotWidth * referenceSize), referencePaddingY, dotWidth * referenceSize, dotHeight * referenceSize);
+    CGRect rectTR1 = CGRectMake(size.width-referencePaddingX-(trailingPoints * referencePaddingX)-(dotWidth * referenceSize), referencePaddingY, dotWidth * referenceSize, dotHeight * referenceSize);
     UIBezierPath *bezierPathTR1 = [UIBezierPath bezierPathWithRoundedRect:rectTR1 cornerRadius:dotSize];
     CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:0.94f green:0.22f blue:0.23f alpha:1.0f].CGColor);
     [bezierPathTR1 fill];
     
-    CGRect rectTR2 = CGRectMake(size.width-referencePaddingX*2-referencePaddingX-(dotWidth * (referenceSize-2)), referencePaddingY*2, dotWidth * (referenceSize-2), dotHeight * (referenceSize-2));
+    CGRect rectTR2 = CGRectMake(size.width-referencePaddingX*2-(trailingPoints * referencePaddingX)-(dotWidth * (referenceSize-2)), referencePaddingY*2, dotWidth * (referenceSize-2), dotHeight * (referenceSize-2));
     UIBezierPath *bezierPathTR2 = [UIBezierPath bezierPathWithRoundedRect:rectTR2 cornerRadius:dotSize];
     CGContextSetFillColorWithColor(ctx, [UIColor whiteColor].CGColor);
     [bezierPathTR2 fill];
     
-    CGRect rectTR3 = CGRectMake(size.width-referencePaddingX*3-referencePaddingX-(dotWidth * (referenceSize-4)), referencePaddingY*3, dotWidth * (referenceSize-4), dotHeight * (referenceSize-4));
+    CGRect rectTR3 = CGRectMake(size.width-referencePaddingX*3-(trailingPoints * referencePaddingX)-(dotWidth * (referenceSize-4)), referencePaddingY*3, dotWidth * (referenceSize-4), dotHeight * (referenceSize-4));
     CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:0.94f green:0.22f blue:0.23f alpha:1.0f].CGColor);
     CGContextFillEllipseInRect(ctx, rectTR3);
     
