@@ -1,7 +1,7 @@
 
 #import "MEGABaseRequestDelegate.h"
 
-@interface MegaRevertVersionRequestDelegate : MEGABaseRequestDelegate
+@interface MEGARemoveVersionRequestDelegate : MEGABaseRequestDelegate
 
 - (instancetype)initWithCompletion:(void (^)(MEGARequest *request))completion;
 

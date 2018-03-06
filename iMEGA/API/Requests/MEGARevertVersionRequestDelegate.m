@@ -1,13 +1,13 @@
 
-#import "MegaRevertVersionRequestDelegate.h"
+#import "MEGARevertVersionRequestDelegate.h"
 
-@interface MegaRevertVersionRequestDelegate ()
+@interface MEGARevertVersionRequestDelegate ()
 
 @property (nonatomic, copy) void (^completion)(MEGARequest *request);
 
 @end
 
-@implementation MegaRevertVersionRequestDelegate
+@implementation MEGARevertVersionRequestDelegate
 
 - (instancetype)initWithCompletion:(void (^)(MEGARequest *request))completion {
     self = [super init];

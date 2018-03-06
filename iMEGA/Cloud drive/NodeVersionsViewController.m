@@ -7,7 +7,7 @@
 #import "MEGASdkManager.h"
 #import "MEGANode+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
-#import "MegaRemoveVersionRequestDelegate.h"
+#import "MEGARemoveVersionRequestDelegate.h"
 #import "NSString+MNZCategory.h"
 #import "Helper.h"
 #import "NodeTableViewCell.h"
@@ -437,7 +437,7 @@
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"deleteVersion", @"Question to ensure user wants to delete file version") message:AMLocalizedString(@"permanentlyRemoved", @"Message to notify user the file version will be permanently removed") preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"delete", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        MegaRemoveVersionRequestDelegate *removeVersionRD = [[MegaRemoveVersionRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+        MEGARemoveVersionRequestDelegate *removeVersionRD = [[MEGARemoveVersionRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
             [self reloadUI];
         }];
         
