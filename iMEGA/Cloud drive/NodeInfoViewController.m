@@ -44,6 +44,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) NSArray<MegaNodeProperty *> *nodeProperties;
+@property (strong, nonatomic) MEGAFolderInfo *folderInfo;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 
@@ -69,6 +70,10 @@
         [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
     }
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    
+    if (self.node.isFolder && !self.folderInfo) {
+        [[MEGASdkManager sharedMEGASdk] getFolderInfoForNode:self.node];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -276,13 +281,16 @@
 - (NSArray<MegaNodeProperty *> *)nodePropertyCells {
     NSMutableArray<MegaNodeProperty *> *propertiesNode = [NSMutableArray new];
     
+    NSString *nodeSize = (self.node.isFile && self.node.mnz_numberOfVersions != 0) ? [NSByteCountFormatter stringFromByteCount:self.node.mnz_versionsSize.longLongValue countStyle:NSByteCountFormatterCountStyleMemory] : [Helper sizeForNode:self.node api:[MEGASdkManager sharedMEGASdk]];
+    [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:nodeSize]];
+    [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"location", @"Title label of a node property.") value:[NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] parentNodeForNode:self.node].name]]];
+    
     if (self.node.isFile && self.node.mnz_numberOfVersions != 0) {
-        [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[NSByteCountFormatter stringFromByteCount:self.node.mnz_versionsSize.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory]]];
-        [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"location", @"Title label of a node property.") value:[NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] parentNodeForNode:self.node].name]]];
         [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file") value:[Helper sizeForNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
-    } else {
-        [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[Helper sizeForNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
-        [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"location", @"Title label of a node property.") value:[NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] parentNodeForNode:self.node].name]]];
+    } else if (self.node.isFolder && self.folderInfo.versions != 0) {
+        [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"versions", @"Title of section to display number of all historical versions of files") value:[NSString stringWithFormat:@"%ld", (long)self.folderInfo.versions]]];
+        [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"currentVersions", @"Title of section to display information of all current versions of files.") value:[NSByteCountFormatter stringFromByteCount:self.folderInfo.currentSize countStyle:NSByteCountFormatterCountStyleMemory]]];
+        [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file.") value:[NSByteCountFormatter stringFromByteCount:self.folderInfo.versionsSize countStyle:NSByteCountFormatterCountStyleMemory]]];
     }
     if (self.node.isFolder) {
         if (self.node.isShared) {
@@ -517,6 +525,14 @@
                 }
                 break;
         }
+    }
+}
+
+
+- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    if (request.type == MEGARequestTypeFolderInfo && error.type == MEGAErrorTypeApiOk) {
+        self.folderInfo = request.megaFolderInfo;
+        [self reloadUI];
     }
 }
 

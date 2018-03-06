@@ -1399,3 +1399,5 @@
 "currentVersion"="Current Version";
 /* A button label which opens a dialog to display the full version history of the selected file. */
 "previousVersions"="Previous Versions";
+/* Title of section to display information of all current versions of files. */
+"currentVersions"="Current Versions";
