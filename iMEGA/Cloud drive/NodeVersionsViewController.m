@@ -303,7 +303,6 @@
     UIContextualAction *revertAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Share" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         self.selectedNodesArray = [NSMutableArray arrayWithObject:[self.node.mnz_versions objectAtIndex:indexPath.row]];
         [self revertAction:nil];
-        [self setEditing:NO animated:YES];
     }];
     revertAction.image = [UIImage imageNamed:@"history"];
     revertAction.backgroundColor = UIColor.darkGrayColor;
@@ -311,12 +310,11 @@
     UIContextualAction *removeAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Share" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         self.selectedNodesArray = [NSMutableArray arrayWithObject:[self.node.mnz_versions objectAtIndex:indexPath.row]];
         [self removeAction:nil];
-        [self setEditing:NO animated:YES];
     }];
     removeAction.image = [UIImage imageNamed:@"delete"];
     removeAction.backgroundColor = UIColor.mnz_redF0373A;
     
-    return [UISwipeActionsConfiguration configurationWithActions:@[revertAction, removeAction]];
+    return [UISwipeActionsConfiguration configurationWithActions:@[removeAction, revertAction]];
 }
 
 #pragma clang diagnostic pop
