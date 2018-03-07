@@ -17,6 +17,7 @@
 @property (nonatomic, getter=isIncomingShareChildView) BOOL incomingShareChildView;
 @property (weak, nonatomic) id<CustomActionViewControllerDelegate> actionDelegate;
 @property (nonatomic, strong) id actionSender;
+@property (strong, nonatomic) NSArray *excludedActions;
 
 @end
 

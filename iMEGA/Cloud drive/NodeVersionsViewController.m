@@ -7,11 +7,11 @@
 #import "MEGASdkManager.h"
 #import "MEGANode+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
-#import "MEGARemoveVersionRequestDelegate.h"
 #import "NSString+MNZCategory.h"
 #import "Helper.h"
 #import "NodeTableViewCell.h"
 #import "CustomActionViewController.h"
+#import "MEGAGetThumbnailRequestDelegate.h"
 
 @interface NodeVersionsViewController () <UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate, MEGADelegate> {
     BOOL allNodesSelected;
@@ -26,14 +26,9 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (weak, nonatomic) IBOutlet UILabel *currentVersionLabel;
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *videoIconImageView;
-
 @property (nonatomic, strong) NSMutableArray<MEGANode *> *selectedNodesArray;
 @property (nonatomic, strong) NSMutableDictionary *nodesIndexPathMutableDictionary;
+@property (nonatomic, strong) NSMutableArray<MEGANode *> *nodeVersions;
 
 @end
 
@@ -45,7 +40,6 @@
     [super viewDidLoad];
 
     self.title = AMLocalizedString(@"versions", @"Title of section to display number of all historical versions of files.");
-    self.currentVersionLabel.text = AMLocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file").uppercaseString;
     
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [self setToolbarItems:@[self.downloadBarButtonItem, flexibleItem, self.revertBarButtonItem, flexibleItem, self.removeBarButtonItem] animated:YES];
@@ -79,28 +73,31 @@
 #pragma mark - Layout
 
 - (void)reloadUI {
-    self.titleLabel.text = self.node.name;
-    
-    if (self.node.isFile) {
-        [self.thumbnailImageView mnz_setThumbnailByNodeHandle:self.node.handle];
-    } else if (self.node.isFolder) {
-        self.thumbnailImageView.image = [Helper imageForNode:self.node];
-    }
-    self.subtitleLabel.text = [Helper sizeAndDateForNode:self.node api:[MEGASdkManager sharedMEGASdk]];
-    
     [self.nodesIndexPathMutableDictionary removeAllObjects];
+    self.nodeVersions = [NSMutableArray arrayWithArray:self.node.mnz_versions];
+    if (self.nodeVersions.count == 0) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
     [self.tableView reloadData];
 }
 
 #pragma mark - TableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.node.mnz_numberOfVersions;
+    if (section == 0) {
+        return 1;
+    } else {
+        return self.nodeVersions.count-1;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    MEGANode *node = [self.node.mnz_versions objectAtIndex:indexPath.row];
+    MEGANode *node = [self nodeForIndexPath:indexPath];
 
     [self.nodesIndexPathMutableDictionary setObject:indexPath forKey:node.base64Handle];
     
@@ -163,8 +160,18 @@
     [cell.thumbnailPlayImageView setHidden:YES];
     
     if (node.isFile) {
-        if ([node hasThumbnail]) {
-            [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdk] cell:cell];
+        if (node.hasThumbnail) {
+            NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
+            
+            if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
+                cell.thumbnailImageView.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
+            } else {
+                MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request){
+                    cell.thumbnailImageView.image = [UIImage imageWithContentsOfFile:request.file];
+                }];
+                [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
+                cell.thumbnailImageView.image = [Helper imageForNode:node];
+            }
         } else {
             [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
         }
@@ -205,7 +212,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    MEGANode *node = [self.node.mnz_versions objectAtIndex:indexPath.row];
+    MEGANode *node = [self nodeForIndexPath:indexPath];
 
     if (tableView.isEditing) {
         [self.selectedNodesArray addObject:node];
@@ -214,7 +221,7 @@
         
         [self setToolbarActionsEnabled:YES];
         
-        if (self.selectedNodesArray.count == self.node.mnz_versions.count) {
+        if (self.selectedNodesArray.count == self.nodeVersions.count) {
             allNodesSelected = YES;
         } else {
             allNodesSelected = NO;
@@ -224,20 +231,20 @@
     }
     
     if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-        [node mnz_openImageInNavigationController:self.navigationController withNodes:self.node.mnz_versions folderLink:NO displayMode:DisplayModeNodeVersions];
+        [node mnz_openImageInNavigationController:self.navigationController withNodes:self.nodeVersions folderLink:NO displayMode:DisplayModeNodeVersions];
     } else {
         [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
     }
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row > self.node.mnz_versions.count) {
+    if (indexPath.row > self.nodeVersions.count) {
         return;
     }
 
     if (tableView.isEditing) {
         
-        MEGANode *node = [self.node.mnz_versions objectAtIndex:indexPath.row];
+        MEGANode *node = [self nodeForIndexPath:indexPath];
         //tempArray avoid crash: "was mutated while being enumerated."
         NSMutableArray *tempArray = [self.selectedNodesArray copy];
         for (MEGANode *n in tempArray) {
@@ -264,9 +271,15 @@
     UITableViewCell *sectionHeader = [self.tableView dequeueReusableCellWithIdentifier:@"nodeInfoHeader"];
     
     UILabel *titleSection = (UILabel*)[sectionHeader viewWithTag:1];
-    titleSection.text = AMLocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file").uppercaseString;
     UILabel *versionsSize = (UILabel*)[sectionHeader viewWithTag:2];
-    versionsSize.text = [NSByteCountFormatter stringFromByteCount:self.node.mnz_versionsSize.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory];
+    
+    if (section == 0) {
+        titleSection.text = AMLocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file").uppercaseString;
+        versionsSize.text = nil;
+    } else {
+        titleSection.text = AMLocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file").uppercaseString;
+        versionsSize.text = [NSByteCountFormatter stringFromByteCount:self.node.mnz_versionsSize.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory];
+    }
     
     return sectionHeader;
 }
@@ -282,8 +295,7 @@
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView leadingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     isSwipeEditing = YES;
-    MEGANode *node = [self.node.mnz_versions objectAtIndex:indexPath.row];
-    self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+    MEGANode *node = [self nodeForIndexPath:indexPath];
     
     UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         [node mnz_downloadNodeOverwriting:YES];
@@ -297,24 +309,27 @@
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     isSwipeEditing = YES;
-    MEGANode *node = [self.node.mnz_versions objectAtIndex:indexPath.row];
-    self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+    self.selectedNodesArray = [NSMutableArray arrayWithObject:[self nodeForIndexPath:indexPath]];
     
-    UIContextualAction *revertAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Share" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        self.selectedNodesArray = [NSMutableArray arrayWithObject:[self.node.mnz_versions objectAtIndex:indexPath.row]];
-        [self revertAction:nil];
-    }];
-    revertAction.image = [UIImage imageNamed:@"history"];
-    revertAction.backgroundColor = UIColor.darkGrayColor;
+    NSMutableArray *rightActions = [NSMutableArray new];
     
     UIContextualAction *removeAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Share" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        self.selectedNodesArray = [NSMutableArray arrayWithObject:[self.node.mnz_versions objectAtIndex:indexPath.row]];
         [self removeAction:nil];
     }];
     removeAction.image = [UIImage imageNamed:@"delete"];
     removeAction.backgroundColor = UIColor.mnz_redF0373A;
+    [rightActions addObject:removeAction];
     
-    return [UISwipeActionsConfiguration configurationWithActions:@[removeAction, revertAction]];
+    if (indexPath.section != 0) {
+        UIContextualAction *revertAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Share" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            [self revertAction:nil];
+        }];
+        revertAction.image = [UIImage imageNamed:@"history"];
+        revertAction.backgroundColor = UIColor.darkGrayColor;
+        [rightActions addObject:revertAction];
+    }
+
+    return [UISwipeActionsConfiguration configurationWithActions:rightActions];
 }
 
 #pragma clang diagnostic pop
@@ -372,8 +387,16 @@
 
 - (void)setToolbarActionsEnabled:(BOOL)boolValue {
     self.downloadBarButtonItem.enabled = self.selectedNodesArray.count == 1 ? boolValue : NO;
-    self.revertBarButtonItem.enabled = self.selectedNodesArray.count == 1 ? boolValue : NO;
+    self.revertBarButtonItem.enabled = (self.selectedNodesArray.count == 1 && self.selectedNodesArray.firstObject.handle != self.node.handle) ? boolValue : NO;
     self.removeBarButtonItem.enabled = boolValue;
+}
+
+- (MEGANode *)nodeForIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        return [self.nodeVersions objectAtIndex:0];
+    } else {
+        return [self.nodeVersions objectAtIndex:indexPath.row+1];
+    }
 }
 
 #pragma mark - UILongPressGestureRecognizer
@@ -394,7 +417,7 @@
             }
             if (self.selectedNodesArray.count == 1) {
                 MEGANode *nodeSelected = self.selectedNodesArray.firstObject;
-                MEGANode *nodePressed = [self.node.mnz_versions objectAtIndex:indexPath.row];
+                MEGANode *nodePressed = [self nodeForIndexPath:indexPath];
                 if (nodeSelected.handle == nodePressed.handle) {
                     [self setEditing:NO animated:YES];
                 }
@@ -435,14 +458,9 @@
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"deleteVersion", @"Question to ensure user wants to delete file version") message:AMLocalizedString(@"permanentlyRemoved", @"Message to notify user the file version will be permanently removed") preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"delete", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        MEGARemoveVersionRequestDelegate *removeVersionRD = [[MEGARemoveVersionRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-            [self reloadUI];
-        }];
-        
         for (MEGANode *node in self.selectedNodesArray) {
-            [[MEGASdkManager sharedMEGASdk] removeVersionNode:node delegate:removeVersionRD];
+            [[MEGASdkManager sharedMEGASdk] removeVersionNode:node];
         }
-        
         [self setEditing:NO animated:YES];
     }]];
     [self presentViewController:alertController animated:YES completion:nil];
@@ -458,8 +476,8 @@
     if (!allNodesSelected) {
         MEGANode *n = nil;
         
-        for (NSInteger i = 0; i < self.node.mnz_numberOfVersions; i++) {
-            n = [self.node.mnz_versions objectAtIndex:i];
+        for (NSInteger i = 0; i < self.nodeVersions.count; i++) {
+            n = [self.nodeVersions objectAtIndex:i];
             [self.selectedNodesArray addObject:n];
         }
         
@@ -477,12 +495,15 @@
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-
+    
     CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
-    actionController.node = [self.node.mnz_versions objectAtIndex:indexPath.row];
+    actionController.node = [self nodeForIndexPath:indexPath];
     actionController.displayMode = DisplayModeNodeVersions;
     actionController.actionDelegate = self;
     actionController.actionSender = sender;
+    if (indexPath.section == 0) {
+        actionController.excludedActions = @[@(MegaNodeActionTypeRevertVersion)];
+    }
     
     if ([[UIDevice currentDevice] iPadDevice]) {
         actionController.modalPresentationStyle = UIModalPresentationPopover;
@@ -523,8 +544,7 @@
     expansionSettings.threshold = 2;
     
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    MEGANode *node = [self.node.mnz_versions objectAtIndex:indexPath.row];
-    self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+    MEGANode *node = [self nodeForIndexPath:indexPath];
     
     if (direction == MGSwipeDirectionLeftToRight && [[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {
         
@@ -537,21 +557,26 @@
         return @[downloadButton];
     } else if (direction == MGSwipeDirectionRightToLeft) {
         
-        MGSwipeButton *revertButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"history"] backgroundColor:UIColor.darkGrayColor padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-            self.selectedNodesArray = [NSMutableArray arrayWithObject:[self.node.mnz_versions objectAtIndex:indexPath.row]];
-            [self revertAction:nil];
-            return YES;
-        }];
-        revertButton.tintColor = UIColor.whiteColor;
-        
+        NSMutableArray *rightButtons = [NSMutableArray new];
+        self.selectedNodesArray = [NSMutableArray arrayWithObject:node];
+
         MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:UIColor.mnz_redF0373A padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-            self.selectedNodesArray = [NSMutableArray arrayWithObject:[self.node.mnz_versions objectAtIndex:indexPath.row]];
             [self removeAction:nil];
             return YES;
         }];
         deleteButton.tintColor = UIColor.whiteColor;
+        [rightButtons addObject:deleteButton];
         
-        return @[deleteButton, revertButton];
+        if (indexPath.section != 0) {
+            MGSwipeButton *revertButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"history"] backgroundColor:UIColor.darkGrayColor padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+                [self revertAction:nil];
+                return YES;
+            }];
+            revertButton.tintColor = UIColor.whiteColor;
+            [rightButtons addObject:revertButton];
+        }
+
+        return rightButtons;
     } else {
         return nil;
     }
