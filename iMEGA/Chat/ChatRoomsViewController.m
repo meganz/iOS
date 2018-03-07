@@ -89,7 +89,7 @@
     
     [self customNavigationBarLabel];
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] && [MEGAReachabilityManager sharedManager].chatRoomListState!=MEGAChatRoomListStateInProgress) {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
         self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
         if (self.chatListItemList.size) {
             [self reorderList];
@@ -220,7 +220,7 @@
 - (UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
     if ([MEGAReachabilityManager isReachable]) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-            if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitWaitingNewSession || [[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitNoCache || [MEGAReachabilityManager sharedManager].chatRoomListState==MEGAChatRoomListStateInProgress) {
+            if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitWaitingNewSession || [[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitNoCache) {
                 UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                 [indicator startAnimating];
                 return indicator;
