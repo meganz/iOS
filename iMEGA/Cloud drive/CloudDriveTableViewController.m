@@ -319,8 +319,6 @@
     } else {
         cell.delegate = self;
     }
-    
-    [cell setEditing:self.isEditing];
 
     return cell;
 }
