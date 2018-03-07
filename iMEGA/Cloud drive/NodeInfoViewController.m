@@ -59,28 +59,18 @@
     [super viewDidLoad];
     
     self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label. The button allows the user to close the conversation.");
+    
+    [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
+    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [self reloadUI];
-
-    if (!self.presentedViewController) {
-        [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
-    }
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     
     if (self.node.isFolder && !self.folderInfo) {
         [[MEGASdkManager sharedMEGASdk] getFolderInfoForNode:self.node];
-    }
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    if (!self.presentedViewController) {
-        [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
     }
 }
 
@@ -253,6 +243,7 @@
 #pragma mark - Actions
 
 - (IBAction)closeTapped:(UIBarButtonItem *)sender {
+    [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

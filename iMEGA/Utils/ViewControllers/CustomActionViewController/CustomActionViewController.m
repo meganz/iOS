@@ -120,6 +120,10 @@
     return header;
 }
 
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(self.collectionView.bounds.size.width, 60);
+}
+
 #pragma mark - CollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -235,6 +239,16 @@
             
         default:
             break;
+    }
+    
+    if (self.excludedActions.count > 0) {
+        NSMutableArray *actionsToRemove = [NSMutableArray new];
+        for (MegaActionNode *action in actions) {
+            if ([self.excludedActions containsObject:@(action.actionType)]) {
+                [actionsToRemove addObject:action];
+            }
+        }
+        [actions removeObjectsInArray:actionsToRemove];
     }
     
     return actions;

@@ -135,19 +135,19 @@
 
 - (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite {
     MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self api:[MEGASdkManager sharedMEGASdk]];
-    if (!offlineNodeExist || overwrite) {
+    if (offlineNodeExist) {
+        return YES;
+    } else {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-            if (![Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:NO]) {
-                return NO;
-            } else {
+            if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:NO]) {
                 [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:overwrite];
                 return YES;
+            } else {
+                return NO;
             }
         } else {
             return NO;
         }
-    } else {
-        return YES;
     }
 }
 
