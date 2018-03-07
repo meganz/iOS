@@ -112,6 +112,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     self.inputToolbar.contentView.textView.jsq_pasteDelegate = self;
     
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideInputToolbar)];
+    tapGesture.cancelsTouchesInView = NO;
+    [self.collectionView addGestureRecognizer:tapGesture];
+    
     [self customiseCollectionViewLayout];
     
     [self.collectionView registerNib:[MEGAOpenMessageHeaderView nib] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[MEGAOpenMessageHeaderView headerReuseIdentifier]];
@@ -736,6 +740,14 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     }
 }
 
+- (void)hideInputToolbar {
+    if (self.inputToolbar.imagePickerView) {
+        [self.inputToolbar mnz_accesoryButtonPressed:self.inputToolbar.imagePickerView.accessoryImageButton];
+    } else if (self.inputToolbar.contentView.textView.isFirstResponder) {
+        [self.inputToolbar mnz_accesoryButtonPressed:self.inputToolbar.contentView.accessoryTextButton];
+    }
+}
+
 #pragma mark - Custom menu actions for cells
 
 - (void)didReceiveMenuWillShowNotification:(NSNotification *)notification {
@@ -1315,6 +1327,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
+    [self hideInputToolbar];
+    
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     if (message.type == MEGAChatMessageTypeAttachment) {
         if (message.nodeList.size.unsignedIntegerValue == 1) {
@@ -1353,7 +1367,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapCellAtIndexPath:(NSIndexPath *)indexPath touchLocation:(CGPoint)touchLocation {
-    NSLog(@"Tapped cell at %@!", NSStringFromCGPoint(touchLocation));
+    [self hideInputToolbar];
 }
 
 #pragma mark - JSQMessagesComposerTextViewPasteDelegate methods
