@@ -18,7 +18,7 @@
 #import "CustomActionViewController.h"
 #import "NodeInfoViewController.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, CustomActionViewControllerDelegate> {
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
 }
@@ -535,6 +535,7 @@
     actionController.node = node;
     actionController.displayMode = DisplayModeSharedItem;
     actionController.actionDelegate = self;
+    actionController.incomingShareChildView = (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0);
     if ([[UIDevice currentDevice] iPadDevice]) {
         actionController.modalPresentationStyle = UIModalPresentationPopover;
         UIPopoverPresentationController *popController = [actionController popoverPresentationController];
@@ -836,7 +837,6 @@
             CloudDriveTableViewController *cloudTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             [cloudTVC setParentNode:node];
             [cloudTVC setDisplayMode:DisplayModeCloudDrive];
-            cloudTVC.incomingShareChildView = (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0);
             
             [self.navigationController pushViewController:cloudTVC animated:YES];
             break;

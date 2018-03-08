@@ -308,6 +308,10 @@
 }
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node] < MEGAShareTypeAccessFull) {
+        return [UISwipeActionsConfiguration configurationWithActions:nil];
+    }
     isSwipeEditing = YES;
     self.selectedNodesArray = [NSMutableArray arrayWithObject:[self nodeForIndexPath:indexPath]];
     
@@ -387,8 +391,8 @@
 
 - (void)setToolbarActionsEnabled:(BOOL)boolValue {
     self.downloadBarButtonItem.enabled = self.selectedNodesArray.count == 1 ? boolValue : NO;
-    self.revertBarButtonItem.enabled = (self.selectedNodesArray.count == 1 && self.selectedNodesArray.firstObject.handle != self.node.handle) ? boolValue : NO;
-    self.removeBarButtonItem.enabled = boolValue;
+    self.revertBarButtonItem.enabled = (self.selectedNodesArray.count == 1 && self.selectedNodesArray.firstObject.handle != self.node.handle && [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node] >= MEGAShareTypeAccessFull) ? boolValue : NO;
+    self.removeBarButtonItem.enabled = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node] < MEGAShareTypeAccessFull ? NO : boolValue;
 }
 
 - (MEGANode *)nodeForIndexPath:(NSIndexPath *)indexPath {
@@ -521,6 +525,10 @@
 #pragma mark - Swipe Delegate
 
 - (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction {
+    MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node];
+    if (direction == MGSwipeDirectionRightToLeft && accessType < MEGAShareTypeAccessFull) {
+        return NO;
+    }
     return !self.isEditing;
 }
 

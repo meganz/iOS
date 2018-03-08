@@ -183,25 +183,32 @@
         case MEGAShareTypeAccessRead:
         case MEGAShareTypeAccessReadWrite: {
             [actions addObject:[self actionDownload]];
-            if (self.displayMode != DisplayModeNodeInfo) {
-                [actions addObject:[self actionFileInfo]];
-            }
-            [actions addObject:[self actionCopy]];
-            if (self.isIncomingShareChildView) {
-                [actions addObject:[self actionLeaveSharing]];
+            if (self.displayMode != DisplayModeNodeVersions) {
+                if (self.displayMode != DisplayModeNodeInfo) {
+                    [actions addObject:[self actionFileInfo]];
+                }
+                [actions addObject:[self actionCopy]];
+                if (self.isIncomingShareChildView) {
+                    [actions addObject:[self actionLeaveSharing]];
+                }
             }
             break;
         }
             
         case MEGAShareTypeAccessFull:
             [actions addObject:[self actionDownload]];
-            if (self.displayMode != DisplayModeNodeInfo) {
-                [actions addObject:[self actionFileInfo]];
-            }
-            [actions addObject:[self actionCopy]];
-            [actions addObject:[self actionRename]];
-            if (self.isIncomingShareChildView) {
-                [actions addObject:[self actionLeaveSharing]];
+            if (self.displayMode == DisplayModeNodeVersions) {
+                [actions addObject:[self actionRevertVersion]];
+                [actions addObject:[self actionRemove]];
+            } else {
+                if (self.displayMode != DisplayModeNodeInfo) {
+                    [actions addObject:[self actionFileInfo]];
+                }
+                [actions addObject:[self actionCopy]];
+                [actions addObject:[self actionRename]];
+                if (self.isIncomingShareChildView) {
+                    [actions addObject:[self actionLeaveSharing]];
+                }
             }
             break;
             
