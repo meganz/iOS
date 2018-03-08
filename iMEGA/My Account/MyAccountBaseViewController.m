@@ -34,7 +34,7 @@
         self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
     
-    [[MEGASdkManager sharedMEGASdk] contactLinkCreateWithDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:NO delegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
