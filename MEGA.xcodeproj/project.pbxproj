@@ -255,8 +255,6 @@
 		77D9A5712023814800B48470 /* MEGAStartDownloadTransferDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9A5702023814800B48470 /* MEGAStartDownloadTransferDelegate.m */; };
 		77F43DD92034637300AE4F42 /* UICollectionView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */; };
 		830EF9A420062F3800FAA947 /* DevicePermissionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */; };
-		8312F454203F186300C03DFF /* MEGARevertVersionRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8312F453203F186300C03DFF /* MEGARevertVersionRequestDelegate.m */; };
-		8312F457203F1DC000C03DFF /* MEGARemoveVersionRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8312F456203F1DC000C03DFF /* MEGARemoveVersionRequestDelegate.m */; };
 		832E1025202B09AE00BDD30F /* NodeActionCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E1023202B09AE00BDD30F /* NodeActionCollectionViewCell.m */; };
 		832E1026202B09AE00BDD30F /* NodeActionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832E1024202B09AE00BDD30F /* NodeActionCollectionViewCell.xib */; };
 		832E102A202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E1028202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.m */; };
@@ -1100,10 +1098,6 @@
 		77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+MNZCategory.m"; sourceTree = "<group>"; };
 		830EF9A220062F3800FAA947 /* DevicePermissionsHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DevicePermissionsHelper.h; sourceTree = "<group>"; };
 		830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DevicePermissionsHelper.m; sourceTree = "<group>"; };
-		8312F452203F186300C03DFF /* MEGARevertVersionRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGARevertVersionRequestDelegate.h; path = API/Requests/MEGARevertVersionRequestDelegate.h; sourceTree = "<group>"; };
-		8312F453203F186300C03DFF /* MEGARevertVersionRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGARevertVersionRequestDelegate.m; path = API/Requests/MEGARevertVersionRequestDelegate.m; sourceTree = "<group>"; };
-		8312F455203F1DC000C03DFF /* MEGARemoveVersionRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGARemoveVersionRequestDelegate.h; path = API/Requests/MEGARemoveVersionRequestDelegate.h; sourceTree = "<group>"; };
-		8312F456203F1DC000C03DFF /* MEGARemoveVersionRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGARemoveVersionRequestDelegate.m; path = API/Requests/MEGARemoveVersionRequestDelegate.m; sourceTree = "<group>"; };
 		832E1022202B09AE00BDD30F /* NodeActionCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeActionCollectionViewCell.h; sourceTree = "<group>"; };
 		832E1023202B09AE00BDD30F /* NodeActionCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeActionCollectionViewCell.m; sourceTree = "<group>"; };
 		832E1024202B09AE00BDD30F /* NodeActionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NodeActionCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -2809,10 +2803,6 @@
 				9437B93E1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m */,
 				77519C34203707F600FDF92B /* MEGARenameRequestDelegate.h */,
 				77519C35203707F600FDF92B /* MEGARenameRequestDelegate.m */,
-				8312F452203F186300C03DFF /* MEGARevertVersionRequestDelegate.h */,
-				8312F453203F186300C03DFF /* MEGARevertVersionRequestDelegate.m */,
-				8312F455203F1DC000C03DFF /* MEGARemoveVersionRequestDelegate.h */,
-				8312F456203F1DC000C03DFF /* MEGARemoveVersionRequestDelegate.m */,
 			);
 			name = Requests;
 			sourceTree = "<group>";
@@ -3527,7 +3517,6 @@
 				41D8ECDE1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.m in Sources */,
 				41D21E5C1D01AEC3002E6296 /* CTAssetCollectionViewCell.m in Sources */,
 				E8D5BF6C1BF3B28500955550 /* SharedItemsTableViewCell.m in Sources */,
-				8312F454203F186300C03DFF /* MEGARevertVersionRequestDelegate.m in Sources */,
 				E8F7917E1BC5754A00C58676 /* GetLinkActivity.m in Sources */,
 				41AA1A1C1AC081C600D32691 /* SecurityOptionsTableViewController.m in Sources */,
 				5B40AB321F7A512E0034C3B3 /* AchievementsDetailsViewController.m in Sources */,
@@ -3554,7 +3543,6 @@
 				A8F6C5F31FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m in Sources */,
 				413199771BD7BD5D002CD6EA /* DTConstants.m in Sources */,
 				832E1032202D8E6900BDD30F /* NodePropertyTableViewCell.m in Sources */,
-				8312F457203F1DC000C03DFF /* MEGARemoveVersionRequestDelegate.m in Sources */,
 				4172795A1DB663FA001AC818 /* JSQMessagesMediaPlaceholderView.m in Sources */,
 				415E690A1DABCDF90043B75F /* ChatRoomsViewController.m in Sources */,
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
