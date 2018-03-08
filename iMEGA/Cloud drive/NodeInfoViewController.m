@@ -500,8 +500,7 @@
                 if (nodeUpdated.handle == self.node.handle) {
                     [self currentVersionRemovedOnNodeList:nodeList];
                 } else {
-                    self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.node.handle];
-                    [self  reloadUI];
+                    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
                 }
                 break;
                 

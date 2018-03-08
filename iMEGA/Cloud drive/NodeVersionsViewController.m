@@ -622,8 +622,7 @@
                 if (nodeUpdated.handle == self.node.handle) {
                     [self currentVersionRemovedOnNodeList:nodeList];
                 } else {
-                    self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.node.handle];
-                    [self  reloadUI];
+                    [self removeNodeVersionWithHandle:nodeUpdated.base64Handle];
                 }
                 break;
                 
@@ -640,6 +639,18 @@
     }
 }
 
+- (void)removeNodeVersionWithHandle:(NSString *)handle {
+    NSIndexPath *nodeIndexPath = [self.nodesIndexPathMutableDictionary objectForKey:handle];
+
+    if (nodeIndexPath) {
+        [self.nodeVersions removeObject:[self nodeForIndexPath:nodeIndexPath]];
+        [self.tableView beginUpdates];
+        [self.tableView deleteRowsAtIndexPaths:@[nodeIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView endUpdates];
+        [self.nodesIndexPathMutableDictionary removeObjectForKey:handle];
+    }
+}
+
 - (void)currentVersionRemovedOnNodeList:(MEGANodeList *)nodeList {
     MEGANode *newCurrentNode;
     
@@ -649,6 +660,7 @@
         if (newCurrentNode.getChanges == MEGANodeChangeTypeParent) {
             self.node = newCurrentNode;
             [self reloadUI];
+            return;
         }
     }
 }
