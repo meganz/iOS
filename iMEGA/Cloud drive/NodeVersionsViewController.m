@@ -11,7 +11,6 @@
 #import "Helper.h"
 #import "NodeTableViewCell.h"
 #import "CustomActionViewController.h"
-#import "MEGAGetThumbnailRequestDelegate.h"
 
 @interface NodeVersionsViewController () <UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate, MEGADelegate> {
     BOOL allNodesSelected;
@@ -101,105 +100,17 @@
 
     [self.nodesIndexPathMutableDictionary setObject:indexPath forKey:node.base64Handle];
     
-    BOOL isDownloaded = NO;
-    
-    NodeTableViewCell *cell;
-    if ([[Helper downloadingNodes] objectForKey:node.base64Handle] != nil) {
-        cell = [self.tableView dequeueReusableCellWithIdentifier:@"downloadingNodeCell" forIndexPath:indexPath];
-        if (cell == nil) {
-            cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"downloadingNodeCell"];
-        }
-        
-        cell.downloadingArrowImageView.image = [UIImage imageNamed:@"downloadQueued"];
-        cell.infoLabel.text = AMLocalizedString(@"queued", @"Queued");
-    } else {
-        cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
-        if (cell == nil) {
-            cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"nodeCell"];
-        }
-        
-        if (node.type == MEGANodeTypeFile) {
-            MOOfflineNode *offlineNode = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
-            
-            if (offlineNode) {
-                isDownloaded = YES;
-            }
-        }
-        
-        cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdk]];
-    }
-    
-    if ([node isExported]) {
-        if (isDownloaded) {
-            cell.upImageView.image = [UIImage imageNamed:@"linked"];
-            cell.middleImageView.image = nil;
-            cell.downImageView.image = [Helper downloadedArrowImage];
-        } else {
-            cell.upImageView.image = nil;
-            cell.middleImageView.image = [UIImage imageNamed:@"linked"];
-            cell.downImageView.image = nil;
-        }
-    } else {
-        cell.upImageView.image = nil;
-        cell.downImageView.image = nil;
-        
-        if (isDownloaded) {
-            cell.middleImageView.image = [Helper downloadedArrowImage];
-        } else {
-            cell.middleImageView.image = nil;
-        }
-    }
-    
-    UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:UIColor.mnz_grayF7F7F7];
-    [cell setSelectedBackgroundView:view];
-    [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
-    
-    cell.nameLabel.text = [node name];
-    
-    [cell.thumbnailPlayImageView setHidden:YES];
-    
-    if (node.isFile) {
-        if (node.hasThumbnail) {
-            NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
-            
-            if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
-                cell.thumbnailImageView.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
-            } else {
-                MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request){
-                    cell.thumbnailImageView.image = [UIImage imageWithContentsOfFile:request.file];
-                }];
-                [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
-                cell.thumbnailImageView.image = [Helper imageForNode:node];
-            }
-        } else {
-            [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
-        }
-    } else if (node.isFolder) {
-        [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
-        
-        cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
-    }
-    
-    cell.nodeHandle = [node handle];
+    NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
+    [cell configureCellForNode:node delegate:self];
     
     if (self.tableView.isEditing) {
         // Check if selectedNodesArray contains the current node in the tableView
         for (MEGANode *n in self.selectedNodesArray) {
-            if ([n handle] == [node handle]) {
+            if (n.handle == node.handle) {
                 [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
         }
     }
-    
-    if (@available(iOS 11.0, *)) {
-        cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-        cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
-    } else {
-        cell.delegate = self;
-    }
-    
-    [cell setEditing:self.isEditing];
     
     return cell;
 }
