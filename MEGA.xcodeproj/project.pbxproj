@@ -271,6 +271,8 @@
 		83654A5A203C3E4100B5E426 /* NodeVersionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83654A59203C3E4100B5E426 /* NodeVersionsViewController.m */; };
 		83681578202AFBC000CA8EFC /* CustomActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83681576202AFBC000CA8EFC /* CustomActionViewController.m */; };
 		83681579202AFBC000CA8EFC /* CustomActionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83681577202AFBC000CA8EFC /* CustomActionViewController.xib */; };
+		83B841672051905E00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
+		83B841682051913C00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
 		9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226691A692ECC00EC7BB6 /* Cloud.storyboard */; };
 		941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
 		941135511F00FFC700D33428 /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226881A692ECC00EC7BB6 /* Helper.m */; };
@@ -3590,6 +3592,7 @@
 			files = (
 				834AD6072024697200D2527F /* MGSwipeButton.m in Sources */,
 				9432294D1EDD9CEB007DB542 /* NSMutableAttributedString+MNZCategory.m in Sources */,
+				83B841682051913C00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */,
 				5BFA34701FAC5857005BFC4E /* MEGAMoveRequestDelegate.m in Sources */,
 				9432294B1EDD9CE5007DB542 /* MEGAUser+MNZCategory.m in Sources */,
 				9456054B1EDD7AD70094EF0F /* LTHPasscodeViewController.m in Sources */,
@@ -3712,6 +3715,7 @@
 				9411355C1F01008400D33428 /* MEGAStore.m in Sources */,
 				949CEACF1F05121D00A3A580 /* LoginRequiredViewController.m in Sources */,
 				941135631F0106DC00D33428 /* UIScrollView+EmptyDataSet.m in Sources */,
+				83B841672051905E00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */,
 				834AD60A2024697700D2527F /* MGSwipeTableCell.m in Sources */,
 				941135531F01000300D33428 /* Reachability.m in Sources */,
 				A85740C82032F6E80033034C /* MOChatDraft+CoreDataClass.m in Sources */,
