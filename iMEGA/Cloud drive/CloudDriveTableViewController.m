@@ -1063,11 +1063,9 @@
     if (newFolderAlertController) {
         UITextField *textField = newFolderAlertController.textFields.firstObject;
         UIAlertAction *rightButtonAction = newFolderAlertController.actions.lastObject;
-        BOOL enableRightButton = NO;
-        if (textField.text.length > 0) {
-            enableRightButton = YES;
-        }
-        rightButtonAction.enabled = enableRightButton;
+        BOOL containsInvalidChars = [sender.text rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"|*/:<>?\"\\"]].length;
+        sender.textColor = containsInvalidChars ? UIColor.mnz_redD90007 : UIColor.darkTextColor;
+        rightButtonAction.enabled = (textField.text.length > 0 && !containsInvalidChars);
     }
 }
 
