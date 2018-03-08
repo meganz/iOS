@@ -51,8 +51,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section==1 && indexPath.row == 0) {
-        // TODO: Delete the handle parameter as it is going to be useless
-        [[MEGASdkManager sharedMEGASdk] contactLinkDeleteWithHandle:0 delegate:self];
+        [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:YES delegate:self];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -75,7 +74,7 @@
     }
     
     switch (request.type) {
-        case MEGARequestTypeContactLinkDelete:
+        case MEGARequestTypeContactLinkCreate:
             [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"resetQrCodeFooter", @"Footer that explains what would happen if the user resets his/her QR code")];
             break;
             

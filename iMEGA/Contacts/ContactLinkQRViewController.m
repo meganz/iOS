@@ -68,7 +68,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] contactLinkCreateWithDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:NO delegate:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -189,7 +189,7 @@
     
     UIAlertAction *resetAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"resetQrCode", @"Action to reset the current valid QR code of the user") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         self.qrImageView.image = nil;
-        [[MEGASdkManager sharedMEGASdk] contactLinkDeleteWithHandle:self.contactLinkHandle delegate:self];
+        [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:YES delegate:self];
     }];
     [resetAlertAction mnz_setTitleTextColor:[UIColor redColor]];
     [moreAlertController addAction:resetAlertAction];
@@ -368,12 +368,6 @@
                 NSString *fullName = [NSString stringWithFormat:@"%@ %@", request.name, request.text];
                 [self presentInviteModalForEmail:request.email fullName:fullName contactLinkHandle:request.nodeHandle];
                 
-                break;
-            }
-                
-            case MEGARequestTypeContactLinkDelete: {
-                [[MEGASdkManager sharedMEGASdk] contactLinkCreateWithDelegate:self];
-
                 break;
             }
                 
