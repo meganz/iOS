@@ -8,9 +8,11 @@
 #import "MEGARemoveContactRequestDelegate.h"
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
 
+#import "CloudDriveTableViewController.h"
 #import "ChatRoomsViewController.h"
 #import "ContactTableViewCell.h"
 #import "DetailsNodeInfoViewController.h"
+#import "DisplayMode.h"
 #import "MessagesViewController.h"
 #import "SharedItemsTableViewCell.h"
 #import "VerifyCredentialsViewController.h"

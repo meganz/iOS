@@ -95,18 +95,16 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     MEGANode *node = [self nodeForIndexPath:indexPath];
 
     [self.nodesIndexPathMutableDictionary setObject:indexPath forKey:node.base64Handle];
     
     NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
-    [cell configureCellForNode:node delegate:self];
+    [cell configureCellForNode:node delegate:self api:[MEGASdkManager sharedMEGASdk]];
     
     if (self.tableView.isEditing) {
-        // Check if selectedNodesArray contains the current node in the tableView
-        for (MEGANode *n in self.selectedNodesArray) {
-            if (n.handle == node.handle) {
+        for (MEGANode *tempNode in self.selectedNodesArray) {
+            if (tempNode.handle == node.handle) {
                 [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
         }
@@ -125,7 +123,6 @@
 #pragma mark - TableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     MEGANode *node = [self nodeForIndexPath:indexPath];
 
     if (tableView.isEditing) {
@@ -154,18 +151,16 @@
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row > self.node.mnz_numberOfVersions-1) {
+    if (indexPath.row > (self.node.mnz_numberOfVersions - 1)) {
         return;
     }
 
     if (tableView.isEditing) {
-        
         MEGANode *node = [self nodeForIndexPath:indexPath];
-        //tempArray avoid crash: "was mutated while being enumerated."
         NSMutableArray *tempArray = [self.selectedNodesArray copy];
-        for (MEGANode *n in tempArray) {
-            if (n.handle == node.handle) {
-                [self.selectedNodesArray removeObject:n];
+        for (MEGANode *tempNode in tempArray) {
+            if (tempNode.handle == node.handle) {
+                [self.selectedNodesArray removeObject:tempNode];
             }
         }
         
@@ -177,10 +172,6 @@
         
         return;
     }
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -224,16 +215,15 @@
 }
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node] < MEGAShareTypeAccessFull) {
-        return [UISwipeActionsConfiguration configurationWithActions:nil];
+        return [UISwipeActionsConfiguration configurationWithActions:@[]];
     }
     isSwipeEditing = YES;
     self.selectedNodesArray = [NSMutableArray arrayWithObject:[self nodeForIndexPath:indexPath]];
     
     NSMutableArray *rightActions = [NSMutableArray new];
     
-    UIContextualAction *removeAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Share" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+    UIContextualAction *removeAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         [self removeAction:nil];
     }];
     removeAction.image = [UIImage imageNamed:@"delete"];
@@ -241,7 +231,7 @@
     [rightActions addObject:removeAction];
     
     if (indexPath.section != 0) {
-        UIContextualAction *revertAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Share" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        UIContextualAction *revertAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [self revertAction:nil];
         }];
         revertAction.image = [UIImage imageNamed:@"history"];
@@ -315,7 +305,7 @@
     if (indexPath.section == 0) {
         return [self.node.mnz_versions objectAtIndex:0];
     } else {
-        return [self.node.mnz_versions objectAtIndex:indexPath.row+1];
+        return [self.node.mnz_versions objectAtIndex:indexPath.row + 1];
     }
 }
 
@@ -448,14 +438,14 @@
     return !self.isEditing;
 }
 
--(void) swipeTableCellWillBeginSwiping:(nonnull MGSwipeTableCell *) cell {
+- (void)swipeTableCellWillBeginSwiping:(nonnull MGSwipeTableCell *)cell {
     NodeTableViewCell *nodeCell = (NodeTableViewCell *)cell;
-    [nodeCell hideCancelButton:YES];
+    nodeCell.moreButton.hidden = YES;
 }
 
--(void) swipeTableCellWillEndSwiping:(nonnull MGSwipeTableCell *) cell {
+- (void)swipeTableCellWillEndSwiping:(nonnull MGSwipeTableCell *)cell {
     NodeTableViewCell *nodeCell = (NodeTableViewCell *)cell;
-    [nodeCell hideCancelButton:NO];
+    nodeCell.moreButton.hidden = NO;
 }
 
 - (NSArray *)swipeTableCell:(MGSwipeTableCell *)cell swipeButtonsForDirection:(MGSwipeDirection)direction

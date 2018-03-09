@@ -40,6 +40,7 @@
 #import "ContactRequestsViewController.h"
 #import "ContactsViewController.h"
 #import "CreateAccountViewController.h"
+#import "DisplayMode.h"
 #import "FileLinkViewController.h"
 #import "FolderLinkViewController.h"
 #import "LaunchViewController.h"

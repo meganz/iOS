@@ -7,6 +7,7 @@
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARemoveRequestDelegate.h"
+#import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "UIImageView+MNZCategory.h"
 

@@ -1,6 +1,6 @@
+
 #import <UIKit/UIKit.h>
-#import "MEGASdkManager.h"
-#import "CloudDriveTableViewController.h"
+#import "DisplayMode.h"
 
 @interface DetailsNodeInfoViewController : UIViewController 
 
