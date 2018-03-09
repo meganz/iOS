@@ -222,7 +222,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="By5-Ht-cmV" userLabel="Arrow Image View">
-                                                    <rect key="frame" x="60" y="33" width="11" height="11"/>
+                                                    <rect key="frame" x="60" y="34.333333333333336" width="11" height="11"/>
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="11" id="X1n-RO-gk8"/>
@@ -2233,8 +2233,9 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                                                         <constraint firstAttribute="trailing" secondItem="Yai-9g-yeA" secondAttribute="trailing" id="xwr-eg-UjQ"/>
                                                     </constraints>
                                                 </view>
-                                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ch9-C6-hOH">
-                                                    <rect key="frame" x="0.0" y="57" width="414" height="2"/>
+                                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="ch9-C6-hOH">
+                                                    <rect key="frame" x="0.0" y="57.333333333333336" width="414" height="2.6666666666666643"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </progressView>
                                             </subviews>
@@ -2315,12 +2316,12 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                         <outlet property="tableView" destination="WwE-ru-viU" id="zpN-3g-l3Z"/>
                     </connections>
                 </viewController>
-                <barButtonItem image="check_mark" width="22" id="AXx-LQ-d20" userLabel="Check Mark Bar Button Item">
+                <barButtonItem image="selectAll" width="22" id="AXx-LQ-d20" userLabel="Check Mark Bar Button Item">
                     <connections>
                         <action selector="selectAllAction:" destination="ShX-bU-gfj" id="4jK-3I-gWv"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="edit" width="22" id="bEs-uo-dv8" userLabel="Edit Bar Button Item">
+                <barButtonItem title="Edit" width="22" id="bEs-uo-dv8" userLabel="Edit Bar Button Item">
                     <connections>
                         <action selector="editTapped:" destination="ShX-bU-gfj" id="CTS-Zd-wK2"/>
                     </connections>
@@ -2395,12 +2396,11 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <image name="delete" width="28" height="28"/>
         <image name="download" width="32" height="32"/>
         <image name="downloadQueued" width="11" height="11"/>
-        <image name="edit" width="22" height="22"/>
         <image name="history" width="28" height="28"/>
         <image name="icon-key-only" width="24" height="24"/>
         <image name="icon-link-only" width="24" height="24"/>
         <image name="icon-link-w-key" width="24" height="24"/>
-        <image name="linked" width="12" height="12"/>
+        <image name="linked" width="24" height="24"/>
         <image name="more" width="26" height="6"/>
         <image name="moreSelected" width="26" height="6"/>
         <image name="move" width="32" height="32"/>
