@@ -219,11 +219,11 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zo2-s1-xCp" userLabel="outgoingCallView">
-                                <rect key="frame" x="61" y="613" width="294" height="100"/>
+                                <rect key="frame" x="61" y="526" width="294" height="187"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4O9-0Y-ZM5">
-                                        <rect key="frame" x="111" y="14" width="72" height="72"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4O9-0Y-ZM5" userLabel="Hang call">
+                                        <rect key="frame" x="111" y="101" width="72" height="72"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <state key="normal" image="rejectCall"/>
                                         <connections>
@@ -231,8 +231,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqO-Tf-O54">
-                                        <rect key="frame" x="8" y="14" width="72" height="72"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <rect key="frame" x="8" y="8" width="72" height="72"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="cameraOff"/>
                                         <state key="selected" image="cameraOn"/>
                                         <connections>
@@ -240,12 +240,21 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="22a-wx-Shy">
-                                        <rect key="frame" x="214" y="14" width="72" height="72"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                        <rect key="frame" x="214" y="8" width="72" height="72"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="micOn"/>
                                         <state key="selected" image="micOff"/>
                                         <connections>
                                             <action selector="muteOrUnmuteCall:" destination="m0F-zS-y46" eventType="touchUpInside" id="4Ej-Sg-BzR"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ku-CZ-ZU4" userLabel="Speaker">
+                                        <rect key="frame" x="111" y="8" width="72" height="72"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="speakerOff"/>
+                                        <state key="selected" image="speakerOn"/>
+                                        <connections>
+                                            <action selector="enableDisableSpeaker:" destination="m0F-zS-y46" eventType="touchUpInside" id="dRS-jM-Dx7"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -359,6 +368,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="enableDisableSpeaker" destination="0Ku-CZ-ZU4" id="et9-uC-3fN"/>
                         <outlet property="enableDisableVideoButton" destination="hqO-Tf-O54" id="xK7-Wv-1ie"/>
                         <outlet property="incomingCallView" destination="eGD-Fd-hut" id="qw7-ME-H9Q"/>
                         <outlet property="localVideoImageView" destination="XBi-5G-ZJL" id="NKM-kX-4GF"/>
@@ -1129,6 +1139,8 @@
         <image name="readWritePermissions" width="46" height="44"/>
         <image name="rejectCall" width="64" height="64"/>
         <image name="remote_mic_mute" width="22" height="22"/>
+        <image name="speakerOff" width="64" height="64"/>
+        <image name="speakerOn" width="64" height="64"/>
         <image name="video_list" width="22" height="22"/>
     </resources>
 </document>

@@ -4,7 +4,7 @@
 
 static const CGFloat FIXED_MARGIN = 20;
 static const CGFloat TOP_HEIGHT = 85;
-static const CGFloat BOTTOM_HEIGHT = 123;
+static const CGFloat BOTTOM_HEIGHT = 210;
 
 @interface MEGALocalImageView ()
 

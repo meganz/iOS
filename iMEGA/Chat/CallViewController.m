@@ -23,6 +23,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *enableDisableVideoButton;
 @property (weak, nonatomic) IBOutlet UIButton *muteUnmuteMicrophone;
+@property (weak, nonatomic) IBOutlet UIButton *enableDisableSpeaker;
 
 @property (weak, nonatomic) IBOutlet UIView *outgoingCallView;
 @property (weak, nonatomic) IBOutlet UIView *incomingCallView;
@@ -48,6 +49,12 @@
     // Do any additional setup after loading the view.
     
     self.enableDisableVideoButton.selected = self.videoCall;
+    self.enableDisableSpeaker.selected = self.videoCall;
+    if (self.videoCall) {
+        [self enableLoudspeaker];
+    } else {
+        [self disableLoudspeaker];
+    }
     self.loudSpeakerEnabled = self.videoCall;
     _statusBarShouldBeHidden = NO;
     
@@ -93,10 +100,9 @@
         [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:startCallRequestDelegate];
     }
     
+    [[UIDevice currentDevice] setProximityMonitoringEnabled:!self.videoCall];
     
-    [[UIDevice currentDevice] setProximityMonitoringEnabled:YES];    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSessionRouteChange:) name:AVAudioSessionRouteChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sensorStateMonitor:) name:UIDeviceProximityStateDidChangeNotification object:nil];
     
     self.nameLabel.text = [self.chatRoom peerFullnameAtIndex:0];
     
@@ -171,16 +177,7 @@
 
 #pragma mark - Private
 
-- (void)sensorStateMonitor:(NSNotificationCenter *)notification {
-    if ([[UIDevice currentDevice] proximityState] == YES) {
-        [self disableLoudspeaker];
-    } else {
-        [self enableLoudspeaker];
-    }
-}
-
-- (void)didSessionRouteChange:(NSNotification *)notification
-{
+- (void)didSessionRouteChange:(NSNotification *)notification {
     NSDictionary *interuptionDict = notification.userInfo;
     const NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
     
@@ -329,6 +326,16 @@
         }
     }];
 }
+
+- (IBAction)enableDisableSpeaker:(UIButton *)sender {
+    if (sender.selected) {
+        [self disableLoudspeaker];
+    } else {
+        [self enableLoudspeaker];
+    }
+    sender.selected = !sender.selected;
+}
+
 
 #pragma mark - MEGAChatCallDelegate
 
