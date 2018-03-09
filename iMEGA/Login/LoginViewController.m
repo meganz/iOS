@@ -214,7 +214,7 @@
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
-    [self.loginButton setBackgroundColor:[UIColor mnz_grayCCCCCC]];
+    self.loginButton.backgroundColor = [UIColor mnz_grayEEEEEE];
     
     return YES;
 }

@@ -2,12 +2,27 @@
 
 @implementation SharedItemsTableViewCell
 
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-    [super setEditing:editing animated:animated];
-    if (editing) {
-        self.separatorInset = UIEdgeInsetsMake(0, 104, 0, 0);
-    } else {
-        self.separatorInset = UIEdgeInsetsMake(0, 64, 0, 0);
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+    
+    if (selected) {
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = [UIColor whiteColor];
+        self.selectedBackgroundView = view;
+        
+        self.lineView.backgroundColor = [UIColor mnz_grayCCCCCC];
+    }
+}
+
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+    [super setHighlighted:highlighted animated:animated];
+    
+    if (highlighted) {
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = [UIColor mnz_grayF7F7F7];
+        self.selectedBackgroundView = view;
+        
+        self.lineView.backgroundColor = [UIColor mnz_grayCCCCCC];
     }
 }
 

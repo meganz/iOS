@@ -252,6 +252,14 @@
 - (IBAction)termsCheckboxTouchUpInside:(id)sender {
     self.termsCheckboxButton.selected = !self.termsCheckboxButton.selected;
     
+    BOOL shoulBeCreateAccountButtonGray = NO;
+    if ((![self.emailTextField.text mnz_isValidEmail]) || ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordTextField.text] == PasswordStrengthVeryWeak) || !self.termsCheckboxButton.selected) {
+        shoulBeCreateAccountButtonGray = YES;
+    } else {
+        shoulBeCreateAccountButtonGray = [self isEmptyAnyTextFieldForTag:self.retypePasswordTextField.tag];
+    }
+    self.createAccountButton.backgroundColor = shoulBeCreateAccountButtonGray ? [UIColor mnz_grayEEEEEE] : [UIColor mnz_redFF4D52];
+    
     [self hideKeyboard];
 }
 
@@ -327,7 +335,7 @@
         self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
     }
     
-    self.createAccountButton.backgroundColor = [UIColor mnz_grayCCCCCC];
+    self.createAccountButton.backgroundColor = [UIColor mnz_grayEEEEEE];
     
     return YES;
 }

@@ -3,12 +3,13 @@
 #import "SVProgressHUD.h"
 
 #import "NSString+MNZCategory.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 
 #import "ChangePasswordViewController.h"
 #import "ParkAccountViewController.h"
 
-@interface ForgotPasswordViewController () <UIAlertViewDelegate, MEGARequestDelegate>
+@interface ForgotPasswordViewController () <MEGARequestDelegate>
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 
@@ -50,6 +51,17 @@
     return UIInterfaceOrientationMaskAll;
 }
 
+#pragma mark - Private
+
+- (void)emailAlertTextFieldDidChange:(UITextField *)sender {
+    UIAlertController *emailAlertController = (UIAlertController *)self.presentedViewController;
+    if (emailAlertController) {
+        UITextField *textField = emailAlertController.textFields.firstObject;
+        UIAlertAction *rightButtonAction = emailAlertController.actions.lastObject;
+        rightButtonAction.enabled = !textField.text.mnz_isEmpty;
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
@@ -57,56 +69,35 @@
 }
 
 - (IBAction)yesButtonTouchUpInside:(UIButton *)sender {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"great", @"Headline when the user chose YES")
-                                                        message:AMLocalizedString(@"recoveryLinkToResetYourPassword", @"Text of the alert message to ask for the link to reset the pass with the MK")
-                                                       delegate:self
-                                              cancelButtonTitle:AMLocalizedString(@"cancel", @"")
-                                              otherButtonTitles:AMLocalizedString(@"send", @""), nil];
+    UIAlertController *emailAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"great", @"Headline when the user chose YES") message:AMLocalizedString(@"recoveryLinkToResetYourPassword", @"Text of the alert message to ask for the link to reset the pass with the MK") preferredStyle:UIAlertControllerStyleAlert];
     
-    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-    UITextField *textField = [alertView textFieldAtIndex:0];
-    textField.placeholder = AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email");
-    [alertView show];
+    [emailAlertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email");
+        [textField addTarget:self action:@selector(emailAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    }];
+    
+    [emailAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
+    UIAlertAction *sendAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+            UITextField *textField = emailAlertController.textFields.firstObject;
+            NSString *email = textField.text;
+            if (email.mnz_isValidEmail) {
+                [[MEGASdkManager sharedMEGASdk] resetPasswordWithEmail:email hasMasterKey:YES delegate:self];
+            } else {
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Message shown when the user writes an invalid format in the email field")];
+            }
+        }
+    }];
+    sendAlertAction.enabled = NO;
+    [emailAlertController addAction:sendAlertAction];
+    
+    [self presentViewController:emailAlertController animated:YES completion:nil];
 }
 
 - (IBAction)noButtonTouchUpInside:(UIButton *)sender {
     ParkAccountViewController *parkAccountVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ParkAccountViewControllerID"];
     [self.navigationController pushViewController:parkAccountVC animated:YES];
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
-    BOOL shouldEnable = YES;
-    if (alertView.tag == 0) {
-        UITextField *textField = [alertView textFieldAtIndex:0];
-        NSString *text = [textField text];
-        if (text.length == 0) {
-            shouldEnable = NO;
-        }
-    }
-    
-    return shouldEnable;
-}
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    switch ([alertView tag]) {
-        case 0: {
-            if (buttonIndex == 1) {
-                UITextField *textField = [alertView textFieldAtIndex:0];
-                NSString *email = [textField text];
-                if ([email mnz_isValidEmail]) {
-                    [[MEGASdkManager sharedMEGASdk] resetPasswordWithEmail:email hasMasterKey:YES delegate:self];
-                } else {
-                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Message shown when the user writes an invalid format in the email field")];
-                }
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
 }
 
 #pragma mark - MEGARequestDelegate
