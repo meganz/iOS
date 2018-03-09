@@ -500,7 +500,9 @@
                 if (nodeUpdated.handle == self.node.handle) {
                     [self currentVersionRemovedOnNodeList:nodeList];
                 } else {
-                    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+                    if (self.node.mnz_numberOfVersions != 0) {
+                        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+                    }
                 }
                 break;
                 

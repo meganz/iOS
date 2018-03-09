@@ -27,7 +27,6 @@
 
 @property (nonatomic, strong) NSMutableArray<MEGANode *> *selectedNodesArray;
 @property (nonatomic, strong) NSMutableDictionary *nodesIndexPathMutableDictionary;
-@property (nonatomic, strong) NSMutableArray<MEGANode *> *nodeVersions;
 
 @end
 
@@ -65,19 +64,19 @@
     [super viewWillDisappear:animated];
     
     if (!self.presentedViewController) {
-        [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
+        [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
     }
 }
 
 #pragma mark - Layout
 
 - (void)reloadUI {
-    [self.nodesIndexPathMutableDictionary removeAllObjects];
-    self.nodeVersions = [NSMutableArray arrayWithArray:self.node.mnz_versions];
-    if (self.nodeVersions.count == 0) {
+    if (self.node.mnz_numberOfVersions == 0) {
         [self.navigationController popViewControllerAnimated:YES];
+    }  else {
+        [self.nodesIndexPathMutableDictionary removeAllObjects];
+        [self.tableView reloadData];
     }
-    [self.tableView reloadData];
 }
 
 #pragma mark - TableViewDataSource
@@ -90,7 +89,7 @@
     if (section == 0) {
         return 1;
     } else {
-        return self.nodeVersions.count-1;
+        return self.node.mnz_numberOfVersions-1;
     }
 }
 
@@ -132,7 +131,7 @@
         
         [self setToolbarActionsEnabled:YES];
         
-        if (self.selectedNodesArray.count == self.nodeVersions.count) {
+        if (self.selectedNodesArray.count == self.node.mnz_numberOfVersions) {
             allNodesSelected = YES;
         } else {
             allNodesSelected = NO;
@@ -142,14 +141,14 @@
     }
     
     if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-        [node mnz_openImageInNavigationController:self.navigationController withNodes:self.nodeVersions folderLink:NO displayMode:DisplayModeNodeVersions];
+        [node mnz_openImageInNavigationController:self.navigationController withNodes:self.node.mnz_versions folderLink:NO displayMode:DisplayModeNodeVersions];
     } else {
         [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
     }
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row > self.nodeVersions.count) {
+    if (indexPath.row > self.node.mnz_numberOfVersions-1) {
         return;
     }
 
@@ -308,9 +307,9 @@
 
 - (MEGANode *)nodeForIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return [self.nodeVersions objectAtIndex:0];
+        return [self.node.mnz_versions objectAtIndex:0];
     } else {
-        return [self.nodeVersions objectAtIndex:indexPath.row+1];
+        return [self.node.mnz_versions objectAtIndex:indexPath.row+1];
     }
 }
 
@@ -391,8 +390,8 @@
     if (!allNodesSelected) {
         MEGANode *n = nil;
         
-        for (NSInteger i = 0; i < self.nodeVersions.count; i++) {
-            n = [self.nodeVersions objectAtIndex:i];
+        for (NSInteger i = 0; i < self.node.mnz_numberOfVersions; i++) {
+            n = [self.node.mnz_versions objectAtIndex:i];
             [self.selectedNodesArray addObject:n];
         }
         
@@ -541,7 +540,8 @@
                 if (nodeUpdated.handle == self.node.handle) {
                     [self currentVersionRemovedOnNodeList:nodeList];
                 } else {
-                    [self removeNodeVersionWithHandle:nodeUpdated.base64Handle];
+                    self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.node.handle];
+                    [self reloadUI];
                 }
                 break;
                 
@@ -558,18 +558,6 @@
     }
 }
 
-- (void)removeNodeVersionWithHandle:(NSString *)handle {
-    NSIndexPath *nodeIndexPath = [self.nodesIndexPathMutableDictionary objectForKey:handle];
-
-    if (nodeIndexPath) {
-        [self.nodeVersions removeObject:[self nodeForIndexPath:nodeIndexPath]];
-        [self.tableView beginUpdates];
-        [self.tableView deleteRowsAtIndexPaths:@[nodeIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-        [self.tableView endUpdates];
-        [self.nodesIndexPathMutableDictionary removeObjectForKey:handle];
-    }
-}
-
 - (void)currentVersionRemovedOnNodeList:(MEGANodeList *)nodeList {
     MEGANode *newCurrentNode;
     
@@ -582,6 +570,8 @@
             return;
         }
     }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - MEGATransferDelegate
