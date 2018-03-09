@@ -34,6 +34,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *hintLabel;
 @property (weak, nonatomic) IBOutlet UILabel *errorLabel;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *contactLinkConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *linkCopyConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *hintConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *errorConstraint;
+
 @property (nonatomic) AVCaptureSession *captureSession;
 @property (nonatomic) AVCaptureVideoPreviewLayer *videoPreviewLayer;
 
@@ -53,6 +58,13 @@
     [self.linkCopyButton setTitle:AMLocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard") forState:UIControlStateNormal];
     
     self.hintLabel.text = AMLocalizedString(@"lineCodeWithCamera", @"Label that encourage the user to line the QR to scan with the camera");
+    
+    if ([UIDevice currentDevice].iPhone4X) {
+        self.contactLinkConstraint.constant = 70.0f;
+        self.linkCopyConstraint.constant = 10.0f;
+        self.hintConstraint.constant = 70.0f;
+        self.errorConstraint.constant = 70.0f;
+    }
 
     if (self.scanCode) {
         self.segmentedControl.selectedSegmentIndex = 1;
