@@ -219,7 +219,7 @@
     if (scrollView.tag != 1) {
         MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
         if (node.name.mnz_isImagePathExtension) {
-            NSString *temporaryImagePath = [self temporatyPathForNode:node];
+            NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:NO];
             if (![[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                 [self setupNode:node forImageView:(UIImageView *)view withMode:MEGAPhotoModeOriginal];
             }
@@ -253,7 +253,7 @@
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
-            NSString *temporaryImagePath = [self temporatyPathForNode:node];
+            NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:NO];
             if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                 imageView.image = [UIImage imageWithContentsOfFile:temporaryImagePath];
             } else {
@@ -362,7 +362,7 @@
             
         case MEGAPhotoModeOriginal: {
             MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithProgress:transferProgress completion:transferCompletion];
-            NSString *temporaryImagePath = [self temporatyPathForNode:node];
+            NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:YES];
             [self.api startDownloadNode:node localPath:temporaryImagePath appData:@"generate_fa" delegate:delegate];
 
             break;
@@ -385,12 +385,12 @@
     }
 }
 
-- (NSString *)temporatyPathForNode:(MEGANode *)node {
+- (NSString *)temporatyPathForNode:(MEGANode *)node createDirectories:(BOOL)createDirectories {
     NSString *nodeFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[node base64Handle]];
     NSString *nodeFilePath = [nodeFolderPath stringByAppendingPathComponent:node.name];
-    
+
     NSError *error;
-    if (![[NSFileManager defaultManager] fileExistsAtPath:nodeFolderPath isDirectory:nil]) {
+    if (createDirectories && ![[NSFileManager defaultManager] fileExistsAtPath:nodeFolderPath isDirectory:nil]) {
         if (![[NSFileManager defaultManager] createDirectoryAtPath:nodeFolderPath withIntermediateDirectories:YES attributes:nil error:&error]) {
             MEGALogError(@"Create directory at path failed with error: %@", error);
         }

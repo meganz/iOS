@@ -66,6 +66,7 @@
     self.selectedNodesMutableArray = [[NSMutableArray alloc] init];
     
     self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
+    self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     
     self.downloadBarButtonItem.title = AMLocalizedString(@"saveForOffline", @"List option shown on the details of a file or folder");
@@ -137,10 +138,10 @@
     [self.tableView setEditing:editing animated:animated];
     
     if (editing) {
-        self.editBarButtonItem.image = [UIImage imageNamed:@"done"];
+        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
         [self setToolbarItemsEnabled:NO];
     } else {
-        self.editBarButtonItem.image = [UIImage imageNamed:@"edit"];
+        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
         [self setToolbarItemsEnabled:YES];
         
         [self.selectedNodesMutableArray removeAllObjects];
@@ -247,13 +248,10 @@
         numberOfRows = self.message.nodeList.size.unsignedIntegerValue;
     }
     
-    self.tableView.separatorStyle = (numberOfRows == 0) ? UITableViewCellSeparatorStyleNone : UITableViewCellSeparatorStyleSingleLine;
-    
     return numberOfRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     MEGANode *currentNode = [self.message.nodeList nodeAtIndex:indexPath.row];
     
     NodeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NodeTableViewCellID" forIndexPath:indexPath];
@@ -288,12 +286,6 @@
     } else {
         cell.thumbnailImageView.image = [Helper imageForNode:currentNode];
     }
-    
-    UIView *view = [[UIView alloc] init];
-    view.backgroundColor = [UIColor mnz_grayF7F7F7];
-    cell.selectedBackgroundView = view;
-    
-    cell.separatorInset = self.tableView.isEditing ? UIEdgeInsetsMake(0.0, 96.0, 0.0, 0.0) : UIEdgeInsetsMake(0.0, 58.0, 0.0, 0.0);
     
     return cell;
 }

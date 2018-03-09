@@ -51,6 +51,8 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *carbonCopyBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 
 @property (nonatomic) MEGACameraUploadsState currentState;
@@ -71,16 +73,8 @@
     
     self.selectedItemsDictionary = [[NSMutableDictionary alloc] init];
     
-    UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
-        [negativeSpaceBarButtonItem setWidth:-8.0];
-    } else {
-        [negativeSpaceBarButtonItem setWidth:-4.0];
-    }
-    [self.navigationItem setRightBarButtonItems:@[negativeSpaceBarButtonItem, self.editButtonItem]];
-    [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
+    self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
     
-    // Long press to select:
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
     
     [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];
@@ -117,6 +111,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
     self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
     [self reloadUI];
 }
@@ -375,13 +370,17 @@
     [self.photosCollectionView reloadData];
 }
 
+- (IBAction)editTapped:(UIBarButtonItem *)sender {
+    BOOL enableEditing = !self.photosCollectionView.allowsMultipleSelection;
+    [self setEditing:enableEditing animated:YES];
+}
+
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
-    [self.editButtonItem setTitle:@""];
-    
     if (editing) {
-        [self.editButtonItem setImage:[UIImage imageNamed:@"done"]];
+        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+        
         [self.navigationItem setTitle:AMLocalizedString(@"selectTitle", @"Select items")];
         [self.photosCollectionView setAllowsMultipleSelection:YES];
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
@@ -392,9 +391,10 @@
             [self.toolbar setAlpha:1.0];
         }];
     } else {
-        [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
+        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+        
         allNodesSelected = NO;
-        [self.navigationItem setTitle:@"Camera Uploads"];
+        self.navigationItem.title = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
         [self.photosCollectionView setAllowsMultipleSelection:NO];
         [self.selectedItemsDictionary removeAllObjects];
         [self.photosCollectionView reloadData];
@@ -519,7 +519,6 @@
     cell.nodeHandle = [node handle];
     
     cell.thumbnailSelectionOverlayView.layer.borderColor = [[UIColor mnz_redFF333A] CGColor];
-    cell.thumbnailSelectionOverlayView.layer.borderWidth = 2.0;
     cell.thumbnailSelectionOverlayView.hidden = [self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]] == nil;
 
     if (node.name.mnz_videoPathExtension && node.duration > -1) {

@@ -13,4 +13,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *infoButton;
 
+@property (weak, nonatomic) IBOutlet UIView *lineView;
+
 @end

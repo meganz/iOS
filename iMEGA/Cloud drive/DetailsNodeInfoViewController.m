@@ -651,9 +651,6 @@
         }
     }
     
-    UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
-    [cell setSelectedBackgroundView:view];
     
     if (@available(iOS 11.0, *)) {
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;

@@ -557,11 +557,13 @@
         NSString *nodeNameString = self.name;
         
         if (self.isFile || self.isFolder) {
-            if ([newName isEqualToString:@""] || [newName isEqualToString:nodeNameString] || newName.mnz_isEmpty) {
+            BOOL containsInvalidChars = [sender.text rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"|*/:<>?\"\\"]].length;
+            if ([newName isEqualToString:@""] || [newName isEqualToString:nodeNameString] || newName.mnz_isEmpty || containsInvalidChars) {
                 enableRightButton = NO;
             } else {
                 enableRightButton = YES;
             }
+            sender.textColor = containsInvalidChars ? UIColor.mnz_redD90007 : UIColor.darkTextColor;
         }
         
         rightButtonAction.enabled = enableRightButton;

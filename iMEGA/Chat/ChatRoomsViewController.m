@@ -153,8 +153,6 @@
             text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
         }
     } else {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-        
         if (![[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
             if ([MEGAReachabilityManager isReachable]) {
                 text = AMLocalizedString(@"chatIsDisabled", @"Title show when you enter on the chat tab and the chat is disabled");
@@ -582,12 +580,6 @@
         numberOfRows = self.chatListItemArray.count;
     }
     
-    if (numberOfRows == 0) {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    } else {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-    }
-    
     return numberOfRows;
 }
 
@@ -613,8 +605,6 @@
     }
     
     [self updateCell:cell forUnreadCountChange:chatListItem.unreadCount];
-    
-    cell.separatorInset = UIEdgeInsetsMake(0.0, 57.0, 0.0, 0.0);
     
     if (@available(iOS 11.0, *)) {
         cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
