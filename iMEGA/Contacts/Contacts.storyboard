@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14087.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="CSm-b8-KOc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="CSm-b8-KOc">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14075.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -1159,10 +1159,14 @@
                         <outlet property="cameraMaskBorderView" destination="Klt-b6-DBf" id="gXO-Og-NI1"/>
                         <outlet property="cameraMaskView" destination="kQ2-dK-rKs" id="dxi-nG-VXL"/>
                         <outlet property="cameraView" destination="2Wz-hl-Go6" id="W42-69-8CO"/>
+                        <outlet property="contactLinkConstraint" destination="zyt-lI-5oJ" id="4n5-30-yZP"/>
                         <outlet property="contactLinkLabel" destination="0up-4b-k8w" id="aOt-g3-HgT"/>
+                        <outlet property="errorConstraint" destination="ESt-ex-Lg3" id="T1k-bI-jVP"/>
                         <outlet property="errorLabel" destination="eNJ-w3-5Ia" id="n7P-Yb-6iG"/>
+                        <outlet property="hintConstraint" destination="zjN-SY-vhs" id="c48-Cl-yG3"/>
                         <outlet property="hintLabel" destination="TpU-vV-XNa" id="LXJ-Rf-Y3a"/>
                         <outlet property="linkCopyButton" destination="A7t-aZ-ziV" id="qwl-cl-vn9"/>
+                        <outlet property="linkCopyConstraint" destination="nXt-np-awe" id="g8E-Hs-oOP"/>
                         <outlet property="moreButton" destination="3eo-nP-4lO" id="G6s-gF-IkV"/>
                         <outlet property="qrImageView" destination="vid-Qw-MNw" id="SvK-bV-L0F"/>
                         <outlet property="segmentedControl" destination="D3t-9X-3oi" id="rYY-KP-0Ve"/>
