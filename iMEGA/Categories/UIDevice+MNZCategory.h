@@ -29,6 +29,11 @@
 @property (nonatomic, readonly) BOOL iPhone6XPlus;
 
 /**
+ * @brief YES if the device is an iPhone 6 Plus, 6S Plus otherwise NO.
+ */
+@property (nonatomic, readonly) BOOL iPhoneX;
+
+/**
  * @brief YES if the style of interface to use should be designed for iPad on the current device, otherwise NO.
  */
 @property (nonatomic, readonly) BOOL iPadDevice;

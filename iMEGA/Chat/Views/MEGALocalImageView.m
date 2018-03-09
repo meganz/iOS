@@ -118,23 +118,28 @@ static const CGFloat BOTTOM_HEIGHT = 210;
     CGFloat variableHeightMargin = [self variableHeightMargin];
     CGFloat x,y;
     
+    CGFloat iPhoneXOffset = 0.0f;
+    if ([[UIDevice currentDevice] iPhoneX] && [[UIScreen mainScreen] bounds].size.height < [[UIScreen mainScreen] bounds].size.width) {
+        // Landscape
+        iPhoneXOffset = 30.0f;
+    }
     switch (self.corner) {
         case CornerTopLeft:
-            x = FIXED_MARGIN;
+            x = FIXED_MARGIN + iPhoneXOffset;
             y = variableHeightMargin;
             break;
         case CornerTopRight:
-            x = self.superview.frame.size.width - self.customWidth - FIXED_MARGIN;
+            x = self.superview.frame.size.width - self.customWidth - FIXED_MARGIN - iPhoneXOffset;
             y = variableHeightMargin;
             break;
             
         case CornerBottonLeft:
-            x = FIXED_MARGIN;
+            x = FIXED_MARGIN + iPhoneXOffset;
             y = self.superview.frame.size.height - self.customHeight - variableHeightMargin;
             break;
             
         case CornerBottonRight:
-            x = self.superview.frame.size.width - self.customWidth - FIXED_MARGIN;
+            x = self.superview.frame.size.width - self.customWidth - FIXED_MARGIN - iPhoneXOffset;
             y = self.superview.frame.size.height - self.customHeight - variableHeightMargin;
             break;
             
