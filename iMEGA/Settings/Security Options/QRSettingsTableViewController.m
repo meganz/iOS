@@ -80,6 +80,12 @@
             
         case MEGARequestTypeGetAttrUser:
             self.autoAcceptSwitch.on = request.flag;
+            
+            break;
+            
+        case MEGARequestTypeSetAttrUser:
+            [[MEGASdkManager sharedMEGASdk] getContactLinksOptionWithDelegate:self];
+
             break;
             
         default:

@@ -270,13 +270,10 @@
     inviteOrDismissModal.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     inviteOrDismissModal.image = [UIImage imageForName:fullName.uppercaseString size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor colorFromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:64.0f]];
     inviteOrDismissModal.viewTitle = fullName;
-    inviteOrDismissModal.detail = email;
-    inviteOrDismissModal.action = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
-    inviteOrDismissModal.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
     
     __weak ContactLinkQRViewController *weakSelf = self;
     __weak CustomModalAlertViewController *weakInviteOrDismissModal = inviteOrDismissModal;
-    inviteOrDismissModal.completion = ^{
+    void (^completion)(void) = ^{
         BOOL isInOutgoingContactRequest = NO;
         MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
         for (NSInteger i = 0; i < outgoingContactRequestList.size.integerValue; i++) {
@@ -312,11 +309,24 @@
         }
     };
     
-    inviteOrDismissModal.onDismiss = ^{
+    void (^onDismiss)(void) = ^{
         [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:^{
             weakSelf.queryInProgress = NO;
         }];
     };
+    
+    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
+    if (user && user.visibility == MEGAUserVisibilityVisible) {
+        inviteOrDismissModal.detail = [AMLocalizedString(@"alreadyAContact", @"Error message displayed when trying to invite a contact who is already added.") stringByReplacingOccurrencesOfString:@"%s" withString:email];
+        inviteOrDismissModal.action = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+        inviteOrDismissModal.completion = onDismiss;
+    } else {
+        inviteOrDismissModal.detail = email;
+        inviteOrDismissModal.action = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
+        inviteOrDismissModal.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+        inviteOrDismissModal.completion = completion;
+        inviteOrDismissModal.onDismiss = onDismiss;
+    }
     
     [self presentViewController:inviteOrDismissModal animated:YES completion:nil];
 }
