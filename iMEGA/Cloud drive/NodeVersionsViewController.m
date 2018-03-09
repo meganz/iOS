@@ -38,7 +38,8 @@
     [super viewDidLoad];
 
     self.title = AMLocalizedString(@"versions", @"Title of section to display number of all historical versions of files.");
-    
+    self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [self setToolbarItems:@[self.downloadBarButtonItem, flexibleItem, self.revertBarButtonItem, flexibleItem, self.removeBarButtonItem] animated:YES];
     
@@ -115,6 +116,9 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        return NO;
+    }
     return YES;
 }
 
@@ -125,25 +129,27 @@
     MEGANode *node = [self nodeForIndexPath:indexPath];
 
     if (tableView.isEditing) {
+        if (indexPath.section == 0) {
+            return;
+        }
         [self.selectedNodesArray addObject:node];
         
         [self updateNavigationBarTitle];
         
         [self setToolbarActionsEnabled:YES];
         
-        if (self.selectedNodesArray.count == self.node.mnz_numberOfVersions) {
+        if (self.selectedNodesArray.count == self.node.mnz_numberOfVersions-1) {
             allNodesSelected = YES;
         } else {
             allNodesSelected = NO;
         }
-        
-        return;
-    }
     
-    if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-        [node mnz_openImageInNavigationController:self.navigationController withNodes:self.node.mnz_versions folderLink:NO displayMode:DisplayModeNodeVersions];
     } else {
-        [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+        if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+            [node mnz_openImageInNavigationController:self.navigationController withNodes:self.node.mnz_versions folderLink:NO displayMode:DisplayModeNodeVersions];
+        } else {
+            [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+        }
     }
 }
 
@@ -274,14 +280,14 @@
     }
     if (editing) {
         if (!isSwipeEditing) {
-            [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
+            self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
             self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
             self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
             [self.navigationController setToolbarHidden:NO animated:YES];
         }
     } else {
-        [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
-        
+        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+
         allNodesSelected = NO;
         self.selectedNodesArray = nil;
         self.navigationItem.leftBarButtonItems = @[];
@@ -320,7 +326,7 @@
         CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
         
-        if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
+        if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section] || indexPath.section == 0) {
             return;
         }
         
@@ -390,7 +396,7 @@
     if (!allNodesSelected) {
         MEGANode *n = nil;
         
-        for (NSInteger i = 0; i < self.node.mnz_numberOfVersions; i++) {
+        for (NSInteger i = 1; i < self.node.mnz_numberOfVersions; i++) {
             n = [self.node.mnz_versions objectAtIndex:i];
             [self.selectedNodesArray addObject:n];
         }
