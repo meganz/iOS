@@ -1,7 +1,7 @@
 
 #import <UIKit/UIKit.h>
-#import "CloudDriveTableViewController.h"
-#import "MEGANode+MNZCategory.h"
+
+#import "DisplayMode.h"
 #import "MegaNodeActionType.h"
 
 @protocol CustomActionViewControllerDelegate <NSObject>

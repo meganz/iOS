@@ -15,6 +15,7 @@
 #import "GetLinkTableViewController.h"
 #import "CloudDriveTableViewController.h"
 #import "CustomActionViewController.h"
+#import "DisplayMode.h"
 #import "BrowserViewController.h"
 #import "NodeVersionsViewController.h"
 

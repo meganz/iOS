@@ -25,7 +25,6 @@
 @property (nonatomic) uint64_t nodeHandle;
 @property (strong, nonatomic) MEGANode *node;
 
-- (void)hideCancelButton:(BOOL)hide;
-- (void)configureCellForNode:(MEGANode *)node delegate:(id<MGSwipeTableCellDelegate>)delegate;
+- (void)configureCellForNode:(MEGANode *)node delegate:(id<MGSwipeTableCellDelegate>)delegate api:(MEGASdk *)api;
 
 @end

@@ -13,7 +13,7 @@
 #import "MyAccountHallViewController.h"
 #import "NSString+MNZCategory.h"
 
-#import "CloudDriveTableViewController.h"
+#import "DisplayMode.h"
 #import "FileLinkViewController.h"
 #import "NodeTableViewCell.h"
 #import "MainTabBarController.h"
@@ -608,7 +608,7 @@
         case MEGANodeTypeFile: {
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 NSArray *nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
-                [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:YES displayMode:2];
+                [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:YES displayMode:DisplayModeSharedItem];
             } else {
                 [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
             }

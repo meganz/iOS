@@ -23,6 +23,7 @@
 #import "MEGAPurchase.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARemoveRequestDelegate.h"
+#import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
@@ -1785,12 +1786,12 @@
 
 - (void)swipeTableCellWillBeginSwiping:(nonnull MGSwipeTableCell *)cell {
     NodeTableViewCell *nodeCell = (NodeTableViewCell *)cell;
-    [nodeCell hideCancelButton:YES];
+    nodeCell.moreButton.hidden = YES;
 }
 
 - (void)swipeTableCellWillEndSwiping:(nonnull MGSwipeTableCell *)cell {
     NodeTableViewCell *nodeCell = (NodeTableViewCell *)cell;
-    [nodeCell hideCancelButton:NO];
+    nodeCell.moreButton.hidden = NO;
 }
 
 - (NSArray *)swipeTableCell:(MGSwipeTableCell *)cell swipeButtonsForDirection:(MGSwipeDirection)direction

@@ -1024,6 +1024,7 @@
 		5B22F9791F8374C400D2B156 /* VENBackspaceTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENBackspaceTextField.h; path = iMEGA/Vendor/VENTokenField/VENTokenField/VENBackspaceTextField.h; sourceTree = SOURCE_ROOT; };
 		5B22F97A1F8374C400D2B156 /* VENTokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENTokenField.m; path = iMEGA/Vendor/VENTokenField/VENTokenField/VENTokenField.m; sourceTree = SOURCE_ROOT; };
 		5B22F97B1F8374C500D2B156 /* VENBackspaceTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENBackspaceTextField.m; path = iMEGA/Vendor/VENTokenField/VENTokenField/VENBackspaceTextField.m; sourceTree = SOURCE_ROOT; };
+		5B2417E720527FB800C8DDE2 /* DisplayMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayMode.h; sourceTree = "<group>"; };
 		5B28D1351F0FB9590062998C /* MEGAImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAImagePickerController.h; sourceTree = "<group>"; };
 		5B28D1361F0FB9590062998C /* MEGAImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAImagePickerController.m; sourceTree = "<group>"; };
 		5B2E918B1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAStartUploadTransferDelegate.h; sourceTree = "<group>"; };
@@ -1822,6 +1823,7 @@
 			children = (
 				E8C8D7821B219BBA00BCDBA4 /* Animators */,
 				5B8281451E7BE7FA0079C1BB /* Cells */,
+				5B2417E620527F5900C8DDE2 /* Headers */,
 				5BB68C9D203599EC00B03C00 /* Views */,
 				A819B3401EAFA7E7004592F9 /* ViewControllers */,
 				415226871A692ECC00EC7BB6 /* Helper.h */,
@@ -1847,7 +1849,6 @@
 				A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */,
 				830EF9A220062F3800FAA947 /* DevicePermissionsHelper.h */,
 				830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */,
-				83681574202AFA1700CA8EFC /* MegaNodeActionType.h */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2496,6 +2497,15 @@
 			);
 			name = VENTokenField;
 			path = Vendor/VENTokenField;
+			sourceTree = "<group>";
+		};
+		5B2417E620527F5900C8DDE2 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				5B2417E720527FB800C8DDE2 /* DisplayMode.h */,
+				83681574202AFA1700CA8EFC /* MegaNodeActionType.h */,
+			);
+			path = Headers;
 			sourceTree = "<group>";
 		};
 		5B2E918F1F1F4567003C6920 /* Transfers */ = {

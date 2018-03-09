@@ -3,7 +3,7 @@
 
 #import "SVProgressHUD.h"
 
-#import "CloudDriveTableViewController.h"
+#import "DisplayMode.h"
 
 @interface MEGARemoveRequestDelegate ()
 
