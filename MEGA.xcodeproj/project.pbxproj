@@ -247,12 +247,19 @@
 		5BFA34701FAC5857005BFC4E /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
 		5BFA34711FAC5BFB005BFC4E /* MEGARemoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */; };
 		77519C36203707F600FDF92B /* MEGARenameRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77519C35203707F600FDF92B /* MEGARenameRequestDelegate.m */; };
+		775652D7203AD2FC009E7EC8 /* ContactLinkQRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775652D6203AD2FC009E7EC8 /* ContactLinkQRViewController.m */; };
+		777E9229203EB0E200266229 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 777E9228203EB0E100266229 /* CoreImage.framework */; };
+		777E922D203EE14B00266229 /* QRSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 777E922C203EE14B00266229 /* QRSettingsTableViewController.m */; };
 		77C544FF2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C544FE2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m */; };
 		77CAAAE0202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CAAADF202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m */; };
 		77CAAAE3202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CAAAE2202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m */; };
 		77D9A56C2023547900B48470 /* MEGAPhotoBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9A56B2023547900B48470 /* MEGAPhotoBrowserViewController.m */; };
 		77D9A56E202355F800B48470 /* MEGAPhotoBrowserViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77D9A56D202355F800B48470 /* MEGAPhotoBrowserViewController.storyboard */; };
 		77D9A5712023814800B48470 /* MEGAStartDownloadTransferDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9A5702023814800B48470 /* MEGAStartDownloadTransferDelegate.m */; };
+		77F1DBDC2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F1DBDB2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.m */; };
+		77F1DBDF2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F1DBDE2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m */; };
+		77F1DBE22056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F1DBE12056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m */; };
+		77F1DBE52056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F1DBE42056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m */; };
 		77F43DD92034637300AE4F42 /* UICollectionView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */; };
 		830EF9A420062F3800FAA947 /* DevicePermissionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */; };
 		832E1025202B09AE00BDD30F /* NodeActionCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E1023202B09AE00BDD30F /* NodeActionCollectionViewCell.m */; };
@@ -1088,6 +1095,11 @@
 		5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAMoveRequestDelegate.m; path = API/Requests/MEGAMoveRequestDelegate.m; sourceTree = "<group>"; };
 		77519C34203707F600FDF92B /* MEGARenameRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGARenameRequestDelegate.h; path = API/Requests/MEGARenameRequestDelegate.h; sourceTree = "<group>"; };
 		77519C35203707F600FDF92B /* MEGARenameRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGARenameRequestDelegate.m; path = API/Requests/MEGARenameRequestDelegate.m; sourceTree = "<group>"; };
+		775652D5203AD2FC009E7EC8 /* ContactLinkQRViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactLinkQRViewController.h; sourceTree = "<group>"; };
+		775652D6203AD2FC009E7EC8 /* ContactLinkQRViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContactLinkQRViewController.m; sourceTree = "<group>"; };
+		777E9228203EB0E100266229 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		777E922B203EE14B00266229 /* QRSettingsTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QRSettingsTableViewController.h; sourceTree = "<group>"; };
+		777E922C203EE14B00266229 /* QRSettingsTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QRSettingsTableViewController.m; sourceTree = "<group>"; };
 		77C544FD2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAPhotoBrowserAnimator.h; sourceTree = "<group>"; };
 		77C544FE2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAPhotoBrowserAnimator.m; sourceTree = "<group>"; };
 		77CAAADE202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAPhotoBrowserPickerViewController.h; sourceTree = "<group>"; };
@@ -1099,6 +1111,14 @@
 		77D9A56D202355F800B48470 /* MEGAPhotoBrowserViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MEGAPhotoBrowserViewController.storyboard; sourceTree = "<group>"; };
 		77D9A56F2023814800B48470 /* MEGAStartDownloadTransferDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAStartDownloadTransferDelegate.h; sourceTree = "<group>"; };
 		77D9A5702023814800B48470 /* MEGAStartDownloadTransferDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAStartDownloadTransferDelegate.m; sourceTree = "<group>"; };
+		77F1DBDA2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAContactLinkCreateRequestDelegate.h; path = API/Requests/MEGAContactLinkCreateRequestDelegate.h; sourceTree = "<group>"; };
+		77F1DBDB2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAContactLinkCreateRequestDelegate.m; path = API/Requests/MEGAContactLinkCreateRequestDelegate.m; sourceTree = "<group>"; };
+		77F1DBDD2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAContactLinkQueryRequestDelegate.h; path = API/Requests/MEGAContactLinkQueryRequestDelegate.h; sourceTree = "<group>"; };
+		77F1DBDE2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAContactLinkQueryRequestDelegate.m; path = API/Requests/MEGAContactLinkQueryRequestDelegate.m; sourceTree = "<group>"; };
+		77F1DBE02056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAGetAttrUserRequestDelegate.h; path = API/Requests/MEGAGetAttrUserRequestDelegate.h; sourceTree = "<group>"; };
+		77F1DBE12056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAGetAttrUserRequestDelegate.m; path = API/Requests/MEGAGetAttrUserRequestDelegate.m; sourceTree = "<group>"; };
+		77F1DBE32056B767005D5F0E /* MEGASetAttrUserRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGASetAttrUserRequestDelegate.h; path = API/Requests/MEGASetAttrUserRequestDelegate.h; sourceTree = "<group>"; };
+		77F1DBE42056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGASetAttrUserRequestDelegate.m; path = API/Requests/MEGASetAttrUserRequestDelegate.m; sourceTree = "<group>"; };
 		77F43DD72034637300AE4F42 /* UICollectionView+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+MNZCategory.h"; sourceTree = "<group>"; };
 		77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+MNZCategory.m"; sourceTree = "<group>"; };
 		830EF9A220062F3800FAA947 /* DevicePermissionsHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DevicePermissionsHelper.h; sourceTree = "<group>"; };
@@ -1472,6 +1492,7 @@
 				9432291A1EDD83B0007DB542 /* AVFoundation.framework in Frameworks */,
 				943229251EDD8479007DB542 /* CoreData.framework in Frameworks */,
 				9432290D1EDD829F007DB542 /* CoreGraphics.framework in Frameworks */,
+				777E9229203EB0E200266229 /* CoreImage.framework in Frameworks */,
 				943229291EDD84D9007DB542 /* CoreMedia.framework in Frameworks */,
 				9419B6C61F20DC5700FEBE31 /* CoreSpotlight.framework in Frameworks */,
 				9432291C1EDD83E9007DB542 /* ImageIO.framework in Frameworks */,
@@ -1767,6 +1788,8 @@
 				E8CA8AB01DF17F7500C205DE /* ContactDetailsViewController.m */,
 				E85EB30B1DF58EBA0066AC68 /* VerifyCredentialsViewController.h */,
 				E85EB30C1DF58EBA0066AC68 /* VerifyCredentialsViewController.m */,
+				775652D5203AD2FC009E7EC8 /* ContactLinkQRViewController.h */,
+				775652D6203AD2FC009E7EC8 /* ContactLinkQRViewController.m */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -2058,6 +2081,7 @@
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				777E9228203EB0E100266229 /* CoreImage.framework */,
 				5B5974E2202858050011E819 /* SafariServices.framework */,
 				A82A38D4200D32EC00883533 /* libmediainfo.a */,
 				A82A38CF200D32BC00883533 /* libzen.a */,
@@ -2164,6 +2188,8 @@
 				E8BD127E1DB76E03003DC53F /* MasterKeyViewController.m */,
 				4178409E1AC328A600713F3C /* ChangePasswordViewController.h */,
 				4178409F1AC328A600713F3C /* ChangePasswordViewController.m */,
+				777E922B203EE14B00266229 /* QRSettingsTableViewController.h */,
+				777E922C203EE14B00266229 /* QRSettingsTableViewController.m */,
 			);
 			path = "Security Options";
 			sourceTree = "<group>";
@@ -2788,38 +2814,46 @@
 		A8AA4F6E1ED4296700E7BA23 /* Requests */ = {
 			isa = PBXGroup;
 			children = (
-				5BFA346C1FAB6282005BFC4E /* MEGAMoveRequestDelegate.h */,
-				5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */,
-				5BFA346A1FAB4169005BFC4E /* MEGARemoveRequestDelegate.h */,
-				5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */,
-				5B0C55AC1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.h */,
-				5B0C55AD1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m */,
-				5B7B4C9E1EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.h */,
-				5B7B4C9F1EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m */,
-				5B7B4CA01EE5AC1200DA6A8D /* MEGAShareRequestDelegate.h */,
-				5B7B4CA11EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m */,
-				A8AA4F771ED42B9E00E7BA23 /* MEGALoginRequestDelegate.h */,
-				A8AA4F781ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m */,
 				A8AA4F7B1ED433CA00E7BA23 /* MEGABaseRequestDelegate.h */,
 				A8AA4F7C1ED433CA00E7BA23 /* MEGABaseRequestDelegate.m */,
-				A8F5D67B1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.h */,
-				A8F5D67C1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m */,
-				A81613FC1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.h */,
-				A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */,
+				77F1DBDA2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.h */,
+				77F1DBDB2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.m */,
+				77F1DBDD2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.h */,
+				77F1DBDE2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m */,
 				5B2E91901F1F98F4003C6920 /* MEGACopyRequestDelegate.h */,
 				5B2E91911F1F98F4003C6920 /* MEGACopyRequestDelegate.m */,
+				A81613FC1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.h */,
+				A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */,
 				5BB50E071F20E840000CA24D /* MEGACreateFolderRequestDelegate.h */,
 				5BB50E081F20E840000CA24D /* MEGACreateFolderRequestDelegate.m */,
+				94624CF91F50484200D52504 /* MEGAExportRequestDelegate.h */,
+				94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */,
+				77F1DBE02056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.h */,
+				77F1DBE12056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m */,
 				A8EC55B21F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.h */,
 				A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */,
 				A820DA3A1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.h */,
 				A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */,
-				94624CF91F50484200D52504 /* MEGAExportRequestDelegate.h */,
-				94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */,
+				5B7B4C9E1EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.h */,
+				5B7B4C9F1EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m */,
+				A8AA4F771ED42B9E00E7BA23 /* MEGALoginRequestDelegate.h */,
+				A8AA4F781ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m */,
+				5BFA346C1FAB6282005BFC4E /* MEGAMoveRequestDelegate.h */,
+				5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */,
 				9437B93D1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.h */,
 				9437B93E1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m */,
+				5BFA346A1FAB4169005BFC4E /* MEGARemoveRequestDelegate.h */,
+				5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */,
+				5B0C55AC1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.h */,
+				5B0C55AD1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m */,
 				77519C34203707F600FDF92B /* MEGARenameRequestDelegate.h */,
 				77519C35203707F600FDF92B /* MEGARenameRequestDelegate.m */,
+				A8F5D67B1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.h */,
+				A8F5D67C1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m */,
+				77F1DBE32056B767005D5F0E /* MEGASetAttrUserRequestDelegate.h */,
+				77F1DBE42056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m */,
+				5B7B4CA01EE5AC1200DA6A8D /* MEGAShareRequestDelegate.h */,
+				5B7B4CA11EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m */,
 				835223AB20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.h */,
 				835223AC20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m */,
 			);
@@ -3416,6 +3450,7 @@
 				4131997C1BD7BD5D002CD6EA /* DTTimePeriodGroup.m in Sources */,
 				E8C8D7851B219C5B00BCDBA4 /* MEGAQLPreviewControllerTransitionAnimator.m in Sources */,
 				830EF9A420062F3800FAA947 /* DevicePermissionsHelper.m in Sources */,
+				77F1DBDC2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.m in Sources */,
 				5BDE180C1F500EE000CD9F82 /* MyAccountBaseViewController.m in Sources */,
 				41EAAE4D1D06B49400622FAF /* UICollectionView+CTAssetsPickerController.m in Sources */,
 				41D21E6F1D01AEC3002E6296 /* CTAssetsPickerNoAssetsView.m in Sources */,
@@ -3426,6 +3461,7 @@
 				417279511DB663FA001AC818 /* JSQMessagesCollectionViewCellIncoming.m in Sources */,
 				41EAAE491D06B49400622FAF /* NSNumberFormatter+CTAssetsPickerController.m in Sources */,
 				41D14F6E1B85F6D40005A27A /* ProductDetailViewController.m in Sources */,
+				777E922D203EE14B00266229 /* QRSettingsTableViewController.m in Sources */,
 				417279551DB663FA001AC818 /* JSQMessagesComposerTextView.m in Sources */,
 				5BB68CA120359B5400B03C00 /* PasswordStrengthIndicatorView.m in Sources */,
 				E8B519261AC9CD8000BB7324 /* TransfersViewController.m in Sources */,
@@ -3466,6 +3502,8 @@
 				E8B3FE781DDB379C008A9C82 /* HelpModalViewController.m in Sources */,
 				A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */,
 				415C6B921CE39D6100B13070 /* SVProgressAnimatedView.m in Sources */,
+				77F1DBE22056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m in Sources */,
+				775652D7203AD2FC009E7EC8 /* ContactLinkQRViewController.m in Sources */,
 				5B323F231F5834E100C5F557 /* ReferralBonusesTableViewController.m in Sources */,
 				41EAAE471D06B49400622FAF /* NSDateFormatter+CTAssetsPickerController.m in Sources */,
 				4182B4EF1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m in Sources */,
@@ -3476,6 +3514,7 @@
 				A89E77471EA6058E00ADC0D2 /* MEGAMessageAttachmentView.m in Sources */,
 				A802B2011FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m in Sources */,
 				5B2E91921F1F98F4003C6920 /* MEGACopyRequestDelegate.m in Sources */,
+				77F1DBE52056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m in Sources */,
 				41EC68461D76DA93003EC803 /* UIBarButtonItem+Badge.m in Sources */,
 				A89629751FACE78B00F02F7A /* MEGACallManager.m in Sources */,
 				946B2D161F46E235009ED32C /* GetLinkTableViewController.m in Sources */,
@@ -3568,6 +3607,7 @@
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
 				E8D5BF691BF35DC400955550 /* SharedItemsViewController.m in Sources */,
 				94624CFB1F50484200D52504 /* MEGAExportRequestDelegate.m in Sources */,
+				77F1DBDF2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m in Sources */,
 				417279451DB663FA001AC818 /* JSQMessagesCollectionViewLayoutAttributes.m in Sources */,
 				5B22F97D1F8374C500D2B156 /* VENToken.m in Sources */,
 				E8B415061DE3237F00B9D206 /* GroupChatDetailsViewController.m in Sources */,
