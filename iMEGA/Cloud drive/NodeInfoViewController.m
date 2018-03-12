@@ -15,7 +15,10 @@
 #import "GetLinkTableViewController.h"
 #import "CloudDriveTableViewController.h"
 #import "CustomActionViewController.h"
+#import "DisplayMode.h"
 #import "BrowserViewController.h"
+#import "NodeVersionsViewController.h"
+#import "MEGAGetFolderInfoRequestDelegate.h"
 
 @interface MegaNodeProperty : NSObject
 
@@ -37,12 +40,13 @@
 
 @end
 
-@interface NodeInfoViewController () <UITableViewDelegate, UITableViewDataSource, CustomActionViewControllerDelegate, MEGADelegate>
+@interface NodeInfoViewController () <UITableViewDelegate, UITableViewDataSource, CustomActionViewControllerDelegate, MEGAGlobalDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) NSArray<MegaNodeProperty *> *nodeProperties;
+@property (strong, nonatomic) MEGAFolderInfo *folderInfo;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 
@@ -56,26 +60,30 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self reloadUI];
-    
     self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label. The button allows the user to close the conversation.");
+    
+    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
+    [self reloadUI];
     
-    [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
+    if (self.node.isFolder && !self.folderInfo) {
+        MEGAGetFolderInfoRequestDelegate *delegate = [[MEGAGetFolderInfoRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+            self.folderInfo = request.megaFolderInfo;
+            [self reloadUI];
+        }];
+        [[MEGASdkManager sharedMEGASdk] getFolderInfoForNode:self.node delegate:delegate];
+    }
 }
 
 #pragma mark - Layout
 
 - (void)reloadUI {
+
     self.nodeProperties = [self nodePropertyCells];
 
     self.title = self.node.isFile ? AMLocalizedString(@"fileInfo", @"Label of the option menu. When clicking this button, the app shows the info of the file.") : AMLocalizedString(@"folderInfo", @"Label of the option menu. When clicking this button, the app shows the info of the folder.");
@@ -131,11 +139,11 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%@", indexPath);
     switch (indexPath.section) {
+            
         case 0:
             switch (indexPath.row) {
-                case 1:
+                case 0:
                     [self showParentNode];
                     break;
                 
@@ -160,6 +168,7 @@
                         [self showManageLinkView];
                     }
                     break;
+                    
                 case 1:
                     [self showManageLinkView];
                     break;
@@ -169,7 +178,7 @@
             break;
             
         case 2:
-            //TODO: show versions view
+            [self showNodeVersions];
             break;
             
         default:
@@ -207,8 +216,8 @@
         NodePropertyTableViewCell *propertyCell = [self.tableView dequeueReusableCellWithIdentifier:@"nodePropertyCell" forIndexPath:indexPath];
         propertyCell.keyLabel.text = [self.nodeProperties objectAtIndex:indexPath.row].title;
         propertyCell.valueLabel.text = [self.nodeProperties objectAtIndex:indexPath.row].value;
-        if (indexPath.row == 1) {
-            propertyCell.valueLabel.textColor = [UIColor mnz_green00BFA5];
+        if (indexPath.row == 0) {
+            propertyCell.valueLabel.textColor = UIColor.mnz_green00BFA5;
         }
         return propertyCell;
     } else if (indexPath.section == 1) {
@@ -238,6 +247,7 @@
 #pragma mark - Actions
 
 - (IBAction)closeTapped:(UIBarButtonItem *)sender {
+    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -266,19 +276,38 @@
 - (NSArray<MegaNodeProperty *> *)nodePropertyCells {
     NSMutableArray<MegaNodeProperty *> *propertiesNode = [NSMutableArray new];
     
-    [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[Helper sizeForNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
     [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"location", @"Title label of a node property.") value:[NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] parentNodeForNode:self.node].name]]];
-    if (self.node.isFolder) {
+    
+    if (self.node.isFile) {
+        if (self.node.mnz_numberOfVersions != 0) {
+            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[NSByteCountFormatter stringFromByteCount:self.node.mnz_versionsSize countStyle:NSByteCountFormatterCountStyleMemory]]];
+            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file") value:[Helper sizeForNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
+        } else {
+            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[Helper sizeForNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
+        }
+        [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"type", @"Refers to the type of a file or folder.") value:self.node.mnz_fileType]];
+        [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"modified", @"A label for any 'Modified' text or title.") value:[Helper dateWithISO8601FormatOfRawTime:self.node.modificationTime.timeIntervalSince1970]]];
+    } else if (self.node.isFolder) {
+        if (self.folderInfo.versions != 0) {
+            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[NSByteCountFormatter stringFromByteCount:(self.folderInfo.currentSize + self.folderInfo.versionsSize) countStyle:NSByteCountFormatterCountStyleMemory]]];
+            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"currentVersions", @"Title of section to display information of all current versions of files.") value:[NSByteCountFormatter stringFromByteCount:self.folderInfo.currentSize countStyle:NSByteCountFormatterCountStyleMemory]]];
+            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file.") value:[NSByteCountFormatter stringFromByteCount:self.folderInfo.versionsSize countStyle:NSByteCountFormatterCountStyleMemory]]];
+            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"versions", @"Title of section to display number of all historical versions of files") value:[NSString stringWithFormat:@"%ld", (long)self.folderInfo.versions]]];
+        } else {
+            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[Helper sizeForNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
+        }
+        if (self.node.isShared) {
+            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"type", @"Refers to the type of a file or folder.") value:AMLocalizedString(@"sharedFolder", @"Title of the incoming shared folders of a user in singular.")]];
+        }  else if ([[MEGASdkManager sharedMEGASdk] numberChildrenForParent:self.node] == 0){
+            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"type", @"Refers to the type of a file or folder.") value:AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files")]];
+        } else {
+            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"type", @"Refers to the type of a file or folder.") value:AMLocalizedString(@"folder", nil)]];
+        }
+        
         [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"contains", @"Label for what a selection contains.") value:[Helper filesAndFoldersInFolderNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
-    } else {
-        [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"type", @"Refers to the type of a file or folder.") value:@"TODO"]];
     }
     
     [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"created", @"The label of the folder creation time.") value:[Helper dateWithISO8601FormatOfRawTime:self.node.creationTime.timeIntervalSince1970]]];
-    
-    if (self.node.isFile) {
-        [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"modified", @"A label for any 'Modified' text or title.") value:[Helper dateWithISO8601FormatOfRawTime:self.node.modificationTime.timeIntervalSince1970]]];
-    }
     
     return propertiesNode;
 }
@@ -364,6 +393,7 @@
 }
 
 - (void)showParentNode {
+    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
     [self dismissViewControllerAnimated:YES completion:^{
         if ([self.nodeInfoDelegate respondsToSelector:@selector(presentParentNode:)]) {
             [self.nodeInfoDelegate presentParentNode:[[MEGASdkManager sharedMEGASdk] parentNodeForNode:self.node]];
@@ -372,35 +402,10 @@
 }
 
 - (void)reloadOrShowWarningAfterActionOnNode:(MEGANode *)nodeUpdated {
-    nodeUpdated = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[self.node handle]];
+    nodeUpdated = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.node.handle];
     if (nodeUpdated != nil) { //Is nil if you don't have access to it
-        if (nodeUpdated.parentHandle == self.node.parentHandle) { //Same place as before
-            //Node renamed, update UI with the new info.
-            //Also when you get link, share folder or remove link
-//            if (self.displayMode == DisplayModeSharedItem && self.node.isOutShare && !nodeUpdated.isOutShare) {
-//                self.displayMode = DisplayModeCloudDrive;
-//            }
-            
-            //TODO: ^ Take into account this case when applying changes related with versioning.
-            
-            self.node = nodeUpdated;
-            [self reloadUI];
-        } else {
-            //Node moved to the Rubbish Bin or moved inside the same shared folder
-            NSString *alertTitle;
-            if (nodeUpdated.parentHandle == [[[MEGASdkManager sharedMEGASdk] rubbishNode] handle]) {
-                alertTitle = (self.node.isFolder) ? AMLocalizedString(@"folderMovedToTheRubbishBin_alertTitle", @"Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location") : AMLocalizedString(@"fileMovedToTheRubbishBin_alertTitle", @"Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location");
-            } else {
-                alertTitle = (self.node.isFolder) ? AMLocalizedString(@"folderMoved_alertTitle", @"Alert title shown when you are seeing the details of a folder and you moved it from another location") : AMLocalizedString(@"fileMoved_alertTitle", @"Alert title shown when you are seeing the details of a file and you moved it from another location");
-            }
-            
-            UIAlertController *warningAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
-            [warningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                [self.navigationController popViewControllerAnimated:YES];
-            }]];
-            
-            [self presentViewController:warningAlertController animated:YES completion:nil];
-        }
+        self.node = nodeUpdated;
+        [self reloadUI];
     } else {
         //Node removed from the Rubbish Bin or moved outside of the shared folder
         NSString *alertTitle = (self.node.isFolder) ? AMLocalizedString(@"youNoLongerHaveAccessToThisFolder_alertTitle", @"Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be") : AMLocalizedString(@"youNoLongerHaveAccessToThisFile_alertTitle", @"Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be");
@@ -413,6 +418,25 @@
     }
 }
 
+- (void)currentVersionRemovedOnNodeList:(MEGANodeList *)nodeList {
+    MEGANode *newCurrentNode;
+    
+    NSUInteger size = nodeList.size.unsignedIntegerValue;
+    for (NSUInteger i = 0; i < size; i++) {
+        newCurrentNode = [nodeList nodeAtIndex:i];
+        if (newCurrentNode.getChanges == MEGANodeChangeTypeParent) {
+            self.node = newCurrentNode;
+            [self reloadUI];
+        }
+    }
+}
+
+- (void)showNodeVersions {
+    NodeVersionsViewController *nodeVersions = [self.storyboard instantiateViewControllerWithIdentifier:@"NodeVersionsVC"];
+    nodeVersions.node = self.node;
+    [self.navigationController pushViewController:nodeVersions animated:YES];
+}
+
 #pragma mark - CustomActionViewControllerDelegate
 
 - (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender {
@@ -420,7 +444,7 @@
             
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-            [node mnz_downloadNode];
+            [node mnz_downloadNodeOverwriting:NO];
             break;
             
         case MegaNodeActionTypeCopy:
@@ -475,9 +499,30 @@
     for (NSUInteger i = 0; i < size; i++) {
         nodeUpdated = [nodeList nodeAtIndex:i];
         
-        if (nodeUpdated.handle == self.node.handle) {
-            [self reloadOrShowWarningAfterActionOnNode:nodeUpdated];
-            break;
+        switch (nodeUpdated.getChanges) {
+                
+            case MEGANodeChangeTypeRemoved:
+                if (nodeUpdated.handle == self.node.handle) {
+                    [self currentVersionRemovedOnNodeList:nodeList];
+                } else {
+                    if (self.node.mnz_numberOfVersions != 0) {
+                        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+                    }
+                }
+                break;
+                
+            case MEGANodeChangeTypeParent:
+                if (nodeUpdated.handle == self.node.handle) {
+                    self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:nodeUpdated.parentHandle];
+                    [self reloadUI];
+                }
+                break;
+                
+            default:
+                if (nodeUpdated.handle == self.node.handle) {
+                    [self reloadOrShowWarningAfterActionOnNode:nodeUpdated];
+                }
+                break;
         }
     }
 }

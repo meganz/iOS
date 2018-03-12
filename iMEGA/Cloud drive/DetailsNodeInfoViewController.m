@@ -7,6 +7,7 @@
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARemoveRequestDelegate.h"
+#import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "UIImageView+MNZCategory.h"
 
@@ -163,7 +164,7 @@
         }
         
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-        [Helper downloadNode:self.node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
+        [Helper downloadNode:self.node folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:NO];
         
         if ([self.node isFolder]) {
             [self.navigationController popViewControllerAnimated:YES];
@@ -651,9 +652,6 @@
         }
     }
     
-    UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
-    [cell setSelectedBackgroundView:view];
     
     if (@available(iOS 11.0, *)) {
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;

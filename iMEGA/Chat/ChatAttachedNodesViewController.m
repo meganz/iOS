@@ -14,6 +14,7 @@
 #import "MEGAGetThumbnailRequestDelegate.h"
 
 #import "BrowserViewController.h"
+#import "DisplayMode.h"
 #import "NodeTableViewCell.h"
 
 @interface ChatAttachedNodesViewController ()
@@ -66,6 +67,7 @@
     self.selectedNodesMutableArray = [[NSMutableArray alloc] init];
     
     self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
+    self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     
     self.downloadBarButtonItem.title = AMLocalizedString(@"saveForOffline", @"List option shown on the details of a file or folder");
@@ -137,10 +139,10 @@
     [self.tableView setEditing:editing animated:animated];
     
     if (editing) {
-        self.editBarButtonItem.image = [UIImage imageNamed:@"done"];
+        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
         [self setToolbarItemsEnabled:NO];
     } else {
-        self.editBarButtonItem.image = [UIImage imageNamed:@"edit"];
+        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
         [self setToolbarItemsEnabled:YES];
         
         [self.selectedNodesMutableArray removeAllObjects];
@@ -159,7 +161,7 @@
     
     if (self.tableView.isEditing) {
         for (MEGANode *node in self.selectedNodesMutableArray) {
-            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
+            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO  shouldOverwrite:NO];
         }
     }
 }
@@ -214,7 +216,7 @@
         }
         
         for (MEGANode *node in self.selectedNodesMutableArray) {
-            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
+            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:NO];
         }
     }
     
@@ -247,13 +249,10 @@
         numberOfRows = self.message.nodeList.size.unsignedIntegerValue;
     }
     
-    self.tableView.separatorStyle = (numberOfRows == 0) ? UITableViewCellSeparatorStyleNone : UITableViewCellSeparatorStyleSingleLine;
-    
     return numberOfRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     MEGANode *currentNode = [self.message.nodeList nodeAtIndex:indexPath.row];
     
     NodeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NodeTableViewCellID" forIndexPath:indexPath];
@@ -289,12 +288,6 @@
         cell.thumbnailImageView.image = [Helper imageForNode:currentNode];
     }
     
-    UIView *view = [[UIView alloc] init];
-    view.backgroundColor = [UIColor mnz_grayF7F7F7];
-    cell.selectedBackgroundView = view;
-    
-    cell.separatorInset = self.tableView.isEditing ? UIEdgeInsetsMake(0.0, 96.0, 0.0, 0.0) : UIEdgeInsetsMake(0.0, 58.0, 0.0, 0.0);
-    
     return cell;
 }
 
@@ -314,7 +307,7 @@
         return;
     } else {
         if (nodeSelected.name.mnz_isImagePathExtension || nodeSelected.name.mnz_isVideoPathExtension) {
-            [nodeSelected mnz_openImageInNavigationController:self.navigationController withNodes:self.nodesLoadedInChatroom folderLink:NO displayMode:2 enableMoveToRubbishBin:NO];
+            [nodeSelected mnz_openImageInNavigationController:self.navigationController withNodes:self.nodesLoadedInChatroom folderLink:NO displayMode:DisplayModeSharedItem enableMoveToRubbishBin:NO];
         } else {
             [nodeSelected mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
         }

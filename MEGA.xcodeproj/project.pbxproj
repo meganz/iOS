@@ -268,8 +268,12 @@
 		834AD6082024697300D2527F /* MGSwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 834AD6012024694200D2527F /* MGSwipeButton.m */; };
 		834AD6092024697600D2527F /* MGSwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 834AD6032024694200D2527F /* MGSwipeTableCell.m */; };
 		834AD60A2024697700D2527F /* MGSwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 834AD6032024694200D2527F /* MGSwipeTableCell.m */; };
+		835223AD20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223AC20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m */; };
+		83654A5A203C3E4100B5E426 /* NodeVersionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83654A59203C3E4100B5E426 /* NodeVersionsViewController.m */; };
 		83681578202AFBC000CA8EFC /* CustomActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83681576202AFBC000CA8EFC /* CustomActionViewController.m */; };
 		83681579202AFBC000CA8EFC /* CustomActionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83681577202AFBC000CA8EFC /* CustomActionViewController.xib */; };
+		83B841672051905E00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
+		83B841682051913C00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
 		9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226691A692ECC00EC7BB6 /* Cloud.storyboard */; };
 		941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
 		941135511F00FFC700D33428 /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226881A692ECC00EC7BB6 /* Helper.m */; };
@@ -492,6 +496,7 @@
 		A85740C72032F6E70033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
 		A85740C82032F6E80033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
 		A85740C92032F6E80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
+		A85CCEF420482912006EF195 /* SF-UI-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A85CCEF32048290C006EF195 /* SF-UI-Text-Semibold.otf */; };
 		A86FC4FC1EBB4999006053A6 /* MEGAPhotoMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A86FC4FB1EBB4999006053A6 /* MEGAPhotoMediaItem.m */; };
 		A88BFFCF1F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
 		A88BFFD01F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
@@ -1021,6 +1026,7 @@
 		5B22F9791F8374C400D2B156 /* VENBackspaceTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENBackspaceTextField.h; path = iMEGA/Vendor/VENTokenField/VENTokenField/VENBackspaceTextField.h; sourceTree = SOURCE_ROOT; };
 		5B22F97A1F8374C400D2B156 /* VENTokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENTokenField.m; path = iMEGA/Vendor/VENTokenField/VENTokenField/VENTokenField.m; sourceTree = SOURCE_ROOT; };
 		5B22F97B1F8374C500D2B156 /* VENBackspaceTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENBackspaceTextField.m; path = iMEGA/Vendor/VENTokenField/VENTokenField/VENBackspaceTextField.m; sourceTree = SOURCE_ROOT; };
+		5B2417E720527FB800C8DDE2 /* DisplayMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayMode.h; sourceTree = "<group>"; };
 		5B28D1351F0FB9590062998C /* MEGAImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAImagePickerController.h; sourceTree = "<group>"; };
 		5B28D1361F0FB9590062998C /* MEGAImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAImagePickerController.m; sourceTree = "<group>"; };
 		5B2E918B1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAStartUploadTransferDelegate.h; sourceTree = "<group>"; };
@@ -1113,6 +1119,10 @@
 		834AD6022024694200D2527F /* MGSwipeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeTableCell.h; sourceTree = "<group>"; };
 		834AD6032024694200D2527F /* MGSwipeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSwipeTableCell.m; sourceTree = "<group>"; };
 		834AD6042024694200D2527F /* MGSwipeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeButton.h; sourceTree = "<group>"; };
+		835223AB20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAGetFolderInfoRequestDelegate.h; path = API/Requests/MEGAGetFolderInfoRequestDelegate.h; sourceTree = "<group>"; };
+		835223AC20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAGetFolderInfoRequestDelegate.m; path = API/Requests/MEGAGetFolderInfoRequestDelegate.m; sourceTree = "<group>"; };
+		83654A58203C3E4100B5E426 /* NodeVersionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeVersionsViewController.h; sourceTree = "<group>"; };
+		83654A59203C3E4100B5E426 /* NodeVersionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeVersionsViewController.m; sourceTree = "<group>"; };
 		83681574202AFA1700CA8EFC /* MegaNodeActionType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MegaNodeActionType.h; sourceTree = "<group>"; };
 		83681575202AFBC000CA8EFC /* CustomActionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomActionViewController.h; sourceTree = "<group>"; };
 		83681576202AFBC000CA8EFC /* CustomActionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomActionViewController.m; sourceTree = "<group>"; };
@@ -1227,6 +1237,7 @@
 		A85740C12032F6B80033034C /* MOChatDraft+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOChatDraft+CoreDataProperties.h"; sourceTree = "<group>"; };
 		A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOChatDraft+CoreDataClass.m"; sourceTree = "<group>"; };
 		A85740C32032F6B80033034C /* MOChatDraft+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOChatDraft+CoreDataClass.h"; sourceTree = "<group>"; };
+		A85CCEF32048290C006EF195 /* SF-UI-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Text-Semibold.otf"; sourceTree = "<group>"; };
 		A86FC4FB1EBB4999006053A6 /* MEGAPhotoMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAPhotoMediaItem.m; sourceTree = "<group>"; };
 		A88BFFAC1F0A52CD0081BCE3 /* libevent_core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_core.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent_core.a; sourceTree = "<group>"; };
 		A88BFFAD1F0A52CD0081BCE3 /* libevent_extra.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_extra.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent_extra.a; sourceTree = "<group>"; };
@@ -1734,6 +1745,8 @@
 				946B2D151F46E235009ED32C /* GetLinkTableViewController.m */,
 				832E102D202CB8AE00BDD30F /* NodeInfoViewController.h */,
 				832E102E202CB8AE00BDD30F /* NodeInfoViewController.m */,
+				83654A58203C3E4100B5E426 /* NodeVersionsViewController.h */,
+				83654A59203C3E4100B5E426 /* NodeVersionsViewController.m */,
 			);
 			path = "Cloud drive";
 			sourceTree = "<group>";
@@ -1815,6 +1828,7 @@
 			children = (
 				E8C8D7821B219BBA00BCDBA4 /* Animators */,
 				5B8281451E7BE7FA0079C1BB /* Cells */,
+				5B2417E620527F5900C8DDE2 /* Headers */,
 				5BB68C9D203599EC00B03C00 /* Views */,
 				A819B3401EAFA7E7004592F9 /* ViewControllers */,
 				415226871A692ECC00EC7BB6 /* Helper.h */,
@@ -1840,7 +1854,6 @@
 				A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */,
 				830EF9A220062F3800FAA947 /* DevicePermissionsHelper.h */,
 				830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */,
-				83681574202AFA1700CA8EFC /* MegaNodeActionType.h */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2491,6 +2504,15 @@
 			path = Vendor/VENTokenField;
 			sourceTree = "<group>";
 		};
+		5B2417E620527F5900C8DDE2 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				5B2417E720527FB800C8DDE2 /* DisplayMode.h */,
+				83681574202AFA1700CA8EFC /* MegaNodeActionType.h */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
 		5B2E918F1F1F4567003C6920 /* Transfers */ = {
 			isa = PBXGroup;
 			children = (
@@ -2798,6 +2820,8 @@
 				9437B93E1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m */,
 				77519C34203707F600FDF92B /* MEGARenameRequestDelegate.h */,
 				77519C35203707F600FDF92B /* MEGARenameRequestDelegate.m */,
+				835223AB20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.h */,
+				835223AC20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m */,
 			);
 			name = Requests;
 			sourceTree = "<group>";
@@ -3196,8 +3220,8 @@
 				4172795E1DB663FA001AC818 /* JSQMessagesTypingIndicatorFooterView.xib in Resources */,
 				5B5B50011E684FDC00DBEB3B /* SF-UI-Display-Regular.otf in Resources */,
 				41136FBE1E1693410031C516 /* MEGAMessagesTypingIndicatorFoorterView.xib in Resources */,
-				A82E5BC81F3465A3003C149C /* Spotlight_file@2x.png in Resources */,
-				5B6429E02020A8CF000E0DCB /* SF-UI-Text-Semibold.otf in Resources */,
+				A82E5BC81F3465A3003C149C /* Spotlight_file@2x.png in Resources */,				
+                5B6429E02020A8CF000E0DCB /* SF-UI-Text-Semibold.otf in Resources */,
 				A82E5BCB1F3465A3003C149C /* Spotlight_folder@3x.png in Resources */,
 				E8C289FF1BF65BAB00F7A034 /* Launch.storyboard in Resources */,
 				4172793A1DB663FA001AC818 /* JSQMessagesViewController.xib in Resources */,
@@ -3416,6 +3440,7 @@
 				5B118EC31FB1B0C6005D7D90 /* NSMutableArray+MNZCategory.m in Sources */,
 				E8CD19871A9266D600CB8B2A /* UnavailableLinkView.m in Sources */,
 				E8D4B8911A69429200A3B2E2 /* ConfirmAccountViewController.m in Sources */,
+				835223AD20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m in Sources */,
 				5B5737D61EFBE6410027ECCD /* MEGANode+MNZCategory.m in Sources */,
 				41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */,
 				41D21E6A1D01AEC3002E6296 /* CTAssetsPageView.m in Sources */,
@@ -3475,6 +3500,7 @@
 				41D21E721D01AEC3002E6296 /* CTAssetThumbnailStacks.m in Sources */,
 				E87C98361CC4CC1000E2B9E6 /* AdvancedTableViewController.m in Sources */,
 				5B28D1371F0FB9590062998C /* MEGAImagePickerController.m in Sources */,
+				83654A5A203C3E4100B5E426 /* NodeVersionsViewController.m in Sources */,
 				417279491DB663FA001AC818 /* JSQMessage.m in Sources */,
 				417279421DB663FA001AC818 /* JSQMessagesBubblesSizeCalculator.m in Sources */,
 				4172794F1DB663FA001AC818 /* JSQMessagesCollectionView.m in Sources */,
@@ -3584,6 +3610,7 @@
 			files = (
 				834AD6072024697200D2527F /* MGSwipeButton.m in Sources */,
 				9432294D1EDD9CEB007DB542 /* NSMutableAttributedString+MNZCategory.m in Sources */,
+				83B841682051913C00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */,
 				5BFA34701FAC5857005BFC4E /* MEGAMoveRequestDelegate.m in Sources */,
 				9432294B1EDD9CE5007DB542 /* MEGAUser+MNZCategory.m in Sources */,
 				9456054B1EDD7AD70094EF0F /* LTHPasscodeViewController.m in Sources */,
@@ -3706,6 +3733,7 @@
 				9411355C1F01008400D33428 /* MEGAStore.m in Sources */,
 				949CEACF1F05121D00A3A580 /* LoginRequiredViewController.m in Sources */,
 				941135631F0106DC00D33428 /* UIScrollView+EmptyDataSet.m in Sources */,
+				83B841672051905E00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */,
 				834AD60A2024697700D2527F /* MGSwipeTableCell.m in Sources */,
 				941135531F01000300D33428 /* Reachability.m in Sources */,
 				A85740C82032F6E80033034C /* MOChatDraft+CoreDataClass.m in Sources */,

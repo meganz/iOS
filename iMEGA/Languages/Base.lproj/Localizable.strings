@@ -996,10 +996,6 @@
 "twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Current Plan:";
-/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
-"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
-/* Title text for the account confirmation. */
-"confirm"="Confirm";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Request a plan";
 /* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
@@ -1264,6 +1260,8 @@
 "openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Revoke";
+/* Label in login screen to inform about the chat initialization proccess */
+"connecting"="Connecting…";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Some items could not be shared with MEGA";
 /* Notification message shown when a transfer failed. Keep colon. */
@@ -1387,3 +1385,21 @@
 "fileInfo"="File info";
 /* Label of the option menu. When clicking this button, the app shows the info of the folder */
 "folderInfo"="Folder info";
+/* Question to ensure user wants to delete file version. */
+"deleteVersion"="Do you want to delete this version";
+/* Message to notify user the file version will be permanently removed */
+"permanentlyRemoved"="It will be permanently removed";
+/*  */
+"delete"="Delete";
+/* A button label which reverts a certain version of a file to be the current version of the selected file. */
+"revert"="Revert";
+/*  */
+"download"="Download";
+/* Singular of file. 1 file */
+"file"="file";
+/* Title of section to display information of the current version of a file. */
+"currentVersion"="Current Version";
+/* A button label which opens a dialog to display the full version history of the selected file. */
+"previousVersions"="Previous Versions";
+/* Title of section to display information of all current versions of files. */
+"currentVersions"="Current Versions";
