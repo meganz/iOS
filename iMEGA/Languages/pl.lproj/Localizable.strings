@@ -100,10 +100,32 @@
 "emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Hasło";
+/*  */
+"pleaseStrengthenYourPassword"="Wprowadź bezpieczniejsze hasło.";
+/* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
+"veryWeak"="Bardzo słabe";
+/*  */
+"weak"="Słabe";
+/*  */
+"passwordVeryWeakOrWeak"="Twoje hasło jest łatwe do odgadnięcia. Spróbuj wpisać dłuższe hasło. Kombinację dużych i małych liter. Dodaj znaki specjalne. Nie używaj imion ani słów ze słownika.";
+/* Label displayed during checking the strength of the password introduced. Represents Medium security */
+"medium"="Średnie";
+/*  */
+"passwordMedium"="Twoje hasło jest wystarczająco bezpieczne aby kontynuować, ale rekomendujemy wzmocnienie hasła później.";
+/*  */
+"good"="Dobre";
+/*  */
+"passwordGood"="To hasło będzie wytrzymałe na najbardziej wyrafinowane ataki brute-force. Upewnij się, że jesteś w stanie je zapamiętać.";
+/* Label displayed during checking the strength of the password introduced. Represents Strong security */
+"strong"="Silne";
+/*  */
+"passwordStrong"="To hasło będzie wytrzymałe na najbardziej wyrafinowane ataki brute-force. Upewnij się, że jesteś w stanie je zapamiętać.";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
 "termsOfServiceButton"="Akceptuję regulamin MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Wprowadź poprawną nazwę";
+/*  */
+"invalidFirstNameAndLastName"="Imię i/lub nazwisko zostało podane błędnie.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Hasła do siebie nie pasują";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -970,10 +992,6 @@
 "twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Aktualny plan:";
-/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
-"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
-/* Title text for the account confirmation. */
-"confirm"="Potwierdź";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Zmień konto";
 /* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
@@ -1155,7 +1173,7 @@
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="Rozmowa z %@";
 /* Title show above the name of the persons with whom you're chatting */
-"chattingWith"="Chatting with";
+"chattingWith"="Rozmowa z";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA zabezpiecza Twoje rozmowy poprzez szyfrowanie danych po storonie użytkownika.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1234,6 +1252,8 @@
 "openMEGAAndSignInToContinue"="Otwórz MEGA i zapisz się aby kontynuować";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Odrzuć";
+/* Label in login screen to inform about the chat initialization proccess */
+"connecting"="Trwa łączenie...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Niektóre elementy nie mogą być udostępnione na MEGA";
 /* Notification message shown when a transfer failed. Keep colon. */
