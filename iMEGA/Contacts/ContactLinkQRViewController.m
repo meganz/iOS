@@ -292,39 +292,8 @@
     __weak ContactLinkQRViewController *weakSelf = self;
     __weak CustomModalAlertViewController *weakInviteOrDismissModal = inviteOrDismissModal;
     void (^completion)(void) = ^{
-        BOOL isInOutgoingContactRequest = NO;
-        MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
-        for (NSInteger i = 0; i < outgoingContactRequestList.size.integerValue; i++) {
-            MEGAContactRequest *contactRequest = [outgoingContactRequestList contactRequestAtIndex:i];
-            if ([email isEqualToString:contactRequest.targetEmail]) {
-                isInOutgoingContactRequest = YES;
-                break;
-            }
-        }
-        if (isInOutgoingContactRequest) {
-            CustomModalAlertViewController *inviteSentModal = [[CustomModalAlertViewController alloc] init];
-            inviteSentModal.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-            inviteSentModal.image = [UIImage imageNamed:@"inviteSent"];
-            inviteSentModal.viewTitle = AMLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
-            NSString *detailText = AMLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
-            detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:email];
-            inviteSentModal.detail = detailText;
-            inviteSentModal.boldInDetail = email;
-            inviteSentModal.action = AMLocalizedString(@"close", nil);
-            inviteSentModal.dismiss = nil;
-            
-            __weak typeof(CustomModalAlertViewController) *weakInviteSentModal = inviteSentModal;
-            inviteSentModal.completion = ^{
-                [weakInviteSentModal dismissViewControllerAnimated:YES completion:nil];
-                weakSelf.queryInProgress = NO;
-            };
-            [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:^{
-                [weakSelf presentViewController:inviteSentModal animated:YES completion:nil];
-            }];
-        } else {
-            [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd handle:contactLinkHandle delegate:self];
-            [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:nil];
-        }
+        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd handle:contactLinkHandle delegate:self];
+        [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:nil];
     };
     
     void (^onDismiss)(void) = ^{
@@ -339,11 +308,31 @@
         inviteOrDismissModal.action = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
         inviteOrDismissModal.completion = onDismiss;
     } else {
-        inviteOrDismissModal.detail = email;
-        inviteOrDismissModal.action = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
-        inviteOrDismissModal.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
-        inviteOrDismissModal.completion = completion;
-        inviteOrDismissModal.onDismiss = onDismiss;
+        BOOL isInOutgoingContactRequest = NO;
+        MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
+        for (NSInteger i = 0; i < outgoingContactRequestList.size.integerValue; i++) {
+            MEGAContactRequest *contactRequest = [outgoingContactRequestList contactRequestAtIndex:i];
+            if ([email isEqualToString:contactRequest.targetEmail]) {
+                isInOutgoingContactRequest = YES;
+                break;
+            }
+        }
+        if (isInOutgoingContactRequest) {
+            inviteOrDismissModal.image = [UIImage imageNamed:@"inviteSent"];
+            inviteOrDismissModal.viewTitle = AMLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
+            NSString *detailText = AMLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
+            detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:email];
+            inviteOrDismissModal.detail = detailText;
+            inviteOrDismissModal.boldInDetail = email;
+            inviteOrDismissModal.action = AMLocalizedString(@"close", nil);
+            inviteOrDismissModal.completion = onDismiss;
+        } else {
+            inviteOrDismissModal.detail = email;
+            inviteOrDismissModal.action = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
+            inviteOrDismissModal.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+            inviteOrDismissModal.completion = completion;
+            inviteOrDismissModal.onDismiss = onDismiss;
+        }
     }
     
     [self presentViewController:inviteOrDismissModal animated:YES completion:nil];
