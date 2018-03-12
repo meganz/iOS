@@ -14,6 +14,7 @@
 #import "MEGAGetThumbnailRequestDelegate.h"
 
 #import "BrowserViewController.h"
+#import "DisplayMode.h"
 #import "NodeTableViewCell.h"
 
 @interface ChatAttachedNodesViewController ()
@@ -160,7 +161,7 @@
     
     if (self.tableView.isEditing) {
         for (MEGANode *node in self.selectedNodesMutableArray) {
-            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
+            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO  shouldOverwrite:NO];
         }
     }
 }
@@ -215,7 +216,7 @@
         }
         
         for (MEGANode *node in self.selectedNodesMutableArray) {
-            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
+            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:NO];
         }
     }
     
@@ -306,7 +307,7 @@
         return;
     } else {
         if (nodeSelected.name.mnz_isImagePathExtension || nodeSelected.name.mnz_isVideoPathExtension) {
-            [nodeSelected mnz_openImageInNavigationController:self.navigationController withNodes:self.nodesLoadedInChatroom folderLink:NO displayMode:2 enableMoveToRubbishBin:NO];
+            [nodeSelected mnz_openImageInNavigationController:self.navigationController withNodes:self.nodesLoadedInChatroom folderLink:NO displayMode:DisplayModeSharedItem enableMoveToRubbishBin:NO];
         } else {
             [nodeSelected mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
         }

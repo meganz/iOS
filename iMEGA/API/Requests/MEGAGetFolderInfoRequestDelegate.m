@@ -1,20 +1,19 @@
 
-#import "MEGAGetThumbnailRequestDelegate.h"
+#import "MEGAGetFolderInfoRequestDelegate.h"
 
-@interface MEGAGetThumbnailRequestDelegate ()
+@interface MEGAGetFolderInfoRequestDelegate ()
 
 @property (nonatomic, copy) void (^completion)(MEGARequest *request);
 
 @end
 
-@implementation MEGAGetThumbnailRequestDelegate
+@implementation MEGAGetFolderInfoRequestDelegate
 
 - (instancetype)initWithCompletion:(void (^)(MEGARequest *request))completion {
     self = [super init];
-    if (self) {
+    if(self) {
         _completion = completion;
     }
-    
     return self;
 }
 
@@ -27,10 +26,9 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     [super onRequestFinish:api request:request error:error];
     
-    if (error.type) {
+    if (error.type != MEGAErrorTypeApiOk) {
         return;
     }
-    
     if (self.completion) {
         self.completion(request);
     }
