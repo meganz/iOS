@@ -193,10 +193,8 @@
         }
             
         case ContactsModeFolderSharedWith: {
-            UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-            negativeSpaceBarButtonItem.width = [[UIDevice currentDevice] iPadDevice] ? -8.0 : -4.0;
-            NSArray *buttonsItems = @[negativeSpaceBarButtonItem, self.editBarButtonItem];
-            [self.navigationItem setRightBarButtonItems:buttonsItems];
+            self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+            self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
             
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
             self.deleteBarButtonItem.title = AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
@@ -486,7 +484,7 @@
     [self.tableView setEditing:editing animated:animated];
     
     if (editing) {
-        [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
+        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
         [self.addBarButtonItem setEnabled:NO];
         
         [self.toolbar setAlpha:0.0];
@@ -495,7 +493,7 @@
             [self.toolbar setAlpha:1.0];
         }];
     } else {
-        [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
+        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
         self.selectedUsersArray = nil;
         [self.addBarButtonItem setEnabled:YES];
         
@@ -752,12 +750,6 @@
         numberOfRows = self.searchController.isActive ? [self.searchVisibleUsersArray count] : [self.visibleUsersArray count];
     }
     
-    if (numberOfRows == 0) {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    } else {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-    }
-    
     return numberOfRows;
 }
 
@@ -813,12 +805,6 @@
             }
         }
     }
-    
-    UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
-    [cell setSelectedBackgroundView:view];
-    
-    cell.separatorInset = (self.tableView.isEditing) ? UIEdgeInsetsMake(0.0, 96.0, 0.0, 0.0) : UIEdgeInsetsMake(0.0, 58.0, 0.0, 0.0);
     
     if (@available(iOS 11.0, *)) {
         cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
@@ -1063,9 +1049,6 @@
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
-    
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
         if (self.searchController.isActive ) {

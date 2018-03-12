@@ -159,12 +159,6 @@
         }
     }
     
-    if (numberOfRows == 0) {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    } else {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-    }
-    
     return numberOfRows;
 }
 
@@ -206,11 +200,6 @@
             break;
     }
     
-    UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
-    [cell setSelectedBackgroundView:view];
-    cell.separatorInset = UIEdgeInsetsMake(0.0, 58.0, 0.0, 0.0);
-    
     if (@available(iOS 11.0, *)) {
         cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
@@ -233,7 +222,6 @@
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     NSString *text;
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     if ([MEGAReachabilityManager isReachable]) {
         text = AMLocalizedString(@"noRequestPending", nil);
     } else {

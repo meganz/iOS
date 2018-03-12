@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12113" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12078"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -36,9 +36,19 @@
                             <constraint firstAttribute="width" constant="22" id="UGK-y6-tDt"/>
                         </constraints>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7vz-sd-oMc" userLabel="Line View">
+                        <rect key="frame" x="15" y="43" width="305" height="0.0"/>
+                        <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="Dmb-jn-xSt"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="A2d-rI-vKh" firstAttribute="leading" relation="lessThanOrEqual" secondItem="DCd-TM-kb0" secondAttribute="trailing" constant="15" id="196-5N-vQ5"/>
+                    <constraint firstAttribute="trailing" secondItem="7vz-sd-oMc" secondAttribute="trailing" id="6g5-Or-NQY"/>
+                    <constraint firstAttribute="bottom" secondItem="7vz-sd-oMc" secondAttribute="bottom" constant="1" id="Cda-qF-LOM"/>
+                    <constraint firstItem="7vz-sd-oMc" firstAttribute="leading" secondItem="DCd-TM-kb0" secondAttribute="leading" id="Rm4-yv-WXL"/>
                     <constraint firstItem="DCd-TM-kb0" firstAttribute="leading" secondItem="F66-ED-kNv" secondAttribute="leading" constant="15" id="ajK-gT-nZC"/>
                     <constraint firstAttribute="trailing" secondItem="A2d-rI-vKh" secondAttribute="trailing" constant="15" id="b4u-fZ-C40"/>
                     <constraint firstItem="DCd-TM-kb0" firstAttribute="centerY" secondItem="F66-ED-kNv" secondAttribute="centerY" id="dRd-29-jK9"/>
@@ -46,6 +56,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="lineView" destination="7vz-sd-oMc" id="mfb-YB-yab"/>
                 <outlet property="redCheckmarkImageView" destination="A2d-rI-vKh" id="jiX-8W-NBa"/>
                 <outlet property="titleLabel" destination="DCd-TM-kb0" id="YSV-Pf-tQZ"/>
             </connections>
