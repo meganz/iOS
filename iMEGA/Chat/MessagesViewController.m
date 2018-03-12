@@ -83,6 +83,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 @property (nonatomic) UIColor *lastChatRoomStateColor;
 @property (nonatomic) UIImage *peerAvatar;
 
+@property (nonatomic) CGFloat lastBottomInset;
+@property (nonatomic) CGFloat lastVerticalOffset;
+
 @end
 
 @implementation MessagesViewController
@@ -108,6 +111,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     }
     
     self.inputToolbar.contentView.textView.jsq_pasteDelegate = self;
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideInputToolbar)];
+    tapGesture.cancelsTouchesInView = NO;
+    [self.collectionView addGestureRecognizer:tapGesture];
     
     [self customiseCollectionViewLayout];
     
@@ -191,8 +198,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     // Add an observer to get notified when coming back to foreground:
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didBecomeActive)
-                                                 name:UIApplicationDidBecomeActiveNotification
+                                             selector:@selector(willEnterForeground)
+                                                 name:UIApplicationWillEnterForegroundNotification
                                                object:nil];
     
     if (@available(iOS 10.0, *)) {
@@ -215,16 +222,20 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     self.inputToolbar.contentView.textView.text = [[MEGAStore shareInstance] fetchChatDraftWithChatId:self.chatRoom.chatId].text;
 }
 
-- (void)didBecomeActive {
+- (void)willEnterForeground {
     // Workaround to avoid wrong collection view height when coming back to foreground
     if ([self.inputToolbar.contentView.textView isFirstResponder]) {
-        [self.inputToolbar.contentView.textView resignFirstResponder];
-        [self.inputToolbar.contentView.textView becomeFirstResponder];
+        [self jsq_setCollectionViewInsetsTopValue:0.0f bottomValue:self.lastBottomInset];
+        CGPoint offset = self.collectionView.contentOffset;
+        offset.y = self.lastVerticalOffset;
+        self.collectionView.contentOffset = offset;
     }
 }
 
 - (void)willResignActive {
     [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
+    self.lastBottomInset = self.collectionView.scrollIndicatorInsets.bottom;
+    self.lastVerticalOffset = self.collectionView.contentOffset.y;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -285,29 +296,36 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     UILabel *label = [[UILabel alloc] init];
     NSString *chatRoomTitle = self.chatRoom.title ? self.chatRoom.title : @"";
-    if (self.chatRoom.isGroup) {
-        if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
-            label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with")];
-        } else {
-            NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:chatRoomTitle attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-            label.textAlignment = NSTextAlignmentCenter;
-            label.attributedText = titleMutableAttributedString;
-        }
-    } else {
-        NSString *chatRoomState;
-        if ([MEGAReachabilityManager isReachable]) {
-            chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
-            self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
-        } else {
-            chatRoomState = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+    NSString *chatRoomState;
+    
+    MEGAChatConnection connectionState = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
+    switch (connectionState) {
+        case MEGAChatConnectionOffline:
+        case MEGAChatConnectionInProgress:            
+        case MEGAChatConnectionLogging:
+            chatRoomState = AMLocalizedString(@"connecting", nil);
             self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:MEGAChatStatusOffline];
-        }
-        if (chatRoomState) {
-            label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:chatRoomState];
-            self.lastChatRoomStateString = chatRoomState;
-        } else {
-            label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:@""];
-        }
+            
+            break;
+            
+        case MEGAChatConnectionOnline:
+            if (self.chatRoom.isGroup) {
+                if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
+                    chatRoomState = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
+                }
+            } else {
+                chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+                self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+            }
+            
+            break;
+    }
+    
+    if (chatRoomState) {
+        label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:chatRoomState];
+        self.lastChatRoomStateString = chatRoomState;
+    } else {
+        label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:@""];
     }
     
     label.adjustsFontSizeToFitWidth = YES;
@@ -714,6 +732,14 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     if (self.openMessageHeaderView) {
         self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
         self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
+    }
+}
+
+- (void)hideInputToolbar {
+    if (self.inputToolbar.imagePickerView) {
+        [self.inputToolbar mnz_accesoryButtonPressed:self.inputToolbar.imagePickerView.accessoryImageButton];
+    } else if (self.inputToolbar.contentView.textView.isFirstResponder) {
+        [self.inputToolbar mnz_accesoryButtonPressed:self.inputToolbar.contentView.accessoryTextButton];
     }
 }
 
@@ -1296,6 +1322,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
+    [self hideInputToolbar];
+    
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     if (message.type == MEGAChatMessageTypeAttachment) {
         if (message.nodeList.size.unsignedIntegerValue == 1) {
@@ -1334,7 +1362,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapCellAtIndexPath:(NSIndexPath *)indexPath touchLocation:(CGPoint)touchLocation {
-    NSLog(@"Tapped cell at %@!", NSStringFromCGPoint(touchLocation));
+    [self hideInputToolbar];
 }
 
 #pragma mark - JSQMessagesComposerTextViewPasteDelegate methods
@@ -1670,6 +1698,12 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     if (self.openMessageHeaderView) {
         self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
         self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
+    }
+}
+
+- (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
+    if (chatId == self.chatRoom.chatId) {
+        [self customNavigationBarLabel];
     }
 }
 
