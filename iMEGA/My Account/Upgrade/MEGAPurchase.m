@@ -26,7 +26,7 @@
 - (void)requestProducts {
     MEGALogDebug(@"[StoreKit] Request products");
     if ([SKPaymentQueue canMakePayments]) {
-        NSSet *productIdentifieres = [[NSSet alloc] initWithObjects:@"mega.ios.pro1.oneMonth", @"mega.ios.pro1.oneYear", @"mega.ios.pro2.oneMonth", @"mega.ios.pro2.oneYear", @"mega.ios.pro3.oneMonth", @"mega.ios.pro3.oneYear", @"mega.ios.prolite.oneMonth", @"mega.ios.prolite.oneYear", nil];
+        NSSet *productIdentifieres = [[NSSet alloc] initWithObjects:@"mega.new.ios.pro1.oneMonth", @"mega.new.ios.pro1.oneYear", @"mega.new.ios.pro2.oneMonth", @"mega.new.ios.pro2.oneYear", @"mega.new.ios.pro3.oneMonth", @"mega.new.ios.pro3.oneYear", @"mega.ios.prolite.oneMonth", @"mega.ios.prolite.oneYear", nil];
         _products = [[NSMutableArray alloc] initWithCapacity:productIdentifieres.count];
         SKProductsRequest *prodRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:productIdentifieres];
         prodRequest.delegate = self;
