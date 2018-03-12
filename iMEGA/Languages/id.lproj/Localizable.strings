@@ -100,10 +100,32 @@
 "emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Sandi";
+/*  */
+"pleaseStrengthenYourPassword"="Harap perkuat password anda.";
+/* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
+"veryWeak"="Sangat lemah";
+/*  */
+"weak"="Lemah";
+/*  */
+"passwordVeryWeakOrWeak"="Password anda mudah ditebak. Coba untuk membuat password yang lebih panjang. Kombinasikan huruf besar & huruf kecil. Tambahkan sepcial characters. Jangan gunakan nama atau kata yang dapat ditemukan di kamus.";
+/* Label displayed during checking the strength of the password introduced. Represents Medium security */
+"medium"="Sedang";
+/*  */
+"passwordMedium"="Password anda cukup kuat, namun disarankan untuk lebih memperkuat password anda lagi.";
+/*  */
+"good"="Bagus";
+/*  */
+"passwordGood"="Password ini akan menahan serangan brute-force yang paling sering. Harap pastikan bahwa anda akan mengingat password anda.";
+/* Label displayed during checking the strength of the password introduced. Represents Strong security */
+"strong"="Kuat";
+/*  */
+"passwordStrong"="Password ini akan menahan serangan brute-force yang paling rumit. Harap pastikan bahwa anda akan mengingat password anda.";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
 "termsOfServiceButton"="Saya setuju dengan Kebijakan Layanan MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Masukan nama yang benar";
+/*  */
+"invalidFirstNameAndLastName"="Nama depan dan/atau nama belakang tidak valid";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Password berbeda";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -185,11 +207,11 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Tambah kontak";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="Invite Contact";
+"inviteContact"="Undang kontak";
 /* Text shown when the user sends a contact invitation */
-"inviteSent"="Invite Sent";
+"inviteSent"="Undangan terkirim";
 /* Button title to allow the user postpone an action */
-"later"="Later";
+"later"="Nanti";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
 "received"="Diterima";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
@@ -965,15 +987,11 @@
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Pilih salah satu plan dibawah ini:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
-"selectOneAccountType"="Select one account type:";
-/* Text shown in the purchase plan view to explain that annual subscription is 16% cheaper than 12 monthly payments */
-"twoMonthsFree"="Annual subscription is 16% cheaper than 12 monthly payments";
+"selectOneAccountType"="Pilih satu jenis akun:";
+/* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
+"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
-"currentPlan"="Current Plan:";
-/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
-"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
-/* Title text for the account confirmation. */
-"confirm"="Konfirm";
+"currentPlan"="Plan saat ini:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Request plan";
 /* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
@@ -1234,6 +1252,8 @@
 "openMEGAAndSignInToContinue"="Buka MEGA dan masuk untuk melanjutkan";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Ambil kembali";
+/* Label in login screen to inform about the chat initialization proccess */
+"connecting"="Menghubungkan...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Beberapa item tidak dapat di share dengan MEGA";
 /* Notification message shown when a transfer failed. Keep colon. */

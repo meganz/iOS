@@ -29,9 +29,9 @@
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="Dai il permesso all'app MEGA di accedere alla videocamera in Impostazioni";
 /* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
-"cameraPermissionsInCall"="Please give MEGA app permission to access your Camera in your Settings. In case you proceed the call will end because the app will be restarted.";
+"cameraPermissionsInCall"="Per favore, dai a MEGA il permesso di accedere alla tua Fotocamera nelle tue Impostazioni. Nel caso in cui tu lo faccia, la chiamata verrà interrotta perché l'applicazione verrà riavviata.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
+"microphonePermissions"="Per favore, dai a MEGA il permesso di accedere al tuo Microfono nelle tue Impostazioni";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Dai il permesso all'app MEGA di accedere alle foto in Impostazioni";
 /* Alert message shown when the user tries to download an empty folder  */
@@ -100,10 +100,32 @@
 "emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Password";
+/*  */
+"pleaseStrengthenYourPassword"="Inserisci una password più sicura.";
+/* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
+"veryWeak"="Molto debole";
+/*  */
+"weak"="Debole";
+/*  */
+"passwordVeryWeakOrWeak"="La tua password è facilmente intuibile. Rendi la tua password più lunga. Combina lettere maiuscole e minuscole. Aggiungi caratteri speciali. Non utilizzare nomi o parole del dizionario";
+/* Label displayed during checking the strength of the password introduced. Represents Medium security */
+"medium"="Media";
+/*  */
+"passwordMedium"="La tua password è abbastanza sicura per procedere, ma ti raccomandiamo di rafforzarla ulteriormente in futuro.";
+/*  */
+"good"="Buono";
+/*  */
+"passwordGood"="Questa password può resistere agli attacchi più tipici di brute-force. Assicurati di ricordarla.";
+/* Label displayed during checking the strength of the password introduced. Represents Strong security */
+"strong"="Sicura";
+/*  */
+"passwordStrong"="Questa password può resistere agli attacchi più tipici di brute-force. Assicurati di ricordarla.";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
 "termsOfServiceButton"="Accetto i termini di servizio di MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Inserisci un nome valido";
+/*  */
+"invalidFirstNameAndLastName"="Nome e/o cognome non validi.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Le password non combaciano";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -966,14 +988,10 @@
 "choosePlan"="Scegli uno dei piani elencati sotto:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Seleziona un tipo di account:";
-/* Text shown in the purchase plan view to explain that annual subscription is 16% cheaper than 12 monthly payments */
-"twoMonthsFree"="Annual subscription is 16% cheaper than 12 monthly payments";
+/* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
+"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Piano corrente:";
-/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
-"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
-/* Title text for the account confirmation. */
-"confirm"="Conferma";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Richiedi un piano";
 /* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
@@ -1234,6 +1252,8 @@
 "openMEGAAndSignInToContinue"="Apri MEGA e accedi per continuare";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Revoca";
+/* Label in login screen to inform about the chat initialization proccess */
+"connecting"="Connessione in corso...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Alcuni oggetti potrebbero non essere condivisi con MEGA";
 /* Notification message shown when a transfer failed. Keep colon. */
@@ -1301,10 +1321,10 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="All'interno dell'app puoi aumentare il tuo spazio di archiviazione e la tua banda di trasferimento con un abbonamento mensile o annuale.";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Abbonamento PRO LITE: €4.99 ($4.99) al mese o €49.99 ($49.99) all'anno ti dà 200GB di spazio di archiviazione e 1TB di larghezza di banda al mese.Abbonamento PRO I: €9.99 ($9.99) al mese o €99.99 ($99.99) all'anno ti dà 1TB di spazio di archiviazione e 2TB di larghezza di banda al mese.Abbonamento PRO II: €19.99 ($19.99) al mese o €199.99 ($199.99) all'anno ti dà 4TB di spazio di archiviazione ed 8TB di larghezza di banda al mese.Abbonamento PRO III: €29.99 ($29.99) al mese o €299.99 ($299.99) all'anno ti dà 8TB di spazio di archiviazione e 16TB di larghezza di banda al mese.";
+"generalDescriptionParagraph5"="Abbonamento PRO LITE: €4.99 (US$4.99) al mese o €49.99 (US$49.99) l'anno ti danno 200 GB di spazio di archiviazione e 1 TB di banda di trasferimento mensile.\n Abbonamento PRO I: €9.99 (US$9.99) al mese o €99.99 (US$99.99) l'anno ti danno 1 TB di spazio di archiviazione e 2 TB di banda di trasferimento mensile.\n Abbonamento PRO II: €19.99 (US$19.99) al mese o €199.99 (US$199.99) l'anno ti danno 4 TB di spazio di archiviazione e 8 TB di banda di trasferimento mensile.\n Abbonamento PRO III: €29.99 (US$29.99) al mese o €299.99 (US$299.99) l'anno ti danno 8 TB di spazio di archiviazione e 16 TB di banda di trasferimento mensile.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Per più informazioni, per favore visita il nostro sito web:Mobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmlDesktop - https://mega.nz/";
+"generalDescriptionParagraph6"="Per più informazioni, per favore visita il nostro sito web:\nMobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nDesktop - https://mega.nz/";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="Chiamata in corso...";
 /* Notification text body shown when you have missed one audio call */
@@ -1324,4 +1344,4 @@
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
 "missedAudioCallsAndMissedVideoCalls"="[A] ha perso una chiamata audio e [B] ha perso una chiamata video";
 /* Button title to see the available bonus */
-"getBonus"="Get Bonus";
+"getBonus"="Ottieni il bonus";

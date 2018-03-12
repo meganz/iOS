@@ -90,8 +90,10 @@
         MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:session];
         switch (chatInit) {
             case MEGAChatInitNoCache: {
+                [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
                 [[MEGASdkManager sharedMEGASdk] fetchNodes];
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
+                [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateInProgress;
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 break;
             }
@@ -217,6 +219,7 @@
     }
     
     [self onlineStatus];
+    [self.tableView reloadData];
 }
 
 #pragma mark - MEGAChatRequestDelegate
@@ -227,6 +230,7 @@
             if (error.type) return;
             
             [self.tableView reloadData];
+            [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateOffline;
             break;
         }
             
