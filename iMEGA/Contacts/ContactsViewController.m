@@ -22,6 +22,7 @@
 #import "UIImageView+MNZCategory.h"
 
 #import "ContactDetailsViewController.h"
+#import "ContactLinkQRViewController.h"
 #import "ContactTableViewCell.h"
 #import "ShareFolderActivity.h"
 
@@ -114,11 +115,8 @@
     
     if (self.contactsMode == ContactsModeDefault) {
         MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
-        self.contactRequestsBarButtonItem.badgeBGColor = [UIColor mnz_green00BFA5];
-        [self.contactRequestsBarButtonItem setBadgeValue:[NSString stringWithFormat:@"%d", incomingContactsLists.size.intValue]];
-        if (@available(iOS 11.0, *)) {
-            self.contactRequestsBarButtonItem.badgeOriginY = 0.0f;
-        }
+        [self setContactRequestBarButtomItemWithValue:incomingContactsLists.size.integerValue];
+        
         if (!self.pendingRequestsPresented && incomingContactsLists.size.intValue > 0) {
             UINavigationController *contactRequestsNC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsNavigationControllerID"];
             [self presentViewController:contactRequestsNC animated:YES completion:nil];
@@ -164,7 +162,7 @@
     switch (self.contactsMode) {
         case ContactsModeDefault: {
             NSArray *buttonsItems = @[self.addBarButtonItem, self.contactRequestsBarButtonItem];
-            self.navigationItem.rightBarButtonItems = buttonsItems;            
+            self.navigationItem.rightBarButtonItems = buttonsItems;
             break;
         }
             
@@ -526,6 +524,18 @@
     return user;
 }
 
+- (void)setContactRequestBarButtomItemWithValue:(NSInteger)value {
+    self.contactRequestsBarButtonItem.badgeBGColor = [UIColor whiteColor];
+    self.contactRequestsBarButtonItem.badgeTextColor = [UIColor mnz_redF0373A];
+    self.contactRequestsBarButtonItem.badgeFont = [UIFont mnz_SFUIMediumWithSize:11.0f];
+    self.contactRequestsBarButtonItem.shouldAnimateBadge = NO;
+    if (@available(iOS 11.0, *)) {
+        self.contactRequestsBarButtonItem.badgeOriginY = 0.0f;
+    }
+    
+    self.contactRequestsBarButtonItem.badgeValue = [NSString stringWithFormat:@"%ld", (long)value];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -549,7 +559,7 @@
 }
 
 - (IBAction)addContact:(UIButton *)sender {
-    UIAlertController *addContactAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *addContactAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [addContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     UIAlertAction *addFromEmailAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addFromEmail", @"Item menu option to add a contact writting his/her email") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -591,6 +601,14 @@
     }];
     [addFromContactsAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [addContactAlertController addAction:addFromContactsAlertAction];
+    
+    UIAlertAction *scanCodeAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"scanCode", @"Segmented control title for view that allows the user to scan QR codes. String as short as possible.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
+        contactLinkVC.scanCode = YES;
+        [self presentViewController:contactLinkVC animated:YES completion:nil];
+    }];
+    [scanCodeAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [addContactAlertController addAction:scanCodeAlertAction];
     
     addContactAlertController.modalPresentationStyle = UIModalPresentationPopover;
     if (self.addBarButtonItem) {
@@ -1218,11 +1236,7 @@
 
 - (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
     MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
-    self.contactRequestsBarButtonItem.badgeBGColor = [UIColor mnz_green00BFA5];
-    self.contactRequestsBarButtonItem.badgeValue = [NSString stringWithFormat:@"%d", incomingContactsLists.size.intValue];
-    if (@available(iOS 11.0, *)) {
-        self.contactRequestsBarButtonItem.badgeOriginY = 0.0f;
-    }
+    [self setContactRequestBarButtomItemWithValue:incomingContactsLists.size.integerValue];
 }
 
 @end
