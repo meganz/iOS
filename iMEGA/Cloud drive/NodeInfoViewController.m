@@ -18,6 +18,7 @@
 #import "DisplayMode.h"
 #import "BrowserViewController.h"
 #import "NodeVersionsViewController.h"
+#import "MEGAGetFolderInfoRequestDelegate.h"
 
 @interface MegaNodeProperty : NSObject
 
@@ -39,7 +40,7 @@
 
 @end
 
-@interface NodeInfoViewController () <UITableViewDelegate, UITableViewDataSource, CustomActionViewControllerDelegate, MEGADelegate>
+@interface NodeInfoViewController () <UITableViewDelegate, UITableViewDataSource, CustomActionViewControllerDelegate, MEGAGlobalDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
@@ -61,7 +62,7 @@
     
     self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label. The button allows the user to close the conversation.");
     
-    [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
+    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
 }
 
@@ -71,14 +72,17 @@
     [self reloadUI];
     
     if (self.node.isFolder && !self.folderInfo) {
-        [[MEGASdkManager sharedMEGASdk] getFolderInfoForNode:self.node];
+        MEGAGetFolderInfoRequestDelegate *delegate = [[MEGAGetFolderInfoRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+            self.folderInfo = request.megaFolderInfo;
+            [self reloadUI];
+        }];
+        [[MEGASdkManager sharedMEGASdk] getFolderInfoForNode:self.node delegate:delegate];
     }
 }
 
 #pragma mark - Layout
 
 - (void)reloadUI {
-    self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.node.handle];
 
     self.nodeProperties = [self nodePropertyCells];
 
@@ -135,7 +139,6 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%@", indexPath);
     switch (indexPath.section) {
             
         case 0:
@@ -244,7 +247,7 @@
 #pragma mark - Actions
 
 - (IBAction)closeTapped:(UIBarButtonItem *)sender {
-    [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
+    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -277,7 +280,7 @@
     
     if (self.node.isFile) {
         if (self.node.mnz_numberOfVersions != 0) {
-            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[NSByteCountFormatter stringFromByteCount:self.node.mnz_versionsSize.longLongValue countStyle:NSByteCountFormatterCountStyleMemory]]];
+            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[NSByteCountFormatter stringFromByteCount:self.node.mnz_versionsSize countStyle:NSByteCountFormatterCountStyleMemory]]];
             [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file") value:[Helper sizeForNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
         } else {
             [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[Helper sizeForNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
@@ -390,6 +393,7 @@
 }
 
 - (void)showParentNode {
+    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
     [self dismissViewControllerAnimated:YES completion:^{
         if ([self.nodeInfoDelegate respondsToSelector:@selector(presentParentNode:)]) {
             [self.nodeInfoDelegate presentParentNode:[[MEGASdkManager sharedMEGASdk] parentNodeForNode:self.node]];
@@ -520,14 +524,6 @@
                 }
                 break;
         }
-    }
-}
-
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if (request.type == MEGARequestTypeFolderInfo && error.type == MEGAErrorTypeApiOk) {
-        self.folderInfo = request.megaFolderInfo;
-        [self reloadUI];
     }
 }
 

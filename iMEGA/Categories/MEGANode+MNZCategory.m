@@ -488,14 +488,14 @@
     return [[[MEGASdkManager sharedMEGASdk] versionsForNode:self] mnz_nodesArrayFromNodeList];
 }
 
-- (NSNumber *)mnz_versionsSize {
-    float totalSize = 0;
+- (long long)mnz_versionsSize {
+    long long totalSize = 0;
     NSArray *versions = [self mnz_versions];
     for (MEGANode *versionNode in versions) {
         totalSize += versionNode.size.floatValue;
     }
     
-    return [NSNumber numberWithFloat:totalSize];
+    return totalSize;
 }
 
 #pragma mark - UITextFieldDelegate
