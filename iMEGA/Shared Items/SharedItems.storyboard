@@ -87,7 +87,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="bc0-wE-0j5">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="bc0-wE-0j5">
                                 <rect key="frame" x="0.0" y="44" width="375" height="510"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
@@ -95,7 +95,7 @@
                                         <rect key="frame" x="0.0" y="22" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SaV-xG-Opx" id="gwY-ut-l2M">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ezv-Ua-cSf" userLabel="Main View">
@@ -153,15 +153,25 @@
                                                                 <action selector="infoTouchUpInside:" destination="2AR-na-hSZ" eventType="touchUpInside" id="93d-dk-EKl"/>
                                                             </connections>
                                                         </button>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GER-3S-KNR" userLabel="Line View">
+                                                            <rect key="frame" x="64" y="59" width="311" height="0.0"/>
+                                                            <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="0.5" id="r0N-zY-IZf"/>
+                                                            </constraints>
+                                                        </view>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstItem="V39-yb-rzt" firstAttribute="centerY" secondItem="ezv-Ua-cSf" secondAttribute="centerY" id="1k4-og-rjh"/>
+                                                        <constraint firstAttribute="trailing" secondItem="GER-3S-KNR" secondAttribute="trailing" id="4Js-Ct-P6n"/>
                                                         <constraint firstItem="B3N-a7-lQZ" firstAttribute="leading" secondItem="lak-r6-LG2" secondAttribute="leading" id="5Hc-fV-cUR"/>
                                                         <constraint firstItem="kGf-9q-GJz" firstAttribute="leading" secondItem="B3N-a7-lQZ" secondAttribute="trailing" constant="11" id="6Zj-Go-cl1"/>
                                                         <constraint firstItem="B3N-a7-lQZ" firstAttribute="leading" secondItem="d1A-d3-Oot" secondAttribute="trailing" constant="8" symbolic="YES" id="7We-2r-2bo"/>
+                                                        <constraint firstItem="GER-3S-KNR" firstAttribute="leading" secondItem="lak-r6-LG2" secondAttribute="leading" id="A0a-re-8R9"/>
                                                         <constraint firstAttribute="centerY" secondItem="d1A-d3-Oot" secondAttribute="centerY" id="BAh-Sa-uKc"/>
                                                         <constraint firstItem="B3N-a7-lQZ" firstAttribute="trailing" secondItem="lak-r6-LG2" secondAttribute="trailing" id="GSA-8q-J05"/>
+                                                        <constraint firstAttribute="bottom" secondItem="GER-3S-KNR" secondAttribute="bottom" constant="1" id="IPc-OO-Ix6"/>
                                                         <constraint firstAttribute="trailing" secondItem="V39-yb-rzt" secondAttribute="trailing" id="KZm-Vm-qkW"/>
                                                         <constraint firstItem="d1A-d3-Oot" firstAttribute="leading" secondItem="ezv-Ua-cSf" secondAttribute="leading" constant="16" id="Mr4-qt-CSU"/>
                                                         <constraint firstAttribute="height" constant="60" id="QDT-qk-l2n"/>
@@ -184,6 +194,7 @@
                                         <connections>
                                             <outlet property="infoButton" destination="V39-yb-rzt" id="ZA6-o2-oOG"/>
                                             <outlet property="infoLabel" destination="lak-r6-LG2" id="BFa-jB-0gX"/>
+                                            <outlet property="lineView" destination="GER-3S-KNR" id="xin-aR-U3k"/>
                                             <outlet property="nameLabel" destination="B3N-a7-lQZ" id="f9J-Eh-dLs"/>
                                             <outlet property="permissionsButton" destination="kGf-9q-GJz" id="drq-Ew-BfS"/>
                                             <outlet property="thumbnailImageView" destination="d1A-d3-Oot" id="ywR-VK-c1E"/>
@@ -227,12 +238,12 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0c6-5i-11D" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <barButtonItem image="check_mark" width="22" id="CK5-xo-5rw" userLabel="Check Mark Bar Button Item">
+                <barButtonItem image="selectAll" width="22" id="CK5-xo-5rw" userLabel="Select All Bar Button Item">
                     <connections>
                         <action selector="selectAllAction:" destination="2AR-na-hSZ" id="Nrq-Bj-fhr"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="edit" width="22" style="plain" id="5z2-p0-4RD" userLabel="Edit Bar Button Item">
+                <barButtonItem title="Edit" width="22" style="plain" id="5z2-p0-4RD" userLabel="Edit Bar Button Item">
                     <connections>
                         <action selector="editTapped:" destination="2AR-na-hSZ" id="un2-ST-0gb"/>
                     </connections>
@@ -286,14 +297,13 @@
         </scene>
     </scenes>
     <resources>
-        <image name="check_mark" width="29" height="29"/>
         <image name="copy" width="32" height="32"/>
         <image name="download" width="32" height="32"/>
-        <image name="edit" width="22" height="22"/>
         <image name="leaveShare" width="32" height="32"/>
         <image name="nodeInfo" width="46" height="44"/>
         <image name="readPermissions" width="46" height="44"/>
         <image name="removeShare" width="32" height="32"/>
+        <image name="selectAll" width="22" height="22"/>
         <image name="shareGray" width="32" height="32"/>
         <image name="shareWith" width="38" height="32"/>
         <image name="sharedItemsIcon" width="29" height="26"/>

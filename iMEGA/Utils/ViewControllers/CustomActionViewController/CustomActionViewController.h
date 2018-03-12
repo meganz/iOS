@@ -1,7 +1,7 @@
 
 #import <UIKit/UIKit.h>
-#import "CloudDriveTableViewController.h"
-#import "MEGANode+MNZCategory.h"
+
+#import "DisplayMode.h"
 #import "MegaNodeActionType.h"
 
 @protocol CustomActionViewControllerDelegate <NSObject>
@@ -17,6 +17,7 @@
 @property (nonatomic, getter=isIncomingShareChildView) BOOL incomingShareChildView;
 @property (weak, nonatomic) id<CustomActionViewControllerDelegate> actionDelegate;
 @property (nonatomic, strong) id actionSender;
+@property (strong, nonatomic) NSArray *excludedActions;
 
 @end
 
