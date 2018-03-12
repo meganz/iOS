@@ -146,8 +146,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[MEGALogger sharedLogger] startLogging];
     }
     
-    MEGALogDebug(@"Application did finish launching with options %@", launchOptions);
-    
     _signalActivityRequired = NO;
     
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
@@ -361,7 +359,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
         }
     }
-
+    
+    MEGALogDebug(@"Application did finish launching with options %@", launchOptions);
+    
     return YES;
 }
 
@@ -437,11 +437,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         
         NSError *error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:[[NSFileManager defaultManager] downloadsDirectory] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error)
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
         
         if (![[NSFileManager defaultManager] removeItemAtPath:[[NSFileManager defaultManager] uploadsDirectory] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error)
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
 }
@@ -1153,7 +1153,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             if ([item.pathExtension.lowercaseString isEqualToString:@"mega"]) {
                 NSError *error = nil;
                 if (![[NSFileManager defaultManager] removeItemAtPath:[directory stringByAppendingPathComponent:item] error:&error]) {
-                    MEGALogError(@"Remove item at path failed with error: %@", error)
+                    MEGALogError(@"Remove item at path failed with error: %@", error);
                 }
             }
         }
@@ -1663,11 +1663,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)application:(UIApplication *)application shouldHideWindows:(BOOL)shouldHide {
     for (UIWindow *window in application.windows) {
         if ([NSStringFromClass(window.class) isEqualToString:@"UIRemoteKeyboardWindow"] || [NSStringFromClass(window.class) isEqualToString:@"UITextEffectsWindow"]) {
-            if (shouldHide) {
-                window.frame = CGRectMake(0, 0, 0, 0);
-            } else {
-                window.frame = [[UIScreen mainScreen] bounds];
-            }
+            window.hidden = shouldHide;
         }
     }
 }
@@ -2237,7 +2233,11 @@ void uncaughtExceptionHandler(NSException *exception) {
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
                 [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self.mainTBC];
                 
-                [[MEGASdkManager sharedMEGAChatSdk] connect];
+                if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
+                    [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
+                } else {
+                    [[MEGASdkManager sharedMEGAChatSdk] connect];
+                }
                 if (isAccountFirstLogin) {
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
                 }
@@ -2490,6 +2490,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     MEGALogInfo(@"onChatConnectionStateUpdate: %@, new state: %d", [MEGASdk base64HandleForUserHandle:chatId], newState);
     if (self.chatRoom.chatId == chatId && newState == MEGAChatConnectionOnline) {
         [self performCall];
+    }
+    // INVALID_HANDLE = ~(uint64_t)0
+    if (chatId == ~(uint64_t)0 && newState == MEGAChatConnectionOnline) {
+        [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateOnline;
+    } else if (newState >= MEGAChatConnectionLogging) {
+        [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateInProgress;
     }
 }
 

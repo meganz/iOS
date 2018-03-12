@@ -100,10 +100,32 @@
 "emailPlaceholder"="이메일";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="비밀번호";
+/*  */
+"pleaseStrengthenYourPassword"="더 강력한 비밀번호를 입력하세요.";
+/* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
+"veryWeak"="매우 약함";
+/*  */
+"weak"="약함";
+/*  */
+"passwordVeryWeakOrWeak"="당신의 비밀번호는 쉽게 추측됩니다. 비밀번호를 더 길게 만드세요. 대문자와 소문자를 조합하세요. 특수 문자를 삽입하세요. 이름이나 사전적 단어를 사용하지 마세요.";
+/* Label displayed during checking the strength of the password introduced. Represents Medium security */
+"medium"="보통";
+/*  */
+"passwordMedium"="당신의 비밀번호는 진행하기에 충분히 좋습니다, 하지만 비밀번호를 더 강력하게 만드는 것을 추천합니다.";
+/*  */
+"good"="좋음";
+/*  */
+"passwordGood"="이 비밀번호는 대부분의 보통 무한 대입 공격을 버틸 것입니다. 확실히 기억해두세요.";
+/* Label displayed during checking the strength of the password introduced. Represents Strong security */
+"strong"="강함";
+/*  */
+"passwordStrong"="이 비밀번호는 대부분의 정교한 무한 대입 공격을 버틸 것입니다. 확실히 기억해두세요.";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
 "termsOfServiceButton"="MEGA의 이용 약관에 동의합니다";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="올바른 이름을 입력하세요";
+/*  */
+"invalidFirstNameAndLastName"="이름 또는 성이 잘못 되었습니다.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="비밀번호가 일치하지 않습니다";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -1151,7 +1173,7 @@
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="%@님과 대화";
 /* Title show above the name of the persons with whom you're chatting */
-"chattingWith"="Chatting with";
+"chattingWith"="대화중인 사람";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA는 당신의 대화 근본적 안전 보증을 제공하는 종단간 (이용자가 통제하는) 암호화를 통해 보호합니다.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1230,6 +1252,8 @@
 "openMEGAAndSignInToContinue"="계속하려면 MEGA를 열고 로그인하세요";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="철회";
+/* Label in login screen to inform about the chat initialization proccess */
+"connecting"="연결중...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="일부 항목이 MEGA로 공유될 수 없습니다.";
 /* Notification message shown when a transfer failed. Keep colon. */
