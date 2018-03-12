@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Osn-De-bku">
-    <device id="ipad9_7" orientation="landscape">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14087.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Osn-De-bku">
+    <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14075.4"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,11 +24,11 @@
                         <viewControllerLayoutGuide type="bottom" id="eJ4-F9-xrP"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="qAU-co-j9W">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="704"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Isg-Gr-mnR">
-                                <rect key="frame" x="0.0" y="46" width="1024" height="658"/>
+                                <rect key="frame" x="0.0" y="46" width="375" height="557"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="bcX-sw-OPy" customClass="MEGACollectionViewFlowLayout">
                                     <size key="itemSize" width="120" height="120"/>
@@ -78,6 +78,11 @@
                                                         </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" red="1" green="0.20000000000000001" blue="0.22745098039215686" alpha="0.47999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                            <integer key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </view>
                                             </subviews>
                                         </view>
@@ -99,7 +104,7 @@
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="photosHeaderId" reuseIdentifier="photoHeaderId" id="rT5-lt-gbb" customClass="HeaderCollectionReusableView">
-                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="30"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P5z-Zy-8op">
@@ -120,7 +125,7 @@
                                     </connections>
                                 </collectionReusableView>
                                 <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoFooterId" id="dPX-DK-2Ol">
-                                    <rect key="frame" x="0.0" y="152" width="1024" height="20"/>
+                                    <rect key="frame" x="0.0" y="152" width="375" height="20"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionReusableView>
                                 <connections>
@@ -129,18 +134,18 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l6a-Jy-M7v">
-                                <rect key="frame" x="0.0" y="-46" width="1024" height="46"/>
+                                <rect key="frame" x="0.0" y="-46" width="375" height="46"/>
                                 <color key="backgroundColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="nkn-cS-Phb"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nyf-uB-Tb3">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="46"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="46"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zhm-WP-YFw">
-                                        <rect key="frame" x="748" y="14" width="259" height="18"/>
+                                        <rect key="frame" x="266" y="14" width="92" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                         <state key="normal" title="Disable">
@@ -151,7 +156,7 @@
                                         </connections>
                                     </button>
                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="LTG-PV-qaW">
-                                        <rect key="frame" x="12" y="30" width="686" height="3"/>
+                                        <rect key="frame" x="12" y="30" width="246" height="3"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="trackTintColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
@@ -192,11 +197,18 @@
                     </view>
                     <tabBarItem key="tabBarItem" tag="1" title="" image="cameraUploadsIcon" id="Fsw-2B-D8x"/>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="hxz-Hg-nRC"/>
+                    <navigationItem key="navigationItem" id="hxz-Hg-nRC">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" width="22" id="jcN-8Q-JdP" userLabel="Edit Bar Button Item">
+                            <connections>
+                                <action selector="editTapped:" destination="3GS-cK-Hw6" id="HKt-xR-Avl"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="carbonCopyBarButtonItem" destination="wpV-mF-Nm9" id="VIA-QO-arM"/>
                         <outlet property="deleteBarButtonItem" destination="bVv-a0-Fx7" id="BwD-Lu-tJf"/>
                         <outlet property="downloadBarButtonItem" destination="mZb-63-wxw" id="I4p-73-knY"/>
+                        <outlet property="editBarButtonItem" destination="jcN-8Q-JdP" id="hg4-YD-HM9"/>
                         <outlet property="moveBarButtonItem" destination="k2g-A4-j6f" id="sR6-Zh-J43"/>
                         <outlet property="photosCollectionView" destination="Isg-Gr-mnR" id="apN-It-bKY"/>
                         <outlet property="photosUploadedLabel" destination="s3z-Mc-fCp" id="MEP-6E-Odf"/>
@@ -209,11 +221,6 @@
                         <outlet property="toolbar" destination="qZy-vw-98U" id="kqk-6K-svX"/>
                     </connections>
                 </viewController>
-                <barButtonItem image="check_mark" id="gRA-OU-vS7" userLabel="Select All Bar Button Item">
-                    <connections>
-                        <action selector="selectAllAction:" destination="3GS-cK-Hw6" id="XId-i9-9Xl"/>
-                    </connections>
-                </barButtonItem>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="qZy-vw-98U">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -257,6 +264,11 @@
                     <color key="tintColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </toolbar>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NUj-Pt-2Vj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <barButtonItem image="selectAll" id="gRA-OU-vS7" userLabel="Select All Bar Button Item">
+                    <connections>
+                        <action selector="selectAllAction:" destination="3GS-cK-Hw6" id="XId-i9-9Xl"/>
+                    </connections>
+                </barButtonItem>
             </objects>
             <point key="canvasLocation" x="1702.734375" y="451.5625"/>
         </scene>
@@ -267,7 +279,7 @@
                     <tabBarItem key="tabBarItem" tag="1" title="" image="cameraUploadsIcon" id="9PP-sR-Gh2"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="o0V-gx-grO">
-                        <rect key="frame" x="0.0" y="20" width="1024" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
@@ -289,18 +301,18 @@
                         <viewControllerLayoutGuide type="bottom" id="ueo-VE-WS0"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Rf7-1t-7Zq">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="704"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Automatically backup your photos to the Cloud Drive" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vnD-OB-rty">
-                                <rect key="frame" x="-5" y="20" width="1032" height="14"/>
+                                <rect key="frame" x="-2" y="20" width="378" height="14"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                 <color key="textColor" red="0.60000002384185791" green="0.60000002384185791" blue="0.60000002384185791" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="inc-er-uaq">
-                                <rect key="frame" x="394" y="580" width="242" height="42"/>
+                                <rect key="frame" x="67" y="479" width="242" height="42"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.30196079611778259" blue="0.32156863808631897" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="16"/>
@@ -318,7 +330,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vAc-18-aEo">
-                                <rect key="frame" x="394" y="638" width="242" height="46"/>
+                                <rect key="frame" x="67" y="537" width="242" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="0.93333333730697632" green="0.93333333730697632" blue="0.93333333730697632" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="16"/>
@@ -336,21 +348,21 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" fixedFrame="YES" placeholderIntrinsicWidth="237" placeholderIntrinsicHeight="260" image="emptyCameraUploads" translatesAutoresizingMaskIntoConstraints="NO" id="djp-QD-Fzh">
-                                <rect key="frame" x="240" y="42" width="546" height="432"/>
+                                <rect key="frame" x="88" y="42" width="200" height="331"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
                                 </accessibility>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" fixedFrame="YES" text="Upload videos" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lh4-9k-L1x">
-                                <rect key="frame" x="39" y="491" width="242" height="31"/>
+                                <rect key="frame" x="39" y="390" width="242" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                 <color key="textColor" red="0.46666666870000001" green="0.46666666870000001" blue="0.46666666870000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="fUE-j7-GEh">
-                                <rect key="frame" x="936" y="491" width="51" height="31"/>
+                                <rect key="frame" x="287" y="390" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <color key="onTintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
@@ -358,14 +370,14 @@
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" fixedFrame="YES" text="Use Mobile Data" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fAH-PT-gIC">
-                                <rect key="frame" x="39" y="530" width="242" height="31"/>
+                                <rect key="frame" x="39" y="429" width="242" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                 <color key="textColor" red="0.46666666870000001" green="0.46666666870000001" blue="0.46666666870000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="751" verticalCompressionResistancePriority="753" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="CuB-uo-3df">
-                                <rect key="frame" x="936" y="530" width="51" height="31"/>
+                                <rect key="frame" x="287" y="429" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <color key="onTintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
@@ -397,7 +409,7 @@
                 <navigationController storyboardIdentifier="CameraUploadsPopUpNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" id="37X-KQ-TGF" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="e0Q-gH-Idh">
-                        <rect key="frame" x="0.0" y="20" width="1024" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
@@ -413,12 +425,12 @@
     </scenes>
     <resources>
         <image name="cameraUploadsIcon" width="30" height="24"/>
-        <image name="check_mark" width="29" height="29"/>
         <image name="copy" width="32" height="32"/>
         <image name="download" width="32" height="32"/>
         <image name="emptyCameraUploads" width="237" height="260"/>
         <image name="move" width="32" height="32"/>
         <image name="rubbishBin" width="32" height="32"/>
+        <image name="selectAll" width="22" height="22"/>
         <image name="shareGray" width="32" height="32"/>
         <image name="video_list" width="22" height="22"/>
         <image name="white_checkmark" width="12" height="12"/>

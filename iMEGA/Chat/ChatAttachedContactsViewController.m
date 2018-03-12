@@ -63,6 +63,7 @@
 
 - (void)setupAttachedContacts {
     self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
+    self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     
     self.addBarButtonItem.title = AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
@@ -139,10 +140,10 @@
     [self.tableView setEditing:editing animated:animated];
     
     if (editing) {
-        self.editBarButtonItem.image = [UIImage imageNamed:@"done"];
+        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
         self.addBarButtonItem.enabled = NO;
     } else {
-        self.editBarButtonItem.image = [UIImage imageNamed:@"edit"];
+        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
         self.addBarButtonItem.enabled = YES;
         
         [self.selectedUsersMutableArray removeAllObjects];
@@ -219,8 +220,6 @@
         numberOfRows = self.message.usersCount;
     }
     
-    self.tableView.separatorStyle = (numberOfRows == 0) ? UITableViewCellSeparatorStyleNone : UITableViewCellSeparatorStyleSingleLine;
-    
     return numberOfRows;
 }
 
@@ -253,12 +252,6 @@
             }
         }
     }
-    
-    UIView *view = [[UIView alloc] init];
-    view.backgroundColor = [UIColor mnz_grayF7F7F7];
-    cell.selectedBackgroundView = view;
-    
-    cell.separatorInset = (self.tableView.isEditing) ? UIEdgeInsetsMake(0.0, 96.0, 0.0, 0.0) : UIEdgeInsetsMake(0.0, 58.0, 0.0, 0.0);
     
     return cell;
 }

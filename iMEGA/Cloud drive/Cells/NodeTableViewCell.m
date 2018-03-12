@@ -13,12 +13,30 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
-    if (editing) {
-        self.separatorInset = UIEdgeInsetsMake(0, 100, 0, 0);
-        self.cancelButton.hidden = YES;
-    } else {
-        self.separatorInset = UIEdgeInsetsMake(0, 60, 0, 0);
-        self.cancelButton.hidden = NO;
+    self.cancelButton.hidden = editing;
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+    
+    if (selected) {
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = [UIColor whiteColor];
+        self.selectedBackgroundView = view;
+        
+         self.lineView.backgroundColor = [UIColor mnz_grayCCCCCC];
+    }
+}
+
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+    [super setHighlighted:highlighted animated:animated];
+
+    if (highlighted) {
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = [UIColor mnz_grayF7F7F7];
+        self.selectedBackgroundView = view;
+        
+        self.lineView.backgroundColor = [UIColor mnz_grayCCCCCC];
     }
 }
 
@@ -26,7 +44,7 @@
     self.cancelButton.hidden = hide;
 }
 
-#pragma mark - Private
+#pragma mark - IBActions
 
 - (IBAction)cancelTransfer:(id)sender {
     NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:[MEGASdk base64HandleForHandle:self.nodeHandle]];

@@ -20,7 +20,7 @@
         <scene sceneID="MZy-Qo-rqg">
             <objects>
                 <tableViewController storyboardIdentifier="OfflineTableViewControllerID" id="0p4-DV-Tt4" customClass="OfflineTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="6pL-lw-K6C">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="6pL-lw-K6C">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -29,7 +29,7 @@
                                 <rect key="frame" x="0.0" y="22" width="375" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="OxW-nm-qxP" id="Ipo-hV-DSj">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4HD-wS-vT1">
@@ -67,19 +67,29 @@
                                                         <constraint firstAttribute="width" constant="22" id="OCb-NZ-GbF"/>
                                                     </constraints>
                                                 </imageView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6R6-uW-4Hb" userLabel="Line View">
+                                                    <rect key="frame" x="62" y="59" width="313" height="0.0"/>
+                                                    <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="0.5" id="QpQ-Mz-efK"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="e5P-pC-mA9" firstAttribute="trailing" secondItem="4HD-wS-vT1" secondAttribute="trailingMargin" id="5XM-JN-cs0"/>
                                                 <constraint firstItem="NDx-eK-6De" firstAttribute="leading" secondItem="4HD-wS-vT1" secondAttribute="leading" constant="10" id="6dL-sB-6ZY"/>
                                                 <constraint firstItem="e5P-pC-mA9" firstAttribute="leading" secondItem="NDx-eK-6De" secondAttribute="trailing" constant="12" id="73j-V5-UxV"/>
+                                                <constraint firstAttribute="trailing" secondItem="6R6-uW-4Hb" secondAttribute="trailing" id="AHm-qL-ATI"/>
                                                 <constraint firstItem="Ine-fm-vKt" firstAttribute="leading" secondItem="NDx-eK-6De" secondAttribute="trailing" constant="12" id="EVF-0i-s8H"/>
                                                 <constraint firstItem="lZz-ne-Jif" firstAttribute="centerY" secondItem="NDx-eK-6De" secondAttribute="centerY" id="RT3-8X-VZ3"/>
                                                 <constraint firstItem="lZz-ne-Jif" firstAttribute="centerX" secondItem="NDx-eK-6De" secondAttribute="centerX" id="RjM-XK-gt4"/>
                                                 <constraint firstAttribute="height" constant="60" id="WZQ-jN-Zvs"/>
                                                 <constraint firstItem="NDx-eK-6De" firstAttribute="centerY" secondItem="4HD-wS-vT1" secondAttribute="centerY" id="clf-LP-sHa"/>
+                                                <constraint firstItem="6R6-uW-4Hb" firstAttribute="leading" secondItem="e5P-pC-mA9" secondAttribute="leading" id="hGe-Bq-ZWb"/>
                                                 <constraint firstItem="Ine-fm-vKt" firstAttribute="trailing" secondItem="4HD-wS-vT1" secondAttribute="trailingMargin" constant="-20" id="nNc-PW-nxi"/>
                                                 <constraint firstItem="e5P-pC-mA9" firstAttribute="top" secondItem="Ine-fm-vKt" secondAttribute="bottom" id="r1z-d0-HHC"/>
+                                                <constraint firstAttribute="bottom" secondItem="6R6-uW-4Hb" secondAttribute="bottom" constant="1" id="tS5-Ge-kWQ"/>
                                                 <constraint firstItem="Ine-fm-vKt" firstAttribute="centerY" secondItem="4HD-wS-vT1" secondAttribute="centerY" multiplier="0.8" id="uUX-Tu-p01"/>
                                             </constraints>
                                         </view>
@@ -94,6 +104,7 @@
                                 <color key="tintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="infoLabel" destination="e5P-pC-mA9" id="n8w-VC-TpJ"/>
+                                    <outlet property="lineView" destination="6R6-uW-4Hb" id="Ljs-ij-oBB"/>
                                     <outlet property="nameLabel" destination="Ine-fm-vKt" id="EtN-bs-ob5"/>
                                     <outlet property="thumbnailImageView" destination="NDx-eK-6De" id="APT-GW-6JC"/>
                                     <outlet property="thumbnailPlayImageView" destination="lZz-ne-Jif" id="XNS-Q2-ylh"/>
@@ -115,11 +126,39 @@
                         <outlet property="activityBarButtonItem" destination="zNw-uj-NF1" id="11A-Xf-bLO"/>
                         <outlet property="deleteBarButtonItem" destination="RRm-wv-TBJ" id="Sox-nG-Goa"/>
                         <outlet property="editBarButtonItem" destination="GcW-Rx-abW" id="YVD-Ah-2CX"/>
+                        <outlet property="moreBarButtonItem" destination="PrY-Gn-pUh" id="7kX-W0-nTJ"/>
                         <outlet property="selectAllBarButtonItem" destination="YUq-JU-8qb" id="aiX-y7-yZJ"/>
                         <outlet property="sortByBarButtonItem" destination="3dR-tr-pXM" id="tyd-rf-xCX"/>
                         <outlet property="toolbar" destination="rHC-vj-tgX" id="hv7-ey-8mh"/>
                     </connections>
                 </tableViewController>
+                <barButtonItem image="selectAll" width="22" id="YUq-JU-8qb" userLabel="Select All Bar Button Item">
+                    <connections>
+                        <action selector="selectAllAction:" destination="0p4-DV-Tt4" id="mFz-d6-Yx2"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem image="moreSelected" width="22" id="PrY-Gn-pUh" userLabel="More Bar Button Item">
+                    <connections>
+                        <action selector="moreAction:" destination="0p4-DV-Tt4" id="JBz-sm-5Uj"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem image="sortBy" width="22" id="3dR-tr-pXM" userLabel="Sort by Bar Button Item">
+                    <connections>
+                        <action selector="sortByTapped:" destination="0p4-DV-Tt4" id="eKH-pu-gCX"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem title="Edit" width="22" id="GcW-Rx-abW" userLabel="Edit Bar Button Item">
+                    <connections>
+                        <action selector="editTapped:" destination="0p4-DV-Tt4" id="Ypp-rf-2ph"/>
+                    </connections>
+                </barButtonItem>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="rHC-vj-tgX">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.97647058963775635" green="0.97647058963775635" blue="0.97647058963775635" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <items/>
+                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </toolbar>
                 <barButtonItem enabled="NO" image="shareGray" width="32" id="zNw-uj-NF1" userLabel="Activity Bar Button Item">
                     <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
@@ -130,28 +169,6 @@
                     <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <action selector="deleteTapped:" destination="0p4-DV-Tt4" id="WIh-k2-zZh"/>
-                    </connections>
-                </barButtonItem>
-                <barButtonItem image="check_mark" width="22" id="YUq-JU-8qb" userLabel="Check Mark Bar Button Item">
-                    <connections>
-                        <action selector="selectAllAction:" destination="0p4-DV-Tt4" id="mFz-d6-Yx2"/>
-                    </connections>
-                </barButtonItem>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="rHC-vj-tgX">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.97647058963775635" green="0.97647058963775635" blue="0.97647058963775635" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <items/>
-                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                </toolbar>
-                <barButtonItem image="sortBy" width="22" id="3dR-tr-pXM" userLabel="Sort by Bar Button Item">
-                    <connections>
-                        <action selector="sortByTapped:" destination="0p4-DV-Tt4" id="eKH-pu-gCX"/>
-                    </connections>
-                </barButtonItem>
-                <barButtonItem image="edit" width="22" style="plain" id="GcW-Rx-abW" userLabel="Edit Bar Button Item">
-                    <connections>
-                        <action selector="editTapped:" destination="0p4-DV-Tt4" id="Ypp-rf-2ph"/>
                     </connections>
                 </barButtonItem>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l69-UK-FjG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -180,10 +197,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="check_mark" width="29" height="29"/>
-        <image name="edit" width="22" height="22"/>
+        <image name="moreSelected" width="26" height="6"/>
         <image name="offlineIcon" width="26" height="24"/>
         <image name="remove" width="32" height="32"/>
+        <image name="selectAll" width="22" height="22"/>
         <image name="shareGray" width="32" height="32"/>
         <image name="sortBy" width="22" height="22"/>
         <image name="video_list" width="22" height="22"/>
