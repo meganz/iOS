@@ -3,13 +3,13 @@
 
 @interface MEGASetAttrUserRequestDelegate ()
 
-@property (nonatomic, copy) void (^completion)(MEGARequest *request);
+@property (nonatomic, copy) void (^completion)(void);
 
 @end
 
 @implementation MEGASetAttrUserRequestDelegate
 
-- (instancetype)initWithCompletion:(void (^)(MEGARequest *request))completion {
+- (instancetype)initWithCompletion:(void (^)(void))completion {
     self = [super init];
     if (self) {
         _completion = completion;
@@ -32,7 +32,7 @@
     }
     
     if (self.completion) {
-        self.completion(request);
+        self.completion();
     }
 }
 

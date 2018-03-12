@@ -71,7 +71,7 @@
 #pragma mark - IBActions
 
 - (IBAction)autoAcceptSwitchDidChange:(UISwitch *)sender {
-    MEGASetAttrUserRequestDelegate *delegate = [[MEGASetAttrUserRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+    MEGASetAttrUserRequestDelegate *delegate = [[MEGASetAttrUserRequestDelegate alloc] initWithCompletion:^() {
         [[MEGASdkManager sharedMEGASdk] getContactLinksOptionWithDelegate:self.getContactLinksOptionDelegate];
     }];
     [[MEGASdkManager sharedMEGASdk] setContactLinksOptionDisable:!sender.isOn delegate:delegate];

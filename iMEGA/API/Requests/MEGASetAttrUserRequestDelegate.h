@@ -5,6 +5,6 @@
 
 - (id)init NS_UNAVAILABLE;
 
-- (instancetype)initWithCompletion:(void (^)(MEGARequest *request))completion;
+- (instancetype)initWithCompletion:(void (^)(void))completion;
 
 @end
