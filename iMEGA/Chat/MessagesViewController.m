@@ -301,12 +301,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     MEGAChatConnection connectionState = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
     switch (connectionState) {
         case MEGAChatConnectionOffline:
-        case MEGAChatConnectionInProgress:
-            chatRoomState = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
-            self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:MEGAChatStatusOffline];
-            
-            break;
-            
+        case MEGAChatConnectionInProgress:            
         case MEGAChatConnectionLogging:
             chatRoomState = AMLocalizedString(@"connecting", nil);
             self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:MEGAChatStatusOffline];

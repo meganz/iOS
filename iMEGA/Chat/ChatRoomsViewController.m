@@ -89,7 +89,7 @@
     
     [self customNavigationBarLabel];
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] && [MEGAReachabilityManager sharedManager].chatRoomListState!=MEGAChatRoomListStateInProgress) {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
         self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
         if (self.chatListItemList.size) {
             [self reorderList];
@@ -220,7 +220,7 @@
 - (UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
     if ([MEGAReachabilityManager isReachable]) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-            if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitWaitingNewSession || [[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitNoCache || [MEGAReachabilityManager sharedManager].chatRoomListState==MEGAChatRoomListStateInProgress) {
+            if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitWaitingNewSession || [[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitNoCache) {
                 UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                 [indicator startAnimating];
                 return indicator;
@@ -415,17 +415,8 @@
 }
 
 - (void)customNavigationBarLabel {
-    NSString *onlineStatusString;
-    switch ([MEGAReachabilityManager sharedManager].chatRoomListState) {
-        case MEGAChatRoomListStateOffline:
-            onlineStatusString = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
-            break;
-            
-        case MEGAChatRoomListStateInProgress:
-        case MEGAChatRoomListStateOnline:
-            onlineStatusString = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] onlineStatus]];
-            break;
-    }
+    NSString *onlineStatusString = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] onlineStatus]];
+    
     if (onlineStatusString) {
         UILabel *label = [Helper customNavigationBarLabelWithTitle:AMLocalizedString(@"chat", @"Chat section header") subtitle:onlineStatusString];
         label.adjustsFontSizeToFitWidth = YES;

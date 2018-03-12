@@ -1663,11 +1663,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)application:(UIApplication *)application shouldHideWindows:(BOOL)shouldHide {
     for (UIWindow *window in application.windows) {
         if ([NSStringFromClass(window.class) isEqualToString:@"UIRemoteKeyboardWindow"] || [NSStringFromClass(window.class) isEqualToString:@"UITextEffectsWindow"]) {
-            if (shouldHide) {
-                window.frame = CGRectMake(0, 0, 0, 0);
-            } else {
-                window.frame = [[UIScreen mainScreen] bounds];
-            }
+            window.hidden = shouldHide;
         }
     }
 }
