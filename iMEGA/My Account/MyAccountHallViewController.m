@@ -3,6 +3,7 @@
 
 #import "AchievementsViewController.h"
 #import "ContactsViewController.h"
+#import "MEGAContactLinkCreateRequestDelegate.h"
 #import "OfflineTableViewController.h"
 #import "MEGANavigationController.h"
 #import "MEGASdk+MNZCategory.h"
@@ -59,6 +60,15 @@
     [_numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
     [_numberFormatter setLocale:[NSLocale currentLocale]];
     [_numberFormatter setMaximumFractionDigits:0];
+    
+    MEGAContactLinkCreateRequestDelegate *delegate = [[MEGAContactLinkCreateRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+        NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
+        self.qrCodeImageView.image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:self.qrCodeImageView.frame.size];
+        self.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+        self.avatarImageView.layer.borderWidth = 6.0f;
+        self.avatarImageView.layer.cornerRadius = 40.0f;
+    }];
+    [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:NO delegate:delegate];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -313,20 +323,6 @@
             [self reloadUI];
             
             break;
-            
-        case MEGARequestTypeContactLinkCreate: {
-            if (error.type) {
-                return;
-            }
-            
-            NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
-            self.qrCodeImageView.image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:self.qrCodeImageView.frame.size];
-            self.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
-            self.avatarImageView.layer.borderWidth = 6.0f;
-            self.avatarImageView.layer.cornerRadius = 40.0f;
-            
-            break;
-        }
             
         default:
             break;

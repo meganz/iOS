@@ -33,8 +33,6 @@
     if (@available(iOS 11.0, *)) {
         self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
-    
-    [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:NO delegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -75,13 +73,13 @@
     [changeAvatarAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
     [editProfileAlertController addAction:changeAvatarAlertAction];
     
-    UIAlertAction *scanCodeAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"myCode", @"Title for view that displays the QR code of the user. String as short as possible.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *myCodeAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"myCode", @"Title for view that displays the QR code of the user. String as short as possible.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
         contactLinkVC.scanCode = NO;
         [self presentViewController:contactLinkVC animated:YES completion:nil];
     }];
-    [scanCodeAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [editProfileAlertController addAction:scanCodeAlertAction];
+    [myCodeAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [editProfileAlertController addAction:myCodeAlertAction];
     
     NSString *myUserBase64Handle = [MEGASdk base64HandleForUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
     NSString *myAvatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:myUserBase64Handle];
