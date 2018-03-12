@@ -523,7 +523,7 @@
         for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:inboxDirectory error:&error]) {
             error = nil;
             if ([[NSFileManager defaultManager] removeItemAtPath:[inboxDirectory stringByAppendingPathComponent:file] error:&error]) {
-                MEGALogError(@"Remove item at path failed with error: %@", error)
+                MEGALogError(@"Remove item at path failed with error: %@", error);
             }
         }
     } else if (self.browserAction == BrowserActionShareExtension) {

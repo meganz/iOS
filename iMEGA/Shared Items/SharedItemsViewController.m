@@ -7,12 +7,14 @@
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
+#import "MEGANode+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
 #import "MEGARemoveRequestDelegate.h"
 #import "MEGAShareRequestDelegate.h"
 #import "NSMutableArray+MNZCategory.h"
 
 #import "BrowserViewController.h"
+#import "CloudDriveTableViewController.h"
 #import "ContactsViewController.h"
 #import "SharedItemsTableViewCell.h"
 #import "CustomActionViewController.h"
@@ -552,7 +554,7 @@
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
         
         for (MEGANode *n in _selectedNodesMutableArray) {
-            [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO];
+            [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:NO];
         }
         
         [self setEditing:NO animated:YES];
@@ -1129,7 +1131,7 @@
     switch (action) {
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-            [node mnz_downloadNode];
+            [node mnz_downloadNodeOverwriting:NO];
             break;
             
         case MegaNodeActionTypeCopy:

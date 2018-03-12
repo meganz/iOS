@@ -40,6 +40,7 @@
 #import "ContactRequestsViewController.h"
 #import "ContactsViewController.h"
 #import "CreateAccountViewController.h"
+#import "DisplayMode.h"
 #import "FileLinkViewController.h"
 #import "FolderLinkViewController.h"
 #import "LaunchViewController.h"
@@ -145,8 +146,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
         [[MEGALogger sharedLogger] startLogging];
     }
-    
-    MEGALogDebug(@"Application did finish launching with options %@", launchOptions);
     
     _signalActivityRequired = NO;
     
@@ -361,7 +360,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
         }
     }
-
+    
+    MEGALogDebug(@"Application did finish launching with options %@", launchOptions);
+    
     return YES;
 }
 
@@ -416,6 +417,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
+    
+    if (self.isSignalActivityRequired) {
+        [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -433,11 +438,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         
         NSError *error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:[[NSFileManager defaultManager] downloadsDirectory] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error)
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
         
         if (![[NSFileManager defaultManager] removeItemAtPath:[[NSFileManager defaultManager] uploadsDirectory] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error)
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
 }
@@ -696,7 +701,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
             [self showOffline];
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
+            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:NO];
             break;
         }
             
@@ -718,7 +723,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [self showOffline];
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
             for (MEGANode *node in [Helper nodesFromLinkMutableArray]) {
-                [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES];
+                [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES shouldOverwrite:NO];
             }
             break;
         }
@@ -1158,7 +1163,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             if ([item.pathExtension.lowercaseString isEqualToString:@"mega"]) {
                 NSError *error = nil;
                 if (![[NSFileManager defaultManager] removeItemAtPath:[directory stringByAppendingPathComponent:item] error:&error]) {
-                    MEGALogError(@"Remove item at path failed with error: %@", error)
+                    MEGALogError(@"Remove item at path failed with error: %@", error);
                 }
             }
         }
@@ -1635,11 +1640,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)application:(UIApplication *)application shouldHideWindows:(BOOL)shouldHide {
     for (UIWindow *window in application.windows) {
         if ([NSStringFromClass(window.class) isEqualToString:@"UIRemoteKeyboardWindow"] || [NSStringFromClass(window.class) isEqualToString:@"UITextEffectsWindow"]) {
-            if (shouldHide) {
-                window.frame = CGRectMake(0, 0, 0, 0);
-            } else {
-                window.frame = [[UIScreen mainScreen] bounds];
-            }
+            window.hidden = shouldHide;
         }
     }
 }
@@ -2209,7 +2210,11 @@ void uncaughtExceptionHandler(NSException *exception) {
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
                 [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self.mainTBC];
                 
-                [[MEGASdkManager sharedMEGAChatSdk] connect];
+                if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
+                    [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
+                } else {
+                    [[MEGASdkManager sharedMEGAChatSdk] connect];
+                }
                 if (isAccountFirstLogin) {
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
                 }
@@ -2462,6 +2467,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     MEGALogInfo(@"onChatConnectionStateUpdate: %@, new state: %d", [MEGASdk base64HandleForUserHandle:chatId], newState);
     if (self.chatRoom.chatId == chatId && newState == MEGAChatConnectionOnline) {
         [self performCall];
+    }
+    // INVALID_HANDLE = ~(uint64_t)0
+    if (chatId == ~(uint64_t)0 && newState == MEGAChatConnectionOnline) {
+        [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateOnline;
+    } else if (newState >= MEGAChatConnectionLogging) {
+        [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateInProgress;
     }
 }
 

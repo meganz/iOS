@@ -7,6 +7,7 @@
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARemoveRequestDelegate.h"
+#import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "UIImageView+MNZCategory.h"
 
@@ -163,7 +164,7 @@
         }
         
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-        [Helper downloadNode:self.node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
+        [Helper downloadNode:self.node folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:NO];
         
         if ([self.node isFolder]) {
             [self.navigationController popViewControllerAnimated:YES];
