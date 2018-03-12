@@ -112,6 +112,10 @@
     return UIInterfaceOrientationMaskAll;
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return (self.segmentedControl.selectedSegmentIndex == 0) ? UIStatusBarStyleDefault : UIStatusBarStyleLightContent;
+}
+
 #pragma mark - User avatar and camera mask
 
 - (void)setUserAvatar {
@@ -164,6 +168,8 @@
         default:
             break;
     }
+    
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 - (IBAction)backButtonTapped:(UIButton *)sender {
