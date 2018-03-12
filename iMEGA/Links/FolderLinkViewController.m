@@ -161,7 +161,7 @@
     [self setNavigationBarTitleLabel];
     
     self.nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:self.parentNode];
-    if ([[_nodeList size] unsignedIntegerValue] == 0) {
+    if (_nodeList.size.unsignedIntegerValue == 0) {
         [self setActionButtonsEnabled:NO];
     } else {
         [self setActionButtonsEnabled:YES];
@@ -176,7 +176,7 @@
     
     [self.tableView reloadData];
     
-    if ([[self.nodeList size] unsignedIntegerValue] == 0) {
+    if (self.nodeList.size.unsignedIntegerValue == 0) {
         [_tableView setTableHeaderView:nil];
     } else {
         self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
@@ -187,7 +187,7 @@
 }
 
 - (void)setNavigationBarTitleLabel {
-    if ([self.parentNode name] != nil && !isFolderLinkNotValid) {
+    if (self.parentNode.name && !isFolderLinkNotValid) {
         UILabel *label = [Helper customNavigationBarLabelWithTitle:self.parentNode.name subtitle:AMLocalizedString(@"folderLink", nil)];
         label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
         self.navigationBarLabel = label;
@@ -547,7 +547,7 @@
             if (isFolderLinkNotValid) {
                 numberOfRows = 0;
             } else {
-                numberOfRows = [[self.nodeList size] integerValue];
+                numberOfRows = self.nodeList.size.integerValue;
             }
         }
     }
@@ -564,8 +564,8 @@
         cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"nodeCell"];
     }
     
-    if ([node type] == MEGANodeTypeFile) {
-        if ([node hasThumbnail]) {
+    if (node.isFile) {
+        if (node.hasThumbnail) {
             [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdkFolder] cell:cell];
         } else {
             [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
@@ -573,19 +573,19 @@
         
         cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
         
-    } else if ([node type] == MEGANodeTypeFolder) {
+    } else if (node.isFolder) {
         [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
         
         cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
     }
     
-    cell.nameLabel.text = [node name];
+    cell.nameLabel.text = node.name;
     
-    cell.nodeHandle = [node handle];
+    cell.nodeHandle = node.handle;
     
     if (tableView.isEditing) {
         for (MEGANode *n in _selectedNodesArray) {
-            if ([n handle] == [node handle]) {
+            if (n.handle == node.handle) {
                 [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
         }
@@ -805,23 +805,23 @@
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if ([error type]) {
-        switch ([error type]) {
+    if (error.type) {
+        switch (error.type) {
             case MEGAErrorTypeApiEArgs: {
-                if ([request type] == MEGARequestTypeLogin) {
+                if (request.type == MEGARequestTypeLogin) {
                     if (decryptionAlertView.visible) { //If the user have written the key
                         [self showDecryptionKeyNotValidAlert];
                     } else {
                         [self showLinkNotValid];
                     }
-                } else if ([request type] == MEGARequestTypeFetchNodes) {
+                } else if (request.type == MEGARequestTypeFetchNodes) {
                     [self showUnavailableLinkView];
                 }
                 break;
             }
                 
             case MEGAErrorTypeApiENoent: {
-                if ([request type] == MEGARequestTypeFetchNodes) {
+                if (request.type == MEGARequestTypeFetchNodes) {
                     [self showLinkNotValid];
                 }
                 break;
@@ -833,9 +833,9 @@
             }
                 
             default: {
-                if ([request type] == MEGARequestTypeLogin) {
+                if (request.type == MEGARequestTypeLogin) {
                     [self showUnavailableLinkView];
-                } else if ([request type] == MEGARequestTypeFetchNodes) {
+                } else if (request.type == MEGARequestTypeFetchNodes) {
                     [api logout];
                     [self showUnavailableLinkView];
                 }
@@ -846,7 +846,7 @@
         return;
     }
     
-    switch ([request type]) {
+    switch (request.type) {
         case MEGARequestTypeLogin: {
             isLoginDone = YES;
             isFetchNodesDone = NO;
@@ -856,7 +856,7 @@
             
         case MEGARequestTypeFetchNodes: {
             
-            if ([request flag]) { //Invalid key
+            if (request.flag) { //Invalid key
                 [api logout];
                 
                 [SVProgressHUD dismiss];
@@ -892,7 +892,7 @@
             
         case MEGARequestTypeGetAttrFile: {
             for (NodeTableViewCell *nodeTableViewCell in [self.tableView visibleCells]) {
-                if ([request nodeHandle] == [nodeTableViewCell nodeHandle]) {
+                if (request.nodeHandle == nodeTableViewCell.nodeHandle) {
                     MEGANode *node = [api nodeForHandle:request.nodeHandle];
                     [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell reindexNode:NO];
                 }
