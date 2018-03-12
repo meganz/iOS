@@ -100,10 +100,32 @@
 "emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Пароль";
+/*  */
+"pleaseStrengthenYourPassword"="Повысьте надежность пароля.";
+/* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
+"veryWeak"="Очень ненадёжный";
+/*  */
+"weak"="Ненадёжный";
+/*  */
+"passwordVeryWeakOrWeak"="Ваш пароль легко подбирается. Попробуйте использовать более длинный пароль. Используйте сочетания заглавных и прописных букв. Используйте символы. Не используйте имена или словарные слова.";
+/* Label displayed during checking the strength of the password introduced. Represents Medium security */
+"medium"="Средний";
+/*  */
+"passwordMedium"="Ваш пароль достаточно надежен для продолжения, но мы рекомендуем все же усилить надежность пароля.";
+/*  */
+"good"="Хороший";
+/*  */
+"passwordGood"="Этот пароль не поддастся самым распространённым атакам с применением полного перебора. Убедитесь, что запомнили его.";
+/* Label displayed during checking the strength of the password introduced. Represents Strong security */
+"strong"="Надёжный";
+/*  */
+"passwordStrong"="Этот пароль не поддастся самым самым мощным атакам с применением полного перебора. Убедитесь, что запомнили его.";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
 "termsOfServiceButton"="Я согласен с условиями предоставления услуг MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Введите правильное имя";
+/*  */
+"invalidFirstNameAndLastName"="Неверное имя и/или фамилия.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Пароли не совпадают";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -966,14 +988,10 @@
 "choosePlan"="Выберите один из планов ниже:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Выберите тип учётной записи:";
-/* Text shown in the purchase plan view to explain that annual subscription is 16% cheaper than 12 monthly payments */
-"twoMonthsFree"="Annual subscription is 16% cheaper than 12 monthly payments";
+/* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
+"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Текущий план:";
-/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
-"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
-/* Title text for the account confirmation. */
-"confirm"="Подтвердить";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Запросить план";
 /* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
@@ -1234,6 +1252,8 @@
 "openMEGAAndSignInToContinue"="Откройте MEGA и войдите, чтобы продолжить";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Отозвать";
+/* Label in login screen to inform about the chat initialization proccess */
+"connecting"="Соединение…";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Некоторыми элементами нельзя поделиться в MEGA";
 /* Notification message shown when a transfer failed. Keep colon. */

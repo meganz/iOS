@@ -100,10 +100,32 @@
 "emailPlaceholder"="メール";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="パスワード";
+/*  */
+"pleaseStrengthenYourPassword"="パスワードを強化して下さい。";
+/* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
+"veryWeak"="非常に弱い";
+/*  */
+"weak"="弱い";
+/*  */
+"passwordVeryWeakOrWeak"="あなたのパスワードは簡単に当てられてしまいます。もっと長くしてみて下さい。大文字と小文字を組み合わせて下さい。記号も入れて下さい。名前や辞書にある言葉はよくありません。";
+/* Label displayed during checking the strength of the password introduced. Represents Medium security */
+"medium"="普通";
+/*  */
+"passwordMedium"="あなたのパスワードはそのままでも行けますが、更に強度を高めることをお勧めします。";
+/*  */
+"good"="良好";
+/*  */
+"passwordGood"="このパスワードは、大抵の攻撃に対抗できるでしょう。絶対に忘れないようにして下さい。";
+/* Label displayed during checking the strength of the password introduced. Represents Strong security */
+"strong"="強い";
+/*  */
+"passwordStrong"="このパスワードは大抵の攻撃に対抗できるでしょう。絶対に忘れないようにして下さい。";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
 "termsOfServiceButton"="MEGAの利用規約に同意します。";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="正しい名前を入力して下さい";
+/*  */
+"invalidFirstNameAndLastName"="名前が無効です。";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="パスワードが合いません。";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -966,14 +988,10 @@
 "choosePlan"="次のプランのうち、１つお選び下さい:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="1つのアカウントタイプを選択：";
-/* Text shown in the purchase plan view to explain that annual subscription is 16% cheaper than 12 monthly payments */
-"twoMonthsFree"="Annual subscription is 16% cheaper than 12 monthly payments";
+/* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
+"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="現在のプラン：";
-/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
-"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
-/* Title text for the account confirmation. */
-"confirm"="確認";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="プランをリクエストする";
 /* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
@@ -1155,7 +1173,7 @@
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="%@さんとの会話";
 /* Title show above the name of the persons with whom you're chatting */
-"chattingWith"="Chatting with";
+"chattingWith"="チャット相手";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGAは、必須の安全保証をご提供するエンドツーエンド（ユーザー制御の）暗号化を使用してチャットを保護いたします：";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1234,6 +1252,8 @@
 "openMEGAAndSignInToContinue"="MEGAを開いて、ログインして続行してください";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="取り消す";
+/* Label in login screen to inform about the chat initialization proccess */
+"connecting"="接続中...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="一部のアイテムはMEGAと共有できませんでした";
 /* Notification message shown when a transfer failed. Keep colon. */
