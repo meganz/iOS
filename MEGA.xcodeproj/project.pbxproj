@@ -268,6 +268,7 @@
 		834AD6082024697300D2527F /* MGSwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 834AD6012024694200D2527F /* MGSwipeButton.m */; };
 		834AD6092024697600D2527F /* MGSwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 834AD6032024694200D2527F /* MGSwipeTableCell.m */; };
 		834AD60A2024697700D2527F /* MGSwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 834AD6032024694200D2527F /* MGSwipeTableCell.m */; };
+		835223AD20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223AC20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m */; };
 		83654A5A203C3E4100B5E426 /* NodeVersionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83654A59203C3E4100B5E426 /* NodeVersionsViewController.m */; };
 		83681578202AFBC000CA8EFC /* CustomActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83681576202AFBC000CA8EFC /* CustomActionViewController.m */; };
 		83681579202AFBC000CA8EFC /* CustomActionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83681577202AFBC000CA8EFC /* CustomActionViewController.xib */; };
@@ -1117,6 +1118,8 @@
 		834AD6022024694200D2527F /* MGSwipeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeTableCell.h; sourceTree = "<group>"; };
 		834AD6032024694200D2527F /* MGSwipeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSwipeTableCell.m; sourceTree = "<group>"; };
 		834AD6042024694200D2527F /* MGSwipeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeButton.h; sourceTree = "<group>"; };
+		835223AB20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAGetFolderInfoRequestDelegate.h; path = API/Requests/MEGAGetFolderInfoRequestDelegate.h; sourceTree = "<group>"; };
+		835223AC20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAGetFolderInfoRequestDelegate.m; path = API/Requests/MEGAGetFolderInfoRequestDelegate.m; sourceTree = "<group>"; };
 		83654A58203C3E4100B5E426 /* NodeVersionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeVersionsViewController.h; sourceTree = "<group>"; };
 		83654A59203C3E4100B5E426 /* NodeVersionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeVersionsViewController.m; sourceTree = "<group>"; };
 		83681574202AFA1700CA8EFC /* MegaNodeActionType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MegaNodeActionType.h; sourceTree = "<group>"; };
@@ -2815,6 +2818,8 @@
 				9437B93E1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m */,
 				77519C34203707F600FDF92B /* MEGARenameRequestDelegate.h */,
 				77519C35203707F600FDF92B /* MEGARenameRequestDelegate.m */,
+				835223AB20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.h */,
+				835223AC20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m */,
 			);
 			name = Requests;
 			sourceTree = "<group>";
@@ -3433,6 +3438,7 @@
 				5B118EC31FB1B0C6005D7D90 /* NSMutableArray+MNZCategory.m in Sources */,
 				E8CD19871A9266D600CB8B2A /* UnavailableLinkView.m in Sources */,
 				E8D4B8911A69429200A3B2E2 /* ConfirmAccountViewController.m in Sources */,
+				835223AD20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m in Sources */,
 				5B5737D61EFBE6410027ECCD /* MEGANode+MNZCategory.m in Sources */,
 				41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */,
 				41D21E6A1D01AEC3002E6296 /* CTAssetsPageView.m in Sources */,

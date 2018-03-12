@@ -185,7 +185,7 @@
         versionsSize.text = nil;
     } else {
         titleSection.text = AMLocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file").uppercaseString;
-        versionsSize.text = [NSByteCountFormatter stringFromByteCount:self.node.mnz_versionsSize.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory];
+        versionsSize.text = [NSByteCountFormatter stringFromByteCount:self.node.mnz_versionsSize  countStyle:NSByteCountFormatterCountStyleMemory];
     }
     
     return sectionHeader;

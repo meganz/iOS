@@ -32,6 +32,6 @@
 
 - (NSInteger)mnz_numberOfVersions;
 - (NSArray *)mnz_versions;
-- (NSNumber *)mnz_versionsSize;
+- (long long)mnz_versionsSize;
 
 @end
