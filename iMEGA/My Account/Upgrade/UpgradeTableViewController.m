@@ -357,13 +357,13 @@
 }
 
 - (NSString *)storageAndUnitsByProduct:(SKProduct *)product {
-    NSArray *storageTransferArray = [product.localizedDescription componentsSeparatedByString:@"#"];
+    NSArray *storageTransferArray = [product.localizedDescription componentsSeparatedByString:@";"];
     NSArray *storageArray = [[storageTransferArray objectAtIndex:0] componentsSeparatedByString:@" "];
     return [NSString stringWithFormat:@"%@ %@", [storageArray objectAtIndex:0], [storageArray objectAtIndex:1]];
 }
 
 - (NSString *)transferAndUnitsByProduct:(SKProduct *)product {
-    NSArray *storageTransferArray = [product.localizedDescription componentsSeparatedByString:@"#"];
+    NSArray *storageTransferArray = [product.localizedDescription componentsSeparatedByString:@";"];
     NSArray *transferArray = [[storageTransferArray objectAtIndex:1] componentsSeparatedByString:@" "];
     return [NSString stringWithFormat:@"%@ %@", [transferArray objectAtIndex:0], [transferArray objectAtIndex:1]];
 }
