@@ -492,7 +492,7 @@
     long long totalSize = 0;
     NSArray *versions = [self mnz_versions];
     for (MEGANode *versionNode in versions) {
-        totalSize += versionNode.size.floatValue;
+        totalSize += versionNode.size.longLongValue;
     }
     
     return totalSize;
