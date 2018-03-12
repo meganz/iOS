@@ -79,7 +79,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (NSMutableDictionary *)downloadingNodes;
 
 + (BOOL)isFreeSpaceEnoughToDownloadNode:(MEGANode *)node isFolderLink:(BOOL)isFolderLink;
-+ (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink;
++ (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink shouldOverwrite:(BOOL)overwrite;
 
 #pragma mark - Utils
 

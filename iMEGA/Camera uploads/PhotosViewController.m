@@ -18,6 +18,7 @@
 #import "HeaderCollectionReusableView.h"
 #import "CameraUploads.h"
 #import "CameraUploadsTableViewController.h"
+#import "DisplayMode.h"
 #import "BrowserViewController.h"
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate> {
@@ -422,7 +423,7 @@
     }
     
     for (MEGANode *n in [self.selectedItemsDictionary allValues]) {
-        [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO];
+        [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:NO];
     }
     [self setEditing:NO animated:YES];
 }
@@ -726,7 +727,7 @@
     NSArray *monthPhotosArray = [monthPhotosDictionary objectForKey:monthKey];
     MEGANode *nodeSelected = [monthPhotosArray objectAtIndex:indexPath.row];
     if (nodeSelected.name.mnz_isImagePathExtension || nodeSelected.name.mnz_isVideoPathExtension) {
-        return [nodeSelected mnz_photoBrowserWithNodes:[self.nodeList mnz_nodesArrayFromNodeList] folderLink:NO displayMode:0 enableMoveToRubbishBin:YES hideControls:YES];
+        return [nodeSelected mnz_photoBrowserWithNodes:[self.nodeList mnz_nodesArrayFromNodeList] folderLink:NO displayMode:DisplayModeCloudDrive enableMoveToRubbishBin:YES hideControls:YES];
     } else {
         return [nodeSelected mnz_viewControllerForNodeInFolderLink:NO];
     }

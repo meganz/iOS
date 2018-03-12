@@ -10,6 +10,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *downloadingArrowImageView;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UIButton *moreButton;
 @property (weak, nonatomic) IBOutlet UIImageView *checkImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *arrowImageView;
 
@@ -22,7 +23,8 @@
 @property (weak, nonatomic) IBOutlet UIView *lineView;
 
 @property (nonatomic) uint64_t nodeHandle;
+@property (strong, nonatomic) MEGANode *node;
 
-- (void)hideCancelButton:(BOOL)hide;
+- (void)configureCellForNode:(MEGANode *)node delegate:(id<MGSwipeTableCellDelegate>)delegate api:(MEGASdk *)api;
 
 @end
