@@ -3,15 +3,20 @@
 
 #import "SVProgressHUD.h"
 
+#import "MEGAContactLinkCreateRequestDelegate.h"
+#import "MEGAGetAttrUserRequestDelegate.h"
+#import "MEGASetAttrUserRequestDelegate.h"
 #import "MEGASdkManager.h"
 
-@interface QRSettingsTableViewController () <MEGARequestDelegate>
+@interface QRSettingsTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UILabel *autoAcceptLabel;
 @property (weak, nonatomic) IBOutlet UILabel *resetQRCodeLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *autoAcceptSwitch;
+
+@property (nonatomic) MEGAGetAttrUserRequestDelegate *getContactLinksOptionDelegate;
 
 @end
 
@@ -25,7 +30,10 @@
     self.resetQRCodeLabel.text = AMLocalizedString(@"resetQrCode", @"Action to reset the current valid QR code of the user");
     self.closeBarButtonItem.title = AMLocalizedString(@"close", nil);
     
-    [[MEGASdkManager sharedMEGASdk] getContactLinksOptionWithDelegate:self];
+    self.getContactLinksOptionDelegate = [[MEGAGetAttrUserRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+        self.autoAcceptSwitch.on = request.flag;
+    }];
+    [[MEGASdkManager sharedMEGASdk] getContactLinksOptionWithDelegate:self.getContactLinksOptionDelegate];
 }
 
 #pragma mark - UITableViewDataSource
@@ -51,7 +59,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section==1 && indexPath.row == 0) {
-        [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:YES delegate:self];
+        MEGAContactLinkCreateRequestDelegate *delegate = [[MEGAContactLinkCreateRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"resetQrCodeFooter", @"Footer that explains what would happen if the user resets his/her QR code")];
+        }];
+
+        [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:YES delegate:delegate];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -59,38 +71,14 @@
 #pragma mark - IBActions
 
 - (IBAction)autoAcceptSwitchDidChange:(UISwitch *)sender {
-    [[MEGASdkManager sharedMEGASdk] setContactLinksOptionDisable:!sender.isOn delegate:self];
+    MEGASetAttrUserRequestDelegate *delegate = [[MEGASetAttrUserRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+        [[MEGASdkManager sharedMEGASdk] getContactLinksOptionWithDelegate:self.getContactLinksOptionDelegate];
+    }];
+    [[MEGASdkManager sharedMEGASdk] setContactLinksOptionDisable:!sender.isOn delegate:delegate];
 }
 
 - (IBAction)didTapCloseButton:(UIBarButtonItem *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if (error.type) {
-        return;
-    }
-    
-    switch (request.type) {
-        case MEGARequestTypeContactLinkCreate:
-            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"resetQrCodeFooter", @"Footer that explains what would happen if the user resets his/her QR code")];
-            break;
-            
-        case MEGARequestTypeGetAttrUser:
-            self.autoAcceptSwitch.on = request.flag;
-            
-            break;
-            
-        case MEGARequestTypeSetAttrUser:
-            [[MEGASdkManager sharedMEGASdk] getContactLinksOptionWithDelegate:self];
-
-            break;
-            
-        default:
-            break;
-    }
 }
 
 @end

@@ -8,6 +8,8 @@
 #import "CustomModalAlertViewController.h"
 #import "DevicePermissionsHelper.h"
 #import "MainTabBarController.h"
+#import "MEGAContactLinkCreateRequestDelegate.h"
+#import "MEGAContactLinkQueryRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGASdkManager.h"
 #import "QRSettingsTableViewController.h"
@@ -17,7 +19,7 @@
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
-@interface ContactLinkQRViewController () <AVCaptureMetadataOutputObjectsDelegate, MEGARequestDelegate>
+@interface ContactLinkQRViewController () <AVCaptureMetadataOutputObjectsDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
@@ -44,7 +46,7 @@
 
 @property (nonatomic) BOOL queryInProgress;
 
-@property (nonatomic) uint64_t contactLinkHandle; // TODO: Delete this property as it is going to be useless
+@property (nonatomic) MEGAContactLinkCreateRequestDelegate *contactLinkCreateDelegate;
 
 @end
 
@@ -75,12 +77,23 @@
     self.cameraMaskBorderView.layer.borderColor = [UIColor whiteColor].CGColor;
     self.cameraMaskBorderView.layer.borderWidth = 2.0f;
     self.cameraMaskBorderView.layer.cornerRadius = 46.0f;
+    
+    self.contactLinkCreateDelegate = [[MEGAContactLinkCreateRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+        NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
+        self.contactLinkLabel.text = destination;
+        if (self.segmentedControl.selectedSegmentIndex == 0) {
+            self.linkCopyButton.hidden = self.moreButton.hidden = NO;
+        }
+        
+        self.qrImageView.image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:self.qrImageView.frame.size];
+        [self setUserAvatar];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:NO delegate:self];
+    [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:NO delegate:self.contactLinkCreateDelegate];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -207,7 +220,7 @@
     
     UIAlertAction *resetAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"resetQrCode", @"Action to reset the current valid QR code of the user") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         self.qrImageView.image = nil;
-        [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:YES delegate:self];
+        [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:YES delegate:self.contactLinkCreateDelegate];
     }];
     [resetAlertAction mnz_setTitleTextColor:[UIColor redColor]];
     [moreAlertController addAction:resetAlertAction];
@@ -272,7 +285,18 @@
                 NSString *baseString = @"https://mega.nz/C!";
                 if ([detectedString containsString:baseString]) {
                     NSString *base64Handle = [detectedString stringByReplacingOccurrencesOfString:baseString withString:@""];
-                    [[MEGASdkManager sharedMEGASdk] contactLinkQueryWithHandle:[MEGASdk handleForBase64Handle:base64Handle] delegate:self];
+                    
+                    MEGAContactLinkQueryRequestDelegate *delegate = [[MEGAContactLinkQueryRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                        [self feedbackWithSuccess:YES];
+                        NSString *fullName = [NSString stringWithFormat:@"%@ %@", request.name, request.text];
+                        [self presentInviteModalForEmail:request.email fullName:fullName contactLinkHandle:request.nodeHandle];
+                    } onError:^(MEGAError *error) {
+                        if (error.type == MEGAErrorTypeApiENoent) {
+                            [self feedbackWithSuccess:NO];
+                        }
+                    }];
+                    
+                    [[MEGASdkManager sharedMEGASdk] contactLinkQueryWithHandle:[MEGASdk handleForBase64Handle:base64Handle] delegate:delegate];
                 } else {
                     [self feedbackWithSuccess:NO];
                 }
@@ -292,7 +316,11 @@
     __weak ContactLinkQRViewController *weakSelf = self;
     __weak CustomModalAlertViewController *weakInviteOrDismissModal = inviteOrDismissModal;
     void (^completion)(void) = ^{
-        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd handle:contactLinkHandle delegate:self];
+        MEGAInviteContactRequestDelegate *delegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1 presentSuccessOver:weakSelf completion:^{
+            __weak ContactLinkQRViewController *weakSelf = self;
+            weakSelf.queryInProgress = NO;
+        }];
+        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd handle:contactLinkHandle delegate:delegate];
         [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:nil];
     };
     
@@ -355,67 +383,6 @@
         self.queryInProgress = success; // If success, queryInProgress will be NO later
         self.errorLabel.text = @"";
     });
-}
-
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if (error.type) {
-        if (request.type == MEGARequestTypeContactLinkQuery && error.type == MEGAErrorTypeApiENoent) {
-            [self feedbackWithSuccess:NO];
-        }
-    } else {
-        switch (request.type) {
-            case MEGARequestTypeContactLinkCreate: {
-                NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
-                self.contactLinkHandle = request.nodeHandle;
-                self.contactLinkLabel.text = destination;
-                if (self.segmentedControl.selectedSegmentIndex == 0) {
-                    self.linkCopyButton.hidden = self.moreButton.hidden = NO;
-                }
-                
-                self.qrImageView.image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:self.qrImageView.frame.size];
-                [self setUserAvatar];
-                
-                break;
-            }
-                
-            case MEGARequestTypeContactLinkQuery: {
-                [self feedbackWithSuccess:YES];
-                NSString *fullName = [NSString stringWithFormat:@"%@ %@", request.name, request.text];
-                [self presentInviteModalForEmail:request.email fullName:fullName contactLinkHandle:request.nodeHandle];
-                
-                break;
-            }
-                
-            case MEGARequestTypeInviteContact: {
-                CustomModalAlertViewController *inviteSentModal = [[CustomModalAlertViewController alloc] init];
-                inviteSentModal.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-                inviteSentModal.image = [UIImage imageNamed:@"inviteSent"];
-                inviteSentModal.viewTitle = AMLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
-                NSString *detailText = AMLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
-                detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
-                inviteSentModal.detail = detailText;
-                inviteSentModal.boldInDetail = request.email;
-                inviteSentModal.action = AMLocalizedString(@"close", nil);
-                inviteSentModal.dismiss = nil;
-                
-                __weak ContactLinkQRViewController *weakSelf = self;
-                __weak typeof(CustomModalAlertViewController) *weakInviteSentModal = inviteSentModal;
-                inviteSentModal.completion = ^{
-                    [weakInviteSentModal dismissViewControllerAnimated:YES completion:^{
-                        weakSelf.queryInProgress = NO;
-                    }];
-                };
-                [self presentViewController:inviteSentModal animated:YES completion:nil];
-
-                break;
-            }
-                
-            default:
-                break;
-        }
-    }
 }
 
 @end
