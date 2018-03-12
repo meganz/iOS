@@ -23,6 +23,7 @@
 #import "MEGAPurchase.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARemoveRequestDelegate.h"
+#import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
@@ -419,7 +420,7 @@
     self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
 
     UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        [node mnz_downloadNode];
+        [node mnz_downloadNodeOverwriting:NO];
         [self setEditing:NO animated:YES];
     }];
     downloadAction.image = [UIImage imageNamed:@"infoDownload"];
@@ -1427,7 +1428,7 @@
     [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
     
     for (MEGANode *node in self.selectedNodesArray) {
-        if (![node mnz_downloadNode]) {
+        if (![node mnz_downloadNodeOverwriting:NO]) {
             return;
         }
     }
@@ -1785,12 +1786,12 @@
 
 - (void)swipeTableCellWillBeginSwiping:(nonnull MGSwipeTableCell *)cell {
     NodeTableViewCell *nodeCell = (NodeTableViewCell *)cell;
-    [nodeCell hideCancelButton:YES];
+    nodeCell.moreButton.hidden = YES;
 }
 
 - (void)swipeTableCellWillEndSwiping:(nonnull MGSwipeTableCell *)cell {
     NodeTableViewCell *nodeCell = (NodeTableViewCell *)cell;
-    [nodeCell hideCancelButton:NO];
+    nodeCell.moreButton.hidden = NO;
 }
 
 - (NSArray *)swipeTableCell:(MGSwipeTableCell *)cell swipeButtonsForDirection:(MGSwipeDirection)direction
@@ -1836,7 +1837,7 @@
     switch (action) {
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-            [node mnz_downloadNode];
+            [node mnz_downloadNodeOverwriting:NO];
             break;
             
         case MegaNodeActionTypeCopy:
