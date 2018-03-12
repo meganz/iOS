@@ -100,6 +100,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @property (nonatomic) URLType urlType;
 @property (nonatomic, strong) NSString *emailOfNewSignUpLink;
 @property (nonatomic, strong) NSString *quickActionType;
+@property (nonatomic, strong) NSString *messageForSuspendedAccount;
+
 
 @property (nonatomic, strong) UIAlertView *API_ESIDAlertView;
 
@@ -119,7 +121,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 @property (strong, nonatomic) NSString *email;
 @property (nonatomic) BOOL presentInviteContactVCLater;
-@property (nonatomic, getter=shouldWaitForChatLogout) BOOL waitForChatLogout;
 
 @end
 
@@ -144,8 +145,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
         [[MEGALogger sharedLogger] startLogging];
     }
-    
-    MEGALogDebug(@"Application did finish launching with options %@", launchOptions);
     
     _signalActivityRequired = NO;
     
@@ -287,9 +286,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [[MEGALogger sharedLogger] enableChatlogs];
             
             MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:sessionV3];
-            if (chatInit == MEGAChatInitNoCache) {
-                [[MEGASdkManager sharedMEGASdk] invalidateCache];
-            } else if (chatInit == MEGAChatInitError) {
+            if (chatInit == MEGAChatInitError) {
                 MEGALogError(@"Init Karere with session failed");
                 NSString *message = [NSString stringWithFormat:@"Error (%ld) initializing the chat", (long)chatInit];
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
@@ -362,7 +359,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
         }
     }
-
+    
+    MEGALogDebug(@"Application did finish launching with options %@", launchOptions);
+    
     return YES;
 }
 
@@ -417,6 +416,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
+    
+    if (self.isSignalActivityRequired) {
+        [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -434,11 +437,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         
         NSError *error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:[[NSFileManager defaultManager] downloadsDirectory] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error)
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
         
         if (![[NSFileManager defaultManager] removeItemAtPath:[[NSFileManager defaultManager] uploadsDirectory] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error)
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
 }
@@ -1150,7 +1153,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             if ([item.pathExtension.lowercaseString isEqualToString:@"mega"]) {
                 NSError *error = nil;
                 if (![[NSFileManager defaultManager] removeItemAtPath:[directory stringByAppendingPathComponent:item] error:&error]) {
-                    MEGALogError(@"Remove item at path failed with error: %@", error)
+                    MEGALogError(@"Remove item at path failed with error: %@", error);
                 }
             }
         }
@@ -1657,30 +1660,10 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
-- (void)showLoginViewController {
-    [SVProgressHUD dismiss];
-    
-    if ((self.urlType == URLTypeNewSignUpLink) && (_emailOfNewSignUpLink != nil)) {
-        if ([self.window.rootViewController isKindOfClass:[MEGANavigationController class]]) {
-            MEGANavigationController *navigationController = (MEGANavigationController *)self.window.rootViewController;
-            
-            if ([navigationController.topViewController isKindOfClass:[LoginViewController class]]) {
-                LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
-                [loginVC performSegueWithIdentifier:@"CreateAccountStoryboardSegueID" sender:_emailOfNewSignUpLink];
-                _emailOfNewSignUpLink = nil;
-            }
-        }
-    }
-}
-
 - (void)application:(UIApplication *)application shouldHideWindows:(BOOL)shouldHide {
     for (UIWindow *window in application.windows) {
         if ([NSStringFromClass(window.class) isEqualToString:@"UIRemoteKeyboardWindow"] || [NSStringFromClass(window.class) isEqualToString:@"UITextEffectsWindow"]) {
-            if (shouldHide) {
-                window.frame = CGRectMake(0, 0, 0, 0);
-            } else {
-                window.frame = [[UIScreen mainScreen] bounds];
-            }
+            window.hidden = shouldHide;
         }
     }
 }
@@ -2028,8 +2011,17 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onEvent:(MEGASdk *)api event:(MEGAEvent *)event {
-    if (event.type == EventChangeToHttps) {
-        [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"useHttpsOnly"];
+    switch (event.type) {
+        case EventChangeToHttps:
+            [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"useHttpsOnly"];
+            break;
+            
+        case EventAccountBlocked:
+            _messageForSuspendedAccount = event.text;
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -2241,7 +2233,11 @@ void uncaughtExceptionHandler(NSException *exception) {
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
                 [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self.mainTBC];
                 
-                [[MEGASdkManager sharedMEGAChatSdk] connect];
+                if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
+                    [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
+                } else {
+                    [[MEGASdkManager sharedMEGAChatSdk] connect];
+                }
                 if (isAccountFirstLogin) {
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
                 }
@@ -2329,14 +2325,27 @@ void uncaughtExceptionHandler(NSException *exception) {
             break;
         }
             
-        case MEGARequestTypeLogout: {
+        case MEGARequestTypeLogout: {            
             [Helper logout];
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-                _waitForChatLogout = YES;
-            } else {
-                [self showLoginViewController];
+            [SVProgressHUD dismiss];
+            
+            if (self.messageForSuspendedAccount) {
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:self.messageForSuspendedAccount preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
             }
             
+            if ((self.urlType == URLTypeNewSignUpLink) && (_emailOfNewSignUpLink != nil)) {
+                if ([self.window.rootViewController isKindOfClass:[MEGANavigationController class]]) {
+                    MEGANavigationController *navigationController = (MEGANavigationController *)self.window.rootViewController;
+                    
+                    if ([navigationController.topViewController isKindOfClass:[LoginViewController class]]) {
+                        LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
+                        [loginVC performSegueWithIdentifier:@"CreateAccountStoryboardSegueID" sender:_emailOfNewSignUpLink];
+                        _emailOfNewSignUpLink = nil;
+                    }
+                }
+            }
             break;
         }
             
@@ -2448,16 +2457,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
     
     if (request.type == MEGAChatRequestTypeLogout) {
-        if (self.shouldWaitForChatLogout) {
-            [self showLoginViewController];
-        } else {
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-                [[MEGALogger sharedLogger] enableSDKlogs];
-            }
-            
-            [self.mainTBC setBadgeValueForChats];
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
+            [[MEGALogger sharedLogger] enableSDKlogs];
         }
         [MEGASdkManager destroySharedMEGAChatSdk];
+        
+        [self.mainTBC setBadgeValueForChats];
     }
     
     MEGALogInfo(@"onChatRequestFinish request type: %ld", request.type);
@@ -2485,6 +2490,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     MEGALogInfo(@"onChatConnectionStateUpdate: %@, new state: %d", [MEGASdk base64HandleForUserHandle:chatId], newState);
     if (self.chatRoom.chatId == chatId && newState == MEGAChatConnectionOnline) {
         [self performCall];
+    }
+    // INVALID_HANDLE = ~(uint64_t)0
+    if (chatId == ~(uint64_t)0 && newState == MEGAChatConnectionOnline) {
+        [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateOnline;
+    } else if (newState >= MEGAChatConnectionLogging) {
+        [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateInProgress;
     }
 }
 

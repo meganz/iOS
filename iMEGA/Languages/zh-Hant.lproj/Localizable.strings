@@ -100,10 +100,32 @@
 "emailPlaceholder"="郵箱地址";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="密碼";
+/*  */
+"pleaseStrengthenYourPassword"="請強化您的密碼。";
+/* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
+"veryWeak"="非常弱";
+/*  */
+"weak"="弱";
+/*  */
+"passwordVeryWeakOrWeak"="您的密碼太容易被猜到了。請嘗試增加密碼長度。結合大小寫。添加特殊字元。不要使用名字或單詞。";
+/* Label displayed during checking the strength of the password introduced. Represents Medium security */
+"medium"="中等";
+/*  */
+"passwordMedium"="您的密碼已足以繼續，但仍建議可再加強密碼強度。";
+/*  */
+"good"="好";
+/*  */
+"passwordGood"="這個密碼將可承受最典型的暴力破解攻擊。請確保您會好好記牢。";
+/* Label displayed during checking the strength of the password introduced. Represents Strong security */
+"strong"="強";
+/*  */
+"passwordStrong"="這個密碼將可承受最典型的暴力破解攻擊。請確保您會好好記牢。";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
 "termsOfServiceButton"="我同意 MEGA 的服務條款";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="請輸入有效的名字";
+/*  */
+"invalidFirstNameAndLastName"="無效的名或姓。";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="密碼不匹配";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -970,10 +992,6 @@
 "twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="目前使用的方案：";
-/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
-"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
-/* Title text for the account confirmation. */
-"confirm"="確認";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="洽詢客製化專屬方案";
 /* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
@@ -1234,6 +1252,8 @@
 "openMEGAAndSignInToContinue"="開啟MEGA並登入以繼續";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="撤除";
+/* Label in login screen to inform about the chat initialization proccess */
+"connecting"="正在連線中...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="某些項目無法與MEGA共享";
 /* Notification message shown when a transfer failed. Keep colon. */
