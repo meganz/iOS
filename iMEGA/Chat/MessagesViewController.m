@@ -158,6 +158,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     self.unreadLabel.userInteractionEnabled = YES;
     
     if (self.presentingViewController && self.parentViewController) {
+        _unreadBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.unreadLabel];
         UIBarButtonItem *chatBackBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"chat", @"Chat section header") style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
         self.navigationItem.leftBarButtonItems = @[chatBackBarButtonItem, self.unreadBarButtonItem];
     } else {
