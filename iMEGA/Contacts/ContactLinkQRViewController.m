@@ -96,8 +96,8 @@
     [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:NO delegate:self.contactLinkCreateDelegate];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
 
     [self setupCameraMask];
     if (self.scanCode) {

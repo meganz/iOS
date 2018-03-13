@@ -22,8 +22,14 @@
 
 @implementation MEGAPhotoBrowserPickerViewController
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.navigationBar.barTintColor = [UIColor whiteColor];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
     
     self.cellInset = 1.0f;
     self.cellSize = [self.collectionView mnz_calculateCellSizeForInset:self.cellInset];
@@ -47,12 +53,6 @@
     titleLabel.minimumScaleFactor = 0.8f;
     self.navigationItem.titleView = titleLabel;
     [self.navigationItem.titleView sizeToFit];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    self.navigationBar.barTintColor = [UIColor whiteColor];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
