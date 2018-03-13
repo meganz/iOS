@@ -378,6 +378,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)openCallViewWithVideo:(BOOL)videoCall {
+    if ([[UIDevice currentDevice] orientation] != UIInterfaceOrientationPortrait) {
+        NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
+        [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
+    }
     CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
     callVC.chatRoom = self.chatRoom;
     callVC.videoCall = videoCall;
