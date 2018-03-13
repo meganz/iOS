@@ -786,9 +786,8 @@
         cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:user.handle]];
         
         int numFilesShares = [[[[MEGASdkManager sharedMEGASdk] inSharesForUser:user] size] intValue];
-        if (numFilesShares == 0) {
-            cell.shareLabel.text = AMLocalizedString(@"noFoldersShared", @"No folders shared");
-        } else  if (numFilesShares == 1 ) {
+        cell.shareLabel.hidden = (numFilesShares == 0) ? YES : NO;
+        if (numFilesShares == 1) {
             cell.shareLabel.text = AMLocalizedString(@"oneFolderShared", @" folder shared");
         } else {
             cell.shareLabel.text = [NSString stringWithFormat:AMLocalizedString(@"foldersShared", @" folders shared"), numFilesShares];
