@@ -393,16 +393,20 @@
             if ([call hasChangedForType:MEGAChatCallChangeTypeRemoteAVFlags]) {
                 self.localVideoImageView.userInteractionEnabled = call.hasRemoteVideo;
                 if (call.hasRemoteVideo) {
-                    [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideoDelegate:self.remoteVideoImageView];
-                    self.remoteVideoImageView.hidden = NO;
-                    self.remoteAvatarImageView.hidden = YES;
-                } else {
-                    [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideoDelegate:self.remoteVideoImageView];
-                    self.remoteVideoImageView.hidden = YES;
-                    if (self.localVideoImageView.hidden) {
-                        self.remoteAvatarImageView.hidden = self.view.frame.size.width > self.view.frame.size.height;
+                    if (self.remoteVideoImageView.hidden) {
+                        [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideoDelegate:self.remoteVideoImageView];
+                        self.remoteVideoImageView.hidden = NO;
+                        self.remoteAvatarImageView.hidden = YES;
                     }
-                    [self.remoteAvatarImageView mnz_setImageForUserHandle:[self.chatRoom peerHandleAtIndex:0]];
+                } else {
+                    if (!self.remoteVideoImageView.hidden) {
+                        [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideoDelegate:self.remoteVideoImageView];
+                        self.remoteVideoImageView.hidden = YES;
+                        if (self.localVideoImageView.hidden) {
+                            self.remoteAvatarImageView.hidden = self.view.frame.size.width > self.view.frame.size.height;
+                        }
+                        [self.remoteAvatarImageView mnz_setImageForUserHandle:[self.chatRoom peerHandleAtIndex:0]];
+                    }
                 }
                 [self.localVideoImageView remoteVideoEnable:call.remoteVideo];
                 self.remoteMicImageView.hidden = call.hasRemoteAudio;
