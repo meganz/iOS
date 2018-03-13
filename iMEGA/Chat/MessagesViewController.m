@@ -1602,12 +1602,16 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                 [self.collectionView reloadData];
             });
             dispatch_async(dispatch_get_main_queue(), ^{
-                NSInteger item = [self.collectionView numberOfItemsInSection:0] - (self.unreadMessages + 1);
+                NSInteger numberOfItemsInSection = [self.collectionView numberOfItemsInSection:0];
+                NSInteger item = numberOfItemsInSection - (self.unreadMessages + 1);
                 if (item < 0) {
                     item = 0;
                 }
                 NSIndexPath *lastUnreadIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
-                [self.collectionView scrollToItemAtIndexPath:lastUnreadIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+                if (numberOfItemsInSection) {
+                    [self.collectionView scrollToItemAtIndexPath:lastUnreadIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+                }
+                
                 if (self.unreadMessages) {
                     [self showOrHideJumpToBottom];
                 }
