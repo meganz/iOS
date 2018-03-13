@@ -52,6 +52,8 @@
     self.enableDisableSpeaker.selected = self.videoCall;
     if (self.videoCall) {
         [self enableLoudspeaker];
+        self.remoteAvatarImageView.hidden = YES;
+        self.localVideoImageView.hidden = NO;
     } else {
         [self disableLoudspeaker];
     }
@@ -147,6 +149,11 @@
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
     BOOL viewWillChangeOrientation = (size.height != self.view.bounds.size.height);
+    
+    if (self.remoteVideoImageView.hidden && self.localVideoImageView.hidden) {
+        self.remoteAvatarImageView.hidden = (size.width > size.height);
+    }
+    
     if (viewWillChangeOrientation && self.call.hasLocalVideo && self.call.hasRemoteVideo) {
         [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
             [self.localVideoImageView rotate];
@@ -308,7 +315,11 @@
                     if (sender.selected) {
                         self.localVideoImageView.hidden = YES;
                         [[MEGASdkManager sharedMEGAChatSdk] removeChatLocalVideoDelegate:self.localVideoImageView];
+                        if (self.remoteVideoImageView.hidden) {
+                            self.remoteAvatarImageView.hidden = self.view.frame.size.width > self.view.frame.size.height;
+                        }
                     } else {
+                        self.remoteAvatarImageView.hidden = YES;
                         self.localVideoImageView.hidden = NO;
                         [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideoDelegate:self.localVideoImageView];
                     }
@@ -382,13 +393,15 @@
             if ([call hasChangedForType:MEGAChatCallChangeTypeRemoteAVFlags]) {
                 self.localVideoImageView.userInteractionEnabled = call.hasRemoteVideo;
                 if (call.hasRemoteVideo) {
-                    self.remoteVideoImageView.hidden = NO;
                     [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideoDelegate:self.remoteVideoImageView];
+                    self.remoteVideoImageView.hidden = NO;
                     self.remoteAvatarImageView.hidden = YES;
                 } else {
                     [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideoDelegate:self.remoteVideoImageView];
                     self.remoteVideoImageView.hidden = YES;
-                    self.remoteAvatarImageView.hidden = NO;
+                    if (self.localVideoImageView.hidden) {
+                        self.remoteAvatarImageView.hidden = self.view.frame.size.width > self.view.frame.size.height;
+                    }
                     [self.remoteAvatarImageView mnz_setImageForUserHandle:[self.chatRoom peerHandleAtIndex:0]];
                 }
                 [self.localVideoImageView remoteVideoEnable:call.remoteVideo];
