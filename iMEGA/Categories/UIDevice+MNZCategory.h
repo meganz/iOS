@@ -29,7 +29,7 @@
 @property (nonatomic, readonly) BOOL iPhone6XPlus;
 
 /**
- * @brief YES if the device is an iPhone 6 Plus, 6S Plus otherwise NO.
+ * @brief YES if the device is an iPhone X, otherwise NO.
  */
 @property (nonatomic, readonly) BOOL iPhoneX;
 
