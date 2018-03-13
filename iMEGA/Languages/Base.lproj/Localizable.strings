@@ -508,8 +508,6 @@
 "offline"="Offline";
 /* Title of the Contacts section */
 "contactsTitle"="Contacts";
-/* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
-"noFoldersShared"="No folders shared";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 folder";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
