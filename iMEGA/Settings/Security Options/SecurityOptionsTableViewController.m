@@ -7,6 +7,7 @@
 #import "MEGASdkManager.h"
 
 #import "ChangePasswordViewController.h"
+#import "QRSettingsTableViewController.h"
 
 @interface SecurityOptionsTableViewController () <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate>
 
@@ -15,6 +16,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *changePasswordLabel;
 @property (weak, nonatomic) IBOutlet UILabel *resetPasswordLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *qrCodeLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *changeEmailLabel;
 
@@ -36,6 +39,8 @@
     
     [self.changePasswordLabel setText:AMLocalizedString(@"changePasswordLabel", @"The name for the change password label")];
     self.resetPasswordLabel.text = AMLocalizedString(@"forgotPassword", @"An option to reset the password.");
+    
+    self.qrCodeLabel.text = AMLocalizedString(@"qrCode", @"QR Code label, used in Settings as title. String as short as possible");
     
     self.changeEmailLabel.text = AMLocalizedString(@"changeEmail", @"The title of the alert dialog to change the email associated to an account.");
     
@@ -71,6 +76,12 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)pushQRSettings {
+    QRSettingsTableViewController *qrSettingsTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"QRSettingsTableViewControllerID"];
+    qrSettingsTVC.navigationItem.rightBarButtonItem = nil;
+    [self.navigationController pushViewController:qrSettingsTVC animated:YES];
+}
+
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
@@ -85,7 +96,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 4;
+    return 5;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -130,13 +141,17 @@
             }
             break;
         }
+            
+        case 2:
+            [self pushQRSettings];
+            break;
         
-        case 2: {
+        case 3: {
             [self pushChangeViewControllerType:ChangeTypeEmail];
             break;
         }
             
-        case 3: { //Close other sessions
+        case 4: { //Close other sessions
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 [[MEGASdkManager sharedMEGASdk] killSession:-1 delegate:self];
             }
