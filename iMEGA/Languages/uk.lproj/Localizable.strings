@@ -306,8 +306,8 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="Ви більше не маєте доступу до цього файлу";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Ви більше не маєте доступу до цієї теки";
-/* List option shown on the details of a file or folder */
-"saveForOffline"="Зберегти локально";
+/* The text is shown as an option on the details of a file or folder */
+"saveForOffline"="Зберігати автономно";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Зберігати автономно";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Ланки видалено";
 /* Title show when a file is being downloaded */
-"downloading"="Завантаження…";
+"downloading"="Скачування";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Ви хочете скасувати завантаження?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -656,8 +656,8 @@
 "masterKey"="Ключ Відновлення";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Змінити пароль";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Експорт ключа відновлення і тримання його в безпечному місці дозволяє відновити акаунт в разі втрати пароля без втрати даних.";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="Експорт майстер-ключа у безпечне місце дозволить встановити новий пароль без втрати даних.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Навіщо мені потрібен Ключ відновлення?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,8 +678,8 @@
 "clearCache"="Очистити кеш";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="На MEGA";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="Кошик для сміття порожній";
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
+"emptyRubbishBin"="Очистити кошик для сміття";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Всі елементи у сміттєвому кошику були видалені";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="Якщо ви не можете отримати доступ до вашої е-пошти, будь ласка, зв'яжіться з support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Скасування ланки минуло.";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Будь ласка, введіть пароль, щоб підтвердити видалення акаунту.";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="Це останній крок видалення вашого облікового запису. Ви назавжди втратите всі дані, що зберігаються у хмарі. Будь ласка, введіть нижче свій пароль.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Закриття облікового запису";
 /* Title for the action that allows to remove a file or folder */

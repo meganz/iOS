@@ -29,9 +29,9 @@
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="Proszę nadaj uprawnienia dostępu dla aplikacji MEGA do kamery w ustawieniach.";
 /* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
-"cameraPermissionsInCall"="Please give MEGA app permission to access your Camera in your Settings. In case you proceed the call will end because the app will be restarted.";
+"cameraPermissionsInCall"="Prosimy o zezwolenie aplikacji MEGA na dostęp do zdjęć poprzez zmianę ustawień. W przypadku zmiany, rozmowa zostanie przerwana aby zrestartować aplikację.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
+"microphonePermissions"="Prosimy o zezwolenie aplikacji MEGA na dostęp do mikrofonu w ustawieniach aplikacji";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Dodaj uprawnienia dla aplikacji MEGA w celu dostępu do katalogu ze zdjęciami poprzez ustawienia.";
 /* Alert message shown when the user tries to download an empty folder  */
@@ -306,8 +306,8 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="Nie masz dostępu do pliku";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Nie masz dostępu do katalogu";
-/* List option shown on the details of a file or folder */
-"saveForOffline"="Zapisz offline";
+/* The text is shown as an option on the details of a file or folder */
+"saveForOffline"="Zapisz lokalnie";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Zapisane offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Linki zostały usunięte";
 /* Title show when a file is being downloaded */
-"downloading"="Pobieranie...";
+"downloading"="Ściąganie";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Czy chcesz przerwać pobieranie?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -656,8 +656,8 @@
 "masterKey"="Klucz zapasowy";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Zmień hasło";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Zapisany i przechowywany w bezpiecznym miejscu klucz umożliwia dostęp do konta w przypadku zapomnienia hasła bez utraty danych.";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="Wyeksportowanie klucza głównego i przechowywanie go w bezpiecznym miejscu, umożliwi Ci zmianę hasła w przyszłości bez ryzyka utraty danych.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Do czego służy klucz?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,8 +678,8 @@
 "clearCache"="Wyczyść pamięć podręczną";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Na MEGA";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="Opróżnij kosz";
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
+"emptyRubbishBin"="Wyczyść kosz";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Wszystkie elementy z kosza zostaną usunięte";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="Jeżeli nie możesz się zalogować, skontaktuj się z support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Link nie jest poprawny.";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Wprowadź swoje hasło ponownie aby potwierdzić anulowanie konta.";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="To jest ostatni krok w procesie usuwania konta. Twoje dane zostaną usunięte. Wprowadź swoje hasło.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Zamknij konto";
 /* Title for the action that allows to remove a file or folder */
@@ -881,7 +881,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Odbierz %1$s dodatkowej powierzchni i %2$s dodatkowego transferu za każde polecenie";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Wybierz kontakty z listy w telefonie lub wpisz adresy email.";
+"inviteYourFriendsExplanation"="Wybierz kontakty z listy lub wpisz adresy email.";
 /*  */
 "insertYourFriendsEmails"="Wpisz adresy email Twoich znajomych:";
 /*  */
@@ -1321,10 +1321,10 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="Poprzez aplikację zawsze możesz zwiększyć dostępną powierzchnię na pliki i limit transferu opłacając subskrypcję miesięczną lub roczną.";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Subkrypcja PRO LITE: €4.99 (US$4.99) miesięcznie lub €49.99 (US$49.99) rocznie otrzymasz 200 GB przestrzeni na pliki oraz 1 TB na transfer danych miesięcznie.Subkrypcja PRO I: €9.99 (US$9.99) miesięcznie lub €99.99 (US$99.99) rocznie otrzymasz 1 TB przestrzeni na pliki oraz 2 TB na transfer danych miesięcznie.Subkrypcja PRO II: €19.99 (US$19.99) miesięcznie lub €199.99 (US$199.99) rocznie otrzymasz 4 TB przestrzeni na pliki oraz 8 TB na transfer danych miesięcznie.Subkrypcja PRO III: €29.99 (US$29.99) miesięcznie lub €299.99 (US$299.99) rocznie otrzymasz 8 TB przestrzeni na pliki oraz 16 TB na transfer danych miesięcznie.";
+"generalDescriptionParagraph5"="Subskrypcja PRO LITE: €4.99 (US$4.99) na miesiąc lub €49.99 (US$49.99) na rok otrzymasz 200 GB powierzchni i 1 TB na transfer plików miesięcznie.\nSubskrypcja PRO I : €9.99 (US$9.99) na miesiąc lub €99.99 (US$99.99) na rok otrzymasz 1 TB powierzchni i 2 TB na transfer plików miesięcznie.\nSubskrypcja PRO II: €19.99 (US$19.99) na miesiąc lub €199.99 (US$199.99) na rok otrzymasz 4 TB powierzchni i 8 TB na transfer plików miesięcznie.\nSubskrypcja PRO III: €29.99 (US$29.99) na miesiąc lub €299.99 (US$299.99) na rok otrzymasz 8 TB powierzchni and 16 TB na transfer plików miesięcznie.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Po więcej informacji, sprawdź naszą strone:Mobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmlDesktop - https://mega.nz/";
+"generalDescriptionParagraph6"="Po więcej informacji przejdź do strony: [Be]Mobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nDesktop - https://mega.nz/";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="Dzwonię...";
 /* Notification text body shown when you have missed one audio call */
@@ -1344,4 +1344,4 @@
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
 "missedAudioCallsAndMissedVideoCalls"="[A] nieodebrane połączenia głosowe i [B] nieodebrane rozmowy video";
 /* Button title to see the available bonus */
-"getBonus"="Get Bonus";
+"getBonus"="Odbierz bonus";
