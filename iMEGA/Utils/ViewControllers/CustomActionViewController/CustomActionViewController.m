@@ -179,73 +179,81 @@
     
     NSMutableArray *actions = [NSMutableArray new];
     
-    switch (accessType) {
-        case MEGAShareTypeAccessRead:
-        case MEGAShareTypeAccessReadWrite: {
-            [actions addObject:[self actionDownload]];
-            if (self.displayMode != DisplayModeNodeVersions) {
-                if (self.displayMode != DisplayModeNodeInfo) {
-                    [actions addObject:[self actionFileInfo]];
-                }
-                [actions addObject:[self actionCopy]];
-                if (self.isIncomingShareChildView) {
-                    [actions addObject:[self actionLeaveSharing]];
-                }
-            }
-            break;
+    if (self.displayMode == DisplayModeFolderLink) {
+        [actions addObject:[self actionImport]];
+        [actions addObject:[self actionDownload]];
+        if (self.node.isFile) {
+            [actions addObject:[self actionOpen]];
         }
-            
-        case MEGAShareTypeAccessFull:
-            [actions addObject:[self actionDownload]];
-            if (self.displayMode == DisplayModeNodeVersions) {
-                [actions addObject:[self actionRevertVersion]];
-                [actions addObject:[self actionRemove]];
-            } else {
-                if (self.displayMode != DisplayModeNodeInfo) {
-                    [actions addObject:[self actionFileInfo]];
-                }
-                [actions addObject:[self actionCopy]];
-                [actions addObject:[self actionRename]];
-                if (self.isIncomingShareChildView) {
-                    [actions addObject:[self actionLeaveSharing]];
-                }
-            }
-            break;
-            
-        case MEGAShareTypeAccessOwner:
-            if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeRubbishBin || self.displayMode == DisplayModeNodeInfo) {
-                [actions addObject:[self actionShare]];
+    } else {
+        switch (accessType) {
+            case MEGAShareTypeAccessRead:
+            case MEGAShareTypeAccessReadWrite: {
                 [actions addObject:[self actionDownload]];
-                if (self.displayMode != DisplayModeNodeInfo) {
-                    [actions addObject:[self actionFileInfo]];
+                if (self.displayMode != DisplayModeNodeVersions) {
+                    if (self.displayMode != DisplayModeNodeInfo) {
+                        [actions addObject:[self actionFileInfo]];
+                    }
+                    [actions addObject:[self actionCopy]];
+                    if (self.isIncomingShareChildView) {
+                        [actions addObject:[self actionLeaveSharing]];
+                    }
                 }
-                [actions addObject:[self actionCopy]];
-                [actions addObject:[self actionMove]];
-                [actions addObject:[self actionRename]];
-                if (self.isIncomingShareChildView) {
-                    [actions addObject:[self actionLeaveSharing]];
-                }
-                if (self.displayMode == DisplayModeCloudDrive) {
-                    [actions addObject:[self actionMoveToRubbishBin]];
-                } else if (self.displayMode == DisplayModeRubbishBin) {
+                break;
+            }
+                
+            case MEGAShareTypeAccessFull:
+                [actions addObject:[self actionDownload]];
+                if (self.displayMode == DisplayModeNodeVersions) {
+                    [actions addObject:[self actionRevertVersion]];
                     [actions addObject:[self actionRemove]];
+                } else {
+                    if (self.displayMode != DisplayModeNodeInfo) {
+                        [actions addObject:[self actionFileInfo]];
+                    }
+                    [actions addObject:[self actionCopy]];
+                    [actions addObject:[self actionRename]];
+                    if (self.isIncomingShareChildView) {
+                        [actions addObject:[self actionLeaveSharing]];
+                    }
                 }
-            } else if (self.displayMode == DisplayModeNodeVersions) {
-                [actions addObject:[self actionDownload]];
-                [actions addObject:[self actionRevertVersion]];
-                [actions addObject:[self actionRemove]];
-            } else {
-                [actions addObject:[self actionShare]];
-                [actions addObject:[self actionDownload]];
-                [actions addObject:[self actionFileInfo]];
-                [actions addObject:[self actionCopy]];
-                [actions addObject:[self actionRename]];
-                [actions addObject:[self actionRemoveSharing]];
-            }
-            break;
-            
-        default:
-            break;
+                break;
+                
+            case MEGAShareTypeAccessOwner:
+                if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeRubbishBin || self.displayMode == DisplayModeNodeInfo) {
+                    [actions addObject:[self actionShare]];
+                    [actions addObject:[self actionDownload]];
+                    if (self.displayMode != DisplayModeNodeInfo) {
+                        [actions addObject:[self actionFileInfo]];
+                    }
+                    [actions addObject:[self actionCopy]];
+                    [actions addObject:[self actionMove]];
+                    [actions addObject:[self actionRename]];
+                    if (self.isIncomingShareChildView) {
+                        [actions addObject:[self actionLeaveSharing]];
+                    }
+                    if (self.displayMode == DisplayModeCloudDrive) {
+                        [actions addObject:[self actionMoveToRubbishBin]];
+                    } else if (self.displayMode == DisplayModeRubbishBin) {
+                        [actions addObject:[self actionRemove]];
+                    }
+                } else if (self.displayMode == DisplayModeNodeVersions) {
+                    [actions addObject:[self actionDownload]];
+                    [actions addObject:[self actionRevertVersion]];
+                    [actions addObject:[self actionRemove]];
+                } else {
+                    [actions addObject:[self actionShare]];
+                    [actions addObject:[self actionDownload]];
+                    [actions addObject:[self actionFileInfo]];
+                    [actions addObject:[self actionCopy]];
+                    [actions addObject:[self actionRename]];
+                    [actions addObject:[self actionRemoveSharing]];
+                }
+                break;
+                
+            default:
+                break;
+        }
     }
     
     if (self.excludedActions.count > 0) {
@@ -306,6 +314,14 @@
     return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share") iconName: @"removeShare" andActionType:MegaNodeActionTypeRemoveSharing];
 }
 
+- (MegaActionNode *)actionImport {
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"import", nil) iconName: @"infoImport" andActionType:MegaNodeActionTypeImport];
+}
+
+- (MegaActionNode *)actionOpen {
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"openButton", nil) iconName: @"infoOpen" andActionType:MegaNodeActionTypeOpen];
+}
+        
 - (MegaActionNode *)actionRevertVersion {
     return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"revert", @"A button label which reverts a certain version of a file to be the current version of the selected file.") iconName: @"history" andActionType:MegaNodeActionTypeRevertVersion];
 }
