@@ -45,7 +45,7 @@
                                                 <action selector="didPressCloseButton:" destination="yD8-RT-K0O" id="y4q-pJ-tUt"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Item" image="more" id="YVt-M3-aSH">
+                                        <barButtonItem key="rightBarButtonItem" image="more" id="YVt-M3-aSH">
                                             <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <connections>
                                                 <action selector="didPressActionsButton:" destination="yD8-RT-K0O" id="cLN-7K-Wry"/>
