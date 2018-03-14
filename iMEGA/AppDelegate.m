@@ -610,11 +610,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     //To tint the color of the prompt.
     [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:[UIColor whiteColor]];
     
-    if (@available(iOS 10.0, *)) {
-        [[UINavigationBar appearance] setShadowImage:[UIImage mnz_navigationBarShadow]];
-        [[UINavigationBar appearance] setBackgroundImage:[UIImage mnz_navigationBarBackground] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsCompact];
-    }
-    
     [[UISearchBar appearance] setTranslucent:NO];
     [[UISearchBar appearance] setBackgroundColor:[UIColor mnz_grayF1F1F2]];
     [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:[UIColor mnz_grayF1F1F2]];
