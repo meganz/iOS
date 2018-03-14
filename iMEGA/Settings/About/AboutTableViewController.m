@@ -72,7 +72,7 @@
 
 - (void)acknowledgements {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        NSURL *URL = [NSURL URLWithString:@"https://mega.nz/ios_acknowledgements.html"];
+        NSURL *URL = [NSURL URLWithString:@"https://github.com/meganz/iOS3/blob/master/CREDITS.md"];
         SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:URL];
         if (@available(iOS 10.0, *)) {
             webViewController.preferredControlTintColor = [UIColor mnz_redD90007];
