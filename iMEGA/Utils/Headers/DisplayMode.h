@@ -4,5 +4,6 @@ typedef NS_ENUM (NSInteger, DisplayMode) {
     DisplayModeRubbishBin,
     DisplayModeSharedItem,
     DisplayModeNodeInfo,
-    DisplayModeNodeVersions
+    DisplayModeNodeVersions,
+    DisplayModeFolderLink
 };

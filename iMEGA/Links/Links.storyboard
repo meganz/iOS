@@ -102,7 +102,7 @@
                                                                 <constraint firstAttribute="height" constant="44" id="tmz-Oz-mBC"/>
                                                             </constraints>
                                                             <color key="tintColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <state key="normal" image="nodeInfo"/>
+                                                            <state key="normal" image="more"/>
                                                             <state key="selected" image="moreSelected"/>
                                                             <state key="highlighted" image="moreSelected"/>
                                                             <connections>
