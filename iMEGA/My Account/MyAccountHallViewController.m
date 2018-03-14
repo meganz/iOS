@@ -3,6 +3,7 @@
 
 #import "AchievementsViewController.h"
 #import "ContactsViewController.h"
+#import "MEGAContactLinkCreateRequestDelegate.h"
 #import "OfflineTableViewController.h"
 #import "MEGANavigationController.h"
 #import "MEGASdk+MNZCategory.h"
@@ -12,6 +13,7 @@
 #import "MyAccountViewController.h"
 #import "SettingsTableViewController.h"
 #import "TransfersViewController.h"
+#import "UIImage+MNZCategory.h"
 #import "UpgradeTableViewController.h"
 #import "UsageViewController.h"
 
@@ -58,6 +60,15 @@
     [_numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
     [_numberFormatter setLocale:[NSLocale currentLocale]];
     [_numberFormatter setMaximumFractionDigits:0];
+    
+    MEGAContactLinkCreateRequestDelegate *delegate = [[MEGAContactLinkCreateRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+        NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
+        self.qrCodeImageView.image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:self.qrCodeImageView.frame.size];
+        self.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+        self.avatarImageView.layer.borderWidth = 6.0f;
+        self.avatarImageView.layer.cornerRadius = 40.0f;
+    }];
+    [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:NO delegate:delegate];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -303,12 +314,18 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     [super onRequestFinish:api request:request error:error];
     
-    if (request.type == MEGARequestTypeAccountDetails) {
-        if (error.type) {
-            return;
-        }
-        
-        [self reloadUI];
+    switch (request.type) {
+        case MEGARequestTypeAccountDetails:
+            if (error.type) {
+                return;
+            }
+            
+            [self reloadUI];
+            
+            break;
+            
+        default:
+            break;
     }
 }
 

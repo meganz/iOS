@@ -1179,7 +1179,7 @@
             
             CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
             customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-            customModalAlertVC.image = @"storage_almost_full";
+            customModalAlertVC.image = [UIImage imageNamed:@"storage_almost_full"];
             customModalAlertVC.viewTitle = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
             customModalAlertVC.detail = alertMessage;
             customModalAlertVC.action = AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
