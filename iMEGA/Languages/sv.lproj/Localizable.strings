@@ -306,7 +306,7 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="Du har inte längre åtkomst till den här filen";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Du har inte längre åtkomst till denna mapp";
-/* List option shown on the details of a file or folder */
+/* The text is shown as an option on the details of a file or folder */
 "saveForOffline"="Spara för offline";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Sparat för frånkopplat läge";
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Länkar borttagna";
 /* Title show when a file is being downloaded */
-"downloading"="Laddar ner...";
+"downloading"="Laddar ned";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Vill du avbryta nedladdningen?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -656,8 +656,8 @@
 "masterKey"="Återställningsnyckel";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Ändra lösenord";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Exportera återställningsnyckel och håll den på en säker plats så kan du återställa kontot i händelse av ett förlorat lösenord utan förlust av data.";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="Om du exporterar huvudnyckeln och förvarar den på ett säkert ställe så kan du ändra lösenord utan att du förlorar data.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Varför behöver jag en återställningsnyckel? ";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,7 +678,7 @@
 "clearCache"="Rensa temporära filer";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="På MEGA";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="Töm papperskorgen";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Alla objekt i papperskorgen kommer att raderas permanent.";
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="Om du inte kommer åt din e-post, kontakta: support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Annulleringslänken har upphört att gälla.";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="För att avsluta ditt konto ange ditt lösenord";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="Detta är det sista steget för att avsluta kontot. Du kommer permanent förlora alla data som lagras i molnet. Ange ditt lösenord nedan.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Stäng konto";
 /* Title for the action that allows to remove a file or folder */

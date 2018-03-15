@@ -306,8 +306,8 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="Wala ka ng access sa file na ito";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Wala ka access sa folder na ito";
-/* List option shown on the details of a file or folder */
-"saveForOffline"="I-save para sa Offline";
+/* The text is shown as an option on the details of a file or folder */
+"saveForOffline"="Isave sa offline";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Itabi ng magamit Offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Tinanggal ang mga link";
 /* Title show when a file is being downloaded */
-"downloading"="Dina-download…";
+"downloading"="Nag-dadownload";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Gusto mo bang kanselahin ang pagda-download?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -656,8 +656,8 @@
 "masterKey"="Recovery Key";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Palitan ang password";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Ang pag-eexport sa Recovery Key at ang pagtatabi nito sa isang maingat na lokasyon ay magbibigay daan upang mabawi mo ang iyong account sakaling mawala mo ang iyong password ng walang data loss.";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="Ang paglalabas ng Master Key at paglalagay nito sa isang ligtas na lugar ay magbibigay daan para makapag-set ka ng bagong password ng walang anumang nalalagas na data.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Bakit ko ba kailangan ang Recovery Key?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,8 +678,8 @@
 "clearCache"="Pagpahi ng Cahe";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Sa MEGA";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="Bakatehin ang Basurahan";
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
+"emptyRubbishBin"="Linisin ang basurahan";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Lahat ng items sa basurahan ay papahiin";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="Kung hindi mo ma-access ang iyong email, i-contact kami sa support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Ang cancellation link ay nag-expire na";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Ilagay ang inyong password para kumpirmahin na tatanggalin mo na iyong account.";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="Ito ang huling hakbang upang i-cancel ang inyong account. Mawawala lahat ng iyong data na nakalagay sa cloud. Ilagay ang inyong password sa ibaba.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Isarado ang account";
 /* Title for the action that allows to remove a file or folder */
@@ -881,7 +881,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Get %1$s of storage and %2$s of transfers for each referral";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+"inviteYourFriendsExplanation"="Pumili ng contacts sa contact list ng phone mo o maglagay ng iba't ibang email address.";
 /*  */
 "insertYourFriendsEmails"="Maglagay ng email(s) ng/mga kaibigan mo:";
 /*  */

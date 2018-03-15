@@ -105,13 +105,10 @@
     if (@available(iOS 11.0, *)) {} else {
         self.navigationBar.tintColor = [UIColor mnz_redFF4D52];
     }
-
-    [self.view layoutIfNeeded];
-    [self reloadUI];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
     
     [self.view layoutIfNeeded];
     [self reloadUI];

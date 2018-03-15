@@ -306,7 +306,7 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="Nu mai ai acces la acest fişier";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Nu mai ai acces la acest folder";
-/* List option shown on the details of a file or folder */
+/* The text is shown as an option on the details of a file or folder */
 "saveForOffline"="Salvează pentru offline";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Salvate pentru offline";
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Linkuri eliminate";
 /* Title show when a file is being downloaded */
-"downloading"="Se descarcă...";
+"downloading"="Se descarcă";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Doreşti să anulezi descărcarea?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -656,8 +656,8 @@
 "masterKey"="Cheie de recuperare";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Schimbă parola";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Salvarea cheii de recuperare şi păstrarea ei într-o locaţie sigură îţi permite să recuperezi contul în cazul unei parole pierdute fără ca să pierzi date.";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="Exportarea cheii principale şi păstrarea ei într-o locaţie sigură îţi permite să setezi o parolă nouă fără pierderea datelor.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="De ce am nevoie de o cheie de recuperare?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,8 +678,8 @@
 "clearCache"="Şterge cache-ul";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Pe MEGA";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="Coş de gunoi gol";
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
+"emptyRubbishBin"="Goleşte coşul de gunoi";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Toate elementele din coşul de gunoi vor fi şterse";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="Dacă nu-ţi poţi accesa e-mailul, te rugăm să contactezi support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Linkul de anulare a expirat.";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Te rugăm să introduci parola pentru a confirma faptul că doreşti să îţi anulezi contul.";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="Acesta este ultimul pas pentru a-ţi anula contul. Vei pierde definitiv toate datele stocate în cloud. Te rugăm să introduci parola mai jos.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Închide contul";
 /* Title for the action that allows to remove a file or folder */
@@ -881,7 +881,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Obţine %1$s stocare şi %2$s transferuri pentru fiecare recomandare";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+"inviteYourFriendsExplanation"="Selectează contacte din lista de contacte a telefonului sau introdu mai multe adrese de e-mail.";
 /*  */
 "insertYourFriendsEmails"="Introdu e-mailul(urile) prietenului:";
 /*  */
