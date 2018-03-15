@@ -527,7 +527,7 @@
     ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
     contactsVC.contactsMode = ContactsModeChatStartConversation;
     MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-    contactsVC.userSelected =^void(NSArray *users) {
+    contactsVC.userSelected =^void(NSArray *users, NSString *groupName) {
         if (users.count == 1) {
             MEGAUser *user = [users objectAtIndex:0];
             MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
@@ -563,7 +563,10 @@
             
             MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
                 messagesVC.chatRoom = chatRoom;
-                [self.navigationController pushViewController:messagesVC animated:YES];                
+                if (groupName) {
+                    [[MEGASdkManager sharedMEGAChatSdk] setChatTitle:chatRoom.chatId title:groupName];
+                }
+                [self.navigationController pushViewController:messagesVC animated:YES];
             }];
             [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:YES peers:peerList delegate:createChatGroupRequestDelegate];
         }

@@ -414,7 +414,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     }
     contactsVC.participantsMutableDictionary = [self.participantsMutableDictionary copy];
     
-    contactsVC.userSelected = ^void(NSArray *users) {
+    contactsVC.userSelected = ^void(NSArray *users, NSString *groupName) {
         if (addParticipant) {
             for (NSInteger i = 0; i < users.count; i++) {
                 if (self.shouldStopInvitingContacts) {
