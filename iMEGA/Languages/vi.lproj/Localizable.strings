@@ -306,8 +306,8 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="Bạn không còn quyền hạn để truy cập tệp tin này nữa";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Bạn không còn quyền hạn để truy cập thư mục này nữa";
-/* List option shown on the details of a file or folder */
-"saveForOffline"="Lưu vào Ngoại Tuyến";
+/* The text is shown as an option on the details of a file or folder */
+"saveForOffline"="Lưu để dùng ngoại tuyến";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Lưu về Ngoại Tuyến";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Các đường liên kết đã được xóa";
 /* Title show when a file is being downloaded */
-"downloading"="Đang tải về...";
+"downloading"="Đang tải";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Bạn muốn hủy tải xuống không?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -443,7 +443,7 @@
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 tệp tin được chuyển vào Thùng Rác";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d mục đã được chuyển vào Thùng Rác!";
+"filesMovedToRubbishBinMessage"="%d mục đã được chuyển vào Thùng Rác";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
 "folderMovedToRubbishBinMessage"="1 thư mục được chuyển vào Thùng Rác";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
@@ -656,8 +656,8 @@
 "masterKey"="Mã Khóa Phục Hồi";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Đổi mật khẩu";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Xuất ra Mã Phục Hồi và giữ mã ở một nơi an toàn và dễ nhớ sẽ giúp bạn tránh việc mất dữ liệu khi thay đổi mật khẩu.";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="Xuất mã-khóa MasterKey và giữ nó ở một nơi an toàn để đề phòng việc mất dữ liệu khi đặt mật khẩu mới.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Tại sao tôi cần phải lưu giữ Mã Khóa Phục Hồi?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,8 +678,8 @@
 "clearCache"="Dọn Bộ Nhớ Tạm";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Trên mạng MEGA";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="Dọn Thùng Rác";
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
+"emptyRubbishBin"="Dọn thùng rác";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Tất cả các mục trong thùng rác sẽ bị xóa";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="Nếu bạn không truy cập được email của mình, xin liên hệ support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Yêu cầu hủy bỏ này đã hết hạn.";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Xin nhập mật khẩu để xác minh và thực hiện xóa bỏ tài khoản.";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="Đây là bước cuối cùng để hoàn tất việc hủy bỏ tài khoản. Bạn sẽ mất hoàn toàn tất cả dữ liệu bạn đã lưu trên ổ mây. Để tiến hành, xin nhập mật khẩu ở dưới đây.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Đóng tài khoản";
 /* Title for the action that allows to remove a file or folder */
@@ -729,9 +729,9 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="Bạn đang chuẩn bị xóa vĩnh viễn [A] tệp tin và [B] thư mục. Bạn có muốn tiến hành không? (Bạn sẽ không thể khôi phục lại việc làm này.)";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="Đã khóa 1 tệp tin khỏi MEGA!";
+"fileRemovedToRubbishBinMessage"="Đã khóa 1 tệp tin khỏi MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="%d tệp tin đã xóa khỏi MEGA!";
+"filesRemovedToRubbishBinMessage"="%d tệp tin đã xóa khỏi MEGA";
 /* Success message shown when 1 folder has been removed from MEGA */
 "folderRemovedToRubbishBinMessage"="1 thư mục vừa bị xóa khỏi MEGA";
 /* Success message shown when {1+} folders have been removed from MEGA */
@@ -881,7 +881,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Nhận thêm %1$s vào không gian lưu trữ và %2$s để truyền tải cho mỗi lời giới thiệu bạn bè";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+"inviteYourFriendsExplanation"="Chọn ra các tên liên lạc trong danh bạ của điện thoại hoặc điền các địa chỉ email.";
 /*  */
 "insertYourFriendsEmails"="Nhập địa chỉ email của bạn bè:";
 /*  */

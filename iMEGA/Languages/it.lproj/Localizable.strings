@@ -306,8 +306,8 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="Non hai più accesso a questo file";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Non hai più accesso a questa cartella";
-/* List option shown on the details of a file or folder */
-"saveForOffline"="Salva per Offline";
+/* The text is shown as an option on the details of a file or folder */
+"saveForOffline"="Salva per l'Offline";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Salvato in locale";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Link rimossi";
 /* Title show when a file is being downloaded */
-"downloading"="Scaricando...";
+"downloading"="Scaricamento in corso";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Vuoi annullare il download?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -656,8 +656,8 @@
 "masterKey"="Chiave di recupero";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Cambia password";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Salvando la Chiave di Recupero e tenendola in un posto sicuro ti permette di recuperare il tuo account nel caso di password dimenticata senza perdita di dati.";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="Esportare la chiave master e mantenerla in un luogo sicuro ti permette di impostare una nuova password, senza perdita di dati.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Perché ho bisogno di una Chiave di Recupero?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,8 +678,8 @@
 "clearCache"="Svuota cache";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Su MEGA";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="Svuota il cestino";
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
+"emptyRubbishBin"="Svuota cestino";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Tutti gli elementi nel cestino verranno cancellati";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="Se non riesci ad accedere con la tua email, contatta support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Link di cancellazione scaduto";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Per favore, inserisci la tua password per confermare che vuoi eliminare il tuo account.";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="Questo è l'ultimo step prima di cancellare il tuo account. Perderai in modo permanente tutti i tuoi dati salvati nel cloud. Inserisci la tua password qui sotto.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Chiudi account";
 /* Title for the action that allows to remove a file or folder */
@@ -731,7 +731,7 @@
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="1 file rimosso da MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="%d files rimossi da MEGA!";
+"filesRemovedToRubbishBinMessage"="%d files rimossi da MEGA";
 /* Success message shown when 1 folder has been removed from MEGA */
 "folderRemovedToRubbishBinMessage"="1 cartella rimossa da MEGA";
 /* Success message shown when {1+} folders have been removed from MEGA */
@@ -881,7 +881,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Ottieni %1$s di spazio di archiviazione e %2$s di banda di trasferimento per ogni utente invitato";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Seleziona i contatti dalla lista dei contatti sul tuo telefono oppure inserisci più indirizzi email.";
+"inviteYourFriendsExplanation"="Seleziona i contatti dalla lista contatti del tuo telefono o inserisci più indirizzi email.";
 /*  */
 "insertYourFriendsEmails"="Inserisci la/e mail del/i tuo/i amico/i:";
 /*  */
