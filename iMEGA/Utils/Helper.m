@@ -841,8 +841,10 @@ static MEGAIndexer *indexer;
             allNodesExistInOffline = YES;
         }
         
-        SendToChatActivity *sendToChatActivity = [[SendToChatActivity alloc] initWithNodes:nodesArray];
-        [activitiesMutableArray addObject:sendToChatActivity];
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+            SendToChatActivity *sendToChatActivity = [[SendToChatActivity alloc] initWithNodes:nodesArray];
+            [activitiesMutableArray addObject:sendToChatActivity];
+        }
     }
     
     if (allNodesExistInOffline) {
