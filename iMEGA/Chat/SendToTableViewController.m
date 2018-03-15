@@ -237,6 +237,10 @@
         
         [self showSuccessMessage];
         
+        if (self.searchController.isActive) {
+            self.searchController.active = NO;
+        }
+        
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
