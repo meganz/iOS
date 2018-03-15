@@ -185,6 +185,7 @@
 		5B17C9B31F73DE310093F162 /* InviteFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B17C9B21F73DE310093F162 /* InviteFriendsViewController.m */; };
 		5B19713D1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B19713C1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m */; };
 		5B20F4A21EFA9629007E0A34 /* ChatAttachedNodesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20F4A11EFA9629007E0A34 /* ChatAttachedNodesViewController.m */; };
+		5B222A74205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B222A73205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m */; };
 		5B22F97C1F8374C500D2B156 /* VENToken.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B22F9771F8374C400D2B156 /* VENToken.xib */; };
 		5B22F97D1F8374C500D2B156 /* VENToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B22F9781F8374C400D2B156 /* VENToken.m */; };
 		5B22F97E1F8374C500D2B156 /* VENTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B22F97A1F8374C400D2B156 /* VENTokenField.m */; };
@@ -1030,6 +1031,8 @@
 		5B19713C1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveSharingActivity.m; sourceTree = "<group>"; };
 		5B20F4A01EFA9629007E0A34 /* ChatAttachedNodesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatAttachedNodesViewController.h; path = Chat/ChatAttachedNodesViewController.h; sourceTree = "<group>"; };
 		5B20F4A11EFA9629007E0A34 /* ChatAttachedNodesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatAttachedNodesViewController.m; path = Chat/ChatAttachedNodesViewController.m; sourceTree = "<group>"; };
+		5B222A72205A9CD30083D433 /* MEGAChatAttachNodeRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAChatAttachNodeRequestDelegate.h; sourceTree = "<group>"; };
+		5B222A73205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAChatAttachNodeRequestDelegate.m; sourceTree = "<group>"; };
 		5B22F9751F8374C400D2B156 /* VENTokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENTokenField.h; path = iMEGA/Vendor/VENTokenField/VENTokenField/VENTokenField.h; sourceTree = SOURCE_ROOT; };
 		5B22F9761F8374C400D2B156 /* VENToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENToken.h; path = iMEGA/Vendor/VENTokenField/VENTokenField/VENToken.h; sourceTree = SOURCE_ROOT; };
 		5B22F9771F8374C400D2B156 /* VENToken.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VENToken.xib; path = iMEGA/Vendor/VENTokenField/VENTokenField/VENToken.xib; sourceTree = SOURCE_ROOT; };
@@ -2780,6 +2783,8 @@
 				A8F6C5F71FAB4295001E274D /* MEGAChatEnableDisableVideoRequestDelegate.m */,
 				A815FCE21FE1795C0075AC29 /* MEGAChatCreateChatGroupRequestDelegate.h */,
 				A815FCE31FE1795C0075AC29 /* MEGAChatCreateChatGroupRequestDelegate.m */,
+				5B222A72205A9CD30083D433 /* MEGAChatAttachNodeRequestDelegate.h */,
+				5B222A73205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m */,
 			);
 			name = Chat;
 			path = API/Chat;
@@ -3443,6 +3448,7 @@
 				77F43DD92034637300AE4F42 /* UICollectionView+MNZCategory.m in Sources */,
 				41EAAE461D06B49400622FAF /* NSBundle+CTAssetsPickerController.m in Sources */,
 				A85740C42032F6B80033034C /* MOChatDraft+CoreDataProperties.m in Sources */,
+				5B222A74205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m in Sources */,
 				413199791BD7BD5D002CD6EA /* DTTimePeriod.m in Sources */,
 				417279581DB663FA001AC818 /* JSQMessagesLoadEarlierHeaderView.m in Sources */,
 				4156C80D1AD7E79A00F5E818 /* LTHPasscodeViewController.m in Sources */,
