@@ -315,8 +315,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 }
                 
                 [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
-                                                                         withLogout:YES
-                                                                     andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
+                                                                         withLogout:NO
+                                                                     andLogoutTitle:nil];
                 [self.window setRootViewController:[LTHPasscodeViewController sharedUser]];
             } else {
                 _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
@@ -1292,8 +1292,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 }
                 
                 [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
-                                                                         withLogout:YES
-                                                                     andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
+                                                                         withLogout:NO
+                                                                     andLogoutTitle:nil];
             }
         }
         
