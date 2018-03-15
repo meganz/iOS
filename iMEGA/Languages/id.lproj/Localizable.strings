@@ -306,8 +306,8 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="Anda tidak lagi memiliki akses ke file ini";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Anda tidak lagi memiliki akses ke folder ini";
-/* List option shown on the details of a file or folder */
-"saveForOffline"="Simpan untuk Offline";
+/* The text is shown as an option on the details of a file or folder */
+"saveForOffline"="Simpan untuk offline";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Simpan untuk Offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Links terhapus";
 /* Title show when a file is being downloaded */
-"downloading"="Mengunduh...";
+"downloading"="Sedang mengunduh";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Apakah anda ingin membatalkan download?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -656,8 +656,8 @@
 "masterKey"="Recovery Key";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Ubah kata sandi";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Menyimpan Recovery Key dan menyimpannya di lokasi yang aman memungkinkan Anda memulihkan akun Anda jika terjadi kehilangan kata kunci tanpa kehilangan data.";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="Meng-ekspor Master Key dan menyimpan nya dalam tempat yang aman;  membolehkan anda untuk mengganti password tanpa kehilangan data";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Mengapa saya butuh Recovery Key?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,7 +678,7 @@
 "clearCache"="Hapus Cache";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Pada MEGA";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="Kosongkan Sampah";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Seluruh item pada Sampah akan dihapus";
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="Jika anda tidak dapat mengakses email anda, harap hubungi support@mega.nz";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Link pembatalan telah habis.";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Harap masukkan password Anda untuk mengonfirmasi bahwa Anda ingin membatalkan akun Anda.";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="Ini adalah langkah terakhir untuk membatalkan akun anda. Anda akan selamanya kehilangan data yang anda simpan di cloud. Harap masukan password anda di bawah ini.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Tutup akun";
 /* Title for the action that allows to remove a file or folder */
@@ -729,7 +729,7 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="Anda sedang akan menghapus [A] file dan [B] folder secara permanen. Apakah anda ingin melanjutkan? (Anda tidak dapat mengulang aksi ini.)";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="1 file dihapuskan dari MEGA!";
+"fileRemovedToRubbishBinMessage"="1 file dihapuskan dari MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
 "filesRemovedToRubbishBinMessage"="%d file dihapus dari MEGA";
 /* Success message shown when 1 folder has been removed from MEGA */
@@ -881,7 +881,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Dapatkan %1$s penyimpanan dan %2$s transfer untuk setiap referral";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+"inviteYourFriendsExplanation"="Pilih kontak dari daftar kontak ponsel Anda atau masukkan beberapa alamat email.";
 /*  */
 "insertYourFriendsEmails"="Masukkan email teman anda:";
 /*  */

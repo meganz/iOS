@@ -66,7 +66,17 @@
 }
 
 - (void)acknowledgements {
-    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://mega.nz/ios_acknowledgements.html"]];
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://github.com/meganz/iOS3/blob/master/CREDITS.md"]];
+    }
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        (alertView.tag == 0) ? [[MEGALogger sharedLogger] stopLogging] : [[MEGALogger sharedLogger] startLogging];
+    }
 }
 
 #pragma mark - UITableViewDataSource

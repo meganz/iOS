@@ -19,6 +19,8 @@
         return cachedAttributedString;
     }
     
+    if (!message) message = @"";
+    
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:message];
     id base = @{
         NSForegroundColorAttributeName:color,
