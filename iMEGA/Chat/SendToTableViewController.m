@@ -8,6 +8,7 @@
 #import "UIImageView+MNZCategory.h"
 
 #import "Helper.h"
+#import "MEGAChatAttachNodeRequestDelegate.h"
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
@@ -35,6 +36,8 @@
 @property (nonatomic, strong) NSMutableArray *visibleUsersMutableArray;
 @property (nonatomic, strong) NSMutableArray *searchedUsersMutableArray;
 @property (nonatomic, strong) NSMutableArray *selectedUsersMutableArray;
+
+@property (nonatomic) NSUInteger pendingAttachNodeOperations;
 
 @end
 
@@ -208,34 +211,37 @@
 }
 
 - (IBAction)sendAction:(UIBarButtonItem *)sender {
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"chatIsDisabled", @"Title show when you enter on the chat tab and the chat is disabled")];
-        return;
-    }
-    
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        self.pendingAttachNodeOperations = (self.nodes.count * self.selectedGroupChatsMutableArray.count) + (self.nodes.count * self.selectedUsersMutableArray.count);
+        
+        MEGAChatAttachNodeRequestDelegate *chatAttachNodeRequestDelegate = [[MEGAChatAttachNodeRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
+            if (--self.pendingAttachNodeOperations == 0) {
+                [self showSuccessMessage];
+            }
+        }];
+        
         for (MEGANode *node in self.nodes) {
             for (MEGAChatListItem *chatListItem in self.selectedGroupChatsMutableArray) {
-                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatListItem.chatId node:node.handle];
+                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatListItem.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
             }
             
             for (MEGAUser *user in self.selectedUsersMutableArray) {
                 MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
                 if (chatRoom) {
-                    [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:node.handle];
+                    [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
                 } else {
                     MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
                     MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
                     [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
                     MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
-                        [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:node.handle];
+                        [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
                     }];
                     [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
                 }
             }
         }
         
-        [self showSuccessMessage];
+        
         
         if (self.searchController.isActive) {
             self.searchController.active = NO;
