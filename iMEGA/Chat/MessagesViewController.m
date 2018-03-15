@@ -751,9 +751,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     NSInteger item = [self.collectionView numberOfItemsInSection:0] - 2;
     if (item >= 0) {
         NSIndexPath *secondByTheEndIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
-        if ([[self.collectionView indexPathsForVisibleItems] containsObject:secondByTheEndIndexPath]) {
+        NSArray<NSIndexPath *> *indexPathsForVisibleItems = [self.collectionView indexPathsForVisibleItems];
+        if ([indexPathsForVisibleItems containsObject:secondByTheEndIndexPath]) {
             [self hideJumpToBottom];
-        } else {
+        } else if (indexPathsForVisibleItems.count > 0) {
             [self showJumpToBottomWithMessage:AMLocalizedString(@"jumpToLatest", @"Label in a button that allows to jump to the latest item")];
         }
     }
