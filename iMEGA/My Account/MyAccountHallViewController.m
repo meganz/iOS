@@ -7,6 +7,7 @@
 #import "MEGANavigationController.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MyAccountHallTableViewCell.h"
 #import "MyAccountViewController.h"
@@ -116,10 +117,14 @@
 #pragma mark - IBActions
 
 - (IBAction)buyPROTouchUpInside:(UIBarButtonItem *)sender {
-    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
-    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-    
-    [self presentViewController:navigationController animated:YES completion:nil];
+    if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
+        UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+        
+        [self presentViewController:navigationController animated:YES completion:nil];
+    } else {
+         [MEGAReachabilityManager isReachableHUDIfNot];
+    }
 }
 
 - (IBAction)viewAndEditProfileTouchUpInside:(UIButton *)sender {
