@@ -570,6 +570,9 @@
 }
 
 - (void)startGroup {
+    if (self.searchController.isActive) {
+        [self.searchController dismissViewControllerAnimated:YES completion:nil];
+    }
     ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
     contactsVC.contactsMode = ContactsModeChatCreateGroup;
     contactsVC.userSelected = self.userSelected;
@@ -808,8 +811,9 @@
         contactsVC.selectedUsersArray = self.selectedUsersArray;
         [self.navigationController pushViewController:contactsVC animated:YES];
     } else {
-        self.userSelected(self.selectedUsersArray, self.insertedGroupName);
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
+            self.userSelected(self.selectedUsersArray, self.insertedGroupName);
+        }];
     }
 
 }
@@ -1060,14 +1064,16 @@
                     [SVProgressHUD showErrorWithStatus:@"Invalid user"];
                     return;
                 }
-                
-                self.userSelected(@[user], nil);
                 if (self.searchController.isActive) {
                     [self.searchController dismissViewControllerAnimated:YES completion:^{
-                        [self dismissViewControllerAnimated:YES completion:nil];
+                        [self dismissViewControllerAnimated:YES completion:^{
+                            self.userSelected(@[user], nil);
+                        }];
                     }];
                 } else {
-                    [self dismissViewControllerAnimated:YES completion:nil];
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        self.userSelected(@[user], nil);
+                    }];
                 }
             }
             break;
