@@ -306,8 +306,8 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="Artık bu dosyaya erişim hakkınız yok";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Artık bu klasöre erişim hakkınız yok";
-/* List option shown on the details of a file or folder */
-"saveForOffline"="Çevrimdışı için Kaydet";
+/* The text is shown as an option on the details of a file or folder */
+"saveForOffline"="Çevrimdışı için kaydet";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Çevrimdışı için Kaydedildi";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Bağlantılar kaldırıldı";
 /* Title show when a file is being downloaded */
-"downloading"="İndiriliyor...";
+"downloading"="İndiriliyor";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="İndirme işlemi iptal edilsin mi?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -441,7 +441,7 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="[A] dosya ve [B] klasörü Çöp Kutusuna taşımak istediğinizden emin misiniz? ";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1 dosya Çöp Kutusu'na taşındı!";
+"fileMovedToRubbishBinMessage"="1 dosya Çöp Kutusu'na taşındı";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
 "filesMovedToRubbishBinMessage"="%d dosya Çöp Kutusuna taşındı";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
@@ -656,8 +656,8 @@
 "masterKey"="Kurtarma Anahtarı";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Şifre değiştir";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Kurtarma Anahtarını kaydetmek ve güvenli bir konumda saklamak parolanızı unuttuğunuzda hiçbir veri kaybına uğramadan parolanızı sıfırlamanızı sağlar.";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="Ana Anahtarı dışa aktarmak ve güvenli bir konumda saklamak, veri kaybı yaşamadan yeni bir şifre belirleyebilmenizi sağlar.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Neden Kurtarma Anahtarına ihtiyacım var?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,8 +678,8 @@
 "clearCache"="Önbelleği temizle";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="MEGA'da";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="Çöp Kutusunu Boşalt";
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
+"emptyRubbishBin"="Çöp kutusunu temizle";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Çöp kutusundaki tüm öğeler silinecek";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="Epostanıza erişemezseniz lütfen support@mega.nz ile irtibat kurun.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="İptal bağlantısının süresi doldu.";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Hesabınızı iptal etmek istediğinizi doğrulamak için parolanızı girin.";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="Bu hesabınızı iptal etmeniz için gereken son adım. Bulutda depolanan tüm veri sonsuza dek silinecektir. Lütfen şifrenizi aşağıya giriniz.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Hesabı kapat";
 /* Title for the action that allows to remove a file or folder */
@@ -881,7 +881,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Her tavsiye için %1$s depolama alanı ve %2$s aktarım kazanın";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Telefonunuzun kişi listesinden kişilerinizi seçin ya da çoğul eposta adresi girin.";
+"inviteYourFriendsExplanation"="Telefonunuzun kişi listesinden kişileri seçin veya birden fazla e-posta adresi girin.";
 /*  */
 "insertYourFriendsEmails"="Arkadaşınızın eposta(lar)ını giriniz:";
 /*  */

@@ -29,9 +29,9 @@
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="Пожалуйста, предоставьте приложению MEGA доступ к камере в настройках";
 /* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
-"cameraPermissionsInCall"="Please give MEGA app permission to access your Camera in your Settings. In case you proceed the call will end because the app will be restarted.";
+"cameraPermissionsInCall"="Пожалуйста, разрешите приложению MEGA доступ к камере в «Настройках». В случае продолжения звонок прекратится, так как приложение будет перезапущено.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
+"microphonePermissions"="Пожалуйста, разрешите приложению MEGA использовать микрофон в меню настроек";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Пожалуйста, предоставьте приложению MEGA доступ к библиотеке фотографий в настройках";
 /* Alert message shown when the user tries to download an empty folder  */
@@ -306,8 +306,8 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="У вас больше нет доступа к этому файлу";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="У вас больше нет доступа к этой папке";
-/* List option shown on the details of a file or folder */
-"saveForOffline"="Сохранено локально";
+/* The text is shown as an option on the details of a file or folder */
+"saveForOffline"="Сохранить локально";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Сохранено локально";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Ссылки удалены";
 /* Title show when a file is being downloaded */
-"downloading"="Загрузка…";
+"downloading"="Скачивание";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Отменить скачивание?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -656,8 +656,8 @@
 "masterKey"="Ключ Восстановления";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Изменить пароль";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Сохранив ключ восстановления и спрятав его в безопасном месте, вы сможете восстановить учетную запись в случае потери пароля без утраты данных.";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="Экспорт мастер-ключа и хранение его в безопасном месте позволит установить новый пароль без потери данных.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Для чего нужен ключ восстановления";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,8 +678,8 @@
 "clearCache"="Очистить кэш";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="В MEGA";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="Корзина пуста";
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
+"emptyRubbishBin"="Очистить корзину";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Все элементы в корзине удалены";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="Если вы не можете получить доступ к своему адресу, свяжитесь с support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Срок действия ссылки удаления истёк.";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Введите пароль, чтобы подтвердить удаление учётной записи.";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="Остался один шаг перед удалением учётной записи. Все данные в облаке будут безвозвратно утрачены. Введите пароль.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Закрыть учётную запись";
 /* Title for the action that allows to remove a file or folder */
@@ -881,7 +881,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Получите %1$s места на диске и %2$s трафика за каждого, кто примет приглашение";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Выберите контакты из телефонного списка контактов или введите адреса электронной почты.";
+"inviteYourFriendsExplanation"="Выберите контакты из телефонного списка или введите адреса их электронной почты.";
 /*  */
 "insertYourFriendsEmails"="Введите e-mail друга:";
 /*  */
@@ -1344,4 +1344,4 @@
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
 "missedAudioCallsAndMissedVideoCalls"="Пропущены аудиозвонки ([A]) и видеозвонки ([B])";
 /* Button title to see the available bonus */
-"getBonus"="Get Bonus";
+"getBonus"="Бонусы";

@@ -6,11 +6,12 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="SF-UI-Text-Medium.otf">
+            <string>SFUIText-Medium</string>
+        </array>
         <array key="SF-UI-Text-Regular.otf">
             <string>SFUIText-Regular</string>
         </array>
@@ -49,15 +50,15 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ine-fm-vKt" userLabel="Title">
-                                                    <rect key="frame" x="62" y="15" width="285" height="18"/>
-                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                                                    <rect key="frame" x="60" y="12" width="39.5" height="18"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e5P-pC-mA9" userLabel="Subtitle">
-                                                    <rect key="frame" x="62" y="33" width="305" height="14"/>
+                                                    <rect key="frame" x="60" y="33" width="31" height="14"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
-                                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="video_list" translatesAutoresizingMaskIntoConstraints="NO" id="lZz-ne-Jif">
@@ -68,7 +69,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6R6-uW-4Hb" userLabel="Line View">
-                                                    <rect key="frame" x="62" y="59" width="313" height="0.0"/>
+                                                    <rect key="frame" x="60" y="60" width="315" height="0.0"/>
                                                     <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="0.5" id="QpQ-Mz-efK"/>
@@ -77,20 +78,20 @@
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstItem="e5P-pC-mA9" firstAttribute="trailing" secondItem="4HD-wS-vT1" secondAttribute="trailingMargin" id="5XM-JN-cs0"/>
+                                                <constraint firstItem="Ine-fm-vKt" firstAttribute="top" secondItem="NDx-eK-6De" secondAttribute="top" constant="2" id="1DW-zJ-MEV"/>
                                                 <constraint firstItem="NDx-eK-6De" firstAttribute="leading" secondItem="4HD-wS-vT1" secondAttribute="leading" constant="10" id="6dL-sB-6ZY"/>
-                                                <constraint firstItem="e5P-pC-mA9" firstAttribute="leading" secondItem="NDx-eK-6De" secondAttribute="trailing" constant="12" id="73j-V5-UxV"/>
+                                                <constraint firstItem="e5P-pC-mA9" firstAttribute="leading" secondItem="NDx-eK-6De" secondAttribute="trailing" constant="10" id="73j-V5-UxV"/>
                                                 <constraint firstAttribute="trailing" secondItem="6R6-uW-4Hb" secondAttribute="trailing" id="AHm-qL-ATI"/>
-                                                <constraint firstItem="Ine-fm-vKt" firstAttribute="leading" secondItem="NDx-eK-6De" secondAttribute="trailing" constant="12" id="EVF-0i-s8H"/>
+                                                <constraint firstItem="Ine-fm-vKt" firstAttribute="leading" secondItem="NDx-eK-6De" secondAttribute="trailing" constant="10" id="EVF-0i-s8H"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="e5P-pC-mA9" secondAttribute="trailing" constant="10" id="NLz-Wk-jl0"/>
                                                 <constraint firstItem="lZz-ne-Jif" firstAttribute="centerY" secondItem="NDx-eK-6De" secondAttribute="centerY" id="RT3-8X-VZ3"/>
                                                 <constraint firstItem="lZz-ne-Jif" firstAttribute="centerX" secondItem="NDx-eK-6De" secondAttribute="centerX" id="RjM-XK-gt4"/>
                                                 <constraint firstAttribute="height" constant="60" id="WZQ-jN-Zvs"/>
                                                 <constraint firstItem="NDx-eK-6De" firstAttribute="centerY" secondItem="4HD-wS-vT1" secondAttribute="centerY" id="clf-LP-sHa"/>
                                                 <constraint firstItem="6R6-uW-4Hb" firstAttribute="leading" secondItem="e5P-pC-mA9" secondAttribute="leading" id="hGe-Bq-ZWb"/>
-                                                <constraint firstItem="Ine-fm-vKt" firstAttribute="trailing" secondItem="4HD-wS-vT1" secondAttribute="trailingMargin" constant="-20" id="nNc-PW-nxi"/>
-                                                <constraint firstItem="e5P-pC-mA9" firstAttribute="top" secondItem="Ine-fm-vKt" secondAttribute="bottom" id="r1z-d0-HHC"/>
-                                                <constraint firstAttribute="bottom" secondItem="6R6-uW-4Hb" secondAttribute="bottom" constant="1" id="tS5-Ge-kWQ"/>
-                                                <constraint firstItem="Ine-fm-vKt" firstAttribute="centerY" secondItem="4HD-wS-vT1" secondAttribute="centerY" multiplier="0.8" id="uUX-Tu-p01"/>
+                                                <constraint firstItem="e5P-pC-mA9" firstAttribute="top" secondItem="Ine-fm-vKt" secondAttribute="bottom" constant="3" id="r1z-d0-HHC"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Ine-fm-vKt" secondAttribute="trailing" constant="10" id="t7Z-fQ-lnE"/>
+                                                <constraint firstAttribute="bottom" secondItem="6R6-uW-4Hb" secondAttribute="bottom" id="tS5-Ge-kWQ"/>
                                             </constraints>
                                         </view>
                                     </subviews>
