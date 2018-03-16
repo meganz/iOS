@@ -306,8 +306,8 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="Você já não tem acesso a este ficheiro";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Você já não tem acesso a esta pasta";
-/* List option shown on the details of a file or folder */
-"saveForOffline"="Save for Offline";
+/* The text is shown as an option on the details of a file or folder */
+"saveForOffline"="Guardar para off-line";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Guardado para offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Ligações removidas";
 /* Title show when a file is being downloaded */
-"downloading"="Transferindo...";
+"downloading"="Downloading";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Pretende cancelar o download?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -656,8 +656,8 @@
 "masterKey"="Chave de recuperação";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Alterar palavra-chave";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Exportar uma Chave de Recuperação e mantê-la numa localização segura permite-lhe recuperar a sua conta no caso de perda da palavra-passe sem perda de dados.";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="Exportar a Chave Mestra e guardá-la num lugar seguro permitir-lhe-á criar uma nova palavra-passe sem perder os seus dados.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,8 +678,8 @@
 "clearCache"="Limpar Cache";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="No MEGA";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="Esvaziar o Lixo";
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
+"emptyRubbishBin"="Esvaziar o caixote do lixo";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Todos os itens no caixote do lixo vão ser apagados";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="Se não consegue aceder ao seu email, por favor contacte support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="A hiperligação de cancelamento expirou.";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Por favor insira a sua palavra-passe para confirmar que quer encerrar a sua conta.";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="Este é o passo final no cancelamento da sua conta. Você perderá permanentemente todos os dados armazenados na nuvem. Por favor insira a sua palavra-passe em baixo.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Apagar conta";
 /* Title for the action that allows to remove a file or folder */

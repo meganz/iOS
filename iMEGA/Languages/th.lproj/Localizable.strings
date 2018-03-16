@@ -29,9 +29,9 @@
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="กรุณาอนุญาตให้แอป MEGA สามารถเข้าถึงการตั้งค่าของกล้องคุณได้";
 /* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
-"cameraPermissionsInCall"="Please give MEGA app permission to access your Camera in your Settings. In case you proceed the call will end because the app will be restarted.";
+"cameraPermissionsInCall"="กรุณาให้สิทธิ์แอป MEGA เพื่อเข้าถึงกล้องในการตั้งค่าของคุณ ในกรณีที่คุณดำเนินการต่อ สายสนทนาจะสิ้นสุดลงเนื่องจากแอปพลิเคชันจะเริ่มต้นใหม่";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
+"microphonePermissions"="กรุณาให้สิทธิ์แอป MEGA เพื่อเข้าถึงไมโครโฟนในการตั้งค่าของคุณ";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="กรุณาอนุญาตให้แอป MEGA สามารถเข้าถึงการตั้งค่าไลบรารีรูปถ่ายของคุณได้";
 /* Alert message shown when the user tries to download an empty folder  */
@@ -306,8 +306,8 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="คุณไม่สามารถเข้าถึงไฟล์นี้ได้";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="คุณไม่สามารถเข้าถึงโฟลเดอร์นี้ได้";
-/* List option shown on the details of a file or folder */
-"saveForOffline"="บันทึกแบบออฟไลน์";
+/* The text is shown as an option on the details of a file or folder */
+"saveForOffline"="บันทึกไว้สำหรับออฟไลน์";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="บันทึกสำหรับไฟล์ออฟไลน์";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="ลิงก์ถูกลบแล้ว";
 /* Title show when a file is being downloaded */
-"downloading"="กำลังดาวน์โหลด...";
+"downloading"="กำลังดาวน์โหลด";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="คุณต้องการที่จะยกเลิกการดาวน์โหลดหรือไม่";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -656,8 +656,8 @@
 "masterKey"="คีย์สำหรับกู้คืน";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="เปลี่ยนรหัส";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="การบันทึกคีย์การกู้คืนและเก็บรักษาไว้ในที่ปลอดภัย จะช่วยให้คุณกู้คืนบัญชีของคุณได้ในกรณีที่รหัสผ่านสูญหายโดยไม่สูญเสียข้อมูล";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="การส่งออกคีย์หลักและการเก็บรักษาไว้ในที่ๆ ปลอดภัย จะช่วยให้คุณสามารถตั้งค่ารหัสผ่านใหม่โดยไม่ต้องสูญเสียข้อมูลใดๆ";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="เหตุใดฉันจึงต้องมีคีย์การกู้คืน";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,8 +678,8 @@
 "clearCache"="เคลียร์แคช";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="บน MEGA";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="ล้างข้อมูลในถังขยะ";
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
+"emptyRubbishBin"="เคลียร์ถังขยะ";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="ทุกรายการในถังขยะจะถูกลบ";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="หากคุณไม่สามารถเข้าถึงอีเมลของคุณได้ กรุณาติดต่อ support@mega.nz";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="ลิงก์ยกเลิกหมดอายุแล้ว";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="กรุณากรอกรหัสผ่านของคุณเพื่อยืนยันว่าคุณต้องการยกเลิกบัญชีของคุณ";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="นี่เป็นขั้นตอนสุดท้ายในการยกเลิกบัญชีของคุณ คุณจะสูญเสียข้อมูลทั้งหมดที่เก็บไว้ในคลาวด์อย่างถาวร กรุณากรอกรหัสผ่านของคุณด้านล่าง";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="ปิดบัญชี";
 /* Title for the action that allows to remove a file or folder */
@@ -881,7 +881,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="รับพื้นที่เก็บข้อมูลขนาด %1$s และการถ่ายโอน %2$s สำหรับการแนะนำในแต่ละครั้ง";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+"inviteYourFriendsExplanation"="เลือกติดต่อจากรายชื่อในโทรศัพท์ของคุณหรือกรอกที่อยู่อีเมลได้พร้อมกัน";
 /*  */
 "insertYourFriendsEmails"="กรอกอีเมลของเพื่อนคุณ:";
 /*  */
@@ -1344,4 +1344,4 @@
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
 "missedAudioCallsAndMissedVideoCalls"="[A] สายที่ไม่ได้รับและอีก [B] สายวิดีโอที่ไม่ได้รับ";
 /* Button title to see the available bonus */
-"getBonus"="Get Bonus";
+"getBonus"="รับโบนัส";

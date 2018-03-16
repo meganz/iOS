@@ -110,8 +110,8 @@
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
     
     self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
     [self reloadUI];

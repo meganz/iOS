@@ -306,8 +306,8 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="U heeft niet langer toegang tot dit bestand";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="U heeft niet langer toegang tot deze map";
-/* List option shown on the details of a file or folder */
-"saveForOffline"="Opslaan voor Offline";
+/* The text is shown as an option on the details of a file or folder */
+"saveForOffline"="Opslaan voor offline";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Opgeslagen voor Offline gebruik";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Koppelingen verwijderd";
 /* Title show when a file is being downloaded */
-"downloading"="Downloaden...";
+"downloading"="Downloaden";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Wilt u de download afbreken?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -656,8 +656,8 @@
 "masterKey"="Herstel Sleutel";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Wijzig wachtwoord";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="De Herstelsleutel opslaan en bewaren op een veilige plek zorgt ervoor dat u uw account kunt herstellen in het geval van een verloren wachtwoord zonder gegevens verlies.";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="Het exporteren en bewaren van de Master Key op een veilige locatie stelt u in staat om een nieuw wachtwoord in te stellen zonder het verlies van gegevens.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Waarom heb ik een Herstel Sleutel nodig?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,7 +678,7 @@
 "clearCache"="Cache wissen";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Bij MEGA";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="Prullenbak leegmaken";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Alle items in de prullenbak worden verwijderd";
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="Als u geen toegang heeft tot uw e-mailaccount, neem dan alstublieft contact op met support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Annuleringskoppeling is verstreken.";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Voer a.u.b. uw wachtwoord in om de annulering van uw account te bevestigen.";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="Dit is de laatste stap om uw account te annuleren. U verliest alle gegevens die zijn opgeslagen in de cloud permanent. Voer alstublieft uw wachtwoord hieronder in.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Beëindig account";
 /* Title for the action that allows to remove a file or folder */

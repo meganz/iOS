@@ -162,6 +162,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     self.unreadLabel.userInteractionEnabled = YES;
     
     if (self.presentingViewController && self.parentViewController) {
+        _unreadBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.unreadLabel];
         UIBarButtonItem *chatBackBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"chat", @"Chat section header") style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
         self.navigationItem.leftBarButtonItems = @[chatBackBarButtonItem, self.unreadBarButtonItem];
     } else {
@@ -389,6 +390,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)openCallViewWithVideo:(BOOL)videoCall {
+    if ([[UIDevice currentDevice] orientation] != UIInterfaceOrientationPortrait) {
+        NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
+        [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
+    }
     CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
     callVC.chatRoom = self.chatRoom;
     callVC.videoCall = videoCall;
@@ -746,9 +751,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     NSInteger item = [self.collectionView numberOfItemsInSection:0] - 2;
     if (item >= 0) {
         NSIndexPath *secondByTheEndIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
-        if ([[self.collectionView indexPathsForVisibleItems] containsObject:secondByTheEndIndexPath]) {
+        NSArray<NSIndexPath *> *indexPathsForVisibleItems = [self.collectionView indexPathsForVisibleItems];
+        if ([indexPathsForVisibleItems containsObject:secondByTheEndIndexPath]) {
             [self hideJumpToBottom];
-        } else {
+        } else if (indexPathsForVisibleItems.count > 0) {
             [self showJumpToBottomWithMessage:AMLocalizedString(@"jumpToLatest", @"Label in a button that allows to jump to the latest item")];
         }
     }

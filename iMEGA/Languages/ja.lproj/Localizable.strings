@@ -29,9 +29,9 @@
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="設定で、MEGAアプリがあなたのカメラにアクセスできるよう許可して下さい。";
 /* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
-"cameraPermissionsInCall"="Please give MEGA app permission to access your Camera in your Settings. In case you proceed the call will end because the app will be restarted.";
+"cameraPermissionsInCall"="設定でMEGAアプリに、カメラにアクセスするための権限を与えてください。続行される場合、アプリが再起動されるため通話が終了します。";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
+"microphonePermissions"="設定でMEGAアプリに、マイクにアクセスするための権限を与えてください。";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="設定でMEGAアプリがあなたのフォトライブラリーにアクセスできるよう、許可して下さい。";
 /* Alert message shown when the user tries to download an empty folder  */
@@ -306,8 +306,8 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="このファイルへは、もうアクセスできません。";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="このフォルダへは、もうアクセスできません。";
-/* List option shown on the details of a file or folder */
-"saveForOffline"="オフライン用に保存";
+/* The text is shown as an option on the details of a file or folder */
+"saveForOffline"="オフラインで保存";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="オフラインで保存";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="リンクを削除しました";
 /* Title show when a file is being downloaded */
-"downloading"="ダウンロード中...";
+"downloading"="ダウンロード中";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="ダウンロードをキャンセルしますか？";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -656,8 +656,8 @@
 "masterKey"="リカバリーキー";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="パスワードを変更する";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="回復キーを保存して安全な場所に保管すると、パスワードを紛失した場合にデータを失うことなくアカウントを回復できます。";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="親鍵を安全な場所にエキスポートしておけば、データを失わずにパスワードを変更できます。";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="どうしてリカバリーキーがいりますか";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,8 +678,8 @@
 "clearCache"="キャッシュ消去";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="MEGAに";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="ゴミ箱は空っぽ";
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
+"emptyRubbishBin"="ゴミ箱をクリア";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="ごみ箱の項目はすべて削除されます";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="メールをアクセスできない場合に、support@mega.nzへご連絡して下さい。";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="キャンセルリンクは失効しました。";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="アカウントをキャンセルされたいことを確認するために、パスワードを入力してください。";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="これはあなたのアカウントをキャンセルする最後のステップです。クラウドに保存されているデータはすべて完全に失われます。以下にパスワードを入力してください。";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="アカウントを閉じる";
 /* Title for the action that allows to remove a file or folder */
@@ -881,7 +881,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="ご紹介ごとに%1$sのストレージと%2$sの転送を取得";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+"inviteYourFriendsExplanation"="あなたの電話の連絡先リストから連絡先を選択するか、複数のメールアドレスを入力します。";
 /*  */
 "insertYourFriendsEmails"="お友達のEメールを入力:";
 /*  */
@@ -1344,4 +1344,4 @@
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
 "missedAudioCallsAndMissedVideoCalls"="[A]件の不在音声着信および[B]件の不在ビデオ着信";
 /* Button title to see the available bonus */
-"getBonus"="Get Bonus";
+"getBonus"="ボーナスを獲得";

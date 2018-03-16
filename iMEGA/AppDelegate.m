@@ -315,8 +315,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 }
                 
                 [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
-                                                                         withLogout:YES
-                                                                     andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
+                                                                         withLogout:NO
+                                                                     andLogoutTitle:nil];
                 [self.window setRootViewController:[LTHPasscodeViewController sharedUser]];
             } else {
                 _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
@@ -609,11 +609,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     //To tint the color of the prompt.
     [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:[UIColor whiteColor]];
-    
-    if (@available(iOS 10.0, *)) {
-        [[UINavigationBar appearance] setShadowImage:[UIImage mnz_navigationBarShadow]];
-        [[UINavigationBar appearance] setBackgroundImage:[UIImage mnz_navigationBarBackground] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsCompact];
-    }
     
     [[UISearchBar appearance] setTranslucent:NO];
     [[UISearchBar appearance] setBackgroundColor:[UIColor mnz_grayF1F1F2]];
@@ -1297,8 +1292,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 }
                 
                 [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
-                                                                         withLogout:YES
-                                                                     andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
+                                                                         withLogout:NO
+                                                                     andLogoutTitle:nil];
             }
         }
         

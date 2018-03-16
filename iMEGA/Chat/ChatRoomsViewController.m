@@ -334,8 +334,8 @@
         
         cell.unreadCount.text = [NSString stringWithFormat:@"%ld", ABS(unreadCount)];
     } else {
-        cell.chatTitle.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
-        cell.chatTitle.textColor = [UIColor mnz_gray666666];
+        cell.chatTitle.font = [UIFont mnz_SFUIMediumWithSize:15.0f];
+        cell.chatTitle.textColor = UIColor.mnz_black333333;
         cell.chatLastMessage.font = [UIFont mnz_SFUIRegularWithSize:12.0f];
         cell.chatLastMessage.textColor = [UIColor mnz_gray666666];
         cell.chatLastTime.font = [UIFont mnz_SFUIRegularWithSize:10.0f];
