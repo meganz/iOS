@@ -93,7 +93,7 @@
     
     if (previewDocumentPath) {
         if (self.name.mnz_isMultimediaPathExtension) {
-            NSURL *path = [NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingString:offlineNodeExist.localPath]];
+            NSURL *path = [NSURL fileURLWithPath:previewDocumentPath];
             MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:path];
             return megaAVViewController;
         } else {

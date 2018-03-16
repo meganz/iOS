@@ -112,6 +112,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     self.inputToolbar.contentView.textView.jsq_pasteDelegate = self;
     
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideInputToolbar)];
+    tapGesture.cancelsTouchesInView = NO;
+    [self.collectionView addGestureRecognizer:tapGesture];
+    
     [self customiseCollectionViewLayout];
     
     [self.collectionView registerNib:[MEGAOpenMessageHeaderView nib] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[MEGAOpenMessageHeaderView headerReuseIdentifier]];
@@ -154,6 +158,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     self.unreadLabel.userInteractionEnabled = YES;
     
     if (self.presentingViewController && self.parentViewController) {
+        _unreadBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.unreadLabel];
         UIBarButtonItem *chatBackBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"chat", @"Chat section header") style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
         self.navigationItem.leftBarButtonItems = @[chatBackBarButtonItem, self.unreadBarButtonItem];
     } else {
@@ -374,6 +379,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)openCallViewWithVideo:(BOOL)videoCall {
+    if ([[UIDevice currentDevice] orientation] != UIInterfaceOrientationPortrait) {
+        NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
+        [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
+    }
     CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
     callVC.chatRoom = self.chatRoom;
     callVC.videoCall = videoCall;
@@ -728,6 +737,14 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     if (self.openMessageHeaderView) {
         self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
         self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
+    }
+}
+
+- (void)hideInputToolbar {
+    if (self.inputToolbar.imagePickerView) {
+        [self.inputToolbar mnz_accesoryButtonPressed:self.inputToolbar.imagePickerView.accessoryImageButton];
+    } else if (self.inputToolbar.contentView.textView.isFirstResponder) {
+        [self.inputToolbar mnz_accesoryButtonPressed:self.inputToolbar.contentView.accessoryTextButton];
     }
 }
 
@@ -1310,6 +1327,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
+    [self hideInputToolbar];
+    
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     if (message.type == MEGAChatMessageTypeAttachment) {
         if (message.nodeList.size.unsignedIntegerValue == 1) {
@@ -1348,7 +1367,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapCellAtIndexPath:(NSIndexPath *)indexPath touchLocation:(CGPoint)touchLocation {
-    NSLog(@"Tapped cell at %@!", NSStringFromCGPoint(touchLocation));
+    [self hideInputToolbar];
 }
 
 #pragma mark - JSQMessagesComposerTextViewPasteDelegate methods
