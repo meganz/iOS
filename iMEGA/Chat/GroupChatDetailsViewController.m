@@ -71,7 +71,7 @@
     if (self.openChatRoom) {
         [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
     } else {
-        [[MEGASdkManager sharedMEGAChatSdk] removeChatRoomDelegate:self];
+        [[MEGASdkManager sharedMEGAChatSdk] removeChatRoomDelegate:self.chatRoom.chatId delegate:self];
     }
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
