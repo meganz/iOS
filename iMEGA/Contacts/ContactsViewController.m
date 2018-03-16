@@ -108,17 +108,6 @@
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
-
-    if (self.contactsMode != ContactsModeChatNamingGroup) {
-        if (@available(iOS 11.0, *)) {
-            self.navigationItem.searchController = self.searchController;
-            self.navigationItem.hidesSearchBarWhenScrolling = YES;
-        } else {
-            if (!self.tableView.tableHeaderView) {
-                self.tableView.tableHeaderView = self.searchController.searchBar;
-            }
-        }
-    }
     
     [self reloadUI];
 }
@@ -261,7 +250,6 @@
     }
 }
 
-
 - (void)reloadUI {
     [self setNavigationBarTitle];
     
@@ -296,6 +284,8 @@
         self.visibleUsersArray = [NSMutableArray arrayWithArray:[usersArray sortedArrayUsingDescriptors:@[sort]]];
     }
     
+    [self.tableView reloadData];
+    
     if (self.contactsMode == ContactsModeFolderSharedWith) {
         if ([self.visibleUsersArray count] == 0) {
             [self.editBarButtonItem setEnabled:NO];
@@ -304,18 +294,11 @@
         } else {
             [self.editBarButtonItem setEnabled:YES];
             self.addParticipantBarButtonItem.enabled = YES;
-            if (@available(iOS 11.0, *)) {
-                self.navigationItem.searchController = self.searchController;
-                self.navigationItem.hidesSearchBarWhenScrolling = YES;
-            } else {
-                if (!self.tableView.tableHeaderView) {
-                    self.tableView.tableHeaderView = self.searchController.searchBar;
-                }
-            }
+            [self addSearchBarController];
         }
+    } else if (self.contactsMode != ContactsModeChatNamingGroup) {
+        [self addSearchBarController];
     }
-    
-    [self.tableView reloadData];
 }
 
 - (void)internetConnectionChanged {
@@ -618,6 +601,17 @@
         self.usersListViewHeightConstraint.constant = 0;
         [self.view layoutIfNeeded];
     }];
+}
+
+- (void)addSearchBarController {
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.searchController = self.searchController;
+        self.navigationItem.hidesSearchBarWhenScrolling = self.tableView.contentSize.height > self.view.frame.size.height;
+    } else {
+        if (!self.tableView.tableHeaderView) {
+            self.tableView.tableHeaderView = self.searchController.searchBar;
+        }
+    }
 }
 
 #pragma mark - IBActions
