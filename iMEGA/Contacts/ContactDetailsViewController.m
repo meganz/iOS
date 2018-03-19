@@ -170,7 +170,12 @@
             numberOfRows = 2;
         } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
             //TODO: When possible, re-add the rows "Notifications", "Close Chat" and "Verify Credentials".
-            numberOfRows = 2;
+            if (self.user.visibility == MEGAUserVisibilityHidden) {
+                numberOfRows = 1;
+            } else {
+                numberOfRows = 2;
+            }
+            
         }
     } else if (section == 1) { //SHARED FOLDERS
         numberOfRows = self.incomingNodeListForUser.size.integerValue;
