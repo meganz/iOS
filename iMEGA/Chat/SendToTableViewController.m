@@ -81,7 +81,7 @@
     if (self.chatListItemList.size) {
         for (NSUInteger i = 0; i < self.chatListItemList.size ; i++) {
             MEGAChatListItem *chatListItem = [self.chatListItemList chatListItemAtIndex:i];
-            if (chatListItem.isGroup) {
+            if (chatListItem.isGroup && (chatListItem.ownPrivilege >= MEGAChatRoomPrivilegeStandard)) {
                 [self.groupChatsMutableArray addObject:chatListItem];
             }
         }

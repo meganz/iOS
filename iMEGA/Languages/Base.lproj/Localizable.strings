@@ -366,8 +366,8 @@
 "copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Open in...";
-/* Send to chat [copy dialog] Tab header */
-"sendToChat"="Send to chat";
+/* */
+"sendToContact"="Send to contact";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="File sent to chat";
 /* Success message when the attachment has been sent to a many chats */

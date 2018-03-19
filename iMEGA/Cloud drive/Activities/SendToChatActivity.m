@@ -26,7 +26,7 @@
 }
 
 - (NSString *)activityTitle {
-    return AMLocalizedString(@"sendToChat", @"Send to chat [copy dialog] Tab header");
+    return AMLocalizedString(@"sendToContact", @"");
 }
 
 - (UIImage *)activityImage {
