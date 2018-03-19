@@ -326,10 +326,13 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                     chatRoomState = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
                 }
             } else {
-                chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
-                self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+                if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
+                    chatRoomState = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
+                } else {
+                    chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+                    self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+                }
             }
-            
             break;
     }
     
@@ -398,6 +401,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     callVC.chatRoom = self.chatRoom;
     callVC.videoCall = videoCall;
     callVC.callType = CallTypeOutgoing;
+    callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+
     if (@available(iOS 10.0, *)) {
         callVC.megaCallManager = [(MainTabBarController *)self.navigationController.tabBarController megaCallManager];
     }
@@ -751,9 +756,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     NSInteger item = [self.collectionView numberOfItemsInSection:0] - 2;
     if (item >= 0) {
         NSIndexPath *secondByTheEndIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
-        if ([[self.collectionView indexPathsForVisibleItems] containsObject:secondByTheEndIndexPath]) {
+        NSArray<NSIndexPath *> *indexPathsForVisibleItems = [self.collectionView indexPathsForVisibleItems];
+        if ([indexPathsForVisibleItems containsObject:secondByTheEndIndexPath]) {
             [self hideJumpToBottom];
-        } else {
+        } else if (indexPathsForVisibleItems.count > 0) {
             [self showJumpToBottomWithMessage:AMLocalizedString(@"jumpToLatest", @"Label in a button that allows to jump to the latest item")];
         }
     }
