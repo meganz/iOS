@@ -315,8 +315,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 }
                 
                 [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
-                                                                         withLogout:YES
-                                                                     andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
+                                                                         withLogout:NO
+                                                                     andLogoutTitle:nil];
                 [self.window setRootViewController:[LTHPasscodeViewController sharedUser]];
             } else {
                 _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
@@ -1292,8 +1292,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 }
                 
                 [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
-                                                                         withLogout:YES
-                                                                     andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
+                                                                         withLogout:NO
+                                                                     andLogoutTitle:nil];
             }
         }
         
@@ -2569,9 +2569,24 @@ void uncaughtExceptionHandler(NSException *exception) {
         NSArray *appDataComponentsArray = [transfer.appData componentsSeparatedByString:@"="];
         NSString *appDataFirstComponentString = [appDataComponentsArray objectAtIndex:0];
         if ([appDataFirstComponentString isEqualToString:@"attachToChatID"]) {
-            NSString *chatID = [appDataComponentsArray objectAtIndex:1];
-            unsigned long long chatIdUll = strtoull([chatID UTF8String], NULL, 0);
-            [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:transfer.nodeHandle];
+            if (error.type == MEGAErrorTypeApiEExist) {
+                MEGALogInfo(@"Transfer has started with exactly the same data (local path and target parent). File: %@", transfer.fileName);
+                return;
+            }
+            
+            if (appDataComponentsArray.count > 2) {
+                NSArray *multipleAppDataComponentsArray = [transfer.appData componentsSeparatedByString:@"!"];
+                for (NSString *attachToChatID in multipleAppDataComponentsArray) {
+                    NSArray *attachToChatIDComponentsArray = [attachToChatID componentsSeparatedByString:@"="];
+                    NSString *chatID = [attachToChatIDComponentsArray objectAtIndex:1];
+                    unsigned long long chatIdUll = strtoull(chatID.UTF8String, NULL, 0);
+                    [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:transfer.nodeHandle];
+                }
+            } else {
+                NSString *chatID = [appDataComponentsArray objectAtIndex:1];
+                unsigned long long chatIdUll = strtoull(chatID.UTF8String, NULL, 0);
+                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:transfer.nodeHandle];
+            }
         }
     }
     
