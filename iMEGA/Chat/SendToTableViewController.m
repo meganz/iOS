@@ -112,43 +112,24 @@
     return ^NSComparisonResult(id a, id b) {
         NSString *first;
         NSString *second;
-        if ([a isKindOfClass:MEGAChatListItem.class]) {
-            if ([b isKindOfClass:MEGAChatListItem.class]) {
-                MEGAChatListItem *chatListItem = a;
-                MEGAChatListItem *chatListItem2 = b;
-                first = chatListItem.title;
-                second = chatListItem2.title;
-            }
-        }
-        
-        if ([a isKindOfClass:MEGAUser.class]) {
-            if ([b isKindOfClass:MEGAUser.class]) {
-                MEGAUser *user = a;
-                MEGAUser *user2 = b;
-                first = user.mnz_fullName;
-                second = user2.mnz_fullName;
-            }
-        }
         
         if ([a isKindOfClass:MEGAChatListItem.class]) {
-            if ([b isKindOfClass:MEGAUser.class]) {
-                MEGAChatListItem *chatListItem = a;
-                MEGAUser *user2 = b;
-                first = chatListItem.title;
-                second = user2.mnz_fullName;
-            }
+            MEGAChatListItem *chatListItem = a;
+            first = chatListItem.title;
+        } else if ([a isKindOfClass:MEGAUser.class]) {
+            MEGAUser *user = a;
+            first = user.mnz_fullName;
         }
         
-        if ([a isKindOfClass:MEGAUser.class]) {
-            if ([b isKindOfClass:MEGAChatListItem.class]) {
-                MEGAUser *user = a;
-                MEGAChatListItem *chatListItem2 = b;
-                first = user.mnz_fullName;
-                second = chatListItem2.title;
-            }
+        if ([b isKindOfClass:MEGAChatListItem.class]) {
+            MEGAChatListItem *chatListItem = b;
+            second = chatListItem.title;
+        } else if ([b isKindOfClass:MEGAUser.class]) {
+            MEGAUser *user = b;
+            second = user.mnz_fullName;
         }
         
-        return [first compare:second];
+        return [first compare:second options:NSCaseInsensitiveSearch];
     };
 }
 
