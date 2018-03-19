@@ -144,7 +144,7 @@
         [action fulfill];
         [self.megaCallManager removeCallByUUID:action.callUUID];
         if ([[UIApplication mnz_visibleViewController] isKindOfClass:CallViewController.class]) {
-            [[UIApplication mnz_visibleViewController] dismissViewControllerAnimated:NO completion:nil];
+            [[UIApplication mnz_visibleViewController] dismissViewControllerAnimated:YES completion:nil];
         }
         [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:call.chatId];
     } else {

@@ -306,7 +306,7 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="شما ديگر به اين فايل دسترسي نداريد";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="شما ديگر به اين فولدر دسترسي نداريد";
-/* List option shown on the details of a file or folder */
+/* The text is shown as an option on the details of a file or folder */
 "saveForOffline"="برای افلاین ذخیره کن";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="برای افلاین ذخیره شده ";
@@ -656,8 +656,8 @@
 "masterKey"="Recovery Key";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="تغییر کلمه عبور";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Saving the Recovery Key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="استخراج کلید اصلی و نگهداری ان در یک مکان امن شما را قادر به ایجاد یک پسورد جدید بدون از دست دادن داده ها می کند.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,8 +678,8 @@
 "clearCache"="کیچ را پاک کنید";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="On MEGA";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="سطل اشغال خالی است";
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
+"emptyRubbishBin"="خالي كردن سطل آشغال";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="All the items in the rubbish bin will be deleted";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="If you can't access your email, please contact support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="لینک لغو کردن تاریخ اش گذشته است";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Please enter your password to confirm that you want to cancel your account.";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="This is the last step to cancel your account. You will permanently lose all the data stored in the cloud. Please enter your password below.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="بستن حساب کاربری";
 /* Title for the action that allows to remove a file or folder */
@@ -1247,7 +1247,7 @@
 /* A summary message when a user has attached many files at once into the chat. */
 "uploadedFiles"="Uploaded these files:";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
 /* A button title to revoke the access to an attachment in a chat. */

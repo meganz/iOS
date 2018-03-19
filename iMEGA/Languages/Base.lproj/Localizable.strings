@@ -306,8 +306,8 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="You no longer have access to this file";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="You no longer have access to this folder";
-/* List option shown on the details of a file or folder */
-"saveForOffline"="Save for Offline";
+/* The text is shown as an option on the details of a file or folder */
+"saveForOffline"="Save for offline";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Saved for Offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Links removed";
 /* Title show when a file is being downloaded */
-"downloading"="Downloading...";
+"downloading"="Downloading";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Do you want to cancel the download?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -599,7 +599,7 @@
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="Share folders";
 /* Button that allows you to select a given folder */
-"select"="Select ";
+"select"="Select";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Permissions";
 /* Permissions given to the user you share your folder with */
@@ -656,8 +656,8 @@
 "masterKey"="Recovery Key";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Change password";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Saving the Recovery Key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,8 +678,8 @@
 "clearCache"="Clear Cache";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="On MEGA";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="Empty Rubbish Bin";
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
+"emptyRubbishBin"="Clear the rubbish bin";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="All the items in the rubbish bin will be deleted";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="If you can't access your email, please contact support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Cancellation link has expired.";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Please enter your password to confirm that you want to cancel your account.";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="This is the last step to cancel your account. You will permanently lose all the data stored in the cloud. Please enter your password below.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Close account";
 /* Title for the action that allows to remove a file or folder */
@@ -881,7 +881,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Get %1$s of storage and %2$s of transfers for each referral";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Select contacts from your phone’s contact list or enter multiple email adresses.";
+"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
 /*  */
 "insertYourFriendsEmails"="Insert your friend's email(s):";
 /*  */
@@ -977,7 +977,7 @@
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Storage";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"transferQuota"="Transfer quota";
+"transferQuota"="Transfer Quota";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limited";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1247,7 +1247,7 @@
 /* A summary message when a user has attached many files at once into the chat. */
 "uploadedFiles"="Uploaded these files:";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
 /* A button title to revoke the access to an attachment in a chat. */
@@ -1345,4 +1345,3 @@
 "missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";
 /* Button title to see the available bonus */
 "getBonus"="Get Bonus";
-
