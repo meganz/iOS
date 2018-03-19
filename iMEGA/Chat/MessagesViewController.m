@@ -387,6 +387,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     callVC.chatRoom = self.chatRoom;
     callVC.videoCall = videoCall;
     callVC.callType = CallTypeOutgoing;
+    callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+
     if (@available(iOS 10.0, *)) {
         callVC.megaCallManager = [(MainTabBarController *)self.navigationController.tabBarController megaCallManager];
     }
