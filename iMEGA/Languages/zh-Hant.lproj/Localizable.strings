@@ -29,9 +29,9 @@
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="請在設置中允許 MEGA App 訪問您的相機。";
 /* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
-"cameraPermissionsInCall"="Please give MEGA app permission to access your Camera in your Settings. In case you proceed the call will end because the app will be restarted.";
+"cameraPermissionsInCall"="請於您的設定中授予MEGA應用程式使用您相機的權限。如果你未開通權限，應用程式便會重新啟動，此通話將結束。";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
+"microphonePermissions"="請於您的設定中授予MEGA應用程式使用您麥克風的權限";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="請在設置中允許 MEGA App 訪問您的照片庫。";
 /* Alert message shown when the user tries to download an empty folder  */
@@ -306,7 +306,7 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="您沒有訪問該檔案的權限";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="您沒有訪問該資料夾的權限";
-/* List option shown on the details of a file or folder */
+/* The text is shown as an option on the details of a file or folder */
 "saveForOffline"="離線儲存";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="離線儲存";
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="已移除連結";
 /* Title show when a file is being downloaded */
-"downloading"="正在下載...";
+"downloading"="下載中";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="您確定取消下載嗎?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -656,8 +656,8 @@
 "masterKey"="還原金鑰";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="變更密碼";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="請儲存還原金鑰並將其保存在安全的地方，以便您可以在遺失密碼時還原您的帳戶，且不必擔心資料遺失。";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="正在導出您的萬能密鑰，請妥善保管。您的萬能密鑰使您不會因為密碼重置而丟失已上傳的數據。";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="為什麼我會需要還原金鑰？";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,8 +678,8 @@
 "clearCache"="清除快取";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="於MEGA上";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="空的垃圾桶";
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
+"emptyRubbishBin"="清空垃圾桶";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="所有垃圾桶中的項目將均被刪除";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="如果您無法進入您的信箱，請聯絡support@mega.nz。";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="註銷連接已失效。";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="請輸入您的密碼，以確認您要註銷您的帳戶。";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="這是刪除帳戶的最後步驟。您將永久遺失儲存在雲端空間中的所有資料。請於下方輸入您的密碼。";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="註銷帳戶";
 /* Title for the action that allows to remove a file or folder */
@@ -881,7 +881,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="每筆推薦成功，皆可獲得%1$s的儲存空間和%2$s的傳輸配額";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+"inviteYourFriendsExplanation"="請從手機通訊錄中選擇聯絡人，或輸入多個電子郵件地址。";
 /*  */
 "insertYourFriendsEmails"="請填入您好友的電子郵件：";
 /*  */
@@ -1324,7 +1324,7 @@
 "generalDescriptionParagraph5"="PRO LITE方案：每月€4.99歐元（$4.99美元）或每年€49.99歐元（$49.99美元），可享有200 GB的儲存空間和每月1 TB的傳輸配額。PRO I 方案：每月€9.99歐元（$9.99美元）或€99.99歐元（$99.99美元），可享有1 TB的儲存空間和每月2 TB的傳輸配額。PRO II 方案：每月€19.99歐元（$19.99美元）或每年€199.99歐元（$199.99美元），可享有4 TB的儲存空間和每月8 TB的傳輸配額。PRO III 方案：每月€29.99歐元（$29.99美元）或€299.99歐元（$299.99美元），可享有8 TB的儲存空間和每月16 TB的傳輸配額。";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="想瞭解更多資訊，請至我們的網站：手機 - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html電腦 - https://mega.nz/";
+"generalDescriptionParagraph6"="欲了解更多資訊，請參考我們的網站：\nMobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nDesktop - https://mega.nz/";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="撥號中...";
 /* Notification text body shown when you have missed one audio call */
@@ -1344,4 +1344,4 @@
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
 "missedAudioCallsAndMissedVideoCalls"="[A]通未接語音來電 和 [B]通未接視訊來電";
 /* Button title to see the available bonus */
-"getBonus"="Get Bonus";
+"getBonus"="獲得獎勵";

@@ -79,7 +79,7 @@
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
 "megaAccessText"="Získajte plne šifrovaný prístup kdekoľvek, kedykoľvek.";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="Prihlásiť";
+"login"="Login";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Vytvoriť účet";
 /* Message shown when the user writes a wrong email or password on login */
@@ -306,7 +306,7 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="K tomuto súboru už nemáte prístup";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="K tomuto priečinku už nemáte prístup";
-/* List option shown on the details of a file or folder */
+/* The text is shown as an option on the details of a file or folder */
 "saveForOffline"="Uložiť pre Offline";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Uložené pre Offline";
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Odkazy odstránené";
 /* Title show when a file is being downloaded */
-"downloading"="Sťahovaniee...";
+"downloading"="Sťahovanie";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Chcete zrušiť toto sťahovanie?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -656,8 +656,8 @@
 "masterKey"="Kľúč pre obnovu";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Zmena hesla";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Exportovanie vášho Kľúča pre obnovu a uchovanie ho na bezpečnom mieste vám umožní znovu získať prístup ku vášmu účtu v prípade strateného heslo, bez straty dát.";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="Exportovanie Hlavného kľúča a uchovanie si ho na bezpečnom mieste vám umožní nastavenie nového hesla bez straty dát.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Načo potrebujem Kľúč na obnovu?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,8 +678,8 @@
 "clearCache"="Vyčistiť dočasnú pamäť";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Na MEGA";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="Vyprázdniť odpadkový kôš";
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
+"emptyRubbishBin"="Vyčistiť odpadkový kôš";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Všetky položky v odpadkovom koši budú zmazané";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="Pokiaľ nemáte prístup ku svojmu emailu, prosím kontaktujte support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Odkaz pre zrušenie vypršal.";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Prosím zadajte svoje heslo pre potvrdenie toho, že chcete zrušiť svoj účet.";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="Toto je posledný krok pred zmazaním vášho účtu. Permanentne stratíte všetky svoje data uložené v cloude. Prosím zadajte svoj heslo nižšie.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Zavrieť účet";
 /* Title for the action that allows to remove a file or folder */

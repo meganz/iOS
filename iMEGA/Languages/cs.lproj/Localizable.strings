@@ -306,7 +306,7 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="Již nemáte přístup k tomuto souboru";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Již nemáte přístup k této složce";
-/* List option shown on the details of a file or folder */
+/* The text is shown as an option on the details of a file or folder */
 "saveForOffline"="Uložit pro offline";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Uloženo offline";
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Odkazy odebrány";
 /* Title show when a file is being downloaded */
-"downloading"="Stahování...";
+"downloading"="Stahování";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Chcete zrušit stahování?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -656,8 +656,8 @@
 "masterKey"="Obnovovací klíč";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Změnit heslo";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Export obnovovacího klíče a jeho ponechání na bezpečném místě vám umožní obnovení vašeho účtu v případě ztraceného hesla bez ztráty dat.";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="Exportování Hlavního klíče a jeho ponechání na bezpečném místě vám umožňuje nastavit nové heslo bez ztráty dat.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Proč potřebuji Obnovovací klíč?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,8 +678,8 @@
 "clearCache"="Vymazat mezipaměť";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Na MEGA";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="Prázdný Koš";
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
+"emptyRubbishBin"="Vysypat koš";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Všechny položky v koši budou odstraněny";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="Pokud nemáte přístup ke svému e-mailu, obraťte se na support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Odkaz na zrušení vypršel.";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Zadejte své heslo pro potvrzení, že chcete zavřít svůj účet.";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="Toto je poslední krok pro zrušení vašeho účtu. Trvale ztratíte všechna data uložená v cloudu. Níže zadejte své heslo.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Zavřít účet";
 /* Title for the action that allows to remove a file or folder */
@@ -1079,7 +1079,7 @@
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Přidat účastníka...";
 /* Title that refers to the status of the chat (Either Online or Offline) */
-"status"="Stav";
+"status"="Status";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Audiovizuální hovory";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */

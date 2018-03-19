@@ -306,7 +306,7 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="Немате више приступ овом документу";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Немате више приступ овом директоријуму.";
-/* List option shown on the details of a file or folder */
+/* The text is shown as an option on the details of a file or folder */
 "saveForOffline"="Сними за офлајн";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Сачувано за offline";
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Линкови су уклоњени";
 /* Title show when a file is being downloaded */
-"downloading"="Преузимање у току...";
+"downloading"="Преузимање у току";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Да ли желите да прекинете преузимање ";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -656,8 +656,8 @@
 "masterKey"="Резервни Кључ";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Промените шифру";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Извожење Кључа за повраћај и његово чување на сигурној локацији омогућава Вам да повратитсе свој налог у случају изгубљене лозинке без губљења података.";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="Експортовање мастер кључа и чување на сигурној локацији омогућава Вам да поставите нову лозинку без губљења података.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,8 +678,8 @@
 "clearCache"="Обришите кеш";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="У MEGA";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="Празна корпа";
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
+"emptyRubbishBin"="Очисти канту за отпатке";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Све ставке у канти за отпатке ће бити уклоњене";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="Ако не можете приступити емал адреси, молимо Вас контактирајте support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Линк за укидање је истекао.";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Молимо Вас унесите вашу лозинку како би сте потврдили да желите да затворите ваш налог.";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="Ово је задњи корак за укидање Вашег налога. Трајно ћете изгубити све податке сачуване на облаку. Молимо унесите своју лозинку испод.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Затвори налог";
 /* Title for the action that allows to remove a file or folder */
