@@ -430,8 +430,12 @@
 }
     
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    isSwipeEditing = YES;
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) {
+        return [UISwipeActionsConfiguration configurationWithActions:@[]];
+    }
+    
+    isSwipeEditing = YES;
     self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
 
     UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
@@ -1817,6 +1821,9 @@
 
         return @[downloadButton];
     } else if (direction == MGSwipeDirectionRightToLeft) {
+        if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) {
+            return nil;
+        }
         
         MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"shareGray"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
             UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:[self.tableView cellForRowAtIndexPath:indexPath]];
