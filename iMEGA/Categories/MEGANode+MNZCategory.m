@@ -14,6 +14,7 @@
 #import "PreviewDocumentViewController.h"
 
 #import "MEGAReachabilityManager.h"
+#import "MEGANavigationController.h"
 
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGARemoveRequestDelegate.h"
@@ -50,11 +51,7 @@
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink {
     UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink];
     if (viewController) {
-        if (viewController.class == PreviewDocumentViewController.class) {
-            [navigationController pushViewController:viewController animated:YES];
-        } else {
-            [navigationController presentViewController:viewController animated:YES completion:nil];
-        }
+        [navigationController presentViewController:viewController animated:YES completion:nil];
     }
 }
 
@@ -80,8 +77,11 @@
             MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:path];
             return megaAVViewController;
         } else {
-            MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentPath];
-            return previewController;
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+            PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
+            previewController.node = self;
+            previewController.api = api;
+            return navigationController;
         }
     } else if (self.name.mnz_isAudiovisualContentUTI && [api httpServerStart:YES port:4443]) {
         MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:self folderLink:isFolderLink];
@@ -94,14 +94,14 @@
             
             return documentOpeningAlertController;
         } else {
-            if (![Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
-                return nil;
+            if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
+                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+                PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
+                previewController.node = self;
+                previewController.api = api;
+                return navigationController;
             }
-            
-            PreviewDocumentViewController *previewDocumentVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentID"];
-            previewDocumentVC.node = self;
-            previewDocumentVC.api = api;
-            return previewDocumentVC;
+            return nil;
         }
     }
 }
