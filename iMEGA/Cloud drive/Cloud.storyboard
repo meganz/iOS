@@ -957,7 +957,7 @@
                                                         </label>
                                                     </subviews>
                                                 </stackView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shareRed" translatesAutoresizingMaskIntoConstraints="NO" id="h0d-mn-bqe">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="share" translatesAutoresizingMaskIntoConstraints="NO" id="h0d-mn-bqe">
                                                     <rect key="frame" x="16" y="15" width="30" height="30"/>
                                                     <color key="tintColor" red="0.80477464200000004" green="0.0" blue="0.041726302360000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
@@ -2406,14 +2406,15 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <image name="icon-key-only" width="24" height="24"/>
         <image name="icon-link-only" width="24" height="24"/>
         <image name="icon-link-w-key" width="24" height="24"/>
-        <image name="linked" width="12" height="12"/>
+        <image name="linked" width="24" height="24"/>
         <image name="more" width="26" height="6"/>
         <image name="moreSelected" width="26" height="6"/>
         <image name="move" width="32" height="32"/>
         <image name="readPermissions" width="46" height="44"/>
         <image name="red_checkmark" width="22" height="22"/>
-        <image name="rubbishBin" width="32" height="32"/>
+        <image name="rubbishBin" width="28" height="28"/>
         <image name="selectAll" width="22" height="22"/>
+        <image name="share" width="28" height="28"/>
         <image name="shareGray" width="32" height="32"/>
         <image name="shareRed" width="16" height="22"/>
         <image name="sortBy" width="22" height="22"/>
