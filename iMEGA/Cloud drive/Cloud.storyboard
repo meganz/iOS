@@ -372,7 +372,6 @@
                         <outlet property="sortByBarButtonItem" destination="Nq1-wJ-mHM" id="8kx-am-2NN"/>
                         <outlet property="toolbar" destination="OOx-vz-vej" id="O9Z-vK-sKV"/>
                         <segue destination="6WJ-kt-Qao" kind="show" identifier="showNodeInfoDetails" id="wms-fr-tEb"/>
-                        <segue destination="zUo-yM-mbH" kind="show" identifier="showPreviewForNode" id="0ut-Zn-xdP"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bYw-MF-Zjk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -470,7 +469,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r08-az-XN8" userLabel="Name Label">
-                                        <rect key="frame" x="188.33333333333334" y="113" width="38.666666666666657" height="18"/>
+                                        <rect key="frame" x="187.66666666666666" y="113" width="38.666666666666657" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="jz7-xx-pbU"/>
                                         </constraints>
@@ -497,7 +496,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="linked" translatesAutoresizingMaskIntoConstraints="NO" id="1D9-EU-e6K">
-                                        <rect key="frame" x="238" y="116" width="12" height="12"/>
+                                        <rect key="frame" x="237.33333333333334" y="116" width="12" height="12"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="12" id="jOY-ko-5HR"/>
                                             <constraint firstAttribute="width" constant="12" id="qL0-qG-79w"/>
@@ -1077,7 +1076,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h3T-5n-ShB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4798.5507246376819" y="-3514.402173913044"/>
+            <point key="canvasLocation" x="5413.04347826087" y="-3514.402173913044"/>
         </scene>
         <!--Sort By Table View Controller-->
         <scene sceneID="4eE-xy-Jk2">
@@ -1511,21 +1510,21 @@
                         <viewControllerLayoutGuide type="bottom" id="Mfa-Dj-had"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="be2-KZ-HQH">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="PvF-fF-Mki">
-                                <rect key="frame" x="197" y="326" width="20" height="20"/>
+                                <rect key="frame" x="197" y="358" width="20" height="20"/>
                             </activityIndicatorView>
                             <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VYB-69-jRQ">
-                                <rect key="frame" x="132" y="335" width="150" height="2"/>
+                                <rect key="frame" x="132" y="367" width="150" height="2"/>
                                 <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="aBH-9X-cH8"/>
                                 </constraints>
                             </progressView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VJh-z4-8vz">
-                                <rect key="frame" x="164" y="220" width="86" height="86"/>
+                                <rect key="frame" x="164" y="252" width="86" height="86"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="86" id="7a7-jd-lI6"/>
                                     <constraint firstAttribute="height" constant="86" id="hRE-m5-OgP"/>
@@ -1542,6 +1541,20 @@
                             <constraint firstItem="VYB-69-jRQ" firstAttribute="centerX" secondItem="PvF-fF-Mki" secondAttribute="centerX" id="z3W-Fw-gSY"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="HWB-rp-yxf">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="uL1-bJ-jlX">
+                            <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="doneTapped:" destination="zUo-yM-mbH" id="hdo-Vw-jfA"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="vj5-kf-txr">
+                            <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="shareAction:" destination="zUo-yM-mbH" id="lwy-7H-eeA"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="PvF-fF-Mki" id="p1g-Gj-5GE"/>
                         <outlet property="imageView" destination="VJh-z4-8vz" id="LRL-gj-Q4P"/>
@@ -1550,7 +1563,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iif-bv-Vsk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1857" y="-3098"/>
+            <point key="canvasLocation" x="2165.217391304348" y="-3267.3913043478265"/>
         </scene>
         <!--Get Link Table View Controller-->
         <scene sceneID="Okz-rU-Dgj">
@@ -1870,7 +1883,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Ql-le-QJr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5681.1594202898559" y="-2611.9565217391305"/>
+            <point key="canvasLocation" x="5988.4057971014499" y="-2611.9565217391305"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xI5-qd-9ig">
@@ -1985,7 +1998,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lLt-dj-Mzk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3536.25" y="-2611.2676056338028"/>
+            <point key="canvasLocation" x="3843.4782608695655" y="-2611.9565217391305"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="FQk-Ve-k32">
@@ -2009,7 +2022,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dCI-fL-1GQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4815.9420289855079" y="-2610.326086956522"/>
+            <point key="canvasLocation" x="5123.188405797102" y="-2610.326086956522"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Tjv-hu-zdo">
@@ -2027,7 +2040,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vfc-Jf-wQV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2669.5652173913045" y="-2610.326086956522"/>
+            <point key="canvasLocation" x="2976.811594202899" y="-2610.326086956522"/>
         </scene>
         <!--Node Versions View Controller-->
         <scene sceneID="Kvm-0D-acq">
@@ -2370,7 +2383,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="myD-32-EkO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4063.7681159420295" y="-3514.402173913044"/>
+            <point key="canvasLocation" x="4678.2608695652179" y="-3514.402173913044"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="7zb-lt-8Ja">
@@ -2392,6 +2405,32 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zvy-4u-WwO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4436" y="-4308"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="uE8-MR-U5C">
+            <objects>
+                <navigationController storyboardIdentifier="previewDocumentNavigationID" automaticallyAdjustsScrollViewInsets="NO" id="Zki-P6-x9M" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Pwp-sd-pPD">
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="SFUIText-Italic" family="SF UI Text" pointSize="17"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="zUo-yM-mbH" kind="relationship" relationship="rootViewController" id="Iy9-nG-ydM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FoT-q7-DoV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1501" y="-3267"/>
         </scene>
     </scenes>
     <resources>
