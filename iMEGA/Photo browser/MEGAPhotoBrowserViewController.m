@@ -237,6 +237,7 @@
         if (node.name.mnz_isVideoPathExtension && scale == 1.0f) {
             scrollView.subviews.lastObject.hidden = NO;
         }
+        [self correctYForView:view inScrollView:scrollView scaledAt:scale];
     }
 }
 
@@ -281,7 +282,8 @@
             zoomableView.showsVerticalScrollIndicator = NO;
             zoomableView.tag = 2;
             [zoomableView addSubview:imageView];
-            
+            [self resizeImageView:imageView];
+
             if (node.name.mnz_isVideoPathExtension) {
                 UIButton *playButton = [[UIButton alloc] initWithFrame:CGRectMake((imageView.frame.size.width - self.playButtonSize) / 2, (imageView.frame.size.height - self.playButtonSize) / 2, self.playButtonSize, self.playButtonSize)];
                 [playButton setImage:[UIImage imageNamed:@"video_list"] forState:UIControlStateNormal];
@@ -307,6 +309,7 @@
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
                             imageView.image = [UIImage imageWithContentsOfFile:request.file];
+                            [self resizeImageView:imageView];
                         }
                         completion:nil];
         [self removeActivityIndicatorsFromView:imageView];
@@ -318,6 +321,7 @@
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
                             imageView.image = [UIImage imageWithContentsOfFile:transfer.path];
+                            [self resizeImageView:imageView];
                             if (transfer.nodeHandle == [self.mediaNodes objectAtIndex:self.currentIndex].handle) {
                                 self.pieChartView.alpha = 0.0f;
                             }
@@ -401,6 +405,28 @@
     return nodeFilePath;
 }
 
+- (void)resizeImageView:(UIImageView *)imageView {
+    CGFloat ratio = imageView.image.size.height / imageView.image.size.width;
+    CGRect frame = imageView.frame;
+    CGFloat newHeight = frame.size.width * ratio;
+    CGFloat newY = frame.origin.y + (frame.size.height - newHeight) / 2;
+    frame.size.height = newHeight;
+    frame.origin.y = newY;
+    imageView.frame = frame;
+}
+
+- (void)correctYForView:(UIView *)view inScrollView:(UIScrollView *)scrollView scaledAt:(CGFloat)scale {
+    if (scale > 1.0f) {
+        CGRect frame = view.frame;
+        frame.origin.y = MAX(frame.origin.y + (scrollView.frame.size.height - (view.frame.size.height * scale)) / 2, 0);
+        view.frame = frame;
+    } else {
+        CGRect frame = view.frame;
+        frame.origin.y = MAX(frame.origin.y + (scrollView.frame.size.height - (view.frame.size.height / scrollView.zoomScale)) / 2, 0);
+        view.frame = frame;
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)didPressCloseButton:(UIBarButtonItem *)sender {
@@ -459,6 +485,12 @@
 #pragma mark - Gesture recognizers
 
 - (void)panGesture:(UIPanGestureRecognizer *)panGestureRecognizer {
+    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
+    if (zoomableView.zoomScale > 1.0f) {
+        return;
+    }
+    
     CGPoint touchPoint = [panGestureRecognizer translationInView:self.view];
     CGFloat verticalIncrement = touchPoint.y - self.panGestureInitialPoint.y;
     
@@ -500,12 +532,28 @@
 - (void)doubleTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer {
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
     UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
+    UIView *imageView = zoomableView.subviews.firstObject;
     if (zoomableView) {
+        CGFloat newScale = zoomableView.zoomScale > 1.0f ? 1.0f : 5.0f;
         [self scrollViewWillBeginZooming:zoomableView withView:zoomableView.subviews.firstObject];
         [UIView animateWithDuration:0.3 animations:^{
-            zoomableView.zoomScale = zoomableView.zoomScale > 1.0f ? 1.0f : 5.0f;
+            if (newScale > 1.0f) {
+                CGPoint tapPoint = [tapGestureRecognizer locationInView:tapGestureRecognizer.view];
+                tapPoint = [imageView convertPoint:tapPoint fromView:tapGestureRecognizer.view];
+                CGRect zoomRect = CGRectZero;
+                zoomRect.size.width = imageView.frame.size.width / newScale;
+                zoomRect.size.height = imageView.frame.size.height / newScale;
+                zoomRect.origin.x = tapPoint.x - zoomRect.size.width / 2;
+                zoomRect.origin.y = tapPoint.y - zoomRect.size.height / 2;
+                [zoomableView zoomToRect:zoomRect animated:NO];
+            } else {
+                zoomableView.zoomScale = newScale;
+            }
+            [self correctYForView:imageView inScrollView:zoomableView scaledAt:newScale];
         } completion:^(BOOL finished) {
-            [self scrollViewDidEndZooming:zoomableView withView:zoomableView.subviews.firstObject atScale:zoomableView.zoomScale];
+            if (node.name.mnz_isVideoPathExtension && newScale == 1.0f) {
+                zoomableView.subviews.lastObject.hidden = NO;
+            }
         }];
     }
 }
