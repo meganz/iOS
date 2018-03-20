@@ -285,7 +285,7 @@
             [self resizeImageView:imageView];
 
             if (node.name.mnz_isVideoPathExtension) {
-                UIButton *playButton = [[UIButton alloc] initWithFrame:CGRectMake((imageView.frame.size.width - self.playButtonSize) / 2, (imageView.frame.size.height - self.playButtonSize) / 2, self.playButtonSize, self.playButtonSize)];
+                UIButton *playButton = [[UIButton alloc] initWithFrame:CGRectMake((zoomableView.frame.size.width - self.playButtonSize) / 2, (zoomableView.frame.size.height - self.playButtonSize) / 2, self.playButtonSize, self.playButtonSize)];
                 [playButton setImage:[UIImage imageNamed:@"video_list"] forState:UIControlStateNormal];
                 playButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
                 playButton.contentVerticalAlignment = UIControlContentHorizontalAlignmentFill;
@@ -531,6 +531,9 @@
 
 - (void)doubleTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer {
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    if (node.name.mnz_isVideoPathExtension) {
+        return;
+    }
     UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
     UIView *imageView = zoomableView.subviews.firstObject;
     if (zoomableView) {
