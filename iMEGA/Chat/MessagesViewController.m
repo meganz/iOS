@@ -315,10 +315,13 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                     chatRoomState = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
                 }
             } else {
-                chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
-                self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+                if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
+                    chatRoomState = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
+                } else {
+                    chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+                    self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+                }
             }
-            
             break;
     }
     
@@ -353,8 +356,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         _audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audioCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
         self.videoCallBarButtonItem.tag = 1;
         self.navigationItem.rightBarButtonItems = @[self.videoCallBarButtonItem, self.audioCallBarButtonItem];
-        self.videoCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
-        self.audioCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
+        self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard) && [MEGAReachabilityManager isReachable]);
     }
 }
 
@@ -731,8 +733,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)internetConnectionChanged {
-    self.videoCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
-    self.audioCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
+    self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard) && [MEGAReachabilityManager isReachable]);
     
     [self customNavigationBarLabel];
 
