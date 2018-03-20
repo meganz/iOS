@@ -5,8 +5,7 @@
 
 @property (nonatomic, strong) MEGANode *node;
 @property (nonatomic, strong) MEGASdk *api;
-@property (nonatomic, strong) NSString *previewDocumentPath;
-
-- (void)doneTapped;
+@property (nonatomic, strong) NSArray<NSString *> *filesPathsArray;
+@property (nonatomic) NSInteger nodeFileIndex;
 
 @end
