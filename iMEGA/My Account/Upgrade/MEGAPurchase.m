@@ -17,16 +17,19 @@
 - (instancetype)init {
     self = [super init];
     if (self != nil) {
-        [self requestProducts];
         [[MEGASdkManager sharedMEGASdk] getPricingWithDelegate:self];
     }
     return self;
 }
 
 - (void)requestProducts {
-    MEGALogDebug(@"[StoreKit] Request products");
+    MEGALogDebug(@"[StoreKit] Request %ld products:", (long)self.pricing.products);
     if ([SKPaymentQueue canMakePayments]) {
-        NSSet *productIdentifieres = [[NSSet alloc] initWithObjects:@"mega.new.ios.pro1.oneMonth", @"mega.new.ios.pro1.oneYear", @"mega.new.ios.pro2.oneMonth", @"mega.new.ios.pro2.oneYear", @"mega.new.ios.pro3.oneMonth", @"mega.new.ios.pro3.oneYear", @"mega.ios.prolite.oneMonth", @"mega.ios.prolite.oneYear", nil];
+        NSMutableSet *productIdentifieres = [[NSMutableSet alloc] initWithCapacity:self.pricing.products];
+        for (NSInteger i = 0; i < self.pricing.products; i++) {
+            MEGALogDebug(@"[StoreKit] Product \"%@\"", [self.pricing iOSIDAtProductIndex:i]);
+            [productIdentifieres addObject:[self.pricing iOSIDAtProductIndex:i]];
+        }
         _products = [[NSMutableArray alloc] initWithCapacity:productIdentifieres.count];
         SKProductsRequest *prodRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:productIdentifieres];
         prodRequest.delegate = self;
@@ -44,7 +47,7 @@
 }
 
 - (void)purchaseProduct:(SKProduct *)product {
-    MEGALogDebug(@"[StoreKit] Purchase product %@", product.productIdentifier);
+    MEGALogDebug(@"[StoreKit] Purchase product \"%@\"", product.productIdentifier);
     if (product != nil) {
         if ([SKPaymentQueue canMakePayments]) {
             SKMutablePayment *paymentRequest = [SKMutablePayment paymentWithProduct:product];
@@ -62,7 +65,7 @@
         }
         
     } else {
-        MEGALogWarning(@"[StoreKit] Product %@ not found", product.productIdentifier);
+        MEGALogWarning(@"[StoreKit] Product \"%@\" not found", product.productIdentifier);
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:AMLocalizedString(@"productNotFound", nil), product.productIdentifier]
                                                             message:nil
                                                            delegate:nil
@@ -90,9 +93,16 @@
     for (SKProduct *product in response.products) {
         [self.products addObject:product];
     }
+    for (NSString *invalidProductIdentifiers in response.invalidProductIdentifiers) {
+        MEGALogError(@"[StoreKit] Invalid product \"%@\"", invalidProductIdentifiers);
+    }
     
     [self.pricingsDelegate pricingsReady];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+}
+
+- (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
+    MEGALogError(@"[StoreKit] Request did fail with error %@", error);
 }
 
 
@@ -179,11 +189,11 @@
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if ([request type] == MEGARequestTypeSubmitPurchaseReceipt) {
+    if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];        
     }
     if (error.type) {
-        if ([request type] == MEGARequestTypeSubmitPurchaseReceipt) {
+        if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
             [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:AMLocalizedString(@"wrongPurchase", nil), [error name], (long)[error type]]];
         }
         return;
@@ -191,6 +201,7 @@
     
     if (request.type == MEGARequestTypeGetPricing) {
         self.pricing = request.pricing;
+        [self requestProducts];
     }
 }
 
