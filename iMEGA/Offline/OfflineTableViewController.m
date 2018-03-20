@@ -8,7 +8,7 @@
 #import "NSString+MNZCategory.h"
 #import "MEGANavigationController.h"
 #import "MEGASdkManager.h"
-#import "MEGAQLPreviewController.h"
+#import "PreviewDocumentViewController.h"
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
 #import "OfflineTableViewCell.h"
@@ -635,12 +635,11 @@ static NSString *kisDirectory = @"kisDirectory";
         MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
         [self presentViewController:megaAVViewController animated:YES completion:nil];
     } else {
-        MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithArrayOfFiles:self.offlineFiles];
-        
-        NSInteger selectedIndexFile = [[[self itemAtIndexPath:indexPath] objectForKey:kIndex] integerValue];
-        
-        [previewController setCurrentPreviewItemIndex:selectedIndexFile];
-        [self presentViewController:previewController animated:YES completion:nil];
+        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+        PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
+        previewController.filesPathsArray = self.offlineFiles;
+        previewController.nodeFileIndex = [[[self itemAtIndexPath:indexPath] objectForKey:kIndex] integerValue];
+        [self presentViewController:navigationController animated:YES completion:nil];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }
@@ -929,14 +928,14 @@ static NSString *kisDirectory = @"kisDirectory";
         MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
         return megaAVViewController;
     } else {
-        MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithArrayOfFiles:self.offlineFiles];
-        
-        NSInteger selectedIndexFile = [[[self.offlineSortedItems objectAtIndex:indexPath.row] objectForKey:kIndex] integerValue];
-        previewController.currentPreviewItemIndex = selectedIndexFile;
+        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+        PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
+        previewController.filesPathsArray = self.offlineFiles;
+        previewController.nodeFileIndex = [[[self itemAtIndexPath:indexPath] objectForKey:kIndex] integerValue];
         
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
         
-        return previewController;
+        return navigationController;
     }
     
     return nil;
