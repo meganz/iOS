@@ -356,8 +356,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         _audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audioCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
         self.videoCallBarButtonItem.tag = 1;
         self.navigationItem.rightBarButtonItems = @[self.videoCallBarButtonItem, self.audioCallBarButtonItem];
-        self.videoCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
-        self.audioCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
+        self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard) && [MEGAReachabilityManager isReachable]);
     }
 }
 
@@ -734,8 +733,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)internetConnectionChanged {
-    self.videoCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
-    self.audioCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
+    self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard) && [MEGAReachabilityManager isReachable]);
     
     [self customNavigationBarLabel];
 
