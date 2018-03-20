@@ -5,19 +5,22 @@
 #import "Helper.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGANavigationController.h"
+#import "MEGANode+MNZCategory.h"
 #import "MEGARemoveContactRequestDelegate.h"
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
 
+#import "BrowserViewController.h"
 #import "CloudDriveTableViewController.h"
 #import "ChatRoomsViewController.h"
+#import "CustomActionViewController.h"
 #import "ContactTableViewCell.h"
-#import "DetailsNodeInfoViewController.h"
 #import "DisplayMode.h"
 #import "MessagesViewController.h"
+#import "NodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"
 #import "VerifyCredentialsViewController.h"
 
-@interface ContactDetailsViewController ()
+@interface ContactDetailsViewController () <CustomActionViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
@@ -137,19 +140,26 @@
 }
 
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
-    
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     
     MEGANode *node = [self.incomingNodeListForUser nodeAtIndex:indexPath.row];
     
-    DetailsNodeInfoViewController *detailsNodeInfoVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
-    detailsNodeInfoVC.displayMode = DisplayModeSharedItem;
-    detailsNodeInfoVC.userName = self.userName;
-    detailsNodeInfoVC.email = self.userEmail;
-    detailsNodeInfoVC.node = node;
+    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
+    actionController.node = node;
+    actionController.displayMode = DisplayModeSharedItem;
+    actionController.actionDelegate = self;
+    actionController.incomingShareChildView = YES;
+    if ([[UIDevice currentDevice] iPadDevice]) {
+        actionController.modalPresentationStyle = UIModalPresentationPopover;
+        actionController.popoverPresentationController.delegate = actionController;
+        actionController.popoverPresentationController.sourceView = sender;
+        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width / 2, sender.frame.size.height / 2);
+    } else {
+        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    }
     
-    [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
+    [self presentViewController:actionController animated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource
@@ -298,6 +308,47 @@
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - CustomActionViewControllerDelegate
+
+- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender {
+    switch (action) {
+        case MegaNodeActionTypeDownload:
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+            [node mnz_downloadNodeOverwriting:NO];
+            break;
+            
+        case MegaNodeActionTypeCopy: {
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+            [self presentViewController:navigationController animated:YES completion:nil];
+            
+            BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+            browserVC.selectedNodesArray = @[node];
+            browserVC.browserAction = BrowserActionCopy;
+            break;
+        }
+            
+        case MegaNodeActionTypeRename:
+            [node mnz_renameNodeInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeFileInfo: {
+            UINavigationController *nodeInfoNavigation = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"NodeInfoNavigationControllerID"];
+            NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
+            nodeInfoVC.node = node;
+            
+            [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
+            break;
+        }
+            
+        case MegaNodeActionTypeLeaveSharing:
+            [node mnz_leaveSharingInViewController:self];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 @end
