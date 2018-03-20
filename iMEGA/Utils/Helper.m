@@ -25,6 +25,7 @@
 #import "RemoveLinkActivity.h"
 #import "RemoveSharingActivity.h"
 #import "ShareFolderActivity.h"
+#import "SendToChatActivity.h"
 
 static MEGANode *linkNode;
 static NSInteger linkNodeOption;
@@ -829,7 +830,6 @@ static MEGAIndexer *indexer;
     
     NodesAre nodesAre = [Helper checkPropertiesForSharingNodes:nodesArray];
     
-    
     BOOL allNodesExistInOffline = NO;
     NSMutableArray *filesURLMutableArray;
     if (NodesAreFolders == (nodesAre & NodesAreFolders)) {
@@ -839,6 +839,11 @@ static MEGAIndexer *indexer;
         filesURLMutableArray = [[NSMutableArray alloc] initWithArray:[Helper checkIfAllOfTheseNodesExistInOffline:nodesArray]];
         if ([filesURLMutableArray count]) {
             allNodesExistInOffline = YES;
+        }
+        
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+            SendToChatActivity *sendToChatActivity = [[SendToChatActivity alloc] initWithNodes:nodesArray];
+            [activitiesMutableArray addObject:sendToChatActivity];
         }
     }
     

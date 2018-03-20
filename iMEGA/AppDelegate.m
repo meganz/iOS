@@ -611,8 +611,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:[UIColor whiteColor]];
     
     [[UISearchBar appearance] setTranslucent:NO];
-    [[UISearchBar appearance] setBackgroundColor:[UIColor mnz_grayF1F1F2]];
-    [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:[UIColor mnz_grayF1F1F2]];
+    [[UISearchBar appearance] setBackgroundColor:[UIColor mnz_grayFCFCFC]];
+    [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:[UIColor mnz_grayEEEEEE]];
     
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
     
@@ -2569,9 +2569,24 @@ void uncaughtExceptionHandler(NSException *exception) {
         NSArray *appDataComponentsArray = [transfer.appData componentsSeparatedByString:@"="];
         NSString *appDataFirstComponentString = [appDataComponentsArray objectAtIndex:0];
         if ([appDataFirstComponentString isEqualToString:@"attachToChatID"]) {
-            NSString *chatID = [appDataComponentsArray objectAtIndex:1];
-            unsigned long long chatIdUll = strtoull([chatID UTF8String], NULL, 0);
-            [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:transfer.nodeHandle];
+            if (error.type == MEGAErrorTypeApiEExist) {
+                MEGALogInfo(@"Transfer has started with exactly the same data (local path and target parent). File: %@", transfer.fileName);
+                return;
+            }
+            
+            if (appDataComponentsArray.count > 2) {
+                NSArray *multipleAppDataComponentsArray = [transfer.appData componentsSeparatedByString:@"!"];
+                for (NSString *attachToChatID in multipleAppDataComponentsArray) {
+                    NSArray *attachToChatIDComponentsArray = [attachToChatID componentsSeparatedByString:@"="];
+                    NSString *chatID = [attachToChatIDComponentsArray objectAtIndex:1];
+                    unsigned long long chatIdUll = strtoull(chatID.UTF8String, NULL, 0);
+                    [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:transfer.nodeHandle];
+                }
+            } else {
+                NSString *chatID = [appDataComponentsArray objectAtIndex:1];
+                unsigned long long chatIdUll = strtoull(chatID.UTF8String, NULL, 0);
+                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:transfer.nodeHandle];
+            }
         }
     }
     

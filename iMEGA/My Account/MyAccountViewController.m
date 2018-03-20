@@ -230,10 +230,14 @@
 }
 
 - (IBAction)buyPROTouchUpInside:(UIButton *)sender {
-    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
-    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-    
-    [self presentViewController:navigationController animated:YES completion:nil];
+    if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
+        UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+        
+        [self presentViewController:navigationController animated:YES completion:nil];
+    } else {
+        [MEGAReachabilityManager isReachableHUDIfNot];
+    }
 }
 
 - (IBAction)logoutTouchUpInside:(UIButton *)sender {
