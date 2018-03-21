@@ -33,7 +33,6 @@
 		4147C2D41B4EE9BA00A37044 /* MEGAStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4147C2D31B4EE9BA00A37044 /* MEGAStore.m */; };
 		4152268B1A692ECC00EC7BB6 /* Cloud.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226691A692ECC00EC7BB6 /* Cloud.storyboard */; };
 		4152268C1A692ECC00EC7BB6 /* CloudDriveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152266B1A692ECC00EC7BB6 /* CloudDriveTableViewController.m */; };
-		4152268D1A692ECC00EC7BB6 /* DetailsNodeInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152266D1A692ECC00EC7BB6 /* DetailsNodeInfoViewController.m */; };
 		4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226711A692ECC00EC7BB6 /* NodeTableViewCell.m */; };
 		415226901A692ECC00EC7BB6 /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226731A692ECC00EC7BB6 /* Contacts.storyboard */; };
 		415226911A692ECC00EC7BB6 /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226751A692ECC00EC7BB6 /* ContactsViewController.m */; };
@@ -508,7 +507,6 @@
 		A85740C72032F6E70033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
 		A85740C82032F6E80033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
 		A85740C92032F6E80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
-		A85CCEF420482912006EF195 /* SF-UI-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A85CCEF32048290C006EF195 /* SF-UI-Text-Semibold.otf */; };
 		A86FC4FC1EBB4999006053A6 /* MEGAPhotoMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A86FC4FB1EBB4999006053A6 /* MEGAPhotoMediaItem.m */; };
 		A88BFFCF1F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
 		A88BFFD01F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
@@ -721,8 +719,6 @@
 		415226691A692ECC00EC7BB6 /* Cloud.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Cloud.storyboard; sourceTree = "<group>"; };
 		4152266A1A692ECC00EC7BB6 /* CloudDriveTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudDriveTableViewController.h; sourceTree = "<group>"; };
 		4152266B1A692ECC00EC7BB6 /* CloudDriveTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CloudDriveTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		4152266C1A692ECC00EC7BB6 /* DetailsNodeInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsNodeInfoViewController.h; sourceTree = "<group>"; };
-		4152266D1A692ECC00EC7BB6 /* DetailsNodeInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DetailsNodeInfoViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		415226701A692ECC00EC7BB6 /* NodeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeTableViewCell.h; sourceTree = "<group>"; };
 		415226711A692ECC00EC7BB6 /* NodeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeTableViewCell.m; sourceTree = "<group>"; };
 		415226731A692ECC00EC7BB6 /* Contacts.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Contacts.storyboard; sourceTree = "<group>"; };
@@ -1268,7 +1264,6 @@
 		A85740C12032F6B80033034C /* MOChatDraft+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOChatDraft+CoreDataProperties.h"; sourceTree = "<group>"; };
 		A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOChatDraft+CoreDataClass.m"; sourceTree = "<group>"; };
 		A85740C32032F6B80033034C /* MOChatDraft+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOChatDraft+CoreDataClass.h"; sourceTree = "<group>"; };
-		A85CCEF32048290C006EF195 /* SF-UI-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Text-Semibold.otf"; sourceTree = "<group>"; };
 		A86FC4FB1EBB4999006053A6 /* MEGAPhotoMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAPhotoMediaItem.m; sourceTree = "<group>"; };
 		A88BFFC81F0A52E90081BCE3 /* libcares.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcares.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcares.a; sourceTree = "<group>"; };
 		A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcryptopp.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcryptopp.a; sourceTree = "<group>"; };
@@ -1757,8 +1752,6 @@
 				415226691A692ECC00EC7BB6 /* Cloud.storyboard */,
 				4152266A1A692ECC00EC7BB6 /* CloudDriveTableViewController.h */,
 				4152266B1A692ECC00EC7BB6 /* CloudDriveTableViewController.m */,
-				4152266C1A692ECC00EC7BB6 /* DetailsNodeInfoViewController.h */,
-				4152266D1A692ECC00EC7BB6 /* DetailsNodeInfoViewController.m */,
 				41AB8EBF1A7103B300E40A39 /* BrowserViewController.h */,
 				41AB8EC01A7103B300E40A39 /* BrowserViewController.m */,
 				41319F531B14968600696BA8 /* SortByTableViewController.h */,
@@ -3259,8 +3252,8 @@
 				4172795E1DB663FA001AC818 /* JSQMessagesTypingIndicatorFooterView.xib in Resources */,
 				5B5B50011E684FDC00DBEB3B /* SF-UI-Display-Regular.otf in Resources */,
 				41136FBE1E1693410031C516 /* MEGAMessagesTypingIndicatorFoorterView.xib in Resources */,
-				A82E5BC81F3465A3003C149C /* Spotlight_file@2x.png in Resources */,				
-                5B6429E02020A8CF000E0DCB /* SF-UI-Text-Semibold.otf in Resources */,
+				A82E5BC81F3465A3003C149C /* Spotlight_file@2x.png in Resources */,
+				5B6429E02020A8CF000E0DCB /* SF-UI-Text-Semibold.otf in Resources */,
 				A82E5BCB1F3465A3003C149C /* Spotlight_folder@3x.png in Resources */,
 				E8C289FF1BF65BAB00F7A034 /* Launch.storyboard in Resources */,
 				4172793A1DB663FA001AC818 /* JSQMessagesViewController.xib in Resources */,
@@ -3529,7 +3522,6 @@
 				41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */,
 				41D21E651D01AEC3002E6296 /* CTAssetsGridViewCell.m in Sources */,
 				4172793F1DB663FA001AC818 /* JSQMessagesToolbarButtonFactory.m in Sources */,
-				4152268D1A692ECC00EC7BB6 /* DetailsNodeInfoViewController.m in Sources */,
 				949086881FD5482E002B12BD /* NSAttributedString+MNZCategory.m in Sources */,
 				137361901A6664C300B740E8 /* main.m in Sources */,
 				417B5AAE1DEC792400A193D5 /* MOUser+CoreDataProperties.m in Sources */,
