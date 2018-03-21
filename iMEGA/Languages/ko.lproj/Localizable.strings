@@ -29,9 +29,9 @@
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="설정에서 MEGA 앱에 카메라 접근 권한을 주세요";
 /* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
-"cameraPermissionsInCall"="Please give MEGA app permission to access your Camera in your Settings. In case you proceed the call will end because the app will be restarted.";
+"cameraPermissionsInCall"="설정에서 MEGA 앱이 카메라에 접근할 수 있도록 해주세요. 앱이 재시작되므로 통화가 종료됩니다.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
+"microphonePermissions"="설정에서 MEGA 앱이 마이크에 접근할 수 있도록 해주세요";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="설정에서 MEGA 앱이 사진 라이브러리에 접근할 수 있는 권한을 주세요";
 /* Alert message shown when the user tries to download an empty folder  */
@@ -306,7 +306,7 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="이 파일에 더 이상 접근 권한이 없습니다";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="이 폴더에 더 이상 접근 권한이 없습니다";
-/* List option shown on the details of a file or folder */
+/* The text is shown as an option on the details of a file or folder */
 "saveForOffline"="오프라인용으로 저장";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="오프라인으로 저장됨";
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="링크 삭제됨";
 /* Title show when a file is being downloaded */
-"downloading"="다운로드중...";
+"downloading"="다운로드중";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="다운로드를 취소하시겠습니까?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -656,8 +656,8 @@
 "masterKey"="복구 키";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="비밀번호 바꾸기";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="복구 키를 저장하고 안전한 위치에 저장하는 것은 비밀번호를 잊어버렸을 때 데이터 손실 없이 계정을 복구할 수 있도록 해줍니다.";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="마스터 키를 내보내서 안전한 장소에 보관하는 것은 데이터 손실 없이 새로운 비밀번호를 설정할 수 있게 해줍니다.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="왜 복구 키가 필요한가요?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,7 +678,7 @@
 "clearCache"="캐시 지우기";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="MEGA에서";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="휴지통 비우기";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="휴지통의 모든 항목이 삭제됩니다";
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="당신의 이메일에 접근할 수 없다면, support@mega.nz로 연락주세요.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="취소 링크가 만료되었습니다.";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="계정을 취소하려면 비밀번호를 입력하여 확인해주세요.";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="계정을 취소하는 마지막 단계입니다. 클라우드에 저장된 모든 데이터를 잃게 됩니다. 아래에 비밀번호를 입력하세요.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="계정 닫기";
 /* Title for the action that allows to remove a file or folder */
@@ -881,7 +881,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="초대할 때마다 %1$s의 저장 공간과 %2$s의 전송 할당량을 받습니다";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+"inviteYourFriendsExplanation"="휴대전화의 연락처 목록에서 연락처를 선택하거나 여러 개의 이메일 주소를 입력하세요.";
 /*  */
 "insertYourFriendsEmails"="친구의 이메일 주소를 입력하세요:";
 /*  */
@@ -1344,4 +1344,4 @@
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
 "missedAudioCallsAndMissedVideoCalls"="[A]개의 부재중 전화와 [B]개의 부재중 영상통화";
 /* Button title to see the available bonus */
-"getBonus"="Get Bonus";
+"getBonus"="보너스 얻기";

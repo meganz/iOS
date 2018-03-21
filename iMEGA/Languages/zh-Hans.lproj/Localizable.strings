@@ -29,9 +29,9 @@
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="请在设置中允许MEGA App 访问您的相机。";
 /* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
-"cameraPermissionsInCall"="Please give MEGA app permission to access your Camera in your Settings. In case you proceed the call will end because the app will be restarted.";
+"cameraPermissionsInCall"="请授予MEGA应用程序访问您的相机的权限。由于应用程序需要重新启动，您的通话将结束。";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
+"microphonePermissions"="请在您的设置中授予MEGA应用访问您的麦克风的权限";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="请在设置中允许MEGA App 访问您的照片库。";
 /* Alert message shown when the user tries to download an empty folder  */
@@ -306,8 +306,8 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="您没有访问该文件的权限";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="您没有访问该文件夹的权限";
-/* List option shown on the details of a file or folder */
-"saveForOffline"="离线保存";
+/* The text is shown as an option on the details of a file or folder */
+"saveForOffline"="离线储存";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="离线储存";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="链接已删除";
 /* Title show when a file is being downloaded */
-"downloading"="正在下载...";
+"downloading"="下载中";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="您确定取消下载吗?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -656,8 +656,8 @@
 "masterKey"="还原金钥";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="变更密码";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="备份恢复金钥并将其存放于安全之处能确保您不会因为忘记帐号密码而丢失已储存的数据。";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="正在导出您的万能密钥，请妥善保管。您的万能密钥使您不会因为密码重置而丢失已上传的数据。";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="为什么我会需要还原金钥？";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,8 +678,8 @@
 "clearCache"="清除缓存";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="于MEGA上";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="空的垃圾桶";
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
+"emptyRubbishBin"="清空垃圾桶";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="所有垃圾桶中的项目将均被删除";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="如果您无法进入您的信箱，请联系support@mega.nz。";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="注销连接已失效。";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="请输入您的密码来确认您要删除帐号。";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="这是删除帐户的最后步骤。您将永久遗失储存在云端空间中的所有资料。请于下方输入您的密码。";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="注销帐户";
 /* Title for the action that allows to remove a file or folder */
@@ -881,7 +881,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="每当推荐成功便能获取%1$s的存储空间和%2$s的流量";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="从手机通讯录选择联系人，或输入多个电子邮件地址。";
+"inviteYourFriendsExplanation"="从手机联系人列表中选择联系人，或输入多个电子邮件地址。";
 /*  */
 "insertYourFriendsEmails"="请填入您好友的电子邮件：";
 /*  */
@@ -1344,4 +1344,4 @@
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
 "missedAudioCallsAndMissedVideoCalls"="[A] 个未接语音通话 和[B] 个未接视频通话";
 /* Button title to see the available bonus */
-"getBonus"="Get Bonus";
+"getBonus"="获得奖励";

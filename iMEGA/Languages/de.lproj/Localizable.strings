@@ -306,8 +306,8 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="Sie haben keinen Zugriff mehr auf diese Datei";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Sie haben keinen Zugriff mehr auf diesen Ordner";
-/* List option shown on the details of a file or folder */
-"saveForOffline"="Für Offline-Zugriff speichern";
+/* The text is shown as an option on the details of a file or folder */
+"saveForOffline"="Für Offline-Nutzung speichern";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Für Offline-Zugriff gespeichert";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Links wurden entfernt";
 /* Title show when a file is being downloaded */
-"downloading"="Downloading...";
+"downloading"="Download";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Möchten Sie den Download abbrechen?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -656,8 +656,8 @@
 "masterKey"="Rettungsschlüssel";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Passwort ändern";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Ihr Rettungsschlüssel ermöglicht Ihnen die Wiederherstellung des Zugangs zu Ihrem Account, sollten Sie Ihr Passwort verlieren. Bewahren Sie ihn sicher auf!";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="Das Exportieren und sichere Aufbewahren des Master Keys ermöglicht Ihnen, ein neues Passwort zu setzen, ohne Ihre Daten zu verlieren. ";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Wozu brauche ich einen Rettungsschlüssel?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,8 +678,8 @@
 "clearCache"="Zwischenspeicher leeren";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Auf MEGA";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="Der Papierkorb ist leer";
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
+"emptyRubbishBin"="Papierkorb leeren";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Ihr Papierkorb wird unwiederbringlich geleert";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="Falls Sie keinen Zugang zu Ihrer Account-E-Mail-Adresse mehr haben, wenden Sie sich bitte an support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Storno-Link abgelaufen";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Bitte geben Sie zur Bestätigung der Accountschließung Ihr Passwort ein.";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="Dies ist die letzte Stufe der Accountlöschung. Sie werden Ihre online gespeicherten Daten verlieren. Bitte geben Sie Ihr Passwort ein.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Account schließen";
 /* Title for the action that allows to remove a file or folder */
@@ -881,7 +881,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Wir belohnen jede Vermittlung mit %1$s Speicherplatz und %2$s Transfervolumen";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+"inviteYourFriendsExplanation"="Wählen Sie Kontakte aus Ihrer Kontaktliste oder geben Sie eine oder mehrere E-Mail-Adressen ein.";
 /*  */
 "insertYourFriendsEmails"="E-Mail-Adresse(n) Ihrer Freunde:";
 /*  */
@@ -1201,7 +1201,7 @@
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Kontakt senden";
 /* */
-"done"="Fein";
+"done"="OK";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Dateien senden";
 /* */
@@ -1247,7 +1247,7 @@
 /* A summary message when a user has attached many files at once into the chat. */
 "uploadedFiles"="Hat diese Dateien hochgeladen:";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
 /* A button title to revoke the access to an attachment in a chat. */
@@ -1324,7 +1324,7 @@
 "generalDescriptionParagraph5"="PRO LITE subscription: €4.99 (US$4.99) per month or €49.99 (US$49.99) per year gives you 200 GB of storage space and 1 TB of transfer quota per month.\nPRO I subscription: €9.99 (US$9.99) per month or €99.99 (US$99.99) per year gives you 1 TB of storage space and 2 TB of transfer quota per month.\nPRO II subscription: €19.99 (US$19.99) per month or €199.99 (US$199.99) per year gives you 4 TB of storage space and 8 TB of transfer quota per month.\nPRO III subscription: €29.99 (US$29.99) per month or €299.99 (US$299.99) per year gives you 8 TB of storage space and 16 TB of transfer quota per month.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="For more info, please check our website:\nMobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nDesktop - https://mega.nz/";
+"generalDescriptionParagraph6"="Mehr Informationen auf unserer Website:\nMobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nDesktop - https://mega.nz/";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="ruft an";
 /* Notification text body shown when you have missed one audio call */

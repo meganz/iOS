@@ -306,7 +306,7 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="Vous n'avez plus accès à ce fichier";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Vous n'avez plus accès à ce dossier";
-/* List option shown on the details of a file or folder */
+/* The text is shown as an option on the details of a file or folder */
 "saveForOffline"="Enregistrer hors ligne";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Enregistré hors ligne";
@@ -375,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Les liens ont été supprimés";
 /* Title show when a file is being downloaded */
-"downloading"="Téléchargement...";
+"downloading"="Téléchargement";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Voulez-vous annuler le téléchargement ?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -656,8 +656,8 @@
 "masterKey"="Clé de récupération";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Changer le mot de passe";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="En enregistrant la clé de récupération et en la conservant en lieu sûr, vous pourrez récupérer votre compte sans perte de données en cas de perte de votre mot de passe.";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="En exportant et en conservant la clé maîtresse en lieu sûr, vous pourrez définir un nouveau mot de passe sans risquer une perte de données.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Pourquoi ai-je besoin d’une clé de récupération ?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -678,7 +678,7 @@
 "clearCache"="Vider le cache";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Sur MEGA";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="Vider la corbeille";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Tous les éléments dans la corbeille seront supprimés";
@@ -704,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="Si vous ne pouvez pas accéder à vos courriels veuillez contacter support@mega.nz";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Le lien d'annulation a expiré.";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Veuillez saisir votre mot de passe pour confirmer que vous souhaitez annuler votre compte.";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="Ceci est la dernière étape pour annuler votre compte. Vous perdrez irrémédiablement toutes les données stockées dans le nuage. Veuillez saisir votre mot de passe ci-dessous.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Fermer le compte";
 /* Title for the action that allows to remove a file or folder */
@@ -1247,7 +1247,7 @@
 /* A summary message when a user has attached many files at once into the chat. */
 "uploadedFiles"="Ces fichiers ont été téléversés :";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Les abonnements sont renouvelés automatiquement lors des périodes d’abonnement successives de même durée et au même tarif que la période initiale choisie. Vous pouvez désactiver le renouvellement automatique de votre abonnement MEGA PRO au plus tard 24 heures avant l’échéance de votre prochain paiement dans la page des réglages de votre compte iTunes. Pour gérer vos abonnements, cliquez simplement sur l’icône de la logithèque App Store sur votre appareil, connectez-vous en bas de la page avec votre identifiant Apple (si ce n’est pas déjà fait), et cliquez sur Afficher l’identifiant Apple. Vous atteindrez la page de votre compte où vous trouverez Gérer vers le bas. Ensuite, vous pourrez sélectionner votre abonnement MEGA PRO et visualiser votre date prévue de renouvellement, choisir un autre type d’abonnement, ou activer, désactiver le renouvellement automatique de votre abonnement.";
+"autorenewableDescription"="Les abonnements sont renouvelés automatiquement pour les périodes d’abonnement successives de même durée et au même tarif que la période initiale choisie. Vous pouvez désactiver le renouvellement automatique de votre abonnement MEGA PRO au plus tard 24 heures avant l’échéance de votre prochain paiement dans la page des réglages de votre compte iTunes. Pour gérer vos abonnements, cliquez simplement sur l’icône de la logithèque App Store sur votre appareil, connectez-vous en bas de la page avec votre identifiant Apple (si ce n’est pas déjà fait), et cliquez sur Afficher l’identifiant Apple. Vous atteindrez la page de votre compte où vous trouverez Gérer vers le bas. Ensuite, vous pourrez sélectionner votre abonnement MEGA PRO et visualiser votre date prévue de renouvellement, choisir un autre type d’abonnement, ou activer, désactiver le renouvellement automatique de votre abonnement.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Ouvrir MEGA et se connecter pour continuer";
 /* A button title to revoke the access to an attachment in a chat. */
