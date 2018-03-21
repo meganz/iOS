@@ -7,7 +7,6 @@
 #import "MEGAAVViewController.h"
 #import "MEGANode.h"
 #import "MEGANodeList+MNZCategory.h"
-#import "MEGAQLPreviewController.h"
 #import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
 
