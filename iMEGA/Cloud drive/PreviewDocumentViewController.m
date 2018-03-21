@@ -21,9 +21,8 @@
 
 #pragma mark - Lifecycle
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
+- (void)viewDidLoad {
+    [super viewDidLoad];
     [self configureNavigation];
 }
 
@@ -76,11 +75,12 @@
 - (void)configureNavigation {
     [self setTitle:self.node.name];
     [self.imageView setImage:[Helper infoImageForNode:self.node]];
-    self.navigationController.navigationBar.barTintColor = [UIColor colorFromHexString:@"FCFCFC"];
-    [self.navigationController.navigationBar setTitleTextAttributes:
-     @{NSForegroundColorAttributeName:[UIColor mnz_black333333],
-       NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17]}];
-    self.navigationController.navigationBar.tintColor = [UIColor mnz_redFF4D52];
+    
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+    [[UINavigationBar appearance] setTintColor:[UIColor mnz_redFF4D52]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorFromHexString:@"FCFCFC"]];
+    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:[UIColor blackColor]];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:[UIColor blackColor]];
 }
 
 - (void)loadPreview {
@@ -106,6 +106,11 @@
 }
 
 - (IBAction)doneTapped:(id)sender {
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor mnz_redF0373A]];
+    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:[UIColor whiteColor]];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:[UIColor whiteColor]];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
