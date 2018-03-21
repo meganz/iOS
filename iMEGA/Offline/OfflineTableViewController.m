@@ -827,12 +827,14 @@ static NSString *kisDirectory = @"kisDirectory";
     [sortByAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
     [moreAlertController addAction:sortByAlertAction];
     
-    UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self editTapped:self.editButtonItem];
-    }];
-    [selectAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
-    [moreAlertController addAction:selectAlertAction];
-    
+    if (self.offlineSortedItems.count) {
+        UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self editTapped:self.editButtonItem];
+        }];
+        [selectAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+        [moreAlertController addAction:selectAlertAction];
+    }
+
     if ([[UIDevice currentDevice] iPadDevice]) {
         moreAlertController.modalPresentationStyle = UIModalPresentationPopover;
         moreAlertController.popoverPresentationController.barButtonItem = self.moreBarButtonItem;
