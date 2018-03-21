@@ -40,10 +40,10 @@
     self.versionCell.gestureRecognizers = @[tapGestureRecognizer];
     
     self.sdkVersionLabel.text = AMLocalizedString(@"sdkVersion", @"Title of the label where the SDK version is shown");
-    self.sdkVersionSHALabel.text = @"85abc37";
+    self.sdkVersionSHALabel.text = @"861f8b48";
     
     self.megachatSdkVersionLabel.text = AMLocalizedString(@"megachatSdkVersion", @"Title of the label where the MEGAchat SDK version is shown");
-    self.megachatSdkSHALabel.text = @"40c2524d";
+    self.megachatSdkSHALabel.text = @"34cf2e2a";
     
     [self.acknowledgementsLabel setText:AMLocalizedString(@"acknowledgements", nil)];
 }
@@ -72,7 +72,7 @@
 
 - (void)acknowledgements {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        NSURL *URL = [NSURL URLWithString:@"https://mega.nz/ios_acknowledgements.html"];
+        NSURL *URL = [NSURL URLWithString:@"https://github.com/meganz/iOS3/blob/master/CREDITS.md"];
         SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:URL];
         if (@available(iOS 10.0, *)) {
             webViewController.preferredControlTintColor = [UIColor mnz_redD90007];
