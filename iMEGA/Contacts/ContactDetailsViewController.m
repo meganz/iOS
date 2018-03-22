@@ -31,8 +31,12 @@
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
 
+@property (strong, nonatomic) IBOutlet UIView *emptyHeaderView;
 @property (strong, nonatomic) IBOutlet UIView *participantsHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *participantsHeaderViewLabel;
+
+@property (strong, nonatomic) IBOutlet UIView *actionsSectionEmptyFooterView;
+@property (strong, nonatomic) IBOutlet UIView *sharedFoldersEmptyFooterView;
 
 @property (nonatomic, strong) MEGAUser *user;
 @property (nonatomic, strong) MEGANodeList *incomingNodeListForUser;
@@ -56,6 +60,10 @@
     
     self.nameLabel.text = self.userName;
     self.emailLabel.text = self.userEmail;
+    
+    self.emptyHeaderView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyHeaderView" owner:self options:nil] firstObject];
+    self.actionsSectionEmptyFooterView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyFooterView" owner:self options:nil] firstObject];
+    self.sharedFoldersEmptyFooterView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyFooterView" owner:self options:nil] firstObject];
     
     self.incomingNodeListForUser = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
     
@@ -206,23 +214,28 @@
                     break;
                     
                 case 1: //Remove Contact
+                    cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
                     cell.nameLabel.text = AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
-                    cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
+                    cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
                     cell.nameLabel.textColor = [UIColor mnz_redF0373A];
+                    cell.lineView.hidden = YES;
                     break;
             }
         } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
             switch (indexPath.row) {
                 case 0: //Clear Chat History
+                    cell.avatarImageView.image = [UIImage imageNamed:@"clearChatHistory"];
                     cell.nameLabel.text = AMLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.");
                     break;
                     
                 case 1: //Remove Contact
+                    cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
                     cell.nameLabel.text = AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
+                    cell.nameLabel.textColor = [UIColor mnz_redF0373A];
+                    cell.lineView.hidden = YES;
                     break;
             }
-            cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
-            cell.nameLabel.textColor = [UIColor mnz_redF0373A];
+            cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
         }
     } else if (indexPath.section == 1) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsSharedFolderTypeID" forIndexPath:indexPath];
@@ -232,6 +245,10 @@
         cell.shareLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
         MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
         cell.permissionsImageView.image = [Helper permissionsButtonImageForShareType:shareType];
+        
+        if ((self.incomingNodeListForUser.size.integerValue - 1) == indexPath.row) {
+            cell.lineView.hidden = YES;
+        }
     }
     
     if (@available(iOS 11.0, *)) {
@@ -242,6 +259,10 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return self.emptyHeaderView;
+    }
+    
     if (section == 1) {
         self.participantsHeaderViewLabel.text = [AMLocalizedString(@"sharedFolders", @"Title of the incoming shared folders of a user.") uppercaseString];
         return self.participantsHeaderView;
@@ -250,16 +271,54 @@
     return nil;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    CGFloat heightForHeader = 0.0f;
-    if (section == 1) {
-        heightForHeader = 23.0f;
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    if (section == 0) {
+        return self.actionsSectionEmptyFooterView;
     }
     
-    return heightForHeader;
+    if (section == 1) {
+        return self.sharedFoldersEmptyFooterView;
+    }
+    
+    return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return 48.0f;
+    }
+    
+    if (section == 1) {
+        return 24.0f;
+    }
+    
+    return 0.0f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 24.0f;
 }
 
 #pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat heightForRow;
+    switch (indexPath.section) {
+        case 0:
+            heightForRow = 44.0f;
+            break;
+            
+        case 1:
+            heightForRow = 60.0f;
+            break;
+            
+        default:
+            heightForRow = 0.0f;
+            break;
+    }
+    
+    return heightForRow;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
