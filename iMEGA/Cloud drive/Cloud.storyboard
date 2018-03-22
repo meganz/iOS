@@ -71,12 +71,6 @@
                                                         </imageView>
                                                     </subviews>
                                                 </stackView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="pYs-tw-MqB">
-                                                    <rect key="frame" x="62" y="33" width="296" height="14.333333333333336"/>
-                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
-                                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iUC-Ic-ezX" userLabel="Info Button">
                                                     <rect key="frame" x="368" y="8" width="46" height="44"/>
                                                     <constraints>
@@ -126,7 +120,7 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s8l-oP-Zn8">
-                                                    <rect key="frame" x="62" y="12" width="296" height="18"/>
+                                                    <rect key="frame" x="62" y="12" width="32.333333333333343" height="18"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -138,23 +132,41 @@
                                                         <constraint firstAttribute="height" constant="0.5" id="u7P-kq-bml"/>
                                                     </constraints>
                                                 </view>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="1hl-ib-lke">
+                                                    <rect key="frame" x="62" y="33" width="43.666666666666657" height="14.333333333333336"/>
+                                                    <subviews>
+                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="versioned" translatesAutoresizingMaskIntoConstraints="NO" id="ipA-l2-Kta">
+                                                            <rect key="frame" x="-62" y="1.3333333333333357" width="12" height="12"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="12" id="Stp-J4-CmV"/>
+                                                                <constraint firstAttribute="height" constant="12" id="YQN-go-Kb2"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pYs-tw-MqB">
+                                                            <rect key="frame" x="0.0" y="0.0" width="43.666666666666664" height="14.333333333333334"/>
+                                                            <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
+                                                            <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="iUC-Ic-ezX" firstAttribute="centerY" secondItem="3n0-uH-vOj" secondAttribute="centerY" id="6Mp-pn-EK8"/>
+                                                <constraint firstItem="1hl-ib-lke" firstAttribute="top" secondItem="s8l-oP-Zn8" secondAttribute="bottom" constant="3" id="CxE-Br-Y5e"/>
                                                 <constraint firstItem="h5n-kg-Yv6" firstAttribute="centerY" secondItem="3n0-uH-vOj" secondAttribute="centerY" id="HhC-T2-bRb"/>
-                                                <constraint firstItem="pYs-tw-MqB" firstAttribute="top" secondItem="s8l-oP-Zn8" secondAttribute="bottom" constant="3" id="Nob-5J-47z"/>
+                                                <constraint firstItem="1hl-ib-lke" firstAttribute="leading" secondItem="rtI-c2-gKy" secondAttribute="trailing" constant="10" id="O1h-yu-BnJ"/>
                                                 <constraint firstAttribute="height" constant="60" id="OKu-ok-9Ie"/>
                                                 <constraint firstAttribute="trailing" secondItem="iUC-Ic-ezX" secondAttribute="trailing" id="OO5-VB-t8T"/>
                                                 <constraint firstItem="s8l-oP-Zn8" firstAttribute="top" secondItem="rtI-c2-gKy" secondAttribute="top" constant="2" id="UHe-5R-TlS"/>
-                                                <constraint firstItem="pYs-tw-MqB" firstAttribute="leading" secondItem="rtI-c2-gKy" secondAttribute="trailing" constant="10" id="Uk0-au-UsX"/>
                                                 <constraint firstItem="s8l-oP-Zn8" firstAttribute="leading" secondItem="rtI-c2-gKy" secondAttribute="trailing" constant="10" id="UvW-tI-STM"/>
                                                 <constraint firstItem="rtI-c2-gKy" firstAttribute="leading" secondItem="h5n-kg-Yv6" secondAttribute="trailing" id="jAs-eH-l4c"/>
-                                                <constraint firstItem="iUC-Ic-ezX" firstAttribute="leading" secondItem="s8l-oP-Zn8" secondAttribute="trailing" constant="10" id="kNX-JT-K6S"/>
+                                                <constraint firstItem="iUC-Ic-ezX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="s8l-oP-Zn8" secondAttribute="trailing" constant="10" id="kNX-JT-K6S"/>
                                                 <constraint firstItem="rtI-c2-gKy" firstAttribute="centerY" secondItem="3n0-uH-vOj" secondAttribute="centerY" id="luv-uo-M68"/>
-                                                <constraint firstItem="iUC-Ic-ezX" firstAttribute="leading" secondItem="pYs-tw-MqB" secondAttribute="trailing" constant="10" id="nnj-Zt-uO5"/>
                                                 <constraint firstItem="17e-z2-BwV" firstAttribute="leading" secondItem="s8l-oP-Zn8" secondAttribute="leading" id="oXm-zk-CQ1"/>
                                                 <constraint firstItem="h5n-kg-Yv6" firstAttribute="leading" secondItem="3n0-uH-vOj" secondAttribute="leading" id="u21-it-q0d"/>
+                                                <constraint firstItem="iUC-Ic-ezX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1hl-ib-lke" secondAttribute="trailing" constant="10" id="uE2-gv-mfE"/>
                                                 <constraint firstAttribute="trailing" secondItem="17e-z2-BwV" secondAttribute="trailing" id="vRK-QH-EZB"/>
                                             </constraints>
                                         </view>
@@ -180,6 +192,7 @@
                                     <outlet property="thumbnailImageView" destination="DWb-1f-CMz" id="jAM-bQ-WCE"/>
                                     <outlet property="thumbnailPlayImageView" destination="bdi-bB-eOF" id="FkA-KF-o0I"/>
                                     <outlet property="upImageView" destination="M1x-fl-Ov3" id="WEy-d0-BEg"/>
+                                    <outlet property="versionedImageView" destination="ipA-l2-Kta" id="fnM-In-50o"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="downloadingNodeCell" id="d7K-nv-YuC" customClass="NodeTableViewCell">
@@ -2111,6 +2124,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <image name="share" width="28" height="28"/>
         <image name="shareGray" width="32" height="32"/>
         <image name="sortBy" width="22" height="22"/>
+        <image name="versioned" width="12" height="12"/>
         <image name="video_list" width="22" height="22"/>
     </resources>
 </document>
