@@ -183,6 +183,8 @@
 		5B17C9B31F73DE310093F162 /* InviteFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B17C9B21F73DE310093F162 /* InviteFriendsViewController.m */; };
 		5B19713D1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B19713C1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m */; };
 		5B20F4A21EFA9629007E0A34 /* ChatAttachedNodesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20F4A11EFA9629007E0A34 /* ChatAttachedNodesViewController.m */; };
+		5B21C83E2063A70400324517 /* EmptyHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B21C83B2063A70300324517 /* EmptyHeaderView.xib */; };
+		5B21C83F2063A70400324517 /* EmptyHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B21C83D2063A70400324517 /* EmptyHeaderView.m */; };
 		5B222A74205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B222A73205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m */; };
 		5B22F97C1F8374C500D2B156 /* VENToken.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B22F9771F8374C400D2B156 /* VENToken.xib */; };
 		5B22F97D1F8374C500D2B156 /* VENToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B22F9781F8374C400D2B156 /* VENToken.m */; };
@@ -229,6 +231,8 @@
 		5BA81EA31FC30C8F00C8146C /* MEGAShareRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B4CA11EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m */; };
 		5BA81EA41FC30C9A00C8146C /* MEGAShareRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B4CA11EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m */; };
 		5BADE39A1F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
+		5BB2E40C20629E2C00E9F45C /* EmptyFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB2E40920629E2B00E9F45C /* EmptyFooterView.m */; };
+		5BB2E40D20629E2C00E9F45C /* EmptyFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BB2E40A20629E2B00E9F45C /* EmptyFooterView.xib */; };
 		5BB50E091F20E840000CA24D /* MEGACreateFolderRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB50E081F20E840000CA24D /* MEGACreateFolderRequestDelegate.m */; };
 		5BB68CA120359B5400B03C00 /* PasswordStrengthIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB68C9F20359B5400B03C00 /* PasswordStrengthIndicatorView.m */; };
 		5BB68CA220359B5400B03C00 /* PasswordStrengthIndicatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BB68CA020359B5400B03C00 /* PasswordStrengthIndicatorView.xib */; };
@@ -1023,6 +1027,9 @@
 		5B19713C1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveSharingActivity.m; sourceTree = "<group>"; };
 		5B20F4A01EFA9629007E0A34 /* ChatAttachedNodesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatAttachedNodesViewController.h; path = Chat/ChatAttachedNodesViewController.h; sourceTree = "<group>"; };
 		5B20F4A11EFA9629007E0A34 /* ChatAttachedNodesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatAttachedNodesViewController.m; path = Chat/ChatAttachedNodesViewController.m; sourceTree = "<group>"; };
+		5B21C83B2063A70300324517 /* EmptyHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyHeaderView.xib; sourceTree = "<group>"; };
+		5B21C83C2063A70400324517 /* EmptyHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyHeaderView.h; sourceTree = "<group>"; };
+		5B21C83D2063A70400324517 /* EmptyHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyHeaderView.m; sourceTree = "<group>"; };
 		5B222A72205A9CD30083D433 /* MEGAChatAttachNodeRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAChatAttachNodeRequestDelegate.h; sourceTree = "<group>"; };
 		5B222A73205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAChatAttachNodeRequestDelegate.m; sourceTree = "<group>"; };
 		5B22F9751F8374C400D2B156 /* VENTokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENTokenField.h; path = iMEGA/Vendor/VENTokenField/VENTokenField/VENTokenField.h; sourceTree = SOURCE_ROOT; };
@@ -1078,6 +1085,9 @@
 		5B8499081F13DBCE0034A36E /* MEGAAssetsPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAAssetsPickerController.m; sourceTree = "<group>"; };
 		5BADE3981F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGANodeList+MNZCategory.h"; sourceTree = "<group>"; };
 		5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGANodeList+MNZCategory.m"; sourceTree = "<group>"; };
+		5BB2E40920629E2B00E9F45C /* EmptyFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyFooterView.m; sourceTree = "<group>"; };
+		5BB2E40A20629E2B00E9F45C /* EmptyFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyFooterView.xib; sourceTree = "<group>"; };
+		5BB2E40B20629E2C00E9F45C /* EmptyFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyFooterView.h; sourceTree = "<group>"; };
 		5BB50E071F20E840000CA24D /* MEGACreateFolderRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGACreateFolderRequestDelegate.h; path = API/Requests/MEGACreateFolderRequestDelegate.h; sourceTree = "<group>"; };
 		5BB50E081F20E840000CA24D /* MEGACreateFolderRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGACreateFolderRequestDelegate.m; path = API/Requests/MEGACreateFolderRequestDelegate.m; sourceTree = "<group>"; };
 		5BB68C9E20359B5300B03C00 /* PasswordStrengthIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordStrengthIndicatorView.h; sourceTree = "<group>"; };
@@ -2566,6 +2576,12 @@
 		5BB68C9D203599EC00B03C00 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5B21C83C2063A70400324517 /* EmptyHeaderView.h */,
+				5B21C83D2063A70400324517 /* EmptyHeaderView.m */,
+				5B21C83B2063A70300324517 /* EmptyHeaderView.xib */,
+				5BB2E40B20629E2C00E9F45C /* EmptyFooterView.h */,
+				5BB2E40920629E2B00E9F45C /* EmptyFooterView.m */,
+				5BB2E40A20629E2B00E9F45C /* EmptyFooterView.xib */,
 				5BB68C9E20359B5300B03C00 /* PasswordStrengthIndicatorView.h */,
 				5BB68C9F20359B5400B03C00 /* PasswordStrengthIndicatorView.m */,
 				5BB68CA020359B5400B03C00 /* PasswordStrengthIndicatorView.xib */,
@@ -3224,6 +3240,7 @@
 				4152273A1A692EEF00EC7BB6 /* SVProgressHUD.bundle in Resources */,
 				94B120BA1FE2B6CB0099E382 /* MEGAToolbarImagePickerView.xib in Resources */,
 				4152273F1A692F8D00EC7BB6 /* Localizable.strings in Resources */,
+				5BB2E40D20629E2C00E9F45C /* EmptyFooterView.xib in Resources */,
 				E8E3E6FA1E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib in Resources */,
 				77D9A56E202355F800B48470 /* MEGAPhotoBrowserViewController.storyboard in Resources */,
 				A8278D7F200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 in Resources */,
@@ -3246,6 +3263,7 @@
 				94AAA9AA1FD6D1C20029D6EB /* SF-UI-Text-BoldItalic.otf in Resources */,
 				A82E5BC91F3465A3003C149C /* Spotlight_file@3x.png in Resources */,
 				A819B3421EAFA844004592F9 /* CustomModalAlertViewController.xib in Resources */,
+				5B21C83E2063A70400324517 /* EmptyHeaderView.xib in Resources */,
 				E8D5BF661BF35A4B00955550 /* SharedItems.storyboard in Resources */,
 				5B4429411E6D705D00BCACC0 /* SF-UI-Text-Medium.otf in Resources */,
 				413199761BD7BD5D002CD6EA /* DateTools.bundle in Resources */,
@@ -3444,6 +3462,7 @@
 				777E922D203EE14B00266229 /* QRSettingsTableViewController.m in Sources */,
 				417279551DB663FA001AC818 /* JSQMessagesComposerTextView.m in Sources */,
 				5BB68CA120359B5400B03C00 /* PasswordStrengthIndicatorView.m in Sources */,
+				5B21C83F2063A70400324517 /* EmptyHeaderView.m in Sources */,
 				E8B519261AC9CD8000BB7324 /* TransfersViewController.m in Sources */,
 				417279441DB663FA001AC818 /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.m in Sources */,
 				41D21E731D01AEC3002E6296 /* CTAssetThumbnailView.m in Sources */,
@@ -3497,6 +3516,7 @@
 				5B2E91921F1F98F4003C6920 /* MEGACopyRequestDelegate.m in Sources */,
 				77F1DBE52056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m in Sources */,
 				41EC68461D76DA93003EC803 /* UIBarButtonItem+Badge.m in Sources */,
+				5BB2E40C20629E2C00E9F45C /* EmptyFooterView.m in Sources */,
 				A89629751FACE78B00F02F7A /* MEGACallManager.m in Sources */,
 				946B2D161F46E235009ED32C /* GetLinkTableViewController.m in Sources */,
 				41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */,
