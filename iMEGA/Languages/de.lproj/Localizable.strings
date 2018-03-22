@@ -983,7 +983,7 @@
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="Bei erfolgreicher Teilnahme an unserem Bonusprogramm.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%.2f %@ pro Monat";
+"productPricePerMonth"="%@ pro Monat";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Bitte wählen Sie:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */

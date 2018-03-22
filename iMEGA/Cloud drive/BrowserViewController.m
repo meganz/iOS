@@ -698,7 +698,7 @@
             self.searchNodesArray = [self.nodes.mnz_nodesArrayFromNodeList mutableCopy];
         } else {
             if (self.browserSegmentedControl.selectedSegmentIndex == 0) {
-                MEGANodeList *allNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:searchString recursive:YES];
+                MEGANodeList *allNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:searchString recursive:NO];
                 self.searchNodesArray = [allNodeList.mnz_nodesArrayFromNodeList mutableCopy];
             } else {
                 NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", searchString];
