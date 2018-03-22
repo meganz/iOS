@@ -1,6 +1,6 @@
 
 #import <UIKit/UIKit.h>
-#import "MEGASdkManager.h"
+#import <StoreKit/StoreKit.h>
 
 @interface ProductDetailViewController : UIViewController
 
@@ -11,7 +11,7 @@
 @property (nonatomic, strong) NSString *bandwidthString;
 @property (nonatomic, strong) NSString *priceMonthString;
 @property (nonatomic, strong) NSString *priceYearlyString;
-@property (nonatomic, strong) NSString *iOSIDMonthlyString;
-@property (nonatomic, strong) NSString *iOSIDYearlyString;
+@property (nonatomic, strong) SKProduct *monthlyProduct;
+@property (nonatomic, strong) SKProduct *yearlyProduct;
 
 @end
