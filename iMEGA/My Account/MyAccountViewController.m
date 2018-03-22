@@ -4,13 +4,14 @@
 
 #import "Helper.h"
 #import "MEGANavigationController.h"
+#import "MEGAPurchase.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 #import "UpgradeTableViewController.h"
 
-@interface MyAccountViewController () <MEGARequestDelegate> {
+@interface MyAccountViewController () <MEGAPurchasePricingDelegate, MEGARequestDelegate> {
     BOOL isAccountDetailsAvailable;
     
     NSNumber *localSize;
@@ -90,6 +91,8 @@
         self.logoutButtonTopImageView.backgroundColor = nil;
         self.logoutButtonBottomImageView.backgroundColor = nil;
     }
+    
+    [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -111,6 +114,8 @@
     if (self.presentedViewController == nil) {
         [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     }
+    
+    self.upgradeAccountButton.enabled = [MEGAPurchase sharedInstance].products.count;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -273,6 +278,12 @@
             [[MEGASdkManager sharedMEGASdk] logout];
         }
     }
+}
+
+#pragma mark - MEGAPurchasePricingDelegate
+
+- (void)pricingsReady {
+    self.upgradeAccountButton.enabled = YES;
 }
 
 #pragma mark - MEGARequestDelegate

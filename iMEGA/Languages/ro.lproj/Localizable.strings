@@ -983,7 +983,7 @@
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="Obiectul participării tale în programul nostru de realizări";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%.2f %@ per lună";
+"productPricePerMonth"="%@ per lună";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Alege unul dintre planurile de mai jos:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
