@@ -297,6 +297,9 @@
         } else {
             [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
         }
+        
+        cell.versionedImageView.hidden = ![[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node];
+        
     } else if ([node type] == MEGANodeTypeFolder) {
         [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
         
