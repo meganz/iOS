@@ -21,6 +21,7 @@
 
 @property (weak, nonatomic) IBOutlet UIProgressView *downloadProgressView;
 @property (weak, nonatomic) IBOutlet UIView *lineView;
+@property (weak, nonatomic) IBOutlet UIImageView *versionedImageView;
 
 @property (nonatomic) uint64_t nodeHandle;
 @property (strong, nonatomic) MEGANode *node;
