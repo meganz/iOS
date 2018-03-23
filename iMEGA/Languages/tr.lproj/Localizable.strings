@@ -983,7 +983,7 @@
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="Başarımlar uygulamamızda katılımınıza tabidir.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="Ayda %.2f %@";
+"productPricePerMonth"="Ayda %@";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Aşağıdaki planlardan birini seçin:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */

@@ -16,30 +16,28 @@
 
 - (instancetype)init {
     self = [super init];
-    if (self != nil) {       
+    if (self != nil) {
         [[MEGASdkManager sharedMEGASdk] getPricingWithDelegate:self];
     }
     return self;
 }
 
-- (void)requestProduct:(NSString *)productId {
-    if (productId != nil) {
-        if ([SKPaymentQueue canMakePayments]) {
-            SKProductsRequest *prodRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithObject:productId]];
-            prodRequest.delegate = self;
-            [prodRequest start];
-            
-        } else {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"appPurchaseDisabled", nil)
-                                                                message:nil
-                                                               delegate:nil
-                                                      cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                      otherButtonTitles:nil, nil];
-            [alertView show];
+- (void)requestProducts {
+    MEGALogDebug(@"[StoreKit] Request %ld products:", (long)self.pricing.products);
+    if ([SKPaymentQueue canMakePayments]) {
+        NSMutableSet *productIdentifieres = [[NSMutableSet alloc] initWithCapacity:self.pricing.products];
+        for (NSInteger i = 0; i < self.pricing.products; i++) {
+            MEGALogDebug(@"[StoreKit] Product \"%@\"", [self.pricing iOSIDAtProductIndex:i]);
+            [productIdentifieres addObject:[self.pricing iOSIDAtProductIndex:i]];
         }
+        _products = [[NSMutableArray alloc] initWithCapacity:productIdentifieres.count];
+        SKProductsRequest *prodRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:productIdentifieres];
+        prodRequest.delegate = self;
+        [prodRequest start];
         
     } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:AMLocalizedString(@"productNotFound", nil), productId]
+        MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"appPurchaseDisabled", nil)
                                                             message:nil
                                                            delegate:nil
                                                   cancelButtonTitle:AMLocalizedString(@"ok", nil)
@@ -48,14 +46,16 @@
     }
 }
 
-- (void)purchaseProduct:(SKProduct *)requestedProduct {
-    if (requestedProduct != nil) {
+- (void)purchaseProduct:(SKProduct *)product {
+    MEGALogDebug(@"[StoreKit] Purchase product \"%@\"", product.productIdentifier);
+    if (product != nil) {
         if ([SKPaymentQueue canMakePayments]) {
-            SKMutablePayment *paymentRequest = [SKMutablePayment paymentWithProduct:requestedProduct];
+            SKMutablePayment *paymentRequest = [SKMutablePayment paymentWithProduct:product];
             NSString *base64UserHandle = [MEGASdk base64HandleForUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
             paymentRequest.applicationUsername = base64UserHandle;
             [[SKPaymentQueue defaultQueue] addPayment:paymentRequest];
         } else {
+            MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"appPurchaseDisabled", nil)
                                                                 message:nil
                                                                delegate:nil
@@ -65,7 +65,8 @@
         }
         
     } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:AMLocalizedString(@"productNotFound", nil), requestedProduct.productIdentifier]
+        MEGALogWarning(@"[StoreKit] Product \"%@\" not found", product.productIdentifier);
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:AMLocalizedString(@"productNotFound", nil), product.productIdentifier]
                                                             message:nil
                                                            delegate:nil
                                                   cancelButtonTitle:AMLocalizedString(@"ok", nil)
@@ -88,14 +89,20 @@
 #pragma mark - SKProductsRequestDelegate Methods
 
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {
-    _validProduct = nil;
-    NSUInteger count = [response.products count];
-    if (count > 0) {
-        _validProduct = [response.products objectAtIndex:0];
+    MEGALogDebug(@"[StoreKit] Products request did receive response %lu products", (unsigned long)response.products.count);
+    for (SKProduct *product in response.products) {
+        [self.products addObject:product];
+    }
+    for (NSString *invalidProductIdentifiers in response.invalidProductIdentifiers) {
+        MEGALogError(@"[StoreKit] Invalid product \"%@\"", invalidProductIdentifiers);
     }
     
+    [self.pricingsDelegate pricingsReady];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    [_delegate requestedProduct];
+}
+
+- (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
+    MEGALogError(@"[StoreKit] Request did fail with error %@", error);
 }
 
 
@@ -103,11 +110,11 @@
 
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions {
     NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
-    MEGALogInfo(@"receipt URL: %@", receiptURL);
+    MEGALogDebug(@"[StoreKit] Receipt URL: %@", receiptURL);
     
     NSData *receiptData = [NSData dataWithContentsOfURL:receiptURL];
     if (!receiptData) {
-        MEGALogInfo(@"No receipt data");
+        MEGALogWarning(@"[StoreKit] No receipt data");
     }
     
     BOOL shouldSubmitReceiptOnRestore = YES; // If restore purchase, send only one time the receipt.
@@ -118,7 +125,7 @@
                 break;
                 
             case SKPaymentTransactionStatePurchased:
-                MEGALogInfo(@"Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier);
+                MEGALogDebug(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier);
                 [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:[receiptData base64EncodedStringWithOptions:0] delegate:self];
                 
                 [_delegate successfulPurchase:self restored:NO];
@@ -129,7 +136,7 @@
                 break;
                 
             case SKPaymentTransactionStateRestored:
-                MEGALogInfo(@"Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier);
+                MEGALogDebug(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier);
                 if (shouldSubmitReceiptOnRestore) {
                     [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:[receiptData base64EncodedStringWithOptions:0] delegate:self];
                     [_delegate successfulPurchase:self restored:YES];
@@ -182,11 +189,11 @@
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if ([request type] == MEGARequestTypeSubmitPurchaseReceipt) {
+    if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];        
     }
     if (error.type) {
-        if ([request type] == MEGARequestTypeSubmitPurchaseReceipt) {
+        if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
             [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:AMLocalizedString(@"wrongPurchase", nil), [error name], (long)[error type]]];
         }
         return;
@@ -194,7 +201,7 @@
     
     if (request.type == MEGARequestTypeGetPricing) {
         self.pricing = request.pricing;
-        [self.pricingsDelegate pricingsReady];
+        [self requestProducts];
     }
 }
 

@@ -6,6 +6,7 @@
 #import "MEGAContactLinkCreateRequestDelegate.h"
 #import "OfflineTableViewController.h"
 #import "MEGANavigationController.h"
+#import "MEGAPurchase.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
@@ -18,7 +19,7 @@
 #import "UpgradeTableViewController.h"
 #import "UsageViewController.h"
 
-@interface MyAccountHallViewController () <UITableViewDataSource, UITableViewDelegate, MEGAGlobalDelegate, MEGARequestDelegate>
+@interface MyAccountHallViewController () <UITableViewDataSource, UITableViewDelegate, MEGAPurchasePricingDelegate, MEGAGlobalDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *buyPROBarButtonItem;
 
@@ -70,6 +71,8 @@
         self.avatarImageView.layer.cornerRadius = 40.0f;
     }];
     [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:NO delegate:delegate];
+
+    [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -79,6 +82,7 @@
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
     [self reloadUI];
+    self.buyPROBarButtonItem.enabled = [MEGAPurchase sharedInstance].products.count;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -305,6 +309,12 @@
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - MEGAPurchasePricingDelegate
+
+- (void)pricingsReady {
+    self.buyPROBarButtonItem.enabled = YES;
 }
 
 #pragma mark - MEGAGlobalDelegate
