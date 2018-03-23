@@ -380,7 +380,6 @@
 #pragma mark - CollectionViewDelegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
     CGRect pageRect = CGPDFPageGetBoxRect([self.pdfView.document pageAtIndex:indexPath.item].pageRef, kCGPDFMediaBox);
     float thumbnailWidth = (self.collectionView.frame.size.width - 60) / 3;
     float ratio = pageRect.size.width / thumbnailWidth;
@@ -388,6 +387,7 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self.pdfView setScaleFactor:self.pdfView.scaleFactorForSizeToFit];
     [self.pdfView goToPage:[self.pdfView.document pageAtIndex:indexPath.item]];
     self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"thumbnailsView"];
     self.collectionView.hidden = YES;
@@ -408,7 +408,7 @@
         imageView.image = [self.thumbnailCache objectForKey:[NSNumber numberWithInteger:indexPath.item]];
     } else {
         PDFPage *page = [self.pdfView.document pageAtIndex:indexPath.item];
-        imageView.image = [page thumbnailOfSize:CGSizeMake(140, 200) forBox:kPDFDisplayBoxMediaBox];
+        imageView.image = [page thumbnailOfSize:CGSizeMake(100, 100) forBox:kPDFDisplayBoxMediaBox];
         [self.thumbnailCache setObject:imageView.image forKey:[NSNumber numberWithInteger:indexPath.item]];
     }
     
@@ -420,7 +420,7 @@
 - (void)didSelectSearchResult:(PDFSelection *)result {
     result.color = UIColor.yellowColor;
     [self.pdfView setCurrentSelection:result];
-    [self.pdfView sizeToFit];
+    [self.pdfView setScaleFactor:self.pdfView.scaleFactorForSizeToFit];
     [self.pdfView goToPage:result.pages[0]];
 }
 
