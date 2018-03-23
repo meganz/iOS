@@ -386,7 +386,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGRect pageRect = CGPDFPageGetBoxRect([self.pdfView.document pageAtIndex:indexPath.item].pageRef, kCGPDFMediaBox);
-    float thumbnailWidth = (self.collectionView.frame.size.width - 60) / 3;
+    float thumbnailWidth = (self.collectionView.frame.size.width - self.collectionView.layoutMargins.right - self.collectionView.layoutMargins.left - 50) / 3;
     float ratio = pageRect.size.width / thumbnailWidth;
     return CGSizeMake(thumbnailWidth, pageRect.size.height / ratio);
 }
