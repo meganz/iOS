@@ -430,7 +430,10 @@
 #pragma mark - IBActions
 
 - (IBAction)didPressCloseButton:(UIBarButtonItem *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.delegate photoBrowser:self willDismissWithNode:node];
+    }];
 }
 
 - (IBAction)didPressActionsButton:(UIBarButtonItem *)sender {
@@ -512,7 +515,9 @@
             if (ABS(verticalIncrement) > 50.0f) {
                 self.view.backgroundColor = [UIColor clearColor];
                 self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
-                [self dismissViewControllerAnimated:YES completion:nil];
+                [self dismissViewControllerAnimated:YES completion:^{
+                    [self.delegate photoBrowser:self willDismissWithNode:node];
+                }];
             } else {
                 [UIView animateWithDuration:0.3 animations:^{
                     self.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
@@ -743,6 +748,7 @@
 
 - (void)presentParentNode:(MEGANode *)node {
     [self dismissViewControllerAnimated:YES completion:^{
+        [self.delegate photoBrowser:self willDismissWithNode:node];
         UIViewController *visibleViewController = [UIApplication mnz_visibleViewController];
         if ([visibleViewController isKindOfClass:MainTabBarController.class]) {
             NSArray *parentTreeArray = node.mnz_parentTreeArray;
