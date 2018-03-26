@@ -42,7 +42,7 @@
 @property (nonatomic) NSUInteger currentIndex;
 
 @property (nonatomic) CGPoint panGestureInitialPoint;
-@property (nonatomic) CGSize panGestureInitialSize;
+@property (nonatomic) CGRect panGestureInitialFrame;
 @property (nonatomic, getter=isInterfaceHidden) BOOL interfaceHidden;
 @property (nonatomic) CGFloat playButtonSize;
 @property (nonatomic) CGFloat gapBetweenPages;
@@ -74,7 +74,7 @@
         }
     }
     
-    self.panGestureInitialPoint = CGPointMake(0.0f, 0.0f);
+    self.panGestureInitialPoint = CGPointZero;
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)]];
     
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGesture:)];
@@ -134,6 +134,9 @@
 #pragma mark - UI
 
 - (void)reloadUI {
+    if (!CGPointEqualToPoint(self.panGestureInitialPoint, CGPointZero)) {
+        return;
+    }
     for (UIView *subview in self.scrollView.subviews) {
         [subview removeFromSuperview];
     }
@@ -238,7 +241,7 @@
         if (node.name.mnz_isVideoPathExtension && scale == 1.0f) {
             scrollView.subviews.lastObject.hidden = NO;
         }
-        [self correctYForView:view inScrollView:scrollView scaledAt:scale];
+        [self correctOriginForView:view scaledAt:scale];
     }
 }
 
@@ -407,25 +410,26 @@
 }
 
 - (void)resizeImageView:(UIImageView *)imageView {
-    CGFloat ratio = imageView.image.size.height / imageView.image.size.width;
+    CGFloat imageRatio = imageView.image.size.height / imageView.image.size.width;
+    CGFloat frameRatio = imageView.frame.size.height / imageView.frame.size.width;
     CGRect frame = imageView.frame;
-    CGFloat newHeight = frame.size.width * ratio;
-    CGFloat newY = frame.origin.y + (frame.size.height - newHeight) / 2;
-    frame.size.height = newHeight;
-    frame.origin.y = newY;
+    if (imageRatio < frameRatio) {
+        CGFloat newHeight = frame.size.width * imageRatio;
+        frame.size.height = newHeight;
+    } else {
+        CGFloat newWidth = frame.size.height / imageRatio;
+        frame.size.width = newWidth;
+    }
     imageView.frame = frame;
+    [self correctOriginForView:imageView scaledAt:1.0f];
 }
 
-- (void)correctYForView:(UIView *)view inScrollView:(UIScrollView *)scrollView scaledAt:(CGFloat)scale {
-    if (scale > 1.0f) {
-        CGRect frame = view.frame;
-        frame.origin.y = MAX(frame.origin.y + (scrollView.frame.size.height - (view.frame.size.height * scale)) / 2, 0);
-        view.frame = frame;
-    } else {
-        CGRect frame = view.frame;
-        frame.origin.y = MAX(frame.origin.y + (scrollView.frame.size.height - (view.frame.size.height / scrollView.zoomScale)) / 2, 0);
-        view.frame = frame;
-    }
+- (void)correctOriginForView:(UIView *)view scaledAt:(CGFloat)scale {
+    UIView *zoomableView = view.superview;
+    CGRect frame = view.frame;
+    frame.origin.x = MAX(frame.origin.x + (zoomableView.frame.size.width - (view.frame.size.width * scale)) / 2, 0);
+    frame.origin.y = MAX(frame.origin.y + (zoomableView.frame.size.height - (view.frame.size.height * scale)) / 2, 0);
+    view.frame = frame;
 }
 
 #pragma mark - IBActions
@@ -494,6 +498,7 @@
     if (zoomableView.zoomScale > 1.0f) {
         return;
     }
+    UIImageView *imageView = zoomableView.subviews.firstObject;
     
     CGPoint touchPoint = [panGestureRecognizer translationInView:self.view];
     CGFloat verticalIncrement = touchPoint.y - self.panGestureInitialPoint.y;
@@ -501,16 +506,16 @@
     switch (panGestureRecognizer.state) {
         case UIGestureRecognizerStateBegan:
             self.panGestureInitialPoint = touchPoint;
-            self.panGestureInitialSize = self.view.frame.size;
+            self.panGestureInitialFrame = imageView.frame;
             self.view.backgroundColor = [UIColor clearColor];
             self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
             break;
             
         case UIGestureRecognizerStateChanged: {
             if (ABS(verticalIncrement) > 0) {
-                CGFloat ratio = 1.0f - (0.3f * (ABS(verticalIncrement) / self.panGestureInitialSize.height));
-                CGFloat horizontalPadding = self.panGestureInitialSize.width * (1.0f - ratio);
-                self.view.frame = CGRectMake(horizontalPadding / 3.0f, verticalIncrement / 3.0f, self.panGestureInitialSize.width * ratio, self.panGestureInitialSize.height * ratio);
+                CGFloat ratio = 1.0f - (0.3f * (ABS(verticalIncrement) / self.panGestureInitialFrame.size.height));
+                CGFloat horizontalPadding = self.panGestureInitialFrame.size.width * (1.0f - ratio);
+                imageView.frame = CGRectMake(self.panGestureInitialFrame.origin.x + (horizontalPadding / 2.0f), self.panGestureInitialFrame.origin.y + (verticalIncrement / 2.0f), self.panGestureInitialFrame.size.width * ratio, self.panGestureInitialFrame.size.height * ratio);
             }
             
             break;
@@ -524,10 +529,11 @@
                 }];
             } else {
                 [UIView animateWithDuration:0.3 animations:^{
-                    self.view.frame = CGRectMake(0.0f, 0.0f, self.panGestureInitialSize.width, self.panGestureInitialSize.height);
+                    imageView.frame = CGRectMake(0.0f, 0.0f, self.panGestureInitialFrame.size.width, self.panGestureInitialFrame.size.height);
                     self.view.backgroundColor = [UIColor whiteColor];
                     self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 1.0f;
                     self.interfaceHidden = NO;
+                    self.panGestureInitialPoint = CGPointZero;
                 } completion:^(BOOL finished) {
                     [self reloadUI];
                 }];
@@ -564,7 +570,7 @@
             } else {
                 zoomableView.zoomScale = newScale;
             }
-            [self correctYForView:imageView inScrollView:zoomableView scaledAt:newScale];
+            [self correctOriginForView:imageView scaledAt:newScale];
         } completion:^(BOOL finished) {
             if (node.name.mnz_isVideoPathExtension && newScale == 1.0f) {
                 zoomableView.subviews.lastObject.hidden = NO;
