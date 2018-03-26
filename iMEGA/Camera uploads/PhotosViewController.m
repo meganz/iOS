@@ -60,6 +60,8 @@
 @property (nonatomic) NSUInteger totalPhotosUploading;
 @property (nonatomic) NSUInteger currentPhotosUploaded;
 
+@property (nonatomic) NSIndexPath *browsingIndexPath;
+
 @end
 
 @implementation PhotosViewController
@@ -526,6 +528,8 @@
         cell.thumbnailVideoDurationLabel.text = [NSString mnz_stringFromTimeInterval:node.duration];
     }
     
+    cell.thumbnailImageView.hidden = self.browsingIndexPath && indexPath.section == self.browsingIndexPath.section && indexPath.item == self.browsingIndexPath.item;
+    
     if (@available(iOS 11.0, *)) {
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
     }
@@ -832,10 +836,17 @@
     NSIndexPath *indexPath = [self indexPathForNode:node];
     if (indexPath) {
         [self.photosCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
-        UICollectionViewCell *cell = [self collectionView:self.photosCollectionView cellForItemAtIndexPath:indexPath];
+        PhotoCollectionViewCell *cell = [self collectionView:self.photosCollectionView cellForItemAtIndexPath:indexPath];
         CGRect cellFrame = [self.photosCollectionView convertRect:cell.frame toView:nil];
         photoBrowser.originFrame = cellFrame;
     }
+    self.browsingIndexPath = indexPath;
+    [self.photosCollectionView reloadData];
+}
+
+- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser willDismissWithNode:(MEGANode *)node {
+    self.browsingIndexPath = nil;
+    [self.photosCollectionView reloadData];
 }
 
 #pragma mark - MEGARequestDelegate
