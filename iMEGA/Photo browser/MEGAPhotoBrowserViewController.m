@@ -42,6 +42,7 @@
 @property (nonatomic) NSUInteger currentIndex;
 
 @property (nonatomic) CGPoint panGestureInitialPoint;
+@property (nonatomic) CGSize panGestureInitialSize;
 @property (nonatomic, getter=isInterfaceHidden) BOOL interfaceHidden;
 @property (nonatomic) CGFloat playButtonSize;
 @property (nonatomic) CGFloat gapBetweenPages;
@@ -500,11 +501,16 @@
     switch (panGestureRecognizer.state) {
         case UIGestureRecognizerStateBegan:
             self.panGestureInitialPoint = touchPoint;
+            self.panGestureInitialSize = self.view.frame.size;
+            self.view.backgroundColor = [UIColor clearColor];
+            self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
             break;
             
         case UIGestureRecognizerStateChanged: {
             if (ABS(verticalIncrement) > 0) {
-                self.view.frame = CGRectMake(0.0f, verticalIncrement, self.view.frame.size.width, self.view.frame.size.height);
+                CGFloat ratio = 1.0f - (0.3f * (ABS(verticalIncrement) / self.panGestureInitialSize.height));
+                CGFloat horizontalPadding = self.panGestureInitialSize.width * (1.0f - ratio);
+                self.view.frame = CGRectMake(horizontalPadding / 3.0f, verticalIncrement / 3.0f, self.panGestureInitialSize.width * ratio, self.panGestureInitialSize.height * ratio);
             }
             
             break;
@@ -513,14 +519,15 @@
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled: {
             if (ABS(verticalIncrement) > 50.0f) {
-                self.view.backgroundColor = [UIColor clearColor];
-                self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
                 [self dismissViewControllerAnimated:YES completion:^{
                     [self.delegate photoBrowser:self willDismissWithNode:node];
                 }];
             } else {
                 [UIView animateWithDuration:0.3 animations:^{
-                    self.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+                    self.view.frame = CGRectMake(0.0f, 0.0f, self.panGestureInitialSize.width, self.panGestureInitialSize.height);
+                    self.view.backgroundColor = [UIColor whiteColor];
+                    self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 1.0f;
+                    self.interfaceHidden = NO;
                 } completion:^(BOOL finished) {
                     [self reloadUI];
                 }];
