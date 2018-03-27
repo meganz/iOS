@@ -411,8 +411,8 @@
 
 - (void)resizeImageView:(UIImageView *)imageView {
     CGFloat imageRatio = imageView.image.size.height / imageView.image.size.width;
-    CGFloat frameRatio = imageView.frame.size.height / imageView.frame.size.width;
-    CGRect frame = imageView.frame;
+    CGFloat frameRatio = self.view.frame.size.height / self.view.frame.size.width;
+    CGRect frame = self.view.frame;
     if (imageRatio < frameRatio) {
         CGFloat newHeight = frame.size.width * imageRatio;
         frame.size.height = newHeight;
