@@ -2698,6 +2698,22 @@ void uncaughtExceptionHandler(NSException *exception) {
             NSURL *videoURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path]];
             [node mnz_generateThumbnailForVideoAtPath:videoURL];
         }
+        
+        if (transfer.fileName.mnz_isImagePathExtension && (!node.latitude || !node.longitude)) {
+            NSData *data = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path]]];
+            CGImageSourceRef imageData = CGImageSourceCreateWithData((CFDataRef)data, NULL);
+            NSDictionary *metadata = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imageData, 0, NULL);
+            NSDictionary *exifDictionary = [metadata objectForKey:(NSString *)kCGImagePropertyGPSDictionary];
+            
+            if(exifDictionary) {
+                NSNumber *latitude = [exifDictionary objectForKey:@"Latitude"];
+                NSNumber *longitude = [exifDictionary objectForKey:@"Longitude"];
+                if (latitude && longitude) {
+                    [api setNodeCoordinates:node latitude:latitude longitude:longitude];
+                }
+            }
+            CFRelease(imageData);
+        }
     }
 }
 
