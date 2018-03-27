@@ -188,6 +188,11 @@
     }
 }
 
+- (void)toggleTransparentInterfaceForDismissal:(BOOL)transparent {
+    self.view.backgroundColor = transparent ? [UIColor clearColor] : [UIColor whiteColor];
+    self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = transparent ? 0.0f : 1.0f;
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -437,6 +442,10 @@
 
 - (IBAction)didPressCloseButton:(UIBarButtonItem *)sender {
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
+    self.targetImageView = zoomableView.subviews.firstObject;
+    [self toggleTransparentInterfaceForDismissal:YES];
+
     [self dismissViewControllerAnimated:YES completion:^{
         [self.delegate photoBrowser:self willDismissWithNode:node];
     }];
@@ -508,8 +517,7 @@
         case UIGestureRecognizerStateBegan:
             self.panGestureInitialPoint = touchPoint;
             self.panGestureInitialFrame = self.targetImageView.frame;
-            self.view.backgroundColor = [UIColor clearColor];
-            self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
+            [self toggleTransparentInterfaceForDismissal:YES];
             break;
             
         case UIGestureRecognizerStateChanged: {
@@ -531,8 +539,7 @@
             } else {
                 [UIView animateWithDuration:0.3 animations:^{
                     self.targetImageView.frame = CGRectMake(0.0f, 0.0f, self.panGestureInitialFrame.size.width, self.panGestureInitialFrame.size.height);
-                    self.view.backgroundColor = [UIColor whiteColor];
-                    self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 1.0f;
+                    [self toggleTransparentInterfaceForDismissal:NO];
                     self.interfaceHidden = NO;
                     self.panGestureInitialPoint = CGPointZero;
                 } completion:^(BOOL finished) {
@@ -762,6 +769,10 @@
 #pragma mark - NodeInfoViewControllerDelegate
 
 - (void)presentParentNode:(MEGANode *)node {
+    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
+    self.targetImageView = zoomableView.subviews.firstObject;
+    [self toggleTransparentInterfaceForDismissal:YES];
+
     [self dismissViewControllerAnimated:YES completion:^{
         [self.delegate photoBrowser:self willDismissWithNode:node];
         UIViewController *visibleViewController = [UIApplication mnz_visibleViewController];
