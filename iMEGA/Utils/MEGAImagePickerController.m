@@ -9,6 +9,8 @@
 #import "NSFileManager+MNZCategory.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGASdkManager.h"
+#import "MEGAStartUploadTransferDelegate.h"
+#import "MEGATransfer+MNZCategory.h"
 
 @interface MEGAImagePickerController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -150,8 +152,12 @@
         [imageData writeToFile:imagePath atomically:YES];
         
         if (self.toUploadSomething) {
+            MEGAStartUploadTransferDelegate *delegate = [[MEGAStartUploadTransferDelegate alloc] initWithCompletion:^(MEGATransfer *transfer) {
+                [transfer mnz_setCoordinatesWithApi:[MEGASdkManager sharedMEGASdk]];
+                [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] error:nil];
+            }];
             self.filePath = [imagePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:YES];
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:NO delegate:delegate];
         } else if (self.toChangeAvatar) {
             NSString *avatarFilePath = [self createAvatarWithImagePath:imagePath];
             [[MEGASdkManager sharedMEGASdk] setAvatarUserWithSourceFilePath:avatarFilePath];

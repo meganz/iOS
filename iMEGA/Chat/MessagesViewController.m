@@ -30,6 +30,7 @@
 #import "MEGAStartUploadTransferDelegate.h"
 #import "MEGAStore.h"
 #import "MEGAToolbarContentView.h"
+#import "MEGATransfer+MNZCategory.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
@@ -656,10 +657,13 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 - (void)startUploadAndAttachWithPath:(NSString *)path parentNode:(MEGANode *)parentNode {
     [self showProgressViewUnderNavigationBar];
     
-    MEGAStartUploadTransferDelegate *startUploadTransferDelegate = [[MEGAStartUploadTransferDelegate alloc] initToUploadToChatWithTotalBytes:^(long long totalBytes) {
+    MEGAStartUploadTransferDelegate *startUploadTransferDelegate = [[MEGAStartUploadTransferDelegate alloc] initToUploadToChatWithTotalBytes:^(MEGATransfer *transfer) {
+        long long totalBytes = transfer.totalBytes.longLongValue;
         self.totalBytesToUpload += totalBytes;
         self.remainingBytesToUpload += totalBytes;
-    } progress:^(float transferredBytes, float totalBytes) {
+    } progress:^(MEGATransfer *transfer) {
+        float transferredBytes = transfer.transferredBytes.floatValue;
+        float totalBytes = transfer.totalBytes.floatValue;
         float asignableProgresRegardWithTotal = (totalBytes / self.totalBytesToUpload);
         float transferProgress = (transferredBytes / totalBytes);
         float currentAsignableProgressForThisTransfer = (transferProgress * asignableProgresRegardWithTotal);
@@ -673,7 +677,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                 [self.navigationBarProgressView setProgress:currentAsignableProgressForThisTransfer animated:YES];
             }
         }
-    } completion:^(long long totalBytes) {
+    } completion:^(MEGATransfer *transfer) {
+        long long totalBytes = transfer.totalBytes.longLongValue;
         float progressCompletedRegardWithTotal = ((float)totalBytes / self.totalBytesToUpload);
         self.totalProgressOfTransfersCompleted += progressCompletedRegardWithTotal;
         self.remainingBytesToUpload -= totalBytes;
@@ -681,10 +686,13 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         if (self.remainingBytesToUpload == 0) {
             [self resetAndHideProgressView];
         }
+        
+        [transfer mnz_setCoordinatesWithApi:[MEGASdkManager sharedMEGASdk]];
+        [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] error:nil];
     }];
     
     NSString *appData = [NSString stringWithFormat:@"attachToChatID=%llu", self.chatRoom.chatId];
-    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:path parent:parentNode appData:appData isSourceTemporary:YES delegate:startUploadTransferDelegate];
+    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:path parent:parentNode appData:appData isSourceTemporary:NO delegate:startUploadTransferDelegate];
 }
 
 - (void)attachOrCopyAndAttachNode:(MEGANode *)node toParentNode:(MEGANode *)parentNode {

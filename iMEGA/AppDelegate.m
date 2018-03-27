@@ -24,6 +24,7 @@
 #import "MEGAPurchase.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
+#import "MEGATransfer+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
@@ -2699,21 +2700,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             [node mnz_generateThumbnailForVideoAtPath:videoURL];
         }
         
-        if (transfer.fileName.mnz_isImagePathExtension && (!node.latitude || !node.longitude)) {
-            NSData *data = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path]]];
-            CGImageSourceRef imageData = CGImageSourceCreateWithData((CFDataRef)data, NULL);
-            NSDictionary *metadata = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imageData, 0, NULL);
-            NSDictionary *exifDictionary = [metadata objectForKey:(NSString *)kCGImagePropertyGPSDictionary];
-            
-            if(exifDictionary) {
-                NSNumber *latitude = [exifDictionary objectForKey:@"Latitude"];
-                NSNumber *longitude = [exifDictionary objectForKey:@"Longitude"];
-                if (latitude && longitude) {
-                    [api setNodeCoordinates:node latitude:latitude longitude:longitude];
-                }
-            }
-            CFRelease(imageData);
-        }
+        [transfer mnz_setCoordinatesWithApi:api];
     }
 }
 
