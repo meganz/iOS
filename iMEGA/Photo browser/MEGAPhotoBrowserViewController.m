@@ -40,6 +40,7 @@
 @property (nonatomic) NSMutableArray<MEGANode *> *mediaNodes;
 @property (nonatomic) NSCache<NSString *, UIScrollView *> *imageViewsCache;
 @property (nonatomic) NSUInteger currentIndex;
+@property (nonatomic) UIImageView *targetImageView;
 
 @property (nonatomic) CGPoint panGestureInitialPoint;
 @property (nonatomic) CGRect panGestureInitialFrame;
@@ -498,7 +499,7 @@
     if (zoomableView.zoomScale > 1.0f) {
         return;
     }
-    UIImageView *imageView = zoomableView.subviews.firstObject;
+    self.targetImageView = zoomableView.subviews.firstObject;
     
     CGPoint touchPoint = [panGestureRecognizer translationInView:self.view];
     CGFloat verticalIncrement = touchPoint.y - self.panGestureInitialPoint.y;
@@ -506,7 +507,7 @@
     switch (panGestureRecognizer.state) {
         case UIGestureRecognizerStateBegan:
             self.panGestureInitialPoint = touchPoint;
-            self.panGestureInitialFrame = imageView.frame;
+            self.panGestureInitialFrame = self.targetImageView.frame;
             self.view.backgroundColor = [UIColor clearColor];
             self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
             break;
@@ -515,7 +516,7 @@
             if (ABS(verticalIncrement) > 0) {
                 CGFloat ratio = 1.0f - (0.3f * (ABS(verticalIncrement) / self.panGestureInitialFrame.size.height));
                 CGFloat horizontalPadding = self.panGestureInitialFrame.size.width * (1.0f - ratio);
-                imageView.frame = CGRectMake(self.panGestureInitialFrame.origin.x + (horizontalPadding / 2.0f), self.panGestureInitialFrame.origin.y + (verticalIncrement / 2.0f), self.panGestureInitialFrame.size.width * ratio, self.panGestureInitialFrame.size.height * ratio);
+                self.targetImageView.frame = CGRectMake(self.panGestureInitialFrame.origin.x + (horizontalPadding / 2.0f), self.panGestureInitialFrame.origin.y + (verticalIncrement / 2.0f), self.panGestureInitialFrame.size.width * ratio, self.panGestureInitialFrame.size.height * ratio);
             }
             
             break;
@@ -529,13 +530,14 @@
                 }];
             } else {
                 [UIView animateWithDuration:0.3 animations:^{
-                    imageView.frame = CGRectMake(0.0f, 0.0f, self.panGestureInitialFrame.size.width, self.panGestureInitialFrame.size.height);
+                    self.targetImageView.frame = CGRectMake(0.0f, 0.0f, self.panGestureInitialFrame.size.width, self.panGestureInitialFrame.size.height);
                     self.view.backgroundColor = [UIColor whiteColor];
                     self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 1.0f;
                     self.interfaceHidden = NO;
                     self.panGestureInitialPoint = CGPointZero;
                 } completion:^(BOOL finished) {
                     [self reloadUI];
+                    self.targetImageView = nil;
                 }];
             }
             
@@ -635,7 +637,7 @@
     if (CGRectIsEmpty(self.originFrame)) {
         return nil;
     } else {
-        return [[MEGAPhotoBrowserAnimator alloc] initWithMode:MEGAPhotoBrowserAnimatorModePresent originFrame:self.originFrame];
+        return [[MEGAPhotoBrowserAnimator alloc] initWithMode:MEGAPhotoBrowserAnimatorModePresent originFrame:self.originFrame targetImageView:self.targetImageView];
     }
 }
 
@@ -643,7 +645,7 @@
     if (CGRectIsEmpty(self.originFrame)) {
         return nil;
     } else {
-        return [[MEGAPhotoBrowserAnimator alloc] initWithMode:MEGAPhotoBrowserAnimatorModeDismiss originFrame:self.originFrame];
+        return [[MEGAPhotoBrowserAnimator alloc] initWithMode:MEGAPhotoBrowserAnimatorModeDismiss originFrame:self.originFrame targetImageView:self.targetImageView];
     }
 }
 
