@@ -124,7 +124,6 @@
     self.parentBrowser = !self.isChildBrowser;
     
     self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", nil);
-    [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
     
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
@@ -395,7 +394,6 @@
 
 - (void)setNodeTableViewCell:(NodeTableViewCell *)cell selected:(BOOL)boolValue {
     cell.checkImageView.hidden = boolValue ? NO : YES;
-    cell.backgroundColor = boolValue ? [UIColor mnz_grayF9F9F9] : nil;
 }
 
 - (void)pushBrowserWithParentNode:(MEGANode *)parentNode {
@@ -433,21 +431,11 @@
 }
 
 - (void)addSearchController {
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchResultsUpdater = self;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.searchBar.delegate = self;
-    self.searchController.searchBar.barTintColor = [UIColor colorWithWhite:235.0f / 255.0f alpha:1.0f];
-    self.searchController.searchBar.translucent = YES;
-    [self.searchController.searchBar sizeToFit];
-    self.searchController.searchBar.tintColor = [UIColor mnz_redD90007];
-    UITextField *searchTextField = [self.searchController.searchBar valueForKey:@"_searchField"];
-    searchTextField.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
-    searchTextField.textColor = [UIColor mnz_gray999999];
+    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.tableView.tableHeaderView = self.searchController.searchBar;
     [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
     self.definesPresentationContext = NO;
-    self.searchController.hidesNavigationBarDuringPresentation = NO;
 }
 
 - (MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath {
@@ -535,7 +523,7 @@
         for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:inboxDirectory error:&error]) {
             error = nil;
             if ([[NSFileManager defaultManager] removeItemAtPath:[inboxDirectory stringByAppendingPathComponent:file] error:&error]) {
-                MEGALogError(@"Remove item at path failed with error: %@", error)
+                MEGALogError(@"Remove item at path failed with error: %@", error);
             }
         }
     } else if (self.browserAction == BrowserActionShareExtension) {
@@ -590,17 +578,10 @@
         numberOfRows = self.searchController.isActive ? self.searchNodesArray.count : self.nodes.size.integerValue;
     }
     
-    if (numberOfRows == 0) {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    } else {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-    }
-    
     return numberOfRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     NSString *cellIdentifier;
     if (self.browserSegmentedControl.selectedSegmentIndex == 0) {
         cellIdentifier = @"nodeCell";
@@ -653,11 +634,6 @@
         cell.infoLabel.text = [share user];
         [cell.cancelButton setImage:[Helper permissionsButtonImageForShareType:shareType] forState:UIControlStateNormal];
     }
-    
-    UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
-    [cell setSelectedBackgroundView:view];
-    [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
     if (@available(iOS 11.0, *)) {
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
@@ -722,7 +698,7 @@
             self.searchNodesArray = [self.nodes.mnz_nodesArrayFromNodeList mutableCopy];
         } else {
             if (self.browserSegmentedControl.selectedSegmentIndex == 0) {
-                MEGANodeList *allNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:searchString recursive:YES];
+                MEGANodeList *allNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:searchString recursive:NO];
                 self.searchNodesArray = [allNodeList.mnz_nodesArrayFromNodeList mutableCopy];
             } else {
                 NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", searchString];

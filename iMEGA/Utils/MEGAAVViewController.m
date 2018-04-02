@@ -2,7 +2,6 @@
 #import "MEGAAVViewController.h"
 
 #import "Helper.h"
-#import "MEGAQLPreviewControllerTransitionAnimator.h"
 #import "MEGANode+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
@@ -93,15 +92,6 @@
 
 - (BOOL)playerViewControllerShouldAutomaticallyDismissAtPictureInPictureStart:(AVPlayerViewController *)playerViewController {
     return NO;
-}
-
-#pragma mark - UIViewControllerTransitioningDelegate
-
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
-    if ([presented isKindOfClass:[AVPlayerViewController class]]) {
-        return [[MEGAQLPreviewControllerTransitionAnimator alloc] init];
-    }
-    return nil;
 }
 
 @end

@@ -43,7 +43,7 @@
                 break;
                 
             default:
-                message = [NSString stringWithFormat:@"%@ %@", request.requestString, error.name];;
+                message = [NSString stringWithFormat:@"%@ %@", request.requestString, error.name];
                 break;
         }
         

@@ -35,6 +35,7 @@
 @property (nonatomic, strong) NSMutableDictionary *chatIdIndexPathDictionary;
 
 @property (strong, nonatomic) UISearchController *searchController;
+
 @end
 
 @implementation ChatRoomsViewController {
@@ -48,19 +49,7 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
-    // No search results controller to display the search results in the current view
-    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchResultsUpdater = self;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.searchBar.delegate = self;
-    self.searchController.searchBar.barTintColor = [UIColor colorWithWhite:235.0f / 255.0f alpha:1.0f];
-    self.searchController.searchBar.translucent = YES;
-    [self.searchController.searchBar sizeToFit];
-    
-    UITextField *searchTextField = [self.searchController.searchBar valueForKey:@"_searchField"];
-    searchTextField.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
-    searchTextField.textColor = [UIColor mnz_gray999999];
-    
+    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.definesPresentationContext = YES;
     
@@ -91,25 +80,7 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
         self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
         if (self.chatListItemList.size) {
-            for (NSUInteger i = 0; i < self.chatListItemList.size ; i++) {
-                MEGAChatListItem *chatListItem = [self.chatListItemList chatListItemAtIndex:i];
-                [self.chatListItemArray addObject:chatListItem];
-            }
-            
-            self.chatListItemArray = [[self.chatListItemArray sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-                NSDate *first  = [(MEGAChatListItem *)a lastMessageDate];
-                NSDate *second = [(MEGAChatListItem *)b lastMessageDate];
-                
-                if (!first) {
-                    first = [NSDate dateWithTimeIntervalSince1970:0];
-                }
-                
-                if (!second) {
-                    second = [NSDate dateWithTimeIntervalSince1970:0];
-                }
-                
-                return [second compare:first];
-            }] mutableCopy];
+            [self reorderList];
             
             [self updateChatIdIndexPathDictionary];
             
@@ -121,13 +92,12 @@
         }
         
         self.addBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
-        
-        [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     } else {
         self.addBarButtonItem.enabled = NO;
         self.tableView.tableHeaderView = nil;
     }
     
+    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [self.tableView reloadData];
 }
 
@@ -139,6 +109,7 @@
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     
     [self.chatListItemArray removeAllObjects];
+    [self.tableView reloadData];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -165,8 +136,6 @@
             text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
         }
     } else {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-        
         if (![[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
             if ([MEGAReachabilityManager isReachable]) {
                 text = AMLocalizedString(@"chatIsDisabled", @"Title show when you enter on the chat tab and the chat is disabled");
@@ -277,6 +246,7 @@
     BOOL boolValue = [MEGAReachabilityManager isReachable];
     self.addBarButtonItem.enabled = boolValue;
     
+    [self customNavigationBarLabel];
     [self.tableView reloadData];
 }
 
@@ -320,17 +290,22 @@
 
 - (void)moveRowByChatListItem:(MEGAChatListItem *)item {
     NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(item.chatId)];
-    if (self.searchController.isActive) {
-        [self.searchChatListItemArray removeObjectAtIndex:indexPath.row];
-        [self.searchChatListItemArray insertObject:item atIndex:0];
-    } else {
-        [self.chatListItemArray removeObjectAtIndex:indexPath.row];
-        [self.chatListItemArray insertObject:item atIndex:0];
+    NSIndexPath *newIndexPath;
+    NSMutableArray *tempArray = self.searchController.isActive ? self.searchChatListItemArray : self.chatListItemArray;
+    for (MEGAChatListItem *chatListItem in tempArray) {
+        if ([item.lastMessageDate compare:chatListItem.lastMessageDate]>=NSOrderedSame) {
+            newIndexPath = [self.chatIdIndexPathDictionary objectForKey:@(chatListItem.chatId)];
+            [tempArray removeObjectAtIndex:indexPath.row];
+            [tempArray insertObject:item atIndex:newIndexPath.row];
+            break;
+        }
     }
-    
+
     [self updateChatIdIndexPathDictionary];
     
-    [self.tableView moveRowAtIndexPath:indexPath toIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    if (newIndexPath) {
+        [self.tableView moveRowAtIndexPath:indexPath toIndexPath:newIndexPath];
+    }
 }
 
 - (void)updateChatIdIndexPathDictionary {
@@ -360,8 +335,8 @@
         
         cell.unreadCount.text = [NSString stringWithFormat:@"%ld", ABS(unreadCount)];
     } else {
-        cell.chatTitle.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
-        cell.chatTitle.textColor = [UIColor mnz_gray666666];
+        cell.chatTitle.font = [UIFont mnz_SFUIMediumWithSize:15.0f];
+        cell.chatTitle.textColor = UIColor.mnz_black333333;
         cell.chatLastMessage.font = [UIFont mnz_SFUIRegularWithSize:12.0f];
         cell.chatLastMessage.textColor = [UIColor mnz_gray666666];
         cell.chatLastTime.font = [UIFont mnz_SFUIRegularWithSize:10.0f];
@@ -373,6 +348,11 @@
 }
 
 - (void)updateCell:(ChatRoomCell *)cell forChatListItem:(MEGAChatListItem *)item {
+    NSString *senderString;
+    if(item.isGroup && item.lastMessageSender != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
+        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
+        senderString = [chatRoom peerFullnameByHandle:item.lastMessageSender];
+    }
     switch (item.lastMessageType) {
         case MEGAChatMessageTypeInvalid: {
             cell.chatLastMessage.text = AMLocalizedString(@"noConversationHistory", @"Information if there are no history messages in current chat conversation");
@@ -390,7 +370,7 @@
                 lastMessageString = AMLocalizedString(@"attachedXFiles", @"A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files.");
                 lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", componentsArray.count]];
             }
-            cell.chatLastMessage.text = lastMessageString;
+            cell.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, lastMessageString] : lastMessageString;
             cell.chatLastTime.hidden = NO;
             cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
             break;
@@ -406,14 +386,14 @@
                 lastMessageString = AMLocalizedString(@"sentXContacts", @"A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent.");
                 lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", componentsArray.count]];
             }
-            cell.chatLastMessage.text = lastMessageString;
+            cell.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, lastMessageString] : lastMessageString;
             cell.chatLastTime.hidden = NO;
             cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
             break;
         }
             
         default: {
-            cell.chatLastMessage.text = item.lastMessage;
+            cell.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, item.lastMessage] : item.lastMessage;
             cell.chatLastTime.hidden = NO;
             cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
             break;
@@ -423,6 +403,7 @@
 
 - (void)customNavigationBarLabel {
     NSString *onlineStatusString = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] onlineStatus]];
+    
     if (onlineStatusString) {
         UILabel *label = [Helper customNavigationBarLabelWithTitle:AMLocalizedString(@"chat", @"Chat section header") subtitle:onlineStatusString];
         label.adjustsFontSizeToFitWidth = YES;
@@ -520,6 +501,26 @@
     }
 }
 
+- (void)reorderList {
+    for (NSUInteger i = 0; i < self.chatListItemList.size ; i++) {
+        MEGAChatListItem *chatListItem = [self.chatListItemList chatListItemAtIndex:i];
+        [self.chatListItemArray addObject:chatListItem];
+    }
+    self.chatListItemArray = [[self.chatListItemArray sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        NSDate *first  = [(MEGAChatListItem *)a lastMessageDate];
+        NSDate *second = [(MEGAChatListItem *)b lastMessageDate];
+        
+        if (!first) {
+            first = [NSDate dateWithTimeIntervalSince1970:0];
+        }
+        if (!second) {
+            second = [NSDate dateWithTimeIntervalSince1970:0];
+        }
+        
+        return [second compare:first];
+    }] mutableCopy];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)addTapped:(UIBarButtonItem *)sender {
@@ -583,12 +584,6 @@
         numberOfRows = self.chatListItemArray.count;
     }
     
-    if (numberOfRows == 0) {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    } else {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-    }
-    
     return numberOfRows;
 }
 
@@ -614,8 +609,6 @@
     }
     
     [self updateCell:cell forUnreadCountChange:chatListItem.unreadCount];
-    
-    cell.separatorInset = UIEdgeInsetsMake(0.0, 57.0, 0.0, 0.0);
     
     if (@available(iOS 11.0, *)) {
         cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
@@ -795,6 +788,18 @@
             cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:userHandle]];
         }
     }
+}
+
+- (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
+    // INVALID_HANDLE = ~(uint64_t)0
+    if (chatId == ~(uint64_t)0 && newState == MEGAChatConnectionOnline) {
+        // Now it's safe to trigger a reordering of the list:
+        self.chatListItemArray = [NSMutableArray new];
+        self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
+        [self reorderList];
+        [self.tableView reloadData];
+    }
+    [self customNavigationBarLabel];
 }
 
 @end

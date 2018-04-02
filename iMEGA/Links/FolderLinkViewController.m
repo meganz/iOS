@@ -13,16 +13,17 @@
 #import "MyAccountHallViewController.h"
 #import "NSString+MNZCategory.h"
 
+#import "DisplayMode.h"
 #import "FileLinkViewController.h"
 #import "NodeTableViewCell.h"
 #import "MainTabBarController.h"
-#import "DetailsNodeInfoViewController.h"
 #import "UnavailableLinkView.h"
 #import "LoginViewController.h"
 #import "OfflineTableViewController.h"
 #import "BrowserViewController.h"
+#import "CustomActionViewController.h"
 
-@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate> {
+@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, CustomActionViewControllerDelegate> {
     
     BOOL isLoginDone;
     BOOL isFetchNodesDone;
@@ -67,18 +68,7 @@
     self.tableView.estimatedRowHeight = 44.0;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
-    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchResultsUpdater = self;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.searchBar.delegate = self;
-    self.searchController.searchBar.barTintColor = [UIColor colorWithWhite:235.0f / 255.0f alpha:1.0f];
-    self.searchController.searchBar.translucent = YES;
-    [self.searchController.searchBar sizeToFit];
-    
-    UITextField *searchTextField = [self.searchController.searchBar valueForKey:@"_searchField"];
-    searchTextField.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
-    searchTextField.textColor = [UIColor mnz_gray999999];
-    
+    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.definesPresentationContext = YES;
     
@@ -105,13 +95,8 @@
     
     [self.navigationItem setTitle:AMLocalizedString(@"folderLink", nil)];
     
-    UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
-        [negativeSpaceBarButtonItem setWidth:-8.0];
-    } else {
-        [negativeSpaceBarButtonItem setWidth:-4.0];
-    }
-    [self.navigationItem setRightBarButtonItems:@[negativeSpaceBarButtonItem, self.editBarButtonItem] animated:YES];
+    self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+    self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     
     [self.importBarButtonItem setTitle:AMLocalizedString(@"import", nil)];
     [self.downloadBarButtonItem setTitle:AMLocalizedString(@"downloadButton", @"Download")];
@@ -127,7 +112,6 @@
         [self reloadUI];
     }
     
-    // Long press to select:
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
 }
 
@@ -177,7 +161,7 @@
     [self setNavigationBarTitleLabel];
     
     self.nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:self.parentNode];
-    if ([[_nodeList size] unsignedIntegerValue] == 0) {
+    if (_nodeList.size.unsignedIntegerValue == 0) {
         [self setActionButtonsEnabled:NO];
     } else {
         [self setActionButtonsEnabled:YES];
@@ -192,7 +176,7 @@
     
     [self.tableView reloadData];
     
-    if ([[self.nodeList size] unsignedIntegerValue] == 0) {
+    if (self.nodeList.size.unsignedIntegerValue == 0) {
         [_tableView setTableHeaderView:nil];
     } else {
         self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
@@ -203,7 +187,7 @@
 }
 
 - (void)setNavigationBarTitleLabel {
-    if ([self.parentNode name] != nil && !isFolderLinkNotValid) {
+    if (self.parentNode.name && !isFolderLinkNotValid) {
         UILabel *label = [Helper customNavigationBarLabelWithTitle:self.parentNode.name subtitle:AMLocalizedString(@"folderLink", nil)];
         label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
         self.navigationBarLabel = label;
@@ -317,7 +301,7 @@
                     [self.navigationController pushViewController:folderLinkVC animated:NO];
 
                 } else {
-                    if (node.name.mnz_isImagePathExtension) {
+                    if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                         NSArray *nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
                         [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:YES displayMode:DisplayModeSharedItem];
                     } else {
@@ -355,11 +339,12 @@
     [self setToolbarButtonsEnabled:!editing];
     
     if (editing) {
-        [_editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
+        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
 
         [self.navigationItem setLeftBarButtonItem:_selectAllBarButtonItem];
     } else {
-        [_editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
+        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+        
         [self setAllNodesSelected:NO];
         _selectedNodesArray = nil;
 
@@ -397,20 +382,32 @@
 }
 
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];;
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodeList nodeAtIndex:indexPath.row];
+        
+    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
+    actionController.node = node;
+    actionController.displayMode = DisplayModeFolderLink;
+    actionController.actionDelegate = self;
+    actionController.actionSender = sender;
     
-    FileLinkViewController *fileLinkVC = [self.storyboard instantiateViewControllerWithIdentifier:@"FileLinkViewControllerID"];
-    [fileLinkVC setFileLinkMode:FileLinkModeNodeFromFolderLink];
-    [fileLinkVC setNodeFromFolderLink:node];
-    [self.navigationController pushViewController:fileLinkVC animated:YES];
+    if ([[UIDevice currentDevice] iPadDevice]) {
+        actionController.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
+        popController.delegate = actionController;
+        popController.sourceView = sender;
+        popController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
+    } else {
+        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    }
+    [self presentViewController:actionController animated:YES completion:nil];
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
     //TODO: If documents have been opened for preview and the user download the folder link after that, move the dowloaded documents to Offline and avoid re-downloading.
-    if ([_tableView isEditing]) {
+    if (self.selectedNodesArray.count != 0) {
         for (MEGANode *node in _selectedNodesArray) {
             if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:YES]) {
                 [self setEditing:NO animated:YES];
@@ -435,16 +432,16 @@
             
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
             
-            if ([_tableView isEditing]) {
+            if (self.selectedNodesArray.count != 0) {
                 for (MEGANode *node in _selectedNodesArray) {
-                    [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES];
+                    [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES shouldOverwrite:NO];
                 }
             } else {
-                [Helper downloadNode:_parentNode folderPath:[Helper relativePathForOffline] isFolderLink:YES];
+                [Helper downloadNode:_parentNode folderPath:[Helper relativePathForOffline] isFolderLink:YES shouldOverwrite:NO];
             }
         }];
     } else {
-        if ([_tableView isEditing]) {
+        if (self.selectedNodesArray.count != 0) {
             [[Helper nodesFromLinkMutableArray] addObjectsFromArray:_selectedNodesArray];
         } else {
             [[Helper nodesFromLinkMutableArray] addObject:_parentNode];
@@ -464,7 +461,7 @@
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
             BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
             [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
-            if ([_tableView isEditing]) {
+            if (self.selectedNodesArray.count != 0) {
                 browserVC.selectedNodesArray = [NSArray arrayWithArray:_selectedNodesArray];
             } else {
                 if (self.parentNode == nil) {
@@ -476,7 +473,7 @@
             [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
         }];
     } else {
-        if ([_tableView isEditing]) {
+        if (self.selectedNodesArray.count != 0) {
             [[Helper nodesFromLinkMutableArray] addObjectsFromArray:_selectedNodesArray];
         } else {
             if (self.parentNode == nil) {
@@ -491,6 +488,16 @@
     }
     
     return;
+}
+
+- (void)openNode:(MEGANode *)node {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+            [node mnz_openImageInNavigationController:self.navigationController withNodes:@[node] folderLink:YES displayMode:2];
+        } else {
+            [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
+        }
+    }
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -540,15 +547,9 @@
             if (isFolderLinkNotValid) {
                 numberOfRows = 0;
             } else {
-                numberOfRows = [[self.nodeList size] integerValue];
+                numberOfRows = self.nodeList.size.integerValue;
             }
         }
-    }
-    
-    if (numberOfRows == 0) {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    } else {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     }
     
     return numberOfRows;
@@ -563,8 +564,8 @@
         cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"nodeCell"];
     }
     
-    if ([node type] == MEGANodeTypeFile) {
-        if ([node hasThumbnail]) {
+    if (node.isFile) {
+        if (node.hasThumbnail) {
             [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdkFolder] cell:cell];
         } else {
             [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
@@ -572,24 +573,19 @@
         
         cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
         
-    } else if ([node type] == MEGANodeTypeFolder) {
+    } else if (node.isFolder) {
         [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
         
         cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
     }
     
-    cell.nameLabel.text = [node name];
+    cell.nameLabel.text = node.name;
     
-    cell.nodeHandle = [node handle];
-    
-    UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
-    [cell setSelectedBackgroundView:view];
-    [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
+    cell.nodeHandle = node.handle;
     
     if (tableView.isEditing) {
         for (MEGANode *n in _selectedNodesArray) {
-            if ([n handle] == [node handle]) {
+            if (n.handle == node.handle) {
                 [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
         }
@@ -633,9 +629,9 @@
         }
 
         case MEGANodeTypeFile: {
-            if (node.name.mnz_isImagePathExtension) {
+            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 NSArray *nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
-                [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:YES displayMode:2];
+                [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:YES displayMode:DisplayModeSharedItem];
             } else {
                 [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
             }
@@ -666,14 +662,6 @@
         
         return;
     }
-}
-
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodeList nodeAtIndex:indexPath.row];
-    
-    DetailsNodeInfoViewController *nodeInfoDetailsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
-    [nodeInfoDetailsVC setNode:node];
-    [self.navigationController pushViewController:nodeInfoDetailsVC animated:YES];
 }
 
 #pragma mark - UISearchBarDelegate
@@ -817,23 +805,23 @@
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if ([error type]) {
-        switch ([error type]) {
+    if (error.type) {
+        switch (error.type) {
             case MEGAErrorTypeApiEArgs: {
-                if ([request type] == MEGARequestTypeLogin) {
+                if (request.type == MEGARequestTypeLogin) {
                     if (decryptionAlertView.visible) { //If the user have written the key
                         [self showDecryptionKeyNotValidAlert];
                     } else {
                         [self showLinkNotValid];
                     }
-                } else if ([request type] == MEGARequestTypeFetchNodes) {
+                } else if (request.type == MEGARequestTypeFetchNodes) {
                     [self showUnavailableLinkView];
                 }
                 break;
             }
                 
             case MEGAErrorTypeApiENoent: {
-                if ([request type] == MEGARequestTypeFetchNodes) {
+                if (request.type == MEGARequestTypeFetchNodes) {
                     [self showLinkNotValid];
                 }
                 break;
@@ -845,9 +833,9 @@
             }
                 
             default: {
-                if ([request type] == MEGARequestTypeLogin) {
+                if (request.type == MEGARequestTypeLogin) {
                     [self showUnavailableLinkView];
-                } else if ([request type] == MEGARequestTypeFetchNodes) {
+                } else if (request.type == MEGARequestTypeFetchNodes) {
                     [api logout];
                     [self showUnavailableLinkView];
                 }
@@ -858,7 +846,7 @@
         return;
     }
     
-    switch ([request type]) {
+    switch (request.type) {
         case MEGARequestTypeLogin: {
             isLoginDone = YES;
             isFetchNodesDone = NO;
@@ -868,7 +856,7 @@
             
         case MEGARequestTypeFetchNodes: {
             
-            if ([request flag]) { //Invalid key
+            if (request.flag) { //Invalid key
                 [api logout];
                 
                 [SVProgressHUD dismiss];
@@ -904,13 +892,36 @@
             
         case MEGARequestTypeGetAttrFile: {
             for (NodeTableViewCell *nodeTableViewCell in [self.tableView visibleCells]) {
-                if ([request nodeHandle] == [nodeTableViewCell nodeHandle]) {
+                if (request.nodeHandle == nodeTableViewCell.nodeHandle) {
                     MEGANode *node = [api nodeForHandle:request.nodeHandle];
                     [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell reindexNode:NO];
                 }
             }
             break;
         }
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - CustomActionViewControllerDelegate
+
+- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender{
+    switch (action) {
+        case MegaNodeActionTypeDownload:
+            self.selectedNodesArray = [NSMutableArray arrayWithObject:node];
+            [self downloadAction:nil];
+            break;
+            
+        case MegaNodeActionTypeOpen:
+            [self openNode:node];
+            break;
+            
+        case MegaNodeActionTypeImport:
+            self.selectedNodesArray = [NSMutableArray arrayWithObject:node];
+            [self importAction:nil];
+            break;
             
         default:
             break;

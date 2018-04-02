@@ -1,8 +1,6 @@
 
 #import "SettingsTableViewController.h"
 
-#import <SafariServices/SafariServices.h>
-
 #import "LTHPasscodeViewController.h"
 #import "SVProgressHUD.h"
 
@@ -129,17 +127,7 @@
 }
 
 - (void)showURL:(NSString *)urlString {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        NSURL *URL = [NSURL URLWithString:urlString];
-        SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:URL];
-        if (@available(iOS 10.0, *)) {
-            webViewController.preferredControlTintColor = [UIColor mnz_redD90007];
-        } else {
-            webViewController.view.tintColor = [UIColor mnz_redD90007];
-        }
-        
-        [self presentViewController:webViewController animated:YES completion:nil];
-    }
+    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:urlString]];
 }
 
 #pragma mark - UITableViewDataSource

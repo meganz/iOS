@@ -10,6 +10,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *speedLabel;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
+@property (weak, nonatomic) IBOutlet UIView *lineView;
+
 @property (nonatomic) NSInteger transferTag;
 
 @end

@@ -6,6 +6,7 @@
 
 #import "SVProgressHUD.h"
 
+#import "ContactLinkQRViewController.h"
 #import "Helper.h"
 #import "MEGAImagePickerController.h"
 #import "MEGANavigationController.h"
@@ -15,8 +16,6 @@
 #import "UIImageView+MNZCategory.h"
 
 @interface MyAccountBaseViewController ()
-
-@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 
 @end
 
@@ -74,13 +73,21 @@
     [changeAvatarAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
     [editProfileAlertController addAction:changeAvatarAlertAction];
     
+    UIAlertAction *myCodeAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"myCode", @"Title for view that displays the QR code of the user. String as short as possible.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
+        contactLinkVC.scanCode = NO;
+        [self presentViewController:contactLinkVC animated:YES completion:nil];
+    }];
+    [myCodeAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [editProfileAlertController addAction:myCodeAlertAction];
+    
     NSString *myUserBase64Handle = [MEGASdk base64HandleForUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
     NSString *myAvatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:myUserBase64Handle];
     if ([[NSFileManager defaultManager] fileExistsAtPath:myAvatarFilePath]) {
         UIAlertAction *removeAvatarAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"removeAvatar", @"Button to remove avatar. Try to keep the text short (as in English)") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[MEGASdkManager sharedMEGASdk] setAvatarUserWithSourceFilePath:nil];
         }];
-        [removeAvatarAlertAction mnz_setTitleTextColor:[UIColor mnz_redD90007]];
+        [removeAvatarAlertAction mnz_setTitleTextColor:[UIColor mnz_redF0373A]];
         [editProfileAlertController addAction:removeAvatarAlertAction];
     }
     

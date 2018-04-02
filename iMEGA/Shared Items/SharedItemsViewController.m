@@ -7,17 +7,20 @@
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
+#import "MEGANode+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
 #import "MEGARemoveRequestDelegate.h"
 #import "MEGAShareRequestDelegate.h"
 #import "NSMutableArray+MNZCategory.h"
 
 #import "BrowserViewController.h"
+#import "CloudDriveTableViewController.h"
 #import "ContactsViewController.h"
-#import "DetailsNodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"
+#import "CustomActionViewController.h"
+#import "NodeInfoViewController.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, CustomActionViewControllerDelegate> {
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
 }
@@ -80,13 +83,8 @@
     
     self.navigationItem.title = AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
     
-    UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
-        [negativeSpaceBarButtonItem setWidth:-8.0];
-    } else {
-        [negativeSpaceBarButtonItem setWidth:-4.0];
-    }
-    [self.navigationItem setRightBarButtonItems:@[negativeSpaceBarButtonItem, self.editBarButtonItem] animated:YES];
+    self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
+    self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
     
     [_sharedItemsSegmentedControl setTitle:AMLocalizedString(@"incoming", nil) forSegmentAtIndex:0];
     [_sharedItemsSegmentedControl setTitle:AMLocalizedString(@"outgoing", nil) forSegmentAtIndex:1];
@@ -96,22 +94,11 @@
     _outgoingNodesForEmailMutableDictionary = [[NSMutableDictionary alloc] init];
     _outgoingIndexPathsMutableDictionary = [[NSMutableDictionary alloc] init];
     
-    // Long press to select:
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
     
     [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];
     
-    // Search controller:
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchResultsUpdater = self;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.searchBar.delegate = self;
-    self.searchController.searchBar.barTintColor = [UIColor colorWithWhite:235.0f / 255.0f alpha:1.0f];
-    self.searchController.searchBar.translucent = YES;
-    [self.searchController.searchBar sizeToFit];
-    UITextField *searchTextField = [self.searchController.searchBar valueForKey:@"_searchField"];
-    searchTextField.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
-    searchTextField.textColor = [UIColor mnz_gray999999];
+    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.definesPresentationContext = YES;
     [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
@@ -198,7 +185,6 @@
 }
 
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
-    
     [self.editBarButtonItem setEnabled:boolValue];
 }
 
@@ -362,6 +348,15 @@
     return self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : self.sharedItemsSegmentedControl.selectedSegmentIndex == 0 ? [self.incomingNodesMutableArray objectAtIndex:indexPath.row] : [self.outgoingNodesMutableArray objectAtIndex:indexPath.row];
 }
 
+- (void)showNodeInfo:(MEGANode *)node {
+    UINavigationController *nodeInfoNavigation = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"NodeInfoNavigationControllerID"];
+    NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
+    nodeInfoVC.node = node;
+    nodeInfoVC.nodeInfoDelegate = self;
+    
+    [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
+}
+
 #pragma mark - Utils
 
 - (void)selectSegment:(NSUInteger)index {
@@ -389,18 +384,17 @@
     [self.tableView setEditing:editing animated:animated];
     
     if (editing) {
-        [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
         if (!isSwipeEditing) {
+            self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
             self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+            [self.toolbar setAlpha:0.0];
+            [self.tabBarController.tabBar addSubview:self.toolbar];
+            [UIView animateWithDuration:0.33f animations:^ {
+                [self.toolbar setAlpha:1.0];
+            }];
         }
-        
-        [self.toolbar setAlpha:0.0];
-        [self.tabBarController.tabBar addSubview:self.toolbar];
-        [UIView animateWithDuration:0.33f animations:^ {
-            [self.toolbar setAlpha:1.0];
-        }];
     } else {
-        [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
+        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
         allNodesSelected = NO;
         [_selectedNodesMutableArray removeAllObjects];
         [_selectedSharesMutableArray removeAllObjects];
@@ -531,43 +525,21 @@
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     
     MEGANode *node = [self nodeAtIndexPath:indexPath];
-    MEGAShare *share = nil;
-    switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
-        case 0: { //Incoming
-            for (NSUInteger i=0; i<[self.incomingShareList.size unsignedIntegerValue]; i++) {
-                MEGAShare *s = [self.incomingShareList shareAtIndex:i];
-                if (s.nodeHandle == node.handle) {
-                    share = s;
-                    break;
-                }
-            }
-            break;
-        }
-            
-        case 1: { //Outgoing
-            for (NSUInteger i=0; i<self.outgoingSharesMutableArray.count; i++) {
-                MEGAShare *s = self.outgoingSharesMutableArray[i];
-                if (s.nodeHandle == node.handle) {
-                    share = s;
-                    break;
-                }
-            }
-            break;
-        }
+    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
+    actionController.node = node;
+    actionController.displayMode = DisplayModeSharedItem;
+    actionController.actionDelegate = self;
+    actionController.incomingShareChildView = (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0);
+    if ([[UIDevice currentDevice] iPadDevice]) {
+        actionController.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
+        popController.delegate = actionController;
+        popController.sourceView = sender;
+        popController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
+    } else {
+        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }
-    
-    DetailsNodeInfoViewController *detailsNodeInfoVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
-    [detailsNodeInfoVC setDisplayMode:DisplayModeSharedItem];
-    
-    NSString *email = [share user];
-    
-    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
-    
-    detailsNodeInfoVC.userName = user.mnz_fullName ? user.mnz_fullName : email;
-    detailsNodeInfoVC.email    = email;
-    detailsNodeInfoVC.node     = node;
-
-    [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
+    [self presentViewController:actionController animated:YES completion:nil];
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
@@ -582,7 +554,7 @@
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
         
         for (MEGANode *n in _selectedNodesMutableArray) {
-            [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO];
+            [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:NO];
         }
         
         [self setEditing:NO animated:YES];
@@ -703,10 +675,8 @@
     if (numberOfRows == 0) {
         [self setEditing:NO animated:NO];
         [self setNavigationBarButtonItemsEnabled:NO];
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     } else {
         [self setNavigationBarButtonItemsEnabled:YES];
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     }
     
     return numberOfRows;
@@ -793,11 +763,6 @@
         }
     }
     
-    UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
-    [cell setSelectedBackgroundView:view];
-    [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
-    
     if ([tableView isEditing]) {
         for (MEGANode *n in _selectedNodesMutableArray) {
             if ([n handle] == [node handle]) {
@@ -808,26 +773,15 @@
     
     if (@available(iOS 11.0, *)) {
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
+    } else {
+        cell.delegate = self;
     }
     
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
-            case 0: { //Incoming
-                [self removeSelectedIncomingShares];
-                break;
-            }
-                
-            case 1: { //Outgoing
-                [self selectedSharesOfSelectedNodes];
-                [self removeSelectedOutgoingShares];
-                break;
-            }
-        }
-    }
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
 }
 
 #pragma mark - UITableViewDelegate
@@ -870,6 +824,7 @@
             CloudDriveTableViewController *cloudTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             [cloudTVC setParentNode:node];
             [cloudTVC setDisplayMode:DisplayModeCloudDrive];
+            
             [self.navigationController pushViewController:cloudTVC animated:YES];
             break;
         }
@@ -912,36 +867,34 @@
     [self setEditing:NO animated:YES];
 }
 
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+    
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = [self nodeAtIndexPath:indexPath];
-    
-    self.selectedNodesMutableArray = [[NSMutableArray alloc] init];
-    if (node != nil) {
-        [self.selectedNodesMutableArray addObject:node];
-    }
-    
-    [self toolbarItemsSetEnabled:YES];
-    
     isSwipeEditing = YES;
-    
-    return UITableViewCellEditingStyleDelete;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *titleForDeleteConfirmationButton;
-    switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
-        case 0: //Incoming
-            titleForDeleteConfirmationButton = AMLocalizedString(@"leaveFolder", @"Button title of the action that allows to leave a shared folder");
-            break;
-            
-        case 1: //Outgoing
-            titleForDeleteConfirmationButton = AMLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share");
-            break;
+    self.selectedNodesMutableArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+    if (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0) { //incoming
+        UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            [self leaveShareAction:nil];
+            [self setEditing:NO animated:YES];
+        }];
+        shareAction.image = [UIImage imageNamed:@"leaveShare"];
+        shareAction.backgroundColor = [UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1];
+        return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
+    } else { //outcoming
+        UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            [self removeShareAction:nil];
+            [self setEditing:NO animated:YES];
+        }];
+        shareAction.image = [UIImage imageNamed:@"removeShare"];
+        shareAction.backgroundColor = [UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1];
+        return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
     }
-    
-    return titleForDeleteConfirmationButton;
 }
 
+#pragma clang diagnostic pop
+    
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
@@ -1001,6 +954,7 @@
     CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
     cloudDriveTVC.parentNode = node;
     cloudDriveTVC.displayMode = DisplayModeCloudDrive;
+    cloudDriveTVC.incomingShareChildView = (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0);
     
     return cloudDriveTVC;
 }
@@ -1035,6 +989,7 @@
         } else {
             [self setEditing:YES animated:YES];
             [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+            [self toolbarItemsForSharedItems];
             [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
         }
     }
@@ -1043,9 +998,6 @@
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
-    
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
         if (self.searchController.isActive) {
@@ -1123,6 +1075,133 @@
 
 - (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
     [self reloadUI];
+}
+
+
+#pragma mark - Swipe Delegate
+
+- (BOOL)swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction {
+    if (direction == MGSwipeDirectionLeftToRight) {
+        return NO;
+    }
+    
+    return !self.isEditing;
+}
+
+- (NSArray *)swipeTableCell:(MGSwipeTableCell *)cell swipeButtonsForDirection:(MGSwipeDirection)direction
+             swipeSettings:(MGSwipeSettings *)swipeSettings expansionSettings:(MGSwipeExpansionSettings *)expansionSettings {
+    
+    swipeSettings.transition = MGSwipeTransitionDrag;
+    expansionSettings.buttonIndex = 0;
+    expansionSettings.expansionLayout = MGSwipeExpansionLayoutCenter;
+    expansionSettings.fillOnTrigger = NO;
+    expansionSettings.threshold = 2;
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    self.selectedNodesMutableArray = [[NSMutableArray alloc] initWithObjects:[self nodeAtIndexPath:indexPath], nil];
+    
+    if (direction == MGSwipeDirectionRightToLeft) {
+        if (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0) { //incoming
+            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"leaveShare"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+                [self leaveShareAction:nil];
+                return YES;
+            }];
+            [shareButton iconTintColor:[UIColor whiteColor]];
+            
+            return @[shareButton];
+        } else { //outcoming
+            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"removeShare"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+                [self removeShareAction:nil];
+                return YES;
+            }];
+            [shareButton iconTintColor:[UIColor whiteColor]];
+            
+            return @[shareButton];
+        }
+        
+    }
+    else {
+        return nil;
+    }
+}
+
+#pragma mark - CustomActionViewControllerDelegate
+
+- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender{
+    switch (action) {
+        case MegaNodeActionTypeDownload:
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
+            [node mnz_downloadNodeOverwriting:NO];
+            break;
+            
+        case MegaNodeActionTypeCopy:
+            self.selectedNodesMutableArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+            [self copyAction:nil];
+            break;
+            
+        case MegaNodeActionTypeRename:
+            [node mnz_renameNodeInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeShare:{
+            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[node] sender:sender];
+            [self presentViewController:activityVC animated:YES completion:nil];
+        }
+            break;
+            
+        case MegaNodeActionTypeFileInfo:
+            [self showNodeInfo:node];
+            break;
+            
+        case MegaNodeActionTypeLeaveSharing:
+            [node mnz_leaveSharingInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeRemoveSharing:
+            [node mnz_removeSharing];
+            break;
+            
+        case MegaNodeActionTypeRemoveLink:
+        case MegaNodeActionTypeMove:
+        case MegaNodeActionTypeMoveToRubbishBin:
+        case MegaNodeActionTypeRemove:
+            break;
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - NodeInfoViewControllerDelegate
+
+- (void)presentParentNode:(MEGANode *)node {
+    
+    if (self.searchController.isActive) {
+        NSArray *parentTreeArray = node.mnz_parentTreeArray;
+        
+        //Created a reference to self.navigationController because if the presented view is not the root controller and search is active, the 'popToRootViewControllerAnimated' makes nil the self.navigationController and therefore the parentTreeArray nodes can't be pushed
+        UINavigationController *navigation = self.navigationController;
+        [navigation popToRootViewControllerAnimated:NO];
+        
+        for (MEGANode *node in parentTreeArray) {
+            CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveTVC.parentNode = node;
+            [navigation pushViewController:cloudDriveTVC animated:NO];
+        }
+        
+        switch (node.type) {
+            case MEGANodeTypeFolder:
+            case MEGANodeTypeRubbish: {
+                CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                cloudDriveTVC.parentNode = node;
+                [navigation pushViewController:cloudDriveTVC animated:NO];
+                break;
+            }
+                
+            default:
+                break;
+        }
+    }
 }
 
 @end

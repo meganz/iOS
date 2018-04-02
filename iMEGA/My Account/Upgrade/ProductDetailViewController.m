@@ -6,7 +6,6 @@
 
 #import "MEGANavigationController.h"
 #import "MEGAPurchase.h"
-#import "MEGASdk+MNZCategory.h"
 
 @interface ProductDetailViewController () <MEGAPurchaseDelegate, UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate> {
     BOOL isPurchased;
@@ -65,7 +64,6 @@
     
     if (!self.isChoosingTheAccountType) {
         UIBarButtonItem *restoreBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"restore", @"Button title to restore failed purchases") style:UIBarButtonItemStylePlain target:self action:@selector(restore)];
-        [restoreBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
         self.navigationItem.rightBarButtonItem = restoreBarButtonItem;
     }
     
@@ -76,17 +74,17 @@
     self.bandwidthLabel.text = AMLocalizedString(@"transferQuota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.");
     [_selectMembershiptLabel setText:AMLocalizedString(@"selectMembership", nil)];
     [_save17Label setText:AMLocalizedString(@"save17", nil)];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
-    if ([[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
-        UIAlertController *youAlreadyHaveAProAccountAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"warning", nil) message:AMLocalizedString(@"youAlreadyHaveAPROAccount", @"Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account)")  preferredStyle:UIAlertControllerStyleAlert];
-        [youAlreadyHaveAProAccountAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"confirm", @"Title text for the account confirmation.") style:UIAlertActionStyleCancel handler:nil]];
-        
-        [self presentViewController:youAlreadyHaveAProAccountAlertController animated:YES completion:nil];
-    }
+    self.navigationController.toolbarHidden = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
     [[MEGAPurchase sharedInstance] setDelegate:nil];
 }
 
@@ -104,6 +102,13 @@
             [[[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentedViewController] dismissViewControllerAnimated:YES completion:nil];
         }
     }
+}
+
+- (void)presentProductUnavailableAlertController {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"productNotAvailable", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource
@@ -129,26 +134,22 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        [[MEGAPurchase sharedInstance] requestProduct:_iOSIDMonthlyString];
+        if (self.monthlyProduct) {
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+            [[MEGAPurchase sharedInstance] purchaseProduct:self.monthlyProduct];
+        } else {
+            [self presentProductUnavailableAlertController];
+        }
     } else {
-        [[MEGAPurchase sharedInstance] requestProduct:_iOSIDYearlyString];
+        if (self.yearlyProduct) {
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+            [[MEGAPurchase sharedInstance] purchaseProduct:self.yearlyProduct];
+        } else {
+            [self presentProductUnavailableAlertController];
+        }
     }
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-#pragma mark - MEGAPurchaseDelegate
-
-- (void)requestedProduct {
-    if ([MEGAPurchase sharedInstance].validProduct != nil) {
-        [[MEGAPurchase sharedInstance] purchaseProduct:[MEGAPurchase sharedInstance].validProduct];
-        
-    } else {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        UIAlertView *unavailAlert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"productNotAvailable", nil) message:nil delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
-        [unavailAlert show];
-    }
 }
 
 - (void)successfulPurchase:(MEGAPurchase *)megaPurchase restored:(BOOL)isRestore {

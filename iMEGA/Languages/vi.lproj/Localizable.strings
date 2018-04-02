@@ -28,6 +28,8 @@
 "attention"="Chú Ý";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="Xin cho MEGA quyền truy cập vào Camera trong phần Thiết đặt của máy";
+/* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
+"cameraPermissionsInCall"="Please give MEGA app permission to access your Camera in your Settings. In case you proceed the call will end because the app will be restarted.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
@@ -98,10 +100,32 @@
 "emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Mật khẩu";
+/*  */
+"pleaseStrengthenYourPassword"="Xin tạo một mật khẩu phức tạp hơn.";
+/* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
+"veryWeak"="Rất yếu";
+/*  */
+"weak"="Yếu";
+/*  */
+"passwordVeryWeakOrWeak"="Mật khẩu này khá dễ đoán. Hãy thử tạo một mật khẩu dài hơn. Bao gồm chữ thường & chữ in hoa. Thêm các ký tự đặc biệt. Đừng dùng tên hay những từ thông dụng.";
+/* Label displayed during checking the strength of the password introduced. Represents Medium security */
+"medium"="Trung bình";
+/*  */
+"passwordMedium"="Mật khẩu của bạn đủ tốt để tiến hành, nhưng khuyên bạn nên làm mật khẩu nó khó hơn trong thời gian tới.";
+/*  */
+"good"="Được";
+/*  */
+"passwordGood"="Mật khẩu này chịu được việc tấn công thử dò mật khẩu (brute-force) thông thường. Hãy chắc rằng bạn ghi nhớ được mật khẩu này.";
+/* Label displayed during checking the strength of the password introduced. Represents Strong security */
+"strong"="Tốt";
+/*  */
+"passwordStrong"="Mật khẩu này chịu được tốt việc tấn công thử dò mật khẩu (brute-force) tinh vi. Hãy chắc rằng bạn ghi nhớ được mật khẩu này.";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
 "termsOfServiceButton"="Tôi đồng ý với Điều Khoản Sử Dụng của MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Xin nhập một tên hợp lệ";
+/*  */
+"invalidFirstNameAndLastName"="Tên và/hoặc Họ không phù hợp.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Hai mật khẩu này không trùng khớp";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -282,8 +306,8 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="Bạn không còn quyền hạn để truy cập tệp tin này nữa";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Bạn không còn quyền hạn để truy cập thư mục này nữa";
-/* List option shown on the details of a file or folder */
-"saveForOffline"="Lưu vào Ngoại Tuyến";
+/* The text is shown as an option on the details of a file or folder */
+"saveForOffline"="Lưu để dùng ngoại tuyến";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Lưu về Ngoại Tuyến";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -351,7 +375,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Các đường liên kết đã được xóa";
 /* Title show when a file is being downloaded */
-"downloading"="Đang tải về...";
+"downloading"="Đang tải";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Bạn muốn hủy tải xuống không?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -419,7 +443,7 @@
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 tệp tin được chuyển vào Thùng Rác";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d mục đã được chuyển vào Thùng Rác!";
+"filesMovedToRubbishBinMessage"="%d mục đã được chuyển vào Thùng Rác";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
 "folderMovedToRubbishBinMessage"="1 thư mục được chuyển vào Thùng Rác";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
@@ -454,10 +478,6 @@
 "overquotaAlert_message"="Thao tác bị từ chối, vì bạn sẽ vượt mức không gian lưu trữ. Bạn có muốn nâng cấp tài khoản để thêm không gian không?";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="Lựa chọn mục";
-/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
-"photosPerMonth"="%lu hình ảnh";
-/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1} photo" */
-"photoPerMonth"="%lu hình";
 /* Button title that skips the current action */
 "skipButton"="Bỏ qua";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
@@ -466,6 +486,12 @@
 "enableCameraUploadsButton"="Bật Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Chế độ Camera Uploads đang hoạt động";
+/* Message shown when the camera uploads have been completed */
+"cameraUploadsComplete"="Camera uploads đã đăng tải xong";
+/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
+"cameraUploadsUploadingFile"="Đang tải lên %1$d trong tổng %2$d tệp";
+/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
+"cameraUploadsUploadingFiles"="Đang tải lên %1$d trong tổng %2$d tệp";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu mục đã được chọn";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -620,16 +646,18 @@
 "onlyWhenChargingLabel"="Chỉ được tải lúc sạc pin";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Nếu Camera Uploads được bật, các hình ảnh mới chụp hoặc các video mới quay sẽ được tải và lưu lên Ổ Mây MEGA của bạn.";
-/* Label for the "Version" number of the app */
-"version"="Phiên bản";
+/* Title of the label where the SDK version is shown */
+"sdkVersion"="Phiên bản MEGA SDK";
+/* Title of the label where the MEGAchat SDK version is shown */
+"megachatSdkVersion"="Phiên bản SDK MEGAchat";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Thỏa Thuận";
 /* Title for the MEGA Recovery Key */
 "masterKey"="Mã Khóa Phục Hồi";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Đổi mật khẩu";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Xuất ra Mã Phục Hồi và giữ mã ở một nơi an toàn và dễ nhớ sẽ giúp bạn tránh việc mất dữ liệu khi thay đổi mật khẩu.";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="Xuất mã-khóa MasterKey và giữ nó ở một nơi an toàn để đề phòng việc mất dữ liệu khi đặt mật khẩu mới.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Tại sao tôi cần phải lưu giữ Mã Khóa Phục Hồi?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -650,8 +678,8 @@
 "clearCache"="Dọn Bộ Nhớ Tạm";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Trên mạng MEGA";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="Dọn Thùng Rác";
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
+"emptyRubbishBin"="Dọn thùng rác";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Tất cả các mục trong thùng rác sẽ bị xóa";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -676,8 +704,8 @@
 "ifYouCantAccessYourEmailAccount"="Nếu bạn không truy cập được email của mình, xin liên hệ support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Yêu cầu hủy bỏ này đã hết hạn.";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Xin nhập mật khẩu để xác minh và thực hiện xóa bỏ tài khoản.";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="Đây là bước cuối cùng để hoàn tất việc hủy bỏ tài khoản. Bạn sẽ mất hoàn toàn tất cả dữ liệu bạn đã lưu trên ổ mây. Để tiến hành, xin nhập mật khẩu ở dưới đây.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Đóng tài khoản";
 /* Title for the action that allows to remove a file or folder */
@@ -701,9 +729,9 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="Bạn đang chuẩn bị xóa vĩnh viễn [A] tệp tin và [B] thư mục. Bạn có muốn tiến hành không? (Bạn sẽ không thể khôi phục lại việc làm này.)";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="Đã khóa 1 tệp tin khỏi MEGA!";
+"fileRemovedToRubbishBinMessage"="Đã khóa 1 tệp tin khỏi MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="%d tệp tin đã xóa khỏi MEGA!";
+"filesRemovedToRubbishBinMessage"="%d tệp tin đã xóa khỏi MEGA";
 /* Success message shown when 1 folder has been removed from MEGA */
 "folderRemovedToRubbishBinMessage"="1 thư mục vừa bị xóa khỏi MEGA";
 /* Success message shown when {1+} folders have been removed from MEGA */
@@ -853,7 +881,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Nhận thêm %1$s vào không gian lưu trữ và %2$s để truyền tải cho mỗi lời giới thiệu bạn bè";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+"inviteYourFriendsExplanation"="Chọn ra các tên liên lạc trong danh bạ của điện thoại hoặc điền các địa chỉ email.";
 /*  */
 "insertYourFriendsEmails"="Nhập địa chỉ email của bạn bè:";
 /*  */
@@ -955,19 +983,15 @@
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="Tùy thuộc vào sự tham gia của người sử dụng dịch vụ để vào chương trình làm nhiệm vụ thưởng.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%.2f %@ mỗi tháng";
+"productPricePerMonth"="%@ mỗi tháng";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Chọn một gói cước ở dưới đây:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Select one account type:";
-/* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
-"twoMonthsFree"="Nhận thêm hai tháng miễn phí  khi mua thuê bao một năm PRO.";
+/* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
+"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Current Plan:";
-/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
-"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
-/* Title text for the account confirmation. */
-"confirm"="Xác nhận";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Đăng ký gói dịch vụ";
 /* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
@@ -1030,6 +1054,8 @@
 "chatIsDisabled"="Chat bị tắt";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Bật";
+/* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
+"disable"="Tắt";
 /* Conversations section */
 "conversations"="Các cuộc trò chuyện";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1146,6 +1172,8 @@
 "removeParticipant"="Loại Bỏ Thành Viên";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="Cuộc trò chuyện với %@";
+/* Title show above the name of the persons with whom you're chatting */
+"chattingWith"="Chatting with";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA bảo vệ các cuộc trò chuyện của bạn nghiêm ngặt với công nghệ bảo mật đầu-cuối cung cấp sự đảm bảo an toàn cần thiết:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1224,6 +1252,8 @@
 "openMEGAAndSignInToContinue"="Mở app MEGA và đăng nhập để tiếp tục";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Loại bỏ";
+/* Label in login screen to inform about the chat initialization proccess */
+"connecting"="Đang kết nối...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Một số tệp tin không thể chia sẻ lên được MEGA";
 /* Notification message shown when a transfer failed. Keep colon. */
@@ -1313,3 +1343,5 @@
 "missedAudioCallsAndMissedVideoCall"="[A] missed audio calls and missed video call";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
 "missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";
+/* Button title to see the available bonus */
+"getBonus"="Get Bonus";
