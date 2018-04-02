@@ -392,6 +392,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [self.window addSubview:self.privacyView];
     
     [self application:application shouldHideWindows:YES];
+    
+    if (![NSStringFromClass([UIApplication sharedApplication].windows[0].class) isEqualToString:@"UIWindow"]) {
+        [[LTHPasscodeViewController sharedUser] disablePasscodeWhenApplicationEntersBackground];
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -420,6 +424,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     if (self.isSignalActivityRequired) {
         [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
+    }
+    
+    if (![NSStringFromClass([UIApplication sharedApplication].windows[0].class) isEqualToString:@"UIWindow"]) {
+        [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
     }
 }
 
