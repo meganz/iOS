@@ -4,13 +4,14 @@
 
 #import "Helper.h"
 #import "MEGANavigationController.h"
+#import "MEGAPurchase.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 #import "UpgradeTableViewController.h"
 
-@interface MyAccountViewController () <MEGARequestDelegate> {
+@interface MyAccountViewController () <MEGAPurchasePricingDelegate, MEGARequestDelegate> {
     BOOL isAccountDetailsAvailable;
     
     NSNumber *localSize;
@@ -90,6 +91,8 @@
         self.logoutButtonTopImageView.backgroundColor = nil;
         self.logoutButtonBottomImageView.backgroundColor = nil;
     }
+    
+    [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -111,6 +114,8 @@
     if (self.presentedViewController == nil) {
         [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     }
+    
+    self.upgradeAccountButton.enabled = [MEGAPurchase sharedInstance].products.count;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -230,10 +235,14 @@
 }
 
 - (IBAction)buyPROTouchUpInside:(UIButton *)sender {
-    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
-    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-    
-    [self presentViewController:navigationController animated:YES completion:nil];
+    if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
+        UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+        
+        [self presentViewController:navigationController animated:YES completion:nil];
+    } else {
+        [MEGAReachabilityManager isReachableHUDIfNot];
+    }
 }
 
 - (IBAction)logoutTouchUpInside:(UIButton *)sender {
@@ -269,6 +278,12 @@
             [[MEGASdkManager sharedMEGASdk] logout];
         }
     }
+}
+
+#pragma mark - MEGAPurchasePricingDelegate
+
+- (void)pricingsReady {
+    self.upgradeAccountButton.enabled = YES;
 }
 
 #pragma mark - MEGARequestDelegate

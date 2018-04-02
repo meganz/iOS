@@ -2,7 +2,7 @@
 #import "JSQPhotoMediaItem.h"
 #import "MEGASdkManager.h"
 
-@interface MEGAPhotoMediaItem : JSQPhotoMediaItem <MEGARequestDelegate>
+@interface MEGAPhotoMediaItem : JSQPhotoMediaItem
 
 @property (nonatomic, copy) MEGANode *node;
 

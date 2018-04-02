@@ -20,7 +20,6 @@
 #import "NodeTableViewCell.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
-#import "MEGAQLPreviewController.h"
 #import "MEGAStore.h"
 
 @interface FileLinkViewController () <UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate>
@@ -57,7 +56,6 @@
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     if (self.fileLinkMode == FileLinkModeDefault) {
         [_cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
-        [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
         [self.navigationItem setRightBarButtonItem:_cancelBarButtonItem];
         
         [self setUIItemsHidden:YES];
@@ -300,9 +298,9 @@
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
                 
                 if (self.fileLinkMode == FileLinkModeDefault) {
-                    [Helper downloadNode:_node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
+                    [Helper downloadNode:_node folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:NO];
                 } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
-                    [Helper downloadNode:self.nodeFromFolderLink folderPath:[Helper relativePathForOffline] isFolderLink:YES];
+                    [Helper downloadNode:self.nodeFromFolderLink folderPath:[Helper relativePathForOffline] isFolderLink:YES shouldOverwrite:NO];
                 }
             }];
         } else {
@@ -323,7 +321,7 @@
 - (void)open {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         BOOL isFolderLink = ((self.fileLinkMode == FileLinkModeNodeFromFolderLink) ? YES : NO);
-        if (self.node.name.mnz_isImagePathExtension) {
+        if (self.node.name.mnz_isImagePathExtension || self.node.name.mnz_isVideoPathExtension) {
             [self.node mnz_openImageInNavigationController:self.navigationController withNodes:@[self.node] folderLink:isFolderLink displayMode:2];
         } else {
             [self.node mnz_openNodeInNavigationController:self.navigationController folderLink:isFolderLink];
@@ -334,7 +332,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return (self.fileLinkMode == FileLinkModeNodeFromFolderLink && self.node.isFolder) ? 2 : 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -364,10 +362,6 @@
             break;
         }
     }
-    UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
-    [cell setSelectedBackgroundView:view];
-    [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
     if ([self isFolderEmpty]) {
         [cell.thumbnailImageView setAlpha:0.4];

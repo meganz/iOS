@@ -11,6 +11,8 @@
 
 @property (nonatomic) NSUInteger numberOfRequests;
 @property (nonatomic) NSUInteger totalRequests;
+@property (nonatomic) UIViewController *viewController;
+@property (nonatomic, copy) void (^completion)(void);
 
 @end
 
@@ -23,6 +25,18 @@
     if (self) {
         _numberOfRequests = numberOfRequests;
         _totalRequests = numberOfRequests;
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithNumberOfRequests:(NSUInteger)numberOfRequests presentSuccessOver:(UIViewController *)viewController completion:(void (^)(void))completion {
+    self = [super init];
+    if (self) {
+        _numberOfRequests = numberOfRequests;
+        _totalRequests = numberOfRequests;
+        _viewController = viewController;
+        _completion = completion;
     }
     
     return self;
@@ -75,21 +89,29 @@
         
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
         customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-        customModalAlertVC.image = @"inviteSent";
+        customModalAlertVC.image = [UIImage imageNamed:@"inviteSent"];
         customModalAlertVC.viewTitle = AMLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
         customModalAlertVC.detail = detailText;
         customModalAlertVC.boldInDetail = request.email;
         customModalAlertVC.action = AMLocalizedString(@"close", nil);
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
         customModalAlertVC.completion = ^{
-            [weakCustom dismissViewControllerAnimated:YES completion:nil];
+            [weakCustom dismissViewControllerAnimated:YES completion:^{
+                if (self.completion) {
+                    self.completion();
+                }
+            }];
         };
         
-        if ([[UIApplication mnz_visibleViewController] isKindOfClass:CNContactPickerViewController.class] ||
-            [[UIApplication mnz_visibleViewController] isKindOfClass:CustomModalAlertViewController.class]) {
-            [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:customModalAlertVC animated:YES completion:nil];
+        if (self.viewController) {
+            [self.viewController presentViewController:customModalAlertVC animated:YES completion:nil];
         } else {
-            [[UIApplication mnz_visibleViewController] presentViewController:customModalAlertVC animated:YES completion:nil];
+            if ([[UIApplication mnz_visibleViewController] isKindOfClass:CNContactPickerViewController.class] ||
+                [[UIApplication mnz_visibleViewController] isKindOfClass:CustomModalAlertViewController.class]) {
+                [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:customModalAlertVC animated:YES completion:nil];
+            } else {
+                [[UIApplication mnz_visibleViewController] presentViewController:customModalAlertVC animated:YES completion:nil];
+            }
         }
     }
 }

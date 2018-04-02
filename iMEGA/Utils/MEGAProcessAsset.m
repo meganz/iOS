@@ -12,6 +12,7 @@
 @property (nonatomic, strong) MEGANode *parentNode;
 
 @property (nonatomic, assign) NSUInteger retries;
+@property (nonatomic, getter=toShareThroughChat) BOOL shareThroughChat;
 
 @end
 
@@ -27,6 +28,23 @@
         _error = error;
         _retries = 0;
         _parentNode = parentNode;
+    }
+    
+    return self;
+}
+
+
+- (instancetype)initToShareThroughChatWithAsset:(PHAsset *)asset filePath:(void (^)(NSString *filePath))filePath node:(void(^)(MEGANode *node))node error:(void (^)(NSError *error))error {
+    self = [super init];
+    
+    if (self) {
+        _asset = asset;
+        _filePath = filePath;
+        _node = node;
+        _error = error;
+        _retries = 0;
+        _shareThroughChat = YES;
+        _parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
     }
     
     return self;
@@ -56,54 +74,36 @@
         options.version = PHImageRequestOptionsVersionOriginal;
     }
     
-    [[PHImageManager defaultManager]
-     requestImageDataForAsset:self.asset
-     options:options
-     resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
-         if (imageData) {
-             NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:self.asset.creationDate];
-             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:self.parentNode];
-             if (node) {
-                 if (self.node) {
-                     self.node(node);
-                 }
-             } else {
-                 NSString *filePath = [self filePathAsCreationDateWithInfo:info];
-                 [self deleteLocalFileIfExists:filePath];
-                 long long imageSize = imageData.length;
-                 if ([self hasFreeSpaceOnDiskForWriteFile:imageSize]) {
-                     NSError *error;
-                     if ([imageData writeToFile:filePath options:NSDataWritingFileProtectionNone error:&error]) {
-                         NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:self.asset.creationDate forKey:NSFileModificationDate];
-                         if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
-                             MEGALogError(@"Set attributes failed with error: %@", error);
-                         }
-                         if (self.filePath) {
-                             filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
-                             self.filePath(filePath);
-                         }
-                     } else {
-                         if (self.error) {
-                             MEGALogError(@"Write to file failed with error %@", error);
-                             self.error(error);
-                         }
-                     }
-                 }
-             }
-         } else {
-             NSError *error = [info objectForKey:@"PHImageErrorKey"];
-             MEGALogError(@"Request image data for asset: %@ failed with error: %@", self.asset, error);
-             if (self.retries < 20) {
-                 self.retries++;
-                 [self requestImageAsset];
-             } else {
-                 if (self.error) {
-                     MEGALogDebug(@"Max attempts reached");
-                     self.error(error);
-                 }
-             }
-         }
-     }];
+    // Optimized image
+    if (self.toShareThroughChat) {
+        options.synchronous = YES;
+        options.resizeMode = PHImageRequestOptionsResizeModeExact;
+        [[PHImageManager defaultManager] requestImageForAsset:self.asset targetSize:CGSizeMake(1000, 1000) contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+            if (result) {
+                NSData *imageData = UIImageJPEGRepresentation(result, 0.75);
+                [self proccessImageData:imageData withInfo:info];
+            } else {
+                NSError *error = [info objectForKey:@"PHImageErrorKey"];
+                MEGALogError(@"Request image data for asset: %@ failed with error: %@", self.asset, error);
+                if (self.retries < 20) {
+                    self.retries++;
+                    [self requestImageAsset];
+                } else {
+                    if (self.error) {
+                        MEGALogDebug(@"Max attempts reached");
+                        self.error(error);
+                    }
+                }
+            }
+        }];
+    } else {
+        [[PHImageManager defaultManager]
+         requestImageDataForAsset:self.asset
+         options:options
+         resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
+             [self proccessImageData:imageData withInfo:info];
+         }];
+    }
 }
 
 - (void)requestVideoAsset {
@@ -134,7 +134,7 @@
                                  self.node(node);
                              }
                              if (![[NSFileManager defaultManager] removeItemAtPath:filePath error:&error]) {
-                                 MEGALogError(@"Remove item at path failed with error: %@", error)
+                                 MEGALogError(@"Remove item at path failed with error: %@", error);
                              }
                          } else {
                              if (self.filePath) {
@@ -203,43 +203,108 @@
     return YES;
 }
 
-
 - (NSString *)filePathAsCreationDateWithInfo:(NSDictionary *)info {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss";
-    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-    dateFormatter.locale = locale;
-    
     MEGALogDebug(@"Asset %@\n%@", self.asset, info);
     NSString *name;
-    NSURL *url = [info objectForKey:@"PHImageFileURLKey"];
-    if (url) {
-        name = url.path.lastPathComponent;
-    } else {
-        NSString *imageFileSandbox = [info objectForKey:@"PHImageFileSandboxExtensionTokenKey"];
-        name = imageFileSandbox.lastPathComponent;
-    }
     
-    if (!self.originalName) {
-        NSString *extension = name.pathExtension.lowercaseString;
-        if (!extension) {
-            switch (self.asset.mediaType) {
-                case PHAssetMediaTypeImage:
-                    extension = @"jpg";
-                    break;
-                    
-                case PHAssetMediaTypeVideo:
-                    extension = @"mov";
-                    break;
-                    
-                default:
-                    break;
-            }
+    if (self.originalName) {
+        NSURL *url = [info objectForKey:@"PHImageFileURLKey"];
+        if (url) {
+            name = url.path.lastPathComponent;
+        } else {
+            NSString *imageFileSandbox = [info objectForKey:@"PHImageFileSandboxExtensionTokenKey"];
+            name = imageFileSandbox.lastPathComponent;
         }
+    } else {
+        NSString *extension = [self extensionWithInfo:info];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateFormat = @"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss";
+        NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+        dateFormatter.locale = locale;
         name = [[dateFormatter stringFromDate:self.asset.creationDate] stringByAppendingPathExtension:extension];
     }
+    
     NSString *filePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:name];
     return filePath;
+}
+
+- (NSString *)extensionWithInfo:(NSDictionary *)info {
+    if (self.shareThroughChat && self.asset.mediaType == PHAssetMediaTypeImage) {
+        return @"jpg";
+    }
+    
+    NSString *extension;
+    
+    NSURL *url = [info objectForKey:@"PHImageFileURLKey"];
+    if (url) {
+        extension = url.path.pathExtension;
+    } else {
+        NSString *imageFileSandbox = [info objectForKey:@"PHImageFileSandboxExtensionTokenKey"];
+        extension = imageFileSandbox.pathExtension;
+    }
+    
+    if (!extension) {
+        switch (self.asset.mediaType) {
+            case PHAssetMediaTypeImage:
+                extension = @"jpg";
+                break;
+                
+            case PHAssetMediaTypeVideo:
+                extension = @"mov";
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+    return extension.lowercaseString;
+}
+
+- (void)proccessImageData:(NSData *)imageData withInfo:(NSDictionary *)info {
+    if (imageData) {
+        NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:self.asset.creationDate];
+        MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:self.parentNode];
+        if (node) {
+            if (self.node) {
+                self.node(node);
+            }
+        } else {
+            NSString *filePath = [self filePathAsCreationDateWithInfo:info];
+            [self deleteLocalFileIfExists:filePath];
+            long long imageSize = imageData.length;
+            if ([self hasFreeSpaceOnDiskForWriteFile:imageSize]) {
+                NSError *error;
+                if ([imageData writeToFile:filePath options:NSDataWritingFileProtectionNone error:&error]) {
+                    NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:self.asset.creationDate forKey:NSFileModificationDate];
+                    if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
+                        MEGALogError(@"Set attributes failed with error: %@", error);
+                    }
+                    if (self.filePath) {
+                        filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                        self.filePath(filePath);
+                    }
+                } else {
+                    if (self.error) {
+                        MEGALogError(@"Write to file failed with error %@", error);
+                        self.error(error);
+                    }
+                }
+            }
+        }
+    } else {
+        NSError *error = [info objectForKey:@"PHImageErrorKey"];
+        MEGALogError(@"Request image data for asset: %@ failed with error: %@", self.asset, error);
+        if (self.retries < 20) {
+            self.retries++;
+            [self requestImageAsset];
+        } else {
+            if (self.error) {
+                MEGALogDebug(@"Max attempts reached");
+                self.error(error);
+            }
+        }
+    }
 }
 
 @end

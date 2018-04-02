@@ -1,10 +1,12 @@
+
 #import "SaveToCameraRollActivity.h"
 
-#import "MEGASdkManager.h"
-#import "MEGAReachabilityManager.h"
-#import "NSFileManager+MNZCategory.h"
-
 #import "SVProgressHUD.h"
+
+#import "MEGAReachabilityManager.h"
+#import "MEGASdkManager.h"
+#import "MEGANode+MNZCategory.h"
+#import "NSFileManager+MNZCategory.h"
 
 @interface SaveToCameraRollActivity () <MEGATransferDelegate>
 
@@ -40,7 +42,11 @@
 }
 
 - (void)performActivity {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+    NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:self.node.base64Handle] stringByAppendingPathComponent:self.node.name];
+    NSString *temporaryFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:temporaryPath];
+    if ([temporaryFingerprint isEqualToString:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:self.node]]) {
+        [self.node mnz_copyToGalleryFromTemporaryPath:temporaryPath];
+    } else if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
         downloadsDirectory = [downloadsDirectory stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
         NSString *offlineNameString = [[MEGASdkManager sharedMEGASdkFolder] escapeFsIncompatible:self.node.name];

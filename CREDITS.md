@@ -58,6 +58,7 @@ Copyright (c) 2014 Georg Kitz
 The MIT License (MIT)
 
 https://github.com/gekitz/GKContactImage/blob/master/LICENSE
+
 --------------------------------------------------------------------
 
 #### JSQMessagesViewController
@@ -82,17 +83,6 @@ The MIT License (MIT)
 
 https://github.com/rolandleth/LTHPasscodeViewController/blob/master/LICENSE.txt
 
---------------------------------------------------------------------
-
-#### MWPhotoBrowser
-https://github.com/meganz/MWPhotoBrowser
-
-Copyright (c) 2010 Michael Waterfall <michaelwaterfall@gmail.com>
-
-###### License:
-The MIT License (MIT)
-
-https://github.com/mwaterfall/MWPhotoBrowser/blob/master/LICENSE
 --------------------------------------------------------------------
 
 #### PieChart
@@ -216,7 +206,7 @@ https://github.com/meganz/sdk/blob/master/LICENSE
 --------------------------------------------------------------------
 
 #### Dependencies of the MEGA C++ SDK
-Due to the usage of the MEGA C++ SDK, MEGAsync requires some additional 
+Due to the usage of the MEGA C++ SDK, the iOS app requires some additional
 libraries. Here is a brief description of all of them:
 
 #### c-ares:
@@ -253,16 +243,14 @@ License: Crypto++ Library is copyrighted as a compilation and (as of version 5.6
 licensed under the Boost Software License 1.0, while the individual files in 
 the compilation are all public domain.
 
-#### OpenSSL
-Copyright (c) 1998-2016 The OpenSSL Project.  All rights reserved.
+#### BoringSSL
+BoringSSL is a fork of OpenSSL that is designed to meet Google's needs.
 
-A toolkit implementing SSL v2/v3 and TLS protocols with full-strength cryptography world-wide.
+https://boringssl.googlesource.com/boringssl/
 
-https://www.openssl.org/
+License: BoringSSL License
 
-License: OpenSSL License
-
-https://github.com/openssl/openssl/blob/master/LICENSE
+https://github.com/google/boringssl/blob/master/LICENSE
 
 #### libuv
 Copyright Joyent, Inc. and other Node contributors. All rights reserved.
@@ -274,5 +262,115 @@ https://github.com/libuv/libuv
 License: MIT
 
 https://github.com/libuv/libuv/blob/v1.x/LICENSE
+
+#### SQLite
+SQLite is an in-process library that implements a self-contained, serverless, zero-configuration, transactional SQL database engine.
+
+http://www.sqlite.org/
+
+License: Public Domain
+
+http://www.sqlite.org/copyright.html
+
+#### utf8proc
+A clean C library for processing UTF-8 Unicode data
+
+https://julialang.org/utf8proc/
+
+License: MIT "expat" license
+
+https://github.com/JuliaLang/utf8proc/blob/master/LICENSE.md
+
+Files included in this repository based on `utf8proc`:
+- `src/mega_utf8proc.cpp` (based on `utf8proc.c`)
+- `src/mega_utf8proc_data.c` (based on `utf8proc_data.c`)
+- `include/mega/mega_utf8proc.h` (based on `utf8proc.h`)
+- `third_party/utf8proc/LICENSE` (copy of the licence of `utf8proc`)
+
+#### http_parser
+HTTP request/response parser for C
+
+https://github.com/nodejs/http-parser
+
+License: MIT
+
+https://github.com/nodejs/http-parser/blob/master/LICENSE-MIT
+
+Files included in this repository based on `http_parser`:
+- `src/mega_http_parser.cpp` (based on `http_parser.c`)
+- `include/mega/mega_http_parser.h` (based on `http_parser.h`)
+- `third_party/http_parser/AUTHORS` (copy of the `AUTHORS` file of `http_parser`)
+- `third_party/http_parser/LICENSE-MIT` (copy of the licence of `http_parser`)
+
+#### zxcvbn-c
+C/C++ version of the zxcvbn password strength estimator
+
+https://github.com/tsyrogit/zxcvbn-c
+
+License: MIT
+
+https://github.com/tsyrogit/zxcvbn-c/blob/master/LICENSE.txt
+
+Files included in this repository based on `zxcvbn-c`:
+- `src/mega_zxcvbn.cpp` (based on `zxcvbn.c`)
+- `include/mega/mega_zxcvbn.h` (based on `zxcvbn.h`)
+- `include/mega/mega_dict-src.h` (dictionary file generated with the same wordlist as our webclient)
+- `third_party/zxcvbn-c/README.md` (copy of the `README.MD` file of `zxcvbn-c`)
+- `third_party/zxcvbn-c/LICENSE.txt` (copy of the licence of `zxcvbn-c`)
+
+#### mediainfolib
+MediaInfo(Lib) is a convenient unified display of the most relevant technical and tag data for video and audio files.
+
+MediaInfoLib - https://github.com/MediaArea/MediaInfoLib
+Copyright (c) MediaArea.net SARL. All Rights Reserved.
+
+This program is freeware under BSD-2-Clause license conditions.
+See License.html for more information
+
+#### ZenLib
+Small C++ derivate classes to have an easier life
+
+ZenLib - https://github.com/MediaArea/ZenLib
+Copyright (c) MediaArea.net SARL. All Rights Reserved.
+
+This program is freeware under zlib license conditions. See License.txt for more information
+
+--------------------------------------------------------------------
+
+#### Dependencies of the MEGAchat C++ SDK
+Due to the usage of the MEGAchat C++ SDK, the iOS app requires some additional
+libraries. Here is a brief description of all of them:
+
+#### libsodium
+Copyright (c) 2013-2017 Frank Denis
+
+Sodium is a modern, easy-to-use software library for encryption, decryption, signatures, password hashing and more.
+
+https://libsodium.org/
+
+License: ISC License
+
+https://github.com/jedisct1/libsodium
+
+#### WebRTC
+Copyright (c) 2011, The WebRTC project authors. All rights reserved.
+
+WebRTC is a free, open project that provides browsers and mobile applications with Real-Time Communications (RTC) capabilities via simple APIs. The WebRTC components have been optimized to best serve this purpose.
+
+https://webrtc.org
+
+License: BSD 3-Clause License
+
+https://github.com/webrtc
+
+#### libwebsockets
+
+Libwebsockets is a lightweight pure C library built to use minimal CPU and memory resources, and provide fast throughput in both directions as client or server.
+
+https://libwebsockets.org/
+
+License: GNU Library General Public License (LGPL) 2.1
+
+https://github.com/warmcat/libwebsockets/blob/master/LICENSE
 
 --------------------------------------------------------------------

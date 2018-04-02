@@ -162,6 +162,38 @@ static const NSUInteger MAX_BUFFER_32MB = 33554432; // 32 MB
     return NO;
 }
 
+- (BOOL)iPhone7Plus {
+    if ([[self deviceName] isEqualToString:@"iPhone 7 Plus"]) {
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (BOOL)iPhone8Plus {
+    if ([[self deviceName] isEqualToString:@"iPhone 8 Plus"]) {
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (BOOL)iPhonePlus {
+    if ([self iPhone6XPlus] || [self iPhone7Plus] || [self iPhone8Plus]) {
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (BOOL)iPhoneX {
+    if ([[self deviceName] isEqualToString:@"iPhone X"]) {
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (BOOL)iPadDevice {
     return ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad);
 }

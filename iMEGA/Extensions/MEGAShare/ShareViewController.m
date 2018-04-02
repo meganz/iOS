@@ -86,6 +86,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActive)
                                                  name:NSExtensionHostDidBecomeActiveNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground)
+                                                 name:NSExtensionHostDidEnterBackgroundNotification
+                                               object:nil];
+
     
     [self setupAppearance];
     [SVProgressHUD setViewForExtension:self.view];
@@ -143,7 +147,7 @@
         if (self.loginRequiredNC) {
             [self.loginRequiredNC dismissViewControllerAnimated:YES completion:nil];
         }
-        if ([LTHPasscodeViewController doesPasscodeExist]) {
+        if ([LTHPasscodeViewController doesPasscodeExist] && !self.passcodePresented) {
             [self presentPasscode];
         } else {
             if (!self.fetchNodesDone) {
@@ -153,6 +157,10 @@
     } else {
         [self requireLogin];
     }
+}
+
+- (void)didEnterBackground {
+    self.passcodePresented = NO;
 }
 
 #pragma mark - Language
@@ -232,22 +240,34 @@
 }
 
 - (void)setupAppearance {
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]}];
-    [[UINavigationBar appearance] setTintColor:[UIColor mnz_redD90007]];
-    [[UINavigationBar appearance] setBackgroundColor:[UIColor mnz_grayF9F9F9]];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor mnz_redF0373A]];
+    [[UINavigationBar appearance] setTranslucent:NO];
+    
+    //To tint the color of the prompt.
+    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:[UIColor whiteColor]];
+    
+    [[UISearchBar appearance] setTranslucent:NO];
+    [[UISearchBar appearance] setBackgroundColor:[UIColor mnz_grayF1F1F2]];
+    [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:[UIColor mnz_grayF1F1F2]];
+    
+    [[UISegmentedControl appearance] setTintColor:[UIColor mnz_redF0373A]];
     
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
     
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
-    if (@available(iOS 11.0, *)) {} else {
-        UIImage *backButtonImage = [[UIImage imageNamed:@"backArrow"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 0)];
-        [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButtonImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    }
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:[UIColor whiteColor]];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UIToolbar class]]] setTintColor:[UIColor mnz_redF0373A]];
     
-    [[UITextField appearance] setTintColor:[UIColor mnz_redD90007]];
-    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:[UIColor mnz_grayF9F9F9]];
+    [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"backArrow"]];
+    [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backArrow"]];
     
-    [[UIView appearanceWhenContainedIn:[UIAlertController class], nil] setTintColor:[UIColor mnz_redD90007]];
+    [[UITextField appearance] setTintColor:[UIColor mnz_green00BFA5]];
+    
+    [[UIView appearanceWhenContainedInInstancesOfClasses:@[[UIAlertController class]]] setTintColor:[UIColor mnz_redF0373A]];
+    
+    [[UIProgressView appearance] setTintColor:[UIColor mnz_redF0373A]];
     
     [self configureProgressHUD];
 }
@@ -741,7 +761,7 @@
 
 - (void)passcodeWasEnteredSuccessfully {
     [self dismissViewControllerAnimated:YES completion:^{
-        self.passcodePresented = NO;
+        self.passcodePresented = YES;
         if ([MEGAReachabilityManager isReachable]) {
             if (!self.fetchNodesDone) {
                 [self loginToMEGA];

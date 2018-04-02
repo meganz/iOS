@@ -14,7 +14,13 @@
 
 @interface CheckEmailAndFollowTheLinkViewController () <MEGAGlobalDelegate>
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *mailImageTopLayoutConstraint;
+@property (weak, nonatomic) IBOutlet UIImageView *mailImageView;
+
+@property (weak, nonatomic) IBOutlet UILabel *awaitingEmailConfirmation;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *checkYourEmailBottomLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *resendButtonTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *resendButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UILabel *checkYourEmailLabel;
@@ -31,6 +37,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if ([[UIDevice currentDevice] iPhone4X]) {
+        self.mailImageTopLayoutConstraint.constant = 24.f;
+        self.checkYourEmailBottomLayoutConstraint.constant = 59.f;
+        self.resendButtonTopLayoutConstraint.constant = 20.0f;
+    } else if ([[UIDevice currentDevice] iPhone5X]) {
+        self.mailImageTopLayoutConstraint.constant = 24.f;
+    }
+
+    self.awaitingEmailConfirmation.text = AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
     [_emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", nil)];
     
     _email = [SAMKeychain passwordForService:@"MEGA" account:@"email"];
@@ -38,6 +53,8 @@
     _base64pwkey = [SAMKeychain passwordForService:@"MEGA" account:@"base64pwkey"];
     
     _emailTextField.text = self.email;
+    
+    self.resendButton.layer.borderColor = [UIColor mnz_gray999999].CGColor;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];

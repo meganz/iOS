@@ -56,6 +56,14 @@
     self.transferQuotaLabel.text = AMLocalizedString(@"transferQuota", @"The header/title of a block/section which contains information about the user's used/available transfer allowance for their account.");
     
     [[MEGASdkManager sharedMEGASdk] getAccountAchievementsWithDelegate:self];
+    
+    if (self.enableCloseBarButton) { //For modal presentations
+        UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"skipButton", @"Button title that skips the current action")
+                                                                           style:UIBarButtonItemStyleDone
+                                                                          target:self
+                                                                          action:@selector(dismissViewController)];
+        self.navigationItem.rightBarButtonItem = rightButtonItem;
+    }
 }
 
 #pragma mark - Private
@@ -68,7 +76,7 @@
     
     NSString *stringFromByteCount;
     NSRange firstPartRange = NSMakeRange(0, 0);
-    NSRange secondPartRange  = NSMakeRange(0, 0);;
+    NSRange secondPartRange  = NSMakeRange(0, 0);
     
     stringFromByteCount = [self.byteCountFormatter stringFromByteCount:quota];
 
@@ -139,6 +147,10 @@
     [self.navigationController pushViewController:inviteFriendsViewController animated:YES];
 }
 
+- (void)dismissViewController {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -195,7 +207,7 @@
         
         NSDate *awardExpirationdDate = [self.achievementsDetails awardExpirationAtIndex:index.unsignedIntegerValue];
         cell.subtitleLabel.text = (awardExpirationdDate.daysUntil == 0) ? AMLocalizedString(@"expired", @"Label to show that an error related with expiration occurs during a SDK operation.") : [AMLocalizedString(@"xDaysLeft", @"") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%lu", awardExpirationdDate.daysUntil]];
-        cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_redD90007] : [UIColor mnz_gray666666];
+        cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_redF0373A] : [UIColor mnz_gray666666];
     }
     
     return cell;
