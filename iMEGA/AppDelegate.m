@@ -169,6 +169,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[MEGASdkManager sharedMEGASdk] httpServerSetMaxBufferSize:[UIDevice currentDevice].maxBufferSize];
     
     [[LTHPasscodeViewController sharedUser] setDelegate:self];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"presentPasscodeLater"];
     
     [self languageCompatibility];
     
@@ -1299,9 +1300,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
                 }
                 
-                [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
-                                                                         withLogout:NO
-                                                                     andLogoutTitle:nil];
+                if (![[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"]) {
+                    [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
+                                                                             withLogout:NO
+                                                                         andLogoutTitle:nil];
+                }
             }
         }
         
@@ -1877,6 +1880,8 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type {
     MEGALogDebug(@"Did receive incoming push with payload: %@", [payload dictionaryPayload]);
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"presentPasscodeLater"];
+    [[LTHPasscodeViewController sharedUser] disablePasscodeWhenApplicationEntersBackground];
     [self startBackgroundTask];
 }
 
