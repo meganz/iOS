@@ -1445,3 +1445,5 @@
 "backupRecoveryKey"="Backup Recovery Key";
 /* Text to describe why user should test password */
 "testPasswordText"="Please test your password below to ensure you remember it. If you lose your password, you will lose access to your data.";
+/* Button Label */
+"confirm"="Confirm";
