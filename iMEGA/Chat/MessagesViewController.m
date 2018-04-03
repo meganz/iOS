@@ -1721,7 +1721,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             [self updateUnreadLabel];
             break;
             
-        case MEGAChatRoomChangeTypeParticipans: {
+        case MEGAChatRoomChangeTypeParticipants: {
             [self customNavigationBarLabel];
             
             [self.collectionView performBatchUpdates:^{
