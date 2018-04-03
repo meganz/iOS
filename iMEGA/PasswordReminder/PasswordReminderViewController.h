@@ -3,4 +3,6 @@
 
 @interface PasswordReminderViewController : UIViewController
 
+@property (assign) BOOL logout;
+
 @end

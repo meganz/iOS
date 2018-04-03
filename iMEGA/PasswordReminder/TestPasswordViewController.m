@@ -3,6 +3,7 @@
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "PasswordView.h"
+#import "Helper.h"
 
 @interface TestPasswordViewController () <PasswordViewDelegate>
 
@@ -24,7 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
     [self configureUI];
     [self resetUI];
     self.descriptionLabelHeight = self.descriptionLabelHeightConstraint.constant;
@@ -40,12 +41,21 @@
                                                object:nil];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.passwordView.passwordTextField becomeFirstResponder];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)tapConfirm:(id)sender {
     [self.passwordView hideKeyboard];
-    //TODO: call sdk to test password, next line is just for testing
-    [self passwordTestSuccess];
+    if ([[MEGASdkManager sharedMEGASdk] checkPassword:self.passwordView.passwordTextField.text]) {
+        [self passwordTestSuccess];
+        [[MEGASdkManager sharedMEGASdk] passwordReminderDialogSucceeded];
+    } else {
+        [self passwordTestFailed];
+    }
 }
 
 - (IBAction)tapBackupRecoveryKey:(id)sender {
@@ -59,7 +69,11 @@
             UIAlertController *recoveryKeyAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"masterKeyExported", @"Alert title shown when you have exported your MEGA Recovery Key") message:AMLocalizedString(@"masterKeyExported_alertMessage", @"The Recovery Key has been exported into the Offline section as RecoveryKey.txt. Note: It will be deleted if you log out, please store it in a safe place.")  preferredStyle:UIAlertControllerStyleAlert];
             [recoveryKeyAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [[MEGASdkManager sharedMEGASdk] masterKeyExported];
-                [self dismissViewControllerAnimated:YES completion:nil];
+                [self dismissViewControllerAnimated:YES completion:^{
+                    if (self.logout) {
+                        [Helper logoutAfterPasswordReminder];
+                    }
+                }];
             }]];
             
             [self presentViewController:recoveryKeyAlertController animated:YES completion:nil];
@@ -70,7 +84,11 @@
 }
 
 - (IBAction)tapClose:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (self.logout) {
+            [Helper logoutAfterPasswordReminder];
+        }
+    }];
 }
 
 #pragma mark - Private
