@@ -845,6 +845,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     MEGALogInfo(@"didPressSendButton %@", message);
     
     [self finishSendingMessageAnimated:YES];
+    [[MEGASdkManager sharedMEGAChatSdk] sendStopTypingNotificationForChat:self.chatRoom.chatId];
 }
 
 - (void)messagesInputToolbar:(MEGAInputToolbar *)toolbar didPressSendButton:(UIButton *)sender toAttachAssets:(NSArray<PHAsset *> *)assets {
@@ -1512,6 +1513,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     if (textLength > 0 && ![self.sendTypingTimer isValid]) {
         self.sendTypingTimer = [NSTimer scheduledTimerWithTimeInterval:4.0 target:self selector:@selector(doNothing) userInfo:nil repeats:NO];
         [[MEGASdkManager sharedMEGAChatSdk] sendTypingNotificationForChat:self.chatRoom.chatId];
+    } else if (textLength == 0) {
+        [[MEGASdkManager sharedMEGAChatSdk] sendStopTypingNotificationForChat:self.chatRoom.chatId];
     }
 }
 
@@ -1761,7 +1764,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                                                                            target:self
                                                                          selector:@selector(hideTypingIndicator)
                                                                          userInfo:nil
-                                                                          repeats:YES];
+                                                                          repeats:NO];
             }
             
             break;
@@ -1771,6 +1774,18 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             [api closeChatRoom:chat.chatId delegate:self];
             [self.navigationController popToRootViewControllerAnimated:YES];
             break;
+            
+        case MEGAChatRoomChangeTypeUserStopTyping: {
+            if (chat.userTypingHandle != api.myUserHandle) {
+                if ([self.peerTyping isEqualToString:[chat peerFullnameByHandle:chat.userTypingHandle]] || [self.peerTyping isEqualToString:[chat peerEmailByHandle:chat.userTypingHandle]]) {
+                    self.peerTyping = @"";
+                    self.footerView.typingLabel.text = @"";
+                    self.showTypingIndicator = NO;
+                }
+            }
+            
+            break;
+        }
             
         default:
             break;

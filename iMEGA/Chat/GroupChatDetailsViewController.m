@@ -586,6 +586,10 @@
             [self.navigationController popToRootViewControllerAnimated:YES];
             break;
             
+        case MEGAChatRoomChangeTypeOwnPriv:
+        case MEGAChatRoomChangeTypeUserStopTyping:
+            break;
+            
         default:
             break;
     }
