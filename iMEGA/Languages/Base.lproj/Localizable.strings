@@ -121,7 +121,7 @@
 /*  */
 "passwordStrong"="This password will withstand most sophisticated brute-force attacks. Please ensure that you will remember it.";
 /*  */
-"agreeWithTheMEGATermsOfService"="I agree with the MEGA [A]Terms of Service[/A]";
+"agreeWithTheMEGATermsOfService"="I agree with the MEGA <a href='terms'>Terms of Service</a>";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Enter a valid name";
 /*  */
@@ -1003,7 +1003,7 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Select one account type:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
+"twoMonthsFree"="An annual subscription is 17% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Current Plan:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
@@ -1372,7 +1372,7 @@
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="Reset QR Code";
 /* Footer that explains what would happen if the user resets his/her QR code */
-"resetQrCodeFooter"="Previous QR Codes will no longer be valid.";
+"resetQrCodeFooter"="Previous QR codes will no longer be valid.";
 /* Title for view that displays the QR code of the user. String as short as possible. */
 "myCode"="My Code";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
@@ -1384,7 +1384,7 @@
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
 "codeScanned"="Code scanned";
 /* title of the screen that shows the users with whom the user has shared a folder */
-"sharedWidth"="Shared with:";
+"sharedWidth"="Shared with: ";
 /*   */
 "details"="Details";
 /* Item menu option upon right click on one or multiple files. */
@@ -1416,7 +1416,7 @@
 /* Label of the option menu. When clicking this button, the app shows the info of the folder */
 "folderInfo"="Folder info";
 /* Question to ensure user wants to delete file version. */
-"deleteVersion"="Do you want to delete this version";
+"deleteVersion"="Do you want to delete this version?";
 /* Message to notify user the file version will be permanently removed */
 "permanentlyRemoved"="It will be permanently removed";
 /*  */
