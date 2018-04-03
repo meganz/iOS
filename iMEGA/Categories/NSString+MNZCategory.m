@@ -216,6 +216,8 @@ static NSString* const B = @"[B]";
     string = [string stringByReplacingOccurrencesOfString:@"[/A]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[S]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[/S]" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"<a href='terms'>" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"</a>" withString:@""];
     
     return string;
 }
