@@ -232,6 +232,12 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     self.inputToolbar.contentView.textView.text = [[MEGAStore shareInstance] fetchChatDraftWithChatId:self.chatRoom.chatId].text;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self showOrHideJumpToBottom];
+}
+
 - (void)willEnterForeground {
     // Workaround to avoid wrong collection view height when coming back to foreground
     if ([self.inputToolbar.contentView.textView isFirstResponder]) {
@@ -845,6 +851,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     MEGALogInfo(@"didPressSendButton %@", message);
     
     [self finishSendingMessageAnimated:YES];
+    [self hideJumpToBottom];
 }
 
 - (void)messagesInputToolbar:(MEGAInputToolbar *)toolbar didPressSendButton:(UIButton *)sender toAttachAssets:(NSArray<PHAsset *> *)assets {
@@ -1535,12 +1542,19 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             [self finishReceivingMessage];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                NSIndexPath *lastCellIndexPath = [NSIndexPath indexPathForItem:([self.collectionView numberOfItemsInSection:0] - 1) inSection:0];
-                if ([[self.collectionView indexPathsForVisibleItems] containsObject:lastCellIndexPath]) {
+                NSUInteger items = [self.collectionView numberOfItemsInSection:0];
+                NSUInteger visibleItems = [self.collectionView indexPathsForVisibleItems].count;
+                if (items > 1 && visibleItems > 0) {
+                    NSIndexPath *lastCellIndexPath = [NSIndexPath indexPathForItem:(items - 2) inSection:0];
+                    if ([[self.collectionView indexPathsForVisibleItems] containsObject:lastCellIndexPath]) {
+                        [self scrollToBottomAnimated:YES];
+                        [self hideJumpToBottom];
+                    } else {
+                        [self showJumpToBottomWithMessage:AMLocalizedString(@"newMessages", @"Label in a button that allows to jump to the latest message")];
+                    }
+                } else {
                     [self scrollToBottomAnimated:YES];
                     [self hideJumpToBottom];
-                } else {
-                    [self showJumpToBottomWithMessage:AMLocalizedString(@"newMessages", @"Label in a button that allows to jump to the latest message")];
                 }
             });
             
