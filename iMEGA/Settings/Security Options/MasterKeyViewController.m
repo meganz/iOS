@@ -4,6 +4,8 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 
+#import "Helper.h"
+
 #import "HelpModalViewController.h"
 
 @interface MasterKeyViewController ()
@@ -72,16 +74,7 @@
 
 - (IBAction)saveMasterKeyTouchUpInside:(UIButton *)sender {
     if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
-        NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
-        
-        BOOL success = [[NSFileManager defaultManager] createFileAtPath:masterKeyFilePath contents:[[[MEGASdkManager sharedMEGASdk] masterKey] dataUsingEncoding:NSUTF8StringEncoding] attributes:@{NSFileProtectionKey:NSFileProtectionComplete}];
-        if (success) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"masterKeyExported", nil) message:AMLocalizedString(@"masterKeyExported_alertMessage", nil) delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
-            [alertView show];
-            
-            [[MEGASdkManager sharedMEGASdk] masterKeyExported];
-        }
+        [Helper showExportMasterKeyInView:self completion:nil];
     } else {
         [MEGAReachabilityManager isReachableHUDIfNot];
     }

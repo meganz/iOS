@@ -59,25 +59,14 @@
 }
 
 - (IBAction)tapBackupRecoveryKey:(id)sender {
-    
     if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
-        NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
+        __weak TestPasswordViewController *weakSelf = self;
         
-        BOOL success = [[NSFileManager defaultManager] createFileAtPath:masterKeyFilePath contents:[[[MEGASdkManager sharedMEGASdk] masterKey] dataUsingEncoding:NSUTF8StringEncoding] attributes:@{NSFileProtectionKey:NSFileProtectionComplete}];
-        if (success) {
-            UIAlertController *recoveryKeyAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"masterKeyExported", @"Alert title shown when you have exported your MEGA Recovery Key") message:AMLocalizedString(@"masterKeyExported_alertMessage", @"The Recovery Key has been exported into the Offline section as RecoveryKey.txt. Note: It will be deleted if you log out, please store it in a safe place.")  preferredStyle:UIAlertControllerStyleAlert];
-            [recoveryKeyAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                [[MEGASdkManager sharedMEGASdk] masterKeyExported];
-                [self dismissViewControllerAnimated:YES completion:^{
-                    if (self.logout) {
-                        [Helper logoutAfterPasswordReminder];
-                    }
-                }];
-            }]];
-            
-            [self presentViewController:recoveryKeyAlertController animated:YES completion:nil];
-        }
+        [Helper showExportMasterKeyInView:self completion:^{
+            if (weakSelf.logout) {
+                [Helper logoutAfterPasswordReminder];
+            }
+        }];
     } else {
         [MEGAReachabilityManager isReachableHUDIfNot];
     }
