@@ -968,6 +968,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     }
 }
 
+- (void)scrollToBottomAnimated:(BOOL)animated {
+    [super scrollToBottomAnimated:animated];
+    [self hideJumpToBottom];
+}
+
 - (void)didEndAnimatingAfterButton:(UIButton *)sender {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self scrollToBottomAnimated:YES];
@@ -1548,13 +1553,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                     NSIndexPath *lastCellIndexPath = [NSIndexPath indexPathForItem:(items - 2) inSection:0];
                     if ([[self.collectionView indexPathsForVisibleItems] containsObject:lastCellIndexPath]) {
                         [self scrollToBottomAnimated:YES];
-                        [self hideJumpToBottom];
                     } else {
                         [self showJumpToBottomWithMessage:AMLocalizedString(@"newMessages", @"Label in a button that allows to jump to the latest message")];
                     }
                 } else {
                     [self scrollToBottomAnimated:YES];
-                    [self hideJumpToBottom];
                 }
             });
             
