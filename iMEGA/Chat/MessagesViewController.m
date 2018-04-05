@@ -1049,10 +1049,23 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)jsq_setCollectionViewInsetsTopValue:(CGFloat)top bottomValue:(CGFloat)bottom {
+    CGRect bounds = self.collectionView.bounds;
+    CGFloat increment = bottom - self.collectionView.contentInset.bottom;
+    
     UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, bottom, 0.0f);
     self.collectionView.contentInset = insets;
     self.collectionView.scrollIndicatorInsets = insets;
     self.jumpToBottomConstraint.constant = bottom + 27.0f;
+
+    if (increment > 0) {
+        bounds.origin.y += increment;
+        bounds.size.height -= bottom;
+        [self.collectionView scrollRectToVisible:bounds animated:NO];
+    }
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self showOrHideJumpToBottom];
+    });
 }
 
 #pragma mark - JSQMessages CollectionView DataSource
