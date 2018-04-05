@@ -1,6 +1,8 @@
 
 #import "MEGATransfer+MNZCategory.h"
 
+#import <AVKit/AVKit.h>
+
 #import "NSString+MNZCategory.h"
 
 @implementation MEGATransfer (MNZCategory)
@@ -23,6 +25,22 @@
             }
             
             CFRelease(imageData);
+            return;
+        }
+    }
+    
+    if (self.fileName.mnz_isVideoPathExtension && (!node.latitude || !node.longitude)) {
+        AVAsset *asset = [AVAsset assetWithURL:[NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:self.path]]];
+        for (AVMetadataItem *item in [asset metadata]) {
+            if ([item.commonKey isEqualToString:AVMetadataCommonKeyLocation]) {
+                NSString *latlon = item.stringValue;
+                NSString *latitude  = [latlon substringToIndex:8];
+                NSString *longitude = [latlon substringWithRange:NSMakeRange(8, 9)];
+                if (latitude && longitude) {
+                    [api setNodeCoordinates:node latitude:@(latitude.doubleValue) longitude:@(longitude.doubleValue)];
+                    return;
+                }
+            }
         }
     }
 }
