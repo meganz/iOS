@@ -120,8 +120,8 @@
 "strong"="Міцний";
 /*  */
 "passwordStrong"="Цей пароль зможе протистояти найбільш типовим атакам підбору паролів. Будь ласка, переконайтеся, що ви будете пам'ятати його.";
-/* Text shown on a button that if clicked shows the MEGA Terms of Service */
-"termsOfServiceButton"="Я згоден з Умовами надання послуг MEGA";
+/*  */
+"agreeWithTheMEGATermsOfService"="Я згоден з <a href='terms'>умовами</a> MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Введіть дійсне ім'я";
 /*  */
@@ -366,6 +366,16 @@
 "copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Відкрити в…";
+/* */
+"sendToContact"="Надіслати контакту";
+/* Toast text upon sending a single file to chat */
+"fileSentToChat"="File sent to chat";
+/* Success message when the attachment has been sent to a many chats */
+"fileSentToXChats"="File sent to %1$d chats";
+/* Toast text upon sending multiple files to chat */
+"filesSentToChat"="Files sent to chat";
+/* success message when sending multiple files. Please do not modify the %d placeholder. */
+"xfilesSentSuccesfully"="%d files sent successfully";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Видалити ланку";
 /* Message shown when there are some active links that can be removed or disabled */
@@ -492,10 +502,16 @@
 "cameraUploadsUploadingFile"="Uploading %1$d of %2$d file";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
 "cameraUploadsUploadingFiles"="Uploading %1$d of %2$d files";
+/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
+"indexOfTotalFile"="%1$d of %2$d file";
+/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
+"indexOfTotalFiles"="%1$d of %2$d files";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu елемент вибрано";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu елементів обрано";
+/* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
+"xSelected"="%d selected";
 /* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
 "cameraUploadsWillBeDisabled"="Відвантаження з камери буде відключено";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
@@ -504,8 +520,6 @@
 "offline"="Не в мережі";
 /* Title of the Contacts section */
 "contactsTitle"="Контакти";
-/* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
-"noFoldersShared"="Немає спільних тек";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 тека";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -983,13 +997,13 @@
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="Subject to your participation in our achievements program.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%@ на місяць";
+"productPricePerMonth"="%@ per month";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Виберіть нижче один з планів:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Select one account type:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
+"twoMonthsFree"="An annual subscription is 17% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Current Plan:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
@@ -1246,6 +1260,10 @@
 "uploadedFile"="Uploaded this file:";
 /* A summary message when a user has attached many files at once into the chat. */
 "uploadedFiles"="Uploaded these files:";
+/* Label in a button that allows to jump to the latest item */
+"jumpToLatest"="Jump to latest";
+/* Label in a button that allows to jump to the latest message */
+"newMessages"="New messages";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Підписки автоматично продовжуються на той само термін і в ту само ціну, що ви вибрали початково. Ви можете відключити автоматичне оновлення вашої підписки не пізніше ніж за 24 години до вашої наступної абонентської плати через сторінку налаштувань облікового запису iTunes. Для того щоб управляти підписками, просто натисніть на іконку App Store на вашому телефоні, увійдіть у свій Apple ID, в нижній частині сторінки (якщо ви цього не робили) і натисніть Переглянути Apple ID. Ви потрапите на сторінку облікового запису, де зможете прокрутити до керування підписками. Звідти ви можете вибрати підписку MEGA PRO і переглянути дату оновлення підписки, вибрати інший пакет підписки або перемикачем вимкнути автооновлення підписки.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1345,3 +1363,73 @@
 "missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";
 /* Button title to see the available bonus */
 "getBonus"="Get Bonus";
+/* QR Code label, used in Settings as title. String as short as possible */
+"qrCode"="QR Code";
+/* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
+"autoAccept"="Auto-Accept";
+/* Footer that explains the way Auto-Accept works for QR codes */
+"autoAcceptFooter"="Contacts that scan your QR Code will be automatically added to your contact list.";
+/* Action to reset the current valid QR code of the user */
+"resetQrCode"="Reset QR Code";
+/* Footer that explains what would happen if the user resets his/her QR code */
+"resetQrCodeFooter"="Previous QR codes will no longer be valid.";
+/* Title for view that displays the QR code of the user. String as short as possible. */
+"myCode"="My Code";
+/* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
+"scanCode"="Scan Code";
+/* Label that encourage the user to line the QR to scan with the camera */
+"lineCodeWithCamera"="Line up the QR code to scan it with your device’s camera";
+/* Error text shown when the user scans a QR that is not valid. String as short as possible. */
+"invalidCode"="Invalid code";
+/* Success text shown in a label when the user scans a valid QR. String as short as possible. */
+"codeScanned"="Code scanned";
+/* title of the screen that shows the users with whom the user has shared a folder */
+"sharedWidth"="Спільно з:";
+/*   */
+"details"="Деталі";
+/* Item menu option upon right click on one or multiple files. */
+"sharing"="Поділитися";
+/* Title of section to display number of all historical versions of files. */
+"versions"="Versions";
+/* Title label of a node property. */
+"location"="Location";
+/* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
+"totalSize"="Загальний розмір";
+/* Refers to the type of a file or folder. */
+"type"="Тип";
+/* Title of the incoming shared folders of a user in singular */
+"sharedFolder"="Тека спільного доступу";
+/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
+"created"="Створено";
+/* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
+"contains"="Містить";
+/* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
+"modified"="Змінено";
+/* used for example when a folder is shared with 2 or more users */
+"users"="користувачі(в)";
+/* user (singular) label indicating is receiving some info, for example shared folders */
+"user"="користувач";
+/* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
+"xVersions"="[X] versions";
+/* Label of the option menu. When clicking this button, the app shows the info of the file */
+"fileInfo"="Інформація про файл";
+/* Label of the option menu. When clicking this button, the app shows the info of the folder */
+"folderInfo"="Інформація про теку";
+/* Question to ensure user wants to delete file version. */
+"deleteVersion"="Do you want to delete this version?";
+/* Message to notify user the file version will be permanently removed */
+"permanentlyRemoved"="It will be permanently removed";
+/*  */
+"delete"="Видалити";
+/* A button label which reverts a certain version of a file to be the current version of the selected file. */
+"revert"="Revert";
+/*  */
+"download"="Скачати";
+/* Singular of file. 1 file */
+"file"="файл";
+/* Title of section to display information of the current version of a file. */
+"currentVersion"="Current Version";
+/* A button label which opens a dialog to display the full version history of the selected file. */
+"previousVersions"="Previous Versions";
+/* Title of section to display information of all current versions of files. */
+"currentVersions"="Current Versions";
