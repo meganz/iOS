@@ -57,8 +57,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 @property (nonatomic, assign) BOOL isFirstLoad;
 
 @property (nonatomic, strong) NSTimer *sendTypingTimer;
-@property (nonatomic, strong) NSTimer *receiveTypingTimer;
-@property (nonatomic, strong) NSString *peerTyping;
+@property (strong, nonatomic) NSMutableArray<NSString *> *whoIsTypingMutableArray;
+@property (strong, nonatomic) NSMutableDictionary<NSString *, NSTimer *> *whoIsTypingTimersMutableDictionary;
 
 @property (nonatomic, strong) UIBarButtonItem *unreadBarButtonItem;
 @property (nonatomic, strong) UILabel *unreadLabel;
@@ -216,6 +216,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     UITapGestureRecognizer *jumpButtonTap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                     action:@selector(jumpToBottomPressed:)];
     [self.jumpToBottomView addGestureRecognizer:jumpButtonTap];
+    
+    _whoIsTypingMutableArray = [[NSMutableArray alloc] init];
+    _whoIsTypingTimersMutableDictionary = [[NSMutableDictionary alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -627,8 +630,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     self.openMessageHeaderView.authenticityLabel.attributedText = authenticityAttributedString;
 }
 
-- (void)hideTypingIndicator {
-    self.showTypingIndicator = NO;
+- (void)userTypingTimerFireMethod:(NSTimer *)timer {
+    [self removeEmailFromTypingIndicator:timer.userInfo];
 }
 
 - (void)doNothing {}
@@ -795,6 +798,69 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self hideJumpToBottom];
 }
 
+- (void)setTypingIndicator {
+    self.showTypingIndicator = self.whoIsTypingMutableArray.count;
+    switch (self.whoIsTypingMutableArray.count) {
+        case 0:
+            self.footerView.typingLabel.text = @"";
+            break;
+            
+        case 1: {
+            NSString *firstUserEmail = [self.whoIsTypingMutableArray objectAtIndex:0];
+            NSString *firstUserName =  [self peerFirstNameForEmail:firstUserEmail];
+            
+            self.footerView.typingLabel.text = [NSString stringWithFormat:AMLocalizedString(@"isTyping", @"A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime."), (firstUserName.length ? firstUserName : firstUserEmail)];
+            break;
+        }
+            
+        case 2: {
+            self.footerView.typingLabel.text = [self twoOrMoreUsersAreTypingString];
+            break;
+        }
+            
+        default: {
+            if (self.whoIsTypingMutableArray.count > 2) {
+                self.footerView.typingLabel.text = [self twoOrMoreUsersAreTypingString];
+            } else {
+                self.footerView.typingLabel.text = @"";
+            }
+            break;
+        }
+    }
+}
+
+- (NSString *)peerFirstNameForEmail:(NSString *)email {
+    uint64_t userHandle = [[MEGASdkManager sharedMEGAChatSdk] userHandleByEmail:email];
+    return [self.chatRoom peerFirstnameByHandle:userHandle];
+}
+
+- (NSString *)twoOrMoreUsersAreTypingString {
+    NSString *firstUserEmail = [self.whoIsTypingMutableArray objectAtIndex:0];
+    NSString *secondUserEmail = [self.whoIsTypingMutableArray objectAtIndex:1];
+    
+    NSString *firstUserFirstName = [self peerFirstNameForEmail:firstUserEmail];
+    NSString *whoIsTypingString = firstUserFirstName.length ? firstUserFirstName : firstUserEmail;
+    
+    NSString *secondUserFirstName = [self peerFirstNameForEmail:secondUserEmail];
+    whoIsTypingString = [whoIsTypingString stringByAppendingString:[NSString stringWithFormat:@", %@", (secondUserFirstName.length ? secondUserFirstName : secondUserEmail)]];
+    
+    NSString *twoOrMoreUsersAreTypingString;
+    if (self.whoIsTypingMutableArray.count == 2) {
+        twoOrMoreUsersAreTypingString = [AMLocalizedString(@"twoUsersAreTyping", @"Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders.") mnz_removeWebclientFormatters];
+    } else if (self.whoIsTypingMutableArray.count > 2) {
+        twoOrMoreUsersAreTypingString = [AMLocalizedString(@"moreThanTwoUsersAreTyping", @"text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders.") mnz_removeWebclientFormatters];
+    }
+    
+    return [twoOrMoreUsersAreTypingString stringByReplacingOccurrencesOfString:@"%1$s" withString:whoIsTypingString];
+}
+
+- (void)removeEmailFromTypingIndicator:(NSString *)email {
+    [self.whoIsTypingMutableArray removeObject:email];
+    [self.whoIsTypingTimersMutableDictionary removeObjectForKey:email];
+    
+    [self setTypingIndicator];
+}
+
 #pragma mark - Gesture recognizer
 
 - (void)hideInputToolbar {
@@ -851,6 +917,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     MEGALogInfo(@"didPressSendButton %@", message);
     
     [self finishSendingMessageAnimated:YES];
+
+    [[MEGASdkManager sharedMEGAChatSdk] sendStopTypingNotificationForChat:self.chatRoom.chatId];
+
     [self hideJumpToBottom];
 }
 
@@ -1179,13 +1248,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 #pragma mark - Typing indicator
 
 - (MEGAMessagesTypingIndicatorFoorterView *)dequeueTypingIndicatorFooterViewForIndexPath:(NSIndexPath *)indexPath {
-    
     self.footerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter
                                                                                                  withReuseIdentifier:[MEGAMessagesTypingIndicatorFoorterView footerReuseIdentifier]
                                                                                                         forIndexPath:indexPath];
-    self.footerView.typingLabel.font = [UIFont mnz_SFUIMediumWithSize:10.0f];
-    self.footerView.typingLabel.textColor = [UIColor mnz_gray999999];
-    self.footerView.typingLabel.text = [NSString stringWithFormat:AMLocalizedString(@"isTyping", nil), self.peerTyping];
+    [self setTypingIndicator];
     
     return self.footerView;
 }
@@ -1524,6 +1590,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     if (textLength > 0 && ![self.sendTypingTimer isValid]) {
         self.sendTypingTimer = [NSTimer scheduledTimerWithTimeInterval:4.0 target:self selector:@selector(doNothing) userInfo:nil repeats:NO];
         [[MEGASdkManager sharedMEGAChatSdk] sendTypingNotificationForChat:self.chatRoom.chatId];
+    } else if (textLength == 0) {
+        [[MEGASdkManager sharedMEGAChatSdk] sendStopTypingNotificationForChat:self.chatRoom.chatId];
     }
 }
 
@@ -1738,7 +1806,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             [self updateUnreadLabel];
             break;
             
-        case MEGAChatRoomChangeTypeParticipans: {
+        case MEGAChatRoomChangeTypeParticipants: {
             [self customNavigationBarLabel];
             
             [self.collectionView performBatchUpdates:^{
@@ -1757,28 +1825,24 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             
         case MEGAChatRoomChangeTypeUserTyping: {
             if (chat.userTypingHandle != api.myUserHandle) {
-                self.showTypingIndicator = YES;
                 NSIndexPath *lastCell = [NSIndexPath indexPathForItem:([self.collectionView numberOfItemsInSection:0] - 1) inSection:0];
                 if ([[self.collectionView indexPathsForVisibleItems] containsObject:lastCell]) {
                     [self scrollToBottomAnimated:YES];
                 }
                 
-                if (![self.peerTyping isEqualToString:[chat peerFullnameByHandle:chat.userTypingHandle]]) {
-                    self.peerTyping = [chat peerFullnameByHandle:chat.userTypingHandle];
+                NSString *userTypingEmail = [chat peerEmailByHandle:chat.userTypingHandle];
+                if (![self.whoIsTypingMutableArray containsObject:userTypingEmail]) {
+                    [self.whoIsTypingMutableArray addObject:userTypingEmail];
                 }
                 
-                if (!self.peerTyping.length) {
-                    self.peerTyping = [chat peerEmailByHandle:chat.userTypingHandle];
+                [self setTypingIndicator];
+                
+                NSTimer *userTypingTimer = [self.whoIsTypingTimersMutableDictionary objectForKey:userTypingEmail];
+                if (userTypingTimer) {
+                    [userTypingTimer invalidate];
                 }
-                
-                self.footerView.typingLabel.text = [NSString stringWithFormat:AMLocalizedString(@"isTyping", nil), self.peerTyping];
-                
-                [self.receiveTypingTimer invalidate];
-                self.receiveTypingTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
-                                                                           target:self
-                                                                         selector:@selector(hideTypingIndicator)
-                                                                         userInfo:nil
-                                                                          repeats:YES];
+                userTypingTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(userTypingTimerFireMethod:) userInfo:userTypingEmail repeats:NO];
+                [self.whoIsTypingTimersMutableDictionary setObject:userTypingTimer forKey:userTypingEmail];
             }
             
             break;
@@ -1788,6 +1852,13 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             [api closeChatRoom:chat.chatId delegate:self];
             [self.navigationController popToRootViewControllerAnimated:YES];
             break;
+            
+        case MEGAChatRoomChangeTypeUserStopTyping: {
+            if (chat.userTypingHandle != api.myUserHandle) {
+                [self removeEmailFromTypingIndicator:[chat peerEmailByHandle:chat.userTypingHandle]];
+            }
+            break;
+        }
             
         default:
             break;
