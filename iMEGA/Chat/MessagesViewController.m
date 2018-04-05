@@ -1279,6 +1279,14 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self showOrHideJumpToBottom];
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self hideJumpToBottom];
+}
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+    [self hideJumpToBottom];
+}
+
 #pragma mark - Custom menu items
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
