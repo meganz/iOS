@@ -120,8 +120,8 @@
 "strong"="強";
 /*  */
 "passwordStrong"="這個密碼將可承受最典型的暴力破解攻擊。請確保您會好好記牢。";
-/* Text shown on a button that if clicked shows the MEGA Terms of Service */
-"termsOfServiceButton"="我同意 MEGA 的服務條款";
+/*  */
+"agreeWithTheMEGATermsOfService"="我同意MEGA的<a href='terms'>服務條款</a>";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="請輸入有效的名字";
 /*  */
@@ -366,6 +366,16 @@
 "copyKey"="複製金鑰";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="開啟於...";
+/* */
+"sendToContact"="寄給聯絡人";
+/* Toast text upon sending a single file to chat */
+"fileSentToChat"="檔案已發送至聊天對話中";
+/* Success message when the attachment has been sent to a many chats */
+"fileSentToXChats"="檔案已發送至%1$d個聊天對話中";
+/* Toast text upon sending multiple files to chat */
+"filesSentToChat"="檔案已發送至聊天對話中";
+/* success message when sending multiple files. Please do not modify the %d placeholder. */
+"xfilesSentSuccesfully"="已成功發送%d個檔案";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="移除連結";
 /* Message shown when there are some active links that can be removed or disabled */
@@ -492,10 +502,16 @@
 "cameraUploadsUploadingFile"="正在上傳 %2$d 個檔案中的第 %1$d 個檔案";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
 "cameraUploadsUploadingFiles"="正在上傳 %2$d 個檔案中的第 %1$d 個檔案";
+/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
+"indexOfTotalFile"="%2$d 個檔案中的第 %1$d 個檔案";
+/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
+"indexOfTotalFiles"="%2$d 個檔案中的第 %1$d 個檔案";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="已選中 %lu 個項目";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="已選中 %lu 個項目";
+/* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
+"xSelected"="已選擇%d個";
 /* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
 "cameraUploadsWillBeDisabled"="相機上傳功能將無法使用";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
@@ -504,8 +520,6 @@
 "offline"="離線";
 /* Title of the Contacts section */
 "contactsTitle"="聯絡人";
-/* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
-"noFoldersShared"="沒有分享的資料夾";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="一個資料夾";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -983,13 +997,13 @@
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="取決於您所達成的獎勵挑戰。";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%@ 每月";
+"productPricePerMonth"="%@ per month";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="請從下列選取一個計畫:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="選擇帳戶類型：";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
+"twoMonthsFree"="An annual subscription is 17% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="目前使用的方案：";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
@@ -1246,6 +1260,10 @@
 "uploadedFile"="已上傳這份檔案：";
 /* A summary message when a user has attached many files at once into the chat. */
 "uploadedFiles"="已上傳這些檔案：";
+/* Label in a button that allows to jump to the latest item */
+"jumpToLatest"="Jump to latest";
+/* Label in a button that allows to jump to the latest message */
+"newMessages"="New messages";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="此訂閱將會自動更新續訂，續訂內容與您一開始選擇的訂閱時間與價格一致。您可以於您的iTunes帳戶設定頁面關閉MEGA PRO的訂閱自動更新續訂，必須於您的下一個訂閱繳款期限的24小時之前執行此操作。欲管理您的訂閱內容，只需點擊您手機上的App Store圖標，可以在頁面下方以您的Apple帳號登入（如果您還沒有這樣做），然後點擊查看帳號。您會被帶到您的帳戶頁面，就可以向下滾動到管理應用程序訂閱。在那裡，您可以選擇你的MEGA PRO訂閱和查看您預定的續約日期，選擇不同的訂閱專案或切換開關至關閉以停用您的自動續訂。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1321,7 +1339,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="在應用程式裡，您可以升級擴大您的儲存空間與傳輸配額，並選擇按月給付或年度專案。";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITE方案：每月€4.99歐元（$4.99美元）或每年€49.99歐元（$49.99美元），可享有200 GB的儲存空間和每月1 TB的傳輸配額。PRO I 方案：每月€9.99歐元（$9.99美元）或€99.99歐元（$99.99美元），可享有1 TB的儲存空間和每月2 TB的傳輸配額。PRO II 方案：每月€19.99歐元（$19.99美元）或每年€199.99歐元（$199.99美元），可享有4 TB的儲存空間和每月8 TB的傳輸配額。PRO III 方案：每月€29.99歐元（$29.99美元）或€299.99歐元（$299.99美元），可享有8 TB的儲存空間和每月16 TB的傳輸配額。";
+"generalDescriptionParagraph5"="PRO LITE subscription: €4.99 (US$4.99) per month or €49.99 (US$49.99) per year gives you 200 GB of storage space and 1 TB of transfer quota per month.\nPRO I subscription: €9.99 (US$9.99) per month or €99.99 (US$99.99) per year gives you 1 TB of storage space and 2 TB of transfer quota per month.\nPRO II subscription: €19.99 (US$19.99) per month or €199.99 (US$199.99) per year gives you 4 TB of storage space and 8 TB of transfer quota per month.\nPRO III subscription: €29.99 (US$29.99) per month or €299.99 (US$299.99) per year gives you 8 TB of storage space and 16 TB of transfer quota per month.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="欲了解更多資訊，請參考我們的網站：\nMobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nDesktop - https://mega.nz/";
@@ -1345,3 +1363,73 @@
 "missedAudioCallsAndMissedVideoCalls"="[A]通未接語音來電 和 [B]通未接視訊來電";
 /* Button title to see the available bonus */
 "getBonus"="獲得獎勵";
+/* QR Code label, used in Settings as title. String as short as possible */
+"qrCode"="QR Code";
+/* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
+"autoAccept"="Auto-Accept";
+/* Footer that explains the way Auto-Accept works for QR codes */
+"autoAcceptFooter"="Contacts that scan your QR Code will be automatically added to your contact list.";
+/* Action to reset the current valid QR code of the user */
+"resetQrCode"="Reset QR Code";
+/* Footer that explains what would happen if the user resets his/her QR code */
+"resetQrCodeFooter"="Previous QR codes will no longer be valid.";
+/* Title for view that displays the QR code of the user. String as short as possible. */
+"myCode"="My Code";
+/* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
+"scanCode"="Scan Code";
+/* Label that encourage the user to line the QR to scan with the camera */
+"lineCodeWithCamera"="Line up the QR code to scan it with your device’s camera";
+/* Error text shown when the user scans a QR that is not valid. String as short as possible. */
+"invalidCode"="Invalid code";
+/* Success text shown in a label when the user scans a valid QR. String as short as possible. */
+"codeScanned"="Code scanned";
+/* title of the screen that shows the users with whom the user has shared a folder */
+"sharedWidth"="共享者：";
+/*   */
+"details"="內容";
+/* Item menu option upon right click on one or multiple files. */
+"sharing"="分享";
+/* Title of section to display number of all historical versions of files. */
+"versions"="版本數";
+/* Title label of a node property. */
+"location"="Location";
+/* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
+"totalSize"="大小總計";
+/* Refers to the type of a file or folder. */
+"type"="類型";
+/* Title of the incoming shared folders of a user in singular */
+"sharedFolder"="已分享的資料夾";
+/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
+"created"="建立";
+/* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
+"contains"="包含";
+/* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
+"modified"="最後修改";
+/* used for example when a folder is shared with 2 or more users */
+"users"="用戶";
+/* user (singular) label indicating is receiving some info, for example shared folders */
+"user"="用戶";
+/* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
+"xVersions"="[X]種版本";
+/* Label of the option menu. When clicking this button, the app shows the info of the file */
+"fileInfo"="檔案資訊";
+/* Label of the option menu. When clicking this button, the app shows the info of the folder */
+"folderInfo"="資料夾資訊";
+/* Question to ensure user wants to delete file version. */
+"deleteVersion"="Do you want to delete this version?";
+/* Message to notify user the file version will be permanently removed */
+"permanentlyRemoved"="It will be permanently removed";
+/*  */
+"delete"="刪除";
+/* A button label which reverts a certain version of a file to be the current version of the selected file. */
+"revert"="還原為此版本";
+/*  */
+"download"="下載";
+/* Singular of file. 1 file */
+"file"="文件";
+/* Title of section to display information of the current version of a file. */
+"currentVersion"="目前的版本";
+/* A button label which opens a dialog to display the full version history of the selected file. */
+"previousVersions"="Previous Versions";
+/* Title of section to display information of all current versions of files. */
+"currentVersions"="目前的版本";
