@@ -14,8 +14,6 @@
 @property (nonatomic, strong) MEGANode *node;
 @property (nonatomic, assign, getter=isFolderLink) BOOL folderLink;
 
-@property (nonatomic) BOOL shouldAskForPasscode;
-
 @end
 
 @implementation MEGAAVViewController
@@ -93,7 +91,7 @@
     
     [self stopStreaming];
     
-    if (self.shouldAskForPasscode && [LTHPasscodeViewController doesPasscodeExist]) {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"] && [LTHPasscodeViewController doesPasscodeExist]) {
         [[LTHPasscodeViewController sharedUser] showLockScreenOver:[UIApplication mnz_visibleViewController].view
                                                      withAnimation:YES
                                                         withLogout:NO
@@ -121,7 +119,7 @@
 
 - (void)applicationDidEnterBackground:(NSNotification*)aNotification {
     if (![NSStringFromClass([UIApplication sharedApplication].windows[0].class) isEqualToString:@"UIWindow"]) {
-        self.shouldAskForPasscode = YES;
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"presentPasscodeLater"];
     }
 }
 
