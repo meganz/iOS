@@ -31,7 +31,7 @@
     
     if (self.fileName.mnz_isVideoPathExtension && (!node.latitude || !node.longitude)) {
         AVAsset *asset = [AVAsset assetWithURL:[NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:self.path]]];
-        for (AVMetadataItem *item in [asset metadata]) {
+        for (AVMetadataItem *item in asset.metadata) {
             if ([item.commonKey isEqualToString:AVMetadataCommonKeyLocation]) {
                 NSString *latlon = item.stringValue;
                 NSString *latitude  = [latlon substringToIndex:8];
