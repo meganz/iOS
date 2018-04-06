@@ -5,6 +5,6 @@
 
 - (id)init NS_UNAVAILABLE;
 
-- (instancetype)initWithLogout:(BOOL)logout;
+- (instancetype)initToLogout:(BOOL)logout;
 
 @end

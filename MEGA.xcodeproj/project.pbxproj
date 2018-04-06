@@ -1642,7 +1642,6 @@
 				137361921A6664C300B740E8 /* AppDelegate.m */,
 				41840EE81E811CD600D8308D /* MEGAApplication.h */,
 				41840EE91E811CD600D8308D /* MEGAApplication.m */,
-				83D64E2B2017873D00E24155 /* PasswordReminder */,
 				E8C289F91BF65B2200F7A034 /* Launch */,
 				4147C2CE1B4EE8A400A37044 /* CoreData */,
 				E84CDAFE1A7292AA003F4C77 /* Links */,
@@ -2828,16 +2827,17 @@
 		A819B3401EAFA7E7004592F9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				E8B3FE761DDB379C008A9C82 /* HelpModalViewController.h */,
-				E8B3FE771DDB379C008A9C82 /* HelpModalViewController.m */,
-				5B134B8E1F86260A000E367E /* HelpModalViewController.xib */,
+				832E1020202B097900BDD30F /* CustomActionViewController */,
+				83D64E2B2017873D00E24155 /* PasswordReminder */,
 				A819B33D1EAFA7E2004592F9 /* CustomModalAlertViewController.h */,
 				A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */,
 				A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */,
+				E8B3FE761DDB379C008A9C82 /* HelpModalViewController.h */,
+				E8B3FE771DDB379C008A9C82 /* HelpModalViewController.m */,
+				5B134B8E1F86260A000E367E /* HelpModalViewController.xib */,
 				836AEDE32018AD1F00868FC7 /* PasswordView.h */,
 				836AEDE42018AD1F00868FC7 /* PasswordView.m */,
 				836AEDE12018AD0C00868FC7 /* PasswordView.xib */,
-				832E1020202B097900BDD30F /* CustomActionViewController */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";

@@ -121,6 +121,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 + (void)presentSafariViewControllerWithURL:(NSURL *)url;
 + (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ __nullable)(void))completion;
++ (void)showMasterKeyCopiedAlert;
 
 #pragma mark - Logout
 
