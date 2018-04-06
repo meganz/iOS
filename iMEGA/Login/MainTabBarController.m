@@ -1,4 +1,9 @@
+
 #import "MainTabBarController.h"
+
+#import <UserNotifications/UserNotifications.h>
+
+#import "LTHPasscodeViewController.h"
 
 #import "CallViewController.h"
 #import "MEGAProviderDelegate.h"
@@ -7,8 +12,6 @@
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "DevicePermissionsHelper.h"
-
-#import <UserNotifications/UserNotifications.h>
 
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate, MEGAChatCallDelegate>
 
@@ -361,6 +364,15 @@
                 [self.megaCallManager endCall:call];
             }
                 
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"] && [LTHPasscodeViewController doesPasscodeExist]) {
+                [[LTHPasscodeViewController sharedUser] showLockScreenOver:[UIApplication mnz_visibleViewController].view
+                                                             withAnimation:YES
+                                                                withLogout:NO
+                                                            andLogoutTitle:nil];
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"presentPasscodeLater"];
+                [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
+            }
+            
             break;
             
         default:
