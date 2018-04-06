@@ -1882,6 +1882,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     MEGALogDebug(@"Did receive incoming push with payload: %@", [payload dictionaryPayload]);
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"presentPasscodeLater"];
     [[LTHPasscodeViewController sharedUser] disablePasscodeWhenApplicationEntersBackground];
+    [LTHPasscodeViewController close];
     [self startBackgroundTask];
 }
 
