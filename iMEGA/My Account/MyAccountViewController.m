@@ -248,7 +248,7 @@
 
 - (IBAction)logoutTouchUpInside:(UIButton *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        MEGAShowPasswordReminderRequestDelegate *showPasswordReminderDelegate = [[MEGAShowPasswordReminderRequestDelegate alloc] initWithLogout:YES];
+        MEGAShowPasswordReminderRequestDelegate *showPasswordReminderDelegate = [[MEGAShowPasswordReminderRequestDelegate alloc] initToLogout:YES];
         [[MEGASdkManager sharedMEGASdk] shouldShowPasswordReminderDialogAtLogout:YES delegate:showPasswordReminderDelegate];
     }
 }

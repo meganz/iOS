@@ -34,6 +34,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
     [self fadeInBackgroundCompletion:nil];
 }
 
@@ -43,28 +44,33 @@
     [self dismissViewControllerAnimated:YES completion:^{
         UINavigationController *testPasswordNavigation = [[UIStoryboard storyboardWithName:@"PasswordReminder" bundle:nil] instantiateViewControllerWithIdentifier:@"TestPasswordNavigationControllerID"];
         TestPasswordViewController *testPasswordViewController = testPasswordNavigation.viewControllers.firstObject;
-        testPasswordViewController.logout = self.logout;
+        testPasswordViewController.logout = self.isLoggingOut;
+        
         [[UIApplication mnz_visibleViewController] presentViewController:testPasswordNavigation animated:YES completion:nil];
     }];
 }
 
 - (IBAction)tapBackupRecoveryKey:(id)sender {
     if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
-        __weak PasswordReminderViewController *weakSelf = self;
-        [self.view setBackgroundColor:[UIColor clearColor]];
-
-        [Helper showExportMasterKeyInView:self completion:^{
-            if (weakSelf.logout) {
-                [Helper logoutAfterPasswordReminder];
-            }
-        }];
+        if (self.isLoggingOut) {
+            [Helper showMasterKeyCopiedAlert];
+        } else {
+            __weak PasswordReminderViewController *weakSelf = self;
+            self.view.backgroundColor = UIColor.clearColor;
+            
+            [Helper showExportMasterKeyInView:self completion:^{
+                if (weakSelf.isLoggingOut) {
+                    [Helper logoutAfterPasswordReminder];
+                }
+            }];
+        }
     } else {
         [MEGAReachabilityManager isReachableHUDIfNot];
     }
 }
 
 - (IBAction)tapDismiss:(id)sender {
-    [self.view setBackgroundColor:[UIColor clearColor]];
+    self.view.backgroundColor = UIColor.clearColor;
     [self dismissViewControllerAnimated:YES completion:^{
         [self notifyUserSkippedOrBlockedPasswordReminder];
     }];
@@ -79,25 +85,32 @@
         [[MEGASdkManager sharedMEGASdk] passwordReminderDialogSkipped];
     }
     
-    if (self.logout) {
+    if (self.isLoggingOut) {
         [Helper logoutAfterPasswordReminder];
     }
 }
 
 - (void)configureUI {
-    [self.alphaView setAlpha:0];
+    self.alphaView.alpha = 0;
     
     self.titleLabel.text = AMLocalizedString(@"remindPasswordTitle", @"Title for Remind Password View, inviting user to test password");
-    self.descriptionLabel.text = AMLocalizedString(@"remindPasswordText", @"Text for Remind Password View, explainig why user should test password");
     self.switchInfoLabel.text = AMLocalizedString(@"dontShowAgain", @"Text for don't show again Remind Password View option");
-    [self.dismissButton setTitle:AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).") forState:UIControlStateNormal];
     [self.testPasswordButton setTitle:AMLocalizedString(@"testPassword", @"Label for test password button") forState:UIControlStateNormal];
-    [self.backupKeyButton setTitle:AMLocalizedString(@"backupRecoveryKey", @"Label for recovery key button") forState:UIControlStateNormal];
+    
+    if (self.isLoggingOut) {
+        self.descriptionLabel.text = AMLocalizedString(@"remindPasswordLogoutText", @" Text to describe why the user should test his/her password before logging out");
+        [self.backupKeyButton setTitle:AMLocalizedString(@"exportRecoveryKey", @"Text 'Export Recovery Key' placed just before two buttons into the 'settings' page to allow see (copy/paste) and export the Recovery Key.") forState:UIControlStateNormal];
+        [self.dismissButton setTitle:AMLocalizedString(@"proceedToLogout", @"Title of the button which logs out from your account.") forState:UIControlStateNormal];
+    } else {
+        self.descriptionLabel.text = AMLocalizedString(@"remindPasswordText", @"Text for Remind Password View, explainig why user should test password");
+        [self.backupKeyButton setTitle:AMLocalizedString(@"backupRecoveryKey", @"Label for recovery key button") forState:UIControlStateNormal];
+        [self.dismissButton setTitle:AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).") forState:UIControlStateNormal];
+    }
 }
 
 - (void)fadeInBackgroundCompletion:(void (^ __nullable)(void))fadeInCompletion {
     [UIView animateWithDuration:.3 animations:^{
-        [self.alphaView setAlpha:1];
+        self.alphaView.alpha = 1;
     } completion:^(BOOL finished) {
         if (fadeInCompletion && finished) {
             fadeInCompletion();

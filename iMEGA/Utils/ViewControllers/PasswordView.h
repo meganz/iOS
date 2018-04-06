@@ -4,6 +4,7 @@
 @protocol PasswordViewDelegate <NSObject>
 
 @optional
+
 - (void)passwordViewBeginEditing;
 
 @end
@@ -16,9 +17,5 @@
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 
 @property (assign, nonatomic) IBOutlet id<PasswordViewDelegate> delegate;
-
-- (void)passwordTextFieldColor:(UIColor *)color;
-- (void)hideKeyboard;
-- (BOOL)isFirstResponder;
 
 @end

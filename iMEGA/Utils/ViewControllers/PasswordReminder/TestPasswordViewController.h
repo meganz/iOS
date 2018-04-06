@@ -3,6 +3,6 @@
 
 @interface TestPasswordViewController : UIViewController
 
-@property (assign) BOOL logout;
+@property (assign, getter=isLoggingOut) BOOL logout;
 
 @end

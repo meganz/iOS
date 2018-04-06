@@ -3,20 +3,21 @@
 
 @implementation PasswordView
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         [self customInit];
     }
+    
     return self;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
-    if(self) {
+    if (self) {
         [self customInit];
     }
+    
     return self;
 }
 
@@ -25,7 +26,7 @@
     [self addSubview:self.customView];
     self.customView.frame = self.bounds;
     self.passwordTextField.delegate = self;
-    [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password")];
+    self.passwordTextField.placeholder = AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password");
 }
 
 - (IBAction)tapToggleSecureTextEntry:(id)sender {
@@ -35,20 +36,6 @@
     } else {
         [self.rightImageView setImage:[UIImage imageNamed:@"showHidePassword_active"] forState:UIControlStateNormal];
     }
-}
-
-#pragma mark - Public
-
-- (void)passwordTextFieldColor:(UIColor *)color {
-    [self.passwordTextField setTextColor:color];
-}
-
-- (void)hideKeyboard {
-    [self.passwordTextField resignFirstResponder];
-}
-
-- (BOOL)isFirstResponder {
-    return [self.passwordTextField isFirstResponder];
 }
 
 #pragma mark - UITextFieldDelegate

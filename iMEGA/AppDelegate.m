@@ -407,7 +407,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
         }
         
-        MEGAShowPasswordReminderRequestDelegate *showPasswordReminderDelegate = [[MEGAShowPasswordReminderRequestDelegate alloc] initWithLogout:NO];
+        MEGAShowPasswordReminderRequestDelegate *showPasswordReminderDelegate = [[MEGAShowPasswordReminderRequestDelegate alloc] initToLogout:NO];
         [[MEGASdkManager sharedMEGASdk] shouldShowPasswordReminderDialogAtLogout:NO delegate:showPasswordReminderDelegate];
     }
     

@@ -1310,6 +1310,17 @@ static MEGAIndexer *indexer;
     }
 }
 
++ (void)showMasterKeyCopiedAlert {
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = [[MEGASdkManager sharedMEGASdk] masterKey];
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"recoveryKeyCopiedToClipboard", @"Title of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported - (String as short as possible).") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [[UIApplication mnz_visibleViewController] presentViewController:alertController animated:YES completion:nil];
+    
+    [[MEGASdkManager sharedMEGASdk] masterKeyExported];
+}
+
 #pragma mark - Log
 
 + (void)enableOrDisableLog {
