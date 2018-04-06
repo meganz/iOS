@@ -36,7 +36,7 @@
         return;
     }
     
-    if (YES) {
+    if (request.flag) {
         PasswordReminderViewController *passwordReminderViewController = [[UIStoryboard storyboardWithName:@"PasswordReminder" bundle:nil] instantiateViewControllerWithIdentifier:@"PasswordReminderViewControllerID"];
         passwordReminderViewController.logout = self.isLoggingOut;
         
