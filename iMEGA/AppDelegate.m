@@ -59,6 +59,7 @@
 #import "UnavailableLinkView.h"
 #import "UpgradeTableViewController.h"
 #import "CustomModalAlertViewController.h"
+#import "MEGAShowPasswordReminderRequestDelegate.h"
 
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
@@ -400,9 +401,14 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[MEGAReachabilityManager sharedManager] reconnectIfIPHasChanged];
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
     
-    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [[CameraUploads syncManager] isCameraUploadsEnabled]) {        
-        MEGALogInfo(@"Enable Camera Uploads");
-        [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
+        if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+            MEGALogInfo(@"Enable Camera Uploads");
+            [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+        }
+        
+        MEGAShowPasswordReminderRequestDelegate *showPasswordReminderDelegate = [[MEGAShowPasswordReminderRequestDelegate alloc] initToLogout:NO];
+        [[MEGASdkManager sharedMEGASdk] shouldShowPasswordReminderDialogAtLogout:NO delegate:showPasswordReminderDelegate];
     }
     
     [self.privacyView removeFromSuperview];
