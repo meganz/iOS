@@ -320,7 +320,7 @@
 
 - (void)open {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        BOOL isFolderLink = ((self.fileLinkMode == FileLinkModeNodeFromFolderLink) ? YES : NO);
+        BOOL isFolderLink = self.fileLinkMode == FileLinkModeNodeFromFolderLink;
         if (self.node.name.mnz_isImagePathExtension || self.node.name.mnz_isVideoPathExtension) {
             [self.node mnz_openImageInNavigationController:self.navigationController withNodes:@[self.node] folderLink:isFolderLink displayMode:2];
         } else {
