@@ -777,7 +777,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         if ([self.editMessage.content isEqualToString:self.inputToolbar.contentView.textView.text]) {
             //If the user didn't change anything on the message that was editing, just go out of edit mode.
         } else {
-            message = [[MEGASdkManager sharedMEGAChatSdk] editMessageForChat:self.chatRoom.chatId messageId:self.editMessage.messageId message:text];
+            uint64_t messageId = (self.editMessage.status == MEGAChatMessageStatusSending) ? self.editMessage.temporalId : self.editMessage.messageId;
+            message = [[MEGASdkManager sharedMEGAChatSdk] editMessageForChat:self.chatRoom.chatId messageId:messageId message:text];
             message.chatRoom = self.chatRoom;
             NSUInteger index = [self.messages indexOfObject:self.editMessage];
             if (index != NSNotFound) {
