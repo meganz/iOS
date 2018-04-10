@@ -3,8 +3,10 @@
 #import <AVFoundation/AVFoundation.h>
 #import <CoreSpotlight/CoreSpotlight.h>
 #import <Intents/Intents.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 #import <Photos/Photos.h>
 #import <PushKit/PushKit.h>
+#import <QuickLook/QuickLook.h>
 #import <UserNotifications/UserNotifications.h>
 
 #import "LTHPasscodeViewController.h"
@@ -17,7 +19,6 @@
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAIndexer.h"
 #import "MEGALogger.h"
-#import "MEGALoginRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
@@ -47,18 +48,22 @@
 #import "LoginViewController.h"
 #import "MainTabBarController.h"
 #import "MessagesViewController.h"
-#import "MEGACreateAccountRequestDelegate.h"
-#import "MEGAPasswordLinkRequestDelegate.h"
-#import "MEGAChatCreateChatGroupRequestDelegate.h"
-#import "MEGAInviteContactRequestDelegate.h"
 #import "MyAccountHallViewController.h"
 #import "OfflineTableViewController.h"
+#import "PreviewDocumentViewController.h"
 #import "SecurityOptionsTableViewController.h"
 #import "SettingsTableViewController.h"
 #import "SharedItemsViewController.h"
 #import "UnavailableLinkView.h"
 #import "UpgradeTableViewController.h"
 #import "CustomModalAlertViewController.h"
+
+#import "MEGAChatCreateChatGroupRequestDelegate.h"
+#import "MEGACreateAccountRequestDelegate.h"
+#import "MEGAGetPublicNodeRequestDelegate.h"
+#import "MEGAInviteContactRequestDelegate.h"
+#import "MEGALoginRequestDelegate.h"
+#import "MEGAPasswordLinkRequestDelegate.h"
 #import "MEGAShowPasswordReminderRequestDelegate.h"
 
 #define kUserAgent @"MEGAiOS"
@@ -841,12 +846,39 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)showFileLinkView:(NSString *)fileLinkURLString {
-    MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
-    FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
-    [fileLinkVC setFileLinkString:fileLinkURLString];
+    MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+        if (!request.flag) {
+            MEGANode *node = request.publicNode;
+            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+                UIViewController *photoBrowserVC = [node mnz_photoBrowserWithNodes:@[node] folderLink:NO displayMode:DisplayModeCloudDrive enableMoveToRubbishBin:NO];
+                [self presentLinkViewController:photoBrowserVC];
+                
+                return;
+            }
+            
+            CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)(node.name.pathExtension), NULL);
+            if ([QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]]) {
+                if (fileUTI) {
+                    CFRelease(fileUTI);
+                }
+                
+                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+                PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
+                previewController.node = node;
+                previewController.api = [MEGASdkManager sharedMEGASdk];
+                [self presentLinkViewController:navigationController];
+                
+                return;
+            }
+        }
+        MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
+        FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
+        [fileLinkVC setFileLinkString:fileLinkURLString];
+        
+        [self presentLinkViewController:fileLinkNavigationController];
+    }];
     
-    [self presentLinkViewController:fileLinkNavigationController];
-    
+    [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:fileLinkURLString delegate:delegate];
     self.link = nil;
 }
 
@@ -920,16 +952,16 @@ typedef NS_ENUM(NSUInteger, URLType) {
     self.link = nil;
 }
 
-- (void)presentLinkViewController:(UINavigationController *)navigationController {
+- (void)presentLinkViewController:(UIViewController *)viewController {
     if ([self.window.rootViewController.presentedViewController isKindOfClass:[MEGANavigationController class]]) {
         MEGANavigationController *cameraUploadsPopUpNavigationController = (MEGANavigationController *)self.window.rootViewController.presentedViewController;
         if ([cameraUploadsPopUpNavigationController.topViewController isKindOfClass:[CameraUploadsPopUpViewController class]]) {
-            [cameraUploadsPopUpNavigationController.topViewController presentViewController:navigationController animated:YES completion:nil];
+            [cameraUploadsPopUpNavigationController.topViewController presentViewController:viewController animated:YES completion:nil];
         } else {
-            [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
+            [self.window.rootViewController presentViewController:viewController animated:YES completion:nil];
         }
     } else {
-        [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
+        [self.window.rootViewController presentViewController:viewController animated:YES completion:nil];
     }
 }
 
