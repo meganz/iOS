@@ -457,6 +457,8 @@
     CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
     actionController.node = [self.mediaNodes objectAtIndex:self.currentIndex];
     actionController.actionDelegate = self;
+    actionController.displayMode = self.displayMode;
+    
     if ([[UIDevice currentDevice] iPadDevice]) {
         actionController.modalPresentationStyle = UIModalPresentationPopover;
         UIPopoverPresentationController *popController = [actionController popoverPresentationController];
