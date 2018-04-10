@@ -501,10 +501,10 @@
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
     if (viewControllerToCommit.class == CloudDriveTableViewController.class) {
         [self.navigationController pushViewController:viewControllerToCommit animated:YES];
-    } else if (viewControllerToCommit.class == PreviewDocumentViewController.class){
+    } else if (viewControllerToCommit.class == PreviewDocumentViewController.class) {
         MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:viewControllerToCommit];
         [self.navigationController presentViewController:navigationController animated:YES completion:nil];
-    }else {
+    } else {
         [self.navigationController presentViewController:viewControllerToCommit animated:YES completion:nil];
     }
 }
