@@ -39,6 +39,7 @@
     photoBrowserVC.api = isFolderLink ? [MEGASdkManager sharedMEGASdkFolder] : [MEGASdkManager sharedMEGASdk];
     photoBrowserVC.node = self;
     photoBrowserVC.nodesArray = nodesArray;
+    photoBrowserVC.displayMode = displayMode;
     
     return photoBrowserVC;
 }

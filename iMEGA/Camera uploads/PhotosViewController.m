@@ -614,6 +614,7 @@
         photoBrowserViewController.nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
         photoBrowserViewController.originFrame = cellFrame;
         photoBrowserViewController.delegate = self;
+        photoBrowserViewController.displayMode = DisplayModeCloudDrive;
 
         [self presentViewController:photoBrowserViewController animated:YES completion:nil];
     } else {
