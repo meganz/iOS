@@ -1887,15 +1887,17 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)onChatOnlineStatusUpdate:(MEGAChatSdk *)api userHandle:(uint64_t)userHandle status:(MEGAChatStatus)onlineStatus inProgress:(BOOL)inProgress {
-    if (inProgress || userHandle == api.myUserHandle) {
+    if (inProgress || userHandle == api.myUserHandle || self.chatRoom.isGroup) {
         return;
     }
     
-    [self customNavigationBarLabel];
-    
-    if (self.openMessageHeaderView) {
-        self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
-        self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
+    if ([self.chatRoom peerHandleAtIndex:0] == userHandle && onlineStatus != MEGAChatStatusInvalid) {
+        [self customNavigationBarLabel];
+        
+        if (self.openMessageHeaderView) {
+            self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
+            self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
+        }
     }
 }
 
