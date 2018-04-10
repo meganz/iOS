@@ -1571,10 +1571,13 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         switch (message.status) {
             case MEGAChatMessageStatusUnknown:
                 break;
+                
             case MEGAChatMessageStatusSending:
                 break;
+                
             case MEGAChatMessageStatusSendingManual:
                 break;
+                
             case MEGAChatMessageStatusServerReceived: {
                 if (message.type == MEGAChatMessageTypeAttachment) {
                     message.chatRoom = self.chatRoom;
@@ -1599,12 +1602,26 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                 }
                 break;
             }
-            case MEGAChatMessageStatusServerRejected:
+                
+            case MEGAChatMessageStatusServerRejected: {
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageId == %" PRIu64, message.messageId];
+                NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
+                if (filteredArray.count) {
+                    NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+                
+                    [self.messages removeObjectAtIndex:index];
+                    [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                }
                 break;
+            }
+                
             case MEGAChatMessageStatusDelivered:
                 break;
+                
             case MEGAChatMessageStatusNotSeen:
                 break;
+                
             case MEGAChatMessageStatusSeen:
                 break;
                 
