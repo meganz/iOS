@@ -38,6 +38,10 @@
     } else {
         [self.rightImageView setImage:[UIImage imageNamed:@"showHidePassword_active"] forState:UIControlStateNormal];
     }
+    //This code fix the position of the text field cursor not locating properly when toggle secure text entry
+    NSString *tmpString = self.passwordTextField.text;
+    self.passwordTextField.text = @" ";
+    self.passwordTextField.text = tmpString;
 }
 
 #pragma mark - UITextFieldDelegate

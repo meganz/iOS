@@ -734,6 +734,7 @@
                                         <subviews>
                                             <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="padlock" translatesAutoresizingMaskIntoConstraints="NO" id="ddP-st-5kT" userLabel="Current Password Padlock Image View">
                                                 <rect key="frame" x="30" y="26" width="32" height="32"/>
+                                                <color key="tintColor" red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="32" id="NaI-9o-Au0"/>
                                                     <constraint firstAttribute="width" constant="32" id="vhS-Nz-gG2"/>
@@ -774,6 +775,7 @@
                                             </imageView>
                                             <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="key" translatesAutoresizingMaskIntoConstraints="NO" id="ftC-bG-Jrj" userLabel="New Password Image View">
                                                 <rect key="frame" x="30" y="91" width="32" height="32"/>
+                                                <color key="tintColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="32" id="FmK-Sd-iWn"/>
                                                     <constraint firstAttribute="width" constant="32" id="wZX-fm-3Hv"/>
@@ -799,7 +801,7 @@
                                                 </constraints>
                                             </imageView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WOV-1d-qrc" customClass="PasswordStrengthIndicatorView">
-                                                <rect key="frame" x="30" y="130" width="315" height="112"/>
+                                                <rect key="frame" x="74" y="130" width="271" height="112"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="112" id="7uD-tO-OUK"/>
@@ -807,6 +809,7 @@
                                             </view>
                                             <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="keyDouble" translatesAutoresizingMaskIntoConstraints="NO" id="fp2-Td-e9h" userLabel="Confirm Password Image View">
                                                 <rect key="frame" x="30" y="268" width="32" height="32"/>
+                                                <color key="tintColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="32" id="8G8-kU-3g1"/>
                                                     <constraint firstAttribute="height" constant="32" id="TXR-3z-paU"/>
@@ -933,7 +936,7 @@
                                             <constraint firstItem="py9-Rd-k8X" firstAttribute="top" secondItem="WOV-1d-qrc" secondAttribute="bottom" constant="64" id="syV-Js-tdT"/>
                                             <constraint firstItem="Kgp-GT-dsf" firstAttribute="top" secondItem="ddP-st-5kT" secondAttribute="bottom" constant="6" id="syf-YK-1ss"/>
                                             <constraint firstItem="Ryf-7d-GGn" firstAttribute="leading" secondItem="ftC-bG-Jrj" secondAttribute="trailing" constant="12" id="uIL-il-S9o"/>
-                                            <constraint firstItem="WOV-1d-qrc" firstAttribute="leading" secondItem="9QC-Ia-E7h" secondAttribute="leading" id="uPe-tJ-sAD"/>
+                                            <constraint firstItem="WOV-1d-qrc" firstAttribute="leading" secondItem="9QC-Ia-E7h" secondAttribute="leading" constant="44" id="uPe-tJ-sAD"/>
                                             <constraint firstItem="9QC-Ia-E7h" firstAttribute="centerX" secondItem="cAv-zt-lSj" secondAttribute="centerX" id="wFa-h0-HCb"/>
                                             <constraint firstItem="py9-Rd-k8X" firstAttribute="top" secondItem="bX8-QE-I91" secondAttribute="bottom" constant="15" id="wwd-fs-Jcv"/>
                                             <constraint firstItem="py9-Rd-k8X" firstAttribute="top" secondItem="fp2-Td-e9h" secondAttribute="bottom" constant="6" id="xJA-kC-UXk"/>
@@ -953,6 +956,7 @@
                                                 <exclude reference="NWr-QJ-Mg5"/>
                                                 <exclude reference="XOi-nI-NKP"/>
                                                 <exclude reference="lNq-0R-pvB"/>
+                                                <exclude reference="yo3-dA-j7D"/>
                                                 <exclude reference="2zl-xp-eZ3"/>
                                                 <exclude reference="34u-NR-BOy"/>
                                                 <exclude reference="lx1-oX-qhx"/>
@@ -960,12 +964,11 @@
                                                 <exclude reference="mMY-VI-iiA"/>
                                                 <exclude reference="nej-Xi-7xM"/>
                                                 <exclude reference="xq4-aB-hyM"/>
-                                                <exclude reference="yo3-dA-j7D"/>
+                                                <exclude reference="JPz-th-d3Y"/>
                                                 <exclude reference="7to-0s-0vt"/>
                                                 <exclude reference="ELC-K1-avX"/>
                                                 <exclude reference="Z8S-F8-JOJ"/>
                                                 <exclude reference="hqo-bk-w0z"/>
-                                                <exclude reference="JPz-th-d3Y"/>
                                                 <exclude reference="BDs-Sg-Z7r"/>
                                                 <exclude reference="IHs-j4-qp0"/>
                                                 <exclude reference="awl-pd-G0G"/>
@@ -978,6 +981,16 @@
                                                 <exclude reference="sVF-Si-0YU"/>
                                                 <exclude reference="wwd-fs-Jcv"/>
                                                 <exclude reference="SUF-1w-x55"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=compact-widthClass=regular">
+                                            <mask key="constraints">
+                                                <include reference="Ob2-U4-yr7"/>
+                                                <include reference="TSL-2w-tx2"/>
+                                                <include reference="2zl-xp-eZ3"/>
+                                                <include reference="wFa-h0-HCb"/>
+                                                <include reference="BDs-Sg-Z7r"/>
+                                                <include reference="p4p-aX-1tP"/>
                                             </mask>
                                         </variation>
                                         <variation key="heightClass=regular-widthClass=compact">
@@ -1001,21 +1014,21 @@
                                                 <include reference="NWr-QJ-Mg5"/>
                                                 <exclude reference="lHg-q5-YaM"/>
                                                 <include reference="lNq-0R-pvB"/>
+                                                <exclude reference="iSn-od-hD0"/>
+                                                <include reference="yo3-dA-j7D"/>
                                                 <include reference="2zl-xp-eZ3"/>
                                                 <include reference="wFa-h0-HCb"/>
                                                 <exclude reference="blB-rh-bHd"/>
                                                 <exclude reference="mMY-VI-iiA"/>
                                                 <exclude reference="nej-Xi-7xM"/>
                                                 <include reference="xq4-aB-hyM"/>
-                                                <exclude reference="iSn-od-hD0"/>
-                                                <include reference="yo3-dA-j7D"/>
+                                                <exclude reference="FpD-Hn-5eJ"/>
+                                                <include reference="JPz-th-d3Y"/>
                                                 <exclude reference="5O7-gp-HJo"/>
                                                 <exclude reference="6Pn-Xh-F31"/>
                                                 <include reference="ELC-K1-avX"/>
                                                 <include reference="Z8S-F8-JOJ"/>
                                                 <include reference="hqo-bk-w0z"/>
-                                                <exclude reference="FpD-Hn-5eJ"/>
-                                                <include reference="JPz-th-d3Y"/>
                                                 <include reference="BDs-Sg-Z7r"/>
                                                 <include reference="p4p-aX-1tP"/>
                                                 <include reference="7fb-2A-Bkm"/>
@@ -1170,7 +1183,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auto-Accept" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ODN-wg-dNs">
-                                                    <rect key="frame" x="16" y="11" width="288" height="21"/>
+                                                    <rect key="frame" x="16" y="11.5" width="288" height="20"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -2222,7 +2235,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="10 minutes" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fft-mR-LRE">
-                                                    <rect key="frame" x="23" y="12" width="280" height="21"/>
+                                                    <rect key="frame" x="23" y="11.5" width="280" height="21"/>
                                                     <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
@@ -2231,7 +2244,7 @@
                                                     </connections>
                                                 </textField>
                                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FbJ-dp-8F4">
-                                                    <rect key="frame" x="313" y="6" width="39" height="33"/>
+                                                    <rect key="frame" x="313" y="5.5" width="39" height="33"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <state key="normal" title="Save">
                                                         <color key="titleColor" red="0.0" green="0.47843137254901957" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

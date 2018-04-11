@@ -19,7 +19,9 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *lastNameTextField;
+@property (weak, nonatomic) IBOutlet UIImageView *nameIconImageView;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
+@property (weak, nonatomic) IBOutlet UIImageView *emailIconImageView;
 @property (weak, nonatomic) IBOutlet PasswordView *passwordView;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordStrengthIndicatorViewHeightLayoutConstraint;
@@ -71,6 +73,7 @@
     [self.retypePasswordView.passwordTextField setPlaceholder:AMLocalizedString(@"confirmPassword", nil)];
     self.retypePasswordView.passwordTextField.tag = 4;
     self.retypePasswordView.leftImageView.image = [UIImage imageNamed:@"keyDouble"];
+    self.retypePasswordView.leftImageView.tintColor = UIColor.mnz_gray777777;
     
     [self setTermsOfServiceAttributedTitle];
     
@@ -102,6 +105,21 @@
     textField.font = [UIFont mnz_SFUIRegularWithSize:17];
 }
 
+- (void)showPasswordErrorView:(PasswordView *)passwordView constraint:(NSLayoutConstraint *)constraint message:(NSString *)message {
+    constraint.constant = 83;
+    passwordView.wrongPasswordView.hidden = NO;
+    passwordView.leftImageView.tintColor = UIColor.mnz_redD90007;
+    passwordView.wrongPasswordLabel.text = message;
+}
+
+- (void)hidePasswordErrorView:(PasswordView *)passwordView constraint:(NSLayoutConstraint *)constraint {
+    if (!passwordView.wrongPasswordView.hidden) {
+        constraint.constant = 44;
+        passwordView.wrongPasswordView.hidden = YES;
+        passwordView.leftImageView.tintColor = UIColor.mnz_gray777777;
+    }
+}
+
 - (IBAction)cancel:(UIBarButtonItem *)sender {
     [self hideKeyboard];
     
@@ -111,6 +129,7 @@
 - (BOOL)validateForm {
     if (![self validateName:self.nameTextField.text] || ![self validateName:self.lastNameTextField.text]) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"invalidFirstNameAndLastName", @"")];
+        self.nameIconImageView.tintColor = UIColor.mnz_redD90007;
         if (![self validateName:self.nameTextField.text]) {
             [self.nameTextField becomeFirstResponder];
         } else {
@@ -122,6 +141,7 @@
     
     if (!self.emailTextField.text.mnz_isValidEmail) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
+        self.emailIconImageView.tintColor = UIColor.mnz_redD90007;
         [self.emailTextField becomeFirstResponder];
         
         return NO;
@@ -129,14 +149,10 @@
     
     if (![self validatePassword]) {
         if ([self.passwordView.passwordTextField.text length] == 0) {
-            self.passwordViewHeightConstraint.constant = 83;
-            self.passwordView.wrongPasswordLabel.text = AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password");
-            self.passwordView.wrongPasswordView.hidden = NO;
+            [self showPasswordErrorView:self.passwordView constraint:self.passwordViewHeightConstraint message:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
             [self.passwordView.passwordTextField becomeFirstResponder];
         } else {
-            self.retypePasswordViewHeightConstraint.constant = 83;
-            self.retypePasswordView.wrongPasswordLabel.text = AMLocalizedString(@"passwordsDoNotMatch", @"Passwords do not match");
-            self.retypePasswordView.wrongPasswordView.hidden = NO;
+            [self showPasswordErrorView:self.retypePasswordView constraint:self.retypePasswordViewHeightConstraint message: AMLocalizedString(@"passwordsDoNotMatch", @"Passwords do not match")];
             [self.retypePasswordView.passwordTextField becomeFirstResponder];
         }
         
@@ -299,6 +315,7 @@
                         [self.navigationController popViewControllerAnimated:YES];
                     }];
                 } else {
+                    self.emailIconImageView.tintColor = UIColor.mnz_redD90007;
                     [self.emailTextField becomeFirstResponder];
                     self.createAccountButton.enabled = YES;
                 }
@@ -331,7 +348,11 @@
     
     self.createAccountButton.backgroundColor = shoulBeCreateAccountButtonGray ? UIColor.mnz_grayEEEEEE : UIColor.mnz_redFF4D52;
     
-    if (textField.tag == 3) {
+    if (textField.tag == 0 || textField.tag == 1) {
+        self.nameIconImageView.tintColor = UIColor.mnz_gray777777;
+    } else if (textField.tag == 2) {
+        self.emailIconImageView.tintColor = UIColor.mnz_gray777777;
+    } else if (textField.tag == 3) {
         if (text.length == 0) {
             self.passwordStrengthIndicatorView.customView.hidden = YES;
             self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
@@ -343,15 +364,11 @@
             
             [self.passwordStrengthIndicatorView updateViewWithPasswordStrength:[[MEGASdkManager sharedMEGASdk] passwordStrength:text]];
         }
-        if (!self.passwordView.wrongPasswordView.hidden) {
-            self.passwordViewHeightConstraint.constant = 44;
-            self.passwordView.wrongPasswordView.hidden = YES;
-        }
+        [self hidePasswordErrorView:self.passwordView constraint:self.passwordViewHeightConstraint];
+        [self hidePasswordErrorView:self.retypePasswordView constraint:self.retypePasswordViewHeightConstraint];
     } else if (textField.tag == 4) {
-        if (!self.retypePasswordView.wrongPasswordView.hidden) {
-            self.retypePasswordViewHeightConstraint.constant = 44;
-            self.retypePasswordView.wrongPasswordView.hidden = YES;
-        }
+        [self hidePasswordErrorView:self.passwordView constraint:self.passwordViewHeightConstraint];
+        [self hidePasswordErrorView:self.retypePasswordView constraint:self.retypePasswordViewHeightConstraint];
     }
     
     return YES;
@@ -359,16 +376,18 @@
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
     
-    if (textField.tag == 3) {
+    if (textField.tag == 0 || textField.tag == 1) {
+        self.nameIconImageView.tintColor = UIColor.mnz_gray777777;
+    } else if (textField.tag == 2) {
+        self.emailIconImageView.tintColor = UIColor.mnz_gray777777;
+    } else if (textField.tag == 3) {
         self.passwordStrengthIndicatorView.customView.hidden = YES;
         self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
-        if (!self.passwordView.wrongPasswordView.hidden) {
-            self.passwordViewHeightConstraint.constant = 44;
-            self.passwordView.wrongPasswordView.hidden = YES;
-        }
+        [self hidePasswordErrorView:self.passwordView constraint:self.passwordViewHeightConstraint];
+        [self hidePasswordErrorView:self.retypePasswordView constraint:self.retypePasswordViewHeightConstraint];
     } else if (textField.tag == 4) {
-        self.retypePasswordViewHeightConstraint.constant = 44;
-        self.retypePasswordView.wrongPasswordView.hidden = YES;
+        [self hidePasswordErrorView:self.passwordView constraint:self.passwordViewHeightConstraint];
+        [self hidePasswordErrorView:self.retypePasswordView constraint:self.retypePasswordViewHeightConstraint];
     }
     
     self.createAccountButton.backgroundColor = UIColor.mnz_grayEEEEEE;

@@ -54,16 +54,19 @@
         self.currentPasswordView.passwordTextField.placeholder = AMLocalizedString(@"currentPassword", @"Placeholder text to explain that the current password should be written on this text field.");
         self.currentPasswordView.passwordTextField.tag = 3;
         self.currentPasswordView.leftImageView.image = [UIImage imageNamed:@"padlock"];
-
+        self.currentPasswordView.leftImageView.tintColor = UIColor.mnz_gray777777;
+        
         [self configureTextFieldStyle:self.theNewPasswordView.passwordTextField];
         self.theNewPasswordView.passwordTextField.placeholder = AMLocalizedString(@"newPassword", @"Placeholder text to explain that the new password should be written on this text field.");
         self.theNewPasswordView.passwordTextField.tag = 4;
         self.theNewPasswordView.leftImageView.image = [UIImage imageNamed:@"key"];
+        self.theNewPasswordView.leftImageView.tintColor = UIColor.mnz_gray777777;
 
         [self configureTextFieldStyle:self.confirmPasswordView.passwordTextField];
         self.confirmPasswordView.passwordTextField.placeholder = AMLocalizedString(@"confirmPassword", @"Placeholder text to explain that the new password should be re-written on this text field.");
         self.confirmPasswordView.passwordTextField.tag = 5;
         self.confirmPasswordView.leftImageView.image = [UIImage imageNamed:@"keyDouble"];
+        self.confirmPasswordView.leftImageView.tintColor = UIColor.mnz_gray777777;
 
         [self.changePasswordButton setTitle:AMLocalizedString(@"changePasswordLabel", @"Section title where you can change your MEGA's password") forState:UIControlStateNormal];
         
@@ -140,40 +143,47 @@
     textField.font = [UIFont mnz_SFUIRegularWithSize:17];
 }
 
+- (void)showPasswordErrorView:(PasswordView *)passwordView constraint:(NSLayoutConstraint *)constraint message:(NSString *)message {
+    constraint.constant = 83;
+    passwordView.wrongPasswordView.hidden = NO;
+    passwordView.leftImageView.tintColor = UIColor.mnz_redD90007;
+    passwordView.wrongPasswordLabel.text = message;
+}
+
+- (void)hidePasswordErrorView:(PasswordView *)passwordView constraint:(NSLayoutConstraint *)constraint {
+    if (!passwordView.wrongPasswordView.hidden) {
+        constraint.constant = 44;
+        passwordView.wrongPasswordView.hidden = YES;
+        passwordView.leftImageView.tintColor = UIColor.mnz_gray777777;
+    }
+}
+
 - (BOOL)validatePasswordForm {
+    [self hidePasswordErrorView:self.theNewPasswordView constraint:self.theNewPasswordViewHeightConstraint];
+    [self hidePasswordErrorView:self.currentPasswordView constraint:self.currentPasswordViewHeightConstraint];
+    [self hidePasswordErrorView:self.confirmPasswordView constraint:self.confirmPasswordViewHeightConstraint];
+    
     if (self.currentPasswordView.passwordTextField.text.length == 0) {
-        self.currentPasswordViewHeightConstraint.constant = 83;
-        self.currentPasswordView.wrongPasswordLabel.text = AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password");
-        self.currentPasswordView.wrongPasswordView.hidden = NO;
+        [self showPasswordErrorView:self.currentPasswordView constraint:self.currentPasswordViewHeightConstraint message:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
         [self.currentPasswordView.passwordTextField becomeFirstResponder];
         return NO;
     }
     
     if (![self validatePassword:self.theNewPasswordView.passwordTextField.text]) {
         if (self.theNewPasswordView.passwordTextField.text.length == 0) {
-            self.theNewPasswordViewHeightConstraint.constant = 83;
-            self.theNewPasswordView.wrongPasswordLabel.text = AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password");
-            self.theNewPasswordView.wrongPasswordView.hidden = NO;
+            [self showPasswordErrorView:self.theNewPasswordView constraint:self.theNewPasswordViewHeightConstraint message:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
             [self.theNewPasswordView.passwordTextField becomeFirstResponder];
         } else {
-            self.theNewPasswordViewHeightConstraint.constant = 83;
-            self.theNewPasswordView.wrongPasswordLabel.text = AMLocalizedString(@"passwordsDoNotMatch", @"Passwords do not match");
-            self.theNewPasswordView.wrongPasswordView.hidden = NO;
-            self.theNewPasswordView.passwordTextField.text = @"";
-            self.confirmPasswordView.passwordTextField.text = @"";
+            [self showPasswordErrorView:self.confirmPasswordView constraint:self.confirmPasswordViewHeightConstraint message:AMLocalizedString(@"passwordsDoNotMatch", @"Passwords do not match")];
             self.passwordStrengthIndicatorView.customView.hidden = YES;
             self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
-            [self.theNewPasswordView.passwordTextField becomeFirstResponder];
+            [self.confirmPasswordView.passwordTextField becomeFirstResponder];
         }
         return NO;
     }
     
     if (([[MEGASdkManager sharedMEGASdk] passwordStrength:self.theNewPasswordView.passwordTextField.text] == PasswordStrengthVeryWeak) && (self.changeType == ChangeTypePassword)) {
-        self.theNewPasswordViewHeightConstraint.constant = 83;
-        self.theNewPasswordView.wrongPasswordLabel.text = AMLocalizedString(@"pleaseStrengthenYourPassword", @"");
-        self.theNewPasswordView.wrongPasswordView.hidden = NO;
-        self.theNewPasswordView.passwordTextField.text = @"";
-        self.confirmPasswordView.passwordTextField.text = @"";
+        [self showPasswordErrorView:self.theNewPasswordView constraint:self.theNewPasswordViewHeightConstraint message:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
         self.passwordStrengthIndicatorView.customView.hidden = YES;
         self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
         [self.theNewPasswordView.passwordTextField becomeFirstResponder];
@@ -181,11 +191,7 @@
     }
     
     if ([self.currentPasswordView.passwordTextField.text isEqualToString:self.theNewPasswordView.passwordTextField.text]) {
-        self.theNewPasswordViewHeightConstraint.constant = 83;
-        self.theNewPasswordView.wrongPasswordLabel.text = AMLocalizedString(@"oldAndNewPasswordMatch", @"The old and the new password can not match");
-        self.theNewPasswordView.wrongPasswordView.hidden = NO;
-        self.theNewPasswordView.passwordTextField.text = @"";
-        self.confirmPasswordView.passwordTextField.text = @"";
+        [self showPasswordErrorView:self.theNewPasswordView constraint:self.theNewPasswordViewHeightConstraint message: AMLocalizedString(@"oldAndNewPasswordMatch", @"The old and the new password can not match")];
         [self.theNewPasswordView.passwordTextField becomeFirstResponder];
         return NO;
     }
@@ -349,20 +355,11 @@
                 
                 [self.passwordStrengthIndicatorView updateViewWithPasswordStrength:[[MEGASdkManager sharedMEGASdk] passwordStrength:text]];
             }
-            if (!self.theNewPasswordView.wrongPasswordView.hidden) {
-                self.theNewPasswordViewHeightConstraint.constant = 44;
-                self.theNewPasswordView.wrongPasswordView.hidden = YES;
-            }
+            [self hidePasswordErrorView:self.theNewPasswordView constraint:self.theNewPasswordViewHeightConstraint];
         } else if (textField.tag == 3) {
-            if (!self.currentPasswordView.wrongPasswordView.hidden) {
-                self.currentPasswordViewHeightConstraint.constant = 44;
-                self.currentPasswordView.wrongPasswordView.hidden = YES;
-            }
+            [self hidePasswordErrorView:self.currentPasswordView constraint:self.currentPasswordViewHeightConstraint];
         } else if (textField.tag == 5) {
-            if (!self.confirmPasswordView.wrongPasswordView.hidden) {
-                self.confirmPasswordViewHeightConstraint.constant = 44;
-                self.confirmPasswordView.wrongPasswordView.hidden = YES;
-            }
+            [self hidePasswordErrorView:self.confirmPasswordView constraint:self.confirmPasswordViewHeightConstraint];
         }
     }
     
@@ -374,20 +371,11 @@
         if (textField.tag == 4) {
             self.passwordStrengthIndicatorView.customView.hidden = YES;
             self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
-            if (!self.theNewPasswordView.wrongPasswordView.hidden) {
-                self.theNewPasswordViewHeightConstraint.constant = 44;
-                self.theNewPasswordView.wrongPasswordView.hidden = YES;
-            }
+            [self hidePasswordErrorView:self.theNewPasswordView constraint:self.theNewPasswordViewHeightConstraint];
         } else if (textField.tag == 3) {
-            if (!self.currentPasswordView.wrongPasswordView.hidden) {
-                self.currentPasswordViewHeightConstraint.constant = 44;
-                self.currentPasswordView.wrongPasswordView.hidden = YES;
-            }
+            [self hidePasswordErrorView:self.currentPasswordView constraint:self.currentPasswordViewHeightConstraint];
         } else if (textField.tag == 5) {
-            if (!self.confirmPasswordView.wrongPasswordView.hidden) {
-                self.confirmPasswordViewHeightConstraint.constant = 44;
-                self.confirmPasswordView.wrongPasswordView.hidden = YES;
-            }
+            [self hidePasswordErrorView:self.confirmPasswordView constraint:self.confirmPasswordViewHeightConstraint];
         }
     }
     
@@ -439,11 +427,9 @@
         switch (error.type) {
             case MEGAErrorTypeApiEArgs: {
                 if (request.type == MEGARequestTypeChangePassword) {
-                    self.currentPasswordView.passwordTextField.text = self.theNewPasswordView.passwordTextField.text = self.confirmPasswordView.passwordTextField.text = @"";
+                    [self showPasswordErrorView:self.currentPasswordView constraint:self.currentPasswordViewHeightConstraint message:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
                     [self.currentPasswordTextField becomeFirstResponder];
-                    self.currentPasswordViewHeightConstraint.constant = 83;
-                    self.currentPasswordView.wrongPasswordLabel.text = AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password");
-                    self.currentPasswordView.wrongPasswordView.hidden = NO;                }
+                }
                 break;
             }
                 
