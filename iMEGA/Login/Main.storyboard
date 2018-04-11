@@ -544,8 +544,10 @@
                     <connections>
                         <outlet property="cancelBarButtonItem" destination="VDK-US-VNZ" id="KMM-7f-dQW"/>
                         <outlet property="createAccountButton" destination="bak-ZA-1ZU" id="Eli-VY-FTw"/>
+                        <outlet property="emailIconImageView" destination="7I0-ut-0r5" id="9W5-Gz-GHj"/>
                         <outlet property="emailTextField" destination="ZUP-K7-qha" id="zmI-Gu-kxg"/>
                         <outlet property="lastNameTextField" destination="mBh-Ff-kxx" id="fX6-of-hi2"/>
+                        <outlet property="nameIconImageView" destination="rQN-gj-bK3" id="eha-4l-IjH"/>
                         <outlet property="nameTextField" destination="bVu-yv-OMn" id="gdC-Y7-LXZ"/>
                         <outlet property="passwordStrengthIndicatorView" destination="ELz-jx-ahD" id="oUj-EM-Ef3"/>
                         <outlet property="passwordStrengthIndicatorViewHeightLayoutConstraint" destination="ygx-SG-dOq" id="dnA-p4-S0s"/>
