@@ -2,6 +2,7 @@
 #import "MEGAImagePickerController.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>
+#import <Photos/Photos.h>
 
 #import "SVProgressHUD.h"
 
@@ -149,18 +150,30 @@
         NSData *imageData = UIImageJPEGRepresentation(image, 1);
         [imageData writeToFile:imagePath atomically:YES];
         
-        if (self.toUploadSomething) {
-            self.filePath = [imagePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:YES];
-        } else if (self.toChangeAvatar) {
-            NSString *avatarFilePath = [self createAvatarWithImagePath:imagePath];
-            [[MEGASdkManager sharedMEGASdk] setAvatarUserWithSourceFilePath:avatarFilePath];
-        } else if (self.toShareThroughChat) {
-            [[MEGASdkManager sharedMEGASdk] createPreview:imagePath destinatioPath:imagePath];
-            self.filePath = [imagePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
-            [self prepareUploadDestination];
-            return;
-        }
+        NSURL *imageURL = [NSURL fileURLWithPath:imagePath];
+        
+        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+            PHAssetCreationRequest *assetCreationRequest = [PHAssetCreationRequest creationRequestForAsset];
+            [assetCreationRequest addResourceWithType:PHAssetResourceTypePhoto fileURL:imageURL options:nil];
+            
+        } completionHandler:^(BOOL success, NSError * _Nullable nserror) {
+            if (success) {
+                if (self.toUploadSomething) {
+                    self.filePath = [imagePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:YES];
+                } else if (self.toChangeAvatar) {
+                    NSString *avatarFilePath = [self createAvatarWithImagePath:imagePath];
+                    [[MEGASdkManager sharedMEGASdk] setAvatarUserWithSourceFilePath:avatarFilePath];
+                } else if (self.toShareThroughChat) {
+                    [[MEGASdkManager sharedMEGASdk] createPreview:imagePath destinatioPath:imagePath];
+                    self.filePath = [imagePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                    [self prepareUploadDestination];
+                    return;
+                }
+            } else {
+                MEGALogError(@"Creation request for asset failed: %@ (Domain: %@ - Code:%ld)", nserror.localizedDescription, nserror.domain, nserror.code);
+            }
+        }];
         
         [self dismissViewControllerAnimated:YES completion:nil];
     } else if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeMovie]) {
