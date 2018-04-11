@@ -897,7 +897,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         if ([self.editMessage.content isEqualToString:self.inputToolbar.contentView.textView.text]) {
             //If the user didn't change anything on the message that was editing, just go out of edit mode.
         } else {
-            message = [[MEGASdkManager sharedMEGAChatSdk] editMessageForChat:self.chatRoom.chatId messageId:self.editMessage.messageId message:text];
+            uint64_t messageId = (self.editMessage.status == MEGAChatMessageStatusSending) ? self.editMessage.temporalId : self.editMessage.messageId;
+            message = [[MEGASdkManager sharedMEGAChatSdk] editMessageForChat:self.chatRoom.chatId messageId:messageId message:text];
             message.chatRoom = self.chatRoom;
             NSUInteger index = [self.messages indexOfObject:self.editMessage];
             if (index != NSNotFound) {
@@ -1750,10 +1751,13 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         switch (message.status) {
             case MEGAChatMessageStatusUnknown:
                 break;
+                
             case MEGAChatMessageStatusSending:
                 break;
+                
             case MEGAChatMessageStatusSendingManual:
                 break;
+                
             case MEGAChatMessageStatusServerReceived: {
                 if (message.type == MEGAChatMessageTypeAttachment) {
                     message.chatRoom = self.chatRoom;
@@ -1778,12 +1782,26 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                 }
                 break;
             }
-            case MEGAChatMessageStatusServerRejected:
+                
+            case MEGAChatMessageStatusServerRejected: {
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageId == %" PRIu64, message.messageId];
+                NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
+                if (filteredArray.count) {
+                    NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+                
+                    [self.messages removeObjectAtIndex:index];
+                    [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                }
                 break;
+            }
+                
             case MEGAChatMessageStatusDelivered:
                 break;
+                
             case MEGAChatMessageStatusNotSeen:
                 break;
+                
             case MEGAChatMessageStatusSeen:
                 break;
                 
