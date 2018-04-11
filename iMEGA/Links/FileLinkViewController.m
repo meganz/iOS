@@ -243,78 +243,30 @@
 }
 
 - (void)import {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-            [self dismissViewControllerAnimated:YES completion:^{
-                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-                [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
-                
-                BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-                browserVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
-                
-                if (self.fileLinkMode == FileLinkModeDefault) {
-                    [browserVC setBrowserAction:BrowserActionImport];
-                } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
-                    [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
-                }
-            }];
-        } else {
-            if (self.fileLinkMode == FileLinkModeDefault) {
-                [Helper setLinkNode:_node];
-                [Helper setSelectedOptionOnLink:1]; //Import file from link
-            } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
-                [[Helper nodesFromLinkMutableArray] addObject:self.nodeFromFolderLink];
-                [Helper setSelectedOptionOnLink:3]; //Import folder or nodes from link
-            }
+    switch (self.fileLinkMode) {
+        case FileLinkModeDefault:
+            [self.node mnz_fileLinkImportFromViewController:self isFolderLink:NO];
+
+            break;
             
-            LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-            [self.navigationController pushViewController:loginVC animated:YES];
-        }
+        case FileLinkModeNodeFromFolderLink:
+            [self.nodeFromFolderLink mnz_fileLinkImportFromViewController:self isFolderLink:YES];
+
+            break;
     }
 }
 
 - (void)download {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        if (self.fileLinkMode == FileLinkModeDefault) {
-            if (![Helper isFreeSpaceEnoughToDownloadNode:_node isFolderLink:NO]) {
-                return;
-            }
-        } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
-            if (![Helper isFreeSpaceEnoughToDownloadNode:self.nodeFromFolderLink isFolderLink:YES]) {
-                return;
-            }
-        }
-        
-        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-            [self dismissViewControllerAnimated:YES completion:^{
-                if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] isKindOfClass:[MainTabBarController class]]) {
-                    MainTabBarController *mainTBC = (MainTabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
-                    mainTBC.selectedIndex = MYACCOUNT;
-                    MEGANavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:MYACCOUNT];
-                    MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
-                    [myAccountHallVC openOffline];
-                }
-                
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-                
-                if (self.fileLinkMode == FileLinkModeDefault) {
-                    [Helper downloadNode:_node folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:NO];
-                } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
-                    [Helper downloadNode:self.nodeFromFolderLink folderPath:[Helper relativePathForOffline] isFolderLink:YES shouldOverwrite:NO];
-                }
-            }];
-        } else {
-            if (self.fileLinkMode == FileLinkModeDefault) {
-                [Helper setLinkNode:_node];
-                [Helper setSelectedOptionOnLink:2]; //Download file from link
-            } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
-                [[Helper nodesFromLinkMutableArray] addObject:self.nodeFromFolderLink];
-                [Helper setSelectedOptionOnLink:4]; //Download folder or nodes from link
-            }
+    switch (self.fileLinkMode) {
+        case FileLinkModeDefault:
+            [self.node mnz_fileLinkDownloadFromViewController:self isFolderLink:NO];
+
+            break;
             
-            LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-            [self.navigationController pushViewController:loginVC animated:YES];
-        }
+        case FileLinkModeNodeFromFolderLink:
+            [self.nodeFromFolderLink mnz_fileLinkDownloadFromViewController:self isFolderLink:YES];
+
+            break;
     }
 }
 

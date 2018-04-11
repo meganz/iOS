@@ -47,6 +47,7 @@
 #import "LaunchViewController.h"
 #import "LoginViewController.h"
 #import "MainTabBarController.h"
+#import "MEGAPhotoBrowserViewController.h"
 #import "MessagesViewController.h"
 #import "MyAccountHallViewController.h"
 #import "OfflineTableViewController.h"
@@ -850,7 +851,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
         if (!request.flag) {
             MEGANode *node = request.publicNode;
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                UIViewController *photoBrowserVC = [node mnz_photoBrowserWithNodes:@[node] folderLink:NO displayMode:DisplayModeCloudDrive enableMoveToRubbishBin:NO];
+                MEGAPhotoBrowserViewController *photoBrowserVC = [node mnz_photoBrowserWithNodes:@[node] folderLink:NO displayMode:DisplayModeCloudDrive enableMoveToRubbishBin:NO];
+                photoBrowserVC.displayMode = DisplayModeFileLink;
                 [self presentLinkViewController:photoBrowserVC];
                 
                 return;

@@ -3,24 +3,28 @@
 
 #import <Photos/Photos.h>
 
+#import "SAMKeychain.h"
+#import "SVProgressHUD.h"
+
 #import "Helper.h"
-#import "MEGAAVViewController.h"
 #import "MEGANode.h"
-#import "MEGANodeList+MNZCategory.h"
-#import "MEGAStore.h"
-#import "NSString+MNZCategory.h"
-
-#import "PreviewDocumentViewController.h"
-
-#import "MEGAReachabilityManager.h"
-#import "MEGANavigationController.h"
-
 #import "MEGAMoveRequestDelegate.h"
+#import "MEGANodeList+MNZCategory.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGARemoveRequestDelegate.h"
 #import "MEGARenameRequestDelegate.h"
 #import "MEGAShareRequestDelegate.h"
-
+#import "MEGAStore.h"
+#import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+
+#import "BrowserViewController.h"
+#import "LoginViewController.h"
+#import "MainTabBarController.h"
+#import "MEGAAVViewController.h"
+#import "MEGANavigationController.h"
+#import "MyAccountHallViewController.h"
+#import "PreviewDocumentViewController.h"
 
 @implementation MEGANode (MNZCategory)
 
@@ -261,6 +265,72 @@
     MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:outSharesForNodeMutableArray.count completion:nil];
     for (MEGAShare *share in outSharesForNodeMutableArray) {
         [[MEGASdkManager sharedMEGASdk] shareNode:self withEmail:share.user level:MEGAShareTypeAccessUnkown delegate:shareRequestDelegate];
+    }
+}
+
+- (void)mnz_fileLinkDownloadFromViewController:(UIViewController *)viewController isFolderLink:(BOOL)isFolderLink {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        if (![Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
+            return;
+        }
+
+        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            [viewController dismissViewControllerAnimated:YES completion:^{
+                UIViewController *rootVC = UIApplication.sharedApplication.delegate.window.rootViewController;
+                if ([rootVC isKindOfClass:MainTabBarController.class]) {
+                    MainTabBarController *mainTBC = (MainTabBarController *)rootVC;
+                    mainTBC.selectedIndex = MYACCOUNT;
+                    MEGANavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:MYACCOUNT];
+                    MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
+                    [myAccountHallVC openOffline];
+                }
+                
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
+                
+                [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:isFolderLink shouldOverwrite:NO];
+            }];
+        } else {
+            if (isFolderLink) {
+                [[Helper nodesFromLinkMutableArray] addObject:self];
+                [Helper setSelectedOptionOnLink:4]; //Download folder or nodes from link
+            } else {
+                [Helper setLinkNode:self];
+                [Helper setSelectedOptionOnLink:2]; //Download file from link
+            }
+            
+            LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
+            [viewController.navigationController pushViewController:loginVC animated:YES];
+        }
+    }
+}
+
+- (void)mnz_fileLinkImportFromViewController:(UIViewController *)viewController isFolderLink:(BOOL)isFolderLink {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            [viewController dismissViewControllerAnimated:YES completion:^{
+                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+                BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+                browserVC.selectedNodesArray = [NSArray arrayWithObject:self];
+                [UIApplication.sharedApplication.delegate.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
+
+                if (isFolderLink) {
+                    [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
+                } else {
+                    [browserVC setBrowserAction:BrowserActionImport];
+                }
+            }];
+        } else {
+            if (isFolderLink) {
+                [[Helper nodesFromLinkMutableArray] addObject:self];
+                [Helper setSelectedOptionOnLink:3]; //Import folder or nodes from link
+            } else {
+                [Helper setLinkNode:self];
+                [Helper setSelectedOptionOnLink:1]; //Import file from link
+            }
+            
+            LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
+            [viewController.navigationController pushViewController:loginVC animated:YES];
+        }
     }
 }
 
