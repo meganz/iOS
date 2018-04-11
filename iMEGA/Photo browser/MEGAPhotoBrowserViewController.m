@@ -292,9 +292,7 @@
             zoomableView.showsVerticalScrollIndicator = NO;
             zoomableView.tag = 2;
             [zoomableView addSubview:imageView];
-            if (imageView.image) {
-                [self resizeImageView:imageView];
-            }
+            [self resizeImageView:imageView];
 
             if (node.name.mnz_isVideoPathExtension) {
                 UIButton *playButton = [[UIButton alloc] initWithFrame:CGRectMake((zoomableView.frame.size.width - self.playButtonSize) / 2, (zoomableView.frame.size.height - self.playButtonSize) / 2, self.playButtonSize, self.playButtonSize)];
@@ -418,17 +416,28 @@
 }
 
 - (void)resizeImageView:(UIImageView *)imageView {
-    CGFloat imageRatio = imageView.image.size.height / imageView.image.size.width;
-    CGFloat frameRatio = self.view.frame.size.height / self.view.frame.size.width;
-    CGRect frame = self.view.frame;
-    if (imageRatio < frameRatio) {
-        CGFloat newHeight = frame.size.width * imageRatio;
-        frame.size.height = newHeight;
-    } else {
-        CGFloat newWidth = frame.size.height / imageRatio;
-        frame.size.width = newWidth;
+    if (imageView.image) {
+        CGFloat imageRatio = imageView.image.size.height / imageView.image.size.width;
+        CGFloat frameRatio = self.view.frame.size.height / self.view.frame.size.width;
+        if (imageRatio != frameRatio) {
+            CGRect frame = self.view.frame;
+            if (imageRatio < frameRatio) {
+                CGFloat newHeight = frame.size.width * imageRatio;
+                frame.size.height = newHeight;
+            } else {
+                CGFloat newWidth = frame.size.height / imageRatio;
+                frame.size.width = newWidth;
+            }
+            
+            UIScrollView *zoomableView = (UIScrollView *)imageView.superview;
+            CGFloat zoomScale = zoomableView.zoomScale;
+            frame.size.width *= zoomScale;
+            frame.size.height *= zoomScale;
+            
+            imageView.frame = frame;
+        }
     }
-    imageView.frame = frame;
+
     [self correctOriginForView:imageView scaledAt:1.0f];
 }
 
@@ -540,7 +549,7 @@
                 }];
             } else {
                 [UIView animateWithDuration:0.3 animations:^{
-                    self.targetImageView.frame = CGRectMake(0.0f, 0.0f, self.panGestureInitialFrame.size.width, self.panGestureInitialFrame.size.height);
+                    self.targetImageView.frame = self.panGestureInitialFrame;
                     [self toggleTransparentInterfaceForDismissal:NO];
                     self.interfaceHidden = NO;
                     self.panGestureInitialPoint = CGPointZero;
