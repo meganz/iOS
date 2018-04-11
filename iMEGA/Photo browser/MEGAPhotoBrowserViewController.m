@@ -36,6 +36,8 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet PieChartView *pieChartView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *customActionsButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *leftToolbarItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *rightToolbarItem;
 
 @property (nonatomic) NSMutableArray<MEGANode *> *mediaNodes;
 @property (nonatomic) NSCache<NSString *, UIScrollView *> *imageViewsCache;
@@ -97,6 +99,14 @@
     self.pieChartView.datasource = self;
     self.pieChartView.layer.cornerRadius = self.pieChartView.frame.size.width/2;
     self.pieChartView.layer.masksToBounds = YES;
+    
+    if (self.displayMode == DisplayModeFileLink) {
+        self.leftToolbarItem.image = nil;
+        self.leftToolbarItem.title = AMLocalizedString(@"download", nil);
+
+        self.rightToolbarItem.image = nil;
+        self.rightToolbarItem.title = AMLocalizedString(@"import", @"Button title that triggers the importing link action");
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -480,37 +490,61 @@
     [self presentViewController:actionController animated:YES completion:nil];
 }
 
-- (IBAction)didPressThumbnailsButton:(UIBarButtonItem *)sender {
-    MEGAPhotoBrowserPickerViewController *pickerVC = [[UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil] instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserPickerViewControllerID"];
-    pickerVC.mediaNodes = self.mediaNodes;
-    pickerVC.delegate = self;
-    pickerVC.api = self.api;
-    [self presentViewController:pickerVC animated:YES completion:nil];
-}
-
-- (IBAction)didPressOpenIn:(UIBarButtonItem *)sender {
+- (IBAction)didPressLeftToolbarButton:(UIBarButtonItem *)sender {
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
     
-    UIActivityViewController *activityViewController;
-    if (node.name.mnz_videoPathExtension) {
-        activityViewController = [Helper activityViewControllerForNodes:@[node] button:sender];
-    } else {
-        MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
-        NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
-        if (node.name.mnz_imagePathExtension) {
-            SaveToCameraRollActivity *saveToCameraRollActivity = [[SaveToCameraRollActivity alloc] initWithNode:node];
-            [activitiesMutableArray addObject:saveToCameraRollActivity];
+    switch (self.displayMode) {
+        case DisplayModeFileLink:
+            [node mnz_fileLinkDownloadFromViewController:self isFolderLink:NO];
+            
+            break;
+            
+        default: {
+            MEGAPhotoBrowserPickerViewController *pickerVC = [[UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil] instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserPickerViewControllerID"];
+            pickerVC.mediaNodes = self.mediaNodes;
+            pickerVC.delegate = self;
+            pickerVC.api = self.api;
+            [self presentViewController:pickerVC animated:YES completion:nil];
+            
+            break;
         }
-        activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[activityItemProvider] applicationActivities:activitiesMutableArray];
-        [activityViewController setExcludedActivityTypes:@[UIActivityTypeSaveToCameraRoll, UIActivityTypeCopyToPasteboard]];
-        activityViewController.popoverPresentationController.barButtonItem = sender;
     }
+}
+
+- (IBAction)didPressRightToolbarButton:(UIBarButtonItem *)sender {
+    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
     
-    activityViewController.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
-        [self reloadUI];
-    };
-    
-    [self presentViewController:activityViewController animated:YES completion:nil];
+    switch (self.displayMode) {
+        case DisplayModeFileLink:
+            [node mnz_fileLinkImportFromViewController:self isFolderLink:NO];
+
+            break;
+            
+        default: {
+            UIActivityViewController *activityViewController;
+            if (node.name.mnz_videoPathExtension) {
+                activityViewController = [Helper activityViewControllerForNodes:@[node] button:sender];
+            } else {
+                MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
+                NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
+                if (node.name.mnz_imagePathExtension) {
+                    SaveToCameraRollActivity *saveToCameraRollActivity = [[SaveToCameraRollActivity alloc] initWithNode:node];
+                    [activitiesMutableArray addObject:saveToCameraRollActivity];
+                }
+                activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[activityItemProvider] applicationActivities:activitiesMutableArray];
+                [activityViewController setExcludedActivityTypes:@[UIActivityTypeSaveToCameraRoll, UIActivityTypeCopyToPasteboard]];
+                activityViewController.popoverPresentationController.barButtonItem = sender;
+            }
+            
+            activityViewController.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
+                [self reloadUI];
+            };
+            
+            [self presentViewController:activityViewController animated:YES completion:nil];
+
+            break;
+        }
+    }
 }
 
 #pragma mark - Gesture recognizers
@@ -619,7 +653,7 @@
 
 - (void)playVideo:(UIButton *)sender {
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
-    UIViewController *playerVC = [node mnz_viewControllerForNodeInFolderLink:(self.api==[MEGASdkManager sharedMEGASdkFolder])];
+    UIViewController *playerVC = [node mnz_viewControllerForNodeInFolderLink:(self.api == [MEGASdkManager sharedMEGASdkFolder])];
     [self presentViewController:playerVC animated:YES completion:nil];
 }
 
@@ -718,15 +752,28 @@
 
 #pragma mark - CustomActionViewControllerDelegate
 
-- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender{
+- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender {
     switch (action) {
-        case MegaNodeActionTypeShare:
-            [self didPressOpenIn:self.customActionsButton];
+        case MegaNodeActionTypeShare: {
+            UIActivityViewController *activityViewController = [Helper activityViewControllerForNodes:@[node] button:sender];
+            activityViewController.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
+                [self reloadUI];
+            };
+            [self presentViewController:activityViewController animated:YES completion:nil];
             break;
-
+        }
+            
         case MegaNodeActionTypeDownload:
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-            [node mnz_downloadNodeOverwriting:NO];
+            switch (self.displayMode) {
+                case DisplayModeFileLink:
+                    [node mnz_fileLinkDownloadFromViewController:self isFolderLink:NO];
+                    break;
+                    
+                default:
+                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+                    [node mnz_downloadNodeOverwriting:NO];
+                    break;
+            }
             break;
             
         case MegaNodeActionTypeFileInfo: {
@@ -772,6 +819,16 @@
             
         case MegaNodeActionTypeMoveToRubbishBin:
             [node mnz_moveToTheRubbishBinInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeImport:
+            [node mnz_fileLinkImportFromViewController:self isFolderLink:NO];
+            break;
+            
+        case MegaNodeActionTypeOpen:
+            if (self.node.name.mnz_isVideoPathExtension) {
+                [self playVideo:nil];
+            }
             break;
             
         default:

@@ -185,6 +185,11 @@
         if (self.node.isFile) {
             [actions addObject:[self actionOpen]];
         }
+    } else if (self.displayMode == DisplayModeFileLink) {
+        [actions addObject:[self actionImport]];
+        [actions addObject:[self actionDownload]];
+        [actions addObject:[self actionOpen]];
+        [actions addObject:[self actionShare]];
     } else {
         switch (accessType) {
             case MEGAShareTypeAccessRead:
