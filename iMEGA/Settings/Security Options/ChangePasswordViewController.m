@@ -302,7 +302,7 @@
         if (self.changeType == ChangeTypePassword) {
             if ([self validatePasswordForm]) {
                 self.changePasswordButton.enabled = NO;
-                [[MEGASdkManager sharedMEGASdk] changePassword:self.currentPasswordTextField.text newPassword:self.theNewPasswordTextField.text delegate:self];
+                [[MEGASdkManager sharedMEGASdk] changePassword:self.currentPasswordView.passwordTextField.text newPassword:self.theNewPasswordView.passwordTextField.text delegate:self];
             }
         } else if (self.changeType == ChangeTypeEmail) {
             if ([self validateEmail]) {
