@@ -370,8 +370,8 @@
                                                                 withLogout:NO
                                                             andLogoutTitle:nil];
                 [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"presentPasscodeLater"];
-                [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
             }
+            [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
             
             break;
             

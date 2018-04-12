@@ -1880,11 +1880,11 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type {
     MEGALogDebug(@"Did receive incoming push with payload: %@", [payload dictionaryPayload]);
-    if (UIApplication.sharedApplication.applicationState == UIApplicationStateBackground) {
+    if (UIApplication.sharedApplication.applicationState == UIApplicationStateBackground || [LTHPasscodeViewController sharedUser].displayedAsLockScreen) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"presentPasscodeLater"];
-        [[LTHPasscodeViewController sharedUser] disablePasscodeWhenApplicationEntersBackground];
         [LTHPasscodeViewController close];
     }
+    [[LTHPasscodeViewController sharedUser] disablePasscodeWhenApplicationEntersBackground];
     [self startBackgroundTask];
 }
 
