@@ -163,12 +163,13 @@
     [self hidePasswordErrorView:self.currentPasswordView constraint:self.currentPasswordViewHeightConstraint];
     [self hidePasswordErrorView:self.confirmPasswordView constraint:self.confirmPasswordViewHeightConstraint];
     
-    if (self.currentPasswordView.passwordTextField.text.length == 0) {
-        [self showPasswordErrorView:self.currentPasswordView constraint:self.currentPasswordViewHeightConstraint message:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
-        [self.currentPasswordView.passwordTextField becomeFirstResponder];
-        return NO;
+    if (self.changeType == ChangeTypePassword) {
+        if (self.currentPasswordView.passwordTextField.text.length == 0) {
+            [self showPasswordErrorView:self.currentPasswordView constraint:self.currentPasswordViewHeightConstraint message:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
+            [self.currentPasswordView.passwordTextField becomeFirstResponder];
+            return NO;
+        }
     }
-    
     if (![self validatePassword:self.theNewPasswordView.passwordTextField.text]) {
         if (self.theNewPasswordView.passwordTextField.text.length == 0) {
             [self showPasswordErrorView:self.theNewPasswordView constraint:self.theNewPasswordViewHeightConstraint message:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
@@ -344,7 +345,7 @@
     
     shoulBeCreateAccountButtonGray ? [self.changePasswordButton setBackgroundColor:UIColor.mnz_grayCCCCCC] : [self.changePasswordButton setBackgroundColor:UIColor.mnz_redFF4C52];
     
-    if (self.changeType == ChangeTypePassword) {
+    if (self.changeType == ChangeTypePassword || self.changeType == ChangeTypeResetPassword || self.changeType == ChangeTypeParkAccount) {
         if (textField.tag == 4) {
             if (text.length == 0) {
                 self.passwordStrengthIndicatorView.customView.hidden = YES;
@@ -356,9 +357,11 @@
                 [self.passwordStrengthIndicatorView updateViewWithPasswordStrength:[[MEGASdkManager sharedMEGASdk] passwordStrength:text]];
             }
             [self hidePasswordErrorView:self.theNewPasswordView constraint:self.theNewPasswordViewHeightConstraint];
+            [self hidePasswordErrorView:self.confirmPasswordView constraint:self.confirmPasswordViewHeightConstraint];
         } else if (textField.tag == 3) {
             [self hidePasswordErrorView:self.currentPasswordView constraint:self.currentPasswordViewHeightConstraint];
         } else if (textField.tag == 5) {
+            [self hidePasswordErrorView:self.theNewPasswordView constraint:self.theNewPasswordViewHeightConstraint];
             [self hidePasswordErrorView:self.confirmPasswordView constraint:self.confirmPasswordViewHeightConstraint];
         }
     }
@@ -367,14 +370,16 @@
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
-    if (self.changeType == ChangeTypePassword) {
+    if (self.changeType == ChangeTypePassword || self.changeType == ChangeTypeResetPassword || self.changeType == ChangeTypeParkAccount) {
         if (textField.tag == 4) {
             self.passwordStrengthIndicatorView.customView.hidden = YES;
             self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
             [self hidePasswordErrorView:self.theNewPasswordView constraint:self.theNewPasswordViewHeightConstraint];
+            [self hidePasswordErrorView:self.confirmPasswordView constraint:self.confirmPasswordViewHeightConstraint];
         } else if (textField.tag == 3) {
             [self hidePasswordErrorView:self.currentPasswordView constraint:self.currentPasswordViewHeightConstraint];
         } else if (textField.tag == 5) {
+            [self hidePasswordErrorView:self.theNewPasswordView constraint:self.theNewPasswordViewHeightConstraint];
             [self hidePasswordErrorView:self.confirmPasswordView constraint:self.confirmPasswordViewHeightConstraint];
         }
     }
@@ -495,6 +500,7 @@
         case MEGARequestTypeConfirmRecoveryLink: {
             if (self.changeType == ChangeTypePassword) {
                 [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"passwordChanged", @"The label showed when your password has been changed")];
+                [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 NSString *title;
                 if (self.changeType == ChangeTypeResetPassword) {
@@ -508,11 +514,12 @@
                     title = AMLocalizedString(@"yourAccounHasBeenParked", nil);
                 }
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                }]];
                 [self presentViewController:alertController animated:YES completion:nil];
             }
             
-            [self dismissViewControllerAnimated:YES completion:nil];
             break;
         }
             
