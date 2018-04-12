@@ -314,14 +314,14 @@
             }
         } else if (self.changeType == ChangeTypeResetPassword) {
             if ([self validatePasswordForm]) {
-                [[MEGASdkManager sharedMEGASdk] confirmResetPasswordWithLink:self.link newPassword:self.theNewPasswordTextField.text masterKey:self.masterKey delegate:self];
+                [[MEGASdkManager sharedMEGASdk] confirmResetPasswordWithLink:self.link newPassword:self.theNewPasswordView.passwordTextField.text masterKey:self.masterKey delegate:self];
             }
         } else if (self.changeType == ChangeTypeParkAccount) {
             if ([self validatePasswordForm]) {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"startNewAccount", @"Headline of the password reset recovery procedure")  message:AMLocalizedString(@"startingFreshAccount", @"Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed 'Recovery Key')") preferredStyle:UIAlertControllerStyleAlert];
                 [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
                 [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    [[MEGASdkManager sharedMEGASdk] confirmResetPasswordWithLink:self.link newPassword:self.theNewPasswordTextField.text masterKey:nil delegate:self];
+                    [[MEGASdkManager sharedMEGASdk] confirmResetPasswordWithLink:self.link newPassword:self.theNewPasswordView.passwordTextField.text masterKey:nil delegate:self];
                 }]];
                 [self presentViewController:alertController animated:YES completion:nil];
             }
