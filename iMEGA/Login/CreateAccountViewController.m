@@ -141,7 +141,7 @@
     
     if (!self.emailTextField.text.mnz_isValidEmail) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
-        self.emailIconImageView.tintColor = UIColor.mnz_redD90007;
+        self.emailIconImageView.image = [UIImage imageNamed:@"errorEmail"];
         [self.emailTextField becomeFirstResponder];
         
         return NO;
@@ -351,7 +351,7 @@
     if (textField.tag == 0 || textField.tag == 1) {
         self.nameIconImageView.tintColor = UIColor.mnz_gray777777;
     } else if (textField.tag == 2) {
-        self.emailIconImageView.tintColor = UIColor.mnz_gray777777;
+        self.emailIconImageView.image = [UIImage imageNamed:@"email"];
     } else if (textField.tag == 3) {
         if (text.length == 0) {
             self.passwordStrengthIndicatorView.customView.hidden = YES;
