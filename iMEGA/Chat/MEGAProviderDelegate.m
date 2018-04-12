@@ -3,6 +3,8 @@
 
 #import <AVFoundation/AVFoundation.h>
 
+#import "LTHPasscodeViewController.h"
+
 #import "CallViewController.h"
 #import "UIApplication+MNZCategory.h"
 
@@ -70,6 +72,14 @@
     [self.player stop];
 }
 
+- (void)managePasscode {
+    if (UIApplication.sharedApplication.applicationState == UIApplicationStateBackground || [[LTHPasscodeViewController sharedUser] isLockscreenPresent]) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"presentPasscodeLater"];
+        [LTHPasscodeViewController close];
+    }
+    [[LTHPasscodeViewController sharedUser] disablePasscodeWhenApplicationEntersBackground];
+}
+
 #pragma mark - CXProviderDelegate
 
 - (void)providerDidReset:(CXProvider *)provider {
@@ -105,6 +115,7 @@
         
         [provider reportOutgoingCallWithUUID:action.callUUID startedConnectingAtDate:nil];
         [action fulfill];
+        [self managePasscode];
     } else {
         [action fail];
     }
@@ -129,6 +140,7 @@
             [[UIApplication mnz_visibleViewController] presentViewController:callVC animated:YES completion:nil];
         }
         [action fulfill];
+        [self managePasscode];
     } else {
         [action fail];
     }

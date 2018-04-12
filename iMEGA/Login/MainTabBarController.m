@@ -183,7 +183,6 @@
                 [self.currentNotifications addObject:localNotification];
                 [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
             }
-
         }
     }
 }
