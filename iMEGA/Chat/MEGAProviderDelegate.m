@@ -72,12 +72,23 @@
     [self.player stop];
 }
 
-- (void)managePasscode {
+- (void)disablePasscodeIfNeeded {
     if (UIApplication.sharedApplication.applicationState == UIApplicationStateBackground || [[LTHPasscodeViewController sharedUser] isLockscreenPresent]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"presentPasscodeLater"];
         [LTHPasscodeViewController close];
     }
     [[LTHPasscodeViewController sharedUser] disablePasscodeWhenApplicationEntersBackground];
+}
+
+- (void)enablePasscodeIfNeeded {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"] && [LTHPasscodeViewController doesPasscodeExist]) {
+        [[LTHPasscodeViewController sharedUser] showLockScreenOver:[UIApplication mnz_visibleViewController].view
+                                                     withAnimation:YES
+                                                        withLogout:NO
+                                                    andLogoutTitle:nil];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"presentPasscodeLater"];
+    }
+    [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
 }
 
 #pragma mark - CXProviderDelegate
@@ -115,7 +126,7 @@
         
         [provider reportOutgoingCallWithUUID:action.callUUID startedConnectingAtDate:nil];
         [action fulfill];
-        [self managePasscode];
+        [self disablePasscodeIfNeeded];
     } else {
         [action fail];
     }
@@ -140,7 +151,7 @@
             [[UIApplication mnz_visibleViewController] presentViewController:callVC animated:YES completion:nil];
         }
         [action fulfill];
-        [self managePasscode];
+        [self disablePasscodeIfNeeded];
     } else {
         [action fail];
     }
@@ -156,7 +167,9 @@
         [action fulfill];
         [self.megaCallManager removeCallByUUID:action.callUUID];
         if ([[UIApplication mnz_visibleViewController] isKindOfClass:CallViewController.class]) {
-            [[UIApplication mnz_visibleViewController] dismissViewControllerAnimated:YES completion:nil];
+            [[UIApplication mnz_visibleViewController] dismissViewControllerAnimated:YES completion:^{
+                [self enablePasscodeIfNeeded];
+            }];
         }
         [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:call.chatId];
     } else {
