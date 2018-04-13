@@ -1156,7 +1156,6 @@
                 </view>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bhb-cj-fvD" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <barButtonItem image="cancelIcon" width="22" id="chL-MJ-s8I" userLabel="Cancel Bar Button Item">
-                    <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <action selector="cancelAction:" destination="Xlz-H7-CBT" id="L7y-yk-xDt"/>
                     </connections>
