@@ -3,8 +3,6 @@
 
 #import <UserNotifications/UserNotifications.h>
 
-#import "LTHPasscodeViewController.h"
-
 #import "CallViewController.h"
 #import "MEGAProviderDelegate.h"
 #import "MessagesViewController.h"
@@ -362,15 +360,6 @@
             if (@available(iOS 10.0, *)) {
                 [self.megaCallManager endCall:call];
             }
-                
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"] && [LTHPasscodeViewController doesPasscodeExist]) {
-                [[LTHPasscodeViewController sharedUser] showLockScreenOver:[UIApplication mnz_visibleViewController].view
-                                                             withAnimation:YES
-                                                                withLogout:NO
-                                                            andLogoutTitle:nil];
-                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"presentPasscodeLater"];
-            }
-            [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
             
             break;
             

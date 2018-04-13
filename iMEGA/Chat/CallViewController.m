@@ -8,13 +8,10 @@
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 
-#import "LTHPasscodeViewController.h"
-
 #import "MEGAChatAnswerCallRequestDelegate.h"
 #import "MEGAChatEnableDisableAudioRequestDelegate.h"
 #import "MEGAChatEnableDisableVideoRequestDelegate.h"
 #import "MEGAChatStartCallRequestDelegate.h"
-#import "UIApplication+MNZCategory.h"
 
 #import "DevicePermissionsHelper.h"
 
@@ -142,19 +139,6 @@
     [[UIDevice currentDevice] setProximityMonitoringEnabled:NO];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"] && [LTHPasscodeViewController doesPasscodeExist]) {
-        [[LTHPasscodeViewController sharedUser] showLockScreenOver:[UIApplication mnz_visibleViewController].view
-                                                     withAnimation:YES
-                                                        withLogout:NO
-                                                    andLogoutTitle:nil];
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"presentPasscodeLater"];
-        [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
-    }
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
