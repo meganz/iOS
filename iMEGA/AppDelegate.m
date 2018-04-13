@@ -90,7 +90,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     BOOL isOverquota;
     
     BOOL isFirstFetchNodesRequestUpdate;
-    BOOL isFirstAPI_EAGAIN;
     NSTimer *timerAPI_EAGAIN;
 }
 
@@ -1176,7 +1175,41 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)showServersTooBusy {
     if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
         LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
-        launchVC.label.text = AMLocalizedString(@"takingLongerThanExpected", @"Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in");
+        NSString *message;
+        switch ([[MEGASdkManager sharedMEGASdk] waiting]) {
+            case RetryNone:
+                message = @"RetryNone";
+                break;
+
+            case RetryConnectivity:
+                message = AMLocalizedString(@"unableToReachMega", @"Message shown when the app is waiting for the server to complete a request due to connectivity issue.");
+                break;
+                
+            case RetryServersBusy:
+                message = AMLocalizedString(@"serversAreTooBusy", @"Message shown when the app is waiting for the server to complete a request due to a HTTP error 500.");
+                break;
+                
+            case RetryApiLock:
+                message = AMLocalizedString(@"takingLongerThanExpected", @"Message shown when the app is waiting for the server to complete a request due to an API lock (error -3).");
+                break;
+                
+            case RetryRateLimit:
+                message = AMLocalizedString(@"tooManyRequest", @"Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4).");
+                break;
+                
+            case RetryLocalLock:
+                message = @"RetryLocalLock";
+                break;
+                
+            case RetryUnknown:
+                message = @"RetryUnknown";
+                break;
+                
+            default:
+                message = @"RetryDefault";
+                break;
+        }
+        launchVC.label.text = message;
     }
 }
 
@@ -2033,7 +2066,6 @@ void uncaughtExceptionHandler(NSException *exception) {
         case MEGARequestTypeLogin:
         case MEGARequestTypeFetchNodes: {
             if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
-                isFirstAPI_EAGAIN = YES;
                 isFirstFetchNodesRequestUpdate = YES;
                 LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
                 [launchVC.activityIndicatorView setHidden:NO];
@@ -2428,9 +2460,8 @@ void uncaughtExceptionHandler(NSException *exception) {
     switch ([request type]) {
         case MEGARequestTypeLogin:
         case MEGARequestTypeFetchNodes: {
-            if (isFirstAPI_EAGAIN) {
+            if (!timerAPI_EAGAIN.isValid) {
                 [self startTimerAPI_EAGAIN];
-                isFirstAPI_EAGAIN = NO;
             }
             break;
         }
