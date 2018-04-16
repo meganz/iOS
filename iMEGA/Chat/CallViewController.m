@@ -352,7 +352,13 @@
 
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
     MEGALogDebug(@"onChatCallUpdate %@", call);
-    self.call = call;
+    
+    if (self.call.callId == call.callId) {
+        self.call = call;
+    } else {
+        return;
+    }
+
     switch (call.status) {
         case MEGAChatCallStatusInitial:
             break;
@@ -418,24 +424,19 @@
             break;
             
         case MEGAChatCallStatusDestroyed: {
-            if (self.call.callId == call.callId) {
-                self.incomingCallView.userInteractionEnabled = NO;
-                
-                [self.timer invalidate];
-                
-                [self.player stop];
-                
-                NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"hang_out" ofType:@"mp3"];
-                NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
-                self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
-                
-                [self.player play];
-                
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [self dismissViewControllerAnimated:YES completion:nil];
-                });
-            }
+            self.incomingCallView.userInteractionEnabled = NO;
             
+            [self.timer invalidate];
+            
+            [self.player stop];
+            
+            NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"hang_out" ofType:@"mp3"];
+            NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
+            self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
+            
+            [self.player play];
+            
+            [self dismissViewControllerAnimated:YES completion:nil];
             break;
         }
             

@@ -121,7 +121,7 @@
 /*  */
 "passwordStrong"="This password will withstand most sophisticated brute-force attacks. Please ensure that you will remember it.";
 /*  */
-"agreeWithTheMEGATermsOfService"="I agree with the MEGA [A]Terms of Service[/A]";
+"agreeWithTheMEGATermsOfService"="I agree with the MEGA <a href='terms'>Terms of Service</a>";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Enter a valid name";
 /*  */
@@ -1003,7 +1003,7 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Select one account type:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
+"twoMonthsFree"="An annual subscription is 17% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Current Plan:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
@@ -1198,6 +1198,10 @@
 "chatNotFound"="Chat not found";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ is typing ...";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders. */
+"twoUsersAreTyping"="%1$s [A]are typing...[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders. */
+"moreThanTwoUsersAreTyping"="%1$s [A]and more are typing...[/A]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Write a message...";
 /* Information if there are no history messages in current chat conversation */
@@ -1372,7 +1376,7 @@
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="Reset QR Code";
 /* Footer that explains what would happen if the user resets his/her QR code */
-"resetQrCodeFooter"="Previous QR Codes will no longer be valid.";
+"resetQrCodeFooter"="Previous QR codes will no longer be valid.";
 /* Title for view that displays the QR code of the user. String as short as possible. */
 "myCode"="My Code";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
@@ -1384,7 +1388,7 @@
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
 "codeScanned"="Code scanned";
 /* title of the screen that shows the users with whom the user has shared a folder */
-"sharedWidth"="Shared with:";
+"sharedWidth"="Shared with: ";
 /*   */
 "details"="Details";
 /* Item menu option upon right click on one or multiple files. */
@@ -1416,7 +1420,7 @@
 /* Label of the option menu. When clicking this button, the app shows the info of the folder */
 "folderInfo"="Folder info";
 /* Question to ensure user wants to delete file version. */
-"deleteVersion"="Do you want to delete this version";
+"deleteVersion"="Do you want to delete this version?";
 /* Message to notify user the file version will be permanently removed */
 "permanentlyRemoved"="It will be permanently removed";
 /*  */
@@ -1433,3 +1437,27 @@
 "previousVersions"="Previous Versions";
 /* Title of section to display information of all current versions of files. */
 "currentVersions"="Current Versions";
+/* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
+"remindPasswordTitle"="Do you remember your password?";
+/* Text that describes why the user should test his/her password */
+"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+/* Text that describes why the user should test his/her password before logging out */
+"remindPasswordLogoutText"="Before logging out we recomend you to export your Recovery Key so a safe place. Note that you’re not able to reset your password if you loose it.";
+/* Text next to a toggle that if enabled won't appear again */
+"dontShowAgain"="Don’t show me again";
+/* Label for test password button and titles */
+"testPassword"="Test Password";
+/* Label for recovery key button */
+"backupRecoveryKey"="Backup Recovery Key";
+/* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
+"testPasswordText"="Please test your password below to ensure you remember it. If you lose your password, you will lose access to your MEGA data. [A]Learn more[/A]";
+/* Title text for the account confirmation. */
+"confirm"="Confirm";
+/* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
+"passwordAccepted"="Password accepted";
+/* A dialog title to export the Recovery Key for the current user. */
+"exportRecoveryKey"="Export Recovery Key";
+/* Title to confirm that you want to logout */
+"proceedToLogout"="Proceed to logout";
+/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
+"testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
