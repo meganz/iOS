@@ -10,6 +10,7 @@
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 #import "UpgradeTableViewController.h"
+#import "MEGAShowPasswordReminderRequestDelegate.h"
 
 @interface MyAccountViewController () <MEGAPurchasePricingDelegate, MEGARequestDelegate> {
     BOOL isAccountDetailsAvailable;
@@ -247,36 +248,8 @@
 
 - (IBAction)logoutTouchUpInside:(UIButton *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        NSError *error;
-        NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] error:&error];
-        if (error) {
-            MEGALogError(@"Contents of directory at path failed with error: %@", error);
-        }
-        
-        BOOL isInboxDirectory = NO;
-        for (NSString *directoryElement in directoryContent) {
-            if ([directoryElement isEqualToString:@"Inbox"]) {
-                NSString *inboxPath = [[Helper pathForOffline] stringByAppendingPathComponent:@"Inbox"];
-                [[NSFileManager defaultManager] fileExistsAtPath:inboxPath isDirectory:&isInboxDirectory];
-                break;
-            }
-        }
-        
-        if (directoryContent.count > 0) {
-            if (directoryContent.count == 1 && isInboxDirectory) {
-                [[MEGASdkManager sharedMEGASdk] logout];
-                return;
-            }
-            
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"warning", nil) message:AMLocalizedString(@"allFilesSavedForOfflineWillBeDeletedFromYourDevice", @"Alert message shown when the user perform logout and has files in the Offline directory") preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                [[MEGASdkManager sharedMEGASdk] logout];
-            }]];
-            [self presentViewController:alertController animated:YES completion:nil];
-        } else {
-            [[MEGASdkManager sharedMEGASdk] logout];
-        }
+        MEGAShowPasswordReminderRequestDelegate *showPasswordReminderDelegate = [[MEGAShowPasswordReminderRequestDelegate alloc] initToLogout:YES];
+        [[MEGASdkManager sharedMEGASdk] shouldShowPasswordReminderDialogAtLogout:YES delegate:showPasswordReminderDelegate];
     }
 }
 

@@ -124,7 +124,9 @@
         callVC.call = call;
         
         if ([[UIApplication mnz_visibleViewController] isKindOfClass:CallViewController.class]) {
-            [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:callVC animated:YES completion:nil];
+            [[UIApplication mnz_visibleViewController] dismissViewControllerAnimated:YES completion:^{
+                [[UIApplication mnz_visibleViewController] presentViewController:callVC animated:YES completion:nil];
+            }];
         } else {
             [[UIApplication mnz_visibleViewController] presentViewController:callVC animated:YES completion:nil];
         }
@@ -134,7 +136,6 @@
     }
 }
 
-
 - (void)provider:(CXProvider *)provider performEndCallAction:(CXEndCallAction *)action {
     MEGAChatCall *call = [self.megaCallManager callForUUID:action.callUUID];
     
@@ -143,9 +144,6 @@
     if (call) {
         [action fulfill];
         [self.megaCallManager removeCallByUUID:action.callUUID];
-        if ([[UIApplication mnz_visibleViewController] isKindOfClass:CallViewController.class]) {
-            [[UIApplication mnz_visibleViewController] dismissViewControllerAnimated:YES completion:nil];
-        }
         [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:call.chatId];
     } else {
         [action fail];

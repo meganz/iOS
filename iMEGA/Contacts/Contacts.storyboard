@@ -1160,6 +1160,14 @@
                                     <constraint firstAttribute="width" constant="248" id="MIp-vy-708"/>
                                 </constraints>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hsA-XJ-oTk">
+                                <rect key="frame" x="147" y="293" width="80" height="80"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="U6K-hO-iSI"/>
+                                    <constraint firstAttribute="width" constant="80" id="xXI-VV-BLm"/>
+                                </constraints>
+                            </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GWN-sM-tLO">
                                 <rect key="frame" x="147" y="293" width="80" height="80"/>
                                 <constraints>
@@ -1220,6 +1228,7 @@
                         <constraints>
                             <constraint firstItem="vid-Qw-MNw" firstAttribute="centerY" secondItem="l1U-26-tIN" secondAttribute="centerY" id="0ZP-Um-xo4"/>
                             <constraint firstItem="2Wz-hl-Go6" firstAttribute="top" secondItem="l1U-26-tIN" secondAttribute="top" id="138-1C-49b"/>
+                            <constraint firstItem="hsA-XJ-oTk" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="1id-Cv-tyh"/>
                             <constraint firstItem="GWN-sM-tLO" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="1kU-i9-0Fg"/>
                             <constraint firstItem="A7t-aZ-ziV" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="6JD-ZG-scX"/>
                             <constraint firstItem="3eo-nP-4lO" firstAttribute="top" secondItem="6GY-JJ-jXB" secondAttribute="bottom" constant="11" id="7IJ-6z-9XC"/>
@@ -1236,6 +1245,7 @@
                             <constraint firstItem="RzH-fB-ztS" firstAttribute="top" secondItem="kQ2-dK-rKs" secondAttribute="bottom" id="Wyg-Uh-TNa"/>
                             <constraint firstItem="kQ2-dK-rKs" firstAttribute="top" secondItem="l1U-26-tIN" secondAttribute="top" id="XFQ-Cx-9n4"/>
                             <constraint firstItem="D3t-9X-3oi" firstAttribute="top" secondItem="6GY-JJ-jXB" secondAttribute="bottom" constant="8" id="cW7-JH-dEG"/>
+                            <constraint firstItem="hsA-XJ-oTk" firstAttribute="centerY" secondItem="l1U-26-tIN" secondAttribute="centerY" id="gMm-3M-IJt"/>
                             <constraint firstItem="eNJ-w3-5Ia" firstAttribute="centerX" secondItem="l1U-26-tIN" secondAttribute="centerX" id="hGY-Fy-vbs"/>
                             <constraint firstItem="2Wz-hl-Go6" firstAttribute="leading" secondItem="l1U-26-tIN" secondAttribute="leading" id="iBn-Vc-htj"/>
                             <constraint firstItem="Klt-b6-DBf" firstAttribute="centerY" secondItem="l1U-26-tIN" secondAttribute="centerY" id="jfe-KN-QCx"/>
@@ -1251,6 +1261,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="avatarBackgroundView" destination="hsA-XJ-oTk" id="2Qm-fi-d8Z"/>
                         <outlet property="avatarImageView" destination="GWN-sM-tLO" id="AF0-7A-jRQ"/>
                         <outlet property="backButton" destination="pfM-gn-rhH" id="lXJ-ot-Cwg"/>
                         <outlet property="cameraMaskBorderView" destination="Klt-b6-DBf" id="gXO-Og-NI1"/>
