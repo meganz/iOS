@@ -532,7 +532,7 @@
                     [activitiesMutableArray addObject:saveToCameraRollActivity];
                 }
                 activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[activityItemProvider] applicationActivities:activitiesMutableArray];
-                [activityViewController setExcludedActivityTypes:@[UIActivityTypeSaveToCameraRoll, UIActivityTypeCopyToPasteboard]];
+                activityViewController.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll, UIActivityTypeCopyToPasteboard];
                 activityViewController.popoverPresentationController.barButtonItem = sender;
             }
             

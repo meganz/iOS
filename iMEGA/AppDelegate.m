@@ -851,8 +851,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         if (!request.flag) {
             MEGANode *node = request.publicNode;
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                MEGAPhotoBrowserViewController *photoBrowserVC = [node mnz_photoBrowserWithNodes:@[node] folderLink:NO displayMode:DisplayModeCloudDrive enableMoveToRubbishBin:NO];
-                photoBrowserVC.displayMode = DisplayModeFileLink;
+                MEGAPhotoBrowserViewController *photoBrowserVC = [node mnz_photoBrowserWithNodes:@[node] folderLink:NO displayMode:DisplayModeFileLink enableMoveToRubbishBin:NO];
                 [self presentLinkViewController:photoBrowserVC];
                 
                 return;
@@ -871,11 +870,15 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 [self presentLinkViewController:navigationController];
                 
                 return;
+            } else {
+                if (fileUTI) {
+                    CFRelease(fileUTI);
+                }
             }
         }
         MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
         FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
-        [fileLinkVC setFileLinkString:fileLinkURLString];
+        fileLinkVC.fileLinkString = fileLinkURLString;
         
         [self presentLinkViewController:fileLinkNavigationController];
     }];
