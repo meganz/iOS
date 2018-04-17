@@ -446,6 +446,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             message.chatRoom = self.chatRoom;
             [self.messages addObject:message];
             [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];
+            [self updateUnreadMessagesLabel:0];
+
             [self finishSendingMessageAnimated:YES];
         }
     };
@@ -745,6 +747,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self.messages removeAllObjects];
     [self.messages addObject:message];
     [self.collectionView reloadData];
+    [self updateUnreadMessagesLabel:0];
     [self.nodesLoaded removeAllObjects];
 }
 
@@ -861,6 +864,22 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self setTypingIndicator];
 }
 
+- (NSIndexPath *)indexPathForCellWithUnreadMessagesLabel {
+    return [NSIndexPath indexPathForItem:(self.messages.count - self.unreadMessages) inSection:0];
+}
+
+- (void)updateUnreadMessagesLabel:(NSUInteger)unreads {
+    NSIndexPath *unreadMessagesIndexPath;
+    if (unreads == 0) {
+        unreadMessagesIndexPath = [self indexPathForCellWithUnreadMessagesLabel];
+        self.unreadMessages = unreads;
+    } else {
+        self.unreadMessages = unreads;
+        unreadMessagesIndexPath = [self indexPathForCellWithUnreadMessagesLabel];
+    }
+    [self.collectionView reloadItemsAtIndexPaths:@[unreadMessagesIndexPath]];
+}
+
 #pragma mark - Gesture recognizer
 
 - (void)hideInputToolbar {
@@ -912,7 +931,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         message = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:text];
         message.chatRoom = self.chatRoom;
         [self.messages addObject:message];
-        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];        
+        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];
+        [self updateUnreadMessagesLabel:0];
     }
     
     MEGALogInfo(@"didPressSendButton %@", message);
@@ -1130,6 +1150,15 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         }
     }
     return [self.avatarImageFactory avatarImageWithImage:avatar];
+}
+
+- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForUnreadMessagesLabelAtIndexPath:(NSIndexPath *)indexPath {
+    NSIndexPath *unreadMessagesIndexPath = [self indexPathForCellWithUnreadMessagesLabel];
+    if (self.unreadMessages && indexPath.section == unreadMessagesIndexPath.section && indexPath.item == unreadMessagesIndexPath.item) {
+        NSString *formatString = self.unreadMessages == 1 ? AMLocalizedString(@"unreadMessage", @"Label in chat rooms that indicates how many messages are unread. Singular and as short as possible.") : AMLocalizedString(@"unreadMessages", @"Label in chat rooms that indicates how many messages are unread. Plural and as short as possible.");
+        return [[NSAttributedString alloc] initWithString:[[NSString stringWithFormat:formatString, (unsigned long)self.unreadMessages] uppercaseString]];
+    }
+    return nil;
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
@@ -1435,6 +1464,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 #pragma mark - Adjusting cell label heights
 
+- (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForUnreadMessagesLabelAtIndexPath:(NSIndexPath *)indexPath {
+    NSIndexPath *unreadMessagesIndexPath = [self indexPathForCellWithUnreadMessagesLabel];
+    return (self.unreadMessages && indexPath.section == unreadMessagesIndexPath.section && indexPath.item == unreadMessagesIndexPath.item) ? 44.0f : 0.0f;
+}
+
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                    layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
@@ -1635,6 +1669,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         case MEGAChatMessageTypeContact: {
             [self.messages addObject:message];
             [self finishReceivingMessage];
+            if (self.unreadMessages) {
+                [self updateUnreadMessagesLabel:self.unreadMessages + 1];
+            }
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSUInteger items = [self.collectionView numberOfItemsInSection:0];
@@ -1763,6 +1800,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                     message.chatRoom = self.chatRoom;
                     [self.messages addObject:message];
                     [self finishReceivingMessage];
+                    if (self.unreadMessages) {
+                        [self updateUnreadMessagesLabel:self.unreadMessages + 1];
+                    }
+                    
                     [self loadNodesFromMessage:message atTheBeginning:YES];
                     if ([[MEGASdkManager sharedMEGAChatSdk] myUserHandle] == message.userHandle) {
                         [self scrollToBottomAnimated:YES];
