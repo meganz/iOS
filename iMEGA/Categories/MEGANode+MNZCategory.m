@@ -268,6 +268,8 @@
     }
 }
 
+#pragma mark - File links
+
 - (void)mnz_fileLinkDownloadFromViewController:(UIViewController *)viewController isFolderLink:(BOOL)isFolderLink {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if (![Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
@@ -311,13 +313,9 @@
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
                 BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
                 browserVC.selectedNodesArray = [NSArray arrayWithObject:self];
-                [UIApplication.sharedApplication.delegate.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
-
-                if (isFolderLink) {
-                    [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
-                } else {
-                    [browserVC setBrowserAction:BrowserActionImport];
-                }
+                [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+                
+                browserVC.browserAction = isFolderLink ? BrowserActionImportFromFolderLink : BrowserActionImport;
             }];
         } else {
             if (isFolderLink) {
