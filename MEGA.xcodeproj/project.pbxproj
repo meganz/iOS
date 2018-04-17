@@ -2598,15 +2598,18 @@
 		5BB68C9D203599EC00B03C00 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5B21C83C2063A70400324517 /* EmptyHeaderView.h */,
-				5B21C83D2063A70400324517 /* EmptyHeaderView.m */,
-				5B21C83B2063A70300324517 /* EmptyHeaderView.xib */,
 				5BB2E40B20629E2C00E9F45C /* EmptyFooterView.h */,
 				5BB2E40920629E2B00E9F45C /* EmptyFooterView.m */,
 				5BB2E40A20629E2B00E9F45C /* EmptyFooterView.xib */,
+				5B21C83C2063A70400324517 /* EmptyHeaderView.h */,
+				5B21C83D2063A70400324517 /* EmptyHeaderView.m */,
+				5B21C83B2063A70300324517 /* EmptyHeaderView.xib */,
 				5BB68C9E20359B5300B03C00 /* PasswordStrengthIndicatorView.h */,
 				5BB68C9F20359B5400B03C00 /* PasswordStrengthIndicatorView.m */,
 				5BB68CA020359B5400B03C00 /* PasswordStrengthIndicatorView.xib */,
+				836AEDE32018AD1F00868FC7 /* PasswordView.h */,
+				836AEDE42018AD1F00868FC7 /* PasswordView.m */,
+				836AEDE12018AD0C00868FC7 /* PasswordView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2835,9 +2838,6 @@
 				E8B3FE761DDB379C008A9C82 /* HelpModalViewController.h */,
 				E8B3FE771DDB379C008A9C82 /* HelpModalViewController.m */,
 				5B134B8E1F86260A000E367E /* HelpModalViewController.xib */,
-				836AEDE32018AD1F00868FC7 /* PasswordView.h */,
-				836AEDE42018AD1F00868FC7 /* PasswordView.m */,
-				836AEDE12018AD0C00868FC7 /* PasswordView.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
