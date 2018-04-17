@@ -11,6 +11,7 @@
 #import "NSString+MNZCategory.h"
 
 #import "CreateAccountViewController.h"
+#import "PasswordView.h"
 
 @interface LoginViewController () <UITextFieldDelegate, MEGARequestDelegate>
 
@@ -18,7 +19,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoTopLayoutConstraint;
 
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
-@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet PasswordView *passwordView;
 
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
@@ -46,10 +47,13 @@
     self.logoImageView.gestureRecognizers = @[tapGestureRecognizer];
     
     [self.emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", @"Email")];
-    [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Password")];
-    
+    self.passwordView.passwordTextField.delegate = self;
+    self.passwordView.passwordTextField.tag = 1;
+    self.passwordView.passwordTextField.textColor = UIColor.mnz_black333333;
+    self.passwordView.passwordTextField.font = [UIFont mnz_SFUIRegularWithSize:17];
+
     [self.loginButton setTitle:AMLocalizedString(@"login", @"Login") forState:UIControlStateNormal];
-    self.loginButton.backgroundColor = [UIColor mnz_grayEEEEEE];
+    self.loginButton.backgroundColor = UIColor.mnz_grayEEEEEE;
     
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", nil) forState:UIControlStateNormal];
     NSString *forgotPasswordString = AMLocalizedString(@"forgotPassword", @"An option to reset the password.");
@@ -90,12 +94,12 @@
     }
     
     [self.emailTextField resignFirstResponder];
-    [self.passwordTextField resignFirstResponder];
+    [self.passwordView.passwordTextField resignFirstResponder];
     
     if ([self validateForm]) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             self.email = self.emailTextField.text;
-            self.password = self.passwordTextField.text;
+            self.password = self.passwordView.passwordTextField.text;
             
             NSOperationQueue *operationQueue = [NSOperationQueue new];
             
@@ -124,13 +128,13 @@
 }
 
 - (BOOL)validateForm {
-    if (![self.emailTextField.text mnz_isValidEmail]) {
+    if (!self.emailTextField.text.mnz_isValidEmail) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
         [self.emailTextField becomeFirstResponder];
         return NO;
-    } else if (![self validatePassword:self.passwordTextField.text]) {
+    } else if (![self validatePassword:self.passwordView.passwordTextField.text]) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
-        [self.passwordTextField becomeFirstResponder];
+        [self.passwordView.passwordTextField becomeFirstResponder];
         return NO;
     }
     return YES;
@@ -148,7 +152,7 @@
     BOOL isAnyTextFieldEmpty = NO;
     switch (tag) {
         case 0: {
-            if ([self.passwordTextField.text isEqualToString:@""]) {
+            if ([self.passwordView.passwordTextField.text isEqualToString:@""]) {
                 isAnyTextFieldEmpty = YES;
             }
             break;
@@ -202,19 +206,19 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     BOOL shoulBeLoginButtonGray = NO;
-    if ([text isEqualToString:@""] || (![self.emailTextField.text mnz_isValidEmail])) {
+    if ([text isEqualToString:@""] || (!self.emailTextField.text.mnz_isValidEmail)) {
         shoulBeLoginButtonGray = YES;
     } else {
         shoulBeLoginButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
     }
     
-    self.loginButton.backgroundColor = shoulBeLoginButtonGray ? [UIColor mnz_grayEEEEEE] : [UIColor mnz_redFF4D52];
+    self.loginButton.backgroundColor = shoulBeLoginButtonGray ? UIColor.mnz_grayEEEEEE : UIColor.mnz_redFF4D52;
     
     return YES;
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
-    self.loginButton.backgroundColor = [UIColor mnz_grayEEEEEE];
+    self.loginButton.backgroundColor = UIColor.mnz_grayEEEEEE;
     
     return YES;
 }
@@ -222,11 +226,11 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     switch ([textField tag]) {
         case 0:
-            [self.passwordTextField becomeFirstResponder];
+            [self.passwordView.passwordTextField becomeFirstResponder];
             break;
             
         case 1:
-            [self.passwordTextField resignFirstResponder];
+            [self.passwordView.passwordTextField resignFirstResponder];
             [self tapLogin:self.loginButton];
             break;
             
