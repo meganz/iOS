@@ -129,6 +129,13 @@
     self.cancelButton.enabled = !boolValue;
 }
 
+- (void)showErrorInPasswordView:(BOOL)showError {
+    self.passwordViewHeightConstraint.constant = showError ? 83.f : 44.f;
+    self.passwordView.wrongPasswordView.hidden = !showError;
+    
+    self.confirmAccountButtonTopLayoutConstraint.constant += (showError ? -39.f : 39.f);
+}
+
 #pragma mark - UIResponder
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -144,8 +151,7 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     if (!self.passwordView.wrongPasswordView.hidden) {
-        self.passwordViewHeightConstraint.constant = 44;
-        self.passwordView.wrongPasswordView.hidden = YES;
+        [self showErrorInPasswordView:NO];
     }
 }
 
@@ -156,8 +162,9 @@
         switch ([error type]) {
             case MEGAErrorTypeApiENoent: { //MEGARequestTypeConfirmAccount, MEGARequestTypeConfirmChangeEmailLink, MEGARequestTypeConfirmCancelLink
                 [self lockUI:NO];
-                self.passwordViewHeightConstraint.constant = 83;
-                self.passwordView.wrongPasswordView.hidden = NO;
+                [SVProgressHUD dismiss];
+                
+                [self showErrorInPasswordView:YES];
                 break;
             }
                 
