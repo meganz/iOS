@@ -3,6 +3,7 @@
 #import "Helper.h"
 #import "MEGASdkManager.h"
 #import "MEGANode+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
 #define kCollectionViewHeaderHeight 80
@@ -188,7 +189,9 @@
     } else if (self.displayMode == DisplayModeFileLink) {
         [actions addObject:[self actionImport]];
         [actions addObject:[self actionDownload]];
-        [actions addObject:[self actionOpen]];
+        if (self.node.name.mnz_isVideoPathExtension) {
+            [actions addObject:[self actionOpen]];
+        }
         [actions addObject:[self actionShare]];
     } else {
         switch (accessType) {
