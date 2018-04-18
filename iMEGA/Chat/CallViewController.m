@@ -3,10 +3,13 @@
 #import "MEGARemoteImageView.h"
 #import "MEGALocalImageView.h"
 #import "NSString+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
+
+#import "LTHPasscodeViewController.h"
 
 #import "MEGAChatAnswerCallRequestDelegate.h"
 #import "MEGAChatEnableDisableAudioRequestDelegate.h"
@@ -259,6 +262,17 @@
     return permissionsAlertController;
 }
 
+- (void)enablePasscodeIfNeeded {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"] && [LTHPasscodeViewController doesPasscodeExist]) {
+        [[LTHPasscodeViewController sharedUser] showLockScreenOver:[UIApplication mnz_visibleViewController].view
+                                                     withAnimation:YES
+                                                        withLogout:NO
+                                                    andLogoutTitle:nil];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"presentPasscodeLater"];
+    }
+    [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)acceptCallWithVideo:(UIButton *)sender {
@@ -441,7 +455,9 @@
             
             [self.player play];
             
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self dismissViewControllerAnimated:YES completion:^{
+                [self enablePasscodeIfNeeded];
+            }];
             break;
         }
             
