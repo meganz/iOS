@@ -17,7 +17,6 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *pauseBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *resumeBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *negativeSpaceBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *transfersSegmentedControl;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -73,19 +72,12 @@
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     
-    self.negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
-        [self.negativeSpaceBarButtonItem setWidth:-5.0];
-    } else {
-        [self.negativeSpaceBarButtonItem setWidth:-1.0];
-    }
-    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
         areTransfersPaused = YES;
-        [self.navigationItem setRightBarButtonItems:@[self.negativeSpaceBarButtonItem, self.cancelBarButtonItem, self.resumeBarButtonItem] animated:YES];
+        self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem, self.resumeBarButtonItem];
     } else {
         areTransfersPaused = NO;
-        [self.navigationItem setRightBarButtonItems:@[self.negativeSpaceBarButtonItem, self.cancelBarButtonItem, self.pauseBarButtonItem] animated:YES];
+        self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem, self.pauseBarButtonItem];
     }
     
     [self transfersList];
@@ -268,12 +260,6 @@
     [cell.nameLabel setText:[[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:fileName]];
     [cell.iconImageView setImage:[Helper imageForExtension:fileName.pathExtension]];
     
-    UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
-    [cell setSelectedBackgroundView:view];
-    
-    [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
-    
     [cell setTransferTag:transfer.tag];
     
     return cell;
@@ -325,10 +311,8 @@
     
     if (numberOfRowsInSections == 0) {
         [self.cancelBarButtonItem setEnabled:NO];
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     } else {
         [self.cancelBarButtonItem setEnabled:YES];
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     }
     
     return numberOfRows;
@@ -597,13 +581,13 @@
 }
 
 - (IBAction)pauseTransfersAction:(UIBarButtonItem *)sender {
-    [self.navigationItem setRightBarButtonItems:@[self.negativeSpaceBarButtonItem, self.cancelBarButtonItem, self.resumeBarButtonItem] animated:NO];
+    self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem, self.resumeBarButtonItem];
     [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES delegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES delegate:self];
 }
 
 - (IBAction)resumeTransfersAction:(UIBarButtonItem *)sender {
-    [self.navigationItem setRightBarButtonItems:@[self.negativeSpaceBarButtonItem, self.cancelBarButtonItem, self.pauseBarButtonItem] animated:NO];
+    self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem, self.pauseBarButtonItem];
     [[MEGASdkManager sharedMEGASdk] pauseTransfers:NO delegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:NO delegate:self];
 }
@@ -648,9 +632,6 @@
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
-    
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         if (areTransfersPaused) {

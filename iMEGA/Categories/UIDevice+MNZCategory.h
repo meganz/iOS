@@ -44,6 +44,11 @@
 @property (nonatomic, readonly) BOOL iPhonePlus;
     
 /**
+ * @brief YES if the device is an iPhone X, otherwise NO.
+ */
+@property (nonatomic, readonly) BOOL iPhoneX;
+
+/**
  * @brief YES if the style of interface to use should be designed for iPad on the current device, otherwise NO.
  */
 @property (nonatomic, readonly) BOOL iPadDevice;

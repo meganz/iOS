@@ -216,6 +216,8 @@ static NSString* const B = @"[B]";
     string = [string stringByReplacingOccurrencesOfString:@"[/A]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[S]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[/S]" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"<a href='terms'>" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"</a>" withString:@""];
     
     return string;
 }
@@ -317,16 +319,17 @@ static NSString* const B = @"[B]";
     return containsEmoji;
 }
 
-- (BOOL)mnz_isPureEmojiString
-{
-    if (self.length == 0) {
+- (BOOL)mnz_isPureEmojiString {
+    if (self.mnz_isEmpty) {
         return NO;
     }
     
+    NSArray *wordsArray = [self componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *noWhitespacesNorNewlinesString = [wordsArray componentsJoinedByString:@""];
+    
     __block BOOL isPureEmojiString = YES;
     
-    [self enumerateSubstringsInRange:NSMakeRange(0,
-                                                 [self length])
+    [noWhitespacesNorNewlinesString enumerateSubstringsInRange:NSMakeRange(0, noWhitespacesNorNewlinesString.length)
                              options:NSStringEnumerationByComposedCharacterSequences
                           usingBlock:^(NSString *substring,
                                        NSRange substringRange,

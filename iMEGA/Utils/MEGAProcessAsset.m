@@ -241,6 +241,7 @@ static void *ProcessAssetProgressContext = &ProcessAssetProgressContext;
                              if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
                                  MEGALogError(@"Set attributes failed with error: %@", error);
                              }
+
                              NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:filePath];
                              MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:self.parentNode];
                              if (node) {
@@ -340,30 +341,49 @@ static void *ProcessAssetProgressContext = &ProcessAssetProgressContext;
             name = imageFileSandbox.lastPathComponent;
         }
     } else {
-        NSString *extension = name.pathExtension.lowercaseString;
-        if (!extension) {
-            switch (self.asset.mediaType) {
-                case PHAssetMediaTypeImage:
-                    extension = @"jpg";
-                    break;
-                    
-                case PHAssetMediaTypeVideo:
-                    extension = @"mov";
-                    break;
-                    
-                default:
-                    break;
-            }
-        }
+        NSString *extension = [self extensionWithInfo:info];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.dateFormat = @"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss";
         NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
         dateFormatter.locale = locale;
         name = [[dateFormatter stringFromDate:self.asset.creationDate] stringByAppendingPathExtension:extension];
-        
     }
+    
     NSString *filePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:name];
     return filePath;
+}
+
+- (NSString *)extensionWithInfo:(NSDictionary *)info {
+    if (self.shareThroughChat && self.asset.mediaType == PHAssetMediaTypeImage) {
+        return @"jpg";
+    }
+    
+    NSString *extension;
+    
+    NSURL *url = [info objectForKey:@"PHImageFileURLKey"];
+    if (url) {
+        extension = url.path.pathExtension;
+    } else {
+        NSString *imageFileSandbox = [info objectForKey:@"PHImageFileSandboxExtensionTokenKey"];
+        extension = imageFileSandbox.pathExtension;
+    }
+    
+    if (!extension) {
+        switch (self.asset.mediaType) {
+            case PHAssetMediaTypeImage:
+                extension = @"jpg";
+                break;
+                
+            case PHAssetMediaTypeVideo:
+                extension = @"mov";
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+    return extension.lowercaseString;
 }
 
 - (void)proccessImageData:(NSData *)imageData withInfo:(NSDictionary *)info {

@@ -25,6 +25,7 @@
 #import "RemoveLinkActivity.h"
 #import "RemoveSharingActivity.h"
 #import "ShareFolderActivity.h"
+#import "SendToChatActivity.h"
 
 static MEGANode *linkNode;
 static NSInteger linkNodeOption;
@@ -633,7 +634,7 @@ static MEGAIndexer *indexer;
     return YES;
 }
 
-+ (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink {
++ (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink shouldOverwrite:(BOOL)overwrite {
     MEGASdk *api;
     
     // Can't create Inbox folder on documents folder, Inbox is reserved for use by Apple
@@ -652,7 +653,14 @@ static MEGAIndexer *indexer;
     NSString *relativeFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
     
     if (node.type == MEGANodeTypeFile) {
-        if (![[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath]]) {
+        if (![[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath]] || overwrite) {
+            if (overwrite) { //For node versions
+                [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath] error:nil];
+                MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:offlineNameString];
+                if (offlineNode) {
+                    [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
+                }
+            }
             MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:api];
             
             NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:[node base64Handle]] stringByAppendingPathComponent:node.name];
@@ -690,7 +698,7 @@ static MEGAIndexer *indexer;
         MEGANodeList *nList = [api childrenForParent:node];
         for (NSInteger i = 0; i < nList.size.integerValue; i++) {
             MEGANode *child = [nList nodeAtIndex:i];
-            [self downloadNode:child folderPath:relativeFilePath isFolderLink:isFolderLink];
+            [self downloadNode:child folderPath:relativeFilePath isFolderLink:isFolderLink shouldOverwrite:overwrite];
         }
     }
 }
@@ -822,7 +830,6 @@ static MEGAIndexer *indexer;
     
     NodesAre nodesAre = [Helper checkPropertiesForSharingNodes:nodesArray];
     
-    
     BOOL allNodesExistInOffline = NO;
     NSMutableArray *filesURLMutableArray;
     if (NodesAreFolders == (nodesAre & NodesAreFolders)) {
@@ -832,6 +839,11 @@ static MEGAIndexer *indexer;
         filesURLMutableArray = [[NSMutableArray alloc] initWithArray:[Helper checkIfAllOfTheseNodesExistInOffline:nodesArray]];
         if ([filesURLMutableArray count]) {
             allNodesExistInOffline = YES;
+        }
+        
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+            SendToChatActivity *sendToChatActivity = [[SendToChatActivity alloc] initWithNodes:nodesArray];
+            [activitiesMutableArray addObject:sendToChatActivity];
         }
     }
     
@@ -1104,6 +1116,39 @@ static MEGAIndexer *indexer;
     [Helper deletePasscode];
 }
 
++ (void)logoutAfterPasswordReminder {
+    NSError *error;
+    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] error:&error];
+    if (error) {
+        MEGALogError(@"Contents of directory at path failed with error: %@", error);
+    }
+    
+    BOOL isInboxDirectory = NO;
+    for (NSString *directoryElement in directoryContent) {
+        if ([directoryElement isEqualToString:@"Inbox"]) {
+            NSString *inboxPath = [[Helper pathForOffline] stringByAppendingPathComponent:@"Inbox"];
+            [[NSFileManager defaultManager] fileExistsAtPath:inboxPath isDirectory:&isInboxDirectory];
+            break;
+        }
+    }
+    
+    if (directoryContent.count > 0) {
+        if (directoryContent.count == 1 && isInboxDirectory) {
+            [[MEGASdkManager sharedMEGASdk] logout];
+            return;
+        }
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"warning", nil) message:AMLocalizedString(@"allFilesSavedForOfflineWillBeDeletedFromYourDevice", @"Alert message shown when the user perform logout and has files in the Offline directory") preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [[MEGASdkManager sharedMEGASdk] logout];
+        }]];
+        [[UIApplication mnz_visibleViewController] presentViewController:alertController animated:YES completion:nil];
+    } else {
+        [[MEGASdkManager sharedMEGASdk] logout];
+    }
+}
+
 + (void)cancelAllTransfers {
     [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:0];
     [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
@@ -1243,6 +1288,37 @@ static MEGAIndexer *indexer;
     if ([LTHPasscodeViewController doesPasscodeExist]) {
         [LTHPasscodeViewController deletePasscode];
     }
+}
+
++ (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ __nullable)(void))completion {
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
+    
+    BOOL success = [[NSFileManager defaultManager] createFileAtPath:masterKeyFilePath contents:[[[MEGASdkManager sharedMEGASdk] masterKey] dataUsingEncoding:NSUTF8StringEncoding] attributes:@{NSFileProtectionKey:NSFileProtectionComplete}];
+    if (success) {
+        UIAlertController *recoveryKeyAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"masterKeyExported", @"Alert title shown when you have exported your MEGA Recovery Key") message:AMLocalizedString(@"masterKeyExported_alertMessage", @"The Recovery Key has been exported into the Offline section as RecoveryKey.txt. Note: It will be deleted if you log out, please store it in a safe place.")  preferredStyle:UIAlertControllerStyleAlert];
+        [recoveryKeyAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [[MEGASdkManager sharedMEGASdk] masterKeyExported];
+            [viewController dismissViewControllerAnimated:YES completion:^{
+                if (completion) {
+                    completion();
+                }
+            }];
+        }]];
+        
+        [viewController presentViewController:recoveryKeyAlertController animated:YES completion:nil];
+    }
+}
+
++ (void)showMasterKeyCopiedAlert {
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = [[MEGASdkManager sharedMEGASdk] masterKey];
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"recoveryKeyCopiedToClipboard", @"Title of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported - (String as short as possible).") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [[UIApplication mnz_visibleViewController] presentViewController:alertController animated:YES completion:nil];
+    
+    [[MEGASdkManager sharedMEGASdk] masterKeyExported];
 }
 
 #pragma mark - Log

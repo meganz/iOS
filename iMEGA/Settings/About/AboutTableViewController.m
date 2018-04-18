@@ -38,10 +38,10 @@
     self.versionCell.gestureRecognizers = @[tapGestureRecognizer];
     
     self.sdkVersionLabel.text = AMLocalizedString(@"sdkVersion", @"Title of the label where the SDK version is shown");
-    self.sdkVersionSHALabel.text = @"8aff409";
+    self.sdkVersionSHALabel.text = @"861f8b48";
     
     self.megachatSdkVersionLabel.text = AMLocalizedString(@"megachatSdkVersion", @"Title of the label where the MEGAchat SDK version is shown");
-    self.megachatSdkSHALabel.text = @"fe15554";
+    self.megachatSdkSHALabel.text = @"34cf2e2a";
     
     [self.acknowledgementsLabel setText:AMLocalizedString(@"acknowledgements", nil)];
 }
@@ -66,7 +66,17 @@
 }
 
 - (void)acknowledgements {
-    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://mega.nz/ios_acknowledgements.html"]];
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://github.com/meganz/iOS3/blob/master/CREDITS.md"]];
+    }
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        (alertView.tag == 0) ? [[MEGALogger sharedLogger] stopLogging] : [[MEGALogger sharedLogger] startLogging];
+    }
 }
 
 #pragma mark - UITableViewDataSource
