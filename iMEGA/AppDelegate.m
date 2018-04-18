@@ -1178,7 +1178,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
         NSString *message;
         switch ([[MEGASdkManager sharedMEGASdk] waiting]) {
             case RetryNone:
-                message = @"RetryNone";
                 break;
 
             case RetryConnectivity:
@@ -1198,18 +1197,17 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 break;
                 
             case RetryLocalLock:
-                message = @"RetryLocalLock";
                 break;
                 
             case RetryUnknown:
-                message = @"RetryUnknown";
                 break;
                 
             default:
-                message = @"RetryDefault";
                 break;
         }
         launchVC.label.text = message;
+        
+        MEGALogDebug(@"The SDK is waiting to complete a request, reason: %lu", (unsigned long)[[MEGASdkManager sharedMEGASdk] waiting]);
     }
 }
 
