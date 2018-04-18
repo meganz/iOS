@@ -170,6 +170,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[MEGASdkManager sharedMEGASdk] httpServerSetMaxBufferSize:[UIDevice currentDevice].maxBufferSize];
     
     [[LTHPasscodeViewController sharedUser] setDelegate:self];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"presentPasscodeLater"];
     
     [self languageCompatibility];
     
@@ -393,6 +394,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [self.window addSubview:self.privacyView];
     
     [self application:application shouldHideWindows:YES];
+    
+    if (![NSStringFromClass([UIApplication sharedApplication].windows[0].class) isEqualToString:@"UIWindow"]) {
+        [[LTHPasscodeViewController sharedUser] disablePasscodeWhenApplicationEntersBackground];
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -426,6 +431,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     if (self.isSignalActivityRequired) {
         [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
+    }
+    
+    if (![NSStringFromClass([UIApplication sharedApplication].windows[0].class) isEqualToString:@"UIWindow"]) {
+        [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
     }
 }
 
@@ -1297,9 +1306,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
                 }
                 
-                [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
-                                                                         withLogout:NO
-                                                                     andLogoutTitle:nil];
+                if (![[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"]) {
+                    [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
+                                                                             withLogout:NO
+                                                                         andLogoutTitle:nil];
+                }
             }
         }
         
