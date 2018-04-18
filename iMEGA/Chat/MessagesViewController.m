@@ -15,7 +15,6 @@
 #import "DevicePermissionsHelper.h"
 #import "DisplayMode.h"
 #import "MainTabBarController.h"
-#import "MEGAAssetsPickerController.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGACopyRequestDelegate.h"
