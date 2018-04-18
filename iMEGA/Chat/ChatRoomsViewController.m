@@ -9,6 +9,7 @@
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGAStore.h"
 #import "NSMutableAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
@@ -348,11 +349,6 @@
 }
 
 - (void)updateCell:(ChatRoomCell *)cell forChatListItem:(MEGAChatListItem *)item {
-    NSString *senderString;
-    if(item.isGroup && item.lastMessageSender != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
-        senderString = [chatRoom peerFullnameByHandle:item.lastMessageSender];
-    }
     switch (item.lastMessageType) {
         case MEGAChatMessageTypeInvalid: {
             cell.chatLastMessage.text = AMLocalizedString(@"noConversationHistory", @"Information if there are no history messages in current chat conversation");
@@ -361,6 +357,15 @@
         }
             
         case MEGAChatMessageTypeAttachment: {
+            NSString *senderString;
+            if (item.group) {
+                if(item.lastMessageSender == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
+                    senderString = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
+                } else {
+                    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
+                    senderString = [chatRoom peerFullnameByHandle:item.lastMessageSender];
+                }
+            }
             NSString *lastMessageString = item.lastMessage;
             NSArray *componentsArray = [lastMessageString componentsSeparatedByString:@"\x01"];
             if (componentsArray.count == 1) {
@@ -371,12 +376,19 @@
                 lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", componentsArray.count]];
             }
             cell.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, lastMessageString] : lastMessageString;
-            cell.chatLastTime.hidden = NO;
-            cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
             break;
         }
             
         case MEGAChatMessageTypeContact: {
+            NSString *senderString;
+            if (item.group) {
+                if(item.lastMessageSender == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
+                    senderString = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
+                } else {
+                    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
+                    senderString = [chatRoom peerFullnameByHandle:item.lastMessageSender];
+                }
+            }
             NSString *lastMessageString = item.lastMessage;
             NSArray *componentsArray = [lastMessageString componentsSeparatedByString:@"\x01"];
             if (componentsArray.count == 1) {
@@ -387,18 +399,148 @@
                 lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", componentsArray.count]];
             }
             cell.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, lastMessageString] : lastMessageString;
+            break;
+        }
+            
+        case MEGAChatMessageTypeTruncate: {
+            NSString *senderString;
+            if(item.lastMessageSender == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
+                senderString = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
+            } else {
+                MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
+                senderString = [chatRoom peerFullnameByHandle:item.lastMessageSender];
+            }
+            NSString *lastMessageString = AMLocalizedString(@"clearedTheChatHistory", @"A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history.");
+            lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"[A]" withString:senderString];
+            cell.chatLastMessage.text = lastMessageString;
+            break;
+        }
+            
+        case MEGAChatMessageTypePrivilegeChange: {
+            NSString *fullNameDidAction;
+            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
+            if(item.lastMessageSender == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
+                fullNameDidAction = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
+            } else {
+                fullNameDidAction = [chatRoom peerFullnameByHandle:item.lastMessageSender];
+            }
+            
+            NSString *fullNameReceiveAction = [chatRoom peerFullnameByHandle:item.lastMessageHandle];
+            
+            if (fullNameReceiveAction.length == 0) {
+                MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:item.lastMessageHandle];
+                if (moUser) {
+                    fullNameReceiveAction = moUser.fullName;
+                } else {
+                    fullNameReceiveAction = @"";
+                }
+            }
+            
+            NSString *wasChangedToBy = AMLocalizedString(@"wasChangedToBy", @"A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith.");
+            wasChangedToBy = [wasChangedToBy stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
+            NSString *privilige;
+            switch (item.lastMessagePriv) {
+                case 0:
+                    privilige = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
+                    break;
+                    
+                case 2:
+                    privilige = AMLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.");
+                    break;
+                    
+                case 3:
+                    privilige = AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat");
+                    break;
+                    
+                default:
+                    break;
+            }
+            wasChangedToBy = [wasChangedToBy stringByReplacingOccurrencesOfString:@"[B]" withString:privilige];
+            wasChangedToBy = [wasChangedToBy stringByReplacingOccurrencesOfString:@"[C]" withString:fullNameDidAction];
+            cell.chatLastMessage.text = wasChangedToBy;
+            break;
+        }
+            
+        case MEGAChatMessageTypeAlterParticipants: {
+            NSString *fullNameDidAction;
+            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
+            if(item.lastMessageSender == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
+                fullNameDidAction = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
+            } else {
+                fullNameDidAction = [chatRoom peerFullnameByHandle:item.lastMessageSender];
+            }
+            
+            NSString *fullNameReceiveAction = [chatRoom peerFullnameByHandle:item.lastMessageHandle];
+            
+            if (fullNameReceiveAction.length == 0) {
+                MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:item.lastMessageHandle];
+                if (moUser) {
+                    fullNameReceiveAction = moUser.fullName;
+                } else {
+                    fullNameReceiveAction = @"";
+                }
+            }
+            
+            switch (item.lastMessagePriv) {
+                case -1: {
+                    if (fullNameDidAction && ![fullNameReceiveAction isEqualToString:fullNameDidAction]) {
+                        NSString *wasRemovedFromTheGroupChatBy = AMLocalizedString(@"wasRemovedFromTheGroupChatBy", @"A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank.");
+                        wasRemovedFromTheGroupChatBy = [wasRemovedFromTheGroupChatBy stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
+                        wasRemovedFromTheGroupChatBy = [wasRemovedFromTheGroupChatBy stringByReplacingOccurrencesOfString:@"[B]" withString:fullNameDidAction];
+                        cell.chatLastMessage.text = wasRemovedFromTheGroupChatBy;
+                    } else {
+                        NSString *leftTheGroupChat = AMLocalizedString(@"leftTheGroupChat", @"A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat.");
+                        leftTheGroupChat = [leftTheGroupChat stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
+                        cell.chatLastMessage.text = leftTheGroupChat;
+                    }
+                    break;
+                }
+                    
+                case -2: {
+                    NSString *joinedTheGroupChatByInvitationFrom = AMLocalizedString(@"joinedTheGroupChatByInvitationFrom", @"A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank.");
+                    joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
+                    joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[B]" withString:fullNameDidAction];
+                    cell.chatLastMessage.text = joinedTheGroupChatByInvitationFrom;
+                    break;
+                }
+                    
+                default:
+                    break;
+            }
             cell.chatLastTime.hidden = NO;
             cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
             break;
         }
             
+        case MEGAChatMessageTypeChatTitle: {
+            NSString *senderString;
+            if(item.lastMessageSender == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
+                senderString = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
+            } else {
+                MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
+                senderString = [chatRoom peerFullnameByHandle:item.lastMessageSender];
+            }
+            NSString *changedGroupChatNameTo = AMLocalizedString(@"changedGroupChatNameTo", @"A hint message in a group chat to indicate the group chat name is changed to a new one. Please keep %s when translating this string which will be replaced with the name at runtime.");
+            changedGroupChatNameTo = [changedGroupChatNameTo stringByReplacingOccurrencesOfString:@"[A]" withString:senderString];
+            changedGroupChatNameTo = [changedGroupChatNameTo stringByReplacingOccurrencesOfString:@"[B]" withString:(item.lastMessage ? item.lastMessage : @" ")];
+            cell.chatLastMessage.text = changedGroupChatNameTo;
+            break;
+        }
+            
         default: {
+            NSString *senderString;
+            if(item.lastMessageSender == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
+                senderString = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
+            } else {
+                MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
+                senderString = [chatRoom peerFullnameByHandle:item.lastMessageSender];
+            }
             cell.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, item.lastMessage] : item.lastMessage;
-            cell.chatLastTime.hidden = NO;
-            cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
             break;
         }
     }
+    cell.chatLastTime.hidden = NO;
+    cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
 }
 
 - (void)customNavigationBarLabel {
@@ -536,7 +678,7 @@
                 MEGALogInfo(@"%@", chatRoom);
                 NSInteger i = 0;
                 for (i = 0; i < self.chatListItemArray.count; i++){
-                    if (chatRoom.chatId == [[self.chatListItemArray objectAtIndex:i] chatId]) {
+                    if (chatRoom.chatId == [(MEGAChatRoom *)[self.chatListItemArray objectAtIndex:i] chatId]) {
                         break;
                     }
                 }
