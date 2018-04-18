@@ -10,20 +10,18 @@
 
 @property (assign) id<MEGAPurchaseDelegate>delegate;
 @property (assign) id<MEGAPurchasePricingDelegate>pricingsDelegate;
-@property (nonatomic, strong) SKProduct *validProduct;
 @property (nonatomic, strong) MEGAPricing *pricing;
+@property (nonatomic, strong) NSMutableArray *products;
 
 + (MEGAPurchase *)sharedInstance;
 
-- (void)requestProduct:(NSString *)productId;
-- (void)purchaseProduct:(SKProduct *)requestedProduct;
+- (void)purchaseProduct:(SKProduct *)product;
 - (void)restorePurchase;
 
 @end
 
 @protocol MEGAPurchaseDelegate <NSObject>
 
-- (void)requestedProduct;
 - (void)successfulPurchase:(MEGAPurchase *)megaPurchase restored:(BOOL)isRestore;
 - (void)failedPurchase:(NSInteger)errorCode message:(NSString *)errorMessage;
 - (void)incompleteRestore;

@@ -8,6 +8,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *permissionsButton;
 @property (weak, nonatomic) IBOutlet UIButton *infoButton;
 
+@property (weak, nonatomic) IBOutlet UIView *lineView;
+
 @property (nonatomic) uint64_t nodeHandle;
 
 @end

@@ -3,10 +3,13 @@
 #import "MEGARemoteImageView.h"
 #import "MEGALocalImageView.h"
 #import "NSString+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
+
+#import "LTHPasscodeViewController.h"
 
 #import "MEGAChatAnswerCallRequestDelegate.h"
 #import "MEGAChatEnableDisableAudioRequestDelegate.h"
@@ -23,6 +26,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *enableDisableVideoButton;
 @property (weak, nonatomic) IBOutlet UIButton *muteUnmuteMicrophone;
+@property (weak, nonatomic) IBOutlet UIButton *enableDisableSpeaker;
 
 @property (weak, nonatomic) IBOutlet UIView *outgoingCallView;
 @property (weak, nonatomic) IBOutlet UIView *incomingCallView;
@@ -48,6 +52,14 @@
     // Do any additional setup after loading the view.
     
     self.enableDisableVideoButton.selected = self.videoCall;
+    self.enableDisableSpeaker.selected = self.videoCall;
+    if (self.videoCall) {
+        [self enableLoudspeaker];
+        self.remoteAvatarImageView.hidden = YES;
+        self.localVideoImageView.hidden = NO;
+    } else {
+        [self disableLoudspeaker];
+    }
     self.loudSpeakerEnabled = self.videoCall;
     _statusBarShouldBeHidden = NO;
     
@@ -58,8 +70,8 @@
     self.localVideoImageView.layer.masksToBounds = YES;
     self.localVideoImageView.layer.cornerRadius = 4;
     self.localVideoImageView.corner = CornerTopRight;
-    self.localVideoImageView.visibleControls = YES;
-
+    self.localVideoImageView.userInteractionEnabled = self.call.hasRemoteVideo;
+    
     if (self.callType == CallTypeIncoming) {
         self.outgoingCallView.hidden = YES;
         if (@available(iOS 10.0, *)) {
@@ -93,10 +105,9 @@
         [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:startCallRequestDelegate];
     }
     
+    [[UIDevice currentDevice] setProximityMonitoringEnabled:!self.videoCall];
     
-    [[UIDevice currentDevice] setProximityMonitoringEnabled:YES];    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSessionRouteChange:) name:AVAudioSessionRouteChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sensorStateMonitor:) name:UIDeviceProximityStateDidChangeNotification object:nil];
     
     self.nameLabel.text = [self.chatRoom peerFullnameAtIndex:0];
     
@@ -134,7 +145,23 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+    return UIInterfaceOrientationMaskAll;
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {    
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    BOOL viewWillChangeOrientation = (size.height != self.view.bounds.size.height);
+    
+    if (self.remoteVideoImageView.hidden && self.localVideoImageView.hidden) {
+        self.remoteAvatarImageView.hidden = (size.width > size.height);
+    }
+    
+    if (viewWillChangeOrientation && self.call.hasLocalVideo && self.call.hasRemoteVideo) {
+        [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+            [self.localVideoImageView rotate];
+        } completion:nil];
+    }
 }
 
 #pragma mark - Status bar
@@ -160,16 +187,7 @@
 
 #pragma mark - Private
 
-- (void)sensorStateMonitor:(NSNotificationCenter *)notification {
-    if ([[UIDevice currentDevice] proximityState] == YES) {
-        [self disableLoudspeaker];
-    } else {
-        [self enableLoudspeaker];
-    }
-}
-
-- (void)didSessionRouteChange:(NSNotification *)notification
-{
+- (void)didSessionRouteChange:(NSNotification *)notification {
     NSDictionary *interuptionDict = notification.userInfo;
     const NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
     
@@ -244,6 +262,17 @@
     return permissionsAlertController;
 }
 
+- (void)enablePasscodeIfNeeded {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"] && [LTHPasscodeViewController doesPasscodeExist]) {
+        [[LTHPasscodeViewController sharedUser] showLockScreenOver:[UIApplication mnz_visibleViewController].view
+                                                     withAnimation:YES
+                                                        withLogout:NO
+                                                    andLogoutTitle:nil];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"presentPasscodeLater"];
+    }
+    [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)acceptCallWithVideo:(UIButton *)sender {
@@ -300,7 +329,11 @@
                     if (sender.selected) {
                         self.localVideoImageView.hidden = YES;
                         [[MEGASdkManager sharedMEGAChatSdk] removeChatLocalVideoDelegate:self.localVideoImageView];
+                        if (self.remoteVideoImageView.hidden) {
+                            self.remoteAvatarImageView.hidden = self.view.frame.size.width > self.view.frame.size.height;
+                        }
                     } else {
+                        self.remoteAvatarImageView.hidden = YES;
                         self.localVideoImageView.hidden = NO;
                         [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideoDelegate:self.localVideoImageView];
                     }
@@ -319,11 +352,49 @@
     }];
 }
 
+- (IBAction)enableDisableSpeaker:(UIButton *)sender {
+    if (sender.selected) {
+        [self disableLoudspeaker];
+    } else {
+        [self enableLoudspeaker];
+    }
+    sender.selected = !sender.selected;
+}
+
+
 #pragma mark - MEGAChatCallDelegate
 
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
     MEGALogDebug(@"onChatCallUpdate %@", call);
     
+    if (self.call.callId == call.callId) {
+        self.call = call;
+    } else {
+        return;
+    }
+    
+    if ([call hasChangedForType:MEGAChatCallChangeTypeSessionStatus]) {
+        if ([call sessionStatusForPeer:call.peerSessionStatusChange] == MEGAChatConnectionInProgress) {
+            if (!self.timer.isValid) {
+                [self.player stop];
+                
+                _timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateLabel) userInfo:nil repeats:YES];
+                [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+                _baseDate = [NSDate date];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    //Add Tap to hide/show controls
+                    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showOrHideControls)];
+                    [tapGestureRecognizer setNumberOfTapsRequired:1];
+                    [self.view addGestureRecognizer:tapGestureRecognizer];
+                    
+                    [self showOrHideControls];
+                });
+            }
+        } else {
+            self.statusCallLabel.text = AMLocalizedString(@"connecting", nil);
+        }
+    }
+
     switch (call.status) {
         case MEGAChatCallStatusInitial:
             break;
@@ -341,37 +412,28 @@
             break;
             
         case MEGAChatCallStatusInProgress: {
-            if (!self.timer.isValid) {
-                [self.player stop];
-                
-                _timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateLabel) userInfo:nil repeats:YES];
-                [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-                _baseDate = [NSDate date];
-                
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    //Add Tap to hide/show controls
-                    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showOrHideControls)];
-                    [tapGestureRecognizer setNumberOfTapsRequired:1];
-                    [self.view addGestureRecognizer:tapGestureRecognizer];
-                    
-                    [self showOrHideControls];
-                });
-            }
             self.outgoingCallView.hidden = NO;
             self.incomingCallView.hidden = YES;
             
             if ([call hasChangedForType:MEGAChatCallChangeTypeRemoteAVFlags]) {
+                self.localVideoImageView.userInteractionEnabled = call.hasRemoteVideo;
                 if (call.hasRemoteVideo) {
-                    self.remoteVideoImageView.hidden = NO;
-                    [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideoDelegate:self.remoteVideoImageView];
-                    self.remoteAvatarImageView.hidden = YES;
+                    if (self.remoteVideoImageView.hidden) {
+                        [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideoDelegate:self.remoteVideoImageView];
+                        self.remoteVideoImageView.hidden = NO;
+                        self.remoteAvatarImageView.hidden = YES;
+                    }
                 } else {
-                    [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideoDelegate:self.remoteVideoImageView];
-                    self.remoteVideoImageView.hidden = YES;
-                    self.remoteAvatarImageView.hidden = NO;
-                    [self.remoteAvatarImageView mnz_setImageForUserHandle:[self.chatRoom peerHandleAtIndex:0]];
+                    if (!self.remoteVideoImageView.hidden) {
+                        [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideoDelegate:self.remoteVideoImageView];
+                        self.remoteVideoImageView.hidden = YES;
+                        if (self.localVideoImageView.hidden) {
+                            self.remoteAvatarImageView.hidden = self.view.frame.size.width > self.view.frame.size.height;
+                        }
+                        [self.remoteAvatarImageView mnz_setImageForUserHandle:[self.chatRoom peerHandleAtIndex:0]];
+                    }
                 }
-                
+                [self.localVideoImageView remoteVideoEnable:call.remoteVideo];
                 self.remoteMicImageView.hidden = call.hasRemoteAudio;
             }
             break;
@@ -381,24 +443,21 @@
             break;
             
         case MEGAChatCallStatusDestroyed: {
-            if (self.call.callId == call.callId) {
-                self.incomingCallView.userInteractionEnabled = NO;
-                
-                [self.timer invalidate];
-                
-                [self.player stop];
-                
-                NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"hang_out" ofType:@"mp3"];
-                NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
-                self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
-                
-                [self.player play];
-                
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [self dismissViewControllerAnimated:YES completion:nil];
-                });
-            }
+            self.incomingCallView.userInteractionEnabled = NO;
             
+            [self.timer invalidate];
+            
+            [self.player stop];
+            
+            NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"hang_out" ofType:@"mp3"];
+            NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
+            self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
+            
+            [self.player play];
+            
+            [self dismissViewControllerAnimated:YES completion:^{
+                [self enablePasscodeIfNeeded];
+            }];
             break;
         }
             

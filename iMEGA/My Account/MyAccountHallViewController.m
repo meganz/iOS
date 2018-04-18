@@ -3,19 +3,23 @@
 
 #import "AchievementsViewController.h"
 #import "ContactsViewController.h"
+#import "MEGAContactLinkCreateRequestDelegate.h"
 #import "OfflineTableViewController.h"
 #import "MEGANavigationController.h"
+#import "MEGAPurchase.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MyAccountHallTableViewCell.h"
 #import "MyAccountViewController.h"
 #import "SettingsTableViewController.h"
 #import "TransfersViewController.h"
+#import "UIImage+MNZCategory.h"
 #import "UpgradeTableViewController.h"
 #import "UsageViewController.h"
 
-@interface MyAccountHallViewController () <UITableViewDataSource, UITableViewDelegate, MEGAGlobalDelegate, MEGARequestDelegate>
+@interface MyAccountHallViewController () <UITableViewDataSource, UITableViewDelegate, MEGAPurchasePricingDelegate, MEGAGlobalDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *buyPROBarButtonItem;
 
@@ -58,6 +62,17 @@
     [_numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
     [_numberFormatter setLocale:[NSLocale currentLocale]];
     [_numberFormatter setMaximumFractionDigits:0];
+    
+    MEGAContactLinkCreateRequestDelegate *delegate = [[MEGAContactLinkCreateRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+        NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
+        self.qrCodeImageView.image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:self.qrCodeImageView.frame.size];
+        self.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+        self.avatarImageView.layer.borderWidth = 6.0f;
+        self.avatarImageView.layer.cornerRadius = 40.0f;
+    }];
+    [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:NO delegate:delegate];
+
+    [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -67,6 +82,7 @@
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
     [self reloadUI];
+    self.buyPROBarButtonItem.enabled = [MEGAPurchase sharedInstance].products.count;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -116,10 +132,14 @@
 #pragma mark - IBActions
 
 - (IBAction)buyPROTouchUpInside:(UIBarButtonItem *)sender {
-    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
-    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-    
-    [self presentViewController:navigationController animated:YES completion:nil];
+    if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
+        UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+        
+        [self presentViewController:navigationController animated:YES completion:nil];
+    } else {
+         [MEGAReachabilityManager isReachableHUDIfNot];
+    }
 }
 
 - (IBAction)viewAndEditProfileTouchUpInside:(UIButton *)sender {
@@ -291,6 +311,12 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+#pragma mark - MEGAPurchasePricingDelegate
+
+- (void)pricingsReady {
+    self.buyPROBarButtonItem.enabled = YES;
+}
+
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
@@ -303,12 +329,18 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     [super onRequestFinish:api request:request error:error];
     
-    if (request.type == MEGARequestTypeAccountDetails) {
-        if (error.type) {
-            return;
-        }
-        
-        [self reloadUI];
+    switch (request.type) {
+        case MEGARequestTypeAccountDetails:
+            if (error.type) {
+                return;
+            }
+            
+            [self reloadUI];
+            
+            break;
+            
+        default:
+            break;
     }
 }
 

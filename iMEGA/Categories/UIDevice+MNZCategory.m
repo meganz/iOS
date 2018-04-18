@@ -186,6 +186,14 @@ static const NSUInteger MAX_BUFFER_32MB = 33554432; // 32 MB
     return NO;
 }
 
+- (BOOL)iPhoneX {
+    if ([[self deviceName] isEqualToString:@"iPhone X"]) {
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (BOOL)iPadDevice {
     return ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad);
 }

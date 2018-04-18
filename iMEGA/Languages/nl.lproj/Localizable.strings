@@ -29,9 +29,9 @@
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="Geeft u aub de MEGA app toegang tot uw camera in uw inestellingen";
 /* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
-"cameraPermissionsInCall"="Please give MEGA app permission to access your Camera in your Settings. In case you proceed the call will end because the app will be restarted.";
+"cameraPermissionsInCall"="Geef MEGA applicatie toestemming voor toegang tot uw Camera in uw instellingen. Voor het geval u doorgaat wordt het gesprek beëindigd omdat de applicatie wordt herstart.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
+"microphonePermissions"="Geef MEGA app toestemming voor toegang tot uw Microphone in uw Instellingen";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Geeft u aub de MEGA app toegang tot uw foto library in uw instellingen";
 /* Alert message shown when the user tries to download an empty folder  */
@@ -100,10 +100,32 @@
 "emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Wachtwoord";
-/* Text shown on a button that if clicked shows the MEGA Terms of Service */
-"termsOfServiceButton"="Ik ga akkoord met de Algemene Voorwaarden van MEGA";
+/*  */
+"pleaseStrengthenYourPassword"="Kies aub een sterker wachtwoord.";
+/* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
+"veryWeak"="Erg Zwak";
+/*  */
+"weak"="Zwak";
+/*  */
+"passwordVeryWeakOrWeak"="Uw wachtwoord is gemakkelijk te raden. Probeer uw wachtwoord langer te maken. Combineer hoofdletters & kleine letters. Voeg speciale tekens toe. Gebruik geen namen of woorden uit een woordenboek.";
+/* Label displayed during checking the strength of the password introduced. Represents Medium security */
+"medium"="Middelmatig";
+/*  */
+"passwordMedium"="Uw wachtwoord is sterk genoeg om door te gaan, echter raden wij u aan uw wachtwoord sterker te maken.";
+/*  */
+"good"="Goed";
+/*  */
+"passwordGood"="Dit wachtwoord zal de meest gebruikelijke brute-force aanvallen weerstaan. Zorg ervoor dat u deze goed onthoudt.";
+/* Label displayed during checking the strength of the password introduced. Represents Strong security */
+"strong"="Sterk";
+/*  */
+"passwordStrong"="Dit wachtwoord zal de meest geavanceerde brute-force aanvallen weerstaan. Zorg ervoor dat u deze goed onthoudt.";
+/*  */
+"agreeWithTheMEGATermsOfService"="Ik ga akkoord met de MEGA <a href='terms'>Algemene Voorwaarden</a>";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Vul uw naam in";
+/*  */
+"invalidFirstNameAndLastName"="Ongeldige voor- en/of achternaam.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Wachtwoorden komen niet overeen";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -284,8 +306,8 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="U heeft niet langer toegang tot dit bestand";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="U heeft niet langer toegang tot deze map";
-/* List option shown on the details of a file or folder */
-"saveForOffline"="Opslaan voor Offline";
+/* The text is shown as an option on the details of a file or folder */
+"saveForOffline"="Opslaan voor offline";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Opgeslagen voor Offline gebruik";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -344,6 +366,16 @@
 "copyKey"="Kopieer sleutel";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Openen in...";
+/* */
+"sendToContact"="Stuur naar contact";
+/* Toast text upon sending a single file to chat */
+"fileSentToChat"="Bestand verstuurd naar gesprek";
+/* Success message when the attachment has been sent to a many chats */
+"fileSentToXChats"="Bestand verzonden naar %1$d gesprekken";
+/* Toast text upon sending multiple files to chat */
+"filesSentToChat"="Bestanden verstuurd naar gesprek";
+/* success message when sending multiple files. Please do not modify the %d placeholder. */
+"xfilesSentSuccesfully"="%d bestanden succesvol verzonden";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Verwijder koppeling";
 /* Message shown when there are some active links that can be removed or disabled */
@@ -353,7 +385,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Koppelingen verwijderd";
 /* Title show when a file is being downloaded */
-"downloading"="Downloaden...";
+"downloading"="Downloaden";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Wilt u de download afbreken?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -470,10 +502,16 @@
 "cameraUploadsUploadingFile"="Uploaden van %1$d of %2$d bestand";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
 "cameraUploadsUploadingFiles"="Uploaden van %1$d of %2$d bestanden";
+/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
+"indexOfTotalFile"="%1$d of %2$d bestand";
+/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
+"indexOfTotalFiles"="%1$d of %2$d bestanden";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu item geselecteerd";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu items geselecteerd";
+/* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
+"xSelected"="%d geselecteerd";
 /* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
 "cameraUploadsWillBeDisabled"="Camera uploads worden uitgeschakeld";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
@@ -482,8 +520,6 @@
 "offline"="Offline";
 /* Title of the Contacts section */
 "contactsTitle"="Contacten";
-/* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
-"noFoldersShared"="Geen mappen gedeeld";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 map";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -634,8 +670,8 @@
 "masterKey"="Herstel Sleutel";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Wijzig wachtwoord";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="De Herstelsleutel opslaan en bewaren op een veilige plek zorgt ervoor dat u uw account kunt herstellen in het geval van een verloren wachtwoord zonder gegevens verlies.";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="Het exporteren en bewaren van de Master Key op een veilige locatie stelt u in staat om een nieuw wachtwoord in te stellen zonder het verlies van gegevens.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Waarom heb ik een Herstel Sleutel nodig?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -656,7 +692,7 @@
 "clearCache"="Cache wissen";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Bij MEGA";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="Prullenbak leegmaken";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Alle items in de prullenbak worden verwijderd";
@@ -682,8 +718,8 @@
 "ifYouCantAccessYourEmailAccount"="Als u geen toegang heeft tot uw e-mailaccount, neem dan alstublieft contact op met support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Annuleringskoppeling is verstreken.";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Voer a.u.b. uw wachtwoord in om de annulering van uw account te bevestigen.";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="Dit is de laatste stap om uw account te annuleren. U verliest alle gegevens die zijn opgeslagen in de cloud permanent. Voer alstublieft uw wachtwoord hieronder in.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Beëindig account";
 /* Title for the action that allows to remove a file or folder */
@@ -961,19 +997,15 @@
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="Afhankelijk aan uw participatie in ons beloningsprogramma.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%.2f %@ per maand";
+"productPricePerMonth"="%@ per month";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Kies één van de abonnementen hieronder:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Selecteer één account type:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
+"twoMonthsFree"="Een Jaar abonnement is 17% goedkoper dan 12 maandelijkse betalingen";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Huidig Abonnement:";
-/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
-"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
-/* Title text for the account confirmation. */
-"confirm"="Bevestigen";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Verzoek om een abonnement";
 /* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
@@ -1155,7 +1187,7 @@
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="Gesprek met %@";
 /* Title show above the name of the persons with whom you're chatting */
-"chattingWith"="Chatting with";
+"chattingWith"="In gesprek met";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA beschermt uw chat met eind-tot-eind codering (gebruiker bestuurd) door het verstrekken van essentiële veiligheidswaarborgen:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1228,12 +1260,18 @@
 "uploadedFile"="Dit bestand geüpload:";
 /* A summary message when a user has attached many files at once into the chat. */
 "uploadedFiles"="Deze bestanden geüpload: ";
+/* Label in a button that allows to jump to the latest item */
+"jumpToLatest"="Jump to latest";
+/* Label in a button that allows to jump to the latest message */
+"newMessages"="New messages";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Abonnementen worden automatisch verlengd voor opeenvolgende abonnementsperioden van dezelfde duur en voor dezelfde prijs als de gekozen beginperiode.U kunt de automatische verlenging van uw MEGA PRO abonnement uitschakelen uiterlijk 24 uur voordat uw volgende abonnementsbetaling via uw pagina accountinstellingen van uw iTunes-account verschuldigd bent. Om uw abonnementen te beheren, klikt u op het pictogram AppStore op uw toestel, meld u aan met een Apple ID aan de onderkant van de pagina (als u dat nog niet hebt gedaan) en klik vervolgens op Bekijk ID. U komt daarmee op uw accountpagina, waar u naar beneden kunt scrollen naar Beheer Applicatie Abonnementen. Van daaruit kunt u uw MEGA PRO abonnement  kiezen en uw geplande verlengingsdatum, u kunt een ander abonnement kiezen of de aan-uit schakelaar uitschakelen op uit zetten om de automatische verlenging van uw abonnement uit te schakelen.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA en login om door te gaan";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Intrekken";
+/* Label in login screen to inform about the chat initialization proccess */
+"connecting"="Verbinden...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Sommige items konden niet gedeeld worden in MEGA";
 /* Notification message shown when a transfer failed. Keep colon. */
@@ -1301,10 +1339,10 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="Binnen de applicatie kunt u de opslagruimte en overdracht tegoed upgraden met een maandelijks of jaarlijks abonnement.";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITE abonnement: €4.99 (US$4.99) per maand of €49.99 (US$49.99) per jaar biedt u 200 GB aan opslagruimte en 1 TB aan overdrachtssnelheid tegoed per maand. PRO I abonnement: €9.99 (US$9.99) per maand of €99.99 (US$99.99) per jaar biedt u 1 TB aan opslagruimte en 2 TB aan overdrachtssnelheid tegoed per maand.PRO II abonnement: €19.99 (US$19.99) per maand of €199.99 (US$199.99) per jaar biedt u 4 TB aan opslagruimte en 8 TB aan overdrachtssnelheid per maand. PRO III abonnement: €29.99 (US$29.99) per maand of €299.99 (US$299.99) per jaar biedt u 8 TB aan opslagruimte en 16 TB aan overdrachtssnelheid per maand.";
+"generalDescriptionParagraph5"="PRO Lite abonnement: €4.99 (US$4.99) per maand of €49.99 (US$49.99) per jaar biedt u 200 GB aan opslag ruimte en 1 TB aan overdracht tegoed per maand.\n\nPRO I abonnement: €9.99 (US$9.99) per maand of €99.99 (US$99.99) per jaar biedt u 1 TB aan opslag ruimte en 2 TB aan overdracht tegoed per maand.\nPRO II abonnement: €19.99 (US$19.99) per maand of €199.99 (US$199.99) per jaar biedt u 4 TB aan opslag ruimte en 8 TB aan overdracht tegoed per maand.\nPRO III abonnement: €29.99 (US$29.99) per maand of €299.99 (US$299.99) per jaar biedt u 8 TB aan opslag ruimte en 16 TB aan overdracht tegoed per maand.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Voor meer informatie, ga naar onze website:Mobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmlDesktop - https://mega.nz/";
+"generalDescriptionParagraph6"="Voor meer informatie, bezoek onze website:\nMobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nDesktop - https://mega.nz/";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="Bellen...";
 /* Notification text body shown when you have missed one audio call */
@@ -1324,4 +1362,74 @@
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
 "missedAudioCallsAndMissedVideoCalls"="[A] gemiste audio oproepen en [B] gemiste video oproepen";
 /* Button title to see the available bonus */
-"getBonus"="Get Bonus";
+"getBonus"="Krijg Bonus";
+/* QR Code label, used in Settings as title. String as short as possible */
+"qrCode"="QR Code";
+/* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
+"autoAccept"="Automatisch-Accepteren";
+/* Footer that explains the way Auto-Accept works for QR codes */
+"autoAcceptFooter"="Contacts die uw QR Code scannen worden automatisch toegevoegd tot uw contact lijst.";
+/* Action to reset the current valid QR code of the user */
+"resetQrCode"="QR Code Resetten";
+/* Footer that explains what would happen if the user resets his/her QR code */
+"resetQrCodeFooter"="Previous QR codes will no longer be valid.";
+/* Title for view that displays the QR code of the user. String as short as possible. */
+"myCode"="Mijn Code";
+/* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
+"scanCode"="Code Scannen";
+/* Label that encourage the user to line the QR to scan with the camera */
+"lineCodeWithCamera"="Zet de QR code klaar om het te scannen met de camera van uw apparaat.";
+/* Error text shown when the user scans a QR that is not valid. String as short as possible. */
+"invalidCode"="Ongeldige code";
+/* Success text shown in a label when the user scans a valid QR. String as short as possible. */
+"codeScanned"="Code gescanned";
+/* title of the screen that shows the users with whom the user has shared a folder */
+"sharedWidth"="Gedeeld met:";
+/*   */
+"details"="Details";
+/* Item menu option upon right click on one or multiple files. */
+"sharing"="Delen";
+/* Title of section to display number of all historical versions of files. */
+"versions"="Versies";
+/* Title label of a node property. */
+"location"="Location";
+/* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
+"totalSize"="Totale grootte";
+/* Refers to the type of a file or folder. */
+"type"="Soort";
+/* Title of the incoming shared folders of a user in singular */
+"sharedFolder"="Gedeelde Map";
+/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
+"created"="Gecreëerd";
+/* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
+"contains"="Bevat";
+/* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
+"modified"="Gewijzigd";
+/* used for example when a folder is shared with 2 or more users */
+"users"="gebruikers";
+/* user (singular) label indicating is receiving some info, for example shared folders */
+"user"="gebruiker";
+/* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
+"xVersions"="[X] versies";
+/* Label of the option menu. When clicking this button, the app shows the info of the file */
+"fileInfo"="File info";
+/* Label of the option menu. When clicking this button, the app shows the info of the folder */
+"folderInfo"="Folder info";
+/* Question to ensure user wants to delete file version. */
+"deleteVersion"="Do you want to delete this version?";
+/* Message to notify user the file version will be permanently removed */
+"permanentlyRemoved"="It will be permanently removed";
+/*  */
+"delete"="Verwijder";
+/* A button label which reverts a certain version of a file to be the current version of the selected file. */
+"revert"="Terugkeren";
+/*  */
+"download"="Download";
+/* Singular of file. 1 file */
+"file"="bestand";
+/* Title of section to display information of the current version of a file. */
+"currentVersion"="Huidige Versie";
+/* A button label which opens a dialog to display the full version history of the selected file. */
+"previousVersions"="Previous Versions";
+/* Title of section to display information of all current versions of files. */
+"currentVersions"="Huidige Versies";

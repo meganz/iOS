@@ -11,4 +11,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *usedLabel;
 @property (weak, nonatomic) IBOutlet UILabel *usedPercentageLabel;
 @property (weak, nonatomic) IBOutlet UIProgressView *usedProgressView;
+
+@property (weak, nonatomic) IBOutlet UIView *lineView;
+
 @end

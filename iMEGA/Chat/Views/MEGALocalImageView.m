@@ -4,11 +4,13 @@
 
 static const CGFloat FIXED_MARGIN = 20;
 static const CGFloat TOP_HEIGHT = 85;
-static const CGFloat BOTTOM_HEIGHT = 123;
+static const CGFloat BOTTOM_HEIGHT = 210;
 
 @interface MEGALocalImageView ()
 
 @property (nonatomic) CGPoint offset;
+@property (nonatomic) NSInteger customWidth;
+@property (nonatomic) NSInteger customHeight;
 
 @end
 
@@ -16,7 +18,9 @@ static const CGFloat BOTTOM_HEIGHT = 123;
 
 - (void)setVisibleControls:(BOOL)visibleControls {
     _visibleControls = visibleControls;
-    [self positionViewByCenter:self.center];
+    if (self.userInteractionEnabled) {
+        [self positionViewByCenter:self.center];
+    }
 }
 
 
@@ -29,7 +33,7 @@ static const CGFloat BOTTOM_HEIGHT = 123;
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView:self.superview];
     [UIView beginAnimations:@"Dragging" context:nil];
-    self.frame = CGRectMake(location.x - self.offset.x, location.y - self.offset.y, self.frame.size.width, self.frame.size.height);
+    self.center = CGPointMake(location.x - self.offset.x + self.frame.size.width / 2, location.y - self.offset.y + self.frame.size.height / 2);
     [UIView commitAnimations];
 }
 
@@ -55,7 +59,46 @@ static const CGFloat BOTTOM_HEIGHT = 123;
             self.corner = CornerTopLeft;
         }
     }
+
+    CGPoint point = [self startingPoint];
+    self.center = CGPointMake(point.x + self.frame.size.width / 2, point.y + self.frame.size.height / 2);
+    [UIView commitAnimations];
     
+}
+
+- (void)rotate {
+    [UIView animateWithDuration:0.5f animations:^{
+        self.customWidth = self.frame.size.height;
+        self.customHeight = self.frame.size.width;
+        CGPoint point = [self startingPoint];
+        self.frame = CGRectMake(point.x, point.y, self.customWidth, self.customHeight);
+    }];
+}
+
+- (void)remoteVideoEnable:(BOOL)enable {
+    if (enable) {
+        self.autoresizingMask = UIViewAutoresizingNone;
+        [UIView animateWithDuration:0.5f animations:^{
+            BOOL portrait = [[UIScreen mainScreen] bounds].size.height > [[UIScreen mainScreen] bounds].size.width;
+            if (portrait) {
+                self.customHeight = self.superview.frame.size.height * 20 / 100;
+                self.customWidth = self.customHeight * 3 / 4;
+            } else {
+                self.customWidth = self.superview.frame.size.width * 20 / 100;
+                self.customHeight = self.customWidth * 3 / 4;
+            }
+            CGPoint point = [self startingPoint];
+            self.frame = CGRectMake(point.x, point.y, self.customWidth, self.customHeight);
+        }];
+    } else {
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [UIView animateWithDuration:0.5f animations:^{
+            self.frame = CGRectMake(0, 0, self.superview.frame.size.width, self.superview.frame.size.height);
+        }];
+    }
+}
+
+- (CGFloat)variableHeightMargin {
     CGFloat variableHeightMargin = FIXED_MARGIN;
     if (self.areControlsVisible) {
         if (self.corner == CornerTopLeft || self.corner == CornerTopRight) {
@@ -68,28 +111,44 @@ static const CGFloat BOTTOM_HEIGHT = 123;
             variableHeightMargin += (TOP_HEIGHT - 40);
         }
     }
+    return variableHeightMargin;
+}
+
+- (CGPoint)startingPoint {
+    CGFloat variableHeightMargin = [self variableHeightMargin];
+    CGFloat x,y;
     
+    CGFloat iPhoneXOffset = 0.0f;
+    if ([[UIDevice currentDevice] iPhoneX] && [[UIScreen mainScreen] bounds].size.height < [[UIScreen mainScreen] bounds].size.width) {
+        // Landscape
+        iPhoneXOffset = 30.0f;
+    }
     switch (self.corner) {
         case CornerTopLeft:
-            self.frame = CGRectMake(FIXED_MARGIN, variableHeightMargin, self.frame.size.width, self.frame.size.height);
+            x = FIXED_MARGIN + iPhoneXOffset;
+            y = variableHeightMargin;
             break;
         case CornerTopRight:
-            self.frame = CGRectMake(self.superview.frame.size.width - self.frame.size.width - FIXED_MARGIN, variableHeightMargin, self.frame.size.width, self.frame.size.height);
+            x = self.superview.frame.size.width - self.customWidth - FIXED_MARGIN - iPhoneXOffset;
+            y = variableHeightMargin;
             break;
             
         case CornerBottonLeft:
-            self.frame = CGRectMake(FIXED_MARGIN, self.superview.frame.size.height - self.frame.size.height - variableHeightMargin, self.frame.size.width, self.frame.size.height);
+            x = FIXED_MARGIN + iPhoneXOffset;
+            y = self.superview.frame.size.height - self.customHeight - variableHeightMargin;
             break;
             
         case CornerBottonRight:
-            self.frame = CGRectMake(self.superview.frame.size.width - self.frame.size.width - FIXED_MARGIN, self.superview.frame.size.height - self.frame.size.height - variableHeightMargin, self.frame.size.width, self.frame.size.height);
+            x = self.superview.frame.size.width - self.customWidth - FIXED_MARGIN - iPhoneXOffset;
+            y = self.superview.frame.size.height - self.customHeight - variableHeightMargin;
             break;
             
         default:
             break;
     }
-    [UIView commitAnimations];
     
+    CGPoint point = CGPointMake(x, y);
+    return point;
 }
 
 #pragma mark - MEGAChatVideoDelegate

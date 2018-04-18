@@ -18,6 +18,7 @@
 #import "HeaderCollectionReusableView.h"
 #import "CameraUploads.h"
 #import "CameraUploadsTableViewController.h"
+#import "DisplayMode.h"
 #import "BrowserViewController.h"
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate> {
@@ -51,11 +52,15 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *carbonCopyBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 
 @property (nonatomic) MEGACameraUploadsState currentState;
 @property (nonatomic) NSUInteger totalPhotosUploading;
 @property (nonatomic) NSUInteger currentPhotosUploaded;
+
+@property (nonatomic) NSIndexPath *browsingIndexPath;
 
 @end
 
@@ -71,16 +76,8 @@
     
     self.selectedItemsDictionary = [[NSMutableDictionary alloc] init];
     
-    UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
-        [negativeSpaceBarButtonItem setWidth:-8.0];
-    } else {
-        [negativeSpaceBarButtonItem setWidth:-4.0];
-    }
-    [self.navigationItem setRightBarButtonItems:@[negativeSpaceBarButtonItem, self.editButtonItem]];
-    [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
+    self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
     
-    // Long press to select:
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
     
     [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];
@@ -115,8 +112,9 @@
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
     self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
     [self reloadUI];
 }
@@ -375,13 +373,17 @@
     [self.photosCollectionView reloadData];
 }
 
+- (IBAction)editTapped:(UIBarButtonItem *)sender {
+    BOOL enableEditing = !self.photosCollectionView.allowsMultipleSelection;
+    [self setEditing:enableEditing animated:YES];
+}
+
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
-    [self.editButtonItem setTitle:@""];
-    
     if (editing) {
-        [self.editButtonItem setImage:[UIImage imageNamed:@"done"]];
+        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+        
         [self.navigationItem setTitle:AMLocalizedString(@"selectTitle", @"Select items")];
         [self.photosCollectionView setAllowsMultipleSelection:YES];
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
@@ -392,9 +394,10 @@
             [self.toolbar setAlpha:1.0];
         }];
     } else {
-        [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
+        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+        
         allNodesSelected = NO;
-        [self.navigationItem setTitle:@"Camera Uploads"];
+        self.navigationItem.title = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
         [self.photosCollectionView setAllowsMultipleSelection:NO];
         [self.selectedItemsDictionary removeAllObjects];
         [self.photosCollectionView reloadData];
@@ -422,7 +425,7 @@
     }
     
     for (MEGANode *n in [self.selectedItemsDictionary allValues]) {
-        [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO];
+        [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:NO];
     }
     [self setEditing:NO animated:YES];
 }
@@ -519,12 +522,13 @@
     cell.nodeHandle = [node handle];
     
     cell.thumbnailSelectionOverlayView.layer.borderColor = [[UIColor mnz_redFF333A] CGColor];
-    cell.thumbnailSelectionOverlayView.layer.borderWidth = 2.0;
     cell.thumbnailSelectionOverlayView.hidden = [self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]] == nil;
 
     if (node.name.mnz_videoPathExtension && node.duration > -1) {
         cell.thumbnailVideoDurationLabel.text = [NSString mnz_stringFromTimeInterval:node.duration];
     }
+    
+    cell.thumbnailImageView.hidden = self.browsingIndexPath && indexPath.section == self.browsingIndexPath.section && indexPath.item == self.browsingIndexPath.item;
     
     if (@available(iOS 11.0, *)) {
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
@@ -727,7 +731,7 @@
     NSArray *monthPhotosArray = [monthPhotosDictionary objectForKey:monthKey];
     MEGANode *nodeSelected = [monthPhotosArray objectAtIndex:indexPath.row];
     if (nodeSelected.name.mnz_isImagePathExtension || nodeSelected.name.mnz_isVideoPathExtension) {
-        return [nodeSelected mnz_photoBrowserWithNodes:[self.nodeList mnz_nodesArrayFromNodeList] folderLink:NO displayMode:0 enableMoveToRubbishBin:YES hideControls:YES];
+        return [nodeSelected mnz_photoBrowserWithNodes:[self.nodeList mnz_nodesArrayFromNodeList] folderLink:NO displayMode:DisplayModeCloudDrive enableMoveToRubbishBin:YES hideControls:YES];
     } else {
         return [nodeSelected mnz_viewControllerForNodeInFolderLink:NO];
     }
@@ -832,10 +836,17 @@
     NSIndexPath *indexPath = [self indexPathForNode:node];
     if (indexPath) {
         [self.photosCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
-        UICollectionViewCell *cell = [self collectionView:self.photosCollectionView cellForItemAtIndexPath:indexPath];
+        PhotoCollectionViewCell *cell = [self collectionView:self.photosCollectionView cellForItemAtIndexPath:indexPath];
         CGRect cellFrame = [self.photosCollectionView convertRect:cell.frame toView:nil];
         photoBrowser.originFrame = cellFrame;
     }
+    self.browsingIndexPath = indexPath;
+    [self.photosCollectionView reloadData];
+}
+
+- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser willDismissWithNode:(MEGANode *)node {
+    self.browsingIndexPath = nil;
+    [self.photosCollectionView reloadData];
 }
 
 #pragma mark - MEGARequestDelegate

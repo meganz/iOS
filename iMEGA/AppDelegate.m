@@ -40,6 +40,7 @@
 #import "ContactRequestsViewController.h"
 #import "ContactsViewController.h"
 #import "CreateAccountViewController.h"
+#import "DisplayMode.h"
 #import "FileLinkViewController.h"
 #import "FolderLinkViewController.h"
 #import "LaunchViewController.h"
@@ -58,6 +59,7 @@
 #import "UnavailableLinkView.h"
 #import "UpgradeTableViewController.h"
 #import "CustomModalAlertViewController.h"
+#import "MEGAShowPasswordReminderRequestDelegate.h"
 
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
@@ -146,8 +148,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[MEGALogger sharedLogger] startLogging];
     }
     
-    MEGALogDebug(@"Application did finish launching with options %@", launchOptions);
-    
     _signalActivityRequired = NO;
     
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
@@ -170,6 +170,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[MEGASdkManager sharedMEGASdk] httpServerSetMaxBufferSize:[UIDevice currentDevice].maxBufferSize];
     
     [[LTHPasscodeViewController sharedUser] setDelegate:self];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"presentPasscodeLater"];
     
     [self languageCompatibility];
     
@@ -316,8 +317,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 }
                 
                 [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
-                                                                         withLogout:YES
-                                                                     andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
+                                                                         withLogout:NO
+                                                                     andLogoutTitle:nil];
                 [self.window setRootViewController:[LTHPasscodeViewController sharedUser]];
             } else {
                 _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
@@ -361,7 +362,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
         }
     }
-
+    
+    MEGALogDebug(@"Application did finish launching with options %@", launchOptions);
+    
     return YES;
 }
 
@@ -391,6 +394,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [self.window addSubview:self.privacyView];
     
     [self application:application shouldHideWindows:YES];
+    
+    if (![NSStringFromClass([UIApplication sharedApplication].windows[0].class) isEqualToString:@"UIWindow"]) {
+        [[LTHPasscodeViewController sharedUser] disablePasscodeWhenApplicationEntersBackground];
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -399,9 +406,14 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[MEGAReachabilityManager sharedManager] reconnectIfIPHasChanged];
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
     
-    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [[CameraUploads syncManager] isCameraUploadsEnabled]) {        
-        MEGALogInfo(@"Enable Camera Uploads");
-        [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
+        if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+            MEGALogInfo(@"Enable Camera Uploads");
+            [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+        }
+        
+        MEGAShowPasswordReminderRequestDelegate *showPasswordReminderDelegate = [[MEGAShowPasswordReminderRequestDelegate alloc] initToLogout:NO];
+        [[MEGASdkManager sharedMEGASdk] shouldShowPasswordReminderDialogAtLogout:NO delegate:showPasswordReminderDelegate];
     }
     
     [self.privacyView removeFromSuperview];
@@ -416,6 +428,14 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
+    
+    if (self.isSignalActivityRequired) {
+        [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
+    }
+    
+    if (![NSStringFromClass([UIApplication sharedApplication].windows[0].class) isEqualToString:@"UIWindow"]) {
+        [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -433,11 +453,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         
         NSError *error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:[[NSFileManager defaultManager] downloadsDirectory] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error)
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
         
         if (![[NSFileManager defaultManager] removeItemAtPath:[[NSFileManager defaultManager] uploadsDirectory] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error)
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
 }
@@ -605,16 +625,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
     //To tint the color of the prompt.
     [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:[UIColor whiteColor]];
     
-    if (@available(iOS 10.0, *)) {
-        [[UINavigationBar appearance] setShadowImage:[UIImage mnz_navigationBarShadow]];
-        [[UINavigationBar appearance] setBackgroundImage:[UIImage mnz_navigationBarBackground] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsCompact];
-    }
-    
     [[UISearchBar appearance] setTranslucent:NO];
-    [[UISearchBar appearance] setBackgroundColor:[UIColor mnz_grayF1F1F2]];
-    [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:[UIColor mnz_grayF1F1F2]];
-    
-    [[UISegmentedControl appearance] setTintColor:[UIColor mnz_redF0373A]];
+    [[UISearchBar appearance] setBackgroundColor:[UIColor mnz_grayFCFCFC]];
+    [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:[UIColor mnz_grayEEEEEE]];
     
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
     
@@ -698,7 +711,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
             [self showOffline];
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
+            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:NO];
             break;
         }
             
@@ -720,7 +733,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [self showOffline];
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
             for (MEGANode *node in [Helper nodesFromLinkMutableArray]) {
-                [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES];
+                [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES shouldOverwrite:NO];
             }
             break;
         }
@@ -1160,7 +1173,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             if ([item.pathExtension.lowercaseString isEqualToString:@"mega"]) {
                 NSError *error = nil;
                 if (![[NSFileManager defaultManager] removeItemAtPath:[directory stringByAppendingPathComponent:item] error:&error]) {
-                    MEGALogError(@"Remove item at path failed with error: %@", error)
+                    MEGALogError(@"Remove item at path failed with error: %@", error);
                 }
             }
         }
@@ -1293,9 +1306,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
                 }
                 
-                [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
-                                                                         withLogout:YES
-                                                                     andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
+                if (![[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"]) {
+                    [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
+                                                                             withLogout:NO
+                                                                         andLogoutTitle:nil];
+                }
             }
         }
         
@@ -1595,9 +1610,11 @@ void uncaughtExceptionHandler(NSException *exception) {
     customModalAlertVC.boldInDetail = self.email;
     
     if (isInOutgoingContactRequest) {
-        customModalAlertVC.image = @"inviteSent";
+        customModalAlertVC.image = [UIImage imageNamed:@"inviteSent"];
         customModalAlertVC.viewTitle = AMLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
-        customModalAlertVC.detail = [NSString stringWithFormat:@"The user %@ has been invited and will appear in your contact list once accepted", self.email];
+        NSString *detailText = AMLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
+        detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:self.email];
+        customModalAlertVC.detail = detailText;
         customModalAlertVC.action = AMLocalizedString(@"close", nil);
         customModalAlertVC.dismiss = nil;
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
@@ -1605,7 +1622,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             [weakCustom dismissViewControllerAnimated:YES completion:nil];
         };
     } else {
-        customModalAlertVC.image = @"groupChat";
+        customModalAlertVC.image = [UIImage imageNamed:@"groupChat"];
         customModalAlertVC.viewTitle = AMLocalizedString(@"inviteContact", @"Title shown when the user tries to make a call and the destination is not in the contact list");
         customModalAlertVC.detail = [NSString stringWithFormat:@"Your contact %@ is not on MEGA. In order to call through MEGA's encrypted chat you need to invite your contact", self.email];
         customModalAlertVC.action = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
@@ -1635,11 +1652,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)application:(UIApplication *)application shouldHideWindows:(BOOL)shouldHide {
     for (UIWindow *window in application.windows) {
         if ([NSStringFromClass(window.class) isEqualToString:@"UIRemoteKeyboardWindow"] || [NSStringFromClass(window.class) isEqualToString:@"UITextEffectsWindow"]) {
-            if (shouldHide) {
-                window.frame = CGRectMake(0, 0, 0, 0);
-            } else {
-                window.frame = [[UIScreen mainScreen] bounds];
-            }
+            window.hidden = shouldHide;
         }
     }
 }
@@ -2209,7 +2222,11 @@ void uncaughtExceptionHandler(NSException *exception) {
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
                 [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self.mainTBC];
                 
-                [[MEGASdkManager sharedMEGAChatSdk] connect];
+                if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
+                    [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
+                } else {
+                    [[MEGASdkManager sharedMEGAChatSdk] connect];
+                }
                 if (isAccountFirstLogin) {
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
                 }
@@ -2463,6 +2480,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     if (self.chatRoom.chatId == chatId && newState == MEGAChatConnectionOnline) {
         [self performCall];
     }
+    // INVALID_HANDLE = ~(uint64_t)0
+    if (chatId == ~(uint64_t)0 && newState == MEGAChatConnectionOnline) {
+        [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateOnline;
+    } else if (newState >= MEGAChatConnectionLogging) {
+        [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateInProgress;
+    }
 }
 
 #pragma mark - MEGATransferDelegate
@@ -2497,7 +2520,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
         customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-        customModalAlertVC.image = @"transfer-quota-empty";
+        customModalAlertVC.image = [UIImage imageNamed:@"transfer-quota-empty"];
         customModalAlertVC.viewTitle = AMLocalizedString(@"depletedTransferQuota_title", @"Title shown when you almost had used your available transfer quota.");
         customModalAlertVC.detail = AMLocalizedString(@"depletedTransferQuota_message", @"Description shown when you almost had used your available transfer quota.");
         customModalAlertVC.action = AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
@@ -2508,10 +2531,15 @@ void uncaughtExceptionHandler(NSException *exception) {
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
         customModalAlertVC.completion = ^{
             [weakCustom dismissViewControllerAnimated:YES completion:^{
-                UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
-                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-                
-                [[UIApplication mnz_visibleViewController] presentViewController:navigationController animated:YES completion:nil];
+                if ([MEGAPurchase sharedInstance].products.count > 0) {
+                    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+                    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+                    
+                    [[UIApplication mnz_visibleViewController] presentViewController:navigationController animated:YES completion:nil];
+                } else {
+                    // Redirect to my account if the products are not available
+                    [self.mainTBC setSelectedIndex:4];
+                }
             }];
         };
         
@@ -2563,9 +2591,24 @@ void uncaughtExceptionHandler(NSException *exception) {
         NSArray *appDataComponentsArray = [transfer.appData componentsSeparatedByString:@"="];
         NSString *appDataFirstComponentString = [appDataComponentsArray objectAtIndex:0];
         if ([appDataFirstComponentString isEqualToString:@"attachToChatID"]) {
-            NSString *chatID = [appDataComponentsArray objectAtIndex:1];
-            unsigned long long chatIdUll = strtoull([chatID UTF8String], NULL, 0);
-            [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:transfer.nodeHandle];
+            if (error.type == MEGAErrorTypeApiEExist) {
+                MEGALogInfo(@"Transfer has started with exactly the same data (local path and target parent). File: %@", transfer.fileName);
+                return;
+            }
+            
+            if (appDataComponentsArray.count > 2) {
+                NSArray *multipleAppDataComponentsArray = [transfer.appData componentsSeparatedByString:@"!"];
+                for (NSString *attachToChatID in multipleAppDataComponentsArray) {
+                    NSArray *attachToChatIDComponentsArray = [attachToChatID componentsSeparatedByString:@"="];
+                    NSString *chatID = [attachToChatIDComponentsArray objectAtIndex:1];
+                    unsigned long long chatIdUll = strtoull(chatID.UTF8String, NULL, 0);
+                    [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:transfer.nodeHandle];
+                }
+            } else {
+                NSString *chatID = [appDataComponentsArray objectAtIndex:1];
+                unsigned long long chatIdUll = strtoull(chatID.UTF8String, NULL, 0);
+                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:transfer.nodeHandle];
+            }
         }
     }
     

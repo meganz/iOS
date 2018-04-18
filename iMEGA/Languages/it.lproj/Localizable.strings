@@ -29,9 +29,9 @@
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="Dai il permesso all'app MEGA di accedere alla videocamera in Impostazioni";
 /* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
-"cameraPermissionsInCall"="Please give MEGA app permission to access your Camera in your Settings. In case you proceed the call will end because the app will be restarted.";
+"cameraPermissionsInCall"="Per favore, dai a MEGA il permesso di accedere alla tua Fotocamera nelle tue Impostazioni. Nel caso in cui tu lo faccia, la chiamata verrà interrotta perché l'applicazione verrà riavviata.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
+"microphonePermissions"="Per favore, dai a MEGA il permesso di accedere al tuo Microfono nelle tue Impostazioni";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Dai il permesso all'app MEGA di accedere alle foto in Impostazioni";
 /* Alert message shown when the user tries to download an empty folder  */
@@ -100,10 +100,32 @@
 "emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Password";
-/* Text shown on a button that if clicked shows the MEGA Terms of Service */
-"termsOfServiceButton"="Accetto i termini di servizio di MEGA";
+/*  */
+"pleaseStrengthenYourPassword"="Inserisci una password più sicura.";
+/* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
+"veryWeak"="Molto debole";
+/*  */
+"weak"="Debole";
+/*  */
+"passwordVeryWeakOrWeak"="La tua password è facilmente intuibile. Rendi la tua password più lunga. Combina lettere maiuscole e minuscole. Aggiungi caratteri speciali. Non utilizzare nomi o parole del dizionario";
+/* Label displayed during checking the strength of the password introduced. Represents Medium security */
+"medium"="Media";
+/*  */
+"passwordMedium"="La tua password è abbastanza sicura per procedere, ma ti raccomandiamo di rafforzarla ulteriormente in futuro.";
+/*  */
+"good"="Buono";
+/*  */
+"passwordGood"="Questa password può resistere agli attacchi più tipici di brute-force. Assicurati di ricordarla.";
+/* Label displayed during checking the strength of the password introduced. Represents Strong security */
+"strong"="Sicura";
+/*  */
+"passwordStrong"="Questa password può resistere agli attacchi più tipici di brute-force. Assicurati di ricordarla.";
+/*  */
+"agreeWithTheMEGATermsOfService"="Sono d'accordo con i <a href='terms'>Termini di Servizio</a> di MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Inserisci un nome valido";
+/*  */
+"invalidFirstNameAndLastName"="Nome e/o cognome non validi.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Le password non combaciano";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -284,8 +306,8 @@
 "youNoLongerHaveAccessToThisFile_alertTitle"="Non hai più accesso a questo file";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Non hai più accesso a questa cartella";
-/* List option shown on the details of a file or folder */
-"saveForOffline"="Salva per Offline";
+/* The text is shown as an option on the details of a file or folder */
+"saveForOffline"="Salva per l'Offline";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Salvato in locale";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -344,6 +366,16 @@
 "copyKey"="Copia chiave";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Aprire";
+/* */
+"sendToContact"="Invia a contatto";
+/* Toast text upon sending a single file to chat */
+"fileSentToChat"="Il file è stato inviato alla chat";
+/* Success message when the attachment has been sent to a many chats */
+"fileSentToXChats"="File inviato a %1$d chat";
+/* Toast text upon sending multiple files to chat */
+"filesSentToChat"="I file sono stati inviati alla chat";
+/* success message when sending multiple files. Please do not modify the %d placeholder. */
+"xfilesSentSuccesfully"="%d file inviati con successo";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Rimuovi link";
 /* Message shown when there are some active links that can be removed or disabled */
@@ -353,7 +385,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Link rimossi";
 /* Title show when a file is being downloaded */
-"downloading"="Scaricando...";
+"downloading"="Scaricamento in corso";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Vuoi annullare il download?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -470,10 +502,16 @@
 "cameraUploadsUploadingFile"="Caricamento di %1$d su %2$d file";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
 "cameraUploadsUploadingFiles"="Caricamento di %1$d su %2$d file";
+/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
+"indexOfTotalFile"="%1$d su %2$d file";
+/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
+"indexOfTotalFiles"="%1$d su %2$d file";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu item selezionato";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu items selezionati";
+/* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
+"xSelected"="%d selezionati";
 /* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
 "cameraUploadsWillBeDisabled"="I caricamenti dalla Fotocamera verranno disabilitati";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
@@ -482,8 +520,6 @@
 "offline"="Offline";
 /* Title of the Contacts section */
 "contactsTitle"="Contatti";
-/* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
-"noFoldersShared"="Nessuna cartella condivisa";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 cartella";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -634,8 +670,8 @@
 "masterKey"="Chiave di recupero";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Cambia password";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Salvando la Chiave di Recupero e tenendola in un posto sicuro ti permette di recuperare il tuo account nel caso di password dimenticata senza perdita di dati.";
+/* Advising the user to keep the user's master key safe. */
+"exportMasterKeyFooter"="Esportare la chiave master e mantenerla in un luogo sicuro ti permette di impostare una nuova password, senza perdita di dati.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Perché ho bisogno di una Chiave di Recupero?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -656,8 +692,8 @@
 "clearCache"="Svuota cache";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Su MEGA";
-/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="Svuota il cestino";
+/* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
+"emptyRubbishBin"="Svuota cestino";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Tutti gli elementi nel cestino verranno cancellati";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -682,8 +718,8 @@
 "ifYouCantAccessYourEmailAccount"="Se non riesci ad accedere con la tua email, contatta support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Link di cancellazione scaduto";
-/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Per favore, inserisci la tua password per confermare che vuoi eliminare il tuo account.";
+/* Text shown in the last alert dialog to confirm the cancellation of an account */
+"enterYourPasswordToConfirmThatYouWanToClose"="Questo è l'ultimo step prima di cancellare il tuo account. Perderai in modo permanente tutti i tuoi dati salvati nel cloud. Inserisci la tua password qui sotto.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Chiudi account";
 /* Title for the action that allows to remove a file or folder */
@@ -709,7 +745,7 @@
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="1 file rimosso da MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="%d files rimossi da MEGA!";
+"filesRemovedToRubbishBinMessage"="%d files rimossi da MEGA";
 /* Success message shown when 1 folder has been removed from MEGA */
 "folderRemovedToRubbishBinMessage"="1 cartella rimossa da MEGA";
 /* Success message shown when {1+} folders have been removed from MEGA */
@@ -859,7 +895,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Ottieni %1$s di spazio di archiviazione e %2$s di banda di trasferimento per ogni utente invitato";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Seleziona i contatti dalla lista dei contatti sul tuo telefono oppure inserisci più indirizzi email.";
+"inviteYourFriendsExplanation"="Seleziona i contatti dalla lista contatti del tuo telefono o inserisci più indirizzi email.";
 /*  */
 "insertYourFriendsEmails"="Inserisci la/e mail del/i tuo/i amico/i:";
 /*  */
@@ -961,19 +997,15 @@
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="Soggetto alla tua partecipazione nel nostro programma di obiettivi.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%.2f %@ per mese";
+"productPricePerMonth"="%@ al mese";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Scegli uno dei piani elencati sotto:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Seleziona un tipo di account:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
+"twoMonthsFree"="Un abbonamento annuale costa il 17% in meno di 12 pagamenti mensili";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Piano corrente:";
-/* Alert text shown in case the user has an active subscription and is in the process to buy a higher plan (An upper level of a PRO account) */
-"youAlreadyHaveAPROAccount"="You already have a PRO account. You will be buying a new subscription to MEGA and in case you have an auto-renewable subscription you must cancel it or you will be charged for two plans.";
-/* Title text for the account confirmation. */
-"confirm"="Conferma";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Richiedi un piano";
 /* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
@@ -1228,12 +1260,18 @@
 "uploadedFile"="Questo file è stato caricato:";
 /* A summary message when a user has attached many files at once into the chat. */
 "uploadedFiles"="Questi file sono stati caricati:";
+/* Label in a button that allows to jump to the latest item */
+"jumpToLatest"="Salta all'ultimo";
+/* Label in a button that allows to jump to the latest message */
+"newMessages"="Nuovi messaggi";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="L’abbonamento si rinnova automaticamente, con la stessa durata e prezzo rispetto a quanto originariamente scelto. È possibile disattivare il rinnovo automatico dell'abbonamento MEGA PRO fino a 24 ore prima del rinnovo programmato nella pagina delle impostazioni di iTunes. Per gestire l’abbonamento, basta andare sull’App Store, ACCEDERE con il tuo ID Apple  in fondo alla pagina (se non lo hai già fatto) e fare clic su \"Visualizza ID Apple.\" Vedrai la pagina con i dettagli dell'account e potrai gestire il tuo abbonamento. Da qui, è possibile abbonarsi a MEGA PRO e vedere quando si rinnova, cambiare il tipo di abbonamento o disattivare l'opzione di rinnovo automatico per poter poi annullare l'abbonamento.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Apri MEGA e accedi per continuare";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Revoca";
+/* Label in login screen to inform about the chat initialization proccess */
+"connecting"="Connessione in corso...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Alcuni oggetti potrebbero non essere condivisi con MEGA";
 /* Notification message shown when a transfer failed. Keep colon. */
@@ -1301,10 +1339,10 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="All'interno dell'app puoi aumentare il tuo spazio di archiviazione e la tua banda di trasferimento con un abbonamento mensile o annuale.";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Abbonamento PRO LITE: €4.99 ($4.99) al mese o €49.99 ($49.99) all'anno ti dà 200GB di spazio di archiviazione e 1TB di larghezza di banda al mese.Abbonamento PRO I: €9.99 ($9.99) al mese o €99.99 ($99.99) all'anno ti dà 1TB di spazio di archiviazione e 2TB di larghezza di banda al mese.Abbonamento PRO II: €19.99 ($19.99) al mese o €199.99 ($199.99) all'anno ti dà 4TB di spazio di archiviazione ed 8TB di larghezza di banda al mese.Abbonamento PRO III: €29.99 ($29.99) al mese o €299.99 ($299.99) all'anno ti dà 8TB di spazio di archiviazione e 16TB di larghezza di banda al mese.";
+"generalDescriptionParagraph5"="Abbonamento PRO LITE: €4.99 (US$4.99) al mese o €49.99 (US$49.99) l'anno ti danno 200 GB di spazio di archiviazione e 1 TB di banda di trasferimento mensile.\n Abbonamento PRO I: €9.99 (US$9.99) al mese o €99.99 (US$99.99) l'anno ti danno 1 TB di spazio di archiviazione e 2 TB di banda di trasferimento mensile.\n Abbonamento PRO II: €19.99 (US$19.99) al mese o €199.99 (US$199.99) l'anno ti danno 4 TB di spazio di archiviazione e 8 TB di banda di trasferimento mensile.\n Abbonamento PRO III: €29.99 (US$29.99) al mese o €299.99 (US$299.99) l'anno ti danno 8 TB di spazio di archiviazione e 16 TB di banda di trasferimento mensile.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Per più informazioni, per favore visita il nostro sito web:Mobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmlDesktop - https://mega.nz/";
+"generalDescriptionParagraph6"="Per più informazioni, per favore visita il nostro sito web:\nMobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nDesktop - https://mega.nz/";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="Chiamata in corso...";
 /* Notification text body shown when you have missed one audio call */
@@ -1324,4 +1362,74 @@
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
 "missedAudioCallsAndMissedVideoCalls"="[A] ha perso una chiamata audio e [B] ha perso una chiamata video";
 /* Button title to see the available bonus */
-"getBonus"="Get Bonus";
+"getBonus"="Ottieni il bonus";
+/* QR Code label, used in Settings as title. String as short as possible */
+"qrCode"="QR Code";
+/* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
+"autoAccept"="Accetta automaticamente";
+/* Footer that explains the way Auto-Accept works for QR codes */
+"autoAcceptFooter"="I contatti che scansioneranno il QR Code saranno aggiunti alla tua lista dei contatti.";
+/* Action to reset the current valid QR code of the user */
+"resetQrCode"="Resetta il QR Code";
+/* Footer that explains what would happen if the user resets his/her QR code */
+"resetQrCodeFooter"="I QRcode precedenti non saranno più validi";
+/* Title for view that displays the QR code of the user. String as short as possible. */
+"myCode"="Il mio QR Code";
+/* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
+"scanCode"="Scansiona QR Code";
+/* Label that encourage the user to line the QR to scan with the camera */
+"lineCodeWithCamera"="Allineati con il QR Code per scansionarlo con la fotocamera del tuo dispositivo";
+/* Error text shown when the user scans a QR that is not valid. String as short as possible. */
+"invalidCode"="QR Code non valido";
+/* Success text shown in a label when the user scans a valid QR. String as short as possible. */
+"codeScanned"="QR Code scansionato";
+/* title of the screen that shows the users with whom the user has shared a folder */
+"sharedWidth"="Condivise con:";
+/*   */
+"details"="Dettagli";
+/* Item menu option upon right click on one or multiple files. */
+"sharing"="Condividi";
+/* Title of section to display number of all historical versions of files. */
+"versions"="Versioni";
+/* Title label of a node property. */
+"location"="Posizione";
+/* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
+"totalSize"="Dimensione Totale";
+/* Refers to the type of a file or folder. */
+"type"="Tipo";
+/* Title of the incoming shared folders of a user in singular */
+"sharedFolder"="Cartella condivisa";
+/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
+"created"="Creato";
+/* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
+"contains"="Contiene";
+/* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
+"modified"="Modificato";
+/* used for example when a folder is shared with 2 or more users */
+"users"="utenti";
+/* user (singular) label indicating is receiving some info, for example shared folders */
+"user"="utente";
+/* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
+"xVersions"="[X] versioni";
+/* Label of the option menu. When clicking this button, the app shows the info of the file */
+"fileInfo"="File info";
+/* Label of the option menu. When clicking this button, the app shows the info of the folder */
+"folderInfo"="Info della cartella";
+/* Question to ensure user wants to delete file version. */
+"deleteVersion"="Vuoi eliminare questa versione?";
+/* Message to notify user the file version will be permanently removed */
+"permanentlyRemoved"="Sarà rimossa permanentemente";
+/*  */
+"delete"="Elimina";
+/* A button label which reverts a certain version of a file to be the current version of the selected file. */
+"revert"="Ritorna";
+/*  */
+"download"="Scarica";
+/* Singular of file. 1 file */
+"file"="file";
+/* Title of section to display information of the current version of a file. */
+"currentVersion"="Versione corrente";
+/* A button label which opens a dialog to display the full version history of the selected file. */
+"previousVersions"="Versioni precedenti";
+/* Title of section to display information of all current versions of files. */
+"currentVersions"="Versioni correnti";
