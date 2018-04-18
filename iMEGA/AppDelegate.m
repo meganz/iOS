@@ -856,25 +856,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 
                 return;
             }
-            
-            CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)(node.name.pathExtension), NULL);
-            if ([QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]]) {
-                if (fileUTI) {
-                    CFRelease(fileUTI);
-                }
-                
-                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
-                PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
-                previewController.node = node;
-                previewController.api = [MEGASdkManager sharedMEGASdk];
-                [self presentLinkViewController:navigationController];
-                
-                return;
-            } else {
-                if (fileUTI) {
-                    CFRelease(fileUTI);
-                }
-            }
         }
         MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
         FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
