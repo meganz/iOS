@@ -25,11 +25,11 @@
 
 @property (strong, nonatomic) MEGATransfer *transfer;
 
-- (void)configureCellForActiveTransfer:(MEGATransfer *)transfer;
+- (void)configureCellForActiveTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate;
 
-- (void)configureCellForPausedTransfer:(MEGATransfer *)transfer;
+- (void)configureCellForPausedTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate;
 
-- (void)configureCellForQueuedTransfer:(MEGATransfer *)transfer;
+- (void)configureCellForQueuedTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate;
 
 - (void)updatePercentAndSpeedLabelsForTransfer:(MEGATransfer *)transfer;
 
