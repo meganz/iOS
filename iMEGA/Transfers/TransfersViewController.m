@@ -22,8 +22,8 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *transfersSegmentedControl;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (nonatomic, strong) NSMutableDictionary *transfersMutableDictionary;
-@property (nonatomic, strong) NSMutableArray *transfers;
+@property (strong, nonatomic) NSMutableDictionary *transfersMutableDictionary;
+@property (strong, nonatomic) NSMutableArray *transfers;
 
 @end
 
@@ -105,26 +105,22 @@
     switch (transfer.state) {
         case MEGATransferStateActive:
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"activeTransferCell" forIndexPath:indexPath];
-            cell.delegate = self;
-            [cell configureCellForActiveTransfer:transfer];
+            [cell configureCellForActiveTransfer:transfer delegate:self];
             return cell;
             
         case MEGATransferStatePaused:
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferCell" forIndexPath:indexPath];
-            cell.delegate = self;
-            [cell configureCellForPausedTransfer:transfer];
+            [cell configureCellForPausedTransfer:transfer delegate:self];
             return cell;
             
         case MEGATransferStateQueued:
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferCell" forIndexPath:indexPath];
-            cell.delegate = self;
-            [cell configureCellForQueuedTransfer:transfer];
+            [cell configureCellForQueuedTransfer:transfer delegate:self];
             return cell;
             
         default:
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferCell" forIndexPath:indexPath];
-            cell.delegate = self;
-            [cell configureCellForQueuedTransfer:transfer];
+            [cell configureCellForQueuedTransfer:transfer delegate:self];
             return cell;
     }
 }
@@ -286,7 +282,7 @@
     BOOL boolValue = [MEGAReachabilityManager isReachable];
     [self setNavigationBarButtonItemsEnabled:boolValue];
     
-    [self.tableView reloadData];
+    [self reloadView];
 }
 
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
@@ -315,28 +311,22 @@
 }
 
 - (IBAction)cancelTransfersAction:(UIBarButtonItem *)sender {
+    if (self.transfersMutableDictionary.count == 0) {
+        return;
+    }
     NSString *transfersTypeString;
     switch (self.transfersSegmentedControl.selectedSegmentIndex) {
         case 0: { //All
-            if (self.transfersMutableDictionary.count == 0) {
-                return;
-            }
             transfersTypeString = AMLocalizedString(@"allInUppercaseTransfers", @"ALL transfers");
             break;
         }
             
         case 1: { //Downloads
-            if (self.transfersMutableDictionary.count == 0) {
-                return;
-            }
             transfersTypeString = AMLocalizedString(@"downloadInUppercaseTransfers", @"DOWNLOAD transfers");
             break;
         }
             
         case 2: { //Uploads
-            if (self.transfersMutableDictionary.count == 0) {
-                return;
-            }
             transfersTypeString = AMLocalizedString(@"uploadInUppercaseTransfers", @"UPLOAD transfers");
             break;
         }
@@ -395,7 +385,7 @@
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:UIColor.mnz_gray999999};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -427,7 +417,7 @@
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
-    return [UIColor whiteColor];
+    return UIColor.whiteColor;
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {

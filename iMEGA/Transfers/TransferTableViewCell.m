@@ -38,7 +38,8 @@
     }
 }
 
-- (void)configureCellForActiveTransfer:(MEGATransfer *)transfer {
+- (void)configureCellForActiveTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate {
+    self.delegate = delegate;
     self.transfer = transfer;
     if (transfer.type == MEGATransferTypeDownload) {
         self.arrowImageView.image = [Helper downloadingTransferImage];
@@ -55,7 +56,8 @@
     [self configureCell];
 }
 
-- (void)configureCellForPausedTransfer:(MEGATransfer *)transfer {
+- (void)configureCellForPausedTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate {
+    self.delegate = delegate;
     self.transfer = transfer;
     [self.pauseButton setImage:[UIImage imageNamed:@"resumeTransfers"] forState:UIControlStateNormal];
     [self.percentageLabel setText:AMLocalizedString(@"paused", @"Paused")];
@@ -64,7 +66,8 @@
     [self configureCell];
 }
 
-- (void)configureCellForQueuedTransfer:(MEGATransfer *)transfer {
+- (void)configureCellForQueuedTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate {
+    self.delegate = delegate;
     self.transfer = transfer;
     [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
     [self.percentageLabel setText:AMLocalizedString(@"queued", @"Queued")];
