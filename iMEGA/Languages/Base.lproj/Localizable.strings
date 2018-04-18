@@ -252,6 +252,8 @@
 "folderAndFiles"="1 folder • %d files";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Queued";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="Paused";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="There are pending downloads";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */

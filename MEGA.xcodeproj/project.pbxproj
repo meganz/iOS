@@ -303,6 +303,7 @@
 		834AD6092024697600D2527F /* MGSwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 834AD6032024694200D2527F /* MGSwipeTableCell.m */; };
 		834AD60A2024697700D2527F /* MGSwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 834AD6032024694200D2527F /* MGSwipeTableCell.m */; };
 		835223AD20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223AC20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m */; };
+		835E624B2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 835E624A2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m */; };
 		8364742820723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8364742720723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m */; };
 		83654A5A203C3E4100B5E426 /* NodeVersionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83654A59203C3E4100B5E426 /* NodeVersionsViewController.m */; };
 		83681578202AFBC000CA8EFC /* CustomActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83681576202AFBC000CA8EFC /* CustomActionViewController.m */; };
@@ -1166,6 +1167,8 @@
 		834AD6042024694200D2527F /* MGSwipeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeButton.h; sourceTree = "<group>"; };
 		835223AB20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAGetFolderInfoRequestDelegate.h; path = API/Requests/MEGAGetFolderInfoRequestDelegate.h; sourceTree = "<group>"; };
 		835223AC20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAGetFolderInfoRequestDelegate.m; path = API/Requests/MEGAGetFolderInfoRequestDelegate.m; sourceTree = "<group>"; };
+		835E62492085ED56007470A2 /* MEGAPauseTransferRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAPauseTransferRequestDelegate.h; path = API/Requests/MEGAPauseTransferRequestDelegate.h; sourceTree = "<group>"; };
+		835E624A2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAPauseTransferRequestDelegate.m; path = API/Requests/MEGAPauseTransferRequestDelegate.m; sourceTree = "<group>"; };
 		8364742620723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAShowPasswordReminderRequestDelegate.h; path = API/Requests/MEGAShowPasswordReminderRequestDelegate.h; sourceTree = "<group>"; };
 		8364742720723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAShowPasswordReminderRequestDelegate.m; path = API/Requests/MEGAShowPasswordReminderRequestDelegate.m; sourceTree = "<group>"; };
 		83654A58203C3E4100B5E426 /* NodeVersionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeVersionsViewController.h; sourceTree = "<group>"; };
@@ -2899,6 +2902,8 @@
 				835223AC20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m */,
 				8364742620723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.h */,
 				8364742720723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m */,
+				835E62492085ED56007470A2 /* MEGAPauseTransferRequestDelegate.h */,
+				835E624A2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m */,
 			);
 			name = Requests;
 			sourceTree = "<group>";
@@ -3654,6 +3659,7 @@
 				A8F6C5F31FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m in Sources */,
 				413199771BD7BD5D002CD6EA /* DTConstants.m in Sources */,
 				832E1032202D8E6900BDD30F /* NodePropertyTableViewCell.m in Sources */,
+				835E624B2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m in Sources */,
 				4172795A1DB663FA001AC818 /* JSQMessagesMediaPlaceholderView.m in Sources */,
 				415E690A1DABCDF90043B75F /* ChatRoomsViewController.m in Sources */,
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
