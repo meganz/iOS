@@ -15,8 +15,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *backupKeyButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButton;
 @property (weak, nonatomic) IBOutlet PasswordView *passwordView;
-@property (weak, nonatomic) IBOutlet UIView *wrongPasswordView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionLabelHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordViewHeightConstraint;
 
 @property (assign, nonatomic) float descriptionLabelHeight;
 
@@ -47,6 +47,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
+    self.passwordView.passwordTextField.clearButtonMode = UITextFieldViewModeNever;
     [self.passwordView.passwordTextField becomeFirstResponder];
 }
 
@@ -127,7 +128,9 @@
 }
 
 - (void)passwordTestFailed {
-    self.wrongPasswordView.hidden = NO;
+    self.passwordViewHeightConstraint.constant = 101;
+    self.passwordView.wrongPasswordView.hidden = NO;
+
     self.passwordView.passwordTextField.textColor = UIColor.mnz_redF0373A;
     
     [self.backupKeyButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
@@ -158,8 +161,9 @@
 - (void)resetUI {
     self.passwordView.passwordTextField.textColor = UIColor.mnz_gray666666;
     
-    self.wrongPasswordView.hidden = YES;
-    
+    self.passwordViewHeightConstraint.constant = 62;
+    self.passwordView.wrongPasswordView.hidden = YES;
+        
     if (self.isLoggingOut) {
         self.confirmButton.layer.borderWidth = 0.0f;
         self.confirmButton.layer.borderColor = nil;
