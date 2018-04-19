@@ -359,12 +359,7 @@
         case MEGAChatMessageTypeAttachment: {
             NSString *senderString;
             if (item.group) {
-                if(item.lastMessageSender == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-                    senderString = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
-                } else {
-                    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
-                    senderString = [chatRoom peerFullnameByHandle:item.lastMessageSender];
-                }
+                senderString = [self actionAuthorNameInChatListItem:item];
             }
             NSString *lastMessageString = item.lastMessage;
             NSArray *componentsArray = [lastMessageString componentsSeparatedByString:@"\x01"];
@@ -382,12 +377,7 @@
         case MEGAChatMessageTypeContact: {
             NSString *senderString;
             if (item.group) {
-                if(item.lastMessageSender == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-                    senderString = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
-                } else {
-                    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
-                    senderString = [chatRoom peerFullnameByHandle:item.lastMessageSender];
-                }
+                senderString = [self actionAuthorNameInChatListItem:item];
             }
             NSString *lastMessageString = item.lastMessage;
             NSArray *componentsArray = [lastMessageString componentsSeparatedByString:@"\x01"];
@@ -403,13 +393,7 @@
         }
             
         case MEGAChatMessageTypeTruncate: {
-            NSString *senderString;
-            if(item.lastMessageSender == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-                senderString = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
-            } else {
-                MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
-                senderString = [chatRoom peerFullnameByHandle:item.lastMessageSender];
-            }
+            NSString *senderString = [self actionAuthorNameInChatListItem:item];
             NSString *lastMessageString = AMLocalizedString(@"clearedTheChatHistory", @"A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history.");
             lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"[A]" withString:senderString];
             cell.chatLastMessage.text = lastMessageString;
@@ -417,14 +401,8 @@
         }
             
         case MEGAChatMessageTypePrivilegeChange: {
-            NSString *fullNameDidAction;
+            NSString *fullNameDidAction = [self actionAuthorNameInChatListItem:item];
             MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
-            if(item.lastMessageSender == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-                fullNameDidAction = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
-            } else {
-                fullNameDidAction = [chatRoom peerFullnameByHandle:item.lastMessageSender];
-            }
-            
             NSString *fullNameReceiveAction = [chatRoom peerFullnameByHandle:item.lastMessageHandle];
             
             if (fullNameReceiveAction.length == 0) {
@@ -462,14 +440,8 @@
         }
             
         case MEGAChatMessageTypeAlterParticipants: {
-            NSString *fullNameDidAction;
+            NSString *fullNameDidAction = [self actionAuthorNameInChatListItem:item];
             MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
-            if(item.lastMessageSender == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-                fullNameDidAction = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
-            } else {
-                fullNameDidAction = [chatRoom peerFullnameByHandle:item.lastMessageSender];
-            }
-            
             NSString *fullNameReceiveAction = [chatRoom peerFullnameByHandle:item.lastMessageHandle];
             
             if (fullNameReceiveAction.length == 0) {
@@ -513,13 +485,7 @@
         }
             
         case MEGAChatMessageTypeChatTitle: {
-            NSString *senderString;
-            if(item.lastMessageSender == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-                senderString = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
-            } else {
-                MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
-                senderString = [chatRoom peerFullnameByHandle:item.lastMessageSender];
-            }
+            NSString *senderString = [self actionAuthorNameInChatListItem:item];
             NSString *changedGroupChatNameTo = AMLocalizedString(@"changedGroupChatNameTo", @"A hint message in a group chat to indicate the group chat name is changed to a new one. Please keep %s when translating this string which will be replaced with the name at runtime.");
             changedGroupChatNameTo = [changedGroupChatNameTo stringByReplacingOccurrencesOfString:@"[A]" withString:senderString];
             changedGroupChatNameTo = [changedGroupChatNameTo stringByReplacingOccurrencesOfString:@"[B]" withString:(item.lastMessage ? item.lastMessage : @" ")];
@@ -528,13 +494,7 @@
         }
             
         default: {
-            NSString *senderString;
-            if(item.lastMessageSender == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-                senderString = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
-            } else {
-                MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
-                senderString = [chatRoom peerFullnameByHandle:item.lastMessageSender];
-            }
+            NSString *senderString = [self actionAuthorNameInChatListItem:item];
             cell.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, item.lastMessage] : item.lastMessage;
             break;
         }
@@ -661,6 +621,18 @@
         
         return [second compare:first];
     }] mutableCopy];
+}
+
+- (NSString *)actionAuthorNameInChatListItem:(MEGAChatListItem *)item {
+    NSString *actionAuthor;
+    if (item.lastMessageSender == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
+        actionAuthor = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
+    } else {
+        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
+        actionAuthor = [chatRoom peerFullnameByHandle:item.lastMessageSender];
+    }
+    
+    return actionAuthor;
 }
 
 #pragma mark - IBActions
