@@ -767,11 +767,27 @@
 - (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender {
     switch (action) {
         case MegaNodeActionTypeShare: {
-            UIActivityViewController *activityViewController = [Helper activityViewControllerForNodes:@[node] button:sender];
-            activityViewController.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
+            UIActivityViewController *activityVC;
+            
+            switch (self.displayMode) {
+                case DisplayModeFileLink: {
+                    activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.publicLink] applicationActivities:nil];
+                    [activityVC setExcludedActivityTypes:@[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]];
+                    [activityVC.popoverPresentationController setBarButtonItem:sender];
+                    
+                    break;
+                }
+                    
+                default:
+                    activityVC = [Helper activityViewControllerForNodes:@[node] button:sender];
+                    break;
+            }
+            
+            activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
                 [self reloadUI];
             };
-            [self presentViewController:activityViewController animated:YES completion:nil];
+            [self presentViewController:activityVC animated:YES completion:nil];
+            
             break;
         }
             
