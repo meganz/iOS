@@ -1670,7 +1670,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             [self.messages addObject:message];
             [self finishReceivingMessage];
             if (self.unreadMessages) {
-                [self updateUnreadMessagesLabel:self.unreadMessages + 1];
+                NSUInteger unreads = [message.senderId isEqualToString:self.senderId] ? 0 : self.unreadMessages + 1;
+                [self updateUnreadMessagesLabel:unreads];
             }
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -1801,7 +1802,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                     [self.messages addObject:message];
                     [self finishReceivingMessage];
                     if (self.unreadMessages) {
-                        [self updateUnreadMessagesLabel:self.unreadMessages + 1];
+                        NSUInteger unreads = [message.senderId isEqualToString:self.senderId] ? 0 : self.unreadMessages + 1;
+                        [self updateUnreadMessagesLabel:unreads];
                     }
                     
                     [self loadNodesFromMessage:message atTheBeginning:YES];
