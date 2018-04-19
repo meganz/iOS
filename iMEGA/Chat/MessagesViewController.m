@@ -447,7 +447,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];
             [self updateUnreadMessagesLabel:0];
 
-            [self finishSendingMessageAnimated:YES];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self finishSendingMessageAnimated:YES];
+            });
         }
     };
     
@@ -940,7 +942,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     MEGALogInfo(@"didPressSendButton %@", message);
     
-    [self finishSendingMessageAnimated:YES];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self finishSendingMessageAnimated:YES];
+    });
 
     [[MEGASdkManager sharedMEGAChatSdk] sendStopTypingNotificationForChat:self.chatRoom.chatId];
 
