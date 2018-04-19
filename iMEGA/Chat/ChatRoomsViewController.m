@@ -494,7 +494,10 @@
         }
             
         default: {
-            NSString *senderString = [self actionAuthorNameInChatListItem:item];
+            NSString *senderString;
+            if (item.group && item.lastMessageSender != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
+                senderString = [self actionAuthorNameInChatListItem:item];
+            }
             cell.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, item.lastMessage] : item.lastMessage;
             break;
         }
