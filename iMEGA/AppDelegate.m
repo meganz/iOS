@@ -861,6 +861,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             MEGANode *node = request.publicNode;
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 MEGAPhotoBrowserViewController *photoBrowserVC = [node mnz_photoBrowserWithNodes:@[node] folderLink:NO displayMode:DisplayModeFileLink enableMoveToRubbishBin:NO];
+                photoBrowserVC.publicLink = fileLinkURLString;
                 [self presentLinkViewController:photoBrowserVC];
                 
                 return;
