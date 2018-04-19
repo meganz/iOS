@@ -7,6 +7,7 @@
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "PasswordView.h"
+#import "UIApplication+MNZCategory.h"
 
 @interface ConfirmAccountViewController () <UITextFieldDelegate, MEGARequestDelegate>
 
@@ -233,16 +234,15 @@
         case MEGARequestTypeConfirmChangeEmailLink: {
             [SVProgressHUD dismiss];
             [self.passwordView.passwordTextField resignFirstResponder];
-            [self dismissViewControllerAnimated:YES completion:nil];
-            
             [[NSNotificationCenter defaultCenter] postNotificationName:@"emailHasChanged" object:nil];
-            
-            NSString *alertMessage = [AMLocalizedString(@"congratulationsNewEmailAddress", @"The [X] will be replaced with the e-mail address.") stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
-            UIAlertController *newEmailAddressAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"newEmail", @"Hint text to suggest that the user have to write the new email on it") message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-            
-            [newEmailAddressAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:nil]];
-            
-            [self presentViewController:newEmailAddressAlertController animated:YES completion:nil];
+            [self dismissViewControllerAnimated:YES completion:^{
+                NSString *alertMessage = [AMLocalizedString(@"congratulationsNewEmailAddress", @"The [X] will be replaced with the e-mail address.") stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
+                UIAlertController *newEmailAddressAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"newEmail", @"Hint text to suggest that the user have to write the new email on it") message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+                
+                [newEmailAddressAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:nil]];
+                
+                [UIApplication.mnz_visibleViewController presentViewController:newEmailAddressAlertController animated:YES completion:nil];
+            }];
             break;
         }
             
