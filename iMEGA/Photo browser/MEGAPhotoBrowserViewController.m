@@ -191,6 +191,15 @@
 - (void)toggleTransparentInterfaceForDismissal:(BOOL)transparent {
     self.view.backgroundColor = transparent ? [UIColor clearColor] : [UIColor whiteColor];
     self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = transparent ? 0.0f : 1.0f;
+    
+    // Toggle the play button:
+    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    if (node.name.mnz_isVideoPathExtension) {
+        UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
+        if (zoomableView) {
+            zoomableView.subviews.lastObject.hidden = transparent;
+        }
+    }
 }
 
 #pragma mark - UIScrollViewDelegate
