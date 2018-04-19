@@ -869,6 +869,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)updateUnreadMessagesLabel:(NSUInteger)unreads {
+    if (!self.unreadMessages) {
+        return;
+    }
+    
     NSIndexPath *unreadMessagesIndexPath;
     if (unreads == 0) {
         unreadMessagesIndexPath = [self indexPathForCellWithUnreadMessagesLabel];
@@ -1669,10 +1673,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         case MEGAChatMessageTypeContact: {
             [self.messages addObject:message];
             [self finishReceivingMessage];
-            if (self.unreadMessages) {
-                NSUInteger unreads = [message.senderId isEqualToString:self.senderId] ? 0 : self.unreadMessages + 1;
-                [self updateUnreadMessagesLabel:unreads];
-            }
+
+            NSUInteger unreads = [message.senderId isEqualToString:self.senderId] ? 0 : self.unreadMessages + 1;
+            [self updateUnreadMessagesLabel:unreads];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSUInteger items = [self.collectionView numberOfItemsInSection:0];
@@ -1801,10 +1804,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                     message.chatRoom = self.chatRoom;
                     [self.messages addObject:message];
                     [self finishReceivingMessage];
-                    if (self.unreadMessages) {
-                        NSUInteger unreads = [message.senderId isEqualToString:self.senderId] ? 0 : self.unreadMessages + 1;
-                        [self updateUnreadMessagesLabel:unreads];
-                    }
+
+                    NSUInteger unreads = [message.senderId isEqualToString:self.senderId] ? 0 : self.unreadMessages + 1;
+                    [self updateUnreadMessagesLabel:unreads];
                     
                     [self loadNodesFromMessage:message atTheBeginning:YES];
                     if ([[MEGASdkManager sharedMEGAChatSdk] myUserHandle] == message.userHandle) {
