@@ -350,6 +350,10 @@
 
 - (void)updateCell:(ChatRoomCell *)cell forChatListItem:(MEGAChatListItem *)item {
     switch (item.lastMessageType) {
+        case 255:
+            cell.chatLastMessage.text = AMLocalizedString(@"loading", @"state previous to import a file");
+            cell.chatLastTime.hidden = YES;
+            break;
         case MEGAChatMessageTypeInvalid: {
             cell.chatLastMessage.text = AMLocalizedString(@"noConversationHistory", @"Information if there are no history messages in current chat conversation");
             cell.chatLastTime.hidden = YES;
