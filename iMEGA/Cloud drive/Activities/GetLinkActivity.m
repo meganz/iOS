@@ -68,12 +68,12 @@
                 UINavigationController *getLinkNC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"GetLinkNavigationControllerID"];
                 GetLinkTableViewController *getLinkTVC = getLinkNC.childViewControllers.firstObject;
                 getLinkTVC.nodesToExport = self.nodes;
-                [[UIApplication mnz_visibleViewController] presentViewController:getLinkNC animated:YES completion:nil];
+                [UIApplication.mnz_visibleViewController presentViewController:getLinkNC animated:YES completion:nil];
             } else {
                 UINavigationController *copyrightWarningNC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CopywriteWarningNavigationControllerID"];
                 CopyrightWarningViewController *copyrightWarningVC = copyrightWarningNC.childViewControllers.firstObject;
                 copyrightWarningVC.nodesToExport = self.nodes;
-                [[UIApplication mnz_visibleViewController] presentViewController:copyrightWarningNC animated:YES completion:nil];
+                [UIApplication.mnz_visibleViewController presentViewController:copyrightWarningNC animated:YES completion:nil];
             }
         }
     }

@@ -613,7 +613,7 @@
 
 - (void)renameAlertTextFieldDidChange:(UITextField *)sender {
     
-    UIAlertController *renameAlertController = (UIAlertController*)[UIApplication mnz_visibleViewController];
+    UIAlertController *renameAlertController = (UIAlertController*)UIApplication.mnz_visibleViewController;
     if (renameAlertController) {
         UITextField *textField = renameAlertController.textFields.firstObject;
         UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;

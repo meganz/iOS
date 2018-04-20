@@ -167,7 +167,7 @@
                 callVC.chatRoom  = chatRoom;
                 callVC.videoCall = call.hasRemoteVideo;
                 callVC.callType = CallTypeIncoming;
-                [[UIApplication mnz_visibleViewController] presentViewController:callVC animated:YES completion:nil];
+                [UIApplication.mnz_visibleViewController presentViewController:callVC animated:YES completion:nil];
             } else {
                 MEGAChatRoom *chatRoom = [api chatRoomForChatId:call.chatId];
                 UILocalNotification* localNotification = [[UILocalNotification alloc] init];
@@ -198,7 +198,7 @@
         callVC.chatRoom  = chatRoom;
         callVC.videoCall = call.hasRemoteVideo;
         callVC.callType = CallTypeIncoming;
-        [[UIApplication mnz_visibleViewController] presentViewController:callVC animated:YES completion:nil];
+        [UIApplication.mnz_visibleViewController presentViewController:callVC animated:YES completion:nil];
     }
 }
 
