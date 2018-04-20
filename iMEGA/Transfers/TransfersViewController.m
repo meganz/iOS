@@ -105,24 +105,16 @@
     switch (transfer.state) {
         case MEGATransferStateActive:
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"activeTransferCell" forIndexPath:indexPath];
-            [cell configureCellForActiveTransfer:transfer delegate:self];
-            return cell;
-            
-        case MEGATransferStatePaused:
-            cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferCell" forIndexPath:indexPath];
-            [cell configureCellForPausedTransfer:transfer delegate:self];
-            return cell;
-            
-        case MEGATransferStateQueued:
-            cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferCell" forIndexPath:indexPath];
-            [cell configureCellForQueuedTransfer:transfer delegate:self];
-            return cell;
+            break;
             
         default:
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferCell" forIndexPath:indexPath];
-            [cell configureCellForQueuedTransfer:transfer delegate:self];
-            return cell;
+            break;
     }
+    
+    [cell configureCellForTransfer:transfer delegate:self];
+    
+    return cell;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

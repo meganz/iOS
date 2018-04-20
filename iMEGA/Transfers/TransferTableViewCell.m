@@ -14,6 +14,8 @@
 
 @implementation TransferTableViewCell
 
+#pragma mark - Public
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     
@@ -38,50 +40,10 @@
     }
 }
 
-- (void)configureCellForActiveTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate {
+- (void)configureCellForTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate {
     self.delegate = delegate;
     self.transfer = transfer;
-    if (transfer.type == MEGATransferTypeDownload) {
-        self.arrowImageView.image = [Helper downloadingTransferImage];
-        self.percentageLabel.textColor = UIColor.mnz_green31B500;
-    } else {
-        self.arrowImageView.image = [Helper uploadingTransferImage];
-        self.percentageLabel.textColor = UIColor.mnz_blue2BA6DE;
-    }
     
-    [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
-
-    [self updatePercentAndSpeedLabelsForTransfer:transfer];
-    
-    [self configureCell];
-}
-
-- (void)configureCellForPausedTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate {
-    self.delegate = delegate;
-    self.transfer = transfer;
-    [self.pauseButton setImage:[UIImage imageNamed:@"resumeTransfers"] forState:UIControlStateNormal];
-    self.percentageLabel.text = AMLocalizedString(@"paused", @"Paused");
-    self.percentageLabel.textColor = UIColor.mnz_gray666666;
-
-    [self configureCell];
-}
-
-- (void)configureCellForQueuedTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate {
-    self.delegate = delegate;
-    self.transfer = transfer;
-    [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
-    self.percentageLabel.text = AMLocalizedString(@"queued", @"Queued");
-    self.percentageLabel.textColor = UIColor.mnz_gray666666;
-
-    [self configureCell];
-}
-
-- (void)configureCell {
-    if (self.transfer.type == MEGATransferTypeDownload) {
-        self.arrowImageView.image = [Helper downloadQueuedTransferImage];
-    } else {
-        self.arrowImageView.image = [Helper uploadQueuedTransferImage];
-    }
     self.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:self.transfer.fileName];
     
     MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.transfer.nodeHandle];
@@ -99,6 +61,8 @@
     } else {
         self.iconImageView.image = [Helper imageForNode:node];
     }
+    
+    [self configureCellState];
 }
 
 - (void)updatePercentAndSpeedLabelsForTransfer:(MEGATransfer *)transfer {
@@ -115,8 +79,53 @@
     float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue * 100);
     NSString *percentageCompleted = [NSString stringWithFormat:@"%.f %%", percentage];
     self.percentageLabel.text = percentageCompleted;
-    NSString *speed = [NSString stringWithFormat:@"%@/s", [NSByteCountFormatter stringFromByteCount:transfer.speed.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory]];
+    NSString *speed = [NSString stringWithFormat:@"%@/s", [NSByteCountFormatter stringFromByteCount:transfer.speed.longLongValue countStyle:NSByteCountFormatterCountStyleMemory]];
     self.speedLabel.text = speed;
+}
+
+#pragma mark - Private
+
+- (void)configureCellState {
+
+    switch (self.transfer.state) {
+            
+        case MEGATransferStateActive:
+            [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
+            [self updatePercentAndSpeedLabelsForTransfer:self.transfer];
+            break;
+            
+        case MEGATransferStatePaused:
+            [self inactiveStateLayout];
+            self.percentageLabel.text = AMLocalizedString(@"paused", @"Paused");
+            [self.pauseButton setImage:[UIImage imageNamed:@"resumeTransfers"] forState:UIControlStateNormal];
+            break;
+            
+        case MEGATransferStateRetrying:
+            [self inactiveStateLayout];
+            self.percentageLabel.text = AMLocalizedString(@"Retrying...", @"Label for the state of a transfer when is being retrying - (String as short as possible).");
+            break;
+            
+        case MEGATransferStateCompleting:
+            [self inactiveStateLayout];
+            self.percentageLabel.text = AMLocalizedString(@"Completing...", @"Label for the state of a transfer when is being completing - (String as short as possible).");
+            break;
+            
+        default:
+            [self inactiveStateLayout];
+            self.percentageLabel.text = AMLocalizedString(@"queued", @"Queued");
+            break;
+    }
+}
+
+- (void)inactiveStateLayout {
+    [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
+    self.percentageLabel.textColor = UIColor.mnz_gray666666;
+    
+    if (self.transfer.type == MEGATransferTypeDownload) {
+        self.arrowImageView.image = [Helper downloadQueuedTransferImage];
+    } else {
+        self.arrowImageView.image = [Helper uploadQueuedTransferImage];
+    }
 }
 
 #pragma mark - IBActions
