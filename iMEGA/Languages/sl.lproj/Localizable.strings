@@ -7,7 +7,7 @@
 /* */
 "no"="Ne";
 /* */
-"upload"="Nalaganje";
+"upload"="Naloži";
 /*  */
 "error"="Napaka";
 /*  */
@@ -58,8 +58,14 @@
 "sslUnverified_alertTitle"="Ne morem preveriti strežniškega SSL ključa. Lahko ste žrtev man-in-the-middle napada.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
-/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
-"takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
+/* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
+"takingLongerThanExpected"="The process is taking longer than expected. Please wait.";
+/* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
+"serversAreTooBusy"="Strežniki so prezasedeni. Prosimo, počakajte.";
+/* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
+"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+/* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
+"tooManyRequest"="Too many requests. Please wait.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Prosim, prijavite se v svoj račun.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -169,7 +175,7 @@
 /* Title for the folder link view */
 "folderLink"="Povezava na mapo";
 /* Button title which downloads a file/folder to your device */
-"downloadButton"="Prenos";
+"downloadButton"="Prevzemi";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Mapa, ki jo želite prenesti, je večja od razpoložljivega pomnilnika.";
 /* Error message shown when a folder can't be created. */
@@ -185,7 +191,7 @@
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Ni internetne povezave";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="Prazna mapa";
+"emptyFolder"="Ni datotek v mapi";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Ni datotek v vašem oblaku";
 /* Button title shown in empty views when you can 'Add files' */
@@ -273,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="najstarejši";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Izberite";
+"choosePhotoVideo"="Izberi";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Posnemi";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
@@ -281,7 +287,7 @@
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Ime nove mape";
 /* Title button for the create folder alert.  */
-"createFolderButton"="Kreiraj";
+"createFolderButton"="Izdelaj";
 /* message when trying to create a folder that already exists */
 "folderAlreadyExists"="Mapa že obstaja";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
@@ -385,7 +391,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Povezave odstranjene";
 /* Title show when a file is being downloaded */
-"downloading"="Prenašam";
+"downloading"="Prevzemam";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Ali želite prekiniti prevzemanje?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -475,7 +481,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d map uspešno deljenih.";
 /* Button title that triggers the importing link action */
-"import"="Uvoz";
+"import"="Uvozi";
 /* Message shown when a file has been imported */
 "fileImported"="Datoteka uvožena!";
 /* Message shown when some files have been imported */
@@ -495,7 +501,7 @@
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Omogoči nalaganje s kamere";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Prenosi s kamere omogočeni";
+"cameraUploadsEnabled"="Nalaganje s kamere omogočeno!";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Camera uploads complete";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
@@ -633,7 +639,7 @@
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Varnostne možnosti";
 /* Title of one of the Settings sections where you can see things 'About' the app */
-"about"="Podatki o";
+"about"="O aplikaciji";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Jezik";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
@@ -647,7 +653,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Politika zasebnosti";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="Splošni pogoji";
+"termsOfServicesLabel"="pravili uporabe";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Ugasnjeno";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -839,7 +845,7 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Seje zaprte";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Spremeni varnostno kodo";
+"changePasscodeLabel"="Zamenjaj vstopno kodo";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="Preprosta koda";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
@@ -939,7 +945,7 @@
 /* Label to show that an error related with expiration occurs during a SDK operation. */
 "expired"="Poteklo";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="Odjava";
+"logoutLabel"="Odjavi";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Odjavljam";
 /* Button to remove avatar. Try to keep the text short (as in English) */
@@ -965,7 +971,7 @@
 /* title of the My Account screen */
 "accountType"="Tip računa:";
 /* Text relative to the MEGA account level. UPPER CASE */
-"free"="BREZPLAČEN";
+"free"="BREZPLAČNO";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="Preteče dne %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
@@ -1198,6 +1204,10 @@
 "chatNotFound"="Pogovor ni najden";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ tipka ...";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders. */
+"twoUsersAreTyping"="[$%1$s [A]are typing...[/A]]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders. */
+"moreThanTwoUsersAreTyping"="[$%1$s [A]and more are typing...[/A]]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Napiši sporočilo...";
 /* Information if there are no history messages in current chat conversation */
@@ -1264,6 +1274,10 @@
 "jumpToLatest"="Jump to latest";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="New messages";
+/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
+"unreadMessage"="%lu unread message";
+/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
+"unreadMessages"="%lu unread messages";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Naročnine se avtomatsko obnavljajo za sledeča obdobja naročnine za enako trajanje in isto ceno, kot je bilo izbrano prvotno obdobje. Avtomatsko obnavljanje vaše MEGA PRO naročnine lahko ugasnete ne kasneje kot 24 ur, preden je čas za plačilo naslednjega obdobja, preko iTunes nastavitev računa. Za upravljanje z naročninami, preprosto kliknite na App Store ikono na vaši napravi, se prijavite svojim Apple ID na dnu strani (če tega še niste storili) in kliknite na View ID. Preusmerjeni boste na stran vašega računa, kjer se lahko premaknete do Manage App Subscriptions. Od tam lahko izberete svojo MEGA PRO naročnino in pogledate predvideni dan obnove, izberete drug paket naročnine ali pa premaknete stikalo na off za onemogočenje avtomatske obnove vaše naročnine.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1280,7 +1294,7 @@
 /* Label to show that an SDK operation has been complete successfully. */
 "No error"="Ni napak";
 /* Label to show that an Internal error occurs during a SDK operation. */
-"Internal error"="Notranja napaka";
+"Internal error"="Interna napaka";
 /* Label to show that an error of Invalid argument occurs during a SDK operation. */
 "Invalid argument"="Napačen argument";
 /* Label to show that a request error occurs during a SDK operation. */
@@ -1420,11 +1434,11 @@
 /* Message to notify user the file version will be permanently removed */
 "permanentlyRemoved"="It will be permanently removed";
 /*  */
-"delete"="Izbriši";
+"delete"="Briši";
 /* A button label which reverts a certain version of a file to be the current version of the selected file. */
 "revert"="Revert";
 /*  */
-"download"="Prenos";
+"download"="Prevzemi";
 /* Singular of file. 1 file */
 "file"="datoteka";
 /* Title of section to display information of the current version of a file. */
@@ -1433,3 +1447,27 @@
 "previousVersions"="Previous Versions";
 /* Title of section to display information of all current versions of files. */
 "currentVersions"="Current Versions";
+/* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
+"remindPasswordTitle"="Do you remember your password?";
+/* Text that describes why the user should test his/her password */
+"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+/* Text that describes why the user should test his/her password before logging out */
+"remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
+/* Text next to a toggle that if enabled won't appear again */
+"dontShowAgain"="Don’t show me again";
+/* Label for test password button and titles */
+"testPassword"="Test Password";
+/* Label for recovery key button */
+"backupRecoveryKey"="Naredi varnostno kopijo rešilnega ključa";
+/* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
+"testPasswordText"="Please test your password below to ensure you remember it. If you lose your password, you will lose access to your MEGA data. [A]Learn more[/A]";
+/* Title text for the account confirmation. */
+"confirm"="Potrdi";
+/* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
+"passwordAccepted"="Password accepted";
+/* A dialog title to export the Recovery Key for the current user. */
+"exportRecoveryKey"="Izvozi rešilni ključ";
+/* Title to confirm that you want to logout */
+"proceedToLogout"="Proceed to logout";
+/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
+"testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
