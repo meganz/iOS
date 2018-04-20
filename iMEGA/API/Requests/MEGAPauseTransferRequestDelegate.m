@@ -11,9 +11,11 @@
 
 - (instancetype)initWithCompletion:(void (^)(MEGARequest *request))completion {
     self = [super init];
-    if(self) {
+    
+    if (self) {
         _completion = completion;
     }
+    
     return self;
 }
 
@@ -29,6 +31,7 @@
     if (error.type != MEGAErrorTypeApiOk) {
         return;
     }
+    
     if (self.completion) {
         self.completion(request);
     }

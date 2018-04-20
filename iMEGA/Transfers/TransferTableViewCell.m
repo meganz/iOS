@@ -19,10 +19,10 @@
     
     if (selected) {
         UIView *view = [[UIView alloc] init];
-        view.backgroundColor = [UIColor whiteColor];
+        view.backgroundColor = UIColor.whiteColor;
         self.selectedBackgroundView = view;
         
-        self.lineView.backgroundColor = [UIColor mnz_grayCCCCCC];
+        self.lineView.backgroundColor = UIColor.mnz_grayCCCCCC;
     }
 }
 
@@ -31,10 +31,10 @@
     
     if (highlighted) {
         UIView *view = [[UIView alloc] init];
-        view.backgroundColor = [UIColor mnz_grayF7F7F7];
+        view.backgroundColor = UIColor.mnz_grayF7F7F7;
         self.selectedBackgroundView = view;
         
-        self.lineView.backgroundColor = [UIColor mnz_grayCCCCCC];
+        self.lineView.backgroundColor = UIColor.mnz_grayCCCCCC;
     }
 }
 
@@ -43,10 +43,10 @@
     self.transfer = transfer;
     if (transfer.type == MEGATransferTypeDownload) {
         self.arrowImageView.image = [Helper downloadingTransferImage];
-        [self.percentageLabel setTextColor:UIColor.mnz_green31B500];
+        self.percentageLabel.textColor = UIColor.mnz_green31B500;
     } else {
         self.arrowImageView.image = [Helper uploadingTransferImage];
-        [self.percentageLabel setTextColor:UIColor.mnz_blue2BA6DE];
+        self.percentageLabel.textColor = UIColor.mnz_blue2BA6DE;
     }
     
     [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
@@ -60,8 +60,8 @@
     self.delegate = delegate;
     self.transfer = transfer;
     [self.pauseButton setImage:[UIImage imageNamed:@"resumeTransfers"] forState:UIControlStateNormal];
-    [self.percentageLabel setText:AMLocalizedString(@"paused", @"Paused")];
-    [self.percentageLabel setTextColor:UIColor.mnz_gray666666];
+    self.percentageLabel.text = AMLocalizedString(@"paused", @"Paused");
+    self.percentageLabel.textColor = UIColor.mnz_gray666666;
 
     [self configureCell];
 }
@@ -70,19 +70,19 @@
     self.delegate = delegate;
     self.transfer = transfer;
     [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
-    [self.percentageLabel setText:AMLocalizedString(@"queued", @"Queued")];
-    [self.percentageLabel setTextColor:UIColor.mnz_gray666666];
+    self.percentageLabel.text = AMLocalizedString(@"queued", @"Queued");
+    self.percentageLabel.textColor = UIColor.mnz_gray666666;
 
     [self configureCell];
 }
 
 - (void)configureCell {
     if (self.transfer.type == MEGATransferTypeDownload) {
-        [self.arrowImageView setImage:[Helper downloadQueuedTransferImage]];
+        self.arrowImageView.image = [Helper downloadQueuedTransferImage];
     } else {
-        [self.arrowImageView setImage:[Helper uploadQueuedTransferImage]];
+        self.arrowImageView.image = [Helper uploadQueuedTransferImage];
     }
-    [self.nameLabel setText:[[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:self.transfer.fileName]];
+    self.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:self.transfer.fileName];
     
     MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.transfer.nodeHandle];
     if (node.hasThumbnail) {
@@ -105,11 +105,11 @@
     self.transfer = transfer;
     
     if (transfer.type == MEGATransferTypeDownload) {
-        [self.arrowImageView setImage:[Helper downloadingTransferImage]];
-        [self.percentageLabel setTextColor:UIColor.mnz_green31B500];
+        self.arrowImageView.image = [Helper downloadingTransferImage];
+        self.percentageLabel.textColor = UIColor.mnz_green31B500;
     } else {
-        [self.arrowImageView setImage:[Helper uploadingTransferImage]];
-        [self.percentageLabel setTextColor:UIColor.mnz_blue2BA6DE];
+        self.arrowImageView.image = [Helper uploadingTransferImage];
+        self.percentageLabel.textColor = UIColor.mnz_blue2BA6DE;
     }
     
     float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue * 100);

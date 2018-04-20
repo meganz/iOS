@@ -83,6 +83,12 @@
                                                         <constraint firstAttribute="height" constant="40" id="CgI-wU-1Ir"/>
                                                         <constraint firstAttribute="width" constant="40" id="nFQ-ax-D9a"/>
                                                     </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="4"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3U3-pH-t8L">
                                                     <rect key="frame" x="60" y="12" width="213" height="18"/>
@@ -200,6 +206,12 @@
                                                         <constraint firstAttribute="height" constant="40" id="DDL-hH-16O"/>
                                                         <constraint firstAttribute="width" constant="40" id="fBG-tQ-u9a"/>
                                                     </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="4"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AGx-71-z6L">
                                                     <rect key="frame" x="60" y="12" width="213" height="18"/>
@@ -211,7 +223,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TCE-dU-QPa" userLabel="Arrow Image View">
-                                                    <rect key="frame" x="60" y="33" width="11" height="11"/>
+                                                    <rect key="frame" x="60" y="32" width="11" height="11"/>
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="11" id="AEe-ta-hPK"/>
@@ -280,7 +292,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="bRY-fO-UhS" secondAttribute="trailing" id="fv3-zv-I3L"/>
                                                 <constraint firstItem="AGx-71-z6L" firstAttribute="leading" secondItem="MZ1-3x-enq" secondAttribute="trailing" constant="10" id="i1b-Sq-VcT"/>
                                                 <constraint firstAttribute="centerY" secondItem="MZ1-3x-enq" secondAttribute="centerY" id="lxn-5L-6cF"/>
-                                                <constraint firstItem="TCE-dU-QPa" firstAttribute="centerY" secondItem="RB2-CC-2Yl" secondAttribute="centerY" constant="1" id="uCa-rr-Rwx"/>
+                                                <constraint firstItem="TCE-dU-QPa" firstAttribute="centerY" secondItem="RB2-CC-2Yl" secondAttribute="centerY" id="uCa-rr-Rwx"/>
                                                 <constraint firstItem="RB2-CC-2Yl" firstAttribute="leading" secondItem="TCE-dU-QPa" secondAttribute="trailing" constant="6" id="yXl-Yu-cSe"/>
                                             </constraints>
                                         </tableViewCellContentView>
