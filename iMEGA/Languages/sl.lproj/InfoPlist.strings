@@ -13,6 +13,6 @@
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
 "quickActionSearchString"="Iskanje";
 /*  */
-"quickActionUploadString"="Nalaganje";
+"quickActionUploadString"="Naloži";
 /* Title of the Offline section */
 "quickActionOfflineString"="Odklopljen";

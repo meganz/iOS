@@ -58,8 +58,14 @@
 "sslUnverified_alertTitle"="SSL ключът на сървъра не може да бъде проверен. Възможно е да сте засегнати от атака  \"човек-в-средата\".";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
-/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
-"takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
+/* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
+"takingLongerThanExpected"="The process is taking longer than expected. Please wait.";
+/* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
+"serversAreTooBusy"="Сървърите са твърде заети. Моля изчакайте.";
+/* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
+"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+/* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
+"tooManyRequest"="Too many requests. Please wait.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Моля, влезте в профила си.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -81,7 +87,7 @@
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Влез";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="Създаване на профил";
+"createAccount"="Създай Профил";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Невалиден имейл и/или парола. Моля, опитайте отново";
 /* Error message when to many attempts to login */
@@ -185,7 +191,7 @@
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Няма интернет връзка";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="Празна папка";
+"emptyFolder"="Няма файлове в папката";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Няма файлове във вашият Cloud Drive";
 /* Button title shown in empty views when you can 'Add files' */
@@ -347,7 +353,7 @@
 /* button caption text that the user clicks when he disagrees */
 "disagree"="Disagree";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
-"linkWithoutKey"="Линк без ключ";
+"linkWithoutKey"="Връзка без ключ";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
 "linkWithKey"="Линк с ключ";
 /* An alert dialog for the Get Link feature */
@@ -495,7 +501,7 @@
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Включи Качвания от Камерата";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Качването от Камерата е активирано";
+"cameraUploadsEnabled"="Качване от Камерата е включено";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Camera uploads complete";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
@@ -633,7 +639,7 @@
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Настройки на Сигурността";
 /* Title of one of the Settings sections where you can see things 'About' the app */
-"about"="За нас";
+"about"="За приложението";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Език";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
@@ -647,7 +653,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Поверителност";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="Условия за ползване";
+"termsOfServicesLabel"="условията за ползване";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Изключен";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -839,7 +845,7 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Сесиите бяха прекратени";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Промени код за достъп";
+"changePasscodeLabel"="Смяна на кода за достъп";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="Опростена парола";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
@@ -965,7 +971,7 @@
 /* title of the My Account screen */
 "accountType"="Тип на профила:";
 /* Text relative to the MEGA account level. UPPER CASE */
-"free"="БЕЗПЛАТЕН";
+"free"="БЕЗПЛАТНО";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="изтича на %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
@@ -1093,7 +1099,7 @@
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Добави участници";
 /* Title that refers to the status of the chat (Either Online or Offline) */
-"status"="Статус";
+"status"="Състояние";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Voice and Video Calls";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1198,6 +1204,10 @@
 "chatNotFound"="Chat not found";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ is typing ...";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders. */
+"twoUsersAreTyping"="[$%1$s [A]are typing...[/A]]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders. */
+"moreThanTwoUsersAreTyping"="[$%1$s [A]and more are typing...[/A]]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Напиши съобщение";
 /* Information if there are no history messages in current chat conversation */
@@ -1219,7 +1229,7 @@
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Изпрати файлове";
 /* */
-"warning"="Внимание";
+"warning"="Предупреждение";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="All files saved for Offline will be deleted from your device. Proceed to logout?";
 /* Title shown when you almost had used your available transfer quota. */
@@ -1264,6 +1274,10 @@
 "jumpToLatest"="Jump to latest";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="New messages";
+/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
+"unreadMessage"="%lu unread message";
+/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
+"unreadMessages"="%lu unread messages";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Абонаментите се подновяват автоматично за последователни абонаментни периоди със същия срок и на същата цена като на първоначално избрания период. Можете да изключите автоматичното подновяване на вашия MEGA PRO абонамент не по-късно от 24 часа преди следващата абонаментна дата за плащане, от страницата за настройки на вашия iTunes профил. За да управлявате вашите абонаменти, просто кликнете върху иконата на App Store на вашия телефон, влезте с вашия Apple ID в долната част на страницата (ако вече не сте го направили) и след това щракнете върху View ID. Ще бъдете пренасочени към страницата на профила си, където по-надолу на страницата се намира Настройка на Абонаментите за Приложения. От там можете да изберете вашия MEGA PRO абонамент и видите насрочената дата за подновяване, да изберете друг абонаментен пакет или превключване ключа за включване/изключване на изключено положение, за да забраните автоматичното подновяване на абонамента си.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1433,3 +1447,27 @@
 "previousVersions"="Previous Versions";
 /* Title of section to display information of all current versions of files. */
 "currentVersions"="Current Versions";
+/* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
+"remindPasswordTitle"="Do you remember your password?";
+/* Text that describes why the user should test his/her password */
+"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+/* Text that describes why the user should test his/her password before logging out */
+"remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
+/* Text next to a toggle that if enabled won't appear again */
+"dontShowAgain"="Don’t show me again";
+/* Label for test password button and titles */
+"testPassword"="Test Password";
+/* Label for recovery key button */
+"backupRecoveryKey"="Резервно копие на Възстановяващ Ключ";
+/* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
+"testPasswordText"="Please test your password below to ensure you remember it. If you lose your password, you will lose access to your MEGA data. [A]Learn more[/A]";
+/* Title text for the account confirmation. */
+"confirm"="Потвърди";
+/* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
+"passwordAccepted"="Password accepted";
+/* A dialog title to export the Recovery Key for the current user. */
+"exportRecoveryKey"="Експортирай Възстановяващ Ключ";
+/* Title to confirm that you want to logout */
+"proceedToLogout"="Proceed to logout";
+/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
+"testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
