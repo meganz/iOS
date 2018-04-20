@@ -1,11 +1,13 @@
+
 #import "GetLinkActivity.h"
+
+#import "SVProgressHUD.h"
 
 #import "CopyrightWarningViewController.h"
 #import "GetLinkTableViewController.h"
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
-
-#import "SVProgressHUD.h"
+#import "UIApplication+MNZCategory.h"
 
 @interface GetLinkActivity ()
 
@@ -66,12 +68,12 @@
                 UINavigationController *getLinkNC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"GetLinkNavigationControllerID"];
                 GetLinkTableViewController *getLinkTVC = getLinkNC.childViewControllers.firstObject;
                 getLinkTVC.nodesToExport = self.nodes;
-                [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:getLinkNC animated:YES completion:nil];
+                [[UIApplication mnz_visibleViewController] presentViewController:getLinkNC animated:YES completion:nil];
             } else {
                 UINavigationController *copyrightWarningNC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CopywriteWarningNavigationControllerID"];
                 CopyrightWarningViewController *copyrightWarningVC = copyrightWarningNC.childViewControllers.firstObject;
                 copyrightWarningVC.nodesToExport = self.nodes;
-                [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:copyrightWarningNC animated:YES completion:nil];
+                [[UIApplication mnz_visibleViewController] presentViewController:copyrightWarningNC animated:YES completion:nil];
             }
         }
     }
