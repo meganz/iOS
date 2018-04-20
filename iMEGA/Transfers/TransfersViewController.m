@@ -49,7 +49,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
-    [self.navigationItem setTitle:AMLocalizedString(@"transfers", @"Transfers")];
+    self.navigationItem.title = AMLocalizedString(@"transfers", @"Transfers");
     
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     
@@ -286,8 +286,8 @@
 }
 
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
-    [self.pauseBarButtonItem setEnabled:boolValue];
-    [self.cancelBarButtonItem setEnabled:boolValue];
+    self.pauseBarButtonItem.enabled = boolValue;
+    self.cancelBarButtonItem.enabled = boolValue;
 }
 
 #pragma mark - IBActions
