@@ -873,7 +873,7 @@
 
     [self dismissViewControllerAnimated:YES completion:^{
         [self.delegate photoBrowser:self willDismissWithNode:node];
-        UIViewController *visibleViewController = [UIApplication mnz_visibleViewController];
+        UIViewController *visibleViewController = UIApplication.mnz_visibleViewController;
         if ([visibleViewController isKindOfClass:MainTabBarController.class]) {
             NSArray *parentTreeArray = node.mnz_parentTreeArray;
 

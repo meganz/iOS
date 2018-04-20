@@ -38,7 +38,7 @@
         UINavigationController *getLinkNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"GetLinkNavigationControllerID"];
         GetLinkTableViewController *getLinkTVC = getLinkNavigationController.childViewControllers[0];
         getLinkTVC.nodesToExport = self.nodesToExport;
-        [[UIApplication mnz_visibleViewController] presentViewController:getLinkNavigationController animated:YES completion:nil];
+        [UIApplication.mnz_visibleViewController presentViewController:getLinkNavigationController animated:YES completion:nil];
     }];
 }
 
