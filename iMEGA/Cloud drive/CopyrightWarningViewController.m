@@ -2,6 +2,7 @@
 #import "CopyrightWarningViewController.h"
 
 #import "GetLinkTableViewController.h"
+#import "UIApplication+MNZCategory.h"
 
 @interface CopyrightWarningViewController ()
 
@@ -37,7 +38,7 @@
         UINavigationController *getLinkNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"GetLinkNavigationControllerID"];
         GetLinkTableViewController *getLinkTVC = getLinkNavigationController.childViewControllers[0];
         getLinkTVC.nodesToExport = self.nodesToExport;
-        [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:getLinkNavigationController animated:YES completion:nil];
+        [[UIApplication mnz_visibleViewController] presentViewController:getLinkNavigationController animated:YES completion:nil];
     }];
 }
 
