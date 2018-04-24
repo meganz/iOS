@@ -20,7 +20,6 @@
 #import "NodeTableViewCell.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
-#import "MEGAQLPreviewController.h"
 #import "MEGAStore.h"
 
 @interface FileLinkViewController () <UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate>

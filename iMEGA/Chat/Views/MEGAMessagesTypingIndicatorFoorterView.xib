@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12113" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12078"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -21,18 +21,19 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Typing label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lfi-NM-BRL">
-                    <rect key="frame" x="12" y="0.0" width="58.5" height="10"/>
+                    <rect key="frame" x="30" y="0.0" width="58.5" height="10"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="10" id="Ey8-uO-Ag3"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="10"/>
-                    <color key="textColor" red="0.60000002384185791" green="0.60000002384185791" blue="0.60000002384185791" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <constraints>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Lfi-NM-BRL" secondAttribute="trailing" constant="30" id="1Fo-PQ-RcW"/>
                 <constraint firstItem="Lfi-NM-BRL" firstAttribute="top" secondItem="ajJ-uk-b04" secondAttribute="top" id="JB4-39-UU4"/>
-                <constraint firstItem="Lfi-NM-BRL" firstAttribute="leading" secondItem="ajJ-uk-b04" secondAttribute="leading" constant="12" id="QS1-xC-GFb"/>
+                <constraint firstItem="Lfi-NM-BRL" firstAttribute="leading" secondItem="ajJ-uk-b04" secondAttribute="leading" constant="30" id="QS1-xC-GFb"/>
                 <constraint firstAttribute="bottom" secondItem="Lfi-NM-BRL" secondAttribute="bottom" id="dPO-PD-tSo"/>
             </constraints>
             <connections>
@@ -41,9 +42,4 @@
             <point key="canvasLocation" x="25" y="52"/>
         </collectionReusableView>
     </objects>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
-    </simulatedMetricsContainer>
 </document>

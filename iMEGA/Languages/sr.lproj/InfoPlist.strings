@@ -13,6 +13,6 @@
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
 "quickActionSearchString"="Претрага";
 /*  */
-"quickActionUploadString"="Пренос";
+"quickActionUploadString"="Прикачи";
 /* Title of the Offline section */
 "quickActionOfflineString"="Офлајн";

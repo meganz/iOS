@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
 
 @property (weak, nonatomic) IBOutlet UIImageView *qrImageView;
+@property (weak, nonatomic) IBOutlet UIView *avatarBackgroundView;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *contactLinkLabel;
 @property (weak, nonatomic) IBOutlet UIButton *linkCopyButton;
@@ -134,9 +135,6 @@
 - (void)setUserAvatar {
     MEGAUser *myUser = [[MEGASdkManager sharedMEGASdk] myUser];
     [self.avatarImageView mnz_setImageForUserHandle:myUser.handle];
-    self.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
-    self.avatarImageView.layer.borderWidth = 6.0f;
-    self.avatarImageView.layer.cornerRadius = 40.0f;
 }
 
 - (void)setupCameraMask {
@@ -157,7 +155,7 @@
         case 0:
             [self stopRecognizingCodes];
             self.view.backgroundColor = [UIColor whiteColor];
-            self.qrImageView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = NO;
+            self.qrImageView.hidden = self.avatarBackgroundView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = NO;
             self.linkCopyButton.hidden = self.moreButton.hidden = (self.contactLinkLabel.text.length == 0);
             self.cameraView.hidden = self.cameraMaskView.hidden = self.cameraMaskBorderView.hidden = self.hintLabel.hidden = self.errorLabel.hidden = YES;
             self.backButton.tintColor = self.segmentedControl.tintColor = [UIColor mnz_redF0373A];
@@ -166,7 +164,7 @@
         case 1:
             if ([self startRecognizingCodes]) {
                 self.view.backgroundColor = [UIColor clearColor];
-                self.qrImageView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = self.linkCopyButton.hidden = self.moreButton.hidden = YES;
+                self.qrImageView.hidden = self.avatarBackgroundView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = self.linkCopyButton.hidden = self.moreButton.hidden = YES;
                 self.cameraView.hidden = self.cameraMaskView.hidden = self.cameraMaskBorderView.hidden = self.hintLabel.hidden = self.errorLabel.hidden = NO;
                 self.queryInProgress = NO;
                 self.backButton.tintColor = self.segmentedControl.tintColor = [UIColor whiteColor];

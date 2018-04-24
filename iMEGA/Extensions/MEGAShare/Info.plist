@@ -17,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.8.4</string>
+	<string>3.8.6</string>
 	<key>CFBundleVersion</key>
-	<string>95</string>
+	<string>98</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -52,10 +52,15 @@
 		<string>SF-UI-Display-Medium.otf</string>
 		<string>SF-UI-Display-Light.otf</string>
 		<string>SF-UI-Display-Regular.otf</string>
+		<string>SF-UI-Display-Bold.otf</string>
+		<string>SF-UI-Display-Semibold.otf</string>
 		<string>SF-UI-Text-Medium.otf</string>
 		<string>SF-UI-Text-Light.otf</string>
 		<string>SF-UI-Text-Regular.otf</string>
 		<string>SF-UI-Text-RegularItalic.otf</string>
+		<string>SF-UI-Text-Bold.otf</string>
+		<string>SF-UI-Text-BoldItalic.otf</string>
+		<string>SF-UI-Text-Semibold.otf</string>
 	</array>
 </dict>
 </plist>

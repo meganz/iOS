@@ -40,8 +40,10 @@
 @property (nonatomic) NSMutableArray<MEGANode *> *mediaNodes;
 @property (nonatomic) NSCache<NSString *, UIScrollView *> *imageViewsCache;
 @property (nonatomic) NSUInteger currentIndex;
+@property (nonatomic) UIImageView *targetImageView;
 
 @property (nonatomic) CGPoint panGestureInitialPoint;
+@property (nonatomic) CGRect panGestureInitialFrame;
 @property (nonatomic, getter=isInterfaceHidden) BOOL interfaceHidden;
 @property (nonatomic) CGFloat playButtonSize;
 @property (nonatomic) CGFloat gapBetweenPages;
@@ -73,7 +75,7 @@
         }
     }
     
-    self.panGestureInitialPoint = CGPointMake(0.0f, 0.0f);
+    self.panGestureInitialPoint = CGPointZero;
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)]];
     
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGesture:)];
@@ -133,6 +135,9 @@
 #pragma mark - UI
 
 - (void)reloadUI {
+    if (!CGPointEqualToPoint(self.panGestureInitialPoint, CGPointZero)) {
+        return;
+    }
     for (UIView *subview in self.scrollView.subviews) {
         [subview removeFromSuperview];
     }
@@ -179,6 +184,20 @@
         UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
         if (zoomableView) {
             zoomableView.zoomScale = 1.0f;
+        }
+    }
+}
+
+- (void)toggleTransparentInterfaceForDismissal:(BOOL)transparent {
+    self.view.backgroundColor = transparent ? [UIColor clearColor] : [UIColor whiteColor];
+    self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = transparent ? 0.0f : 1.0f;
+    
+    // Toggle the play button:
+    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    if (node.name.mnz_isVideoPathExtension) {
+        UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
+        if (zoomableView) {
+            zoomableView.subviews.lastObject.hidden = transparent;
         }
     }
 }
@@ -237,6 +256,7 @@
         if (node.name.mnz_isVideoPathExtension && scale == 1.0f) {
             scrollView.subviews.lastObject.hidden = NO;
         }
+        [self correctOriginForView:view scaledAt:scale];
     }
 }
 
@@ -281,9 +301,10 @@
             zoomableView.showsVerticalScrollIndicator = NO;
             zoomableView.tag = 2;
             [zoomableView addSubview:imageView];
-            
+            [self resizeImageView:imageView];
+
             if (node.name.mnz_isVideoPathExtension) {
-                UIButton *playButton = [[UIButton alloc] initWithFrame:CGRectMake((imageView.frame.size.width - self.playButtonSize) / 2, (imageView.frame.size.height - self.playButtonSize) / 2, self.playButtonSize, self.playButtonSize)];
+                UIButton *playButton = [[UIButton alloc] initWithFrame:CGRectMake((zoomableView.frame.size.width - self.playButtonSize) / 2, (zoomableView.frame.size.height - self.playButtonSize) / 2, self.playButtonSize, self.playButtonSize)];
                 [playButton setImage:[UIImage imageNamed:@"video_list"] forState:UIControlStateNormal];
                 playButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
                 playButton.contentVerticalAlignment = UIControlContentHorizontalAlignmentFill;
@@ -307,6 +328,7 @@
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
                             imageView.image = [UIImage imageWithContentsOfFile:request.file];
+                            [self resizeImageView:imageView];
                         }
                         completion:nil];
         [self removeActivityIndicatorsFromView:imageView];
@@ -318,6 +340,7 @@
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
                             imageView.image = [UIImage imageWithContentsOfFile:transfer.path];
+                            [self resizeImageView:imageView];
                             if (transfer.nodeHandle == [self.mediaNodes objectAtIndex:self.currentIndex].handle) {
                                 self.pieChartView.alpha = 0.0f;
                             }
@@ -401,10 +424,51 @@
     return nodeFilePath;
 }
 
+- (void)resizeImageView:(UIImageView *)imageView {
+    if (imageView.image) {
+        CGFloat imageRatio = imageView.image.size.height / imageView.image.size.width;
+        CGFloat frameRatio = self.view.frame.size.height / self.view.frame.size.width;
+        if (imageRatio != frameRatio) {
+            CGRect frame = self.view.frame;
+            if (imageRatio < frameRatio) {
+                CGFloat newHeight = frame.size.width * imageRatio;
+                frame.size.height = newHeight;
+            } else {
+                CGFloat newWidth = frame.size.height / imageRatio;
+                frame.size.width = newWidth;
+            }
+            
+            UIScrollView *zoomableView = (UIScrollView *)imageView.superview;
+            CGFloat zoomScale = zoomableView.zoomScale;
+            frame.size.width *= zoomScale;
+            frame.size.height *= zoomScale;
+            
+            imageView.frame = frame;
+        }
+    }
+
+    [self correctOriginForView:imageView scaledAt:1.0f];
+}
+
+- (void)correctOriginForView:(UIView *)view scaledAt:(CGFloat)scale {
+    UIView *zoomableView = view.superview;
+    CGRect frame = view.frame;
+    frame.origin.x = MAX(frame.origin.x + (zoomableView.frame.size.width - (view.frame.size.width * scale)) / 2, 0);
+    frame.origin.y = MAX(frame.origin.y + (zoomableView.frame.size.height - (view.frame.size.height * scale)) / 2, 0);
+    view.frame = frame;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)didPressCloseButton:(UIBarButtonItem *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
+    self.targetImageView = zoomableView.subviews.firstObject;
+    [self toggleTransparentInterfaceForDismissal:YES];
+
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.delegate photoBrowser:self willDismissWithNode:node];
+    }];
 }
 
 - (IBAction)didPressActionsButton:(UIBarButtonItem *)sender {
@@ -459,17 +523,28 @@
 #pragma mark - Gesture recognizers
 
 - (void)panGesture:(UIPanGestureRecognizer *)panGestureRecognizer {
+    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
+    if (zoomableView.zoomScale > 1.0f) {
+        return;
+    }
+    self.targetImageView = zoomableView.subviews.firstObject;
+    
     CGPoint touchPoint = [panGestureRecognizer translationInView:self.view];
     CGFloat verticalIncrement = touchPoint.y - self.panGestureInitialPoint.y;
     
     switch (panGestureRecognizer.state) {
         case UIGestureRecognizerStateBegan:
             self.panGestureInitialPoint = touchPoint;
+            self.panGestureInitialFrame = self.targetImageView.frame;
+            [self toggleTransparentInterfaceForDismissal:YES];
             break;
             
         case UIGestureRecognizerStateChanged: {
             if (ABS(verticalIncrement) > 0) {
-                self.view.frame = CGRectMake(0.0f, verticalIncrement, self.view.frame.size.width, self.view.frame.size.height);
+                CGFloat ratio = 1.0f - (0.3f * (ABS(verticalIncrement) / self.panGestureInitialFrame.size.height));
+                CGFloat horizontalPadding = self.panGestureInitialFrame.size.width * (1.0f - ratio);
+                self.targetImageView.frame = CGRectMake(self.panGestureInitialFrame.origin.x + (horizontalPadding / 2.0f), self.panGestureInitialFrame.origin.y + (verticalIncrement / 2.0f), self.panGestureInitialFrame.size.width * ratio, self.panGestureInitialFrame.size.height * ratio);
             }
             
             break;
@@ -478,14 +553,18 @@
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled: {
             if (ABS(verticalIncrement) > 50.0f) {
-                self.view.backgroundColor = [UIColor clearColor];
-                self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
-                [self dismissViewControllerAnimated:YES completion:nil];
+                [self dismissViewControllerAnimated:YES completion:^{
+                    [self.delegate photoBrowser:self willDismissWithNode:node];
+                }];
             } else {
                 [UIView animateWithDuration:0.3 animations:^{
-                    self.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+                    self.targetImageView.frame = self.panGestureInitialFrame;
+                    [self toggleTransparentInterfaceForDismissal:NO];
+                    self.interfaceHidden = NO;
+                    self.panGestureInitialPoint = CGPointZero;
                 } completion:^(BOOL finished) {
                     [self reloadUI];
+                    self.targetImageView = nil;
                 }];
             }
             
@@ -499,13 +578,32 @@
 
 - (void)doubleTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer {
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    if (node.name.mnz_isVideoPathExtension) {
+        return;
+    }
     UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
+    UIView *imageView = zoomableView.subviews.firstObject;
     if (zoomableView) {
+        CGFloat newScale = zoomableView.zoomScale > 1.0f ? 1.0f : 5.0f;
         [self scrollViewWillBeginZooming:zoomableView withView:zoomableView.subviews.firstObject];
         [UIView animateWithDuration:0.3 animations:^{
-            zoomableView.zoomScale = zoomableView.zoomScale > 1.0f ? 1.0f : 5.0f;
+            if (newScale > 1.0f) {
+                CGPoint tapPoint = [tapGestureRecognizer locationInView:tapGestureRecognizer.view];
+                tapPoint = [imageView convertPoint:tapPoint fromView:tapGestureRecognizer.view];
+                CGRect zoomRect = CGRectZero;
+                zoomRect.size.width = imageView.frame.size.width / newScale;
+                zoomRect.size.height = imageView.frame.size.height / newScale;
+                zoomRect.origin.x = tapPoint.x - zoomRect.size.width / 2;
+                zoomRect.origin.y = tapPoint.y - zoomRect.size.height / 2;
+                [zoomableView zoomToRect:zoomRect animated:NO];
+            } else {
+                zoomableView.zoomScale = newScale;
+            }
+            [self correctOriginForView:imageView scaledAt:newScale];
         } completion:^(BOOL finished) {
-            [self scrollViewDidEndZooming:zoomableView withView:zoomableView.subviews.firstObject atScale:zoomableView.zoomScale];
+            if (node.name.mnz_isVideoPathExtension && newScale == 1.0f) {
+                zoomableView.subviews.lastObject.hidden = NO;
+            }
         }];
     }
 }
@@ -566,7 +664,7 @@
     if (CGRectIsEmpty(self.originFrame)) {
         return nil;
     } else {
-        return [[MEGAPhotoBrowserAnimator alloc] initWithMode:MEGAPhotoBrowserAnimatorModePresent originFrame:self.originFrame];
+        return [[MEGAPhotoBrowserAnimator alloc] initWithMode:MEGAPhotoBrowserAnimatorModePresent originFrame:self.originFrame targetImageView:self.targetImageView];
     }
 }
 
@@ -574,7 +672,7 @@
     if (CGRectIsEmpty(self.originFrame)) {
         return nil;
     } else {
-        return [[MEGAPhotoBrowserAnimator alloc] initWithMode:MEGAPhotoBrowserAnimatorModeDismiss originFrame:self.originFrame];
+        return [[MEGAPhotoBrowserAnimator alloc] initWithMode:MEGAPhotoBrowserAnimatorModeDismiss originFrame:self.originFrame targetImageView:self.targetImageView];
     }
 }
 
@@ -691,7 +789,12 @@
 #pragma mark - NodeInfoViewControllerDelegate
 
 - (void)presentParentNode:(MEGANode *)node {
+    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
+    self.targetImageView = zoomableView.subviews.firstObject;
+    [self toggleTransparentInterfaceForDismissal:YES];
+
     [self dismissViewControllerAnimated:YES completion:^{
+        [self.delegate photoBrowser:self willDismissWithNode:node];
         UIViewController *visibleViewController = [UIApplication mnz_visibleViewController];
         if ([visibleViewController isKindOfClass:MainTabBarController.class]) {
             NSArray *parentTreeArray = node.mnz_parentTreeArray;

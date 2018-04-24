@@ -7,9 +7,11 @@
 #import "UIImageView+MNZCategory.h"
 
 #import "ChatRoomsViewController.h"
+#import "ContactsViewController.h"
 #import "GroupChatDetailsViewTableViewCell.h"
 
 #import "MEGAInviteContactRequestDelegate.h"
+#import "MEGANavigationController.h"
 #import "MEGASdkManager.h"
 #import "MEGAGlobalDelegate.h"
 
@@ -23,8 +25,12 @@
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
 
+@property (strong, nonatomic) IBOutlet UIView *emptyHeaderView;
 @property (strong, nonatomic) IBOutlet UIView *participantsHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *participantsHeaderViewLabel;
+
+@property (strong, nonatomic) IBOutlet UIView *actionsSectionEmptyFooterView;
+@property (strong, nonatomic) IBOutlet UIView *sharedFoldersEmptyFooterView;
 
 @property (strong, nonatomic) NSMutableArray *participantsMutableArray;
 
@@ -44,6 +50,10 @@
     self.navigationItem.title = AMLocalizedString(@"groupInfo", @"Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group");
     
     self.nameLabel.text = self.chatRoom.title;
+    
+    self.emptyHeaderView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyHeaderView" owner:self options:nil] firstObject];
+    self.actionsSectionEmptyFooterView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyFooterView" owner:self options:nil] firstObject];
+    self.sharedFoldersEmptyFooterView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyFooterView" owner:self options:nil] firstObject];
     
     CGSize avatarSize = self.avatarImageView.frame.size;
     UIImage *avatarImage = [UIImage imageForName:self.chatRoom.title.uppercaseString size:avatarSize backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(avatarSize.width/2.0f)]];
@@ -70,7 +80,7 @@
     if (self.openChatRoom) {
         [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
     } else {
-        [[MEGASdkManager sharedMEGAChatSdk] removeChatRoomDelegate:self];
+        [[MEGASdkManager sharedMEGAChatSdk] removeChatRoomDelegate:self.chatRoom.chatId delegate:self];
     }
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
@@ -151,6 +161,30 @@
     return sendParticipantContactRequest;
 }
 
+- (void)addParticipant {
+    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
+    ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
+    contactsVC.contactsMode = ContactsModeChatAddParticipant;
+    NSMutableDictionary *participantsMutableDictionary = [[NSMutableDictionary alloc] init];
+    NSUInteger peerCount = self.chatRoom.peerCount;
+    for (NSUInteger i = 0; i < peerCount; i++) {
+        uint64_t peerHandle = [self.chatRoom peerHandleAtIndex:i];
+        if ([self.chatRoom peerPrivilegeByHandle:peerHandle] > MEGAChatRoomPrivilegeRm) {
+            [participantsMutableDictionary setObject:[NSNumber numberWithUnsignedLongLong:peerHandle] forKey:[NSNumber numberWithUnsignedLongLong:peerHandle]];
+        }
+    }
+    contactsVC.participantsMutableDictionary = participantsMutableDictionary.copy;
+    
+    contactsVC.userSelected = ^void(NSArray *users, NSString *groupName) {
+        for (NSInteger i = 0; i < users.count; i++) {
+            MEGAUser *user = [users objectAtIndex:i];
+            [[MEGASdkManager sharedMEGAChatSdk] inviteToChat:self.chatRoom.chatId user:user.handle privilege:MEGAChatRoomPrivilegeStandard delegate:self];
+        }
+    };
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)backAction:(UIBarButtonItem *)sender {
@@ -198,6 +232,10 @@
         }
     } else if (section == 1) {
         numberOfRows = self.participantsMutableArray.count;
+        
+        if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
+            numberOfRows += 1;
+        }
     }
     
     return numberOfRows;
@@ -212,8 +250,9 @@
             case MEGAChatRoomPrivilegeRo:
             case MEGAChatRoomPrivilegeStandard: {
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsLeaveGroupTypeID" forIndexPath:indexPath];
-                NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]};
-                cell.nameLabel.attributedText = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.") attributes:attributes];
+                cell.nameLabel.text = AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
+                cell.nameLabel.textColor = UIColor.mnz_redF0373A;
+                cell.lineView.hidden = YES;
                 break;
             }
                 
@@ -221,27 +260,27 @@
                 switch (indexPath.row) {
                     case 0: {
                         cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsLeaveGroupTypeID" forIndexPath:indexPath];
-                        NSString *text;
                         if (indexPath.row == 0) {
-                            text = AMLocalizedString(@"renameGroup", @"The title of a menu button which allows users to rename a group chat.");
+                            cell.leftImageView.image = [UIImage imageNamed:@"renameGroup"];
+                            cell.nameLabel.text = AMLocalizedString(@"renameGroup", @"The title of a menu button which allows users to rename a group chat.");
                         } else if (indexPath.row == 2) {
-                            text = AMLocalizedString(@"changeGroupAvatar", @"Title of the action that allows you to change the avatar of a group chat.");
+                            cell.nameLabel.text = AMLocalizedString(@"changeGroupAvatar", @"Title of the action that allows you to change the avatar of a group chat.");
                         }
-                        cell.nameLabel.text = text;
                         break;
                     }
                         
                     case 1:
                     case 2: {
                         cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsLeaveGroupTypeID" forIndexPath:indexPath];
-                        NSString *text;
                         if (indexPath.row == 1) {
-                            text = AMLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.");
+                            cell.leftImageView.image = [UIImage imageNamed:@"clearChatHistory"];
+                            cell.nameLabel.text = AMLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.");
                         } else if (indexPath.row == 2) {
-                            text = AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
+                            cell.leftImageView.image = [UIImage imageNamed:@"leaveGroup"];
+                            cell.nameLabel.text = AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
+                            cell.nameLabel.textColor = UIColor.mnz_redF0373A;
+                            cell.lineView.hidden = YES;
                         }
-                        NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]};
-                        cell.nameLabel.attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
                         break;
                     }
                 }
@@ -249,7 +288,19 @@
             }
         }
     } else if (indexPath.section == 1) {
-        uint64_t handle = [[self.participantsMutableArray objectAtIndex:indexPath.row] unsignedLongLongValue];
+        if ((indexPath.row == 0) && (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator)) {
+            cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsParticipantEmailTypeID" forIndexPath:indexPath];
+            cell.leftImageView = nil;
+            cell.emailLabel.text = AMLocalizedString(@"addParticipant", @"Button label. Allows to add contacts in current chat conversation.");
+            cell.onlineStatusView.backgroundColor = nil;
+            cell.rightImageView.image = nil;
+            
+            return cell;
+        }
+        
+        NSInteger index = (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) ? (indexPath.row - 1) : indexPath.row;
+        
+        uint64_t handle = [[self.participantsMutableArray objectAtIndex:index] unsignedLongLongValue];
         NSString *peerFullname;
         NSString *peerEmail;
         MEGAChatRoomPrivilege privilege;
@@ -261,7 +312,7 @@
         } else {
             peerFullname = [self.chatRoom peerFullnameByHandle:handle];
             peerEmail = [self.chatRoom peerEmailByHandle:handle];
-            privilege = [self.chatRoom peerPrivilegeAtIndex:indexPath.row];
+            privilege = [self.chatRoom peerPrivilegeAtIndex:index];
         }
         BOOL isNameEmpty = [[peerFullname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
         if (isNameEmpty) {
@@ -298,12 +349,20 @@
                 break;
         }
         cell.rightImageView.image = permissionsImage;
+        
+        if ((self.participantsMutableArray.count - 1) == index) {
+            cell.lineView.hidden = YES;
+        }
     }
     
     return cell;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return self.emptyHeaderView;
+    }
+    
     if (section == 1) {
         self.participantsHeaderViewLabel.text = [AMLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat") uppercaseString];
         return self.participantsHeaderView;
@@ -312,16 +371,54 @@
     return nil;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    CGFloat heightForHeader = 0.0f;
-    if (section == 1) {
-        heightForHeader = 23.0f;
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    if (section == 0) {
+        return self.actionsSectionEmptyFooterView;
     }
     
-    return heightForHeader;
+    if (section == 1) {
+        return self.sharedFoldersEmptyFooterView;
+    }
+    
+    return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return 48.0f;
+    }
+    
+    if (section == 1) {
+        return 24.0f;
+    }
+    
+    return 0.0f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 24.0f;
 }
 
 #pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat heightForRow;
+    switch (indexPath.section) {
+        case 0:
+            heightForRow = 44.0f;
+            break;
+            
+        case 1:
+            heightForRow = 60.0f;
+            break;
+            
+        default:
+            heightForRow = 0.0f;
+            break;
+    }
+    
+    return heightForRow;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
@@ -375,8 +472,16 @@
                 break;
         }
     } else if (indexPath.section == 1) {
-        if (indexPath.row != (self.participantsMutableArray.count - 1)) {
-            uint64_t userHandle = [[self.participantsMutableArray objectAtIndex:indexPath.row] unsignedLongLongValue];
+        if ((indexPath.row == 0) && (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator)) {
+            [self addParticipant];
+            [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+            return;
+        }
+        
+        NSInteger index = (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) ? (indexPath.row - 1) : indexPath.row;
+        
+        if (index != (self.participantsMutableArray.count - 1)) {
+            uint64_t userHandle = [[self.participantsMutableArray objectAtIndex:index] unsignedLongLongValue];
 
             UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
             UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil];
@@ -455,8 +560,6 @@
     }
 }
 
-
-
 - (void)onChatRoomUpdate:(MEGAChatSdk *)api chat:(MEGAChatRoom *)chat {
     MEGALogInfo(@"onChatRoomUpdate %@", chat);
     self.chatRoom = chat;
@@ -467,7 +570,7 @@
         case MEGAChatRoomChangeTypeUnreadCount:
             break;
             
-        case MEGAChatRoomChangeTypeParticipans:            
+        case MEGAChatRoomChangeTypeParticipants:            
             [self setParticipants];
             [self.tableView reloadData];
             break;
@@ -481,6 +584,10 @@
             
         case MEGAChatRoomChangeTypeClosed:
             [self.navigationController popToRootViewControllerAnimated:YES];
+            break;
+            
+        case MEGAChatRoomChangeTypeOwnPriv:
+        case MEGAChatRoomChangeTypeUserStopTyping:
             break;
             
         default:

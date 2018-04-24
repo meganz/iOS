@@ -15,7 +15,6 @@
 #import "DevicePermissionsHelper.h"
 #import "DisplayMode.h"
 #import "MainTabBarController.h"
-#import "MEGAAssetsPickerController.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGACopyRequestDelegate.h"
@@ -57,8 +56,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 @property (nonatomic, assign) BOOL isFirstLoad;
 
 @property (nonatomic, strong) NSTimer *sendTypingTimer;
-@property (nonatomic, strong) NSTimer *receiveTypingTimer;
-@property (nonatomic, strong) NSString *peerTyping;
+@property (strong, nonatomic) NSMutableArray<NSString *> *whoIsTypingMutableArray;
+@property (strong, nonatomic) NSMutableDictionary<NSString *, NSTimer *> *whoIsTypingTimersMutableDictionary;
 
 @property (nonatomic, strong) UIBarButtonItem *unreadBarButtonItem;
 @property (nonatomic, strong) UILabel *unreadLabel;
@@ -216,6 +215,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     UITapGestureRecognizer *jumpButtonTap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                     action:@selector(jumpToBottomPressed:)];
     [self.jumpToBottomView addGestureRecognizer:jumpButtonTap];
+    
+    _whoIsTypingMutableArray = [[NSMutableArray alloc] init];
+    _whoIsTypingTimersMutableDictionary = [[NSMutableDictionary alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -230,6 +232,12 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self updateUnreadLabel];
     
     self.inputToolbar.contentView.textView.text = [[MEGAStore shareInstance] fetchChatDraftWithChatId:self.chatRoom.chatId].text;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self showOrHideJumpToBottom];
 }
 
 - (void)willEnterForeground {
@@ -326,10 +334,13 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                     chatRoomState = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
                 }
             } else {
-                chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
-                self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+                if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
+                    chatRoomState = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
+                } else {
+                    chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+                    self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+                }
             }
-            
             break;
     }
     
@@ -364,8 +375,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         _audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audioCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
         self.videoCallBarButtonItem.tag = 1;
         self.navigationItem.rightBarButtonItems = @[self.videoCallBarButtonItem, self.audioCallBarButtonItem];
-        self.videoCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
-        self.audioCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
+        self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard) && [MEGAReachabilityManager isReachable]);
     }
 }
 
@@ -398,6 +408,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     callVC.chatRoom = self.chatRoom;
     callVC.videoCall = videoCall;
     callVC.callType = CallTypeOutgoing;
+    callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+
     if (@available(iOS 10.0, *)) {
         callVC.megaCallManager = [(MainTabBarController *)self.navigationController.tabBarController megaCallManager];
     }
@@ -433,7 +445,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             message.chatRoom = self.chatRoom;
             [self.messages addObject:message];
             [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];
-            [self finishSendingMessageAnimated:YES];
+            [self updateUnreadMessagesLabel:0];
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self finishSendingMessageAnimated:YES];
+            });
         }
     };
     
@@ -617,8 +633,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     self.openMessageHeaderView.authenticityLabel.attributedText = authenticityAttributedString;
 }
 
-- (void)hideTypingIndicator {
-    self.showTypingIndicator = NO;
+- (void)userTypingTimerFireMethod:(NSTimer *)timer {
+    [self removeEmailFromTypingIndicator:timer.userInfo];
 }
 
 - (void)doNothing {}
@@ -732,12 +748,12 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self.messages removeAllObjects];
     [self.messages addObject:message];
     [self.collectionView reloadData];
+    [self updateUnreadMessagesLabel:0];
     [self.nodesLoaded removeAllObjects];
 }
 
 - (void)internetConnectionChanged {
-    self.videoCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
-    self.audioCallBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
+    self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard) && [MEGAReachabilityManager isReachable]);
     
     [self customNavigationBarLabel];
 
@@ -786,6 +802,89 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self hideJumpToBottom];
 }
 
+- (void)setTypingIndicator {
+    self.showTypingIndicator = self.whoIsTypingMutableArray.count;
+    switch (self.whoIsTypingMutableArray.count) {
+        case 0:
+            self.footerView.typingLabel.text = @"";
+            break;
+            
+        case 1: {
+            NSString *firstUserEmail = [self.whoIsTypingMutableArray objectAtIndex:0];
+            NSString *firstUserName =  [self peerFirstNameForEmail:firstUserEmail];
+            
+            self.footerView.typingLabel.text = [NSString stringWithFormat:AMLocalizedString(@"isTyping", @"A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime."), (firstUserName.length ? firstUserName : firstUserEmail)];
+            break;
+        }
+            
+        case 2: {
+            self.footerView.typingLabel.text = [self twoOrMoreUsersAreTypingString];
+            break;
+        }
+            
+        default: {
+            if (self.whoIsTypingMutableArray.count > 2) {
+                self.footerView.typingLabel.text = [self twoOrMoreUsersAreTypingString];
+            } else {
+                self.footerView.typingLabel.text = @"";
+            }
+            break;
+        }
+    }
+}
+
+- (NSString *)peerFirstNameForEmail:(NSString *)email {
+    uint64_t userHandle = [[MEGASdkManager sharedMEGAChatSdk] userHandleByEmail:email];
+    return [self.chatRoom peerFirstnameByHandle:userHandle];
+}
+
+- (NSString *)twoOrMoreUsersAreTypingString {
+    NSString *firstUserEmail = [self.whoIsTypingMutableArray objectAtIndex:0];
+    NSString *secondUserEmail = [self.whoIsTypingMutableArray objectAtIndex:1];
+    
+    NSString *firstUserFirstName = [self peerFirstNameForEmail:firstUserEmail];
+    NSString *whoIsTypingString = firstUserFirstName.length ? firstUserFirstName : firstUserEmail;
+    
+    NSString *secondUserFirstName = [self peerFirstNameForEmail:secondUserEmail];
+    whoIsTypingString = [whoIsTypingString stringByAppendingString:[NSString stringWithFormat:@", %@", (secondUserFirstName.length ? secondUserFirstName : secondUserEmail)]];
+    
+    NSString *twoOrMoreUsersAreTypingString;
+    if (self.whoIsTypingMutableArray.count == 2) {
+        twoOrMoreUsersAreTypingString = [AMLocalizedString(@"twoUsersAreTyping", @"Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders.") mnz_removeWebclientFormatters];
+    } else if (self.whoIsTypingMutableArray.count > 2) {
+        twoOrMoreUsersAreTypingString = [AMLocalizedString(@"moreThanTwoUsersAreTyping", @"text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders.") mnz_removeWebclientFormatters];
+    }
+    
+    return [twoOrMoreUsersAreTypingString stringByReplacingOccurrencesOfString:@"%1$s" withString:whoIsTypingString];
+}
+
+- (void)removeEmailFromTypingIndicator:(NSString *)email {
+    [self.whoIsTypingMutableArray removeObject:email];
+    [self.whoIsTypingTimersMutableDictionary removeObjectForKey:email];
+    
+    [self setTypingIndicator];
+}
+
+- (NSIndexPath *)indexPathForCellWithUnreadMessagesLabel {
+    return [NSIndexPath indexPathForItem:(self.messages.count - self.unreadMessages) inSection:0];
+}
+
+- (void)updateUnreadMessagesLabel:(NSUInteger)unreads {
+    if (!self.unreadMessages) {
+        return;
+    }
+    
+    NSIndexPath *unreadMessagesIndexPath;
+    if (unreads == 0) {
+        unreadMessagesIndexPath = [self indexPathForCellWithUnreadMessagesLabel];
+        self.unreadMessages = unreads;
+    } else {
+        self.unreadMessages = unreads;
+        unreadMessagesIndexPath = [self indexPathForCellWithUnreadMessagesLabel];
+    }
+    [self.collectionView reloadItemsAtIndexPaths:@[unreadMessagesIndexPath]];
+}
+
 #pragma mark - Gesture recognizer
 
 - (void)hideInputToolbar {
@@ -822,7 +921,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         if ([self.editMessage.content isEqualToString:self.inputToolbar.contentView.textView.text]) {
             //If the user didn't change anything on the message that was editing, just go out of edit mode.
         } else {
-            message = [[MEGASdkManager sharedMEGAChatSdk] editMessageForChat:self.chatRoom.chatId messageId:self.editMessage.messageId message:text];
+            uint64_t messageId = (self.editMessage.status == MEGAChatMessageStatusSending) ? self.editMessage.temporalId : self.editMessage.messageId;
+            message = [[MEGASdkManager sharedMEGAChatSdk] editMessageForChat:self.chatRoom.chatId messageId:messageId message:text];
             message.chatRoom = self.chatRoom;
             NSUInteger index = [self.messages indexOfObject:self.editMessage];
             if (index != NSNotFound) {
@@ -836,12 +936,19 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         message = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:text];
         message.chatRoom = self.chatRoom;
         [self.messages addObject:message];
-        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];        
+        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];
+        [self updateUnreadMessagesLabel:0];
     }
     
     MEGALogInfo(@"didPressSendButton %@", message);
     
-    [self finishSendingMessageAnimated:YES];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self finishSendingMessageAnimated:YES];
+    });
+
+    [[MEGASdkManager sharedMEGAChatSdk] sendStopTypingNotificationForChat:self.chatRoom.chatId];
+
+    [self hideJumpToBottom];
 }
 
 - (void)messagesInputToolbar:(MEGAInputToolbar *)toolbar didPressSendButton:(UIButton *)sender toAttachAssets:(NSArray<PHAsset *> *)assets {
@@ -958,6 +1065,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     }
 }
 
+- (void)scrollToBottomAnimated:(BOOL)animated {
+    [super scrollToBottomAnimated:animated];
+    [self hideJumpToBottom];
+}
+
 - (void)didEndAnimatingAfterButton:(UIButton *)sender {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self scrollToBottomAnimated:YES];
@@ -965,10 +1077,23 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)jsq_setCollectionViewInsetsTopValue:(CGFloat)top bottomValue:(CGFloat)bottom {
+    CGRect bounds = self.collectionView.bounds;
+    CGFloat increment = bottom - self.collectionView.contentInset.bottom;
+    
     UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, bottom, 0.0f);
     self.collectionView.contentInset = insets;
     self.collectionView.scrollIndicatorInsets = insets;
     self.jumpToBottomConstraint.constant = bottom + 27.0f;
+
+    if (increment > 0) {
+        bounds.origin.y += increment;
+        bounds.size.height -= bottom;
+        [self.collectionView scrollRectToVisible:bounds animated:NO];
+    }
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self showOrHideJumpToBottom];
+    });
 }
 
 #pragma mark - JSQMessages CollectionView DataSource
@@ -1032,6 +1157,15 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         }
     }
     return [self.avatarImageFactory avatarImageWithImage:avatar];
+}
+
+- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForUnreadMessagesLabelAtIndexPath:(NSIndexPath *)indexPath {
+    NSIndexPath *unreadMessagesIndexPath = [self indexPathForCellWithUnreadMessagesLabel];
+    if (self.unreadMessages && indexPath.section == unreadMessagesIndexPath.section && indexPath.item == unreadMessagesIndexPath.item) {
+        NSString *formatString = self.unreadMessages == 1 ? AMLocalizedString(@"unreadMessage", @"Label in chat rooms that indicates how many messages are unread. Singular and as short as possible.") : AMLocalizedString(@"unreadMessages", @"Label in chat rooms that indicates how many messages are unread. Plural and as short as possible.");
+        return [[NSAttributedString alloc] initWithString:[[NSString stringWithFormat:formatString, (unsigned long)self.unreadMessages] uppercaseString]];
+    }
+    return nil;
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
@@ -1164,13 +1298,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 #pragma mark - Typing indicator
 
 - (MEGAMessagesTypingIndicatorFoorterView *)dequeueTypingIndicatorFooterViewForIndexPath:(NSIndexPath *)indexPath {
-    
     self.footerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter
                                                                                                  withReuseIdentifier:[MEGAMessagesTypingIndicatorFoorterView footerReuseIdentifier]
                                                                                                         forIndexPath:indexPath];
-    self.footerView.typingLabel.font = [UIFont mnz_SFUIMediumWithSize:10.0f];
-    self.footerView.typingLabel.textColor = [UIColor mnz_gray999999];
-    self.footerView.typingLabel.text = [NSString stringWithFormat:AMLocalizedString(@"isTyping", nil), self.peerTyping];
+    [self setTypingIndicator];
     
     return self.footerView;
 }
@@ -1183,6 +1314,14 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     [self showOrHideJumpToBottom];
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self hideJumpToBottom];
+}
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+    [self hideJumpToBottom];
 }
 
 #pragma mark - Custom menu items
@@ -1331,6 +1470,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 #pragma mark - JSQMessages collection view flow layout delegate
 
 #pragma mark - Adjusting cell label heights
+
+- (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForUnreadMessagesLabelAtIndexPath:(NSIndexPath *)indexPath {
+    NSIndexPath *unreadMessagesIndexPath = [self indexPathForCellWithUnreadMessagesLabel];
+    return (self.unreadMessages && indexPath.section == unreadMessagesIndexPath.section && indexPath.item == unreadMessagesIndexPath.item) ? 44.0f : 0.0f;
+}
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                    layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
@@ -1509,6 +1653,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     if (textLength > 0 && ![self.sendTypingTimer isValid]) {
         self.sendTypingTimer = [NSTimer scheduledTimerWithTimeInterval:4.0 target:self selector:@selector(doNothing) userInfo:nil repeats:NO];
         [[MEGASdkManager sharedMEGAChatSdk] sendTypingNotificationForChat:self.chatRoom.chatId];
+    } else if (textLength == 0) {
+        [[MEGASdkManager sharedMEGAChatSdk] sendStopTypingNotificationForChat:self.chatRoom.chatId];
     }
 }
 
@@ -1530,14 +1676,22 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         case MEGAChatMessageTypeContact: {
             [self.messages addObject:message];
             [self finishReceivingMessage];
+
+            NSUInteger unreads = [message.senderId isEqualToString:self.senderId] ? 0 : self.unreadMessages + 1;
+            [self updateUnreadMessagesLabel:unreads];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                NSIndexPath *lastCellIndexPath = [NSIndexPath indexPathForItem:([self.collectionView numberOfItemsInSection:0] - 1) inSection:0];
-                if ([[self.collectionView indexPathsForVisibleItems] containsObject:lastCellIndexPath]) {
-                    [self scrollToBottomAnimated:YES];
-                    [self hideJumpToBottom];
+                NSUInteger items = [self.collectionView numberOfItemsInSection:0];
+                NSUInteger visibleItems = [self.collectionView indexPathsForVisibleItems].count;
+                if (items > 1 && visibleItems > 0) {
+                    NSIndexPath *lastCellIndexPath = [NSIndexPath indexPathForItem:(items - 2) inSection:0];
+                    if ([[self.collectionView indexPathsForVisibleItems] containsObject:lastCellIndexPath]) {
+                        [self scrollToBottomAnimated:YES];
+                    } else {
+                        [self showJumpToBottomWithMessage:AMLocalizedString(@"newMessages", @"Label in a button that allows to jump to the latest message")];
+                    }
                 } else {
-                    [self showJumpToBottomWithMessage:AMLocalizedString(@"newMessages", @"Label in a button that allows to jump to the latest message")];
+                    [self scrollToBottomAnimated:YES];
                 }
             });
             
@@ -1641,15 +1795,22 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         switch (message.status) {
             case MEGAChatMessageStatusUnknown:
                 break;
+                
             case MEGAChatMessageStatusSending:
                 break;
+                
             case MEGAChatMessageStatusSendingManual:
                 break;
+                
             case MEGAChatMessageStatusServerReceived: {
                 if (message.type == MEGAChatMessageTypeAttachment) {
                     message.chatRoom = self.chatRoom;
                     [self.messages addObject:message];
                     [self finishReceivingMessage];
+
+                    NSUInteger unreads = [message.senderId isEqualToString:self.senderId] ? 0 : self.unreadMessages + 1;
+                    [self updateUnreadMessagesLabel:unreads];
+                    
                     [self loadNodesFromMessage:message atTheBeginning:YES];
                     if ([[MEGASdkManager sharedMEGAChatSdk] myUserHandle] == message.userHandle) {
                         [self scrollToBottomAnimated:YES];
@@ -1669,12 +1830,26 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                 }
                 break;
             }
-            case MEGAChatMessageStatusServerRejected:
+                
+            case MEGAChatMessageStatusServerRejected: {
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageId == %" PRIu64, message.messageId];
+                NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
+                if (filteredArray.count) {
+                    NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+                
+                    [self.messages removeObjectAtIndex:index];
+                    [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                }
                 break;
+            }
+                
             case MEGAChatMessageStatusDelivered:
                 break;
+                
             case MEGAChatMessageStatusNotSeen:
                 break;
+                
             case MEGAChatMessageStatusSeen:
                 break;
                 
@@ -1718,7 +1893,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             [self updateUnreadLabel];
             break;
             
-        case MEGAChatRoomChangeTypeParticipans: {
+        case MEGAChatRoomChangeTypeParticipants: {
             [self customNavigationBarLabel];
             
             [self.collectionView performBatchUpdates:^{
@@ -1737,28 +1912,24 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             
         case MEGAChatRoomChangeTypeUserTyping: {
             if (chat.userTypingHandle != api.myUserHandle) {
-                self.showTypingIndicator = YES;
                 NSIndexPath *lastCell = [NSIndexPath indexPathForItem:([self.collectionView numberOfItemsInSection:0] - 1) inSection:0];
                 if ([[self.collectionView indexPathsForVisibleItems] containsObject:lastCell]) {
                     [self scrollToBottomAnimated:YES];
                 }
                 
-                if (![self.peerTyping isEqualToString:[chat peerFullnameByHandle:chat.userTypingHandle]]) {
-                    self.peerTyping = [chat peerFullnameByHandle:chat.userTypingHandle];
+                NSString *userTypingEmail = [chat peerEmailByHandle:chat.userTypingHandle];
+                if (![self.whoIsTypingMutableArray containsObject:userTypingEmail]) {
+                    [self.whoIsTypingMutableArray addObject:userTypingEmail];
                 }
                 
-                if (!self.peerTyping.length) {
-                    self.peerTyping = [chat peerEmailByHandle:chat.userTypingHandle];
+                [self setTypingIndicator];
+                
+                NSTimer *userTypingTimer = [self.whoIsTypingTimersMutableDictionary objectForKey:userTypingEmail];
+                if (userTypingTimer) {
+                    [userTypingTimer invalidate];
                 }
-                
-                self.footerView.typingLabel.text = [NSString stringWithFormat:AMLocalizedString(@"isTyping", nil), self.peerTyping];
-                
-                [self.receiveTypingTimer invalidate];
-                self.receiveTypingTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
-                                                                           target:self
-                                                                         selector:@selector(hideTypingIndicator)
-                                                                         userInfo:nil
-                                                                          repeats:YES];
+                userTypingTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(userTypingTimerFireMethod:) userInfo:userTypingEmail repeats:NO];
+                [self.whoIsTypingTimersMutableDictionary setObject:userTypingTimer forKey:userTypingEmail];
             }
             
             break;
@@ -1769,21 +1940,30 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             [self.navigationController popToRootViewControllerAnimated:YES];
             break;
             
+        case MEGAChatRoomChangeTypeUserStopTyping: {
+            if (chat.userTypingHandle != api.myUserHandle) {
+                [self removeEmailFromTypingIndicator:[chat peerEmailByHandle:chat.userTypingHandle]];
+            }
+            break;
+        }
+            
         default:
             break;
     }
 }
 
 - (void)onChatOnlineStatusUpdate:(MEGAChatSdk *)api userHandle:(uint64_t)userHandle status:(MEGAChatStatus)onlineStatus inProgress:(BOOL)inProgress {
-    if (inProgress || userHandle == api.myUserHandle) {
+    if (inProgress || userHandle == api.myUserHandle || self.chatRoom.isGroup) {
         return;
     }
     
-    [self customNavigationBarLabel];
-    
-    if (self.openMessageHeaderView) {
-        self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
-        self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
+    if ([self.chatRoom peerHandleAtIndex:0] == userHandle && onlineStatus != MEGAChatStatusInvalid) {
+        [self customNavigationBarLabel];
+        
+        if (self.openMessageHeaderView) {
+            self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
+            self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
+        }
     }
 }
 

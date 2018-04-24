@@ -295,7 +295,7 @@
 }
 
 - (MegaActionNode *)actionMoveToRubbishBin {
-    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"moveToTheRubbishBin", @"Title for the action that allows you to 'Move to the Rubbish Bin' files or folders") iconName: @"rubbishBin2" andActionType:MegaNodeActionTypeMoveToRubbishBin];
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"moveToTheRubbishBin", @"Title for the action that allows you to 'Move to the Rubbish Bin' files or folders") iconName: @"rubbishBin" andActionType:MegaNodeActionTypeMoveToRubbishBin];
 }
 
 - (MegaActionNode *)actionRemove {

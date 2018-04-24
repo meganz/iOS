@@ -111,14 +111,18 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UITableViewCell *sectionHeader = [self.tableView dequeueReusableCellWithIdentifier:@"nodeInfoHeader"];
     
-    UILabel *titleSection = (UILabel*)[sectionHeader viewWithTag:1];
+    UILabel *titleSection = (UILabel *)[sectionHeader viewWithTag:1];
     switch (section) {
         case 0:
             titleSection.text = AMLocalizedString(@"details", @"Label title header of node details").uppercaseString;
             break;
             
         case 1:
-            titleSection.text = AMLocalizedString(@"sharing", @"Label title header of node sharing").uppercaseString;
+            if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node] == MEGAShareTypeAccessOwner) {
+                titleSection.text = AMLocalizedString(@"sharing", @"Label title header of node sharing").uppercaseString;
+            } else {
+                titleSection.text = [[MEGASdkManager sharedMEGASdk] hasVersionsForNode:self.node] ? AMLocalizedString(@"versions", @"Label title header of node versions").uppercaseString : @"";
+            }
             break;
             
         case 2:
@@ -140,7 +144,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
-            
         case 0:
             switch (indexPath.row) {
                 case 0:
@@ -152,30 +155,37 @@
             }
             break;
             
-        case 1:
-            switch (indexPath.row) {
-                case 0:
-                    if (self.node.isFolder) {
-                        if (self.node.isShared) {
-                            ContactsViewController *contactsVC =  [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
-                            contactsVC.contactsMode = ContactsModeFolderSharedWith;
-                            contactsVC.node = self.node;
-                            [self.navigationController pushViewController:contactsVC animated:YES];
+        case 1: {
+            if ([[MEGASdkManager sharedMEGASdk] hasVersionsForNode:self.node] && [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node] != MEGAShareTypeAccessOwner) {
+                [self showNodeVersions];
+                break;
+            } else {
+                switch (indexPath.row) {
+                    case 0:
+                        if (self.node.isFolder) {
+                            if (self.node.isShared) {
+                                ContactsViewController *contactsVC =  [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
+                                contactsVC.contactsMode = ContactsModeFolderSharedWith;
+                                contactsVC.node = self.node;
+                                [self.navigationController pushViewController:contactsVC animated:YES];
+                            } else {
+                                [self showShareActivityFromSender:self.thumbnailImageView];
+                            }
                         } else {
-                            [self showShareActivityFromSender:self.thumbnailImageView];
+                            [self showManageLinkView];
                         }
-                    } else {
+                        break;
+                        
+                    case 1:
                         [self showManageLinkView];
-                    }
-                    break;
-                    
-                case 1:
-                    [self showManageLinkView];
-                    break;
-                default:
-                    break;
+                        break;
+                        
+                    default:
+                        break;
+                }
             }
             break;
+        }
             
         case 2:
             [self showNodeVersions];
@@ -189,26 +199,26 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger numberOfSections;
+    NSInteger numberOfRows;
     switch (section) {
         case 0:
-            numberOfSections = self.nodeProperties.count;
+            numberOfRows = self.nodeProperties.count;
             break;
             
         case 1:
-            if (self.node.isFolder) {
-                numberOfSections = 2;
+            if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node] == MEGAShareTypeAccessOwner) {
+                numberOfRows = self.node.isFolder ? 2 : 1;
             } else {
-                numberOfSections = 1;
+                numberOfRows = [[MEGASdkManager sharedMEGASdk] hasVersionsForNode:self.node] ? 1 : 0;
             }
             break;
             
         default:
-            numberOfSections = 1;
+            numberOfRows = 1;
             break;
     }
     
-    return numberOfSections;
+    return numberOfRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -216,19 +226,30 @@
         NodePropertyTableViewCell *propertyCell = [self.tableView dequeueReusableCellWithIdentifier:@"nodePropertyCell" forIndexPath:indexPath];
         propertyCell.keyLabel.text = [self.nodeProperties objectAtIndex:indexPath.row].title;
         propertyCell.valueLabel.text = [self.nodeProperties objectAtIndex:indexPath.row].value;
-        if (indexPath.row == 0) {
+        if ([propertyCell.keyLabel.text isEqualToString:AMLocalizedString(@"location", @"Title label of a node property.")]) {
             propertyCell.valueLabel.textColor = UIColor.mnz_green00BFA5;
         }
+        
         return propertyCell;
     } else if (indexPath.section == 1) {
-        if (self.node.isFolder) {
-            if (indexPath.row == 0) {
-                return [self sharedFolderCellForIndexPath:indexPath];
-            } else {
-                return [self linkCellForIndexPath:indexPath];
-            }
+        if ([[MEGASdkManager sharedMEGASdk] hasVersionsForNode:self.node] && ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node] != MEGAShareTypeAccessOwner)) {
+            return [self versionCellForIndexPath:indexPath];
         } else {
-            return [self linkCellForIndexPath:indexPath];
+            switch (indexPath.row) {
+                case 0: {
+                    if (self.node.isFolder) {
+                        return [self sharedFolderCellForIndexPath:indexPath];
+                    } else {
+                        return [self linkCellForIndexPath:indexPath];
+                    }
+                }
+                    
+                case 1:
+                    return [self linkCellForIndexPath:indexPath];
+                    
+                default:
+                    return nil;
+            }
         }
     } else {
         return [self versionCellForIndexPath:indexPath];
@@ -236,7 +257,12 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    NSInteger sections = 2;
+    NSInteger sections = 1;
+    
+    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node] == MEGAShareTypeAccessOwner) {
+        sections++;
+    }
+    
     if ([[MEGASdkManager sharedMEGASdk] hasVersionsForNode:self.node]) {
         sections++;
     }
@@ -276,7 +302,9 @@
 - (NSArray<MegaNodeProperty *> *)nodePropertyCells {
     NSMutableArray<MegaNodeProperty *> *propertiesNode = [NSMutableArray new];
     
-    [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"location", @"Title label of a node property.") value:[NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] parentNodeForNode:self.node].name]]];
+    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node] == MEGAShareTypeAccessOwner) {
+        [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"location", @"Title label of a node property.") value:[NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] parentNodeForNode:self.node].name]]];
+    }
     
     if (self.node.isFile) {
         if (self.node.mnz_numberOfVersions != 0) {
@@ -296,14 +324,6 @@
         } else {
             [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[Helper sizeForNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
         }
-        if (self.node.isShared) {
-            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"type", @"Refers to the type of a file or folder.") value:AMLocalizedString(@"sharedFolder", @"Title of the incoming shared folders of a user in singular.")]];
-        }  else if ([[MEGASdkManager sharedMEGASdk] numberChildrenForParent:self.node] == 0){
-            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"type", @"Refers to the type of a file or folder.") value:AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files")]];
-        } else {
-            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"type", @"Refers to the type of a file or folder.") value:AMLocalizedString(@"folder", nil)]];
-        }
-        
         [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"contains", @"Label for what a selection contains.") value:[Helper filesAndFoldersInFolderNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
     }
     
@@ -324,6 +344,7 @@
 - (NodeTappablePropertyTableViewCell *)sharedFolderCellForIndexPath:(NSIndexPath *)indexPath {
     NodeTappablePropertyTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeTappablePropertyCell" forIndexPath:indexPath];
     cell.iconImageView.image = [UIImage imageNamed:@"share"];
+    cell.iconImageView.tintColor = UIColor.mnz_redD90007;
     if (self.node.isShared) {
         cell.titleLabel.text = AMLocalizedString(@"sharedWidth", @"Label title indicating the number of users having a node shared");
         NSString *usersString = [self outSharesForNode:self.node].count > 1 ? AMLocalizedString(@"users", @"used for example when a folder is shared with 2 or more users") : AMLocalizedString(@"user", @"user (singular) label indicating is receiving some info");

@@ -1,10 +1,12 @@
 
 #import "MEGAAVViewController.h"
 
+#import "LTHPasscodeViewController.h"
+
 #import "Helper.h"
-#import "MEGAQLPreviewControllerTransitionAnimator.h"
 #import "MEGANode+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 
 @interface MEGAAVViewController () <AVPlayerViewControllerDelegate, UIViewControllerTransitioningDelegate>
 
@@ -64,6 +66,11 @@
                                              selector:@selector(movieFinishedCallback:)
                                                  name:AVPlayerItemDidPlayToEndTimeNotification
                                                object:self.player.currentItem];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidEnterBackground:)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -71,15 +78,30 @@
     [self.player play];
 }
 
-#pragma mark - Notifications
-
-- (void)movieFinishedCallback:(NSNotification*)aNotification {
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:AVPlayerItemDidPlayToEndTimeNotification
                                                   object:self.player.currentItem];
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationDidEnterBackgroundNotification
+                                                  object:nil];
     
+    [self stopStreaming];
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"] && [LTHPasscodeViewController doesPasscodeExist]) {
+        [[LTHPasscodeViewController sharedUser] showLockScreenOver:[UIApplication mnz_visibleViewController].view
+                                                     withAnimation:YES
+                                                        withLogout:NO
+                                                    andLogoutTitle:nil];
+    }
+}
+
+#pragma mark - Private
+
+- (void)stopStreaming {
     if (self.node) {
         if (![self isFolderLink]) {
             [[MEGASdkManager sharedMEGASdk] httpServerStop];
@@ -89,19 +111,22 @@
     }
 }
 
+#pragma mark - Notifications
+
+- (void)movieFinishedCallback:(NSNotification*)aNotification {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)applicationDidEnterBackground:(NSNotification*)aNotification {
+    if (![NSStringFromClass([UIApplication sharedApplication].windows[0].class) isEqualToString:@"UIWindow"]) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"presentPasscodeLater"];
+    }
+}
+
 #pragma mark - AVPlayerViewControllerDelegate
 
 - (BOOL)playerViewControllerShouldAutomaticallyDismissAtPictureInPictureStart:(AVPlayerViewController *)playerViewController {
     return NO;
-}
-
-#pragma mark - UIViewControllerTransitioningDelegate
-
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
-    if ([presented isKindOfClass:[AVPlayerViewController class]]) {
-        return [[MEGAQLPreviewControllerTransitionAnimator alloc] init];
-    }
-    return nil;
 }
 
 @end
