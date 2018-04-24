@@ -5,5 +5,6 @@ typedef NS_ENUM (NSInteger, DisplayMode) {
     DisplayModeSharedItem,
     DisplayModeNodeInfo,
     DisplayModeNodeVersions,
-    DisplayModeFolderLink
+    DisplayModeFolderLink,
+    DisplayModeFileLink
 };
