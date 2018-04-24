@@ -58,8 +58,14 @@
 "sslUnverified_alertTitle"="Chave SSL do servidor não pode ser verificada. Você pode ter sido afetado por um ataque \"man-in-the-middle\".";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="O conteúdo que você está tentando acessar não está disponível para esta conta. Tente fazer o login com a mesma conta usada no navegador móvel.";
-/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
-"takingLongerThanExpected"="O processo está demorando mais do que o esperado. Por favor, aguarde...";
+/* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
+"takingLongerThanExpected"="The process is taking longer than expected. Please wait.";
+/* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
+"serversAreTooBusy"="Servidores ocupados. Aguarde.";
+/* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
+"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+/* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
+"tooManyRequest"="Too many requests. Please wait.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Por favor, faça login na sua conta.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -185,7 +191,7 @@
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Sem ligação à internet";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="Pasta vazia";
+"emptyFolder"="Pasta Vazia";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Não há arquivos na sua nuvem";
 /* Button title shown in empty views when you can 'Add files' */
@@ -341,7 +347,7 @@
 /* String already exists: 367, but we need to split paragraphs. */
 "copyrightMessagePart1"="O MEGA respeita os direitos autorais de terceiros e exige que os usuários do serviço de nuvem MEGA cumpram as leis de direitos autorais.";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="Você está estritamente proibido de usar o serviço de nuvem MEGA para infringir direitos autorais. Você não pode fazer upload, download, armazenar, compartilhar, exibir, fazer streaming, distribuir, enviar por email, criar um link, transmitir ou disponibilizar quaisquer arquivos, dados ou conteúdos que violem os direitos de autor ou outros direitos de propriedade de qualquer pessoa ou entidade.";
+"copyrightMessagePart2"="Você está estritamente proibido de usar o serviço de nuvem MEGA de infringir direitos autorais. Você não pode fazer upload, download, armazenar, compartilhar, display, streaming, distribuir, enviar por email, criar um link, transmitir ou disponibilizar quaisquer arquivos, dados ou conteúdos que violem os direitos de autor ou outros direitos de propriedade de qualquer pessoa ou entidade.";
 /* button caption text that the user clicks when he agrees */
 "agree"="Concordo";
 /* button caption text that the user clicks when he disagrees */
@@ -451,9 +457,9 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="Tem certeza de que deseja mover [A] arquivos e pastas [B] para o Lixo Bin?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1 arquivo movido para a Lixeira";
+"fileMovedToRubbishBinMessage"="1 arquivo movido para a lixeira";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d arquivos movidos para a Lixeira";
+"filesMovedToRubbishBinMessage"="%d arquivos movidos para a lixeira";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
 "folderMovedToRubbishBinMessage"="1 pasta movida para a lixeira";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
@@ -493,9 +499,9 @@
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "automaticallyBackupYourPhotos"="Faça backup automático das suas fotos para a Nuvem de arquivos";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Habilitar uploads da câmera";
+"enableCameraUploadsButton"="Ativar uploads da câmera";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Transferências da Camera Uploads ativadas";
+"cameraUploadsEnabled"="Camera Uploads ativada";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Uploads da câmera concluidos";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
@@ -743,9 +749,9 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="Você está prestes a remover permanentemente [A] arquivos e pastas [B]. Gostaria de continuar? (Você não pode desfazer esta ação.)";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="1 arquivo removido da MEGA";
+"fileRemovedToRubbishBinMessage"="1 arquivo removido do MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="%d arquivos removidos da MEGA";
+"filesRemovedToRubbishBinMessage"="%d arquivos removidos do MEGA";
 /* Success message shown when 1 folder has been removed from MEGA */
 "folderRemovedToRubbishBinMessage"="1 pasta removida do MEGA";
 /* Success message shown when {1+} folders have been removed from MEGA */
@@ -787,7 +793,7 @@
 /*  */
 "yourPasswordHasBeenReset"="A sua senha foi resetada com sucesso. Por favor, faça login na sua conta agora.";
 /* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Se você tem um backup da sua chave de recuperação, você pode redefinir sua senha, selecionando YES. Nenhum dado será perdido.";
+"forgotPassword_firstParagraph"="Se você tiver um backup da sua chave de recuperação, você pode resetar a sua senha selecionando SIM. Nenhum dado será perdido.";
 /* Second paragraph of the screen when the password has been forgotten */
 "forgotPassword_secondParagraph"="Você ainda pode exportar a sua chave de recuperação agora se você tiver uma sessão MEGA ativa em qualquer outro navegador neste ou em qualquer outro computador. Se você não fizer isso, você não pode mais descriptografar sua conta existente, mas você pode começar um novo com o mesmo endereço de e-mail, selecionando não.";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
@@ -801,7 +807,7 @@
 /* The title of the screen to park an account. */
 "noMasterKey_title"="Oops!";
 /* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Devido ao nosso paradigma de criptografia end-to-end, você não será capaz de acessar seus dados sem sua senha ou um backup de sua chave de recuperação.";
+"noMasterKey_firstParagraph"="Devido ao nosso paradigma de criptografia de ponta a ponta, você não poderá acessar os seus dados sem a sua senha ou um backup da sua chave de recuperação.";
 /* Second paragraph of the screen to park an account */
 "noMasterKey_secondParagraph"="Você pode estacionar sua conta existente e iniciar uma fresca sob o mesmo endereço de e-mail. Os seus dados serão conservados durante pelo menos 60 dias. No caso em que você se lembra a senha da sua conta estacionado, por favor contacte support@mega.nz";
 /* Text of the dialog message to ask for the link to park the account */
@@ -839,7 +845,7 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Sessões finalizadas";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Mudar código de acesso";
+"changePasscodeLabel"="Altere código de acesso";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="Código de acesso simples";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
@@ -1198,6 +1204,10 @@
 "chatNotFound"="Chat não encontrado";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ está digitando ...";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders. */
+"twoUsersAreTyping"="[$%1$s [A]are typing...[/A]]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders. */
+"moreThanTwoUsersAreTyping"="[$%1$s [A]and more are typing...[/A]]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Escreva uma mensagem...";
 /* Information if there are no history messages in current chat conversation */
@@ -1219,7 +1229,7 @@
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Enviar arquivos";
 /* */
-"warning"="Atenção";
+"warning"="Aviso";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Todos os arquivos salvos para uso offline serão excluídos do seu dispositivo. Deseja continuar?";
 /* Title shown when you almost had used your available transfer quota. */
@@ -1261,9 +1271,13 @@
 /* A summary message when a user has attached many files at once into the chat. */
 "uploadedFiles"="Enviou os seguintes arquivos:";
 /* Label in a button that allows to jump to the latest item */
-"jumpToLatest"="Ir para o final";
+"jumpToLatest"="Ir ao mais recente";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Novas mensagens";
+/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
+"unreadMessage"="%lu unread message";
+/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
+"unreadMessages"="%lu unread messages";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="As assinaturas são automaticamente renovadas por períodos iguais, de igual duração e ao mesmo preço que o período inicial escolhido. Você pode anular a renovação automática da sua assinatura MEGA até 24 horas antes DO próximo pagamento da assinatura fazendo-o através da página de configurações da sua conta iTunes. Para gerenciar suas assinaturas basta clicar no ícone da App Store no seu aparelho, entrar com seu ID da Apple na parte inferior da página (se você ainda não o tiver feito) e, em seguida, clicar em Ver ID. Você será levado à página da sua conta onde rolando para baixo pode gerenciar as suas assinaturas. A partir daqui, você pode selecionar sua assinatura MEGA Pro e ver a sua data de renovação programada, escolher um pacote de assinatura diferente ou puxar o botão on-off para fora para desativar a renovação automática da sua assinatura.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1326,7 +1340,7 @@
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Erro desconhecido";
 /* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="Será necessário reiniciar o MEGA depois de modificar o idioma.";
+"languageRestartAlert"="Você precisará reiniciar o MEGA depois de mudar o idioma.";
 /* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
 "languageRestartNotification"="Idioma modificado. Toque para reiniciar.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
@@ -1433,3 +1447,27 @@
 "previousVersions"="Versões anteriores";
 /* Title of section to display information of all current versions of files. */
 "currentVersions"="Versões atuais";
+/* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
+"remindPasswordTitle"="Você lembra da senha da sua conta?";
+/* Text that describes why the user should test his/her password */
+"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+/* Text that describes why the user should test his/her password before logging out */
+"remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
+/* Text next to a toggle that if enabled won't appear again */
+"dontShowAgain"="Don’t show me again";
+/* Label for test password button and titles */
+"testPassword"="Test Password";
+/* Label for recovery key button */
+"backupRecoveryKey"="Exportar chave de recuperação";
+/* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
+"testPasswordText"="Por favor, verifique a sua senha abaixo, para garantir que você se lembra dela. Se você perder a sua senha, perderá o acesso aos seus dados MEGA. [A]Mais informações[/A]";
+/* Title text for the account confirmation. */
+"confirm"="Confirmar";
+/* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
+"passwordAccepted"="Senha correta";
+/* A dialog title to export the Recovery Key for the current user. */
+"exportRecoveryKey"="Exportar chave de recuperação";
+/* Title to confirm that you want to logout */
+"proceedToLogout"="Proceed to logout";
+/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
+"testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";

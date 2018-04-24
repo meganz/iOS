@@ -1,5 +1,5 @@
 /* Button title to cancel something */
-"cancel"="キャンセル";
+"cancel"="キャンセルする";
 /* Button title to accept something */
 "ok"="OK";
 /* */
@@ -58,8 +58,14 @@
 "sslUnverified_alertTitle"="サーバーのSSL鍵が照合できません。中間者攻撃かも知れません。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="アクセスしようとしているコンテンツは、このアカウントでは利用できません。モバイルWebクライアントと同じアカウントでログインしてください。";
-/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
-"takingLongerThanExpected"="プロセスに予想以上時間がかかっています。お待ちください...";
+/* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
+"takingLongerThanExpected"="The process is taking longer than expected. Please wait.";
+/* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
+"serversAreTooBusy"="サーバーがビジーです。少々お待ちください。";
+/* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
+"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+/* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
+"tooManyRequest"="Too many requests. Please wait.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="あなたのアカウントにログインして下さい。";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -185,7 +191,7 @@
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="ネット接続なし";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="空のフォルダ";
+"emptyFolder"="フォルダにファイルなし";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="あなたのクラウドデバイスにはファイルが存在しません。";
 /* Button title shown in empty views when you can 'Add files' */
@@ -233,7 +239,7 @@
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="アップロードなし";
 /* Title of the Cloud Drive section */
-"cloudDrive"="クラウドドライブ";
+"cloudDrive"="クラウド・ドライブ";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="ファイル%dこ";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -259,7 +265,7 @@
 /* Section title of the 'Sort by' */
 "sortTitle"="ソートする";
 /* Button title to 'Save' the selected option */
-"save"="保存する";
+"save"="保存";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="名前（上り）";
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
@@ -273,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="古いものから";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="選択する";
+"choosePhotoVideo"="選ぶ";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="キャプチャ";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
@@ -341,7 +347,7 @@
 /* String already exists: 367, but we need to split paragraphs. */
 "copyrightMessagePart1"="MEGAは他人の著作権を尊重し、MEGAクラウドサービスのユーザーが著作権に関する法律に従うことを義務づけています";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="著作権を侵害するためにMEGAクラウドサービスを利用することは厳しく禁じれています。どんな個人または団体の著作権やその他の所有権をも侵害するようなファイル、データ、またはコンテンツをアップロード、ダウンロード、保存、共有、表示、ストリーム、配布、メール、リンク、送信等するのは許されません。";
+"copyrightMessagePart2"="MEGAクラウドサービスを使用して著作権を侵害することは厳しく禁止されています。あなたは、個人または団体の著作権またはその他の財産権を侵害するファイル、データ、またはコンテンツをアップロード、ダウンロード、保存、共有、表示、ストリーム配信、配布、メールで送信、リンク、送信、またはその他の方法で利用可能にすることはできません。";
 /* button caption text that the user clicks when he agrees */
 "agree"="同意する";
 /* button caption text that the user clicks when he disagrees */
@@ -411,7 +417,7 @@
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
 "moveFilesFoldersMessage"="[A]ファイルと[B]フォルダ移動済み";
 /* List option shown on the details of a file or folder */
-"copy"="コピー";
+"copy"="コピー実行";
 /* Success message shown when you have copied 1 file */
 "copyFileMessage"="ファイル１こコピー完了";
 /* Success message shown when you have copied {1+} files */
@@ -451,9 +457,9 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="[A]ファイルと[B]フォルダをごみ箱に移動してもよろしいですか？　";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="ファイル１つ、ゴミ箱に移動完了！";
+"fileMovedToRubbishBinMessage"="ゴミ箱にファイル１こ、移動しました。";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%dファイルは、ゴミ箱に移動しました。";
+"filesMovedToRubbishBinMessage"="ゴミ箱にファイル%dこ、移動しました。";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
 "folderMovedToRubbishBinMessage"="ゴミ箱にフォルダ１こ、移動しました。";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
@@ -493,9 +499,9 @@
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "automaticallyBackupYourPhotos"="自動的にクラウド・ドライブに写真をバックアップします";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="写真アップロード有効";
+"enableCameraUploadsButton"="カメラアップロードを有効にする";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="写真アップロードできます";
+"cameraUploadsEnabled"="カメラアップロードは有効です";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="カメラアップロードが完了しました";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
@@ -521,7 +527,7 @@
 /* Title of the Contacts section */
 "contactsTitle"="知り合い";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
-"oneFolderShared"="フォルダー1個";
+"oneFolderShared"="フォルダ1こ";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="フォルダ%dこ";
 /* Item menu option to add a contact writting his/her email */
@@ -617,7 +623,7 @@
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="許可";
 /* Permissions given to the user you share your folder with */
-"readOnly"="読み取り専用";
+"readOnly"="読み込みだけ";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="読み取りと書き込み";
 /* Permissions given to the user you share your folder with */
@@ -629,11 +635,11 @@
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="ゴミ箱";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
-"advanced"="高度";
+"advanced"="高度設定";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="セキュリティオプション";
 /* Title of one of the Settings sections where you can see things 'About' the app */
-"about"="について";
+"about"="概要";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="言語";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
@@ -743,9 +749,9 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="[A]ファイルと[B]フォルダを完全に削除しようとしています。続行しますか？（この操作は元に戻すことはできません）。";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="MEGAからファイル１こ、取り除かれました。";
+"fileRemovedToRubbishBinMessage"="MEGAからファイル１こ除去しました";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="ファイル%dこ、MEGAから除外。";
+"filesRemovedToRubbishBinMessage"="MEGAからファイル%dこ、除去しました。";
 /* Success message shown when 1 folder has been removed from MEGA */
 "folderRemovedToRubbishBinMessage"="MEGAからフォルダ１こ、除去しました。";
 /* Success message shown when {1+} folders have been removed from MEGA */
@@ -781,7 +787,7 @@
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey"="リカバリーキー";
 /* An alert title where the user provided the incorrect Recovery Key. */
-"invalidRecoveryKey"="リカバリーキー無効";
+"invalidRecoveryKey"="回復キーが無効です";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="あなたの回復キーは、パスワードのリセットに使用されます。新しいパスワードを入力してください。";
 /*  */
@@ -791,7 +797,7 @@
 /* Second paragraph of the screen when the password has been forgotten */
 "forgotPassword_secondParagraph"="このコンピューターまたは他のコンピュータ上の他のブラウザでアクティブなMEGAセッションがある場合でも、回復キーをエクスポートできます。そうしないと、既存のアカウントを復号することはできなくなりますが、［いいえ］を選択して同じメールアドレスで新しいアカウントを開始することができます。";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="リカバリーキーバックアップがおありですか";
+"doYouHaveABackupOfYourRecoveryKey"="回復キーのバックアップはありますか？　";
 /* Headline when the user chose YES */
 "great"="了解。では…";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
@@ -801,7 +807,7 @@
 /* The title of the screen to park an account. */
 "noMasterKey_title"="おっと";
 /* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="エンドツーエンド暗号化パラダイムにより、パスワードまたは回復キーのバックアップのいずれかがなければ、データにアクセスすることはできません。";
+"noMasterKey_firstParagraph"="当社のエンドツーエンド暗号化パラダイムにより、パスワードまたは回復キーのバックアップのいずれかがなければ、データにアクセスすることはできません。";
 /* Second paragraph of the screen to park an account */
 "noMasterKey_secondParagraph"="既存のアカウントをそのままにしておいて、同じメールアドレスで新しいアカウントを開始することができます。あなたのデータは少なくとも60日間は保持されます。そのままにしておいたアカウントのパスワードを思い出した場合は、support@mega.nzまでご連絡ください。";
 /* Text of the dialog message to ask for the link to park the account */
@@ -839,7 +845,7 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="セッションを閉じました";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="パスコードを変更する";
+"changePasscodeLabel"="パスコードを変更して下さい";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="簡単なパスコード";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
@@ -935,7 +941,7 @@
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="か月";
 /*  */
-"days"="日間";
+"days"="日";
 /* Label to show that an error related with expiration occurs during a SDK operation. */
 "expired"="失効済み";
 /* Title of the button which logs out from your account. */
@@ -1198,6 +1204,10 @@
 "chatNotFound"="チャットなし";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@が入力中です...";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders. */
+"twoUsersAreTyping"="[$%1$s [A]are typing...[/A]]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders. */
+"moreThanTwoUsersAreTyping"="[$%1$s [A]and more are typing...[/A]]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="メッセージを入力...";
 /* Information if there are no history messages in current chat conversation */
@@ -1264,6 +1274,10 @@
 "jumpToLatest"="最新項目にジャンプ";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="新しいメッセージ";
+/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
+"unreadMessage"="%lu unread message";
+/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
+"unreadMessages"="%lu unread messages";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="サブスクリプションは、選択した最初の期間と同じ期間の連続したサブスクリプション期間を対象に、および同じ価格で、自動的に更新されます。あなたのiTunesアカウントの設定ページから、次回のサブスクリプションのお支払い期限が切れる24時間前までに、MEGA PROサブスクリプションの自動更新をオフにすることができます。サブスクリプションを管理するには、携帯端末のApp Storeアイコンをクリックし、ページの下部にあるあなたのApple IDでサインインしてから（まだそのように行っていない場合）、「IDを表示」をクリックします。すると、アカウントのページに移動し、そこで「アプリサブスクリプションの管理]まで下にスクロールします。そこから、MEGA PROのサブスクリプションを選択したり、あなたの予定されている更新日を確認したり、別のサブスクリプションパッケージを選択したり、オン/オフスイッチをオフに切り替えて、サブスクリプションの自動更新を無効にしたりできます。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1280,7 +1294,7 @@
 /* Label to show that an SDK operation has been complete successfully. */
 "No error"="エラーなし";
 /* Label to show that an Internal error occurs during a SDK operation. */
-"Internal error"="エラー発生";
+"Internal error"="内部エラー";
 /* Label to show that an error of Invalid argument occurs during a SDK operation. */
 "Invalid argument"="引数無効";
 /* Label to show that a request error occurs during a SDK operation. */
@@ -1433,3 +1447,27 @@
 "previousVersions"="以前のバージョン";
 /* Title of section to display information of all current versions of files. */
 "currentVersions"="現在のバージョン";
+/* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
+"remindPasswordTitle"="パスワードを覚えていますか？ ";
+/* Text that describes why the user should test his/her password */
+"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+/* Text that describes why the user should test his/her password before logging out */
+"remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
+/* Text next to a toggle that if enabled won't appear again */
+"dontShowAgain"="Don’t show me again";
+/* Label for test password button and titles */
+"testPassword"="Test Password";
+/* Label for recovery key button */
+"backupRecoveryKey"="回復キーをバックアップ";
+/* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
+"testPasswordText"="以下にパスワードを入力し、パスワードを覚えていることを確認してください。パスワードを失った場合、MEGAのデータにアクセスできなくなります。[A]もっと詳しく知る[/A]";
+/* Title text for the account confirmation. */
+"confirm"="確認";
+/* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
+"passwordAccepted"="パスワードが受け入れられました";
+/* A dialog title to export the Recovery Key for the current user. */
+"exportRecoveryKey"="回復キーをエクスポート";
+/* Title to confirm that you want to logout */
+"proceedToLogout"="Proceed to logout";
+/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
+"testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";

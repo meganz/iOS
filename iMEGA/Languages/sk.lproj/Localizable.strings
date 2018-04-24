@@ -7,7 +7,7 @@
 /* */
 "no"="Nie";
 /* */
-"upload"="Upload";
+"upload"="Uploadovať";
 /*  */
 "error"="Chyba";
 /*  */
@@ -58,8 +58,14 @@
 "sslUnverified_alertTitle"="Nebolo možné overiť serverový SSL kľúč. Je možné, že ste pod vplyvom útoku typu man-in-the-middle.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
-/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
-"takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
+/* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
+"takingLongerThanExpected"="The process is taking longer than expected. Please wait.";
+/* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
+"serversAreTooBusy"="Servery sú preťažené. Prosím vyčkajte.";
+/* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
+"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+/* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
+"tooManyRequest"="Too many requests. Please wait.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Prosím prihláste sa do svojho účtu.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -185,7 +191,7 @@
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Žiadne internetové pripojenie";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="Prázdny priečinok";
+"emptyFolder"="Žiadne súbory v priečinku";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Vo vašom Cloudovom úložisku nie sú žiadne súbory";
 /* Button title shown in empty views when you can 'Add files' */
@@ -495,7 +501,7 @@
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Povoliť upload z fotoaparátu";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Nahrávanie z fotoaparátu povolené";
+"cameraUploadsEnabled"="Uploady z fotoaparátu povolené";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Camera uploads complete";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
@@ -629,7 +635,7 @@
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Odpadkový kôš";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
-"advanced"="Pokročilé";
+"advanced"="Rozšírené";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Nastavenia bezpečnosti";
 /* Title of one of the Settings sections where you can see things 'About' the app */
@@ -1198,6 +1204,10 @@
 "chatNotFound"="Chat not found";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ is typing ...";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders. */
+"twoUsersAreTyping"="[$%1$s [A]are typing...[/A]]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders. */
+"moreThanTwoUsersAreTyping"="[$%1$s [A]and more are typing...[/A]]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Napíšte správu...";
 /* Information if there are no history messages in current chat conversation */
@@ -1264,6 +1274,10 @@
 "jumpToLatest"="Jump to latest";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="New messages";
+/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
+"unreadMessage"="%lu unread message";
+/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
+"unreadMessages"="%lu unread messages";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Predplatné sa automaticky obnovuje pre po sebe idúce predplatné obdobia s rovnakou dĺžkou a za rovnakú cenu ako je prvotne zvolená. Automatické predlžovanie predplatného vášho MEGA PRO účtu môžete zmeniť najneskôr 24 hodín predtým ako je splatnosť vášho predplatného cez stránku nastavení vášho iTunes účtu. Pre správu vašich predplatných, jednoducho kliknite na ikonu App store na vašom zariadení, prihláste sa pomocou vášho Apple ID (ak ste tak už neurobili predtým) a kliknite na Zobraziť ID. Budete presmerovaný na stránku vášho účtu kde môžete zoskrolovať nižšie na Správu Predplatených Aplikácií. Tam si môžete zvoliť MEGA PRO predplatné a nechať si zobraziť dátum obnovy, vybrať iný predplatený balíček alebo prepnúť \"Zapnuté/Vypnuté\" pre vypnutie automatického predlžovania predplatného.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1433,3 +1447,27 @@
 "previousVersions"="Previous Versions";
 /* Title of section to display information of all current versions of files. */
 "currentVersions"="Current Versions";
+/* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
+"remindPasswordTitle"="Do you remember your password?";
+/* Text that describes why the user should test his/her password */
+"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+/* Text that describes why the user should test his/her password before logging out */
+"remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
+/* Text next to a toggle that if enabled won't appear again */
+"dontShowAgain"="Don’t show me again";
+/* Label for test password button and titles */
+"testPassword"="Test Password";
+/* Label for recovery key button */
+"backupRecoveryKey"="Zálohovať kľúč pre obnovu";
+/* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
+"testPasswordText"="Please test your password below to ensure you remember it. If you lose your password, you will lose access to your MEGA data. [A]Learn more[/A]";
+/* Title text for the account confirmation. */
+"confirm"="Potvrdiť";
+/* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
+"passwordAccepted"="Password accepted";
+/* A dialog title to export the Recovery Key for the current user. */
+"exportRecoveryKey"="Exportovať kľúč pre obnovu";
+/* Title to confirm that you want to logout */
+"proceedToLogout"="Proceed to logout";
+/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
+"testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
