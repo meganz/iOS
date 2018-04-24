@@ -1,4 +1,7 @@
+
 #import "MainTabBarController.h"
+
+#import <UserNotifications/UserNotifications.h>
 
 #import "CallViewController.h"
 #import "MEGAProviderDelegate.h"
@@ -7,8 +10,6 @@
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "DevicePermissionsHelper.h"
-
-#import <UserNotifications/UserNotifications.h>
 
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate, MEGAChatCallDelegate>
 
@@ -89,7 +90,7 @@
     [super viewWillAppear:animated];
     
     if (@available(iOS 10.0, *)) {} else {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentCallViewControllerIfThereAreAnIncomingCall) name:UIApplicationDidBecomeActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentCallViewControllerIfThereIsAnIncomingCall) name:UIApplicationDidBecomeActiveNotification object:nil];
     }
 }
     
@@ -180,13 +181,12 @@
                 [self.currentNotifications addObject:localNotification];
                 [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
             }
-
         }
     }
 }
 
 
-- (void)presentCallViewControllerIfThereAreAnIncomingCall {
+- (void)presentCallViewControllerIfThereIsAnIncomingCall {
     NSArray *callsKeys = [self.missedCallsDictionary allKeys];
     if (callsKeys.count > 0) {
         MEGAChatCall *call = [self.missedCallsDictionary objectForKey:[callsKeys objectAtIndex:0]];
@@ -360,7 +360,7 @@
             if (@available(iOS 10.0, *)) {
                 [self.megaCallManager endCall:call];
             }
-                
+            
             break;
             
         default:

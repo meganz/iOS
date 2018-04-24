@@ -6,8 +6,10 @@
 #import "MEGAContactLinkCreateRequestDelegate.h"
 #import "OfflineTableViewController.h"
 #import "MEGANavigationController.h"
+#import "MEGAPurchase.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MyAccountHallTableViewCell.h"
 #import "MyAccountViewController.h"
@@ -17,7 +19,7 @@
 #import "UpgradeTableViewController.h"
 #import "UsageViewController.h"
 
-@interface MyAccountHallViewController () <UITableViewDataSource, UITableViewDelegate, MEGAGlobalDelegate, MEGARequestDelegate>
+@interface MyAccountHallViewController () <UITableViewDataSource, UITableViewDelegate, MEGAPurchasePricingDelegate, MEGAGlobalDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *buyPROBarButtonItem;
 
@@ -69,6 +71,8 @@
         self.avatarImageView.layer.cornerRadius = 40.0f;
     }];
     [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:NO delegate:delegate];
+
+    [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -78,6 +82,7 @@
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
     [self reloadUI];
+    self.buyPROBarButtonItem.enabled = [MEGAPurchase sharedInstance].products.count;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -127,10 +132,14 @@
 #pragma mark - IBActions
 
 - (IBAction)buyPROTouchUpInside:(UIBarButtonItem *)sender {
-    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
-    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-    
-    [self presentViewController:navigationController animated:YES completion:nil];
+    if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
+        UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+        
+        [self presentViewController:navigationController animated:YES completion:nil];
+    } else {
+         [MEGAReachabilityManager isReachableHUDIfNot];
+    }
 }
 
 - (IBAction)viewAndEditProfileTouchUpInside:(UIButton *)sender {
@@ -300,6 +309,12 @@
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - MEGAPurchasePricingDelegate
+
+- (void)pricingsReady {
+    self.buyPROBarButtonItem.enabled = YES;
 }
 
 #pragma mark - MEGAGlobalDelegate

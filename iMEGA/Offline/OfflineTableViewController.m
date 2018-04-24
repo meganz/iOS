@@ -8,7 +8,7 @@
 #import "NSString+MNZCategory.h"
 #import "MEGANavigationController.h"
 #import "MEGASdkManager.h"
-#import "MEGAQLPreviewController.h"
+#import "PreviewDocumentViewController.h"
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
 #import "OfflineTableViewCell.h"
@@ -163,6 +163,22 @@ static NSString *kisDirectory = @"kisDirectory";
             self.previewingContext = nil;
         }
     }
+}
+
+- (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super willTransitionToTraitCollection:newCollection withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:nil completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        if (UIDevice.currentDevice.iPhone4X || UIDevice.currentDevice.iPhone5X) {
+            CGRect frame = [UIApplication sharedApplication].keyWindow.rootViewController.view.frame;
+            if (frame.size.width > frame.size.height) {
+                CGFloat oldWidth = frame.size.width;
+                frame.size.width = frame.size.height;
+                frame.size.height = oldWidth;
+                [UIApplication sharedApplication].keyWindow.rootViewController.view.frame = frame;
+            }
+        }
+    }];
 }
 
 #pragma mark - Private
@@ -635,12 +651,11 @@ static NSString *kisDirectory = @"kisDirectory";
         MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
         [self presentViewController:megaAVViewController animated:YES completion:nil];
     } else {
-        MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithArrayOfFiles:self.offlineFiles];
-        
-        NSInteger selectedIndexFile = [[[self itemAtIndexPath:indexPath] objectForKey:kIndex] integerValue];
-        
-        [previewController setCurrentPreviewItemIndex:selectedIndexFile];
-        [self presentViewController:previewController animated:YES completion:nil];
+        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+        PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
+        previewController.filesPathsArray = self.offlineFiles;
+        previewController.nodeFileIndex = [[[self itemAtIndexPath:indexPath] objectForKey:kIndex] integerValue];
+        [self presentViewController:navigationController animated:YES completion:nil];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }
@@ -828,12 +843,14 @@ static NSString *kisDirectory = @"kisDirectory";
     [sortByAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
     [moreAlertController addAction:sortByAlertAction];
     
-    UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self editTapped:self.editButtonItem];
-    }];
-    [selectAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
-    [moreAlertController addAction:selectAlertAction];
-    
+    if (self.offlineSortedItems.count) {
+        UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self editTapped:self.editButtonItem];
+        }];
+        [selectAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+        [moreAlertController addAction:selectAlertAction];
+    }
+
     if ([[UIDevice currentDevice] iPadDevice]) {
         moreAlertController.modalPresentationStyle = UIModalPresentationPopover;
         moreAlertController.popoverPresentationController.barButtonItem = self.moreBarButtonItem;
@@ -929,14 +946,14 @@ static NSString *kisDirectory = @"kisDirectory";
         MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
         return megaAVViewController;
     } else {
-        MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithArrayOfFiles:self.offlineFiles];
-        
-        NSInteger selectedIndexFile = [[[self.offlineSortedItems objectAtIndex:indexPath.row] objectForKey:kIndex] integerValue];
-        previewController.currentPreviewItemIndex = selectedIndexFile;
+        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+        PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
+        previewController.filesPathsArray = self.offlineFiles;
+        previewController.nodeFileIndex = [[[self itemAtIndexPath:indexPath] objectForKey:kIndex] integerValue];
         
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
         
-        return previewController;
+        return navigationController;
     }
     
     return nil;

@@ -5,19 +5,22 @@
 #import "Helper.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGANavigationController.h"
+#import "MEGANode+MNZCategory.h"
 #import "MEGARemoveContactRequestDelegate.h"
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
 
+#import "BrowserViewController.h"
 #import "CloudDriveTableViewController.h"
 #import "ChatRoomsViewController.h"
+#import "CustomActionViewController.h"
 #import "ContactTableViewCell.h"
-#import "DetailsNodeInfoViewController.h"
 #import "DisplayMode.h"
 #import "MessagesViewController.h"
+#import "NodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"
 #import "VerifyCredentialsViewController.h"
 
-@interface ContactDetailsViewController ()
+@interface ContactDetailsViewController () <CustomActionViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
@@ -28,8 +31,12 @@
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
 
+@property (strong, nonatomic) IBOutlet UIView *emptyHeaderView;
 @property (strong, nonatomic) IBOutlet UIView *participantsHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *participantsHeaderViewLabel;
+
+@property (strong, nonatomic) IBOutlet UIView *actionsSectionEmptyFooterView;
+@property (strong, nonatomic) IBOutlet UIView *sharedFoldersEmptyFooterView;
 
 @property (nonatomic, strong) MEGAUser *user;
 @property (nonatomic, strong) MEGANodeList *incomingNodeListForUser;
@@ -53,6 +60,10 @@
     
     self.nameLabel.text = self.userName;
     self.emailLabel.text = self.userEmail;
+    
+    self.emptyHeaderView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyHeaderView" owner:self options:nil] firstObject];
+    self.actionsSectionEmptyFooterView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyFooterView" owner:self options:nil] firstObject];
+    self.sharedFoldersEmptyFooterView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyFooterView" owner:self options:nil] firstObject];
     
     self.incomingNodeListForUser = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
     
@@ -137,19 +148,26 @@
 }
 
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
-    
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     
     MEGANode *node = [self.incomingNodeListForUser nodeAtIndex:indexPath.row];
     
-    DetailsNodeInfoViewController *detailsNodeInfoVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
-    detailsNodeInfoVC.displayMode = DisplayModeSharedItem;
-    detailsNodeInfoVC.userName = self.userName;
-    detailsNodeInfoVC.email = self.userEmail;
-    detailsNodeInfoVC.node = node;
+    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
+    actionController.node = node;
+    actionController.displayMode = DisplayModeSharedItem;
+    actionController.actionDelegate = self;
+    actionController.incomingShareChildView = YES;
+    if ([[UIDevice currentDevice] iPadDevice]) {
+        actionController.modalPresentationStyle = UIModalPresentationPopover;
+        actionController.popoverPresentationController.delegate = actionController;
+        actionController.popoverPresentationController.sourceView = sender;
+        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width / 2, sender.frame.size.height / 2);
+    } else {
+        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    }
     
-    [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
+    [self presentViewController:actionController animated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource
@@ -170,7 +188,12 @@
             numberOfRows = 2;
         } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
             //TODO: When possible, re-add the rows "Notifications", "Close Chat" and "Verify Credentials".
-            numberOfRows = 2;
+            if (self.user.visibility == MEGAUserVisibilityHidden) {
+                numberOfRows = 1;
+            } else {
+                numberOfRows = 2;
+            }
+            
         }
     } else if (section == 1) { //SHARED FOLDERS
         numberOfRows = self.incomingNodeListForUser.size.integerValue;
@@ -191,23 +214,28 @@
                     break;
                     
                 case 1: //Remove Contact
+                    cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
                     cell.nameLabel.text = AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
-                    cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
+                    cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
                     cell.nameLabel.textColor = [UIColor mnz_redF0373A];
+                    cell.lineView.hidden = YES;
                     break;
             }
         } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
             switch (indexPath.row) {
                 case 0: //Clear Chat History
+                    cell.avatarImageView.image = [UIImage imageNamed:@"clearChatHistory"];
                     cell.nameLabel.text = AMLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.");
                     break;
                     
                 case 1: //Remove Contact
+                    cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
                     cell.nameLabel.text = AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
+                    cell.nameLabel.textColor = [UIColor mnz_redF0373A];
+                    cell.lineView.hidden = YES;
                     break;
             }
-            cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
-            cell.nameLabel.textColor = [UIColor mnz_redF0373A];
+            cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
         }
     } else if (indexPath.section == 1) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsSharedFolderTypeID" forIndexPath:indexPath];
@@ -217,6 +245,10 @@
         cell.shareLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
         MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
         cell.permissionsImageView.image = [Helper permissionsButtonImageForShareType:shareType];
+        
+        if ((self.incomingNodeListForUser.size.integerValue - 1) == indexPath.row) {
+            cell.lineView.hidden = YES;
+        }
     }
     
     if (@available(iOS 11.0, *)) {
@@ -227,6 +259,10 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return self.emptyHeaderView;
+    }
+    
     if (section == 1) {
         self.participantsHeaderViewLabel.text = [AMLocalizedString(@"sharedFolders", @"Title of the incoming shared folders of a user.") uppercaseString];
         return self.participantsHeaderView;
@@ -235,16 +271,54 @@
     return nil;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    CGFloat heightForHeader = 0.0f;
-    if (section == 1) {
-        heightForHeader = 23.0f;
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    if (section == 0) {
+        return self.actionsSectionEmptyFooterView;
     }
     
-    return heightForHeader;
+    if (section == 1) {
+        return self.sharedFoldersEmptyFooterView;
+    }
+    
+    return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return 48.0f;
+    }
+    
+    if (section == 1) {
+        return 24.0f;
+    }
+    
+    return 0.0f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 24.0f;
 }
 
 #pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat heightForRow;
+    switch (indexPath.section) {
+        case 0:
+            heightForRow = 44.0f;
+            break;
+            
+        case 1:
+            heightForRow = 60.0f;
+            break;
+            
+        default:
+            heightForRow = 0.0f;
+            break;
+    }
+    
+    return heightForRow;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
@@ -293,6 +367,47 @@
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - CustomActionViewControllerDelegate
+
+- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender {
+    switch (action) {
+        case MegaNodeActionTypeDownload:
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+            [node mnz_downloadNodeOverwriting:NO];
+            break;
+            
+        case MegaNodeActionTypeCopy: {
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+            [self presentViewController:navigationController animated:YES completion:nil];
+            
+            BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+            browserVC.selectedNodesArray = @[node];
+            browserVC.browserAction = BrowserActionCopy;
+            break;
+        }
+            
+        case MegaNodeActionTypeRename:
+            [node mnz_renameNodeInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeFileInfo: {
+            UINavigationController *nodeInfoNavigation = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"NodeInfoNavigationControllerID"];
+            NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
+            nodeInfoVC.node = node;
+            
+            [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
+            break;
+        }
+            
+        case MegaNodeActionTypeLeaveSharing:
+            [node mnz_leaveSharingInViewController:self];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 @end

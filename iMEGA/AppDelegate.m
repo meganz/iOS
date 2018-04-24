@@ -59,6 +59,7 @@
 #import "UnavailableLinkView.h"
 #import "UpgradeTableViewController.h"
 #import "CustomModalAlertViewController.h"
+#import "MEGAShowPasswordReminderRequestDelegate.h"
 
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
@@ -91,7 +92,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     BOOL isOverquota;
     
     BOOL isFirstFetchNodesRequestUpdate;
-    BOOL isFirstAPI_EAGAIN;
     NSTimer *timerAPI_EAGAIN;
 }
 
@@ -169,6 +169,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[MEGASdkManager sharedMEGASdk] httpServerSetMaxBufferSize:[UIDevice currentDevice].maxBufferSize];
     
     [[LTHPasscodeViewController sharedUser] setDelegate:self];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"presentPasscodeLater"];
     
     [self languageCompatibility];
     
@@ -392,6 +393,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [self.window addSubview:self.privacyView];
     
     [self application:application shouldHideWindows:YES];
+    
+    if (![NSStringFromClass([UIApplication sharedApplication].windows[0].class) isEqualToString:@"UIWindow"]) {
+        [[LTHPasscodeViewController sharedUser] disablePasscodeWhenApplicationEntersBackground];
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -400,9 +405,14 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[MEGAReachabilityManager sharedManager] reconnectIfIPHasChanged];
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
     
-    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [[CameraUploads syncManager] isCameraUploadsEnabled]) {        
-        MEGALogInfo(@"Enable Camera Uploads");
-        [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
+        if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+            MEGALogInfo(@"Enable Camera Uploads");
+            [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+        }
+        
+        MEGAShowPasswordReminderRequestDelegate *showPasswordReminderDelegate = [[MEGAShowPasswordReminderRequestDelegate alloc] initToLogout:NO];
+        [[MEGASdkManager sharedMEGASdk] shouldShowPasswordReminderDialogAtLogout:NO delegate:showPasswordReminderDelegate];
     }
     
     [self.privacyView removeFromSuperview];
@@ -420,6 +430,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     if (self.isSignalActivityRequired) {
         [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
+    }
+    
+    if (![NSStringFromClass([UIApplication sharedApplication].windows[0].class) isEqualToString:@"UIWindow"]) {
+        [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
     }
 }
 
@@ -611,8 +625,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:[UIColor whiteColor]];
     
     [[UISearchBar appearance] setTranslucent:NO];
-    [[UISearchBar appearance] setBackgroundColor:[UIColor mnz_grayF1F1F2]];
-    [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:[UIColor mnz_grayF1F1F2]];
+    [[UISearchBar appearance] setBackgroundColor:[UIColor mnz_grayFCFCFC]];
+    [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:[UIColor mnz_grayEEEEEE]];
     
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
     
@@ -1181,7 +1195,39 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)showServersTooBusy {
     if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
         LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
-        launchVC.label.text = AMLocalizedString(@"takingLongerThanExpected", @"Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in");
+        NSString *message;
+        switch ([[MEGASdkManager sharedMEGASdk] waiting]) {
+            case RetryNone:
+                break;
+
+            case RetryConnectivity:
+                message = AMLocalizedString(@"unableToReachMega", @"Message shown when the app is waiting for the server to complete a request due to connectivity issue.");
+                break;
+                
+            case RetryServersBusy:
+                message = AMLocalizedString(@"serversAreTooBusy", @"Message shown when the app is waiting for the server to complete a request due to a HTTP error 500.");
+                break;
+                
+            case RetryApiLock:
+                message = AMLocalizedString(@"takingLongerThanExpected", @"Message shown when the app is waiting for the server to complete a request due to an API lock (error -3).");
+                break;
+                
+            case RetryRateLimit:
+                message = AMLocalizedString(@"tooManyRequest", @"Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4).");
+                break;
+                
+            case RetryLocalLock:
+                break;
+                
+            case RetryUnknown:
+                break;
+                
+            default:
+                break;
+        }
+        launchVC.label.text = message;
+        
+        MEGALogDebug(@"The SDK is waiting to complete a request, reason: %lu", (unsigned long)[[MEGASdkManager sharedMEGASdk] waiting]);
     }
 }
 
@@ -1291,9 +1337,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
                 }
                 
-                [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
-                                                                         withLogout:NO
-                                                                     andLogoutTitle:nil];
+                if (![[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"]) {
+                    [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
+                                                                             withLogout:NO
+                                                                         andLogoutTitle:nil];
+                }
             }
         }
         
@@ -2005,7 +2053,6 @@ void uncaughtExceptionHandler(NSException *exception) {
         case MEGARequestTypeLogin:
         case MEGARequestTypeFetchNodes: {
             if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
-                isFirstAPI_EAGAIN = YES;
                 isFirstFetchNodesRequestUpdate = YES;
                 LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
                 [launchVC.activityIndicatorView setHidden:NO];
@@ -2400,9 +2447,8 @@ void uncaughtExceptionHandler(NSException *exception) {
     switch ([request type]) {
         case MEGARequestTypeLogin:
         case MEGARequestTypeFetchNodes: {
-            if (isFirstAPI_EAGAIN) {
+            if (!timerAPI_EAGAIN.isValid) {
                 [self startTimerAPI_EAGAIN];
-                isFirstAPI_EAGAIN = NO;
             }
             break;
         }
@@ -2514,10 +2560,15 @@ void uncaughtExceptionHandler(NSException *exception) {
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
         customModalAlertVC.completion = ^{
             [weakCustom dismissViewControllerAnimated:YES completion:^{
-                UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
-                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-                
-                [[UIApplication mnz_visibleViewController] presentViewController:navigationController animated:YES completion:nil];
+                if ([MEGAPurchase sharedInstance].products.count > 0) {
+                    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+                    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+                    
+                    [[UIApplication mnz_visibleViewController] presentViewController:navigationController animated:YES completion:nil];
+                } else {
+                    // Redirect to my account if the products are not available
+                    [self.mainTBC setSelectedIndex:4];
+                }
             }];
         };
         
@@ -2569,9 +2620,24 @@ void uncaughtExceptionHandler(NSException *exception) {
         NSArray *appDataComponentsArray = [transfer.appData componentsSeparatedByString:@"="];
         NSString *appDataFirstComponentString = [appDataComponentsArray objectAtIndex:0];
         if ([appDataFirstComponentString isEqualToString:@"attachToChatID"]) {
-            NSString *chatID = [appDataComponentsArray objectAtIndex:1];
-            unsigned long long chatIdUll = strtoull([chatID UTF8String], NULL, 0);
-            [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:transfer.nodeHandle];
+            if (error.type == MEGAErrorTypeApiEExist) {
+                MEGALogInfo(@"Transfer has started with exactly the same data (local path and target parent). File: %@", transfer.fileName);
+                return;
+            }
+            
+            if (appDataComponentsArray.count > 2) {
+                NSArray *multipleAppDataComponentsArray = [transfer.appData componentsSeparatedByString:@"!"];
+                for (NSString *attachToChatID in multipleAppDataComponentsArray) {
+                    NSArray *attachToChatIDComponentsArray = [attachToChatID componentsSeparatedByString:@"="];
+                    NSString *chatID = [attachToChatIDComponentsArray objectAtIndex:1];
+                    unsigned long long chatIdUll = strtoull(chatID.UTF8String, NULL, 0);
+                    [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:transfer.nodeHandle];
+                }
+            } else {
+                NSString *chatID = [appDataComponentsArray objectAtIndex:1];
+                unsigned long long chatIdUll = strtoull(chatID.UTF8String, NULL, 0);
+                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:transfer.nodeHandle];
+            }
         }
     }
     

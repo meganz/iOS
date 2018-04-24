@@ -6,6 +6,7 @@
 @property (nonatomic) MEGAPhotoBrowserAnimatorMode mode;
 @property (nonatomic) CGRect originFrame;
 @property (nonatomic) NSTimeInterval duration;
+@property (nonatomic) UIImageView *targetImageView;
 
 @end
 
@@ -13,11 +14,12 @@
 
 #pragma mark - Initialization
 
-- (instancetype)initWithMode:(MEGAPhotoBrowserAnimatorMode)mode originFrame:(CGRect)originFrame {
+- (instancetype)initWithMode:(MEGAPhotoBrowserAnimatorMode)mode originFrame:(CGRect)originFrame targetImageView:(UIImageView *)targetImageView {
     if (self = [super init]) {
         _mode = mode;
         _originFrame = originFrame;
         _duration = 0.2;
+        _targetImageView = targetImageView;
     }
     return self;
 }
@@ -57,21 +59,21 @@
         }
             
         case MEGAPhotoBrowserAnimatorModeDismiss: {
-            UIView *targetView = [transitionContext viewForKey:UITransitionContextFromViewKey];
-            
-            CGRect finalFrame = targetView.frame;
+            CGRect finalFrame = self.targetImageView.frame;
             CGAffineTransform scaleTransform = [self transformForFrame:finalFrame];
 
-            targetView.transform = CGAffineTransformIdentity;
-            targetView.center = [self centerPointForFrame:finalFrame];
-            targetView.clipsToBounds = YES;
+            self.targetImageView.transform = CGAffineTransformIdentity;
+            self.targetImageView.center = [self centerPointForFrame:finalFrame];
+            self.targetImageView.clipsToBounds = YES;
             
-            [transitionView addSubview:targetView];
+            [transitionView addSubview:self.targetImageView];
             
             [UIView animateWithDuration:self.duration
                              animations:^{
-                                 targetView.transform = scaleTransform;
-                                 targetView.center = originCenterPoint;
+                                 self.targetImageView.transform = scaleTransform;
+                                 self.targetImageView.center = originCenterPoint;
+                                 self.targetImageView.frame = self.originFrame;
+                                 self.targetImageView.contentMode = UIViewContentModeScaleAspectFill;
                              } completion:^(BOOL finished) {
                                  [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
                              }];
@@ -90,11 +92,11 @@
 }
 
 - (CGPoint)originCenterPoint {
-    return CGPointMake(self.originFrame.origin.x + self.originFrame.size.width*0.5, self.originFrame.origin.y + self.originFrame.size.height*0.5);
+    return [self centerPointForFrame:self.originFrame];
 }
 
 - (CGPoint)centerPointForFrame:(CGRect)frame {
-    return CGPointMake(frame.origin.x + frame.size.width*0.5, frame.origin.y + frame.size.height*0.5);
+    return CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame));
 }
 
 @end

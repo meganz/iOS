@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
 @property (nonatomic) QLPreviewController *previewController;
+@property (nonatomic) NSString *nodeFilePath;
 
 @end
 
@@ -22,23 +23,31 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self configureNavigation];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
-    NSError * error = nil;
-    NSString *nodeFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[self.node base64Handle]];
-    NSString *nodeFilePath = [nodeFolderPath stringByAppendingPathComponent:self.node.name];
-    
-    if (![[NSFileManager defaultManager] fileExistsAtPath:nodeFolderPath isDirectory:nil]) {
-        if (![[NSFileManager defaultManager] createDirectoryAtPath:nodeFolderPath withIntermediateDirectories:YES attributes:nil error:&error]) {
-            MEGALogError(@"Create directory at path failed with error: %@", error);
+    if (self.filesPathsArray) {
+        [self loadPreview];
+    } else {
+        NSError * error = nil;
+        NSString *nodeFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[self.node base64Handle]];
+        self.nodeFilePath = [nodeFolderPath stringByAppendingPathComponent:self.node.name];
+        
+        if (![[NSFileManager defaultManager] fileExistsAtPath:nodeFolderPath isDirectory:nil]) {
+            if (![[NSFileManager defaultManager] createDirectoryAtPath:nodeFolderPath withIntermediateDirectories:YES attributes:nil error:&error]) {
+                MEGALogError(@"Create directory at path failed with error: %@", error);
+            }
+        }
+        
+        if (![[NSFileManager defaultManager] fileExistsAtPath:self.nodeFilePath isDirectory:nil]) {
+            [self.api startDownloadNode:self.node localPath:self.nodeFilePath delegate:self];
+        } else if (!self.previewController) {
+            [self loadPreview];
         }
     }
-    
-    if (![[NSFileManager defaultManager] fileExistsAtPath:nodeFilePath isDirectory:nil]) {
-        [self.api startDownloadNode:self.node localPath:nodeFilePath delegate:self];
-    }
-    
-    [self setTitle:self.node.name];
-    [self.imageView setImage:[Helper infoImageForNode:self.node]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -52,8 +61,7 @@
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
         
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-        [self updatePreviewControllerFrameToSize:size];
-//        [self.previewController refreshCurrentPreviewItem];
+        self.previewController.view.frame = self.view.bounds;
     } completion:nil];
     
 }
@@ -64,29 +72,86 @@
 
 #pragma mark - Private
 
-- (void)updatePreviewControllerFrameToSize:(CGSize)size {
-    CGFloat y = [UIApplication sharedApplication].statusBarFrame.size.height + self.navigationController.navigationBar.frame.size.height;
-    self.previewController.view.frame = CGRectMake(0.0f, y, size.width, size.height - y);
+- (void)configureNavigation {
+    [self setTitle:self.node.name];
+    [self.imageView setImage:[Helper infoImageForNode:self.node]];
+    
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+    [[UINavigationBar appearance] setTintColor:[UIColor mnz_redFF4D52]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorFromHexString:@"FCFCFC"]];
+    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:[UIColor blackColor]];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:[UIColor blackColor]];
+}
+
+- (void)loadPreview {
+    self.previewController = [[QLPreviewController alloc] init];
+    self.previewController.delegate = self;
+    self.previewController.dataSource = self;
+    self.previewController.view.frame = self.view.bounds;
+    
+    if (self.filesPathsArray) {
+        self.title = [self.filesPathsArray objectAtIndex:self.nodeFileIndex].lastPathComponent;
+        [self.previewController setCurrentPreviewItemIndex:self.nodeFileIndex];
+        [self addObserver:self forKeyPath:@"self.previewController.title" options:NSKeyValueObservingOptionNew context:nil];
+    }
+    
+    [self.view addSubview:self.previewController.view];
+}
+
+- (IBAction)shareAction:(id)sender {
+    NSString *filePath = self.filesPathsArray ? [self.filesPathsArray objectAtIndex:self.previewController.currentPreviewItemIndex] : self.nodeFilePath;
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[filePath.lastPathComponent, [NSURL fileURLWithPath:filePath]] applicationActivities:nil];
+    activityVC.popoverPresentationController.barButtonItem = sender;
+    [self presentViewController:activityVC animated:YES completion:nil];
+}
+
+- (IBAction)doneTapped:(id)sender {
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor mnz_redF0373A]];
+    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:[UIColor whiteColor]];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:[UIColor whiteColor]];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"self.previewController.title"]) {
+        UILabel *titleLabel = [Helper customNavigationBarLabelWithTitle:[self.filesPathsArray objectAtIndex:self.previewController.currentPreviewItemIndex].lastPathComponent subtitle:self.previewController.title color:[UIColor mnz_black333333]];
+        titleLabel.adjustsFontSizeToFitWidth = YES;
+        titleLabel.minimumScaleFactor = 0.8f;
+        self.navigationItem.titleView = titleLabel;
+        [self.navigationItem.titleView sizeToFit];
+    }
 }
 
 #pragma mark - QLPreviewControllerDataSource
 
 - (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller {
+    if (self.filesPathsArray) {
+        return self.filesPathsArray.count;
+    }
     return 1;
 }
 
 - (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index {
-    if (previewDocumentTransfer.path != nil) {
-        return [NSURL fileURLWithPath:previewDocumentTransfer.path];
+    if (self.filesPathsArray) {
+        return [NSURL fileURLWithPath:[self.filesPathsArray objectAtIndex:index]];
+    } else {
+        if (previewDocumentTransfer.path) {
+            return [NSURL fileURLWithPath:previewDocumentTransfer.path];
+        } else {
+            return [NSURL fileURLWithPath:self.nodeFilePath];
+        }
     }
-
-    return nil;
 }
 
 #pragma mark - QLPreviewControllerDelegate
 
 - (void)previewControllerWillDismiss:(QLPreviewController *)controller {
     previewDocumentTransfer = nil;
+    if (self.filesPathsArray) {
+        [self removeObserver:self forKeyPath:@"self.previewController.title"];
+    }
 }
 
 #pragma mark - MEGATransferDelegate
@@ -98,7 +163,7 @@
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     [self.activityIndicator stopAnimating];
     [self.progressView setHidden:NO];
-    float percentage = ([[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue] * 100);
+    float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue * 100);
     [self.progressView setProgress:percentage];
 }
 
@@ -107,12 +172,7 @@
         return;
     }
     
-    self.previewController = [[QLPreviewController alloc] init];
-    [self.previewController setDelegate:self];
-    [self.previewController setDataSource:self];
-    [self.previewController setTitle:transfer.fileName];
-    [self updatePreviewControllerFrameToSize:self.view.frame.size];
-    [self.view addSubview:self.previewController.view];
+    [self loadPreview];
 }
 
 @end
