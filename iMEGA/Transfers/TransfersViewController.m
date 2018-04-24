@@ -449,6 +449,10 @@
 
 #pragma mark - MEGATransferDelegate
 
+- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+    [self reloadView];
+}
+
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     
     NSIndexPath *indexPath = [self indexPathForTransfer:transfer];
