@@ -1,6 +1,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "DisplayMode.h"
+
 @class MEGAPhotoBrowserViewController;
 
 typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
@@ -23,5 +25,7 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 @property (nonatomic) MEGASdk *api;
 @property (nonatomic) CGRect originFrame;
 @property (nonatomic, weak) id<MEGAPhotoBrowserDelegate> delegate;
+@property (nonatomic) DisplayMode displayMode;
+@property (nonatomic) NSString *publicLink;
 
 @end
