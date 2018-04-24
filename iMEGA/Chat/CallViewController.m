@@ -264,7 +264,7 @@
 
 - (void)enablePasscodeIfNeeded {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"] && [LTHPasscodeViewController doesPasscodeExist]) {
-        [[LTHPasscodeViewController sharedUser] showLockScreenOver:[UIApplication mnz_visibleViewController].view
+        [[LTHPasscodeViewController sharedUser] showLockScreenOver:UIApplication.mnz_visibleViewController.view
                                                      withAnimation:YES
                                                         withLogout:NO
                                                     andLogoutTitle:nil];

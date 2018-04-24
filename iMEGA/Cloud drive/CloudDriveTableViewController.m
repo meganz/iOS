@@ -28,6 +28,7 @@
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
 #import "NSMutableArray+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
@@ -248,7 +249,11 @@
         }
         
         [cell.downloadingArrowImageView setImage:[UIImage imageNamed:@"downloadQueued"]];
-        [cell.infoLabel setText:AMLocalizedString(@"queued", @"Queued")];
+        if (cell.downloadProgressView.progress != 0) {
+            [cell.infoLabel setText:AMLocalizedString(@"paused", @"Paused")];
+        } else {
+            [cell.infoLabel setText:AMLocalizedString(@"queued", @"Queued")];
+        }
     } else {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
         if (cell == nil) {
@@ -483,7 +488,7 @@
         case MEGANodeTypeFile: {
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList]);
-                return [node mnz_photoBrowserWithNodes:nodesArray folderLink:NO displayMode:self.displayMode enableMoveToRubbishBin:YES hideControls:YES];
+                return [node mnz_photoBrowserWithNodes:nodesArray folderLink:NO displayMode:self.displayMode enableMoveToRubbishBin:YES];
             } else {
                 UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO];
                 return viewController;
@@ -501,10 +506,10 @@
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
     if (viewControllerToCommit.class == CloudDriveTableViewController.class) {
         [self.navigationController pushViewController:viewControllerToCommit animated:YES];
-    } else if (viewControllerToCommit.class == PreviewDocumentViewController.class){
+    } else if (viewControllerToCommit.class == PreviewDocumentViewController.class) {
         MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:viewControllerToCommit];
         [self.navigationController presentViewController:navigationController animated:YES completion:nil];
-    }else {
+    } else {
         [self.navigationController presentViewController:viewControllerToCommit animated:YES completion:nil];
     }
 }
@@ -1204,7 +1209,7 @@
                 }];
             };
             
-            [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:customModalAlertVC animated:YES completion:nil];
+            [UIApplication.mnz_visibleViewController presentViewController:customModalAlertVC animated:YES completion:nil];
             
             alreadyPresented = YES;
         } else {
