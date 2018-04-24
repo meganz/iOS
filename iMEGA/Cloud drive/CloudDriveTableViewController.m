@@ -248,7 +248,11 @@
         }
         
         [cell.downloadingArrowImageView setImage:[UIImage imageNamed:@"downloadQueued"]];
-        [cell.infoLabel setText:AMLocalizedString(@"queued", @"Queued")];
+        if (cell.downloadProgressView.progress != 0) {
+            [cell.infoLabel setText:AMLocalizedString(@"paused", @"Paused")];
+        } else {
+            [cell.infoLabel setText:AMLocalizedString(@"queued", @"Queued")];
+        }
     } else {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
         if (cell == nil) {
