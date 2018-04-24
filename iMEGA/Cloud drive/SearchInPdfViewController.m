@@ -27,8 +27,23 @@
     self.searchBar.showsCancelButton = YES;
     self.searchBar.tintColor = [UIColor redColor];
     self.navigationItem.titleView = self.searchBar;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
     [self.searchBar becomeFirstResponder];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    
+    [self.searchBar resignFirstResponder];
+
+    [super viewDidDisappear:animated];
 }
 
 #pragma mark - UITableViewDataSource
@@ -90,5 +105,32 @@
 }
 
 #pragma clang diagnostic pop
+
+#pragma mark - Keyboard
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    NSDictionary *keyInfo = [notification userInfo];
+    CGRect keyboardFrame = [[keyInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    keyboardFrame = [self.tableView convertRect:keyboardFrame fromView:nil];
+    CGRect intersect = CGRectIntersection(keyboardFrame, self.tableView.bounds);
+    if (!CGRectIsNull(intersect)) {
+        NSTimeInterval duration = [[keyInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+        NSInteger curve = [notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] intValue] << 16;
+        [UIView animateWithDuration:duration delay:0.0 options:curve animations: ^{
+            self.tableView.contentInset = UIEdgeInsetsMake(0, 0, intersect.size.height, 0);
+            self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, intersect.size.height, 0);
+        } completion:nil];
+    }
+}
+
+- (void) keyboardWillHide:  (NSNotification *) notification{
+    NSDictionary *keyInfo = [notification userInfo];
+    NSTimeInterval duration = [[keyInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    NSInteger curve = [notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] intValue] << 16;
+    [UIView animateWithDuration:duration delay:0.0 options:curve animations: ^{
+        self.tableView.contentInset = UIEdgeInsetsZero;
+        self.tableView.scrollIndicatorInsets = UIEdgeInsetsZero;
+    } completion:nil];
+}
 
 @end
