@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="CSm-b8-KOc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="CSm-b8-KOc">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -451,11 +451,21 @@
                                     <constraint firstAttribute="height" id="M3c-hM-0jP"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pPF-c3-Klm">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="HZ6-gj-bzt"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="nEj-Ji-K4x" firstAttribute="top" secondItem="N7V-7h-Ud3" secondAttribute="bottom" id="3e3-rH-XKk"/>
+                            <constraint firstItem="nEj-Ji-K4x" firstAttribute="top" secondItem="pPF-c3-Klm" secondAttribute="bottom" id="DdT-PW-qAq"/>
                             <constraint firstAttribute="trailing" secondItem="nEj-Ji-K4x" secondAttribute="trailing" id="GdB-Px-vJo"/>
+                            <constraint firstAttribute="trailing" secondItem="pPF-c3-Klm" secondAttribute="trailing" id="RGu-R3-UNx"/>
+                            <constraint firstItem="pPF-c3-Klm" firstAttribute="leading" secondItem="fkF-VR-LpX" secondAttribute="leading" id="bLA-f9-Drg"/>
+                            <constraint firstItem="pPF-c3-Klm" firstAttribute="top" secondItem="N7V-7h-Ud3" secondAttribute="bottom" id="bLS-JT-93s"/>
                             <constraint firstItem="nKV-wF-xCm" firstAttribute="leading" secondItem="fkF-VR-LpX" secondAttribute="leadingMargin" constant="-20" id="bp8-Ln-ilh"/>
                             <constraint firstItem="nEj-Ji-K4x" firstAttribute="leading" secondItem="fkF-VR-LpX" secondAttribute="leading" id="dd5-aN-TAn"/>
                             <constraint firstAttribute="trailingMargin" secondItem="nKV-wF-xCm" secondAttribute="trailing" constant="-20" id="rhE-9k-BSG"/>
@@ -490,6 +500,8 @@
                         <outlet property="deleteBarButtonItem" destination="wgy-rg-Fjg" id="idp-L0-R7m"/>
                         <outlet property="editBarButtonItem" destination="EF0-GJ-VNE" id="UsC-Ca-lDB"/>
                         <outlet property="insertAnEmailBarButtonItem" destination="EYv-wx-auj" id="SJD-wz-lKl"/>
+                        <outlet property="searchFixedView" destination="pPF-c3-Klm" id="9fI-UB-bBc"/>
+                        <outlet property="searchFixedViewHeightConstraint" destination="HZ6-gj-bzt" id="eRw-r1-yzB"/>
                         <outlet property="selectAllBarButtonItem" destination="Llm-yt-C3F" id="EGI-Ug-yJ5"/>
                         <outlet property="shareFolderWithBarButtonItem" destination="43b-TZ-Eh5" id="0tk-cU-sUm"/>
                         <outlet property="tableView" destination="nKV-wF-xCm" id="70Y-aH-yDi"/>
