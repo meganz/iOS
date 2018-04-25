@@ -56,6 +56,9 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *usersListViewHeightConstraint;
 
+@property (weak, nonatomic) IBOutlet UIView *searchFixedView;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *searchFixedViewHeightConstraint;
+
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *insertAnEmailBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *shareFolderWithBarButtonItem;
 @property (strong, nonatomic) NSString *insertedEmail;
@@ -84,18 +87,9 @@
     self.tableView.emptyDataSetDelegate = self;
     
     self.pendingRequestsPresented = NO;
-    
-    UISearchController *searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
-    searchController.searchBar.tintColor = [UIColor whiteColor];
-    searchController.definesPresentationContext = YES;
-    searchController.hidesNavigationBarDuringPresentation = NO;
-    UITextField *searchTextField = [searchController.searchBar valueForKey:@"_searchField"];
-    UIView *backgroundview = searchTextField.subviews.firstObject;
-    backgroundview.backgroundColor = [UIColor whiteColor];
-    backgroundview.layer.cornerRadius = 10;
-    backgroundview.clipsToBounds = YES;
-    self.searchController = searchController;
 
+    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    
     [self.createGroupBarButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:1 green:1 blue:1 alpha:.5]} forState:UIControlStateDisabled];
 
     [self setupContacts];
@@ -607,13 +601,21 @@
 }
 
 - (void)addSearchBarController {
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.searchController = self.searchController;
-        self.navigationItem.hidesSearchBarWhenScrolling = self.tableView.contentSize.height > self.view.frame.size.height;
-    } else {
-        if (!self.tableView.tableHeaderView) {
-            self.tableView.tableHeaderView = self.searchController.searchBar;
-        }
+    switch (self.contactsMode) {
+        case ContactsModeChatCreateGroup:
+        case ContactsModeChatStartConversation:
+            self.searchFixedViewHeightConstraint.constant = self.searchController.searchBar.frame.size.height;
+            [self.searchFixedView addSubview:self.searchController.searchBar];
+            self.searchController.hidesNavigationBarDuringPresentation = NO;
+            break;
+            
+        default:
+            if (!self.tableView.tableHeaderView) {
+                self.tableView.tableHeaderView = self.searchController.searchBar;
+                [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
+                self.definesPresentationContext = YES;
+            }
+            break;
     }
 }
 
