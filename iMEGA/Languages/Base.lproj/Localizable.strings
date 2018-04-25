@@ -778,8 +778,6 @@
 "oldAndNewPasswordMatch"="The new and the old password must not match.";
 /* An option to reset the password. */
 "forgotPassword"="Forgot password?";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="You can reset your password by following the recovery link that will be sent to your email.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="This recovery link has expired, please try again.";
 /* Headline of the password reset recovery procedure */
