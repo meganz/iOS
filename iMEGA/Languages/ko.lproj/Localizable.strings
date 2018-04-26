@@ -59,7 +59,7 @@
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="접근하려면 항목은 이 계정에서 이용할 수 없습니다. 모바일 웹 클라이언트와 같은 계정으로 로그인하세요.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
-"takingLongerThanExpected"="The process is taking longer than expected. Please wait.";
+"takingLongerThanExpected"="과정이 예상보다 오래 걸립니다. 잠시 기다려주세요...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="서버가 너무 바쁩니다. 잠시 기다리세요.";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
@@ -677,7 +677,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="비밀번호 바꾸기";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="마스터 키를 내보내서 안전한 장소에 보관하는 것은 데이터 손실 없이 새로운 비밀번호를 설정할 수 있게 해줍니다.";
+"exportMasterKeyFooter"="복구 키를 내보내고 안전한 장소에 보관하는 것은 데이터 손실 없이 새 비밀번호를 설정할 수 있도록 해줍니다.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="왜 복구 키가 필요한가요?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -1204,10 +1204,10 @@
 "chatNotFound"="대화가 발견되지 않음";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@님이 입력중 ...";
-/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders. */
-"twoUsersAreTyping"="[$%1$s [A]are typing...[/A]]";
-/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders. */
-"moreThanTwoUsersAreTyping"="[$%1$s [A]and more are typing...[/A]]";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s님이 [A]입력중...[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s님 외 다수가 [A]입력중...[/A]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="메시지 쓰기...";
 /* Information if there are no history messages in current chat conversation */
@@ -1471,3 +1471,5 @@
 "proceedToLogout"="Proceed to logout";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+/* state previous to import a file */
+"loading"="불러오는 중...";
