@@ -119,14 +119,6 @@
         return NO;
     }
     
-    if ([[MEGASdkManager sharedMEGASdk] checkPassword:self.theNewPasswordTextField.text]) {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"oldAndNewPasswordMatch", @"The old and the new password can not match")];
-        [self.theNewPasswordTextField setText:@""];
-        [self.confirmPasswordTextField setText:@""];
-        [self.theNewPasswordTextField becomeFirstResponder];
-        return NO;
-    }
-    
     return YES;
 }
 
