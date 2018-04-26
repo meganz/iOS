@@ -59,13 +59,13 @@
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="المحتوى الذي تحاول الدخول إليه غير متاح لهذا الحساب. حاول تسجيل الدخول بنفس الحساب كما هو الحال في موقع الويب للجوال.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
-"takingLongerThanExpected"="The process is taking longer than expected. Please wait.";
+"takingLongerThanExpected"="تستغرق العملية وقتا أطول من المتوقع. الرجاء الإنتظار...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="الخوادم مشغولة جدا. الرجاء الانتظار.";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
-"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+"unableToReachMega"="لم ينجح الاتصال مع MEGA. يرجى التأكد من الاتصال الشبكي أو إعادة المحاولة بعد قليل.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
-"tooManyRequest"="Too many requests. Please wait.";
+"tooManyRequest"="تجاوز الحد الاعظمي للطلبات. من فضلك انتظر.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="يرجى تسجيل الدخول إلى حسابك.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -679,7 +679,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="تغيير كلمة المرور";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="تصدير المفتاح الرئيسي والحفاظ عليه في مكان آمن تمكنك من تعيين كلمة مرور جديدة دون فقدان البيانات.";
+"exportMasterKeyFooter"="تصدير مفتاح الاستعادة والحفاظ عليه في مكان آمن يساعدك على تحديد كلمة مرور جديدة دون فقدك للبيانات.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="لماذا أحتاج لمفتاح استعادة؟";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -1206,10 +1206,10 @@
 "chatNotFound"="لا توجد محادثة";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ يكتب ...";
-/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders. */
-"twoUsersAreTyping"="[$%1$s [A]are typing...[/A]]";
-/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders. */
-"moreThanTwoUsersAreTyping"="[$%1$s [A]and more are typing...[/A]]";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s [A]جاري الكتابة...[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s [A]وأكثر يكتبون...[/A]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="اكتب رسالة...";
 /* Information if there are no history messages in current chat conversation */
@@ -1277,9 +1277,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="رسائل جديدة";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu unread message";
+"unreadMessage"="%lu رسالة غير مقروءة";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu unread messages";
+"unreadMessages"="%lu رسائل غير مقروءة";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="يتم تجديد الاشتراكات تلقائيا لفترات اشتراك المتتالية لنفس المدة وبنفس سعر الباقة الأولى التي تم اختيارها. يمكنك إيقاف التجديد التلقائي من اشتراكك MEGA برو في موعد أقصاه 24 ساعة قبل دفع اشتراكك المقبل ومن خلال صفحة إعدادات الحساب الخاصة بك في اي تيونز. لإدارة الاشتراكات الخاصة بك، ببساطة انقر على أيقونة المتجر على الهاتف الخاص بك، قم بتسجيل الدخول باستخدام معرف أبل الخاص بك في أسفل الصفحة (إذا لم تكن قد فعلت ذلك) ثم انقر فوق عرض ID. سوف يتم نقلك إلى صفحة الحساب الخاص بك حيث يمكنك النزل لأسفل الى إدارة التطبيقات والاشتراكات. من هناك، يمكنك تحديد اشتراكك MEGA برو وعرض تاريخ التجديد المقرر، واختيار حزمة الاشتراك مختلفة أو تعطيل أو تشغيل التجديد التلقائي لاشتراكك.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1452,13 +1452,13 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="هل تتذكر كلمة مرورك؟";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+"remindPasswordText"="ان إعادة تعيين كلمة المرور الخاصة بك بسبب ضياعها سيؤدي الى فقدان المعطيات المخزنة كونها محمية بتقنية MEGA للتشفير. لذلك تأكد من حفظ وتذكر كلمة المرور.";
 /* Text that describes why the user should test his/her password before logging out */
-"remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
+"remindPasswordLogoutText"="ننصح بتصدير مفتاح الاسترجاع الخاص بك وحفظه بمكان آمن قبل تسجيل الخروج. يرجى الملاحظة انه من غير الممكن إعادة تعيين كلمة المرور في حال نسيانها.";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="Don’t show me again";
+"dontShowAgain"="عدم الإظهار مرة اخرى";
 /* Label for test password button and titles */
-"testPassword"="Test Password";
+"testPassword"="اختبار كلمة المرور";
 /* Label for recovery key button */
 "backupRecoveryKey"="نسخ مفتاح الاستتعادة احتياطيا";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
@@ -1470,6 +1470,8 @@
 /* A dialog title to export the Recovery Key for the current user. */
 "exportRecoveryKey"="تصدير مفتاح الاستعادة";
 /* Title to confirm that you want to logout */
-"proceedToLogout"="Proceed to logout";
+"proceedToLogout"="متابعة تسجيل الخروج";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+"testPasswordLogoutText"="انت في صدد تسجيل الخروج، من فضلك تأكد وتحقق من تذكرك لكلمة المرور الخاصة بك. ضياع كلمة المرور سيؤدي الى فقدان الولوج للبيانات المخزنة لدى MEGA.";
+/* state previous to import a file */
+"loading"="جاري التحميل";

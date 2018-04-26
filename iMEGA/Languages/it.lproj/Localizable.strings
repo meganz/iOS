@@ -61,7 +61,7 @@
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Il processo sta prendendo più tempo di quanto previsto. Per favore, aspetta.";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
-"serversAreTooBusy"="I server sono molto impegnati al momento. Per favore, aspetta.";
+"serversAreTooBusy"="I server sono troppo occupati. Per favore, aspetta.";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
 "unableToReachMega"="Non è possibile raggiungere MEGA. Per favore, controlla la tua connessione o riprova più tardi.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
@@ -199,7 +199,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Nessun risultato";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Svuota il cestino";
+"cloudDriveEmptyState_titleRubbishBin"="Svuota il Cestino                                ";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Nessun file salvato in Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -675,11 +675,11 @@
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Ringraziamenti";
 /* Title for the MEGA Recovery Key */
-"masterKey"="Chiave di recupero";
+"masterKey"="Chiave di Recupero";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Cambia password";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="Esportare la chiave master e mantenerla in un luogo sicuro ti permette di impostare una nuova password, senza perdita di dati.";
+"exportMasterKeyFooter"="Esportare la Chiave di Recupero e tenerla in un posto sicuro ti permette di reimpostare la password senza perdite di dati.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Perché ho bisogno di una Chiave di Recupero?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -787,7 +787,7 @@
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
 "pleaseEnterYourRecoveryKey"="Per favore, inserisci la tua chiave di recupero";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
-"recoveryKey"="Chiave di recupero";
+"recoveryKey"="Chiave di Recupero";
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="Chiave di Recupero non valida";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
@@ -795,7 +795,7 @@
 /*  */
 "yourPasswordHasBeenReset"="La tua password è stata reimpostata correttamente. Si prega di accedere al proprio account.";
 /* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Se hai una copia della tua Chiave di Recupero, puoi resettare la tua password selezionando SI. Nessun dato sarà perso.";
+"forgotPassword_firstParagraph"="Se hai una copia della tua Chiave di Recupero, puoi resettare la tua password selezionando DI. Nessun dato sarà perso.";
 /* Second paragraph of the screen when the password has been forgotten */
 "forgotPassword_secondParagraph"="Puoi ancora esportare la tua Chiave di recupero se hai una sessione attiva in un qualsiasi altro browser, su questo o su un altro computer. Se non hai sessioni attive, non puoi decriptare il tuo account, ma puoi crearne uno nuovo selezionando NO.";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
@@ -1206,10 +1206,10 @@
 "chatNotFound"="Chat non trovata";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ sta scrivendo...";
-/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders. */
-"twoUsersAreTyping"="[$%1$s [A]are typing...[/A]]";
-/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders. */
-"moreThanTwoUsersAreTyping"="[$%1$s [A]and more are typing...[/A]]";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s [A]stanno scrivendo...[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s [A]ed altri stanno scrivendo...[/A]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Scrivi un messaggio...";
 /* Information if there are no history messages in current chat conversation */
@@ -1394,7 +1394,7 @@
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="Scansiona QR Code";
 /* Label that encourage the user to line the QR to scan with the camera */
-"lineCodeWithCamera"="Allineati con il QR Code per scansionarlo con la fotocamera del tuo dispositivo";
+"lineCodeWithCamera"="Inquadra il QRcode fa scansionare con la fotocamera del tuo dispositivo";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
 "invalidCode"="QR Code non valido";
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
@@ -1473,3 +1473,5 @@
 "proceedToLogout"="Procedi al logout";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
 "testPasswordLogoutText"="Stai per effettuare il logout, per favore testa la tua password per assicurarti di ricordarla. Se perdi la tua password, perderai l'accesso ai tuoi dati archiviati su MEGA.";
+/* state previous to import a file */
+"loading"="Caricamento...";

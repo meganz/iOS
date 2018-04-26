@@ -55,13 +55,13 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="You have been logged out of this device from another location";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="Server's SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
+"sslUnverified_alertTitle"="Server’s SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
-"takingLongerThanExpected"="The process is taking longer than expected. Please wait.";
+"takingLongerThanExpected"="The process is taking longer than expected. Please wait…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
-"serversAreTooBusy"="Servers are too busy. Please wait.";
+"serversAreTooBusy"="Servers are too busy. Please wait…";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
 "unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
@@ -81,7 +81,7 @@
 /* Message shown on the app's start animation to explain what MEGA SPEED means */
 "megaSpeedText"="Uploads are fast. Quickly share files with everyone.";
 /* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="Keep all your files safe with MEGA's end-to-end encryption.";
+"megaPrivacyText"="Keep all your files safe with MEGA’s end-to-end encryption.";
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
 "megaAccessText"="Get fully encrypted access anywhere, anytime.";
 /* Button title which triggers the action to login in your MEGA account */
@@ -291,7 +291,7 @@
 /* message when trying to create a folder that already exists */
 "folderAlreadyExists"="Folder already exists";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="Import from...";
+"uploadFrom"="Import from…";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A] already uploaded with the name [B]";
 /* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
@@ -331,9 +331,9 @@
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
 "manageLinks"="Manage links";
 /* Message shown when a link to a file or folder is being generated */
-"generatingLink"="Generating link...";
+"generatingLink"="Generating link…";
 /* Message shown when some links to files and/or folders are being generated */
-"generatingLinks"="Generating links...";
+"generatingLinks"="Generating links…";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="Link copied";
 /* Message shown when some links have been copied to the pasteboard */
@@ -345,7 +345,7 @@
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Copyright warning to all users";
 /* String already exists: 367, but we need to split paragraphs. */
-"copyrightMessagePart1"="MEGA respects the copyrights of others and requires that users of the MEGA cloud service comply with the laws of copyright. ";
+"copyrightMessagePart1"="MEGA respects the copyrights of others and requires that users of the MEGA cloud service comply with the laws of copyright.";
 /* String already exists: 367, but we need to split paragraphs */
 "copyrightMessagePart2"="You are strictly prohibited from using the MEGA cloud service to infringe copyrights. You may not upload, download, store, share, display, stream, distribute, email, link to, transmit or otherwise make available any files, data or content that infringes any copyright or other proprietary rights of any person or entity.";
 /* button caption text that the user clicks when he agrees */
@@ -371,7 +371,7 @@
 /* Title for a button that copies the key of the link to the clipboard */
 "copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
-"openIn"="Open in...";
+"openIn"="Open in…";
 /* */
 "sendToContact"="Send to contact";
 /* Toast text upon sending a single file to chat */
@@ -579,7 +579,7 @@
 /* Success message shown when a contact has been invited */
 "requestSent"="Request sent";
 /* Add contacts and share dialog error message when user try to add your own email address */
-"noNeedToAddYourOwnEmailAddress"="There's no need to add your own email address";
+"noNeedToAddYourOwnEmailAddress"="There’s no need to add your own email address";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
 "alreadyHaveAContactWithThatEmailAddress"="You already have a contact with that email address";
 /* Success message shown when a contact has been invited */
@@ -679,7 +679,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Change password";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.";
+"exportMasterKeyFooter"="Exporting the Recovery Key and keeping it in a secure location enables you to set a new password without data loss.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -715,7 +715,7 @@
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Save videos in gallery";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
-"imageAndVideoDownloadsFooter"="Save iOS compatible images and videos in your device's gallery (Note: images and videos won't be saved in Offline).";
+"imageAndVideoDownloadsFooter"="Save iOS compatible images and videos in your device’s gallery (Note: images and videos won't be saved in Offline).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Currently using %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -774,8 +774,6 @@
 "confirmPassword"="Confirm Password";
 /* Success message shown when the password has been changed */
 "passwordChanged"="Your password has been changed.";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="The new and the old password must not match.";
 /* An option to reset the password. */
 "forgotPassword"="Forgot password?";
 /* Message shown during forgot your password process if the link to reset password has expired */
@@ -809,7 +807,7 @@
 /* First paragraph of the screen to park an account */
 "noMasterKey_firstParagraph"="Due to our end-to-end encryption paradigm, you will not be able to access your data without either your password or a backup of your Recovery Key.";
 /* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="You can park your existing account and start a fresh one under the same e-mail address. Your data will be retained for at least 60 days. In case that you recall your parked account's password, please contact support@mega.nz";
+"noMasterKey_secondParagraph"="You can park your existing account and start a fresh one under the same e-mail address. Your data will be retained for at least 60 days. In case that you recall your parked account’s password, please contact support@mega.nz";
 /* Text of the dialog message to ask for the link to park the account */
 "recoveryLinkToParkYourAccount"="Please enter your e-mail address below. You will receive a recovery link that will allow you to park your account.";
 /* Headline for parking an account (basically restarting from scratch) */
@@ -901,15 +899,15 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Get %1$s of storage and %2$s of transfers for each referral";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+"inviteYourFriendsExplanation"="Select contacts from your phone’s contact list or enter multiple email addresses.";
 /*  */
-"insertYourFriendsEmails"="Insert your friend's email(s):";
+"insertYourFriendsEmails"="Insert your friend’s email(s):";
 /*  */
 "howItWorks"="How it works";
 /*  */
 "howItWorksMain"="Your friend needs to register for a free account on MEGA and [S]install at least one MEGA client application[/S] (either the sync client or one of our mobile apps)";
 /*  */
-"howItWorksSecondary"="You can notify your friend through any method. You will earn the quota if you have entered your friend's email here prior to them registering with that address.";
+"howItWorksSecondary"="You can notify your friend through any method. You will earn the quota if you have entered your friend’s email here prior to them registering with that address.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="You will not receive credit for inviting someone who has used MEGA previously and you will not be notified about such a rejection.";
 /* Header of block with achievements bonuses. */
@@ -1097,7 +1095,7 @@
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A] changed group chat name to '[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
-"addParticipant"="Add Participant...";
+"addParticipant"="Add Participant…";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1197,19 +1195,19 @@
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"confidentialityExplanation"="[S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. ";
+"confidentialityExplanation"="[S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "authenticityExplanation"="[S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit.";
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="Chat not found";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
-"isTyping"="%@ is typing ...";
-/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders. */
-"twoUsersAreTyping"="[$%1$s [A]are typing...[/A]]";
-/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders. */
-"moreThanTwoUsersAreTyping"="[$%1$s [A]and more are typing...[/A]]";
+"isTyping"="%@ is typing …";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s [A]are typing…[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s [A]and more are typing…[/A]";
 /* Message box label which shows that user can type message text in this textview */
-"writeAMessage"="Write a message...";
+"writeAMessage"="Write a message…";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="No conversation history";
 /* Button which allows to retry send message in chat conversation. */
@@ -1255,7 +1253,7 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s is already a contact.";
 /* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="Sent Contact: %s ";
+"sentContact"="Sent Contact: %s";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="Sent %s Contacts.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
@@ -1358,7 +1356,7 @@
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="For more info, please check our website:\nMobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nDesktop - https://mega.nz/";
 /* Label shown when you receive an incoming call, before start the call. */
-"calling..."="Calling...";
+"calling..."="Calling…";
 /* Notification text body shown when you have missed one audio call */
 "missedAudioCall"="Missed audio call";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
@@ -1398,7 +1396,7 @@
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
 "codeScanned"="Code scanned";
 /* title of the screen that shows the users with whom the user has shared a folder */
-"sharedWidth"="Shared with: ";
+"sharedWidth"="Shared with:";
 /*   */
 "details"="Details";
 /* Item menu option upon right click on one or multiple files. */
@@ -1471,3 +1469,5 @@
 "proceedToLogout"="Proceed to logout";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+/* state previous to import a file */
+"loading"="Loading…";
