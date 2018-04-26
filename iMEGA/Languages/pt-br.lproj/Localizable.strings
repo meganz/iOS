@@ -59,13 +59,13 @@
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="O conteúdo que você está tentando acessar não está disponível para esta conta. Tente fazer o login com a mesma conta usada no navegador móvel.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
-"takingLongerThanExpected"="The process is taking longer than expected. Please wait.";
+"takingLongerThanExpected"="O processo está demorando mais do que o esperado. Por favor, aguarde.";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
-"serversAreTooBusy"="Servidores ocupados. Aguarde.";
+"serversAreTooBusy"="Servidores ocupados. Por favor, aguarde.";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
-"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+"unableToReachMega"="Não é possível acessar o MEGA. Por favor, verifique a sua conexão ou tente novamente mais tarde.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
-"tooManyRequest"="Too many requests. Please wait.";
+"tooManyRequest"="Muitas solicitações. Por favor, aguarde.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Por favor, faça login na sua conta.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -679,7 +679,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Mudar a senha";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="Exportar a Chave Mestra e guardá-la num lugar seguro permitir-lhe-á criar uma nova palavra-passe sem perder os seus dados.";
+"exportMasterKeyFooter"="Exportar a chave de recuperação e mantê-la em um lugar seguro permite que você defina uma nova senha, sem perda de dados.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Por que eu preciso de uma chave de recuperação?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -1206,10 +1206,10 @@
 "chatNotFound"="Chat não encontrado";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ está digitando ...";
-/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders. */
-"twoUsersAreTyping"="[$%1$s [A]are typing...[/A]]";
-/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders. */
-"moreThanTwoUsersAreTyping"="[$%1$s [A]and more are typing...[/A]]";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s [A]estão escrevendo...[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s [A]e outros estão escrevendo...[/A]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Escreva uma mensagem...";
 /* Information if there are no history messages in current chat conversation */
@@ -1277,9 +1277,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Novas mensagens";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu unread message";
+"unreadMessage"="%lu mensagem não lida";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu unread messages";
+"unreadMessages"="%lu mensagens não lidas";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="As assinaturas são automaticamente renovadas por períodos iguais, de igual duração e ao mesmo preço que o período inicial escolhido. Você pode anular a renovação automática da sua assinatura MEGA até 24 horas antes DO próximo pagamento da assinatura fazendo-o através da página de configurações da sua conta iTunes. Para gerenciar suas assinaturas basta clicar no ícone da App Store no seu aparelho, entrar com seu ID da Apple na parte inferior da página (se você ainda não o tiver feito) e, em seguida, clicar em Ver ID. Você será levado à página da sua conta onde rolando para baixo pode gerenciar as suas assinaturas. A partir daqui, você pode selecionar sua assinatura MEGA Pro e ver a sua data de renovação programada, escolher um pacote de assinatura diferente ou puxar o botão on-off para fora para desativar a renovação automática da sua assinatura.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1452,13 +1452,13 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="Você lembra da senha da sua conta?";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+"remindPasswordText"="Devido à tecnologia de criptografia do MEGA, você não pode redefinir a sua senha sem perder os seus dados. Por favor, confirme que você lembra da sua senha.";
 /* Text that describes why the user should test his/her password before logging out */
-"remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
+"remindPasswordLogoutText"="Antes de fazer logout, recomendamos que você exporte a sua chave de recuperação para um local seguro. Sem a chave, não é possível redefinir a sua senha se você a esquecer.";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="Don’t show me again";
+"dontShowAgain"="Não mostrar novamente";
 /* Label for test password button and titles */
-"testPassword"="Test Password";
+"testPassword"="Confirmar senha";
 /* Label for recovery key button */
 "backupRecoveryKey"="Exportar chave de recuperação";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
@@ -1470,6 +1470,8 @@
 /* A dialog title to export the Recovery Key for the current user. */
 "exportRecoveryKey"="Exportar chave de recuperação";
 /* Title to confirm that you want to logout */
-"proceedToLogout"="Proceed to logout";
+"proceedToLogout"="Fazer logout";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+"testPasswordLogoutText"="Você está prestes a sair. Por favor, confirme a sua senha para garantir que você se lembra dela. Se você perder a sua senha, perderá o acesso aos seus dados no MEGA.";
+/* state previous to import a file */
+"loading"="Carregando...";

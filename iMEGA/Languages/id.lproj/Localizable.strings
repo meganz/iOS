@@ -59,7 +59,7 @@
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Konten yang ingin Anda akses tidak tersedia untuk akun ini. Coba masuk dengan akun yang sama seperti di klien web seluler.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
-"takingLongerThanExpected"="The process is taking longer than expected. Please wait.";
+"takingLongerThanExpected"="Prosesnya memakan waktu lebih lama dari yang diperkirakan. Mohon tunggu...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="Server sangat sibuk. Harap tunggu.";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
@@ -679,7 +679,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Ubah kata sandi";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="Meng-ekspor Master Key dan menyimpan nya dalam tempat yang aman;  membolehkan anda untuk mengganti password tanpa kehilangan data";
+"exportMasterKeyFooter"="Meng-ekspor Recovery Key dan menyimpan nya di tempat yang aman membolehkan anda mengatur password baru tanpa kehilangan data.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Mengapa saya butuh Recovery Key?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -1206,10 +1206,10 @@
 "chatNotFound"="Percakapan tidak ditemukan";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ sedang mengetik ...";
-/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders. */
-"twoUsersAreTyping"="[$%1$s [A]are typing...[/A]]";
-/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders. */
-"moreThanTwoUsersAreTyping"="[$%1$s [A]and more are typing...[/A]]";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s [A]sedang mengetik..[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s [A]dan lainnya sedang mengetik...[/A]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Tulis pesan...";
 /* Information if there are no history messages in current chat conversation */
@@ -1473,3 +1473,5 @@
 "proceedToLogout"="Proceed to logout";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+/* state previous to import a file */
+"loading"="Memuat...";
