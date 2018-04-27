@@ -677,7 +677,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Şifre değiştir";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="Ana Anahtarı dışa aktarmak ve güvenli bir konumda saklamak, veri kaybı yaşamadan yeni bir şifre belirleyebilmenizi sağlar.";
+"exportMasterKeyFooter"="Kurtarma Anahtarını dışarıya aktarıp güvenli bir yerde saklamak veri kaybına uğramadan şifre değiştirmenizi sağlar.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Neden Kurtarma Anahtarına ihtiyacım var?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -793,7 +793,7 @@
 /*  */
 "yourPasswordHasBeenReset"="Şifreniz başarıyla sıfırlandı. Şimdi hesabınıza giriş yapın.";
 /* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Eğer Kurtarma Anahtarınızın yedeği varsa, EVET seçeneği ile parolanızı sıfırlayabilirsiniz. Veri kaybı yaşanmayacaktır.";
+"forgotPassword_firstParagraph"="Kurtarma Anahtarınızın yedeği var ise, EVET'i seçip parolanızı sıfırlayabilirsiniz. Veri kaybı yaşanmayacaktır.";
 /* Second paragraph of the screen when the password has been forgotten */
 "forgotPassword_secondParagraph"="Eğer herhangi bir tarayıcıda aktif bir MEGA oturumunuz varsa Kurtarma Anahtarınızı dışarı aktarabilirsiniz. Yoksa, varolan hesabı deşifre edemezsiniz, fakat HAYIR tuşuna basarak aynı eposta adı altında yenisini açabilirsiniz.";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
@@ -1204,10 +1204,10 @@
 "chatNotFound"="Sohbet bulunamadı";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ yazıyor ...";
-/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders. */
-"twoUsersAreTyping"="[$%1$s [A]are typing...[/A]]";
-/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders. */
-"moreThanTwoUsersAreTyping"="[$%1$s [A]and more are typing...[/A]]";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s [A]yazıyor...[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s [A]ve diğerleri yazıyor...[/A]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Bir mesaj yaz...";
 /* Information if there are no history messages in current chat conversation */
@@ -1392,7 +1392,7 @@
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="Kodu Tara";
 /* Label that encourage the user to line the QR to scan with the camera */
-"lineCodeWithCamera"="Cihazınızın kamerasıyla taramak için Kare kodunu hizalayın";
+"lineCodeWithCamera"="KareKod'u cihazınızın kamerası ile taratın";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
 "invalidCode"="Geçersiz kod";
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
@@ -1471,3 +1471,5 @@
 "proceedToLogout"="Çıkış yap";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
 "testPasswordLogoutText"="Çıkış yapmak üzeresiniz, lütfen hatırladığınızdan emin olmak için parolanızı test edin. Eğer parolanızı unutursanız, MEGA verilerinize erişiminizi kaybedeceksiniz.";
+/* state previous to import a file */
+"loading"="Yükleniyor...";

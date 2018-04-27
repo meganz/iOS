@@ -90,7 +90,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeHandleLink
 };
 
-@interface AppDelegate () <UIAlertViewDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, PKPushRegistryDelegate> {
+@interface AppDelegate () <UIAlertViewDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, PKPushRegistryDelegate, MEGAPurchasePricingDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
     
@@ -128,6 +128,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 @property (strong, nonatomic) NSString *email;
 @property (nonatomic) BOOL presentInviteContactVCLater;
+
+@property (nonatomic, getter=showChooseAccountTypeLater) BOOL chooseAccountTypeLater;
 
 @end
 
@@ -675,12 +677,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [UIApplication.mnz_visibleViewController presentViewController:cameraUploadsNavigationController animated:YES completion:^{
         isAccountFirstLogin = NO;
         if (self.urlType == URLTypeConfirmationLink) {
-            UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
-            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-            upgradeTVC.chooseAccountType = YES;
-            
-            [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
-            self.urlType = URLTypeDefault;
+            if ([MEGAPurchase sharedInstance].products.count > 0) {
+                [self showChooseAccountType];
+            } else {
+                [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
+                self.chooseAccountTypeLater = YES;
+            }
         }
      
         if ([Helper selectedOptionOnLink] != 0) {
@@ -1694,6 +1696,15 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
+- (void)showChooseAccountType {
+    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+    upgradeTVC.chooseAccountType = YES;
+    
+    [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+    self.urlType = URLTypeDefault;
+}
+
 #pragma mark - Battery changed
 
 - (void)batteryChanged:(NSNotification *)notification {
@@ -1939,6 +1950,17 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     [self openChatRoomWithChatNumber:notification.userInfo[@"chatId"]];
+}
+
+#pragma mark - MEGAPurchasePricingDelegate
+
+- (void)pricingsReady {
+    if (self.showChooseAccountTypeLater) {
+        [self showChooseAccountType];
+        
+        self.chooseAccountTypeLater = NO;
+        [[MEGAPurchase sharedInstance] setPricingsDelegate:nil];
+    }
 }
 
 #pragma mark - MEGAGlobalDelegate
