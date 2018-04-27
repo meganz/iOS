@@ -89,9 +89,10 @@
     self.pdfDocument.delegate = nil;
     [self.pdfDocument cancelFindString];
 
+    [self.searchResults removeAllObjects];
+    [self.tableView reloadData];
+    
     if (searchBar.text.length > 3) {
-        [self.searchResults removeAllObjects];
-        [self.tableView reloadData];
         self.pdfDocument.delegate = self;
         [self.pdfDocument beginFindString:searchBar.text withOptions:NSCaseInsensitiveSearch];
     }
