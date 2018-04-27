@@ -256,14 +256,14 @@
         }
             
         case 4: {
-            if ([self.currentPasswordView.passwordTextField.text isEqualToString:@""] || [self.confirmPasswordView.passwordTextField.text isEqualToString:@""]) {
+            if ((self.changeType != ChangeTypePassword && [self.currentPasswordView.passwordTextField.text isEqualToString:@""]) || [self.confirmPasswordView.passwordTextField.text isEqualToString:@""]) {
                 isAnyTextFieldEmpty = YES;
             }
             break;
         }
             
         case 5: {
-            if ([self.currentPasswordView.passwordTextField.text isEqualToString:@""] || [self.theNewPasswordView.passwordTextField.text isEqualToString:@""]) {
+            if ((self.changeType != ChangeTypePassword && [self.currentPasswordView.passwordTextField.text isEqualToString:@""]) || [self.theNewPasswordView.passwordTextField.text isEqualToString:@""]) {
                 isAnyTextFieldEmpty = YES;
             }
             break;
