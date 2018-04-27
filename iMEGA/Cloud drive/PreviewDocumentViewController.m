@@ -18,6 +18,7 @@
 
 #import "MEGANode+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+#import "MEGAStore.h"
 
 @interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol> {
     MEGATransfer *previewDocumentTransfer;
@@ -75,10 +76,26 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
     if (self.isMovingFromParentViewController && previewDocumentTransfer) {
         [self.api cancelTransfer:previewDocumentTransfer];
     }
+    
+    if (@available(iOS 11.0, *)) {
+        if (!self.pdfView.hidden) {
+            CGPDFPageRef pageRef = self.pdfView.currentPage.pageRef;
+            size_t page = CGPDFPageGetPageNumber(pageRef);
+            NSString *fingerprint = [NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.pdfView.document.documentURL.path]];
+            if (page != 1) {
+                if (fingerprint && ![fingerprint isEqualToString:@""]) {
+                    [[MEGAStore shareInstance] insertOrUpdateMediaDestinationWithFingerprint:fingerprint destination:[NSNumber numberWithLongLong:page] timescale:nil];
+                }
+            } else {
+                [[MEGAStore shareInstance] deleteMediaDestinationWithFingerprint:fingerprint];
+            }
+        }
+    }
+    
+    [super viewWillDisappear:animated];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -374,11 +391,18 @@
         [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, self.openInBarButtonItem] animated:YES];
         [self.navigationController setToolbarHidden:NO animated:YES];
         self.navigationItem.rightBarButtonItem = self.node ? self.moreBarButtonItem : nil;
-        
+        self.navigationController.hidesBarsOnTap = YES;
+
         self.pdfView.autoScales = YES;
         self.pdfView.document = [[PDFDocument alloc] initWithURL:url];
         
-        [self.pdfView goToFirstPage:nil];
+        NSString *fingerprint = [NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.pdfView.document.documentURL.path]];
+        if (fingerprint && ![fingerprint isEqualToString:@""]) {
+            NSNumber *destinationPage = [[MEGAStore shareInstance] fetchMediaDestinationWithFingerprint:fingerprint].destination;
+            [self.pdfView goToPage:[self.pdfView.document pageAtIndex:destinationPage.unsignedIntegerValue - 1]];
+        } else {
+            [self.pdfView goToFirstPage:nil];
+        }
     }
 }
 
