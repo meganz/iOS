@@ -59,13 +59,13 @@
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Le contenu auquel vous essayez d’accéder n’est pas proposé pour ce compte. Essayez de vous connecter avec le même compte que le client Web mobile.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
-"takingLongerThanExpected"="The process is taking longer than expected. Please wait.";
+"takingLongerThanExpected"="Le processus prend plus longtemps que prévu. Veuillez patienter.";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="Les serveurs sont trop occupés. Veuillez patienter.";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
-"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+"unableToReachMega"="Impossible d’atteindre MEGA. Veuillez vérifier votre connectivité ou ressayer plus tard.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
-"tooManyRequest"="Too many requests. Please wait.";
+"tooManyRequest"="Trop de requêtes. Veuillez patienter.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Veuillez vous connecter à votre compte.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -199,7 +199,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Aucun résultat";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Vider la corbeille";
+"cloudDriveEmptyState_titleRubbishBin"="Vider la corbeille                                ";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Aucun fichier enregistré hors ligne";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -677,7 +677,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Changer le mot de passe";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="En exportant et en conservant la clé maîtresse en lieu sûr, vous pourrez définir un nouveau mot de passe sans risquer une perte de données.";
+"exportMasterKeyFooter"="En exportant et en conservant la clé de récupération dans un endroit sécurisé, vous pourrez définir un nouveau mot de passe, sans encourir de perte de données.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Pourquoi ai-je besoin d’une clé de récupération ?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -793,7 +793,7 @@
 /*  */
 "yourPasswordHasBeenReset"="Votre mot de passe a été réinitialisé avec succès. Veuillez maintenant vous connecter à votre compte.";
 /* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Si vous détenez une sauvegarde de votre clé de récupération, vous pouvez réinitialiser votre mot de passe en choisissant OUI. Aucune donnée ne sera perdue.";
+"forgotPassword_firstParagraph"="Si vous avez une sauvegarde de votre clé de récupération, vous pouvez réinitialiser votre mot de passe en sélectionnant OUI. Aucunes données ne seront perdues.";
 /* Second paragraph of the screen when the password has been forgotten */
 "forgotPassword_secondParagraph"="Vous pouvez encore exporter votre clé de récupération maintenant si vous avez une session MEGA active dans n’importe quel autre navigateur sur cet ordinateur ou sur un autre. Si ce n’est pas le cas, vous ne pourrez plus déchiffrer votre compte actuel, mais vous pourrez en créer un nouveau avec la même adresse courriel en choisissant NON.";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
@@ -1204,10 +1204,10 @@
 "chatNotFound"="La conversation est introuvable";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ écrit...";
-/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders. */
-"twoUsersAreTyping"="[$%1$s [A]are typing...[/A]]";
-/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders. */
-"moreThanTwoUsersAreTyping"="[$%1$s [A]and more are typing...[/A]]";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s [A]écrivent...[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s [A]et plus écrivent...[/A]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Rédiger un message...";
 /* Information if there are no history messages in current chat conversation */
@@ -1249,7 +1249,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Voulez-vous vraiment annuler l’inscription ?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="Si vous avez mal orthographié votre adresse courriel, corrigez-la et cliquez sur « Renvoyer ».";
+"misspelledEmailAddress"="Si vous avez mal orthographié votre adresse courriel, corrigez-la et cliquez sur « Renvoyer ».";
 /* A button to resend the email confirmation. */
 "resend"="Renvoyer";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1275,9 +1275,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Nouveaux messages";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu unread message";
+"unreadMessage"="%lu message non lu";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu unread messages";
+"unreadMessages"="%lu messages non lus";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Les abonnements sont renouvelés automatiquement pour les périodes d’abonnement successives de même durée et au même tarif que la période initiale choisie. Vous pouvez désactiver le renouvellement automatique de votre abonnement MEGA PRO au plus tard 24 heures avant l’échéance de votre prochain paiement dans la page des réglages de votre compte iTunes. Pour gérer vos abonnements, cliquez simplement sur l’icône de la logithèque App Store sur votre appareil, connectez-vous en bas de la page avec votre identifiant Apple (si ce n’est pas déjà fait), et cliquez sur Afficher l’identifiant Apple. Vous atteindrez la page de votre compte où vous trouverez Gérer vers le bas. Ensuite, vous pourrez sélectionner votre abonnement MEGA PRO et visualiser votre date prévue de renouvellement, choisir un autre type d’abonnement, ou activer, désactiver le renouvellement automatique de votre abonnement.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1450,13 +1450,13 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="Vous souvenez-vous de votre mot de passe ?";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+"remindPasswordText"="En raison de la technologie de chiffrement de MEGA, vous ne pouvez pas réinitialiser votre mot de passe sans perte de données. Veuillez vous assurer de vous rappeler votre mot de passe.";
 /* Text that describes why the user should test his/her password before logging out */
-"remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
+"remindPasswordLogoutText"="Avant de vous déconnecter, nous vous recommandons d’exporter votre clé de récupération en lieu sûr. Notez que vous ne pouvez pas réinitialiser votre mot de passe si vous l’oubliez.";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="Don’t show me again";
+"dontShowAgain"="Ne plus afficher";
 /* Label for test password button and titles */
-"testPassword"="Test Password";
+"testPassword"="Tester le mot de passe";
 /* Label for recovery key button */
 "backupRecoveryKey"="Sauvegarder la clé de récupération";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
@@ -1468,6 +1468,8 @@
 /* A dialog title to export the Recovery Key for the current user. */
 "exportRecoveryKey"="Exporter la clé de récupération";
 /* Title to confirm that you want to logout */
-"proceedToLogout"="Proceed to logout";
+"proceedToLogout"="Poursuivre la déconnexion";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+"testPasswordLogoutText"="Vous êtes sur le point de vous déconnecter. Veuillez tester votre mot de passe pour vous assurer que vous en souvenez. Si vous perdez votre mot de passe, vous perdrez l’accès à vos données MEGA.";
+/* state previous to import a file */
+"loading"="Chargement…";
