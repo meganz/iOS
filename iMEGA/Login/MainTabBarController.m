@@ -1,4 +1,7 @@
+
 #import "MainTabBarController.h"
+
+#import <UserNotifications/UserNotifications.h>
 
 #import "CallViewController.h"
 #import "MEGAProviderDelegate.h"
@@ -7,8 +10,6 @@
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "DevicePermissionsHelper.h"
-
-#import <UserNotifications/UserNotifications.h>
 
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate, MEGAChatCallDelegate>
 
@@ -35,6 +36,7 @@
     
     for (NSInteger i = 0; i < [defaultViewControllersMutableArray count]; i++) {
         UITabBarItem *tabBarItem = [[defaultViewControllersMutableArray objectAtIndex:i] tabBarItem];
+        tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
         switch (tabBarItem.tag) {
             case CLOUD:
                 [tabBarItem setImage:[[UIImage imageNamed:@"cloudDriveIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
@@ -89,7 +91,7 @@
     [super viewWillAppear:animated];
     
     if (@available(iOS 10.0, *)) {} else {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentCallViewControllerIfThereAreAnIncomingCall) name:UIApplicationDidBecomeActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentCallViewControllerIfThereIsAnIncomingCall) name:UIApplicationDidBecomeActiveNotification object:nil];
     }
 }
     
@@ -166,7 +168,7 @@
                 callVC.chatRoom  = chatRoom;
                 callVC.videoCall = call.hasRemoteVideo;
                 callVC.callType = CallTypeIncoming;
-                [[UIApplication mnz_visibleViewController] presentViewController:callVC animated:YES completion:nil];
+                [UIApplication.mnz_visibleViewController presentViewController:callVC animated:YES completion:nil];
             } else {
                 MEGAChatRoom *chatRoom = [api chatRoomForChatId:call.chatId];
                 UILocalNotification* localNotification = [[UILocalNotification alloc] init];
@@ -180,13 +182,12 @@
                 [self.currentNotifications addObject:localNotification];
                 [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
             }
-
         }
     }
 }
 
 
-- (void)presentCallViewControllerIfThereAreAnIncomingCall {
+- (void)presentCallViewControllerIfThereIsAnIncomingCall {
     NSArray *callsKeys = [self.missedCallsDictionary allKeys];
     if (callsKeys.count > 0) {
         MEGAChatCall *call = [self.missedCallsDictionary objectForKey:[callsKeys objectAtIndex:0]];
@@ -198,7 +199,7 @@
         callVC.chatRoom  = chatRoom;
         callVC.videoCall = call.hasRemoteVideo;
         callVC.callType = CallTypeIncoming;
-        [[UIApplication mnz_visibleViewController] presentViewController:callVC animated:YES completion:nil];
+        [UIApplication.mnz_visibleViewController presentViewController:callVC animated:YES completion:nil];
     }
 }
 
@@ -360,7 +361,7 @@
             if (@available(iOS 10.0, *)) {
                 [self.megaCallManager endCall:call];
             }
-                
+            
             break;
             
         default:

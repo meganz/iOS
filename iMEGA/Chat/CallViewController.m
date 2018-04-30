@@ -3,10 +3,13 @@
 #import "MEGARemoteImageView.h"
 #import "MEGALocalImageView.h"
 #import "NSString+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
+
+#import "LTHPasscodeViewController.h"
 
 #import "MEGAChatAnswerCallRequestDelegate.h"
 #import "MEGAChatEnableDisableAudioRequestDelegate.h"
@@ -259,6 +262,17 @@
     return permissionsAlertController;
 }
 
+- (void)enablePasscodeIfNeeded {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"] && [LTHPasscodeViewController doesPasscodeExist]) {
+        [[LTHPasscodeViewController sharedUser] showLockScreenOver:UIApplication.mnz_visibleViewController.view
+                                                     withAnimation:YES
+                                                        withLogout:NO
+                                                    andLogoutTitle:nil];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"presentPasscodeLater"];
+    }
+    [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)acceptCallWithVideo:(UIButton *)sender {
@@ -358,6 +372,28 @@
     } else {
         return;
     }
+    
+    if ([call hasChangedForType:MEGAChatCallChangeTypeSessionStatus]) {
+        if ([call sessionStatusForPeer:call.peerSessionStatusChange] == MEGAChatConnectionInProgress) {
+            if (!self.timer.isValid) {
+                [self.player stop];
+                
+                _timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateLabel) userInfo:nil repeats:YES];
+                [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+                _baseDate = [NSDate date];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    //Add Tap to hide/show controls
+                    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showOrHideControls)];
+                    [tapGestureRecognizer setNumberOfTapsRequired:1];
+                    [self.view addGestureRecognizer:tapGestureRecognizer];
+                    
+                    [self showOrHideControls];
+                });
+            }
+        } else {
+            self.statusCallLabel.text = AMLocalizedString(@"connecting", nil);
+        }
+    }
 
     switch (call.status) {
         case MEGAChatCallStatusInitial:
@@ -376,23 +412,6 @@
             break;
             
         case MEGAChatCallStatusInProgress: {
-            if (!self.timer.isValid) {
-                [self.player stop];
-                
-                _timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateLabel) userInfo:nil repeats:YES];
-                [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-                _baseDate = [NSDate date];
-                
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    //Add Tap to hide/show controls
-                    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showOrHideControls)];
-                    [tapGestureRecognizer setNumberOfTapsRequired:1];
-                    [self.view addGestureRecognizer:tapGestureRecognizer];
-                    
-                    [self showOrHideControls];
-                });
-
-            }
             self.outgoingCallView.hidden = NO;
             self.incomingCallView.hidden = YES;
             
@@ -436,7 +455,9 @@
             
             [self.player play];
             
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self dismissViewControllerAnimated:YES completion:^{
+                [self enablePasscodeIfNeeded];
+            }];
             break;
         }
             

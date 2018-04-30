@@ -106,12 +106,7 @@
         if (self.viewController) {
             [self.viewController presentViewController:customModalAlertVC animated:YES completion:nil];
         } else {
-            if ([[UIApplication mnz_visibleViewController] isKindOfClass:CNContactPickerViewController.class] ||
-                [[UIApplication mnz_visibleViewController] isKindOfClass:CustomModalAlertViewController.class]) {
-                [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:customModalAlertVC animated:YES completion:nil];
-            } else {
-                [[UIApplication mnz_visibleViewController] presentViewController:customModalAlertVC animated:YES completion:nil];
-            }
+            [UIApplication.mnz_visibleViewController presentViewController:customModalAlertVC animated:YES completion:nil];
         }
     }
 }

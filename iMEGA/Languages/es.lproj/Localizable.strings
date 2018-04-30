@@ -58,8 +58,14 @@
 "sslUnverified_alertTitle"="La clave SSL no se ha podido verificar. Tus comunicaciones podrían estar siendo interceptadas por un atacante.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="El contenido al que estás intentando acceder no pertenece a esta cuenta. Inicia sesión con la misma cuenta que tienes en el navegador.";
-/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
+/* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Tardando más de lo previsto. Por favor, espera...";
+/* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
+"serversAreTooBusy"="Servidores ocupados. Por favor, espera.";
+/* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
+"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+/* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
+"tooManyRequest"="Demasiadas peticiones. Por favor espera.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Por favor, inicia sesión en tu cuenta.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -79,9 +85,9 @@
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
 "megaAccessText"="Obtén acceso totalmente cifrado en cualquier lugar, en cualquier momento.";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="Iniciar sesión";
+"login"="Iniciar Sesión";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="Crear cuenta";
+"createAccount"="Crear Cuenta";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Correo electrónico y/o contraseña no válidos. Por favor, inténtalo de nuevo";
 /* Error message when to many attempts to login */
@@ -493,7 +499,7 @@
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "automaticallyBackupYourPhotos"="Guarda tus fotos automáticamente en tu Nube";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Activar Subidas de la cámara";
+"enableCameraUploadsButton"="Activar Subidas de la cámara ";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Subidas de la cámara activadas";
 /* Message shown when the camera uploads have been completed */
@@ -521,7 +527,7 @@
 /* Title of the Contacts section */
 "contactsTitle"="Contactos";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
-"oneFolderShared"="Compartiendo una carpeta";
+"oneFolderShared"="1 carpeta";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d carpetas";
 /* Item menu option to add a contact writting his/her email */
@@ -639,7 +645,7 @@
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="Español";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
-"sendFeedbackLabel"="Enviar comentarios";
+"sendFeedbackLabel"="Enviar valoración";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Por favor, escribe tus comentarios:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
@@ -671,7 +677,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Cambiar contraseña";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="Exportar la Clave de recuperación y guardarla en un sitio seguro te permite establecer una nueva contraseña sin pérdida de datos. ";
+"exportMasterKeyFooter"="Si exportas la Clave de recuperación y la guardas en un lugar seguro podrás cambiar la contraseña sin perder tus datos.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="¿Por qué necesito la Clave de recuperación?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -787,11 +793,11 @@
 /*  */
 "yourPasswordHasBeenReset"="Tu contraseña ha sido restablecida con éxito. Por favor accede a tu cuenta.";
 /* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Si tienes una copia de tu Clave de recuperación, puedes restablecer tu contraseña seleccionando SÍ. Ningún dato se perderá en el proceso.";
+"forgotPassword_firstParagraph"="Si tiene una copia de seguridad de tu Clave de recuperación, puedes restablecer tu contraseña seleccionando SÍ. No perderás tus datos.";
 /* Second paragraph of the screen when the password has been forgotten */
 "forgotPassword_secondParagraph"="Puedes todavía exportar la Clave de recuperación si tienes una sesión de MEGA activa en un navegador en este o en otro ordenador. Si no es así, ya no puedes descifrar tu cuenta existente, pero puedes empezar una nueva cuenta con la misma dirección de correo electrónico seleccionando NO.";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="¿Tienes una copia de tu Clave de recuperación?";
+"doYouHaveABackupOfYourRecoveryKey"="¿Tiene una copia de seguridad de tu Clave de recuperación?";
 /* Headline when the user chose YES */
 "great"="¡Bien!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
@@ -801,7 +807,7 @@
 /* The title of the screen to park an account. */
 "noMasterKey_title"="¡Vaya!";
 /* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Debido a nuestro paradigma de cifrado punto a punto, no podrás acceder a tus datos sin tu contraseña o una copia de seguridad de la Clave de recuperación.";
+"noMasterKey_firstParagraph"="Debido a nuestro paradigma de cifrado punto a punto, no podrás acceder a tus datos sin tu contraseña o una copia de seguridad de tu Clave de recuperación.";
 /* Second paragraph of the screen to park an account */
 "noMasterKey_secondParagraph"="Puedes aparcar tu cuenta existente y empezar con una nueva usando la misma dirección de correo electrónico. Tus datos se conservarán durante al menos 60 días. En caso de que recuerdes la contraseña de la cuenta aparcada, por favor, ponte en contacto con support@mega.nz";
 /* Text of the dialog message to ask for the link to park the account */
@@ -1003,7 +1009,7 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Selecciona el tipo de cuenta:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Una suscripción anual es un 17% más barata que 12 pagos mensuales";
+"twoMonthsFree"="La suscripción anual es un 17% más barata que 12 pagos mensuales";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Plan actual:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
@@ -1198,6 +1204,10 @@
 "chatNotFound"="Chat no encontrado";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ está escribiendo ...";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s [A]están escribiendo...[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s [A]y otros están escribiendo...[/A]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Escribir un mensaje...";
 /* Information if there are no history messages in current chat conversation */
@@ -1261,9 +1271,13 @@
 /* A summary message when a user has attached many files at once into the chat. */
 "uploadedFiles"="Ha subido estos archivos:";
 /* Label in a button that allows to jump to the latest item */
-"jumpToLatest"="Jump to latest";
+"jumpToLatest"="Ir al más reciente";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Nuevos mensajes";
+/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
+"unreadMessage"="%lu mensaje no leído";
+/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
+"unreadMessages"="%lu mensajes no leídos";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="La suscripción se renueva automáticamente con la misma duración y precio elegidos inicialmente. Puedes desactivar la renovación automática de la suscripción A MEGA PRO en la página de ajustes de iTunes hasta 24 horas antes de la renovación programada. Para gestionar tu suscripción, simplemente ve a la App Store, inicia sesión con tu Apple ID al final de la página (si no has hecho esto todavía) y pulsa en “Ver ID de Apple”. Podrás ver la página con los detalles de tu cuenta, donde puedes gestionar las suscripciones que has contratado. Desde aquí, puedes seleccionar la suscripción A MEGA PRO y ver cuando será renovada, cambiar el tipo de suscripción o desactivar la opción de renovación automática para luego cancelar tu suscripción.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1433,3 +1447,29 @@
 "previousVersions"="Versiones anteriores";
 /* Title of section to display information of all current versions of files. */
 "currentVersions"="Versiones actuales";
+/* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
+"remindPasswordTitle"="¿Recuerdas tu contraseña?";
+/* Text that describes why the user should test his/her password */
+"remindPasswordText"="Debido a la tecnología de cifrado de MEGA, no puedes restablecer la contraseña sin perder tus datos. Por favor, asegúrate de recordar tu contraseña.";
+/* Text that describes why the user should test his/her password before logging out */
+"remindPasswordLogoutText"="Antes de cerrar la sesión, te recomendamos que guardes la Clave de recuperación en un lugar seguro. Ten en cuenta que no podrás restablecer tu contraseña si se te olvida.";
+/* Text next to a toggle that if enabled won't appear again */
+"dontShowAgain"="No volver a mostrar";
+/* Label for test password button and titles */
+"testPassword"="Prueba la contraseña";
+/* Label for recovery key button */
+"backupRecoveryKey"="Guarda tu Clave de recuperación";
+/* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
+"testPasswordText"="Escribe tu contraseña a continuación para asegurarte de que la recuerdas. Si pierdes tu contraseña, perderás el acceso a tus datos en MEGA. [A]Más información[/A]";
+/* Title text for the account confirmation. */
+"confirm"="Confirmar";
+/* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
+"passwordAccepted"="Contraseña correcta";
+/* A dialog title to export the Recovery Key for the current user. */
+"exportRecoveryKey"="Exportar Clave de recuperación";
+/* Title to confirm that you want to logout */
+"proceedToLogout"="Proceed to logout";
+/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
+"testPasswordLogoutText"="Estás a punto de cerrar la sesión. Prueba tu contraseña para asegurarte de que la recuerdes. Si pierdes tu contraseña, perderás el acceso a tus datos en MEGA.";
+/* state previous to import a file */
+"loading"="Cargando…";

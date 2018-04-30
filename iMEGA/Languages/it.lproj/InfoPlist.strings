@@ -9,10 +9,10 @@
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryAddUsageDescription"="MEGA ha bisogno di accedere alla tua galleria fotografica per aggiungere foto e video alla galleria del tuo dispositivo";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSFaceIDUsageDescription"="MEGA accede al tuo Face ID per permetterti di sbloccare facilmente il passcode dell'app nel caso in cui tu attivi questa opzione.";
+"NSFaceIDUsageDescription"="MEGA accede al tuo Face ID per permetterti di sbloccare facilmente il passcode dell'app nel caso in cui tu attivi questa opzione.                                ";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
 "quickActionSearchString"="Ricerca";
 /*  */
-"quickActionUploadString"="Invia";
+"quickActionUploadString"="Upload";
 /* Title of the Offline section */
 "quickActionOfflineString"="Offline";

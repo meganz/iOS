@@ -243,4 +243,50 @@ static MEGAStore *_megaStore = nil;
     return array.firstObject;
 }
 
+#pragma mark - MOMediaDestination entity
+
+- (void)insertOrUpdateMediaDestinationWithFingerprint:(NSString *)fingerprint destination:(NSNumber *)destination timescale:(NSNumber *)timescale {
+    MOMediaDestination *moMediaDestination = [self fetchMediaDestinationWithFingerprint:fingerprint];
+    
+    if (moMediaDestination) {
+        moMediaDestination.destination = destination;
+        moMediaDestination.timescale = timescale;
+        
+        MEGALogDebug(@"Save context - update media destination with fingerprint %@ and destination %@", moMediaDestination.fingerprint, moMediaDestination.destination);
+    } else {
+        MOMediaDestination *moMediaDestination = [NSEntityDescription insertNewObjectForEntityForName:@"MediaDestination" inManagedObjectContext:self.managedObjectContext];
+        moMediaDestination.fingerprint = fingerprint;
+        moMediaDestination.destination = destination;
+        moMediaDestination.timescale = timescale;
+
+        MEGALogDebug(@"Save context - insert media destination with fingerprint %@ and destination %@", moMediaDestination.fingerprint, moMediaDestination.destination);
+    }
+    
+    [self saveContext];
+}
+
+- (void)deleteMediaDestinationWithFingerprint:(NSString *)fingerprint {
+    MOMediaDestination *moMediaDestination = [self fetchMediaDestinationWithFingerprint:fingerprint];
+
+    if (moMediaDestination) {
+        [self.managedObjectContext deleteObject:moMediaDestination];
+        
+        MEGALogDebug(@"Save context - remove media destination with fingerprint %@", moMediaDestination.fingerprint);
+    }
+    
+    [self saveContext];
+}
+
+- (MOMediaDestination *)fetchMediaDestinationWithFingerprint:(NSString *)fingerprint {
+    NSFetchRequest *request = [MOMediaDestination fetchRequest];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fingerprint == %@", fingerprint];
+    request.predicate = predicate;
+    
+    NSError *error;
+    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    return array.firstObject;
+}
+
 @end
