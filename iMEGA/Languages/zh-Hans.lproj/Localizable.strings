@@ -3,9 +3,9 @@
 /* Button title to accept something */
 "ok"="OK";
 /* */
-"yes"="是的";
+"yes"="是";
 /* */
-"no"="不是";
+"no"="否";
 /* */
 "upload"="上传";
 /*  */
@@ -58,8 +58,14 @@
 "sslUnverified_alertTitle"="服务器SSL 金钥未能认证。您可能会收到第三方攻击。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="您尝试访问的内容并不对当前登入的帐户开放。请登入与浏览器中所登录的相同的帐户。";
-/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
+/* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="加载时间比预期的长，请耐心等待。";
+/* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
+"serversAreTooBusy"="服务器忙碌中。请稍候...";
+/* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
+"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+/* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
+"tooManyRequest"="Too many requests. Please wait.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="请登入您的帐号。";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -79,9 +85,9 @@
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
 "megaAccessText"="随时随地获得完全加密访问";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="登入";
+"login"="登录";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="建立帐号";
+"createAccount"="创建账号";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="邮箱地址或密码无效。请重试";
 /* Error message when to many attempts to login */
@@ -149,7 +155,7 @@
 /* Title for the file link view */
 "fileLink"="文件链接";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="开启";
+"openButton"="打开";
 /* Error message shown when you try to download something bigger than the space available in your device */
 "fileTooBigMessage"="您正在尝试下载的文件大于可用内存。";
 /* Error message shown when you try to open something bigger than the free space in your device */
@@ -185,7 +191,7 @@
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="无网络连接";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="空的文件夹";
+"emptyFolder"="文件夹中没有文件";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="您的云盘中没有文件";
 /* Button title shown in empty views when you can 'Add files' */
@@ -259,7 +265,7 @@
 /* Section title of the 'Sort by' */
 "sortTitle"="排序";
 /* Button title to 'Save' the selected option */
-"save"="储存";
+"save"="保存";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="名字（升序）";
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
@@ -273,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="由旧至新";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="选取";
+"choosePhotoVideo"="选择";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="拍摄";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
@@ -281,7 +287,7 @@
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="新文件夹的名字";
 /* Title button for the create folder alert.  */
-"createFolderButton"="建立";
+"createFolderButton"="创建";
 /* message when trying to create a folder that already exists */
 "folderAlreadyExists"="文件夹已存在";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
@@ -347,7 +353,7 @@
 /* button caption text that the user clicks when he disagrees */
 "disagree"="反对";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
-"linkWithoutKey"="链接不包含密钥";
+"linkWithoutKey"="使用无密钥方式进入(公开文件)";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
 "linkWithKey"="链接包含密钥";
 /* An alert dialog for the Get Link feature */
@@ -366,6 +372,16 @@
 "copyKey"="复制密钥";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="开启于...";
+/* */
+"sendToContact"="寄给联系人";
+/* Toast text upon sending a single file to chat */
+"fileSentToChat"="文件已发送至聊天";
+/* Success message when the attachment has been sent to a many chats */
+"fileSentToXChats"="文件发送到%1$d个对话";
+/* Toast text upon sending multiple files to chat */
+"filesSentToChat"="文件已发送至聊天";
+/* success message when sending multiple files. Please do not modify the %d placeholder. */
+"xfilesSentSuccesfully"="成功发送%d个文件";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="删除链接";
 /* Message shown when there are some active links that can be removed or disabled */
@@ -441,7 +457,7 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="您确定要将[A] 文件和[B] 文件夹移至垃圾桶吗？";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1 个文件已被移动到垃圾桶";
+"fileMovedToRubbishBinMessage"="1个文件已移放进垃圾桶";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
 "filesMovedToRubbishBinMessage"="%d 个文件已被移动到垃圾桶";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
@@ -483,19 +499,25 @@
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "automaticallyBackupYourPhotos"="自动将相片备份到云盘";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="激活相机上传";
+"enableCameraUploadsButton"="允许从相机上传";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="照片上传已激活";
+"cameraUploadsEnabled"="已开启相机上传";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="从相机上传成功";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "cameraUploadsUploadingFile"="正在上传 %1$d 个文件，共%2$d个文件中。";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
 "cameraUploadsUploadingFiles"="正在上传 %1$d 个文件，共%2$d个文件中。";
+/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
+"indexOfTotalFile"="%2$d 个文件中的 %1$d 个文件";
+/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
+"indexOfTotalFiles"="%2$d 个文件中的 %1$d 个文件";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="已选中%lu 个项目";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="已选中%lu 个项目";
+/* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
+"xSelected"="已选%d个项目";
 /* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
 "cameraUploadsWillBeDisabled"="相机上传功能将无法使用";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
@@ -595,7 +617,7 @@
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
 "XContactsSelected"="[X]位联系人";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="分享文件夹";
+"shareFolder"="共享文件夹";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="分享文件夹";
 /* Button that allows you to select a given folder */
@@ -603,7 +625,7 @@
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="允许";
 /* Permissions given to the user you share your folder with */
-"readOnly"="只能浏览";
+"readOnly"="只读";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="读取与写入";
 /* Permissions given to the user you share your folder with */
@@ -657,7 +679,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="变更密码";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="正在导出您的万能密钥，请妥善保管。您的万能密钥使您不会因为密码重置而丢失已上传的数据。";
+"exportMasterKeyFooter"="汇出还原金钥并将其保存于安全的位置，使您于设置新密码时不会有资料遗失。";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="为什么我会需要还原金钥？";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -729,9 +751,9 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="您将永久删除[A] 个文件和[B] 个文件夹。您要继续吗？ (注意！此操作不可恢复。)";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="已从MEGA移除1 个文件！";
+"fileRemovedToRubbishBinMessage"="已从MEGA删除1个文件";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="从MEGA 移除%d 个文件";
+"filesRemovedToRubbishBinMessage"="已从MEGA删除%d个文件";
 /* Success message shown when 1 folder has been removed from MEGA */
 "folderRemovedToRubbishBinMessage"="已从MEGA删除1个文件夹";
 /* Success message shown when {1+} folders have been removed from MEGA */
@@ -751,7 +773,7 @@
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="确认密码";
 /* Success message shown when the password has been changed */
-"passwordChanged"="您的密码已变更。";
+"passwordChanged"="您的密码已被更改。";
 /* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
 "oldAndNewPasswordMatch"="新的密码不能与您现在的密码相同。";
 /* An option to reset the password. */
@@ -767,17 +789,17 @@
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey"="还原金钥";
 /* An alert title where the user provided the incorrect Recovery Key. */
-"invalidRecoveryKey"="无效的还原金钥";
+"invalidRecoveryKey"="回复还原金钥";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="还原金钥将被用于重设您的密码。请输入您的新密码。";
 /*  */
 "yourPasswordHasBeenReset"="密码已重置。请立即登入帐户。";
 /* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="如果您有还原金钥的备份，您可以选择「是」以重设您的密码。任何资料均不会遗失。";
+"forgotPassword_firstParagraph"="如果您备份了还原金钥，则可以通过选择是重置密码。没有数据将丢失。";
 /* Second paragraph of the screen when the password has been forgotten */
 "forgotPassword_secondParagraph"="若您现在于此电脑的其他浏览器中或其他电脑中，仍开有已登入MEGA的页面，您还有机会可以汇出还原金钥。如果您没有，您将无法再解密或登入您现有的帐户，但您可以选择「否」以使用同一电子信箱重新注册。";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="您有备份您的还原金钥吗？";
+"doYouHaveABackupOfYourRecoveryKey"="您有恢复金匙的备份吗";
 /* Headline when the user chose YES */
 "great"="很好!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
@@ -787,7 +809,7 @@
 /* The title of the screen to park an account. */
 "noMasterKey_title"="噢！";
 /* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="因我们使用严谨的端对端加密模式，您将无法在没有密码或还原金钥的备份下取得您的资料。";
+"noMasterKey_firstParagraph"="由于我们的端到端加密，没有您的密码或还原金钥的备份，您将无法访问您的数据。";
 /* Second paragraph of the screen to park an account */
 "noMasterKey_secondParagraph"="您可以先封存现有的帐户，再以同一个电子信箱重新注册。您的资料将会被保存至少60天。在这之间，如果您回想起您此一封存帐号的密码，请联系support@mega.nz以寻求恢复协助。";
 /* Text of the dialog message to ask for the link to park the account */
@@ -825,7 +847,7 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="已关闭之其他登入";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="更改密码";
+"changePasscodeLabel"="更改验证码";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="简单密码";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
@@ -833,7 +855,7 @@
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="于10次密码输入错误后，自动登出并删除本机资料";
 /* Menu item */
-"help"="帮助";
+"help"="支持";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="协助中心";
 /* Title to rate the app */
@@ -881,7 +903,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="每当推荐成功便能获取%1$s的存储空间和%2$s的流量";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="从手机联系人列表中选择联系人，或输入多个电子邮件地址。";
+"inviteYourFriendsExplanation"="从手机通讯录选择联系人，或输入多个电子邮件地址。";
 /*  */
 "insertYourFriendsEmails"="请填入您好友的电子邮件：";
 /*  */
@@ -921,7 +943,7 @@
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="个月";
 /*  */
-"days"="日";
+"days"="天";
 /* Label to show that an error related with expiration occurs during a SDK operation. */
 "expired"="过期";
 /* Title of the button which logs out from your account. */
@@ -983,13 +1005,13 @@
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="取决于您所达成的奖励挑战。";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%.2f %@ 每月";
+"productPricePerMonth"="%@ /月";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="请从下列选取一个计划:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="选择一个帐户类型：";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
+"twoMonthsFree"="年度订阅比12个月每月付款便宜17%";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="当前计划：";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
@@ -1184,6 +1206,10 @@
 "chatNotFound"="未找到此对话";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@正在输入...";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s [A]正在输入...[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s [A]和其他人正在输入...[/A]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="书写信息...";
 /* Information if there are no history messages in current chat conversation */
@@ -1246,6 +1272,14 @@
 "uploadedFile"="文件已被上传：";
 /* A summary message when a user has attached many files at once into the chat. */
 "uploadedFiles"="这些文件已被上传：";
+/* Label in a button that allows to jump to the latest item */
+"jumpToLatest"="跳转到最新";
+/* Label in a button that allows to jump to the latest message */
+"newMessages"="新消息";
+/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
+"unreadMessage"="%lu 未读信息";
+/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
+"unreadMessages"="%lu 未读信息";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="此订阅将会自动更新续订，续订内容与您一开始选择的订阅时间与价格一致。您可以于您的iTunes帐户设定页面关闭MEGA PRO的订阅自动更新续订，必须于您的下一个订阅缴款期限的24小时之前执行此操作。欲管理您的订阅内容，只需点击您手机上的App Store图标，可以在页面下方以您的Apple帐号登入（如果您还没有这样做），然后点击查看帐号。您会被带到您的帐户页面，就可以向下滚动到管理应用程序订阅。在那里，您可以选择你的MEGA PRO订阅和查看您预定的续约日期，选择不同的计划或切换开关至关闭以停用您的自动续订。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1321,10 +1355,10 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="在应用程序里，您可以升级扩大您的储存空间与流量，并选择按月给付或年度专案。";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITE方案：每月€4.99欧元（$4.99美元）或每年€49.99欧元（$49.99美元），可享有200 GB的储存空间和每月1 TB的流量。 PRO I 方案：每月€9.99欧元（$9.99美元）或€99.99欧元（$99.99美元），可享有1 TB的储存空间和每月2 TB的流量。 PRO II 方案：每月€19.99欧元（$19.99美元）或每年€199.99欧元（$199.99美元），可享有4 TB的储存空间和每月8 TB的流量。 PRO III 方案：每月€29.99欧元（$29.99美元）或€299.99欧元（$299.99美元），可享有8 TB的储存空间和每月16 TB的流量。";
+"generalDescriptionParagraph5"="PRO LITE订阅：每月4.99欧元（4.99美元）或每年49.99欧元（49.99美元），为您提供每月200GB的存储空间和1TB的转移限额。\n PRO I预订：9.99欧元（9.99美元）每月99.99欧元（99.99美元），每月可为您提供1TB的存储空间和2TB的转移限额。\n PRO II订购：每月19.99欧元（19.99美元）或每199.99欧元（199.99美元）每年为您提供4TB的存储空间和8TB的传输配额。[BR] PRO III订阅：每月29.99美元（29.99美元）或每年299.99欧元（299.99美元），为您提供8TB的存储空间和16每月转移配额。";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="想了解更多资讯，请至我们的网站： 手机- https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html 电脑- https://mega.nz/";
+"generalDescriptionParagraph6"="欲了解更多信息，请查看我们的网站：\nMobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nDesktop - https://mega.nz/";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="呼叫中...";
 /* Notification text body shown when you have missed one audio call */
@@ -1345,3 +1379,99 @@
 "missedAudioCallsAndMissedVideoCalls"="[A] 个未接语音通话 和[B] 个未接视频通话";
 /* Button title to see the available bonus */
 "getBonus"="获得奖励";
+/* QR Code label, used in Settings as title. String as short as possible */
+"qrCode"="二维码";
+/* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
+"autoAccept"="自动接受";
+/* Footer that explains the way Auto-Accept works for QR codes */
+"autoAcceptFooter"="扫描二维码码的联系人会自动添加到您的联系人列表中。";
+/* Action to reset the current valid QR code of the user */
+"resetQrCode"="重置二维码";
+/* Footer that explains what would happen if the user resets his/her QR code */
+"resetQrCodeFooter"="之前的二维码将不再有效。";
+/* Title for view that displays the QR code of the user. String as short as possible. */
+"myCode"="我的二维码";
+/* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
+"scanCode"="扫码";
+/* Label that encourage the user to line the QR to scan with the camera */
+"lineCodeWithCamera"="排列二位码后使用设备的相机进行扫描";
+/* Error text shown when the user scans a QR that is not valid. String as short as possible. */
+"invalidCode"="该码无效";
+/* Success text shown in a label when the user scans a valid QR. String as short as possible. */
+"codeScanned"="二维码扫描成功";
+/* title of the screen that shows the users with whom the user has shared a folder */
+"sharedWidth"="共享者：";
+/*   */
+"details"="内容";
+/* Item menu option upon right click on one or multiple files. */
+"sharing"="分享";
+/* Title of section to display number of all historical versions of files. */
+"versions"="历史版本";
+/* Title label of a node property. */
+"location"="位置";
+/* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
+"totalSize"="大小总计";
+/* Refers to the type of a file or folder. */
+"type"="类型";
+/* Title of the incoming shared folders of a user in singular */
+"sharedFolder"="已分享的文件夹";
+/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
+"created"="建立";
+/* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
+"contains"="包含";
+/* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
+"modified"="最后修改";
+/* used for example when a folder is shared with 2 or more users */
+"users"="用户";
+/* user (singular) label indicating is receiving some info, for example shared folders */
+"user"="用户";
+/* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
+"xVersions"="[X]个版本";
+/* Label of the option menu. When clicking this button, the app shows the info of the file */
+"fileInfo"="文件资讯";
+/* Label of the option menu. When clicking this button, the app shows the info of the folder */
+"folderInfo"="文件夹资讯";
+/* Question to ensure user wants to delete file version. */
+"deleteVersion"="是否删除这个版本？";
+/* Message to notify user the file version will be permanently removed */
+"permanentlyRemoved"="它将被永久性删除";
+/*  */
+"delete"="删除";
+/* A button label which reverts a certain version of a file to be the current version of the selected file. */
+"revert"="还原为此版本";
+/*  */
+"download"="下载";
+/* Singular of file. 1 file */
+"file"="文件";
+/* Title of section to display information of the current version of a file. */
+"currentVersion"="当前版本";
+/* A button label which opens a dialog to display the full version history of the selected file. */
+"previousVersions"="上个版本";
+/* Title of section to display information of all current versions of files. */
+"currentVersions"="当前版本";
+/* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
+"remindPasswordTitle"="你还记得本帐号的密码吗？";
+/* Text that describes why the user should test his/her password */
+"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+/* Text that describes why the user should test his/her password before logging out */
+"remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
+/* Text next to a toggle that if enabled won't appear again */
+"dontShowAgain"="Don’t show me again";
+/* Label for test password button and titles */
+"testPassword"="Test Password";
+/* Label for recovery key button */
+"backupRecoveryKey"="备份还原秘钥";
+/* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
+"testPasswordText"="请在下方测试您所记得的密码。如果您忘记密码，您将无法再访问您储存在 MEGA 的数据。[A]了解更多[/A]";
+/* Title text for the account confirmation. */
+"confirm"="确认";
+/* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
+"passwordAccepted"="密码已确认";
+/* A dialog title to export the Recovery Key for the current user. */
+"exportRecoveryKey"="导出恢复金匙";
+/* Title to confirm that you want to logout */
+"proceedToLogout"="Proceed to logout";
+/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
+"testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+/* state previous to import a file */
+"loading"="加载中";

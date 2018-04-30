@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14087.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qvR-uV-YnP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qvR-uV-YnP">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14075.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -609,29 +609,12 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="fy7-lu-12J" style="IBUITableViewCellStyleDefault" id="U2a-bz-dX1" userLabel="Change Password Table View Cell">
-                                        <rect key="frame" x="0.0" y="195" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="U2a-bz-dX1" id="mdg-Qq-77P">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Reset password" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fy7-lu-12J">
-                                                    <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
-                                                    <color key="textColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="" footerTitle="" id="DIb-cs-pWo">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="IER-Qw-muP" style="IBUITableViewCellStyleDefault" id="etO-9p-087" userLabel="Change Email Table View Cell">
-                                        <rect key="frame" x="0.0" y="259" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="215" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="etO-9p-087" id="aP8-YV-7Gv">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -652,7 +635,7 @@
                             <tableViewSection headerTitle="" footerTitle="" id="iCu-Aj-k5u">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="6Dq-qt-Jc3" style="IBUITableViewCellStyleDefault" id="cNw-4r-zFD" userLabel="Change Email Table View Cell">
-                                        <rect key="frame" x="0.0" y="323" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="279" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cNw-4r-zFD" id="gMr-ld-HPQ">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -685,7 +668,6 @@
                         <outlet property="closeOtherSessionsLabel" destination="6Dq-qt-Jc3" id="swv-M1-mpB"/>
                         <outlet property="masterKeyLabel" destination="CZT-vM-cFP" id="OOF-mQ-3v7"/>
                         <outlet property="masterKeyRightDetailLabel" destination="c7i-ho-QAZ" id="PpN-W1-llS"/>
-                        <outlet property="resetPasswordLabel" destination="fy7-lu-12J" id="3cV-rA-HUE"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I4m-YE-vxx" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -972,6 +954,7 @@
                         <outlet property="changePasswordButton" destination="Ugg-UB-5iL" id="rrD-tl-euI"/>
                         <outlet property="confirmPasswordImageView" destination="fp2-Td-e9h" id="zAh-rJ-iuZ"/>
                         <outlet property="confirmPasswordTextField" destination="bX8-QE-I91" id="nZP-4e-8sf"/>
+                        <outlet property="currentLineImageView" destination="Kgp-GT-dsf" id="Zqq-UQ-azL"/>
                         <outlet property="currentPasswordImageView" destination="ddP-st-5kT" id="lnl-z6-74f"/>
                         <outlet property="currentPasswordTextField" destination="I30-Sl-69j" id="p55-du-2pD"/>
                         <outlet property="emailIsChangingDescriptionLabel" destination="Gh4-XS-wZS" id="crs-Hs-zMx"/>

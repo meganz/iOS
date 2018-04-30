@@ -3,7 +3,7 @@
 /* Button title to accept something */
 "ok"="OK";
 /* */
-"yes"="Có";
+"yes"="Có ";
 /* */
 "no"="Không";
 /* */
@@ -58,8 +58,14 @@
 "sslUnverified_alertTitle"="Không xác thực được SSL key từ máy chủ. Xem chừng bạn đã bị tác động bởi người hack trung gian.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
-/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
-"takingLongerThanExpected"="Quá trình diễn ra lâu hơn dự kiến. Xin vui lòng chờ...";
+/* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
+"takingLongerThanExpected"="Quá trình diễn ra lâu hơn dự kiến. Xin kiên nhẫn chờ...";
+/* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
+"serversAreTooBusy"="Bộ phận máy chủ hiện đang bận. Xin vui lòng chờ.";
+/* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
+"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+/* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
+"tooManyRequest"="Too many requests. Please wait.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Xin đăng nhập vào tài khoản.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -273,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="cũ nhất";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Chọn";
+"choosePhotoVideo"="Chọn ảnh/video";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Chụp ảnh";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
@@ -366,6 +372,16 @@
 "copyKey"="Sao chép mã khóa";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Mở với...";
+/* */
+"sendToContact"="Gửi tới danh bạ";
+/* Toast text upon sending a single file to chat */
+"fileSentToChat"="File sent to chat";
+/* Success message when the attachment has been sent to a many chats */
+"fileSentToXChats"="Tệp đã gửi tới cho %1$d cuộc chat";
+/* Toast text upon sending multiple files to chat */
+"filesSentToChat"="Files sent to chat";
+/* success message when sending multiple files. Please do not modify the %d placeholder. */
+"xfilesSentSuccesfully"="%d tệp tin đã được gửi đi";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Xóa đường dẫn liên kết";
 /* Message shown when there are some active links that can be removed or disabled */
@@ -483,19 +499,25 @@
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "automaticallyBackupYourPhotos"="Tự động lưu dự phòng các hình ảnh trong máy lên Ổ Mây";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Bật Camera Uploads";
+"enableCameraUploadsButton"="Bật tính năng Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Chế độ Camera Uploads đang hoạt động";
+"cameraUploadsEnabled"="Camera Uploads đang được bật";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Camera uploads đã đăng tải xong";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "cameraUploadsUploadingFile"="Đang tải lên %1$d trong tổng %2$d tệp";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
 "cameraUploadsUploadingFiles"="Đang tải lên %1$d trong tổng %2$d tệp";
+/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
+"indexOfTotalFile"="%1$d trong tổng %2$d tệp";
+/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
+"indexOfTotalFiles"="%1$d trong tổng %2$d tệp";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu mục đã được chọn";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu mục đã được chọn";
+/* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
+"xSelected"="%d được chọn";
 /* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
 "cameraUploadsWillBeDisabled"="Camera Uploads sẽ bị tắt";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
@@ -595,7 +617,7 @@
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
 "XContactsSelected"="[X] liên hệ";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="Chia Sẻ Thư Mục";
+"shareFolder"="Chia sẻ thư mục này";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="Chia sẻ thư mục";
 /* Button that allows you to select a given folder */
@@ -657,7 +679,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Đổi mật khẩu";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="Xuất mã-khóa MasterKey và giữ nó ở một nơi an toàn để đề phòng việc mất dữ liệu khi đặt mật khẩu mới.";
+"exportMasterKeyFooter"="Xuất ra Mã Phục Hồi và giữ mã ở một nơi an toàn và dễ nhớ sẽ giúp bạn tránh việc mất dữ liệu khi thay đổi mật khẩu.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Tại sao tôi cần phải lưu giữ Mã Khóa Phục Hồi?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -751,7 +773,7 @@
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Xác nhận mật khẩu";
 /* Success message shown when the password has been changed */
-"passwordChanged"="Mật khẩu đã được thay đổi.";
+"passwordChanged"="Bạn vừa đổi mật khẩu.";
 /* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
 "oldAndNewPasswordMatch"="Mật khẩu mới và cũ không được giống nhau.";
 /* An option to reset the password. */
@@ -767,17 +789,17 @@
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey"="Mã Khóa Phục Hồi";
 /* An alert title where the user provided the incorrect Recovery Key. */
-"invalidRecoveryKey"="Mã Khóa Phục Hồi không hợp lệ";
+"invalidRecoveryKey"="Sai Mã Khóa Phục Hồi";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Mã Khóa Phục Hồi này sẽ được dùng để đặt lại mật khẩu. Nhập cẩn thận mật khẩu mới bạn muốn dùng.";
 /*  */
 "yourPasswordHasBeenReset"="Mật khẩu đã được đặt lại thành công. Bạn có thể đăng nhập vào tài khoản ngay bây giờ.";
 /* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Nếu bạn có lưu dự phòng Mã Phục Hồi của mình, bạn có thể đặt lại mật khẩu mà không bị mất dữ liệu, chọn CÓ.";
+"forgotPassword_firstParagraph"="Nếu bạn có Mã Khóa Phục Hồi, nhấn CÓ. Bạn sẽ được phép đặt lại mật khẩu mà không bị mất dữ liệu của tài khoản.";
 /* Second paragraph of the screen when the password has been forgotten */
 "forgotPassword_secondParagraph"="Bạn vẫn có thể xuất ra Mã Phục Hồi ngay bây giờ nếu bạn đang có một phiên MEGA đang hoạt động từ bất kỳ máy tính nào có MEGA được đăng nhập vào trình duyệt web. Nếu không có, bạn không thể truy cập vào tài khoản của mình được nữa, nhưng bạn vẫn có thể đăng ký lại một tài khoản mới với cùng địa chỉ email, bằng cách chọn nút KHÔNG.";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="Bạn có bản lưu dự phòng của Mã Phục Hồi không?";
+"doYouHaveABackupOfYourRecoveryKey"="Bạn có Mã Khóa Phục Hồi của tài khoản không?";
 /* Headline when the user chose YES */
 "great"="Vậy thì tốt!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
@@ -787,7 +809,7 @@
 /* The title of the screen to park an account. */
 "noMasterKey_title"="Ây!";
 /* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Vì lý do dạng thức mã-hóa đầu-cuối, bạn sẽ không được truy cập vào dữ liệu của mình mà không có mật khẩu hoặc bản dự phòng của Mã Phục Hồi.";
+"noMasterKey_firstParagraph"="Vì đặc tính của phương thức mã hóa đầu-cuối, sẽ không có cách nào để truy cập vào dữ liệu của tài khoản nếu quên mất mật khẩu và không có Mã Phục Hồi được đề phòng sẵn.";
 /* Second paragraph of the screen to park an account */
 "noMasterKey_secondParagraph"="Bạn có thể thay thế mới tài khoản hiện có của mình và bắt đầu một cái mới với cùng địa chỉ email. Trong vòng 60 ngày nếu bạn nhớ ra mật khẩu của tài khoản cũ, xin vui lòng liên lạc với support@mega.nz";
 /* Text of the dialog message to ask for the link to park the account */
@@ -833,7 +855,7 @@
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Sau 10 lần nhập sai mã, ứng dụng sẽ tự động thoát tài khoản và xóa các dữ liệu có liên quan đến MEGA trong iPhone";
 /* Menu item */
-"help"="Trợ giúp";
+"help"="Cần trợ giúp";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Thư viện cách sử dụng và vấn đề";
 /* Title to rate the app */
@@ -983,13 +1005,13 @@
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="Tùy thuộc vào sự tham gia của người sử dụng dịch vụ để vào chương trình làm nhiệm vụ thưởng.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%.2f %@ mỗi tháng";
+"productPricePerMonth"="%@ per month";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Chọn một gói cước ở dưới đây:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Select one account type:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
+"twoMonthsFree"="An annual subscription is 17% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Current Plan:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
@@ -1184,6 +1206,10 @@
 "chatNotFound"="Không tìm thấy cuộc chat";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ đang viết tin nhắn ...";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s [A]đang viết tin nhắn...[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s [A]và vài người khác đang viết tin nhắn...[/A]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Viết tin nhắn...";
 /* Information if there are no history messages in current chat conversation */
@@ -1246,6 +1272,14 @@
 "uploadedFile"="Uploaded this file:";
 /* A summary message when a user has attached many files at once into the chat. */
 "uploadedFiles"="Uploaded these files:";
+/* Label in a button that allows to jump to the latest item */
+"jumpToLatest"="Jump to latest";
+/* Label in a button that allows to jump to the latest message */
+"newMessages"="New messages";
+/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
+"unreadMessage"="%lu unread message";
+/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
+"unreadMessages"="%lu unread messages";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Các gói cước đăng ký sẽ được tự động gia hạn chu kỳ thuê bao kế tiếp vào cùng thời gian và cùng mức giá như thời gian ban đầu khi gói cước được mua lần đầu tiên. Quý khách có thể tắt tự động gia hạn thuê bao MEGA PRO ít nhất trước 24 giờ trước thời điểm thanh toán đăng ký tiếp theo thông qua trang cài đặt tài khoản iTunes của quý khách. Để quản lý đăng ký, chỉ cần nhấp vào biểu tượng App Store trên điện thoại, đăng nhập với Apple ID của quý khách, ở dưới cùng của trang. Sau đó bấm Xem ID (View ID). Quý khách sẽ được đưa đến trang tài khoản, rồi di chuyển xuống đến mục Manage App Subscriptions. Từ đó, chọn vào thuê bao MEGA PRO của quý khách và xem ngày gia hạn dự kiến tiếp theo, chọn một gói thuê bao khác hoặc chuyển đổi chuyển đổi on-off (bật-tắt) để ngắt việc tự động gia hạn thuê bao.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1321,10 +1355,10 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="Ở trong ứng dụng MEGA, bạn có thể nâng cấp thêm không gian lưu trữ và băng thông truyền tải với gói cước thành viên mỗi tháng hay thường niên.";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Gói PRO LITE: 4.99€ euro (hay 4.99$ đô-la Mỹ) mỗi tháng hay 49.99€ (49.99$) nếu mua thường niên cung cấp cho khách hàng 200 GB không gian lưu trữ và 1 TB băng thông truyền tải cho mỗi một tháng.Gói PRO I: 9.99€ (9.99$) mỗi tháng hay 99.99€ (99.99$) nếu mua thường niên cung cấp cho khách hàng 1 TB không gian lưu trữ và 2 TB băng thông truyền tải cho mỗi một tháng.Gói PRO II: 19.99€ (19.99$) mỗi tháng hay 199.99€ (199.99$) nếu mua thường niên cung cấp cho khách hàng 4 TB không gian lưu trữ và 8 TB băng thông truyền tải cho mỗi một tháng.Gói PRO III: 29.99€ (29.99$) mỗi tháng hay 299.99€ (299.99$) nếu mua thường niên cung cấp cho khách hàng 8 TB không gian lưu trữ và 16 TB băng thông truyền tải cho mỗi một tháng.";
+"generalDescriptionParagraph5"="PRO LITE subscription: €4.99 (US$4.99) per month or €49.99 (US$49.99) per year gives you 200 GB of storage space and 1 TB of transfer quota per month.\nPRO I subscription: €9.99 (US$9.99) per month or €99.99 (US$99.99) per year gives you 1 TB of storage space and 2 TB of transfer quota per month.\nPRO II subscription: €19.99 (US$19.99) per month or €199.99 (US$199.99) per year gives you 4 TB of storage space and 8 TB of transfer quota per month.\nPRO III subscription: €29.99 (US$29.99) per month or €299.99 (US$299.99) per year gives you 8 TB of storage space and 16 TB of transfer quota per month.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Để biết thêm thông tin, xin truy cập:Trên điện thoại - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmltrên máy tính - https://mega.nz/";
+"generalDescriptionParagraph6"="For more info, please check our website:\nMobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nDesktop - https://mega.nz/";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="Đang gọi...";
 /* Notification text body shown when you have missed one audio call */
@@ -1345,3 +1379,99 @@
 "missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";
 /* Button title to see the available bonus */
 "getBonus"="Get Bonus";
+/* QR Code label, used in Settings as title. String as short as possible */
+"qrCode"="QR Code";
+/* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
+"autoAccept"="Auto-Accept";
+/* Footer that explains the way Auto-Accept works for QR codes */
+"autoAcceptFooter"="Contacts that scan your QR Code will be automatically added to your contact list.";
+/* Action to reset the current valid QR code of the user */
+"resetQrCode"="Reset QR Code";
+/* Footer that explains what would happen if the user resets his/her QR code */
+"resetQrCodeFooter"="Previous QR codes will no longer be valid.";
+/* Title for view that displays the QR code of the user. String as short as possible. */
+"myCode"="My Code";
+/* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
+"scanCode"="Scan Code";
+/* Label that encourage the user to line the QR to scan with the camera */
+"lineCodeWithCamera"="Line up the QR code to scan it with your device’s camera";
+/* Error text shown when the user scans a QR that is not valid. String as short as possible. */
+"invalidCode"="Invalid code";
+/* Success text shown in a label when the user scans a valid QR. String as short as possible. */
+"codeScanned"="Code scanned";
+/* title of the screen that shows the users with whom the user has shared a folder */
+"sharedWidth"="Đã chia sẻ cho:";
+/*   */
+"details"="Chi tiết";
+/* Item menu option upon right click on one or multiple files. */
+"sharing"="Chia sẻ";
+/* Title of section to display number of all historical versions of files. */
+"versions"="Các phiên bản";
+/* Title label of a node property. */
+"location"="Location";
+/* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
+"totalSize"="Tổng kích thước";
+/* Refers to the type of a file or folder. */
+"type"="Dạng";
+/* Title of the incoming shared folders of a user in singular */
+"sharedFolder"="Thư mục được chia sẻ";
+/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
+"created"="Ngày tạo";
+/* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
+"contains"="Chứa đựng";
+/* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
+"modified"="Chỉnh Sửa Lần Cuối";
+/* used for example when a folder is shared with 2 or more users */
+"users"="người";
+/* user (singular) label indicating is receiving some info, for example shared folders */
+"user"="người";
+/* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
+"xVersions"="Có [X] bản được bảo lưu";
+/* Label of the option menu. When clicking this button, the app shows the info of the file */
+"fileInfo"="Thông tin tệp tin";
+/* Label of the option menu. When clicking this button, the app shows the info of the folder */
+"folderInfo"="Thông tin thư mục";
+/* Question to ensure user wants to delete file version. */
+"deleteVersion"="Do you want to delete this version?";
+/* Message to notify user the file version will be permanently removed */
+"permanentlyRemoved"="It will be permanently removed";
+/*  */
+"delete"="Xóa";
+/* A button label which reverts a certain version of a file to be the current version of the selected file. */
+"revert"="Phục hồi lại";
+/*  */
+"download"="Tải về";
+/* Singular of file. 1 file */
+"file"="tệp";
+/* Title of section to display information of the current version of a file. */
+"currentVersion"="Phiên bản hiện hành";
+/* A button label which opens a dialog to display the full version history of the selected file. */
+"previousVersions"="Previous Versions";
+/* Title of section to display information of all current versions of files. */
+"currentVersions"="Phiên bản hiện hành";
+/* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
+"remindPasswordTitle"="Bạn có còn nhớ mật khẩu của mình không?";
+/* Text that describes why the user should test his/her password */
+"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+/* Text that describes why the user should test his/her password before logging out */
+"remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
+/* Text next to a toggle that if enabled won't appear again */
+"dontShowAgain"="Don’t show me again";
+/* Label for test password button and titles */
+"testPassword"="Test Password";
+/* Label for recovery key button */
+"backupRecoveryKey"="Sao lưu Mã Khóa Phục Hồi";
+/* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
+"testPasswordText"="Xin nhập thử mật khẩu ở dưới đây để kiểm tra rằng bạn không có quên mất khẩu cho tài khoản MEGA này. Bởi vì nếu quên, bạn sẽ mất quyền truy cập vào dữ liệu của mình. [A]Đọc thêm[/A]";
+/* Title text for the account confirmation. */
+"confirm"="Xác nhận";
+/* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
+"passwordAccepted"="Mật khẩu chính xác";
+/* A dialog title to export the Recovery Key for the current user. */
+"exportRecoveryKey"="Xuất Mã Khóa Phục Hồi";
+/* Title to confirm that you want to logout */
+"proceedToLogout"="Proceed to logout";
+/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
+"testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+/* state previous to import a file */
+"loading"="Đang tải...";

@@ -82,7 +82,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeHandleLink
 };
 
-@interface AppDelegate () <UIAlertViewDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, PKPushRegistryDelegate> {
+@interface AppDelegate () <UIAlertViewDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, PKPushRegistryDelegate, MEGAPurchasePricingDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
     
@@ -90,7 +90,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     BOOL isOverquota;
     
     BOOL isFirstFetchNodesRequestUpdate;
-    BOOL isFirstAPI_EAGAIN;
     NSTimer *timerAPI_EAGAIN;
 }
 
@@ -121,6 +120,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 @property (strong, nonatomic) NSString *email;
 @property (nonatomic) BOOL presentInviteContactVCLater;
+
+@property (nonatomic, getter=showChooseAccountTypeLater) BOOL chooseAccountTypeLater;
 
 @end
 
@@ -650,12 +651,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [self.window.rootViewController presentViewController:cameraUploadsNavigationController animated:YES completion:^{
         isAccountFirstLogin = NO;
         if (self.urlType == URLTypeConfirmationLink) {
-            UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
-            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-            upgradeTVC.chooseAccountType = YES;
-            
-            [self presentLinkViewController:navigationController];
-            self.urlType = URLTypeDefault;
+            if ([MEGAPurchase sharedInstance].products.count > 0) {
+                [self showChooseAccountType];
+            } else {
+                [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
+                self.chooseAccountTypeLater = YES;
+            }
         }
      
         if ([Helper selectedOptionOnLink] != 0) {
@@ -1176,7 +1177,39 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)showServersTooBusy {
     if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
         LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
-        launchVC.label.text = AMLocalizedString(@"takingLongerThanExpected", @"Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in");
+        NSString *message;
+        switch ([[MEGASdkManager sharedMEGASdk] waiting]) {
+            case RetryNone:
+                break;
+
+            case RetryConnectivity:
+                message = AMLocalizedString(@"unableToReachMega", @"Message shown when the app is waiting for the server to complete a request due to connectivity issue.");
+                break;
+                
+            case RetryServersBusy:
+                message = AMLocalizedString(@"serversAreTooBusy", @"Message shown when the app is waiting for the server to complete a request due to a HTTP error 500.");
+                break;
+                
+            case RetryApiLock:
+                message = AMLocalizedString(@"takingLongerThanExpected", @"Message shown when the app is waiting for the server to complete a request due to an API lock (error -3).");
+                break;
+                
+            case RetryRateLimit:
+                message = AMLocalizedString(@"tooManyRequest", @"Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4).");
+                break;
+                
+            case RetryLocalLock:
+                break;
+                
+            case RetryUnknown:
+                break;
+                
+            default:
+                break;
+        }
+        launchVC.label.text = message;
+        
+        MEGALogDebug(@"The SDK is waiting to complete a request, reason: %lu", (unsigned long)[[MEGASdkManager sharedMEGASdk] waiting]);
     }
 }
 
@@ -1668,6 +1701,15 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
+- (void)showChooseAccountType {
+    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+    upgradeTVC.chooseAccountType = YES;
+    
+    [self presentLinkViewController:navigationController];
+    self.urlType = URLTypeDefault;
+}
+
 #pragma mark - Battery changed
 
 - (void)batteryChanged:(NSNotification *)notification {
@@ -1915,6 +1957,17 @@ void uncaughtExceptionHandler(NSException *exception) {
     [self openChatRoomWithChatNumber:notification.userInfo[@"chatId"]];
 }
 
+#pragma mark - MEGAPurchasePricingDelegate
+
+- (void)pricingsReady {
+    if (self.showChooseAccountTypeLater) {
+        [self showChooseAccountType];
+        
+        self.chooseAccountTypeLater = NO;
+        [[MEGAPurchase sharedInstance] setPricingsDelegate:nil];
+    }
+}
+
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
@@ -2033,7 +2086,6 @@ void uncaughtExceptionHandler(NSException *exception) {
         case MEGARequestTypeLogin:
         case MEGARequestTypeFetchNodes: {
             if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
-                isFirstAPI_EAGAIN = YES;
                 isFirstFetchNodesRequestUpdate = YES;
                 LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
                 [launchVC.activityIndicatorView setHidden:NO];
@@ -2428,9 +2480,8 @@ void uncaughtExceptionHandler(NSException *exception) {
     switch ([request type]) {
         case MEGARequestTypeLogin:
         case MEGARequestTypeFetchNodes: {
-            if (isFirstAPI_EAGAIN) {
+            if (!timerAPI_EAGAIN.isValid) {
                 [self startTimerAPI_EAGAIN];
-                isFirstAPI_EAGAIN = NO;
             }
             break;
         }
@@ -2542,10 +2593,15 @@ void uncaughtExceptionHandler(NSException *exception) {
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
         customModalAlertVC.completion = ^{
             [weakCustom dismissViewControllerAnimated:YES completion:^{
-                UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
-                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-                
-                [[UIApplication mnz_visibleViewController] presentViewController:navigationController animated:YES completion:nil];
+                if ([MEGAPurchase sharedInstance].products.count > 0) {
+                    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+                    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+                    
+                    [[UIApplication mnz_visibleViewController] presentViewController:navigationController animated:YES completion:nil];
+                } else {
+                    // Redirect to my account if the products are not available
+                    [self.mainTBC setSelectedIndex:4];
+                }
             }];
         };
         

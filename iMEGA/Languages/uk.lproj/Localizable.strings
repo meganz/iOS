@@ -1,5 +1,5 @@
 /* Button title to cancel something */
-"cancel"="Скасувати";
+"cancel"="Відмінити";
 /* Button title to accept something */
 "ok"="OK";
 /* */
@@ -58,8 +58,14 @@
 "sslUnverified_alertTitle"="Ключі серверу SSL не можливо перевірити. Ви можете бути уражені атакою людина-по-середині.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
-/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
-"takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
+/* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
+"takingLongerThanExpected"="The process is taking longer than expected. Please wait…";
+/* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
+"serversAreTooBusy"="Сервери занадто зайняті. Будь ласка, зачекайте.";
+/* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
+"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+/* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
+"tooManyRequest"="Too many requests. Please wait.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Будь ласка, увійдіть в свій обліковий запис.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -185,7 +191,7 @@
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Немає інтернет з'єднання";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="Порожня тека";
+"emptyFolder"="Немає файлів у теці";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Не має файлів на вашому Хмарному диску";
 /* Button title shown in empty views when you can 'Add files' */
@@ -273,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="найстаріші";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Вибрати";
+"choosePhotoVideo"="Вибір";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Захоплення";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
@@ -366,6 +372,16 @@
 "copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Відкрити в…";
+/* */
+"sendToContact"="Надіслати контакту";
+/* Toast text upon sending a single file to chat */
+"fileSentToChat"="File sent to chat";
+/* Success message when the attachment has been sent to a many chats */
+"fileSentToXChats"="File sent to %1$d chats";
+/* Toast text upon sending multiple files to chat */
+"filesSentToChat"="Files sent to chat";
+/* success message when sending multiple files. Please do not modify the %d placeholder. */
+"xfilesSentSuccesfully"="%d files sent successfully";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Видалити ланку";
 /* Message shown when there are some active links that can be removed or disabled */
@@ -492,10 +508,16 @@
 "cameraUploadsUploadingFile"="Uploading %1$d of %2$d file";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
 "cameraUploadsUploadingFiles"="Uploading %1$d of %2$d files";
+/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
+"indexOfTotalFile"="%1$d of %2$d file";
+/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
+"indexOfTotalFiles"="%1$d of %2$d files";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu елемент вибрано";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu елементів обрано";
+/* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
+"xSelected"="%d selected";
 /* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
 "cameraUploadsWillBeDisabled"="Відвантаження з камери буде відключено";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
@@ -595,7 +617,7 @@
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
 "XContactsSelected"="[X] контакти(ів)";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="Тека спільного доступу";
+"shareFolder"="Спільний доступ до теки";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="Спільні теки";
 /* Button that allows you to select a given folder */
@@ -657,7 +679,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Змінити пароль";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="Експорт майстер-ключа у безпечне місце дозволить встановити новий пароль без втрати даних.";
+"exportMasterKeyFooter"="Експорт ключа відновлення і збереження його у безпечному місці дозволить встановити новий пароль без втрати даних.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Навіщо мені потрібен Ключ відновлення?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -825,7 +847,7 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Сесії закрито";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Змінити таємний код";
+"changePasscodeLabel"="Змінити пароль";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="Простий пароль";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
@@ -881,17 +903,17 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Get %1$s of storage and %2$s of transfers for each referral";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+"inviteYourFriendsExplanation"="Select contacts from your phone’s contact list or enter multiple email addresses.";
 /*  */
-"insertYourFriendsEmails"="Insert your friend's email(s):";
+"insertYourFriendsEmails"="Введіть е-поштові адреси друзів:";
 /*  */
 "howItWorks"="Як це працює";
 /*  */
-"howItWorksMain"="Your friend needs to register for a free account on MEGA and [S]install at least one MEGA client application[/S] (either the sync client or one of our mobile apps)";
+"howItWorksMain"="Ваш друг повинен зареєструвати безкоштовну обліковку MEGA і [S]встановити принаймні одну клієнтську програму MEGA[/S] (клієнт синхронізації або мобільний додаток)";
 /*  */
-"howItWorksSecondary"="You can notify your friend through any method. You will earn the quota if you have entered your friend's email here prior to them registering with that address.";
+"howItWorksSecondary"="Ви можете повідомити друга в будь-який спосіб. Ви отримаєте квоту, якщо ввели е-пошту друга перш ніж він виконав реєстрацію.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
-"howItWorksTertiary"="You will not receive credit for inviting someone who has used MEGA previously and you will not be notified about such a rejection.";
+"howItWorksTertiary"="Ви не отримаєте винагороду за запрошення того, хто вже користувався MEGA раніше і не будете сповіщені про це.";
 /* Header of block with achievements bonuses. */
 "unlockedBonuses"="Unlocked bonuses:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
@@ -917,7 +939,7 @@
 /*  */
 "xDaysLeft"="Залишилось %1 днів";
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
-"bonusExpiresIn"="(Bonus expires in [S]%1[/S] %2)";
+"bonusExpiresIn"="(Бонус спливає через [S]%1[/S] %2)";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="місяці(ів)";
 /*  */
@@ -925,7 +947,7 @@
 /* Label to show that an error related with expiration occurs during a SDK operation. */
 "expired"="Минуло";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="Вийти";
+"logoutLabel"="Вихід";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Вихід з облікового запису";
 /* Button to remove avatar. Try to keep the text short (as in English) */
@@ -971,9 +993,9 @@
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Ви можете оновитися пізніше через Мій обліковий запис";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to 4 TB (4096 GB)[/S] of cloud storage space.";
+"cloudDriveIsAlmostFull"="[S]Ваш хмарний диск майже заповнено.[/S] [A]Покращіть[/A] акаунт до PRO і отримайте [S]до 4 ТБ (4096 ГБ)[/S] хмарного сховища.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Your account is full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to 4 TB (4096 GB)[/S] of cloud storage space.";
+"cloudDriveIsFull"="[S]Вашу обліковку заповнено.[/S] [A]Покращіть[/A] акаунт до PRO і отримайте [S]до 4 ТБ (4096 ГБ)[/S] хмарного сховища.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Місце";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -981,15 +1003,15 @@
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Обмежено";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
-"subjectToYourParticipationInOurAchievementsProgram"="Subject to your participation in our achievements program.";
+"subjectToYourParticipationInOurAchievementsProgram"="За умови участі у нашій програмі досягнень.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%.2f %@ на місяць";
+"productPricePerMonth"="%@ per month";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Виберіть нижче один з планів:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Select one account type:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
+"twoMonthsFree"="An annual subscription is 17% cheaper than 12 monthly payments";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Current Plan:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
@@ -1184,6 +1206,10 @@
 "chatNotFound"="Чат не знайдено";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ друкує…";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s [A]are typing…[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s [A]and more are typing…[/A]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Написати повідомлення…";
 /* Information if there are no history messages in current chat conversation */
@@ -1211,7 +1237,7 @@
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Depleted transfer quota";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+"depletedTransferQuota_message"="Розмір вашого чергового завантаження перевищує квоту передачі даних, доступних для вашої обліковки і тому передача може буде перервана.";
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="Дивитись плани";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
@@ -1246,6 +1272,14 @@
 "uploadedFile"="Uploaded this file:";
 /* A summary message when a user has attached many files at once into the chat. */
 "uploadedFiles"="Uploaded these files:";
+/* Label in a button that allows to jump to the latest item */
+"jumpToLatest"="Jump to latest";
+/* Label in a button that allows to jump to the latest message */
+"newMessages"="New messages";
+/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
+"unreadMessage"="%lu unread message";
+/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
+"unreadMessages"="%lu unread messages";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Підписки автоматично продовжуються на той само термін і в ту само ціну, що ви вибрали початково. Ви можете відключити автоматичне оновлення вашої підписки не пізніше ніж за 24 години до вашої наступної абонентської плати через сторінку налаштувань облікового запису iTunes. Для того щоб управляти підписками, просто натисніть на іконку App Store на вашому телефоні, увійдіть у свій Apple ID, в нижній частині сторінки (якщо ви цього не робили) і натисніть Переглянути Apple ID. Ви потрапите на сторінку облікового запису, де зможете прокрутити до керування підписками. Звідти ви можете вибрати підписку MEGA PRO і переглянути дату оновлення підписки, вибрати інший пакет підписки або перемикачем вимкнути автооновлення підписки.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1313,20 +1347,20 @@
 "languageRestartNotification"="Language changed. Tap to restart.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA is a secure cloud storage service that gives you 50 GB free storage space. Unlike other cloud storage providers, your data is encrypted and decrypted by your client devices only and never by us.";
+"generalDescriptionParagraph1"="MEGA це захищена служба хмарного сховища, яка надає вам 50 ГБ безкоштовного місця зберігання. На відміну від інших провайдерів хмарного збереження, ваші дані шифруються та розшифровуються лише вашими клієнтськими пристроями і ніколи нами.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="Upload your files from your smartphone or tablet, then search, store, download, stream, view, share, rename or delete your files any time, from any device, anywhere. Share folders with your contacts and see their updates in real time.";
+"generalDescriptionParagraph2"="Завантажуйте свої файли зі свого смартфона або планшету, а потім шукайте, зберігайте, переглядайте, надсилайте, перейменовуйте чи видаляйте свої файли будь коли, з будь-якого пристрою та будь-де. Діліться теками зі своїми контактами та переглядайте їх в режимі реального часу.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph3"="The encryption process means we cannot access or reset your password so you MUST remember it (unless you have your Recovery Key backed up) or you will lose access to your stored files.";
+"generalDescriptionParagraph3"="Процес шифрування означає, що ми не можемо отримати доступ до пароля або скинути його, тому ви ПОВИННІ запам'ятати його (якщо у вас немає резервної копії ключа відновлення) інакше ви втратите доступ до збережених файлів.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="Inside the app you can upgrade your storage space and transfer quota with a monthly or yearly subscription.";
+"generalDescriptionParagraph4"="Через додаток ви можете збільшити місце зберігання і квоту передачі даних придбавши місячну або річну підписку.";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="PRO LITE subscription: €4.99 (US$4.99) per month or €49.99 (US$49.99) per year gives you 200 GB of storage space and 1 TB of transfer quota per month.\nPRO I subscription: €9.99 (US$9.99) per month or €99.99 (US$99.99) per year gives you 1 TB of storage space and 2 TB of transfer quota per month.\nPRO II subscription: €19.99 (US$19.99) per month or €199.99 (US$199.99) per year gives you 4 TB of storage space and 8 TB of transfer quota per month.\nPRO III subscription: €29.99 (US$29.99) per month or €299.99 (US$299.99) per year gives you 8 TB of storage space and 16 TB of transfer quota per month.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="For more info, please check our website:\nMobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nDesktop - https://mega.nz/";
 /* Label shown when you receive an incoming call, before start the call. */
-"calling..."="Calling...";
+"calling..."="Calling…";
 /* Notification text body shown when you have missed one audio call */
 "missedAudioCall"="Missed audio call";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
@@ -1345,3 +1379,99 @@
 "missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";
 /* Button title to see the available bonus */
 "getBonus"="Get Bonus";
+/* QR Code label, used in Settings as title. String as short as possible */
+"qrCode"="QR Code";
+/* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
+"autoAccept"="Auto-Accept";
+/* Footer that explains the way Auto-Accept works for QR codes */
+"autoAcceptFooter"="Contacts that scan your QR Code will be automatically added to your contact list.";
+/* Action to reset the current valid QR code of the user */
+"resetQrCode"="Reset QR Code";
+/* Footer that explains what would happen if the user resets his/her QR code */
+"resetQrCodeFooter"="Previous QR codes will no longer be valid.";
+/* Title for view that displays the QR code of the user. String as short as possible. */
+"myCode"="My Code";
+/* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
+"scanCode"="Scan Code";
+/* Label that encourage the user to line the QR to scan with the camera */
+"lineCodeWithCamera"="Line up the QR code to scan it with your device’s camera";
+/* Error text shown when the user scans a QR that is not valid. String as short as possible. */
+"invalidCode"="Invalid code";
+/* Success text shown in a label when the user scans a valid QR. String as short as possible. */
+"codeScanned"="Code scanned";
+/* title of the screen that shows the users with whom the user has shared a folder */
+"sharedWidth"="Спільно з:";
+/*   */
+"details"="Деталі";
+/* Item menu option upon right click on one or multiple files. */
+"sharing"="Поділитися";
+/* Title of section to display number of all historical versions of files. */
+"versions"="Versions";
+/* Title label of a node property. */
+"location"="Location";
+/* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
+"totalSize"="Загальний розмір";
+/* Refers to the type of a file or folder. */
+"type"="Тип";
+/* Title of the incoming shared folders of a user in singular */
+"sharedFolder"="Тека спільного доступу";
+/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
+"created"="Створено";
+/* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
+"contains"="Містить";
+/* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
+"modified"="Змінено";
+/* used for example when a folder is shared with 2 or more users */
+"users"="користувачі(в)";
+/* user (singular) label indicating is receiving some info, for example shared folders */
+"user"="користувач";
+/* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
+"xVersions"="[X] versions";
+/* Label of the option menu. When clicking this button, the app shows the info of the file */
+"fileInfo"="Інформація про файл";
+/* Label of the option menu. When clicking this button, the app shows the info of the folder */
+"folderInfo"="Інформація про теку";
+/* Question to ensure user wants to delete file version. */
+"deleteVersion"="Do you want to delete this version?";
+/* Message to notify user the file version will be permanently removed */
+"permanentlyRemoved"="It will be permanently removed";
+/*  */
+"delete"="Видалити";
+/* A button label which reverts a certain version of a file to be the current version of the selected file. */
+"revert"="Revert";
+/*  */
+"download"="Скачати";
+/* Singular of file. 1 file */
+"file"="файл";
+/* Title of section to display information of the current version of a file. */
+"currentVersion"="Current Version";
+/* A button label which opens a dialog to display the full version history of the selected file. */
+"previousVersions"="Previous Versions";
+/* Title of section to display information of all current versions of files. */
+"currentVersions"="Current Versions";
+/* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
+"remindPasswordTitle"="Do you remember your password?";
+/* Text that describes why the user should test his/her password */
+"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+/* Text that describes why the user should test his/her password before logging out */
+"remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
+/* Text next to a toggle that if enabled won't appear again */
+"dontShowAgain"="Don’t show me again";
+/* Label for test password button and titles */
+"testPassword"="Test Password";
+/* Label for recovery key button */
+"backupRecoveryKey"="Збереження ключа відновлення";
+/* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
+"testPasswordText"="Please test your password below to ensure you remember it. If you lose your password, you will lose access to your MEGA data. [A]Learn more[/A]";
+/* Title text for the account confirmation. */
+"confirm"="Підтвердження";
+/* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
+"passwordAccepted"="Password accepted";
+/* A dialog title to export the Recovery Key for the current user. */
+"exportRecoveryKey"="Експорт ключа відновлення";
+/* Title to confirm that you want to logout */
+"proceedToLogout"="Proceed to logout";
+/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
+"testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+/* state previous to import a file */
+"loading"="Завантаження…";

@@ -7,7 +7,7 @@
 /* */
 "no"="Нет";
 /* */
-"upload"="Загрузка на сервер";
+"upload"="Загрузить";
 /*  */
 "error"="Ошибка";
 /*  */
@@ -58,8 +58,14 @@
 "sslUnverified_alertTitle"="SSL-ключ сервера не удаётся проверить. Возможно, вы находитесь под «атакой посредника» (англ. Man in the middle (MitM)).";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Содержимое, которое вы пытаетесь получить, недоступно для этой учётной записи. Попробуйте войти в ту же учётную запись, что и в мобильном веб-клиенте.";
-/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
-"takingLongerThanExpected"="Процесс занимает больше ожидаемого. Подождите…";
+/* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
+"takingLongerThanExpected"="Процесс длится дольше ожидаемого. Пожалуйста, подождите…";
+/* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
+"serversAreTooBusy"="Серверы очень заняты. Пожалуйста, подождите.";
+/* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
+"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+/* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
+"tooManyRequest"="Too many requests. Please wait.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Пожалуйста, авторизируйтесь.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -79,7 +85,7 @@
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
 "megaAccessText"="Получить полностью зашифрованный доступ в любом месте, в любое время.";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="Вход";
+"login"="Войти";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Регистрация";
 /* Message shown when the user writes a wrong email or password on login */
@@ -185,7 +191,7 @@
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Нет Интернет-соединения";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="Пустая папка";
+"emptyFolder"="Папка пуста";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="На вашем Облачном Диске нет файлов";
 /* Button title shown in empty views when you can 'Add files' */
@@ -273,7 +279,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="старейшие";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Выбрать";
+"choosePhotoVideo"="Выберите";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Съёмка";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
@@ -341,7 +347,7 @@
 /* String already exists: 367, but we need to split paragraphs. */
 "copyrightMessagePart1"="MEGA уважает авторские права других лиц и требует, чтобы пользователи сервиса облачного сервиса MEGA соблюдали закон об авторском праве.";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="Вам строго запрещено использовать сервис облачный сервис MEGA для нарушения авторского права. Вы не можете загружать, скачивать, хранить, обмениваться, отображать, транслировать, распространять, пересылать по электронной почте, ссылаться на материалы, передавать или использовать любой другой способ публикации файлов, данных или контента, который нарушает авторское право или другие права собственности любого физического или юридического лица.";
+"copyrightMessagePart2"="Запрещается использовать облачную службу MEGA для нарушения авторских прав. Вы не можете загружать, скачивать, хранить, обмениваться, показывать, транслировать, распространять, отправлять по электронной почте, делиться ссылкой или иным образом предоставлять любые файлы, данные или контент, которые нарушают любые авторские или другие имущественные права любого лица или организации.";
 /* button caption text that the user clicks when he agrees */
 "agree"="Согласен";
 /* button caption text that the user clicks when he disagrees */
@@ -366,6 +372,16 @@
 "copyKey"="Скопировать ключ";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Открыть в…";
+/* */
+"sendToContact"="Послать контакту";
+/* Toast text upon sending a single file to chat */
+"fileSentToChat"="Файл отправлен в чат";
+/* Success message when the attachment has been sent to a many chats */
+"fileSentToXChats"="Файл отправлен в чаты (%1$d)";
+/* Toast text upon sending multiple files to chat */
+"filesSentToChat"="Файлы отправлены в чат";
+/* success message when sending multiple files. Please do not modify the %d placeholder. */
+"xfilesSentSuccesfully"="Файлы успешно отправлены (%d)";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Удалить ссылку";
 /* Message shown when there are some active links that can be removed or disabled */
@@ -375,7 +391,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Ссылки удалены";
 /* Title show when a file is being downloaded */
-"downloading"="Скачивание";
+"downloading"="Загрузка";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Отменить скачивание?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -483,19 +499,25 @@
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "automaticallyBackupYourPhotos"="Автоматически копировать фото на облачный диск";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Разрешить загрузки с камеры";
+"enableCameraUploadsButton"="Включить загрузки из камеры";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Загрузки с камеры разрешены";
+"cameraUploadsEnabled"="Закачки с камеры включены!";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Загрузки из камеры завершены";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "cameraUploadsUploadingFile"="Загрузка файлов: %1$d из %2$d";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
 "cameraUploadsUploadingFiles"="Загрузка файлов: %1$d из %2$d";
+/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
+"indexOfTotalFile"="файлы: %1$d из %2$d";
+/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
+"indexOfTotalFiles"="файлы: %1$d из %2$d";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="Элементов выбрано: %lu";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="Элементов выбрано: %lu";
+/* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
+"xSelected"="%d выбрано";
 /* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
 "cameraUploadsWillBeDisabled"="Загрузки из камеры будут отключены";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
@@ -595,7 +617,7 @@
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
 "XContactsSelected"="[X] контакта/ов: ";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="Общая папка";
+"shareFolder"="Открыть общий доступ к папке";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="Поделиться папками";
 /* Button that allows you to select a given folder */
@@ -603,7 +625,7 @@
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Права";
 /* Permissions given to the user you share your folder with */
-"readOnly"="Только для чтения";
+"readOnly"="Только чтение";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="Чтение и запись";
 /* Permissions given to the user you share your folder with */
@@ -615,11 +637,11 @@
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Корзина";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
-"advanced"="Продвинутый";
+"advanced"="Продвинутые";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Параметры безопасности";
 /* Title of one of the Settings sections where you can see things 'About' the app */
-"about"="О нас";
+"about"="О программе";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Язык";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
@@ -633,7 +655,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Политика конфиденциальности";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="Условия предоставления услуг";
+"termsOfServicesLabel"="условиями предоставления услуг";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Выкл";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -657,7 +679,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Изменить пароль";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="Экспорт мастер-ключа и хранение его в безопасном месте позволит установить новый пароль без потери данных.";
+"exportMasterKeyFooter"="Экспорт ключа восстановления и его хранение в надёжном месте позволит задать новый пароль без потери данных.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Для чего нужен ключ восстановления";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -773,7 +795,7 @@
 /*  */
 "yourPasswordHasBeenReset"="Ваш пароль успешно восстановлен. Пожалуйста, зайдите в свою учётную запись прямо сейчас.";
 /* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Если у вас есть резервная копия ключа восстановления, вы можете сбросить пароль, нажав «ДА». Никакие данные не пропадут.";
+"forgotPassword_firstParagraph"="Если у вас есть резервная копия ключа восстановления, вы можете сбросить пароль, нажав «ДА». Данные не будут потеряны.";
 /* Second paragraph of the screen when the password has been forgotten */
 "forgotPassword_secondParagraph"="Вы всё ещё можете экспортировать ключ восстановления, если у вас есть активная сессия MEGA в любом другом браузере на любом другом компьютере. Иначе существующую учётную запись расшифровать не получится, но вы можете создать новую под тем же адресом электронной почты, выбрав «НЕТ».";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
@@ -787,7 +809,7 @@
 /* The title of the screen to park an account. */
 "noMasterKey_title"="Ой!";
 /* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Согласно нашей парадигме сквозного шифрования вы не сможете получить доступ к данным без пароля или резервной копии ключа восстановления.";
+"noMasterKey_firstParagraph"="Благодаря нашей парадигме сквозного шифрования вы не сможете получить доступ к своим данным без пароля или резервной копии ключа восстановления.";
 /* Second paragraph of the screen to park an account */
 "noMasterKey_secondParagraph"="Вы можете заморозить существующую учётную запись и создать новую под тем же адресом электронной почты. Ваши данные будут храниться минимум 60 дней. Если вы вспомните пароль замороженной учётной записи, свяжитесь с support@mega.nz.";
 /* Text of the dialog message to ask for the link to park the account */
@@ -865,7 +887,7 @@
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
 "buyPRO"="Купить PRO";
 /* Caption of a button to upgrade the account to Pro status */
-"upgrade"="Повысить статус";
+"upgrade"="Повысить";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Посмотреть и изменить профиль.";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -881,7 +903,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Получите %1$s места на диске и %2$s трафика за каждого, кто примет приглашение";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Выберите контакты из телефонного списка или введите адреса их электронной почты.";
+"inviteYourFriendsExplanation"="Выберите контакты из телефонного списка контактов или введите адреса электронной почты.";
 /*  */
 "insertYourFriendsEmails"="Введите e-mail друга:";
 /*  */
@@ -921,11 +943,11 @@
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="месяцев";
 /*  */
-"days"="дн.";
+"days"="д.";
 /* Label to show that an error related with expiration occurs during a SDK operation. */
 "expired"="Истекло";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="Выход";
+"logoutLabel"="Выйти";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Выход";
 /* Button to remove avatar. Try to keep the text short (as in English) */
@@ -983,13 +1005,13 @@
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="При условии вашего участия в программе достижений.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%.2f %@ в месяц";
+"productPricePerMonth"="%@ в месяц";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Выберите один из планов ниже:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Выберите тип учётной записи:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
+"twoMonthsFree"="Годовая подписка на 17% дешевле 12 месячных платежей";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Текущий план:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
@@ -1184,6 +1206,10 @@
 "chatNotFound"="Чат не найден";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ печатает ...";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s [A]печатают…[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s [A]и другие печатают…[/A]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Напишите сообщение…";
 /* Information if there are no history messages in current chat conversation */
@@ -1246,6 +1272,14 @@
 "uploadedFile"="Загрузил файл:";
 /* A summary message when a user has attached many files at once into the chat. */
 "uploadedFiles"="Загрузил файлы:";
+/* Label in a button that allows to jump to the latest item */
+"jumpToLatest"="К последнему";
+/* Label in a button that allows to jump to the latest message */
+"newMessages"="Новые сообщения";
+/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
+"unreadMessage"="%lu unread message";
+/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
+"unreadMessages"="%lu unread messages";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Подписки продлеваются автоматически на тот же срок по такой же цене. Вы можете отключить автоматическое продление подписки MEGA PRO не позднее чем за 24 часа до следующего платежа в настройках учётной записи iTunes. Для управления подписками просто нажмите на значок App Store в телефоне, войдите со своим Apple ID внизу страницы (если вы этого ещё не сделали) и нажмите View ID. Вы попадёте на страницу своей учётной записи, прокрутите её вниз до управления подписками приложений. Там вы можете выбрать свою подписку MEGA PRO и посмотреть запланированную дату продления. Выберите другой план подписки или нажмите на переключатель «вкл/выкл» для отключения автоматического продления подписок.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1308,7 +1342,7 @@
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Неизвестная ошибка";
 /* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="После смены языка нужно перезапустить MEGA";
+"languageRestartAlert"="Нужно перезапустить приложение после смены языка";
 /* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
 "languageRestartNotification"="Язык изменён. Коснитесь для перезапуска.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
@@ -1321,10 +1355,10 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="В приложении вы можете расширить место для хранения и квоту передач с месячной или годовой подпиской.";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Подписка PRO LITE: €4.99 (US$4.99) в месяц или €49.99 (US$49.99) в год предоставляет 200 ГБ дискового пространства и 1 ТБ трафика в месяц.Подписка PRO I: €9.99 (US$9.99) в месяц или €99.99 (US$99.99) в год предоставляет 1 ТБ дискового пространства и 2 ТБ трафика в месяц.Подписка PRO II: €19.99 (US$19.99) в месяц или €199.99 (US$199.99) в год предоставляет 4 ТБ дискового пространства и 8 ТБ трафика в месяц.Подписка PRO III: €29.99 (US$29.99) в месяц или €299.99 (US$299.99) в год предоставляет 8 ТБ дискового пространства и 16 ТБ трафика в месяц.";
+"generalDescriptionParagraph5"="Подписка PRO LITE: 4.99 € (4.99 $ США) в месяц или 49.99 € (49.99 $ США) в год предоставляет 200 ГБ дискового пространства и 1 ТБ трафика в месяц.\nПодписка PRO I: 9.99 € (9.99 $ США) в месяц или 99.99 € (99.99 $ США) в год предоставляет 1 ТБ дискового пространства и 2 ТБ трафика в месяц.\nПодписка PRO II: 19.99 € (19.99 $ США) в месяц или 199.99 € (199.99 $ США) в год предоставляет 4 ТБ дискового пространства и 8 ТБ трафика в месяц.\nПодписка PRO III: 29.99 € (29.99 $ США) в месяц или 299.99 € (299.99 $ США) в год предоставляет 8 ТБ дискового пространства и 16 TB ТБ трафика в месяц.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Подробнее на сайте:Мобильный - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmlНастольный - https://mega.nz/";
+"generalDescriptionParagraph6"="Больше информации на нашем сайте:\nМобильный — https://mega.nz/mobile_terms.html — https://mega.nz/mobile_privacy.html\nНастольный — https://mega.nz/";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="Вызов…";
 /* Notification text body shown when you have missed one audio call */
@@ -1345,3 +1379,99 @@
 "missedAudioCallsAndMissedVideoCalls"="Пропущены аудиозвонки ([A]) и видеозвонки ([B])";
 /* Button title to see the available bonus */
 "getBonus"="Бонусы";
+/* QR Code label, used in Settings as title. String as short as possible */
+"qrCode"="QR-код";
+/* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
+"autoAccept"="Принимать автоматически";
+/* Footer that explains the way Auto-Accept works for QR codes */
+"autoAcceptFooter"="Контакты, просканировавшие ваш QR-код, будут автоматически добавлены в ваш список контактов.";
+/* Action to reset the current valid QR code of the user */
+"resetQrCode"="Сбросить QR-код";
+/* Footer that explains what would happen if the user resets his/her QR code */
+"resetQrCodeFooter"="Предыдущие QR-коды больше не будут действительны.";
+/* Title for view that displays the QR code of the user. String as short as possible. */
+"myCode"="Мой код";
+/* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
+"scanCode"="Скан кода";
+/* Label that encourage the user to line the QR to scan with the camera */
+"lineCodeWithCamera"="Наведите камеру на QR-код для сканирования";
+/* Error text shown when the user scans a QR that is not valid. String as short as possible. */
+"invalidCode"="Недействительный код";
+/* Success text shown in a label when the user scans a valid QR. String as short as possible. */
+"codeScanned"="Просканировано";
+/* title of the screen that shows the users with whom the user has shared a folder */
+"sharedWidth"="Общий с:";
+/*   */
+"details"="Детали";
+/* Item menu option upon right click on one or multiple files. */
+"sharing"="Общий доступ";
+/* Title of section to display number of all historical versions of files. */
+"versions"="Версии";
+/* Title label of a node property. */
+"location"="Расположение";
+/* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
+"totalSize"="Размер";
+/* Refers to the type of a file or folder. */
+"type"="Тип";
+/* Title of the incoming shared folders of a user in singular */
+"sharedFolder"="Общая папка ";
+/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
+"created"="Создан";
+/* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
+"contains"="Содержит";
+/* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
+"modified"="Изменено";
+/* used for example when a folder is shared with 2 or more users */
+"users"="пользователей(я)";
+/* user (singular) label indicating is receiving some info, for example shared folders */
+"user"="пользователь";
+/* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
+"xVersions"="Версий: [X]";
+/* Label of the option menu. When clicking this button, the app shows the info of the file */
+"fileInfo"="О файле";
+/* Label of the option menu. When clicking this button, the app shows the info of the folder */
+"folderInfo"="О папке";
+/* Question to ensure user wants to delete file version. */
+"deleteVersion"="Удалить эту версию?";
+/* Message to notify user the file version will be permanently removed */
+"permanentlyRemoved"="Она будет удалена безвозвратно";
+/*  */
+"delete"="Удалить";
+/* A button label which reverts a certain version of a file to be the current version of the selected file. */
+"revert"="Отменить";
+/*  */
+"download"="Скачать";
+/* Singular of file. 1 file */
+"file"="файл";
+/* Title of section to display information of the current version of a file. */
+"currentVersion"="Текущая версия";
+/* A button label which opens a dialog to display the full version history of the selected file. */
+"previousVersions"="Прошлые версии";
+/* Title of section to display information of all current versions of files. */
+"currentVersions"="Текущие версии";
+/* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
+"remindPasswordTitle"="Вы помните пароль?";
+/* Text that describes why the user should test his/her password */
+"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+/* Text that describes why the user should test his/her password before logging out */
+"remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
+/* Text next to a toggle that if enabled won't appear again */
+"dontShowAgain"="Don’t show me again";
+/* Label for test password button and titles */
+"testPassword"="Test Password";
+/* Label for recovery key button */
+"backupRecoveryKey"="Сохранить ключ восстановления";
+/* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
+"testPasswordText"="Проверьте свой пароль, чтобы убедиться, что вы его не забыли. Если вы потеряете его, все ваши данные в MEGA будут потеряны. [A]Узнать больше[/A]";
+/* Title text for the account confirmation. */
+"confirm"="Подтвердить";
+/* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
+"passwordAccepted"="Пароль принят";
+/* A dialog title to export the Recovery Key for the current user. */
+"exportRecoveryKey"="Экспорт ключа восстановления";
+/* Title to confirm that you want to logout */
+"proceedToLogout"="Proceed to logout";
+/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
+"testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+/* state previous to import a file */
+"loading"="Загрузка…";
