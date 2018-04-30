@@ -58,8 +58,14 @@
 "sslUnverified_alertTitle"="คีย์ SSL ของเซิร์ฟเวอร์ไม่สามารถตรวจสอบได้ คุณอาจจะได้รับผลกระทบจากการลักลอบดักข้อมูล";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="เนื้อหาที่คุณพยายามเข้าถึง ไม่สามารถใช้งานได้กับบัญชีนี้ ลองลงชื่อเข้าใช้ด้วยบัญชีเดียวกันกับในเว็บไคลเอ็นต์บนมือถืออีกครั้ง";
-/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
-"takingLongerThanExpected"="กระบวนการนี้ใช้เวลานานกว่าที่คาดไว้ กรุณารอสักครู่...";
+/* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
+"takingLongerThanExpected"="กระบวนการนี้ใช้เวลานานกว่าที่คาดไว้ กรุณารอ...";
+/* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
+"serversAreTooBusy"="เซิร์ฟเวอร์ไม่ว่าง กรุณารอสักครู่";
+/* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
+"unableToReachMega"="ไม่สามารถเข้าถึง MEGA กรุณาตรวจสอบการเชื่อมต่อของคุณหรือลองอีกครั้งในภายหลัง";
+/* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
+"tooManyRequest"="มีคำขอมากเกินไป กรุณารอ";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="กรุณาเข้าสู่ระบบในบัญชีของคุณ";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -341,7 +347,7 @@
 /* String already exists: 367, but we need to split paragraphs. */
 "copyrightMessagePart1"="MEGA เคารพลิขสิทธิ์ของผู้อื่นและต้องการให้ผู้ใช้บริการคลาวด์ MEGA ปฏิบัติตามกฎหมายลิขสิทธิ์";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="คุณจะไม่ใช้บริการคลาวด์ของ MEGA ไปในทางละเมิดลิขสิทธิ์ คุณจะไม่อัปโหลด ดาวน์โหลด จัดเก็บ แชร์ แสดง สตรีม แจกจ่าย อีเมล แนบลิงก์ เผยแพร่ ไฟล์หรือข้อมูลใดๆ ที่มีเนื้อหาละเมิดลิขสิทธิ์หรือกรรมสิทธิ์ในทรัพย์สินอื่นใดของบุคคลหรือนิติบุคคล";
+"copyrightMessagePart2"="คุณต้องไม่ใช้บริการ MEGA คลาวด์ ในการละเมิดลิขสิทธิ์โดยเด็ดขาด คุณไม่สามารถอัปโหลด, ดาวน์โหลด, จัดเก็บ, แชร์, แสดง, สตรีม, แจกจ่าย, ส่งอีเมล, ส่งหรือเผยแพร่ไฟล์ข้อมูล หรือเนื้อหาที่ละเมิดลิขสิทธิ์หรือกรรมสิทธิ์ในทรัพย์สินอื่นของบุคคลหรือนิติบุคคลใด ๆ";
 /* button caption text that the user clicks when he agrees */
 "agree"="เห็นด้วย";
 /* button caption text that the user clicks when he disagrees */
@@ -366,6 +372,16 @@
 "copyKey"="คัดลอกคีย์";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="เปิดด้วย...";
+/* */
+"sendToContact"="ส่งให้ผู้ติดต่อ";
+/* Toast text upon sending a single file to chat */
+"fileSentToChat"="ไฟล์ถูกส่งไปยังแชทแล้ว";
+/* Success message when the attachment has been sent to a many chats */
+"fileSentToXChats"="ไฟล์ถูกส่งไปยัง %1$d แชท";
+/* Toast text upon sending multiple files to chat */
+"filesSentToChat"="ไฟล์ถูกส่งไปยังแชทแล้ว";
+/* success message when sending multiple files. Please do not modify the %d placeholder. */
+"xfilesSentSuccesfully"="ส่งไฟล์ %d เรียบร้อยแล้ว";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="เอาลิงก์ออก";
 /* Message shown when there are some active links that can be removed or disabled */
@@ -483,19 +499,25 @@
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "automaticallyBackupYourPhotos"="สำรองรูปภาพของคุณโดยอัตโนมัติไปยังคลาด์ไดร์ฟ";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="เปิดใช้งานอัปโหลดจากกล้อง";
+"enableCameraUploadsButton"="เปิดใช้งานอัปโหลดกล้อง";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="อัปโหลดจากกล้องถูกเปิดใช้งาน";
+"cameraUploadsEnabled"="เปิดใช้งานอัปโหลดจากกล้อง";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="การอัปโหลดกล้องเสร็จสมบูรณ์";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "cameraUploadsUploadingFile"="กำลังอัปโหลดไฟล์ %1$d จาก %2$d ไฟล์";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
 "cameraUploadsUploadingFiles"="กำลังอัปโหลดไฟล์ %1$d จาก %2$d ไฟล์";
+/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
+"indexOfTotalFile"="ไฟล์ %1$d จาก %2$d ไฟล์";
+/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
+"indexOfTotalFiles"="ไฟล์ %1$d จาก %2$d ไฟล์";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu รายการที่เลือกแล้ว";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu รายการที่เลือก";
+/* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
+"xSelected"="เลือกแล้ว %d รายการ";
 /* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
 "cameraUploadsWillBeDisabled"="อัปโหลดจากกล้องจะถูกปิดการใช้งาน";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
@@ -657,7 +679,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="เปลี่ยนรหัส";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="การส่งออกคีย์หลักและการเก็บรักษาไว้ในที่ๆ ปลอดภัย จะช่วยให้คุณสามารถตั้งค่ารหัสผ่านใหม่โดยไม่ต้องสูญเสียข้อมูลใดๆ";
+"exportMasterKeyFooter"="การส่งออกคีย์การกู้คืนและเก็บไว้ในที่ปลอดภัย จะช่วยให้คุณสามารถตั้งรหัสผ่านใหม่โดยไม่สูญเสียข้อมูล";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="เหตุใดฉันจึงต้องมีคีย์การกู้คืน";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -751,7 +773,7 @@
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="ยืนยันรหัสผ่าน";
 /* Success message shown when the password has been changed */
-"passwordChanged"="รหัสผ่านของคุณได้ถูกเปลี่ยนแล้ว.";
+"passwordChanged"="รหัสผ่านของคุณได้ถูกเปลี่ยนแล้ว";
 /* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
 "oldAndNewPasswordMatch"="รหัสผ่านใหม่และเก่าจะต้องไม่เหมือนกัน";
 /* An option to reset the password. */
@@ -773,11 +795,11 @@
 /*  */
 "yourPasswordHasBeenReset"="รหัสผ่านของคุณถูกรีเซ็ตเรียบร้อยแล้ว กรุณาเข้าสู่ระบบด้วยบัญชีตอนนี้ได้แล้ว";
 /* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="หากคุณมีสำเนาสำรองของคีย์การกู้คืน คุณสามารถรีเซ็ตรหัสผ่านโดยเลือก ใช่ ข้อมูลของคุณจะไม่สูญหายแต่อย่างใด";
+"forgotPassword_firstParagraph"="หากคุณมีสำเนาสำรองของคีย์การกู้คืน คุณสามารถรีเซ็ตรหัสผ่านโดยเลือกใช่ ซึ่งข้อมูลจะไม่สูญหาย";
 /* Second paragraph of the screen when the password has been forgotten */
 "forgotPassword_secondParagraph"="คุณยังสามารถส่งออกคีย์การกู้คืนของคุณได้ในขณะนี้ หากคุณมีเซสชัน MEGA ที่ใช้งานอยู่ในเบราว์เซอร์อื่น ๆ บนคอมพิวเตอร์เครื่องอื่นหรืออย่างอื่น คุณสามารถถอดรหัสบัญชีเดิมของคุณได้ แต่คุณสามารถเริ่มต้นใหม่ได้ภายใต้ที่อยู่อีเมลเดียวกัน โดยเลือก ไม่";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="คุณมีการสำรองข้อมูลคีย์การกู้คืนแล้วหรือยัง";
+"doYouHaveABackupOfYourRecoveryKey"="คุณมีสำเนาสำรองคีย์การกู้คืนหรือไม่";
 /* Headline when the user chose YES */
 "great"="ยอดเยี่ยม!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
@@ -787,7 +809,7 @@
 /* The title of the screen to park an account. */
 "noMasterKey_title"="อุ๊ปส์!";
 /* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="เนื่องจากกระบวนทัศน์การเข้ารหัสตั้งแต่ต้นทางถึงปลายทางของเรา คุณจะไม่สามารถเข้าถึงข้อมูลของคุณโดยไม่ใช้รหัสผ่านหรือข้อมูลสำรองของคีย์การกู้คืน";
+"noMasterKey_firstParagraph"="เนื่องจากกระบวนการเข้ารหัสตั้งแต่ต้นทางถึงปลายทางของเรา คุณจะไม่สามารถเข้าถึงข้อมูลของคุณโดยไม่ใช้รหัสผ่านหรือข้อมูลสำรองของคีย์การกู้คืนได้";
 /* Second paragraph of the screen to park an account */
 "noMasterKey_secondParagraph"="คุณสามารถพาร์คบัญชีเดิมของคุณและเริ่มต้นบัญชีใหม่ได้ภายใต้ที่อยู่อีเมลเดียวกัน ข้อมูลของคุณจะถูกเก็บไว้อย่างน้อย 60 วัน ในกรณีที่คุณจำรหัสผ่านบัญชีที่คุณพาร์คไว้ กรุณาติดต่อ support@mega.nz";
 /* Text of the dialog message to ask for the link to park the account */
@@ -881,7 +903,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="รับพื้นที่เก็บข้อมูลขนาด %1$s และการถ่ายโอน %2$s สำหรับการแนะนำในแต่ละครั้ง";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="เลือกติดต่อจากรายชื่อในโทรศัพท์ของคุณหรือกรอกที่อยู่อีเมลได้พร้อมกัน";
+"inviteYourFriendsExplanation"="เลือกผู้ติดต่อจากรายชื่อในโทรศัพท์ของคุณหรือกรอกที่อยู่อีเมลพร้อมกัน";
 /*  */
 "insertYourFriendsEmails"="กรอกอีเมลของเพื่อนคุณ:";
 /*  */
@@ -983,13 +1005,13 @@
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="ขึ้นอยู่กับการมีส่วนร่วมในโครงการความสำเร็จของเรา";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%.2f %@ ต่อเดือน";
+"productPricePerMonth"="%@ ต่อเดือน";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="เลือกแผนใดแผนหนึ่งด้านล่างนี้:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="เลือกบัญชีหนึ่งประเภท:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
+"twoMonthsFree"="การสมัครรับข้อมูลรายปีคือ 17% ถูกกว่าการชำระเงินรายเดือน 12 ครั้ง";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="แผนปัจจุบัน:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
@@ -1184,6 +1206,10 @@
 "chatNotFound"="ไม่พบแชท";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ กำลังพิมพ์ ...";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s [A]กำลังพิมพ์...[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s [A]และคนอื่น ๆ กำลังพิมพ์...[/A]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="เขียนข้อความ...";
 /* Information if there are no history messages in current chat conversation */
@@ -1246,6 +1272,14 @@
 "uploadedFile"="อัปโหลดไฟล์นี้แล้ว:";
 /* A summary message when a user has attached many files at once into the chat. */
 "uploadedFiles"="อัปโหลดไฟล์เหล่านี้แล้ว:";
+/* Label in a button that allows to jump to the latest item */
+"jumpToLatest"="ข้ามไปที่ล่าสุด";
+/* Label in a button that allows to jump to the latest message */
+"newMessages"="ข้อความใหม่";
+/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
+"unreadMessage"="%lu ข้อความที่ยังไม่ได้อ่าน";
+/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
+"unreadMessages"="%lu ข้อความที่ยังไม่ได้อ่าน";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="การสมัครใช้งานแบบต่ออายุอัตโนมัติอย่างต่อเนื่องนั้น จะถูกกำหนดค่าไม่ว่าจะเป็นระยะเวลาการสมัครใช้งานหรือราคา จะเป็นไปในทิศทางเดียวกันและเป็นค่าแรกเริ่มให้โดยอัตโนมัติ คุณสามารถปิดการใช้งานดังกล่าว แพคเกจ MEGA PRO ได้ไม่เกิน 24 ชั่วโมงก่อนการชำระเงินในรอบถัดไป เนื่องจากเป็นการตั้งค่าผ่านหน้าบัญชี iTunes ของคุณ และเพื่อจัดการกับการสมัครใช้งานของคุณ เพียงแค่แตะที่ไอคอน App Store บนโทรศัพท์ของคุณ ลงชื่อเข้าด้วย Apple ID ของคุณที่ด้านล่างของหน้า (ถ้าคุณยังไม่ได้ดำเนินการ) แล้วคลิกดูรหัส คุณจะถูกนำไปยังหน้าบัญชีของคุณ สามารถเลื่อนลงไปจัดการ การสมัครใช้งานแอปได้ จากนั้น คุณสามารถเลือกการสมัครใช้งาน MEGA PRO และสามารถดูกำหนดการต่ออายุ เลือกแพคเกจสมัครใช้งานต่างๆ หรือสลับสวิทช์เปิด-ปิด เพื่อปิดใช้งาน การสมัครใช้งานแบบต่ออายุอัตโนมัติของคุณได้เช่นเดียวกัน";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1321,10 +1355,10 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="ภายในแอปพลิเคชันคุณสามารถอัปเกรดพื้นที่เก็บข้อมูลและโควต้าการถ่ายโอนด้วยการสมัครรายเดือนหรือรายปี";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="สมัครใช้งาน PRO LITE: 4.99 ยูโร (4.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 49.99 ยูโร (49.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 200 GB และโควต้าการถ่ายโอน 1 TB ต่อเดือนสมัครใช้งาน PRO I: 9.99 ยูโร (9.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 99.99 ยูโร (99.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 1 TB และโควต้าการถ่ายโอน 2 TB ต่อเดือนสมัครใช้งาน PRO II: 19.99 ยูโร (19.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 199.99 ยูโร (199.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 4 TB และโควต้าการถ่ายโอน 8 TB ต่อเดือนสมัครใช้งาน PRO III: 29.99 ยูโร (29.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 299.99 ยูโร (299.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 8 TB และโควต้าการถ่ายโอน 16 TB ต่อเดือน";
+"generalDescriptionParagraph5"="สมัครใช้งาน PRO LITE: 4.99 ยูโร (4.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 49.99 ยูโร (49.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 200 GB และโควต้าการถ่ายโอน 1 TB ต่อเดือน\nสมัครใช้งาน PRO I: 9.99 ยูโร (9.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 99.99 ยูโร (99.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 1 TB และโควต้าการถ่ายโอน 2 TB ต่อเดือน\nสมัครใช้งาน PRO II: 19.99 ยูโร (19.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 199.99 ยูโร (199.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 4 TB และโควต้าการถ่ายโอน 8 TB ต่อเดือน\nสมัครใช้งาน PRO III: 29.99 ยูโร (29.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 299.99 ยูโร (299.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 8 TB และโควต้าการถ่ายโอน 16 TB ต่อเดือน";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="สำหรับข้อมูลเพิ่มเติม กรุณาตรวจสอบเว็บไซต์ของเรา:มือถือ - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.htmlดสก์ทอป - https://mega.nz/";
+"generalDescriptionParagraph6"="สำหรับข้อมูลเพิ่มเติม กรุณาตรวจสอบได้ที่เว็บไซต์ของเรา:\nอุปกรณ์มือถือ - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nเดสก์ทอป - https://mega.nz/";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="กำลังโทร...";
 /* Notification text body shown when you have missed one audio call */
@@ -1345,3 +1379,99 @@
 "missedAudioCallsAndMissedVideoCalls"="[A] สายที่ไม่ได้รับและอีก [B] สายวิดีโอที่ไม่ได้รับ";
 /* Button title to see the available bonus */
 "getBonus"="รับโบนัส";
+/* QR Code label, used in Settings as title. String as short as possible */
+"qrCode"="คิวอาร์โค้ด";
+/* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
+"autoAccept"="ยอมรับอัตโนมัติ";
+/* Footer that explains the way Auto-Accept works for QR codes */
+"autoAcceptFooter"="ผู้ติดต่อที่สแกนคิวอาร์โค้ดของคุณจะถูกเพิ่มลงในรายชื่อผู้ติดต่อของคุณโดยอัตโนมัติ";
+/* Action to reset the current valid QR code of the user */
+"resetQrCode"="รีเซ็ตคิวอาร์โค้ด";
+/* Footer that explains what would happen if the user resets his/her QR code */
+"resetQrCodeFooter"="คิวอาร์โค้ดก่อนหน้านี้จะไม่สามารถใช้งานได้อีกต่อไป";
+/* Title for view that displays the QR code of the user. String as short as possible. */
+"myCode"="โค้ดของฉัน";
+/* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
+"scanCode"="สแกนโค้ด";
+/* Label that encourage the user to line the QR to scan with the camera */
+"lineCodeWithCamera"="จัดเรียงคิวอาร์โค้ด เพื่อสแกนด้วยกล้องถ่ายรูปของอุปกรณ์";
+/* Error text shown when the user scans a QR that is not valid. String as short as possible. */
+"invalidCode"="โค้ดไม่ถูกต้อง";
+/* Success text shown in a label when the user scans a valid QR. String as short as possible. */
+"codeScanned"="สแกนโค้ดแล้ว";
+/* title of the screen that shows the users with whom the user has shared a folder */
+"sharedWidth"="แชร์ด้วย:";
+/*   */
+"details"="รายละเอียด";
+/* Item menu option upon right click on one or multiple files. */
+"sharing"="แชร์";
+/* Title of section to display number of all historical versions of files. */
+"versions"="เวอร์ชัน";
+/* Title label of a node property. */
+"location"="ตำแหน่งที่ตั้ง";
+/* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
+"totalSize"="ขนาดทั้งหมด";
+/* Refers to the type of a file or folder. */
+"type"="ประเภท";
+/* Title of the incoming shared folders of a user in singular */
+"sharedFolder"="แชร์โฟลเดอร์";
+/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
+"created"="วันที่สร้าง";
+/* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
+"contains"="ประกอบด้วย";
+/* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
+"modified"="วันที่แก้ไข";
+/* used for example when a folder is shared with 2 or more users */
+"users"="ผู้ใช้";
+/* user (singular) label indicating is receiving some info, for example shared folders */
+"user"="ผู้ใช้";
+/* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
+"xVersions"="[X] เวอร์ชัน";
+/* Label of the option menu. When clicking this button, the app shows the info of the file */
+"fileInfo"="ข้อมูลไฟล์";
+/* Label of the option menu. When clicking this button, the app shows the info of the folder */
+"folderInfo"="ข้อมูลโฟลเดอร์";
+/* Question to ensure user wants to delete file version. */
+"deleteVersion"="คุณต้องการลบเวอร์ชันนี้หรือไม่";
+/* Message to notify user the file version will be permanently removed */
+"permanentlyRemoved"="จะถูกนำออกอย่างถาวร";
+/*  */
+"delete"="ลบ";
+/* A button label which reverts a certain version of a file to be the current version of the selected file. */
+"revert"="กลับคืน";
+/*  */
+"download"="ดาวน์โหลด";
+/* Singular of file. 1 file */
+"file"="ไฟล์";
+/* Title of section to display information of the current version of a file. */
+"currentVersion"="เวอร์ชันปัจจุบัน";
+/* A button label which opens a dialog to display the full version history of the selected file. */
+"previousVersions"="เวอร์ชันก่อนหน้า";
+/* Title of section to display information of all current versions of files. */
+"currentVersions"="เวอร์ชันปัจจุบัน";
+/* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
+"remindPasswordTitle"="คุณจำรหัสผ่านได้หรือไม่";
+/* Text that describes why the user should test his/her password */
+"remindPasswordText"="เนื่องจากเทคโนโลยีการเข้ารหัสของ MEGA คุณไม่สามารถรีเซ็ตรหัสผ่านโดยไม่สูญเสียข้อมูลได้ กรุณาตรวจสอบว่าคุณไม่ลืมรหัสผ่านของคุณจริง ๆ";
+/* Text that describes why the user should test his/her password before logging out */
+"remindPasswordLogoutText"="ก่อนออกจากระบบเราขอแนะนำให้คุณส่งออกคีย์การกู้คืนข้อมูลไปยังที่ปลอดภัย โปรดทราบว่าคุณไม่สามารถรีเซ็ตรหัสผ่านหากลืมรหัสผ่านได้";
+/* Text next to a toggle that if enabled won't appear again */
+"dontShowAgain"="ไม่ต้องแสดงในครั้งต่อไป";
+/* Label for test password button and titles */
+"testPassword"="ทดสอบรหัสผ่าน";
+/* Label for recovery key button */
+"backupRecoveryKey"="สำรองคีย์การกู้คืน";
+/* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
+"testPasswordText"="กรุณาทดสอบรหัสผ่านของคุณด้านล่าง เพื่อให้แน่ใจว่าคุณจำได้ หากคุณลืมรหัสผ่าน จะไม่สามารถเข้าถึงข้อมูล MEGA ของคุณได้ [A]เรียนรู้เพิ่มเติม[/A]";
+/* Title text for the account confirmation. */
+"confirm"="ยืนยัน";
+/* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
+"passwordAccepted"="ยอมรับรหัสผ่านแล้ว";
+/* A dialog title to export the Recovery Key for the current user. */
+"exportRecoveryKey"="ส่งออกคีย์การกู้คืน";
+/* Title to confirm that you want to logout */
+"proceedToLogout"="ดำเนินการเพื่อออกจากระบบ";
+/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
+"testPasswordLogoutText"="คุณกำลังจะออกจากระบบ กรุณาทดสอบรหัสผ่านเพื่อให้แน่ใจว่าคุณจำได้ หากลืมรหัสผ่าน คุณจะสูญเสียการเข้าถึงข้อมูล MEGA ของคุณไปโดยปริยาย";
+/* state previous to import a file */
+"loading"="กำลังโหลด...";

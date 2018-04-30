@@ -468,7 +468,7 @@
         case MEGAChatRoomChangeTypeUnreadCount:
             break;
             
-        case MEGAChatRoomChangeTypeParticipans:            
+        case MEGAChatRoomChangeTypeParticipants:            
             [self setParticipants];
             [self.tableView reloadData];
             break;

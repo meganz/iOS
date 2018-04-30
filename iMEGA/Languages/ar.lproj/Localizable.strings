@@ -1,13 +1,13 @@
 /* Button title to cancel something */
-"cancel"="إلغاء";
+"cancel"="الغاء";
 /* Button title to accept something */
-"ok"="موافق";
+"ok"="حسنا";
 /* */
 "yes"="نعم";
 /* */
 "no"="لا";
 /* */
-"upload"="تحميل";
+"upload"="رفع";
 /*  */
 "error"="خطأ";
 /*  */
@@ -58,8 +58,14 @@
 "sslUnverified_alertTitle"="مفتاح طبقة المنفذ الآمن (SSL) لايمكن توثيقه، ربما تتأثر من هجوم رجل في الوسط.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="المحتوى الذي تحاول الدخول إليه غير متاح لهذا الحساب. حاول تسجيل الدخول بنفس الحساب كما هو الحال في موقع الويب للجوال.";
-/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
+/* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="تستغرق العملية وقتا أطول من المتوقع. الرجاء الإنتظار...";
+/* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
+"serversAreTooBusy"="الخوادم مشغولة جدا. الرجاء الانتظار.";
+/* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
+"unableToReachMega"="لم ينجح الاتصال مع MEGA. يرجى التأكد من الاتصال الشبكي أو إعادة المحاولة بعد قليل.";
+/* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
+"tooManyRequest"="تجاوز الحد الاعظمي للطلبات. من فضلك انتظر.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="يرجى تسجيل الدخول إلى حسابك.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -169,7 +175,7 @@
 /* Title for the folder link view */
 "folderLink"="رابط المجلد";
 /* Button title which downloads a file/folder to your device */
-"downloadButton"="التنزيل";
+"downloadButton"="تحميل";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="المجلد الذي تحاول تحميله أكبر من الذاكرة المتوفرة.";
 /* Error message shown when a folder can't be created. */
@@ -185,7 +191,7 @@
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="الاتصال غير متوفر";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="مجلد فارغ ";
+"emptyFolder"="لا توجد ملفات في المجلد";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="لم توجد ملفات في محرك السحابة الخاص بك";
 /* Button title shown in empty views when you can 'Add files' */
@@ -341,7 +347,7 @@
 /* String already exists: 367, but we need to split paragraphs. */
 "copyrightMessagePart1"="MEGA تحترم حقوق نشر الآخرين وتطلب من مستخدمي خدمات السحابة MEGA بالالتزام بقوانين حقوق النشر.";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="تم منعك منعا باتا من استخدام خدمة MEGA  السحابية لانتهاكك حقوق النشر. لايمكنك من الرفع أوالتحميل أوالتخزين أوالمشاركة أوالعرض أوالبث أوالتوزيع أوإرسال البريد الالكتروني أوالتواصل أونقل أو تفير أية ملفات أو بيانات أو محتوى ينتهك أي حق من حقوق النشر أو أية حقوق ملكية لأي شخص.";
+"copyrightMessagePart2"="لقد تم منعك منعا تاما من استخدام الخدمة السحابية MEGA لانتهاك حقوق الطبع والنشر. لا يجوز لك تحميل أو تنزيل أو تخزين أو مشاركة أو عرض أو بث أو توزيع أو إرسال بريد إلكتروني أو ربط أو نقل أو إتاحة أي ملفات أو بيانات أو محتوى ينتهك أي حقوق طبع ونشر أو حقوق ملكية أخرى لأي شخص أو كيان.";
 /* button caption text that the user clicks when he agrees */
 "agree"="موافق";
 /* button caption text that the user clicks when he disagrees */
@@ -366,6 +372,16 @@
 "copyKey"="انسخ المفتاح";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="فتح في...";
+/* */
+"sendToContact"="ارسل الى جهة الاتصال";
+/* Toast text upon sending a single file to chat */
+"fileSentToChat"="تم إرسال الملف للمحادثة";
+/* Success message when the attachment has been sent to a many chats */
+"fileSentToXChats"="الملف أرسل ل %1$d محادثات ";
+/* Toast text upon sending multiple files to chat */
+"filesSentToChat"="تم إرسال الملفات للمحادثة";
+/* success message when sending multiple files. Please do not modify the %d placeholder. */
+"xfilesSentSuccesfully"="%d ملفات أرسلت بنجاح";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="إزالة الرابط";
 /* Message shown when there are some active links that can be removed or disabled */
@@ -441,7 +457,7 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="هل أنت متأكد أنك تريد نقل [A] الملفات و [B] المجلدات إلى سلة القمامة؟";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1 ملف تم نقله لسلة المحذوفات بنجاح";
+"fileMovedToRubbishBinMessage"="1 ملف تم نقله لسلة المحذوفات";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
 "filesMovedToRubbishBinMessage"="%d ملفات تم نقلها إلى سلة المحذوفات";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
@@ -483,19 +499,25 @@
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "automaticallyBackupYourPhotos"="انسخ احتياطيا صورك إلى السحابة";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="تفعيل رفع البوم الكاميرا";
+"enableCameraUploadsButton"="تفعيل تحميلات الكاميرا";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="تفعيل تحميلات الكاميرا";
+"cameraUploadsEnabled"="تحميلات الكاميرا مفعلة";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="تحميلات الكاميرا تمت بنجاح";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "cameraUploadsUploadingFile"="رفع %1$d من %2$d ملف ";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
 "cameraUploadsUploadingFiles"="رفع %1$d من %2$d ملفات";
+/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
+"indexOfTotalFile"="%1$d من %2$d ملف";
+/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
+"indexOfTotalFiles"="%1$d من %2$d ملفات";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu بند محدد";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu عناصر مختارة";
+/* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
+"xSelected"="%d مختارة";
 /* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
 "cameraUploadsWillBeDisabled"="سيتم تعطيل تحميل الكاميرا";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
@@ -553,7 +575,7 @@
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="عنوان البريد الإلكتروني";
 /* Button title to 'Add' the contact to your contacts list */
-"addContactButton"="إضافة";
+"addContactButton"="اضافة";
 /* Success message shown when a contact has been invited */
 "requestSent"="تم إرسال الطلب";
 /* Add contacts and share dialog error message when user try to add your own email address */
@@ -595,7 +617,7 @@
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
 "XContactsSelected"="[X] جهات الاتصال";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="شارك مجلد";
+"shareFolder"="مجلد المشاركة";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="الملفات المشاركة";
 /* Button that allows you to select a given folder */
@@ -603,13 +625,13 @@
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="صلاحيات";
 /* Permissions given to the user you share your folder with */
-"readOnly"="القراءة فقط";
+"readOnly"="للقراءة فقط";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="القراءة والتحرير";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="الوصول الكامل";
 /* Title of the Settings section */
-"settingsTitle"="الإعدادات";
+"settingsTitle"="الاعدادات";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="رفع الألبوم";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
@@ -619,9 +641,9 @@
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="خيارات الأمان";
 /* Title of one of the Settings sections where you can see things 'About' the app */
-"about"="معلومات عن";
+"about"="حول";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
-"language"="اللغة";
+"language"="لغة";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="لغة التطبيق";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
@@ -657,7 +679,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="تغيير كلمة المرور";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="تصدير المفتاح الرئيسي والحفاظ عليه في مكان آمن تمكنك من تعيين كلمة مرور جديدة دون فقدان البيانات.";
+"exportMasterKeyFooter"="تصدير مفتاح الاستعادة والحفاظ عليه في مكان آمن يساعدك على تحديد كلمة مرور جديدة دون فقدك للبيانات.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="لماذا أحتاج لمفتاح استعادة؟";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -751,7 +773,7 @@
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="تأكيد كلمة المرور";
 /* Success message shown when the password has been changed */
-"passwordChanged"="لقد تم تغيير كلمة المرور.";
+"passwordChanged"="تم تغيير كلمة المرور.";
 /* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
 "oldAndNewPasswordMatch"="كلمة السر الجديدة يجب ألا تطابق القديمة.";
 /* An option to reset the password. */
@@ -767,17 +789,17 @@
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey"="مفتاح الإستعادة";
 /* An alert title where the user provided the incorrect Recovery Key. */
-"invalidRecoveryKey"="مفتاح الاستعادة غير متوفر ";
+"invalidRecoveryKey"="مفتاح الاستعادة غير صالح";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="مفتاح الاستعادة الخاص بك سيستخدم لاستعادة كلمة المرور. الرجاء أدخل كلمة المرور الجديدة.";
 /*  */
 "yourPasswordHasBeenReset"="تم إعادة تعيين كلمة المرور الخاصة بك بنجاح. يرجى تسجيل الدخول إلى حسابك.";
 /* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="إذا كان لديك نسخة احتياطية من مفتاح الاسترداد، يمكنك إعادة تعيين كلمة المرور الخاصة بك عن طريق اختيار \"نعم\". لن يتم فقدان بياناتك.";
+"forgotPassword_firstParagraph"="إذا كان لديك نسخة احتياطية من مفتاح الاسترداد، فيمكنك إعادة تعيين كلمة المرور عن طريق تحديد \"نعم\". لن تفقد أية بيانات.";
 /* Second paragraph of the screen when the password has been forgotten */
 "forgotPassword_secondParagraph"="لا يزال بإمكانك تصدير مفتاح الاستعادة الآن إذا كان لديك جلسة MEGA نشطة في أي متصفح آخر على هذا الكمبيوتر أو أي كمبيوتر آخر. إذا لم تقم بذلك، لن يمكنك فك تشفير حسابك الحالي، ولكن يمكنك أن تبدأ من جديد تحت عنوان البريد الإلكتروني نفسه عن طريق اختيار NO.";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="هل لديك نسخة احتياطية عن مفتاح الاستعادة الخاص بك؟";
+"doYouHaveABackupOfYourRecoveryKey"="هل لديك نسخة احتياطية من مفتاح الاستعادة الخاص بك؟";
 /* Headline when the user chose YES */
 "great"="عظيم!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
@@ -787,7 +809,7 @@
 /* The title of the screen to park an account. */
 "noMasterKey_title"="عفوا!";
 /* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="نظرا لأن التشفير لدينا هومن النهاية إلى النهاية، لن تكون قادرا على الوصول إلى البيانات الخاصة بك دون كلمة السر أو نسخة احتياطية من مفتاح الاستعادة.";
+"noMasterKey_firstParagraph"="نظرا لنموذج التشفير من النهاية حتى النهاية، لن تتمكن من الوصول إلى بياناتك بدون كلمة المرور أو نسخة احتياطية من مفتاح الاستعادة.";
 /* Second paragraph of the screen to park an account */
 "noMasterKey_secondParagraph"="يمكنك إيقاف حسابك الحالي وبدء حساب جديد تحت نفس عنوان البريد الإلكتروني. سيتم الاحتفاظ بالبيانات الخاصة بك لمدة 60 يوما على الأقل. إذا كنت لا تتذكر كلمة المرور حسابك الموقوف،  يرجى التواصل على support@mega.nz";
 /* Text of the dialog message to ask for the link to park the account */
@@ -833,7 +855,7 @@
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="سجل الخروج وامسح البيانات المحلية بعد عشر محاولات فاشلة لادخال كلمة المرور.";
 /* Menu item */
-"help"="مساعدة";
+"help"="المساعدة";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="مركز المساعدة";
 /* Title to rate the app */
@@ -875,7 +897,7 @@
 /* Title of the Used storage section */
 "usedStorage"="المساحة المستخدمة ";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="ادع أصدقائك واحصل على ترقيات ";
+"inviteFriendsAndGetRewards"="ادع أصدقائك واحصل على ترقيات";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="ادع اصدقائك";
 /* title of the introduction for the achievements screen */
@@ -925,7 +947,7 @@
 /* Label to show that an error related with expiration occurs during a SDK operation. */
 "expired"="انتهت";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="تسجيل الخروج";
+"logoutLabel"="الخروج";
 /* String shown when you are logging out of your account. */
 "loggingOut"="تسجيل الخروج";
 /* Button to remove avatar. Try to keep the text short (as in English) */
@@ -951,7 +973,7 @@
 /* title of the My Account screen */
 "accountType"="نوع الحساب:";
 /* Text relative to the MEGA account level. UPPER CASE */
-"free"="مجانًا";
+"free"="مجانا";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="تنتهي في %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
@@ -973,7 +995,7 @@
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="[S]مساحة السحابة على وشك الامتلاء[/S] [A]رق عضويتك الآن[/A] لحساب برو واحصل [S]حتى 4 تيرابايت  (4096 جيجابايت)[/S] كمساحة تخزين.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]سحابة التخزين ممتلئة بالكامل[/S] [A]رق حسابك الآن إلى[/A] ل PRO واحصل على [S]4 تيرابايت (4000 جيجابايت)[/S] كمساحة تخزين.                ";
+"cloudDriveIsFull"="[S]سحابة التخزين ممتلئة بالكامل[/S] [A]رق حسابك الآن إلى[/A] ل PRO واحصل على [S]4 تيرابايت (4096 جيجابايت)[/S] كمساحة تخزين.                ";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="التخزين";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -983,13 +1005,13 @@
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="خاضع لمشاركاتك في برنامج إنجازاتنا.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%.2f %@ شهريا";
+"productPricePerMonth"="%@ شهريا";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="اختر احدي الخطط ادناة:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="اختر نوع واحد لحسابك:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
+"twoMonthsFree"="اشتراكك السنوي أرخص 17% عن الاشتراك الشهري لمدة 12 شهر";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="الباقة الحالية:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
@@ -1013,7 +1035,7 @@
 /* Button title to restore failed purchases */
 "restore"="الاستعادة";
 /* "Monthly" subscriptions */
-"monthly"="شهريًا";
+"monthly"="شهريا";
 /* "Yearly" subscriptions */
 "yearly"="سنويًا";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
@@ -1119,7 +1141,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="هل أنت متأكد أنك تريد مسح محفوظات الرسائل بالكامل لهذه المحادثة؟";
 /* 'Next' button in a dialog */
-"continue"="استمر";
+"continue"="استمرار";
 /* Button title that allows the user to close a chat. */
 "closeChat"="أغلق المحادثة";
 /* Title of the incoming shared folders of a user. */
@@ -1184,6 +1206,10 @@
 "chatNotFound"="لا توجد محادثة";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ يكتب ...";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s [A]جاري الكتابة...[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s [A]وأكثر يكتبون...[/A]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="اكتب رسالة...";
 /* Information if there are no history messages in current chat conversation */
@@ -1246,6 +1272,14 @@
 "uploadedFile"="رفع هذا الملف:";
 /* A summary message when a user has attached many files at once into the chat. */
 "uploadedFiles"="رفع هذه الملفات:";
+/* Label in a button that allows to jump to the latest item */
+"jumpToLatest"="اذهب للأحدث";
+/* Label in a button that allows to jump to the latest message */
+"newMessages"="رسائل جديدة";
+/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
+"unreadMessage"="%lu رسالة غير مقروءة";
+/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
+"unreadMessages"="%lu رسائل غير مقروءة";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="يتم تجديد الاشتراكات تلقائيا لفترات اشتراك المتتالية لنفس المدة وبنفس سعر الباقة الأولى التي تم اختيارها. يمكنك إيقاف التجديد التلقائي من اشتراكك MEGA برو في موعد أقصاه 24 ساعة قبل دفع اشتراكك المقبل ومن خلال صفحة إعدادات الحساب الخاصة بك في اي تيونز. لإدارة الاشتراكات الخاصة بك، ببساطة انقر على أيقونة المتجر على الهاتف الخاص بك، قم بتسجيل الدخول باستخدام معرف أبل الخاص بك في أسفل الصفحة (إذا لم تكن قد فعلت ذلك) ثم انقر فوق عرض ID. سوف يتم نقلك إلى صفحة الحساب الخاص بك حيث يمكنك النزل لأسفل الى إدارة التطبيقات والاشتراكات. من هناك، يمكنك تحديد اشتراكك MEGA برو وعرض تاريخ التجديد المقرر، واختيار حزمة الاشتراك مختلفة أو تعطيل أو تشغيل التجديد التلقائي لاشتراكك.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1308,7 +1342,7 @@
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="خطأ غير معروف";
 /* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="ستحتاج لإعادة تشغيل MEGA بعد تغيير اللغة ";
+"languageRestartAlert"="تحتاج إلى إعادة تشغيل MEGA بعد تغيير اللغة";
 /* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
 "languageRestartNotification"="تم تغيير اللغة ،، اضغط لإعادة التشغيل ";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
@@ -1345,3 +1379,99 @@
 "missedAudioCallsAndMissedVideoCalls"="[A] اتصالات صوتية فائتة و [B] اتصالات مرئية فائتة";
 /* Button title to see the available bonus */
 "getBonus"="احصل على علاوة ";
+/* QR Code label, used in Settings as title. String as short as possible */
+"qrCode"="رمز الاستجابة السريعة";
+/* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
+"autoAccept"="قبول تلقائي ";
+/* Footer that explains the way Auto-Accept works for QR codes */
+"autoAcceptFooter"="سيتم إضافة جهات الاتصال التي تمسح رمز الاستجابة السريعة الخاص بك تلقائيًا إلى قائمة جهات اتصالك.";
+/* Action to reset the current valid QR code of the user */
+"resetQrCode"="إعادة تعيين كود QR";
+/* Footer that explains what would happen if the user resets his/her QR code */
+"resetQrCodeFooter"="أكواد QR السابقة لن تكون صالحة.";
+/* Title for view that displays the QR code of the user. String as short as possible. */
+"myCode"="الرمز الخاص بي";
+/* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
+"scanCode"="مسح الرمز";
+/* Label that encourage the user to line the QR to scan with the camera */
+"lineCodeWithCamera"="أنشئ رمز الاستجابة السريعة لتمسحه عبر كاميرا جهازك";
+/* Error text shown when the user scans a QR that is not valid. String as short as possible. */
+"invalidCode"="الرمز غير صالح";
+/* Success text shown in a label when the user scans a valid QR. String as short as possible. */
+"codeScanned"="تم مسح الرمز";
+/* title of the screen that shows the users with whom the user has shared a folder */
+"sharedWidth"="المشاركة مع:";
+/*   */
+"details"="تفاصيل";
+/* Item menu option upon right click on one or multiple files. */
+"sharing"="المشاركة";
+/* Title of section to display number of all historical versions of files. */
+"versions"="النسخ";
+/* Title label of a node property. */
+"location"="الموقع";
+/* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
+"totalSize"="الحجم الإجمالي";
+/* Refers to the type of a file or folder. */
+"type"="النوع";
+/* Title of the incoming shared folders of a user in singular */
+"sharedFolder"="مجلد مشترك";
+/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
+"created"="أنشئ";
+/* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
+"contains"="المحتويات";
+/* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
+"modified"="عُدِّل";
+/* used for example when a folder is shared with 2 or more users */
+"users"="اعضاء";
+/* user (singular) label indicating is receiving some info, for example shared folders */
+"user"="عضو";
+/* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
+"xVersions"="[X] نسخ";
+/* Label of the option menu. When clicking this button, the app shows the info of the file */
+"fileInfo"="معلومات الملف";
+/* Label of the option menu. When clicking this button, the app shows the info of the folder */
+"folderInfo"="معلومات المجلد";
+/* Question to ensure user wants to delete file version. */
+"deleteVersion"="هل تود حذف هذه النسخة؟";
+/* Message to notify user the file version will be permanently removed */
+"permanentlyRemoved"="سيتم حذفها نهائيا";
+/*  */
+"delete"="حذف";
+/* A button label which reverts a certain version of a file to be the current version of the selected file. */
+"revert"="العودة";
+/*  */
+"download"="تحميل";
+/* Singular of file. 1 file */
+"file"="ملف";
+/* Title of section to display information of the current version of a file. */
+"currentVersion"="النسخة الحالية";
+/* A button label which opens a dialog to display the full version history of the selected file. */
+"previousVersions"="النسخ السابقة";
+/* Title of section to display information of all current versions of files. */
+"currentVersions"="النسخ الحالية";
+/* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
+"remindPasswordTitle"="هل تتذكر كلمة مرورك؟";
+/* Text that describes why the user should test his/her password */
+"remindPasswordText"="ان إعادة تعيين كلمة المرور الخاصة بك بسبب ضياعها سيؤدي الى فقدان المعطيات المخزنة كونها محمية بتقنية MEGA للتشفير. لذلك تأكد من حفظ وتذكر كلمة المرور.";
+/* Text that describes why the user should test his/her password before logging out */
+"remindPasswordLogoutText"="ننصح بتصدير مفتاح الاسترجاع الخاص بك وحفظه بمكان آمن قبل تسجيل الخروج. يرجى الملاحظة انه من غير الممكن إعادة تعيين كلمة المرور في حال نسيانها.";
+/* Text next to a toggle that if enabled won't appear again */
+"dontShowAgain"="عدم الإظهار مرة اخرى";
+/* Label for test password button and titles */
+"testPassword"="اختبار كلمة المرور";
+/* Label for recovery key button */
+"backupRecoveryKey"="نسخ مفتاح الاستتعادة احتياطيا";
+/* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
+"testPasswordText"="يرجى اختبار كلمة المرور أدناه لضمان تذكرها. إذا فقدت كلمة المرور، فستفقد إمكانية الدخول إلى بياناتك لدى ميغا. [A]تعلم المزيد[/A]";
+/* Title text for the account confirmation. */
+"confirm"="تأكيد";
+/* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
+"passwordAccepted"="تم قبول كلمة المرور";
+/* A dialog title to export the Recovery Key for the current user. */
+"exportRecoveryKey"="تصدير مفتاح الاستعادة";
+/* Title to confirm that you want to logout */
+"proceedToLogout"="متابعة تسجيل الخروج";
+/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
+"testPasswordLogoutText"="انت في صدد تسجيل الخروج، من فضلك تأكد وتحقق من تذكرك لكلمة المرور الخاصة بك. ضياع كلمة المرور سيؤدي الى فقدان الولوج للبيانات المخزنة لدى MEGA.";
+/* state previous to import a file */
+"loading"="جاري التحميل";
