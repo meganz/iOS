@@ -1,10 +1,3 @@
-//
-//  MOMediaDestination+CoreDataProperties.h
-//  
-//
-//  Created by Carlos Martín Acera on 26/4/18.
-//
-//
 
 #import "MOMediaDestination+CoreDataClass.h"
 
