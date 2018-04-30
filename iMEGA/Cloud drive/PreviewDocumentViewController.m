@@ -85,12 +85,12 @@
             CGPDFPageRef pageRef = self.pdfView.currentPage.pageRef;
             size_t page = CGPDFPageGetPageNumber(pageRef);
             NSString *fingerprint = [NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.pdfView.document.documentURL.path]];
-            if (page != 1) {
+            if (page == 1) {
+                [[MEGAStore shareInstance] deleteMediaDestinationWithFingerprint:fingerprint];
+            } else {
                 if (fingerprint && ![fingerprint isEqualToString:@""]) {
                     [[MEGAStore shareInstance] insertOrUpdateMediaDestinationWithFingerprint:fingerprint destination:[NSNumber numberWithLongLong:page] timescale:nil];
                 }
-            } else {
-                [[MEGAStore shareInstance] deleteMediaDestinationWithFingerprint:fingerprint];
             }
         }
     }

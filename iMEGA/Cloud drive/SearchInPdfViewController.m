@@ -124,7 +124,7 @@
     }
 }
 
-- (void) keyboardWillHide:  (NSNotification *) notification{
+- (void)keyboardWillHide:(NSNotification *)notification {
     NSDictionary *keyInfo = [notification userInfo];
     NSTimeInterval duration = [[keyInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     NSInteger curve = [notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] intValue] << 16;
