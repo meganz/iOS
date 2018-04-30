@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="17D47" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17E199" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="ChatDraft" representedClassName="MOChatDraft" syncable="YES">
         <attribute name="chatId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="MediaDestination" representedClassName="MOMediaDestination" syncable="YES">
+        <attribute name="destination" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="fingerprint" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="timescale" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
     </entity>
     <entity name="OfflineNode" representedClassName="MOOfflineNode" syncable="YES">
         <attribute name="base64Handle" attributeType="String" indexed="YES" syncable="YES"/>
@@ -17,8 +22,9 @@
         <attribute name="lastname" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="OfflineNode" positionX="-63" positionY="-18" width="128" height="105"/>
-        <element name="User" positionX="-63" positionY="9" width="128" height="105"/>
-        <element name="ChatDraft" positionX="-63" positionY="27" width="128" height="75"/>
+        <element name="ChatDraft" positionX="-63" positionY="15" width="128" height="73"/>
+        <element name="OfflineNode" positionX="-117" positionY="-171" width="128" height="105"/>
+        <element name="User" positionX="331" positionY="-198" width="128" height="105"/>
+        <element name="MediaDestination" positionX="99" positionY="-72" width="128" height="90"/>
     </elements>
 </model>

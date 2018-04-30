@@ -7,7 +7,7 @@
 /* */
 "no"="לא";
 /* */
-"upload"="העלה";
+"upload"="העלאה";
 /*  */
 "error"="שגיאה";
 /*  */
@@ -58,8 +58,14 @@
 "sslUnverified_alertTitle"="מפתח ה-SSL של השרת לא אומת. ייתכן ואתה קורבן של התקפת איש-באמצע.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
-/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
-"takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
+/* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
+"takingLongerThanExpected"="The process is taking longer than expected. Please wait…";
+/* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
+"serversAreTooBusy"="השרתים עמוסים. אנא המתן.";
+/* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
+"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+/* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
+"tooManyRequest"="Too many requests. Please wait.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="אנא התחבר לחשבון שלך.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -79,7 +85,7 @@
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
 "megaAccessText"="קבל גישה מאובטחת באופן מלא, בכל זמן.";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="התחברות";
+"login"="התחבר";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="צור חשבון";
 /* Message shown when the user writes a wrong email or password on login */
@@ -185,7 +191,7 @@
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="אין חיבור לאינטרנט";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="תיקייה ריקה";
+"emptyFolder"="אין קבצים בתיקייה";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="אין קבצים בכונן הענן שלך";
 /* Button title shown in empty views when you can 'Add files' */
@@ -495,7 +501,7 @@
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="אפשר העלאת תמונות מצלמה";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="העלאת תמונות מצלמה מאופשרת";
+"cameraUploadsEnabled"="העלאות תמונות מהמצלמה אופשר!";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Camera uploads complete";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
@@ -617,7 +623,7 @@
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="הרשאות";
 /* Permissions given to the user you share your folder with */
-"readOnly"="קריאה בלבד";
+"readOnly"="קריאה-בלבד";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="קרא & כתוב";
 /* Permissions given to the user you share your folder with */
@@ -633,7 +639,7 @@
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="אפשרויות אבטחה";
 /* Title of one of the Settings sections where you can see things 'About' the app */
-"about"="אודות";
+"about"="הודות";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="שפה";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
@@ -671,7 +677,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="שנה סיסמה";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="ייצוא המפתח הראשי ושמירתו במקום מאובטח מאפשר לך להגדיר סיסמא חדשה ללא איבוד נתונים.";
+"exportMasterKeyFooter"="ייצוא מפתח השחזור שלך ושמירתו במקום מאובטח, מאפשר לך לקבוע סיסמא חדשה מבלי לאבד מידע.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="למה אני צריך מפתח שחזור?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -765,7 +771,7 @@
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="אשר סיסמא";
 /* Success message shown when the password has been changed */
-"passwordChanged"="הסיסמה שונתה.";
+"passwordChanged"="סיסמתך שונתה.";
 /* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
 "oldAndNewPasswordMatch"="הסיסמא הקודמת והחדשה לא יכולות להיות זהות.";
 /* An option to reset the password. */
@@ -839,7 +845,7 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="העמודים הפתוחים נסגרו ";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="שנה קוד";
+"changePasscodeLabel"="שנה סיסמא";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="קוד פשוט";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
@@ -895,7 +901,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Get %1$s of storage and %2$s of transfers for each referral";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Select contacts from your phone's contact list or enter multiple email addresses.";
+"inviteYourFriendsExplanation"="Select contacts from your phone’s contact list or enter multiple email addresses.";
 /*  */
 "insertYourFriendsEmails"="הכנס מייל(ים) של חבר שלך:";
 /*  */
@@ -939,7 +945,7 @@
 /* Label to show that an error related with expiration occurs during a SDK operation. */
 "expired"="פג תוקף";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="התנתק";
+"logoutLabel"="יציאה";
 /* String shown when you are logging out of your account. */
 "loggingOut"="מתנתק";
 /* Button to remove avatar. Try to keep the text short (as in English) */
@@ -1003,7 +1009,7 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Select one account type:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="An annual subscription is 17% cheaper than 12 monthly payments";
+"twoMonthsFree"="מנוי שנתי הוא זול ב-17% מאשר 12 תשלומים חודשיים";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Current Plan:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
@@ -1198,6 +1204,10 @@
 "chatNotFound"="השיחה לא נמצאה";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ מקליד...";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s [A]מקלידים...[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s [A]and more are typing…[/A]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="כתוב הודעה...";
 /* Information if there are no history messages in current chat conversation */
@@ -1264,6 +1274,10 @@
 "jumpToLatest"="Jump to latest";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="New messages";
+/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
+"unreadMessage"="%lu unread message";
+/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
+"unreadMessages"="%lu unread messages";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="המנויים מחודשים באופן אוטומטי לתקופות צמודות. כל חידוש הוא לאותה תקופה כמו התקופה ההתחלתית ובאותו הסכום. ניתן לכבות את החידוש האוטומטי של חשבון ה-MEGA PRO שלך לא יאוחר מ-24 שעות לפני החידוש הבא דרך עמוד האפשרויות של החשבון שלך ב-iTunes. ניתן לנהל בקלות את המנויים שלך, לחץ על האייקון של חנות האפליקציות של אפל, ה-App Store, היכנס עם החשבון של באפל בתחתית העמוד (אם לא עשית זאת כבר) ולחץ על \"הצג חשבון\"  (View ID). תילקח לדף החשבון שלך ושם תוכל לגלול למטה אל \"נהל מנויים מאפליקציות\" (Manage App Subscriptions). משם תוכל לבחור את החשבון שלך ב-MEGA PRO ולראות את התאריך לחידוש, לבחור מבין אפשרויות המנויים שלנו וגם לשנות את הגדרת החידוש האוטומטי.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1344,7 +1358,7 @@
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="For more info, please check our website:\nMobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nDesktop - https://mega.nz/";
 /* Label shown when you receive an incoming call, before start the call. */
-"calling..."="Calling...";
+"calling..."="Calling…";
 /* Notification text body shown when you have missed one audio call */
 "missedAudioCall"="Missed audio call";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
@@ -1433,3 +1447,29 @@
 "previousVersions"="Previous Versions";
 /* Title of section to display information of all current versions of files. */
 "currentVersions"="Current Versions";
+/* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
+"remindPasswordTitle"="האם אתה זוכר את הסיסמא שלך?";
+/* Text that describes why the user should test his/her password */
+"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+/* Text that describes why the user should test his/her password before logging out */
+"remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
+/* Text next to a toggle that if enabled won't appear again */
+"dontShowAgain"="Don’t show me again";
+/* Label for test password button and titles */
+"testPassword"="Test Password";
+/* Label for recovery key button */
+"backupRecoveryKey"="גבה מפתח שחזור";
+/* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
+"testPasswordText"="אנא נסה את סיסמתך על מנת לוודא כי הינך זוכר אותה. אם תשכח את סיסמתך, תאבד את היכולת לגשת למידע שלך ב-MEGA. [A]למד עוד[/A]";
+/* Title text for the account confirmation. */
+"confirm"="אשר";
+/* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
+"passwordAccepted"="סיסמא התקבלה";
+/* A dialog title to export the Recovery Key for the current user. */
+"exportRecoveryKey"="ייצא מפתח שחזור";
+/* Title to confirm that you want to logout */
+"proceedToLogout"="Proceed to logout";
+/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
+"testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+/* state previous to import a file */
+"loading"="טוען...";

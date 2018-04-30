@@ -7,10 +7,11 @@
 #import "MEGAReachabilityManager.h"
 #import "Helper.h"
 #import "NSMutableAttributedString+MNZCategory.h"
+#import "MEGAGetThumbnailRequestDelegate.h"
 
 #import "TransferTableViewCell.h"
 
-@interface TransfersViewController () <UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGATransferDelegate> {
+@interface TransfersViewController () <UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGATransferDelegate, TransferTableViewCellDelegate> {
     BOOL areTransfersPaused;
 }
 
@@ -21,18 +22,8 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *transfersSegmentedControl;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (nonatomic, strong) NSMutableDictionary *allActiveTransfersMutableDictionary;
-@property (nonatomic, strong) NSMutableDictionary *allQueuedTransfersMutableDictionary;
-
-@property (nonatomic, strong) NSMutableDictionary *downloadActiveTransfersMutableDictionary;
-@property (nonatomic, strong) NSMutableDictionary *downloadQueuedTransfersMutableDictionary;
-
-@property (nonatomic, strong) NSMutableDictionary *uploadActiveTransfersMutableDictionary;
-@property (nonatomic, strong) NSMutableDictionary *uploadQueuedTransfersMutableDictionary;
-
-@property (nonatomic, strong) NSMutableDictionary *allTransfersIndexPathMutableDictionary;
-@property (nonatomic, strong) NSMutableDictionary *downloadTransfersIndexPathMutableDictionary;
-@property (nonatomic, strong) NSMutableDictionary *uploadTransfersIndexPathMutableDictionary;
+@property (strong, nonatomic) NSMutableDictionary *transfersMutableDictionary;
+@property (strong, nonatomic) NSMutableArray *transfers;
 
 @end
 
@@ -50,12 +41,7 @@
     [self.transfersSegmentedControl setTitle:AMLocalizedString(@"downloads", @"Downloads") forSegmentAtIndex:1];
     [self.transfersSegmentedControl setTitle:AMLocalizedString(@"uploads", @"Uploads") forSegmentAtIndex:2];
     
-    self.allActiveTransfersMutableDictionary = [[NSMutableDictionary alloc] init];
-    self.allQueuedTransfersMutableDictionary = [[NSMutableDictionary alloc] init];
-    
-    self.allTransfersIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
-    self.downloadTransfersIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
-    self.uploadTransfersIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
+    self.transfersMutableDictionary = [[NSMutableDictionary alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -63,7 +49,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
-    [self.navigationItem setTitle:AMLocalizedString(@"transfers", @"Transfers")];
+    self.navigationItem.title = AMLocalizedString(@"transfers", @"Transfers");
     
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     
@@ -80,15 +66,9 @@
         self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem, self.pauseBarButtonItem];
     }
     
-    [self transfersList];
-    
-    if (self.transfersSegmentedControl.selectedSegmentIndex == 1) {
-        [self transfersForDirection:0];
-    } else if (self.transfersSegmentedControl.selectedSegmentIndex == 2) {
-        [self transfersForDirection:1];
+    if (!areTransfersPaused) {
+        [self reloadView];
     }
-    
-    [self.tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -120,202 +100,29 @@
     
     TransferTableViewCell *cell;
     
-    MEGATransfer *transfer;
-    if ([indexPath section] == 0) { //ACTIVE TRANSFERS
-        cell = [self.tableView dequeueReusableCellWithIdentifier:@"activeTransferCell" forIndexPath:indexPath];
-        if (cell == nil) {
-            cell = [[TransferTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"activeTransferCell"];
-        }
-        
-        switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-            case 0: { //All
-                NSArray *allActiveTransfersArray = [self.allActiveTransfersMutableDictionary allValues];
-                NSUInteger count = allActiveTransfersArray.count;
-                
-                if (count == 0) {
-                    break;
-                }
-                
-                if (count > indexPath.row) {
-                    transfer = [allActiveTransfersArray objectAtIndex:indexPath.row];
-                    if ([transfer type] == MEGATransferTypeDownload) {
-                        [self.allTransfersIndexPathMutableDictionary setObject:indexPath forKey:[self keyForTransfer:transfer]];
-                    } else {
-                        [self.allTransfersIndexPathMutableDictionary setObject:indexPath forKey:[NSNumber numberWithInteger:transfer.tag]];
-                    }
-                }
-                
-                break;
-            }
-                
-            case 1: { //Downloads
-                
-                NSArray *downloadActiveTransfersArray = [self.downloadActiveTransfersMutableDictionary allValues];
-                NSUInteger count = downloadActiveTransfersArray.count;
-                
-                if (count == 0) {
-                    break;
-                }
-                
-                if (count > indexPath.row) {
-                    transfer = [downloadActiveTransfersArray objectAtIndex:indexPath.row];
-                    [self.downloadTransfersIndexPathMutableDictionary setObject:indexPath forKey:[self keyForTransfer:transfer]];
-                }
-                
-                break;
-            }
-                
-            case 2: { //Uploads
-                
-                NSArray *uploadActiveTransfersArray = [self.uploadActiveTransfersMutableDictionary allValues];
-                NSUInteger count = uploadActiveTransfersArray.count;
-                if (count == 0) {
-                    break;
-                }
-                
-                if (count > indexPath.row) {
-                    transfer = [uploadActiveTransfersArray objectAtIndex:indexPath.row];
-                    [self.uploadTransfersIndexPathMutableDictionary setObject:indexPath forKey:[NSNumber numberWithInteger:transfer.tag]];
-                }
-                
-                break;
-            }
-        }
-        if ([transfer type] == MEGATransferTypeDownload) {
-            [cell.arrowImageView setImage:[Helper downloadingTransferImage]];
-            [cell.percentageLabel setTextColor:[UIColor mnz_green31B500]];
-        } else {
-            [cell.arrowImageView setImage:[Helper uploadingTransferImage]];
-            [cell.percentageLabel setTextColor:[UIColor mnz_blue2BA6DE]];
-        }
-        
-    } else { //QUEUED TRANSFERS
-        cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferCell" forIndexPath:indexPath];
-        if (cell == nil) {
-            cell = [[TransferTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"transferCell"];
-        }
-        
-        switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-            case 0: { //All
-                NSArray *allQueuedTransfersArray = [self.allQueuedTransfersMutableDictionary allValues];
-                NSUInteger count = allQueuedTransfersArray.count;
-                
-                if (count == 0) {
-                    break;
-                }
-                
-                if (count > indexPath.row) {
-                    transfer = [allQueuedTransfersArray objectAtIndex:indexPath.row];
-                    if ([transfer type] == MEGATransferTypeDownload) {
-                        [self.allTransfersIndexPathMutableDictionary setObject:indexPath forKey:[self keyForTransfer:transfer]];
-                    } else {
-                        [self.allTransfersIndexPathMutableDictionary setObject:indexPath forKey:[NSNumber numberWithInteger:transfer.tag]];
-                    }
-                }
-                
-                break;
-            }
-                
-            case 1: { //Downloads
-                NSArray *downloadQueuedTransfersArray = [self.downloadQueuedTransfersMutableDictionary allValues];
-                NSUInteger count = downloadQueuedTransfersArray.count;
-               
-                if (count == 0) {
-                    break;
-                }
-                
-                if (count > indexPath.row) {
-                    transfer = [downloadQueuedTransfersArray objectAtIndex:indexPath.row];
-                    [self.downloadTransfersIndexPathMutableDictionary setObject:indexPath forKey:[self keyForTransfer:transfer]];
-                }
-                
-                break;
-            }
-                
-            case 2: { //Uploads
-                NSArray *uploadQueuedTransfersArray = [self.uploadQueuedTransfersMutableDictionary allValues];
-                NSUInteger count = uploadQueuedTransfersArray.count;
-                if (count == 0) {
-                    break;
-                }
-                
-                if (count > indexPath.row) {
-                    transfer = [uploadQueuedTransfersArray objectAtIndex:indexPath.row];
-                    [self.uploadTransfersIndexPathMutableDictionary setObject:indexPath forKey:[NSNumber numberWithInteger:transfer.tag]];
-                }
-                
-                break;
-            }
-        }
-        
-        [cell.percentageLabel setText:AMLocalizedString(@"queued", @"Queued")];
-        if ([transfer type] == MEGATransferTypeDownload) {
-            [cell.arrowImageView setImage:[Helper downloadQueuedTransferImage]];
-        } else {
-            [cell.arrowImageView setImage:[Helper uploadQueuedTransferImage]];
-        }
+    MEGATransfer *transfer = [self.transfers objectAtIndex:indexPath.row];
+    
+    switch (transfer.state) {
+        case MEGATransferStateActive:
+            cell = [self.tableView dequeueReusableCellWithIdentifier:@"activeTransferCell" forIndexPath:indexPath];
+            break;
+            
+        default:
+            cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferCell" forIndexPath:indexPath];
+            break;
     }
     
-    NSString *fileName = [transfer fileName];
-    [cell.nameLabel setText:[[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:fileName]];
-    [cell.iconImageView setImage:[Helper imageForExtension:fileName.pathExtension]];
-    
-    [cell setTransferTag:transfer.tag];
+    [cell configureCellForTransfer:transfer delegate:self];
     
     return cell;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger numberOfRows = 0;
-    NSInteger numberOfRowsInSections = 0;
-    
-    if ([MEGAReachabilityManager isReachable]) {
-        if (!areTransfersPaused) {
-            switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-                case 0: { //All
-                    if (section == 0) {
-                        numberOfRows = [self.allActiveTransfersMutableDictionary count];
-                    } else {
-                        numberOfRows = [self.allQueuedTransfersMutableDictionary count];
-                    }
-                    numberOfRowsInSections = [self.allActiveTransfersMutableDictionary count] + [self.allQueuedTransfersMutableDictionary count];
-                    break;
-                }
-                    
-                case 1:  { //Downloads
-                    if (section == 0) {
-                        numberOfRows = [self.downloadActiveTransfersMutableDictionary count];
-                    } else {
-                        numberOfRows = [self.downloadQueuedTransfersMutableDictionary count];
-                    }
-                    numberOfRowsInSections = [self.downloadActiveTransfersMutableDictionary count] + [self.downloadQueuedTransfersMutableDictionary count];
-                    break;
-                }
-                    
-                case 2: { //Uploads
-                    if (section == 0) {
-                        numberOfRows = [self.uploadActiveTransfersMutableDictionary count];
-                    } else {
-                        numberOfRows = [self.uploadQueuedTransfersMutableDictionary count];
-                    }
-                    numberOfRowsInSections = [self.uploadActiveTransfersMutableDictionary count] + [self.uploadQueuedTransfersMutableDictionary count];
-                    break;
-                }
-            }
-        }
-    }
-    
-    if (numberOfRowsInSections == 0) {
-        [self.cancelBarButtonItem setEnabled:NO];
-    } else {
-        [self.cancelBarButtonItem setEnabled:YES];
-    }
-    
-    return numberOfRows;
+    return self.transfers.count;
 }
 
 #pragma mark - UITableViewDelegate
@@ -324,10 +131,203 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-#pragma mark - UIAlertViewDelegate
+#pragma mark - Private
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if ((alertView.tag == 0) && (buttonIndex == 1)) {
+- (void)reloadView {
+    
+    [self.transfersMutableDictionary removeAllObjects];
+    self.transfers = [NSMutableArray new];
+
+    switch (self.transfersSegmentedControl.selectedSegmentIndex) {
+        case 0:
+            [self getAllTransfers];
+            break;
+            
+        case 1:
+            [self getDownloadTransfers];
+            break;
+            
+        case 2:
+            [self getUploadTransfers];
+            break;
+            
+        default:
+            [self getAllTransfers];
+            break;
+    }
+    
+    [self sortTransfers];
+}
+
+- (void)getAllTransfers {
+    MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] transfers];
+    if ([transferList.size integerValue] != 0) {
+        [self mergeTransfers:transferList];
+    }
+    
+    transferList = [[MEGASdkManager sharedMEGASdkFolder] transfers];
+    if ([transferList.size integerValue] != 0) {
+        [self mergeTransfers:transferList];
+    }
+}
+
+- (void)getDownloadTransfers {
+    MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] downloadTransfers];
+    if ([transferList.size integerValue] != 0) {
+        [self mergeTransfers:transferList];
+    }
+    
+    transferList = [[MEGASdkManager sharedMEGASdkFolder] downloadTransfers];
+    if ([transferList.size integerValue] != 0) {
+        [self mergeTransfers:transferList];
+    }
+}
+
+- (void)getUploadTransfers {
+    MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] uploadTransfers];
+    if ([transferList.size integerValue] != 0) {
+        [self mergeTransfers:transferList];
+    }
+    
+    transferList = [[MEGASdkManager sharedMEGASdkFolder] uploadTransfers];
+    if ([transferList.size integerValue] != 0) {
+        [self mergeTransfers:transferList];
+    }
+    
+}
+
+- (void)mergeTransfers:(MEGATransferList *)transferList {
+    NSInteger transferListSize = [transferList.size integerValue];
+    for (NSInteger i = 0; i < transferListSize; i++) {
+        MEGATransfer *transfer = [transferList transferAtIndex:i];
+        if (transfer.type == MEGATransferTypeDownload) {
+            [self.transfersMutableDictionary setObject:transfer forKey:[self keyForTransfer:transfer]];
+        } else {
+            [self.transfersMutableDictionary setObject:transfer forKey:[NSNumber numberWithInteger:transfer.tag]];
+        }
+    }
+}
+
+- (void)sortTransfers {
+    NSMutableArray *activeTransfers = [NSMutableArray new];
+    NSMutableArray *inactiveTransfers = [NSMutableArray new];
+    
+    for (MEGATransfer *transfer in self.transfersMutableDictionary.allValues) {
+        
+        switch (transfer.state) {
+                
+            case MEGATransferStateActive:
+                [activeTransfers addObject:transfer];
+                break;
+                
+            default:
+                [inactiveTransfers addObject:transfer];
+                break;
+        }
+    }
+    
+    [self.transfers addObjectsFromArray:activeTransfers];
+    [self.transfers addObjectsFromArray:inactiveTransfers];
+    
+    [self.tableView reloadData];
+}
+
+- (void)cleanTransfersList {
+    [self.transfersMutableDictionary removeAllObjects];
+    [self.transfers removeAllObjects];
+}
+
+- (NSString *)keyForTransfer:(MEGATransfer *)transfer {
+    return [NSString stringWithFormat:@"%ld_%@", (long)[transfer tag], [NSString stringWithString:[MEGASdk base64HandleForHandle:transfer.nodeHandle] ]];
+}
+
+- (void)removeTransfer:(MEGATransfer *)transfer {
+    MEGATransfer *tempTransfer = [self.transfersMutableDictionary objectForKey:[self keyForTransfer:transfer]];
+    if (tempTransfer) {
+        [self.transfers removeObject:tempTransfer];
+        [self.transfersMutableDictionary removeObjectForKey:[self keyForTransfer:transfer]];
+    }
+}
+
+- (void)cancelTransfersForDirection:(NSInteger)direction {
+    MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] transfers];
+    if ([transferList.size integerValue] != 0) {
+        [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:direction delegate:self];
+    }
+    
+    transferList = [[MEGASdkManager sharedMEGASdkFolder] transfers];
+    if ([transferList.size integerValue] != 0) {
+        [[MEGASdkManager sharedMEGASdkFolder] cancelTransfersForDirection:direction delegate:self];
+    }
+}
+
+- (NSIndexPath *)indexPathForTransfer:(MEGATransfer *)transfer {
+    for (int i = 0; i < self.transfers.count; i++) {
+        if (transfer.nodeHandle == [[self.transfers objectAtIndex:i] nodeHandle]) {
+            return [NSIndexPath indexPathForRow:i inSection:0];
+        }
+    }
+    return nil;
+}
+
+- (void)internetConnectionChanged {
+    BOOL boolValue = [MEGAReachabilityManager isReachable];
+    [self setNavigationBarButtonItemsEnabled:boolValue];
+    
+    [self reloadView];
+}
+
+- (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
+    self.pauseBarButtonItem.enabled = boolValue;
+    self.cancelBarButtonItem.enabled = boolValue;
+}
+
+#pragma mark - IBActions
+
+- (IBAction)transfersTypeSegmentedControlValueChanged:(UISegmentedControl *)sender {
+    if (!areTransfersPaused) {
+        [self reloadView];
+    }
+}
+
+- (IBAction)pauseTransfersAction:(UIBarButtonItem *)sender {
+    self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem, self.resumeBarButtonItem];
+    [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES delegate:self];
+    [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES delegate:self];
+}
+
+- (IBAction)resumeTransfersAction:(UIBarButtonItem *)sender {
+    self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem, self.pauseBarButtonItem];
+    [[MEGASdkManager sharedMEGASdk] pauseTransfers:NO delegate:self];
+    [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:NO delegate:self];
+}
+
+- (IBAction)cancelTransfersAction:(UIBarButtonItem *)sender {
+    if (self.transfersMutableDictionary.count == 0) {
+        return;
+    }
+    NSString *transfersTypeString;
+    switch (self.transfersSegmentedControl.selectedSegmentIndex) {
+        case 0: { //All
+            transfersTypeString = AMLocalizedString(@"allInUppercaseTransfers", @"ALL transfers");
+            break;
+        }
+            
+        case 1: { //Downloads
+            transfersTypeString = AMLocalizedString(@"downloadInUppercaseTransfers", @"DOWNLOAD transfers");
+            break;
+        }
+            
+        case 2: { //Uploads
+            transfersTypeString = AMLocalizedString(@"uploadInUppercaseTransfers", @"UPLOAD transfers");
+            break;
+        }
+    }
+    
+    UIAlertController *cancelTransfersAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"cancelTransfersTitle", @"Cancel transfers") message:[NSString stringWithFormat:AMLocalizedString(@"cancelTransfersText", @"Do you want to cancel %@?"), transfersTypeString] preferredStyle:UIAlertControllerStyleAlert];
+    [cancelTransfersAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
+    [cancelTransfersAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         switch (self.transfersSegmentedControl.selectedSegmentIndex) {
             case 0: { //All
                 [self cancelTransfersForDirection:0];
@@ -346,287 +346,9 @@
             }
         }
         [self.tableView reloadData];
-    }
-}
-
-#pragma mark - Private
-
-- (void)transfersList {
-    MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] transfers];
-    if ([transferList.size integerValue] != 0) {
-        [self clasifyTransfers:transferList];
-    }
+    }]];
     
-    transferList = [[MEGASdkManager sharedMEGASdkFolder] transfers];
-    if ([transferList.size integerValue] != 0) {
-        [self clasifyTransfers:transferList];
-    }
-}
-
-- (void)clasifyTransfers:(MEGATransferList *)transferList {
-    NSInteger transferListSize = [transferList.size integerValue];
-    for (NSInteger i = 0; i < transferListSize; i++) {
-        MEGATransfer *transfer = [transferList transferAtIndex:i];
-        if ([transfer type] == MEGATransferTypeDownload) {
-            [self.allQueuedTransfersMutableDictionary setObject:transfer forKey:[self keyForTransfer:transfer]];
-        } else {
-            [self.allQueuedTransfersMutableDictionary setObject:transfer forKey:[NSNumber numberWithInteger:transfer.tag]];
-        }
-    }
-}
-
-- (void)addNewTransfer:(MEGATransfer *)transfer {
-    if ([transfer type] == MEGATransferTypeDownload) {
-        NSString *key = [self keyForTransfer:transfer];
-        [self.allQueuedTransfersMutableDictionary setObject:transfer forKey:key];
-        
-        if (self.transfersSegmentedControl.selectedSegmentIndex == 1) {
-            [self.downloadQueuedTransfersMutableDictionary setObject:transfer forKey:key];
-        }
-    } else {
-        NSNumber *key = [NSNumber numberWithInteger:transfer.tag];
-        [self.allQueuedTransfersMutableDictionary setObject:transfer forKey:key];
-        
-        if (self.transfersSegmentedControl.selectedSegmentIndex == 2) {
-            [self.uploadQueuedTransfersMutableDictionary setObject:transfer forKey:key];
-        }
-    }
-}
-
-- (void)cleanTransfersList {
-    [self.allActiveTransfersMutableDictionary removeAllObjects];
-    [self.allQueuedTransfersMutableDictionary removeAllObjects];
-    
-    [self.allTransfersIndexPathMutableDictionary removeAllObjects];
-    [self.downloadTransfersIndexPathMutableDictionary removeAllObjects];
-    [self.uploadTransfersIndexPathMutableDictionary removeAllObjects];
-    
-    if (self.transfersSegmentedControl.selectedSegmentIndex == 1) {
-        [self.downloadActiveTransfersMutableDictionary removeAllObjects];
-        [self.downloadQueuedTransfersMutableDictionary removeAllObjects];
-    } else if (self.transfersSegmentedControl.selectedSegmentIndex == 2) {
-        [self.uploadActiveTransfersMutableDictionary removeAllObjects];
-        [self.uploadQueuedTransfersMutableDictionary removeAllObjects];
-    }
-}
-
-- (void)transfersForDirection:(NSInteger)direction {
-    if (direction) {
-        self.uploadActiveTransfersMutableDictionary = [[NSMutableDictionary alloc] init];
-        NSEnumerator *enumerator = [self.allActiveTransfersMutableDictionary objectEnumerator];
-        MEGATransfer *transfer;
-        while ((transfer = [enumerator nextObject])) {
-            if ([transfer type] == MEGATransferTypeUpload) {
-                [self.uploadActiveTransfersMutableDictionary setObject:transfer forKey:[NSNumber numberWithInteger:transfer.tag]];
-            }
-        }
-        
-        self.uploadQueuedTransfersMutableDictionary = [[NSMutableDictionary alloc] init];
-        enumerator = [self.allQueuedTransfersMutableDictionary objectEnumerator];
-        while ((transfer = [enumerator nextObject])) {
-            if ([transfer type] == MEGATransferTypeUpload) {
-                [self.uploadQueuedTransfersMutableDictionary setObject:transfer forKey:[NSNumber numberWithInteger:transfer.tag]];
-            }
-        }
-    } else {
-        self.downloadActiveTransfersMutableDictionary = [[NSMutableDictionary alloc] init];
-        NSEnumerator *enumerator = [self.allActiveTransfersMutableDictionary objectEnumerator];
-        MEGATransfer *transfer;
-        while ((transfer = [enumerator nextObject])) {
-            if ([transfer type] == MEGATransferTypeDownload) {
-                [self.downloadActiveTransfersMutableDictionary setObject:transfer forKey:[self keyForTransfer:transfer]];
-            }
-        }
-        
-        self.downloadQueuedTransfersMutableDictionary = [[NSMutableDictionary alloc] init];
-        enumerator = [self.allQueuedTransfersMutableDictionary objectEnumerator];
-        while ((transfer = [enumerator nextObject])) {
-            if ([transfer type] == MEGATransferTypeDownload) {
-                [self.downloadQueuedTransfersMutableDictionary setObject:transfer forKey:[self keyForTransfer:transfer]];
-            }
-        }
-    }
-}
-
-- (NSString *)keyForTransfer:(MEGATransfer *)transfer {
-    return [NSString stringWithFormat:@"%ld_%@", (long)[transfer tag], [NSString stringWithString:[MEGASdk base64HandleForHandle:transfer.nodeHandle] ]];
-}
-
-- (void)setActiveTransfer:(MEGATransfer *)transfer {
-    if ([transfer type] == MEGATransferTypeDownload) {
-        NSString *key = [self keyForTransfer:transfer];
-        [self.allQueuedTransfersMutableDictionary removeObjectForKey:key];
-        [self.allActiveTransfersMutableDictionary setObject:transfer forKey:key];
-        
-        if (self.transfersSegmentedControl.selectedSegmentIndex == 1) {
-            [self.downloadQueuedTransfersMutableDictionary removeObjectForKey:key];
-            [self.downloadActiveTransfersMutableDictionary setObject:transfer forKey:key];
-        }
-    } else {
-        NSNumber *key = [NSNumber numberWithInteger:transfer.tag];
-        [self.allQueuedTransfersMutableDictionary removeObjectForKey:key];
-        [self.allActiveTransfersMutableDictionary setObject:transfer forKey:key];
-        
-        if (self.transfersSegmentedControl.selectedSegmentIndex == 2) {
-            [self.uploadQueuedTransfersMutableDictionary removeObjectForKey:key];
-            [self.uploadActiveTransfersMutableDictionary setObject:transfer forKey:key];
-        }
-    }
-}
-
-- (void)removeTransfer:(MEGATransfer *)transfer {
-    if ([transfer type] == MEGATransferTypeDownload) {
-        NSString *key = [self keyForTransfer:transfer];
-        [self.allActiveTransfersMutableDictionary removeObjectForKey:key];
-        [self.allQueuedTransfersMutableDictionary removeObjectForKey:key];
-        if (self.transfersSegmentedControl.selectedSegmentIndex == 1) {
-            [self.downloadActiveTransfersMutableDictionary removeObjectForKey:key];
-            [self.downloadQueuedTransfersMutableDictionary removeObjectForKey:key];
-        }
-        
-        [self.allTransfersIndexPathMutableDictionary removeObjectForKey:key];
-        [self.downloadTransfersIndexPathMutableDictionary removeObjectForKey:key];
-    } else {
-        NSNumber *key = [NSNumber numberWithInteger:transfer.tag];
-        [self.allActiveTransfersMutableDictionary removeObjectForKey:key];
-        [self.allQueuedTransfersMutableDictionary removeObjectForKey:key];
-        if (self.transfersSegmentedControl.selectedSegmentIndex == 2) {
-            [self.uploadActiveTransfersMutableDictionary removeObjectForKey:key];
-            [self.uploadQueuedTransfersMutableDictionary removeObjectForKey:key];
-        }
-        
-        [self.allTransfersIndexPathMutableDictionary removeObjectForKey:key];
-        [self.uploadTransfersIndexPathMutableDictionary removeObjectForKey:key];
-    }
-}
-
-- (void)cancelTransfersForDirection:(NSInteger)direction {
-    MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] transfers];
-    if ([transferList.size integerValue] != 0) {
-        [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:direction delegate:self];
-    }
-    
-    transferList = [[MEGASdkManager sharedMEGASdkFolder] transfers];
-    if ([transferList.size integerValue] != 0) {
-        [[MEGASdkManager sharedMEGASdkFolder] cancelTransfersForDirection:direction delegate:self];
-    }
-}
-
-- (NSIndexPath *)indexPathForTransfer:(MEGATransfer *)transfer {
-    NSIndexPath *indexPath;
-    switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-        case 0: { //All
-            if ([transfer type] == MEGATransferTypeDownload) {
-                indexPath = [self.allTransfersIndexPathMutableDictionary objectForKey:[self keyForTransfer:transfer]];
-            } else {
-                indexPath = [self.allTransfersIndexPathMutableDictionary objectForKey:[NSNumber numberWithInteger:transfer.tag]];
-            }
-            break;
-        }
-            
-        case 1: { //Downloads
-            if ([transfer type] == MEGATransferTypeUpload) {
-                return nil;
-            }
-            indexPath = [self.downloadTransfersIndexPathMutableDictionary objectForKey:[self keyForTransfer:transfer]];
-            break;
-        }
-            
-        case 2: { //Uploads
-            if ([transfer type] == MEGATransferTypeDownload) {
-                return nil;
-            }
-            indexPath = [self.uploadTransfersIndexPathMutableDictionary objectForKey:[NSNumber numberWithInteger:transfer.tag]];
-            break;
-        }
-    }
-    return indexPath;
-}
-
-- (void)internetConnectionChanged {
-    BOOL boolValue = [MEGAReachabilityManager isReachable];
-    [self setNavigationBarButtonItemsEnabled:boolValue];
-    
-    [self.tableView reloadData];
-}
-
-- (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
-    [self.pauseBarButtonItem setEnabled:boolValue];
-    [self.cancelBarButtonItem setEnabled:boolValue];
-}
-
-#pragma mark - IBActions
-
-- (IBAction)transfersTypeSegmentedControlValueChanged:(UISegmentedControl *)sender {
-    switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-        case 0: { //All
-            [self.downloadActiveTransfersMutableDictionary removeAllObjects];
-            [self.downloadQueuedTransfersMutableDictionary removeAllObjects];
-            [self.uploadActiveTransfersMutableDictionary removeAllObjects];
-            [self.uploadQueuedTransfersMutableDictionary removeAllObjects];
-            break;
-        }
-            
-        case 1: { //Downloads
-            [self transfersForDirection:0];
-            break;
-        }
-    
-        case 2: { //Uploads
-            [self transfersForDirection:1];
-            break;
-        }
-    }
-    [self.tableView reloadData];
-}
-
-- (IBAction)pauseTransfersAction:(UIBarButtonItem *)sender {
-    self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem, self.resumeBarButtonItem];
-    [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES delegate:self];
-    [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES delegate:self];
-}
-
-- (IBAction)resumeTransfersAction:(UIBarButtonItem *)sender {
-    self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem, self.pauseBarButtonItem];
-    [[MEGASdkManager sharedMEGASdk] pauseTransfers:NO delegate:self];
-    [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:NO delegate:self];
-}
-
-- (IBAction)cancelTransfersAction:(UIBarButtonItem *)sender {
-    NSString *transfersTypeString;
-    switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-        case 0: { //All
-            if ((self.allActiveTransfersMutableDictionary.count == 0) && (self.allQueuedTransfersMutableDictionary.count == 0)) {
-                return;
-            }
-            transfersTypeString = AMLocalizedString(@"allInUppercaseTransfers", @"ALL transfers");
-            break;
-        }
-            
-        case 1: { //Downloads
-            if ((self.downloadActiveTransfersMutableDictionary.count == 0) && (self.downloadQueuedTransfersMutableDictionary.count == 0)) {
-                return;
-            }
-            transfersTypeString = AMLocalizedString(@"downloadInUppercaseTransfers", @"DOWNLOAD transfers");
-            break;
-        }
-            
-        case 2: { //Uploads
-            if ((self.uploadActiveTransfersMutableDictionary.count == 0) && (self.uploadQueuedTransfersMutableDictionary.count == 0)) {
-                return;
-            }
-            transfersTypeString = AMLocalizedString(@"uploadInUppercaseTransfers", @"UPLOAD transfers");
-            break;
-        }
-    }
-    
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"cancelTransfersTitle", @"Cancel transfers")
-                                                        message:[NSString stringWithFormat:AMLocalizedString(@"cancelTransfersText", @"Do you want to cancel %@?"), transfersTypeString]
-                                                       delegate:self
-                                              cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                              otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-    [alertView setTag:0];
-    [alertView show];
+    [self presentViewController:cancelTransfersAlert animated:YES completion:nil];
 }
 
 #pragma mark - DZNEmptyDataSetSource
@@ -655,7 +377,7 @@
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:UIColor.mnz_gray999999};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -687,7 +409,7 @@
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
-    return [UIColor whiteColor];
+    return UIColor.whiteColor;
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
@@ -697,21 +419,25 @@
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if ([error type]) {
+    if (error.type) {
         return;
     }
     
     switch ([request type]) {
         case MEGARequestTypePauseTransfers: {
-            [[NSUserDefaults standardUserDefaults] setBool:[request flag] forKey:@"TransfersPaused"];
-            areTransfersPaused = [request flag];
-            [self.tableView reloadData];
+            [[NSUserDefaults standardUserDefaults] setBool:request.flag forKey:@"TransfersPaused"];
+            areTransfersPaused = request.flag;
+            if (areTransfersPaused) {
+                [self cleanTransfersList];
+                [self.tableView reloadData];
+            } else {
+                [self reloadView];
+            }
             break;
         }
             
         case MEGARequestTypeCancelTransfers: {
-            [self cleanTransfersList];
-            [self.tableView reloadData];
+            [self reloadView];
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transfersCancelled", nil)];
             break;
         }
@@ -724,42 +450,19 @@
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    [self addNewTransfer:transfer];
-    [self.tableView reloadData];
+    [self reloadView];
 }
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     
-    if ([transfer type] == MEGATransferTypeDownload) {
-        NSString *key = [self keyForTransfer:transfer];
-        if (([self.allActiveTransfersMutableDictionary objectForKey:key] == nil) && ([self.allQueuedTransfersMutableDictionary objectForKey:key] != nil)) {
-            [self setActiveTransfer:transfer];
-            [self.tableView reloadData];
-        }
-    } else {
-        NSNumber *key = [NSNumber numberWithInteger:transfer.tag];
-        if (([self.allActiveTransfersMutableDictionary objectForKey:key] == nil) && ([self.allQueuedTransfersMutableDictionary objectForKey:key] != nil)) {
-            [self setActiveTransfer:transfer];
-            [self.tableView reloadData];
-        }
-    }
-    
     NSIndexPath *indexPath = [self indexPathForTransfer:transfer];
-    if (indexPath != nil && ([indexPath section] == 0)) {
-        float percentage = ([[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue] * 100);
-        NSString *percentageCompleted = [NSString stringWithFormat:@"%.f %%", percentage];
-        NSString *speed = [NSString stringWithFormat:@"%@/s", [NSByteCountFormatter stringFromByteCount:[[transfer speed] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory]];
-        
+    if (indexPath != nil && (transfer.state == MEGATransferStateActive)) {
         TransferTableViewCell *cell = (TransferTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-        if ([transfer type] == MEGATransferTypeDownload) {
-            [cell.arrowImageView setImage:[Helper downloadingTransferImage]];
-            [cell.percentageLabel setTextColor:[UIColor mnz_green31B500]];
+        if ([cell.reuseIdentifier isEqualToString:@"activeTransferCell"]) {
+            [cell updatePercentAndSpeedLabelsForTransfer:transfer];
         } else {
-            [cell.arrowImageView setImage:[Helper uploadingTransferImage]];
-            [cell.percentageLabel setTextColor:[UIColor mnz_blue2BA6DE]];
+            [self reloadView];
         }
-        [cell.percentageLabel setText:percentageCompleted];
-        [cell.speedLabel setText:speed];
     }
 }
 
@@ -768,17 +471,18 @@
         return;
     }
     
-    if ([error type]) {
-        if ([error type] == MEGAErrorTypeApiEIncomplete) {
+    if (error.type) {
+        if (error.type == MEGAErrorTypeApiEIncomplete) {
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
-            [self removeTransfer:transfer];
-            [self.tableView reloadData];
         }
-        return;
     }
-    
-    [self removeTransfer:transfer];
-    [self.tableView reloadData];
+    [self reloadView];
+}
+
+#pragma mark - TransferTableViewCellDelegate
+
+- (void)pauseTransferCell:(TransferTableViewCell *)cell {
+    [self reloadView];
 }
 
 @end

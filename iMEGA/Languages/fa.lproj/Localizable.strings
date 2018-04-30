@@ -58,8 +58,14 @@
 "sslUnverified_alertTitle"="كدگذار SSL سرور شناخته نشد. شما ممكن است مورد حمله سايبري قرار بگيريد.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
-/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
-"takingLongerThanExpected"="The process is taking longer than expected. Please wait...";
+/* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
+"takingLongerThanExpected"="The process is taking longer than expected. Please wait.";
+/* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
+"serversAreTooBusy"="Servers are too busy. Please wait.";
+/* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
+"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+/* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
+"tooManyRequest"="Too many requests. Please wait.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="لطفاً وارد شناسه کاربریتان شوید.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -81,7 +87,7 @@
 /* Button title which triggers the action to login in your MEGA account */
 "login"="ورود";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="ساختن شناسه";
+"createAccount"="شناسه کاربری بسازید.";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="ایمیل / پسورد اشتباه. اطفا دوباره تلاش کنید";
 /* Error message when to many attempts to login */
@@ -451,9 +457,9 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="Are you sure you want to move [A] files and [B] folders to the Rubbish Bin?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1 فایل به سطل اشغال رفت!";
+"fileMovedToRubbishBinMessage"="١ فايل به سطل آشغال منتقل شد";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d فایل به سطل اشغال رفت!";
+"filesMovedToRubbishBinMessage"="%d فايل به سطل آشغال منتقل شد";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
 "folderMovedToRubbishBinMessage"="١ فولدر به سطل آشغال منتقل شد";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
@@ -743,9 +749,9 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="You are about to permanently remove [A] files and [B] folders. Would you like to proceed? (You cannot undo this action.)";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="1 فایل از MEGA حذف شد!";
+"fileRemovedToRubbishBinMessage"="١ فايل از مگا برداشته شد";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="فایل های %d  از مگا شکست خورد!";
+"filesRemovedToRubbishBinMessage"="%d فايل از مگا حذف شد";
 /* Success message shown when 1 folder has been removed from MEGA */
 "folderRemovedToRubbishBinMessage"="1 فولدر از مگا حذف شد";
 /* Success message shown when {1+} folders have been removed from MEGA */
@@ -839,7 +845,7 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Sessions closed";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="تعویض کد عبور";
+"changePasscodeLabel"="گذرکد را تغییر بده";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="کد عبور ساده";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
@@ -847,7 +853,7 @@
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Logout and erase local data after 10 failed passcode attempts";
 /* Menu item */
-"help"="راهنمایی";
+"help"="کمک";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="مرکز آموزش";
 /* Title to rate the app */
@@ -939,7 +945,7 @@
 /* Label to show that an error related with expiration occurs during a SDK operation. */
 "expired"="منقضی";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="خروج از سامانه";
+"logoutLabel"="خروج";
 /* String shown when you are logging out of your account. */
 "loggingOut"="در حال خارج شدن";
 /* Button to remove avatar. Try to keep the text short (as in English) */
@@ -1198,6 +1204,10 @@
 "chatNotFound"="Chat not found";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ is typing ...";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders. */
+"twoUsersAreTyping"="[$%1$s [A]are typing...[/A]]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders. */
+"moreThanTwoUsersAreTyping"="[$%1$s [A]and more are typing...[/A]]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Write a message...";
 /* Information if there are no history messages in current chat conversation */
@@ -1219,7 +1229,7 @@
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="فایل ها را ارسال کن";
 /* */
-"warning"="اخطار";
+"warning"="هشدار";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="All files saved for Offline will be deleted from your device. Proceed to logout?";
 /* Title shown when you almost had used your available transfer quota. */
@@ -1264,6 +1274,10 @@
 "jumpToLatest"="Jump to latest";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="New messages";
+/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
+"unreadMessage"="%lu unread message";
+/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
+"unreadMessages"="%lu unread messages";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1420,7 +1434,7 @@
 /* Message to notify user the file version will be permanently removed */
 "permanentlyRemoved"="It will be permanently removed";
 /*  */
-"delete"="حذف";
+"delete"="پاک کنید";
 /* A button label which reverts a certain version of a file to be the current version of the selected file. */
 "revert"="Revert";
 /*  */
@@ -1433,3 +1447,27 @@
 "previousVersions"="Previous Versions";
 /* Title of section to display information of all current versions of files. */
 "currentVersions"="Current Versions";
+/* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
+"remindPasswordTitle"="Do you remember your password?";
+/* Text that describes why the user should test his/her password */
+"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+/* Text that describes why the user should test his/her password before logging out */
+"remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
+/* Text next to a toggle that if enabled won't appear again */
+"dontShowAgain"="Don’t show me again";
+/* Label for test password button and titles */
+"testPassword"="Test Password";
+/* Label for recovery key button */
+"backupRecoveryKey"="Backup Recovery Key";
+/* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
+"testPasswordText"="Please test your password below to ensure you remember it. If you lose your password, you will lose access to your MEGA data. [A]Learn more[/A]";
+/* Title text for the account confirmation. */
+"confirm"="تایید";
+/* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
+"passwordAccepted"="Password accepted";
+/* A dialog title to export the Recovery Key for the current user. */
+"exportRecoveryKey"="Export Recovery Key";
+/* Title to confirm that you want to logout */
+"proceedToLogout"="Proceed to logout";
+/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
+"testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";

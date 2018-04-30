@@ -3,6 +3,8 @@
 
 #import <AVFoundation/AVFoundation.h>
 
+#import "LTHPasscodeViewController.h"
+
 #import "CallViewController.h"
 #import "UIApplication+MNZCategory.h"
 
@@ -70,6 +72,14 @@
     [self.player stop];
 }
 
+- (void)disablePasscodeIfNeeded {
+    if (UIApplication.sharedApplication.applicationState == UIApplicationStateBackground || [[LTHPasscodeViewController sharedUser] isLockscreenPresent]) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"presentPasscodeLater"];
+        [LTHPasscodeViewController close];
+    }
+    [[LTHPasscodeViewController sharedUser] disablePasscodeWhenApplicationEntersBackground];
+}
+
 #pragma mark - CXProviderDelegate
 
 - (void)providerDidReset:(CXProvider *)provider {
@@ -105,6 +115,7 @@
         
         [provider reportOutgoingCallWithUUID:action.callUUID startedConnectingAtDate:nil];
         [action fulfill];
+        [self disablePasscodeIfNeeded];
     } else {
         [action fail];
     }
@@ -123,14 +134,15 @@
         callVC.megaCallManager = self.megaCallManager;
         callVC.call = call;
         
-        if ([[UIApplication mnz_visibleViewController] isKindOfClass:CallViewController.class]) {
-            [[UIApplication mnz_visibleViewController] dismissViewControllerAnimated:YES completion:^{
-                [[UIApplication mnz_visibleViewController] presentViewController:callVC animated:YES completion:nil];
+        if ([UIApplication.mnz_visibleViewController isKindOfClass:CallViewController.class]) {
+            [UIApplication.mnz_visibleViewController dismissViewControllerAnimated:YES completion:^{
+                [UIApplication.mnz_visibleViewController presentViewController:callVC animated:YES completion:nil];
             }];
         } else {
-            [[UIApplication mnz_visibleViewController] presentViewController:callVC animated:YES completion:nil];
+            [UIApplication.mnz_visibleViewController presentViewController:callVC animated:YES completion:nil];
         }
         [action fulfill];
+        [self disablePasscodeIfNeeded];
     } else {
         [action fail];
     }
