@@ -105,6 +105,13 @@
     }
 }
 
+- (void)presentProductUnavailableAlertController {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"productNotAvailable", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -128,26 +135,22 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        [[MEGAPurchase sharedInstance] requestProduct:_iOSIDMonthlyString];
+        if (self.monthlyProduct) {
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+            [[MEGAPurchase sharedInstance] purchaseProduct:self.monthlyProduct];
+        } else {
+            [self presentProductUnavailableAlertController];
+        }
     } else {
-        [[MEGAPurchase sharedInstance] requestProduct:_iOSIDYearlyString];
+        if (self.yearlyProduct) {
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+            [[MEGAPurchase sharedInstance] purchaseProduct:self.yearlyProduct];
+        } else {
+            [self presentProductUnavailableAlertController];
+        }
     }
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-#pragma mark - MEGAPurchaseDelegate
-
-- (void)requestedProduct {
-    if ([MEGAPurchase sharedInstance].validProduct != nil) {
-        [[MEGAPurchase sharedInstance] purchaseProduct:[MEGAPurchase sharedInstance].validProduct];
-        
-    } else {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        UIAlertView *unavailAlert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"productNotAvailable", nil) message:nil delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
-        [unavailAlert show];
-    }
 }
 
 - (void)successfulPurchase:(MEGAPurchase *)megaPurchase restored:(BOOL)isRestore {

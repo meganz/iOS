@@ -1,7 +1,7 @@
 /* Button title to cancel something */
 "cancel"="Annuler";
 /* Button title to accept something */
-"ok"="OK";
+"ok"="D’accord";
 /* */
 "yes"="Oui";
 /* */
@@ -11,7 +11,7 @@
 /*  */
 "error"="Erreur";
 /*  */
-"name"="Prénom";
+"name"="Nom";
 /* Caption of a button to edit the files that are selected */
 "edit"="Modifier";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -58,8 +58,14 @@
 "sslUnverified_alertTitle"="La clé SSL du serveur ne peut pas être vérifiée. Vous pourriez être la cible d’une attaque de l’intercepteur.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Le contenu auquel vous essayez d’accéder n’est pas proposé pour ce compte. Essayez de vous connecter avec le même compte que le client Web mobile.";
-/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
-"takingLongerThanExpected"="Le processus prend plus de temps que prévu. Veuillez patienter...";
+/* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
+"takingLongerThanExpected"="Le processus prend plus longtemps que prévu. Veuillez patienter.";
+/* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
+"serversAreTooBusy"="Les serveurs sont trop occupés. Veuillez patienter.";
+/* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
+"unableToReachMega"="Impossible d’atteindre MEGA. Veuillez vérifier votre connectivité ou ressayer plus tard.";
+/* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
+"tooManyRequest"="Trop de requêtes. Veuillez patienter.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Veuillez vous connecter à votre compte.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -193,7 +199,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Aucun résultat";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Vider la corbeille";
+"cloudDriveEmptyState_titleRubbishBin"="Vider la corbeille                                ";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Aucun fichier enregistré hors ligne";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -366,6 +372,16 @@
 "copyKey"="Copier la clé";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Ouvrir avec...";
+/* */
+"sendToContact"="Envoyer à un contact";
+/* Toast text upon sending a single file to chat */
+"fileSentToChat"="Le fichier a été envoyé vers la discussion";
+/* Success message when the attachment has been sent to a many chats */
+"fileSentToXChats"="Le fichier a été envoyé à %1$d conversations";
+/* Toast text upon sending multiple files to chat */
+"filesSentToChat"="Les fichiers ont été envoyés vers la discussion";
+/* success message when sending multiple files. Please do not modify the %d placeholder. */
+"xfilesSentSuccesfully"="%d fichiers ont été envoyés avec succès";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Supprimer le lien";
 /* Message shown when there are some active links that can be removed or disabled */
@@ -375,7 +391,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Les liens ont été supprimés";
 /* Title show when a file is being downloaded */
-"downloading"="Téléchargement";
+"downloading"="Téléchargement en cours";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Voulez-vous annuler le téléchargement ?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -441,7 +457,7 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="Voulez-vous vraiment déplacer [A] fichiers et [B] dossiers vers la corbeille ?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1 fichier a été déplacé vers la corbeille";
+"fileMovedToRubbishBinMessage"="Un fichier a été déplacé vers la corbeille";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
 "filesMovedToRubbishBinMessage"="%d fichiers ont été déplacés vers la corbeille";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
@@ -492,10 +508,16 @@
 "cameraUploadsUploadingFile"="Téléversement d'%1$d de %2$d fichier";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
 "cameraUploadsUploadingFiles"="Téléversement de %1$d de %2$d fichiers";
+/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
+"indexOfTotalFile"="%1$d de %2$d fichier";
+/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
+"indexOfTotalFiles"="%1$d de %2$d fichiers";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu élément est sélectionné";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu éléments ont été sélectionnés";
+/* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
+"xSelected"="%d sélectionnés";
 /* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
 "cameraUploadsWillBeDisabled"="Le téléversement de la caméra sera désactivé";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
@@ -603,7 +625,7 @@
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Droits";
 /* Permissions given to the user you share your folder with */
-"readOnly"="Lecture seule";
+"readOnly"="Lecture seulement";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="Lecture et écriture";
 /* Permissions given to the user you share your folder with */
@@ -625,9 +647,9 @@
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="Anglais";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
-"sendFeedbackLabel"="Envoyer des commentaires";
+"sendFeedbackLabel"="Envoyer une rétroaction";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="Veuillez rédiger vos commentaires ici :";
+"pleaseWriteYourFeedback"="Veuillez rédiger votre commentaire ici :";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Aucun compte courriel n'est défini sur votre appareil";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
@@ -657,7 +679,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Changer le mot de passe";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="En exportant et en conservant la clé maîtresse en lieu sûr, vous pourrez définir un nouveau mot de passe sans risquer une perte de données.";
+"exportMasterKeyFooter"="En exportant et en conservant la clé de récupération dans un endroit sécurisé, vous pourrez définir un nouveau mot de passe, sans encourir de perte de données.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Pourquoi ai-je besoin d’une clé de récupération ?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -669,7 +691,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="La clé de récupération a été exportée";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="La clé de récupération a été exportée dans la section Hors ligne sous RecoveryKey.txt. Note : elle sera supprimée si vous vous déconnectez. Veuillez la conserver dans un endroit sûr.";
+"masterKeyExported_alertMessage"="La clé de récupération a été exportée dans la section Hors ligne sous RecoveryKey.txt. Note : Elle sera supprimée si vous vous déconnectez. Veuillez la conserver dans un endroit sûr.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Sur votre appareil";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -767,17 +789,17 @@
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey"="Clé de récupération";
 /* An alert title where the user provided the incorrect Recovery Key. */
-"invalidRecoveryKey"="Clé de récupération invalide";
+"invalidRecoveryKey"="La clé de récupération est invalide";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Votre clé de récupération sera utilisée pour réinitialiser votre mot de passe. Veuillez saisir votre nouveau mot de passe.";
 /*  */
 "yourPasswordHasBeenReset"="Votre mot de passe a été réinitialisé avec succès. Veuillez maintenant vous connecter à votre compte.";
 /* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Si vous détenez une sauvegarde de votre clé de récupération, vous pouvez réinitialiser votre mot de passe en choisissant OUI. Aucune donnée ne sera perdue.";
+"forgotPassword_firstParagraph"="Si vous avez une sauvegarde de votre clé de récupération, vous pouvez réinitialiser votre mot de passe en sélectionnant OUI. Aucunes données ne seront perdues.";
 /* Second paragraph of the screen when the password has been forgotten */
 "forgotPassword_secondParagraph"="Vous pouvez encore exporter votre clé de récupération maintenant si vous avez une session MEGA active dans n’importe quel autre navigateur sur cet ordinateur ou sur un autre. Si ce n’est pas le cas, vous ne pourrez plus déchiffrer votre compte actuel, mais vous pourrez en créer un nouveau avec la même adresse courriel en choisissant NON.";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="Avez-vous une sauvegarde de votre clé de récupération ?";
+"doYouHaveABackupOfYourRecoveryKey"="Avez-vous une sauvegarde de votre clé de récupération ?";
 /* Headline when the user chose YES */
 "great"="Très bien !";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
@@ -787,7 +809,7 @@
 /* The title of the screen to park an account. */
 "noMasterKey_title"="Oups !";
 /* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="En raison de notre modèle de chiffrement de bout en  bout, vous ne pourrez pas accéder à vos données sans votre mot de passe ou une sauvegarde de votre clé de récupération.";
+"noMasterKey_firstParagraph"="En raison de notre modèle de chiffrement de bout en  bout, vous ne pourrez pas accéder à vos données sans votre mot de passe ou une sauvegarde de votre clé de récupération. ";
 /* Second paragraph of the screen to park an account */
 "noMasterKey_secondParagraph"="Vous pouvez remiser votre compte existant et en commencer un nouveau avec la même adresse courriel. Vos données seront conservées pendant au moins 60 jours. Dans le cas où vous vous souviendriez du mot de passe de votre compte remisé, veuillez contacter support@mega.nz";
 /* Text of the dialog message to ask for the link to park the account */
@@ -921,7 +943,7 @@
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="mois";
 /*  */
-"days"="jour";
+"days"="jours";
 /* Label to show that an error related with expiration occurs during a SDK operation. */
 "expired"="Expiré";
 /* Title of the button which logs out from your account. */
@@ -971,9 +993,9 @@
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Vous pourrez surclasser votre compte ultérieurement dans Mon compte";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Votre disque nuagique est presque plein.[/S] [A]Passez maintenant[/A] à un compte PRO et obtenez [S]jusqu’à 4 To (4 096 Go)[/S] d’espace nuagique de stockage.";
+"cloudDriveIsAlmostFull"="[S]Votre disque nuagique est presque plein.[/S] [A]Passez maintenant[/A] à un compte PRO et obtenez [S]jusqu’à 8 To (8 192 Go)[/S] d’espace nuagique de stockage.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Votre compte est plein.[/S] [A]Passez maintenant[/A] à un compte PRO et obtenez [S]jusqu’à 4 To (4 096 Go)[/S] d’espace de stockage nuagique.      ";
+"cloudDriveIsFull"="[S]Votre compte est plein.[/S] [A]Passez maintenant[/A] à un compte PRO et obtenez [S]jusqu’à 8 To (8 192 Go)[/S] d’espace de stockage nuagique.      ";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Espace de stockage";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -983,13 +1005,13 @@
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="Sous réserve de votre participation au programme d'objectifs.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%.2f %@ par mois";
+"productPricePerMonth"="%@ par mois";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Choisir une des offres ci-dessous :";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Sélectionner un type de compte :";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Annual subscription is 17% cheaper than 12 monthly payments";
+"twoMonthsFree"="L’abonnement annuel est 10 % moins cher que 12 mensualités";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Abonnement actuel :";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
@@ -1119,7 +1141,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Voulez-vous vraiment effacer l’historique entier de cette conversation ?";
 /* 'Next' button in a dialog */
-"continue"="Poursuivre";
+"continue"="Continuer";
 /* Button title that allows the user to close a chat. */
 "closeChat"="Fermer la conversation";
 /* Title of the incoming shared folders of a user. */
@@ -1184,6 +1206,10 @@
 "chatNotFound"="La conversation est introuvable";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ écrit...";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s [A]écrivent...[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s [A]et plus écrivent...[/A]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Rédiger un message...";
 /* Information if there are no history messages in current chat conversation */
@@ -1225,7 +1251,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Voulez-vous vraiment annuler l’inscription ?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="Si vous avez mal orthographié votre adresse courriel, corrigez-la et cliquez sur « Renvoyer ».";
+"misspelledEmailAddress"="Si vous avez mal orthographié votre adresse courriel, corrigez-la et cliquez sur « Renvoyer ».";
 /* A button to resend the email confirmation. */
 "resend"="Renvoyer";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1246,6 +1272,14 @@
 "uploadedFile"="Ce fichier a été téléversé :";
 /* A summary message when a user has attached many files at once into the chat. */
 "uploadedFiles"="Ces fichiers ont été téléversés :";
+/* Label in a button that allows to jump to the latest item */
+"jumpToLatest"="Sauter au plus récent";
+/* Label in a button that allows to jump to the latest message */
+"newMessages"="Nouveaux messages";
+/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
+"unreadMessage"="%lu message non lu";
+/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
+"unreadMessages"="%lu messages non lus";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Les abonnements sont renouvelés automatiquement pour les périodes d’abonnement successives de même durée et au même tarif que la période initiale choisie. Vous pouvez désactiver le renouvellement automatique de votre abonnement MEGA PRO au plus tard 24 heures avant l’échéance de votre prochain paiement dans la page des réglages de votre compte iTunes. Pour gérer vos abonnements, cliquez simplement sur l’icône de la logithèque App Store sur votre appareil, connectez-vous en bas de la page avec votre identifiant Apple (si ce n’est pas déjà fait), et cliquez sur Afficher l’identifiant Apple. Vous atteindrez la page de votre compte où vous trouverez Gérer vers le bas. Ensuite, vous pourrez sélectionner votre abonnement MEGA PRO et visualiser votre date prévue de renouvellement, choisir un autre type d’abonnement, ou activer, désactiver le renouvellement automatique de votre abonnement.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1315,7 +1349,7 @@
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA est un service de stockage nuagique sécurisé qui vous offre gratuitement 50 Go d’espace de stockage gratuit. Contrairement aux autres fournisseurs de stockage nuagique, vos données sont seulement chiffrées et déchiffrées par vos appareils client et jamais par nous.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="Téléversez vos fichiers de votre téléphone intelligent ou tablette, puis recherchez, stockez, téléchargez, lisez en continu, visualisez, partagez, renommez ou supprimez vos fichiers n'importe quand, de n'importe quel appareil, n'importe où. Partagez des dossiers avec vos contacts et suivez leurs modifications en temps réel.";
+"generalDescriptionParagraph2"="Téléversez vos fichiers de votre téléphone intelligent ou tablette, puis recherchez, stockez, téléchargez, lisez en continu, visualisez, partagez, renommez ou supprimez vos fichiers n’importe quand, de n’importe quel appareil, n’importe où. Partagez des dossiers avec vos contacts et suivez leurs modifications en temps réel.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="Le processus de chiffrement signifie que nous ne pouvons ni accéder à votre mot de passe ni le réinitialiser. Vous DEVEZ donc le mémoriser (à moins que vous ayez sauvegardé votre clé de récupération) ou vous perdrez l’accès à vos fichiers stockés.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
@@ -1345,3 +1379,99 @@
 "missedAudioCallsAndMissedVideoCalls"="[A] appels vocaux et [B] appels vidéo manqués";
 /* Button title to see the available bonus */
 "getBonus"="Obtenir des primes";
+/* QR Code label, used in Settings as title. String as short as possible */
+"qrCode"="Code QR";
+/* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
+"autoAccept"="Accepter automatiquement";
+/* Footer that explains the way Auto-Accept works for QR codes */
+"autoAcceptFooter"="Les contacts qui lisent votre code QR seront automatiquement ajoutés à votre liste de contacts.";
+/* Action to reset the current valid QR code of the user */
+"resetQrCode"="Réinitialiser le code QR";
+/* Footer that explains what would happen if the user resets his/her QR code */
+"resetQrCodeFooter"="Les codes QR précédents ne seront plus valides.";
+/* Title for view that displays the QR code of the user. String as short as possible. */
+"myCode"="Mon code";
+/* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
+"scanCode"="Lire un code";
+/* Label that encourage the user to line the QR to scan with the camera */
+"lineCodeWithCamera"="Aligner le code QR pour le lire avec l’appareil photo de votre appareil";
+/* Error text shown when the user scans a QR that is not valid. String as short as possible. */
+"invalidCode"="Code invalide";
+/* Success text shown in a label when the user scans a valid QR. String as short as possible. */
+"codeScanned"="Code lu";
+/* title of the screen that shows the users with whom the user has shared a folder */
+"sharedWidth"="Partagé avec :";
+/*   */
+"details"="Détails";
+/* Item menu option upon right click on one or multiple files. */
+"sharing"="Partage";
+/* Title of section to display number of all historical versions of files. */
+"versions"="Versions ";
+/* Title label of a node property. */
+"location"="Emplacement";
+/* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
+"totalSize"="Taille totale";
+/* Refers to the type of a file or folder. */
+"type"="Type";
+/* Title of the incoming shared folders of a user in singular */
+"sharedFolder"="Dossier partagé";
+/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
+"created"="Créé";
+/* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
+"contains"="Contient";
+/* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
+"modified"="Modifié";
+/* used for example when a folder is shared with 2 or more users */
+"users"="utilisateurs";
+/* user (singular) label indicating is receiving some info, for example shared folders */
+"user"="utilisateur";
+/* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
+"xVersions"="[X] versions";
+/* Label of the option menu. When clicking this button, the app shows the info of the file */
+"fileInfo"="Infos sur le fichier";
+/* Label of the option menu. When clicking this button, the app shows the info of the folder */
+"folderInfo"="Infos sur le dossier";
+/* Question to ensure user wants to delete file version. */
+"deleteVersion"="Voulez-vous supprimer cette version ?";
+/* Message to notify user the file version will be permanently removed */
+"permanentlyRemoved"="Elle sera supprimée définitivement";
+/*  */
+"delete"="Supprimer";
+/* A button label which reverts a certain version of a file to be the current version of the selected file. */
+"revert"="Revenir";
+/*  */
+"download"="Télécharger";
+/* Singular of file. 1 file */
+"file"="fichier";
+/* Title of section to display information of the current version of a file. */
+"currentVersion"="Version actuelle ";
+/* A button label which opens a dialog to display the full version history of the selected file. */
+"previousVersions"="Versions précédentes";
+/* Title of section to display information of all current versions of files. */
+"currentVersions"="Versions actuelles ";
+/* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
+"remindPasswordTitle"="Vous souvenez-vous de votre mot de passe ?";
+/* Text that describes why the user should test his/her password */
+"remindPasswordText"="En raison de la technologie de chiffrement de MEGA, vous ne pouvez pas réinitialiser votre mot de passe sans perte de données. Veuillez vous assurer de vous rappeler votre mot de passe.";
+/* Text that describes why the user should test his/her password before logging out */
+"remindPasswordLogoutText"="Avant de vous déconnecter, nous vous recommandons d’exporter votre clé de récupération en lieu sûr. Notez que vous ne pouvez pas réinitialiser votre mot de passe si vous l’oubliez.";
+/* Text next to a toggle that if enabled won't appear again */
+"dontShowAgain"="Ne plus afficher";
+/* Label for test password button and titles */
+"testPassword"="Tester le mot de passe";
+/* Label for recovery key button */
+"backupRecoveryKey"="Sauvegarder la clé de récupération";
+/* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
+"testPasswordText"="Veuillez tester votre mot de passe ci-dessous pour vous assurer de vous en souvenir. Si vous perdez votre mot de passe, vous perdrez l'accès à vos données MEGA. [A]En apprendre davantage[/A]";
+/* Title text for the account confirmation. */
+"confirm"="Confirmer";
+/* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
+"passwordAccepted"="Le mot de passe a été accepté";
+/* A dialog title to export the Recovery Key for the current user. */
+"exportRecoveryKey"="Exporter la clé de récupération";
+/* Title to confirm that you want to logout */
+"proceedToLogout"="Poursuivre la déconnexion";
+/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
+"testPasswordLogoutText"="Vous êtes sur le point de vous déconnecter. Veuillez tester votre mot de passe pour vous assurer que vous en souvenez. Si vous perdez votre mot de passe, vous perdrez l’accès à vos données MEGA.";
+/* state previous to import a file */
+"loading"="Chargement…";

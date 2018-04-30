@@ -15,9 +15,7 @@
 #import "ProductDetailViewController.h"
 #import "ProductTableViewCell.h"
 
-#define TOBYTES 1024*1024*1024
-
-@interface UpgradeTableViewController () <MFMailComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, MEGAPurchasePricingDelegate>
+@interface UpgradeTableViewController () <MFMailComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -67,7 +65,7 @@
     self.currentPlanLabel.text = AMLocalizedString(@"currentPlan", @"Text shown on the upgrade account page above the current PRO plan subscription");
     
     NSMutableAttributedString *asteriskMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes: @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]}];
-    NSAttributedString *twoMonthsFreeAttributedString = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"twoMonthsFree", @"Text shown in the purchase plan view to explain that annual subscription is 16% cheaper than 12 monthly payments") attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black262626]}];
+    NSAttributedString *twoMonthsFreeAttributedString = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"twoMonthsFree", @"Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments") attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black262626]}];
     [asteriskMutableAttributedString appendAttributedString:twoMonthsFreeAttributedString];
     self.twoMonthsFreeLabel.attributedText = asteriskMutableAttributedString;
     
@@ -162,9 +160,27 @@
 
 - (void)getIndexPositionsForProLevels {
     self.proLevelsIndexesMutableDictionary = [[NSMutableDictionary alloc] init];
-    for (NSUInteger i = 0; i < [MEGAPurchase sharedInstance].pricing.products; i++) {
-        MEGAAccountType proLevel = [[MEGAPurchase sharedInstance].pricing proLevelAtProductIndex:i];
-        if ([[MEGAPurchase sharedInstance].pricing monthsAtProductIndex:i] == 12 || proLevel == MEGAAccountTypeFree) {
+    BOOL yearPlan;
+    for (NSUInteger i = 0; i < [MEGAPurchase sharedInstance].products.count; i++) {
+        SKProduct *product = [[MEGAPurchase sharedInstance].products objectAtIndex:i];
+        MEGAAccountType proLevel;
+        if ([product.productIdentifier containsString:@"pro1"]) {
+            proLevel = MEGAAccountTypeProI;
+        } else if ([product.productIdentifier containsString:@"pro2"]) {
+            proLevel = MEGAAccountTypeProII;
+        } else if ([product.productIdentifier containsString:@"pro3"]) {
+            proLevel = MEGAAccountTypeProIII;
+        } else {
+            proLevel = MEGAAccountTypeLite;
+        }
+        
+        if ([product.productIdentifier containsString:@"oneYear"]) {
+            yearPlan = YES;
+        } else {
+            yearPlan = NO;
+        }
+        
+        if (yearPlan) {
             continue;
         }
         
@@ -265,7 +281,8 @@
 - (NSAttributedString *)storageAttributedStringForProLevelAtIndex:(NSInteger)index {
     NSMutableAttributedString *storageString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"productSpace", @"Storage related with the MEGA PRO account level you can subscribe")] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
     
-    NSString *storageFormattedString = [NSByteCountFormatter stringFromByteCount:((long long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:index] * TOBYTES) countStyle:NSByteCountFormatterCountStyleMemory];
+    SKProduct *product = [[MEGAPurchase sharedInstance].products objectAtIndex:index];
+    NSString *storageFormattedString = [self storageAndUnitsByProduct:product];
     NSMutableAttributedString *storageMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:storageFormattedString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
     [storageMutableAttributedString appendAttributedString:storageString];
     
@@ -275,7 +292,8 @@
 - (NSAttributedString *)bandwidthAttributedStringForProLevelAtIndex:(NSInteger)index {
     NSMutableAttributedString *bandwidthString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"transferQuota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.")] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
     
-    NSString *bandwidthFormattedString = [NSByteCountFormatter stringFromByteCount:((long long)[[MEGAPurchase sharedInstance].pricing transferGBAtProductIndex:index] * TOBYTES) countStyle:NSByteCountFormatterCountStyleMemory];
+    SKProduct *product = [[MEGAPurchase sharedInstance].products objectAtIndex:index];
+    NSString *bandwidthFormattedString = [self transferAndUnitsByProduct:product];
     NSMutableAttributedString *bandwidthMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:bandwidthFormattedString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
     [bandwidthMutableAttributedString appendAttributedString:bandwidthString];
     
@@ -336,6 +354,25 @@
     }
     
     [self presentViewController:safariViewController animated:YES completion:nil];
+}
+
+- (NSString *)storageAndUnitsByProduct:(SKProduct *)product {
+    NSArray *storageTransferArray = [product.localizedDescription componentsSeparatedByString:@";"];
+    NSArray *storageArray = [[storageTransferArray objectAtIndex:0] componentsSeparatedByString:@" "];
+    return [NSString stringWithFormat:@"%@ %@", [storageArray objectAtIndex:0], [storageArray objectAtIndex:1]];
+}
+
+- (NSString *)transferAndUnitsByProduct:(SKProduct *)product {
+    NSArray *storageTransferArray = [product.localizedDescription componentsSeparatedByString:@";"];
+    NSArray *transferArray = [[storageTransferArray objectAtIndex:1] componentsSeparatedByString:@" "];
+    return [NSString stringWithFormat:@"%@ %@", [transferArray objectAtIndex:0], [transferArray objectAtIndex:1]];
+}
+
+- (NSString *)priceByProduct:(SKProduct *)product {
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setNumberStyle: NSNumberFormatterCurrencyStyle];
+    numberFormatter.locale = product.priceLocale;
+    return [numberFormatter stringFromNumber:product.price];
 }
 
 #pragma mark - IBActions
@@ -404,7 +441,10 @@
     cell.productStorageLabel.attributedText = (self.isChoosingTheAccountType && indexPath.row == 0) ? [self freeStorageAttributedString] : [self storageAttributedStringForProLevelAtIndex:proLevelIndexNumber.integerValue];
     cell.productBandwidthLabel.attributedText = (self.isChoosingTheAccountType && indexPath.row == 0) ? [self freeTransferQuotaAttributedString] :[self bandwidthAttributedStringForProLevelAtIndex:proLevelIndexNumber.integerValue];
     
-    NSString *productPriceString = [NSString stringWithFormat:AMLocalizedString(@"productPricePerMonth", @"Price asociated with the MEGA PRO account level you can subscribe"), (float)[[MEGAPurchase sharedInstance].pricing amountAtProductIndex:proLevelIndexNumber.integerValue] / 100, [[MEGAPurchase sharedInstance].pricing currencyAtProductIndex:proLevelIndexNumber.integerValue]];
+    
+    SKProduct *product = [[MEGAPurchase sharedInstance].products objectAtIndex:proLevelIndexNumber.integerValue];
+    
+    NSString *productPriceString = [NSString stringWithFormat:AMLocalizedString(@"productPricePerMonth", @"Price asociated with the MEGA PRO account level you can subscribe"), [self priceByProduct:product]];
     NSAttributedString *asteriskAttributedString = [[NSAttributedString alloc] initWithString:@" *" attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]}];
     NSMutableAttributedString *productPriceMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:productPriceString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[self colorForProLevel:proLevelNumber.integerValue]}];
     [productPriceMutableAttributedString appendAttributedString:asteriskAttributedString];
@@ -438,23 +478,23 @@
     productDetailVC.megaAccountType = proPlanNumber.integerValue;
     
     NSNumber *proLevelIndexNumber = [self.proLevelsIndexesMutableDictionary objectForKey:proPlanNumber];
-    productDetailVC.storageString = [NSByteCountFormatter stringFromByteCount:((long long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:proLevelIndexNumber.integerValue] * TOBYTES) countStyle:NSByteCountFormatterCountStyleMemory];
-    productDetailVC.bandwidthString = [NSByteCountFormatter stringFromByteCount:((long long)[[MEGAPurchase sharedInstance].pricing transferGBAtProductIndex:proLevelIndexNumber.integerValue] * TOBYTES) countStyle:NSByteCountFormatterCountStyleMemory];
-    productDetailVC.priceMonthString = [NSString stringWithFormat:@"%.2f %@", (float)[[MEGAPurchase sharedInstance].pricing amountAtProductIndex:proLevelIndexNumber.integerValue] / 100, [[MEGAPurchase sharedInstance].pricing currencyAtProductIndex:proLevelIndexNumber.integerValue]];
-    productDetailVC.priceYearlyString = [NSString stringWithFormat:@"%.2f %@", (float)[[MEGAPurchase sharedInstance].pricing amountAtProductIndex:(proLevelIndexNumber.integerValue + 1)] / 100, [[MEGAPurchase sharedInstance].pricing currencyAtProductIndex:proLevelIndexNumber.integerValue]];
-    productDetailVC.iOSIDMonthlyString = [[MEGAPurchase sharedInstance].pricing iOSIDAtProductIndex:proLevelIndexNumber.integerValue];
-    productDetailVC.iOSIDYearlyString = [[MEGAPurchase sharedInstance].pricing iOSIDAtProductIndex:(proLevelIndexNumber.integerValue + 1)];
+    
+    SKProduct *monthlyProduct = [[MEGAPurchase sharedInstance].products objectAtIndex:proLevelIndexNumber.integerValue];
+    SKProduct *yearlyProduct = [[MEGAPurchase sharedInstance].products objectAtIndex:proLevelIndexNumber.integerValue+1];
+    NSString *storageFormattedString = [self storageAndUnitsByProduct:monthlyProduct];
+    NSString *bandwidthFormattedString = [self transferAndUnitsByProduct:monthlyProduct];
+    
+    productDetailVC.storageString = storageFormattedString;
+    productDetailVC.bandwidthString = bandwidthFormattedString;
+    productDetailVC.priceMonthString = [self priceByProduct:monthlyProduct];
+    productDetailVC.priceYearlyString = [self priceByProduct:yearlyProduct];
+    productDetailVC.monthlyProduct = monthlyProduct;
+    productDetailVC.yearlyProduct = yearlyProduct;
     [self.navigationController pushViewController:productDetailVC animated:YES];
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-#pragma mark - MEGAPurchasePricingDelegate
-
-- (void)pricingsReady {
-    [self.tableView reloadData];
 }
 
 @end
