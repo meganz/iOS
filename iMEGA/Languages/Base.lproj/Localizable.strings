@@ -1475,3 +1475,9 @@
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
 /* state previous to import a file */
 "loading"="Loading…";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="Restart";
+/* Title to alert user the possibility of continue playing video or start from the beginning */
+"continuePlaying"="Continue playing?";
+/* Message to alert user the possibility of continue playing video or start from the beginning */
+"continueOrRestartVideo"="Would you like to continue playing video where you leaved or restart it?";

@@ -7,12 +7,14 @@
 #import "MEGANode+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+#import "MEGAStore.h"
 
 @interface MEGAAVViewController () <AVPlayerViewControllerDelegate, UIViewControllerTransitioningDelegate>
 
 @property (nonatomic, strong, nonnull) NSURL *path;
 @property (nonatomic, strong) MEGANode *node;
 @property (nonatomic, assign, getter=isFolderLink) BOOL folderLink;
+@property (nonatomic, assign, getter=isEndPlaying) BOOL endPlaying;
 
 @end
 
@@ -75,7 +77,27 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.player play];
+    
+    NSString *fingerprint = [self fileFingerprint];
+
+    if (fingerprint && ![fingerprint isEqualToString:@""]) {
+        MOMediaDestination *mediaDestination = [[MEGAStore shareInstance] fetchMediaDestinationWithFingerprint:fingerprint];
+        if (mediaDestination) {
+            UIAlertController *resumeOrRestartAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"continuePlaying", @"Title to alert user the posibility of continue playing video or start again") message:AMLocalizedString(@"continueOrRestartVideo", @"Message to alert user the posibility of continue playing video or start again") preferredStyle:UIAlertControllerStyleAlert];
+            [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"continue", @"'Next' button in a dialog") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [self.player seekToTime:CMTimeMake(mediaDestination.destination.longLongValue, mediaDestination.timescale.intValue)];
+                [self.player play];
+            }]];
+            [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"restart", @"A label for the Restart button to relaunch MEGAsync.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [self.player play];
+            }]];
+            [self presentViewController:resumeOrRestartAlert animated:YES completion:nil];
+        } else {
+            [self.player play];
+        }
+    } else {
+        [self.player play];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -99,11 +121,25 @@
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    NSString *fingerprint = [self fileFingerprint];
+
+    if (fingerprint && ![fingerprint isEqualToString:@""]) {
+        if (!self.isEndPlaying) {
+            [[MEGAStore shareInstance] insertOrUpdateMediaDestinationWithFingerprint:fingerprint destination:[NSNumber numberWithLongLong:self.player.currentTime.value] timescale:[NSNumber numberWithInt:self.player.currentTime.timescale]];
+        } else {
+            [[MEGAStore shareInstance] deleteMediaDestinationWithFingerprint:fingerprint];
+        }
+    }
+    
+    [super viewWillDisappear:animated];
+}
+
 #pragma mark - Private
 
 - (void)stopStreaming {
     if (self.node) {
-        if (![self isFolderLink]) {
+        if (!self.isFolderLink) {
             [[MEGASdkManager sharedMEGASdk] httpServerStop];
         } else {
             [[MEGASdkManager sharedMEGASdkFolder] httpServerStop];
@@ -111,9 +147,26 @@
     }
 }
 
+- (NSString *)fileFingerprint {
+    NSString *fingerprint = [NSString new];
+
+    if ([self.path.absoluteString containsString:@"http"]) {
+        if (self.folderLink) {
+            fingerprint = [[MEGASdkManager sharedMEGASdkFolder] fingerprintForNode:self.node];
+        } else {
+            fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForNode:self.node];
+        }
+    } else {
+        fingerprint = [NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.path.path]];
+    }
+    
+    return fingerprint;
+}
+
 #pragma mark - Notifications
 
 - (void)movieFinishedCallback:(NSNotification*)aNotification {
+    self.endPlaying = YES;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
