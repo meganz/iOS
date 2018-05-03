@@ -89,6 +89,11 @@
     self.pendingRequestsPresented = NO;
 
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    [self.searchController.searchBar setBarTintColor:UIColor.mnz_grayFCFCFC];
+    self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    
+    UITextField *searchTextField = [self.searchController.searchBar valueForKey:@"_searchField"];
+    searchTextField.backgroundColor = UIColor.mnz_grayEEEEEE;
     
     [self.createGroupBarButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:1 green:1 blue:1 alpha:.5]} forState:UIControlStateDisabled];
 
@@ -223,8 +228,13 @@
             
         case ContactsModeChatCreateGroup: {
             [self setTableViewEditing:YES animated:NO];
-            self.createGroupBarButtonItem.title = @"Next"; //TODO:localize
+            self.createGroupBarButtonItem.title = AMLocalizedString(@"Next", nil);
             self.createGroupBarButtonItem.enabled = NO;
+            [self.createGroupBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                   [UIFont mnz_SFUIMediumWithSize:17],
+                                                                   NSFontAttributeName,
+                                                                   nil]
+                                                         forState:UIControlStateNormal];
             self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
             self.navigationItem.rightBarButtonItems = @[self.createGroupBarButtonItem];
             self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
@@ -234,6 +244,11 @@
         case ContactsModeChatNamingGroup: {
             self.navigationItem.leftBarButtonItems = @[self.backBarButtonItem];
             self.createGroupBarButtonItem.title = AMLocalizedString(@"Create", nil);
+            [self.createGroupBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                              [UIFont mnz_SFUIMediumWithSize:17],
+                                                              NSFontAttributeName,
+                                                              nil]
+                                                    forState:UIControlStateNormal];
             self.navigationItem.rightBarButtonItems = @[self.createGroupBarButtonItem];
             self.createGroupBarButtonItem.enabled = NO;
             self.contactsMode = ContactsModeChatNamingGroup;
@@ -603,11 +618,12 @@
 - (void)addSearchBarController {
     switch (self.contactsMode) {
         case ContactsModeChatCreateGroup:
-        case ContactsModeChatStartConversation:
+        case ContactsModeChatStartConversation: {
             self.searchFixedViewHeightConstraint.constant = self.searchController.searchBar.frame.size.height;
             [self.searchFixedView addSubview:self.searchController.searchBar];
             self.searchController.hidesNavigationBarDuringPresentation = NO;
             break;
+        }
             
         default:
             if (!self.tableView.tableHeaderView) {
@@ -805,8 +821,7 @@
 }
 
 - (IBAction)createGroupAction:(UIBarButtonItem *)sender {
-    BOOL addParticipantsMode = [self.createGroupBarButtonItem.title isEqualToString:@"Next"];
-    if (addParticipantsMode) {
+    if (self.contactsMode == ContactsModeChatCreateGroup) {
         ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
         contactsVC.contactsMode = ContactsModeChatNamingGroup;
         contactsVC.userSelected = self.userSelected;
@@ -817,7 +832,6 @@
             self.userSelected(self.selectedUsersArray, self.insertedGroupName);
         }];
     }
-
 }
 
 - (IBAction)addParticipantAction:(UIBarButtonItem *)sender {
@@ -878,21 +892,23 @@
     if (self.contactsMode == ContactsModeChatStartConversation && indexPath.section == 0) {
         ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsEmailTableViewCellID" forIndexPath:indexPath];
         cell.permissionsImageView.hidden = YES;
-        cell.avatarImageView.backgroundColor = [UIColor colorWithRed:0 green:0.75 blue:0.65 alpha:1];
         if (indexPath.row == 0) {
             cell.nameLabel.text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
-            cell.avatarImageView.image = [UIImage imageNamed:@"myAccountContactsIcon"];
+            cell.avatarImageView.image = [UIImage imageNamed:@"inviteToChat"];
+            if (self.users.size.intValue == 0) {
+                cell.lineView.hidden = YES;
+            }
         } else {
             cell.nameLabel.text = AMLocalizedString(@"groupChat", @"Label title for a group chat");
-            cell.avatarImageView.image = [UIImage imageNamed:@"chatIcon"];
+            cell.avatarImageView.image = [UIImage imageNamed:@"createGroup"];
+            cell.lineView.hidden = YES;
         }
         return cell;
     } else if (self.contactsMode == ContactsModeChatNamingGroup && indexPath.section == 0) {
         ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NamingGroupTableViewCellID" forIndexPath:indexPath];
         cell.permissionsImageView.hidden = YES;
-        cell.avatarImageView.backgroundColor = [UIColor colorWithRed:0 green:0.75 blue:0.65 alpha:1];
         cell.nameLabel.text = @"Start Group Chat";
-        cell.avatarImageView.image = [UIImage imageNamed:@"chatIcon"];
+        cell.avatarImageView.image = [UIImage imageNamed:@"addGroupAvatar"];
         [cell.groupNameTextField becomeFirstResponder];
         return cell;
     } else {
@@ -1167,7 +1183,7 @@
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.contactsMode == ContactsModeChatStartConversation) {
+    if (self.contactsMode == ContactsModeChatStartConversation || self.contactsMode == ContactsModeChatNamingGroup) {
         return UITableViewCellEditingStyleNone;
     }
     

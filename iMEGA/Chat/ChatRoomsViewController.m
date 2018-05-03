@@ -15,6 +15,7 @@
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
+#import "MEGAChatChangeGroupNameRequestDelegate.h"
 
 #import "ChatRoomCell.h"
 #import "ChatSettingsTableViewController.h"
@@ -686,9 +687,11 @@
             MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
                 messagesVC.chatRoom = chatRoom;
                 if (groupName) {
-                    [[MEGASdkManager sharedMEGAChatSdk] setChatTitle:chatRoom.chatId title:groupName];
+                    MEGAChatChangeGroupNameRequestDelegate *changeGroupNameRequestDelegate = [[MEGAChatChangeGroupNameRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
+                        [self.navigationController pushViewController:messagesVC animated:YES];
+                    }];
+                    [[MEGASdkManager sharedMEGAChatSdk] setChatTitle:chatRoom.chatId title:groupName delegate:changeGroupNameRequestDelegate];
                 }
-                [self.navigationController pushViewController:messagesVC animated:YES];
             }];
             [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:YES peers:peerList delegate:createChatGroupRequestDelegate];
         }
