@@ -72,8 +72,9 @@
     if (fingerprint && ![fingerprint isEqualToString:@""]) {
         MOMediaDestination *mediaDestination = [[MEGAStore shareInstance] fetchMediaDestinationWithFingerprint:fingerprint];
         if (mediaDestination) {
-            UIAlertController *resumeOrRestartAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"continuePlaying", @"Title to alert user the posibility of continue playing video or start again") message:AMLocalizedString(@"continueOrRestartVideo", @"Message to alert user the posibility of continue playing video or start again") preferredStyle:UIAlertControllerStyleAlert];
-            [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"continue", @"'Next' button in a dialog") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            NSString *infoVideoDestination = [NSString stringWithFormat:AMLocalizedString(@"continueOrRestartVideoMessage", @"Message to show the user info (name and time) about the resume of the video"), [self fileName], [self timeForMediaDestination:mediaDestination]];
+            UIAlertController *resumeOrRestartAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"resumePlayback", @"Title to alert user the possibility of resume playing the video or start from the beginning") message:infoVideoDestination preferredStyle:UIAlertControllerStyleAlert];
+            [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"resume", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [self playWithDestination:mediaDestination];
             }]];
             [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"restart", @"A label for the Restart button to relaunch MEGAsync.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -156,6 +157,23 @@
         } else {
             [[MEGASdkManager sharedMEGASdk] httpServerStop];
         }
+    }
+}
+
+- (NSString *)timeForMediaDestination:(MOMediaDestination *)mediaDestination {
+    CMTime mediaTime = CMTimeMake(mediaDestination.destination.longLongValue, mediaDestination.timescale.intValue);
+    NSUInteger durationSeconds = (long)CMTimeGetSeconds(mediaTime);
+    NSUInteger hours = floor(durationSeconds / 3600);
+    NSUInteger minutes = floor(durationSeconds % 3600 / 60);
+    NSUInteger seconds = floor(durationSeconds % 3600 % 60);
+    return [NSString stringWithFormat:@"%02ld:%02ld:%02ld", hours, minutes, seconds];
+}
+
+- (NSString *)fileName {
+    if (self.node) {
+        return self.node.name;
+    } else {
+        return self.fileUrl.lastPathComponent;
     }
 }
 
