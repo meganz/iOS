@@ -1473,3 +1473,5 @@
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
 /* state previous to import a file */
 "loading"="Loading...";
+/*   */
+"Next"="Next";

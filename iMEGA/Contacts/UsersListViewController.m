@@ -64,7 +64,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MEGAUser *user = [self.users objectAtIndex:indexPath.row];
     UserCollectionViewCell *userCell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"UserCollectionViewCellID" forIndexPath:indexPath];
-    userCell.nameLabel.text = user.mnz_fullName;
+    userCell.nameLabel.text = user.mnz_firstName;
     [userCell.avatarImageView mnz_setImageForUserHandle:user.handle];
     return userCell;
 }
