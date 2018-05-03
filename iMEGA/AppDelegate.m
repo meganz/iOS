@@ -3,8 +3,10 @@
 #import <AVFoundation/AVFoundation.h>
 #import <CoreSpotlight/CoreSpotlight.h>
 #import <Intents/Intents.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 #import <Photos/Photos.h>
 #import <PushKit/PushKit.h>
+#import <QuickLook/QuickLook.h>
 #import <UserNotifications/UserNotifications.h>
 
 #import "LTHPasscodeViewController.h"
@@ -17,7 +19,6 @@
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAIndexer.h"
 #import "MEGALogger.h"
-#import "MEGALoginRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
@@ -46,19 +47,24 @@
 #import "LaunchViewController.h"
 #import "LoginViewController.h"
 #import "MainTabBarController.h"
+#import "MEGAPhotoBrowserViewController.h"
 #import "MessagesViewController.h"
-#import "MEGACreateAccountRequestDelegate.h"
-#import "MEGAPasswordLinkRequestDelegate.h"
-#import "MEGAChatCreateChatGroupRequestDelegate.h"
-#import "MEGAInviteContactRequestDelegate.h"
 #import "MyAccountHallViewController.h"
 #import "OfflineTableViewController.h"
+#import "PreviewDocumentViewController.h"
 #import "SecurityOptionsTableViewController.h"
 #import "SettingsTableViewController.h"
 #import "SharedItemsViewController.h"
 #import "UnavailableLinkView.h"
 #import "UpgradeTableViewController.h"
 #import "CustomModalAlertViewController.h"
+
+#import "MEGAChatCreateChatGroupRequestDelegate.h"
+#import "MEGACreateAccountRequestDelegate.h"
+#import "MEGAGetPublicNodeRequestDelegate.h"
+#import "MEGAInviteContactRequestDelegate.h"
+#import "MEGALoginRequestDelegate.h"
+#import "MEGAPasswordLinkRequestDelegate.h"
 #import "MEGAShowPasswordReminderRequestDelegate.h"
 
 #define kUserAgent @"MEGAiOS"
@@ -84,7 +90,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeHandleLink
 };
 
-@interface AppDelegate () <UIAlertViewDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, PKPushRegistryDelegate> {
+@interface AppDelegate () <UIAlertViewDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, PKPushRegistryDelegate, MEGAPurchasePricingDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
     
@@ -122,6 +128,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 @property (strong, nonatomic) NSString *email;
 @property (nonatomic) BOOL presentInviteContactVCLater;
+
+@property (nonatomic, getter=showChooseAccountTypeLater) BOOL chooseAccountTypeLater;
 
 @end
 
@@ -294,7 +302,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
                 [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                 [[MEGASdkManager sharedMEGAChatSdk] logout];
-                [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+                [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
             }
         } else {
             [[MEGALogger sharedLogger] enableSDKlogs];
@@ -335,7 +343,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         if (sessionId) {
             MEGACreateAccountRequestDelegate *createAccountRequestDelegate = [[MEGACreateAccountRequestDelegate alloc] initWithCompletion:^ (MEGAError *error) {
                 CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckEmailAndFollowTheLinkViewControllerID"];
-                [self.window.rootViewController presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:nil];
+                [UIApplication.mnz_visibleViewController presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:nil];
             }];
             createAccountRequestDelegate.resumeCreateAccount = YES;
             [[MEGASdkManager sharedMEGASdk] resumeCreateAccountWithSessionId:sessionId delegate:createAccountRequestDelegate];
@@ -555,14 +563,14 @@ typedef NS_ENUM(NSUInteger, URLType) {
                                             if (granted) {
                                                 [self performCall];
                                             } else {
-                                                [[UIApplication mnz_visibleViewController] presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
+                                                [UIApplication.mnz_visibleViewController presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
                                             }
                                         }];
                                     } else {
                                         [self performCall];
                                     }
                                 } else {
-                                    [[UIApplication mnz_visibleViewController] presentViewController:[DevicePermissionsHelper audioPermisionAlertController] animated:YES completion:nil];
+                                    [UIApplication.mnz_visibleViewController presentViewController:[DevicePermissionsHelper audioPermisionAlertController] animated:YES completion:nil];
                                 }
                             }];
                         }
@@ -666,15 +674,15 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)showCameraUploadsPopUp {
     MEGANavigationController *cameraUploadsNavigationController =[[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsPopUpNavigationControllerID"];
     
-    [self.window.rootViewController presentViewController:cameraUploadsNavigationController animated:YES completion:^{
+    [UIApplication.mnz_visibleViewController presentViewController:cameraUploadsNavigationController animated:YES completion:^{
         isAccountFirstLogin = NO;
         if (self.urlType == URLTypeConfirmationLink) {
-            UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
-            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-            upgradeTVC.chooseAccountType = YES;
-            
-            [self presentLinkViewController:navigationController];
-            self.urlType = URLTypeDefault;
+            if ([MEGAPurchase sharedInstance].products.count > 0) {
+                [self showChooseAccountType];
+            } else {
+                [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
+                self.chooseAccountTypeLater = YES;
+            }
         }
      
         if ([Helper selectedOptionOnLink] != 0) {
@@ -719,7 +727,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
             [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
             browserVC.selectedNodesArray = [NSArray arrayWithArray:[Helper nodesFromLinkMutableArray]];
-            [self presentLinkViewController:navigationController];
+            [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
             break;
         }
             
@@ -849,12 +857,25 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)showFileLinkView:(NSString *)fileLinkURLString {
-    MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
-    FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
-    [fileLinkVC setFileLinkString:fileLinkURLString];
+    MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+        if (!request.flag) {
+            MEGANode *node = request.publicNode;
+            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+                MEGAPhotoBrowserViewController *photoBrowserVC = [node mnz_photoBrowserWithNodes:@[node] folderLink:NO displayMode:DisplayModeFileLink enableMoveToRubbishBin:NO];
+                photoBrowserVC.publicLink = fileLinkURLString;
+                [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];
+                
+                return;
+            }
+        }
+        MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
+        FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
+        fileLinkVC.fileLinkString = fileLinkURLString;
+        
+        [UIApplication.mnz_visibleViewController presentViewController:fileLinkNavigationController animated:YES completion:nil];
+    }];
     
-    [self presentLinkViewController:fileLinkNavigationController];
-    
+    [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:fileLinkURLString delegate:delegate];
     self.link = nil;
 }
 
@@ -882,7 +903,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [folderlinkVC setIsFolderRootNode:YES];
     [folderlinkVC setFolderLinkString:folderLinkURLString];
     
-    [self presentLinkViewController:folderNavigationController];
+    [UIApplication.mnz_visibleViewController presentViewController:folderNavigationController animated:YES completion:nil];
     
     self.link = nil;
 }
@@ -912,7 +933,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             [self showEncryptedLinkAlert:request.link];
         }]];
-        [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
     }];
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyAlertTitle", nil) message:AMLocalizedString(@"decryptionKeyAlertMessage", nil) preferredStyle:UIAlertControllerStyleAlert];
@@ -923,22 +944,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[MEGASdkManager sharedMEGASdk] decryptPasswordProtectedLink:encryptedLinkURLString password:alertController.textFields.firstObject.text delegate:delegate];
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-    [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+    [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
     
     self.link = nil;
-}
-
-- (void)presentLinkViewController:(UINavigationController *)navigationController {
-    if ([self.window.rootViewController.presentedViewController isKindOfClass:[MEGANavigationController class]]) {
-        MEGANavigationController *cameraUploadsPopUpNavigationController = (MEGANavigationController *)self.window.rootViewController.presentedViewController;
-        if ([cameraUploadsPopUpNavigationController.topViewController isKindOfClass:[CameraUploadsPopUpViewController class]]) {
-            [cameraUploadsPopUpNavigationController.topViewController presentViewController:navigationController animated:YES completion:nil];
-        } else {
-            [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
-        }
-    } else {
-        [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
-    }
 }
 
 - (BOOL)isConfirmationLink:(NSString *)afterSlashesString {
@@ -990,7 +998,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             SecurityOptionsTableViewController *securityOptionsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"SecurityOptionsTableViewControllerID"];
             [securityOptionsTVC.navigationItem setRightBarButtonItem:[self cancelBarButtonItem]];
             MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:securityOptionsTVC];
-            [self presentLinkViewController:navigationController];
+            [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
         } else {
             [self showPleaseLogInToYourAccountAlert];
         }
@@ -1010,7 +1018,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             ContactRequestsViewController *contactsRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
             MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:contactsRequestsVC];
-            [self presentLinkViewController:navigationController];
+            [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
         } else {
             [self showPleaseLogInToYourAccountAlert];
         }
@@ -1125,7 +1133,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [browserVC setLocalpath:[self.link path]]; // "file://" = 7 characters
         [browserVC setBrowserAction:BrowserActionOpenIn];
         
-        [self presentLinkViewController:browserNavigationController];
+        [UIApplication.mnz_visibleViewController presentViewController:browserNavigationController animated:YES completion:nil];
         
         self.link = nil;
     }
@@ -1267,7 +1275,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [viewController.navigationItem setRightBarButtonItem:[self cancelBarButtonItem]];
     
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:viewController];
-    [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
+    [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (UIBarButtonItem *)cancelBarButtonItem {
@@ -1292,7 +1300,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     confirmAccountVC.confirmationLinkString = link;
     confirmAccountVC.emailString = email;
     
-    [self presentLinkViewController:confirmAccountNavigationController];
+    [UIApplication.mnz_visibleViewController presentViewController:confirmAccountNavigationController animated:YES completion:nil];
 }
 
 - (void)presentChangeViewType:(ChangeType)changeType email:(NSString *)email masterKey:(NSString *)masterKey link:(NSString *)link {
@@ -1303,7 +1311,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     changePasswordVC.link = link;
     
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:changePasswordVC];
-    [self presentLinkViewController:navigationController];
+    [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (void)requestUserName {
@@ -1495,13 +1503,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
                         [[MEGASdkManager sharedMEGASdk] logout];
                     }]];
                     
-                    [self.window.rootViewController presentViewController:warningAlertController animated:YES completion:nil];
+                    [UIApplication.mnz_visibleViewController presentViewController:warningAlertController animated:YES completion:nil];
                 } else {
                     [[MEGASdkManager sharedMEGASdk] logout];
                 }
             }]];
             
-            [self.window.rootViewController presentViewController:theContentIsNotAvailableAlertController animated:YES completion:nil];
+            [UIApplication.mnz_visibleViewController presentViewController:theContentIsNotAvailableAlertController animated:YES completion:nil];
         }
     }
     self.nodeToPresentBase64Handle = nil;
@@ -1666,7 +1674,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         };
     }
     
-    [[UIApplication mnz_visibleViewController] presentViewController:customModalAlertVC animated:YES completion:nil];
+    [UIApplication.mnz_visibleViewController presentViewController:customModalAlertVC animated:YES completion:nil];
     
     self.presentInviteContactVCLater = NO;
 }
@@ -1686,6 +1694,15 @@ void uncaughtExceptionHandler(NSException *exception) {
             window.hidden = shouldHide;
         }
     }
+}
+
+- (void)showChooseAccountType {
+    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+    upgradeTVC.chooseAccountType = YES;
+    
+    [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+    self.urlType = URLTypeDefault;
 }
 
 #pragma mark - Battery changed
@@ -1709,7 +1726,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         
         [self dismissPresentedViews];
         
-        [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
+        [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
     } else if ([alertView tag] == 1) { //alreadyLoggedInAlertView
         if (buttonIndex == 0) {
             _emailOfNewSignUpLink = nil;
@@ -1933,6 +1950,17 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     [self openChatRoomWithChatNumber:notification.userInfo[@"chatId"]];
+}
+
+#pragma mark - MEGAPurchasePricingDelegate
+
+- (void)pricingsReady {
+    if (self.showChooseAccountTypeLater) {
+        [self showChooseAccountType];
+        
+        self.chooseAccountTypeLater = NO;
+        [[MEGAPurchase sharedInstance] setPricingsDelegate:nil];
+    }
 }
 
 #pragma mark - MEGAGlobalDelegate
@@ -2351,7 +2379,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             if (self.messageForSuspendedAccount) {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:self.messageForSuspendedAccount preferredStyle:UIAlertControllerStyleAlert];
                 [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+                [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
             }
             
             if ((self.urlType == URLTypeNewSignUpLink) && (_emailOfNewSignUpLink != nil)) {
@@ -2494,7 +2522,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:@"Chat disabled (Init error). Enable chat in More -> Settings -> Chat" preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         [[MEGASdkManager sharedMEGAChatSdk] logout];
-        [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
     }
 }
 
@@ -2564,7 +2592,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                     UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
                     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
                     
-                    [[UIApplication mnz_visibleViewController] presentViewController:navigationController animated:YES completion:nil];
+                    [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
                 } else {
                     // Redirect to my account if the products are not available
                     [self.mainTBC setSelectedIndex:4];
@@ -2572,7 +2600,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             }];
         };
         
-        [[UIApplication mnz_visibleViewController] presentViewController:customModalAlertVC animated:YES completion:nil];
+        [UIApplication.mnz_visibleViewController presentViewController:customModalAlertVC animated:YES completion:nil];
     }
 }
 

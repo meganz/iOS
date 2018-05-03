@@ -36,6 +36,7 @@
     
     for (NSInteger i = 0; i < [defaultViewControllersMutableArray count]; i++) {
         UITabBarItem *tabBarItem = [[defaultViewControllersMutableArray objectAtIndex:i] tabBarItem];
+        tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
         switch (tabBarItem.tag) {
             case CLOUD:
                 [tabBarItem setImage:[[UIImage imageNamed:@"cloudDriveIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
@@ -167,7 +168,7 @@
                 callVC.chatRoom  = chatRoom;
                 callVC.videoCall = call.hasRemoteVideo;
                 callVC.callType = CallTypeIncoming;
-                [[UIApplication mnz_visibleViewController] presentViewController:callVC animated:YES completion:nil];
+                [UIApplication.mnz_visibleViewController presentViewController:callVC animated:YES completion:nil];
             } else {
                 MEGAChatRoom *chatRoom = [api chatRoomForChatId:call.chatId];
                 UILocalNotification* localNotification = [[UILocalNotification alloc] init];
@@ -198,7 +199,7 @@
         callVC.chatRoom  = chatRoom;
         callVC.videoCall = call.hasRemoteVideo;
         callVC.callType = CallTypeIncoming;
-        [[UIApplication mnz_visibleViewController] presentViewController:callVC animated:YES completion:nil];
+        [UIApplication.mnz_visibleViewController presentViewController:callVC animated:YES completion:nil];
     }
 }
 

@@ -59,9 +59,9 @@
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="您尝试访问的内容并不对当前登入的帐户开放。请登入与浏览器中所登录的相同的帐户。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
-"takingLongerThanExpected"="The process is taking longer than expected. Please wait.";
+"takingLongerThanExpected"="加载时间比预期的长，请耐心等待。";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
-"serversAreTooBusy"="系统忙碌中，请稍候。";
+"serversAreTooBusy"="服务器忙碌中。请稍候...";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
 "unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
@@ -677,7 +677,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="变更密码";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="正在导出您的万能密钥，请妥善保管。您的万能密钥使您不会因为密码重置而丢失已上传的数据。";
+"exportMasterKeyFooter"="汇出还原金钥并将其保存于安全的位置，使您于设置新密码时不会有资料遗失。";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="为什么我会需要还原金钥？";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -1204,10 +1204,10 @@
 "chatNotFound"="未找到此对话";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@正在输入...";
-/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders. */
-"twoUsersAreTyping"="[$%1$s [A]are typing...[/A]]";
-/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders. */
-"moreThanTwoUsersAreTyping"="[$%1$s [A]and more are typing...[/A]]";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s [A]正在输入...[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s [A]和其他人正在输入...[/A]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="书写信息...";
 /* Information if there are no history messages in current chat conversation */
@@ -1275,9 +1275,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="新消息";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu unread message";
+"unreadMessage"="%lu 未读信息";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu unread messages";
+"unreadMessages"="%lu 未读信息";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="此订阅将会自动更新续订，续订内容与您一开始选择的订阅时间与价格一致。您可以于您的iTunes帐户设定页面关闭MEGA PRO的订阅自动更新续订，必须于您的下一个订阅缴款期限的24小时之前执行此操作。欲管理您的订阅内容，只需点击您手机上的App Store图标，可以在页面下方以您的Apple帐号登入（如果您还没有这样做），然后点击查看帐号。您会被带到您的帐户页面，就可以向下滚动到管理应用程序订阅。在那里，您可以选择你的MEGA PRO订阅和查看您预定的续约日期，选择不同的计划或切换开关至关闭以停用您的自动续订。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1471,3 +1471,5 @@
 "proceedToLogout"="Proceed to logout";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+/* state previous to import a file */
+"loading"="加载中";

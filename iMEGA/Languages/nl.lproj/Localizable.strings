@@ -59,7 +59,7 @@
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="De inhoud die u probeert te krijgen is niet beschikbaar voor deze account. Probeer in te loggen met dezelfde account als in de mobiele web programma.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
-"takingLongerThanExpected"="The process is taking longer than expected. Please wait.";
+"takingLongerThanExpected"="Het proces duurt langer dan verwacht. Wacht a.u.b....";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="Servers zijn te druk. Even geduld alstublieft.";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
@@ -1204,10 +1204,10 @@
 "chatNotFound"="Chat niet gevonden";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ is aan het typen..";
-/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders. */
-"twoUsersAreTyping"="[$%1$s [A]are typing...[/A]]";
-/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders. */
-"moreThanTwoUsersAreTyping"="[$%1$s [A]and more are typing...[/A]]";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s [A]zijn aan het schrijven.....[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s [A] en meer zijn aan het schrijven...[/A]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Schrijf een bericht...";
 /* Information if there are no history messages in current chat conversation */
@@ -1471,3 +1471,5 @@
 "proceedToLogout"="Proceed to logout";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+/* state previous to import a file */
+"loading"="Laden...";
