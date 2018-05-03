@@ -1477,7 +1477,9 @@
 "loading"="Loading…";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="Restart";
-/* Title to alert user the possibility of continue playing video or start from the beginning */
-"continuePlaying"="Continue playing?";
-/* Message to alert user the possibility of continue playing video or start from the beginning */
-"continueOrRestartVideo"="Would you like to continue playing video where you leaved or restart it?";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Resume playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%@ will continue at %@";
+/*  */
+"resume"="Resume";
