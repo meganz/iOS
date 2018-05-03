@@ -11,7 +11,7 @@
 
 @interface MEGAAVViewController () <AVPlayerViewControllerDelegate, UIViewControllerTransitioningDelegate>
 
-@property (nonatomic, strong, nonnull) NSURL *path;
+@property (nonatomic, strong, nonnull) NSURL *fileUrl;
 @property (nonatomic, strong) MEGANode *node;
 @property (nonatomic, assign, getter=isFolderLink) BOOL folderLink;
 @property (nonatomic, assign, getter=isEndPlaying) BOOL endPlaying;
@@ -20,11 +20,11 @@
 
 @implementation MEGAAVViewController
 
-- (instancetype)initWithURL:(NSURL *)path {
+- (instancetype)initWithURL:(NSURL *)fileUrl {
     self = [super init];
     
     if (self) {
-        _path       = path;
+        _fileUrl    = fileUrl;
         _node       = nil;
         _folderLink = NO;
     }
@@ -38,11 +38,7 @@
     if (self) {
         _node       = node;
         _folderLink = folderLink;
-        if (!folderLink) {
-            _path = [[MEGASdkManager sharedMEGASdk] httpServerGetLocalLink:node];
-        } else {
-            _path = [[MEGASdkManager sharedMEGASdkFolder] httpServerGetLocalLink:node];
-        }
+        _fileUrl    = nil;
     }
     
     return self;
@@ -51,17 +47,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (!self.path) {
-        return;
-    }
-    
     [self setTransitioningDelegate:self];
     
-    self.player = [AVPlayer playerWithURL:self.path];
-    self.delegate = self;
-    
     if (self.node && !self.node.hasThumbnail && !self.isFolderLink && self.node.name.mnz_isVideoPathExtension) {
-        [self.node mnz_generateThumbnailForVideoAtPath:self.path];
+        [self.node mnz_generateThumbnailForVideoAtPath:self.fileUrl];
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -85,18 +74,17 @@
         if (mediaDestination) {
             UIAlertController *resumeOrRestartAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"continuePlaying", @"Title to alert user the posibility of continue playing video or start again") message:AMLocalizedString(@"continueOrRestartVideo", @"Message to alert user the posibility of continue playing video or start again") preferredStyle:UIAlertControllerStyleAlert];
             [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"continue", @"'Next' button in a dialog") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                [self.player seekToTime:CMTimeMake(mediaDestination.destination.longLongValue, mediaDestination.timescale.intValue)];
-                [self.player play];
+                [self playWithDestination:mediaDestination];
             }]];
             [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"restart", @"A label for the Restart button to relaunch MEGAsync.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                [self.player play];
+                [self playWithDestination:nil];
             }]];
             [self presentViewController:resumeOrRestartAlert animated:YES completion:nil];
         } else {
-            [self.player play];
+            [self playWithDestination:nil];
         }
     } else {
-        [self.player play];
+        [self playWithDestination:nil];
     }
 }
 
@@ -125,10 +113,10 @@
     NSString *fingerprint = [self fileFingerprint];
 
     if (fingerprint && ![fingerprint isEqualToString:@""]) {
-        if (!self.isEndPlaying) {
-            [[MEGAStore shareInstance] insertOrUpdateMediaDestinationWithFingerprint:fingerprint destination:[NSNumber numberWithLongLong:self.player.currentTime.value] timescale:[NSNumber numberWithInt:self.player.currentTime.timescale]];
-        } else {
+        if (self.isEndPlaying) {
             [[MEGAStore shareInstance] deleteMediaDestinationWithFingerprint:fingerprint];
+        } else {
+            [[MEGAStore shareInstance] insertOrUpdateMediaDestinationWithFingerprint:fingerprint destination:[NSNumber numberWithLongLong:self.player.currentTime.value] timescale:[NSNumber numberWithInt:self.player.currentTime.timescale]];
         }
     }
     
@@ -137,12 +125,36 @@
 
 #pragma mark - Private
 
+- (void)playWithDestination:(MOMediaDestination *)mediaDestination {
+    if (self.node) {
+        if (self.folderLink) {
+            self.fileUrl = [[MEGASdkManager sharedMEGASdkFolder] httpServerGetLocalLink:self.node];
+        } else {
+            self.fileUrl = [[MEGASdkManager sharedMEGASdk] httpServerGetLocalLink:self.node];
+        }
+    }
+    
+    if (!self.fileUrl) {
+        return;
+    }
+    
+    self.player = [AVPlayer playerWithURL:self.fileUrl];
+    self.delegate = self;
+    
+    if (mediaDestination) {
+        [self.player seekToTime:CMTimeMake(mediaDestination.destination.longLongValue, mediaDestination.timescale.intValue)];
+    }
+    
+    [self.player play];
+}
+
+
 - (void)stopStreaming {
     if (self.node) {
-        if (!self.isFolderLink) {
-            [[MEGASdkManager sharedMEGASdk] httpServerStop];
-        } else {
+        if (self.isFolderLink) {
             [[MEGASdkManager sharedMEGASdkFolder] httpServerStop];
+        } else {
+            [[MEGASdkManager sharedMEGASdk] httpServerStop];
         }
     }
 }
@@ -150,14 +162,14 @@
 - (NSString *)fileFingerprint {
     NSString *fingerprint = [NSString new];
 
-    if ([self.path.absoluteString containsString:@"http"]) {
+    if (self.node) {
         if (self.folderLink) {
             fingerprint = [[MEGASdkManager sharedMEGASdkFolder] fingerprintForNode:self.node];
         } else {
             fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForNode:self.node];
         }
     } else {
-        fingerprint = [NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.path.path]];
+        fingerprint = [NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.fileUrl.path]];
     }
     
     return fingerprint;
