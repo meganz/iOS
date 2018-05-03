@@ -14,7 +14,6 @@
 #import "NSString+MNZCategory.h"
 
 #import "DisplayMode.h"
-#import "FileLinkViewController.h"
 #import "NodeTableViewCell.h"
 #import "MainTabBarController.h"
 #import "UnavailableLinkView.h"
@@ -95,7 +94,7 @@
     
     [self.navigationItem setTitle:AMLocalizedString(@"folderLink", nil)];
     
-    self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+    self.editBarButtonItem.title = AMLocalizedString(@"select", nil);
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     
     [self.importBarButtonItem setTitle:AMLocalizedString(@"import", nil)];
@@ -343,7 +342,7 @@
 
         [self.navigationItem setLeftBarButtonItem:_selectAllBarButtonItem];
     } else {
-        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+        self.editBarButtonItem.title = AMLocalizedString(@"select", nil);
         
         [self setAllNodesSelected:NO];
         _selectedNodesArray = nil;

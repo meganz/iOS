@@ -59,7 +59,7 @@
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Dieser Account kann auf die gewünschte Datei nicht zugreifen. Bitte nutzen Sie denselben Account wie im Browser.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
-"takingLongerThanExpected"="The process is taking longer than expected. Please wait.";
+"takingLongerThanExpected"="Der Vorgang dauert ungewöhnlich lange. Bitte haben Sie Geduld...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="Unsere Server sind kurzzeitig überlastet. Es geht gleich weiter.";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
@@ -677,7 +677,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Passwort ändern";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="Das Exportieren und sichere Aufbewahren des Master Keys ermöglicht Ihnen, ein neues Passwort zu setzen, ohne Ihre Daten zu verlieren. ";
+"exportMasterKeyFooter"="Der Export Ihres Rettungsschlüssels und das Verwahren an einem sicheren Ort ermöglicht es Ihnen, Ihr Passwort ohne Datenverlust zurückzusetzen.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Wozu brauche ich einen Rettungsschlüssel?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -685,7 +685,7 @@
 /*  */
 "masterKey_thirdParagraph"="Ein Angreifer, der sich eine Kopie Ihres Rettungsschlüssels verschafft hat, kann damit trotzdem noch nicht auf Ihre Daten zugreifen, da ein Passwort-Reset zusätzlich den Zugang zu Ihrer E-Mail voraussetzt.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="Rettungsschlüssel in die Zwischenablage kopiert";
+"recoveryKeyCopiedToClipboard"="Der Rettungsschlüssel wurde in die Zwischenablage kopiert";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Rettungsschlüssel exportiert";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -1204,10 +1204,10 @@
 "chatNotFound"="Chat nicht gefunden";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ tippt ...";
-/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders. */
-"twoUsersAreTyping"="[$%1$s [A]are typing...[/A]]";
-/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders. */
-"moreThanTwoUsersAreTyping"="[$%1$s [A]and more are typing...[/A]]";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s [A]tippen...[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s [A]und weitere tippen...[/A]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Nachricht schreiben...";
 /* Information if there are no history messages in current chat conversation */
@@ -1471,3 +1471,5 @@
 "proceedToLogout"="Proceed to logout";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+/* state previous to import a file */
+"loading"="Wird geladen...";

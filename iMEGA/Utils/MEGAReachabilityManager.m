@@ -28,15 +28,18 @@
     return _sharedManager;
 }
 + (BOOL)isReachable {
-    return [[[MEGAReachabilityManager sharedManager] reachability] isReachable];
+    NetworkStatus status = [[[MEGAReachabilityManager sharedManager] reachability] currentReachabilityStatus];
+    return status == ReachableViaWiFi || status == ReachableViaWWAN;
 }
 
 + (BOOL)isReachableViaWWAN {
-    return [[[MEGAReachabilityManager sharedManager] reachability] isReachableViaWWAN];
+    NetworkStatus status = [[[MEGAReachabilityManager sharedManager] reachability] currentReachabilityStatus];
+    return status == ReachableViaWWAN;
 }
 
 + (BOOL)isReachableViaWiFi {
-    return [[[MEGAReachabilityManager sharedManager] reachability] isReachableViaWiFi];
+    NetworkStatus status = [[[MEGAReachabilityManager sharedManager] reachability] currentReachabilityStatus];
+    return status == ReachableViaWiFi;
 }
 
 + (bool)hasCellularConnection {
@@ -73,7 +76,7 @@
     self = [super init];
     
     if (self) {
-        self.reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
+        self.reachability = [Reachability reachabilityForInternetConnection];
         [self.reachability startNotifier];
         _IpAddress = [self getIpAddress];
         [[NSNotificationCenter defaultCenter] addObserver:self

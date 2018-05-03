@@ -3,24 +3,28 @@
 
 #import <Photos/Photos.h>
 
+#import "SAMKeychain.h"
+#import "SVProgressHUD.h"
+
 #import "Helper.h"
-#import "MEGAAVViewController.h"
 #import "MEGANode.h"
-#import "MEGANodeList+MNZCategory.h"
-#import "MEGAStore.h"
-#import "NSString+MNZCategory.h"
-
-#import "PreviewDocumentViewController.h"
-
-#import "MEGAReachabilityManager.h"
-#import "MEGANavigationController.h"
-
 #import "MEGAMoveRequestDelegate.h"
+#import "MEGANodeList+MNZCategory.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGARemoveRequestDelegate.h"
 #import "MEGARenameRequestDelegate.h"
 #import "MEGAShareRequestDelegate.h"
-
+#import "MEGAStore.h"
+#import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+
+#import "BrowserViewController.h"
+#import "LoginViewController.h"
+#import "MainTabBarController.h"
+#import "MEGAAVViewController.h"
+#import "MEGANavigationController.h"
+#import "MyAccountHallViewController.h"
+#import "PreviewDocumentViewController.h"
 
 @implementation MEGANode (MNZCategory)
 
@@ -34,15 +38,12 @@
 }
 
 - (MEGAPhotoBrowserViewController *)mnz_photoBrowserWithNodes:(NSArray<MEGANode *> *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(DisplayMode)displayMode enableMoveToRubbishBin:(BOOL)enableMoveToRubbishBin {
-    return [self mnz_photoBrowserWithNodes:nodesArray folderLink:isFolderLink displayMode:displayMode enableMoveToRubbishBin:enableMoveToRubbishBin hideControls:NO];
-}
-
-- (MEGAPhotoBrowserViewController *)mnz_photoBrowserWithNodes:(NSArray<MEGANode *> *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(DisplayMode)displayMode enableMoveToRubbishBin:(BOOL)enableMoveToRubbishBin hideControls:(BOOL)hideControls {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
     MEGAPhotoBrowserViewController *photoBrowserVC = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
     photoBrowserVC.api = isFolderLink ? [MEGASdkManager sharedMEGASdkFolder] : [MEGASdkManager sharedMEGASdk];
     photoBrowserVC.node = self;
     photoBrowserVC.nodesArray = nodesArray;
+    photoBrowserVC.displayMode = displayMode;
     
     return photoBrowserVC;
 }
@@ -264,6 +265,70 @@
     MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:outSharesForNodeMutableArray.count completion:nil];
     for (MEGAShare *share in outSharesForNodeMutableArray) {
         [[MEGASdkManager sharedMEGASdk] shareNode:self withEmail:share.user level:MEGAShareTypeAccessUnkown delegate:shareRequestDelegate];
+    }
+}
+
+#pragma mark - File links
+
+- (void)mnz_fileLinkDownloadFromViewController:(UIViewController *)viewController isFolderLink:(BOOL)isFolderLink {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        if (![Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
+            return;
+        }
+
+        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            [viewController dismissViewControllerAnimated:YES completion:^{
+                UIViewController *rootVC = UIApplication.sharedApplication.delegate.window.rootViewController;
+                if ([rootVC isKindOfClass:MainTabBarController.class]) {
+                    MainTabBarController *mainTBC = (MainTabBarController *)rootVC;
+                    mainTBC.selectedIndex = MYACCOUNT;
+                    MEGANavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:MYACCOUNT];
+                    MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
+                    [myAccountHallVC openOffline];
+                }
+                
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
+                
+                [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:isFolderLink shouldOverwrite:NO];
+            }];
+        } else {
+            if (isFolderLink) {
+                [[Helper nodesFromLinkMutableArray] addObject:self];
+                [Helper setSelectedOptionOnLink:4]; //Download folder or nodes from link
+            } else {
+                [Helper setLinkNode:self];
+                [Helper setSelectedOptionOnLink:2]; //Download file from link
+            }
+            
+            LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
+            [viewController.navigationController pushViewController:loginVC animated:YES];
+        }
+    }
+}
+
+- (void)mnz_fileLinkImportFromViewController:(UIViewController *)viewController isFolderLink:(BOOL)isFolderLink {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            [viewController dismissViewControllerAnimated:YES completion:^{
+                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+                BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+                browserVC.selectedNodesArray = [NSArray arrayWithObject:self];
+                [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+                
+                browserVC.browserAction = isFolderLink ? BrowserActionImportFromFolderLink : BrowserActionImport;
+            }];
+        } else {
+            if (isFolderLink) {
+                [[Helper nodesFromLinkMutableArray] addObject:self];
+                [Helper setSelectedOptionOnLink:3]; //Import folder or nodes from link
+            } else {
+                [Helper setLinkNode:self];
+                [Helper setSelectedOptionOnLink:1]; //Import file from link
+            }
+            
+            LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
+            [viewController.navigationController pushViewController:loginVC animated:YES];
+        }
     }
 }
 
@@ -548,7 +613,7 @@
 
 - (void)renameAlertTextFieldDidChange:(UITextField *)sender {
     
-    UIAlertController *renameAlertController = (UIAlertController*)[UIApplication mnz_visibleViewController];
+    UIAlertController *renameAlertController = (UIAlertController*)UIApplication.mnz_visibleViewController;
     if (renameAlertController) {
         UITextField *textField = renameAlertController.textFields.firstObject;
         UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6uN-CI-8KQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6uN-CI-8KQ">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -83,9 +83,15 @@
                                                         <constraint firstAttribute="height" constant="40" id="CgI-wU-1Ir"/>
                                                         <constraint firstAttribute="width" constant="40" id="nFQ-ax-D9a"/>
                                                     </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="4"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3U3-pH-t8L">
-                                                    <rect key="frame" x="60" y="12" width="259" height="18"/>
+                                                    <rect key="frame" x="60" y="12" width="213" height="18"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -108,21 +114,39 @@
                                                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="blm-2I-lcW" userLabel="Cancel Button">
-                                                    <rect key="frame" x="329" y="8" width="46" height="44"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="44" id="e0M-Bk-UHu"/>
-                                                        <constraint firstAttribute="width" constant="46" id="gdw-TL-0DZ"/>
-                                                    </constraints>
-                                                    <state key="normal" image="cancel">
-                                                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="cancelTransfer:" destination="tHq-Vb-vFR" eventType="touchUpInside" id="mW1-dO-haY"/>
-                                                    </connections>
-                                                </button>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gry-Y4-jb0">
+                                                    <rect key="frame" x="283" y="8" width="92" height="44"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dE6-NS-2V2" userLabel="Cancel Button">
+                                                            <rect key="frame" x="0.0" y="0.0" width="46" height="44"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="46" id="fDZ-2z-ljV"/>
+                                                                <constraint firstAttribute="height" constant="44" id="vXe-UB-9g8"/>
+                                                            </constraints>
+                                                            <state key="normal" image="pauseTransfers">
+                                                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="pauseTransfer:" destination="tHq-Vb-vFR" eventType="touchUpInside" id="Ggn-Yl-AbD"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="blm-2I-lcW" userLabel="Cancel Button">
+                                                            <rect key="frame" x="46" y="0.0" width="46" height="44"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="44" id="e0M-Bk-UHu"/>
+                                                                <constraint firstAttribute="width" constant="46" id="gdw-TL-0DZ"/>
+                                                            </constraints>
+                                                            <state key="normal" image="cancel">
+                                                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="cancelTransfer:" destination="tHq-Vb-vFR" eventType="touchUpInside" id="mW1-dO-haY"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="c4a-Tj-bKE" userLabel="Speed">
-                                                    <rect key="frame" x="120" y="30" width="198" height="15"/>
+                                                    <rect key="frame" x="120" y="30" width="153" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="15" id="uMM-Wx-V2E"/>
                                                     </constraints>
@@ -144,17 +168,17 @@
                                                 <constraint firstItem="c4a-Tj-bKE" firstAttribute="leading" secondItem="ynC-ES-fNB" secondAttribute="trailing" constant="8" id="3XW-vS-ZZ3"/>
                                                 <constraint firstItem="Hqn-V7-rNU" firstAttribute="centerY" secondItem="c4a-Tj-bKE" secondAttribute="centerY" id="3wm-zz-RZ4"/>
                                                 <constraint firstItem="Hqn-V7-rNU" firstAttribute="centerY" secondItem="ynC-ES-fNB" secondAttribute="centerY" id="81y-7h-KBk"/>
+                                                <constraint firstAttribute="trailing" secondItem="Gry-Y4-jb0" secondAttribute="trailing" id="948-xt-6Da"/>
                                                 <constraint firstAttribute="bottom" secondItem="bvb-fe-3yM" secondAttribute="bottom" id="CHP-X5-eGc"/>
-                                                <constraint firstItem="blm-2I-lcW" firstAttribute="leading" secondItem="c4a-Tj-bKE" secondAttribute="trailing" constant="11" id="GAT-lT-qCN"/>
                                                 <constraint firstItem="Hqn-V7-rNU" firstAttribute="leading" secondItem="sYj-FV-cM7" secondAttribute="trailing" constant="10" id="KLW-nn-Ms1"/>
-                                                <constraint firstItem="blm-2I-lcW" firstAttribute="centerY" secondItem="sYj-FV-cM7" secondAttribute="centerY" id="KnD-18-cIH"/>
                                                 <constraint firstItem="ynC-ES-fNB" firstAttribute="top" secondItem="3U3-pH-t8L" secondAttribute="bottom" id="LvU-ni-Yqa"/>
+                                                <constraint firstItem="Gry-Y4-jb0" firstAttribute="leading" secondItem="c4a-Tj-bKE" secondAttribute="trailing" constant="10" id="N7e-eJ-6jZ"/>
                                                 <constraint firstItem="3U3-pH-t8L" firstAttribute="top" secondItem="sYj-FV-cM7" secondAttribute="top" constant="2" id="RiB-4e-vuA"/>
-                                                <constraint firstAttribute="trailing" secondItem="blm-2I-lcW" secondAttribute="trailing" id="XkV-L3-OuO"/>
-                                                <constraint firstItem="blm-2I-lcW" firstAttribute="leading" secondItem="3U3-pH-t8L" secondAttribute="trailing" constant="10" id="az5-QZ-HNi"/>
+                                                <constraint firstItem="Gry-Y4-jb0" firstAttribute="centerY" secondItem="x4S-nS-49E" secondAttribute="centerY" id="SRP-1j-Ylf"/>
                                                 <constraint firstItem="3U3-pH-t8L" firstAttribute="leading" secondItem="sYj-FV-cM7" secondAttribute="trailing" constant="10" id="b2I-XP-H3d"/>
                                                 <constraint firstAttribute="trailing" secondItem="bvb-fe-3yM" secondAttribute="trailing" id="c7u-7O-MXE"/>
                                                 <constraint firstAttribute="centerY" secondItem="sYj-FV-cM7" secondAttribute="centerY" id="msA-tc-TKK"/>
+                                                <constraint firstItem="Gry-Y4-jb0" firstAttribute="leading" secondItem="3U3-pH-t8L" secondAttribute="trailing" constant="10" id="oCc-ST-aNS"/>
                                                 <constraint firstItem="bvb-fe-3yM" firstAttribute="leading" secondItem="3U3-pH-t8L" secondAttribute="leading" id="zk1-Fj-hAb"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -164,6 +188,7 @@
                                             <outlet property="cancelButton" destination="blm-2I-lcW" id="g8j-jy-czH"/>
                                             <outlet property="iconImageView" destination="sYj-FV-cM7" id="CBi-hE-JDv"/>
                                             <outlet property="nameLabel" destination="3U3-pH-t8L" id="v6c-tP-3Qu"/>
+                                            <outlet property="pauseButton" destination="dE6-NS-2V2" id="YKV-Ob-xne"/>
                                             <outlet property="percentageLabel" destination="ynC-ES-fNB" id="D0i-n3-VBq"/>
                                             <outlet property="speedLabel" destination="c4a-Tj-bKE" id="Njr-ER-Hou"/>
                                         </connections>
@@ -181,9 +206,15 @@
                                                         <constraint firstAttribute="height" constant="40" id="DDL-hH-16O"/>
                                                         <constraint firstAttribute="width" constant="40" id="fBG-tQ-u9a"/>
                                                     </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="4"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AGx-71-z6L">
-                                                    <rect key="frame" x="60" y="12" width="259" height="18"/>
+                                                    <rect key="frame" x="60" y="12" width="213" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="fFL-eG-HXv"/>
                                                     </constraints>
@@ -192,7 +223,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TCE-dU-QPa" userLabel="Arrow Image View">
-                                                    <rect key="frame" x="60" y="33" width="11" height="11"/>
+                                                    <rect key="frame" x="60" y="32" width="11" height="11"/>
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="11" id="AEe-ta-hPK"/>
@@ -200,7 +231,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="RB2-CC-2Yl" userLabel="Info">
-                                                    <rect key="frame" x="77" y="30" width="241" height="15"/>
+                                                    <rect key="frame" x="77" y="30" width="196" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="15" id="ruD-qM-Xj2"/>
                                                     </constraints>
@@ -208,19 +239,37 @@
                                                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RJg-ce-LC1" userLabel="Cancel Button">
-                                                    <rect key="frame" x="329" y="8" width="46" height="44"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="44" id="uHe-XL-Zct"/>
-                                                        <constraint firstAttribute="width" constant="46" id="vb1-3q-3Db"/>
-                                                    </constraints>
-                                                    <state key="normal" image="cancel">
-                                                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="cancelTransfer:" destination="qvn-pG-AKw" eventType="touchUpInside" id="pci-h3-vgz"/>
-                                                    </connections>
-                                                </button>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D4t-OQ-tDW">
+                                                    <rect key="frame" x="283" y="8" width="92" height="44"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RJg-ce-LC1" userLabel="Cancel Button">
+                                                            <rect key="frame" x="0.0" y="0.0" width="46" height="44"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="44" id="uHe-XL-Zct"/>
+                                                                <constraint firstAttribute="width" constant="46" id="vb1-3q-3Db"/>
+                                                            </constraints>
+                                                            <state key="normal" image="pauseTransfers">
+                                                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="pauseTransfer:" destination="qvn-pG-AKw" eventType="touchUpInside" id="t9b-z0-dCb"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ws3-xf-NLk" userLabel="Cancel Button">
+                                                            <rect key="frame" x="46" y="0.0" width="46" height="44"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="44" id="2DI-EX-xQ7"/>
+                                                                <constraint firstAttribute="width" constant="46" id="HrR-Rd-WLh"/>
+                                                            </constraints>
+                                                            <state key="normal" image="cancel">
+                                                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="cancelTransfer:" destination="qvn-pG-AKw" eventType="touchUpInside" id="HOZ-JD-2cK"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bRY-fO-UhS" userLabel="Line View">
                                                     <rect key="frame" x="60" y="60" width="315" height="0.0"/>
                                                     <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -231,36 +280,30 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="TCE-dU-QPa" firstAttribute="leading" secondItem="MZ1-3x-enq" secondAttribute="trailing" constant="10" id="ASa-T7-04r"/>
-                                                <constraint firstItem="RJg-ce-LC1" firstAttribute="leading" secondItem="RB2-CC-2Yl" secondAttribute="trailing" constant="11" id="Ae5-RH-LMw"/>
                                                 <constraint firstAttribute="bottom" secondItem="bRY-fO-UhS" secondAttribute="bottom" id="CHU-4S-0JR"/>
                                                 <constraint firstItem="AGx-71-z6L" firstAttribute="top" secondItem="MZ1-3x-enq" secondAttribute="top" constant="2" id="CpX-Iy-dsC"/>
                                                 <constraint firstItem="bRY-fO-UhS" firstAttribute="leading" secondItem="AGx-71-z6L" secondAttribute="leading" id="EKb-al-1F3"/>
+                                                <constraint firstItem="D4t-OQ-tDW" firstAttribute="leading" secondItem="RB2-CC-2Yl" secondAttribute="trailing" constant="10" id="EyB-OS-y8k"/>
                                                 <constraint firstItem="RB2-CC-2Yl" firstAttribute="top" secondItem="AGx-71-z6L" secondAttribute="bottom" id="Fy3-xX-eYz"/>
-                                                <constraint firstItem="RJg-ce-LC1" firstAttribute="leading" secondItem="AGx-71-z6L" secondAttribute="trailing" constant="10" id="KIx-pI-wyb"/>
-                                                <constraint firstItem="RJg-ce-LC1" firstAttribute="centerY" secondItem="MZ1-3x-enq" secondAttribute="centerY" id="VR2-Ju-f2A"/>
+                                                <constraint firstItem="D4t-OQ-tDW" firstAttribute="leading" secondItem="AGx-71-z6L" secondAttribute="trailing" constant="10" id="Hwl-QP-T5G"/>
+                                                <constraint firstAttribute="trailing" secondItem="D4t-OQ-tDW" secondAttribute="trailing" id="Q6y-ct-GfE"/>
                                                 <constraint firstItem="MZ1-3x-enq" firstAttribute="leading" secondItem="ZzS-S9-QPl" secondAttribute="leading" constant="10" id="YhX-OF-RWs"/>
+                                                <constraint firstItem="D4t-OQ-tDW" firstAttribute="centerY" secondItem="ZzS-S9-QPl" secondAttribute="centerY" id="buw-M5-HHa"/>
                                                 <constraint firstAttribute="trailing" secondItem="bRY-fO-UhS" secondAttribute="trailing" id="fv3-zv-I3L"/>
                                                 <constraint firstItem="AGx-71-z6L" firstAttribute="leading" secondItem="MZ1-3x-enq" secondAttribute="trailing" constant="10" id="i1b-Sq-VcT"/>
-                                                <constraint firstAttribute="trailing" secondItem="RJg-ce-LC1" secondAttribute="trailing" id="iAF-Lg-1oB"/>
                                                 <constraint firstAttribute="centerY" secondItem="MZ1-3x-enq" secondAttribute="centerY" id="lxn-5L-6cF"/>
-                                                <constraint firstItem="TCE-dU-QPa" firstAttribute="centerY" secondItem="RB2-CC-2Yl" secondAttribute="centerY" constant="1" id="uCa-rr-Rwx"/>
-                                                <constraint firstItem="RJg-ce-LC1" firstAttribute="trailing" secondItem="ZzS-S9-QPl" secondAttribute="trailingMargin" id="uQA-ru-2Of"/>
+                                                <constraint firstItem="TCE-dU-QPa" firstAttribute="centerY" secondItem="RB2-CC-2Yl" secondAttribute="centerY" id="uCa-rr-Rwx"/>
                                                 <constraint firstItem="RB2-CC-2Yl" firstAttribute="leading" secondItem="TCE-dU-QPa" secondAttribute="trailing" constant="6" id="yXl-Yu-cSe"/>
                                             </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="uQA-ru-2Of"/>
-                                                </mask>
-                                            </variation>
                                         </tableViewCellContentView>
                                         <color key="tintColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="arrowImageView" destination="TCE-dU-QPa" id="Wec-fw-hUG"/>
-                                            <outlet property="cancelButton" destination="RJg-ce-LC1" id="gFI-QA-QXP"/>
                                             <outlet property="iconImageView" destination="MZ1-3x-enq" id="AXC-oB-pyI"/>
                                             <outlet property="infoLabel" destination="RB2-CC-2Yl" id="O0n-Ug-qQy"/>
                                             <outlet property="lineView" destination="bRY-fO-UhS" id="1oG-YL-a0u"/>
                                             <outlet property="nameLabel" destination="AGx-71-z6L" id="K3E-eu-zmM"/>
+                                            <outlet property="pauseButton" destination="RJg-ce-LC1" id="XSc-wL-7Wu"/>
                                             <outlet property="percentageLabel" destination="RB2-CC-2Yl" id="Nbo-8d-Vla"/>
                                         </connections>
                                     </tableViewCell>

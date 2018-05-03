@@ -59,7 +59,7 @@
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Conţinutul pe care încerci să îl accesezi nu este disponibil pentru acest cont. Încearcă să te autentifici cu acelaşi cont ca şi în clientul web mobil.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
-"takingLongerThanExpected"="The process is taking longer than expected. Please wait.";
+"takingLongerThanExpected"="Procesul durează mai mult decât era de aşteptat. Te rugăm să aştepţi...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="Serverele sunt prea ocupate. Te rugăm să aştepţi.";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
@@ -677,7 +677,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Schimbă parola";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="Exportarea cheii principale şi păstrarea ei într-o locaţie sigură îţi permite să setezi o parolă nouă fără pierderea datelor.";
+"exportMasterKeyFooter"="Exportarea cheii de recuperare şi păstrarea ei într-o locaţie sigură îţi dă posibilitatea să setezi o parolă nouă fără pierderea datelor.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="De ce am nevoie de o cheie de recuperare?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -1204,10 +1204,10 @@
 "chatNotFound"="Chat negăsit";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ tastează ...";
-/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders. */
-"twoUsersAreTyping"="[$%1$s [A]are typing...[/A]]";
-/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders. */
-"moreThanTwoUsersAreTyping"="[$%1$s [A]and more are typing...[/A]]";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s [A]tastează...[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s [A]şi mai mulţi tastează...[/A]";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Scrie un mesaj...";
 /* Information if there are no history messages in current chat conversation */
@@ -1471,3 +1471,5 @@
 "proceedToLogout"="Proceed to logout";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+/* state previous to import a file */
+"loading"="Se încarcă...";

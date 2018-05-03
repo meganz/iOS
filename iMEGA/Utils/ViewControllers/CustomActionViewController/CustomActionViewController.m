@@ -3,6 +3,7 @@
 #import "Helper.h"
 #import "MEGASdkManager.h"
 #import "MEGANode+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
 #define kCollectionViewHeaderHeight 80
@@ -185,6 +186,10 @@
         if (self.node.isFile) {
             [actions addObject:[self actionOpen]];
         }
+    } else if (self.displayMode == DisplayModeFileLink) {
+        [actions addObject:[self actionImport]];
+        [actions addObject:[self actionDownload]];
+        [actions addObject:[self actionShare]];
     } else {
         switch (accessType) {
             case MEGAShareTypeAccessRead:
