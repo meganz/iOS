@@ -20,6 +20,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *statusRightDetailLabel;
 @property (nonatomic, getter=isInvalidStatus) BOOL invalidStatus;
 
+@property (weak, nonatomic) IBOutlet UILabel *richPreviewsLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *richPreviewsSwitch;
+
 @property (weak, nonatomic) IBOutlet UILabel *useMobileDataLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *useMobileDataSwitch;
 
@@ -43,7 +46,7 @@
     
     self.useMobileDataLabel.text = AMLocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
         
-    BOOL isChatEnabled = ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) ? YES : NO;
+    BOOL isChatEnabled = [NSUserDefaults.standardUserDefaults boolForKey:@"IsChatEnabled"];
     [self.chatSwitch setOn:isChatEnabled animated:YES];
     if (isChatEnabled) {
         BOOL isMobileDataEnabledForChat = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsMobileDataEnabledForChat"];
@@ -53,6 +56,8 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         [self.useMobileDataSwitch setOn:NO animated:YES];
     }
+    
+    self.richPreviewsSwitch.on = [NSUserDefaults.standardUserDefaults boolForKey:@"richLinks"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -117,6 +122,10 @@
     }
 }
 
+- (IBAction)richPreviewsValueChanged:(UISwitch *)sender {
+    [[MEGASdkManager sharedMEGASdk] enableRichPreviews:sender.isOn];
+}
+
 - (IBAction)useMobileDataValueChanged:(UISwitch *)sender {
     MEGALogInfo(@"Chat - Mobile Data: %@", (sender.isOn ? @"ON" : @"OFF"));
     
@@ -150,7 +159,7 @@
     NSInteger numberOfSections = 1;
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
         //TODO: Enable "Use Mobile Data" section when possible
-        numberOfSections = 2;
+        numberOfSections = 3;
     }
     
     return numberOfSections;
@@ -167,7 +176,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSString *titleForHeader;
-    if (section == 2) {
+    if (section == 3) {
         titleForHeader = AMLocalizedString(@"voiceAndVideoCalls", @"Section title of a button where you can enable mobile data for voice and video calls.");
     }
     return titleForHeader;
