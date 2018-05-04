@@ -72,20 +72,24 @@
     if (fingerprint && ![fingerprint isEqualToString:@""]) {
         MOMediaDestination *mediaDestination = [[MEGAStore shareInstance] fetchMediaDestinationWithFingerprint:fingerprint];
         if (mediaDestination) {
-            NSString *infoVideoDestination = [NSString stringWithFormat:AMLocalizedString(@"continueOrRestartVideoMessage", @"Message to show the user info (name and time) about the resume of the video"), [self fileName], [self timeForMediaDestination:mediaDestination]];
-            UIAlertController *resumeOrRestartAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"resumePlayback", @"Title to alert user the possibility of resume playing the video or start from the beginning") message:infoVideoDestination preferredStyle:UIAlertControllerStyleAlert];
-            [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"resume", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                [self playWithDestination:mediaDestination];
-            }]];
-            [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"restart", @"A label for the Restart button to relaunch MEGAsync.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                [self playWithDestination:nil];
-            }]];
-            [self presentViewController:resumeOrRestartAlert animated:YES completion:nil];
+            if ([self fileName].mnz_isVideoPathExtension) {
+                NSString *infoVideoDestination = [NSString stringWithFormat:AMLocalizedString(@"continueOrRestartVideoMessage", @"Message to show the user info (name and time) about the resume of the video"), [self fileName], [self timeForMediaDestination:mediaDestination]];
+                UIAlertController *resumeOrRestartAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"resumePlayback", @"Title to alert user the possibility of resume playing the video or start from the beginning") message:infoVideoDestination preferredStyle:UIAlertControllerStyleAlert];
+                [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"resume", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [self seekToDestination:mediaDestination play:YES];
+                }]];
+                [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"restart", @"A label for the Restart button to relaunch MEGAsync.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [self seekToDestination:nil play:YES];
+                }]];
+                [self presentViewController:resumeOrRestartAlert animated:YES completion:nil];
+            } else {
+                [self seekToDestination:mediaDestination play:NO];
+            }
         } else {
-            [self playWithDestination:nil];
+            [self seekToDestination:nil play:YES];
         }
     } else {
-        [self playWithDestination:nil];
+        [self seekToDestination:nil play:YES];
     }
 }
 
@@ -126,7 +130,7 @@
 
 #pragma mark - Private
 
-- (void)playWithDestination:(MOMediaDestination *)mediaDestination {
+- (void)seekToDestination:(MOMediaDestination *)mediaDestination play:(BOOL)play {
     if (self.node) {
         if (self.folderLink) {
             self.fileUrl = [[MEGASdkManager sharedMEGASdkFolder] httpServerGetLocalLink:self.node];
@@ -146,7 +150,9 @@
         [self.player seekToTime:CMTimeMake(mediaDestination.destination.longLongValue, mediaDestination.timescale.intValue)];
     }
     
-    [self.player play];
+    if (play) {
+        [self.player play];
+    }
 }
 
 
