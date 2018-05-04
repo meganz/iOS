@@ -277,6 +277,9 @@
 		7747B2DA208625B60011814E /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7747B2D6208623660011814E /* Reachability.m */; };
 		7747B2DB208625B70011814E /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7747B2D6208623660011814E /* Reachability.m */; };
 		77485F84207CB6D3007402B1 /* MEGAGetPublicNodeRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77485F83207CB6D3007402B1 /* MEGAGetPublicNodeRequestDelegate.m */; };
+		774FA65E2090BF9F0061DD85 /* MEGAMessageDialogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 774FA65D2090BF9F0061DD85 /* MEGAMessageDialogView.xib */; };
+		774FA6612090C0030061DD85 /* MEGAMessageDialogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 774FA6602090C0030061DD85 /* MEGAMessageDialogView.m */; };
+		774FA6642090F5A20061DD85 /* MEGADialogMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 774FA6632090F5A20061DD85 /* MEGADialogMediaItem.m */; };
 		77519C36203707F600FDF92B /* MEGARenameRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77519C35203707F600FDF92B /* MEGARenameRequestDelegate.m */; };
 		775652D7203AD2FC009E7EC8 /* ContactLinkQRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775652D6203AD2FC009E7EC8 /* ContactLinkQRViewController.m */; };
 		777E9229203EB0E200266229 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 777E9228203EB0E100266229 /* CoreImage.framework */; };
@@ -1125,6 +1128,11 @@
 		7747B2D7208623660011814E /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		77485F82207CB6D3007402B1 /* MEGAGetPublicNodeRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAGetPublicNodeRequestDelegate.h; path = API/Requests/MEGAGetPublicNodeRequestDelegate.h; sourceTree = "<group>"; };
 		77485F83207CB6D3007402B1 /* MEGAGetPublicNodeRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAGetPublicNodeRequestDelegate.m; path = API/Requests/MEGAGetPublicNodeRequestDelegate.m; sourceTree = "<group>"; };
+		774FA65D2090BF9F0061DD85 /* MEGAMessageDialogView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGAMessageDialogView.xib; sourceTree = "<group>"; };
+		774FA65F2090C0030061DD85 /* MEGAMessageDialogView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAMessageDialogView.h; sourceTree = "<group>"; };
+		774FA6602090C0030061DD85 /* MEGAMessageDialogView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAMessageDialogView.m; sourceTree = "<group>"; };
+		774FA6622090F5A20061DD85 /* MEGADialogMediaItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGADialogMediaItem.h; sourceTree = "<group>"; };
+		774FA6632090F5A20061DD85 /* MEGADialogMediaItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGADialogMediaItem.m; sourceTree = "<group>"; };
 		77519C34203707F600FDF92B /* MEGARenameRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGARenameRequestDelegate.h; path = API/Requests/MEGARenameRequestDelegate.h; sourceTree = "<group>"; };
 		77519C35203707F600FDF92B /* MEGARenameRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGARenameRequestDelegate.m; path = API/Requests/MEGARenameRequestDelegate.m; sourceTree = "<group>"; };
 		775652D5203AD2FC009E7EC8 /* ContactLinkQRViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactLinkQRViewController.h; sourceTree = "<group>"; };
@@ -1699,6 +1707,9 @@
 				A8C262AC1FA1D85E006172CE /* MEGARemoteImageView.m */,
 				A8C262AE1FA1D876006172CE /* MEGALocalImageView.h */,
 				A8C262AF1FA1D876006172CE /* MEGALocalImageView.m */,
+				774FA65F2090C0030061DD85 /* MEGAMessageDialogView.h */,
+				774FA6602090C0030061DD85 /* MEGAMessageDialogView.m */,
+				774FA65D2090BF9F0061DD85 /* MEGAMessageDialogView.xib */,
 			);
 			name = Views;
 			path = Chat/Views;
@@ -2312,6 +2323,8 @@
 				A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */,
 				A8B1F4701F0A9A080057520C /* MEGAPhotoMediaItem.h */,
 				A86FC4FB1EBB4999006053A6 /* MEGAPhotoMediaItem.m */,
+				774FA6622090F5A20061DD85 /* MEGADialogMediaItem.h */,
+				774FA6632090F5A20061DD85 /* MEGADialogMediaItem.m */,
 			);
 			name = Model;
 			path = Chat/Model;
@@ -3267,6 +3280,7 @@
 				A82E5BF51F3470B5003C149C /* Spotlight_folder.png in Resources */,
 				41D21E6D1D01AEC3002E6296 /* CTAssetsPickerController.bundle in Resources */,
 				A82E5BCA1F3465A3003C149C /* Spotlight_folder@2x.png in Resources */,
+				774FA65E2090BF9F0061DD85 /* MEGAMessageDialogView.xib in Resources */,
 				5B134B8F1F86260B000E367E /* HelpModalViewController.xib in Resources */,
 				E8C289F41BF5F8A200F7A034 /* SF-UI-Display-Light.otf in Resources */,
 				5B4429401E6D705D00BCACC0 /* SF-UI-Display-Medium.otf in Resources */,
@@ -3561,6 +3575,7 @@
 				41D21DF21D01AE89002E6296 /* NSLayoutConstraint+PureLayout.m in Sources */,
 				E8F791801BC5754A00C58676 /* OpenInActivity.m in Sources */,
 				5B367573204FFBE80087362D /* SendToTableViewController.m in Sources */,
+				774FA6642090F5A20061DD85 /* MEGADialogMediaItem.m in Sources */,
 				417279571DB663FA001AC818 /* JSQMessagesLabel.m in Sources */,
 				A89629721FACE30900F02F7A /* MEGAChatCall+MNZCategory.m in Sources */,
 				410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */,
@@ -3580,6 +3595,7 @@
 				417279381DB663FA001AC818 /* UIView+JSQMessages.m in Sources */,
 				A89E77471EA6058E00ADC0D2 /* MEGAMessageAttachmentView.m in Sources */,
 				A802B2011FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m in Sources */,
+				774FA6612090C0030061DD85 /* MEGAMessageDialogView.m in Sources */,
 				5B2E91921F1F98F4003C6920 /* MEGACopyRequestDelegate.m in Sources */,
 				77F1DBE52056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m in Sources */,
 				41EC68461D76DA93003EC803 /* UIBarButtonItem+Badge.m in Sources */,

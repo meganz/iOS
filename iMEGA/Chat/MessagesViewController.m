@@ -18,6 +18,7 @@
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGACopyRequestDelegate.h"
+#import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAImagePickerController.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGAMessagesTypingIndicatorFoorterView.h"
@@ -87,6 +88,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 @property (nonatomic) CGFloat lastBottomInset;
 @property (nonatomic) CGFloat lastVerticalOffset;
+
+@property (nonatomic) NSMutableArray<MEGAChatMessage *> *observedMessages;
+@property (nonatomic) NSUInteger richLinkWarningCounterValue;
 
 @end
 
@@ -218,6 +222,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     _whoIsTypingMutableArray = [[NSMutableArray alloc] init];
     _whoIsTypingTimersMutableDictionary = [[NSMutableDictionary alloc] init];
+    
+    // Array of observed messages:
+    self.observedMessages = [[NSMutableArray<MEGAChatMessage *> alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -279,6 +286,12 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)dismissChatRoom {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)dealloc {
+    for (MEGAChatMessage *message in self.observedMessages) {
+        [message removeObserver:self forKeyPath:@"warningDialog"];
+    }
 }
 
 #pragma mark - Private
@@ -904,19 +917,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [super didReceiveMenuWillShowNotification:notification];
 }
 
-#pragma mark - JSQMessagesViewController method overrides
+#pragma mark - Rich links support
 
-- (void)didPressSendButton:(UIButton *)button
-           withMessageText:(NSString *)text
-                  senderId:(NSString *)senderId
-         senderDisplayName:(NSString *)senderDisplayName
-                      date:(NSDate *)date {
-    
-    if (text.mnz_isEmpty) {
-        return;
-    }
-    
+- (MEGAChatMessage *)sendMessage:(NSString *)text {
     MEGAChatMessage *message;
+    
     if (self.editMessage) {
         if ([self.editMessage.content isEqualToString:self.inputToolbar.contentView.textView.text]) {
             //If the user didn't change anything on the message that was editing, just go out of edit mode.
@@ -945,10 +950,72 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     dispatch_async(dispatch_get_main_queue(), ^{
         [self finishSendingMessageAnimated:YES];
     });
-
+    
     [[MEGASdkManager sharedMEGAChatSdk] sendStopTypingNotificationForChat:self.chatRoom.chatId];
-
+    
     [self hideJumpToBottom];
+    return message;
+}
+
+- (void)reloadMessage:(MEGAChatMessage *)messageToReload skippedDialogs:(NSNumber *)skippedDialogs {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for (NSUInteger i = 0; i < self.messages.count; i++) {
+            MEGAChatMessage *message = [self.messages objectAtIndex:i];
+            if (message.temporalId == messageToReload.temporalId) {
+                message.warningDialog = skippedDialogs.integerValue >= 3 ? MEGAChatMessageWarningDialogStandard : MEGAChatMessageWarningDialogInitial;
+                [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:i inSection:0]]];
+                [self.observedMessages addObject:message];
+                [message addObserver:self forKeyPath:@"warningDialog" options:NSKeyValueObservingOptionNew context:nil];
+            }
+        }
+    });
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    MEGAChatMessage *messageToReload = (MEGAChatMessage *)object;
+    
+    if (messageToReload.warningDialog == MEGAChatMessageWarningDialogDismiss) {
+        [[MEGASdkManager sharedMEGASdk] setRichLinkWarningCounterValue:++self.richLinkWarningCounterValue];
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for (NSUInteger i = 0; i < self.messages.count; i++) {
+            MEGAChatMessage *message = [self.messages objectAtIndex:i];
+            if (message.temporalId == messageToReload.temporalId) {
+                [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:i inSection:0]]];
+            }
+        }
+    });
+}
+
+#pragma mark - JSQMessagesViewController method overrides
+
+- (void)didPressSendButton:(UIButton *)button
+           withMessageText:(NSString *)text
+                  senderId:(NSString *)senderId
+         senderDisplayName:(NSString *)senderDisplayName
+                      date:(NSDate *)date {
+    
+    if (text.mnz_isEmpty) {
+        return;
+    }
+    
+    MEGAChatMessage *message = [self sendMessage:text];
+    
+    if ([MEGAChatSdk hasUrl:text]) {
+        MEGAGetAttrUserRequestDelegate *delegate = [[MEGAGetAttrUserRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+            if (request.flag) {
+                [self reloadMessage:message skippedDialogs:request.number];
+                self.richLinkWarningCounterValue = request.number.unsignedIntegerValue;
+            }
+        } error:^(MEGARequest *request, MEGAError *error) {
+            if (request.flag) {
+                [self reloadMessage:message skippedDialogs:request.number];
+                self.richLinkWarningCounterValue = request.number.unsignedIntegerValue;
+            }
+        }];
+        [[MEGASdkManager sharedMEGASdk] shouldShowRichLinkWarningWithDelegate:delegate];
+    }
 }
 
 - (void)messagesInputToolbar:(MEGAInputToolbar *)toolbar didPressSendButton:(UIButton *)sender toAttachAssets:(NSArray<PHAsset *> *)assets {
@@ -1821,7 +1888,13 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"temporalId == %" PRIu64, message.temporalId];
                     NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
                     if (filteredArray.count) {
-                        NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
+                        MEGAChatMessage *oldMessage = filteredArray.firstObject;
+                        if (oldMessage.warningDialog > MEGAChatMessageWarningDialogNone) {
+                            message.warningDialog = oldMessage.warningDialog;
+                            [self.observedMessages addObject:message];
+                            [message addObserver:self forKeyPath:@"warningDialog" options:NSKeyValueObservingOptionNew context:nil];
+                        }
+                        NSUInteger index = [self.messages indexOfObject:oldMessage];
                         [self.messages replaceObjectAtIndex:index withObject:message];
                         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
                         [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
