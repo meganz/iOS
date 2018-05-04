@@ -9,6 +9,8 @@
 #import "UIApplication+MNZCategory.h"
 #import "MEGAStore.h"
 
+static const NSUInteger MIN_SECOND = 10; // Save only where the users were playing the file, if the streaming second is greater than this value.
+
 @interface MEGAAVViewController () <AVPlayerViewControllerDelegate, UIViewControllerTransitioningDelegate>
 
 @property (nonatomic, strong, nonnull) NSURL *fileUrl;
@@ -118,12 +120,12 @@
     [super viewWillDisappear:animated];
 
     CMTime mediaTime = CMTimeMake(self.player.currentTime.value, self.player.currentTime.timescale);
-    if (CMTimeGetSeconds(mediaTime) <= 10) return;
+    Float64 second = CMTimeGetSeconds(mediaTime);
     
     NSString *fingerprint = [self fileFingerprint];
     
     if (fingerprint && ![fingerprint isEqualToString:@""]) {
-        if (self.isEndPlaying) {
+        if (self.isEndPlaying || second <= MIN_SECOND) {
             [[MEGAStore shareInstance] deleteMediaDestinationWithFingerprint:fingerprint];
         } else {
             [[MEGAStore shareInstance] insertOrUpdateMediaDestinationWithFingerprint:fingerprint destination:[NSNumber numberWithLongLong:self.player.currentTime.value] timescale:[NSNumber numberWithInt:self.player.currentTime.timescale]];
