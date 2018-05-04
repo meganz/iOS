@@ -621,6 +621,7 @@
         case ContactsModeChatStartConversation: {
             self.searchFixedViewHeightConstraint.constant = self.searchController.searchBar.frame.size.height;
             [self.searchFixedView addSubview:self.searchController.searchBar];
+            self.searchController.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
             self.searchController.hidesNavigationBarDuringPresentation = NO;
             break;
         }
