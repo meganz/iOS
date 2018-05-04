@@ -1479,3 +1479,11 @@
 "ignore"="Ignore";
 /* Button title to allow the user open the default browser */
 "openBrowser"="Open browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="Restart";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Resume playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%@ will continue at %@";
+/*  */
+"resume"="Resume";
