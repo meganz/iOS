@@ -391,10 +391,19 @@
         [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, self.openInBarButtonItem] animated:YES];
         [self.navigationController setToolbarHidden:NO animated:YES];
         self.navigationItem.rightBarButtonItem = self.node ? self.moreBarButtonItem : nil;
-        self.navigationController.hidesBarsOnTap = YES;
 
-        self.pdfView.autoScales = YES;
+        UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGesture:)];
+        doubleTap.numberOfTapsRequired = 2;
+        [self.pdfView addGestureRecognizer:doubleTap];
+        
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGesture:)];
+        singleTap.numberOfTapsRequired = 1;
+        [singleTap requireGestureRecognizerToFail:doubleTap];
+        [self.pdfView addGestureRecognizer:singleTap];
+        
         self.pdfView.document = [[PDFDocument alloc] initWithURL:url];
+        self.pdfView.autoScales = YES;
+        self.pdfView.minScaleFactor = self.pdfView.scaleFactorForSizeToFit;
         
         NSString *fingerprint = [NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.pdfView.document.documentURL.path]];
         if (fingerprint && ![fingerprint isEqualToString:@""]) {
@@ -403,6 +412,35 @@
         } else {
             [self.pdfView goToFirstPage:nil];
         }
+    }
+}
+
+- (void)doubleTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer {
+    CGFloat newScale = self.pdfView.scaleFactor > 1.0f ? 1.0f : 2.0f;
+    [UIView animateWithDuration:0.3 animations:^{
+        if (newScale > 1.0f) {
+            CGPoint tapPoint = [tapGestureRecognizer locationInView:self.pdfView];
+            tapPoint = [self.pdfView convertPoint:tapPoint toPage:self.pdfView.currentPage];
+            CGRect zoomRect = CGRectZero;
+            zoomRect.size.width = self.pdfView.frame.size.width / newScale;
+            zoomRect.size.height = self.pdfView.frame.size.height / newScale;
+            zoomRect.origin.x = tapPoint.x - zoomRect.size.width / 2;
+            zoomRect.origin.y = tapPoint.y - zoomRect.size.height / 2;
+            [self.pdfView setScaleFactor:newScale];
+            [self.pdfView goToRect:zoomRect onPage:self.pdfView.currentPage];
+        } else {
+            [self.pdfView setScaleFactor:self.pdfView.scaleFactorForSizeToFit];
+        }
+    } completion:nil];
+}
+
+- (void)singleTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer {
+    if (self.navigationController.isToolbarHidden) {
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        [self.navigationController setToolbarHidden:NO animated:YES];
+    } else {
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        [self.navigationController setToolbarHidden:YES animated:YES];
     }
 }
 
