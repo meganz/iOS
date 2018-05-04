@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-UI-Text-Regular.otf">
+            <string>SFUIText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view opaque="NO" contentMode="scaleToFill" id="iN0-l3-epB" customClass="MEGAMessageDialogView">
+            <rect key="frame" x="0.0" y="0.0" width="283" height="228"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="URL" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Lj-e3-Q6c">
+                    <rect key="frame" x="10" y="10" width="263" height="18"/>
+                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WJ4-Um-tsU">
+                    <rect key="frame" x="3" y="38" width="277" height="187"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="privacy_warning_ico" translatesAutoresizingMaskIntoConstraints="NO" id="Hlg-o0-T4G">
+                            <rect key="frame" x="10" y="10" width="84" height="84"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="84" id="D9I-0e-iDp"/>
+                                <constraint firstAttribute="height" constant="84" id="q5b-p8-3YE"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable rich URL previews" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f56-7K-RgY">
+                            <rect key="frame" x="104" y="10" width="163" height="36"/>
+                            <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enhance the MEGAchat experience. URL content will be retrieved without end-to-end encryption." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tMl-50-u3C">
+                            <rect key="frame" x="104" y="56" width="163" height="57.5"/>
+                            <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
+                            <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wyp-ba-wyc">
+                            <rect key="frame" x="10" y="133" width="257" height="44"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ha-5c-sT3">
+                                    <rect key="frame" x="0.0" y="0.0" width="48.5" height="44"/>
+                                    <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="44" id="EQK-Qj-W2k"/>
+                                    </constraints>
+                                    <state key="normal" title="Never">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="4"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="didTapButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="h0v-cZ-DGz"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nc4-kW-7Bl">
+                                    <rect key="frame" x="58.5" y="0.0" width="67.5" height="44"/>
+                                    <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="44" id="loM-nX-pW8"/>
+                                    </constraints>
+                                    <state key="normal" title="Not now">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="4"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="didTapButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="p9B-6Y-acg"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="86P-Mc-Tr9">
+                                    <rect key="frame" x="136" y="0.0" width="121" height="44"/>
+                                    <color key="backgroundColor" red="0.0" green="0.74901960784313726" blue="0.6470588235294118" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="44" id="6yw-S8-8QV"/>
+                                    </constraints>
+                                    <state key="normal" title="Always accept">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="4"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="didTapButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="bTa-wT-Vt6"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Hlg-o0-T4G" firstAttribute="top" secondItem="WJ4-Um-tsU" secondAttribute="top" constant="10" id="5zn-GL-8FV"/>
+                        <constraint firstItem="tMl-50-u3C" firstAttribute="leading" secondItem="Hlg-o0-T4G" secondAttribute="trailing" constant="10" id="DCc-Mi-2zS"/>
+                        <constraint firstAttribute="trailing" secondItem="f56-7K-RgY" secondAttribute="trailing" constant="10" id="EbC-K3-gmx"/>
+                        <constraint firstAttribute="bottom" secondItem="wyp-ba-wyc" secondAttribute="bottom" constant="10" id="R3X-cA-nsM"/>
+                        <constraint firstItem="f56-7K-RgY" firstAttribute="leading" secondItem="Hlg-o0-T4G" secondAttribute="trailing" constant="10" id="SGD-1a-ywU"/>
+                        <constraint firstItem="tMl-50-u3C" firstAttribute="top" secondItem="f56-7K-RgY" secondAttribute="bottom" constant="10" id="d0h-1b-nnh"/>
+                        <constraint firstItem="Hlg-o0-T4G" firstAttribute="leading" secondItem="WJ4-Um-tsU" secondAttribute="leading" constant="10" id="fCk-dN-fne"/>
+                        <constraint firstItem="wyp-ba-wyc" firstAttribute="leading" secondItem="WJ4-Um-tsU" secondAttribute="leading" constant="10" id="oE5-T0-llv"/>
+                        <constraint firstAttribute="trailing" secondItem="wyp-ba-wyc" secondAttribute="trailing" constant="10" id="sy9-9H-w6Q"/>
+                        <constraint firstItem="f56-7K-RgY" firstAttribute="top" secondItem="WJ4-Um-tsU" secondAttribute="top" constant="10" id="yRI-c0-E58"/>
+                        <constraint firstAttribute="trailing" secondItem="tMl-50-u3C" secondAttribute="trailing" constant="10" id="z7t-MS-rys"/>
+                        <constraint firstItem="wyp-ba-wyc" firstAttribute="centerX" secondItem="WJ4-Um-tsU" secondAttribute="centerX" id="zLj-c2-oXu"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="4"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="1Lj-e3-Q6c" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="2pE-QF-xz3"/>
+                <constraint firstItem="1Lj-e3-Q6c" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="KOo-88-FQ4"/>
+                <constraint firstAttribute="bottom" secondItem="WJ4-Um-tsU" secondAttribute="bottom" constant="3" id="Qkd-nd-d4N"/>
+                <constraint firstAttribute="trailing" secondItem="1Lj-e3-Q6c" secondAttribute="trailing" constant="10" id="iJN-el-7vt"/>
+                <constraint firstItem="WJ4-Um-tsU" firstAttribute="top" secondItem="1Lj-e3-Q6c" secondAttribute="bottom" constant="10" id="oBL-mH-an1"/>
+                <constraint firstItem="WJ4-Um-tsU" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="3" id="oo5-eW-FhL"/>
+                <constraint firstAttribute="trailing" secondItem="WJ4-Um-tsU" secondAttribute="trailing" constant="3" id="rW8-wF-UHI"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="alwaysAcceptButton" destination="86P-Mc-Tr9" id="Hz2-bh-i3u"/>
+                <outlet property="headingLabel" destination="1Lj-e3-Q6c" id="5sf-c6-i91"/>
+                <outlet property="neverButton" destination="2ha-5c-sT3" id="Zlo-EW-c1s"/>
+                <outlet property="notNowButton" destination="Nc4-kW-7Bl" id="fI9-rm-fyu"/>
+            </connections>
+            <point key="canvasLocation" x="25.5" y="52"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="privacy_warning_ico" width="86" height="86"/>
+    </resources>
+</document>

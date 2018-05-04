@@ -61,6 +61,7 @@
 
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
 #import "MEGACreateAccountRequestDelegate.h"
+#import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAGetPublicNodeRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGALoginRequestDelegate.h"
@@ -1996,6 +1997,13 @@ void uncaughtExceptionHandler(NSException *exception) {
                 }
                 if ([user hasChangedType:MEGAUserChangeTypeLastname]) {
                     [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname];
+                }
+                if ([user hasChangedType:MEGAUserChangeTypeRichPreviews]) {
+                    [NSUserDefaults.standardUserDefaults removeObjectForKey:@"richLinks"];
+                    MEGAGetAttrUserRequestDelegate *delegate = [[MEGAGetAttrUserRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                        [NSUserDefaults.standardUserDefaults setBool:request.flag forKey:@"richLinks"];
+                    }];
+                    [[MEGASdkManager sharedMEGASdk] isRichPreviewsEnabledWithDelegate:delegate];
                 }
             }
         } else {

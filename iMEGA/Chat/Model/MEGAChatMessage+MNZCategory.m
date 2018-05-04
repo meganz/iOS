@@ -1,17 +1,19 @@
 
 #import "MEGAChatMessage+MNZCategory.h"
-#import "MEGASdkManager.h"
-#import "MEGAStore.h"
-#import "MEGAAttachmentMediaItem.h"
-
-#import "MEGAPhotoMediaItem.h"
-#import "NSString+MNZCategory.h"
-#import "NSAttributedString+MNZCategory.h"
 
 #import <objc/runtime.h>
 
+#import "MEGAAttachmentMediaItem.h"
+#import "MEGADialogMediaItem.h"
+#import "MEGAPhotoMediaItem.h"
+#import "MEGASdkManager.h"
+#import "MEGAStore.h"
+#import "NSAttributedString+MNZCategory.h"
+#import "NSString+MNZCategory.h"
+
 static const void *chatRoomTagKey = &chatRoomTagKey;
 static const void *attributedTextTagKey = &attributedTextTagKey;
+static const void *warningDialogTagKey = &warningDialogTagKey;
 
 @implementation MEGAChatMessage (MNZCategory)
 
@@ -30,12 +32,9 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
 - (BOOL)isMediaMessage {
     BOOL mediaMessage = NO;
     
-    if (self.isDeleted) {
-        mediaMessage = NO;
-    } else {
-        if (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment) {
-            mediaMessage = YES;
-        }
+    // TODO: Remove the following commented code
+    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.warningDialog > MEGAChatMessageWarningDialogNone)/*|| self.type == MEGAChatMessageTypeContainsMeta*/)) {
+        mediaMessage = YES;
     }
     
     return mediaMessage;
@@ -207,7 +206,7 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
                                                                              font:[UIFont mnz_SFUIRegularWithSize:fontSize]
                                                                             color:textColor];
         
-        if (self.isEdited) {
+        if (self.isEdited && self.type != MEGAChatMessageTypeContainsMeta) {
             NSAttributedString *edited = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"edited", @"A log message in a chat to indicate that the message has been edited by the user.") attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularItalicWithSize:12.0f], NSForegroundColorAttributeName:textColor}];
             NSMutableAttributedString *attributedText = [self.attributedText mutableCopy];
             [attributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
@@ -221,20 +220,43 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
 }
 
 - (id<JSQMessageMediaData>)media {
-    if (self.type == MEGAChatMessageTypeContact) {
-        MEGAAttachmentMediaItem *attachmentMediaItem = [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:self];
-        return attachmentMediaItem;
-    } else if (self.type == MEGAChatMessageTypeAttachment) {
-        MEGANode *node = [self.nodeList nodeAtIndex:0];
-        if (self.nodeList.size.integerValue > 1 || (!node.name.mnz_isImagePathExtension && !node.name.mnz_isVideoPathExtension)) {
-            MEGAAttachmentMediaItem *attachmentMediaItem = [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:self];
-            return attachmentMediaItem;
-        } else {
-            MEGAPhotoMediaItem *photoItem = [[MEGAPhotoMediaItem alloc] initWithMEGANode:node];
-            return photoItem;
+    id<JSQMessageMediaData> media = nil;
+    
+    switch (self.type) {
+        case MEGAChatMessageTypeContact:
+            media = [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:self];
+            break;
+            
+        case MEGAChatMessageTypeAttachment: {
+            MEGANode *node = [self.nodeList nodeAtIndex:0];
+            if (self.nodeList.size.integerValue > 1 || (!node.name.mnz_isImagePathExtension && !node.name.mnz_isVideoPathExtension)) {
+                media = [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:self];
+            } else {
+                media = [[MEGAPhotoMediaItem alloc] initWithMEGANode:node];
+            }
+            
+            break;
         }
+            
+        case MEGAChatMessageTypeContainsMeta: {
+            // TODO: UI for rich links
+            
+            break;
+        }
+            
+        case MEGAChatMessageTypeNormal: {
+            if (self.warningDialog > MEGAChatMessageWarningDialogNone) {
+                media = [[MEGADialogMediaItem alloc] initWithMEGAChatMessage:self];
+            }
+            
+            break;
+        }
+            
+        default:
+            break;
     }
-    return nil;
+    
+    return media;
 }
 
 - (NSUInteger)messageHash {
@@ -245,7 +267,7 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
 
 - (NSUInteger)hash {
     NSUInteger contentHash = self.type == MEGAChatMessageTypeAttachment ? [self.nodeList nodeAtIndex:0].handle : self.content.hash;
-    return self.senderId.hash ^ self.date.hash ^ contentHash;
+    return self.senderId.hash ^ self.date.hash ^ contentHash ^ self.warningDialog;
 }
 
 - (id)debugQuickLookObject {
@@ -268,6 +290,14 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
 
 - (void)setAttributedText:(NSAttributedString *)attributedText {
     objc_setAssociatedObject(self, &attributedTextTagKey, attributedText, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (MEGAChatMessageWarningDialog)warningDialog {
+    return ((NSNumber *)objc_getAssociatedObject(self, warningDialogTagKey)).integerValue;
+}
+
+- (void)setWarningDialog:(MEGAChatMessageWarningDialog)warningDialog {
+    objc_setAssociatedObject(self, &warningDialogTagKey, [NSNumber numberWithInteger:warningDialog], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end
