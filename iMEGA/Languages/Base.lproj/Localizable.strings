@@ -55,7 +55,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="You have been logged out of this device from another location";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="Server’s SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
+"sslUnverified_alertTitle"="MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -1475,6 +1475,10 @@
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
 /* state previous to import a file */
 "loading"="Loading…";
+/* Button title to allow the user ignore something */
+"ignore"="Ignore";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Open browser";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="Restart";
 /* Title to alert user the possibility of resume playing the video or start from the beginning */
