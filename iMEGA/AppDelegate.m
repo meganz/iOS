@@ -2211,6 +2211,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 if (request.type == MEGARequestTypeQuerySignUpLink) {
                     [self showLinkNotValid];
                 } else if (request.type == MEGARequestTypeLogout && request.paramType == MEGAErrorTypeApiESSL && !self.sslKeyPinningController) {
+                    [SVProgressHUD dismiss];
                     _sslKeyPinningController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"sslUnverified_alertTitle", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
                     [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ignore", @"Button title to allow the user ignore something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
                         self.sslKeyPinningController = nil;
