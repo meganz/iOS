@@ -131,6 +131,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 @property (nonatomic, getter=showChooseAccountTypeLater) BOOL chooseAccountTypeLater;
 
+@property (nonatomic, strong) UIAlertController *sslKeyPinningController;
+
 @end
 
 @implementation AppDelegate
@@ -2094,7 +2096,9 @@ void uncaughtExceptionHandler(NSException *exception) {
                 return;
             }
             
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:AMLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
+            if (request.paramType != MEGAErrorTypeApiESSL) {
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:AMLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
+            }
             break;
         }
             
@@ -2190,16 +2194,6 @@ void uncaughtExceptionHandler(NSException *exception) {
                 break;
             }
                 
-            case MEGAErrorTypeApiESSL: {
-                if ([request type] == MEGARequestTypeLogout) {
-                    NSString *issuer = [NSString stringWithFormat:@"(Issuer: %@)", [request text] ? [request text] : @"Unknown"];
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"sslUnverified_alertTitle", nil) message:issuer delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
-                    [alertView show];
-                    [Helper logout];
-                }
-                break;
-            }
-                
             case MEGAErrorTypeApiEAccess: {
                 if ([request type] == MEGARequestTypeSetAttrFile) {
                     MEGANode *node = [api nodeForHandle:request.nodeHandle];
@@ -2214,12 +2208,37 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
                 
             case MEGAErrorTypeApiEIncomplete: {
-                if ([request type] == MEGARequestTypeQuerySignUpLink) {
+                if (request.type == MEGARequestTypeQuerySignUpLink) {
                     [self showLinkNotValid];
+                } else if (request.type == MEGARequestTypeLogout && request.paramType == MEGAErrorTypeApiESSL && !self.sslKeyPinningController) {
+                    [SVProgressHUD dismiss];
+                    _sslKeyPinningController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"sslUnverified_alertTitle", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+                    [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ignore", @"Button title to allow the user ignore something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                        self.sslKeyPinningController = nil;
+                        [api setPublicKeyPinning:NO];
+                        [api reconnect];
+                    }]];
+                    
+                    [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"retry", @"Button which allows to retry send message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                        self.sslKeyPinningController = nil;
+                        [api retryPendingConnections];
+                    }]];
+                    
+                    [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"openBrowser", @"Button title to allow the user open the default browser") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                        self.sslKeyPinningController = nil;
+                        NSURL *url = [NSURL URLWithString:@"https://www.mega.nz"];
+                        
+                        if (@available(iOS 10.0, *)) {
+                            [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:NULL];
+                        } else {
+                            [[UIApplication sharedApplication] openURL:url];
+                        }
+                    }]];
+                    
+                    [[UIApplication mnz_visibleViewController] presentViewController:self.sslKeyPinningController animated:YES completion:nil];
                 }
                 break;
             }
-                
                 
             case MEGAErrorTypeApiEBlocked: {
                 if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeFetchNodes) {
