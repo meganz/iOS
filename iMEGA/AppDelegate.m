@@ -2217,31 +2217,28 @@ void uncaughtExceptionHandler(NSException *exception) {
                         self.sslKeyPinningController = nil;
                         [api setPublicKeyPinning:NO];
                         [api reconnect];
-                        return;
                     }]];
+                    
                     [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"retry", @"Button which allows to retry send message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                         self.sslKeyPinningController = nil;
                         [api retryPendingConnections];
-                        return;
                     }]];
+                    
                     [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"openBrowser", @"Button title to allow the user open the default browser") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                         self.sslKeyPinningController = nil;
                         NSURL *url = [NSURL URLWithString:@"https://www.mega.nz"];
                         
                         if (@available(iOS 10.0, *)) {
                             [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:NULL];
-                        } else{                          
+                        } else {
                             [[UIApplication sharedApplication] openURL:url];
                         }
-                        
                     }]];
                     
                     [[UIApplication mnz_visibleViewController] presentViewController:self.sslKeyPinningController animated:YES completion:nil];
-                    
-                    }
+                }
                 break;
             }
-                
                 
             case MEGAErrorTypeApiEBlocked: {
                 if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeFetchNodes) {
