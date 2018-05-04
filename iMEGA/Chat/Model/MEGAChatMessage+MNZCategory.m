@@ -244,7 +244,7 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
 #pragma mark - NSObject
 
 - (NSUInteger)hash {
-    NSUInteger contentHash = self.isMediaMessage ? [self.media mediaHash] : self.text.hash;
+    NSUInteger contentHash = self.type == MEGAChatMessageTypeAttachment ? [self.nodeList nodeAtIndex:0].handle : self.content.hash;
     return self.senderId.hash ^ self.date.hash ^ contentHash;
 }
 
