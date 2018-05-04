@@ -115,8 +115,13 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    NSString *fingerprint = [self fileFingerprint];
+    [super viewWillDisappear:animated];
 
+    CMTime mediaTime = CMTimeMake(self.player.currentTime.value, self.player.currentTime.timescale);
+    if (CMTimeGetSeconds(mediaTime) <= 10) return;
+    
+    NSString *fingerprint = [self fileFingerprint];
+    
     if (fingerprint && ![fingerprint isEqualToString:@""]) {
         if (self.isEndPlaying) {
             [[MEGAStore shareInstance] deleteMediaDestinationWithFingerprint:fingerprint];
@@ -124,8 +129,6 @@
             [[MEGAStore shareInstance] insertOrUpdateMediaDestinationWithFingerprint:fingerprint destination:[NSNumber numberWithLongLong:self.player.currentTime.value] timescale:[NSNumber numberWithInt:self.player.currentTime.timescale]];
         }
     }
-    
-    [super viewWillDisappear:animated];
 }
 
 #pragma mark - Private
