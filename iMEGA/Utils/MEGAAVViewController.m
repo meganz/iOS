@@ -171,11 +171,8 @@
 
 - (NSString *)timeForMediaDestination:(MOMediaDestination *)mediaDestination {
     CMTime mediaTime = CMTimeMake(mediaDestination.destination.longLongValue, mediaDestination.timescale.intValue);
-    NSUInteger durationSeconds = (long)CMTimeGetSeconds(mediaTime);
-    NSUInteger hours = floor(durationSeconds / 3600);
-    NSUInteger minutes = floor(durationSeconds % 3600 / 60);
-    NSUInteger seconds = floor(durationSeconds % 3600 % 60);
-    return [NSString stringWithFormat:@"%02ld:%02ld:%02ld", hours, minutes, seconds];
+    NSTimeInterval durationSeconds = (NSTimeInterval)CMTimeGetSeconds(mediaTime);
+    return [NSString mnz_stringFromTimeInterval:durationSeconds];
 }
 
 - (NSString *)fileName {
@@ -187,7 +184,7 @@
 }
 
 - (NSString *)fileFingerprint {
-    NSString *fingerprint = [NSString new];
+    NSString *fingerprint;
 
     if (self.node) {
         if (self.folderLink) {
