@@ -28,7 +28,9 @@
     [self.collectionView performBatchUpdates:^{
         [self.users addObject:user];
         [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.users.count-1 inSection:0]]];
-    } completion:nil];
+    } completion:^(BOOL finished) {
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.users.count-1 inSection:0] atScrollPosition:UICollectionViewScrollPositionRight animated:YES];
+    }];
 }
 
 - (void)removeUser:(MEGAUser *)user {
