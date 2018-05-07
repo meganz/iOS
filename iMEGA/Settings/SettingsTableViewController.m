@@ -221,10 +221,10 @@
         case 5: { //Privacy Policy, Terms of Service
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 if (indexPath.row == 0) {
-                    [self showURL:@"https://mega.nz/ios_privacy.html"];
+                    [self showURL:@"https://mega.nz/privacy"];
                     break;
                 } else if (indexPath.row == 1) {
-                    [self showURL:@"https://mega.nz/ios_terms.html"];
+                    [self showURL:@"https://mega.nz/terms"];
                     break;
                 } else if (indexPath.row == 2) {
                     [self showURL:@"https://mega.nz/gdpr"];
