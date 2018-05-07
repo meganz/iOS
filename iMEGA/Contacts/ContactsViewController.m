@@ -1120,7 +1120,7 @@
                     return;
                 }
                 [self.selectedUsersArray addObject:user];
-                self.createGroupBarButtonItem.enabled = YES;
+                self.createGroupBarButtonItem.enabled = (self.selectedUsersArray.count > 1);
                 if (!self.childViewControllers.count) {
                     [self addUsersListSubview];
                 }
@@ -1151,6 +1151,8 @@
                 [self.selectedUsersArray removeObject:u];
             }
         }
+        
+        self.createGroupBarButtonItem.enabled = (self.selectedUsersArray.count > 1);
         
         [self updatePromptTitle];
         
@@ -1483,9 +1485,9 @@
     NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
     [self.tableView deselectRowAtIndexPath:[self.indexPathsMutableDictionary objectForKey:base64Handle] animated:YES];
     [self.selectedUsersArray removeObject:user];
+    self.createGroupBarButtonItem.enabled = (self.selectedUsersArray.count > 1);
     if (self.selectedUsersArray.count == 0) {
         [self removeUsersListSubview];
-        self.createGroupBarButtonItem.enabled = NO;
     }
 }
 
