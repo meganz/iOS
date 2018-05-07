@@ -111,6 +111,10 @@
     }
 }
 
+- (IBAction)forgotPasswordTouchUpInside:(UIButton *)sender {
+    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://mega.nz/recovery"]];
+}
+
 #pragma mark - Private
 
 - (void)logoTappedFiveTimes:(UITapGestureRecognizer *)sender {
@@ -179,11 +183,6 @@
     NSDate *date = [NSDate dateWithTimeIntervalSinceNow:totalSeconds];
     
     return [dateFormatter stringFromDate:date];
-}
-
-- (IBAction)forgotPasswordTouchUpInside:(UIButton *)sender {
-    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ForgotPasswordNavigationControllerID"];
-    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 #pragma mark - UIResponder
