@@ -41,6 +41,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *privacyPolicyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *termsOfServiceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dataProtectionRegulationLabel;
 
 @end
 
@@ -124,6 +125,7 @@
     
     self.privacyPolicyLabel.text = AMLocalizedString(@"privacyPolicyLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy'");
     self.termsOfServiceLabel.text = AMLocalizedString(@"termsOfServicesLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Terms of Service'");
+    self.dataProtectionRegulationLabel.text = AMLocalizedString(@"dataProtectionRegulationLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation'");
 }
 
 - (void)showURL:(NSString *)urlString {
@@ -142,13 +144,16 @@
         case 0: //Camera Uploads, Chat
         case 1:
         case 3:
-        case 5: //Privacy Policy, Terms of Service
             numberOfRows = 2;
             break;
             
         case 2: //Advanced
         case 4: //Help
             numberOfRows = 1;
+            break;
+            
+        case 5: //Privacy Policy, Terms of Service, GDPR
+            numberOfRows = 3;
             break;
     }
     return numberOfRows;
@@ -220,6 +225,9 @@
                     break;
                 } else if (indexPath.row == 1) {
                     [self showURL:@"https://mega.nz/ios_terms.html"];
+                    break;
+                } else if (indexPath.row == 2) {
+                    [self showURL:@"https://mega.nz/gdpr"];
                     break;
                 }
             }
