@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-UI-Text-Medium.otf">
+            <string>SFUIText-Medium</string>
+        </array>
+        <array key="SF-UI-Text-Regular.otf">
+            <string>SFUIText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="MEGAMessageRichPreviewView">
+            <rect key="frame" x="0.0" y="0.0" width="283" height="145"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="right" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FN9-Ad-mvV" customClass="JSQMessagesCellTextView">
+                    <rect key="frame" x="10" y="10" width="263" height="18"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Afl-00-Yt3">
+                    <rect key="frame" x="3" y="38" width="277" height="104"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Wtg-DQ-2NZ">
+                            <rect key="frame" x="10" y="10" width="84" height="84"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="84" id="OCN-Kf-4Ad"/>
+                                <constraint firstAttribute="width" constant="84" id="oWn-OV-Ep0"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="4"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s8a-fM-ZOs">
+                            <rect key="frame" x="104" y="10" width="163" height="18"/>
+                            <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description Description Description Description " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Daj-pk-8cr">
+                            <rect key="frame" x="104" y="38" width="163" height="28"/>
+                            <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="omh-f0-brF">
+                            <rect key="frame" x="104" y="80" width="14" height="14"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="14" id="c2s-hP-y7F"/>
+                                <constraint firstAttribute="width" constant="14" id="ePV-Ur-HQO"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="25t-oi-F3U">
+                            <rect key="frame" x="124" y="80" width="143" height="14"/>
+                            <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
+                            <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="omh-f0-brF" secondAttribute="bottom" constant="10" id="2zh-zh-rbw"/>
+                        <constraint firstItem="25t-oi-F3U" firstAttribute="leading" secondItem="omh-f0-brF" secondAttribute="trailing" constant="6" id="4Ux-aT-Q3y"/>
+                        <constraint firstItem="s8a-fM-ZOs" firstAttribute="leading" secondItem="Wtg-DQ-2NZ" secondAttribute="trailing" constant="10" id="Cpe-9P-5ne"/>
+                        <constraint firstItem="Daj-pk-8cr" firstAttribute="leading" secondItem="Wtg-DQ-2NZ" secondAttribute="trailing" constant="10" id="EqL-yE-OGP"/>
+                        <constraint firstAttribute="trailing" secondItem="s8a-fM-ZOs" secondAttribute="trailing" constant="10" id="Iuq-1u-p8q"/>
+                        <constraint firstAttribute="trailing" secondItem="25t-oi-F3U" secondAttribute="trailing" constant="10" id="RL4-5A-DIN"/>
+                        <constraint firstItem="s8a-fM-ZOs" firstAttribute="top" secondItem="Afl-00-Yt3" secondAttribute="top" constant="10" id="SAY-fi-iK0"/>
+                        <constraint firstItem="Daj-pk-8cr" firstAttribute="top" secondItem="s8a-fM-ZOs" secondAttribute="bottom" constant="10" id="Tgw-DV-jUj"/>
+                        <constraint firstItem="omh-f0-brF" firstAttribute="leading" secondItem="Wtg-DQ-2NZ" secondAttribute="trailing" constant="10" id="hfq-0s-HCT"/>
+                        <constraint firstAttribute="height" constant="104" id="mwy-UL-vSe"/>
+                        <constraint firstItem="Wtg-DQ-2NZ" firstAttribute="top" secondItem="Afl-00-Yt3" secondAttribute="top" constant="10" id="pJq-f2-kwk"/>
+                        <constraint firstAttribute="trailing" secondItem="Daj-pk-8cr" secondAttribute="trailing" constant="10" id="t3g-eh-sx4"/>
+                        <constraint firstAttribute="bottom" secondItem="25t-oi-F3U" secondAttribute="bottom" constant="10" id="w55-aI-4CT"/>
+                        <constraint firstItem="Wtg-DQ-2NZ" firstAttribute="leading" secondItem="Afl-00-Yt3" secondAttribute="leading" constant="10" id="z59-pi-oBS"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="4"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="FN9-Ad-mvV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="B7X-xZ-mvD"/>
+                <constraint firstAttribute="bottom" secondItem="Afl-00-Yt3" secondAttribute="bottom" constant="3" id="F08-tA-q6h"/>
+                <constraint firstAttribute="trailing" secondItem="Afl-00-Yt3" secondAttribute="trailing" constant="3" id="KC9-sF-6Ou"/>
+                <constraint firstItem="Afl-00-Yt3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="3" id="Soy-bv-v1F"/>
+                <constraint firstAttribute="trailing" secondItem="FN9-Ad-mvV" secondAttribute="trailing" constant="10" id="YmV-xM-p4P"/>
+                <constraint firstItem="Afl-00-Yt3" firstAttribute="top" secondItem="FN9-Ad-mvV" secondAttribute="bottom" constant="10" id="gae-EP-mzv"/>
+                <constraint firstItem="FN9-Ad-mvV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="lYg-bt-dPV"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="contentTextView" destination="FN9-Ad-mvV" id="TXs-JA-qkV"/>
+                <outlet property="descriptionLabel" destination="Daj-pk-8cr" id="Qfd-8H-eHh"/>
+                <outlet property="iconImageView" destination="omh-f0-brF" id="BlD-hy-RNn"/>
+                <outlet property="imageImageView" destination="Wtg-DQ-2NZ" id="Kmh-8m-7PZ"/>
+                <outlet property="linkLabel" destination="25t-oi-F3U" id="Beq-aq-ls3"/>
+                <outlet property="titleLabel" destination="s8a-fM-ZOs" id="sOo-QK-JeI"/>
+            </connections>
+            <point key="canvasLocation" x="24.5" y="51.5"/>
+        </view>
+    </objects>
+</document>

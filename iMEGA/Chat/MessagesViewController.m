@@ -1402,7 +1402,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         case MEGAChatMessageTypeRevokeAttachment:
             break;
             
-        case MEGAChatMessageTypeNormal: {
+        case MEGAChatMessageTypeNormal:
+        case MEGAChatMessageTypeContainsMeta: {
             //All messages
             if (action == @selector(copy:)) return YES;
             
@@ -1797,7 +1798,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             case MEGAChatMessageTypePrivilegeChange:
             case MEGAChatMessageTypeChatTitle:
             case MEGAChatMessageTypeAttachment:
-            case MEGAChatMessageTypeContact: {
+            case MEGAChatMessageTypeContact:
+            case MEGAChatMessageTypeContainsMeta: {
                 if (!message.isDeleted) {
                     [self.messages insertObject:message atIndex:0];
                 }

@@ -6,6 +6,7 @@
 #import "MEGAAttachmentMediaItem.h"
 #import "MEGADialogMediaItem.h"
 #import "MEGAPhotoMediaItem.h"
+#import "MEGARichPreviewMediaItem.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "NSAttributedString+MNZCategory.h"
@@ -32,8 +33,7 @@ static const void *warningDialogTagKey = &warningDialogTagKey;
 - (BOOL)isMediaMessage {
     BOOL mediaMessage = NO;
     
-    // TODO: Remove the following commented code
-    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.warningDialog > MEGAChatMessageWarningDialogNone)/*|| self.type == MEGAChatMessageTypeContainsMeta*/)) {
+    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.warningDialog > MEGAChatMessageWarningDialogNone) || self.type == MEGAChatMessageTypeContainsMeta)) {
         mediaMessage = YES;
     }
     
@@ -239,7 +239,7 @@ static const void *warningDialogTagKey = &warningDialogTagKey;
         }
             
         case MEGAChatMessageTypeContainsMeta: {
-            // TODO: UI for rich links
+            media = [[MEGARichPreviewMediaItem alloc] initWithMEGAChatMessage:self];
             
             break;
         }
@@ -267,7 +267,8 @@ static const void *warningDialogTagKey = &warningDialogTagKey;
 
 - (NSUInteger)hash {
     NSUInteger contentHash = self.type == MEGAChatMessageTypeAttachment ? [self.nodeList nodeAtIndex:0].handle : self.content.hash;
-    return self.senderId.hash ^ self.date.hash ^ contentHash ^ self.warningDialog;
+    NSUInteger metaHash = self.type == MEGAChatMessageTypeContainsMeta ? self.containsMeta.type : MEGAChatContainsMetaTypeInvalid;
+    return self.senderId.hash ^ self.date.hash ^ contentHash ^ self.warningDialog ^ metaHash;
 }
 
 - (id)debugQuickLookObject {

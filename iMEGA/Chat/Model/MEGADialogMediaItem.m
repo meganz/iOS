@@ -32,11 +32,6 @@
     _cachedDialogView = nil;
 }
 
-- (CGSize)mediaViewDisplaySize {
-    CGFloat displaySize = [[UIDevice currentDevice] mnz_widthForChatBubble];
-    return CGSizeMake(displaySize, 228.0f);
-}
-
 #pragma mark - Setters
 
 - (void)setMessage:(MEGAChatMessage *)message {
@@ -56,38 +51,45 @@
         return nil;
     }
     
-    if (!self.cachedDialogView) {
-        MEGAMessageDialogView *dialogView = [[[NSBundle bundleForClass:MEGAMessageDialogView.class] loadNibNamed:@"MEGAMessageDialogView" owner:self options:nil] objectAtIndex:0];
-        
-        // Sizes:
-        CGSize dialogViewSize = [self mediaViewDisplaySize];
-        dialogView.frame = CGRectMake(dialogView.frame.origin.x,
-                                      dialogView.frame.origin.y,
-                                      dialogViewSize.width,
-                                      dialogViewSize.height);
-        
-        // Colors:
-        if (self.message.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-            dialogView.backgroundColor = [UIColor mnz_green00BFA5];
-            dialogView.headingLabel.textColor = [UIColor whiteColor];
-        } else {
-            dialogView.backgroundColor = [UIColor mnz_grayE2EAEA];
-        }
-        
-        // Content:
-        dialogView.headingLabel.text = self.message.content;
-        dialogView.neverButton.hidden = self.message.warningDialog != MEGAChatMessageWarningDialogStandard;
-        dialogView.delegate = self;
-        
-        // Bubble:
-        JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:[UIApplication sharedApplication].userInterfaceLayoutDirection];
-        JSQMessagesMediaViewBubbleImageMasker *messageMediaViewBubleImageMasker = [[JSQMessagesMediaViewBubbleImageMasker alloc] initWithBubbleImageFactory:bubbleFactory];
-        [messageMediaViewBubleImageMasker applyOutgoingBubbleImageMaskToMediaView:dialogView];
-        self.cachedDialogView = dialogView;
+    if (self.cachedDialogView) {
+        return self.cachedDialogView;
+    }
 
+    MEGAMessageDialogView *dialogView = [[NSBundle bundleForClass:MEGAMessageDialogView.class] loadNibNamed:@"MEGAMessageDialogView" owner:self options:nil].firstObject;
+    
+    // Sizes:
+    CGSize dialogViewSize = [self mediaViewDisplaySize];
+    dialogView.frame = CGRectMake(dialogView.frame.origin.x,
+                                  dialogView.frame.origin.y,
+                                  dialogViewSize.width,
+                                  dialogViewSize.height);
+    
+    // Colors:
+    if (self.message.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
+        dialogView.backgroundColor = [UIColor mnz_green00BFA5];
+        dialogView.headingLabel.textColor = [UIColor whiteColor];
+    } else {
+        dialogView.backgroundColor = [UIColor mnz_grayE2EAEA];
     }
     
+    // Content:
+    dialogView.headingLabel.text = self.message.content;
+    dialogView.neverButton.hidden = self.message.warningDialog != MEGAChatMessageWarningDialogStandard;
+    dialogView.delegate = self;
+    
+    // Bubble:
+    JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:[UIApplication sharedApplication].userInterfaceLayoutDirection];
+    JSQMessagesMediaViewBubbleImageMasker *messageMediaViewBubleImageMasker = [[JSQMessagesMediaViewBubbleImageMasker alloc] initWithBubbleImageFactory:bubbleFactory];
+    [messageMediaViewBubleImageMasker applyOutgoingBubbleImageMaskToMediaView:dialogView];
+    
+    self.cachedDialogView = dialogView;
+
     return self.cachedDialogView;
+}
+
+- (CGSize)mediaViewDisplaySize {
+    CGFloat displaySize = [[UIDevice currentDevice] mnz_widthForChatBubble];
+    return CGSizeMake(displaySize, 228.0f);
 }
 
 - (NSUInteger)mediaHash {
