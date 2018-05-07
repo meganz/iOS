@@ -1630,6 +1630,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             chatAttachedContactsVC.message = message;
             [self.navigationController pushViewController:chatAttachedContactsVC animated:YES];
         }
+    } else if (message.type == MEGAChatMessageTypeContainsMeta) {
+        [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:message.containsMeta.richPreview.url]];
     }
 }
 
