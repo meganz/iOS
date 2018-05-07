@@ -284,6 +284,9 @@
 		775652D7203AD2FC009E7EC8 /* ContactLinkQRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775652D6203AD2FC009E7EC8 /* ContactLinkQRViewController.m */; };
 		777E9229203EB0E200266229 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 777E9228203EB0E100266229 /* CoreImage.framework */; };
 		777E922D203EE14B00266229 /* QRSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 777E922C203EE14B00266229 /* QRSettingsTableViewController.m */; };
+		77B32274209C6DE80037FA89 /* MEGARichPreviewMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B32273209C6DE80037FA89 /* MEGARichPreviewMediaItem.m */; };
+		77B32277209C6EC00037FA89 /* MEGAMessageRichPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B32276209C6EC00037FA89 /* MEGAMessageRichPreviewView.m */; };
+		77B32279209C6F060037FA89 /* MEGAMessageRichPreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77B32278209C6F060037FA89 /* MEGAMessageRichPreviewView.xib */; };
 		77C544FF2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C544FE2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m */; };
 		77CAAAE0202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CAAADF202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m */; };
 		77CAAAE3202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CAAAE2202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m */; };
@@ -1140,6 +1143,11 @@
 		777E9228203EB0E100266229 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		777E922B203EE14B00266229 /* QRSettingsTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QRSettingsTableViewController.h; sourceTree = "<group>"; };
 		777E922C203EE14B00266229 /* QRSettingsTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QRSettingsTableViewController.m; sourceTree = "<group>"; };
+		77B32272209C6DE80037FA89 /* MEGARichPreviewMediaItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGARichPreviewMediaItem.h; sourceTree = "<group>"; };
+		77B32273209C6DE80037FA89 /* MEGARichPreviewMediaItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGARichPreviewMediaItem.m; sourceTree = "<group>"; };
+		77B32275209C6EC00037FA89 /* MEGAMessageRichPreviewView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAMessageRichPreviewView.h; sourceTree = "<group>"; };
+		77B32276209C6EC00037FA89 /* MEGAMessageRichPreviewView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAMessageRichPreviewView.m; sourceTree = "<group>"; };
+		77B32278209C6F060037FA89 /* MEGAMessageRichPreviewView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGAMessageRichPreviewView.xib; sourceTree = "<group>"; };
 		77C544FD2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAPhotoBrowserAnimator.h; sourceTree = "<group>"; };
 		77C544FE2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAPhotoBrowserAnimator.m; sourceTree = "<group>"; };
 		77CAAADE202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAPhotoBrowserPickerViewController.h; sourceTree = "<group>"; };
@@ -1710,6 +1718,9 @@
 				774FA65F2090C0030061DD85 /* MEGAMessageDialogView.h */,
 				774FA6602090C0030061DD85 /* MEGAMessageDialogView.m */,
 				774FA65D2090BF9F0061DD85 /* MEGAMessageDialogView.xib */,
+				77B32275209C6EC00037FA89 /* MEGAMessageRichPreviewView.h */,
+				77B32276209C6EC00037FA89 /* MEGAMessageRichPreviewView.m */,
+				77B32278209C6F060037FA89 /* MEGAMessageRichPreviewView.xib */,
 			);
 			name = Views;
 			path = Chat/Views;
@@ -2325,6 +2336,8 @@
 				A86FC4FB1EBB4999006053A6 /* MEGAPhotoMediaItem.m */,
 				774FA6622090F5A20061DD85 /* MEGADialogMediaItem.h */,
 				774FA6632090F5A20061DD85 /* MEGADialogMediaItem.m */,
+				77B32272209C6DE80037FA89 /* MEGARichPreviewMediaItem.h */,
+				77B32273209C6DE80037FA89 /* MEGARichPreviewMediaItem.m */,
 			);
 			name = Model;
 			path = Chat/Model;
@@ -3307,6 +3320,7 @@
 				94B120BA1FE2B6CB0099E382 /* MEGAToolbarImagePickerView.xib in Resources */,
 				4152273F1A692F8D00EC7BB6 /* Localizable.strings in Resources */,
 				5BB2E40D20629E2C00E9F45C /* EmptyFooterView.xib in Resources */,
+				77B32279209C6F060037FA89 /* MEGAMessageRichPreviewView.xib in Resources */,
 				E8E3E6FA1E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib in Resources */,
 				77D9A56E202355F800B48470 /* MEGAPhotoBrowserViewController.storyboard in Resources */,
 				A8278D7F200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 in Resources */,
@@ -3470,6 +3484,7 @@
 				41AC2AC01AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m in Sources */,
 				E8534D4B1E15231C00911C40 /* ChatSettingsTableViewController.m in Sources */,
 				E8F791811BC5754A00C58676 /* RemoveLinkActivity.m in Sources */,
+				77B32277209C6EC00037FA89 /* MEGAMessageRichPreviewView.m in Sources */,
 				77D9A56C2023547900B48470 /* MEGAPhotoBrowserViewController.m in Sources */,
 				417279361DB663FA001AC818 /* UIColor+JSQMessages.m in Sources */,
 				137361931A6664C300B740E8 /* AppDelegate.m in Sources */,
@@ -3565,6 +3580,7 @@
 				A8C262AD1FA1D85E006172CE /* MEGARemoteImageView.m in Sources */,
 				E8CA8AB11DF17F7500C205DE /* ContactDetailsViewController.m in Sources */,
 				5B8499091F13DBCE0034A36E /* MEGAAssetsPickerController.m in Sources */,
+				77B32274209C6DE80037FA89 /* MEGARichPreviewMediaItem.m in Sources */,
 				41D21E5E1D01AEC3002E6296 /* CTAssetItemViewController.m in Sources */,
 				77D9A5712023814800B48470 /* MEGAStartDownloadTransferDelegate.m in Sources */,
 				5BD4A0211F838606000E24E6 /* ViewFrameAccessor.m in Sources */,

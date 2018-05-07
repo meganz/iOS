@@ -1,14 +1,14 @@
 
 #import "MEGAPhotoMediaItem.h"
 
+#import <MobileCoreServices/UTCoreTypes.h>
+
 #import "JSQMessagesMediaPlaceholderView.h"
 
 #import "NSString+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGAGetPreviewRequestDelegate.h"
-
-#import <MobileCoreServices/UTCoreTypes.h>
 
 @interface MEGAPhotoMediaItem ()
 
@@ -53,17 +53,6 @@
     _cachedImageView = nil;
 }
 
-- (CGSize)mediaViewDisplaySize {
-    CGFloat displaySize = [[UIDevice currentDevice] mnz_widthForChatBubble];
-    return CGSizeMake(displaySize, displaySize);
-}
-
-- (UIView *)mediaPlaceholderView {
-    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    [indicator startAnimating];
-    return indicator;
-}
-
 #pragma mark - Private
 
 - (void)configureCachedImageViewWithImagePath:(NSString *)imagePath {
@@ -103,6 +92,17 @@
     }
     
     return self.cachedImageView;
+}
+
+- (CGSize)mediaViewDisplaySize {
+    CGFloat displaySize = [[UIDevice currentDevice] mnz_widthForChatBubble];
+    return CGSizeMake(displaySize, displaySize);
+}
+
+- (UIView *)mediaPlaceholderView {
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [indicator startAnimating];
+    return indicator;
 }
 
 - (NSUInteger)mediaHash {
