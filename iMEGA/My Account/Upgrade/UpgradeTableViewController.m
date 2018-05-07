@@ -333,13 +333,13 @@
 
 - (void)showTermsOfService {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [self showURL:@"https://mega.nz/ios_terms.html"];
+        [self showURL:@"https://mega.nz/terms"];
     }
 }
 
 - (void)showPrivacyPolicy {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [self showURL:@"https://mega.nz/ios_privacy.html"];
+        [self showURL:@"https://mega.nz/privacy"];
     }
 }
 
