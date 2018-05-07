@@ -57,6 +57,7 @@
     self.autoAwayLabel.text = AMLocalizedString(@"autoAway", nil);
     
     self.statusPersistenceLabel.text = AMLocalizedString(@"statusPersistence", nil);
+    [self.autoAwayTimeSaveButton setTitle:AMLocalizedString(@"save", @"Button title to 'Save' the selected option") forState:UIControlStateNormal];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -162,8 +163,18 @@
 
 - (IBAction)autoAwayTimeSaveButtonTouchUpInside:(UIButton *)sender {
     [self.autoAwayTimeTextField resignFirstResponder];
+    
     self.autoAwayTimeSaveButton.enabled = NO;
     self.autoAwayTimeSaveButton.hidden = YES;
+    
+    if (self.autoAwayTimeTextField.text.intValue == 0) {
+        self.autoAwayTimeTextField.text = @"1";
+    }
+    
+    if ([self.autoAwayTimeTextField.text isEqualToString:[NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)]]) {
+        [self updateAutoAwayTimeLabel];
+        return;
+    }
     
     self.autoAwayTimeoutInMinutes = self.autoAwayTimeTextField.text.intValue;
     
@@ -211,7 +222,7 @@
             break;
             
         case 2:
-            if (self.presenceConfig.autoAwayTimeout < 2) {
+            if ((self.presenceConfig.autoAwayTimeout / 60) >= 2) {
                 titleForFooter = AMLocalizedString(@"showMeAwayAfterXMinutesOfInactivity", @"Footer text to explain the meaning of the functionaly Auto-away of your chat status.");
                 titleForFooter = [titleForFooter stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)]];
             } else {
@@ -267,25 +278,13 @@
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     textField.text = [NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)];
     
-    self.autoAwayTimeSaveButton.enabled = NO;
+    self.autoAwayTimeSaveButton.enabled = YES;
     self.autoAwayTimeSaveButton.hidden = NO;
     
     return YES;
 }
-
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    
-    NSString *textFieldString = [textField text];
-    NSString *currentText = [textFieldString stringByReplacingCharactersInRange:range withString:string];
-    
-    if ([currentText isEqualToString:[NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)]]) {
-        self.autoAwayTimeSaveButton.enabled = NO;
-        return NO;
-    } else if ([currentText isEqualToString:@"0"] || [currentText isEqualToString:@""]) {
-        self.autoAwayTimeSaveButton.enabled = NO;
-    } else {
-        self.autoAwayTimeSaveButton.enabled = YES;
-    }
+    self.autoAwayTimeSaveButton.enabled = YES;
     
     return YES;
 }

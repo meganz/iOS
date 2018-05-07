@@ -2167,7 +2167,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="10 minutes" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fft-mR-LRE">
-                                                    <rect key="frame" x="23" y="11.5" width="280" height="21"/>
+                                                    <rect key="frame" x="23" y="11.5" width="275" height="21"/>
                                                     <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
@@ -2176,8 +2176,9 @@
                                                     </connections>
                                                 </textField>
                                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FbJ-dp-8F4">
-                                                    <rect key="frame" x="313" y="5.5" width="39" height="33"/>
+                                                    <rect key="frame" x="308" y="1.5" width="59" height="41"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                                                     <state key="normal" title="Save">
                                                         <color key="titleColor" red="0.0" green="0.47843137254901957" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
@@ -2189,7 +2190,7 @@
                                             <constraints>
                                                 <constraint firstItem="Fft-mR-LRE" firstAttribute="centerY" secondItem="cmp-xZ-0hh" secondAttribute="centerY" id="3Pk-87-JJf"/>
                                                 <constraint firstItem="Fft-mR-LRE" firstAttribute="leadingMargin" secondItem="cmp-xZ-0hh" secondAttribute="leadingMargin" constant="15" id="CUN-GO-pyt"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="FbJ-dp-8F4" secondAttribute="trailingMargin" constant="15" id="LeJ-jj-h2s"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="FbJ-dp-8F4" secondAttribute="trailingMargin" id="LeJ-jj-h2s"/>
                                                 <constraint firstItem="FbJ-dp-8F4" firstAttribute="leading" secondItem="Fft-mR-LRE" secondAttribute="trailing" constant="10" id="i7a-RS-wnv"/>
                                                 <constraint firstItem="FbJ-dp-8F4" firstAttribute="centerY" secondItem="Fft-mR-LRE" secondAttribute="centerY" id="vYt-Cq-qx6"/>
                                             </constraints>
