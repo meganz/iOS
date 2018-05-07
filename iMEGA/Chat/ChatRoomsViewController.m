@@ -129,11 +129,19 @@
     }
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.tableView reloadEmptyDataSet];
+    } completion:nil];
+}
+
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     NSString *text = @"";
-    if (self.searchController.isActive ) {
+    if (self.searchController.isActive) {
         if (self.searchController.searchBar.text.length > 0) {
             text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
         }
@@ -145,15 +153,26 @@
                 text = AMLocalizedString(@"noInternetConnection",  @"Text shown on the app when you don't have connection to the internet or when you have lost it");
             }
         } else {
-            return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"noConversations", @"Empty Conversations section") sectionTitle:AMLocalizedString(@"conversations", @"Conversations section")];
+            text = AMLocalizedString(@"noConversations", @"Empty Conversations section");
         }
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray333333]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    NSString *text = @"";
+
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+        text = AMLocalizedString(@"noConversationsDescription", @"Empty Conversations descritpion");
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:14.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     if ([MEGAReachabilityManager isReachable]) {
@@ -165,7 +184,7 @@
                 return nil;
             }
         } else {
-            return [UIImage imageNamed:@"emptyContacts"];
+            return [UIImage imageNamed:@"chatEmptyState"];
         }
     } else {
         return [UIImage imageNamed:@"noInternetConnection"];
@@ -182,7 +201,7 @@
         }
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:20.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor whiteColor]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -191,7 +210,7 @@
     UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
     UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
     
-    return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
+    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
