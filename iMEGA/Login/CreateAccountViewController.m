@@ -299,7 +299,7 @@
 }
 
 - (IBAction)termOfServiceTouchUpInside:(UIButton *)sender {
-    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://mega.nz/ios_terms.html"]];
+    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://mega.nz/terms"]];
 }
 
 - (IBAction)createAccountTouchUpInside:(id)sender {
