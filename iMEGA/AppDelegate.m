@@ -705,7 +705,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         case 1: { //Import file from link
             MEGANode *node = [Helper linkNode];
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-            [self.window.rootViewController.presentedViewController presentViewController:navigationController animated:YES completion:nil];
+            [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
             
             BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
             browserVC.selectedNodesArray = [NSArray arrayWithObject:node];
@@ -764,7 +764,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
         return;
     }
         
-    [self dismissPresentedViews];
+    if (self.window.rootViewController.presentedViewController) {
+        [self.window.rootViewController dismissViewControllerAnimated:NO completion:nil];
+    }
     
     if ([[url absoluteString] rangeOfString:@"file:///"].location != NSNotFound) {
         self.urlType = URLTypeOpenInLink;
