@@ -113,19 +113,6 @@
 
 #pragma mark - UITextFieldDelegate
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    BOOL shoulBeCreateAccountButtonGray = NO;
-    if (![self.emailTextField.text mnz_isValidEmail]) {
-        shoulBeCreateAccountButtonGray = YES;
-    } else {
-        shoulBeCreateAccountButtonGray = NO;
-    }
-    
-    shoulBeCreateAccountButtonGray ? [self.resendButton setBackgroundColor:[UIColor mnz_grayCCCCCC]] : [self.resendButton setBackgroundColor:[UIColor mnz_redFF4D52]];
-    
-    return YES;
-}
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self.emailTextField resignFirstResponder];
     [self resendTouchUpInside:nil];
