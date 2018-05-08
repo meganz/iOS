@@ -127,7 +127,7 @@
 /*  */
 "passwordStrong"="סיסמתך תעמוד מול רוב התקפות המתוחכמות של Brute-Force. אנא וודא כי הינך זוכר אותה.";
 /*  */
-"agreeWithTheMEGATermsOfService"="אני מסכים אם <a href='terms'>תנאי השימוש</a> של MEGA";
+"agreeWithTheMEGATermsOfService"="אני מסכים עם <a href='terms'>תנאי השימוש</a> של MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="הכנס שם תקין";
 /*  */
@@ -258,6 +258,12 @@
 "folderAndFiles"="תיקייה 1 • %d קבצים";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="בתור";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="הושהה";
+/* Label for the state of a transfer when is being completing - (String as short as possible). */
+"Completing..."="מסיים...";
+/* Label for the state of a transfer when is being retrying - (String as short as possible). */
+"Retrying..."="מנסה שוב...";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="ישנן הורדות בהמתנה";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -654,6 +660,8 @@
 "privacyPolicyLabel"="מדיניות פרטיות";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="תנאי שימוש";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="כבוי";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -772,12 +780,8 @@
 "confirmPassword"="אשר סיסמא";
 /* Success message shown when the password has been changed */
 "passwordChanged"="סיסמתך שונתה.";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="הסיסמא הקודמת והחדשה לא יכולות להיות זהות.";
 /* An option to reset the password. */
 "forgotPassword"="שכחת סיסמא?";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="תוכל לשנות את סיסמתך בקישור שנשלח אליך למייל.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="קישור זה פג תוקף, אנא נסה שנית.";
 /* Headline of the password reset recovery procedure */
@@ -792,26 +796,9 @@
 "youRecoveryKeyIsGoingTo"="מפתח השחזור שלך ישמש על מנת לאפס את הסיסמא שלך. אנא הכנס סיסמא חדשה.";
 /*  */
 "yourPasswordHasBeenReset"="הסיסמא אותחלה בהצלחה. אנא התחבר כעת.";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="אם יש לך גיבוי של מפתח השחזור שלך, תוכל לאפס את הסיסמא שלך על ידי לחיצה על - כן. שום מידע לא יילך לאיבוד.";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="עדיין תוכל לגבות את מפתח השחזור שלך אם יש לך חשבון פתוח כרגע בדפדפן אחר במחשב זה או במחשב אחר. אם לא, לא תוכל לפענח את חשבונך, אך תוכל לפתוח חשבון חדש תחת אותה כתובת מייל על ידי בחירה ב-לא.";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="יש לך גיבוי של מפתח השחזור שלך?";
-/* Headline when the user chose YES */
-"great"="מצוין!";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="אנא הכנס את כתובת המייל שלך. תקבל קישור לעמוד שבוא תוכל להכניס את מפתח השחזור שלך ולשנות סיסמא.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="שלח";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="אופס!";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="עקב אלגוריתם ההצפנה קצה-אל-קצה שלנו, לא תוכל לגשת למידע שלך ללא הסיסמא או מפתח השחזור שלך.";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="תוכל להחנות את חשבונך ולפתוח אחד חדש תחת אותה כתובת מייל. המידע שלך יישמר ללפחות 60 יום. במקרה ותיזכר בסיסמא, אנא צור קשר עם support@mega.nz";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="אנא הכנס את כתובת המייל שלך למטה. תקבל קישור לעמוד בו תוכל להחנות את החשבון שלך.";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="החנה חשבון";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -1070,6 +1057,8 @@
 "chat"="צ'ט";
 /* Empty Conversations section */
 "noConversations"="אין שיחות";
+/* Empty Conversations description */
+"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="צ'ט בוטל";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1098,6 +1087,8 @@
 "changedGroupChatNameTo"="[A] שינה את שם הקבוצה ל'[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="הוסף משתתף...";
+/* Menu item to add participants to a chat */
+"addParticipants"="Add participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="מצב";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1473,3 +1464,17 @@
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
 /* state previous to import a file */
 "loading"="טוען...";
+/*   */
+"next"="הבא";
+/* Button title to allow the user ignore something */
+"ignore"="התעלם";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Open browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="Restart";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Resume playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%@ will continue at %@";
+/*  */
+"resume"="המשך";

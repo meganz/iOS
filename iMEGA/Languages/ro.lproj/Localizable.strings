@@ -258,6 +258,12 @@
 "folderAndFiles"="1 folder • %d fişier";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="În coada de aşteptare";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="Pus pe pauză";
+/* Label for the state of a transfer when is being completing - (String as short as possible). */
+"Completing..."="Se finalizează...";
+/* Label for the state of a transfer when is being retrying - (String as short as possible). */
+"Retrying..."="Se reîncearcă...";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Există descărcări în aşteptare";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -654,6 +660,8 @@
 "privacyPolicyLabel"="Politica de confidenţialitate";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Termenii de utilizare a serviciului";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Dezactivat";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -772,12 +780,8 @@
 "confirmPassword"="Confirmă parola";
 /* Success message shown when the password has been changed */
 "passwordChanged"="Parola ta a fost schimbată.";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="Parola nouă şi cea veche nu se pot potrivi.";
 /* An option to reset the password. */
 "forgotPassword"="Ai uitat parola?";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="Poţi reseta parola urmărind linkul de recuperare care va fi trimis către e-mailul tău.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Acest link de recuperare a expirat, te rugăm să încerci din nou.";
 /* Headline of the password reset recovery procedure */
@@ -792,26 +796,9 @@
 "youRecoveryKeyIsGoingTo"="Cheia de recuperare va fi folosită pentru a-ţi reseta parola. Te rugăm să introduci parola nouă.";
 /*  */
 "yourPasswordHasBeenReset"="Parola ta a fost resetată cu succes.  Te rugăm să te autentifici în contul tău acum.";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Dacă ai un backup al cheii tale de recuperare, îţi poţi reseta parola selectând DA. Niciuna dintre date nu va fi pierdută.";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="Poţi exporta în continuare cheia de recuperare acum dacă ai o sesiune MEGA activă în orice alt browser pe acesta sau orice alt calculator. Dacă nu ai, nu mai poţi decripta contul existent, însă poţi începe unul nou sub aceeaşi adresă de e-mail selectând NU.";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="Ai un backup al cheii tale de recuperare?";
-/* Headline when the user chose YES */
-"great"="Minunat!";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Te rugăm să introduci adresa ta de e-mail mai jos. Vei primi un link de recuperare care îţi va permite să trimiţi cheia de recuperare şi să îţi resetezi parola.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Trimite";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="Ups!";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Datorită paradigmei noastre de criptare capăt-la-capăt, nu vei putea să îţi accesezi datele fără, fie parola ta, fie un backup al cheii tale de recuperare.";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="Poţi parca contul existent şi să începi unul proaspăt sub aceeaşi adresă de e-mail. Datele tale vor fi păstrate pentru cel puţin 60 de zile. În cazul în care îţi aminteşti parola contului parcat, te rugăm să contactezi support@mega.nz";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="Te rugăm să introduci adresa de e-mail mai jos. Vei primi un link de recuperare care îţi va permite să parchezi contul.";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Cont parcat";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -1070,6 +1057,8 @@
 "chat"="Chat";
 /* Empty Conversations section */
 "noConversations"="Nicio conversaţie";
+/* Empty Conversations description */
+"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Chatul este dezactivat";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1098,6 +1087,8 @@
 "changedGroupChatNameTo"="[A] a schimbat numele chatului grupului în '[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Adaugă participant...";
+/* Menu item to add participants to a chat */
+"addParticipants"="Add participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Stare";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1473,3 +1464,17 @@
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
 /* state previous to import a file */
 "loading"="Se încarcă...";
+/*   */
+"next"="Înainte";
+/* Button title to allow the user ignore something */
+"ignore"="Ignoră";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Open browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="Reporneşte";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Resume playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%@ will continue at %@";
+/*  */
+"resume"="Reia";
