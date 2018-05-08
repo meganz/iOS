@@ -127,7 +127,7 @@
 /*  */
 "passwordStrong"="このパスワードは大抵の攻撃に対抗できるでしょう。絶対に忘れないようにして下さい。";
 /*  */
-"agreeWithTheMEGATermsOfService"="MEGA<a href='terms'>利用規約</a>に同意します。";
+"agreeWithTheMEGATermsOfService"="私は、MEGAの <a href='terms'>サービス規約</a>に同意します。";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="正しい名前を入力して下さい";
 /*  */
@@ -258,6 +258,12 @@
 "folderAndFiles"="1フォルダ　•　%d ファイル";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="待機中";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="一時停止中";
+/* Label for the state of a transfer when is being completing - (String as short as possible). */
+"Completing..."="完了中...";
+/* Label for the state of a transfer when is being retrying - (String as short as possible). */
+"Retrying..."="再試行中...";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="待機中ダウンロードあり";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -654,6 +660,8 @@
 "privacyPolicyLabel"="プライバシーポリシー";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="利用規約";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="オフ";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -772,12 +780,8 @@
 "confirmPassword"="パスワード確認";
 /* Success message shown when the password has been changed */
 "passwordChanged"="あなたのパスワードは変更されました。";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="新旧のパスワードが一致しません。";
 /* An option to reset the password. */
 "forgotPassword"="パスワードをわすれました？";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="あなたのメールアドレスに送信される回復リンクに従って、パスワードをリセットすることができます。";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="この回収リンクは期限切れです。やり直して下さい。";
 /* Headline of the password reset recovery procedure */
@@ -792,26 +796,9 @@
 "youRecoveryKeyIsGoingTo"="あなたの回復キーは、パスワードのリセットに使用されます。新しいパスワードを入力してください。";
 /*  */
 "yourPasswordHasBeenReset"="パスワードはリセットされています。新しいアカウントにログインして下さい。";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="あなたの回復キーのバックアップがある場合は、「はい」を選択してパスワードをリセットできます。データは失われません。";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="このコンピューターまたは他のコンピュータ上の他のブラウザでアクティブなMEGAセッションがある場合でも、回復キーをエクスポートできます。そうしないと、既存のアカウントを復号することはできなくなりますが、［いいえ］を選択して同じメールアドレスで新しいアカウントを開始することができます。";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="回復キーのバックアップはありますか？　";
-/* Headline when the user chose YES */
-"great"="了解。では…";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="以下にあなたのメールアドレスを入力してください。回復キーを送信してパスワードをリセットできる、回復リンクをあなたは受信します。";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="送信";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="おっと";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="当社のエンドツーエンド暗号化パラダイムにより、パスワードまたは回復キーのバックアップのいずれかがなければ、データにアクセスすることはできません。";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="既存のアカウントをそのままにしておいて、同じメールアドレスで新しいアカウントを開始することができます。あなたのデータは少なくとも60日間は保持されます。そのままにしておいたアカウントのパスワードを思い出した場合は、support@mega.nzまでご連絡ください。";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="以下にあなたのメールアドレスを入力してください。あなたはアカウントをそのままにしておける回復リンクを受信します。";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="古いアカウントを放っておく";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -1070,6 +1057,8 @@
 "chat"="チャット";
 /* Empty Conversations section */
 "noConversations"="会話なし";
+/* Empty Conversations description */
+"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="チャット無効";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1098,6 +1087,8 @@
 "changedGroupChatNameTo"="[A]はグループチャット名前を[B]に編集しました。";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="参加者を追加...";
+/* Menu item to add participants to a chat */
+"addParticipants"="Add participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="ステータス";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1473,3 +1464,17 @@
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
 /* state previous to import a file */
 "loading"="アップロード中";
+/*   */
+"next"="次へ";
+/* Button title to allow the user ignore something */
+"ignore"="無視する";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Open browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="再起動";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Resume playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%@ will continue at %@";
+/*  */
+"resume"="再開";

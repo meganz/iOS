@@ -127,7 +127,7 @@
 /*  */
 "passwordStrong"="Цей пароль зможе протистояти найбільш типовим атакам підбору паролів. Будь ласка, переконайтеся, що ви будете пам'ятати його.";
 /*  */
-"agreeWithTheMEGATermsOfService"="Я згоден з <a href='terms'>умовами</a> MEGA";
+"agreeWithTheMEGATermsOfService"="Я погоджуюсь з <a href='terms'>Умовами користування</a> MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Введіть дійсне ім'я";
 /*  */
@@ -258,6 +258,12 @@
 "folderAndFiles"="1 тека • %d файли(ів)";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="У черзі";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="Призупинено";
+/* Label for the state of a transfer when is being completing - (String as short as possible). */
+"Completing..."="Completing...";
+/* Label for the state of a transfer when is being retrying - (String as short as possible). */
+"Retrying..."="Retrying...";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="В очікуванні є завантаження";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -654,6 +660,8 @@
 "privacyPolicyLabel"="Політика Конфіденційності";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Умови Надання Послуг";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Вимк.";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -772,12 +780,8 @@
 "confirmPassword"="Підтвердити пароль";
 /* Success message shown when the password has been changed */
 "passwordChanged"="Ваш пароль було змінено.";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="Новий і старий паролі не повинні збігатися.";
 /* An option to reset the password. */
 "forgotPassword"="Забули пароль?";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="Ви можете відновити свій пароль натиснувши ланку відновлення, що надіслана на вашу е-пошту.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Час дії цієї ланки відновлення вичерпано, будь ласка, спробуйте ще раз.";
 /* Headline of the password reset recovery procedure */
@@ -792,26 +796,9 @@
 "youRecoveryKeyIsGoingTo"="Ваш ключ відновлення було використано для скидання паролю. Будь ласка, введіть новий пароль.";
 /*  */
 "yourPasswordHasBeenReset"="Ваш пароль успішно відновлено. Будь ласка, зайдіть у свій обліковий запис просто зараз.";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Якщо у вас є резервна копія ключа відновлення, ви можете відновити свій пароль, вибравши ТАК. Дані не будуть втрачені.";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="Як і раніше, ви можете експортувати ваш Ключ відновлення прямо зараз, якщо маєте активну сесію MEGA в будь-якому браузері на цьому чи іншому комп'ютері. Якщо ви цього не зробите, ви більше не зможете розшифрувати існуючий обліковий запис, але зможете розпочати новий з тією ж самою адресою е-пошти, обравши НІ.";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="Маєте резервну копію ключа відновлення?";
-/* Headline when the user chose YES */
-"great"="Чудово!";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Будь ласка, введіть нижче вашу адресу е-пошти. Ви отримаєте посилання відновлення, яке дозволить вам ввести ключ відновлення і скинути пароль.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Відправити";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="Ой!";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Завдяки парадигмі нашого крізного шифрування, ви не зможете отримати доступ до даних без вводу паролю або відновитись за допомогою ключа шифрування.";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="Ви можете запаркувати свій існуючий обліковий запис і створити новий з тією ж самою адресою е-пошти. Ваші дані будуть зберігатися протягом 60 днів. У разі відкликання паркування вашого облікового запису, будь ласка, зв'яжіться з support@mega.nz";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="Будь ласка, введіть нижче вашу адресу е-пошти. Ви отримаєте ланку відновлення, яка дозволить вам запаркувати свій акаунт.";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Залишити обліковий запис";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -1070,6 +1057,8 @@
 "chat"="Чат";
 /* Empty Conversations section */
 "noConversations"="Немає розмов";
+/* Empty Conversations description */
+"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Чат відключено";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1098,6 +1087,8 @@
 "changedGroupChatNameTo"="[A] змінив назву групи на '[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Додати учасника…";
+/* Menu item to add participants to a chat */
+"addParticipants"="Add participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Статус";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1473,3 +1464,17 @@
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
 /* state previous to import a file */
 "loading"="Завантаження…";
+/*   */
+"next"="Далі";
+/* Button title to allow the user ignore something */
+"ignore"="Ігнорувати";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Open browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="Restart";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Resume playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%@ will continue at %@";
+/*  */
+"resume"="Продовжити";

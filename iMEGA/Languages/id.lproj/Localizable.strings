@@ -127,7 +127,7 @@
 /*  */
 "passwordStrong"="Password ini akan menahan serangan brute-force yang paling rumit. Harap pastikan bahwa anda akan mengingat password anda.";
 /*  */
-"agreeWithTheMEGATermsOfService"="Saya menerima <a href='terms'>Ketentuan Penggunaan</a> MEGA";
+"agreeWithTheMEGATermsOfService"="Saya setuju dengan <a href='terms'>Kebijakan Pelayanan MEGA</a>";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Masukan nama yang benar";
 /*  */
@@ -258,6 +258,12 @@
 "folderAndFiles"="1 folder • %d file";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Dimasukan antrian";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="Berhenti sementara";
+/* Label for the state of a transfer when is being completing - (String as short as possible). */
+"Completing..."="Melengkapi ...";
+/* Label for the state of a transfer when is being retrying - (String as short as possible). */
+"Retrying..."="Mencoba lagi ...";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Terdapat pending download";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -654,6 +660,8 @@
 "privacyPolicyLabel"="Kebijakan Privasi";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Ketentuan Penggunaan";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Off";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -772,12 +780,8 @@
 "confirmPassword"="Konfirmasi password";
 /* Success message shown when the password has been changed */
 "passwordChanged"="Kata sandi anda telah dirubah.";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="Password baru dan lama tidak sama.";
 /* An option to reset the password. */
 "forgotPassword"="Lupa password?";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="Anda dapat me-reset password anda dengan mengikuti recovery link yang akan dikirim ke email anda.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Recovery link ini telah kadaluarsa, harap coba kembali.";
 /* Headline of the password reset recovery procedure */
@@ -792,26 +796,9 @@
 "youRecoveryKeyIsGoingTo"="Recovery Key anda akan dipakai untuk me-reset password anda. Harap, masukan password baru anda.";
 /*  */
 "yourPasswordHasBeenReset"="Password telah sukses direset. Harap masuk ke akun anda sekarang.";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Jika Anda memiliki cadangan Recovery Key, Anda dapat mereset kata sandi Anda dengan memilih YES. Tidak ada data yang hilang.";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="Anda masih tetap dapat meng-ekspor Recovery Key anda sekarang jika anda memiliki sesi MEGA yang aktif pada browser lainnya pada komputer ini atau komputer lain. Jika anda tidak memilikinya, anda tidak lagi dapat men-dekripsi akun anda, namun anda dapat memulai akun baru dengan alamat e-mail yang sama dengan memilih TIDAK.";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="Apakah Anda memiliki cadangan dari Recovery Key Anda?";
-/* Headline when the user chose YES */
-"great"="Bagus!";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Harap masukan alamat email anda di bawah. Anda akan menerima recovery link yang membolehkan anda untuk memasukan Recovery Key anda dan me-reset password anda.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Kirim";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="Oops!";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Karena paradigma enkripsi end-to-end kami, Anda tidak akan dapat mengakses data Anda tanpa kata sandi atau cadangan Recovery Key Anda.";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="Anda dapat memparkir akun anda dan memulai ulang dengan email yang sama. Data anda akan kami simpan selama setidaknya 60 hari. Jika anda mengingat password dari akun yang sedang anda parkir, harap kontak support@mega.nz";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="Harap masukan alamat email anda di bawah ini. Anda akan menerima recovery link yang akan membolehkan anda memparkir akun anda.";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Parkir akun";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -1070,6 +1057,8 @@
 "chat"="Chat";
 /* Empty Conversations section */
 "noConversations"="Tidak ada percakapan";
+/* Empty Conversations description */
+"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Percakapan dinonaktifkan";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1098,6 +1087,8 @@
 "changedGroupChatNameTo"="[A] mengganti nama percakapan grup menjadi '[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Tambah participant...";
+/* Menu item to add participants to a chat */
+"addParticipants"="Add participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1193,7 +1184,7 @@
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="Percakapan dengan %@";
 /* Title show above the name of the persons with whom you're chatting */
-"chattingWith"="Chatting with";
+"chattingWith"="Chatting dengan";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA melindungi chat anda dengan enkripsi menyeluruh (diatur oleh pengguna) yang memberikan jaminan keamanan:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1263,13 +1254,13 @@
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="Melampirkan %s file.";
 /* A summary message when a user sent the information of one contact through the chat. */
-"sharedContact"="Shared this contact:";
+"sharedContact"="Bagikan kontak ini:";
 /* A summary message when a user sent the information of some contacts at once through the chat. */
-"sharedContacts"="Shared these contacts:";
+"sharedContacts"="Bagikan kontak ini:";
 /* A summary message when a user has attached one file into the chat. */
-"uploadedFile"="Uploaded this file:";
+"uploadedFile"="Unggah file ini:";
 /* A summary message when a user has attached many files at once into the chat. */
-"uploadedFiles"="Uploaded these files:";
+"uploadedFiles"="Unggah file-file ini:";
 /* Label in a button that allows to jump to the latest item */
 "jumpToLatest"="Jump to latest";
 /* Label in a button that allows to jump to the latest message */
@@ -1360,21 +1351,21 @@
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="Panggilan...";
 /* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="Missed audio call";
+"missedAudioCall"="Panggilan audio tidak terjawab";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A] missed audio calls";
+"missedAudioCalls"="[A] panggilan audio tidak terjawab";
 /* Notification text body shown when you have missed one video call */
-"missedVideoCall"="Missed video call";
+"missedVideoCall"="Panggilan video tidak terjawab";
 /* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A] missed video calls";
+"missedVideoCalls"="[A] panggilan video tidak terjawab";
 /* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="Missed audio call and missed video call";
+"missedAudioCallAndMissedVideoCall"="Panggilan audio tidak terjawab dan panggilan video tidak terjawab";
 /* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="Missed audio call and [A] missed video calls";
+"missedAudioCallAndMissedVideoCalls"="Panggilan audio tidak terjawab dan [A] meleset panggilan video";
 /* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A] missed audio calls and missed video call";
+"missedAudioCallsAndMissedVideoCall"="[A] panggilan audio tidak terjawab dan panggilan video tidak terjawab";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";
+"missedAudioCallsAndMissedVideoCalls"="[A] panggilan audio tidak terjawab dan [B] meleset panggilan video";
 /* Button title to see the available bonus */
 "getBonus"="Get Bonus";
 /* QR Code label, used in Settings as title. String as short as possible */
@@ -1473,3 +1464,17 @@
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
 /* state previous to import a file */
 "loading"="Memuat...";
+/*   */
+"next"="Berikut";
+/* Button title to allow the user ignore something */
+"ignore"="Abaikan";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Open browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="Restart";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Resume playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%@ will continue at %@";
+/*  */
+"resume"="Lanjutkan";

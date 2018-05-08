@@ -127,7 +127,7 @@
 /*  */
 "passwordStrong"="Mật khẩu này chịu được tốt việc tấn công thử dò mật khẩu (brute-force) tinh vi. Hãy chắc rằng bạn ghi nhớ được mật khẩu này.";
 /*  */
-"agreeWithTheMEGATermsOfService"="Tôi đồng ý với <a href='terms'>Điều khoản dịch vụ</a> của  MEGA";
+"agreeWithTheMEGATermsOfService"="Tôi đồng ý với <a href='terms'>Điều Khoản Dịch Vụ</a> của MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Xin nhập một tên hợp lệ";
 /*  */
@@ -258,6 +258,12 @@
 "folderAndFiles"="1 thư mục • %d tệp tin";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Đang chờ";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="Đã tạm dừng";
+/* Label for the state of a transfer when is being completing - (String as short as possible). */
+"Completing..."="Đang hoàn tất...";
+/* Label for the state of a transfer when is being retrying - (String as short as possible). */
+"Retrying..."="Đang thử lại...";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Hiện đang có phiên tải xuống đang chờ";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -654,6 +660,8 @@
 "privacyPolicyLabel"="Chính Sách Quyền Riêng Tư";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Điều Khoản Sử Dụng Dịch Vụ";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Tắt";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -772,12 +780,8 @@
 "confirmPassword"="Xác nhận mật khẩu";
 /* Success message shown when the password has been changed */
 "passwordChanged"="Bạn vừa đổi mật khẩu.";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="Mật khẩu mới và cũ không được giống nhau.";
 /* An option to reset the password. */
 "forgotPassword"="Quên mất mật khẩu?";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="Một đường liên kết sẽ được gửi tới hộp thư email của bạn để tiến hành quá trình đặt lại mật khẩu.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Liên kết phục hồi này đã bị hết hạn, xin thử lại.";
 /* Headline of the password reset recovery procedure */
@@ -792,26 +796,9 @@
 "youRecoveryKeyIsGoingTo"="Mã Khóa Phục Hồi này sẽ được dùng để đặt lại mật khẩu. Nhập cẩn thận mật khẩu mới bạn muốn dùng.";
 /*  */
 "yourPasswordHasBeenReset"="Mật khẩu đã được đặt lại thành công. Bạn có thể đăng nhập vào tài khoản ngay bây giờ.";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Nếu bạn có Mã Khóa Phục Hồi, nhấn CÓ. Bạn sẽ được phép đặt lại mật khẩu mà không bị mất dữ liệu của tài khoản.";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="Bạn vẫn có thể xuất ra Mã Phục Hồi ngay bây giờ nếu bạn đang có một phiên MEGA đang hoạt động từ bất kỳ máy tính nào có MEGA được đăng nhập vào trình duyệt web. Nếu không có, bạn không thể truy cập vào tài khoản của mình được nữa, nhưng bạn vẫn có thể đăng ký lại một tài khoản mới với cùng địa chỉ email, bằng cách chọn nút KHÔNG.";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="Bạn có Mã Khóa Phục Hồi của tài khoản không?";
-/* Headline when the user chose YES */
-"great"="Vậy thì tốt!";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Xin nhập địa chỉ email của bạn ở dưới đây. Bạn sẽ nhận được một thư email có chứa đường liên kết khôi phục tài khoản để nhập Mã Phục Hồi và đặt lại mật khẩu.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Gửi";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="Ây!";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Vì đặc tính của phương thức mã hóa đầu-cuối, sẽ không có cách nào để truy cập vào dữ liệu của tài khoản nếu quên mất mật khẩu và không có Mã Phục Hồi được đề phòng sẵn.";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="Bạn có thể thay thế mới tài khoản hiện có của mình và bắt đầu một cái mới với cùng địa chỉ email. Trong vòng 60 ngày nếu bạn nhớ ra mật khẩu của tài khoản cũ, xin vui lòng liên lạc với support@mega.nz";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="Xin nhập địa chỉ email của bạn ở dưới đây. Sau đó vào kiểm tra hộp thư email đó, bạn sẽ thấy một thư có chứa đường liên kết để thay thế tài khoản.";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Thay mới tài khoản";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -1070,6 +1057,8 @@
 "chat"="Chat";
 /* Empty Conversations section */
 "noConversations"="Không có Cuộc Trò Chuyện nào";
+/* Empty Conversations description */
+"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Chat bị tắt";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1098,6 +1087,8 @@
 "changedGroupChatNameTo"="[A] đã thay đổi tên nhóm chat thành '[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Mời thêm người vào trò chuyện...";
+/* Menu item to add participants to a chat */
+"addParticipants"="Add participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Trạng thái";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1473,3 +1464,17 @@
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
 /* state previous to import a file */
 "loading"="Đang tải...";
+/*   */
+"next"="Kế tiếp";
+/* Button title to allow the user ignore something */
+"ignore"="Bỏ Qua";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Open browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="Khởi động lại MEGAsync";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Resume playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%@ will continue at %@";
+/*  */
+"resume"="Tiếp tục truyền tải";

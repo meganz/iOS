@@ -127,7 +127,7 @@
 /*  */
 "passwordStrong"="To hasło będzie wytrzymałe na najbardziej wyrafinowane ataki brute-force. Upewnij się, że jesteś w stanie je zapamiętać.";
 /*  */
-"agreeWithTheMEGATermsOfService"="Zgadzam się z <a href='terms'>Warunkami serwisu MEGA</a>";
+"agreeWithTheMEGATermsOfService"="Akeceptuję <a href='terms'>regulamin</a> MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Wprowadź poprawną nazwę";
 /*  */
@@ -258,6 +258,12 @@
 "folderAndFiles"="1 katalog • %d plików";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Zakolejkowane";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="Zatrzymane";
+/* Label for the state of a transfer when is being completing - (String as short as possible). */
+"Completing..."="Zakańczanie...";
+/* Label for the state of a transfer when is being retrying - (String as short as possible). */
+"Retrying..."="Ponawiam próbę...";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Brak oczekujących pobrań";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -654,6 +660,8 @@
 "privacyPolicyLabel"="Polityka Prywatności";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Warunki korzystania z Serwisu";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Wył";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -772,12 +780,8 @@
 "confirmPassword"="Potwierdź hasło";
 /* Success message shown when the password has been changed */
 "passwordChanged"="Twoje hasło zostało zmienione.";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="Nowe i poprzednie hasło nie pasują do siebie.";
 /* An option to reset the password. */
 "forgotPassword"="Zapomniałeś hasła?";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="Możesz zresetować hasło poprzez kliknięcie w link w otrzymanym emailu.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Link do odzyskania hasła wygasł, proszę spróbować ponownie.";
 /* Headline of the password reset recovery procedure */
@@ -792,26 +796,9 @@
 "youRecoveryKeyIsGoingTo"="Twój klucz zostanie użyty aby zresetować Twoje hasło. Wprowadź nowe hasło.";
 /*  */
 "yourPasswordHasBeenReset"="Hasło zostało zresetowane pomyślnie. Zaloguj się teraz do konta.";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Jeżeli posiadasz kopię klucza, możesz zresetować swojego hasło klikając TAK. Dane nie zostaną utracone.";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="Zawsze możesz wyeksportować swój klucz podczas aktywnej sesji na MEGA. Zawsze możesz utworzyć nowego konto na ten sam adres email poprzez kliknięcie NIE.";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="Czy posiadasz kopię swojego klucza?";
-/* Headline when the user chose YES */
-"great"="Super!";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Wpisz adres e-mail poniżej. Otrzymasz link w którym będziesz mógł umieścić swój klucz i zresetować hasło.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Wyślij";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="Upss!";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Ze względu na mechanizmy szyfrowania, nie będziesz miał możliwości dostępu do swoich danych bez prawidłowgo hasła lub klucza.";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="Możesz zaparkować swoje konto i utworzyć nowe na ten sam adres email. Twoje dane będą przechowywane przez 60 dni. W przypadku chęci odzyskania danych napisz do nas support@mega.nz";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="Wprowadź adres email poniżej. Otrzymasz link, który umożliwi zachowanie Twojego konta.";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Zaparkuj konto";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -1003,7 +990,7 @@
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="Podlega zasadom opisanym w programie osiągnięć.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%@ per month";
+"productPricePerMonth"="%@ na miesiąc";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Wybierz konto z listy poniżej:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
@@ -1070,6 +1057,8 @@
 "chat"="Chat";
 /* Empty Conversations section */
 "noConversations"="Brak rozmów";
+/* Empty Conversations description */
+"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Czat jest zablokowany";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1098,6 +1087,8 @@
 "changedGroupChatNameTo"="[A] zmienił nazwę czatu na '[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Dodaj uczestnika...";
+/* Menu item to add participants to a chat */
+"addParticipants"="Add participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1473,3 +1464,17 @@
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
 /* state previous to import a file */
 "loading"="Pobieranie danych...";
+/*   */
+"next"="Następny";
+/* Button title to allow the user ignore something */
+"ignore"="Zignorowane";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Open browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="Zrestartuj";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Resume playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%@ will continue at %@";
+/*  */
+"resume"="Wznów";
