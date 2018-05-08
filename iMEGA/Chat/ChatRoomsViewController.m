@@ -15,6 +15,7 @@
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
+#import "MEGAChatChangeGroupNameRequestDelegate.h"
 
 #import "ChatRoomCell.h"
 #import "ChatSettingsTableViewController.h"
@@ -128,11 +129,19 @@
     }
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.tableView reloadEmptyDataSet];
+    } completion:nil];
+}
+
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     NSString *text = @"";
-    if (self.searchController.isActive ) {
+    if (self.searchController.isActive) {
         if (self.searchController.searchBar.text.length > 0) {
             text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
         }
@@ -144,15 +153,26 @@
                 text = AMLocalizedString(@"noInternetConnection",  @"Text shown on the app when you don't have connection to the internet or when you have lost it");
             }
         } else {
-            return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"noConversations", @"Empty Conversations section") sectionTitle:AMLocalizedString(@"conversations", @"Conversations section")];
+            text = AMLocalizedString(@"noConversations", @"Empty Conversations section");
         }
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    NSString *text = @"";
+
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+        text = AMLocalizedString(@"noConversationsDescription", @"Empty Conversations description");
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:14.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     if ([MEGAReachabilityManager isReachable]) {
@@ -164,7 +184,7 @@
                 return nil;
             }
         } else {
-            return [UIImage imageNamed:@"emptyContacts"];
+            return [UIImage imageNamed:@"chatEmptyState"];
         }
     } else {
         return [UIImage imageNamed:@"noInternetConnection"];
@@ -181,7 +201,7 @@
         }
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:20.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor whiteColor]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -190,7 +210,7 @@
     UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
     UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
     
-    return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
+    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
@@ -649,7 +669,7 @@
     ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
     contactsVC.contactsMode = ContactsModeChatStartConversation;
     MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-    contactsVC.userSelected =^void(NSArray *users) {
+    contactsVC.userSelected = ^void(NSArray *users, NSString *groupName) {
         if (users.count == 1) {
             MEGAUser *user = [users objectAtIndex:0];
             MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
@@ -685,7 +705,12 @@
             
             MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
                 messagesVC.chatRoom = chatRoom;
-                [self.navigationController pushViewController:messagesVC animated:YES];                
+                if (groupName) {
+                    MEGAChatChangeGroupNameRequestDelegate *changeGroupNameRequestDelegate = [[MEGAChatChangeGroupNameRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
+                        [self.navigationController pushViewController:messagesVC animated:YES];
+                    }];
+                    [[MEGASdkManager sharedMEGAChatSdk] setChatTitle:chatRoom.chatId title:groupName delegate:changeGroupNameRequestDelegate];
+                }
             }];
             [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:YES peers:peerList delegate:createChatGroupRequestDelegate];
         }

@@ -63,9 +63,9 @@
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="서버가 너무 바쁩니다. 잠시 기다리세요.";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
-"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+"unableToReachMega"="MEGA에 접속할 수 없습니다. 연결을 확인하거나 나중에 다시 시도하세요.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
-"tooManyRequest"="Too many requests. Please wait.";
+"tooManyRequest"="요청이 너무 많습니다. 기다려주세요.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="당신의 계정에 로그인하세요.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -127,7 +127,7 @@
 /*  */
 "passwordStrong"="이 비밀번호는 대부분의 정교한 무한 대입 공격을 버틸 것입니다. 확실히 기억해두세요.";
 /*  */
-"agreeWithTheMEGATermsOfService"="나는 MEGA의 <a href='terms'>이용 약관</a>에 동의합니다.";
+"agreeWithTheMEGATermsOfService"="MEGA의 <a href='terms'>이용약관</a>에 동의합니다";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="올바른 이름을 입력하세요";
 /*  */
@@ -258,6 +258,12 @@
 "folderAndFiles"="1 폴더 • %d 파일";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="대기열";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="일시정지됨";
+/* Label for the state of a transfer when is being completing - (String as short as possible). */
+"Completing..."="완료중...";
+/* Label for the state of a transfer when is being retrying - (String as short as possible). */
+"Retrying..."="재시도중...";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="대기중인 다운로드가 있습니다";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -654,6 +660,8 @@
 "privacyPolicyLabel"="개인 정보 보호 정책";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="이용 약관";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="끔";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -772,12 +780,8 @@
 "confirmPassword"="비밀번호 확인";
 /* Success message shown when the password has been changed */
 "passwordChanged"="비밀번호가 변경되었습니다.";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="새 비밀번호와 옛 비밀번호가 달라야합니다.";
 /* An option to reset the password. */
 "forgotPassword"="비밀번호를 잊었나요?";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="이메일로 발송된 복구 링크를 통해 비밀번호를 재설정할 수 있습니다.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="이 복구 링크는 만료된 것으로 보입니다. 다시 시도하세요.";
 /* Headline of the password reset recovery procedure */
@@ -792,26 +796,9 @@
 "youRecoveryKeyIsGoingTo"="복구 키는 비밀번호를 초기화하는데에 사용될 것입니다. 새 비밀번호를 입력하세요.";
 /*  */
 "yourPasswordHasBeenReset"="비밀번호가 성공적으로 재설정되었습니다. 이제 당신의 계정으로 로그인할 수 있습니다.";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="복구 키의 백업을 가지고 있다면, 예를 눌러서 비밀번호를 재설정할 수 있습니다. 데이터가 손실되지 않습니다.";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="이 컴퓨터나 다른 컴퓨터에 활성 MEGA 세션이 있다면 복구 키를 내보낼 수 있습니다. 그렇지 않다면, 기존 계정을 더 이상 해독할 수 없고, 아니오를 선택하여 기존 이메일 주소에 새 계정을 시작할 수 있습니다.";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="복구 키의 백업을 가지고 계신가요?";
-/* Headline when the user chose YES */
-"great"="좋습니다!";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="아래에 이메일 주소를 입력하세요. 복구 키를 입력하고 비밀번호를 재설정할 수 있는 복구 링크를 받게 됩니다.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="보내기";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="이런!";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="우리의 종단간 암호화 패러다임으로 인해, 당신의 비밀번호나 복구 키 없이 당신의 데이터에 접근할 수 없습니다.";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="당신은 기존 계정을 보류하고 같은 이메일 주소로 새 계정을 만들 수 있습니다. 당신의 데이터는 최소 60일간 보관됩니다. 만약 보류된 계정의 비밀번호가 생각났다면, support@mega.nz로 연락주세요.";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="아래에 이메일 주소를 입력하세요. 계정을 보류할 수 있는 복구 링크를 받게 됩니다.";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="계정 보류";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -1070,6 +1057,8 @@
 "chat"="대화";
 /* Empty Conversations section */
 "noConversations"="대화 없음";
+/* Empty Conversations description */
+"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="대화가 비활성화됨";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1098,6 +1087,8 @@
 "changedGroupChatNameTo"="[A]님이 단체 대화 이름을 '[B]'로 변경하였습니다.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="참가자 추가";
+/* Menu item to add participants to a chat */
+"addParticipants"="Add participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="상태";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1275,9 +1266,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="새 메시지";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu unread message";
+"unreadMessage"="%lu개의 읽지 않은 메시지";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu unread messages";
+"unreadMessages"="%lu개의 읽지 않은 메시지";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="구독은 처음 선택했던 기간과 동일한 가격과 동일한 기간으로 자동으로 연장됩니다. 다음 구독 결제 24시간 전에 당신의 iTunes 계정 설정 페이지에서 자동 결제를 제거할 수 있습니다. 구독을 관라허려면, 휴대전화에서 앱 스토어를 클릭하여 페이지 하단에서 애플 ID로 로그인하세요 (만약 하지 않았다면) 그리고 ID 보기를 클릭하세요. 앱 구독 관리 페이지로 내려갈 수 있는 계정 페이지가 보이게 됩니다. 거기서, MEGA PRO 구독을 선택할 수 있고, 예정된 갱신일을 보고, 다른 구독 패키지 선택 또는 구독의 자동 갱신을 해제할 수 있는 스위치를 끌 수 있습니다.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1450,13 +1441,13 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="비밀번호가 기억났나요?";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+"remindPasswordText"="MEGA의 암호화 기술로 인하여 데이터 손실 없이 비밀번호를 초기화할 수 없습니다. 비밀번호를 반드시 기억하도록 하세요.";
 /* Text that describes why the user should test his/her password before logging out */
-"remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
+"remindPasswordLogoutText"="로그아웃 하기 전에 당신의 복구 키를 안전한 곳에 복사할 것을 권장합니다. 복구 키를 잊어버렸을 경우 비밀번호를 초기화할 수 없다는 사실을 기억하세요.";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="Don’t show me again";
+"dontShowAgain"="다시 보여주지 마세요";
 /* Label for test password button and titles */
-"testPassword"="Test Password";
+"testPassword"="비밀번호 테스트";
 /* Label for recovery key button */
 "backupRecoveryKey"="복구 키 백업";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
@@ -1468,8 +1459,22 @@
 /* A dialog title to export the Recovery Key for the current user. */
 "exportRecoveryKey"="복구 키 내보내기";
 /* Title to confirm that you want to logout */
-"proceedToLogout"="Proceed to logout";
+"proceedToLogout"="로그아웃 진행";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+"testPasswordLogoutText"="당신은 로그아웃 하려고 합니다, 당신이 비밀번호를 기억하는지 비밀번호를 테스트하세요. 만약 비밀번호를 잊어버리면, 당신의 MEGA 데이터에 접근할 수 없습니다.";
 /* state previous to import a file */
 "loading"="불러오는 중...";
+/*   */
+"next"="다음";
+/* Button title to allow the user ignore something */
+"ignore"="무시";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Open browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="재시작";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Resume playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%@ will continue at %@";
+/*  */
+"resume"="재개";

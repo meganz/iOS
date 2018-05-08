@@ -127,7 +127,7 @@
 /*  */
 "passwordStrong"="Ang password na ito ay matatagalan ang mas matiniding atake ng mga hackers. Siguraduhin lamang na matatandaan mo ito.";
 /*  */
-"agreeWithTheMEGATermsOfService"="Sinasang-ayunan ko ang <a href='terms'>Terms of Service</a> ng MEGA";
+"agreeWithTheMEGATermsOfService"="Pumapayag ako sa <a href='terms'>Terms of Service</a> ng MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Maglagay ng valid na pangalan";
 /*  */
@@ -258,6 +258,12 @@
 "folderAndFiles"="isang folder • %d na files";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Na-queued";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="Itinigil";
+/* Label for the state of a transfer when is being completing - (String as short as possible). */
+"Completing..."="Tinatapos…";
+/* Label for the state of a transfer when is being retrying - (String as short as possible). */
+"Retrying..."="Sinusubukan…";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Mayroong pending downloads";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -525,7 +531,7 @@
 /* Title of the Offline section */
 "offline"="Offline";
 /* Title of the Contacts section */
-"contactsTitle"="Mga Koneksyon";
+"contactsTitle"="Contacts";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 folder";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -654,6 +660,8 @@
 "privacyPolicyLabel"="Pribadong Patakaran";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Terms of Service";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Off";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -772,12 +780,8 @@
 "confirmPassword"="Kumpirmahin ang password";
 /* Success message shown when the password has been changed */
 "passwordChanged"="Nabago na ang iyong passsword.";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="Ang bago at lumang password ay hindi tugma.";
 /* An option to reset the password. */
 "forgotPassword"="Nalimutan ang password?";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="Sundan ang recovery link na ipapadala sa emai mo upang mai-reset ang password.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Ang recovery link ay lipas na, subukang muli.";
 /* Headline of the password reset recovery procedure */
@@ -792,26 +796,9 @@
 "youRecoveryKeyIsGoingTo"="Gagamitin ang iyong Recovery Key para ireset ang iyong password. Makikiusap na ilagay ang bagong password.";
 /*  */
 "yourPasswordHasBeenReset"="Ang password ay nabago na. Maglog in na sa inyong account.";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Kung mayroon kang backup ng iyong Recovery Key, pupwede mong ireset ang iyong password sa pagpili ng OO. Walang data ang mawawala.";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="Kung mayroon ka pang active session sa MEGA o sa alinmang browser dito o sa ibang computer, pupwede mo pa i-export ang iyong Recovery Key. Kung hindi naman, hindi mo made-decrypt ang iyong kasalukuyang accout, pero pwede kang magsimula ng bagong account sa ilalim ng parehas na e-mail address sa pagpili ng HINDI.";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="Meron ka bang backup ng iyong Recovery Key?";
-/* Headline when the user chose YES */
-"great"="'Yun oh!";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Ilagay ang e-mail address sa ibaba. Makakatanggap ka ng recovery link na mabibigay daan sa iyo upang maisumite ang Recovery Key at upang i-reset ang iyong password.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Ipadala";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="Naku!";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Dahil sa aming end-to-end encryption paradigm, hindi mo pupwedeng puntahan ang iyong data ng walang password o ng backup ng iyong Recovery Key.";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="Pupwede mong i-park ang iyong kasalukuyang account at magsimula ng bagong account sa ilalim ng iisang e-mail address. Ang iyong data ay mananatili sa loob ng 60 na araw. Kung sakaling matandaan mo ang password ng naka-park na account, i-contact kami sa support@mega.nz";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="Ilagay ang iyong e-mail address sa ibaba. Makakatanggap ka ng recovery link na magbibigay daan upang mai-park mo ang iyong account.";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Park account";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -1070,6 +1057,8 @@
 "chat"="Chat";
 /* Empty Conversations section */
 "noConversations"="Walang Conversations";
+/* Empty Conversations description */
+"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Ihinihinto muna ang Chat";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1098,6 +1087,8 @@
 "changedGroupChatNameTo"="[A] changed group chat name to '[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Magdagdag ng kasali...";
+/* Menu item to add participants to a chat */
+"addParticipants"="Add participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1340,7 +1331,7 @@
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Di matukoy na error";
 /* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="You will need to restart MEGA after changing the language";
+"languageRestartAlert"="Kinakailangan mag-restart ng MEGA pagkatapos magbago ng wika";
 /* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
 "languageRestartNotification"="Language changed. Tap to restart.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
@@ -1473,3 +1464,17 @@
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
 /* state previous to import a file */
 "loading"="Nag-loload...";
+/*   */
+"next"="Kasunod";
+/* Button title to allow the user ignore something */
+"ignore"="Talikuran";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Open browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="Restart";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Resume playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%@ will continue at %@";
+/*  */
+"resume"="I-resume";

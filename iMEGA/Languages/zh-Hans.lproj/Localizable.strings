@@ -37,7 +37,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="您不能下载空的文件夹。";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="帐号已可使用。请登入。";
+"accountAlreadyConfirmed"="账号已可使用。请登入。";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="无效的链接";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -63,11 +63,11 @@
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="服务器忙碌中。请稍候...";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
-"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+"unableToReachMega"="无法连接MEGA。请检查您的连接或稍后再试。";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
-"tooManyRequest"="Too many requests. Please wait.";
+"tooManyRequest"="请求太多。请稍候。";
 /* Alert title shown when you need to log in to continue with the action you want to do */
-"pleaseLogInToYourAccount"="请登入您的帐号。";
+"pleaseLogInToYourAccount"="请登入您的账号。";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA 存储空间";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -95,7 +95,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="请检查您的电子信箱，并点击信中的链接以确认激活您的帐户。";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="您的帐号已被锁定。请连系support@mega.nz";
+"accountBlocked"="您的账号已被锁定。请连系support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="请输入有效的邮箱地址";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -135,7 +135,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="密码不匹配";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="您需要同意MEGA服务条款才可注册帐号。";
+"termsCheckboxUnselected"="您需要同意MEGA服务条款才可注册账号。";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="这个电子邮件信箱在Mega已被注册。";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -143,7 +143,7 @@
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="请输入您的密码来确认账户";
 /* Button title that triggers the confirm account action */
-"confirmAccountButton"="确认您的帐号";
+"confirmAccountButton"="确认您的账号";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="错误密码";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
@@ -258,6 +258,12 @@
 "folderAndFiles"="1 文件夹• %d 文件";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="已入进程";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="暂停";
+/* Label for the state of a transfer when is being completing - (String as short as possible). */
+"Completing..."="即将完成...";
+/* Label for the state of a transfer when is being retrying - (String as short as possible). */
+"Retrying..."="重试中...";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="该文件有待处理的下载";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -327,11 +333,11 @@
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="创建共享链接";
 /* Item menu option upon right click on one or multiple files. */
-"manageLink"="管理连接";
+"manageLink"="管理链接";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
 "manageLinks"="管理链接";
 /* Message shown when a link to a file or folder is being generated */
-"generatingLink"="正在生成连接...";
+"generatingLink"="正在生成链接...";
 /* Message shown when some links to files and/or folders are being generated */
 "generatingLinks"="正在生产链接...";
 /* Message shown when the link has been copied to the pasteboard */
@@ -654,6 +660,8 @@
 "privacyPolicyLabel"="隐私政策";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="服务条款";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="关闭";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -687,7 +695,7 @@
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
 "recoveryKeyCopiedToClipboard"="已复制还原金钥至剪贴簿";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="已汇出还原金钥";
+"masterKeyExported"="恢复金匙已导出";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="还原金钥已以RecoveryKey.txt(还原金钥文字档)汇出至离线模式中。注意：您登出后它将会被删除，请将其存放于安全之处。";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
@@ -717,17 +725,17 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="目前已使用%s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="注销帐户";
+"cancelYourAccount"="注销账户";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
-"youWillLooseAllData"="您将遗失所有与此帐户相关的资料，确定要继续吗？";
+"youWillLooseAllData"="您将遗失所有与此账户相关的资料，确定要继续吗？";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
 "ifYouCantAccessYourEmailAccount"="如果您无法进入您的信箱，请联系support@mega.nz。";
 /* During account cancellation (deletion) */
-"cancellationLinkHasExpired"="注销连接已失效。";
+"cancellationLinkHasExpired"="注销链接已失效。";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
-"enterYourPasswordToConfirmThatYouWanToClose"="这是删除帐户的最后步骤。您将永久遗失储存在云端空间中的所有资料。请于下方输入您的密码。";
+"enterYourPasswordToConfirmThatYouWanToClose"="这是删除账户的最后步骤。您将永久遗失储存在云端空间中的所有资料。请于下方输入您的密码。";
 /* Account closure, password check dialog when user click on closure email. */
-"closeAccount"="注销帐户";
+"closeAccount"="注销账户";
 /* Title for the action that allows to remove a file or folder */
 "remove"="删除";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
@@ -772,12 +780,8 @@
 "confirmPassword"="确认密码";
 /* Success message shown when the password has been changed */
 "passwordChanged"="您的密码已被更改。";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="新的密码不能与您现在的密码相同。";
 /* An option to reset the password. */
 "forgotPassword"="忘记密码了？";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="您可以重新设定密码，请依稍后会寄至您的电子信箱的还原链接操作。";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="这个恢复链接已失效，请再试一次。";
 /* Headline of the password reset recovery procedure */
@@ -791,35 +795,18 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="还原金钥将被用于重设您的密码。请输入您的新密码。";
 /*  */
-"yourPasswordHasBeenReset"="密码已重置。请立即登入帐户。";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="如果您备份了还原金钥，则可以通过选择是重置密码。没有数据将丢失。";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="若您现在于此电脑的其他浏览器中或其他电脑中，仍开有已登入MEGA的页面，您还有机会可以汇出还原金钥。如果您没有，您将无法再解密或登入您现有的帐户，但您可以选择「否」以使用同一电子信箱重新注册。";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="您有恢复金匙的备份吗";
-/* Headline when the user chose YES */
-"great"="很好!";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="请于下方输入您的电子邮件地址。您将收到一个还原链接，让您可以提交您的还原金钥并重置密码。";
+"yourPasswordHasBeenReset"="密码已重置。请立即登入账户。";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="送出";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="噢！";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="由于我们的端到端加密，没有您的密码或还原金钥的备份，您将无法访问您的数据。";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="您可以先封存现有的帐户，再以同一个电子信箱重新注册。您的资料将会被保存至少60天。在这之间，如果您回想起您此一封存帐号的密码，请联系support@mega.nz以寻求恢复协助。";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="请于下方输入您的电子邮件地址。您将收到还原金钥链接，让您可以封存您的帐户。";
 /* Headline for parking an account (basically restarting from scratch) */
-"parkAccount"="封存帐号";
+"parkAccount"="封存账号";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
-"startingFreshAccount"="我已了解我正在重新注册一个全新且空白的帐户。除非我能想起原本的密码，或者找到之前汇出之还原金钥，否则我将失去我现在帐户中的所有资料。";
+"startingFreshAccount"="我已了解我正在重新注册一个全新且空白的账户。除非我能想起原本的密码，或者找到之前汇出之还原金钥，否则我将失去我现在账户中的所有资料。";
 /* Caption of the button to proceed */
-"startNewAccount"="开始建立新帐号";
+"startNewAccount"="开始建立新账号";
 /*  */
-"yourAccounHasBeenParked"="您的旧帐号已成功封存。现在可登入您的新帐号。";
+"yourAccounHasBeenParked"="您的旧账号已成功封存。现在可登入您的新账号。";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="新邮件";
 /* Button text for the user to confirm their change of email address. */
@@ -839,9 +826,9 @@
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="请输入您的密码以验证您的电子邮件地址";
 /* The [X] will be replaced with the e-mail address. */
-"congratulationsNewEmailAddress"="恭喜您完成更换，您于此MEGA帐户的新电子邮件地址为：[X]";
+"congratulationsNewEmailAddress"="恭喜您完成更换，您于此MEGA账户的新电子邮件地址为：[X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
-"closeOtherSessions"="从其他设备中登出帐户";
+"closeOtherSessions"="从其他设备中登出账户";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="已关闭之其他登入";
 /* Section title where you can change the app's passcode */
@@ -853,7 +840,7 @@
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="于10次密码输入错误后，自动登出并删除本机资料";
 /* Menu item */
-"help"="支持";
+"help"="客户服务";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="协助中心";
 /* Title to rate the app */
@@ -881,7 +868,7 @@
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="下载传输";
 /* Title of My Account section. There you can see your account details */
-"myAccount"="我的帐号";
+"myAccount"="我的账号";
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
 "buyPRO"="购买 PRO";
 /* Caption of a button to upgrade the account to Pro status */
@@ -969,7 +956,7 @@
 /* Title for MEGA "Available" space. */
 "availableLabel"="可使用的";
 /* title of the My Account screen */
-"accountType"="帐号类型:";
+"accountType"="账号类型:";
 /* Text relative to the MEGA account level. UPPER CASE */
 "free"="免费";
 /* Text that shows the expiry date of the account PRO level */
@@ -987,7 +974,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="付费升级账户";
 /*  */
-"chooseYourAccountType"="选择您的帐号类型";
+"chooseYourAccountType"="选择您的账号类型";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="您稍后可在\"我的帐户\"中进行升级";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
@@ -1070,6 +1057,8 @@
 "chat"="交谈";
 /* Empty Conversations section */
 "noConversations"="无对话(已清空)";
+/* Empty Conversations description */
+"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="聊天功能已停用";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1098,6 +1087,8 @@
 "changedGroupChatNameTo"="[A]将群组名称更改为'[B]'。";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="增加与会者...";
+/* Menu item to add participants to a chat */
+"addParticipants"="Add participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="状态";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1279,7 +1270,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu 未读信息";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="此订阅将会自动更新续订，续订内容与您一开始选择的订阅时间与价格一致。您可以于您的iTunes帐户设定页面关闭MEGA PRO的订阅自动更新续订，必须于您的下一个订阅缴款期限的24小时之前执行此操作。欲管理您的订阅内容，只需点击您手机上的App Store图标，可以在页面下方以您的Apple帐号登入（如果您还没有这样做），然后点击查看帐号。您会被带到您的帐户页面，就可以向下滚动到管理应用程序订阅。在那里，您可以选择你的MEGA PRO订阅和查看您预定的续约日期，选择不同的计划或切换开关至关闭以停用您的自动续订。";
+"autorenewableDescription"="此订阅将会自动更新续订，续订内容与您一开始选择的订阅时间与价格一致。您可以于您的iTunes账户设定页面关闭MEGA PRO的订阅自动更新续订，必须于您的下一个订阅缴款期限的24小时之前执行此操作。欲管理您的订阅内容，只需点击您手机上的App Store图标，可以在页面下方以您的Apple账号登入（如果您还没有这样做），然后点击查看账号。您会被带到您的账户页面，就可以向下滚动到管理应用程序订阅。在那里，您可以选择你的MEGA PRO订阅和查看您预定的续约日期，选择不同的计划或切换开关至关闭以停用您的自动续订。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="开启MEGA并登入以继续";
 /* A button title to revoke the access to an attachment in a chat. */
@@ -1450,13 +1441,13 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="你还记得本帐号的密码吗？";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+"remindPasswordText"="由于MEGA的加密技术，您无法在不丢失数据的情况下重设密码。请确保你记得你的密码。";
 /* Text that describes why the user should test his/her password before logging out */
-"remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
+"remindPasswordLogoutText"="在注销之前，我们建议您将恢复金匙导出到安全的地方。请注意，如果您忘记密码，则无法重置密码。";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="Don’t show me again";
+"dontShowAgain"="不再显示";
 /* Label for test password button and titles */
-"testPassword"="Test Password";
+"testPassword"="密码测试";
 /* Label for recovery key button */
 "backupRecoveryKey"="备份还原秘钥";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
@@ -1468,8 +1459,22 @@
 /* A dialog title to export the Recovery Key for the current user. */
 "exportRecoveryKey"="导出恢复金匙";
 /* Title to confirm that you want to logout */
-"proceedToLogout"="Proceed to logout";
+"proceedToLogout"="继续登出";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+"testPasswordLogoutText"="您即将登出，请确认您的密码并确保您记住它。如果您忘记了密码，您将无法使用MEGA数据。";
 /* state previous to import a file */
 "loading"="加载中";
+/*   */
+"next"="下一步";
+/* Button title to allow the user ignore something */
+"ignore"="忽略";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Open browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="重启";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Resume playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%@ will continue at %@";
+/*  */
+"resume"="恢复";

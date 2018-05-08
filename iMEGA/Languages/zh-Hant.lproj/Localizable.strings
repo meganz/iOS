@@ -258,6 +258,12 @@
 "folderAndFiles"="1 資料夾 • %d 檔案";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="已入排程";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="暫停";
+/* Label for the state of a transfer when is being completing - (String as short as possible). */
+"Completing..."="即將完成...";
+/* Label for the state of a transfer when is being retrying - (String as short as possible). */
+"Retrying..."="重試中...";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="該文件有待處理的下載";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -654,6 +660,8 @@
 "privacyPolicyLabel"="隱私政策";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="服務條款";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="關閉";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -772,12 +780,8 @@
 "confirmPassword"="確認密碼";
 /* Success message shown when the password has been changed */
 "passwordChanged"="你的密碼已變更。";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="新的密碼不能與您現在的密碼相同。";
 /* An option to reset the password. */
 "forgotPassword"="忘記密碼了？";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="您可以重新設定密碼，請依稍後會寄至您的電子信箱的還原連結操作。";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="這個復原連結已失效，請再試一次。";
 /* Headline of the password reset recovery procedure */
@@ -792,26 +796,9 @@
 "youRecoveryKeyIsGoingTo"="還原金鑰將被用於重設您的密碼。請輸入您的新密碼。";
 /*  */
 "yourPasswordHasBeenReset"="您的密碼已成功重置。請即登入測試。";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="如果您有還原金鑰的備份，則可以選擇「是」以重新設定密碼。資料均不會遺失。";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="若您現在於此電腦的其他瀏覽器中或其他電腦中，仍開有已登入MEGA的頁面，您還有機會可以匯出還原金鑰。如果您沒有，您將無法再解密或登入您現有的帳戶，但您可以選擇「否」以使用同一電子信箱重新註冊。";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="您有還原金鑰的備份嗎？";
-/* Headline when the user chose YES */
-"great"="很好!";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="請於下方輸入您的電子郵件地址。您將收到一個還原連結，讓您可以提交您的還原金鑰並重置密碼。";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="送出";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="噢！";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="因我們遵循嚴謹的端對端加密原則，如果您沒有密碼或還原金鑰備份，將會無法存取您的資料。";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="您可以先封存現有的帳戶，再以同一個電子信箱重新註冊。您的資料將會被保存至少60天。在這之間，如果您回想起您此一封存帳號的密碼，請聯繫support@mega.nz以尋求復原協助。";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="請於下方輸入您的電子郵件地址。您將收到還原金鑰連結，讓您可以封存您的帳戶。";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="封存帳號";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -1070,6 +1057,8 @@
 "chat"="交談";
 /* Empty Conversations section */
 "noConversations"="無對話(已清空)";
+/* Empty Conversations description */
+"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="聊天功能已停用";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1098,6 +1087,8 @@
 "changedGroupChatNameTo"="[A]將群組名稱更改為'[B]'。";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="新增成員...";
+/* Menu item to add participants to a chat */
+"addParticipants"="Add participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="狀態";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1473,3 +1464,17 @@
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
 /* state previous to import a file */
 "loading"="讀取中";
+/*   */
+"next"="次一";
+/* Button title to allow the user ignore something */
+"ignore"="忽略";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Open browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="重新啟動";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Resume playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%@ will continue at %@";
+/*  */
+"resume"="恢復";
