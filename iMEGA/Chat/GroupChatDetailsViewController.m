@@ -290,7 +290,7 @@
     } else if (indexPath.section == 1) {
         if ((indexPath.row == 0) && (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator)) {
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsParticipantEmailTypeID" forIndexPath:indexPath];
-            cell.leftImageView = nil;
+            cell.leftImageView.image = [UIImage imageNamed:@"inviteToChat"];
             cell.emailLabel.text = AMLocalizedString(@"addParticipant", @"Button label. Allows to add contacts in current chat conversation.");
             cell.onlineStatusView.backgroundColor = nil;
             cell.rightImageView.image = nil;
