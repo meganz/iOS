@@ -31,11 +31,12 @@
 
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (strong, nonatomic) IBOutlet UIView *usersListView;
-@property (strong, nonatomic) IBOutlet UIView *contactsHeaderView;
+@property (weak, nonatomic) IBOutlet UIView *usersListView;
+@property (weak, nonatomic) IBOutlet UIView *contactsHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *contactsHeaderViewLabel;
+@property (weak, nonatomic) IBOutlet UIView *contactsTopLineHeaderView;
 
 @property (nonatomic, strong) MEGAUserList *users;
 @property (nonatomic, strong) NSMutableArray *visibleUsersArray;
@@ -50,17 +51,17 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addParticipantBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *createGroupBarButtonItem;
 
-@property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
 
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *usersListViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *usersListViewHeightConstraint;
 
 @property (weak, nonatomic) IBOutlet UIView *searchFixedView;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *searchFixedViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchFixedViewHeightConstraint;
 
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *insertAnEmailBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *shareFolderWithBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *insertAnEmailBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareFolderWithBarButtonItem;
 @property (strong, nonatomic) NSString *insertedEmail;
 @property (strong, nonatomic) NSString *insertedGroupName;
 
@@ -212,6 +213,7 @@
         }
             
         case ContactsModeChatStartConversation: {
+            self.tableView.backgroundColor = [UIColor mnz_grayFCFCFC];
             self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
             self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem];
             break;
@@ -219,6 +221,7 @@
             
         case ContactsModeChatAddParticipant:
         case ContactsModeChatAttachParticipant: {
+            self.tableView.backgroundColor = [UIColor mnz_grayFCFCFC];
             self.addParticipantBarButtonItem.title = AMLocalizedString(@"ok", nil);
             [self setTableViewEditing:YES animated:NO];
             self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
@@ -227,6 +230,7 @@
         }
             
         case ContactsModeChatCreateGroup: {
+            self.tableView.backgroundColor = [UIColor mnz_grayFCFCFC];
             [self setTableViewEditing:YES animated:NO];
             self.createGroupBarButtonItem.title = AMLocalizedString(@"next", nil);
             self.createGroupBarButtonItem.enabled = NO;
@@ -479,7 +483,7 @@
             break;
             
         case ContactsModeChatAddParticipant:
-            self.navigationItem.title = AMLocalizedString(@"addParticipant", @"Button label. Allows to add contacts in current chat conversation.");
+            self.navigationItem.title = AMLocalizedString(@"addParticipants", @"Menu item to add participants to a chat");
             break;
             
         case ContactsModeChatAttachParticipant:
@@ -487,7 +491,7 @@
             break;
             
         case ContactsModeChatCreateGroup:
-            self.navigationItem.title = AMLocalizedString(@"addParticipant", @"Button label. Allows to add contacts in current chat conversation.");
+            self.navigationItem.title = AMLocalizedString(@"addParticipants", @"Menu item to add participants to a chat");
             break;
             
         case ContactsModeChatNamingGroup:
@@ -621,6 +625,9 @@
 }
 
 - (void)addSearchBarController {
+    if (self.visibleUsersArray.count == 0) {
+        return;
+    }
     switch (self.contactsMode) {
         case ContactsModeChatCreateGroup:
         case ContactsModeChatStartConversation: {
@@ -664,7 +671,7 @@
 }
 
 - (IBAction)addContact:(UIView *)sender {
-    UIAlertController *addContactAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *addContactAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [addContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     UIAlertAction *addFromEmailAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addFromEmail", @"Item menu option to add a contact writting his/her email") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -768,7 +775,11 @@
         [self.shareFolderActivity activityDidFinish:YES];
     }
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (self.contactsMode == ContactsModeChatCreateGroup) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (IBAction)backAction:(UIBarButtonItem *)sender {
@@ -828,6 +839,9 @@
 
 - (IBAction)createGroupAction:(UIBarButtonItem *)sender {
     if (self.contactsMode == ContactsModeChatCreateGroup) {
+        if (self.searchController.searchBar.isFirstResponder) {
+            [self.searchController dismissViewControllerAnimated:YES completion:nil];
+        }
         ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
         contactsVC.contactsMode = ContactsModeChatNamingGroup;
         contactsVC.userSelected = self.userSelected;
@@ -858,7 +872,7 @@
     NSInteger numberOfRows = 0;
     if ([MEGAReachabilityManager isReachable]) {
         if (self.contactsMode == ContactsModeChatStartConversation && section == 0) {
-            if (self.users.size.intValue > 0) {
+            if (self.visibleUsersArray.count > 0) {
                 return 2;
             } else {
                 return 1;
@@ -914,6 +928,7 @@
         ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NamingGroupTableViewCellID" forIndexPath:indexPath];
         cell.permissionsImageView.hidden = YES;
         cell.nameLabel.text = @"Start Group Chat";
+        cell.lineView.hidden = YES;
         cell.avatarImageView.image = [UIImage imageNamed:@"addGroupAvatar"];
         [cell.groupNameTextField becomeFirstResponder];
         return cell;
@@ -985,6 +1000,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0 && self.contactsMode == ContactsModeChatCreateGroup) {
         self.contactsHeaderViewLabel.text = AMLocalizedString(@"contactsTitle", @"Title of the Contacts section").uppercaseString;
+        self.contactsTopLineHeaderView.hidden = YES;
         return self.contactsHeaderView;
     }
     if (section == 1 && (self.contactsMode >= ContactsModeChatStartConversation)) {

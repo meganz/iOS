@@ -1087,6 +1087,8 @@
 "changedGroupChatNameTo"="[A] changed group chat name to '[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Add Participant…";
+/* Menu item to add participants to a chat */
+"addParticipants"="Add participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
 /* Section title of a button where you can enable mobile data for voice and video calls. */

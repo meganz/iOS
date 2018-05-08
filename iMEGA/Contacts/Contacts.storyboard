@@ -496,6 +496,7 @@
                         <outlet property="contactRequestsBarButtonItem" destination="GvZ-OT-HaA" id="wh8-yW-HiY"/>
                         <outlet property="contactsHeaderView" destination="x2b-8m-1ll" id="d33-aF-cTo"/>
                         <outlet property="contactsHeaderViewLabel" destination="Wgy-Fa-zRi" id="Axm-Vi-QSl"/>
+                        <outlet property="contactsTopLineHeaderView" destination="R2k-qb-Kfq" id="tBW-S7-Qqq"/>
                         <outlet property="createGroupBarButtonItem" destination="xiQ-pP-FgM" id="BrK-3Y-gaG"/>
                         <outlet property="deleteBarButtonItem" destination="wgy-rg-Fjg" id="idp-L0-R7m"/>
                         <outlet property="editBarButtonItem" destination="EF0-GJ-VNE" id="UsC-Ca-lDB"/>
