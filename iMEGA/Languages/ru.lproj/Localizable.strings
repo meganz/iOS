@@ -63,9 +63,9 @@
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="Серверы очень заняты. Пожалуйста, подождите.";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
-"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+"unableToReachMega"="Не удаётся подключиться к MEGA. Пожалуйста, проверьте соединение или попробуйте позже.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
-"tooManyRequest"="Too many requests. Please wait.";
+"tooManyRequest"="Слишком много запросов. Пожалуйста, подождите.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Пожалуйста, авторизируйтесь.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -127,7 +127,7 @@
 /*  */
 "passwordStrong"="Этот пароль не поддастся самым самым мощным атакам с применением полного перебора. Убедитесь, что запомнили его.";
 /*  */
-"agreeWithTheMEGATermsOfService"="Я согласен с <a href='terms'>условиями предоставления услуг</a> MEGA";
+"agreeWithTheMEGATermsOfService"="Я согласен с <a href='terms'>Условиями предоставления услуг</a> MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Введите правильное имя";
 /*  */
@@ -258,6 +258,12 @@
 "folderAndFiles"="1 папка • файлов: %d";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="В очереди";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="На паузе";
+/* Label for the state of a transfer when is being completing - (String as short as possible). */
+"Completing..."="Завершение…";
+/* Label for the state of a transfer when is being retrying - (String as short as possible). */
+"Retrying..."="Повтор…";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Есть активные загрузки";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -654,6 +660,8 @@
 "privacyPolicyLabel"="Политика конфиденциальности";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="условиями предоставления услуг";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Выкл";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -772,12 +780,8 @@
 "confirmPassword"="Подтвердите пароль";
 /* Success message shown when the password has been changed */
 "passwordChanged"="Ваш пароль был изменен.";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="Новый и старый пароли не должны совпадать.";
 /* An option to reset the password. */
 "forgotPassword"="Забыли пароль?";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="Вы можете сбросить пароль, перейдя по ссылке, которая будет в письме.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Время действия этой ссылки восстановления истекло, пожалуйста, попробуйте ещё ​​раз.";
 /* Headline of the password reset recovery procedure */
@@ -792,26 +796,9 @@
 "youRecoveryKeyIsGoingTo"="Ключ восстановления будет использован для сброса пароля. Введите новый пароль.";
 /*  */
 "yourPasswordHasBeenReset"="Ваш пароль успешно восстановлен. Пожалуйста, зайдите в свою учётную запись прямо сейчас.";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Если у вас есть резервная копия ключа восстановления, вы можете сбросить пароль, нажав «ДА». Данные не будут потеряны.";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="Вы всё ещё можете экспортировать ключ восстановления, если у вас есть активная сессия MEGA в любом другом браузере на любом другом компьютере. Иначе существующую учётную запись расшифровать не получится, но вы можете создать новую под тем же адресом электронной почты, выбрав «НЕТ».";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="У вас есть резервная копия ключа восстановления?";
-/* Headline when the user chose YES */
-"great"="Отлично!";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Введите свой адрес электронной почты. Вы получите ссылку восстановления, которая позволит ввести ключ восстановления и сбросить пароль.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Отправить";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="Ой!";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Благодаря нашей парадигме сквозного шифрования вы не сможете получить доступ к своим данным без пароля или резервной копии ключа восстановления.";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="Вы можете заморозить существующую учётную запись и создать новую под тем же адресом электронной почты. Ваши данные будут храниться минимум 60 дней. Если вы вспомните пароль замороженной учётной записи, свяжитесь с support@mega.nz.";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="Введите адрес электронной почты. Вы получите ссылку, которая позволит заморозить учётную запись.";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Сбросить учётную запись";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -1070,6 +1057,8 @@
 "chat"="Чат";
 /* Empty Conversations section */
 "noConversations"="Нет разговоров";
+/* Empty Conversations description */
+"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Чат отключён";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1098,6 +1087,8 @@
 "changedGroupChatNameTo"="Название группового чата изменено на '[B]' пользователем [A].";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Добавить участника…";
+/* Menu item to add participants to a chat */
+"addParticipants"="Add participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Статус";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1275,9 +1266,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Новые сообщения";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu unread message";
+"unreadMessage"="Не прочитано: %lu";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu unread messages";
+"unreadMessages"="Не прочитано: %lu";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Подписки продлеваются автоматически на тот же срок по такой же цене. Вы можете отключить автоматическое продление подписки MEGA PRO не позднее чем за 24 часа до следующего платежа в настройках учётной записи iTunes. Для управления подписками просто нажмите на значок App Store в телефоне, войдите со своим Apple ID внизу страницы (если вы этого ещё не сделали) и нажмите View ID. Вы попадёте на страницу своей учётной записи, прокрутите её вниз до управления подписками приложений. Там вы можете выбрать свою подписку MEGA PRO и посмотреть запланированную дату продления. Выберите другой план подписки или нажмите на переключатель «вкл/выкл» для отключения автоматического продления подписок.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1450,13 +1441,13 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="Вы помните пароль?";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+"remindPasswordText"="В связи с технологией шифрования MEGA невозможно сбросить пароль без потери данных. Пожалуйста, убедитесь, что помните его.";
 /* Text that describes why the user should test his/her password before logging out */
-"remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
+"remindPasswordLogoutText"="Советуем экспортировать ключ восстановления в безопасное место перед выходом из системы. Учтите, что вы не сможете сбросить пароль, если забудете его.";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="Don’t show me again";
+"dontShowAgain"="Больше не показывать";
 /* Label for test password button and titles */
-"testPassword"="Test Password";
+"testPassword"="Тест пароля";
 /* Label for recovery key button */
 "backupRecoveryKey"="Сохранить ключ восстановления";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
@@ -1468,8 +1459,22 @@
 /* A dialog title to export the Recovery Key for the current user. */
 "exportRecoveryKey"="Экспорт ключа восстановления";
 /* Title to confirm that you want to logout */
-"proceedToLogout"="Proceed to logout";
+"proceedToLogout"="Выйти";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+"testPasswordLogoutText"="Перед выходом из системы, пожалуйста, проверьте пароль, чтобы убедиться, что вы его помните. Потеряв пароль, вы утратите доступ ко всем своим MEGA-данным.";
 /* state previous to import a file */
 "loading"="Загрузка…";
+/*   */
+"next"="Вперёд";
+/* Button title to allow the user ignore something */
+"ignore"="Игнорировать";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Open browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="Перезапуск";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Resume playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%@ will continue at %@";
+/*  */
+"resume"="Возобновить";

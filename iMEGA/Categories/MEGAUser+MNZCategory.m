@@ -8,4 +8,9 @@
     return moUser.fullName;
 }
 
+- (NSString *)mnz_firstName {
+    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:self.handle];
+    return moUser.firstname;
+}
+
 @end

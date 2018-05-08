@@ -127,7 +127,7 @@
 /*  */
 "passwordStrong"="Esta senha vai resistir aos ataques de força-bruta mais sofisticados. Por favor, certifique-se de que você vai lembrar dela.";
 /*  */
-"agreeWithTheMEGATermsOfService"="Concordo com os <a href='terms'>Termos de Serviço</a> da MEGA";
+"agreeWithTheMEGATermsOfService"="Eu concordo com os <a href='terms'>Termos de serviço</a> do MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Digite um nome válido";
 /*  */
@@ -207,7 +207,7 @@
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="Nenhuma entrada de pastas compartilhadas";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="Sem saída pastas compartilhadas";
+"noOutgoingSharedItemsEmptyState_text"="Não há pastas compartilhadas por você";
 /* Title of Contacts requests section */
 "contactRequests"="Solicitações de contato";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -258,6 +258,12 @@
 "folderAndFiles"="1 pasta • %d arquivos";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Em fila";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="Pausado";
+/* Label for the state of a transfer when is being completing - (String as short as possible). */
+"Completing..."="Completando...";
+/* Label for the state of a transfer when is being retrying - (String as short as possible). */
+"Retrying..."="Tentando de novo...";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Há downloads pendentes";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -391,7 +397,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Links removidos";
 /* Title show when a file is being downloaded */
-"downloading"="Baixando";
+"downloading"="Fazendo o download";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Você quer cancelar o download?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -539,7 +545,7 @@
 /* Title of the "Incoming" Shared Items. */
 "incoming"="Entrada";
 /* Title of the "Outgoing" Shared Items. */
-"outgoing"="Extrovertido";
+"outgoing"="Saída";
 /* Text shown to explain that you have shared a folder with one contact */
 "sharedWithOneContact"="Compartilhado com um contato";
 /* Text shown to explain with how many contacts you have shared a folder */
@@ -651,9 +657,11 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Não tem conta de e-mail configurada no seu dispositivo";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Política de Privacidade";
+"privacyPolicyLabel"="Política de privacidade";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="Termos de Serviço";
+"termsOfServicesLabel"="Termos de serviço";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Desativado";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -675,7 +683,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="Chave de Recuperação";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Mudar a senha";
+"changePasswordLabel"="Alterar senha";
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="Exportar a chave de recuperação e mantê-la em um lugar seguro permite que você defina uma nova senha, sem perda de dados.";
 /* Question button to present a view where it's explained what is the Recovery Key */
@@ -771,13 +779,9 @@
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Confirmar senha";
 /* Success message shown when the password has been changed */
-"passwordChanged"="Sua senha foi alterada.";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="A nova e a antiga palavra-passe não podem ser iguais.";
+"passwordChanged"="A sua senha foi alterada.";
 /* An option to reset the password. */
 "forgotPassword"="Esqueceu a sua senha?";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="Você pode resetar a sua senha clicando no link de recuperação que será enviado para o seu e-mail.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="O link de recuperação expirou. Tente novamente.";
 /* Headline of the password reset recovery procedure */
@@ -792,26 +796,9 @@
 "youRecoveryKeyIsGoingTo"="Sua chave de recuperação vai ser usado para redefinir sua senha. Por favor, insira sua nova senha.";
 /*  */
 "yourPasswordHasBeenReset"="A sua senha foi resetada com sucesso. Por favor, faça login na sua conta agora.";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Se você tiver um backup da sua chave de recuperação, você pode resetar a sua senha selecionando SIM. Nenhum dado será perdido.";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="Você ainda pode exportar a sua chave de recuperação agora se você tiver uma sessão MEGA ativa em qualquer outro navegador neste ou em qualquer outro computador. Se você não fizer isso, você não pode mais descriptografar sua conta existente, mas você pode começar um novo com o mesmo endereço de e-mail, selecionando não.";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="Você tem um backup da sua chave de recuperação?";
-/* Headline when the user chose YES */
-"great"="Ótimo!";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Por favor, digite o seu endereço de email abaixo. Você receberá um link de recuperação para informar a chave de recuperação, e resetar a sua senha.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Enviar";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="Oops!";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Devido ao nosso paradigma de criptografia de ponta a ponta, você não poderá acessar os seus dados sem a sua senha ou um backup da sua chave de recuperação.";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="Você pode estacionar sua conta existente e iniciar uma fresca sob o mesmo endereço de e-mail. Os seus dados serão conservados durante pelo menos 60 dias. No caso em que você se lembra a senha da sua conta estacionado, por favor contacte support@mega.nz";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="Por favor, indique o seu endereço de e-mail abaixo. Você receberá um link de recuperação que permitirá que você estacionar sua conta.";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Estacionar a minha conta";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -855,7 +842,7 @@
 /* Menu item */
 "help"="Ajuda";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Centro de ajuda";
+"helpCentreLabel"="Central de ajuda";
 /* Title to rate the app */
 "rateUsLabel"="Nos avalie";
 /* Title of the Transfers section */
@@ -863,7 +850,7 @@
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Todas";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
-"downloads"="Transferências";
+"downloads"="Downloads";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="Uploads";
 /* Success message shown when one transfer has been cancelled */
@@ -1070,6 +1057,8 @@
 "chat"="Chat";
 /* Empty Conversations section */
 "noConversations"="Sem conversações";
+/* Empty Conversations description */
+"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="O chat está desativado";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1098,6 +1087,8 @@
 "changedGroupChatNameTo"="[A] mudou o nome do grupo de chat para '[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Adicionar participante...";
+/* Menu item to add participants to a chat */
+"addParticipants"="Add participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1473,3 +1464,17 @@
 "testPasswordLogoutText"="Você está prestes a sair. Por favor, confirme a sua senha para garantir que você se lembra dela. Se você perder a sua senha, perderá o acesso aos seus dados no MEGA.";
 /* state previous to import a file */
 "loading"="Carregando...";
+/*   */
+"next"="Próximo";
+/* Button title to allow the user ignore something */
+"ignore"="Ignorar";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Open browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="Reiniciar";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Resume playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%@ will continue at %@";
+/*  */
+"resume"="Continuar";

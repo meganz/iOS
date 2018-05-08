@@ -89,11 +89,11 @@
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Hesap Yaratın";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Geçersiz e-posta ve/veya şifre. Lütfen tekrar deneyin";
+"invalidMailOrPassword"="Geçersiz e-posta ve/veya parola. Lütfen tekrar deneyin";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Çok fazla giriş denemesi yaptınız. Lütfen bekleyin %@";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="Lütfen e-postanızı kontrol edin ve hesabınızı onaylamak için gönderilen linke tıklayın.";
+"accountNotConfirmed"="Lütfen e-postanızı kontrol edin ve hesabınızı onaylamak için gönderilen bağlantıya tıklayın.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Hesabınız bloke edilmiştir.  Lütfen support@mega.nz ile irtibata geçiniz";
 /* Message shown when the user writes an invalid format in the email field */
@@ -105,35 +105,35 @@
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Eposta";
 /* Hint text to suggest that the user has to write his password */
-"passwordPlaceholder"="Şifre";
+"passwordPlaceholder"="Parola";
 /*  */
-"pleaseStrengthenYourPassword"="Lütfen şifrenizi güçlendirin.";
+"pleaseStrengthenYourPassword"="Lütfen parolanızı güçlendirin.";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
 "veryWeak"="Çok zayıf";
 /*  */
 "weak"="Zayıf";
 /*  */
-"passwordVeryWeakOrWeak"="Şifreniz kolaylıkla tahmin edildi. Şifrenizi daha uzun seçmeyi deneyin. Büyük ve küçük harflerin kombinasyonunu kullanın. Özel karakterler ekleyin. Özel isim yada sözlük kelimelerini kullanmayın.";
+"passwordVeryWeakOrWeak"="Parolanız kolaylıkla tahmin edildi. Parolanızı daha uzun seçmeyi deneyin. Büyük ve küçük harflerin kombinasyonunu kullanın. Özel karakterler ekleyin. Özel isim yada sözlük kelimelerini kullanmayın.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="Orta";
 /*  */
-"passwordMedium"="Şifreniz devam edebilmek için yeterli zorlukta, ama daha güçlü bir şfire seçmeniz öneriliyor.";
+"passwordMedium"="Parolanız devam edebilmek için yeterli zorlukta, ama daha güçlü bir şifre seçmeniz öneriliyor.";
 /*  */
 "good"="İyi";
 /*  */
-"passwordGood"="Bu şifre yaygın tahmin etme saldırılarına karşı dayanıklı. Lütfen hatırlayacağınızdan emin olun.";
+"passwordGood"="Bu parola en yaygın kaba kuvvet saldırılarına karşı gelecektir. Lütfen hatırlayacağınızdan emin olun.";
 /* Label displayed during checking the strength of the password introduced. Represents Strong security */
 "strong"="Efsane";
 /*  */
-"passwordStrong"="Bu şifre en karmaşık tahmin etme saldırılarına karşı dayanıklı. Lütfen hatırlayacağınızdan emin olun.";
+"passwordStrong"="Bu parola en karmaşık kaba kuvvet saldırılarına karşı gelecektir. Lütfen hatırlayacağınızdan emin olun.";
 /*  */
-"agreeWithTheMEGATermsOfService"="MEGA <a href='terms'>Hizmet Koşulları</a>'nı kabul ediyorum";
+"agreeWithTheMEGATermsOfService"="MEGA <a href='terms'>Hizmet Şartları</a>nı kabul ediyorum";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Geçerli bir isim girin";
 /*  */
 "invalidFirstNameAndLastName"="Geçersiz ad/soyad";
 /* Error text shown when you have not written the same password */
-"passwordsDoNotMatch"="Şifreler eşleşmiyor";
+"passwordsDoNotMatch"="Parolalar eşleşmiyor";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="MEGA'da hesap açmak için hizmet koşullarını kabul etmeniz gerekli.";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -141,11 +141,11 @@
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Eposta onayı bekleniyor.";
 /* Text shown on the confirm account view to remind the user what to do */
-"confirmText"="Hesabınızı onaylamak için şifrenizi girin";
+"confirmText"="Hesabınızı onaylamak için parolanızı girin";
 /* Button title that triggers the confirm account action */
 "confirmAccountButton"="Hesabınızı onaylayın.";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
-"passwordWrong"="Hatalı şifre";
+"passwordWrong"="Hatalı parola";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertTitle"="Başka bir hesapla oturum açtınız";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
@@ -199,7 +199,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Sonuç yok";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Çöp Kutusunu Boşalt";
+"cloudDriveEmptyState_titleRubbishBin"="Çöp Kutusunu boşalt                                ";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Çevrimdışı için Kaydedilmiş dosya yoktur";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -258,6 +258,12 @@
 "folderAndFiles"="1 klasör • %d dosya";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Sıraya alındı";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="Duraklatıldı";
+/* Label for the state of a transfer when is being completing - (String as short as possible). */
+"Completing..."="Tamamlanıyor...";
+/* Label for the state of a transfer when is being retrying - (String as short as possible). */
+"Retrying..."="Yeniden deneniyor...";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Bekleyen indirmeler var";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -654,6 +660,8 @@
 "privacyPolicyLabel"="Gizlilik İlkeleri";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="hizmet şartları";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Kapalı";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -675,15 +683,15 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="Kurtarma Anahtarı";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Şifre değiştir";
+"changePasswordLabel"="Parola değiştir";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="Kurtarma Anahtarını dışarıya aktarıp güvenli bir yerde saklamak veri kaybına uğramadan şifre değiştirmenizi sağlar.";
+"exportMasterKeyFooter"="Ana Anahtarı dışa aktarmak ve güvenli bir konumda saklamak, veri kaybı yaşamadan yeni bir parola belirleyebilmenizi sağlar.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Neden Kurtarma Anahtarına ihtiyacım var?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
 "masterKey_firstParagraph"="Verileriniz sadece Kurtarma Anahtarınız ile başlayan deşifreleme zincirinden geçerek okunulabilir hale gelir, biz bu anahtarı parolanızla birlikte şifrelenmiş olarak saklıyoruz. Bu demektir ki parolanızı unutursanız, Kurtarma Anahtarınız ve verileriniz deşifrelenemez.";
 /*  */
-"masterKey_thirdParagraph"="Harici bir saldırgan sadece anahtarınız ile hesabınıza erişim sağlayamaz. Şifre sıfırlama hem anahtar hem de e-posta adresinize erişim gerektirir.";
+"masterKey_thirdParagraph"="Harici bir saldırgan sadece anahtarınız ile hesabınıza erişim sağlayamaz. Parola sıfırlama hem anahtar hem de e-posta adresinize erişim gerektirir.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
 "recoveryKeyCopiedToClipboard"="Kurtarma Anahtarı panoya kopyalandı";
 /* Alert title shown when you have exported your MEGA Recovery Key */
@@ -725,7 +733,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="İptal bağlantısının süresi doldu.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
-"enterYourPasswordToConfirmThatYouWanToClose"="Bu hesabınızı iptal etmeniz için gereken son adım. Bulutda depolanan tüm veri sonsuza dek silinecektir. Lütfen şifrenizi aşağıya giriniz.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Bu hesabınızı iptal etmeniz için gereken son adım. Bulutda depolanan tüm veri sonsuza dek silinecektir. Lütfen parolanızı aşağıya giriniz.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Hesabı kapat";
 /* Title for the action that allows to remove a file or folder */
@@ -765,23 +773,19 @@
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] dosya ve [B] klasör MEGA'dan kaldırıldı";
 /* Hint text to suggest that the user have to write his/her current password */
-"currentPassword"="Mevcut şifre:";
+"currentPassword"="Mevcut Parola";
 /* Hint text to suggest that the user have to write the new password on it */
-"newPassword"="Yeni şifre";
+"newPassword"="Yeni Parola";
 /* Hint text where the user have to re-write the new password to confirm it */
-"confirmPassword"="Şifreyi onaylayın";
+"confirmPassword"="Parolayı onaylayın";
 /* Success message shown when the password has been changed */
-"passwordChanged"="Şifreniz değiştirildi.";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="Yeni ve eski şifre aynı  olamaz.";
+"passwordChanged"="Parolanız değiştirildi.";
 /* An option to reset the password. */
-"forgotPassword"="Şifrenizi mi unuttunuz?";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="Parolanızı eposta adresinize gönderilen kurtarma linkinden sıfırlayabilirsiniz.";
+"forgotPassword"="Parolanızı mı unuttunuz?";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Bu kurtarma bağlantısının süresi doldu, lütfen tekrar deneyin.";
 /* Headline of the password reset recovery procedure */
-"passwordReset"="Şifre sıfırlama";
+"passwordReset"="Parola sıfırlama";
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
 "pleaseEnterYourRecoveryKey"="Lütfen Kurtarma Anahtarını girin";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
@@ -789,33 +793,16 @@
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="Geçersiz Kurtarma Anahtarı";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="Kurtarma Anahtarınız şifrenizi sıfırlamak için kullanılacaktır. Lütfen, yeni şifrenizi girin.";
+"youRecoveryKeyIsGoingTo"="Kurtarma Anahtarınız parolanızı sıfırlamak için kullanılacaktır. Lütfen, yeni parolanızı girin.";
 /*  */
-"yourPasswordHasBeenReset"="Şifreniz başarıyla sıfırlandı. Şimdi hesabınıza giriş yapın.";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Kurtarma Anahtarınızın yedeği var ise, EVET'i seçip parolanızı sıfırlayabilirsiniz. Veri kaybı yaşanmayacaktır.";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="Eğer herhangi bir tarayıcıda aktif bir MEGA oturumunuz varsa Kurtarma Anahtarınızı dışarı aktarabilirsiniz. Yoksa, varolan hesabı deşifre edemezsiniz, fakat HAYIR tuşuna basarak aynı eposta adı altında yenisini açabilirsiniz.";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="Kurtarma Anahtarınızın yedeği var mı?";
-/* Headline when the user chose YES */
-"great"="Harika!";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Lütfen e-posta adresinizi aşağıya girin. Kurtarma Anahtarınızı girip şifrenizi sıfırlayabileceğiniz bir kurtarma bağlantısı göndereceğiz.";
+"yourPasswordHasBeenReset"="Parolanız başarıyla sıfırlandı. Şimdi hesabınıza giriş yapın.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Gönder";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="Eyvah!";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Uçtan uca şifreleme kipimizden dolayı, parolanız veya Kurtarma Anahtarınız olmadan verilerinize erişemezsiniz.";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="Varolan hesabınızı parkedip aynı eposta üzerine temiz bir başlangıç yapabilirsiniz. Bilgileriniz en az 60 gün tutulacaktır. Eğer parkedilen hesabınızın şifresiniz hatırlarsanız, lütfen support@mega.nz adresine ulaşın";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="Lütfen e-posta adresinizi aşağıya girin. Hesabınızı park etmeniz için gereken kurtarma linki gönderilecektir.";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Hesabı park et";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
-"startingFreshAccount"="Sıfırdan boş bir hesaba başlayacağımı ve şifremi hatırlamadığım/Kurtarma Anahtarını temin etmediğim sürece şu anki hesabındaki tüm verileri kaybedeceğimi kabul ediyorum.";
+"startingFreshAccount"="Sıfırdan bir hesaba başlayacağımı ve parolamı hatırlamadığım/Kurtarma Anahtarını temin etmediğim sürece şu anki hesabındaki tüm verileri kaybedeceğimi kabul ediyorum.";
 /* Caption of the button to proceed */
 "startNewAccount"="Yeni hesap başlatın";
 /*  */
@@ -837,7 +824,7 @@
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
 "emailIsChanging_description"="Gelen kutunuza gidin ve yeni e-posta adresinizi onaylamak için bağlantıya tıklayın.";
 /* Text shown on the confirm email view to remind the user what to do */
-"verifyYourEmailAddress_description"="E-posta adresinizi doğrulamak için şifrenizi girin";
+"verifyYourEmailAddress_description"="E-posta adresinizi doğrulamak için parolanızı girin";
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="Tebrikler, bu MEGA hesabı için yeni e-posta adresiniz: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
@@ -1070,6 +1057,8 @@
 "chat"="Sohbet";
 /* Empty Conversations section */
 "noConversations"="Konuşma yok";
+/* Empty Conversations description */
+"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Sohbet devredışı";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1098,6 +1087,8 @@
 "changedGroupChatNameTo"="[A] grup sohbeti adını [B] yaptı.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Katılımcı ekle...";
+/* Menu item to add participants to a chat */
+"addParticipants"="Add participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Durum";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1382,9 +1373,9 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="Otomatik Kabul";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="Kare Kodunuzu tarayan kişiler otomatik olarak kişi listenize eklenecektir.";
+"autoAcceptFooter"="Kare kodunuzu tarayan kişiler otomatik olarak kişi listenize eklenecektir.";
 /* Action to reset the current valid QR code of the user */
-"resetQrCode"="Kare Kodunu Sıfırla";
+"resetQrCode"="Kare kodu sıfırla";
 /* Footer that explains what would happen if the user resets his/her QR code */
 "resetQrCodeFooter"="Önceki kare kodlar artık geçerli olmayacak.";
 /* Title for view that displays the QR code of the user. String as short as possible. */
@@ -1392,7 +1383,7 @@
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="Kodu Tara";
 /* Label that encourage the user to line the QR to scan with the camera */
-"lineCodeWithCamera"="KareKod'u cihazınızın kamerası ile taratın";
+"lineCodeWithCamera"="Karekodu cihazınızın kamerası ile taratın";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
 "invalidCode"="Geçersiz kod";
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
@@ -1473,3 +1464,17 @@
 "testPasswordLogoutText"="Çıkış yapmak üzeresiniz, lütfen hatırladığınızdan emin olmak için parolanızı test edin. Eğer parolanızı unutursanız, MEGA verilerinize erişiminizi kaybedeceksiniz.";
 /* state previous to import a file */
 "loading"="Yükleniyor...";
+/*   */
+"next"="Sonraki";
+/* Button title to allow the user ignore something */
+"ignore"="Yoksay";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Open browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="Yeniden başlat";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Resume playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%@ will continue at %@";
+/*  */
+"resume"="Devam et";

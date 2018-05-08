@@ -258,6 +258,12 @@
 "folderAndFiles"="1 carpeta • %d archivos";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="En cola";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="En pausa";
+/* Label for the state of a transfer when is being completing - (String as short as possible). */
+"Completing..."="Completando...";
+/* Label for the state of a transfer when is being retrying - (String as short as possible). */
+"Retrying..."="Reintentando...";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Hay descargas pendientes";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -654,6 +660,8 @@
 "privacyPolicyLabel"="Política de privacidad";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Términos de servicio";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="No";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -772,12 +780,8 @@
 "confirmPassword"="Confirmar contraseña";
 /* Success message shown when the password has been changed */
 "passwordChanged"="Tu contraseña ha sido cambiada.";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="La nueva contraseña no puede coincidir con la antigua.";
 /* An option to reset the password. */
 "forgotPassword"="¿Has olvidado tu contraseña?";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="Puedes restablecer tu contraseña si sigues el enlace de recuperación que será enviado a tu correo electrónico.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Este enlace de recuperación ha caducado, por favor inténtalo de nuevo.";
 /* Headline of the password reset recovery procedure */
@@ -792,26 +796,9 @@
 "youRecoveryKeyIsGoingTo"="Tu Clave de recuperación se utilizará para establecer una nueva contraseña. Por favor, introduce tu nueva contraseña.";
 /*  */
 "yourPasswordHasBeenReset"="Tu contraseña ha sido restablecida con éxito. Por favor accede a tu cuenta.";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Si tiene una copia de seguridad de tu Clave de recuperación, puedes restablecer tu contraseña seleccionando SÍ. No perderás tus datos.";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="Puedes todavía exportar la Clave de recuperación si tienes una sesión de MEGA activa en un navegador en este o en otro ordenador. Si no es así, ya no puedes descifrar tu cuenta existente, pero puedes empezar una nueva cuenta con la misma dirección de correo electrónico seleccionando NO.";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="¿Tiene una copia de seguridad de tu Clave de recuperación?";
-/* Headline when the user chose YES */
-"great"="¡Bien!";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Por favor, introduce tu correo electrónico a continuación. Recibirás un enlace de recuperación que te permitirá enviar tu Clave de recuperación y restablecer tu contraseña.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Enviar";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="¡Vaya!";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Debido a nuestro paradigma de cifrado punto a punto, no podrás acceder a tus datos sin tu contraseña o una copia de seguridad de tu Clave de recuperación.";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="Puedes aparcar tu cuenta existente y empezar con una nueva usando la misma dirección de correo electrónico. Tus datos se conservarán durante al menos 60 días. En caso de que recuerdes la contraseña de la cuenta aparcada, por favor, ponte en contacto con support@mega.nz";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="Por favor introduce la dirección de correo electrónico a continuación. Recibirás un enlace que te permitirá aparcar la cuenta.";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Aparcar cuenta";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -977,7 +964,7 @@
 /* Button title for the section where you can see the 'Purchase history' related to your account */
 "purchaseHistory"="Historial de compras";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
-"incomingShares"="Carpetas compartidas";
+"incomingShares"="Carpetas compartidas entrantes";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
 "of %@"="de %@";
 /* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
@@ -1070,6 +1057,8 @@
 "chat"="Chat";
 /* Empty Conversations section */
 "noConversations"="No hay conversaciones";
+/* Empty Conversations description */
+"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Chat desactivado";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1098,6 +1087,8 @@
 "changedGroupChatNameTo"="[A] cambió el nombre del grupo a '[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Añadir participante...";
+/* Menu item to add participants to a chat */
+"addParticipants"="Add participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Estado";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1468,8 +1459,22 @@
 /* A dialog title to export the Recovery Key for the current user. */
 "exportRecoveryKey"="Exportar Clave de recuperación";
 /* Title to confirm that you want to logout */
-"proceedToLogout"="Proceed to logout";
+"proceedToLogout"="Cerrar la sesión";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
 "testPasswordLogoutText"="Estás a punto de cerrar la sesión. Prueba tu contraseña para asegurarte de que la recuerdes. Si pierdes tu contraseña, perderás el acceso a tus datos en MEGA.";
 /* state previous to import a file */
 "loading"="Cargando…";
+/*   */
+"next"="Siguiente";
+/* Button title to allow the user ignore something */
+"ignore"="Ignorar";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Open browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="Reiniciar";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Resume playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%@ will continue at %@";
+/*  */
+"resume"="Reanudar";

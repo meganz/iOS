@@ -258,6 +258,12 @@
 "folderAndFiles"="1 map • %d bestanden";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Wachtrij";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="Gepauzeerd";
+/* Label for the state of a transfer when is being completing - (String as short as possible). */
+"Completing..."="Voltooien...";
+/* Label for the state of a transfer when is being retrying - (String as short as possible). */
+"Retrying..."="Opnieuw proberen...";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Er zijn  wachtende downloads";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -654,6 +660,8 @@
 "privacyPolicyLabel"="Privacybeleid";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Algemene Voorwaarden";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Uit";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -772,12 +780,8 @@
 "confirmPassword"="Bevestig wachtwoord";
 /* Success message shown when the password has been changed */
 "passwordChanged"="Uw wachtwoord is gewijzigd.";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="Het nieuwe en oude wachtwoord kunnen niet overeen komen.";
 /* An option to reset the password. */
 "forgotPassword"="Wachtwoord vergeten?";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="U kunt uw wachtwoord wijzigen door op de herstel koppeling te klikken die naar uw email verzonden is.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Deze herstelkoppeling is verlopen, probeer a.u.b. opnieuw.";
 /* Headline of the password reset recovery procedure */
@@ -792,26 +796,9 @@
 "youRecoveryKeyIsGoingTo"="Uw coderingssleutel zal worden gebruikt om uw wachtwoord te resetten. Voer alstublieft uw nieuwe wachtwoord in.";
 /*  */
 "yourPasswordHasBeenReset"="Uw wachtwoord is succesvol gewijzigd. Log nu aub in met uw account.";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Als u een reservekopie van uw Reservesleutel heeft, kunt u uw wachtwoord resetten door JA te selecteren. Geen gegevens gaan verloren.";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="U kunt uw Herstel Sleutel nog steeds exporteren als u een actieve MEGA sessie heeft in een andere browser op deze of een andere computer. Als u dat niet doet, dan kan u uw bestaande account niet langer decoderen, maar kunt u wel een nieuwe starten onder hetzelfde e-mailadres door NEE te selecteren.";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="Heeft u een reservekopie van uw Herstelsleutel?";
-/* Headline when the user chose YES */
-"great"="Geweldig!";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Vul alstublieft hieronder uw e-mailadres in. U ontvangt een herstelkoppeling die u de mogelijkheid biedt uw coderingssleutel in te dienen en uw wachtwoord te resetten.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Versturen";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="Oeps!";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Door onze eind-tot-eind encryptie paradigma, heeft u geen toegang tot uw gegevens zonder uw wachtwoord of een reservekopie van uw Herstelsleutel.";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="U kunt uw bestaande account parkeren en een nieuwe starten onder hetzelfde e-mailadres. Uw gegevens zullen worden bewaard voor tenminste 60 dagen. Wanneer u het wachtwoord van uw geparkeerde account herinnert, neem dan alstublieft contact op met support@mega.nz";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="Vul alstublieft hieronder uw e-mail adres in. U ontvangt een herstel koppeling die u de mogelijkheid biedt om uw account te parkeren.";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Parkeer account";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -1003,7 +990,7 @@
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="Afhankelijk aan uw participatie in ons beloningsprogramma.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%@ per month";
+"productPricePerMonth"="%@ per maand";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Kies één van de abonnementen hieronder:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
@@ -1070,6 +1057,8 @@
 "chat"="Chat";
 /* Empty Conversations section */
 "noConversations"="Geen Gesprekken";
+/* Empty Conversations description */
+"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Chat is uitgeschakeld";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1098,6 +1087,8 @@
 "changedGroupChatNameTo"="[A] heeft het onderwerp gewijzigd naar '[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Deelnemer toevoegen...";
+/* Menu item to add participants to a chat */
+"addParticipants"="Add participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1473,3 +1464,17 @@
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
 /* state previous to import a file */
 "loading"="Laden...";
+/*   */
+"next"="Volgende";
+/* Button title to allow the user ignore something */
+"ignore"="Negeren";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Open browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="Herstart";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Resume playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%@ will continue at %@";
+/*  */
+"resume"="Doorgaan";
