@@ -145,9 +145,11 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="alwaysAcceptButton" destination="86P-Mc-Tr9" id="Hz2-bh-i3u"/>
+                <outlet property="descriptionLabel" destination="tMl-50-u3C" id="lkn-cS-gVE"/>
                 <outlet property="headingLabel" destination="1Lj-e3-Q6c" id="5sf-c6-i91"/>
                 <outlet property="neverButton" destination="2ha-5c-sT3" id="Zlo-EW-c1s"/>
                 <outlet property="notNowButton" destination="Nc4-kW-7Bl" id="fI9-rm-fyu"/>
+                <outlet property="titleLabel" destination="f56-7K-RgY" id="3QQ-nq-PIr"/>
             </connections>
             <point key="canvasLocation" x="25.5" y="52"/>
         </view>

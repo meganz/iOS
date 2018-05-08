@@ -1102,6 +1102,10 @@
 "addParticipant"="Add Participant…";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
+/* Title used in settings that enables the generation of link previews in the chat */
+"richUrlPreviews"="Rich URL previews";
+/* Explanation of rich URL previews, given when users can enable/disable them, either in settings or in dialogs */
+"richPreviewsFooter"="Enhance the MEGAchat experience. URL content will be retrieved without end-to-end encryption.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Voice and Video Calls";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1230,6 +1234,14 @@
 "done"="Done";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Send Files";
+/* Title used on the warning dialog that asks users to enable rich URL previews */
+"enableRichUrlPreviews"="Enable rich URL previews";
+/* Button title to always accept something */
+"alwaysAccept"="Always accept";
+/* Button title to not accept something for the moment */
+"notNow"="Not now";
+/* */
+"never"="Never";
 /* */
 "warning"="Warning";
 /* Alert message shown when the user perform logout and has files in the Offline directory */

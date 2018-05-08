@@ -16,6 +16,8 @@ typedef NS_ENUM(NSInteger, MEGAMessageDialogOption) {
 @interface MEGAMessageDialogView : UIView
 
 @property (weak, nonatomic) IBOutlet UILabel *headingLabel;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *neverButton;
 @property (weak, nonatomic) IBOutlet UIButton *notNowButton;
 @property (weak, nonatomic) IBOutlet UIButton *alwaysAcceptButton;
