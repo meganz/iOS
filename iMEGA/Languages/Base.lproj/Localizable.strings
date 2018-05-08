@@ -1057,7 +1057,7 @@
 "chat"="Chat";
 /* Empty Conversations section */
 "noConversations"="No Conversations";
-/* Empty Conversations descriptpion */
+/* Empty Conversations description */
 "noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Chat is disabled";
@@ -1463,7 +1463,7 @@
 /* state previous to import a file */
 "loading"="Loading…";
 /*   */
-"Next"="Next";
+"next"="Next";
 /* Button title to allow the user ignore something */
 "ignore"="Ignore";
 /* Button title to allow the user open the default browser */

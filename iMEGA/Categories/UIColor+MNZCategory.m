@@ -87,10 +87,6 @@
     return [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
 }
 
-+ (UIColor *)mnz_gray333333 {
-    return [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
-}
-
 #pragma mark - Green
 
 + (UIColor *)mnz_green00BFA5 {

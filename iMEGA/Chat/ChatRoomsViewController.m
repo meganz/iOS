@@ -157,7 +157,7 @@
         }
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray333333]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -166,7 +166,7 @@
     NSString *text = @"";
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-        text = AMLocalizedString(@"noConversationsDescription", @"Empty Conversations descritpion");
+        text = AMLocalizedString(@"noConversationsDescription", @"Empty Conversations description");
     }
     
     NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:14.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
@@ -669,7 +669,7 @@
     ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
     contactsVC.contactsMode = ContactsModeChatStartConversation;
     MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-    contactsVC.userSelected =^void(NSArray *users, NSString *groupName) {
+    contactsVC.userSelected = ^void(NSArray *users, NSString *groupName) {
         if (users.count == 1) {
             MEGAUser *user = [users objectAtIndex:0];
             MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];

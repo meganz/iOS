@@ -32,7 +32,6 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 + (UIColor *)mnz_grayF5F5F5;
 + (UIColor *)mnz_grayF7F7F7;
 + (UIColor *)mnz_grayF9F9F9;
-+ (UIColor *)mnz_gray333333;
 
 #pragma mark - Green
 

@@ -228,7 +228,7 @@
             
         case ContactsModeChatCreateGroup: {
             [self setTableViewEditing:YES animated:NO];
-            self.createGroupBarButtonItem.title = AMLocalizedString(@"Next", nil);
+            self.createGroupBarButtonItem.title = AMLocalizedString(@"next", nil);
             self.createGroupBarButtonItem.enabled = NO;
             [self.createGroupBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                                    [UIFont mnz_SFUIMediumWithSize:17],
@@ -243,7 +243,7 @@
             
         case ContactsModeChatNamingGroup: {
             self.navigationItem.leftBarButtonItems = @[self.backBarButtonItem];
-            self.createGroupBarButtonItem.title = AMLocalizedString(@"Create", nil);
+            self.createGroupBarButtonItem.title = AMLocalizedString(@"createFolderButton", nil);
             [self.createGroupBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                               [UIFont mnz_SFUIMediumWithSize:17],
                                                               NSFontAttributeName,

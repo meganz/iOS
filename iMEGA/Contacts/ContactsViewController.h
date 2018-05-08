@@ -22,7 +22,7 @@ typedef NS_ENUM(NSUInteger, ContactsMode) {
 
 @property (nonatomic, strong) ShareFolderActivity *shareFolderActivity;
 
-@property (nonatomic, copy) void(^userSelected)(NSArray *,  NSString*);
+@property (nonatomic, copy) void(^userSelected)(NSArray *,  NSString *);
 
 @property (strong, nonatomic) NSMutableDictionary *participantsMutableDictionary;
 
