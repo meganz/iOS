@@ -588,19 +588,24 @@
     [self.navigationController pushViewController:contactsVC animated:YES];
 }
 
-- (void)addUsersListSubview {
-    [self.view layoutIfNeeded];
-    [UIView animateWithDuration:.5 animations:^ {
-        self.usersListViewHeightConstraint.constant = 110;
-        [self.view layoutIfNeeded];
-    }];
-    UsersListViewController *usersList = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"UsersListViewControllerID"];
-    self.usersListVC = usersList;
-    self.usersListVC.userListDelegate = self;
-    [self addChildViewController:usersList];
-    usersList.view.frame = self.usersListView.bounds;
-    [self.usersListView addSubview:usersList.view];
-    [usersList didMoveToParentViewController:self];
+- (void)addUserToList:(MEGAUser *)user {
+    if (self.childViewControllers.count) {
+        [self.usersListVC addUser:user];
+    } else {
+        [UIView animateWithDuration:.5 animations:^{
+            self.usersListViewHeightConstraint.constant = 110;
+            [self.view layoutIfNeeded];
+        } completion:^(BOOL finished) {
+            UsersListViewController *usersList = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"UsersListViewControllerID"];
+            self.usersListVC = usersList;
+            self.usersListVC.userListDelegate = self;
+            [self addChildViewController:usersList];
+            usersList.view.frame = self.usersListView.bounds;
+            [self.usersListView addSubview:usersList.view];
+            [usersList didMoveToParentViewController:self];
+            [self.usersListVC addUser:user];
+        }];
+    }
 }
 
 - (void)removeUsersListSubview {
@@ -1121,10 +1126,7 @@
                 }
                 [self.selectedUsersArray addObject:user];
                 self.createGroupBarButtonItem.enabled = (self.selectedUsersArray.count > 1);
-                if (!self.childViewControllers.count) {
-                    [self addUsersListSubview];
-                }
-                [self.usersListVC addUser:user];
+                [self addUserToList:user];
                 return;
             }
             break;
