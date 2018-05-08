@@ -44,6 +44,8 @@
     
     self.statusLabel.text = AMLocalizedString(@"status", @"Title that refers to the status of the chat (Either Online or Offline)");
     
+    self.richPreviewsLabel.text = AMLocalizedString(@"richUrlPreviews", @"Title used in settings that enables the generation of link previews in the chat");
+    
     self.useMobileDataLabel.text = AMLocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
         
     BOOL isChatEnabled = [NSUserDefaults.standardUserDefaults boolForKey:@"IsChatEnabled"];
@@ -180,6 +182,14 @@
         titleForHeader = AMLocalizedString(@"voiceAndVideoCalls", @"Section title of a button where you can enable mobile data for voice and video calls.");
     }
     return titleForHeader;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    NSString *footerTitle;
+    if (section == 2) {
+        footerTitle = AMLocalizedString(@"richPreviewsFooter", @"Explanation of rich URL previews, given when users can enable/disable them, either in settings or in dialogs");
+    }
+    return footerTitle;
 }
 
 #pragma mark - UITableViewDelegate
