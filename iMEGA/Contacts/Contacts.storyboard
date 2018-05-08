@@ -1834,7 +1834,7 @@
                                                         <constraint firstAttribute="height" constant="26" id="UXj-T5-RK3"/>
                                                         <constraint firstAttribute="width" constant="26" id="dmL-pT-sxP"/>
                                                     </constraints>
-                                                    <state key="normal" image="icon_remove"/>
+                                                    <state key="normal" image="remove_media"/>
                                                     <connections>
                                                         <action selector="removeUserAction:" destination="HSA-9V-kLf" eventType="touchUpInside" id="xmi-fm-JvG"/>
                                                     </connections>
@@ -1912,11 +1912,11 @@
         <image name="contact_request_accept" width="46" height="44"/>
         <image name="contact_request_deny" width="46" height="44"/>
         <image name="contactsIcon" width="32" height="24"/>
-        <image name="icon_remove" width="52" height="52"/>
         <image name="moreSelected" width="26" height="6"/>
         <image name="nodeInfo" width="46" height="44"/>
         <image name="readPermissions" width="46" height="44"/>
         <image name="readWritePermissions" width="46" height="44"/>
+        <image name="remove_media" width="26" height="26"/>
         <image name="selectAll" width="22" height="22"/>
     </resources>
 </document>
