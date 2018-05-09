@@ -208,6 +208,7 @@
             
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
             self.deleteBarButtonItem.title = AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
+            [self.deleteBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]} forState:UIControlStateNormal];
             self.toolbar.items = @[flexibleItem, self.deleteBarButtonItem];
             break;
         }
@@ -533,23 +534,33 @@
         self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
         [self.addBarButtonItem setEnabled:NO];
         
-        [self.toolbar setAlpha:0.0];
-        [self.tabBarController.tabBar addSubview:self.toolbar];
-        [UIView animateWithDuration:0.33f animations:^ {
-            [self.toolbar setAlpha:1.0];
-        }];
+        if (self.tabBarController) {
+            [self.toolbar setAlpha:0.0];
+            [self.tabBarController.tabBar addSubview:self.toolbar];
+            [UIView animateWithDuration:0.33f animations:^ {
+                [self.toolbar setAlpha:1.0];
+            }];
+        } else if (self.navigationController.isToolbarHidden) {
+            self.navigationController.topViewController.toolbarItems = self.toolbar.items;
+            [self.navigationController setToolbarHidden:NO animated:animated];
+        }
     } else {
         self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
         self.selectedUsersArray = nil;
         [self.addBarButtonItem setEnabled:YES];
         
-        [UIView animateWithDuration:0.33f animations:^ {
-            [self.toolbar setAlpha:0.0];
-        } completion:^(BOOL finished) {
-            if (finished) {
-                [self.toolbar removeFromSuperview];
-            }
-        }];
+        if (self.tabBarController) {
+            [UIView animateWithDuration:0.33f animations:^ {
+                [self.toolbar setAlpha:0.0];
+            } completion:^(BOOL finished) {
+                if (finished) {
+                    [self.toolbar removeFromSuperview];
+                }
+            }];
+        } else {
+            self.navigationController.topViewController.toolbarItems = @[];
+            [self.navigationController setToolbarHidden:YES animated:animated];
+        }
     }
     
     if (!self.selectedUsersArray) {
