@@ -283,6 +283,7 @@
     actionController.displayMode = DisplayModeNodeInfo;
     actionController.actionDelegate = self;
     actionController.actionSender = sender;
+    actionController.incomingShareChildView = self.incomingShareChildView;
     
     if ([[UIDevice currentDevice] iPadDevice]) {
         actionController.modalPresentationStyle = UIModalPresentationPopover;

@@ -353,7 +353,8 @@
     NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
     nodeInfoVC.node = node;
     nodeInfoVC.nodeInfoDelegate = self;
-    
+    nodeInfoVC.incomingShareChildView = self.sharedItemsSegmentedControl.selectedSegmentIndex == 0;
+
     [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
 }
 

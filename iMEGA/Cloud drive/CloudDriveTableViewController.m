@@ -1263,6 +1263,7 @@
     NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
     nodeInfoVC.node = node;
     nodeInfoVC.nodeInfoDelegate = self;
+    nodeInfoVC.incomingShareChildView = self.incomingShareChildView;
     
     [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
 }

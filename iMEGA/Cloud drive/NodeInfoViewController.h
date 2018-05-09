@@ -15,4 +15,6 @@
 
 @property (weak, nonatomic) id<NodeInfoViewControllerDelegate> nodeInfoDelegate;
 
+@property (nonatomic, getter=isIncomingShareChildView) BOOL incomingShareChildView;
+
 @end
