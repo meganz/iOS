@@ -1157,6 +1157,8 @@
 "renameGroup"="Baguhin ang pangalan ng Grupo";
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="Baguhin ang Group Avatar";
+/* Text used as hint to give the user information to write a name for the group chat. */
+"enterGroupName"="Enter group name";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Lumisan";
 /* Top menu option which opens more menu options in a context menu. */

@@ -1088,7 +1088,7 @@
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Deelnemer toevoegen...";
 /* Menu item to add participants to a chat */
-"addParticipants"="Add participants";
+"addParticipants"="Deelnemers toevoegen";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1157,6 +1157,8 @@
 "renameGroup"="Hernoem Groep";
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="Verander Groepsafbeelding";
+/* Text used as hint to give the user information to write a name for the group chat. */
+"enterGroupName"="Enter group name";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Verlaten";
 /* Top menu option which opens more menu options in a context menu. */
