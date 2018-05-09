@@ -1156,7 +1156,6 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="avatarImageView" destination="zaL-ex-F72" id="aNV-nw-hXz"/>
-                        <outlet property="backBarButtonItem" destination="k2i-2F-hvZ" id="QWP-06-lig"/>
                         <outlet property="emailLabel" destination="wgN-dK-iZJ" id="GaO-1o-0VL"/>
                         <outlet property="nameLabel" destination="XHC-l2-3NH" id="pQa-Ks-sFl"/>
                         <outlet property="participantsHeaderView" destination="V26-d7-tzR" id="RcT-eq-3gY"/>
