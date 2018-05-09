@@ -605,9 +605,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         }
     }
     
-    //TODO: Show text in chattingWithLabel when its string is translated.
-//    self.openMessageHeaderView.chattingWithLabel.text = AMLocalizedString(@"chattingWith", @"Title show above the name of the persons with whom you're chatting");
-    self.openMessageHeaderView.chattingWithLabel.text = nil;
+    self.openMessageHeaderView.chattingWithLabel.text = AMLocalizedString(@"chattingWith", @"Title show above the name of the persons with whom you're chatting");
     self.openMessageHeaderView.conversationWithLabel.text = participantsNames;
     self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
     self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
