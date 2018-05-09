@@ -1,24 +1,25 @@
 
 #import "NodeInfoViewController.h"
+
+#import "SVProgressHUD.h"
+
+#import "BrowserViewController.h"
+#import "CloudDriveTableViewController.h"
+#import "ContactsViewController.h"
+#import "CopyrightWarningViewController.h"
+#import "CustomActionViewController.h"
+#import "DisplayMode.h"
 #import "Helper.h"
-#import "UIImage+MNZCategory.h"
-#import "UIImageView+MNZCategory.h"
+#import "MEGAExportRequestDelegate.h"
+#import "MEGAGetFolderInfoRequestDelegate.h"
+#import "MEGANavigationController.h"
+#import "MEGANode+MNZCategory.h"
 #import "MEGASdkManager.h"
 #import "NodePropertyTableViewCell.h"
 #import "NodeTappablePropertyTableViewCell.h"
-#import "MEGANode+MNZCategory.h"
-#import "MEGAExportRequestDelegate.h"
-#import "MEGANavigationController.h"
-
-#import "SVProgressHUD.h"
-#import "ContactsViewController.h"
-#import "GetLinkTableViewController.h"
-#import "CloudDriveTableViewController.h"
-#import "CustomActionViewController.h"
-#import "DisplayMode.h"
-#import "BrowserViewController.h"
 #import "NodeVersionsViewController.h"
-#import "MEGAGetFolderInfoRequestDelegate.h"
+#import "UIImage+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 
 @interface MegaNodeProperty : NSObject
 
@@ -393,11 +394,7 @@
 }
 
 - (void)showManageLinkView {
-    UINavigationController *getLinkNavigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"GetLinkNavigationControllerID"];
-    GetLinkTableViewController *getLinkTVC = getLinkNavigationController.childViewControllers[0];
-    getLinkTVC.nodesToExport = @[self.node];
-    
-    [self presentViewController:getLinkNavigationController animated:YES completion:nil];
+    [CopyrightWarningViewController presentGetLinkViewControllerForNodes:@[self.node] inViewController:self];
 }
 
 - (void)browserWithAction:(BrowserAction)action {
