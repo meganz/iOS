@@ -938,7 +938,7 @@
     } else if (self.contactsMode == ContactsModeChatNamingGroup && indexPath.section == 0) {
         ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NamingGroupTableViewCellID" forIndexPath:indexPath];
         cell.permissionsImageView.hidden = YES;
-        cell.nameLabel.text = @"Start Group Chat";
+        cell.groupNameTextField.placeholder = AMLocalizedString(@"enterGroupName", @"Placeholder to hint the user to write a name for the group chat.");
         cell.lineView.hidden = YES;
         cell.avatarImageView.image = [UIImage imageNamed:@"addGroupAvatar"];
         [cell.groupNameTextField becomeFirstResponder];
