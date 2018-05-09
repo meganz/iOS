@@ -149,6 +149,9 @@
 }
 
 - (void)loadQLController {
+    self.activityIndicator.hidden = YES;
+    self.progressView.hidden = YES;
+    self.imageView.hidden = YES;
     self.previewController = [[QLPreviewController alloc] init];
     self.previewController.delegate = self;
     self.previewController.dataSource = self;
@@ -463,7 +466,11 @@
 #pragma mark - CollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.pdfView.document.pageCount;
+    if (@available(iOS 11.0, *)) {
+        return self.pdfView.document.pageCount;
+    } else {
+        return 0;
+    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
