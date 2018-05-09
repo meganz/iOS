@@ -776,9 +776,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     if (self.jumpToBottomView.alpha > 0) {
         return;
     }
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:0.2 delay:0.3 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.jumpToBottomView.alpha = 1.0f;
-    }];
+    } completion:nil];
 }
 
 - (void)hideJumpToBottom {
@@ -1308,7 +1308,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    [self showOrHideJumpToBottom];
+    if (!decelerate) {
+        [self showOrHideJumpToBottom];
+    }
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
