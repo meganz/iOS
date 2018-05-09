@@ -51,7 +51,6 @@
 #import "MessagesViewController.h"
 #import "MyAccountHallViewController.h"
 #import "OfflineTableViewController.h"
-#import "PreviewDocumentViewController.h"
 #import "SecurityOptionsTableViewController.h"
 #import "SettingsTableViewController.h"
 #import "SharedItemsViewController.h"
