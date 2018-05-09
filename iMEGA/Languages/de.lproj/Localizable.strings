@@ -1157,6 +1157,8 @@
 "renameGroup"="Gruppe umbenennen";
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="Gruppen-Avatar ändern";
+/* Text used as hint to give the user information to write a name for the group chat. */
+"enterGroupName"="Enter group name";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Verlassen";
 /* Top menu option which opens more menu options in a context menu. */

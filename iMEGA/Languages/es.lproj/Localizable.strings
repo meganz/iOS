@@ -63,7 +63,7 @@
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="Servidores ocupados. Por favor, espera.";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
-"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+"unableToReachMega"="No se puede acceder a MEGA. Comprueba tu conexión o inténtalo más tarde.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
 "tooManyRequest"="Demasiadas peticiones. Por favor espera.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -661,7 +661,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Términos de servicio";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
-"dataProtectionRegulationLabel"="Data Protection Regulation";
+"dataProtectionRegulationLabel"="Reglamento de protección de datos";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="No";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -1088,7 +1088,7 @@
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Añadir participante...";
 /* Menu item to add participants to a chat */
-"addParticipants"="Add participants";
+"addParticipants"="Añadir participantes";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Estado";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1157,6 +1157,8 @@
 "renameGroup"="Renombrar grupo";
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="Cambiar imagen del perfil del grupo";
+/* Text used as hint to give the user information to write a name for the group chat. */
+"enterGroupName"="Enter group name";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Abandonar";
 /* Top menu option which opens more menu options in a context menu. */

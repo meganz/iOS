@@ -191,7 +191,7 @@
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Sem ligação à internet";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="Pasta Vazia";
+"emptyFolder"="Pasta vazia";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Não há arquivos na sua nuvem";
 /* Button title shown in empty views when you can 'Add files' */
@@ -199,7 +199,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Sem resultados";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Limpar lixeira";
+"cloudDriveEmptyState_titleRubbishBin"="Esvaziar a lixeira";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Nenhum arquivo salvo para uso offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -285,7 +285,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="mais velho";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Escolha";
+"choosePhotoVideo"="Selecionar";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Captar";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
@@ -353,7 +353,7 @@
 /* String already exists: 367, but we need to split paragraphs. */
 "copyrightMessagePart1"="O MEGA respeita os direitos autorais de terceiros e exige que os usuários do serviço de nuvem MEGA cumpram as leis de direitos autorais.";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="Você está estritamente proibido de usar o serviço de nuvem MEGA de infringir direitos autorais. Você não pode fazer upload, download, armazenar, compartilhar, display, streaming, distribuir, enviar por email, criar um link, transmitir ou disponibilizar quaisquer arquivos, dados ou conteúdos que violem os direitos de autor ou outros direitos de propriedade de qualquer pessoa ou entidade.";
+"copyrightMessagePart2"="Você está estritamente proibido de usar o serviço de nuvem do MEGA para infringir direitos autorais. Você não pode fazer upload, download, armazenar, compartilhar, visualizar, fazer streaming, distribuir, enviar por email, criar um link, difundir ou disponibilizar quaisquer arquivos, dados ou conteúdos que infinjam os direitos de autor ou outros direitos de propriedade de qualquer pessoa ou entidade.";
 /* button caption text that the user clicks when he agrees */
 "agree"="Concordo";
 /* button caption text that the user clicks when he disagrees */
@@ -507,7 +507,7 @@
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Ativar uploads da câmera";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Camera Uploads ativada";
+"cameraUploadsEnabled"="Uploads da câmera ativos";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Uploads da câmera concluidos";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
@@ -661,7 +661,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Termos de serviço";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
-"dataProtectionRegulationLabel"="Data Protection Regulation";
+"dataProtectionRegulationLabel"="Regulamento de proteção de dados";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Desativado";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -681,11 +681,11 @@
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Agradecimentos";
 /* Title for the MEGA Recovery Key */
-"masterKey"="Chave de Recuperação";
+"masterKey"="Chave de recuperação";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Alterar senha";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="Exportar a chave de recuperação e mantê-la em um lugar seguro permite que você defina uma nova senha, sem perda de dados.";
+"exportMasterKeyFooter"="Exportar a chave de recuperação e guardá-la em um lugar seguro permite que você altere a sua senha sem perder os seus dados.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Por que eu preciso de uma chave de recuperação?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -693,7 +693,7 @@
 /*  */
 "masterKey_thirdParagraph"="Um atacante externo não pode obter acesso à sua conta apenas com a sua chave. A recuperação de senha necessita tanto a chave como o acesso ao seu email.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="A chave de recuperação foi copiada para o clipboard";
+"recoveryKeyCopiedToClipboard"="Chave de recuperação copiada para a área de transferência";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="A chave de recuperação foi exportada";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -757,9 +757,9 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="Você está prestes a remover permanentemente [A] arquivos e pastas [B]. Gostaria de continuar? (Você não pode desfazer esta ação.)";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="1 arquivo removido do MEGA";
+"fileRemovedToRubbishBinMessage"="1 arquivo eliminado do MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="%d arquivos removidos do MEGA";
+"filesRemovedToRubbishBinMessage"="%d arquivos eliminados do MEGA";
 /* Success message shown when 1 folder has been removed from MEGA */
 "folderRemovedToRubbishBinMessage"="1 pasta removida do MEGA";
 /* Success message shown when {1+} folders have been removed from MEGA */
@@ -789,7 +789,7 @@
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
 "pleaseEnterYourRecoveryKey"="Por favor, insira sua chave de recuperação";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
-"recoveryKey"="Chave de Recuperação";
+"recoveryKey"="Chave de recuperação";
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="Chave de recuperação inválida";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
@@ -832,7 +832,7 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Sessões finalizadas";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Altere código de acesso";
+"changePasscodeLabel"="Alterar o código de acesso";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="Código de acesso simples";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
@@ -1044,7 +1044,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Ativar o modo de depuração";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Um log será criado na seção off-line (MEGAiOS.log). Os logs podem conter informações relacionadas à sua conta.";
+"enableDebugMode_message"="Um log será criado na seção offline (MEGAiOS.log). Os logs podem conter informações relacionadas à sua conta.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Desativar o modo de depuração";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -1088,7 +1088,7 @@
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Adicionar participante...";
 /* Menu item to add participants to a chat */
-"addParticipants"="Add participants";
+"addParticipants"="Adicionar participantes";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1157,6 +1157,8 @@
 "renameGroup"="Renomear grupo";
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="Alterar o avatar do grupo";
+/* Text used as hint to give the user information to write a name for the group chat. */
+"enterGroupName"="Enter group name";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Sair";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1449,7 +1451,7 @@
 /* Label for test password button and titles */
 "testPassword"="Confirmar senha";
 /* Label for recovery key button */
-"backupRecoveryKey"="Exportar chave de recuperação";
+"backupRecoveryKey"="Salvar chave de recuperação";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
 "testPasswordText"="Por favor, verifique a sua senha abaixo, para garantir que você se lembra dela. Se você perder a sua senha, perderá o acesso aos seus dados MEGA. [A]Mais informações[/A]";
 /* Title text for the account confirmation. */
