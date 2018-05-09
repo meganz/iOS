@@ -570,6 +570,7 @@
         case MEGAChatRoomChangeTypeUnreadCount:
             break;
             
+        case MEGAChatRoomChangeTypeOwnPriv:
         case MEGAChatRoomChangeTypeParticipants:            
             [self setParticipants];
             [self.tableView reloadData];
@@ -586,7 +587,6 @@
             [self.navigationController popToRootViewControllerAnimated:YES];
             break;
             
-        case MEGAChatRoomChangeTypeOwnPriv:
         case MEGAChatRoomChangeTypeUserStopTyping:
             break;
             
