@@ -61,16 +61,10 @@
         NSString *nodeFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[self.node base64Handle]];
         self.nodeFilePath = [nodeFolderPath stringByAppendingPathComponent:self.node.name];
         
-        if (![[NSFileManager defaultManager] fileExistsAtPath:nodeFolderPath isDirectory:nil]) {
-            if (![[NSFileManager defaultManager] createDirectoryAtPath:nodeFolderPath withIntermediateDirectories:YES attributes:nil error:&error]) {
-                MEGALogError(@"Create directory at path failed with error: %@", error);
-            }
-        }
-        
-        if (![[NSFileManager defaultManager] fileExistsAtPath:self.nodeFilePath isDirectory:nil]) {
+        if ([[NSFileManager defaultManager] createDirectoryAtPath:nodeFolderPath withIntermediateDirectories:YES attributes:nil error:&error]) {
             [self.api startDownloadNode:self.node localPath:self.nodeFilePath delegate:self];
-        } else if (!self.previewController) {
-            [self loadPreview];
+        } else {
+            MEGALogError(@"Create directory at path failed with error: %@", error);
         }
     }
 }

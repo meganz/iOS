@@ -79,8 +79,10 @@
         } else {
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
             PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
-            previewController.node = self;
             previewController.api = api;
+            previewController.filesPathsArray = @[previewDocumentPath];
+            previewController.nodeFileIndex = 0;
+            
             return navigationController;
         }
     } else if (self.name.mnz_isAudiovisualContentUTI && [api httpServerStart:YES port:4443]) {
