@@ -1477,6 +1477,6 @@
 /* Title to alert user the possibility of resume playing the video or start from the beginning */
 "resumePlayback"="Resume playback?";
 /* Message to show the user info (name and time) about the resume of the video */
-"continueOrRestartVideoMessage"="%@ will continue at %@";
+"continueOrRestartVideoMessage"="%1$s will continue at %2$s";
 /*  */
 "resume"="Reanudar";

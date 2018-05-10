@@ -75,7 +75,9 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
         MOMediaDestination *mediaDestination = [[MEGAStore shareInstance] fetchMediaDestinationWithFingerprint:fingerprint];
         if (mediaDestination) {
             if ([self fileName].mnz_isVideoPathExtension) {
-                NSString *infoVideoDestination = [NSString stringWithFormat:AMLocalizedString(@"continueOrRestartVideoMessage", @"Message to show the user info (name and time) about the resume of the video"), [self fileName], [self timeForMediaDestination:mediaDestination]];
+                NSString *infoVideoDestination = AMLocalizedString(@"continueOrRestartVideoMessage", @"Message to show the user info (name and time) about the resume of the video");
+                infoVideoDestination = [infoVideoDestination stringByReplacingOccurrencesOfString:@"%1$s" withString:[self fileName]];
+                infoVideoDestination = [infoVideoDestination stringByReplacingOccurrencesOfString:@"%2$s" withString:[self timeForMediaDestination:mediaDestination]];
                 UIAlertController *resumeOrRestartAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"resumePlayback", @"Title to alert user the possibility of resume playing the video or start from the beginning") message:infoVideoDestination preferredStyle:UIAlertControllerStyleAlert];
                 [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"resume", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     [self seekToDestination:mediaDestination play:YES];
