@@ -664,7 +664,7 @@ static MEGAIndexer *indexer;
                 if ((node.name.mnz_isImagePathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (node.name.mnz_videoPathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
                     [node mnz_copyToGalleryFromTemporaryPath:temporaryPath];
                 } else {
-                    [Helper copyNode:node from:temporaryPath to:relativeFilePath api:api];
+                    [Helper moveNode:node from:temporaryPath to:relativeFilePath api:api];
                 }
             } else {
                 NSString *appData = nil;
@@ -707,6 +707,16 @@ static MEGAIndexer *indexer;
     }
 }
 
++ (void)moveNode:(MEGANode *)node from:(NSString *)itemPath to:(NSString *)relativeFilePath api:(MEGASdk *)api {
+    NSRange replaceRange = [relativeFilePath rangeOfString:@"Documents/"];
+    if (replaceRange.location != NSNotFound) {
+        NSString *result = [relativeFilePath stringByReplacingCharactersInRange:replaceRange withString:@""];
+        NSError *error;
+        if ([[NSFileManager defaultManager] moveItemAtPath:itemPath toPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath] error:&error]) {
+            [[MEGAStore shareInstance] insertOfflineNode:node api:api path:result.decomposedStringWithCanonicalMapping];
+        } else {
+            MEGALogError(@"Failed to move from %@ to %@ with error: %@", itemPath, relativeFilePath, error);
+        }
     }
 }
 
