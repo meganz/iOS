@@ -1041,13 +1041,16 @@ static MEGAIndexer *indexer;
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle color:(UIColor *)color {
     NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title attributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:color}];
     
-    subtitle = [NSString stringWithFormat:@"\n%@", subtitle];
-    NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:color}];
-    
-    [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
+    if (![subtitle isEqualToString:@""]) {
+        subtitle = [NSString stringWithFormat:@"\n%@", subtitle];
+        NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:color}];
+        
+        [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
+    }
     
     UILabel *label = [[UILabel alloc] init];
-    [label setNumberOfLines:2];
+    [label setNumberOfLines:[subtitle isEqualToString:@""] ? 1 : 2];
+    
     [label setTextAlignment:NSTextAlignmentCenter];
     [label setAttributedText:titleMutableAttributedString];
     
