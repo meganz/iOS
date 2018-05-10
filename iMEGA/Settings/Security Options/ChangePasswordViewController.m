@@ -9,7 +9,7 @@
 #import "PasswordStrengthIndicatorView.h"
 #import "PasswordView.h"
 
-@interface ChangePasswordViewController () <MEGARequestDelegate, UITextFieldDelegate>
+@interface ChangePasswordViewController () <MEGARequestDelegate, UITextFieldDelegate, MEGAGlobalDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *currentPasswordImageView;
 @property (weak, nonatomic) IBOutlet UITextField *currentPasswordTextField;
@@ -126,7 +126,16 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(emailHasChanged) name:@"emailHasChanged" object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
 #pragma mark - Private
@@ -405,6 +414,19 @@
     }
     
     return YES;
+}
+
+#pragma mark - MEGAGlobalDelegate
+
+- (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
+    NSInteger count = userList.size.integerValue;
+    for (NSInteger i = 0 ; i < count; i++) {
+        MEGAUser *user = [userList userAtIndex:i];
+        if (user.handle == [MEGASdkManager sharedMEGASdk].myUser.handle && user.changes == MEGAUserChangeTypeEmail) {
+            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"emailChanged", @"The label showed when your email has been changed")];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
 }
 
 #pragma mark - MEGARequestDelegate
