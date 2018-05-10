@@ -423,7 +423,8 @@
     for (NSInteger i = 0 ; i < count; i++) {
         MEGAUser *user = [userList userAtIndex:i];
         if (user.handle == [MEGASdkManager sharedMEGASdk].myUser.handle && user.changes == MEGAUserChangeTypeEmail) {
-            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"emailChanged", @"The label showed when your email has been changed")];
+            NSString *emailChangedString = [AMLocalizedString(@"congratulationsNewEmailAddress", @"The [X] will be replaced with the e-mail address.") stringByReplacingOccurrencesOfString:@"[X]" withString:user.email];
+            [SVProgressHUD showSuccessWithStatus:emailChangedString];
             [self.navigationController popViewControllerAnimated:YES];
         }
     }
