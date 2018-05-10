@@ -70,7 +70,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    if (self.isMovingFromParentViewController && previewDocumentTransfer) {
+    if (previewDocumentTransfer) {
         [self.api cancelTransfer:previewDocumentTransfer];
     }
     
