@@ -698,8 +698,15 @@ static MEGAIndexer *indexer;
     NSRange replaceRange = [relativeFilePath rangeOfString:@"Documents/"];
     if (replaceRange.location != NSNotFound) {
         NSString *result = [relativeFilePath stringByReplacingCharactersInRange:replaceRange withString:@""];
-        [[NSFileManager defaultManager] copyItemAtPath:itemPath toPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath] error:nil];
-        [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[result decomposedStringWithCanonicalMapping]];
+        NSError *error;
+        if ([[NSFileManager defaultManager] copyItemAtPath:itemPath toPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath] error:&error]) {
+            [[MEGAStore shareInstance] insertOfflineNode:node api:api path:result.decomposedStringWithCanonicalMapping];
+        } else {
+            MEGALogError(@"Failed to copy from %@ to %@ with error: %@", itemPath, relativeFilePath, error);
+        }
+    }
+}
+
     }
 }
 

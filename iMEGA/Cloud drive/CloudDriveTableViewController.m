@@ -428,7 +428,10 @@
     self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
 
     UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        [node mnz_downloadNodeOverwriting:NO];
+        if ([node mnz_downloadNodeOverwriting:NO]) {
+            [self reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:node.base64Handle]];
+        }
+        
         [self setEditing:NO animated:YES];
     }];
     downloadAction.image = [UIImage imageNamed:@"infoDownload"];
@@ -1268,6 +1271,12 @@
     [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
 }
 
+- (void)reloadRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath != nil) {
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -1446,7 +1455,9 @@
     [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
     
     for (MEGANode *node in self.selectedNodesArray) {
-        if (![node mnz_downloadNodeOverwriting:NO]) {
+        if ([node mnz_downloadNodeOverwriting:NO]) {
+            [self reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:node.base64Handle]];
+        } else {
             return;
         }
     }
@@ -1737,10 +1748,7 @@
     
     if (transfer.type == MEGATransferTypeDownload) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-        NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
-        if (indexPath != nil) {
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        }
+        [self reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
     }
 }
 
@@ -1779,20 +1787,14 @@
         } else if ([error type] == MEGAErrorTypeApiEIncomplete) {
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
             NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-            NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
-            if (indexPath != nil) {
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-            }
+            [self reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
         }
         return;
     }
     
     if ([transfer type] == MEGATransferTypeDownload) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-        NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
-        if (indexPath != nil) {
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        }
+        [self reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
     }
 }
 
@@ -1858,7 +1860,9 @@
     switch (action) {
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-            [node mnz_downloadNodeOverwriting:NO];
+            if ([node mnz_downloadNodeOverwriting:NO]) {
+                [self reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:node.base64Handle]];
+            }
             break;
             
         case MegaNodeActionTypeCopy:
