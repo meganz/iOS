@@ -505,7 +505,7 @@
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "automaticallyBackupYourPhotos"="Guarda tus fotos automáticamente en tu Nube";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Activar Subidas de la cámara ";
+"enableCameraUploadsButton"="Activar Subidas de la cámara";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Subidas de la cámara activadas";
 /* Message shown when the camera uploads have been completed */
@@ -1058,7 +1058,7 @@
 /* Empty Conversations section */
 "noConversations"="No hay conversaciones";
 /* Empty Conversations description */
-"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
+"noConversationsDescription"="Start chatting securely with your contacts using end-to-end encryption";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Chat desactivado";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1248,7 +1248,7 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s ya es un contacto";
 /* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="Contacto enviado: %s ";
+"sentContact"="Contacto enviado: %s";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="%s contactos enviados.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
@@ -1289,7 +1289,7 @@
 /* Label to show that an Internal error occurs during a SDK operation. */
 "Internal error"="Error interno";
 /* Label to show that an error of Invalid argument occurs during a SDK operation. */
-"Invalid argument"="Argumento no válido ";
+"Invalid argument"="Argumento no válido";
 /* Label to show that a request error occurs during a SDK operation. */
 "Request failed, retrying"="Petición fallida, reintentando";
 /* Label to show that the rate limit has been reached during a SDK operation. */

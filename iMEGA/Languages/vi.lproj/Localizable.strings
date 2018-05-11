@@ -3,7 +3,7 @@
 /* Button title to accept something */
 "ok"="OK";
 /* */
-"yes"="Có ";
+"yes"="Có";
 /* */
 "no"="Không";
 /* */
@@ -1058,7 +1058,7 @@
 /* Empty Conversations section */
 "noConversations"="Không có Cuộc Trò Chuyện nào";
 /* Empty Conversations description */
-"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
+"noConversationsDescription"="Start chatting securely with your contacts using end-to-end encryption";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Chat bị tắt";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */

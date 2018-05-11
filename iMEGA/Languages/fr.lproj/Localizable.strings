@@ -199,7 +199,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Aucun résultat";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Vider la corbeille                                ";
+"cloudDriveEmptyState_titleRubbishBin"="Vider la corbeille";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Aucun fichier enregistré Hors ligne";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -247,7 +247,7 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
 "oneFolder"="%d dossier";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
-"folders"=" %d dossiers";
+"folders"="%d dossiers";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
 "folderAndFile"="1 dossier • 1 fichier";
 /* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
@@ -535,7 +535,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 dossier";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
-"foldersShared"=" %d dossiers";
+"foldersShared"="%d dossiers";
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="Insérer une adresse courriel";
 /* Title of Shared Items section */
@@ -661,13 +661,13 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Conditions générales d’utilisation";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
-"dataProtectionRegulationLabel"="Data Protection Regulation";
+"dataProtectionRegulationLabel"="Règlement sur la protection des données";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Désactivé";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
 "on"="Activé";
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
-"options"="Options ";
+"options"="Options";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Téléverser les vidéos";
 /* Option title to enable Camera Uploads only when the device is charging */
@@ -980,7 +980,7 @@
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="[S]Votre disque nuagique est presque plein.[/S] [A]Passez maintenant[/A] à un compte PRO et obtenez [S]jusqu’à 8 To (8 192 Go)[/S] d’espace nuagique de stockage.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Votre compte est plein.[/S] [A]Passez maintenant[/A] à un compte PRO et obtenez [S]jusqu’à 8 To (8 192 Go)[/S] d’espace de stockage nuagique.      ";
+"cloudDriveIsFull"="[S]Votre compte est plein.[/S] [A]Passez maintenant[/A] à un compte PRO et obtenez [S]jusqu’à 8 To (8 192 Go)[/S] d’espace de stockage nuagique.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Espace de stockage";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1004,7 +1004,7 @@
 /* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
 "thereAreNoPlansSuitableForYourCurrentUsage"="Aucune offre ne correspond à votre utilisation actuelle. Veuillez [A]contacter l'assistance[/A] pour obtenir une offre personnalisée.";
 /* Header shown to help on the purchasin process */
-"selectMembership"="Choisir un abonnement : ";
+"selectMembership"="Choisir un abonnement :";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
 "save17"="Économisez 17 %";
 /* Error message shown when the purchase has failed */
@@ -1058,7 +1058,7 @@
 /* Empty Conversations section */
 "noConversations"="Aucune conversation";
 /* Empty Conversations description */
-"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
+"noConversationsDescription"="Commencez à discuter en toute sécurité avec vos contacts grâce au chiffrement de bout en bout";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Le dialogue est désactivé";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1082,7 +1082,7 @@
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
 "clearedTheChatHistory"="[A] a effacé l'historique de la conversation.";
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
-"wasChangedToBy"="[A] a été changé en [B] par [C]. ";
+"wasChangedToBy"="[A] a été changé en [B] par [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A] a changé le nom de la conversation de groupe en '[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
@@ -1158,7 +1158,7 @@
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="Changer l’avatar du groupe";
 /* Text used as hint to give the user information to write a name for the group chat. */
-"enterGroupName"="Enter group name";
+"enterGroupName"="Saisir le nom du groupe";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Quitter";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1319,7 +1319,7 @@
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
 "Blocked"="Bloqué";
 /* Label to show that an error related with an over quota occurs during a SDK operation. */
-"Over quota"="Dépassement de quota ";
+"Over quota"="Dépassement de quota";
 /* Label to show that an error related with a temporary problem occurs during a SDK operation. */
 "Temporarily not available"="Temporairement non disponible";
 /* Label to show that an error related with too many connections occurs during a SDK operation. */
@@ -1397,7 +1397,7 @@
 /* Item menu option upon right click on one or multiple files. */
 "sharing"="Partage";
 /* Title of section to display number of all historical versions of files. */
-"versions"="Versions ";
+"versions"="Versions";
 /* Title label of a node property. */
 "location"="Emplacement";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
@@ -1435,11 +1435,11 @@
 /* Singular of file. 1 file */
 "file"="fichier";
 /* Title of section to display information of the current version of a file. */
-"currentVersion"="Version actuelle ";
+"currentVersion"="Version actuelle";
 /* A button label which opens a dialog to display the full version history of the selected file. */
 "previousVersions"="Versions précédentes";
 /* Title of section to display information of all current versions of files. */
-"currentVersions"="Versions actuelles ";
+"currentVersions"="Versions actuelles";
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="Vous souvenez-vous de votre mot de passe ?";
 /* Text that describes why the user should test his/her password */
@@ -1471,11 +1471,11 @@
 /* Button title to allow the user ignore something */
 "ignore"="Ignorer";
 /* Button title to allow the user open the default browser */
-"openBrowser"="Open browser";
+"openBrowser"="Ouvrir le navigateur";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="Redémarrer";
 /* Title to alert user the possibility of resume playing the video or start from the beginning */
-"resumePlayback"="Resume playback?";
+"resumePlayback"="Reprendre la lecture ?";
 /* Message to show the user info (name and time) about the resume of the video */
 "continueOrRestartVideoMessage"="%1$s will continue at %2$s";
 /*  */

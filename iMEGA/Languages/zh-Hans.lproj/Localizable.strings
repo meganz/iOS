@@ -55,7 +55,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="您已从其他位置登出该设备";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="服务器SSL 金钥未能认证。您可能会收到第三方攻击。";
+"sslUnverified_alertTitle"="MEGA无法通过SSL安全连接。您可能需要使用公共WiFi。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="您尝试访问的内容并不对当前登入的帐户开放。请登入与浏览器中所登录的相同的帐户。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -994,7 +994,7 @@
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="请从下列选取一个计划:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
-"selectOneAccountType"="选择一个帐户类型：";
+"selectOneAccountType"="选择一个账户类型：";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="年度订阅比12个月每月付款便宜17%";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1058,7 +1058,7 @@
 /* Empty Conversations section */
 "noConversations"="无对话(已清空)";
 /* Empty Conversations description */
-"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
+"noConversationsDescription"="开始使用端到端加密安全的与您的联系人进行聊天";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="聊天功能已停用";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1158,7 +1158,7 @@
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="变更群组头像";
 /* Text used as hint to give the user information to write a name for the group chat. */
-"enterGroupName"="Enter group name";
+"enterGroupName"="输入群名称";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="离开";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1471,12 +1471,12 @@
 /* Button title to allow the user ignore something */
 "ignore"="忽略";
 /* Button title to allow the user open the default browser */
-"openBrowser"="Open browser";
+"openBrowser"="打开浏览器";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="重启";
 /* Title to alert user the possibility of resume playing the video or start from the beginning */
-"resumePlayback"="Resume playback?";
+"resumePlayback"="恢复播放？";
 /* Message to show the user info (name and time) about the resume of the video */
-"continueOrRestartVideoMessage"="%1$s will continue at %2$s";
+"continueOrRestartVideoMessage"="%1$s将在%2$s继续";
 /*  */
 "resume"="恢复";

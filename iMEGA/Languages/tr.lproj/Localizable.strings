@@ -55,7 +55,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Başka bir yerden oturum açıldığı için bu cihazdan çıkış yapıldı";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="Sunucunun SSL anahtarı doğrulanamadı. İki bağlantı noktası arasındaki bağlantıyı izinsiz izleme saldırısı altında olabilirsiniz.";
+"sslUnverified_alertTitle"="MEGA, SSL aracılığıyla güvenli bir şekilde bağlantı kuramıyor. Ek gereksinimleri olan ortak WiFi'de olabilirsiniz.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Erişmeye çalıştığınız içerik bu hesap için mevcut değil. Mobil web istemcisindeki hesabta yer alan aynı hesapla giriş yapmayı deneyin.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -63,7 +63,7 @@
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="Sunucular meşgul. Lütfen bekleyin.";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
-"unableToReachMega"="MEGA'ya erişim başarısız. Lütfen bağlantınızı kontrol edin veya tekrar deneyin. ";
+"unableToReachMega"="MEGA'ya erişim başarısız. Lütfen bağlantınızı kontrol edin veya tekrar deneyin.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
 "tooManyRequest"="Çok fazla istek. Lütfen bekleyin.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -199,7 +199,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Sonuç yok";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Çöp Kutusunu boşalt                                ";
+"cloudDriveEmptyState_titleRubbishBin"="Çöp Kutusunu boşalt";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Çevrimdışı için Kaydedilmiş dosya yoktur";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -461,7 +461,7 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
 "moveFilesFolderToRubbishBinMessage"="%d dosya ve 1 klasörü Çöp Kutusu'na taşımak istediğinizden emin misiniz?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="[A] dosya ve [B] klasörü Çöp Kutusuna taşımak istediğinizden emin misiniz? ";
+"moveFilesFoldersToRubbishBinMessage"="[A] dosya ve [B] klasörü Çöp Kutusuna taşımak istediğinizden emin misiniz?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 dosya Çöp Kutusu'na taşındı";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -978,9 +978,9 @@
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Daha sonra Hesabım sekmesinden yükseltebilirsiniz";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Bulut Sürücü neredeyse dolu.[/S] [A]Şimdi PRO hesabına yükseltin[/A] ve [S]4TB'a (4096 GB)[/S] kadar bulut depolama alanı sahip olun.                ";
+"cloudDriveIsAlmostFull"="[S]Bulut Sürücü neredeyse dolu.[/S] [A]Şimdi PRO hesabına yükseltin[/A] ve [S]4TB'a (4096 GB)[/S] kadar bulut depolama alanı sahip olun.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Hesabınız dolu.[/S] [A]Şimdi PRO hesaba yükseltin[/A] ve [S]4TB'a varan (4096 GB)[/S] bulut depolamasına sahip olun.                ";
+"cloudDriveIsFull"="[S]Hesabınız dolu.[/S] [A]Şimdi PRO hesaba yükseltin[/A] ve [S]4TB'a varan (4096 GB)[/S] bulut depolamasına sahip olun.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Saklama alanı";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1058,7 +1058,7 @@
 /* Empty Conversations section */
 "noConversations"="Konuşma yok";
 /* Empty Conversations description */
-"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
+"noConversationsDescription"="Uçtan-uca şifreleme kullanarak kişilerinizle sohbet edin";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Sohbet devredışı";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1076,11 +1076,11 @@
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
 "wasRemovedFromTheGroupChatBy"="[A], [B] tarafından grup sohbetinden çıkarıldı.";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="[A] grup sohbetinden ayrıldı. ";
+"leftTheGroupChat"="[A] grup sohbetinden ayrıldı.";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
 "joinedTheGroupChatByInvitationFrom"="[A], [B] tarafından sohbete davet edildi ve katıldı.";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
-"clearedTheChatHistory"="[A] sohbet geçmişini temizledi. ";
+"clearedTheChatHistory"="[A] sohbet geçmişini temizledi.";
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
 "wasChangedToBy"="[A], [C] tarafından [B] yapıldı.";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
@@ -1138,7 +1138,7 @@
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
 "contactCredentials"="Kişi giriş bilgileri";
 /* "Verify user" dialog description */
-"thisIsBestDoneInRealLife"="Bu en iyi gerçek hayatta, yüz yüze toplantı ile yapılır. Doğrulanmış OTR veya PGP gibi başka önceden doğrulanmış bir kanal varsa onu da kullanabilirsiniz. ";
+"thisIsBestDoneInRealLife"="Bu en iyi gerçek hayatta, yüz yüze toplantı ile yapılır. Doğrulanmış OTR veya PGP gibi başka önceden doğrulanmış bir kanal varsa onu da kullanabilirsiniz.";
 /* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
 "yourCredentials"="Giriş Bilgilerin";
 /* Button to reset the password */
@@ -1148,7 +1148,7 @@
 /* start a chat/conversation */
 "startConversation"="Konuşma Başlat";
 /* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
-"group"="Grup ";
+"group"="Grup";
 /* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
 "groupInfo"="Grup bilgisi";
 /* Label title for a group chat */
@@ -1158,7 +1158,7 @@
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="Grup Resmini Değiştir";
 /* Text used as hint to give the user information to write a name for the group chat. */
-"enterGroupName"="Enter group name";
+"enterGroupName"="Grup ismini girin";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Ayrıl";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1170,11 +1170,11 @@
 /* A button label. The button allows the user to close the conversation. */
 "close"="Kapat";
 /* Alert text that explains what means confirming the action 'Leave' */
-"youWillNoLongerHaveAccessToThisConversation"="Bu sohbete artık erişiminiz yoktur ";
+"youWillNoLongerHaveAccessToThisConversation"="Bu sohbete artık erişiminiz yoktur";
 /* A button label. The button allows the user to leave the conversation. */
 "leaveChat"="Sohbetten çık";
 /* Button title that allows the user to leave a group chat. */
-"leaveGroup"="Grubu terket ";
+"leaveGroup"="Grubu terket";
 /* Label to describe the section where you can see the participants of a group chat */
 "participants"="Katılımcılar";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
@@ -1471,12 +1471,12 @@
 /* Button title to allow the user ignore something */
 "ignore"="Yoksay";
 /* Button title to allow the user open the default browser */
-"openBrowser"="Open browser";
+"openBrowser"="Tarayıcıyı aç";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="Yeniden başlat";
 /* Title to alert user the possibility of resume playing the video or start from the beginning */
-"resumePlayback"="Resume playback?";
+"resumePlayback"="Çalmaya devam et?";
 /* Message to show the user info (name and time) about the resume of the video */
-"continueOrRestartVideoMessage"="%1$s will continue at %2$s";
+"continueOrRestartVideoMessage"="%1$s, %2$s aşamasından devam edecek";
 /*  */
 "resume"="Devam et";

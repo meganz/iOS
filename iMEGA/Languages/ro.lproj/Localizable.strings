@@ -1058,7 +1058,7 @@
 /* Empty Conversations section */
 "noConversations"="Nicio conversaţie";
 /* Empty Conversations description */
-"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
+"noConversationsDescription"="Start chatting securely with your contacts using end-to-end encryption";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Chatul este dezactivat";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */

@@ -199,7 +199,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Nessun risultato";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Svuota il Cestino                                ";
+"cloudDriveEmptyState_titleRubbishBin"="Svuota il Cestino";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Nessun file salvato in Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -978,9 +978,9 @@
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Puoi aggiornare più tardi in Il Mio Account";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Il tuo Cloud è quasi pieno.[/S] [A]Aggiorna ora[/A] ad un account PRO ora e ottieni [S]fino a 4TB (4096GB)[/S] di spazio cloud.                ";
+"cloudDriveIsAlmostFull"="[S]Il tuo Cloud è quasi pieno.[/S] [A]Aggiorna ora[/A] ad un account PRO ora e ottieni [S]fino a 4TB (4096GB)[/S] di spazio cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Il tuo account è pieno.[/S] [A]Aggiorna ora[/A] ad un account PRO ora e ottieni [S]fino a 4TB (4096 GB)[/S] di spazio cloud.                ";
+"cloudDriveIsFull"="[S]Il tuo account è pieno.[/S] [A]Aggiorna ora[/A] ad un account PRO ora e ottieni [S]fino a 4TB (4096 GB)[/S] di spazio cloud.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="di spazio d'archiviazione";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1058,7 +1058,7 @@
 /* Empty Conversations section */
 "noConversations"="Nessuna Conversazione";
 /* Empty Conversations description */
-"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
+"noConversationsDescription"="Inizia a chattare in sicurezza con i tuoi contatti utilizzando la criptazione end-to-end";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Chat disattivata";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1158,7 +1158,7 @@
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="Cambia immagine del gruppo";
 /* Text used as hint to give the user information to write a name for the group chat. */
-"enterGroupName"="Enter group name";
+"enterGroupName"="Inserisci nome gruppo";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Lascia";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1471,11 +1471,11 @@
 /* Button title to allow the user ignore something */
 "ignore"="Ignora";
 /* Button title to allow the user open the default browser */
-"openBrowser"="Open browser";
+"openBrowser"="Apri browser";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="Riavvia";
 /* Title to alert user the possibility of resume playing the video or start from the beginning */
-"resumePlayback"="Resume playback?";
+"resumePlayback"="Ricominciare playback?";
 /* Message to show the user info (name and time) about the resume of the video */
 "continueOrRestartVideoMessage"="%1$s will continue at %2$s";
 /*  */

@@ -956,7 +956,7 @@
 /* Title for MEGA "Available" space. */
 "availableLabel"="Tersedia";
 /* title of the My Account screen */
-"accountType"="Tipe Akun: ";
+"accountType"="Tipe Akun:";
 /* Text relative to the MEGA account level. UPPER CASE */
 "free"="GRATIS";
 /* Text that shows the expiry date of the account PRO level */
@@ -1058,7 +1058,7 @@
 /* Empty Conversations section */
 "noConversations"="Tidak ada percakapan";
 /* Empty Conversations description */
-"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
+"noConversationsDescription"="Start chatting securely with your contacts using end-to-end encryption";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Percakapan dinonaktifkan";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */

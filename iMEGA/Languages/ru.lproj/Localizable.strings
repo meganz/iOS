@@ -55,7 +55,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Вы вышли из этого устройства из другого места";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="SSL-ключ сервера не удаётся проверить. Возможно, вы находитесь под «атакой посредника» (англ. Man in the middle (MitM)).";
+"sslUnverified_alertTitle"="MEGA не удаётся подключиться в защищённом режиме по SSL. Возможно, вы используете общественный WiFi с дополнительными требованиями.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Содержимое, которое вы пытаетесь получить, недоступно для этой учётной записи. Попробуйте войти в ту же учётную запись, что и в мобильном веб-клиенте.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -585,7 +585,7 @@
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Не обязательно добавлять свой собственный  email адрес";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="У Вас уже есть контакт с таким email-адресом ";
+"alreadyHaveAContactWithThatEmailAddress"="У Вас уже есть контакт с таким email-адресом";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="Пользователь [X]  приглашён. Он появится в вашем списке контактов, если согласится.";
 /* Success message shown when some contacts have been invited */
@@ -619,7 +619,7 @@
 /*  */
 "oneContact"="1 контакт";
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
-"XContactsSelected"="[X] контакта/ов: ";
+"XContactsSelected"="[X] контакта/ов:";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Открыть общий доступ к папке";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -1058,7 +1058,7 @@
 /* Empty Conversations section */
 "noConversations"="Нет разговоров";
 /* Empty Conversations description */
-"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
+"noConversationsDescription"="Начните безопасное общение со своими контактами благодаря сквозному шифрованию.";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Чат отключён";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1134,7 +1134,7 @@
 /* Button title that allows the user to close a chat. */
 "closeChat"="Закрыть Чат";
 /* Title of the incoming shared folders of a user. */
-"sharedFolders"="Общие папки ";
+"sharedFolders"="Общие папки";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
 "contactCredentials"="Учетные Данные Контакта";
 /* "Verify user" dialog description */
@@ -1152,13 +1152,13 @@
 /* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
 "groupInfo"="Информация о Группе";
 /* Label title for a group chat */
-"groupChat"="Групповой Чат ";
+"groupChat"="Групповой Чат";
 /* The title of a menu button which allows users to rename a group chat. */
 "renameGroup"="Переименовать группу";
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="Изменить Аватар Группы";
 /* Text used as hint to give the user information to write a name for the group chat. */
-"enterGroupName"="Enter group name";
+"enterGroupName"="Введите имя группы";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Выйти";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1248,7 +1248,7 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s уже в списке контактов.";
 /* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="Отправлено контакту: %s ";
+"sentContact"="Отправлено контакту: %s";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="Отправлено %s контактам.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
@@ -1405,7 +1405,7 @@
 /* Refers to the type of a file or folder. */
 "type"="Тип";
 /* Title of the incoming shared folders of a user in singular */
-"sharedFolder"="Общая папка ";
+"sharedFolder"="Общая папка";
 /* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
 "created"="Создан";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
@@ -1471,12 +1471,12 @@
 /* Button title to allow the user ignore something */
 "ignore"="Игнорировать";
 /* Button title to allow the user open the default browser */
-"openBrowser"="Open browser";
+"openBrowser"="Открыть браузер";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="Перезапуск";
 /* Title to alert user the possibility of resume playing the video or start from the beginning */
-"resumePlayback"="Resume playback?";
+"resumePlayback"="Возобновить воспроизведение?";
 /* Message to show the user info (name and time) about the resume of the video */
-"continueOrRestartVideoMessage"="%1$s will continue at %2$s";
+"continueOrRestartVideoMessage"="%1$s продолжится на %2$s";
 /*  */
 "resume"="Возобновить";
