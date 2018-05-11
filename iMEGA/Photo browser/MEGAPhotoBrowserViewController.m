@@ -727,7 +727,10 @@
 #pragma mark - MEGAPhotoBrowserPickerDelegate
 
 - (void)updateCurrentIndexTo:(NSUInteger)newIndex {
-    self.currentIndex = newIndex;
+    if (newIndex != self.currentIndex) {
+        self.currentIndex = newIndex;
+        [self reloadUI];
+    }
 }
 
 #pragma mark - PieChartViewDelegate
