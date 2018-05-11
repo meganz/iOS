@@ -2,6 +2,9 @@
 #import "MEGAProcessAsset.h"
 #import "NSFileManager+MNZCategory.h"
 #import "MEGASdkManager.h"
+#import "MEGAReachabilityManager.h"
+
+static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 
 @interface MEGAProcessAsset ()
 
@@ -75,10 +78,12 @@
     }
     
     // Optimized image
-    if (self.toShareThroughChat) {
+    if (self.toShareThroughChat && ![MEGAReachabilityManager isReachableViaWiFi]) {
         options.synchronous = YES;
         options.resizeMode = PHImageRequestOptionsResizeModeExact;
-        [[PHImageManager defaultManager] requestImageForAsset:self.asset targetSize:CGSizeMake(1000, 1000) contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        NSUInteger totalPixels = self.asset.pixelWidth * self.asset.pixelHeight;
+        float factor = MIN(sqrtf((float)DOWNSCALE_IMAGES_PX / totalPixels), 1);
+        [[PHImageManager defaultManager] requestImageForAsset:self.asset targetSize:CGSizeMake(self.asset.pixelWidth * factor, self.asset.pixelHeight * factor) contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
             if (result) {
                 NSData *imageData = UIImageJPEGRepresentation(result, 0.75);
                 [self proccessImageData:imageData withInfo:info];
