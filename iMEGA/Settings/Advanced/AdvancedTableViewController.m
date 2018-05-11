@@ -94,7 +94,8 @@
         
         unsigned long long thumbnailsSize = [Helper sizeOfFolderAtPath:[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"]];
         unsigned long long previewsSize = [Helper sizeOfFolderAtPath:[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"]];
-        unsigned long long cacheSize = thumbnailsSize + previewsSize;
+        unsigned long long temporaryDirectory = [Helper sizeOfFolderAtPath:NSTemporaryDirectory()];
+        unsigned long long cacheSize = thumbnailsSize + previewsSize + temporaryDirectory;
         
         self.cacheSizeString = [byteCountFormatter stringFromByteCount:cacheSize];
         self.cacheSizeString = [self formatStringFromByteCountFormatter:self.cacheSizeString];
@@ -263,6 +264,7 @@
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
                 [self deleteFolderContentsInPath:thumbnailsPathString];
                 [self deleteFolderContentsInPath:previewsPathString];
+                [self deleteFolderContentsInPath:NSTemporaryDirectory()];
                 dispatch_async(dispatch_get_main_queue(), ^(void){
                     [SVProgressHUD dismiss];
                     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];

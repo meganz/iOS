@@ -372,12 +372,12 @@
         } else {
             [[NSFileManager defaultManager] removeItemAtPath:documentFilePath error:nil];
             if ([Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
-                [[MEGASdkManager sharedMEGASdk] startDownloadNode:node localPath:documentFilePath delegate:self];;
+                [[MEGASdkManager sharedMEGASdk] startDownloadNode:node localPath:documentFilePath delegate:self];
             }
         }
     } else {
         if ([Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
-            [[MEGASdkManager sharedMEGASdk] startDownloadNode:node localPath:documentFilePath delegate:self];;
+            [[MEGASdkManager sharedMEGASdk] startDownloadNode:node localPath:documentFilePath delegate:self];
         }
     }
 }

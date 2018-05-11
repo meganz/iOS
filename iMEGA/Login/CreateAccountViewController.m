@@ -1,39 +1,44 @@
 
 #import "CreateAccountViewController.h"
 
-#import <SafariServices/SafariServices.h>
-
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
+#import "Helper.h"
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "NSString+MNZCategory.h"
 
 #import "CheckEmailAndFollowTheLinkViewController.h"
 #import "PasswordStrengthIndicatorView.h"
+#import "PasswordView.h"
 
 @interface CreateAccountViewController () <UINavigationControllerDelegate, UITextFieldDelegate, MEGARequestDelegate>
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
+
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *lastNameTextField;
+@property (weak, nonatomic) IBOutlet UIImageView *nameIconImageView;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
-@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UIImageView *emailIconImageView;
+@property (weak, nonatomic) IBOutlet PasswordView *passwordView;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordStrengthIndicatorViewHeightLayoutConstraint;
 @property (weak, nonatomic) IBOutlet PasswordStrengthIndicatorView *passwordStrengthIndicatorView;
 
-@property (weak, nonatomic) IBOutlet UITextField *retypePasswordTextField;
+@property (weak, nonatomic) IBOutlet PasswordView *retypePasswordView;
 
 @property (weak, nonatomic) IBOutlet UIButton *termsCheckboxButton;
 @property (weak, nonatomic) IBOutlet UIButton *termsOfServiceButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 
-@property (weak, nonatomic) IBOutlet UIButton *loginButton;
-
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITextField *activeTextField;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *retypePasswordViewHeightConstraint;
 
 @end
 
@@ -50,6 +55,8 @@
     tapGesture.cancelsTouchesInView = NO;
     [self.scrollView addGestureRecognizer:tapGesture];
     
+    self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+    
     self.nameTextField.placeholder = AMLocalizedString(@"firstName", @"Hint text for the first name (Placeholder)");
     self.lastNameTextField.placeholder = AMLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)");
     
@@ -59,18 +66,19 @@
         [_emailTextField setText:self.emailString];
     }
     
-    [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Password")];
-    [self.retypePasswordTextField setPlaceholder:AMLocalizedString(@"confirmPassword", nil)];
+    [self configureTextFieldStyle:self.passwordView.passwordTextField];
+    self.passwordView.passwordTextField.tag = 3;
+
+    [self configureTextFieldStyle:self.retypePasswordView.passwordTextField];
+    [self.retypePasswordView.passwordTextField setPlaceholder:AMLocalizedString(@"confirmPassword", nil)];
+    self.retypePasswordView.passwordTextField.tag = 4;
+    self.retypePasswordView.leftImageView.image = [UIImage imageNamed:@"keyDouble"];
+    self.retypePasswordView.leftImageView.tintColor = UIColor.mnz_gray777777;
     
-    [self.termsOfServiceButton setTitle:AMLocalizedString(@"termsOfServiceButton", @"I agree with the MEGA Terms of Service") forState:UIControlStateNormal];
-    if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
-        self.termsOfServiceButton.titleLabel.font = [UIFont mnz_SFUIRegularWithSize:11.0f];
-    }
+    [self setTermsOfServiceAttributedTitle];
     
-    self.createAccountButton.backgroundColor = [UIColor mnz_grayCCCCCC];
+    self.createAccountButton.backgroundColor = UIColor.mnz_grayEEEEEE;
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Create Account") forState:UIControlStateNormal];
-    
-    [self.loginButton setTitle:AMLocalizedString(@"login", nil) forState:UIControlStateNormal];
     
     [self registerForKeyboardNotifications];
 }
@@ -91,9 +99,37 @@
 
 #pragma mark - Private
 
+- (void)configureTextFieldStyle:(UITextField *)textField {
+    textField.delegate = self;
+    textField.textColor = UIColor.mnz_black333333;
+    textField.font = [UIFont mnz_SFUIRegularWithSize:17];
+}
+
+- (void)showPasswordErrorView:(PasswordView *)passwordView constraint:(NSLayoutConstraint *)constraint message:(NSString *)message {
+    constraint.constant = 83;
+    passwordView.wrongPasswordView.hidden = NO;
+    passwordView.leftImageView.tintColor = UIColor.mnz_redD90007;
+    passwordView.wrongPasswordLabel.text = message;
+}
+
+- (void)hidePasswordErrorView:(PasswordView *)passwordView constraint:(NSLayoutConstraint *)constraint {
+    if (!passwordView.wrongPasswordView.hidden) {
+        constraint.constant = 44;
+        passwordView.wrongPasswordView.hidden = YES;
+        passwordView.leftImageView.tintColor = UIColor.mnz_gray777777;
+    }
+}
+
+- (IBAction)cancel:(UIBarButtonItem *)sender {
+    [self hideKeyboard];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (BOOL)validateForm {
     if (![self validateName:self.nameTextField.text] || ![self validateName:self.lastNameTextField.text]) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"invalidFirstNameAndLastName", @"")];
+        self.nameIconImageView.tintColor = UIColor.mnz_redD90007;
         if (![self validateName:self.nameTextField.text]) {
             [self.nameTextField becomeFirstResponder];
         } else {
@@ -105,24 +141,25 @@
     
     if (!self.emailTextField.text.mnz_isValidEmail) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
+        self.emailIconImageView.image = [UIImage imageNamed:@"errorEmail"];
         [self.emailTextField becomeFirstResponder];
         
         return NO;
     }
     
     if (![self validatePassword]) {
-        if ([self.passwordTextField.text length] == 0) {
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
-            [self.passwordTextField becomeFirstResponder];
+        if ([self.passwordView.passwordTextField.text length] == 0) {
+            [self showPasswordErrorView:self.passwordView constraint:self.passwordViewHeightConstraint message:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
+            [self.passwordView.passwordTextField becomeFirstResponder];
         } else {
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordsDoNotMatch", @"Passwords do not match")];
-            [self.retypePasswordTextField becomeFirstResponder];
+            [self showPasswordErrorView:self.retypePasswordView constraint:self.retypePasswordViewHeightConstraint message: AMLocalizedString(@"passwordsDoNotMatch", @"Passwords do not match")];
+            [self.retypePasswordView.passwordTextField becomeFirstResponder];
         }
         
         return NO;
     }
     
-    if ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordTextField.text] == PasswordStrengthVeryWeak) {
+    if ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordView.passwordTextField.text] == PasswordStrengthVeryWeak) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"pleaseStrengthenYourPassword", @"")];
         
         return NO;
@@ -146,7 +183,7 @@
 }
 
 - (BOOL)validatePassword {
-    if (self.passwordTextField.text.length == 0 || self.retypePasswordTextField.text.length == 0 || ![self.passwordTextField.text isEqualToString:self.retypePasswordTextField.text]) {
+    if (self.passwordView.passwordTextField.text.length == 0 || self.retypePasswordView.passwordTextField.text.length == 0 || ![self.passwordView.passwordTextField.text isEqualToString:self.retypePasswordView.passwordTextField.text]) {
         return NO;
     } else {
         return YES;
@@ -157,35 +194,35 @@
     BOOL isAnyTextFieldEmpty = NO;
     switch (tag) {
         case 0: {
-            if ([self.lastNameTextField.text isEqualToString:@""] || [self.emailTextField.text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""] || [self.retypePasswordTextField.text isEqualToString:@""]) {
+            if ([self.lastNameTextField.text isEqualToString:@""] || [self.emailTextField.text isEqualToString:@""] || [self.passwordView.passwordTextField.text isEqualToString:@""] || [self.retypePasswordView.passwordTextField.text isEqualToString:@""]) {
                 isAnyTextFieldEmpty = YES;
             }
             break;
         }
             
         case 1: {
-            if ([self.nameTextField.text isEqualToString:@""] || [self.lastNameTextField.text isEqualToString:@""] || [self.emailTextField.text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""] || [self.retypePasswordTextField.text isEqualToString:@""]) {
+            if ([self.nameTextField.text isEqualToString:@""] || [self.lastNameTextField.text isEqualToString:@""] || [self.emailTextField.text isEqualToString:@""] || [self.passwordView.passwordTextField.text isEqualToString:@""] || [self.retypePasswordView.passwordTextField.text isEqualToString:@""]) {
                 isAnyTextFieldEmpty = YES;
             }
             break;
         }
             
         case 2: {
-            if ([self.nameTextField.text isEqualToString:@""] || [self.lastNameTextField.text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""] || [self.retypePasswordTextField.text isEqualToString:@""]) {
+            if ([self.nameTextField.text isEqualToString:@""] || [self.lastNameTextField.text isEqualToString:@""] || [self.passwordView.passwordTextField.text isEqualToString:@""] || [self.retypePasswordView.passwordTextField.text isEqualToString:@""]) {
                 isAnyTextFieldEmpty = YES;
             }
             break;
         }
             
         case 3: {
-            if ([self.nameTextField.text isEqualToString:@""] || [self.lastNameTextField.text isEqualToString:@""] || [self.emailTextField.text isEqualToString:@""] || [self.retypePasswordTextField.text isEqualToString:@""]) {
+            if ([self.nameTextField.text isEqualToString:@""] || [self.lastNameTextField.text isEqualToString:@""] || [self.emailTextField.text isEqualToString:@""] || [self.retypePasswordView.passwordTextField.text isEqualToString:@""]) {
                 isAnyTextFieldEmpty = YES;
             }
             break;
         }
             
         case 4: {
-            if ([self.nameTextField.text isEqualToString:@""] || [self.lastNameTextField.text isEqualToString:@""] || [self.emailTextField.text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""]) {
+            if ([self.nameTextField.text isEqualToString:@""] || [self.lastNameTextField.text isEqualToString:@""] || [self.emailTextField.text isEqualToString:@""] || [self.passwordView.passwordTextField.text isEqualToString:@""]) {
                 isAnyTextFieldEmpty = YES;
             }
             break;
@@ -231,26 +268,38 @@
     self.scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
 }
 
+- (void)setTermsOfServiceAttributedTitle {
+    NSString *agreeWithTheMEGATermsOfService = AMLocalizedString(@"agreeWithTheMEGATermsOfService", @"");
+    NSString *termsOfServiceString = [agreeWithTheMEGATermsOfService mnz_stringBetweenString:@"<a href='terms'>" andString:@"</a>"];
+    agreeWithTheMEGATermsOfService = [agreeWithTheMEGATermsOfService mnz_removeWebclientFormatters];
+    
+    NSMutableAttributedString *termsOfServiceMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:agreeWithTheMEGATermsOfService attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_gray666666}];
+    [termsOfServiceMutableAttributedString setAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_gray666666} range:[agreeWithTheMEGATermsOfService rangeOfString:@"MEGA"]];
+    if (termsOfServiceString) {
+        [termsOfServiceMutableAttributedString setAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_gray666666} range:[agreeWithTheMEGATermsOfService rangeOfString:termsOfServiceString]];
+    }
+    
+    [self.termsOfServiceButton setAttributedTitle:termsOfServiceMutableAttributedString forState:UIControlStateNormal];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)termsCheckboxTouchUpInside:(id)sender {
     self.termsCheckboxButton.selected = !self.termsCheckboxButton.selected;
     
+    BOOL shoulBeCreateAccountButtonGray = NO;
+    if ((!self.emailTextField.text.mnz_isValidEmail) || ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordView.passwordTextField.text] == PasswordStrengthVeryWeak) || !self.termsCheckboxButton.selected) {
+        shoulBeCreateAccountButtonGray = YES;
+    } else {
+        shoulBeCreateAccountButtonGray = [self isEmptyAnyTextFieldForTag:self.retypePasswordView.passwordTextField.tag];
+    }
+    self.createAccountButton.backgroundColor = shoulBeCreateAccountButtonGray ? UIColor.mnz_grayEEEEEE : UIColor.mnz_redFF4D52;
+    
     [self hideKeyboard];
 }
 
 - (IBAction)termOfServiceTouchUpInside:(UIButton *)sender {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        NSURL *URL = [NSURL URLWithString:@"https://mega.nz/ios_terms.html"];
-        UIViewController *webViewController = [[SFSafariViewController alloc] initWithURL:URL];
-        ((SFSafariViewController *)webViewController).modalPresentationStyle = UIModalPresentationOverFullScreen;
-        if (@available(iOS 10.0, *)) {
-            ((SFSafariViewController *)webViewController).preferredControlTintColor = [UIColor mnz_redD90007];
-        } else {
-            webViewController.view.tintColor = [UIColor mnz_redD90007];
-        }
-        [self presentViewController:webViewController animated:YES completion:nil];
-    }
+    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://mega.nz/terms"]];
 }
 
 - (IBAction)createAccountTouchUpInside:(id)sender {
@@ -266,13 +315,14 @@
                         [self.navigationController popViewControllerAnimated:YES];
                     }];
                 } else {
+                    self.emailIconImageView.tintColor = UIColor.mnz_redD90007;
                     [self.emailTextField becomeFirstResponder];
-                    [self.createAccountButton setEnabled:YES];
+                    self.createAccountButton.enabled = YES;
                 }
             }];
             createAccountRequestDelegate.resumeCreateAccount = NO;
-            [[MEGASdkManager sharedMEGASdk] createAccountWithEmail:self.emailTextField.text password:self.passwordTextField.text firstname:self.nameTextField.text lastname:self.lastNameTextField.text delegate:createAccountRequestDelegate];
-            [self.createAccountButton setEnabled:NO];
+            [[MEGASdkManager sharedMEGASdk] createAccountWithEmail:self.emailTextField.text password:self.passwordView.passwordTextField.text firstname:self.nameTextField.text lastname:self.lastNameTextField.text delegate:createAccountRequestDelegate];
+            self.createAccountButton.enabled = NO;
         }
     }
 }
@@ -290,15 +340,19 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     BOOL shoulBeCreateAccountButtonGray = NO;
-    if ([text isEqualToString:@""] || (![self.emailTextField.text mnz_isValidEmail]) || ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordTextField.text] == PasswordStrengthVeryWeak)) {
+    if ([text isEqualToString:@""] || (!self.emailTextField.text.mnz_isValidEmail) || ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordView.passwordTextField.text] == PasswordStrengthVeryWeak) || !self.termsCheckboxButton.isSelected) {
         shoulBeCreateAccountButtonGray = YES;
     } else {
         shoulBeCreateAccountButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
     }
     
-    shoulBeCreateAccountButtonGray ? [self.createAccountButton setBackgroundColor:[UIColor mnz_grayCCCCCC]] : [self.createAccountButton setBackgroundColor:[UIColor mnz_redFF4D52]];
+    self.createAccountButton.backgroundColor = shoulBeCreateAccountButtonGray ? UIColor.mnz_grayEEEEEE : UIColor.mnz_redFF4D52;
     
-    if (textField.tag == 3) {
+    if (textField.tag == 0 || textField.tag == 1) {
+        self.nameIconImageView.tintColor = UIColor.mnz_gray777777;
+    } else if (textField.tag == 2) {
+        self.emailIconImageView.image = [UIImage imageNamed:@"email"];
+    } else if (textField.tag == 3) {
         if (text.length == 0) {
             self.passwordStrengthIndicatorView.customView.hidden = YES;
             self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
@@ -310,18 +364,33 @@
             
             [self.passwordStrengthIndicatorView updateViewWithPasswordStrength:[[MEGASdkManager sharedMEGASdk] passwordStrength:text]];
         }
+        [self hidePasswordErrorView:self.passwordView constraint:self.passwordViewHeightConstraint];
+        [self hidePasswordErrorView:self.retypePasswordView constraint:self.retypePasswordViewHeightConstraint];
+    } else if (textField.tag == 4) {
+        [self hidePasswordErrorView:self.passwordView constraint:self.passwordViewHeightConstraint];
+        [self hidePasswordErrorView:self.retypePasswordView constraint:self.retypePasswordViewHeightConstraint];
     }
     
     return YES;
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
-    if (textField.tag == 3) {
+    
+    if (textField.tag == 0 || textField.tag == 1) {
+        self.nameIconImageView.tintColor = UIColor.mnz_gray777777;
+    } else if (textField.tag == 2) {
+        self.emailIconImageView.tintColor = UIColor.mnz_gray777777;
+    } else if (textField.tag == 3) {
         self.passwordStrengthIndicatorView.customView.hidden = YES;
         self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
+        [self hidePasswordErrorView:self.passwordView constraint:self.passwordViewHeightConstraint];
+        [self hidePasswordErrorView:self.retypePasswordView constraint:self.retypePasswordViewHeightConstraint];
+    } else if (textField.tag == 4) {
+        [self hidePasswordErrorView:self.passwordView constraint:self.passwordViewHeightConstraint];
+        [self hidePasswordErrorView:self.retypePasswordView constraint:self.retypePasswordViewHeightConstraint];
     }
     
-    self.createAccountButton.backgroundColor = [UIColor mnz_grayCCCCCC];
+    self.createAccountButton.backgroundColor = UIColor.mnz_grayEEEEEE;
     
     return YES;
 }
@@ -337,15 +406,15 @@
             break;
             
         case 2:
-            [self.passwordTextField becomeFirstResponder];
+            [self.passwordView.passwordTextField becomeFirstResponder];
             break;
             
         case 3:
-            [self.retypePasswordTextField becomeFirstResponder];
+            [self.retypePasswordView.passwordTextField becomeFirstResponder];
             break;
             
         case 4:
-            [self.retypePasswordTextField resignFirstResponder];
+            [self.retypePasswordView.passwordTextField resignFirstResponder];
             break;
             
         default:
