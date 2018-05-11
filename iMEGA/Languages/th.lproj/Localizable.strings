@@ -126,8 +126,8 @@
 "strong"="คาดเดาได้ยากมาก";
 /*  */
 "passwordStrong"="รหัสผ่านนี้จะสามารถป้องกันการโจมตีแบบ brute-force ที่มีความซับซ้อนได้ กรุณาตรวจสอบอีกครั้งว่าคุณจะสามารถจำรหัสผ่านเหล่านี้ได้";
-/* Text shown on a button that if clicked shows the MEGA Terms of Service */
-"termsOfServiceButton"="ฉันเห็นด้วยกับข้อกำหนดในการบริการของ MEGA";
+/*  */
+"agreeWithTheMEGATermsOfService"="ฉันเห็นด้วยกับ<a href='terms'>ข้อกำหนดในการบริการ</a> ของ MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="กรอกชื่อให้ถูกต้อง";
 /*  */
@@ -258,6 +258,12 @@
 "folderAndFiles"="1 โฟลเดอร์ • %d ไฟล์";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="อยู่ในคิว";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="พักแล้ว";
+/* Label for the state of a transfer when is being completing - (String as short as possible). */
+"Completing..."="กำลังเสร็จสิ้น...";
+/* Label for the state of a transfer when is being retrying - (String as short as possible). */
+"Retrying..."="กำลังลองอีกครั้ง...";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="ยังมีการดาวน์โหลดที่ค้างอยู่";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -526,8 +532,6 @@
 "offline"="ออฟไลน์";
 /* Title of the Contacts section */
 "contactsTitle"="ผู้ติดต่อ";
-/* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
-"noFoldersShared"="ไม่มีโฟลเดอร์ที่จะแชร์";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 โฟล์เดอร์";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -656,6 +660,8 @@
 "privacyPolicyLabel"="นโยบายความเป็นส่วนตัว";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="ข้อตกลงในการใช้งาน";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="ปิด";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -774,12 +780,8 @@
 "confirmPassword"="ยืนยันรหัสผ่าน";
 /* Success message shown when the password has been changed */
 "passwordChanged"="รหัสผ่านของคุณได้ถูกเปลี่ยนแล้ว";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="รหัสผ่านใหม่และเก่าจะต้องไม่เหมือนกัน";
 /* An option to reset the password. */
 "forgotPassword"="ลืมรหัสผ่านหรือไม่";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="คุณสามารถรีเซ็ตรหัสผ่านโดยทำตามลิงก์การกู้คืนที่จะถูกส่งไปยังอีเมลของคุณ";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="ลิงก์สำหรับการกู้คืนได้หมดอายุแล้ว กรุณาลองใหม่อีกครั้ง";
 /* Headline of the password reset recovery procedure */
@@ -794,26 +796,9 @@
 "youRecoveryKeyIsGoingTo"="คีย์การกู้คืนของคุณจะถูกใช้เพื่อรีเซ็ตรหัสผ่านของคุณ กรุณากรอกรหัสผ่านใหม่ของคุณ";
 /*  */
 "yourPasswordHasBeenReset"="รหัสผ่านของคุณถูกรีเซ็ตเรียบร้อยแล้ว กรุณาเข้าสู่ระบบด้วยบัญชีตอนนี้ได้แล้ว";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="หากคุณมีสำเนาสำรองของคีย์การกู้คืน คุณสามารถรีเซ็ตรหัสผ่านโดยเลือกใช่ ซึ่งข้อมูลจะไม่สูญหาย";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="คุณยังสามารถส่งออกคีย์การกู้คืนของคุณได้ในขณะนี้ หากคุณมีเซสชัน MEGA ที่ใช้งานอยู่ในเบราว์เซอร์อื่น ๆ บนคอมพิวเตอร์เครื่องอื่นหรืออย่างอื่น คุณสามารถถอดรหัสบัญชีเดิมของคุณได้ แต่คุณสามารถเริ่มต้นใหม่ได้ภายใต้ที่อยู่อีเมลเดียวกัน โดยเลือก ไม่";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="คุณมีสำเนาสำรองคีย์การกู้คืนหรือไม่";
-/* Headline when the user chose YES */
-"great"="ยอดเยี่ยม!";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="กรุณากรอกที่อยู่อีเมลด้านล่างนี้ คุณจะได้รับลิงก์สำหรับกู้คืน ที่จะช่วยส่งคีย์การกู้คืนและการตั้งค่ารหัสผ่านของคุณได้";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="ส่ง";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="อุ๊ปส์!";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="เนื่องจากกระบวนการเข้ารหัสตั้งแต่ต้นทางถึงปลายทางของเรา คุณจะไม่สามารถเข้าถึงข้อมูลของคุณโดยไม่ใช้รหัสผ่านหรือข้อมูลสำรองของคีย์การกู้คืนได้";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="คุณสามารถพาร์คบัญชีเดิมของคุณและเริ่มต้นบัญชีใหม่ได้ภายใต้ที่อยู่อีเมลเดียวกัน ข้อมูลของคุณจะถูกเก็บไว้อย่างน้อย 60 วัน ในกรณีที่คุณจำรหัสผ่านบัญชีที่คุณพาร์คไว้ กรุณาติดต่อ support@mega.nz";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="กรุณากรอกที่อยู่อีเมลของคุณด้านล่าง คุณจะได้รับลิงก์การกู้คืนซึ่งจะช่วยให้คุณสามารถพาร์คบัญชีของคุณได้";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="พาร์คบัญชี";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -1072,6 +1057,8 @@
 "chat"="แชท";
 /* Empty Conversations section */
 "noConversations"="ไม่มีการสนทนา";
+/* Empty Conversations description */
+"noConversationsDescription"="Start chatting securely with your contacts using end-to-end encryption";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="แชทถูกปิดใช้งาน";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1100,6 +1087,8 @@
 "changedGroupChatNameTo"="[A] เปลี่ยนชื่อแชทกลุ่มเป็น '[B]'";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="เพิ่มผู้เข้าร่วม...";
+/* Menu item to add participants to a chat */
+"addParticipants"="เพิ่มผู้เข้าร่วม";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="สถานะ";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1168,6 +1157,8 @@
 "renameGroup"="เปลี่ยนชื่อกลุ่ม";
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="เปลี่ยนรูปโปรไฟล์ของกลุ่ม";
+/* Text used as hint to give the user information to write a name for the group chat. */
+"enterGroupName"="Enter group name";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="ออก";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1257,7 +1248,7 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s มีอยู่แล้วในผู้ติดต่อ";
 /* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="ส่งไปยังผู้ติดต่อ: %s ";
+"sentContact"="ส่งไปยังผู้ติดต่อ: %s";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="ส่งแล้ว %s ผู้ติดต่อ";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
@@ -1475,3 +1466,17 @@
 "testPasswordLogoutText"="คุณกำลังจะออกจากระบบ กรุณาทดสอบรหัสผ่านเพื่อให้แน่ใจว่าคุณจำได้ หากลืมรหัสผ่าน คุณจะสูญเสียการเข้าถึงข้อมูล MEGA ของคุณไปโดยปริยาย";
 /* state previous to import a file */
 "loading"="กำลังโหลด...";
+/*   */
+"next"="ถัดไป";
+/* Button title to allow the user ignore something */
+"ignore"="ละเว้น";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Open browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="รีสตาร์ท";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Resume playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%1$s will continue at %2$s";
+/*  */
+"resume"="ต่อ";

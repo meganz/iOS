@@ -126,8 +126,8 @@
 "strong"="חזק";
 /*  */
 "passwordStrong"="סיסמתך תעמוד מול רוב התקפות המתוחכמות של Brute-Force. אנא וודא כי הינך זוכר אותה.";
-/* Text shown on a button that if clicked shows the MEGA Terms of Service */
-"termsOfServiceButton"="אני מסכים עם תנאי השימוש של MEGA";
+/*  */
+"agreeWithTheMEGATermsOfService"="אני מסכים עם <a href='terms'>תנאי השימוש</a> של MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="הכנס שם תקין";
 /*  */
@@ -258,6 +258,12 @@
 "folderAndFiles"="תיקייה 1 • %d קבצים";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="בתור";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="הושהה";
+/* Label for the state of a transfer when is being completing - (String as short as possible). */
+"Completing..."="מסיים...";
+/* Label for the state of a transfer when is being retrying - (String as short as possible). */
+"Retrying..."="מנסה שוב...";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="ישנן הורדות בהמתנה";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -509,7 +515,7 @@
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
 "cameraUploadsUploadingFiles"="מעלה %1$d מתוך %2$d קבצים";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"indexOfTotalFile"="%1$d מתוך קובץ %2$d ";
+"indexOfTotalFile"="%1$d מתוך קובץ %2$d";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
 "indexOfTotalFiles"="%1$d מתוך %2$d קבצים";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
@@ -526,8 +532,6 @@
 "offline"="מנותק";
 /* Title of the Contacts section */
 "contactsTitle"="אנשי קשר";
-/* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
-"noFoldersShared"="לא שותפו תיקיות";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="תיקייה 1";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -597,7 +601,7 @@
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="נמחקו %d אנשי קשר";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
-"removedContact"="איש הקשר %@ נמחק! ";
+"removedContact"="איש הקשר %@ נמחק!";
 /* Label shown when a contact request is pending */
 "pending"="ממתין";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
@@ -656,6 +660,8 @@
 "privacyPolicyLabel"="מדיניות פרטיות";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="תנאי שימוש";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="כבוי";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -723,7 +729,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="תאבד את כל המידע המקושר לחשבון זה. האם להמשיך?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="אם אין לך דרך לגשת למייל שלך, אנא צור קשר עם support@mega.nz. ";
+"ifYouCantAccessYourEmailAccount"="אם אין לך דרך לגשת למייל שלך, אנא צור קשר עם support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="קישור הביטול פג תוקף.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -755,9 +761,9 @@
 /* Success message shown when {1+} files have been removed from MEGA */
 "filesRemovedToRubbishBinMessage"="%d קבצים נמחקו מ-MEGA";
 /* Success message shown when 1 folder has been removed from MEGA */
-"folderRemovedToRubbishBinMessage"="תיקייה אחת נמחקה מ-MEGA ";
+"folderRemovedToRubbishBinMessage"="תיקייה אחת נמחקה מ-MEGA";
 /* Success message shown when {1+} folders have been removed from MEGA */
-"foldersRemovedToRubbishBinMessage"="%d תיקייה נמחקו מ-MEGA ";
+"foldersRemovedToRubbishBinMessage"="%d תיקייה נמחקו מ-MEGA";
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
 "fileFolderRemovedToRubbishBinMessage"="קובץ אחד ותיקיה אחת נמחקו מ-MEGA";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
@@ -774,12 +780,8 @@
 "confirmPassword"="אשר סיסמא";
 /* Success message shown when the password has been changed */
 "passwordChanged"="סיסמתך שונתה.";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="הסיסמא הקודמת והחדשה לא יכולות להיות זהות.";
 /* An option to reset the password. */
 "forgotPassword"="שכחת סיסמא?";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="תוכל לשנות את סיסמתך בקישור שנשלח אליך למייל.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="קישור זה פג תוקף, אנא נסה שנית.";
 /* Headline of the password reset recovery procedure */
@@ -794,26 +796,9 @@
 "youRecoveryKeyIsGoingTo"="מפתח השחזור שלך ישמש על מנת לאפס את הסיסמא שלך. אנא הכנס סיסמא חדשה.";
 /*  */
 "yourPasswordHasBeenReset"="הסיסמא אותחלה בהצלחה. אנא התחבר כעת.";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="אם יש לך גיבוי של מפתח השחזור שלך, תוכל לאפס את הסיסמא שלך על ידי לחיצה על - כן. שום מידע לא יילך לאיבוד.";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="עדיין תוכל לגבות את מפתח השחזור שלך אם יש לך חשבון פתוח כרגע בדפדפן אחר במחשב זה או במחשב אחר. אם לא, לא תוכל לפענח את חשבונך, אך תוכל לפתוח חשבון חדש תחת אותה כתובת מייל על ידי בחירה ב-לא.";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="יש לך גיבוי של מפתח השחזור שלך?";
-/* Headline when the user chose YES */
-"great"="מצוין!";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="אנא הכנס את כתובת המייל שלך. תקבל קישור לעמוד שבוא תוכל להכניס את מפתח השחזור שלך ולשנות סיסמא.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="שלח";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="אופס!";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="עקב אלגוריתם ההצפנה קצה-אל-קצה שלנו, לא תוכל לגשת למידע שלך ללא הסיסמא או מפתח השחזור שלך.";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="תוכל להחנות את חשבונך ולפתוח אחד חדש תחת אותה כתובת מייל. המידע שלך יישמר ללפחות 60 יום. במקרה ותיזכר בסיסמא, אנא צור קשר עם support@mega.nz";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="אנא הכנס את כתובת המייל שלך למטה. תקבל קישור לעמוד בו תוכל להחנות את החשבון שלך.";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="החנה חשבון";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -845,7 +830,7 @@
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
 "closeOtherSessions"="סגור סשנים אחרים";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
-"sessionsClosed"="העמודים הפתוחים נסגרו ";
+"sessionsClosed"="העמודים הפתוחים נסגרו";
 /* Section title where you can change the app's passcode */
 "changePasscodeLabel"="שנה סיסמא";
 /* Title to describe a simple (four digit) passcode */
@@ -1007,7 +992,7 @@
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%@ per month";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
-"choosePlan"="בחר אחד מהמסלולים הבאים: ";
+"choosePlan"="בחר אחד מהמסלולים הבאים:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Select one account type:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
@@ -1019,7 +1004,7 @@
 /* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
 "thereAreNoPlansSuitableForYourCurrentUsage"="אין תוכניות שמתאימות לשימוש הנוכחי שלך. אנא צור קשר עם [A]תמיכה[/A] לקבלת תכנית אישית.";
 /* Header shown to help on the purchasin process */
-"selectMembership"="בחר סוג: ";
+"selectMembership"="בחר סוג:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
 "save17"="חסוך 17%";
 /* Error message shown when the purchase has failed */
@@ -1041,7 +1026,7 @@
 /* Alert title shown when a selected plan is not available at that moment on the App store */
 "productNotAvailable"="מוצר זה לא קיים בחנות האפליקציות כרגע. אנא נסה שוב מאוחר יותר.";
 /* Alert title shown when the user has purchase correctly some plan */
-"thankYou_title"="תודה ";
+"thankYou_title"="תודה";
 /* Alert message shown when a purchase was restored succesfully */
 "purchaseRestore_message"="הרכישה שלך שוחזרה";
 /* Alert title shown when a purchase has stopped because some error between the process */
@@ -1072,6 +1057,8 @@
 "chat"="צ'ט";
 /* Empty Conversations section */
 "noConversations"="אין שיחות";
+/* Empty Conversations description */
+"noConversationsDescription"="Start chatting securely with your contacts using end-to-end encryption";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="צ'ט בוטל";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1100,6 +1087,8 @@
 "changedGroupChatNameTo"="[A] שינה את שם הקבוצה ל'[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="הוסף משתתף...";
+/* Menu item to add participants to a chat */
+"addParticipants"="הוסף משתתפים";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="מצב";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1168,6 +1157,8 @@
 "renameGroup"="שנה שם קבוצה";
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="שנה תמונת קבוצה";
+/* Text used as hint to give the user information to write a name for the group chat. */
+"enterGroupName"="Enter group name";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="עזוב";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1197,7 +1188,7 @@
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Chatting with";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA מאבטחת את השיחה שלך עם הצפנת קצה-אל-קצה (ניהול בידי המשתמש) ובכך מאפשר אבטחה מקסימלית. ";
+"chatIntroductionMessage"="MEGA מאבטחת את השיחה שלך עם הצפנת קצה-אל-קצה (ניהול בידי המשתמש) ובכך מאפשר אבטחה מקסימלית.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]סודיות.[/S] רק היוצר ואלו שיש להם הרשאות יכולים לפענח ולקרוא את התוכן.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1475,3 +1466,17 @@
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
 /* state previous to import a file */
 "loading"="טוען...";
+/*   */
+"next"="הבא";
+/* Button title to allow the user ignore something */
+"ignore"="התעלם";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Open browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="Restart";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Resume playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%1$s will continue at %2$s";
+/*  */
+"resume"="המשך";

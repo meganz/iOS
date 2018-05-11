@@ -2,13 +2,18 @@
 
 #import <CoreSpotlight/CoreSpotlight.h>
 #import "LTHPasscodeViewController.h"
+#import <SafariServices/SafariServices.h>
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 
 #import "MEGAActivityItemProvider.h"
+#import "MEGANode+MNZCategory.h"
+#import "MEGALogger.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 
@@ -20,6 +25,7 @@
 #import "RemoveLinkActivity.h"
 #import "RemoveSharingActivity.h"
 #import "ShareFolderActivity.h"
+#import "SendToChatActivity.h"
 
 static MEGANode *linkNode;
 static NSInteger linkNodeOption;
@@ -88,11 +94,13 @@ static MEGAIndexer *indexer;
                                 @"3dm":@"3d",
                                 @"3fr":@"raw",
                                 @"3g2":@"video",
+                                @"3ga":@"audio",
                                 @"3gp":@"video",
                                 @"7z":@"compressed",
                                 @"aac":@"audio",
+                                @"abr":@"photoshop",
                                 @"ac3":@"audio",
-                                @"accdb":@"database",
+                                @"accdb":@"web_lang",
                                 @"aep":@"after_effects",
                                 @"aet":@"after_effects",
                                 @"ai":@"illustrator",
@@ -103,78 +111,68 @@ static MEGAIndexer *indexer;
                                 @"apk":@"executable",
                                 @"app":@"executable",
                                 @"arw":@"raw",
-                                @"as":@"fla_lang",
-                                @"asc":@"fla_lang",
                                 @"ascii":@"text",
                                 @"asf":@"video",
                                 @"asp":@"web_lang",
                                 @"aspx":@"web_lang",
-                                @"asx":@"playlist",
                                 @"avi":@"video",
                                 @"bay":@"raw",
-                                @"bmp":@"graphic",
+                                @"bin":@"executable",
+                                @"bmp":@"image",
                                 @"bz2":@"compressed",
-                                @"c":@"source_code",
-                                @"cc":@"source_code",
+                                @"c":@"web_lang",
+                                @"cc":@"web_lang",
                                 @"cdr":@"vector",
                                 @"cgi":@"web_lang",
-                                @"class":@"java",
+                                @"class":@"web_data",
                                 @"com":@"executable",
-                                @"cpp":@"source_code",
+                                @"cmd":@"executable",
+                                @"cpp":@"web_lang",
                                 @"cr2":@"raw",
                                 @"css":@"web_data",
-                                @"cxx":@"source_code",
+                                @"cxx":@"web_lang",
                                 @"dcr":@"raw",
-                                @"db":@"database",
-                                @"dbf":@"database",
-                                @"dhtml":@"html",
-                                @"dll":@"source_code",
+                                @"db":@"web_lang",
+                                @"dbf":@"web_lang",
+                                @"dll":@"web_lang",
                                 @"dng":@"raw",
                                 @"doc":@"word",
                                 @"docx":@"word",
                                 @"dotx":@"word",
                                 @"dwg":@"cad",
-                                @"dwt":@"dreamweaver",
                                 @"dxf":@"cad",
                                 @"dmg":@"dmg",
                                 @"eps":@"vector",
                                 @"exe":@"executable",
                                 @"fff":@"raw",
-                                @"fla":@"flash",
                                 @"flac":@"audio",
-                                @"flv":@"video",
                                 @"fnt":@"font",
                                 @"fon":@"font",
                                 @"gadget":@"executable",
-                                @"gif":@"graphic",
-                                @"gpx":@"gis",
+                                @"gif":@"image",
                                 @"gsheet":@"spreadsheet",
                                 @"gz":@"compressed",
-                                @"h":@"source_code",
-                                @"hpp":@"source_code",
-                                @"htm":@"html",
-                                @"html":@"html",
+                                @"h":@"web_lang",
+                                @"hpp":@"web_lang",
                                 @"iff":@"audio",
                                 @"inc":@"web_lang",
                                 @"indd":@"indesign",
-                                @"jar":@"java",
-                                @"java":@"java",
+                                @"jar":@"web_data",
+                                @"java":@"web_data",
                                 @"jpeg":@"image",
                                 @"jpg":@"image",
                                 @"js":@"web_data",
                                 @"key":@"keynote",
-                                @"kml":@"gis",
                                 @"log":@"text",
-                                @"m":@"source_code",
-                                @"mm":@"source_code",
-                                @"m3u":@"playlist",
+                                @"m":@"web_lang",
+                                @"mm":@"web_lang",
                                 @"m4v":@"video",
                                 @"m4a":@"audio",
                                 @"max":@"3d",
-                                @"mdb":@"database",
+                                @"mdb":@"web_lang",
                                 @"mef":@"raw",
-                                @"mid":@"midi",
-                                @"midi":@"midi",
+                                @"mid":@"audio",
+                                @"midi":@"audio",
                                 @"mkv":@"video",
                                 @"mov":@"video",
                                 @"mp3":@"audio",
@@ -189,14 +187,13 @@ static MEGAIndexer *indexer;
                                 @"obj":@"3d",
                                 @"odp":@"generic",
                                 @"ods":@"spreadsheet",
-                                @"odt":@"text",
+                                @"odt":@"openoffice",
                                 @"ogv":@"video",
                                 @"otf":@"font",
                                 @"ots":@"spreadsheet",
                                 @"orf":@"raw",
                                 @"pages":@"pages",
-                                @"pcast":@"podcast",
-                                @"pdb":@"database",
+                                @"pdb":@"web_lang",
                                 @"pdf":@"pdf",
                                 @"pef":@"raw",
                                 @"php":@"web_lang",
@@ -205,8 +202,7 @@ static MEGAIndexer *indexer;
                                 @"php5":@"web_lang",
                                 @"phtml":@"web_lang",
                                 @"pl":@"web_lang",
-                                @"pls":@"playlist",
-                                @"png":@"graphic",
+                                @"png":@"image",
                                 @"ppj":@"premiere",
                                 @"pps":@"powerpoint",
                                 @"ppt":@"powerpoint",
@@ -215,42 +211,37 @@ static MEGAIndexer *indexer;
                                 @"psb":@"photoshop",
                                 @"psd":@"photoshop",
                                 @"py":@"web_lang",
-                                @"ra":@"real_audio",
-                                @"ram":@"real_audio",
                                 @"rar":@"compressed",
-                                @"rm":@"real_audio",
                                 @"rtf":@"text",
                                 @"rw2":@"raw",
                                 @"rwl":@"raw",
-                                @"sh":@"source_code",
+                                @"sh":@"web_lang",
                                 @"shtml":@"web_data",
                                 @"sitx":@"compressed",
                                 @"sketch":@"sketch",
-                                @"sql":@"database",
+                                @"sql":@"web_lang",
                                 @"srf":@"raw",
-                                @"srt":@"subtitles",
+                                @"srt":@"text",
                                 @"stl":@"3d",
                                 @"svg":@"vector",
                                 @"svgz":@"vector",
-                                @"swf":@"swf",
                                 @"tar":@"compressed",
                                 @"tbz":@"compressed",
-                                @"tga":@"graphic",
+                                @"tga":@"image",
                                 @"tgz":@"compressed",
-                                @"tif":@"graphic",
-                                @"tiff":@"graphic",
+                                @"tif":@"image",
+                                @"tiff":@"image",
                                 @"torrent":@"torrent",
                                 @"ttf":@"font",
                                 @"txt":@"text",
-                                @"vcf":@"vcard",
-                                @"vob":@"video_vob",
+                                @"vob":@"video",
                                 @"wav":@"audio",
                                 @"webm":@"video",
                                 @"wma":@"audio",
                                 @"wmv":@"video",
                                 @"wpd":@"text",
                                 @"wps":@"word",
-                                @"xhtml":@"html",
+                                @"Xd":@"experiencedesign",
                                 @"xlr":@"spreadsheet",
                                 @"xls":@"excel",
                                 @"xlsx":@"excel",
@@ -619,7 +610,7 @@ static MEGAIndexer *indexer;
     return YES;
 }
 
-+ (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink {
++ (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink shouldOverwrite:(BOOL)overwrite {
     MEGASdk *api;
     
     // Can't create Inbox folder on documents folder, Inbox is reserved for use by Apple
@@ -638,16 +629,27 @@ static MEGAIndexer *indexer;
     NSString *relativeFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
     
     if (node.type == MEGANodeTypeFile) {
-        if (![[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath]]) {
-            MOOfflineNode *offlineNodeExist =  [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
+        if (![[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath]] || overwrite) {
+            if (overwrite) { //For node versions
+                [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath] error:nil];
+                MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:offlineNameString];
+                if (offlineNode) {
+                    [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
+                }
+            }
+            MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:api];
+            
+            NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:[node base64Handle]] stringByAppendingPathComponent:node.name];
+            NSString *temporaryFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:temporaryPath];
             
             if (offlineNodeExist) {
-                NSRange replaceRange = [relativeFilePath rangeOfString:@"Documents/"];
-                if (replaceRange.location != NSNotFound) {
-                    NSString *result = [relativeFilePath stringByReplacingCharactersInRange:replaceRange withString:@""];
-                    NSString *itemPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
-                    [[NSFileManager defaultManager] copyItemAtPath:itemPath toPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath] error:nil];
-                    [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[result decomposedStringWithCanonicalMapping]];
+                NSString *itemPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
+                [Helper copyNode:node from:itemPath to:relativeFilePath api:api];
+            } else if ([temporaryFingerprint isEqualToString:[api fingerprintForNode:node]]) {
+                if ((node.name.mnz_isImagePathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (node.name.mnz_videoPathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
+                    [node mnz_copyToGalleryFromTemporaryPath:temporaryPath];
+                } else {
+                    [Helper moveNode:node from:temporaryPath to:relativeFilePath api:api];
                 }
             } else {
                 NSString *appData = nil;
@@ -672,7 +674,33 @@ static MEGAIndexer *indexer;
         MEGANodeList *nList = [api childrenForParent:node];
         for (NSInteger i = 0; i < nList.size.integerValue; i++) {
             MEGANode *child = [nList nodeAtIndex:i];
-            [self downloadNode:child folderPath:relativeFilePath isFolderLink:isFolderLink];
+            [self downloadNode:child folderPath:relativeFilePath isFolderLink:isFolderLink shouldOverwrite:overwrite];
+        }
+    }
+}
+
++ (void)copyNode:(MEGANode *)node from:(NSString *)itemPath to:(NSString *)relativeFilePath api:(MEGASdk *)api {
+    NSRange replaceRange = [relativeFilePath rangeOfString:@"Documents/"];
+    if (replaceRange.location != NSNotFound) {
+        NSString *result = [relativeFilePath stringByReplacingCharactersInRange:replaceRange withString:@""];
+        NSError *error;
+        if ([[NSFileManager defaultManager] copyItemAtPath:itemPath toPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath] error:&error]) {
+            [[MEGAStore shareInstance] insertOfflineNode:node api:api path:result.decomposedStringWithCanonicalMapping];
+        } else {
+            MEGALogError(@"Failed to copy from %@ to %@ with error: %@", itemPath, relativeFilePath, error);
+        }
+    }
+}
+
++ (void)moveNode:(MEGANode *)node from:(NSString *)itemPath to:(NSString *)relativeFilePath api:(MEGASdk *)api {
+    NSRange replaceRange = [relativeFilePath rangeOfString:@"Documents/"];
+    if (replaceRange.location != NSNotFound) {
+        NSString *result = [relativeFilePath stringByReplacingCharactersInRange:replaceRange withString:@""];
+        NSError *error;
+        if ([[NSFileManager defaultManager] moveItemAtPath:itemPath toPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath] error:&error]) {
+            [[MEGAStore shareInstance] insertOfflineNode:node api:api path:result.decomposedStringWithCanonicalMapping];
+        } else {
+            MEGALogError(@"Failed to move from %@ to %@ with error: %@", itemPath, relativeFilePath, error);
         }
     }
 }
@@ -749,19 +777,17 @@ static MEGAIndexer *indexer;
 }
 
 + (NSString *)sizeAndDateForNode:(MEGANode *)node api:(MEGASdk *)api {
+    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], [self dateWithISO8601FormatOfRawTime:node.creationTime.timeIntervalSince1970]];
+}
+
++ (NSString *)sizeForNode:(MEGANode *)node api:(MEGASdk *)api {
     NSString *size;
-    time_t rawtime;
     if ([node isFile]) {
         size = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory];
-        rawtime = [[node modificationTime] timeIntervalSince1970];
     } else {
         size = [NSByteCountFormatter stringFromByteCount:[[api sizeForNode:node] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
-        rawtime = [[node creationTime] timeIntervalSince1970];
     }
-    
-    NSString *date = [self dateWithISO8601FormatOfRawTime:rawtime];
-    
-    return [NSString stringWithFormat:@"%@ • %@", size, date];
+    return size;
 }
 
 + (NSString *)dateWithISO8601FormatOfRawTime:(time_t)rawtime {
@@ -780,9 +806,12 @@ static MEGAIndexer *indexer;
 }
 
 + (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray button:(UIBarButtonItem *)shareBarButtonItem {
+    return [self activityViewControllerForNodes:nodesArray sender:shareBarButtonItem];
+}
+
++ (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id)sender {
     totalOperations = nodesArray.count;
     
-    UIActivityViewController *activityVC;
     NSMutableArray *activityItemsMutableArray = [[NSMutableArray alloc] init];
     NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
     
@@ -804,6 +833,11 @@ static MEGAIndexer *indexer;
         if ([filesURLMutableArray count]) {
             allNodesExistInOffline = YES;
         }
+        
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+            SendToChatActivity *sendToChatActivity = [[SendToChatActivity alloc] initWithNodes:nodesArray];
+            [activitiesMutableArray addObject:sendToChatActivity];
+        }
     }
     
     if (allNodesExistInOffline) {
@@ -818,7 +852,7 @@ static MEGAIndexer *indexer;
         }
         
         if (nodesArray.count == 1) {
-            OpenInActivity *openInActivity = [[OpenInActivity alloc] initOnBarButtonItem:shareBarButtonItem];
+            OpenInActivity *openInActivity = [[OpenInActivity alloc] initOnView:sender];
             [activitiesMutableArray addObject:openInActivity];
         }
     } else {
@@ -842,9 +876,16 @@ static MEGAIndexer *indexer;
         [activitiesMutableArray addObject:removeSharingActivity];
     }
     
-    activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItemsMutableArray applicationActivities:activitiesMutableArray];
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItemsMutableArray applicationActivities:activitiesMutableArray];
     [activityVC setExcludedActivityTypes:excludedActivityTypesMutableArray];
-    [activityVC.popoverPresentationController setBarButtonItem:shareBarButtonItem];
+    
+    if ([[sender class] isEqual:UIBarButtonItem.class]) {
+        activityVC.popoverPresentationController.barButtonItem = sender;
+    } else {
+        UIView *presentationView = (UIView*)sender;
+        activityVC.popoverPresentationController.sourceView = presentationView;
+        activityVC.popoverPresentationController.sourceRect = CGRectMake(0, 0, presentationView.frame.size.width/2, presentationView.frame.size.height/2);
+    }
     
     return activityVC;
 }
@@ -976,22 +1017,69 @@ static MEGAIndexer *indexer;
     return spaceHeight;
 }
 
++ (NSDictionary *)titleAttributesForEmptyState {
+    return @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:UIColor.mnz_black333333};
+}
+
++ (NSDictionary *)buttonTextAttributesForEmptyState {
+    return @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor};
+}
+
 #pragma mark - Utils for UI
 
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
-    NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+    return [self customNavigationBarLabelWithTitle:title subtitle:subtitle color:[UIColor whiteColor]];
+}
+
++ (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle color:(UIColor *)color {
+    NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title attributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:color}];
     
-    subtitle = [NSString stringWithFormat:@"\n%@", subtitle];
-    NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
-    
-    [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
+    if (![subtitle isEqualToString:@""]) {
+        subtitle = [NSString stringWithFormat:@"\n%@", subtitle];
+        NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:color}];
+        
+        [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
+    }
     
     UILabel *label = [[UILabel alloc] init];
-    [label setNumberOfLines:2];
+    [label setNumberOfLines:[subtitle isEqualToString:@""] ? 1 : 2];
+    
     [label setTextAlignment:NSTextAlignmentCenter];
     [label setAttributedText:titleMutableAttributedString];
     
     return label;
+}
+
++ (UISearchController *)customSearchControllerWithSearchResultsUpdaterDelegate:(id<UISearchResultsUpdating>)searchResultsUpdaterDelegate searchBarDelegate:(id<UISearchBarDelegate>)searchBarDelegate {
+    UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    searchController.searchResultsUpdater = searchResultsUpdaterDelegate;
+    searchController.searchBar.delegate = searchBarDelegate;
+    searchController.dimsBackgroundDuringPresentation = NO;
+    
+    searchController.searchBar.translucent = NO;
+    searchController.searchBar.barTintColor = [UIColor mnz_grayF1F1F2];
+    searchController.searchBar.tintColor = [UIColor mnz_redF0373A];
+    
+    UITextField *searchTextField = [searchController.searchBar valueForKey:@"_searchField"];
+    searchTextField.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
+    searchTextField.backgroundColor = [UIColor whiteColor];
+    searchTextField.textColor = [UIColor mnz_black333333];
+    searchTextField.tintColor = [UIColor mnz_green00BFA5];
+    
+    return searchController;
+}
+
++ (void)presentSafariViewControllerWithURL:(NSURL *)url {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:url];
+        if (@available(iOS 10.0, *)) {
+            safariViewController.preferredControlTintColor = [UIColor mnz_redF0373A];
+        } else {
+            safariViewController.view.tintColor = [UIColor mnz_redF0373A];
+        }
+        
+        [UIApplication.mnz_visibleViewController presentViewController:safariViewController animated:YES completion:nil];
+    }
 }
 
 #pragma mark - Logout
@@ -1030,6 +1118,39 @@ static MEGAIndexer *indexer;
     [Helper resetUserData];
     
     [Helper deletePasscode];
+}
+
++ (void)logoutAfterPasswordReminder {
+    NSError *error;
+    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] error:&error];
+    if (error) {
+        MEGALogError(@"Contents of directory at path failed with error: %@", error);
+    }
+    
+    BOOL isInboxDirectory = NO;
+    for (NSString *directoryElement in directoryContent) {
+        if ([directoryElement isEqualToString:@"Inbox"]) {
+            NSString *inboxPath = [[Helper pathForOffline] stringByAppendingPathComponent:@"Inbox"];
+            [[NSFileManager defaultManager] fileExistsAtPath:inboxPath isDirectory:&isInboxDirectory];
+            break;
+        }
+    }
+    
+    if (directoryContent.count > 0) {
+        if (directoryContent.count == 1 && isInboxDirectory) {
+            [[MEGASdkManager sharedMEGASdk] logout];
+            return;
+        }
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"warning", nil) message:AMLocalizedString(@"allFilesSavedForOfflineWillBeDeletedFromYourDevice", @"Alert message shown when the user perform logout and has files in the Offline directory") preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [[MEGASdkManager sharedMEGASdk] logout];
+        }]];
+        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+    } else {
+        [[MEGASdkManager sharedMEGASdk] logout];
+    }
 }
 
 + (void)cancelAllTransfers {
@@ -1173,20 +1294,52 @@ static MEGAIndexer *indexer;
     }
 }
 
++ (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ __nullable)(void))completion {
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
+    
+    BOOL success = [[NSFileManager defaultManager] createFileAtPath:masterKeyFilePath contents:[[[MEGASdkManager sharedMEGASdk] masterKey] dataUsingEncoding:NSUTF8StringEncoding] attributes:@{NSFileProtectionKey:NSFileProtectionComplete}];
+    if (success) {
+        UIAlertController *recoveryKeyAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"masterKeyExported", @"Alert title shown when you have exported your MEGA Recovery Key") message:AMLocalizedString(@"masterKeyExported_alertMessage", @"The Recovery Key has been exported into the Offline section as RecoveryKey.txt. Note: It will be deleted if you log out, please store it in a safe place.")  preferredStyle:UIAlertControllerStyleAlert];
+        [recoveryKeyAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [[MEGASdkManager sharedMEGASdk] masterKeyExported];
+            [viewController dismissViewControllerAnimated:YES completion:^{
+                if (completion) {
+                    completion();
+                }
+            }];
+        }]];
+        
+        [viewController presentViewController:recoveryKeyAlertController animated:YES completion:nil];
+    }
+}
+
++ (void)showMasterKeyCopiedAlert {
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = [[MEGASdkManager sharedMEGASdk] masterKey];
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"recoveryKeyCopiedToClipboard", @"Title of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported - (String as short as possible).") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+    
+    [[MEGASdkManager sharedMEGASdk] masterKeyExported];
+}
+
 #pragma mark - Log
 
-+ (UIAlertView *)logAlertView:(BOOL)enableLog {
-    UIAlertView *logAlertView;
-    NSString *title = enableLog ? AMLocalizedString(@"enableDebugMode_title", nil) :AMLocalizedString(@"disableDebugMode_title", nil);
-    NSString *message = enableLog ? AMLocalizedString(@"enableDebugMode_message", nil) :AMLocalizedString(@"disableDebugMode_message", nil);
-    logAlertView = [[UIAlertView alloc] initWithTitle:title
-                                              message:message
-                                             delegate:nil
-                                    cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                    otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-    logAlertView.tag = enableLog ? 1 : 0;
++ (void)enableOrDisableLog {
+    BOOL enableLog = ![[NSUserDefaults standardUserDefaults] boolForKey:@"logging"];
+    NSString *alertTitle = enableLog ? AMLocalizedString(@"enableDebugMode_title", @"Alert title shown when the DEBUG mode is enabled") :AMLocalizedString(@"disableDebugMode_title", @"Alert title shown when the DEBUG mode is disabled");
+    NSString *alertMessage = enableLog ? AMLocalizedString(@"enableDebugMode_message", @"Alert message shown when the DEBUG mode is enabled") :AMLocalizedString(@"disableDebugMode_message", @"Alert message shown when the DEBUG mode is disabled");
     
-    return logAlertView;
+    UIAlertController *logAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+    [logAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
+    [logAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        enableLog ? [[MEGALogger sharedLogger] startLogging] : [[MEGALogger sharedLogger] stopLogging];
+    }]];
+    
+    [UIApplication.mnz_visibleViewController presentViewController:logAlertController animated:YES completion:nil];
 }
 
 @end
