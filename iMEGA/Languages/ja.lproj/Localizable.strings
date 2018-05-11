@@ -1058,7 +1058,7 @@
 /* Empty Conversations section */
 "noConversations"="会話なし";
 /* Empty Conversations description */
-"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
+"noConversationsDescription"="Start chatting securely with your contacts using end-to-end encryption";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="チャット無効";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1441,7 +1441,7 @@
 /* Title of section to display information of all current versions of files. */
 "currentVersions"="現在のバージョン";
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
-"remindPasswordTitle"="パスワードを覚えていますか？ ";
+"remindPasswordTitle"="パスワードを覚えていますか？";
 /* Text that describes why the user should test his/her password */
 "remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
 /* Text that describes why the user should test his/her password before logging out */

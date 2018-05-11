@@ -1058,7 +1058,7 @@
 /* Empty Conversations section */
 "noConversations"="ไม่มีการสนทนา";
 /* Empty Conversations description */
-"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
+"noConversationsDescription"="Start chatting securely with your contacts using end-to-end encryption";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="แชทถูกปิดใช้งาน";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1248,7 +1248,7 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s มีอยู่แล้วในผู้ติดต่อ";
 /* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="ส่งไปยังผู้ติดต่อ: %s ";
+"sentContact"="ส่งไปยังผู้ติดต่อ: %s";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="ส่งแล้ว %s ผู้ติดต่อ";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */

@@ -149,7 +149,7 @@
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertTitle"="Você está logado com outra conta";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertMessage"="Se você concorda, a conta atual será desconectada e todos os dados off-line serão apagados. Pretende continuar? ";
+"alreadyLoggedInAlertMessage"="Se você concorda, a conta atual será desconectada e todos os dados off-line serão apagados. Pretende continuar?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Você precisa libertar algum espaço no seu dispositivo";
 /* Title for the file link view */
@@ -599,7 +599,7 @@
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Tem certeza que deseja remover %d usuários da sua lista de contatos?";
 /* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d contatos removidos ";
+"removedContacts"="%d contatos removidos";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Contato %@ removido";
 /* Label shown when a contact request is pending */
@@ -968,7 +968,7 @@
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
 "of %@"="de %@";
 /* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="usado %@ ";
+"used of %@"="usado %@";
 /* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
 "available of %@"="disponível de %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
@@ -978,9 +978,9 @@
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Você pode atualizar mais tarde em Minha conta";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="A sua [S]Nuvem de arquivos está quase cheia.[/S] [A]Faça o upgrade[/A] para uma conta PRO e obtenha [S]até 4TB (4096 GB)[/S] de espaço de armazenamento em nuvem.               ";
+"cloudDriveIsAlmostFull"="A sua [S]Nuvem de arquivos está quase cheia.[/S] [A]Faça o upgrade[/A] para uma conta PRO e obtenha [S]até 4TB (4096 GB)[/S] de espaço de armazenamento em nuvem.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]A sua conta está cheia.[/S] [A]Faça o upgrade[/A] para uma conta PRO e obtenha [S]até 4TB (4096 GB[/S] de espaço de armazenamento em nuvem.                ";
+"cloudDriveIsFull"="[S]A sua conta está cheia.[/S] [A]Faça o upgrade[/A] para uma conta PRO e obtenha [S]até 4TB (4096 GB[/S] de espaço de armazenamento em nuvem.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Armazenamento";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1058,7 +1058,7 @@
 /* Empty Conversations section */
 "noConversations"="Sem conversações";
 /* Empty Conversations description */
-"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
+"noConversationsDescription"="Converse com segurança com os seus contatos usando criptografia de ponta a ponta";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="O chat está desativado";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1158,7 +1158,7 @@
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="Alterar o avatar do grupo";
 /* Text used as hint to give the user information to write a name for the group chat. */
-"enterGroupName"="Enter group name";
+"enterGroupName"="Digite o nome do grupo";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Sair";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1248,7 +1248,7 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s já é um contato.";
 /* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="Contato enviado: %s ";
+"sentContact"="Contato enviado: %s";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="Enviados %s contatos.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
@@ -1471,11 +1471,11 @@
 /* Button title to allow the user ignore something */
 "ignore"="Ignorar";
 /* Button title to allow the user open the default browser */
-"openBrowser"="Open browser";
+"openBrowser"="Abrir o navegador";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="Reiniciar";
 /* Title to alert user the possibility of resume playing the video or start from the beginning */
-"resumePlayback"="Resume playback?";
+"resumePlayback"="Retomar a reprodução?";
 /* Message to show the user info (name and time) about the resume of the video */
 "continueOrRestartVideoMessage"="%1$s will continue at %2$s";
 /*  */

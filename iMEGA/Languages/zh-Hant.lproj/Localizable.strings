@@ -75,7 +75,7 @@
 /* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
 "megaPrivacy"="MEGA 隱私保護";
 /* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="訪問 MEGA ";
+"megaAccess"="訪問 MEGA";
 /* Message shown on the app's start animation to explain what MEGA SPACE means */
 "megaSpaceText"="馬上註冊獲得50 GB 免費空間";
 /* Message shown on the app's start animation to explain what MEGA SPEED means */
@@ -1058,7 +1058,7 @@
 /* Empty Conversations section */
 "noConversations"="無對話(已清空)";
 /* Empty Conversations description */
-"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
+"noConversationsDescription"="Start chatting securely with your contacts using end-to-end encryption";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="聊天功能已停用";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */

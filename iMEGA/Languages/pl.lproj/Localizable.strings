@@ -916,7 +916,7 @@
 /*  */
 "installMEGASync"="Zainstaluj MEGAsync";
 /* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
-"installMEGASyncCompletedExplanation"="Otrzymałeś %1 dodatkowej przestrzeni na pliki i %2 limitu transferu za zainstalowanie aplikacji MEGAsync. ";
+"installMEGASyncCompletedExplanation"="Otrzymałeś %1 dodatkowej przestrzeni na pliki i %2 limitu transferu za zainstalowanie aplikacji MEGAsync.";
 /*  */
 "installOurMobileApp"="Zainstaluj naszą aplikację mobilną";
 /* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
@@ -1058,7 +1058,7 @@
 /* Empty Conversations section */
 "noConversations"="Brak rozmów";
 /* Empty Conversations description */
-"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
+"noConversationsDescription"="Start chatting securely with your contacts using end-to-end encryption";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Czat jest zablokowany";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */

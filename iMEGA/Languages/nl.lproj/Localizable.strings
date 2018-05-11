@@ -37,7 +37,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="U kunt geen lege map downloaden";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="Uw account is reeds geactiveerd. Log a.u.b. in. ";
+"accountAlreadyConfirmed"="Uw account is reeds geactiveerd. Log a.u.b. in.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Ongeldige koppeling";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -351,7 +351,7 @@
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Waarschuwing over auteursrechten aan alle gebruikers";
 /* String already exists: 367, but we need to split paragraphs. */
-"copyrightMessagePart1"="MEGA respecteert het auteursrecht van anderen en eist dat de gebruikers van de MEGA cloud service zich aan de auteurswetten houden. ";
+"copyrightMessagePart1"="MEGA respecteert het auteursrecht van anderen en eist dat de gebruikers van de MEGA cloud service zich aan de auteurswetten houden.";
 /* String already exists: 367, but we need to split paragraphs */
 "copyrightMessagePart2"="Het is strikt verboden om de MEGA cloud dienst te gebruiken om inbreuk te maken op auteursrecht.U mag niet uploaden, downloaden, opslaan, delen, weergeven, streamen, verdelen, mailen, linken naar, overdragen of anders beschikbaar maken van elk bestand, gegevens inhoud die inbreuk maken op auteursrecht of andere eigendom rechten of elk persoon of entiteit.";
 /* button caption text that the user clicks when he agrees */
@@ -423,7 +423,7 @@
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
 "moveFilesFoldersMessage"="[A] bestanden en [B] mappen verplaatst";
 /* List option shown on the details of a file or folder */
-"copy"="Kopiëren ";
+"copy"="Kopiëren";
 /* Success message shown when you have copied 1 file */
 "copyFileMessage"="1 bestand gekopieërd";
 /* Success message shown when you have copied {1+} files */
@@ -673,7 +673,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Alleen tijden het laden";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Wanneer ingeschakeld zullen uw foto's en video's automatisch worden geüpload. ";
+"cameraUploads_footer"="Wanneer ingeschakeld zullen uw foto's en video's automatisch worden geüpload.";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK versie";
 /* Title of the label where the MEGAchat SDK version is shown */
@@ -721,7 +721,7 @@
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Bewaar video's in galerij";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
-"imageAndVideoDownloadsFooter"="Bewaar iOS compatible afbeeldingen en video's in de galerij van uw apparaat (Let op: afbeeldingen en video's worden niet in Offline opgeslagen). ";
+"imageAndVideoDownloadsFooter"="Bewaar iOS compatible afbeeldingen en video's in de galerij van uw apparaat (Let op: afbeeldingen en video's worden niet in Offline opgeslagen).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Momenteel %s in gebruik";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -838,7 +838,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Verwijder lokale data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Afmelden en lokale gegevens worden gewist na 10 mislukte inlogpogingen ";
+"failedAttempstSectionTitle"="Afmelden en lokale gegevens worden gewist na 10 mislukte inlogpogingen";
 /* Menu item */
 "help"="Help";
 /* Title of the section to access MEGA's help centre */
@@ -1058,7 +1058,7 @@
 /* Empty Conversations section */
 "noConversations"="Geen Gesprekken";
 /* Empty Conversations description */
-"noConversationsDescription"="Start chat securely with your contacts in a encrypted way";
+"noConversationsDescription"="Start chatting securely with your contacts using end-to-end encryption";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Chat is uitgeschakeld";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1262,7 +1262,7 @@
 /* A summary message when a user has attached one file into the chat. */
 "uploadedFile"="Dit bestand geüpload:";
 /* A summary message when a user has attached many files at once into the chat. */
-"uploadedFiles"="Deze bestanden geüpload: ";
+"uploadedFiles"="Deze bestanden geüpload:";
 /* Label in a button that allows to jump to the latest item */
 "jumpToLatest"="Ga naar de laatste";
 /* Label in a button that allows to jump to the latest message */
