@@ -112,6 +112,9 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (CGFloat)verticalOffsetForEmptyStateWithNavigationBarSize:(CGSize)navigationBarSize searchBarActive:(BOOL)isSearchBarActive;
 + (CGFloat)spaceHeightForEmptyState;
 
++ (NSDictionary *)titleAttributesForEmptyState;
++ (NSDictionary *)buttonTextAttributesForEmptyState;
+
 #pragma mark - Utils for UI
 
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle;

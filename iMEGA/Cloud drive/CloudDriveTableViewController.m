@@ -8,7 +8,6 @@
 #import "UIScrollView+EmptyDataSet.h"
 
 #import "NSFileManager+MNZCategory.h"
-#import "NSMutableAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
 
@@ -732,7 +731,7 @@
             switch (self.displayMode) {
                 case DisplayModeCloudDrive: {
                     if ([self.parentNode type] == MEGANodeTypeRoot) {
-                        return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"cloudDriveEmptyState_title", @"Title shown when your Cloud Drive is empty, when you don't have any files.") sectionTitle:AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section")];
+                        text = AMLocalizedString(@"cloudDriveEmptyState_title", @"Title shown when your Cloud Drive is empty, when you don't have any files.");
                     } else {
                         text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
                     }
@@ -741,7 +740,7 @@
                     
                 case DisplayModeRubbishBin:
                     if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                        return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Title shown when your Rubbish Bin is empty.") sectionTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'")];
+                        text = AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Title shown when your Rubbish Bin is empty.");
                     } else {
                         text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
                     }
@@ -755,9 +754,7 @@
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
@@ -768,23 +765,23 @@
         }
         
         if (self.searchController.isActive) {
-            image = [UIImage imageNamed:@"emptySearch"];
+            image = [UIImage imageNamed:@"searchEmptyState"];
         } else {
             switch (self.displayMode) {
                 case DisplayModeCloudDrive: {
                     if ([self.parentNode type] == MEGANodeTypeRoot) {
-                        image = [UIImage imageNamed:@"emptyCloudDrive"];
+                        image = [UIImage imageNamed:@"cloudEmptyState"];
                     } else {
-                        image = [UIImage imageNamed:@"emptyFolder"];
+                        image = [UIImage imageNamed:@"folderEmptyState"];
                     }
                     break;
                 }
                     
                 case DisplayModeRubbishBin: {
                     if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                        image = [UIImage imageNamed:@"emptyRubbishBin"];
+                        image = [UIImage imageNamed:@"rubbishEmptyState"];
                     } else {
-                        image = [UIImage imageNamed:@"emptyFolder"];
+                        image = [UIImage imageNamed:@"folderEmptyState"];
                     }
                     break;
                 }
@@ -794,7 +791,7 @@
             }
         }
     } else {
-        image = [UIImage imageNamed:@"noInternetConnection"];
+        image = [UIImage imageNamed:@"noInternetEmptyState"];
     }
     
     return image;
@@ -827,9 +824,7 @@
         
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:20.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    return [[NSAttributedString alloc] initWithString:text attributes:[Helper buttonTextAttributesForEmptyState]];
 }
 
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
@@ -841,7 +836,7 @@
     UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
     UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
     
-    return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
+    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {

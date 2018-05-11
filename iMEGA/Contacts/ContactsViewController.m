@@ -16,7 +16,6 @@
 #import "MEGASdkManager.h"
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAUser+MNZCategory.h"
-#import "NSMutableAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
@@ -1325,30 +1324,28 @@
                 text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
             }
         } else {
-            return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.") sectionTitle:AMLocalizedString(@"contactsTitle", @"Title of My Contacts section")];
+            text = AMLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.");
         }
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-   NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     if ([MEGAReachabilityManager isReachable]) {
         if (self.searchController.isActive) {
             if (self.searchController.searchBar.text.length > 0) {
-                return [UIImage imageNamed:@"emptySearch"];
+                return [UIImage imageNamed:@"searchEmptyState"];
             } else {
                 return nil;
             }
         } else {
-            return [UIImage imageNamed:@"emptyContacts"];
+            return [UIImage imageNamed:@"contactsEmptyState"];
         }
     } else {
-        return [UIImage imageNamed:@"noInternetConnection"];
+        return [UIImage imageNamed:@"noInternetEmptyState"];
     }
 }
 
@@ -1359,19 +1356,17 @@
     
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable] && !self.searchController.isActive) {
-        text = AMLocalizedString(@"addContacts", nil);
+        text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:20.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    return [[NSAttributedString alloc] initWithString:text attributes:[Helper buttonTextAttributesForEmptyState]];
 }
 
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
     UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
     UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
     
-    return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
+    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {

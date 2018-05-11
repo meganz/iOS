@@ -6,7 +6,6 @@
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "Helper.h"
-#import "NSMutableAttributedString+MNZCategory.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 
 #import "TransferTableViewCell.h"
@@ -357,11 +356,11 @@
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         if (areTransfersPaused) {
-            return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"transfersEmptyState_titlePaused", nil) sectionTitle:AMLocalizedString(@"transfers", @"Title of the Transfers section")];
+            text = AMLocalizedString(@"transfersEmptyState_titlePaused", nil);
         } else {
             switch (self.transfersSegmentedControl.selectedSegmentIndex) {
                 case 0: //All
-                    return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"transfersEmptyState_titleAll", @"Title shown when the there's no transfers and they aren't paused") sectionTitle:AMLocalizedString(@"transfers", @"Title of the Transfers section")];
+                    text = AMLocalizedString(@"transfersEmptyState_titleAll", @"Title shown when the there's no transfers and they aren't paused");
                     break;
                     
                 case 1: //Downloads
@@ -377,33 +376,31 @@
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:UIColor.mnz_gray999999};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     UIImage *image;
     if ([MEGAReachabilityManager isReachable]) {
         if (areTransfersPaused) {
-            image = [UIImage imageNamed:@"transfersPaused"];
+            image = [UIImage imageNamed:@"pausedTransfersEmptyState"];
         } else {
             switch (self.transfersSegmentedControl.selectedSegmentIndex) {
                 case 0: //All
-                    image = [UIImage imageNamed:@"emptyTransfers"];
+                    image = [UIImage imageNamed:@"transfersEmptyState"];
                     break;
                     
                 case 1: //Downloads
-                    image = [UIImage imageNamed:@"emptyTransfersDownloads"];
+                    image = [UIImage imageNamed:@"downloadsEmptyState"];
                     break;
                     
                 case 2: //Uploads
-                    image = [UIImage imageNamed:@"emptyTransfersUploads"];
+                    image = [UIImage imageNamed:@"uploadsEmptyState"];
                     break;
             }
         }
     } else {
-        image = [UIImage imageNamed:@"noInternetConnection"];
+        image = [UIImage imageNamed:@"noInternetEmptyState"];
     }
     return image;
 }

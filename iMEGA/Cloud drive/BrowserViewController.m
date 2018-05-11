@@ -771,9 +771,7 @@
         text = AMLocalizedString(@"noInternetConnection",  @"Text shown on the app when you don't have connection to the internet or when you have lost it");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
@@ -781,19 +779,19 @@
     if ([MEGAReachabilityManager isReachable]) {
         if (self.searchController.isActive) {
             if (self.searchController.searchBar.text.length > 0) {
-                return [UIImage imageNamed:@"emptySearch"];
+                return [UIImage imageNamed:@"searchEmptyState"];
             } else {
                 return nil;
             }
         } else {
             if ((self.browserSegmentedControl.selectedSegmentIndex == 1) && self.isParentBrowser) {
-                image = [UIImage imageNamed:@"emptySharedItemsIncoming"];
+                image = [UIImage imageNamed:@"incomingEmptyState"];
             } else {
-                image = [UIImage imageNamed:@"emptyFolder"];
+                image = [UIImage imageNamed:@"folderEmptyState"];
             }
         }
     } else {
-        image = [UIImage imageNamed:@"noInternetConnection"];
+        image = [UIImage imageNamed:@"noInternetEmptyState"];
     }
     
     return image;

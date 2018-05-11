@@ -1259,7 +1259,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)showLinkNotValid {
-    [self showEmptyStateViewWithImageNamed:@"noInternetConnection" title:AMLocalizedString(@"linkNotValid", nil) text:@""];
+    [self showEmptyStateViewWithImageNamed:@"noInternetEmptyState" title:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid") text:@""];
     self.link = nil;
     self.urlType = URLTypeDefault;
 }

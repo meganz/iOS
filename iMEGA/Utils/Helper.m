@@ -1017,6 +1017,14 @@ static MEGAIndexer *indexer;
     return spaceHeight;
 }
 
++ (NSDictionary *)titleAttributesForEmptyState {
+    return @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:UIColor.mnz_black333333};
+}
+
++ (NSDictionary *)buttonTextAttributesForEmptyState {
+    return @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor};
+}
+
 #pragma mark - Utils for UI
 
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
