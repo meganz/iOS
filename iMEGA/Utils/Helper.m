@@ -153,6 +153,7 @@ static MEGAIndexer *indexer;
                                 @"gsheet":@"spreadsheet",
                                 @"gz":@"compressed",
                                 @"h":@"web_lang",
+                                @"heic":@"image",
                                 @"hpp":@"web_lang",
                                 @"iff":@"audio",
                                 @"inc":@"web_lang",
