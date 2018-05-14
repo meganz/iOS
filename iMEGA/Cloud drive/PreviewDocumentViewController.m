@@ -18,6 +18,7 @@
 
 #import "MEGANode+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 #import "MEGAStore.h"
 
 @interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol> {
@@ -109,7 +110,7 @@
 
 - (void)configureNavigation {
     [self setTitle:self.node.name];
-    [self.imageView setImage:[Helper infoImageForNode:self.node]];
+    [self.imageView mnz_imageForNode:self.node];
     
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
     [[UINavigationBar appearance] setTintColor:[UIColor mnz_redFF4D52]];

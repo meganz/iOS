@@ -12,6 +12,7 @@
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "DisplayMode.h"
@@ -282,10 +283,10 @@
                 cell.thumbnailImageView.image = [UIImage imageWithContentsOfFile:request.file];
             }];
             [[MEGASdkManager sharedMEGASdk] getThumbnailNode:currentNode destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
-            cell.thumbnailImageView.image = [Helper imageForNode:currentNode];
+            [cell.thumbnailImageView mnz_imageForNode:currentNode];
         }
     } else {
-        cell.thumbnailImageView.image = [Helper imageForNode:currentNode];
+        [cell.thumbnailImageView mnz_imageForNode:currentNode];
     }
     
     return cell;

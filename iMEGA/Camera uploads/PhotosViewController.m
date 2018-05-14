@@ -13,6 +13,7 @@
 #import "NSString+MNZCategory.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "UICollectionView+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "PhotoCollectionViewCell.h"
 #import "HeaderCollectionReusableView.h"
@@ -516,7 +517,7 @@
     if ([node hasThumbnail]) {
         [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdk] cell:cell];
     } else {
-        [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+        [cell.thumbnailImageView mnz_imageForNode:node];
     }
     
     cell.nodeHandle = [node handle];

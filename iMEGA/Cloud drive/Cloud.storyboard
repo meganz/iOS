@@ -1543,10 +1543,10 @@
                                 </constraints>
                             </progressView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VJh-z4-8vz">
-                                <rect key="frame" x="164" y="220" width="86" height="86"/>
+                                <rect key="frame" x="167" y="226" width="80" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="86" id="7a7-jd-lI6"/>
-                                    <constraint firstAttribute="height" constant="86" id="hRE-m5-OgP"/>
+                                    <constraint firstAttribute="width" constant="80" id="7a7-jd-lI6"/>
+                                    <constraint firstAttribute="height" constant="80" id="hRE-m5-OgP"/>
                                 </constraints>
                             </imageView>
                             <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xcl-UM-x0L">
