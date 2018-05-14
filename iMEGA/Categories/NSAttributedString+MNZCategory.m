@@ -3,6 +3,8 @@
 
 #import <CoreText/CoreText.h>
 
+#import "NSString+MNZCategory.h"
+
 @implementation NSAttributedString (MNZCategory)
 
 + (NSAttributedString *)mnz_attributedStringFromMessage:(NSString *)message
@@ -14,7 +16,10 @@
         cache = [NSCache new];
         cache.countLimit = 1000;
     });
-    NSAttributedString *cachedAttributedString = [cache objectForKey:[NSString stringWithFormat:@"%lu%@", (unsigned long)message.hash, color.description]];
+    
+    NSString *key = [[NSString stringWithFormat:@"%@%@", message, color.description] SHA256];
+    NSAttributedString *cachedAttributedString = [cache objectForKey:key];
+    
     if (cachedAttributedString) {
         return cachedAttributedString;
     }
@@ -112,7 +117,7 @@
         }
     }];
     
-    [cache setObject:attributedString forKey:[NSString stringWithFormat:@"%lu%@", (unsigned long)message.hash, color.description]];
+    [cache setObject:attributedString forKey:key];
     return attributedString;
 }
 

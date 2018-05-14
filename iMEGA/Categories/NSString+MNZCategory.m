@@ -1,6 +1,7 @@
 
 #import "NSString+MNZCategory.h"
 
+#import <CommonCrypto/CommonDigest.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 
 #import "MEGAChatSdk.h"
@@ -232,6 +233,21 @@ static NSString* const B = @"[B]";
     } else {
         return [NSString stringWithFormat:@"%02ld:%02ld", (long)minutes, (long)seconds];
     }
+}
+
+- (NSString*)SHA256 {
+    unsigned int outputLength = CC_SHA256_DIGEST_LENGTH;
+    unsigned char output[outputLength];
+    
+    CC_SHA256(self.UTF8String, (CC_LONG)[self lengthOfBytesUsingEncoding:NSUTF8StringEncoding], output);
+    
+    NSMutableString* hash = [NSMutableString stringWithCapacity:outputLength * 2];
+    for (unsigned int i = 0; i < outputLength; i++) {
+        [hash appendFormat:@"%02x", output[i]];
+        output[i] = 0;
+    }
+    
+    return hash;
 }
 
 #pragma mark - Emoji utils
