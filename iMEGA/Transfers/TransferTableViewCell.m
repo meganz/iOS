@@ -1,10 +1,10 @@
 #import "TransferTableViewCell.h"
-#import "MEGASdkManager.h"
-
-#import "MEGAPauseTransferRequestDelegate.h"
-#import "MEGAGetThumbnailRequestDelegate.h"
 
 #import "Helper.h"
+#import "MEGAPauseTransferRequestDelegate.h"
+#import "MEGAGetThumbnailRequestDelegate.h"
+#import "MEGASdkManager.h"
+#import "UIImageView+MNZCategory.h"
 
 @interface TransferTableViewCell ()
 
@@ -56,10 +56,10 @@
                 self.iconImageView.image = [UIImage imageWithContentsOfFile:request.file];
             }];
             [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
-            self.iconImageView.image = [Helper imageForNode:node];
+            [self.iconImageView mnz_imageForNode:node];
         }
     } else {
-        self.iconImageView.image = [Helper imageForNode:node];
+        [self.iconImageView mnz_imageForNode:node];
     }
     
     [self configureCellState];

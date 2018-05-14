@@ -9,6 +9,7 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "MEGAActivityItemProvider.h"
 #import "MEGANode+MNZCategory.h"
@@ -153,6 +154,7 @@ static MEGAIndexer *indexer;
                                 @"gsheet":@"spreadsheet",
                                 @"gz":@"compressed",
                                 @"h":@"web_lang",
+                                @"heic":@"image",
                                 @"hpp":@"web_lang",
                                 @"iff":@"audio",
                                 @"inc":@"web_lang",
@@ -254,14 +256,6 @@ static MEGAIndexer *indexer;
     return fileTypesDictionary;
 }
 
-+ (NSString *)fileTypeIconForExtension:(NSString *)extension {
-    NSString *fileTypeIconString = [self.fileTypesDictionary valueForKey:extension];
-    if (fileTypeIconString == nil) {
-        fileTypeIconString = @"generic";
-    }
-    return fileTypeIconString;
-}
-
 + (UIImage *)genericImage {
     static UIImage *genericImage = nil;
     
@@ -314,94 +308,6 @@ static MEGAIndexer *indexer;
         defaultPhotoImage = [UIImage imageNamed:@"image"];
     }
     return defaultPhotoImage;
-}
-
-+ (UIImage *)imageForNode:(MEGANode *)node {
-    
-    switch ([node type]) {
-        case MEGANodeTypeFolder: {
-            if ([node.name isEqualToString:@"Camera Uploads"]) {
-                return [self folderCameraUploadsImage];
-            } else {
-                if (node.isInShare) {
-                    return [self incomingFolderImage];
-                } else if (node.isOutShare) {
-                    return [self outgoingFolderImage];
-                } else {
-                    return [self folderImage];
-                }
-            }
-            break;
-        }
-            
-        case MEGANodeTypeFile: {
-            NSString *nodePathExtension = node.name.pathExtension;
-            return [self imageForExtension:nodePathExtension];
-            break;
-        }
-            
-        default:
-            return [self genericImage];
-    }
-}
-
-+ (UIImage *)imageForExtension:(NSString *)extension {
-    extension = extension.lowercaseString;
-    UIImage *image;
-    if ([extension isEqualToString:@"jpg"] || [extension isEqualToString:@"jpeg"]) {
-        image = [Helper defaultPhotoImage];
-    } else {
-        NSString *filetypeImage = [self.fileTypesDictionary valueForKey:extension];
-        if (filetypeImage && filetypeImage.length > 0) {
-            image = [UIImage imageNamed:filetypeImage];
-        } else {
-            return [self genericImage];
-        }
-    }
-    return image;
-}
-
-+ (UIImage *)infoImageForNode:(MEGANode *)node {
-    
-    switch ([node type]) {
-        case MEGANodeTypeFolder: {
-            if ([node.name isEqualToString:@"Camera Uploads"]) {
-                return [UIImage imageNamed:@"info_folder_image"];
-            } else {
-                if ([[MEGASdkManager sharedMEGASdk] isSharedNode:node]) {
-                    return [UIImage imageNamed:@"info_folder_outgoing"];
-                } else {
-                    return [UIImage imageNamed:@"info_folder"];
-                }
-            }
-            break;
-        }
-            
-        case MEGANodeTypeFile: {
-            NSString *nodePathExtension = node.name.pathExtension;
-            return [self infoImageForExtension:nodePathExtension];
-            break;
-        }
-            
-        default:
-            return [UIImage imageNamed:@"info_generic"];
-    }
-}
-
-+ (UIImage *)infoImageForExtension:(NSString *)extension {
-    extension = extension.lowercaseString;
-    UIImage *image;
-    if ([extension isEqualToString:@"jpg"] || [extension isEqualToString:@"jpeg"]) {
-        image = [UIImage imageNamed:@"info_image"];
-    } else {
-        NSString *filetypeImage = [self.fileTypesDictionary valueForKey:extension];
-        if (filetypeImage && filetypeImage.length > 0) {
-            image = [UIImage imageNamed:[NSString stringWithFormat:@"info_%@", filetypeImage]];
-        } else {
-            return [UIImage imageNamed:@"info_generic"];
-        }
-    }
-    return image;
 }
 
 + (UIImage *)downloadedArrowImage {
@@ -750,10 +656,10 @@ static MEGAIndexer *indexer;
         [api getThumbnailNode:node destinationFilePath:thumbnailFilePath];
         if ([cell isKindOfClass:[NodeTableViewCell class]]) {
             NodeTableViewCell *nodeTableViewCell = cell;
-            [nodeTableViewCell.thumbnailImageView setImage:[Helper imageForNode:node]];
+            [nodeTableViewCell.thumbnailImageView mnz_imageForNode:node];
         } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
             PhotoCollectionViewCell *photoCollectionViewCell = cell;
-            [photoCollectionViewCell.thumbnailImageView setImage:[Helper imageForNode:node]];
+            [photoCollectionViewCell.thumbnailImageView mnz_imageForNode:node];
         }
     }
 }

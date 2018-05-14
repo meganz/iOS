@@ -93,7 +93,7 @@
     if (self.node.type == MEGANodeTypeFile) {
         [self.thumbnailImageView mnz_setThumbnailByNodeHandle:self.node.handle];
     } else if (self.node.type == MEGANodeTypeFolder) {
-        [self.thumbnailImageView setImage:[Helper imageForNode:self.node]];
+        [self.thumbnailImageView mnz_imageForNode:self.node];
     }
     
     [self.tableView reloadData];

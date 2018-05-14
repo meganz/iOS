@@ -114,7 +114,7 @@
     if (self.node.isFile) {
         [imageView mnz_setThumbnailByNodeHandle:self.node.handle];
     } else if (self.node.isFolder) {
-        imageView.image = [Helper imageForNode:self.node];
+        [imageView mnz_imageForNode:self.node];
         info.text = [Helper filesAndFoldersInFolderNode:self.node api:[MEGASdkManager sharedMEGASdk]];
     }
     

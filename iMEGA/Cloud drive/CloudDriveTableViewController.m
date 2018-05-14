@@ -10,6 +10,8 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "Helper.h"
 #import "MEGAAssetsPickerController.h"
@@ -27,7 +29,6 @@
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
 #import "NSMutableArray+MNZCategory.h"
-#import "UIApplication+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
@@ -299,13 +300,13 @@
         if ([node hasThumbnail]) {
             [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdk] cell:cell];
         } else {
-            [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+            [cell.thumbnailImageView mnz_imageForNode:node];
         }
         
         cell.versionedImageView.hidden = ![[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node];
         
     } else if ([node type] == MEGANodeTypeFolder) {
-        [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+        [cell.thumbnailImageView mnz_imageForNode:node];
         
         cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
     }

@@ -11,6 +11,7 @@
 #import "MEGASdkManager.h"
 #import "MyAccountHallViewController.h"
 #import "NSString+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "LoginViewController.h"
 #import "MainTabBarController.h"
@@ -200,10 +201,10 @@
     [_sizeLabel setText:sizeString];
     
     if ([_node isFolder]) {
-        [_thumbnailImageView setImage:[Helper infoImageForNode:_node]];
+        [self.thumbnailImageView mnz_imageForNode:self.node];
     } else {
         NSString *extension = [name pathExtension];
-        [_thumbnailImageView setImage:[Helper infoImageForExtension:[extension lowercaseString]]];
+        [self.thumbnailImageView mnz_setImageForExtension:extension];
         
         CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)(extension), NULL);
         if (UTTypeConformsTo(fileUTI, kUTTypeImage) || [QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
