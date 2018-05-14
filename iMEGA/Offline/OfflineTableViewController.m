@@ -13,6 +13,7 @@
 #import "OfflineTableViewCell.h"
 #import "OpenInActivity.h"
 #import "SortByTableViewController.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "MEGAStore.h"
 #import "MEGAAVViewController.h"
@@ -538,7 +539,6 @@ static NSString *kisDirectory = @"kisDirectory";
         [cell.infoLabel setText:[NSString mnz_stringByFiles:files andFolders:folders]];
     } else {
         NSString *extension = [[nameString pathExtension] lowercaseString];
-        NSString *fileTypeIconString = [Helper fileTypeIconForExtension:extension];
         
         if (!handleString) {
             NSString *fpLocal = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:pathForItem];
@@ -569,8 +569,7 @@ static NSString *kisDirectory = @"kisDirectory";
                     [[MEGASdkManager sharedMEGASdk] createThumbnail:pathForItem destinatioPath:thumbnailFilePath];
                 }
             } else {
-                UIImage *iconImage = [UIImage imageNamed:fileTypeIconString];
-                [cell.thumbnailImageView setImage:iconImage];
+                [cell.thumbnailImageView mnz_setImageForExtension:extension];
             }
         }
         

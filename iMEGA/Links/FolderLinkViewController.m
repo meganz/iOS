@@ -12,6 +12,7 @@
 #import "MEGASdkManager.h"
 #import "MyAccountHallViewController.h"
 #import "NSString+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "DisplayMode.h"
 #import "NodeTableViewCell.h"
@@ -567,13 +568,13 @@
         if (node.hasThumbnail) {
             [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdkFolder] cell:cell];
         } else {
-            [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+            [cell.thumbnailImageView mnz_imageForNode:node];
         }
         
         cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
         
     } else if (node.isFolder) {
-        [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+        [cell.thumbnailImageView mnz_imageForNode:node];
         
         cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
     }

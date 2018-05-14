@@ -204,8 +204,9 @@
 - (void)resetZooms {
     for (MEGANode *node in self.mediaNodes) {
         UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
-        if (zoomableView) {
+        if (zoomableView && zoomableView.zoomScale != 1.0f) {
             zoomableView.zoomScale = 1.0f;
+            [self resizeImageView:(UIImageView *)zoomableView.subviews.firstObject];
         }
     }
 }
@@ -228,11 +229,14 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView.tag == 1) {
-        self.currentIndex = (scrollView.contentOffset.x + self.gapBetweenPages) / scrollView.frame.size.width;
-        [self resetZooms];
-        [self reloadTitle];
-        [self airplayDisplayCurrentImage];
-        [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
+        NSInteger newIndex = (scrollView.contentOffset.x + self.gapBetweenPages) / scrollView.frame.size.width;
+        if (newIndex != self.currentIndex) {
+            self.currentIndex = newIndex;
+            [self resetZooms];
+            [self reloadTitle];
+            [self airplayDisplayCurrentImage];
+            [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
+        }
     }
 }
 
@@ -278,7 +282,7 @@
         if (node.name.mnz_isVideoPathExtension && scale == 1.0f) {
             scrollView.subviews.lastObject.hidden = NO;
         }
-        [self correctOriginForView:view scaledAt:scale];
+        [self resizeImageView:(UIImageView *)view];
     }
 }
 

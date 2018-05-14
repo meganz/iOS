@@ -8,6 +8,7 @@
 #import "NSString+MNZCategory.h"
 #import "UICollectionView+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 
 @interface MEGAPhotoBrowserPickerViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -84,7 +85,7 @@
     if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailPath]) {
         cell.imageView.image = [UIImage imageWithContentsOfFile:thumbnailPath];
     } else {
-        cell.imageView.image = [Helper imageForNode:node];
+        [cell.imageView mnz_imageForNode:node];
         [self updateCollectionView:collectionView withThumbnailOfNode:node];
     }
     
