@@ -12,6 +12,7 @@
 #import "NSMutableArray+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "NodeTableViewCell.h"
 
@@ -618,7 +619,7 @@
         cell.nodeHandle = [node handle];
         [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdk] cell:cell];
     } else {
-        [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+        [cell.thumbnailImageView mnz_imageForNode:node];
     }
     
     cell.nameLabel.text = [node name];
