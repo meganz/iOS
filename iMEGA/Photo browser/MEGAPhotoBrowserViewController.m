@@ -270,6 +270,9 @@
             if (![[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                 [self setupNode:node forImageView:(UIImageView *)view withMode:MEGAPhotoModeOriginal];
             }
+            if (!self.interfaceHidden) {
+                [self singleTapGesture:nil];
+            }
         } else {
             scrollView.subviews.lastObject.hidden = YES;
         }
@@ -648,6 +651,9 @@
                 zoomRect.origin.x = tapPoint.x - zoomRect.size.width / 2;
                 zoomRect.origin.y = tapPoint.y - zoomRect.size.height / 2;
                 [zoomableView zoomToRect:zoomRect animated:NO];
+                if (!self.interfaceHidden) {
+                    [self singleTapGesture:nil];
+                }
             } else {
                 zoomableView.zoomScale = newScale;
             }
