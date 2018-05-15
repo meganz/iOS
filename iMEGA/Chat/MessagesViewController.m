@@ -254,6 +254,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
     self.lastBottomInset = self.collectionView.scrollIndicatorInsets.bottom;
     self.lastVerticalOffset = self.collectionView.contentOffset.y;
+    
+    self.unreadMessages = 0;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -795,6 +797,15 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self hideJumpToBottom];
 }
 
+- (void)hideUnreadMessagesLabelIfNeeded {
+    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForItem:(self.messages.count - 1) inSection:0];
+    if (self.unreadMessages && [[self.collectionView indexPathsForVisibleItems] containsObject:lastIndexPath]) {
+        NSIndexPath *indexPathForCellWithUnreadMessagesLabel = [self indexPathForCellWithUnreadMessagesLabel];
+        self.unreadMessages = 0;
+        [self.collectionView reloadItemsAtIndexPaths:@[indexPathForCellWithUnreadMessagesLabel]];
+    }
+}
+
 - (void)setTypingIndicator {
     self.showTypingIndicator = self.whoIsTypingMutableArray.count;
     switch (self.whoIsTypingMutableArray.count) {
@@ -1305,12 +1316,14 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     [self showOrHideJumpToBottom];
+    [self hideUnreadMessagesLabelIfNeeded];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     if (!decelerate) {
         [self showOrHideJumpToBottom];
     }
+    [self hideUnreadMessagesLabelIfNeeded];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
