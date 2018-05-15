@@ -110,7 +110,12 @@
 
 - (void)configureNavigation {
     [self setTitle:self.node.name];
-    [self.imageView mnz_imageForNode:self.node];
+    
+    if (self.node) {
+        [self.imageView mnz_imageForNode:self.node];
+    } else {
+        [self.imageView mnz_setImageForExtension:[self.filesPathsArray objectAtIndex:self.nodeFileIndex].pathExtension];
+    }
     
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
     [[UINavigationBar appearance] setTintColor:[UIColor mnz_redFF4D52]];
