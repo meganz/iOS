@@ -55,7 +55,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Vous avez été déconnecté de cet appareil à partir d’un autre endroit";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="La clé SSL du serveur ne peut pas être vérifiée. Vous pourriez être la cible d’une attaque de l’intercepteur.";
+"sslUnverified_alertTitle"="MEGA n’arrive pas à se connecter de façon sécurisée par SSL. Vous êtes peut-être sur un réseau Wi-Fi public qui a des exigences supplémentaires.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Le contenu auquel vous essayez d’accéder n’est pas proposé pour ce compte. Essayez de vous connecter avec le même compte que le client Web mobile.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -381,11 +381,11 @@
 /* */
 "sendToContact"="Envoyer à un contact";
 /* Toast text upon sending a single file to chat */
-"fileSentToChat"="Le fichier a été envoyé vers la discussion";
+"fileSentToChat"="Le fichier a été envoyé vers la conversation";
 /* Success message when the attachment has been sent to a many chats */
 "fileSentToXChats"="Le fichier a été envoyé à %1$d conversations";
 /* Toast text upon sending multiple files to chat */
-"filesSentToChat"="Les fichiers ont été envoyés vers la discussion";
+"filesSentToChat"="Les fichiers ont été envoyés vers la conversation";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="%d fichiers ont été envoyés avec succès";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -1054,7 +1054,7 @@
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Voulez-vous vraiment supprimer ces éléments hors ligne ?";
 /* Chat section header */
-"chat"="Discussion";
+"chat"="Dialogue";
 /* Empty Conversations section */
 "noConversations"="Aucune conversation";
 /* Empty Conversations description */
@@ -1078,9 +1078,9 @@
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
 "leftTheGroupChat"="[A] a quitté la conversation de groupe";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
-"joinedTheGroupChatByInvitationFrom"="[A] s'est joint à la conversation de groupe sur invitation de [B].";
+"joinedTheGroupChatByInvitationFrom"="[A] s’est joint à la conversation de groupe sur invitation de [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
-"clearedTheChatHistory"="[A] a effacé l'historique de la conversation.";
+"clearedTheChatHistory"="[A] a effacé l’historique de la conversation.";
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
 "wasChangedToBy"="[A] a été changé en [B] par [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
@@ -1477,6 +1477,6 @@
 /* Title to alert user the possibility of resume playing the video or start from the beginning */
 "resumePlayback"="Reprendre la lecture ?";
 /* Message to show the user info (name and time) about the resume of the video */
-"continueOrRestartVideoMessage"="%1$s will continue at %2$s";
+"continueOrRestartVideoMessage"="%1$s continuera à %2$s";
 /*  */
 "resume"="Reprendre";

@@ -55,7 +55,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="You have been logged out of this device from another location";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="La chiave SSL del server non può essere verificata. Potresti essere affetto da un attacco di tipo man-in-the-middle.";
+"sslUnverified_alertTitle"="MEGA non riesce a connettersi in sicurezza attraverso SSL. Dovresti essere su un WiFi pubblico con requisiti addizionali.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Il contenuto a cui stai provando ad accedere non è disponibile per questo account. Prova ad effettuare l'accesso con lo stesso account come nel client web mobile.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -1477,6 +1477,6 @@
 /* Title to alert user the possibility of resume playing the video or start from the beginning */
 "resumePlayback"="Ricominciare playback?";
 /* Message to show the user info (name and time) about the resume of the video */
-"continueOrRestartVideoMessage"="%1$s will continue at %2$s";
+"continueOrRestartVideoMessage"="%1$s continuerà a %2$s";
 /*  */
 "resume"="Riprendi";

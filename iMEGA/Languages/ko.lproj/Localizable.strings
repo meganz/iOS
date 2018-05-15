@@ -55,7 +55,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="다른 위치에서 이 장치가 로그아웃 되었습니다";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="서버의 SSL 암호를 확인할 수 없습니다. 중간자 공격의 영향을 받았을 수 있습니다.";
+"sslUnverified_alertTitle"="MEGA가 SSL을 통하여 안전하게 연결할 수 없습니다. 추가 요구사항이 있는 공개 WiFi에 연결되어 있을 수 있습니다.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="접근하려면 항목은 이 계정에서 이용할 수 없습니다. 모바일 웹 클라이언트와 같은 계정으로 로그인하세요.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -1158,7 +1158,7 @@
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="단체 아바타 변경";
 /* Text used as hint to give the user information to write a name for the group chat. */
-"enterGroupName"="Enter group name";
+"enterGroupName"="그룹 이름을 입력하세요";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="떠나기";
 /* Top menu option which opens more menu options in a context menu. */
