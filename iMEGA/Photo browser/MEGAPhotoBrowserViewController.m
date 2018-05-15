@@ -247,9 +247,11 @@
         }
         CGFloat newIndexFloat = (scrollView.contentOffset.x + self.gapBetweenPages) / scrollView.frame.size.width;
         NSUInteger newIndex = floor(newIndexFloat);
-        if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
-            [self reloadTitleForIndex:newIndex];
-            [self loadNearbyImagesFromIndex:newIndex];
+        if (@available(iOS 10.0, *)) {
+            if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
+                [self reloadTitleForIndex:newIndex];
+                [self loadNearbyImagesFromIndex:newIndex];
+            }
         }
     }
 }
