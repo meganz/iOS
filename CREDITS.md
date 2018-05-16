@@ -85,15 +85,15 @@ https://github.com/rolandleth/LTHPasscodeViewController/blob/master/LICENSE.txt
 
 --------------------------------------------------------------------
 
-#### MWPhotoBrowser
-https://github.com/meganz/MWPhotoBrowser
+#### MGSwipeTableCell
+https://github.com/MortimerGoro/MGSwipeTableCell
 
-Copyright (c) 2010 Michael Waterfall <michaelwaterfall@gmail.com>
+Copyright (c) 2018 Imanol Fernandez @MortimerGoro
 
 ###### License:
 The MIT License (MIT)
 
-https://github.com/mwaterfall/MWPhotoBrowser/blob/master/LICENSE
+https://github.com/MortimerGoro/MGSwipeTableCell/blob/master/LICENSE
 
 --------------------------------------------------------------------
 

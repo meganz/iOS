@@ -140,7 +140,7 @@
                                         <constraint firstAttribute="height" constant="46" id="5OY-NV-ozf"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
-                                    <color key="tintColor" red="0.85098039215686272" green="0.0" blue="0.027450980392156862" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <state key="normal" title="Dismiss"/>
                                     <connections>
                                         <action selector="dismissTouchUpInside:" destination="-1" eventType="touchUpInside" id="ZoY-Bf-3NQ"/>
@@ -179,6 +179,8 @@
                         <constraint firstItem="a7Y-Zm-Y3I" firstAttribute="top" secondItem="2PZ-4l-cdv" secondAttribute="bottom" constant="20" id="5VL-sP-aSR"/>
                         <constraint firstAttribute="trailing" secondItem="KXA-VS-o9F" secondAttribute="trailing" constant="20" id="6sz-o5-Mm0"/>
                         <constraint firstItem="woc-LH-3yv" firstAttribute="centerX" secondItem="sy9-8p-mxu" secondAttribute="centerX" id="7e5-0N-VNo"/>
+                        <constraint firstItem="a7Y-Zm-Y3I" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="sy9-8p-mxu" secondAttribute="leading" constant="20" id="8Y1-bv-Sfg"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="a7Y-Zm-Y3I" secondAttribute="trailing" constant="20" id="NSz-sU-MoI"/>
                         <constraint firstItem="woc-LH-3yv" firstAttribute="top" secondItem="KXA-VS-o9F" secondAttribute="bottom" priority="999" constant="18" id="P5E-U9-i2Q"/>
                         <constraint firstItem="woc-LH-3yv" firstAttribute="width" secondItem="sy9-8p-mxu" secondAttribute="width" multiplier="0.95" id="Sfq-Ue-Q4h"/>
                         <constraint firstAttribute="height" constant="448" id="Ul6-gb-Inm"/>

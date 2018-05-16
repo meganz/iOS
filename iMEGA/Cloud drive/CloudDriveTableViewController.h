@@ -1,11 +1,10 @@
-#import <UIKit/UIKit.h>
-#import "MEGASdkManager.h"
 
-typedef NS_ENUM (NSInteger, DisplayMode) {
-    DisplayModeCloudDrive = 0,
-    DisplayModeRubbishBin,
-    DisplayModeSharedItem
-};
+#import <UIKit/UIKit.h>
+
+#import "DisplayMode.h"
+
+@class MEGANode;
+@class MEGAUser;
 
 @interface CloudDriveTableViewController : UITableViewController
 

@@ -36,7 +36,7 @@
 
     self.biometricsLabel.text = @"Touch ID";
     
-    LAContext *context = [[LAContext alloc] init];;
+    LAContext *context = [[LAContext alloc] init];
     
     if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:nil]) {
         if (@available(iOS 11.0, *)) {
@@ -50,6 +50,9 @@
     
     wasPasscodeAlreadyEnabled = [LTHPasscodeViewController doesPasscodeExist];
     [[LTHPasscodeViewController sharedUser] setHidesCancelButton:NO];
+    
+    [[LTHPasscodeViewController sharedUser] setNavigationBarTintColor:[UIColor mnz_redF0373A]];
+    [[LTHPasscodeViewController sharedUser] setNavigationTintColor:[UIColor whiteColor]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

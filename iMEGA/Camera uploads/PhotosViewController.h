@@ -1,7 +1,7 @@
+
 #import <UIKit/UIKit.h>
 
 #import "MEGASdkManager.h"
-#import "MWPhotoBrowser.h"
 
 typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
     MEGACameraUploadsStateDisabled,

@@ -7,6 +7,7 @@
 #import "MEGASdkManager.h"
 
 #import "ChangePasswordViewController.h"
+#import "QRSettingsTableViewController.h"
 
 @interface SecurityOptionsTableViewController () <UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate>
 
@@ -14,6 +15,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *masterKeyRightDetailLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *changePasswordLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *qrCodeLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *changeEmailLabel;
 
@@ -34,6 +37,8 @@
     self.masterKeyRightDetailLabel.text = @"";
     
     [self.changePasswordLabel setText:AMLocalizedString(@"changePasswordLabel", @"The name for the change password label")];
+    
+    self.qrCodeLabel.text = AMLocalizedString(@"qrCode", @"QR Code label, used in Settings as title. String as short as possible");
     
     self.changeEmailLabel.text = AMLocalizedString(@"changeEmail", @"The title of the alert dialog to change the email associated to an account.");
     
@@ -69,10 +74,16 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)pushQRSettings {
+    QRSettingsTableViewController *qrSettingsTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"QRSettingsTableViewControllerID"];
+    qrSettingsTVC.navigationItem.rightBarButtonItem = nil;
+    [self.navigationController pushViewController:qrSettingsTVC animated:YES];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 4;
+    return 5;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -105,13 +116,17 @@
             [self pushChangeViewControllerType:ChangeTypePassword];
             break;
         }
+            
+        case 2:
+            [self pushQRSettings];
+            break;
         
-        case 2: {
+        case 3: {
             [self pushChangeViewControllerType:ChangeTypeEmail];
             break;
         }
             
-        case 3: { //Close other sessions
+        case 4: { //Close other sessions
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 [[MEGASdkManager sharedMEGASdk] killSession:-1 delegate:self];
             }

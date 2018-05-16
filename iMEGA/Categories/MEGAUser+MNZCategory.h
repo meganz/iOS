@@ -9,5 +9,6 @@
  *
  */
 @property (nonatomic, readonly) NSString *mnz_fullName;
+@property (nonatomic, readonly) NSString *mnz_firstName;
 
 @end

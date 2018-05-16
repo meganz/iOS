@@ -32,6 +32,7 @@ MEGAChatSdk *_MEGAChatSdk = nil;
         }
         NSString *basePath = applicationSupportDirectoryURL.path;
         _megaSDK = [[MEGASdk alloc] initWithAppKey:_appKey userAgent:_userAgent basePath:basePath];
+        [_megaSDK retrySSLErrors:YES];
     });
     return _megaSDK;
 }
@@ -61,6 +62,7 @@ MEGAChatSdk *_MEGAChatSdk = nil;
         NSAssert(_userAgent != nil, @"setUserAgent: should be called first");
         NSString *basePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
         _megaSDKFolder = [[MEGASdk alloc] initWithAppKey:_appKey userAgent:_userAgent basePath:basePath];
+        [_megaSDKFolder retrySSLErrors:YES];
     });
     return _megaSDKFolder;
 }

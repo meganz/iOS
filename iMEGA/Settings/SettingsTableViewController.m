@@ -1,8 +1,6 @@
 
 #import "SettingsTableViewController.h"
 
-#import <SafariServices/SafariServices.h>
-
 #import "LTHPasscodeViewController.h"
 #import "SVProgressHUD.h"
 
@@ -43,6 +41,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *privacyPolicyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *termsOfServiceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dataProtectionRegulationLabel;
 
 @end
 
@@ -126,20 +125,11 @@
     
     self.privacyPolicyLabel.text = AMLocalizedString(@"privacyPolicyLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy'");
     self.termsOfServiceLabel.text = AMLocalizedString(@"termsOfServicesLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Terms of Service'");
+    self.dataProtectionRegulationLabel.text = AMLocalizedString(@"dataProtectionRegulationLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation'");
 }
 
 - (void)showURL:(NSString *)urlString {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        NSURL *URL = [NSURL URLWithString:urlString];
-        SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:URL];
-        if (@available(iOS 10.0, *)) {
-            webViewController.preferredControlTintColor = [UIColor mnz_redD90007];
-        } else {
-            webViewController.view.tintColor = [UIColor mnz_redD90007];
-        }
-        
-        [self presentViewController:webViewController animated:YES completion:nil];
-    }
+    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:urlString]];
 }
 
 #pragma mark - UITableViewDataSource
@@ -154,13 +144,16 @@
         case 0: //Camera Uploads, Chat
         case 1:
         case 3:
-        case 5: //Privacy Policy, Terms of Service
             numberOfRows = 2;
             break;
             
         case 2: //Advanced
         case 4: //Help
             numberOfRows = 1;
+            break;
+            
+        case 5: //Privacy Policy, Terms of Service, GDPR
+            numberOfRows = 3;
             break;
     }
     return numberOfRows;
@@ -228,10 +221,13 @@
         case 5: { //Privacy Policy, Terms of Service
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 if (indexPath.row == 0) {
-                    [self showURL:@"https://mega.nz/ios_privacy.html"];
+                    [self showURL:@"https://mega.nz/privacy"];
                     break;
                 } else if (indexPath.row == 1) {
-                    [self showURL:@"https://mega.nz/ios_terms.html"];
+                    [self showURL:@"https://mega.nz/terms"];
+                    break;
+                } else if (indexPath.row == 2) {
+                    [self showURL:@"https://mega.nz/gdpr"];
                     break;
                 }
             }
