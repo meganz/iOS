@@ -480,10 +480,15 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)customToolbarContentView {
     self.inputToolbar.contentView.textView.placeHolderTextColor = [UIColor mnz_grayCCCCCC];
-    self.inputToolbar.contentView.textView.placeHolder = AMLocalizedString(@"writeAMessage", @"Message box label which shows that user can type message text in this textview");
     self.inputToolbar.contentView.textView.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
     self.inputToolbar.contentView.textView.textColor = [UIColor mnz_black333333];
     self.inputToolbar.contentView.textView.tintColor = [UIColor mnz_green00BFA5];
+    [self updateToolbarPlaceHolder];
+}
+
+- (void)updateToolbarPlaceHolder {
+    NSString *placeholder = [AMLocalizedString(@"writeAMessage", @"This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to \"Chat room topic\"... Write a message to Contact Name1, Contact Name2, Contact Name3") stringByReplacingOccurrencesOfString:@"%s" withString:self.chatRoom.title];
+    self.inputToolbar.contentView.textView.placeHolder = placeholder;
 }
 
 - (BOOL)showDateBetweenMessage:(MEGAChatMessage *)message previousMessage:(MEGAChatMessage *)previousMessage {
@@ -1908,6 +1913,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             
         case MEGAChatRoomChangeTypeParticipants: {
             [self customNavigationBarLabel];
+            [self updateToolbarPlaceHolder];
             
             [self.collectionView performBatchUpdates:^{
                 [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
@@ -1921,6 +1927,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             
         case MEGAChatRoomChangeTypeTitle:
             [self customNavigationBarLabel];
+            [self updateToolbarPlaceHolder];
+            
             break;
             
         case MEGAChatRoomChangeTypeUserTyping: {
