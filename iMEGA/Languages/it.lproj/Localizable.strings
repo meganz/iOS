@@ -55,7 +55,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="You have been logged out of this device from another location";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="La chiave SSL del server non può essere verificata. Potresti essere affetto da un attacco di tipo man-in-the-middle.";
+"sslUnverified_alertTitle"="MEGA non riesce a connettersi in sicurezza attraverso SSL. Dovresti essere su un WiFi pubblico con requisiti addizionali.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Il contenuto a cui stai provando ad accedere non è disponibile per questo account. Prova ad effettuare l'accesso con lo stesso account come nel client web mobile.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -126,8 +126,8 @@
 "strong"="Sicura";
 /*  */
 "passwordStrong"="Questa password può resistere agli attacchi più tipici di brute-force. Assicurati di ricordarla.";
-/* Text shown on a button that if clicked shows the MEGA Terms of Service */
-"termsOfServiceButton"="Accetto i termini di servizio di MEGA";
+/*  */
+"agreeWithTheMEGATermsOfService"="Sono d'accordo con i <a href='terms'>Termini di Servizio</a> di Mega";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Inserisci un nome valido";
 /*  */
@@ -199,7 +199,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Nessun risultato";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Svuota il Cestino                                ";
+"cloudDriveEmptyState_titleRubbishBin"="Svuota il Cestino";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Nessun file salvato in Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -258,6 +258,12 @@
 "folderAndFiles"="1 cartella • %d file";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="In coda";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="In pausa";
+/* Label for the state of a transfer when is being completing - (String as short as possible). */
+"Completing..."="Finendo...";
+/* Label for the state of a transfer when is being retrying - (String as short as possible). */
+"Retrying..."="Riprovando...";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Ci sono downloads in sospeso";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -526,8 +532,6 @@
 "offline"="Offline";
 /* Title of the Contacts section */
 "contactsTitle"="Contatti";
-/* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
-"noFoldersShared"="Nessuna cartella condivisa";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 cartella";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -656,6 +660,8 @@
 "privacyPolicyLabel"="Informativa Privacy";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Termini di Servizio";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Off";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -774,12 +780,8 @@
 "confirmPassword"="Conferma password";
 /* Success message shown when the password has been changed */
 "passwordChanged"="La tua password è stata modificata.";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="La nuova e la vecchia password non possono corrispondere.";
 /* An option to reset the password. */
 "forgotPassword"="Password dimenticata?";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="Puoi resettare la password usando il link di recupero che ti sarà inviato per email.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Questo link di recupero è scaduto, si prega di riprovare.";
 /* Headline of the password reset recovery procedure */
@@ -794,26 +796,9 @@
 "youRecoveryKeyIsGoingTo"="La tua Chiave di Recupero sarà usata per resettare la tua password. Per favore, inserisci la tua nuova password.";
 /*  */
 "yourPasswordHasBeenReset"="La tua password è stata reimpostata correttamente. Si prega di accedere al proprio account.";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Se hai una copia della tua Chiave di Recupero, puoi resettare la tua password selezionando DI. Nessun dato sarà perso.";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="Puoi ancora esportare la tua Chiave di recupero se hai una sessione attiva in un qualsiasi altro browser, su questo o su un altro computer. Se non hai sessioni attive, non puoi decriptare il tuo account, ma puoi crearne uno nuovo selezionando NO.";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="Hai una copia della tua Chiave di Recupero?";
-/* Headline when the user chose YES */
-"great"="Ottimo!";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Per favore, inserisci il tuo indirizzo email qui sotto. Riceverai un link di recupero che ti permetterà di inserire la tua Chiave di Recupero e resettare la tua password.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Invia";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="Ops!";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="A causa del paradigma della nostra criptazione end-to-end, non potrai accedere ai tuoi dati senza la tua password o una copia della tua Chiave di Recupero.";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="Puoi parcheggiare il tuo account esistente e crearne uno nuovo sullo stesso indirizzo email. I tuoi dati verranno mantenuti per almeno 60 giorni. Nel caso in cui tu voglia richiamare il tuo account parcheggiato, per favore contatta support@mega.nz";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="Per favore, inserisci la tua email qui sotto. Riceverai un link di recupero che ti permetterà di parcheggiare il tuo account.";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Resetta account";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -993,9 +978,9 @@
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Puoi aggiornare più tardi in Il Mio Account";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Il tuo Cloud è quasi pieno.[/S] [A]Aggiorna ora[/A] ad un account PRO ora e ottieni [S]fino a 4TB (4096GB)[/S] di spazio cloud.                ";
+"cloudDriveIsAlmostFull"="[S]Il tuo Cloud è quasi pieno.[/S] [A]Aggiorna ora[/A] ad un account PRO ora e ottieni [S]fino a 4TB (4096GB)[/S] di spazio cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Il tuo account è pieno.[/S] [A]Aggiorna ora[/A] ad un account PRO ora e ottieni [S]fino a 4TB (4096 GB)[/S] di spazio cloud.                ";
+"cloudDriveIsFull"="[S]Il tuo account è pieno.[/S] [A]Aggiorna ora[/A] ad un account PRO ora e ottieni [S]fino a 4TB (4096 GB)[/S] di spazio cloud.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="di spazio d'archiviazione";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1072,6 +1057,8 @@
 "chat"="Chat";
 /* Empty Conversations section */
 "noConversations"="Nessuna Conversazione";
+/* Empty Conversations description */
+"noConversationsDescription"="Inizia a chattare in sicurezza con i tuoi contatti utilizzando la criptazione end-to-end";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Chat disattivata";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1100,6 +1087,8 @@
 "changedGroupChatNameTo"="[A] ha cambiato il nome del gruppo in \"[B]\"";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Aggiungi partecipante...";
+/* Menu item to add participants to a chat */
+"addParticipants"="Aggiungi partecipanti";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Stato";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1168,6 +1157,8 @@
 "renameGroup"="Rinomina gruppo";
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="Cambia immagine del gruppo";
+/* Text used as hint to give the user information to write a name for the group chat. */
+"enterGroupName"="Inserisci nome gruppo";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Lascia";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1475,3 +1466,17 @@
 "testPasswordLogoutText"="Stai per effettuare il logout, per favore testa la tua password per assicurarti di ricordarla. Se perdi la tua password, perderai l'accesso ai tuoi dati archiviati su MEGA.";
 /* state previous to import a file */
 "loading"="Caricamento...";
+/*   */
+"next"="Seguente";
+/* Button title to allow the user ignore something */
+"ignore"="Ignora";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Apri browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="Riavvia";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Ricominciare playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%1$s continuerà a %2$s";
+/*  */
+"resume"="Riprendi";

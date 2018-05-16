@@ -37,7 +37,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="U kunt geen lege map downloaden";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="Uw account is reeds geactiveerd. Log a.u.b. in. ";
+"accountAlreadyConfirmed"="Uw account is reeds geactiveerd. Log a.u.b. in.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Ongeldige koppeling";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -55,7 +55,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="U bent uitgelogd van dit apparaat vanuit een andere locatie";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="De SSL sleutel van de server kan niet worden geverifieerd. U zou kunnen worden geschaad door een man-in-the-middle aanval.";
+"sslUnverified_alertTitle"="MEGA is niet in staat om veilig te verbinden via SSL. U kunt op het publiekelijke wifi zitten met extra benodigdheden.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="De inhoud die u probeert te krijgen is niet beschikbaar voor deze account. Probeer in te loggen met dezelfde account als in de mobiele web programma.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -63,9 +63,9 @@
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="Servers zijn te druk. Even geduld alstublieft.";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
-"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+"unableToReachMega"="Niet in staat om MEGA te bereiken. Controleer uw connectiviteit of probeer later nogmaals.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
-"tooManyRequest"="Too many requests. Please wait.";
+"tooManyRequest"="Te veel verzoeken. Wacht a.u.b.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Log in op uw account.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -107,7 +107,7 @@
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Wachtwoord";
 /*  */
-"pleaseStrengthenYourPassword"="Kies aub een sterker wachtwoord.";
+"pleaseStrengthenYourPassword"="Kies a.u.b. een sterker wachtwoord.";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
 "veryWeak"="Erg Zwak";
 /*  */
@@ -126,8 +126,8 @@
 "strong"="Sterk";
 /*  */
 "passwordStrong"="Dit wachtwoord zal de meest geavanceerde brute-force aanvallen weerstaan. Zorg ervoor dat u deze goed onthoudt.";
-/* Text shown on a button that if clicked shows the MEGA Terms of Service */
-"termsOfServiceButton"="Ik ga akkoord met de Algemene Voorwaarden van MEGA";
+/*  */
+"agreeWithTheMEGATermsOfService"="Ik ga akkoord met de MEGA <a href='terms'>Algemene Voorwaarden</a>";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Vul uw naam in";
 /*  */
@@ -258,6 +258,12 @@
 "folderAndFiles"="1 map • %d bestanden";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Wachtrij";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="Gepauzeerd";
+/* Label for the state of a transfer when is being completing - (String as short as possible). */
+"Completing..."="Voltooien...";
+/* Label for the state of a transfer when is being retrying - (String as short as possible). */
+"Retrying..."="Opnieuw proberen...";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Er zijn  wachtende downloads";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -273,7 +279,7 @@
 /* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
 "largest"="Grootste";
 /* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
-"smallest"="kleinste";
+"smallest"="Kleinste";
 /* Sort by option (5/6). This one order the files by its modification date, newer first */
 "newest"="Nieuwste";
 /* Sort by option (6/6). This one order the files by its modification date, older first */
@@ -325,7 +331,7 @@
 /* Title shown under the action that allows you to get a link to file or folder */
 "getLink"="Haal de koppeling op";
 /* Title shown under the action that allows you to get several links to files and/or folders */
-"getLinks"="Haal koppelingen";
+"getLinks"="Haal koppelingen op";
 /* Item menu option upon right click on one or multiple files. */
 "manageLink"="Koppeling beheren";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
@@ -345,7 +351,7 @@
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Waarschuwing over auteursrechten aan alle gebruikers";
 /* String already exists: 367, but we need to split paragraphs. */
-"copyrightMessagePart1"="MEGA respecteert het auteursrecht van anderen en eist dat de gebruikers van de MEGA cloud service zich aan de auteurswetten houden. ";
+"copyrightMessagePart1"="MEGA respecteert het auteursrecht van anderen en eist dat de gebruikers van de MEGA cloud service zich aan de auteurswetten houden.";
 /* String already exists: 367, but we need to split paragraphs */
 "copyrightMessagePart2"="Het is strikt verboden om de MEGA cloud dienst te gebruiken om inbreuk te maken op auteursrecht.U mag niet uploaden, downloaden, opslaan, delen, weergeven, streamen, verdelen, mailen, linken naar, overdragen of anders beschikbaar maken van elk bestand, gegevens inhoud die inbreuk maken op auteursrecht of andere eigendom rechten of elk persoon of entiteit.";
 /* button caption text that the user clicks when he agrees */
@@ -417,7 +423,7 @@
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
 "moveFilesFoldersMessage"="[A] bestanden en [B] mappen verplaatst";
 /* List option shown on the details of a file or folder */
-"copy"="Kopiëren ";
+"copy"="Kopiëren";
 /* Success message shown when you have copied 1 file */
 "copyFileMessage"="1 bestand gekopieërd";
 /* Success message shown when you have copied {1+} files */
@@ -526,8 +532,6 @@
 "offline"="Offline";
 /* Title of the Contacts section */
 "contactsTitle"="Contacten";
-/* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
-"noFoldersShared"="Geen mappen gedeeld";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 map";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -629,7 +633,7 @@
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="Lezen & Schrijven";
 /* Permissions given to the user you share your folder with */
-"fullAccess"="volledige toegang";
+"fullAccess"="Volledige toegang";
 /* Title of the Settings section */
 "settingsTitle"="Instellingen";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
@@ -656,6 +660,8 @@
 "privacyPolicyLabel"="Privacybeleid";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Algemene Voorwaarden";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Uit";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -667,7 +673,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Alleen tijden het laden";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Wanneer ingeschakeld zullen uw foto's en video's automatisch worden geüpload. ";
+"cameraUploads_footer"="Wanneer ingeschakeld zullen uw foto's en video's automatisch worden geüpload.";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK versie";
 /* Title of the label where the MEGAchat SDK version is shown */
@@ -715,7 +721,7 @@
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Bewaar video's in galerij";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
-"imageAndVideoDownloadsFooter"="Bewaar iOS compatible afbeeldingen en video's in de galerij van uw apparaat (Let op: afbeeldingen en video's worden niet in Offline opgeslagen). ";
+"imageAndVideoDownloadsFooter"="Bewaar iOS compatible afbeeldingen en video's in de galerij van uw apparaat (Let op: afbeeldingen en video's worden niet in Offline opgeslagen).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Momenteel %s in gebruik";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -774,12 +780,8 @@
 "confirmPassword"="Bevestig wachtwoord";
 /* Success message shown when the password has been changed */
 "passwordChanged"="Uw wachtwoord is gewijzigd.";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="Het nieuwe en oude wachtwoord kunnen niet overeen komen.";
 /* An option to reset the password. */
 "forgotPassword"="Wachtwoord vergeten?";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="U kunt uw wachtwoord wijzigen door op de herstel koppeling te klikken die naar uw email verzonden is.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Deze herstelkoppeling is verlopen, probeer a.u.b. opnieuw.";
 /* Headline of the password reset recovery procedure */
@@ -794,26 +796,9 @@
 "youRecoveryKeyIsGoingTo"="Uw coderingssleutel zal worden gebruikt om uw wachtwoord te resetten. Voer alstublieft uw nieuwe wachtwoord in.";
 /*  */
 "yourPasswordHasBeenReset"="Uw wachtwoord is succesvol gewijzigd. Log nu aub in met uw account.";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Als u een reservekopie van uw Reservesleutel heeft, kunt u uw wachtwoord resetten door JA te selecteren. Geen gegevens gaan verloren.";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="U kunt uw Herstel Sleutel nog steeds exporteren als u een actieve MEGA sessie heeft in een andere browser op deze of een andere computer. Als u dat niet doet, dan kan u uw bestaande account niet langer decoderen, maar kunt u wel een nieuwe starten onder hetzelfde e-mailadres door NEE te selecteren.";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="Heeft u een reservekopie van uw Herstelsleutel?";
-/* Headline when the user chose YES */
-"great"="Geweldig!";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Vul alstublieft hieronder uw e-mailadres in. U ontvangt een herstelkoppeling die u de mogelijkheid biedt uw coderingssleutel in te dienen en uw wachtwoord te resetten.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Versturen";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="Oeps!";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Door onze eind-tot-eind encryptie paradigma, heeft u geen toegang tot uw gegevens zonder uw wachtwoord of een reservekopie van uw Herstelsleutel.";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="U kunt uw bestaande account parkeren en een nieuwe starten onder hetzelfde e-mailadres. Uw gegevens zullen worden bewaard voor tenminste 60 dagen. Wanneer u het wachtwoord van uw geparkeerde account herinnert, neem dan alstublieft contact op met support@mega.nz";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="Vul alstublieft hieronder uw e-mail adres in. U ontvangt een herstel koppeling die u de mogelijkheid biedt om uw account te parkeren.";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Parkeer account";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -853,7 +838,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Verwijder lokale data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Afmelden en lokale gegevens worden gewist na 10 mislukte inlogpogingen ";
+"failedAttempstSectionTitle"="Afmelden en lokale gegevens worden gewist na 10 mislukte inlogpogingen";
 /* Menu item */
 "help"="Help";
 /* Title of the section to access MEGA's help centre */
@@ -1072,6 +1057,8 @@
 "chat"="Chat";
 /* Empty Conversations section */
 "noConversations"="Geen Gesprekken";
+/* Empty Conversations description */
+"noConversationsDescription"="Begin met veilig chatten met uw contacten door gebruik van eind-tot-eind codering";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Chat is uitgeschakeld";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1100,6 +1087,8 @@
 "changedGroupChatNameTo"="[A] heeft het onderwerp gewijzigd naar '[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Deelnemer toevoegen...";
+/* Menu item to add participants to a chat */
+"addParticipants"="Deelnemers toevoegen";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1168,6 +1157,8 @@
 "renameGroup"="Hernoem Groep";
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="Verander Groepsafbeelding";
+/* Text used as hint to give the user information to write a name for the group chat. */
+"enterGroupName"="Voer groep naam in";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Verlaten";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1271,15 +1262,15 @@
 /* A summary message when a user has attached one file into the chat. */
 "uploadedFile"="Dit bestand geüpload:";
 /* A summary message when a user has attached many files at once into the chat. */
-"uploadedFiles"="Deze bestanden geüpload: ";
+"uploadedFiles"="Deze bestanden geüpload:";
 /* Label in a button that allows to jump to the latest item */
 "jumpToLatest"="Ga naar de laatste";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Nieuwe berichten";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu unread message";
+"unreadMessage"="%lu ongelezen bericht";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu unread messages";
+"unreadMessages"="%lu ongelezen berichten";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Abonnementen worden automatisch verlengd voor opeenvolgende abonnementsperioden van dezelfde duur en voor dezelfde prijs als de gekozen beginperiode.U kunt de automatische verlenging van uw MEGA PRO abonnement uitschakelen uiterlijk 24 uur voordat uw volgende abonnementsbetaling via uw pagina accountinstellingen van uw iTunes-account verschuldigd bent. Om uw abonnementen te beheren, klikt u op het pictogram AppStore op uw toestel, meld u aan met een Apple ID aan de onderkant van de pagina (als u dat nog niet hebt gedaan) en klik vervolgens op Bekijk ID. U komt daarmee op uw accountpagina, waar u naar beneden kunt scrollen naar Beheer Applicatie Abonnementen. Van daaruit kunt u uw MEGA PRO abonnement  kiezen en uw geplande verlengingsdatum, u kunt een ander abonnement kiezen of de aan-uit schakelaar uitschakelen op uit zetten om de automatische verlenging van uw abonnement uit te schakelen.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1452,13 +1443,13 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="Herinnert u zich uw wachtwoord?";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+"remindPasswordText"="Door MEGA's encryptie technologie bent u niet in staat uw wachtwoord te resetten zonder data verlies. Zorg ervoor dat u uw wachtwoord onthoudt.";
 /* Text that describes why the user should test his/her password before logging out */
-"remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
+"remindPasswordLogoutText"="Voordat u uitlogt raden we u aan uw Herstelsleutel te exporteren naar een veilige plek. Merk op dat u uw wachtwoord niet kunt resetten als u het vergeet.";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="Don’t show me again";
+"dontShowAgain"="Laat me niet meer zien";
 /* Label for test password button and titles */
-"testPassword"="Test Password";
+"testPassword"="Wachtwoord Testen";
 /* Label for recovery key button */
 "backupRecoveryKey"="Reservekopie Herstelsleutel";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
@@ -1470,8 +1461,22 @@
 /* A dialog title to export the Recovery Key for the current user. */
 "exportRecoveryKey"="Herstelsleutel Exporteren";
 /* Title to confirm that you want to logout */
-"proceedToLogout"="Proceed to logout";
+"proceedToLogout"="Doorgaan met uitloggen";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+"testPasswordLogoutText"="U staat op het punt om uit te loggen, test uw wachtwoord om er zeker van te zijn dat u het onthoudt. Als u uw wachtwoord verliest, verliest u toegang tot uw MEGA gegevens. ";
 /* state previous to import a file */
 "loading"="Laden...";
+/*   */
+"next"="Volgende";
+/* Button title to allow the user ignore something */
+"ignore"="Negeren";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Openen browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="Herstart";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Afspelen hervatten?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%1$s wordt hervat bij %2$s";
+/*  */
+"resume"="Doorgaan";
