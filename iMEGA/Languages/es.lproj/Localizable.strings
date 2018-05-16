@@ -55,7 +55,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Tu sesión ha sido cerrada de este dispositivo desde otra localización";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="La clave SSL no se ha podido verificar. Tus comunicaciones podrían estar siendo interceptadas por un atacante.";
+"sslUnverified_alertTitle"="MEGA no se puede conectar de forma segura a través de SSL. Es posible que estés conectado a una WiFi pública con requisitos adicionales.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="El contenido al que estás intentando acceder no pertenece a esta cuenta. Inicia sesión con la misma cuenta que tienes en el navegador.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -1058,7 +1058,7 @@
 /* Empty Conversations section */
 "noConversations"="No hay conversaciones";
 /* Empty Conversations description */
-"noConversationsDescription"="Start chatting securely with your contacts using end-to-end encryption";
+"noConversationsDescription"="Chatea de forma segura con tus contactos mediante el cifrado punto a punto";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Chat desactivado";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1158,7 +1158,7 @@
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="Cambiar imagen del perfil del grupo";
 /* Text used as hint to give the user information to write a name for the group chat. */
-"enterGroupName"="Enter group name";
+"enterGroupName"="Escribe el nombre del grupo";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Abandonar";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1471,12 +1471,12 @@
 /* Button title to allow the user ignore something */
 "ignore"="Ignorar";
 /* Button title to allow the user open the default browser */
-"openBrowser"="Open browser";
+"openBrowser"="Abrir navegador";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="Reiniciar";
 /* Title to alert user the possibility of resume playing the video or start from the beginning */
-"resumePlayback"="Resume playback?";
+"resumePlayback"="¿Reanudar la reproducción?";
 /* Message to show the user info (name and time) about the resume of the video */
-"continueOrRestartVideoMessage"="%1$s will continue at %2$s";
+"continueOrRestartVideoMessage"="%1$s continuará en %2$s";
 /*  */
 "resume"="Reanudar";

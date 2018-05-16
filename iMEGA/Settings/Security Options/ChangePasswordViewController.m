@@ -416,6 +416,44 @@
     return YES;
 }
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    switch (textField.tag) {
+        case 3:
+            self.currentPasswordView.rightImageView.hidden = NO;
+            break;
+            
+        case 4:
+            self.theNewPasswordView.rightImageView.hidden = NO;
+            break;
+            
+        case 5:
+            self.confirmPasswordView.rightImageView.hidden = NO;
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    switch (textField.tag) {
+        case 3:
+            self.currentPasswordView.rightImageView.hidden = YES;
+            break;
+            
+        case 4:
+            self.theNewPasswordView.rightImageView.hidden = YES;
+            break;
+            
+        case 5:
+            self.confirmPasswordView.rightImageView.hidden = YES;
+            break;
+            
+        default:
+            break;
+    }
+}
+
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
