@@ -762,7 +762,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)showOrHideJumpToBottom {
-    if (self.collectionView.contentSize.height - self.collectionView.contentOffset.y < 800.0f) {
+    CGFloat verticalIncrementToShow = self.view.frame.size.height * 1.5;
+    if (self.collectionView.contentSize.height - self.collectionView.contentOffset.y < verticalIncrementToShow) {
         [self hideJumpToBottom];
     } else {
         [self showJumpToBottomWithMessage:AMLocalizedString(@"jumpToLatest", @"Label in a button that allows to jump to the latest item")];

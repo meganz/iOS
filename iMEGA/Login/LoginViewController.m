@@ -223,7 +223,7 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    switch ([textField tag]) {
+    switch (textField.tag) {
         case 0:
             [self.passwordView.passwordTextField becomeFirstResponder];
             break;
@@ -238,6 +238,18 @@
     }
     
     return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField.tag == 1) {
+        self.passwordView.rightImageView.hidden = NO;
+    }
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    if (textField.tag == 1) {
+        self.passwordView.rightImageView.hidden = YES;
+    }
 }
 
 @end

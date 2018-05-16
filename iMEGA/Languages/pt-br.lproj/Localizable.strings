@@ -55,7 +55,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Você foi desconectado deste dispositivo a partir de outro local.";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="Chave SSL do servidor não pode ser verificada. Você pode ter sido afetado por um ataque \"man-in-the-middle\".";
+"sslUnverified_alertTitle"="O MEGA não consegue se conectar de forma segura por meio de SSL. Você pode estar usando uma rede WiFi pública com requisitos adicionais.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="O conteúdo que você está tentando acessar não está disponível para esta conta. Tente fazer o login com a mesma conta usada no navegador móvel.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -277,13 +277,13 @@
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
 "nameDescending"="nome (decrescente)";
 /* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
-"largest"="maior";
+"largest"="Maior";
 /* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
-"smallest"="menor";
+"smallest"="Menor";
 /* Sort by option (5/6). This one order the files by its modification date, newer first */
-"newest"="mais novo";
+"newest"="Mais recente";
 /* Sort by option (6/6). This one order the files by its modification date, older first */
-"oldest"="mais velho";
+"oldest"="Mais antigo";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
 "choosePhotoVideo"="Selecionar";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
@@ -509,7 +509,7 @@
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Uploads da câmera ativos";
 /* Message shown when the camera uploads have been completed */
-"cameraUploadsComplete"="Uploads da câmera concluidos";
+"cameraUploadsComplete"="Uploads da câmera concluídos";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "cameraUploadsUploadingFile"="Fazendo upload %1$d de %2$d arquivo";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -671,11 +671,11 @@
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Carregamento de vídeos";
 /* Option title to enable Camera Uploads only when the device is charging */
-"onlyWhenChargingLabel"="Apenas quando estiver carregando";
+"onlyWhenChargingLabel"="Somente quando estiver carregando";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Quando ativado novas fotos e vídeos serão carregados.";
 /* Title of the label where the SDK version is shown */
-"sdkVersion"="Versão do MEGA SDK";
+"sdkVersion"="MEGA - versão do SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
 "megachatSdkVersion"="MEGAchat - versão do SDK";
 /* Title for the section "Acknowledgements" of the app */
@@ -713,7 +713,7 @@
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Não usar HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
-"transfersSectionFooter"="Ative essa opção apenas se a sua transferência não iniciar. Em circunstâncias normais, o HTTP é satisfatória como já todas as transferências são criptografados.";
+"transfersSectionFooter"="Ative essa opção somente se a sua transferência não começar. Em circunstâncias normais, HTTP é suficiente, pois todas as transferências já estão criptografadas.";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Imagem e vídeo de downloads";
 /* Section title where you can enable the option 'Save images in gallery' */
