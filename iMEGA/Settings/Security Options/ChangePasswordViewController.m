@@ -25,8 +25,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *changePasswordButton;
 
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
-
 @property (weak, nonatomic) IBOutlet PasswordView *currentPasswordView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *currentPasswordViewHeightConstraint;
 
@@ -92,34 +90,6 @@
         
         self.emailIsChangingTitleLabel.text = AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
         self.emailIsChangingDescriptionLabel.text = AMLocalizedString(@"emailIsChanging_description", @"Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess");
-    } else if (self.changeType == ChangeTypeResetPassword || self.changeType == ChangeTypeParkAccount) {
-        
-        self.currentPasswordView.hidden = YES;
-        self.currentPasswordTextField.hidden = self.currentPasswordImageView.hidden = NO;
-        
-        self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
-        
-        self.navigationItem.title = (self.changeType == ChangeTypeResetPassword) ? AMLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") : AMLocalizedString(@"parkAccount", @"Headline for parking an account (basically restarting from scratch)");
-        
-        self.currentPasswordImageView.image = [UIImage imageNamed:@"email"];
-        self.currentPasswordTextField.text = self.email;
-        self.currentPasswordTextField.secureTextEntry = NO;
-        self.currentPasswordTextField.userInteractionEnabled = NO;
-        
-        [self configureTextFieldStyle:self.theNewPasswordView.passwordTextField];
-        self.theNewPasswordView.passwordTextField.placeholder = AMLocalizedString(@"newPassword", @"Placeholder text to explain that the new password should be written on this text field.");
-        self.theNewPasswordView.passwordTextField.tag = 4;
-        self.theNewPasswordView.leftImageView.image = [UIImage imageNamed:@"key"];
-        
-        [self configureTextFieldStyle:self.confirmPasswordView.passwordTextField];
-        self.confirmPasswordView.passwordTextField.placeholder = AMLocalizedString(@"confirmPassword", @"Placeholder text to explain that the new password should be re-written on this text field.");
-        self.confirmPasswordView.passwordTextField.tag = 5;
-        self.confirmPasswordView.leftImageView.image = [UIImage imageNamed:@"keyDouble"];
-
-        NSString *buttonTitle = (self.changeType == ChangeTypeResetPassword) ? AMLocalizedString(@"changePasswordLabel", @"Section title where you can change your MEGA's password") : AMLocalizedString(@"startNewAccount", @"Caption of the button to proceed");
-        [self.changePasswordButton setTitle:buttonTitle forState:UIControlStateNormal];
-        
-        [self.theNewPasswordTextField becomeFirstResponder];
     }
 }
 
@@ -306,19 +276,6 @@
                 self.theNewPasswordImageView.image = [UIImage imageNamed:@"errorEmail"];
                 self.confirmPasswordImageView.image = [UIImage imageNamed:@"errorEmailConfirm"];
             }
-        } else if (self.changeType == ChangeTypeResetPassword) {
-            if ([self validatePasswordForm]) {
-                [[MEGASdkManager sharedMEGASdk] confirmResetPasswordWithLink:self.link newPassword:self.theNewPasswordView.passwordTextField.text masterKey:self.masterKey delegate:self];
-            }
-        } else if (self.changeType == ChangeTypeParkAccount) {
-            if ([self validatePasswordForm]) {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"startNewAccount", @"Headline of the password reset recovery procedure")  message:AMLocalizedString(@"startingFreshAccount", @"Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed 'Recovery Key')") preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    [[MEGASdkManager sharedMEGASdk] confirmResetPasswordWithLink:self.link newPassword:self.theNewPasswordView.passwordTextField.text masterKey:nil delegate:self];
-                }]];
-                [self presentViewController:alertController animated:YES completion:nil];
-            }
         }
     } else {
         self.changePasswordButton.enabled = YES;
@@ -338,7 +295,7 @@
     
     shoulBeCreateAccountButtonGray ? [self.changePasswordButton setBackgroundColor:UIColor.mnz_grayCCCCCC] : [self.changePasswordButton setBackgroundColor:UIColor.mnz_redFF4C52];
     
-    if (self.changeType == ChangeTypePassword || self.changeType == ChangeTypeResetPassword || self.changeType == ChangeTypeParkAccount) {
+    if (self.changeType == ChangeTypePassword) {
         if (textField.tag == 4) {
             if (text.length == 0) {
                 self.passwordStrengthIndicatorView.customView.hidden = YES;
@@ -363,7 +320,7 @@
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
-    if (self.changeType == ChangeTypePassword || self.changeType == ChangeTypeResetPassword || self.changeType == ChangeTypeParkAccount) {
+    if (self.changeType == ChangeTypePassword) {
         if (textField.tag == 4) {
             self.passwordStrengthIndicatorView.customView.hidden = YES;
             self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
@@ -547,23 +504,6 @@
             if (self.changeType == ChangeTypePassword) {
                 [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"passwordChanged", @"The label showed when your password has been changed")];
                 [self dismissViewControllerAnimated:YES completion:nil];
-            } else {
-                NSString *title;
-                if (self.changeType == ChangeTypeResetPassword) {
-                    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"passwordReset" object:nil];
-                        title = AMLocalizedString(@"passwordChanged", @"The label showed when your password has been changed");
-                    } else {
-                        title = AMLocalizedString(@"yourPasswordHasBeenReset", nil);
-                    }
-                } else if (self.changeType == ChangeTypeParkAccount) {
-                    title = AMLocalizedString(@"yourAccounHasBeenParked", nil);
-                }
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    [self dismissViewControllerAnimated:YES completion:nil];
-                }]];
-                [self presentViewController:alertController animated:YES completion:nil];
             }
             
             break;

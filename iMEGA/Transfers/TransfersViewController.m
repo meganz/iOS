@@ -14,9 +14,9 @@
     BOOL areTransfersPaused;
 }
 
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *pauseBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *resumeBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *pauseBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *resumeBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *transfersSegmentedControl;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
