@@ -1294,7 +1294,7 @@
         allNodesSelected = NO;
     }
     
-    if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeRubbishBin) {
+    if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeRubbishBin) {
         [self updateNavigationBarTitle];
     }
     
