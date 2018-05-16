@@ -370,7 +370,6 @@
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
 - (IBAction)searchTapped:(id)sender {
-    self.collectionView.hidden = YES;
     UINavigationController *searchInPdfNavigation = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"SearchInPdfNavigationID"];
     SearchInPdfViewController *searchInPdfVC = searchInPdfNavigation.viewControllers.firstObject;
     searchInPdfVC.pdfDocument = self.pdfView.document;
@@ -487,6 +486,10 @@
 #pragma mark - SearchInPdfViewControllerProtocol
 
 - (void)didSelectSearchResult:(PDFSelection *)result {
+    if (!self.collectionView.hidden) {
+        self.collectionView.hidden = YES;
+        self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"thumbnailsView"];
+    }
     result.color = UIColor.yellowColor;
     [self.pdfView setCurrentSelection:result];
     [self.pdfView setScaleFactor:self.pdfView.scaleFactorForSizeToFit];
