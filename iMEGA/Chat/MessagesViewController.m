@@ -1316,14 +1316,12 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     [self showOrHideJumpToBottom];
-    [self hideUnreadMessagesLabelIfNeeded];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     if (!decelerate) {
         [self showOrHideJumpToBottom];
     }
-    [self hideUnreadMessagesLabelIfNeeded];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
