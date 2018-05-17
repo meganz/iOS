@@ -210,6 +210,7 @@
         if (self.contactDetailsMode == ContactDetailsModeDefault) {
             switch (indexPath.row) {
                 case 0: //Send Message
+                    cell.avatarImageView.image = [UIImage imageNamed:@"sendMessage"];
                     cell.nameLabel.text = AMLocalizedString(@"sendMessage", @"Title to perform the action of sending a message to a contact.");
                     break;
                     
