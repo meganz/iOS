@@ -162,8 +162,12 @@
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
     NSString *text = @"";
 
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-        text = AMLocalizedString(@"noConversationsDescription", @"Empty Conversations description");
+    if (self.searchController.isActive) {
+        text = @"";
+    } else {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+            text = AMLocalizedString(@"noConversationsDescription", @"Empty Conversations description");
+        }
     }
     
     NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:14.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
