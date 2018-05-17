@@ -961,16 +961,17 @@ static MEGAIndexer *indexer;
     searchController.searchResultsUpdater = searchResultsUpdaterDelegate;
     searchController.searchBar.delegate = searchBarDelegate;
     searchController.dimsBackgroundDuringPresentation = NO;
-    
+    searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     searchController.searchBar.translucent = NO;
-    searchController.searchBar.barTintColor = [UIColor mnz_grayF1F1F2];
-    searchController.searchBar.tintColor = [UIColor mnz_redF0373A];
+    searchController.searchBar.barTintColor = UIColor.mnz_grayFCFCFC;
+    searchController.searchBar.tintColor = UIColor.mnz_redF0373A;
+    searchController.searchBar.backgroundImage = [[UIImage alloc] init];
     
     UITextField *searchTextField = [searchController.searchBar valueForKey:@"_searchField"];
     searchTextField.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
-    searchTextField.backgroundColor = [UIColor whiteColor];
-    searchTextField.textColor = [UIColor mnz_black333333];
-    searchTextField.tintColor = [UIColor mnz_green00BFA5];
+    searchTextField.backgroundColor = UIColor.mnz_grayEEEEEE;
+    searchTextField.textColor = UIColor.mnz_black333333;
+    searchTextField.tintColor = UIColor.mnz_green00BFA5;
     
     return searchController;
 }

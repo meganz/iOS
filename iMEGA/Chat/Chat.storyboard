@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eDp-9x-QPr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eDp-9x-QPr">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -80,7 +80,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6xG-n6-aut">
-                                                    <rect key="frame" x="378.33333333333331" y="15" width="20.666666666666686" height="12"/>
+                                                    <rect key="frame" x="373.33333333333331" y="15" width="20.666666666666686" height="12"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="12" id="SeZ-yc-RTT"/>
                                                     </constraints>
@@ -89,7 +89,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bKm-zc-lgI" userLabel="Unread View">
-                                                    <rect key="frame" x="385" y="35" width="14" height="14"/>
+                                                    <rect key="frame" x="380" y="35" width="14" height="14"/>
                                                     <subviews>
                                                         <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="U" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RGB-uG-ZWn">
                                                             <rect key="frame" x="2" y="1.3333333333333357" width="10" height="12"/>
@@ -163,7 +163,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="OEw-WR-Lm7" firstAttribute="height" secondItem="lqj-pM-q0p" secondAttribute="height" id="51W-bD-gK2"/>
-                            <constraint firstItem="OEw-WR-Lm7" firstAttribute="top" secondItem="lqj-pM-q0p" secondAttribute="top" id="Bxm-9P-9fd"/>
+                            <constraint firstItem="OEw-WR-Lm7" firstAttribute="top" secondItem="WDN-Of-Gfv" secondAttribute="top" id="Bxm-9P-9fd"/>
                             <constraint firstItem="OEw-WR-Lm7" firstAttribute="leading" secondItem="WDN-Of-Gfv" secondAttribute="leading" id="cHf-GK-XiU"/>
                             <constraint firstItem="OEw-WR-Lm7" firstAttribute="width" secondItem="lqj-pM-q0p" secondAttribute="width" id="pvL-gt-KFt"/>
                         </constraints>
@@ -215,7 +215,7 @@
                         <viewLayoutGuide key="safeArea" id="HK1-ti-nxG"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="contactCell" rowHeight="60" id="q8Z-v9-8p1" customClass="ContactTableViewCell">
-                                <rect key="frame" x="0.0" y="55.333333333333336" width="414" height="60"/>
+                                <rect key="frame" x="0.0" y="55.333333333333343" width="414" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="q8Z-v9-8p1" id="lPa-H8-875">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
@@ -816,7 +816,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W71-dB-C1l">
-                                        <rect key="frame" x="60" y="12" width="40" height="18"/>
+                                        <rect key="frame" x="60" y="12" width="42" height="18"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -877,7 +877,7 @@
                                 <color key="sectionIndexTrackingBackgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="GroupChatDetailsNotificationsTypeID" rowHeight="44" id="n0y-k4-J86" userLabel="Notifications Table View Cell" customClass="GroupChatDetailsViewTableViewCell">
-                                        <rect key="frame" x="0.0" y="55.333333333333336" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="55.333333333333343" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="n0y-k4-J86" id="jsD-3E-TrH">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -1035,7 +1035,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="readPermissions" translatesAutoresizingMaskIntoConstraints="NO" id="719-7i-afu">
-                                                    <rect key="frame" x="353" y="8" width="46" height="44"/>
+                                                    <rect key="frame" x="348" y="8" width="46" height="44"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="46" id="mZl-SM-POH"/>
                                                         <constraint firstAttribute="height" constant="44" id="xiS-jV-ZB0"/>
@@ -1122,7 +1122,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GroupChatDetailsParticipantTypeID" rowHeight="60" id="1Vg-z0-UP1" customClass="GroupChatDetailsViewTableViewCell">
-                                        <rect key="frame" x="0.0" y="203.33333333333334" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="203.33333333333334" width="414" height="60.000000000000028"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1Vg-z0-UP1" id="PuR-Jb-de0">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
@@ -1165,7 +1165,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="readWritePermissions" translatesAutoresizingMaskIntoConstraints="NO" id="19j-Ho-Oad">
-                                                    <rect key="frame" x="353" y="8" width="46" height="44.333333333333336"/>
+                                                    <rect key="frame" x="348" y="8" width="46" height="44.333333333333336"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="44" id="fMJ-OF-ggM"/>
                                                         <constraint firstAttribute="width" constant="46" id="yMd-DY-rLD"/>
@@ -1520,8 +1520,8 @@
         <image name="backArrow" width="22" height="22"/>
         <image name="cameraOff" width="64" height="64"/>
         <image name="cameraOn" width="64" height="64"/>
-        <image name="chatIcon" width="32" height="26"/>
-        <image name="chatSelectedIcon" width="32" height="26"/>
+        <image name="chatIcon" width="31" height="28"/>
+        <image name="chatSelectedIcon" width="31" height="28"/>
         <image name="hudNoCamera" width="28" height="28"/>
         <image name="micOff" width="64" height="64"/>
         <image name="micOn" width="64" height="64"/>
