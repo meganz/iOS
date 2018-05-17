@@ -1736,8 +1736,12 @@ void uncaughtExceptionHandler(NSException *exception) {
         } else if (buttonIndex == 1) {
             [[MEGASdkManager sharedMEGASdk] logout];
         }
-    } else if ((alertView.tag == 2 && buttonIndex == 1) || (alertView.tag == 3 && buttonIndex == 1)) { //masterKeyLoggedInAlertView,
-        // TODO: New flow for reset password
+    } else if ((alertView.tag == 2 && buttonIndex == 1) || (alertView.tag == 3 && buttonIndex == 1)) { //masterKeyLoggedInAlertView, masterKeyLoggedOutAlertView
+        NSString *masterKey = (alertView.tag == 2) ? [[MEGASdkManager sharedMEGASdk] masterKey] : [[alertView textFieldAtIndex:0] text];
+        [self presentChangeViewType:ChangeTypeResetPassword email:self.emailOfNewSignUpLink masterKey:masterKey link:self.recoveryLink];
+        
+        self.emailOfNewSignUpLink = nil;
+        self.recoveryLink = nil;
     }
 }
 
@@ -2382,7 +2386,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                     self.emailOfNewSignUpLink = request.email;
                     self.recoveryLink = request.link;
                 } else {
-                    // TODO: New flow for parking account
+                    [self presentChangeViewType:ChangeTypeParkAccount email:request.email masterKey:nil link:request.link];
                 }
             }
             break;
