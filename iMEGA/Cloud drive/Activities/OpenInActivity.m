@@ -4,6 +4,7 @@
 @interface OpenInActivity () <UIDocumentInteractionControllerDelegate>
 
 @property (strong, nonatomic) UIBarButtonItem *shareBarButtonItem;
+@property (strong, nonatomic) UIView *view;
 @property (strong, nonatomic) UIDocumentInteractionController *documentInteractionController;
 
 @end
@@ -15,6 +16,16 @@
     if (self) {
         _shareBarButtonItem = barButtonItem;
     }
+    
+    return self;
+}
+
+- (instancetype)initOnView:(UIView *)view {
+    self = [super init];
+    if (self) {
+        _view = view;
+    }
+    
     return self;
 }
 
@@ -40,7 +51,12 @@
 }
 
 - (void)performActivity {
-    BOOL canOpenIn = [self.documentInteractionController presentOpenInMenuFromBarButtonItem:self.shareBarButtonItem animated:YES];
+    BOOL canOpenIn;
+    if (self.shareBarButtonItem) {
+        canOpenIn = [self.documentInteractionController presentOpenInMenuFromBarButtonItem:self.shareBarButtonItem animated:YES];
+    } else {
+        canOpenIn = [self.documentInteractionController presentOpenInMenuFromRect:self.view.frame inView:self.view animated:YES];
+    }
     if (canOpenIn) {
         [self.documentInteractionController presentPreviewAnimated:YES];
     }

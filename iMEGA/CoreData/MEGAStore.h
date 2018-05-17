@@ -4,6 +4,7 @@
 #import "MOOfflineNode.h"
 #import "MOUser.h"
 #import "MOChatDraft+CoreDataProperties.h"
+#import "MOMediaDestination+CoreDataProperties.h"
 
 @interface MEGAStore : NSObject
 
@@ -35,5 +36,11 @@
 
 - (void)insertOrUpdateChatDraftWithChatId:(uint64_t)chatId text:(NSString *)text;
 - (MOChatDraft *)fetchChatDraftWithChatId:(uint64_t)chatId;
+
+#pragma mark - MOMediaDestination entity
+
+- (void)insertOrUpdateMediaDestinationWithFingerprint:(NSString *)fingerprint destination:(NSNumber *)destination timescale:(NSNumber *)timescale;
+- (void)deleteMediaDestinationWithFingerprint:(NSString *)fingerprint;
+- (MOMediaDestination *)fetchMediaDestinationWithFingerprint:(NSString *)fingerprint;
 
 @end

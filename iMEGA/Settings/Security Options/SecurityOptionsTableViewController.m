@@ -7,14 +7,16 @@
 #import "MEGASdkManager.h"
 
 #import "ChangePasswordViewController.h"
+#import "QRSettingsTableViewController.h"
 
-@interface SecurityOptionsTableViewController () <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate>
+@interface SecurityOptionsTableViewController () <UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *masterKeyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *masterKeyRightDetailLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *changePasswordLabel;
-@property (weak, nonatomic) IBOutlet UILabel *resetPasswordLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *qrCodeLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *changeEmailLabel;
 
@@ -35,7 +37,8 @@
     self.masterKeyRightDetailLabel.text = @"";
     
     [self.changePasswordLabel setText:AMLocalizedString(@"changePasswordLabel", @"The name for the change password label")];
-    self.resetPasswordLabel.text = AMLocalizedString(@"forgotPassword", @"An option to reset the password.");
+    
+    self.qrCodeLabel.text = AMLocalizedString(@"qrCode", @"QR Code label, used in Settings as title. String as short as possible");
     
     self.changeEmailLabel.text = AMLocalizedString(@"changeEmail", @"The title of the alert dialog to change the email associated to an account.");
     
@@ -71,28 +74,19 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if (alertView.tag == 2) {
-        if (buttonIndex == 1) {
-            [[MEGASdkManager sharedMEGASdk] resetPasswordWithEmail:[[MEGASdkManager sharedMEGASdk] myEmail] hasMasterKey:YES delegate:self];
-            
-        }
-    }
+- (void)pushQRSettings {
+    QRSettingsTableViewController *qrSettingsTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"QRSettingsTableViewControllerID"];
+    qrSettingsTVC.navigationItem.rightBarButtonItem = nil;
+    [self.navigationController pushViewController:qrSettingsTVC animated:YES];
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 4;
+    return 5;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 1) {
-        return 2;
-    }
-    
     return 1;
 }
 
@@ -119,24 +113,20 @@
         }
             
         case 1: {
-            if (indexPath.row == 0) {
-                [self pushChangeViewControllerType:ChangeTypePassword];
-            } else if (indexPath.row == 1) {
-                if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"youCanResetYourPasswordByFollowing", @"Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password") message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-                    alertView.tag = 2;
-                    [alertView show];
-                }
-            }
+            [self pushChangeViewControllerType:ChangeTypePassword];
             break;
         }
+            
+        case 2:
+            [self pushQRSettings];
+            break;
         
-        case 2: {
+        case 3: {
             [self pushChangeViewControllerType:ChangeTypeEmail];
             break;
         }
             
-        case 3: { //Close other sessions
+        case 4: { //Close other sessions
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 [[MEGASdkManager sharedMEGASdk] killSession:-1 delegate:self];
             }
