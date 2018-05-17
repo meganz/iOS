@@ -28,16 +28,11 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 #pragma mark - Images
 
-+ (NSString *)fileTypeIconForExtension:(NSString *)extension;
-
-+ (UIImage *)imageForNode:(MEGANode *)node;
-+ (UIImage *)imageForExtension:(NSString *)extension;
-
-+ (UIImage *)infoImageForNode:(MEGANode *)node;
-+ (UIImage *)infoImageForExtension:(NSString *)extension;
++ (NSDictionary *)fileTypesDictionary;
 
 + (UIImage *)genericImage;
 + (UIImage *)folderImage;
++ (UIImage *)folderCameraUploadsImage;
 + (UIImage *)incomingFolderImage;
 + (UIImage *)outgoingFolderImage;
 + (UIImage *)defaultPhotoImage;
@@ -79,7 +74,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (NSMutableDictionary *)downloadingNodes;
 
 + (BOOL)isFreeSpaceEnoughToDownloadNode:(MEGANode *)node isFolderLink:(BOOL)isFolderLink;
-+ (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink;
++ (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink shouldOverwrite:(BOOL)overwrite;
 
 #pragma mark - Utils
 
@@ -92,10 +87,12 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (void)setThumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell reindexNode:(BOOL)reindex;
 
 + (NSString *)sizeAndDateForNode:(MEGANode *)node api:(MEGASdk *)api;
++ (NSString *)sizeForNode:(MEGANode *)node api:(MEGASdk *)api;
 + (NSString *)dateWithISO8601FormatOfRawTime:(time_t)rawtime;
 + (NSString *)filesAndFoldersInFolderNode:(MEGANode *)node api:(MEGASdk *)api;
 
 + (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray button:(UIBarButtonItem *)shareBarButtonItem;
++ (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id)sender;
 + (NSUInteger)totalOperations;
 + (void)setCopyToPasteboard:(BOOL)boolValue;
 + (BOOL)copyToPasteboard;
@@ -110,19 +107,30 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (CGFloat)verticalOffsetForEmptyStateWithNavigationBarSize:(CGSize)navigationBarSize searchBarActive:(BOOL)isSearchBarActive;
 + (CGFloat)spaceHeightForEmptyState;
 
++ (NSDictionary *)titleAttributesForEmptyState;
++ (NSDictionary *)buttonTextAttributesForEmptyState;
+
 #pragma mark - Utils for UI
 
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
++ (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle color:(UIColor *)color;
+
++ (UISearchController *)customSearchControllerWithSearchResultsUpdaterDelegate:(id<UISearchResultsUpdating>)searchResultsUpdaterDelegate searchBarDelegate:(id<UISearchBarDelegate>)searchBarDelegate;
+
++ (void)presentSafariViewControllerWithURL:(NSURL *)url;
++ (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ __nullable)(void))completion;
++ (void)showMasterKeyCopiedAlert;
 
 #pragma mark - Logout
 
 + (void)logout;
 + (void)logoutFromConfirmAccount;
++ (void)logoutAfterPasswordReminder;
 + (void)clearSession;
 + (void)deletePasscode;
 
 #pragma mark - Log
 
-+ (UIAlertView *)logAlertView:(BOOL)enableLog;
++ (void)enableOrDisableLog;
 
 @end

@@ -147,6 +147,10 @@
 }
 
 - (BOOL)removeFromIndex:(NSString *)base64Handle {
+    if (!base64Handle) {
+        return NO;
+    }
+    
     __block BOOL success = NO;
     dispatch_semaphore_t sem = dispatch_semaphore_create(0);
 

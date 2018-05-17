@@ -1,8 +1,6 @@
 
 #import "AboutTableViewController.h"
 
-#import <SafariServices/SafariServices.h>
-
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
@@ -40,10 +38,10 @@
     self.versionCell.gestureRecognizers = @[tapGestureRecognizer];
     
     self.sdkVersionLabel.text = AMLocalizedString(@"sdkVersion", @"Title of the label where the SDK version is shown");
-    self.sdkVersionSHALabel.text = @"861f8b48";
+    self.sdkVersionSHALabel.text = @"03932765";
     
     self.megachatSdkVersionLabel.text = AMLocalizedString(@"megachatSdkVersion", @"Title of the label where the MEGAchat SDK version is shown");
-    self.megachatSdkSHALabel.text = @"34cf2e2a";
+    self.megachatSdkSHALabel.text = @"9aad1232";
     
     [self.acknowledgementsLabel setText:AMLocalizedString(@"acknowledgements", nil)];
 }
@@ -63,24 +61,13 @@
 
 - (void)logoTappedFiveTimes:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
-        BOOL enableLogging = ![[NSUserDefaults standardUserDefaults] boolForKey:@"logging"];
-        UIAlertView *logAlertView = [Helper logAlertView:enableLogging];
-        logAlertView.delegate = self;
-        [logAlertView show];
+        [Helper enableOrDisableLog];
     }
 }
 
 - (void)acknowledgements {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        NSURL *URL = [NSURL URLWithString:@"https://github.com/meganz/iOS3/blob/master/CREDITS.md"];
-        SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:URL];
-        if (@available(iOS 10.0, *)) {
-            webViewController.preferredControlTintColor = [UIColor mnz_redD90007];
-        } else {
-            webViewController.view.tintColor = [UIColor mnz_redD90007];
-        }
-        
-        [self presentViewController:webViewController animated:YES completion:nil];
+        [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://github.com/meganz/iOS3/blob/master/CREDITS.md"]];
     }
 }
 

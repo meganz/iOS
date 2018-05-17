@@ -159,12 +159,6 @@
         }
     }
     
-    if (numberOfRows == 0) {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    } else {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-    }
-    
     return numberOfRows;
 }
 
@@ -206,11 +200,6 @@
             break;
     }
     
-    UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
-    [cell setSelectedBackgroundView:view];
-    cell.separatorInset = UIEdgeInsetsMake(0.0, 58.0, 0.0, 0.0);
-    
     if (@available(iOS 11.0, *)) {
         cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
@@ -233,23 +222,20 @@
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     NSString *text;
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     if ([MEGAReachabilityManager isReachable]) {
         text = AMLocalizedString(@"noRequestPending", nil);
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     if ([MEGAReachabilityManager isReachable]) {
-        return [UIImage imageNamed:@"emptyContacts"];
+        return [UIImage imageNamed:@"contactsEmptyState"];
     } else {
-        return [UIImage imageNamed:@"noInternetConnection"];
+        return [UIImage imageNamed:@"noInternetEmptyState"];
     }
 }
 

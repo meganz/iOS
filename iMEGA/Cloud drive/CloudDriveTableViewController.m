@@ -8,9 +8,10 @@
 #import "UIScrollView+EmptyDataSet.h"
 
 #import "NSFileManager+MNZCategory.h"
-#import "NSMutableAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "Helper.h"
 #import "MEGAAssetsPickerController.h"
@@ -23,6 +24,7 @@
 #import "MEGAPurchase.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARemoveRequestDelegate.h"
+#import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
@@ -30,8 +32,6 @@
 
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
-#import "DetailsNodeInfoViewController.h"
-#import "MEGAAVViewController.h"
 #import "NodeTableViewCell.h"
 #import "PhotosViewController.h"
 #import "PreviewDocumentViewController.h"
@@ -40,7 +40,11 @@
 #import "UpgradeTableViewController.h"
 #import "CustomModalAlertViewController.h"
 
-@interface CloudDriveTableViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate> {
+#import "CustomActionViewController.h"
+
+#import "NodeInfoViewController.h"
+
+@interface CloudDriveTableViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate> {
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
     
@@ -49,9 +53,9 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *moreMinimizedBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sortByBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *negativeSpaceBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
@@ -86,24 +90,12 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
-    self.tableView.estimatedRowHeight = 44.0;
+    self.tableView.estimatedRowHeight = 60.0;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
-    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchResultsUpdater = self;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.searchBar.delegate = self;
-    self.searchController.searchBar.barTintColor = [UIColor colorWithWhite:235.0f / 255.0f alpha:1.0f];
-    self.searchController.searchBar.translucent = YES;
-    [self.searchController.searchBar sizeToFit];
-    
-    UITextField *searchTextField = [self.searchController.searchBar valueForKey:@"_searchField"];
-    searchTextField.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
-    searchTextField.textColor = [UIColor mnz_gray999999];
-    
+    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.definesPresentationContext = YES;
-    
     self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
     
     [self setNavigationBarButtonItems];
@@ -147,7 +139,6 @@
     
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
     
-    // Long press to select:
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
 }
 
@@ -200,6 +191,10 @@
     return UIInterfaceOrientationMaskAll;
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return self.searchController.isActive ? UIStatusBarStyleDefault : UIStatusBarStyleLightContent;
+}
+
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
@@ -235,12 +230,6 @@
         }
     }
     
-    if (numberOfRows == 0) {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    } else {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-    }
-    
     return numberOfRows;
 }
 
@@ -260,7 +249,11 @@
         }
         
         [cell.downloadingArrowImageView setImage:[UIImage imageNamed:@"downloadQueued"]];
-        [cell.infoLabel setText:AMLocalizedString(@"queued", @"Queued")];
+        if (cell.downloadProgressView.progress != 0) {
+            [cell.infoLabel setText:AMLocalizedString(@"paused", @"Paused")];
+        } else {
+            [cell.infoLabel setText:AMLocalizedString(@"queued", @"Queued")];
+        }
     } else {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
         if (cell == nil) {
@@ -274,7 +267,7 @@
                 isDownloaded = YES;
             }
         }
-        
+
         cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdk]];
     }
     
@@ -299,11 +292,6 @@
         }
     }
     
-    UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
-    [cell setSelectedBackgroundView:view];
-    [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
-    
     cell.nameLabel.text = [node name];
     
     [cell.thumbnailPlayImageView setHidden:YES];
@@ -312,10 +300,13 @@
         if ([node hasThumbnail]) {
             [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdk] cell:cell];
         } else {
-            [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+            [cell.thumbnailImageView mnz_imageForNode:node];
         }
+        
+        cell.versionedImageView.hidden = ![[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node];
+        
     } else if ([node type] == MEGANodeTypeFolder) {
-        [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+        [cell.thumbnailImageView mnz_imageForNode:node];
         
         cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
     }
@@ -334,8 +325,10 @@
     if (@available(iOS 11.0, *)) {
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
         cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
+    } else {
+        cell.delegate = self;
     }
-    
+
     return cell;
 }
 
@@ -346,7 +339,6 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
     
     if (tableView.isEditing) {
@@ -367,7 +359,7 @@
         return;
     }
     
-    switch ([node type]) {
+    switch (node.type) {
         case MEGANodeTypeFolder: {
             CloudDriveTableViewController *cdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             [cdvc setParentNode:node];
@@ -381,7 +373,7 @@
         }
             
         case MEGANodeTypeFile: {
-            if (node.name.mnz_isImagePathExtension) {
+            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList]);
                 [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:NO displayMode:self.displayMode];
             } else {
@@ -393,6 +385,8 @@
         default:
             break;
     }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -425,75 +419,48 @@
     }
 }
 
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView leadingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+    isSwipeEditing = YES;
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
-    
-    if (self.displayMode == DisplayModeCloudDrive && [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] < MEGAShareTypeAccessFull) {
-        return UITableViewCellEditingStyleNone;
-    } else {
-        self.selectedNodesArray = [NSMutableArray new];
-        [self.selectedNodesArray addObject:node];
-        
-        [self setToolbarActionsEnabled:YES];
-        
-        isSwipeEditing = YES;
-        
-        MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
-        [self toolbarActionsForShareType:shareType];
-        
-        return UITableViewCellEditingStyleDelete;
-    }
-}
+    self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
 
-- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node;
-    if (self.searchController.isActive) {
-        if (indexPath.row > self.searchNodesArray.count || indexPath.row < 0) {
-            return @"";
+    UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        if ([node mnz_downloadNodeOverwriting:NO]) {
+            [self reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:node.base64Handle]];
         }
-        node = [self.searchNodesArray objectAtIndex:indexPath.row];
-    } else {
-        if (indexPath.row > self.nodes.size.integerValue || indexPath.row < 0) {
-            return @"";
-        }
-        node = [self.nodes nodeAtIndex:indexPath.row];
-    }
-    MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
-    if (accessType >= MEGAShareTypeAccessFull) {
-        return AMLocalizedString(@"remove", nil);
+        
+        [self setEditing:NO animated:YES];
+    }];
+    downloadAction.image = [UIImage imageNamed:@"infoDownload"];
+    downloadAction.backgroundColor = [UIColor colorWithRed:0 green:0.75 blue:0.65 alpha:1];
+    
+    return [UISwipeActionsConfiguration configurationWithActions:@[downloadAction]];
+}
+    
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) {
+        return [UISwipeActionsConfiguration configurationWithActions:@[]];
     }
     
-    return @"";
-}
+    isSwipeEditing = YES;
+    self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle==UITableViewCellEditingStyleDelete) {
-        MEGANode *node = nil;
-        if (self.searchController.isActive) {
-            node = [self.searchNodesArray objectAtIndex:indexPath.row];
-        } else {
-            node = [self.nodes nodeAtIndex:indexPath.row];
-        }
-        
-        void (^completion)(void) = ^{
-            [self setEditing:NO animated:YES];
-        };
-        
-        MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
-        if (accessType == MEGAShareTypeAccessOwner) {
-            if (self.displayMode == DisplayModeCloudDrive) {
-                MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:(node.isFile ? 1 : 0) folders:(node.isFolder ? 1 : 0) completion:completion];
-                [[MEGASdkManager sharedMEGASdk] moveNode:node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode] delegate:moveRequestDelegate];
-            } else { //DisplayModeRubbishBin (Remove)
-                MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:DisplayModeRubbishBin files:(node.isFile ? 1 : 0) folders:(node.isFolder ? 1 : 0) completion:completion];
-                [[MEGASdkManager sharedMEGASdk] removeNode:node delegate:removeRequestDelegate];
-            }
-        } if (accessType == MEGAShareTypeAccessFull) { //DisplayModeSharedItem (Move to the Rubbish Bin)
-            MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:(node.isFile ? 1 : 0) folders:(node.isFolder ? 1 : 0) completion:completion];
-            [[MEGASdkManager sharedMEGASdk] moveNode:node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode] delegate:moveRequestDelegate];
-        }
-    }
+    UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+        [self presentViewController:activityVC animated:YES completion:nil];
+        [self setEditing:NO animated:YES];
+    }];
+    shareAction.image = [UIImage imageNamed:@"shareGray"];
+    shareAction.backgroundColor = [UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1];
+    
+    return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
 }
+    
+#pragma clang diagnostic pop
 
 #pragma mark - UIViewControllerPreviewingDelegate
 
@@ -522,9 +489,9 @@
         }
             
         case MEGANodeTypeFile: {
-            if (node.name.mnz_isImagePathExtension) {
+            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList]);
-                return [node mnz_photoBrowserWithNodes:nodesArray folderLink:NO displayMode:self.displayMode enableMoveToRubbishBin:YES hideControls:YES];
+                return [node mnz_photoBrowserWithNodes:nodesArray folderLink:NO displayMode:self.displayMode enableMoveToRubbishBin:YES];
             } else {
                 UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO];
                 return viewController;
@@ -540,8 +507,11 @@
 }
 
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
-    if (viewControllerToCommit.class == CloudDriveTableViewController.class || viewControllerToCommit.class == MWPhotoBrowser.class || viewControllerToCommit.class == PreviewDocumentViewController.class) {
+    if (viewControllerToCommit.class == CloudDriveTableViewController.class) {
         [self.navigationController pushViewController:viewControllerToCommit animated:YES];
+    } else if (viewControllerToCommit.class == PreviewDocumentViewController.class) {
+        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:viewControllerToCommit];
+        [self.navigationController presentViewController:navigationController animated:YES completion:nil];
     } else {
         [self.navigationController presentViewController:viewControllerToCommit animated:YES completion:nil];
     }
@@ -762,7 +732,7 @@
             switch (self.displayMode) {
                 case DisplayModeCloudDrive: {
                     if ([self.parentNode type] == MEGANodeTypeRoot) {
-                        return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"cloudDriveEmptyState_title", @"Title shown when your Cloud Drive is empty, when you don't have any files.") sectionTitle:AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section")];
+                        text = AMLocalizedString(@"cloudDriveEmptyState_title", @"Title shown when your Cloud Drive is empty, when you don't have any files.");
                     } else {
                         text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
                     }
@@ -771,7 +741,7 @@
                     
                 case DisplayModeRubbishBin:
                     if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                        return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Title shown when your Rubbish Bin is empty.") sectionTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'")];
+                        text = AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Title shown when your Rubbish Bin is empty.");
                     } else {
                         text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
                     }
@@ -785,9 +755,7 @@
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
@@ -798,23 +766,23 @@
         }
         
         if (self.searchController.isActive) {
-            image = [UIImage imageNamed:@"emptySearch"];
+            image = [UIImage imageNamed:@"searchEmptyState"];
         } else {
             switch (self.displayMode) {
                 case DisplayModeCloudDrive: {
                     if ([self.parentNode type] == MEGANodeTypeRoot) {
-                        image = [UIImage imageNamed:@"emptyCloudDrive"];
+                        image = [UIImage imageNamed:@"cloudEmptyState"];
                     } else {
-                        image = [UIImage imageNamed:@"emptyFolder"];
+                        image = [UIImage imageNamed:@"folderEmptyState"];
                     }
                     break;
                 }
                     
                 case DisplayModeRubbishBin: {
                     if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                        image = [UIImage imageNamed:@"emptyRubbishBin"];
+                        image = [UIImage imageNamed:@"rubbishEmptyState"];
                     } else {
-                        image = [UIImage imageNamed:@"emptyFolder"];
+                        image = [UIImage imageNamed:@"folderEmptyState"];
                     }
                     break;
                 }
@@ -824,7 +792,7 @@
             }
         }
     } else {
-        image = [UIImage imageNamed:@"noInternetConnection"];
+        image = [UIImage imageNamed:@"noInternetEmptyState"];
     }
     
     return image;
@@ -857,9 +825,7 @@
         
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:20.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    return [[NSAttributedString alloc] initWithString:text attributes:[Helper buttonTextAttributesForEmptyState]];
 }
 
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
@@ -871,7 +837,7 @@
     UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
     UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
     
-    return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
+    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
@@ -1052,20 +1018,18 @@
 }
 
 - (void)setNavigationBarButtonItems {
-    [self createNegativeSpaceBarButtonItem];
-    
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
             if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode] == MEGAShareTypeAccessRead) {
-                self.navigationItem.rightBarButtonItems = @[self.negativeSpaceBarButtonItem, self.editBarButtonItem, self.sortByBarButtonItem];
+                self.navigationItem.rightBarButtonItems = @[self.moreMinimizedBarButtonItem];
             } else {
-                self.navigationItem.rightBarButtonItems = @[self.negativeSpaceBarButtonItem, self.moreBarButtonItem];
+                self.navigationItem.rightBarButtonItems = @[self.moreBarButtonItem];
             }
             break;
         }
             
         case DisplayModeRubbishBin:
-            self.navigationItem.rightBarButtonItems = @[self.negativeSpaceBarButtonItem, self.editBarButtonItem, self.sortByBarButtonItem];
+            self.navigationItem.rightBarButtonItems = @[self.moreMinimizedBarButtonItem];
             break;
             
         default:
@@ -1088,17 +1052,6 @@
             
         default:
             break;
-    }
-}
-
-- (void)createNegativeSpaceBarButtonItem {
-    if (self.negativeSpaceBarButtonItem == nil) {
-        self.negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-        if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
-            self.negativeSpaceBarButtonItem.width = -8.0;
-        } else {
-            self.negativeSpaceBarButtonItem.width = -4.0;
-        }
     }
 }
 
@@ -1125,11 +1078,9 @@
     if (newFolderAlertController) {
         UITextField *textField = newFolderAlertController.textFields.firstObject;
         UIAlertAction *rightButtonAction = newFolderAlertController.actions.lastObject;
-        BOOL enableRightButton = NO;
-        if (textField.text.length > 0) {
-            enableRightButton = YES;
-        }
-        rightButtonAction.enabled = enableRightButton;
+        BOOL containsInvalidChars = [sender.text rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"|*/:<>?\"\\"]].length;
+        sender.textColor = containsInvalidChars ? UIColor.mnz_redD90007 : UIColor.darkTextColor;
+        rightButtonAction.enabled = (textField.text.length > 0 && !containsInvalidChars);
     }
 }
 
@@ -1242,7 +1193,7 @@
             
             CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
             customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-            customModalAlertVC.image = @"storage_almost_full";
+            customModalAlertVC.image = [UIImage imageNamed:@"storage_almost_full"];
             customModalAlertVC.viewTitle = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
             customModalAlertVC.detail = alertMessage;
             customModalAlertVC.action = AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
@@ -1257,7 +1208,7 @@
                 }];
             };
             
-            [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:customModalAlertVC animated:YES completion:nil];
+            [UIApplication.mnz_visibleViewController presentViewController:customModalAlertVC animated:YES completion:nil];
             
             alreadyPresented = YES;
         } else {
@@ -1306,6 +1257,22 @@
     }
 }
 
+- (void)showNodeInfo:(MEGANode *)node {
+    UINavigationController *nodeInfoNavigation = [self.storyboard instantiateViewControllerWithIdentifier:@"NodeInfoNavigationControllerID"];
+    NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
+    nodeInfoVC.node = node;
+    nodeInfoVC.nodeInfoDelegate = self;
+    nodeInfoVC.incomingShareChildView = self.incomingShareChildView;
+    
+    [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
+}
+
+- (void)reloadRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath != nil) {
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -1327,7 +1294,7 @@
         allNodesSelected = NO;
     }
     
-    if (self.displayMode == DisplayModeCloudDrive) {
+    if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeRubbishBin) {
         [self updateNavigationBarTitle];
     }
     
@@ -1406,6 +1373,32 @@
     [self presentFromMoreBarButtonItemTheAlertController:moreAlertController];
 }
 
+- (IBAction)moreMinimizedAction:(UIBarButtonItem *)sender {
+    UIAlertController *moreMinimizedAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [moreMinimizedAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
+    UIAlertAction *sortByAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self presentSortByViewController];
+    }];
+    [sortByAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [moreMinimizedAlertController addAction:sortByAlertAction];
+    
+    UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        BOOL enableEditing = !self.tableView.isEditing;
+        [self setEditing:enableEditing animated:YES];
+    }];
+    [selectAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [moreMinimizedAlertController addAction:selectAlertAction];
+    
+    if ([[UIDevice currentDevice] iPadDevice]) {
+        moreMinimizedAlertController.modalPresentationStyle = UIModalPresentationPopover;
+        moreMinimizedAlertController.popoverPresentationController.barButtonItem = self.moreMinimizedBarButtonItem;
+        moreMinimizedAlertController.popoverPresentationController.sourceView = self.view;
+    }
+    
+    [self presentViewController:moreMinimizedAlertController animated:YES completion:nil];
+}
+
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
     BOOL enableEditing = !self.tableView.isEditing;
     [self setEditing:enableEditing animated:YES];
@@ -1413,26 +1406,25 @@
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
-    
-    [self updateNavigationBarTitle];
+
+    if (!isSwipeEditing) {
+        [self updateNavigationBarTitle];
+    }
     
     if (editing) {
-        [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
-        self.navigationItem.rightBarButtonItems = @[self.negativeSpaceBarButtonItem, self.editBarButtonItem];
         if (!isSwipeEditing) {
-            self.navigationItem.leftBarButtonItems = @[self.negativeSpaceBarButtonItem, self.selectAllBarButtonItem];
+            self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+            self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
+            self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+            [self.toolbar setAlpha:0.0];
+            [self.tabBarController.tabBar addSubview:self.toolbar];
+            [UIView animateWithDuration:0.33f animations:^ {
+                [self.toolbar setAlpha:1.0];
+            }];
         }
-        
-        [self.toolbar setAlpha:0.0];
-        [self.tabBarController.tabBar addSubview:self.toolbar];
-        [UIView animateWithDuration:0.33f animations:^ {
-            [self.toolbar setAlpha:1.0];
-        }];
     } else {
-        [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
-        
+        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
         [self setNavigationBarButtonItems];
-        
         allNodesSelected = NO;
         self.selectedNodesArray = nil;
         self.navigationItem.leftBarButtonItems = @[];
@@ -1456,17 +1448,14 @@
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
-    for (MEGANode *n in self.selectedNodesArray) {
-        if (![Helper isFreeSpaceEnoughToDownloadNode:n isFolderLink:NO]) {
-            [self setEditing:NO animated:YES];
-            return;
-        }
-    }
-    
     [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
     
-    for (MEGANode *n in self.selectedNodesArray) {
-        [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO];
+    for (MEGANode *node in self.selectedNodesArray) {
+        if ([node mnz_downloadNodeOverwriting:NO]) {
+            [self reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:node.base64Handle]];
+        } else {
+            return;
+        }
     }
     
     [self setEditing:NO animated:YES];
@@ -1606,16 +1595,28 @@
         return;
     }
     
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];;
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
     
-    DetailsNodeInfoViewController *detailsNodeInfoVC = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
-    [detailsNodeInfoVC setNode:node];
-    [detailsNodeInfoVC setDisplayMode:self.displayMode];
-    detailsNodeInfoVC.incomingShareChildView = self.isIncomingShareChildView;
-    [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
+    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
+    actionController.node = node;
+    actionController.displayMode = self.displayMode;
+    actionController.incomingShareChildView = self.isIncomingShareChildView;
+    actionController.actionDelegate = self;
+    actionController.actionSender = sender;
+    
+    if ([[UIDevice currentDevice] iPadDevice]) {
+        actionController.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
+        popController.delegate = actionController;
+        popController.sourceView = sender;
+        popController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
+    } else {
+        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    }
+    [self presentViewController:actionController animated:YES completion:nil];
 }
 
 #pragma mark - UISearchBarDelegate
@@ -1743,10 +1744,7 @@
     
     if (transfer.type == MEGATransferTypeDownload) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-        NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
-        if (indexPath != nil) {
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        }
+        [self reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
     }
 }
 
@@ -1766,6 +1764,7 @@
         if (indexPath != nil) {
             NodeTableViewCell *cell = (NodeTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
             [cell.infoLabel setText:[NSString stringWithFormat:@"%@ • %@", percentageCompleted, speed]];
+            cell.downloadProgressView.progress = [[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue];
         }
     }
 }
@@ -1784,19 +1783,160 @@
         } else if ([error type] == MEGAErrorTypeApiEIncomplete) {
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
             NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-            NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
-            if (indexPath != nil) {
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-            }
+            [self reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
         }
         return;
     }
     
     if ([transfer type] == MEGATransferTypeDownload) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-        NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
-        if (indexPath != nil) {
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        [self reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
+    }
+}
+
+#pragma mark - Swipe Delegate
+
+- (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction {
+    return !self.isEditing;
+}
+
+- (void)swipeTableCellWillBeginSwiping:(nonnull MGSwipeTableCell *)cell {
+    NodeTableViewCell *nodeCell = (NodeTableViewCell *)cell;
+    nodeCell.moreButton.hidden = YES;
+}
+
+- (void)swipeTableCellWillEndSwiping:(nonnull MGSwipeTableCell *)cell {
+    NodeTableViewCell *nodeCell = (NodeTableViewCell *)cell;
+    nodeCell.moreButton.hidden = NO;
+}
+
+- (NSArray *)swipeTableCell:(MGSwipeTableCell *)cell swipeButtonsForDirection:(MGSwipeDirection)direction
+             swipeSettings:(MGSwipeSettings *)swipeSettings expansionSettings:(MGSwipeExpansionSettings *)expansionSettings {
+    
+    swipeSettings.transition = MGSwipeTransitionDrag;
+    expansionSettings.buttonIndex = 0;
+    expansionSettings.expansionLayout = MGSwipeExpansionLayoutCenter;
+    expansionSettings.fillOnTrigger = NO;
+    expansionSettings.threshold = 2;
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+    self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+    
+    if (direction == MGSwipeDirectionLeftToRight && [[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {
+        
+        MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor colorWithRed:0.0 green:0.75 blue:0.65 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+            [self downloadAction:nil];
+            return YES;
+        }];
+        [downloadButton iconTintColor:[UIColor whiteColor]];
+
+        return @[downloadButton];
+    } else if (direction == MGSwipeDirectionRightToLeft) {
+        if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) {
+            return nil;
+        }
+        
+        MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"shareGray"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+            [self presentViewController:activityVC animated:YES completion:nil];
+            return YES;
+        }];
+        [shareButton iconTintColor:[UIColor whiteColor]];
+
+        return @[shareButton];
+    } else {
+        return nil;
+    }
+}
+
+#pragma mark - CustomActionViewControllerDelegate
+
+- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender{
+    switch (action) {
+        case MegaNodeActionTypeDownload:
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+            if ([node mnz_downloadNodeOverwriting:NO]) {
+                [self reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:node.base64Handle]];
+            }
+            break;
+            
+        case MegaNodeActionTypeCopy:
+            self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+            [self copyAction:nil];
+            break;
+            
+        case MegaNodeActionTypeMove:
+            self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+            [self moveAction:nil];
+            break;
+            
+        case MegaNodeActionTypeRename:
+            [node mnz_renameNodeInViewController:self];
+            break;
+
+        case MegaNodeActionTypeShare: {
+            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[node] sender:sender];
+            [self presentViewController:activityVC animated:YES completion:nil];
+        }
+            break;
+            
+        case MegaNodeActionTypeFileInfo:
+            [self showNodeInfo:node];
+            break;
+            
+        case MegaNodeActionTypeLeaveSharing:
+            [node mnz_leaveSharingInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeRemoveLink:
+            break;
+            
+        case MegaNodeActionTypeMoveToRubbishBin:
+            [node mnz_moveToTheRubbishBinInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeRemove:
+            [node mnz_removeInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeRemoveSharing:
+            [node mnz_removeSharing];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - NodeInfoViewControllerDelegate
+
+- (void)presentParentNode:(MEGANode *)node {
+    
+    if (self.searchController.isActive) {
+        NSArray *parentTreeArray = node.mnz_parentTreeArray;
+        
+        //Created a reference to self.navigationController because if the presented view is not the root controller and search is active, the 'popToRootViewControllerAnimated' makes nil the self.navigationController and therefore the parentTreeArray nodes can't be pushed
+        UINavigationController *navigation = self.navigationController;
+        [navigation popToRootViewControllerAnimated:NO];
+        
+        for (MEGANode *node in parentTreeArray) {
+            CloudDriveTableViewController *cloudDriveTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveTVC.parentNode = node;
+            [navigation pushViewController:cloudDriveTVC animated:NO];
+        }
+        
+        switch (node.type) {
+            case MEGANodeTypeFolder:
+            case MEGANodeTypeRubbish: {
+                CloudDriveTableViewController *cloudDriveTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                cloudDriveTVC.parentNode = node;
+                [navigation pushViewController:cloudDriveTVC animated:NO];
+                break;
+            }
+                
+            default:
+                break;
         }
     }
 }

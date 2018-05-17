@@ -48,6 +48,19 @@
     return font;
 }
 
++ (UIFont *)mnz_SFUISemiBoldWithSize:(CGFloat)size {
+    NSParameterAssert(size >= 0.0f);
+    
+    UIFont *font;
+    if (size >= 20.0f) {
+        font = [UIFont fontWithName:@"SFUIDisplay-Semibold" size:size];
+    } else {
+        font = [UIFont fontWithName:@"SFUIText-Semibold" size:size];
+    }
+    
+    return font;
+}
+
 + (UIFont *)mnz_defaultFontForPureEmojiStringWithEmojis:(NSUInteger)emojiCount {
     CGFloat size = 15.0f;
     
