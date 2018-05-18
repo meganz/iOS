@@ -20,6 +20,7 @@
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGAStore.h"
+#import "MEGAQLPreviewController.h"
 
 @interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol> {
     MEGATransfer *previewDocumentTransfer;
@@ -90,6 +91,13 @@
         }
     }
     
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor}];
+    [[UINavigationBar appearance] setTintColor:UIColor.whiteColor];
+    [[UINavigationBar appearance] setBarTintColor:UIColor.mnz_redF0373A];
+    [[UINavigationBar appearance] setTranslucent:NO];
+    [[UIToolbar appearance] setTintColor:UIColor.mnz_redF0373A];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:UIColor.whiteColor];
+
     [super viewWillDisappear:animated];
 }
 
@@ -270,7 +278,13 @@
         return;
     }
     
-    [self loadPreview];
+    MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentTransfer.path];
+    [previewController setModalPresentationStyle:UIModalPresentationCustom];
+    [previewController setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[UIApplication mnz_visibleViewController] presentViewController:previewController animated:YES completion:nil];
+    }];
 }
 
 #pragma mark - CustomActionViewControllerDelegate

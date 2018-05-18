@@ -17,6 +17,7 @@
 
 #import "MEGAStore.h"
 #import "MEGAAVViewController.h"
+#import "MEGAQLPreviewController.h"
 
 static NSString *kFileName = @"kFileName";
 static NSString *kIndex = @"kIndex";
@@ -648,13 +649,21 @@ static NSString *kisDirectory = @"kisDirectory";
     } else if (previewDocumentPath.mnz_isMultimediaPathExtension) {
         MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
         [self presentViewController:megaAVViewController animated:YES completion:nil];
-    } else {
+    } else if ([previewDocumentPath.pathExtension isEqualToString:@"pdf"]){
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
         PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
         previewController.filesPathsArray = self.offlineFiles;
         previewController.nodeFileIndex = [[[self itemAtIndexPath:indexPath] objectForKey:kIndex] integerValue];
         [self presentViewController:navigationController animated:YES completion:nil];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    } else {
+        MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithArrayOfFiles:self.offlineFiles];
+        
+        NSInteger selectedIndexFile = [[[self.offlineSortedItems objectAtIndex:indexPath.row] objectForKey:kIndex] integerValue];
+        previewController.currentPreviewItemIndex = selectedIndexFile;
+        [self presentViewController:previewController animated:YES completion:nil];
+        
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }
 
@@ -943,7 +952,7 @@ static NSString *kisDirectory = @"kisDirectory";
     } else if (previewDocumentPath.mnz_isMultimediaPathExtension) {
         MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
         return megaAVViewController;
-    } else {
+    } else if ([previewDocumentPath.pathExtension isEqualToString:@"pdf"]){
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
         PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
         previewController.filesPathsArray = self.offlineFiles;
@@ -952,6 +961,15 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
         
         return navigationController;
+    } else {
+        MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithArrayOfFiles:self.offlineFiles];
+        
+        NSInteger selectedIndexFile = [[[self.offlineSortedItems objectAtIndex:indexPath.row] objectForKey:kIndex] integerValue];
+        previewController.currentPreviewItemIndex = selectedIndexFile;
+        
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+        return previewController;
     }
     
     return nil;
