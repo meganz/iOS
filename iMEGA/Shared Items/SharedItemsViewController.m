@@ -28,7 +28,7 @@
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIView *sharedItemsSegmentedControlView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *sharedItemsSegmentedControl;

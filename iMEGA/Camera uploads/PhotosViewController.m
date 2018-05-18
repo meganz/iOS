@@ -47,7 +47,7 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *photosCollectionView;
 
-@property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moveBarButtonItem;
