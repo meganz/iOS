@@ -29,14 +29,14 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
 
-@property (strong, nonatomic) IBOutlet UIView *emptyHeaderView;
-@property (strong, nonatomic) IBOutlet UIView *participantsHeaderView;
+@property (nonatomic) UIView *emptyHeaderView;
+@property (nonatomic) UIView *actionsSectionEmptyFooterView;
+@property (nonatomic) UIView *sharedFoldersEmptyFooterView;
+
+@property (weak, nonatomic) IBOutlet UIView *participantsHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *participantsHeaderViewLabel;
-
-@property (strong, nonatomic) IBOutlet UIView *actionsSectionEmptyFooterView;
-@property (strong, nonatomic) IBOutlet UIView *sharedFoldersEmptyFooterView;
 
 @property (nonatomic, strong) MEGAUser *user;
 @property (nonatomic, strong) MEGANodeList *incomingNodeListForUser;
@@ -61,10 +61,10 @@
     self.nameLabel.text = self.userName;
     self.emailLabel.text = self.userEmail;
     
-    self.emptyHeaderView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyHeaderView" owner:self options:nil] firstObject];
-    self.actionsSectionEmptyFooterView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyFooterView" owner:self options:nil] firstObject];
-    self.sharedFoldersEmptyFooterView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyFooterView" owner:self options:nil] firstObject];
-    
+    self.emptyHeaderView = [NSBundle.mainBundle loadNibNamed:@"EmptyHeaderView" owner:self options:nil].firstObject;
+    self.actionsSectionEmptyFooterView = [NSBundle.mainBundle loadNibNamed:@"EmptyFooterView" owner:self options:nil].firstObject;
+    self.sharedFoldersEmptyFooterView = [NSBundle.mainBundle loadNibNamed:@"EmptyFooterView" owner:self options:nil].firstObject;
+
     self.incomingNodeListForUser = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
     
     if (@available(iOS 11.0, *)) {

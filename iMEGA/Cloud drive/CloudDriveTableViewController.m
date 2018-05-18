@@ -52,11 +52,9 @@
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *moreMinimizedBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *sortByBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *moreMinimizedBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
@@ -1045,8 +1043,7 @@
         }
             
         case DisplayModeRubbishBin: {
-            [self.sortByBarButtonItem setEnabled:boolValue];
-            [self.editBarButtonItem setEnabled:boolValue];
+            self.editBarButtonItem.enabled = boolValue;
             break;
         }
             
