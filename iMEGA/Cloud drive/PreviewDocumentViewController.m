@@ -18,6 +18,7 @@
 
 #import "MEGANode+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 #import "MEGAStore.h"
 
 @interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol> {
@@ -61,22 +62,16 @@
         NSString *nodeFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[self.node base64Handle]];
         self.nodeFilePath = [nodeFolderPath stringByAppendingPathComponent:self.node.name];
         
-        if (![[NSFileManager defaultManager] fileExistsAtPath:nodeFolderPath isDirectory:nil]) {
-            if (![[NSFileManager defaultManager] createDirectoryAtPath:nodeFolderPath withIntermediateDirectories:YES attributes:nil error:&error]) {
-                MEGALogError(@"Create directory at path failed with error: %@", error);
-            }
-        }
-        
-        if (![[NSFileManager defaultManager] fileExistsAtPath:self.nodeFilePath isDirectory:nil]) {
+        if ([[NSFileManager defaultManager] createDirectoryAtPath:nodeFolderPath withIntermediateDirectories:YES attributes:nil error:&error]) {
             [self.api startDownloadNode:self.node localPath:self.nodeFilePath delegate:self];
-        } else if (!self.previewController) {
-            [self loadPreview];
+        } else {
+            MEGALogError(@"Create directory at path failed with error: %@", error);
         }
     }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    if (self.isMovingFromParentViewController && previewDocumentTransfer) {
+    if (previewDocumentTransfer) {
         [self.api cancelTransfer:previewDocumentTransfer];
     }
     
@@ -115,7 +110,12 @@
 
 - (void)configureNavigation {
     [self setTitle:self.node.name];
-    [self.imageView setImage:[Helper infoImageForNode:self.node]];
+    
+    if (self.node) {
+        [self.imageView mnz_imageForNode:self.node];
+    } else {
+        [self.imageView mnz_setImageForExtension:[self.filesPathsArray objectAtIndex:self.nodeFileIndex].pathExtension];
+    }
     
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
     [[UINavigationBar appearance] setTintColor:[UIColor mnz_redFF4D52]];
@@ -149,6 +149,9 @@
 }
 
 - (void)loadQLController {
+    self.activityIndicator.hidden = YES;
+    self.progressView.hidden = YES;
+    self.imageView.hidden = YES;
     self.previewController = [[QLPreviewController alloc] init];
     self.previewController.delegate = self;
     self.previewController.dataSource = self;
@@ -258,7 +261,7 @@
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     [self.activityIndicator stopAnimating];
     [self.progressView setHidden:NO];
-    float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue * 100);
+    float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue);
     [self.progressView setProgress:percentage];
 }
 
@@ -372,7 +375,6 @@
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
 - (IBAction)searchTapped:(id)sender {
-    self.collectionView.hidden = YES;
     UINavigationController *searchInPdfNavigation = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"SearchInPdfNavigationID"];
     SearchInPdfViewController *searchInPdfVC = searchInPdfNavigation.viewControllers.firstObject;
     searchInPdfVC.pdfDocument = self.pdfView.document;
@@ -391,10 +393,19 @@
         [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, self.openInBarButtonItem] animated:YES];
         [self.navigationController setToolbarHidden:NO animated:YES];
         self.navigationItem.rightBarButtonItem = self.node ? self.moreBarButtonItem : nil;
-        self.navigationController.hidesBarsOnTap = YES;
 
-        self.pdfView.autoScales = YES;
+        UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGesture:)];
+        doubleTap.numberOfTapsRequired = 2;
+        [self.pdfView addGestureRecognizer:doubleTap];
+        
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGesture:)];
+        singleTap.numberOfTapsRequired = 1;
+        [singleTap requireGestureRecognizerToFail:doubleTap];
+        [self.pdfView addGestureRecognizer:singleTap];
+        
         self.pdfView.document = [[PDFDocument alloc] initWithURL:url];
+        self.pdfView.autoScales = YES;
+        self.pdfView.minScaleFactor = self.pdfView.scaleFactorForSizeToFit;
         
         NSString *fingerprint = [NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.pdfView.document.documentURL.path]];
         if (fingerprint && ![fingerprint isEqualToString:@""]) {
@@ -403,6 +414,35 @@
         } else {
             [self.pdfView goToFirstPage:nil];
         }
+    }
+}
+
+- (void)doubleTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer {
+    CGFloat newScale = self.pdfView.scaleFactor > 1.0f ? 1.0f : 2.0f;
+    [UIView animateWithDuration:0.3 animations:^{
+        if (newScale > 1.0f) {
+            CGPoint tapPoint = [tapGestureRecognizer locationInView:self.pdfView];
+            tapPoint = [self.pdfView convertPoint:tapPoint toPage:self.pdfView.currentPage];
+            CGRect zoomRect = CGRectZero;
+            zoomRect.size.width = self.pdfView.frame.size.width / newScale;
+            zoomRect.size.height = self.pdfView.frame.size.height / newScale;
+            zoomRect.origin.x = tapPoint.x - zoomRect.size.width / 2;
+            zoomRect.origin.y = tapPoint.y - zoomRect.size.height / 2;
+            [self.pdfView setScaleFactor:newScale];
+            [self.pdfView goToRect:zoomRect onPage:self.pdfView.currentPage];
+        } else {
+            [self.pdfView setScaleFactor:self.pdfView.scaleFactorForSizeToFit];
+        }
+    } completion:nil];
+}
+
+- (void)singleTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer {
+    if (self.navigationController.isToolbarHidden) {
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        [self.navigationController setToolbarHidden:NO animated:YES];
+    } else {
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        [self.navigationController setToolbarHidden:YES animated:YES];
     }
 }
 
@@ -425,7 +465,11 @@
 #pragma mark - CollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.pdfView.document.pageCount;
+    if (@available(iOS 11.0, *)) {
+        return self.pdfView.document.pageCount;
+    } else {
+        return 0;
+    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -447,6 +491,10 @@
 #pragma mark - SearchInPdfViewControllerProtocol
 
 - (void)didSelectSearchResult:(PDFSelection *)result {
+    if (!self.collectionView.hidden) {
+        self.collectionView.hidden = YES;
+        self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"thumbnailsView"];
+    }
     result.color = UIColor.yellowColor;
     [self.pdfView setCurrentSelection:result];
     [self.pdfView setScaleFactor:self.pdfView.scaleFactorForSizeToFit];

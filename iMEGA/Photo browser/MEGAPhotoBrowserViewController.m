@@ -204,8 +204,9 @@
 - (void)resetZooms {
     for (MEGANode *node in self.mediaNodes) {
         UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
-        if (zoomableView) {
+        if (zoomableView && zoomableView.zoomScale != 1.0f) {
             zoomableView.zoomScale = 1.0f;
+            [self resizeImageView:(UIImageView *)zoomableView.subviews.firstObject];
         }
     }
 }
@@ -228,11 +229,14 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView.tag == 1) {
-        self.currentIndex = (scrollView.contentOffset.x + self.gapBetweenPages) / scrollView.frame.size.width;
-        [self resetZooms];
-        [self reloadTitle];
-        [self airplayDisplayCurrentImage];
-        [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
+        NSInteger newIndex = (scrollView.contentOffset.x + self.gapBetweenPages) / scrollView.frame.size.width;
+        if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
+            self.currentIndex = newIndex;
+            [self resetZooms];
+            [self reloadTitle];
+            [self airplayDisplayCurrentImage];
+            [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
+        }
     }
 }
 
@@ -243,9 +247,11 @@
         }
         CGFloat newIndexFloat = (scrollView.contentOffset.x + self.gapBetweenPages) / scrollView.frame.size.width;
         NSUInteger newIndex = floor(newIndexFloat);
-        if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
-            [self reloadTitleForIndex:newIndex];
-            [self loadNearbyImagesFromIndex:newIndex];
+        if (@available(iOS 10.0, *)) {
+            if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
+                [self reloadTitleForIndex:newIndex];
+                [self loadNearbyImagesFromIndex:newIndex];
+            }
         }
     }
 }
@@ -266,6 +272,9 @@
             if (![[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                 [self setupNode:node forImageView:(UIImageView *)view withMode:MEGAPhotoModeOriginal];
             }
+            if (!self.interfaceHidden) {
+                [self singleTapGesture:nil];
+            }
         } else {
             scrollView.subviews.lastObject.hidden = YES;
         }
@@ -278,7 +287,7 @@
         if (node.name.mnz_isVideoPathExtension && scale == 1.0f) {
             scrollView.subviews.lastObject.hidden = NO;
         }
-        [self correctOriginForView:view scaledAt:scale];
+        [self resizeImageView:(UIImageView *)view];
     }
 }
 
@@ -460,10 +469,12 @@
                 frame.size.width = newWidth;
             }
             
-            UIScrollView *zoomableView = (UIScrollView *)imageView.superview;
-            CGFloat zoomScale = zoomableView.zoomScale;
-            frame.size.width *= zoomScale;
-            frame.size.height *= zoomScale;
+            if ([imageView.superview isKindOfClass:UIScrollView.class]) {
+                UIScrollView *zoomableView = (UIScrollView *)imageView.superview;
+                CGFloat zoomScale = zoomableView.zoomScale;
+                frame.size.width *= zoomScale;
+                frame.size.height *= zoomScale;
+            }
             
             imageView.frame = frame;
         }
@@ -644,6 +655,9 @@
                 zoomRect.origin.x = tapPoint.x - zoomRect.size.width / 2;
                 zoomRect.origin.y = tapPoint.y - zoomRect.size.height / 2;
                 [zoomableView zoomToRect:zoomRect animated:NO];
+                if (!self.interfaceHidden) {
+                    [self singleTapGesture:nil];
+                }
             } else {
                 zoomableView.zoomScale = newScale;
             }
@@ -727,7 +741,10 @@
 #pragma mark - MEGAPhotoBrowserPickerDelegate
 
 - (void)updateCurrentIndexTo:(NSUInteger)newIndex {
-    self.currentIndex = newIndex;
+    if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
+        self.currentIndex = newIndex;
+        [self reloadUI];
+    }
 }
 
 #pragma mark - PieChartViewDelegate

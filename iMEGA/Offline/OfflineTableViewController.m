@@ -4,7 +4,6 @@
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 
-#import "NSMutableAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "MEGANavigationController.h"
 #import "MEGASdkManager.h"
@@ -14,6 +13,7 @@
 #import "OfflineTableViewCell.h"
 #import "OpenInActivity.h"
 #import "SortByTableViewController.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "MEGAStore.h"
 #import "MEGAAVViewController.h"
@@ -43,7 +43,7 @@ static NSString *kisDirectory = @"kisDirectory";
 @property (nonatomic, strong) NSMutableArray *selectedItems;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sortByBarButtonItem;
 
@@ -539,7 +539,6 @@ static NSString *kisDirectory = @"kisDirectory";
         [cell.infoLabel setText:[NSString mnz_stringByFiles:files andFolders:folders]];
     } else {
         NSString *extension = [[nameString pathExtension] lowercaseString];
-        NSString *fileTypeIconString = [Helper fileTypeIconForExtension:extension];
         
         if (!handleString) {
             NSString *fpLocal = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:pathForItem];
@@ -570,8 +569,7 @@ static NSString *kisDirectory = @"kisDirectory";
                     [[MEGASdkManager sharedMEGASdk] createThumbnail:pathForItem destinatioPath:thumbnailFilePath];
                 }
             } else {
-                UIImage *iconImage = [UIImage imageNamed:fileTypeIconString];
-                [cell.thumbnailImageView setImage:iconImage];
+                [cell.thumbnailImageView mnz_setImageForExtension:extension];
             }
         }
         
@@ -989,7 +987,7 @@ static NSString *kisDirectory = @"kisDirectory";
             }
         } else {
             if (self.folderPathFromOffline == nil) {
-                return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"offlineEmptyState_title", @"Title shown when the Offline section is empty, when you don't have download any files. Keep the upper.") sectionTitle:AMLocalizedString(@"offline", @"Title of the Offline section")];
+                text = AMLocalizedString(@"offlineEmptyState_title", @"Title shown when the Offline section is empty, when you don't have download any files. Keep the upper.");
             } else {
                 text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
             }
@@ -998,9 +996,7 @@ static NSString *kisDirectory = @"kisDirectory";
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
@@ -1008,19 +1004,19 @@ static NSString *kisDirectory = @"kisDirectory";
     if ([MEGAReachabilityManager isReachable]) {
         if (self.searchController.isActive) {
             if (self.searchController.searchBar.text.length > 0) {
-                return [UIImage imageNamed:@"emptySearch"];
+                return [UIImage imageNamed:@"searchEmptyState"];
             } else {
                 return nil;
             }
         } else {
             if (self.folderPathFromOffline == nil) {
-                image = [UIImage imageNamed:@"emptyOffline"];
+                image = [UIImage imageNamed:@"offlineEmptyState"];
             } else {
-                image = [UIImage imageNamed:@"emptyFolder"];
+                image = [UIImage imageNamed:@"folderEmptyState"];
             }
         }
     } else {
-        image = [UIImage imageNamed:@"noInternetConnection"];
+        image = [UIImage imageNamed:@"noInternetEmptyState"];
     }
     return image;
 }

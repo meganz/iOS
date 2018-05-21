@@ -209,14 +209,12 @@
         text = AMLocalizedString(@"noInternetConnection",  @"Text shown on the app when you don't have connection to the internet or when you have lost it");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     if (![MEGAReachabilityManager isReachable]) {
-        return [UIImage imageNamed:@"noInternetConnection"];
+        return [UIImage imageNamed:@"noInternetEmptyState"];
     }
     
     return nil;

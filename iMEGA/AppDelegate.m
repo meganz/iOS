@@ -51,7 +51,6 @@
 #import "MessagesViewController.h"
 #import "MyAccountHallViewController.h"
 #import "OfflineTableViewController.h"
-#import "PreviewDocumentViewController.h"
 #import "SecurityOptionsTableViewController.h"
 #import "SettingsTableViewController.h"
 #import "SharedItemsViewController.h"
@@ -131,6 +130,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @property (nonatomic) BOOL presentInviteContactVCLater;
 
 @property (nonatomic, getter=showChooseAccountTypeLater) BOOL chooseAccountTypeLater;
+
+@property (nonatomic, strong) UIAlertController *sslKeyPinningController;
 
 @end
 
@@ -341,7 +342,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     } else {
         // Resume ephemeral account
         NSString *sessionId = [SAMKeychain passwordForService:@"MEGA" account:@"sessionId"];
-        if (sessionId) {
+        if (sessionId && ![[[launchOptions objectForKey:@"UIApplicationLaunchOptionsURLKey"] absoluteString] containsString:@"confirm"]) {
             MEGACreateAccountRequestDelegate *createAccountRequestDelegate = [[MEGACreateAccountRequestDelegate alloc] initWithCompletion:^ (MEGAError *error) {
                 CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckEmailAndFollowTheLinkViewControllerID"];
                 [UIApplication.mnz_visibleViewController presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:nil];
@@ -704,7 +705,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         case 1: { //Import file from link
             MEGANode *node = [Helper linkNode];
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-            [self.window.rootViewController.presentedViewController presentViewController:navigationController animated:YES completion:nil];
+            [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
             
             BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
             browserVC.selectedNodesArray = [NSArray arrayWithObject:node];
@@ -763,7 +764,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
         return;
     }
         
-    [self dismissPresentedViews];
+    if (self.window.rootViewController.presentedViewController) {
+        [self.window.rootViewController dismissViewControllerAnimated:NO completion:nil];
+    }
     
     if ([[url absoluteString] rangeOfString:@"file:///"].location != NSNotFound) {
         self.urlType = URLTypeOpenInLink;
@@ -1257,7 +1260,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)showLinkNotValid {
-    [self showEmptyStateViewWithImageNamed:@"noInternetConnection" title:AMLocalizedString(@"linkNotValid", nil) text:@""];
+    [self showEmptyStateViewWithImageNamed:@"noInternetEmptyState" title:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid") text:@""];
     self.link = nil;
     self.urlType = URLTypeDefault;
 }
@@ -2102,7 +2105,9 @@ void uncaughtExceptionHandler(NSException *exception) {
                 return;
             }
             
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:AMLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
+            if (request.paramType != MEGAErrorTypeApiESSL) {
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:AMLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
+            }
             break;
         }
             
@@ -2198,16 +2203,6 @@ void uncaughtExceptionHandler(NSException *exception) {
                 break;
             }
                 
-            case MEGAErrorTypeApiESSL: {
-                if ([request type] == MEGARequestTypeLogout) {
-                    NSString *issuer = [NSString stringWithFormat:@"(Issuer: %@)", [request text] ? [request text] : @"Unknown"];
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"sslUnverified_alertTitle", nil) message:issuer delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
-                    [alertView show];
-                    [Helper logout];
-                }
-                break;
-            }
-                
             case MEGAErrorTypeApiEAccess: {
                 if ([request type] == MEGARequestTypeSetAttrFile) {
                     MEGANode *node = [api nodeForHandle:request.nodeHandle];
@@ -2222,12 +2217,37 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
                 
             case MEGAErrorTypeApiEIncomplete: {
-                if ([request type] == MEGARequestTypeQuerySignUpLink) {
+                if (request.type == MEGARequestTypeQuerySignUpLink) {
                     [self showLinkNotValid];
+                } else if (request.type == MEGARequestTypeLogout && request.paramType == MEGAErrorTypeApiESSL && !self.sslKeyPinningController) {
+                    [SVProgressHUD dismiss];
+                    _sslKeyPinningController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"sslUnverified_alertTitle", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+                    [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ignore", @"Button title to allow the user ignore something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                        self.sslKeyPinningController = nil;
+                        [api setPublicKeyPinning:NO];
+                        [api reconnect];
+                    }]];
+                    
+                    [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"retry", @"Button which allows to retry send message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                        self.sslKeyPinningController = nil;
+                        [api retryPendingConnections];
+                    }]];
+                    
+                    [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"openBrowser", @"Button title to allow the user open the default browser") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                        self.sslKeyPinningController = nil;
+                        NSURL *url = [NSURL URLWithString:@"https://www.mega.nz"];
+                        
+                        if (@available(iOS 10.0, *)) {
+                            [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:NULL];
+                        } else {
+                            [[UIApplication sharedApplication] openURL:url];
+                        }
+                    }]];
+                    
+                    [[UIApplication mnz_visibleViewController] presentViewController:self.sslKeyPinningController animated:YES completion:nil];
                 }
                 break;
             }
-                
                 
             case MEGAErrorTypeApiEBlocked: {
                 if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeFetchNodes) {

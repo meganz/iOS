@@ -58,24 +58,7 @@
 
 - (void)performActivity {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        if (self.nodes != nil) {
-            if (![[NSUserDefaults standardUserDefaults] boolForKey:@"agreedCopywriteWarning"]) {
-                if ([[[MEGASdkManager sharedMEGASdk] publicLinks].size intValue] > 0) {
-                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"agreedCopywriteWarning"];
-                }
-            }
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"agreedCopywriteWarning"]) {
-                UINavigationController *getLinkNC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"GetLinkNavigationControllerID"];
-                GetLinkTableViewController *getLinkTVC = getLinkNC.childViewControllers.firstObject;
-                getLinkTVC.nodesToExport = self.nodes;
-                [UIApplication.mnz_visibleViewController presentViewController:getLinkNC animated:YES completion:nil];
-            } else {
-                UINavigationController *copyrightWarningNC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CopywriteWarningNavigationControllerID"];
-                CopyrightWarningViewController *copyrightWarningVC = copyrightWarningNC.childViewControllers.firstObject;
-                copyrightWarningVC.nodesToExport = self.nodes;
-                [UIApplication.mnz_visibleViewController presentViewController:copyrightWarningNC animated:YES completion:nil];
-            }
-        }
+        [CopyrightWarningViewController presentGetLinkViewControllerForNodes:self.nodes inViewController:UIApplication.mnz_visibleViewController];
     }
 }
 

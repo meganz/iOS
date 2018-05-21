@@ -1,8 +1,10 @@
 #import "NodeTableViewCell.h"
-#import "MEGASdkManager.h"
+
 #import "Helper.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
+#import "MEGASdkManager.h"
 #import "MEGAStore.h"
+#import "UIImageView+MNZCategory.h"
 
 @implementation NodeTableViewCell
 
@@ -89,10 +91,10 @@
                 self.thumbnailImageView.image = [UIImage imageWithContentsOfFile:request.file];
             }];
             [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
-            self.thumbnailImageView.image = [Helper imageForNode:node];
+            [self.thumbnailImageView mnz_imageForNode:node];
         }
     } else {
-        self.thumbnailImageView.image = [Helper imageForNode:node];
+        [self.thumbnailImageView mnz_imageForNode:node];
     }
     
     self.nameLabel.text = node.name;

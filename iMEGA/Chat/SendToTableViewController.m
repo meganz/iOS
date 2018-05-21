@@ -447,19 +447,17 @@
         text = AMLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:UIColor.mnz_black333333};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     UIImage *image = nil;
     if (self.searchController.isActive) {
         if (self.searchController.searchBar.text.length) {
-            image = [UIImage imageNamed:@"emptySearch"];
+            image = [UIImage imageNamed:@"searchEmptyState"];
         }
     } else {
-        image = [UIImage imageNamed:@"emptyContacts"];
+        image = [UIImage imageNamed:@"contactsEmptyState"];
     }
     
     return image;

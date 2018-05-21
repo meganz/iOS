@@ -114,7 +114,7 @@
     if (self.node.isFile) {
         [imageView mnz_setThumbnailByNodeHandle:self.node.handle];
     } else if (self.node.isFolder) {
-        imageView.image = [Helper imageForNode:self.node];
+        [imageView mnz_imageForNode:self.node];
         info.text = [Helper filesAndFoldersInFolderNode:self.node api:[MEGASdkManager sharedMEGASdk]];
     }
     
@@ -221,6 +221,7 @@
                     if (self.isIncomingShareChildView) {
                         [actions addObject:[self actionLeaveSharing]];
                     }
+                    [actions addObject:[self actionMoveToRubbishBin]];
                 }
                 break;
                 
@@ -237,7 +238,7 @@
                     if (self.isIncomingShareChildView) {
                         [actions addObject:[self actionLeaveSharing]];
                     }
-                    if (self.displayMode == DisplayModeCloudDrive) {
+                    if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeNodeInfo) {
                         [actions addObject:[self actionMoveToRubbishBin]];
                     } else if (self.displayMode == DisplayModeRubbishBin) {
                         [actions addObject:[self actionRemove]];

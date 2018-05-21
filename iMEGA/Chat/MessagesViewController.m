@@ -261,6 +261,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
     self.lastBottomInset = self.collectionView.scrollIndicatorInsets.bottom;
     self.lastVerticalOffset = self.collectionView.contentOffset.y;
+    
+    self.unreadMessages = 0;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -444,7 +446,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     }
     contactsVC.participantsMutableDictionary = [self.participantsMutableDictionary copy];
     
-    contactsVC.userSelected = ^void(NSArray *users) {
+    contactsVC.userSelected = ^void(NSArray *users, NSString *groupName) {
         if (addParticipant) {
             for (NSInteger i = 0; i < users.count; i++) {
                 if (self.shouldStopInvitingContacts) {
@@ -491,10 +493,16 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)customToolbarContentView {
     self.inputToolbar.contentView.textView.placeHolderTextColor = [UIColor mnz_grayCCCCCC];
-    self.inputToolbar.contentView.textView.placeHolder = AMLocalizedString(@"writeAMessage", @"Message box label which shows that user can type message text in this textview");
     self.inputToolbar.contentView.textView.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
     self.inputToolbar.contentView.textView.textColor = [UIColor mnz_black333333];
     self.inputToolbar.contentView.textView.tintColor = [UIColor mnz_green00BFA5];
+    [self updateToolbarPlaceHolder];
+}
+
+- (void)updateToolbarPlaceHolder {
+    NSString *title = self.chatRoom.hasCustomTitle ? [NSString stringWithFormat:@"\"%@\"", self.chatRoom.title] : self.chatRoom.title;
+    NSString *placeholder = [AMLocalizedString(@"writeAMessage", @"This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to \"Chat room topic\"... Write a message to Contact Name1, Contact Name2, Contact Name3") stringByReplacingOccurrencesOfString:@"%s" withString:title];
+    self.inputToolbar.contentView.textView.placeHolder = placeholder;
 }
 
 - (BOOL)showDateBetweenMessage:(MEGAChatMessage *)message previousMessage:(MEGAChatMessage *)previousMessage {
@@ -618,9 +626,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         }
     }
     
-    //TODO: Show text in chattingWithLabel when its string is translated.
-//    self.openMessageHeaderView.chattingWithLabel.text = AMLocalizedString(@"chattingWith", @"Title show above the name of the persons with whom you're chatting");
-    self.openMessageHeaderView.chattingWithLabel.text = nil;
+    self.openMessageHeaderView.chattingWithLabel.text = AMLocalizedString(@"chattingWith", @"Title show above the name of the persons with whom you're chatting");
     self.openMessageHeaderView.conversationWithLabel.text = participantsNames;
     self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
     self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
@@ -777,15 +783,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)showOrHideJumpToBottom {
-    NSInteger item = [self.collectionView numberOfItemsInSection:0] - 2;
-    if (item >= 0) {
-        NSIndexPath *secondByTheEndIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
-        NSArray<NSIndexPath *> *indexPathsForVisibleItems = [self.collectionView indexPathsForVisibleItems];
-        if ([indexPathsForVisibleItems containsObject:secondByTheEndIndexPath]) {
-            [self hideJumpToBottom];
-        } else if (indexPathsForVisibleItems.count > 0) {
-            [self showJumpToBottomWithMessage:AMLocalizedString(@"jumpToLatest", @"Label in a button that allows to jump to the latest item")];
-        }
+    CGFloat verticalIncrementToShow = self.view.frame.size.height * 1.5;
+    if (self.collectionView.contentSize.height - self.collectionView.contentOffset.y < verticalIncrementToShow) {
+        [self hideJumpToBottom];
+    } else {
+        [self showJumpToBottomWithMessage:AMLocalizedString(@"jumpToLatest", @"Label in a button that allows to jump to the latest item")];
     }
 }
 
@@ -796,9 +798,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     if (self.jumpToBottomView.alpha > 0) {
         return;
     }
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:0.2 delay:0.3 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.jumpToBottomView.alpha = 1.0f;
-    }];
+    } completion:nil];
 }
 
 - (void)hideJumpToBottom {
@@ -813,6 +815,15 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 - (void)jumpToBottomPressed:(UITapGestureRecognizer *)recognizer {
     [self scrollToBottomAnimated:YES];
     [self hideJumpToBottom];
+}
+
+- (void)hideUnreadMessagesLabelIfNeeded {
+    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForItem:(self.messages.count - 1) inSection:0];
+    if (self.unreadMessages && [[self.collectionView indexPathsForVisibleItems] containsObject:lastIndexPath]) {
+        NSIndexPath *indexPathForCellWithUnreadMessagesLabel = [self indexPathForCellWithUnreadMessagesLabel];
+        self.unreadMessages = 0;
+        [self.collectionView reloadItemsAtIndexPaths:@[indexPathForCellWithUnreadMessagesLabel]];
+    }
 }
 
 - (void)setTypingIndicator {
@@ -1069,6 +1080,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 - (void)didPressAccessoryButton:(UIButton *)sender {
     switch (sender.tag) {
         case MEGAChatAccessoryButtonCamera: {
+            self.inputToolbar.hidden = YES;
             if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType:completionHandler:)]) {
                 [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL permissionGranted) {
                     if (permissionGranted) {
@@ -1093,9 +1105,12 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         }
             
         case MEGAChatAccessoryButtonUpload: {
+            self.inputToolbar.hidden = YES;
             NSString *alertControllerTitle = AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
             UIAlertController *selectOptionAlertController = [UIAlertController alertControllerWithTitle:alertControllerTitle message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-            [selectOptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+            [selectOptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                self.inputToolbar.hidden = NO;
+            }]];
             
             UIAlertAction *sendFromCloudDriveAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fromCloudDrive", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
@@ -1382,7 +1397,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    [self showOrHideJumpToBottom];
+    if (!decelerate) {
+        [self showOrHideJumpToBottom];
+    }
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
@@ -1974,6 +1991,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             
         case MEGAChatRoomChangeTypeParticipants: {
             [self customNavigationBarLabel];
+            [self updateToolbarPlaceHolder];
             
             [self.collectionView performBatchUpdates:^{
                 [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
@@ -1987,6 +2005,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             
         case MEGAChatRoomChangeTypeTitle:
             [self customNavigationBarLabel];
+            [self updateToolbarPlaceHolder];
+            
             break;
             
         case MEGAChatRoomChangeTypeUserTyping: {
