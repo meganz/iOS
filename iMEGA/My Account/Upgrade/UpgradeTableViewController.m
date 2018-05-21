@@ -18,8 +18,8 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (strong, nonatomic) IBOutlet UIView *chooseFromOneOfThePlansHeaderView;
-@property (strong, nonatomic) IBOutlet UIView *chooseFromOneOfThePlansPROHeaderView;
+@property (weak, nonatomic) IBOutlet UIView *chooseFromOneOfThePlansHeaderView;
+@property (weak, nonatomic) IBOutlet UIView *chooseFromOneOfThePlansPROHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *chooseFromOneOfThePlansLabel;
 
 @property (weak, nonatomic) IBOutlet UIView *currentPlanView;
