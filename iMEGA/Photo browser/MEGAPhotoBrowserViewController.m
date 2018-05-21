@@ -469,10 +469,12 @@
                 frame.size.width = newWidth;
             }
             
-            UIScrollView *zoomableView = (UIScrollView *)imageView.superview;
-            CGFloat zoomScale = zoomableView.zoomScale;
-            frame.size.width *= zoomScale;
-            frame.size.height *= zoomScale;
+            if ([imageView.superview isKindOfClass:UIScrollView.class]) {
+                UIScrollView *zoomableView = (UIScrollView *)imageView.superview;
+                CGFloat zoomScale = zoomableView.zoomScale;
+                frame.size.width *= zoomScale;
+                frame.size.height *= zoomScale;
+            }
             
             imageView.frame = frame;
         }
