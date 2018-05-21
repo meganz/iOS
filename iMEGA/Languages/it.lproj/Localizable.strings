@@ -377,7 +377,7 @@
 /* Title for a button that copies the key of the link to the clipboard */
 "copyKey"="Copia chiave";
 /* Title shown under the action that allows you to open a file in another app */
-"openIn"="Aprire";
+"openIn"="Apri con...";
 /* */
 "sendToContact"="Invia a contatto";
 /* Toast text upon sending a single file to chat */
@@ -1201,8 +1201,8 @@
 "twoUsersAreTyping"="%1$s [A]stanno scrivendo...[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
 "moreThanTwoUsersAreTyping"="%1$s [A]ed altri stanno scrivendo...[/A]";
-/* Message box label which shows that user can type message text in this textview */
-"writeAMessage"="Scrivi un messaggio...";
+/* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
+"writeAMessage"="Scrivi un messaggio a %s...";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="Nessuna conversazione";
 /* Button which allows to retry send message in chat conversation. */
@@ -1443,7 +1443,7 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="Ricordi la tua password?";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="A causa della tecnologia di criptazione utilizzata da MEGA non è possibile resettare la password senza una perdita di dati. Per favore, fa' in modo di ricordare la tua password.";
+"remindPasswordText"="A causa della tecnologia di criptazione utilizzata da MEGA non è possibile resettare la password senza una perdita di dati. Per favore, fai in modo di ricordare la tua password.";
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Prima di effettuare il logout TI raccomandiamo di esportare la tua Chiave di Recupero in un posto sicuro. Ricorda che non potrai resettare la tua password se la dimentichi.";
 /* Text next to a toggle that if enabled won't appear again */

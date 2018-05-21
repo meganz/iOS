@@ -36,7 +36,7 @@
     
     for (NSInteger i = 0; i < [defaultViewControllersMutableArray count]; i++) {
         UITabBarItem *tabBarItem = [[defaultViewControllersMutableArray objectAtIndex:i] tabBarItem];
-        tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+        [self reloadInsetsForTabBarItem:tabBarItem];
         switch (tabBarItem.tag) {
             case CLOUD:
                 [tabBarItem setImage:[[UIImage imageNamed:@"cloudDriveIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
@@ -126,7 +126,27 @@
     return UIStatusBarStyleLightContent;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    for (UITabBarItem *tabBarItem in self.tabBar.items) {
+        [self reloadInsetsForTabBarItem:tabBarItem];
+    }
+}
+
 #pragma mark - Private
+
+- (void)reloadInsetsForTabBarItem:(UITabBarItem *)tabBarItem {
+    if (@available(iOS 11.0, *)) {
+        if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
+            tabBarItem.imageInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+        } else {
+            tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+        }
+    } else {
+        tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+    }
+}
 
 - (void)setBadgeValueForIncomingContactRequests {
     MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];

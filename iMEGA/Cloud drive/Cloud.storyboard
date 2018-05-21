@@ -385,7 +385,6 @@
                         <outlet property="moveBarButtonItem" destination="paI-37-wBm" id="Sj3-a8-hXZ"/>
                         <outlet property="selectAllBarButtonItem" destination="Tlb-j4-XPE" id="ymf-3D-A1G"/>
                         <outlet property="shareBarButtonItem" destination="Rdk-Wp-1bg" id="FF2-5U-Aie"/>
-                        <outlet property="sortByBarButtonItem" destination="Nq1-wJ-mHM" id="8kx-am-2NN"/>
                         <outlet property="toolbar" destination="OOx-vz-vej" id="O9Z-vK-sKV"/>
                     </connections>
                 </tableViewController>
@@ -403,11 +402,6 @@
                 <barButtonItem image="moreSelected" width="22" id="sIc-bX-A0v" userLabel="More Minimized Bar Button Item">
                     <connections>
                         <action selector="moreMinimizedAction:" destination="KWY-Kr-BLD" id="Q0l-h3-gZB"/>
-                    </connections>
-                </barButtonItem>
-                <barButtonItem image="sortBy" width="22" id="Nq1-wJ-mHM" userLabel="Sort by Bar Button Item">
-                    <connections>
-                        <action selector="sortByAction:" destination="KWY-Kr-BLD" id="uRk-9s-L19"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem title="Edit" width="22" id="mLN-ad-YAf" userLabel="Edit Bar Button Item">
@@ -2636,7 +2630,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <image name="icon-key-only" width="24" height="24"/>
         <image name="icon-link-only" width="24" height="24"/>
         <image name="icon-link-w-key" width="24" height="24"/>
-        <image name="linked" width="24" height="24"/>
+        <image name="linked" width="12" height="12"/>
         <image name="more" width="26" height="6"/>
         <image name="moreSelected" width="26" height="6"/>
         <image name="move" width="32" height="32"/>
@@ -2649,7 +2643,6 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <image name="share" width="28" height="28"/>
         <image name="shareGray" width="32" height="32"/>
         <image name="shareRed" width="16" height="22"/>
-        <image name="sortBy" width="22" height="22"/>
         <image name="thumbnailsView" width="24" height="24"/>
         <image name="versioned" width="12" height="12"/>
         <image name="video_list" width="22" height="22"/>

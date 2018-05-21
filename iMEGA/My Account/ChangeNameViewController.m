@@ -9,7 +9,7 @@
 
 @interface ChangeNameViewController () <UITextFieldDelegate, MEGARequestDelegate>
 
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UITextField *firstNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *lastNameTextField;
