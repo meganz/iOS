@@ -230,7 +230,7 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView.tag == 1) {
         NSInteger newIndex = (scrollView.contentOffset.x + self.gapBetweenPages) / scrollView.frame.size.width;
-        if (newIndex != self.currentIndex) {
+        if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
             self.currentIndex = newIndex;
             [self resetZooms];
             [self reloadTitle];
@@ -739,7 +739,7 @@
 #pragma mark - MEGAPhotoBrowserPickerDelegate
 
 - (void)updateCurrentIndexTo:(NSUInteger)newIndex {
-    if (newIndex != self.currentIndex) {
+    if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
         self.currentIndex = newIndex;
         [self reloadUI];
     }
