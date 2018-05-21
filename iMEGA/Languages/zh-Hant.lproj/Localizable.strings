@@ -1201,8 +1201,8 @@
 "twoUsersAreTyping"="%1$s [A]正在打字...[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
 "moreThanTwoUsersAreTyping"="%1$s [A]和其他人正在打字...[/A]";
-/* Message box label which shows that user can type message text in this textview */
-"writeAMessage"="書寫訊息...";
+/* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
+"writeAMessage"="Write a message to %s...";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="沒有對話歷史記錄";
 /* Button which allows to retry send message in chat conversation. */
@@ -1443,7 +1443,7 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="您還記得你的密碼嗎？";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset your password without data loss. Please make sure you remember your password.";
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
 /* Text next to a toggle that if enabled won't appear again */
