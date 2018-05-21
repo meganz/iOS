@@ -55,7 +55,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="You have been logged out of this device from another location";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="Server’s SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
+"sslUnverified_alertTitle"="MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -660,6 +660,8 @@
 "privacyPolicyLabel"="Privacy Policy";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Terms of Service";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Off";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -794,26 +796,9 @@
 "youRecoveryKeyIsGoingTo"="Your Recovery Key is going to be used to reset your password. Please, enter your new password.";
 /*  */
 "yourPasswordHasBeenReset"="Your password has been reset successfully. Please log into your account now.";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="If you have a backup of your Recovery Key, you can reset your password by selecting YES. No data will be lost.";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="You can still export your Recovery Key now if you have an active MEGA session in any other browser on this or any other computer. If you don't, you can no longer decrypt your existing account, but you can start a new one under the same e-mail address by selecting NO.";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="Do you have a backup of your Recovery Key?";
-/* Headline when the user chose YES */
-"great"="Great!";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Please enter your e-mail address below. You will receive a recovery link that will allow you to submit your Recovery Key and reset your password.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Send";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="Oops!";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Due to our end-to-end encryption paradigm, you will not be able to access your data without either your password or a backup of your Recovery Key.";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="You can park your existing account and start a fresh one under the same e-mail address. Your data will be retained for at least 60 days. In case that you recall your parked account’s password, please contact support@mega.nz";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="Please enter your e-mail address below. You will receive a recovery link that will allow you to park your account.";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Park account";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -1072,6 +1057,8 @@
 "chat"="Chat";
 /* Empty Conversations section */
 "noConversations"="No Conversations";
+/* Empty Conversations description */
+"noConversationsDescription"="Start chatting securely with your contacts using end-to-end encryption";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Chat is disabled";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1100,6 +1087,8 @@
 "changedGroupChatNameTo"="[A] changed group chat name to '[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Add Participant…";
+/* Menu item to add participants to a chat */
+"addParticipants"="Add participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
 /* Title used in settings that enables the generation of link previews in the chat */
@@ -1172,6 +1161,8 @@
 "renameGroup"="Rename Group";
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="Change Group Avatar";
+/* Text used as hint to give the user information to write a name for the group chat. */
+"enterGroupName"="Enter group name";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Leave";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1214,8 +1205,8 @@
 "twoUsersAreTyping"="%1$s [A]are typing…[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
 "moreThanTwoUsersAreTyping"="%1$s [A]and more are typing…[/A]";
-/* Message box label which shows that user can type message text in this textview */
-"writeAMessage"="Write a message…";
+/* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
+"writeAMessage"="Write a message to %s...";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="No conversation history";
 /* Button which allows to retry send message in chat conversation. */
@@ -1487,3 +1478,17 @@
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
 /* state previous to import a file */
 "loading"="Loading…";
+/*   */
+"next"="Next";
+/* Button title to allow the user ignore something */
+"ignore"="Ignore";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Open browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="Restart";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Resume playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%1$s will continue at %2$s";
+/*  */
+"resume"="Resume";

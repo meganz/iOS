@@ -28,7 +28,7 @@
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIView *sharedItemsSegmentedControlView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *sharedItemsSegmentedControl;
@@ -353,7 +353,8 @@
     NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
     nodeInfoVC.node = node;
     nodeInfoVC.nodeInfoDelegate = self;
-    
+    nodeInfoVC.incomingShareChildView = self.sharedItemsSegmentedControl.selectedSegmentIndex == 0;
+
     [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
 }
 
@@ -1021,9 +1022,7 @@
         text = AMLocalizedString(@"noInternetConnection",  nil);
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
@@ -1031,25 +1030,25 @@
     if ([MEGAReachabilityManager isReachable]) {
         if (self.searchController.isActive) {
             if (self.searchController.searchBar.text.length > 0) {
-                return [UIImage imageNamed:@"emptySearch"];
+                return [UIImage imageNamed:@"searchEmptyState"];
             } else {
                 return nil;
             }
         } else {
             switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
                 case 0: { //Incoming
-                    image = [UIImage imageNamed:@"emptySharedItemsIncoming"];
+                    image = [UIImage imageNamed:@"incomingEmptyState"];
                     break;
                 }
                     
                 case 1: { //Outgoing
-                    image = [UIImage imageNamed:@"emptySharedItemsOutgoing"];
+                    image = [UIImage imageNamed:@"outgoingEmptyState"];
                     break;
                 }
             }
         }
     } else {
-        image = [UIImage imageNamed:@"noInternetConnection"];
+        image = [UIImage imageNamed:@"noInternetEmptyState"];
     }
     
     return image;

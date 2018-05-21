@@ -154,6 +154,12 @@
     if (!self.passwordView.wrongPasswordView.hidden) {
         [self showErrorInPasswordView:NO];
     }
+    
+    self.passwordView.rightImageView.hidden = NO;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    self.passwordView.rightImageView.hidden = YES;
 }
 
 #pragma mark - MEGARequestDelegate

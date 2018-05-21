@@ -30,7 +30,7 @@
 }
 
 - (UIImage *)activityImage {
-    return [UIImage imageNamed:@"activity_openIn"];
+    return [UIImage imageNamed:@"activity_sendToContact"];
 }
 
 - (BOOL)canPerformWithActivityItems:(NSArray *)activityItems {

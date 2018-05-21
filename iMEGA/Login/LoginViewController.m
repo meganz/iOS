@@ -111,6 +111,10 @@
     }
 }
 
+- (IBAction)forgotPasswordTouchUpInside:(UIButton *)sender {
+    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://mega.nz/recovery"]];
+}
+
 #pragma mark - Private
 
 - (void)logoTappedFiveTimes:(UITapGestureRecognizer *)sender {
@@ -181,11 +185,6 @@
     return [dateFormatter stringFromDate:date];
 }
 
-- (IBAction)forgotPasswordTouchUpInside:(UIButton *)sender {
-    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ForgotPasswordNavigationControllerID"];
-    [self presentViewController:navigationController animated:YES completion:nil];
-}
-
 #pragma mark - UIResponder
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -224,7 +223,7 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    switch ([textField tag]) {
+    switch (textField.tag) {
         case 0:
             [self.passwordView.passwordTextField becomeFirstResponder];
             break;
@@ -239,6 +238,18 @@
     }
     
     return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField.tag == 1) {
+        self.passwordView.rightImageView.hidden = NO;
+    }
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    if (textField.tag == 1) {
+        self.passwordView.rightImageView.hidden = YES;
+    }
 }
 
 @end

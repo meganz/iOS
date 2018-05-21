@@ -9,7 +9,7 @@
 #import "PasswordStrengthIndicatorView.h"
 #import "PasswordView.h"
 
-@interface ChangePasswordViewController () <MEGARequestDelegate, UITextFieldDelegate>
+@interface ChangePasswordViewController () <MEGARequestDelegate, UITextFieldDelegate, MEGAGlobalDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *currentPasswordImageView;
 @property (weak, nonatomic) IBOutlet UITextField *currentPasswordTextField;
@@ -126,7 +126,16 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(emailHasChanged) name:@"emailHasChanged" object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
 #pragma mark - Private
@@ -405,6 +414,58 @@
     }
     
     return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    switch (textField.tag) {
+        case 3:
+            self.currentPasswordView.rightImageView.hidden = NO;
+            break;
+            
+        case 4:
+            self.theNewPasswordView.rightImageView.hidden = NO;
+            break;
+            
+        case 5:
+            self.confirmPasswordView.rightImageView.hidden = NO;
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    switch (textField.tag) {
+        case 3:
+            self.currentPasswordView.rightImageView.hidden = YES;
+            break;
+            
+        case 4:
+            self.theNewPasswordView.rightImageView.hidden = YES;
+            break;
+            
+        case 5:
+            self.confirmPasswordView.rightImageView.hidden = YES;
+            break;
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - MEGAGlobalDelegate
+
+- (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
+    NSInteger count = userList.size.integerValue;
+    for (NSInteger i = 0 ; i < count; i++) {
+        MEGAUser *user = [userList userAtIndex:i];
+        if (user.handle == [MEGASdkManager sharedMEGASdk].myUser.handle && user.changes == MEGAUserChangeTypeEmail) {
+            NSString *emailChangedString = [AMLocalizedString(@"congratulationsNewEmailAddress", @"The [X] will be replaced with the e-mail address.") stringByReplacingOccurrencesOfString:@"[X]" withString:user.email];
+            [SVProgressHUD showSuccessWithStatus:emailChangedString];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
 }
 
 #pragma mark - MEGARequestDelegate

@@ -30,4 +30,15 @@
     return fullName ? fullName : self.email;
 }
 
+- (NSString *)firstName {
+    NSString *firstname = nil;
+    if (self) {
+        if (self.firstname) {
+            firstname = self.firstname;
+        }
+    }
+    
+    return firstname ? firstname : self.email;
+}
+
 @end

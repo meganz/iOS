@@ -7,7 +7,7 @@
 
 @interface MEGAAVViewController : AVPlayerViewController
 
-- (instancetype)initWithURL:(NSURL *)path;
+- (instancetype)initWithURL:(NSURL *)fileUrl;
 - (instancetype)initWithNode:(MEGANode *)node folderLink:(BOOL)folderLink;
 
 @end

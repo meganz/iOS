@@ -8,9 +8,10 @@
 #import "UIScrollView+EmptyDataSet.h"
 
 #import "NSFileManager+MNZCategory.h"
-#import "NSMutableAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "Helper.h"
 #import "MEGAAssetsPickerController.h"
@@ -28,7 +29,6 @@
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
 #import "NSMutableArray+MNZCategory.h"
-#import "UIApplication+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
@@ -52,11 +52,9 @@
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *moreMinimizedBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *sortByBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *moreMinimizedBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
@@ -300,13 +298,13 @@
         if ([node hasThumbnail]) {
             [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdk] cell:cell];
         } else {
-            [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+            [cell.thumbnailImageView mnz_imageForNode:node];
         }
         
         cell.versionedImageView.hidden = ![[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node];
         
     } else if ([node type] == MEGANodeTypeFolder) {
-        [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+        [cell.thumbnailImageView mnz_imageForNode:node];
         
         cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
     }
@@ -428,7 +426,10 @@
     self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
 
     UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        [node mnz_downloadNodeOverwriting:NO];
+        if ([node mnz_downloadNodeOverwriting:NO]) {
+            [self reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:node.base64Handle]];
+        }
+        
         [self setEditing:NO animated:YES];
     }];
     downloadAction.image = [UIImage imageNamed:@"infoDownload"];
@@ -729,7 +730,7 @@
             switch (self.displayMode) {
                 case DisplayModeCloudDrive: {
                     if ([self.parentNode type] == MEGANodeTypeRoot) {
-                        return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"cloudDriveEmptyState_title", @"Title shown when your Cloud Drive is empty, when you don't have any files.") sectionTitle:AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section")];
+                        text = AMLocalizedString(@"cloudDriveEmptyState_title", @"Title shown when your Cloud Drive is empty, when you don't have any files.");
                     } else {
                         text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
                     }
@@ -738,7 +739,7 @@
                     
                 case DisplayModeRubbishBin:
                     if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                        return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Title shown when your Rubbish Bin is empty.") sectionTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'")];
+                        text = AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Title shown when your Rubbish Bin is empty.");
                     } else {
                         text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
                     }
@@ -752,9 +753,7 @@
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
@@ -765,23 +764,23 @@
         }
         
         if (self.searchController.isActive) {
-            image = [UIImage imageNamed:@"emptySearch"];
+            image = [UIImage imageNamed:@"searchEmptyState"];
         } else {
             switch (self.displayMode) {
                 case DisplayModeCloudDrive: {
                     if ([self.parentNode type] == MEGANodeTypeRoot) {
-                        image = [UIImage imageNamed:@"emptyCloudDrive"];
+                        image = [UIImage imageNamed:@"cloudEmptyState"];
                     } else {
-                        image = [UIImage imageNamed:@"emptyFolder"];
+                        image = [UIImage imageNamed:@"folderEmptyState"];
                     }
                     break;
                 }
                     
                 case DisplayModeRubbishBin: {
                     if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                        image = [UIImage imageNamed:@"emptyRubbishBin"];
+                        image = [UIImage imageNamed:@"rubbishEmptyState"];
                     } else {
-                        image = [UIImage imageNamed:@"emptyFolder"];
+                        image = [UIImage imageNamed:@"folderEmptyState"];
                     }
                     break;
                 }
@@ -791,7 +790,7 @@
             }
         }
     } else {
-        image = [UIImage imageNamed:@"noInternetConnection"];
+        image = [UIImage imageNamed:@"noInternetEmptyState"];
     }
     
     return image;
@@ -824,9 +823,7 @@
         
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:20.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    return [[NSAttributedString alloc] initWithString:text attributes:[Helper buttonTextAttributesForEmptyState]];
 }
 
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
@@ -838,7 +835,7 @@
     UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
     UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
     
-    return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
+    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
@@ -1046,8 +1043,7 @@
         }
             
         case DisplayModeRubbishBin: {
-            [self.sortByBarButtonItem setEnabled:boolValue];
-            [self.editBarButtonItem setEnabled:boolValue];
+            self.editBarButtonItem.enabled = boolValue;
             break;
         }
             
@@ -1263,8 +1259,15 @@
     NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
     nodeInfoVC.node = node;
     nodeInfoVC.nodeInfoDelegate = self;
+    nodeInfoVC.incomingShareChildView = self.incomingShareChildView;
     
     [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
+}
+
+- (void)reloadRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath != nil) {
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
 }
 
 #pragma mark - IBActions
@@ -1288,7 +1291,7 @@
         allNodesSelected = NO;
     }
     
-    if (self.displayMode == DisplayModeCloudDrive) {
+    if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeRubbishBin) {
         [self updateNavigationBarTitle];
     }
     
@@ -1445,7 +1448,9 @@
     [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
     
     for (MEGANode *node in self.selectedNodesArray) {
-        if (![node mnz_downloadNodeOverwriting:NO]) {
+        if ([node mnz_downloadNodeOverwriting:NO]) {
+            [self reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:node.base64Handle]];
+        } else {
             return;
         }
     }
@@ -1736,10 +1741,7 @@
     
     if (transfer.type == MEGATransferTypeDownload) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-        NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
-        if (indexPath != nil) {
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        }
+        [self reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
     }
 }
 
@@ -1778,20 +1780,14 @@
         } else if ([error type] == MEGAErrorTypeApiEIncomplete) {
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
             NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-            NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
-            if (indexPath != nil) {
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-            }
+            [self reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
         }
         return;
     }
     
     if ([transfer type] == MEGATransferTypeDownload) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-        NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
-        if (indexPath != nil) {
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        }
+        [self reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
     }
 }
 
@@ -1857,7 +1853,9 @@
     switch (action) {
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-            [node mnz_downloadNodeOverwriting:NO];
+            if ([node mnz_downloadNodeOverwriting:NO]) {
+                [self reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:node.base64Handle]];
+            }
             break;
             
         case MegaNodeActionTypeCopy:

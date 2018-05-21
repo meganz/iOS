@@ -29,6 +29,8 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 + (NSString *)mnz_stringFromTimeInterval:(NSTimeInterval)interval;
 
+- (NSString*)SHA256;
+
 - (BOOL)mnz_containsEmoji;
 - (BOOL)mnz_isPureEmojiString;
 - (NSInteger)mnz_emojiCount;
