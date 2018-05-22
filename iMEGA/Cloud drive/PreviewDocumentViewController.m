@@ -40,6 +40,7 @@
 @property (nonatomic) NSString *nodeFilePath;
 @property (nonatomic) NSCache<NSNumber *, UIImage *> *thumbnailCache;
 @property (nonatomic) BOOL thumbnailsPopulated;
+@property (nonatomic, getter=isSearchTapped) BOOL searchTapped;
 @property (nonatomic) PDFSelection *searchedItem NS_AVAILABLE_IOS(11.0);
 
 @end
@@ -69,6 +70,8 @@
             MEGALogError(@"Create directory at path failed with error: %@", error);
         }
     }
+    
+    _searchTapped = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -91,12 +94,14 @@
         }
     }
     
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor}];
-    [[UINavigationBar appearance] setTintColor:UIColor.whiteColor];
-    [[UINavigationBar appearance] setBarTintColor:UIColor.mnz_redF0373A];
-    [[UINavigationBar appearance] setTranslucent:NO];
-    [[UIToolbar appearance] setTintColor:UIColor.mnz_redF0373A];
-    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:UIColor.whiteColor];
+    if (!self.isSearchTapped) {
+        [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor}];
+        [[UINavigationBar appearance] setTintColor:UIColor.whiteColor];
+        [[UINavigationBar appearance] setBarTintColor:UIColor.mnz_redF0373A];
+        [[UINavigationBar appearance] setTranslucent:NO];
+        [[UIToolbar appearance] setTintColor:UIColor.mnz_redF0373A];
+        [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:UIColor.whiteColor];
+    }
 
     [super viewWillDisappear:animated];
 }
@@ -394,6 +399,8 @@
     searchInPdfVC.pdfDocument = self.pdfView.document;
     searchInPdfVC.delegate = self;
     [self presentViewController:searchInPdfNavigation animated:YES completion:nil];
+    
+    self.searchTapped = YES;
 }
 
 - (void)loadPdfKit:(NSURL *)url {
