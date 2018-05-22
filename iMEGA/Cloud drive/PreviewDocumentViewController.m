@@ -283,6 +283,18 @@
         return;
     }
     
+    if (@available(iOS 11.0, *)) {
+        if ([transfer.path.pathExtension isEqualToString:@"pdf"]) {
+            [self loadPdfKit:[NSURL fileURLWithPath:transfer.path]];
+        } else {
+            [self presentMEGAQlPreviewController];
+        }
+    } else {
+        [self presentMEGAQlPreviewController];
+    }
+}
+
+- (void)presentMEGAQlPreviewController {
     MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentTransfer.path];
     [previewController setModalPresentationStyle:UIModalPresentationCustom];
     [previewController setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
