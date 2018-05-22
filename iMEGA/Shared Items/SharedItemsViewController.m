@@ -14,7 +14,7 @@
 #import "NSMutableArray+MNZCategory.h"
 
 #import "BrowserViewController.h"
-#import "CloudDriveTableViewController.h"
+#import "CloudDriveViewController.h"
 #import "ContactsViewController.h"
 #import "SharedItemsTableViewCell.h"
 #import "CustomActionViewController.h"
@@ -822,7 +822,7 @@
 
     switch ([node type]) {
         case MEGANodeTypeFolder: {
-            CloudDriveTableViewController *cloudTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            CloudDriveViewController *cloudTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             [cloudTVC setParentNode:node];
             [cloudTVC setDisplayMode:DisplayModeCloudDrive];
             
@@ -952,7 +952,7 @@
         }
     }
     
-    CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+    CloudDriveViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
     cloudDriveTVC.parentNode = node;
     cloudDriveTVC.displayMode = DisplayModeCloudDrive;
     cloudDriveTVC.incomingShareChildView = (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0);
@@ -1183,7 +1183,7 @@
         [navigation popToRootViewControllerAnimated:NO];
         
         for (MEGANode *node in parentTreeArray) {
-            CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            CloudDriveViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             cloudDriveTVC.parentNode = node;
             [navigation pushViewController:cloudDriveTVC animated:NO];
         }
@@ -1191,7 +1191,7 @@
         switch (node.type) {
             case MEGANodeTypeFolder:
             case MEGANodeTypeRubbish: {
-                CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                CloudDriveViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
                 cloudDriveTVC.parentNode = node;
                 [navigation pushViewController:cloudDriveTVC animated:NO];
                 break;

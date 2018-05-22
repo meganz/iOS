@@ -4,7 +4,7 @@
 #import "AchievementsViewController.h"
 #import "ContactsViewController.h"
 #import "MEGAContactLinkCreateRequestDelegate.h"
-#import "OfflineTableViewController.h"
+#import "OfflineViewController.h"
 #import "MEGANavigationController.h"
 #import "MEGAPurchase.h"
 #import "MEGASdk+MNZCategory.h"
@@ -296,7 +296,7 @@
         }
             
         case 4: { //Offline
-            OfflineTableViewController *offlineTVC = [[UIStoryboard storyboardWithName:@"Offline" bundle:nil] instantiateViewControllerWithIdentifier:@"OfflineTableViewControllerID"];
+            OfflineViewController *offlineTVC = [[UIStoryboard storyboardWithName:@"Offline" bundle:nil] instantiateViewControllerWithIdentifier:@"OfflineViewControllerID"];
             [self.navigationController pushViewController:offlineTVC animated:YES];
             break;
         }

@@ -966,7 +966,6 @@ static MEGAIndexer *indexer;
     searchController.searchBar.translucent = NO;
     searchController.searchBar.barTintColor = UIColor.mnz_grayFCFCFC;
     searchController.searchBar.tintColor = UIColor.mnz_redF0373A;
-    searchController.searchBar.backgroundImage = [[UIImage alloc] init];
     
     UITextField *searchTextField = [searchController.searchBar valueForKey:@"_searchField"];
     searchTextField.font = [UIFont mnz_SFUIRegularWithSize:17.0f];

@@ -17,7 +17,6 @@
 #import "MainTabBarController.h"
 #import "BrowserViewController.h"
 #import "UnavailableLinkView.h"
-#import "OfflineTableViewController.h"
 #import "NodeTableViewCell.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
