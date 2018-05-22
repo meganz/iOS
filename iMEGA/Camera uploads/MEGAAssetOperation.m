@@ -92,10 +92,12 @@
         NSString *name = filePath.lastPathComponent;
         NSString *newName = [self newNameForName:name];
         
-        NSString *appData = nil;
+        NSString *appData = [NSString new];
         if (self.automatically) {
-            appData = [NSString stringWithFormat:@"CU=%ld", [[[CameraUploads syncManager] assetsOperationQueue] operationCount]];
+            appData = [appData mnz_appDataToSaveCameraUploadsCount:[[[CameraUploads syncManager] assetsOperationQueue] operationCount]];
         }
+        
+        appData = [appData mnz_appDataToSaveCoordinates:[NSString mnz_coordinatesOfPHAsset:self.phasset]];
         
         if (![name isEqualToString:newName]) {
             NSString *newFilePath = [self.uploadsDirectory stringByAppendingPathComponent:newName];
@@ -105,9 +107,9 @@
             if (![[NSFileManager defaultManager] moveItemAtPath:absoluteFilePath toPath:newFilePath error:&error]) {
                 MEGALogError(@"Move item at path failed with error: %@", error);
             }
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[newFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:appData isSourceTemporary:NO delegate:self];
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[newFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:appData isSourceTemporary:YES delegate:self];
         } else {
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:appData isSourceTemporary:NO delegate:self];
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:appData isSourceTemporary:YES delegate:self];
         }
     } node:^(MEGANode *node) {
         if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == self.parentNode.handle) {
@@ -268,8 +270,6 @@
     
     if ([transfer type] == MEGATransferTypeUpload) {
         [self completeOperation];
-        [transfer mnz_setCoordinatesWithApi:api];
-        [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] error:nil];
     }
     
     if (![[[CameraUploads syncManager] assetsOperationQueue] operationCount] && self.automatically) {

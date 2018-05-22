@@ -563,7 +563,8 @@ static MEGAIndexer *indexer;
                     NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
                     downloadsDirectory = [downloadsDirectory stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
                     relativeFilePath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
-                    appData = @"SaveInPhotosApp";
+                    
+                    appData = [[NSString new] mnz_appDataToSaveInPhotosApp];
                 }
                 [[MEGASdkManager sharedMEGASdk] startDownloadNode:[api authorizeNode:node] localPath:relativeFilePath appData:appData];
             }
