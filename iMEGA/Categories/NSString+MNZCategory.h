@@ -1,6 +1,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class PHAsset;
+
 typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 @interface NSString (MNZCategory)
@@ -11,6 +13,16 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 @property (nonatomic, readonly, getter=mnz_isImagePathExtension) BOOL mnz_imagePathExtension;
 @property (nonatomic, readonly, getter=mnz_isVideoPathExtension) BOOL mnz_videoPathExtension;
 @property (nonatomic, readonly, getter=mnz_isMultimediaPathExtension) BOOL mnz_multimediaPathExtension;
+
+#pragma mark - appData
+
+- (NSString *)mnz_appDataToSaveCameraUploadsCount:(NSUInteger)operationCount;
+- (NSString *)mnz_appDataToGenerateThumbnailAndPreview;
+- (NSString *)mnz_appDataToSaveInPhotosApp;
+- (NSString *)mnz_appDataToAttachToChatID:(uint64_t)chatId;
+- (NSString *)mnz_appDataToSaveCoordinates:(NSString *)coordinates;
+
+#pragma mark - Utils
 
 + (NSString *)mnz_stringWithoutUnitOfComponents:(NSArray *)componentsSeparatedByStringArray;
 + (NSString *)mnz_stringWithoutCountOfComponents:(NSArray *)componentsSeparatedByStringArray;
@@ -34,5 +46,8 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 - (BOOL)mnz_containsEmoji;
 - (BOOL)mnz_isPureEmojiString;
 - (NSInteger)mnz_emojiCount;
+
++ (NSString *)mnz_coordinatesOfPHAsset:(PHAsset *)phasset;
+- (NSString *)mnz_coordinatesOfPhotoOrVideo;
 
 @end

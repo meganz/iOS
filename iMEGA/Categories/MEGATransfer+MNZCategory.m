@@ -1,46 +1,132 @@
 
 #import "MEGATransfer+MNZCategory.h"
 
-#import <AVKit/AVKit.h>
+#import <Photos/Photos.h>
 
+#import "CameraUploads.h"
+#import "Helper.h"
+#import "MEGANode+MNZCategory.h"
+#import "MEGASdkManager.h"
+#import "MEGAReachabilityManager.h"
 #import "NSString+MNZCategory.h"
 
 @implementation MEGATransfer (MNZCategory)
 
-- (void)mnz_setCoordinatesWithApi:(MEGASdk *)api {
-    MEGANode *node = [api nodeForHandle:self.nodeHandle];
-    if (self.fileName.mnz_isImagePathExtension && (!node.latitude || !node.longitude)) {
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:self.path]]];
-        CGImageSourceRef imageData = CGImageSourceCreateWithData((CFDataRef)data, NULL);
-        if (imageData) {
-            NSDictionary *metadata = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imageData, 0, NULL);
-            NSDictionary *exifDictionary = [metadata objectForKey:(NSString *)kCGImagePropertyGPSDictionary];
-            
-            if(exifDictionary) {
-                NSNumber *latitude = [exifDictionary objectForKey:@"Latitude"];
-                NSNumber *longitude = [exifDictionary objectForKey:@"Longitude"];
-                if (latitude && longitude) {
-                    [api setNodeCoordinates:node latitude:latitude longitude:longitude];
-                }
-            }
-            
-            CFRelease(imageData);
-            return;
-        }
+- (void)mnz_parseAppData {
+    if (!self.appData) {
+        return;
     }
     
-    if (self.fileName.mnz_isVideoPathExtension && (!node.latitude || !node.longitude)) {
-        AVAsset *asset = [AVAsset assetWithURL:[NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:self.path]]];
-        for (AVMetadataItem *item in asset.metadata) {
-            if ([item.commonKey isEqualToString:AVMetadataCommonKeyLocation]) {
-                NSString *latlon = item.stringValue;
-                NSString *latitude  = [latlon substringToIndex:8];
-                NSString *longitude = [latlon substringWithRange:NSMakeRange(8, 9)];
-                if (latitude && longitude) {
-                    [api setNodeCoordinates:node latitude:@(latitude.doubleValue) longitude:@(longitude.doubleValue)];
-                    return;
-                }
+    NSArray *appDataComponentsArray = [self.appData componentsSeparatedByString:@">"];
+    if (appDataComponentsArray.count) {
+        for (NSString *appDataComponent in appDataComponentsArray) {
+            NSArray *appDataComponentComponentsArray = [appDataComponent componentsSeparatedByString:@"="];
+            NSString *appDataType = appDataComponentComponentsArray.firstObject;
+            
+            if ([appDataType isEqualToString:@"generate_fa"]) {
+                [self mnz_generateFileAttributes];
             }
+            
+            if ([appDataType isEqualToString:@"SaveInPhotosApp"]) {
+                [self mnz_saveInPhotosApp];
+            }
+            
+            if ([appDataType isEqualToString:@"attachToChatID"]) {
+                NSString *tempAppDataComponent = [appDataComponent stringByReplacingOccurrencesOfString:@"!" withString:@""];
+                [self mnz_attachtToChatID:tempAppDataComponent];
+            }
+            
+            if ([appDataType isEqualToString:@"setCoordinates"]) {
+                [self mnz_setCoordinates:appDataComponent];
+            }
+        }
+    }
+}
+
+- (void)mnz_cancelPendingCUTransfer {
+    if ([self.appData containsString:@"CU"]) {
+        if ([CameraUploads syncManager].isCameraUploadsEnabled) {
+            if (![CameraUploads syncManager].isUseCellularConnectionEnabled && [MEGAReachabilityManager isReachableViaWWAN]) {
+                [[MEGASdkManager sharedMEGASdk] cancelTransfer:self];
+            }
+        } else {
+            [[MEGASdkManager sharedMEGASdk] cancelTransfer:self];
+        }
+    }
+}
+
+- (void)mnz_cancelPendingCUVideoTransfer {
+    if ([self.appData containsString:@"CU"]) {
+        if ([CameraUploads syncManager].isCameraUploadsEnabled) {
+            if (self.fileName.mnz_isVideoPathExtension) {
+                [[MEGASdkManager sharedMEGASdk] cancelTransfer:self];
+            }
+        }
+    }
+}
+
+- (void)mnz_generateFileAttributes {
+    MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];
+    
+    NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
+    BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
+    if (!thumbnailExists) {
+        [[MEGASdkManager sharedMEGASdk] createThumbnail:[NSHomeDirectory() stringByAppendingPathComponent:self.path] destinatioPath:thumbnailFilePath];
+    }
+    
+    NSString *previewFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
+    BOOL previewExists = [[NSFileManager defaultManager] fileExistsAtPath:previewFilePath];
+    if (!previewExists) {
+        [[MEGASdkManager sharedMEGASdk] createPreview:[NSHomeDirectory() stringByAppendingPathComponent:self.path] destinatioPath:previewFilePath];
+    }
+    
+    [self mnz_setNodeCoordinates];
+}
+
+- (void)mnz_saveInPhotosApp {
+    [self mnz_setNodeCoordinates];
+    
+    MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];
+    [node mnz_copyToGalleryFromTemporaryPath:[NSHomeDirectory() stringByAppendingPathComponent:self.path]];
+}
+
+- (void)mnz_attachtToChatID:(NSString *)attachToChatID {
+    NSArray *appDataComponentComponentsArray = [attachToChatID componentsSeparatedByString:@"="];
+    NSString *chatID = [appDataComponentComponentsArray objectAtIndex:1];
+    unsigned long long chatIdUll = strtoull(chatID.UTF8String, NULL, 0);
+    [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:self.nodeHandle];
+}
+
+- (void)mnz_setNodeCoordinates {
+    if (self.fileName.mnz_isImagePathExtension || self.fileName.mnz_isImagePathExtension) {
+        MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];
+        if (node.latitude && node.longitude) {
+            return;
+        }
+        
+        if (self.type == MEGATransferTypeDownload) {
+            NSString *coordinates = [[NSString new] mnz_appDataToSaveCoordinates:self.path.mnz_coordinatesOfPhotoOrVideo];
+            if (!coordinates.mnz_isEmpty) {
+                [self mnz_setCoordinates:coordinates];
+            }
+        } else {
+            [self mnz_parseAppData];
+        }
+    }
+}
+
+#pragma mark - Private
+
+- (void)mnz_setCoordinates:(NSString *)coordinates {
+    NSArray *appDataComponentComponentsArray = [coordinates componentsSeparatedByString:@"="];
+    NSString *appDataSecondComponentComponentsString = [appDataComponentComponentsArray objectAtIndex:1];
+    NSArray *setCoordinatesComponentsArray = [appDataSecondComponentComponentsString componentsSeparatedByString:@"&"];
+    if (setCoordinatesComponentsArray.count == 2) {
+        NSString *latitude = [setCoordinatesComponentsArray objectAtIndex:0];
+        NSString *longitude = [setCoordinatesComponentsArray objectAtIndex:1];
+        if (latitude && longitude) {
+            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];
+            [[MEGASdkManager sharedMEGASdk] setNodeCoordinates:node latitude:latitude.doubleValue longitude:longitude.doubleValue];
         }
     }
 }

@@ -671,14 +671,14 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     if (sourceType == UIImagePickerControllerSourceTypeCamera) {
         MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToShareThroughChatWithSourceType:sourceType filePathCompletion:^(NSString *filePath, UIImagePickerControllerSourceType sourceType) {
             MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-            [self startUploadAndAttachWithPath:filePath parentNode:parentNode];
+            [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:nil];
         }];
         
         [self presentViewController:imagePickerController animated:YES completion:nil];
     }
 }
 
-- (void)startUploadAndAttachWithPath:(NSString *)path parentNode:(MEGANode *)parentNode {
+- (void)startUploadAndAttachWithPath:(NSString *)path parentNode:(MEGANode *)parentNode appData:(NSString *)appData {
     [self showProgressViewUnderNavigationBar];
     
     MEGAStartUploadTransferDelegate *startUploadTransferDelegate = [[MEGAStartUploadTransferDelegate alloc] initToUploadToChatWithTotalBytes:^(MEGATransfer *transfer) {
@@ -710,13 +710,14 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         if (self.remainingBytesToUpload == 0) {
             [self resetAndHideProgressView];
         }
-        
-        [transfer mnz_setCoordinatesWithApi:[MEGASdkManager sharedMEGASdk]];
-        [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] error:nil];
     }];
     
-    NSString *appData = [NSString stringWithFormat:@"attachToChatID=%llu", self.chatRoom.chatId];
-    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:path parent:parentNode appData:appData isSourceTemporary:NO delegate:startUploadTransferDelegate];
+    if (!appData) {
+        appData = [NSString new];
+    }
+    appData = [appData mnz_appDataToAttachToChatID:self.chatRoom.chatId];
+    
+    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:path parent:parentNode appData:appData isSourceTemporary:YES delegate:startUploadTransferDelegate];
 }
 
 - (void)attachOrCopyAndAttachNode:(MEGANode *)node toParentNode:(MEGANode *)parentNode {
@@ -985,7 +986,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 - (void)uploadAssets:(NSArray<PHAsset *> *)assets toParentNode:(MEGANode *)parentNode {
     for (PHAsset *asset in assets) {
         MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initToShareThroughChatWithAsset:asset filePath:^(NSString *filePath) {
-            [self startUploadAndAttachWithPath:filePath parentNode:parentNode];
+            NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:[NSString mnz_coordinatesOfPHAsset:asset]];
+            [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:appData];
         } node:^(MEGANode *node) {
             [self attachOrCopyAndAttachNode:node toParentNode:parentNode];
         } error:^(NSError *error) {

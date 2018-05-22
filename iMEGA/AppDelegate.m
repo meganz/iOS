@@ -2029,23 +2029,11 @@ void uncaughtExceptionHandler(NSException *exception) {
         } else {
             for (NSInteger i = 0; i < transferList.size.integerValue; i++) {
                 MEGATransfer *transfer = [transferList transferAtIndex:i];
-                if (transfer.appData) {
-                    NSArray *appDataComponentsArray = [transfer.appData componentsSeparatedByString:@"="];
-                    NSString *appDataFirstComponentString = [appDataComponentsArray objectAtIndex:0];
-                    if ([appDataFirstComponentString isEqualToString:@"CU"]) {
-                        if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-                            if (![CameraUploads syncManager].isUseCellularConnectionEnabled && [MEGAReachabilityManager isReachableViaWWAN]) {
-                                [api cancelTransfer:transfer];
-                            } else {
-                                MEGALogInfo(@"Camera Upload should be delayed");
-                                [CameraUploads syncManager].shouldCameraUploadsBeDelayed = YES;
-                            }
-                        } else {
-                            [api cancelTransfer:transfer];
-                        }
-                        break;
-                    }
-                    break;
+                [transfer mnz_cancelPendingCUTransfer];
+                
+                if ([transfer.appData containsString:@"CU"] && [CameraUploads syncManager].isCameraUploadsEnabled && [CameraUploads syncManager].isUseCellularConnectionEnabled && ![MEGAReachabilityManager isReachableViaWWAN]) {
+                    MEGALogInfo(@"Camera Upload should be delayed");
+                    [CameraUploads syncManager].shouldCameraUploadsBeDelayed = YES;
                 }
             }
         }
@@ -2582,13 +2570,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     if (transfer.type == MEGATransferTypeUpload) {
-        if (transfer.appData) {
-            NSArray *appDataComponentsArray = [transfer.appData componentsSeparatedByString:@"="];
-            NSString *appDataFirstComponentString = [appDataComponentsArray objectAtIndex:0];
-            if ([appDataFirstComponentString isEqualToString:@"CU"] && ![CameraUploads syncManager].isUseCellularConnectionEnabled && [MEGAReachabilityManager isReachableViaWWAN]) {
-                [api cancelTransfer:transfer];
-            }
-        }
+        [transfer mnz_cancelPendingCUTransfer];
     }
 }
 
@@ -2666,28 +2648,14 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
         }
         
-        NSArray *appDataComponentsArray = [transfer.appData componentsSeparatedByString:@"="];
-        NSString *appDataFirstComponentString = [appDataComponentsArray objectAtIndex:0];
-        if ([appDataFirstComponentString isEqualToString:@"attachToChatID"]) {
+        if ([transfer.appData containsString:@"attachToChatID"]) {
             if (error.type == MEGAErrorTypeApiEExist) {
                 MEGALogInfo(@"Transfer has started with exactly the same data (local path and target parent). File: %@", transfer.fileName);
                 return;
             }
-            
-            if (appDataComponentsArray.count > 2) {
-                NSArray *multipleAppDataComponentsArray = [transfer.appData componentsSeparatedByString:@"!"];
-                for (NSString *attachToChatID in multipleAppDataComponentsArray) {
-                    NSArray *attachToChatIDComponentsArray = [attachToChatID componentsSeparatedByString:@"="];
-                    NSString *chatID = [attachToChatIDComponentsArray objectAtIndex:1];
-                    unsigned long long chatIdUll = strtoull(chatID.UTF8String, NULL, 0);
-                    [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:transfer.nodeHandle];
-                }
-            } else {
-                NSString *chatID = [appDataComponentsArray objectAtIndex:1];
-                unsigned long long chatIdUll = strtoull(chatID.UTF8String, NULL, 0);
-                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:transfer.nodeHandle];
-            }
         }
+        
+        [transfer mnz_parseAppData];
     }
     
     if (error.type) {
@@ -2711,26 +2679,13 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     if ([transfer type] == MEGATransferTypeDownload) {
         // Don't add to the database files saved in others applications
-        if ([transfer.appData isEqualToString:@"SaveInPhotosApp"]) {
-            [node mnz_copyToGalleryFromTemporaryPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path]];
+        if ([transfer.appData containsString:@"SaveInPhotosApp"]) {
+            [transfer mnz_saveInPhotosApp];
             return;
         }
         
-        if ([transfer.appData isEqualToString:@"generate_fa"]) {
-            NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
-            BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
-            
-            if (!thumbnailExists) {
-                [api createThumbnail:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] destinatioPath:thumbnailFilePath];
-            }
-            
-            NSString *previewFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
-            BOOL previewExists = [[NSFileManager defaultManager] fileExistsAtPath:previewFilePath];
-            
-            if (!previewExists) {
-                [api createPreview:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] destinatioPath:previewFilePath];
-            }
-            
+        if ([transfer.appData containsString:@"generate_fa"]) {
+            [transfer mnz_generateFileAttributes];
             return;
         }
         
@@ -2749,7 +2704,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             [node mnz_generateThumbnailForVideoAtPath:videoURL];
         }
         
-        [transfer mnz_setCoordinatesWithApi:api];
+        [transfer mnz_setNodeCoordinates];
     }
 }
 

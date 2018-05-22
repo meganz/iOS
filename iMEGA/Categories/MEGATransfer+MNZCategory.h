@@ -3,6 +3,13 @@
 
 @interface MEGATransfer (MNZCategory)
 
-- (void)mnz_setCoordinatesWithApi:(MEGASdk *)api;
+- (void)mnz_parseAppData;
+
+- (void)mnz_cancelPendingCUTransfer;
+- (void)mnz_cancelPendingCUVideoTransfer;
+- (void)mnz_generateFileAttributes;
+- (void)mnz_saveInPhotosApp;
+- (void)mnz_attachtToChatID:(NSString *)attachToChatID;
+- (void)mnz_setNodeCoordinates;
 
 @end
