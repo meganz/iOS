@@ -2395,6 +2395,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         case MEGARequestTypeLogout: {            
             [Helper logout];
             [SVProgressHUD dismiss];
+            [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
             
             if (self.messageForSuspendedAccount) {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:self.messageForSuspendedAccount preferredStyle:UIAlertControllerStyleAlert];
