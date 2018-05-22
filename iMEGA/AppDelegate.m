@@ -36,7 +36,7 @@
 #import "ChangePasswordViewController.h"
 #import "ChatRoomsViewController.h"
 #import "CheckEmailAndFollowTheLinkViewController.h"
-#import "CloudDriveTableViewController.h"
+#import "CloudDriveViewController.h"
 #import "ConfirmAccountViewController.h"
 #import "ContactRequestsViewController.h"
 #import "ContactsViewController.h"
@@ -50,7 +50,6 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "MessagesViewController.h"
 #import "MyAccountHallViewController.h"
-#import "OfflineTableViewController.h"
 #import "SecurityOptionsTableViewController.h"
 #import "SettingsTableViewController.h"
 #import "SharedItemsViewController.h"
@@ -1147,7 +1146,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([type isEqualToString:@"mega.ios.search"]) {
         self.mainTBC.selectedIndex = CLOUD;
         MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:CLOUD];
-        CloudDriveTableViewController *cloudDriveTVC = navigationController.viewControllers.firstObject;
+        CloudDriveViewController *cloudDriveTVC = navigationController.viewControllers.firstObject;
         if (self.quickActionType) { //Coming from didFinishLaunchingWithOptions
             if ([LTHPasscodeViewController doesPasscodeExist]) {
                 [cloudDriveTVC activateSearch]; // Cloud Drive already presented, so activate search bar
@@ -1160,7 +1159,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     } else if ([type isEqualToString:@"mega.ios.upload"]) {
         self.mainTBC.selectedIndex = CLOUD;
         MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:CLOUD];
-        CloudDriveTableViewController *cloudDriveTVC = navigationController.viewControllers.firstObject;
+        CloudDriveViewController *cloudDriveTVC = navigationController.viewControllers.firstObject;
         [cloudDriveTVC presentUploadAlertController];
     } else if ([type isEqualToString:@"mega.ios.offline"]) {
         [self showOffline];
@@ -1523,7 +1522,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     NSArray *parentTreeArray = node.mnz_parentTreeArray;
     for (MEGANode *node in parentTreeArray) {
-        CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+        CloudDriveViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
         cloudDriveTVC.parentNode = node;
         [navigationController pushViewController:cloudDriveTVC animated:NO];
     }
@@ -1531,7 +1530,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     switch (node.type) {
         case MEGANodeTypeFolder:
         case MEGANodeTypeRubbish: {
-            CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            CloudDriveViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             cloudDriveTVC.parentNode = node;
             [navigationController pushViewController:cloudDriveTVC animated:NO];
             break;

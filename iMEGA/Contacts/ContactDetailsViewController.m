@@ -10,7 +10,7 @@
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
 
 #import "BrowserViewController.h"
-#import "CloudDriveTableViewController.h"
+#import "CloudDriveViewController.h"
 #import "ChatRoomsViewController.h"
 #import "CustomActionViewController.h"
 #import "ContactTableViewCell.h"
@@ -360,7 +360,7 @@
             }
         }
     } else if (indexPath.section == 1) { //Show incoming shared folder contents
-        CloudDriveTableViewController *cloudTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+        CloudDriveViewController *cloudTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
         MEGANode *incomingNode = [self.incomingNodeListForUser nodeAtIndex:indexPath.row];
         cloudTVC.parentNode = incomingNode;
         cloudTVC.displayMode = DisplayModeCloudDrive;
