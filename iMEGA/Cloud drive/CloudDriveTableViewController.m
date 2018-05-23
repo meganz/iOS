@@ -1096,7 +1096,31 @@
             [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL permissionGranted) {
                 if (permissionGranted) {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+                            switch (status) {
+                                case PHAuthorizationStatusNotDetermined:
+                                    break;
+                                case PHAuthorizationStatusAuthorized: {
+                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                                    });
+                                    break;
+                                }
+                                case PHAuthorizationStatusRestricted: {
+                                    break;
+                                }
+                                case PHAuthorizationStatusDenied:{
+                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+                                        [[NSUserDefaults standardUserDefaults] synchronize];
+                                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                                    });
+                                    break;
+                                }
+                                default:
+                                    break;
+                            }
+                        }];
                     });
                 } else {
                     dispatch_async(dispatch_get_main_queue(), ^{

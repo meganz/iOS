@@ -3,6 +3,7 @@
 
 #import <AVFoundation/AVCaptureDevice.h>
 #import <AVFoundation/AVMediaFormat.h>
+#import <Photos/Photos.h>
 
 #import "SVProgressHUD.h"
 
@@ -119,7 +120,31 @@
                 if (permissionGranted) {
                     // Permission has been granted. Use dispatch_async for any UI updating code because this block may be executed in a thread.
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+                            switch (status) {
+                                case PHAuthorizationStatusNotDetermined:
+                                    break;
+                                case PHAuthorizationStatusAuthorized: {
+                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                                    });
+                                    break;
+                                }
+                                case PHAuthorizationStatusRestricted: {
+                                    break;
+                                }
+                                case PHAuthorizationStatusDenied:{
+                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+                                        [[NSUserDefaults standardUserDefaults] synchronize];
+                                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                                    });
+                                    break;
+                                }
+                                default:
+                                    break;
+                            }
+                        }];
                     });
                 } else {
                     dispatch_async(dispatch_get_main_queue(), ^{
