@@ -296,8 +296,8 @@
         }
             
         case 4: { //Offline
-            OfflineViewController *offlineTVC = [[UIStoryboard storyboardWithName:@"Offline" bundle:nil] instantiateViewControllerWithIdentifier:@"OfflineViewControllerID"];
-            [self.navigationController pushViewController:offlineTVC animated:YES];
+            OfflineViewController *offlineVC = [[UIStoryboard storyboardWithName:@"Offline" bundle:nil] instantiateViewControllerWithIdentifier:@"OfflineViewControllerID"];
+            [self.navigationController pushViewController:offlineVC animated:YES];
             break;
         }
             

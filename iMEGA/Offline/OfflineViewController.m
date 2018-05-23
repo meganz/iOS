@@ -24,7 +24,7 @@ static NSString *kModificationDate = @"kModificationDate";
 static NSString *kFileSize = @"kFileSize";
 static NSString *kisDirectory = @"kisDirectory";
 
-@interface OfflineViewController ()<UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, MGSwipeTableCellDelegate, UITableViewDataSource, UITableViewDelegate> {
+@interface OfflineViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, MGSwipeTableCellDelegate, UITableViewDataSource, UITableViewDelegate> {
     NSString *previewDocumentPath;
     BOOL allItemsSelected;
     BOOL isSwipeEditing;
@@ -637,14 +637,14 @@ static NSString *kisDirectory = @"kisDirectory";
     if (isDirectory) {
         NSString *folderPathFromOffline = [self folderPathFromOffline:previewDocumentPath folder:[cell itemNameString]];
         
-        OfflineViewController *offlineTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineViewControllerID"];
-        [offlineTVC setFolderPathFromOffline:folderPathFromOffline];
+        OfflineViewController *offlineVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineViewControllerID"];
+        [offlineVC setFolderPathFromOffline:folderPathFromOffline];
         if (self.searchController.isActive) {
             [self.searchController dismissViewControllerAnimated:YES completion:^{
-                [self.navigationController pushViewController:offlineTVC animated:YES];
+                [self.navigationController pushViewController:offlineVC animated:YES];
             }];
         } else {
-            [self.navigationController pushViewController:offlineTVC animated:YES];
+            [self.navigationController pushViewController:offlineVC animated:YES];
         }
     } else if (previewDocumentPath.mnz_isMultimediaPathExtension) {
         MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
@@ -935,11 +935,11 @@ static NSString *kisDirectory = @"kisDirectory";
     if (isDirectory) {
         NSString *folderPathFromOffline = [self folderPathFromOffline:previewDocumentPath folder:cell.itemNameString];
         
-        OfflineViewController *offlineTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineViewControllerID"];
-        offlineTVC.folderPathFromOffline = folderPathFromOffline;
-        offlineTVC.peekIndexPath = indexPath;
+        OfflineViewController *offlineVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineViewControllerID"];
+        offlineVC.folderPathFromOffline = folderPathFromOffline;
+        offlineVC.peekIndexPath = indexPath;
         
-        return offlineTVC;
+        return offlineVC;
     } else if (previewDocumentPath.mnz_isMultimediaPathExtension) {
         MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
         return megaAVViewController;
@@ -969,8 +969,8 @@ static NSString *kisDirectory = @"kisDirectory";
     UIPreviewAction *deleteAction = [UIPreviewAction actionWithTitle:AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder")
                                                                style:UIPreviewActionStyleDestructive
                                                              handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
-                                                                 OfflineViewController *offlineTVC = (OfflineViewController *)previewViewController;
-                                                                 [offlineTVC tableView:offlineTVC.tableView commitEditingStyle:UITableViewCellEditingStyleDelete forRowAtIndexPath:offlineTVC.peekIndexPath];
+                                                                 OfflineViewController *offlineVC = (OfflineViewController *)previewViewController;
+                                                                 [offlineVC tableView:offlineVC.tableView commitEditingStyle:UITableViewCellEditingStyleDelete forRowAtIndexPath:offlineVC.peekIndexPath];
                                                              }];
     
     return @[deleteAction];

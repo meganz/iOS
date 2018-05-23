@@ -44,7 +44,7 @@
 
 #import "NodeInfoViewController.h"
 
-@interface CloudDriveViewController ()<UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITableViewDelegate, UITableViewDataSource> {
+@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITableViewDelegate, UITableViewDataSource> {
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
     
@@ -479,12 +479,12 @@
     
     switch (node.type) {
         case MEGANodeTypeFolder: {
-            CloudDriveViewController *cloudDriveTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveTVC.parentNode = node;
+            CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveVC.parentNode = node;
             if (self.displayMode == DisplayModeRubbishBin) {
-                cloudDriveTVC.displayMode = self.displayMode;
+                cloudDriveVC.displayMode = self.displayMode;
             }
-            return cloudDriveTVC;
+            return cloudDriveVC;
             break;
         }
             
@@ -524,19 +524,19 @@
     [UIPreviewAction actionWithTitle:AMLocalizedString(@"saveForOffline", @"List option shown on the details of a file or folder")
                                style:UIPreviewActionStyleDefault
                              handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
-                                 CloudDriveViewController *cloudDriveTVC = (CloudDriveViewController *)previewViewController;
+                                 CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
                                  self.selectedNodesArray = [NSMutableArray new];
-                                 [self.selectedNodesArray addObject:cloudDriveTVC.parentNode];
+                                 [self.selectedNodesArray addObject:cloudDriveVC.parentNode];
                                  [self downloadAction:nil];
                              }];
     
     UIPreviewAction *copyAction = [UIPreviewAction actionWithTitle:AMLocalizedString(@"copy", @"List option shown on the details of a file or folder")
                                                              style:UIPreviewActionStyleDefault
                                                            handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
-                                                               CloudDriveViewController *cloudDriveTVC = (CloudDriveViewController *)previewViewController;
+                                                               CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
                                                                MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
                                                                BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-                                                               browserVC.selectedNodesArray = @[cloudDriveTVC.parentNode];
+                                                               browserVC.selectedNodesArray = @[cloudDriveVC.parentNode];
                                                                browserVC.browserAction = BrowserActionCopy;
                                                                [rootViewController presentViewController:navigationController animated:YES completion:nil];
                                                            }];
@@ -560,8 +560,8 @@
     [UIPreviewAction actionWithTitle:deletePreviewActionTitle
                                style:UIPreviewActionStyleDestructive
                              handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
-                                 CloudDriveViewController *cloudDriveTVC = (CloudDriveViewController *)previewViewController;
-                                 MEGANode *parentNode = cloudDriveTVC.parentNode;
+                                 CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
+                                 MEGANode *parentNode = cloudDriveVC.parentNode;
                                  MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:parentNode];
                                  if (accessType == MEGAShareTypeAccessOwner) {
                                      if (self.displayMode == DisplayModeCloudDrive) {
@@ -614,9 +614,9 @@
                 UIPreviewAction *leaveShareAction = [UIPreviewAction actionWithTitle:AMLocalizedString(@"leave", @"A button label. The button allows the user to leave the group conversation.")
                                                                                style:UIPreviewActionStyleDestructive
                                                                              handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
-                                                                                 CloudDriveViewController *cloudDriveTVC = (CloudDriveViewController *)previewViewController;
+                                                                                 CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
                                                                                  
-                                                                                 NSString *alertMessage = (cloudDriveTVC.selectedNodesArray.count > 1) ? AMLocalizedString(@"leaveSharesAlertMessage", @"Alert message shown when the user tap on the leave share action selecting multipe inshares") : AMLocalizedString(@"leaveShareAlertMessage", @"Alert message shown when the user tap on the leave share action for one inshare");
+                                                                                 NSString *alertMessage = (cloudDriveVC.selectedNodesArray.count > 1) ? AMLocalizedString(@"leaveSharesAlertMessage", @"Alert message shown when the user tap on the leave share action selecting multipe inshares") : AMLocalizedString(@"leaveShareAlertMessage", @"Alert message shown when the user tap on the leave share action for one inshare");
                                                                                  UIAlertController *leaveAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"leaveFolder", @"Button title of the action that allows to leave a shared folder") message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
                                                                                  [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
                                                                                  
@@ -638,18 +638,18 @@
             UIPreviewAction *shareAction = [UIPreviewAction actionWithTitle:AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected ")
                                                                       style:UIPreviewActionStyleDefault
                                                                     handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
-                                                                        CloudDriveViewController *cloudDriveTVC = (CloudDriveViewController *)previewViewController;
-                                                                        UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[cloudDriveTVC.parentNode] button:nil];
+                                                                        CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
+                                                                        UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[cloudDriveVC.parentNode] button:nil];
                                                                         [rootViewController presentViewController:activityVC animated:YES completion:nil];
                                                                     }];
             
             UIPreviewAction *moveAction = [UIPreviewAction actionWithTitle:AMLocalizedString(@"move", @"Title for the action that allows you to move a file or folder")
                                                                      style:UIPreviewActionStyleDefault
                                                                    handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
-                                                                       CloudDriveViewController *cloudDriveTVC = (CloudDriveViewController *)previewViewController;
+                                                                       CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
                                                                        MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
                                                                        BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-                                                                       browserVC.selectedNodesArray = @[cloudDriveTVC.parentNode];
+                                                                       browserVC.selectedNodesArray = @[cloudDriveVC.parentNode];
                                                                        if (lowShareType == MEGAShareTypeAccessOwner) {
                                                                            browserVC.browserAction = BrowserActionMove;
                                                                        }
@@ -661,11 +661,11 @@
                     UIPreviewAction *shareFolderPreviewAction = [UIPreviewAction actionWithTitle:AMLocalizedString(@"shareFolder", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive")
                                                                                            style:UIPreviewActionStyleDefault
                                                                                          handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
-                                                                                             CloudDriveViewController *cloudDriveTVC = (CloudDriveViewController *)previewViewController;
+                                                                                             CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
                                                                                              MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
                                                                                              ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
                                                                                              contactsVC.contactsMode = ContactsModeShareFoldersWith;
-                                                                                             contactsVC.nodesArray = @[cloudDriveTVC.parentNode];
+                                                                                             contactsVC.nodesArray = @[cloudDriveVC.parentNode];
                                                                                              [rootViewController presentViewController:navigationController animated:YES completion:nil];
                                                                                          }];
                     
@@ -1360,11 +1360,11 @@
     [moreAlertController addAction:selectAlertAction];
     
     UIAlertAction *rubbishBinAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        CloudDriveViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-        cloudDriveTVC.parentNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
-        cloudDriveTVC.displayMode = DisplayModeRubbishBin;
-        cloudDriveTVC.title = AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
-        [self.navigationController pushViewController:cloudDriveTVC animated:YES];
+        CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+        cloudDriveVC.parentNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
+        cloudDriveVC.displayMode = DisplayModeRubbishBin;
+        cloudDriveVC.title = AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
+        [self.navigationController pushViewController:cloudDriveVC animated:YES];
     }];
     [rubbishBinAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [moreAlertController addAction:rubbishBinAlertAction];
@@ -1920,17 +1920,17 @@
         [navigation popToRootViewControllerAnimated:NO];
         
         for (MEGANode *node in parentTreeArray) {
-            CloudDriveViewController *cloudDriveTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveTVC.parentNode = node;
-            [navigation pushViewController:cloudDriveTVC animated:NO];
+            CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveVC.parentNode = node;
+            [navigation pushViewController:cloudDriveVC animated:NO];
         }
         
         switch (node.type) {
             case MEGANodeTypeFolder:
             case MEGANodeTypeRubbish: {
-                CloudDriveViewController *cloudDriveTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                cloudDriveTVC.parentNode = node;
-                [navigation pushViewController:cloudDriveTVC animated:NO];
+                CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                cloudDriveVC.parentNode = node;
+                [navigation pushViewController:cloudDriveVC animated:NO];
                 break;
             }
                 
