@@ -153,7 +153,7 @@
 - (NSURL *)documentUrl {
     if (previewDocumentTransfer.path) {
         return [NSURL fileURLWithPath:previewDocumentTransfer.path];
-    } else if (self.node){
+    } else if (self.node && self.nodeFilePath){
         return [NSURL fileURLWithPath:self.nodeFilePath];
     } else {
         self.title = [self.filesPathsArray objectAtIndex:self.nodeFileIndex].lastPathComponent;
@@ -283,14 +283,16 @@
         return;
     }
     
-    if (@available(iOS 11.0, *)) {
-        if ([transfer.path.pathExtension isEqualToString:@"pdf"]) {
-            [self loadPdfKit:[NSURL fileURLWithPath:transfer.path]];
+    if (self.isViewLoaded && self.view.window) {
+        if (@available(iOS 11.0, *)) {
+            if ([transfer.path.pathExtension isEqualToString:@"pdf"]) {
+                [self loadPdfKit:[NSURL fileURLWithPath:transfer.path]];
+            } else {
+                [self presentMEGAQlPreviewController];
+            }
         } else {
             [self presentMEGAQlPreviewController];
         }
-    } else {
-        [self presentMEGAQlPreviewController];
     }
 }
 
