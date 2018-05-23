@@ -1,6 +1,8 @@
 
 #import "AdvancedTableViewController.h"
 
+#import <Photos/Photos.h>
+
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
@@ -25,13 +27,14 @@
 @property (weak, nonatomic) IBOutlet UISwitch *photosSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *videosSwitch;
 
-@property (weak, nonatomic) IBOutlet UITableViewCell *savePhotosTableViewCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *saveVideosTableViewCell;
-
 @property (weak, nonatomic) IBOutlet UILabel *cancelAccountLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *dontUseHttpLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *useHttpsOnlySwitch;
+
+// Photos taken and videos recorded from within the app
+@property (weak, nonatomic) IBOutlet UILabel *saveMediaInGalleryLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *saveMediaInGallerySwitch;
 
 @property (nonatomic, copy) NSString *offlineSizeString;
 @property (nonatomic, copy) NSString *cacheSizeString;
@@ -54,6 +57,14 @@
     
     _offlineSizeString = @"...";
     _cacheSizeString = @"...";
+    
+    PHAuthorizationStatus phAuthorizationStatus = [PHPhotoLibrary authorizationStatus];
+    if (phAuthorizationStatus == PHAuthorizationStatusAuthorized) {
+        if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isSaveMediaCapturedToGalleryEnabled"]) {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -65,6 +76,7 @@
     [self.dontUseHttpLabel setText:AMLocalizedString(@"dontUseHttp", @"Text next to a switch that allows disabling the HTTP protocol for transfers")];
     [self.savePhotosLabel setText:AMLocalizedString(@"saveImagesInGallery", @"Section title where you can enable the option 'Save images in gallery'")];
     [self.saveVideosLabel setText:AMLocalizedString(@"saveVideosInGallery", @"Section title where you can enable the option 'Save videos in gallery'")];
+    [self.saveMediaInGalleryLabel setText:AMLocalizedString(@"saveMediaInGallery", @"Section title where you can enable the option 'Save media in gallery'")];
     
     BOOL useHttpsOnly = [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] boolForKey:@"useHttpsOnly"];
     [self.useHttpsOnlySwitch setOn:useHttpsOnly];
@@ -74,6 +86,9 @@
     
     BOOL isSaveVideoToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"];
     [self.videosSwitch setOn:isSaveVideoToGalleryEnabled];
+    
+    BOOL isSaveMediaCapturedToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"isSaveMediaCapturedToGalleryEnabled"];
+    [self.saveMediaInGallerySwitch setOn:isSaveMediaCapturedToGalleryEnabled];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
@@ -145,6 +160,41 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (IBAction)mediaInGallerySwitchChanged:(UISwitch *)sender {
+    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+        switch (status) {
+            case PHAuthorizationStatusNotDetermined:
+                break;
+            case PHAuthorizationStatusAuthorized: {
+                [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                break;
+            }
+            case PHAuthorizationStatusRestricted: {
+                break;
+            }
+            case PHAuthorizationStatusDenied:{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Alert message to explain that the MEGA app needs permission to access your device photos") preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+                    
+                    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                    }]];
+                    
+                    [self presentViewController:permissionsAlertController animated:YES completion:nil];
+                    
+                    [self.saveMediaInGallerySwitch setOn:NO animated:YES];
+                });
+                break;
+            }
+            default:
+                break;
+        }
+    }];
+}
+
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -162,7 +212,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 6;
+    return 7;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -190,6 +240,10 @@
             
         case 4: //Downloads
             titleHeader = AMLocalizedString(@"imageAndVideoDownloadsHeader", @"Title header that refers to where do you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section");
+            break;
+            
+        case 5: //Photos taken and video recorded from within the app
+            titleHeader = AMLocalizedString(@"photosTakenAndVideoRecordedFromWithinTheAppHeader", @"Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section");
             break;
     }
     return titleHeader;
@@ -229,6 +283,11 @@
             
         case 4: { //Image and videos downloads
             titleFooter = AMLocalizedString(@"imageAndVideoDownloadsFooter", @"Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled");
+            break;
+        }
+            
+        case 5: { //Photos taken and video recorded from within the app
+            titleFooter = AMLocalizedString(@"photosTakenAndVideoRecordedFromWithinTheAppFooter", @"Footer text that explain what happen if the options 'Save media in gallery’ is enabled");
             break;
         }
     }
@@ -284,7 +343,7 @@
             break;
         }
             
-        case 5: { //Cancel account
+        case 6: { //Cancel account
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 UIAlertView *cancelAccountAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"youWillLooseAllData", @"Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted.") message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
                 cancelAccountAlertView.tag = 1;
