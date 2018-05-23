@@ -349,17 +349,17 @@
             [navigationController popToRootViewControllerAnimated:NO];
             
             for (MEGANode *node in parentTreeArray) {
-                CloudDriveViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                cloudDriveTVC.parentNode = node;
-                [navigationController pushViewController:cloudDriveTVC animated:NO];
+                CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                cloudDriveVC.parentNode = node;
+                [navigationController pushViewController:cloudDriveVC animated:NO];
             }
             
             switch (node.type) {
                 case MEGANodeTypeFolder:
                 case MEGANodeTypeRubbish: {
-                    CloudDriveViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                    cloudDriveTVC.parentNode = node;
-                    [navigationController pushViewController:cloudDriveTVC animated:NO];
+                    CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                    cloudDriveVC.parentNode = node;
+                    [navigationController pushViewController:cloudDriveVC animated:NO];
                     break;
                 }
                     

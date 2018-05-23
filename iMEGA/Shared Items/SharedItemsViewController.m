@@ -822,11 +822,11 @@
 
     switch ([node type]) {
         case MEGANodeTypeFolder: {
-            CloudDriveViewController *cloudTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            [cloudTVC setParentNode:node];
-            [cloudTVC setDisplayMode:DisplayModeCloudDrive];
+            CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            [cloudDriveVC setParentNode:node];
+            [cloudDriveVC setDisplayMode:DisplayModeCloudDrive];
             
-            [self.navigationController pushViewController:cloudTVC animated:YES];
+            [self.navigationController pushViewController:cloudDriveVC animated:YES];
             break;
         }
         
@@ -952,12 +952,12 @@
         }
     }
     
-    CloudDriveViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-    cloudDriveTVC.parentNode = node;
-    cloudDriveTVC.displayMode = DisplayModeCloudDrive;
-    cloudDriveTVC.incomingShareChildView = (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0);
+    CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+    cloudDriveVC.parentNode = node;
+    cloudDriveVC.displayMode = DisplayModeCloudDrive;
+    cloudDriveVC.incomingShareChildView = (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0);
     
-    return cloudDriveTVC;
+    return cloudDriveVC;
 }
 
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
@@ -1183,17 +1183,17 @@
         [navigation popToRootViewControllerAnimated:NO];
         
         for (MEGANode *node in parentTreeArray) {
-            CloudDriveViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveTVC.parentNode = node;
-            [navigation pushViewController:cloudDriveTVC animated:NO];
+            CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveVC.parentNode = node;
+            [navigation pushViewController:cloudDriveVC animated:NO];
         }
         
         switch (node.type) {
             case MEGANodeTypeFolder:
             case MEGANodeTypeRubbish: {
-                CloudDriveViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                cloudDriveTVC.parentNode = node;
-                [navigation pushViewController:cloudDriveTVC animated:NO];
+                CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                cloudDriveVC.parentNode = node;
+                [navigation pushViewController:cloudDriveVC animated:NO];
                 break;
             }
                 
