@@ -84,6 +84,7 @@
                 previewController.api = api;
                 previewController.filesPathsArray = @[previewDocumentPath];
                 previewController.nodeFileIndex = 0;
+                previewController.node = self;
                 
                 return navigationController;
             } else {
