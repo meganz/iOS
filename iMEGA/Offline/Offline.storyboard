@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="faa-Ut-As6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="faa-Ut-As6">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -21,16 +22,12 @@
         <scene sceneID="Nzg-hX-4N7">
             <objects>
                 <viewController storyboardIdentifier="OfflineViewControllerID" id="cPA-hf-QcT" customClass="OfflineViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="QEn-O1-WB0"/>
-                        <viewControllerLayoutGuide type="bottom" id="DIH-IQ-yPT"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="FGg-Hd-b4x">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="460-k4-NaY">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="offlineTableViewCell" id="BSy-rN-swd" customClass="OfflineTableViewCell">
@@ -128,12 +125,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="460-k4-NaY" firstAttribute="top" secondItem="QEn-O1-WB0" secondAttribute="bottom" id="InT-kL-gXZ"/>
-                            <constraint firstAttribute="bottom" secondItem="460-k4-NaY" secondAttribute="bottom" id="Zjp-MZ-ZUh"/>
-                            <constraint firstItem="460-k4-NaY" firstAttribute="leading" secondItem="FGg-Hd-b4x" secondAttribute="leading" id="lbF-p7-lWZ"/>
-                            <constraint firstAttribute="trailing" secondItem="460-k4-NaY" secondAttribute="trailing" id="rbl-Td-Rrf"/>
+                            <constraint firstItem="460-k4-NaY" firstAttribute="top" secondItem="kdw-oU-J8k" secondAttribute="top" id="InT-kL-gXZ"/>
+                            <constraint firstItem="460-k4-NaY" firstAttribute="bottom" secondItem="kdw-oU-J8k" secondAttribute="bottom" id="SMs-oL-dcY"/>
+                            <constraint firstItem="460-k4-NaY" firstAttribute="leading" secondItem="kdw-oU-J8k" secondAttribute="leading" id="lbF-p7-lWZ"/>
+                            <constraint firstItem="kdw-oU-J8k" firstAttribute="trailing" secondItem="460-k4-NaY" secondAttribute="trailing" id="rbl-Td-Rrf"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="kdw-oU-J8k"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="VKp-HB-43t">
                         <barButtonItem key="backBarButtonItem" title=" " id="kjM-8U-Phg"/>
                     </navigationItem>
@@ -162,6 +161,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.97647058959999999" green="0.97647058959999999" blue="0.97647058959999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <viewLayoutGuide key="safeArea" id="Ccc-J8-e5q"/>
                     <items/>
                     <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </toolbar>

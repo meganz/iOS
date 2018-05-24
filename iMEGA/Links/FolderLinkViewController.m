@@ -68,7 +68,6 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
-    self.tableView.tableHeaderView = self.searchController.searchBar;
     self.definesPresentationContext = YES;
     
     isLoginDone = NO;

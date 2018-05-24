@@ -79,7 +79,6 @@
     self.tableView.emptyDataSetDelegate = self;
     
     [self.navigationController.view setBackgroundColor:[UIColor mnz_grayF9F9F9]];
-    [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
     self.navigationItem.title = AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
     
