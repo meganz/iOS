@@ -27,6 +27,7 @@
 #import "MEGAStore.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "NSURL+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 
@@ -71,24 +72,6 @@
 #define kAppKey @"EVtjzb7R"
 
 #define kFirstRun @"FirstRun"
-
-typedef NS_ENUM(NSUInteger, URLType) {
-    URLTypeDefault,
-    URLTypeFileLink,
-    URLTypeFolderLink,
-    URLTypeEncryptedLink,
-    URLTypeConfirmationLink,
-    URLTypeOpenInLink,
-    URLTypeNewSignUpLink,
-    URLTypeBackupLink,
-    URLTypeIncomingPendingContactsLink,
-    URLTypeChangeEmailLink,
-    URLTypeCancelAccountLink,
-    URLTypeRecoverLink,
-    URLTypeChatLink,
-    URLTypeLoginRequiredLink,
-    URLTypeHandleLink
-};
 
 @interface AppDelegate () <UIAlertViewDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, PKPushRegistryDelegate, MEGAPurchasePricingDelegate> {
     BOOL isAccountFirstLogin;
@@ -757,107 +740,115 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)processLink:(NSURL *)url {
-    NSString *afterSlashesString = [[url absoluteString] substringFromIndex:7]; // "mega://" = 7 characters
-        
-    if (afterSlashesString.length < 2) {
-        [self showLinkNotValid];
-        return;
-    }
-        
     if (self.window.rootViewController.presentedViewController) {
         [self.window.rootViewController dismissViewControllerAnimated:NO completion:nil];
     }
     
-    if ([[url absoluteString] rangeOfString:@"file:///"].location != NSNotFound) {
-        self.urlType = URLTypeOpenInLink;
-        [self openIn];
-        return;
+    switch ([url mnz_type]) {
+        case URLTypeDefault:
+            [self showLinkNotValid];
+            
+            break;
+            
+        case URLTypeOpenInLink:
+            [self openIn];
+            
+            break;
+            
+        case URLTypeFileLink:
+            [self showFileLinkView:[url mnz_MEGAURL]];
+            
+            break;
+            
+        case URLTypeFolderLink:
+            [self showFolderLinkView:[url mnz_MEGAURL]];
+            
+            break;
+            
+        case URLTypeEncryptedLink:
+            [self showEncryptedLinkAlert:[url mnz_MEGAURL]];
+            
+            break;
+            
+        case URLTypeConfirmationLink:
+            [[MEGASdkManager sharedMEGASdk] querySignupLink:[url mnz_MEGAURL]];
+            self.link = nil;
+            
+            break;
+            
+        case URLTypeNewSignUpLink:
+            [[MEGASdkManager sharedMEGASdk] querySignupLink:[url mnz_MEGAURL]];
+
+            break;
+            
+        case URLTypeBackupLink:
+            if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+                [self showBackupLinkView];
+            } else {
+                [self showPleaseLogInToYourAccountAlert];
+            }
+            
+            break;
+            
+        case URLTypeIncomingPendingContactsLink:
+            if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+                [self showContactRequestsView];
+            } else {
+                [self showPleaseLogInToYourAccountAlert];
+            }
+            
+            break;
+            
+        case URLTypeChangeEmailLink:
+            if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+                [[MEGASdkManager sharedMEGASdk] queryChangeEmailLink:[url mnz_MEGAURL]];
+            } else {
+                [self showPleaseLogInToYourAccountAlert];
+            }
+            
+            break;
+            
+        case URLTypeCancelAccountLink:
+            if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+                [[MEGASdkManager sharedMEGASdk] queryCancelLink:[url mnz_MEGAURL]];
+            } else {
+                [self showPleaseLogInToYourAccountAlert];
+            }
+            
+            break;
+            
+        case URLTypeRecoverLink:
+            [[MEGASdkManager sharedMEGASdk] queryResetPasswordLink:[url mnz_MEGAURL]];
+
+            break;
+            
+        case URLTypeChatLink:
+            self.mainTBC.selectedIndex = CHAT;
+
+            break;
+            
+        case URLTypeLoginRequiredLink: {
+            NSString *session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
+            if (session) {
+                [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
+                [SAMKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
+            }
+
+            break;
+        }
+            
+        case URLTypeHandleLink:
+            self.nodeToPresentBase64Handle = [[url mnz_afterSlashesString] substringFromIndex:1];
+            [self presentNode];
+            
+            break;
     }
-        
-    if ([self isFileLink:afterSlashesString]) {
-        self.urlType = URLTypeFileLink;
-        return;
-    }
-    
-    if ([self isFolderLink:afterSlashesString]) {
-        self.urlType = URLTypeFolderLink;
-        return;
-    }
-    
-    if ([self isEncryptedLink:afterSlashesString]) {
-        self.urlType = URLTypeEncryptedLink;
-        return;
-    }
-    
-    if ([self isConfirmationLink:afterSlashesString]) {
-        self.urlType = URLTypeConfirmationLink;
-        return;
-    }
-    
-    if ([self isNewSignUpLink:afterSlashesString]) {
-        self.urlType = URLTypeNewSignUpLink;
-        return;
-    }
-    
-    if ([self isBackupLink:afterSlashesString]) {
-        self.urlType = URLTypeBackupLink;
-        return;
-    }
-    
-    if ([self isIncomingPendingContactsLink:afterSlashesString]) {
-        self.urlType = URLTypeIncomingPendingContactsLink;
-        return;
-    }
-    
-    if ([self isChangeEmailLink:afterSlashesString]) {
-        self.urlType = URLTypeChangeEmailLink;
-        return;
-    }
-    
-    if ([self isCancelAccountLink:afterSlashesString]) {
-        self.urlType = URLTypeCancelAccountLink;
-        return;
-    }
-    
-    if ([self isRecoverLink:afterSlashesString]) {
-        self.urlType = URLTypeRecoverLink;
-        return;
-    }
-    
-    if ([self isChatLink:afterSlashesString]) {
-        self.urlType = URLTypeChatLink;
-        return;
-    }
-    
-    if ([self isLoginRequiredLink:afterSlashesString]) {
-        self.urlType = URLTypeLoginRequiredLink;
-        return;
-    }
-    
-    if ([self isHandleLink:afterSlashesString]) {
-        self.urlType = URLTypeHandleLink;
-        return;
-    }
-    
-    [self showLinkNotValid];
 }
 
 - (void)dismissPresentedViews {
     if (self.window.rootViewController.presentedViewController != nil) {
         [self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
     }
-}
-
-- (BOOL)isFileLink:(NSString *)afterSlashesString {
-    NSString *megaURLTypeString = [afterSlashesString substringToIndex:2]; // mega://"#!"
-    BOOL isFileLink = [megaURLTypeString isEqualToString:@"#!"];
-    if (isFileLink) {
-        NSString *fileLinkString = @"https://mega.nz/";
-        fileLinkString = [fileLinkString stringByAppendingString:afterSlashesString];
-        [self showFileLinkView:fileLinkString];
-        return YES;
-    }
-    return NO;
 }
 
 - (void)showFileLinkView:(NSString *)fileLinkURLString {
@@ -883,22 +874,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     self.link = nil;
 }
 
-- (BOOL)isFolderLink:(NSString *)afterSlashesString {
-    if (afterSlashesString.length < 3) {
-        return NO;
-    }
-    
-    NSString *megaURLTypeString = [afterSlashesString substringToIndex:3]; // mega://"#F!"
-    BOOL isFolderLink = [megaURLTypeString isEqualToString:@"#F!"];
-    if (isFolderLink) {
-        NSString *folderLinkString = @"https://mega.nz/";
-        folderLinkString = [folderLinkString stringByAppendingString:afterSlashesString];
-        [self showFolderLinkView:folderLinkString];
-        return YES;
-    }
-    return NO;
-}
-
 - (void)showFolderLinkView:(NSString *)folderLinkURLString {
     MEGANavigationController *folderNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FolderLinkNavigationControllerID"];
     
@@ -910,22 +885,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [UIApplication.mnz_visibleViewController presentViewController:folderNavigationController animated:YES completion:nil];
     
     self.link = nil;
-}
-
-- (BOOL)isEncryptedLink:(NSString *)afterSlashesString {
-    if (afterSlashesString.length < 3) {
-        return NO;
-    }
-    
-    NSString *megaURLTypeString = [afterSlashesString substringToIndex:3]; // mega://"#P!"
-    BOOL isEncryptedLink = [megaURLTypeString isEqualToString:@"#P!"];
-    if (isEncryptedLink) {
-        NSString *encryptedLinkString = @"https://mega.nz/";
-        encryptedLinkString = [encryptedLinkString stringByAppendingString:afterSlashesString];
-        [self showEncryptedLinkAlert:encryptedLinkString];
-        return YES;
-    }
-    return NO;
 }
 
 - (void)showEncryptedLinkAlert:(NSString *)encryptedLinkURLString {
@@ -953,181 +912,17 @@ typedef NS_ENUM(NSUInteger, URLType) {
     self.link = nil;
 }
 
-- (BOOL)isConfirmationLink:(NSString *)afterSlashesString {
-    if (afterSlashesString.length < 8) {
-        return NO;
-    }
-    
-    NSString *megaURLString = @"https://mega.nz/";
-    BOOL isMEGACONZConfirmationLink = [[afterSlashesString substringToIndex:7] isEqualToString:@"confirm"]; // mega://"confirm"
-    BOOL isMEGANZConfirmationLink = [[afterSlashesString substringToIndex:8] isEqualToString:@"#confirm"]; // mega://"#confirm"
-    if (isMEGACONZConfirmationLink) {
-        NSString *megaURLConfirmationString = [megaURLString stringByAppendingString:@"#"];
-        megaURLConfirmationString = [megaURLConfirmationString stringByAppendingString:afterSlashesString];
-        [[MEGASdkManager sharedMEGASdk] querySignupLink:megaURLConfirmationString];
-        self.link = nil;
-        return YES;
-    } else if (isMEGANZConfirmationLink) {
-        NSString *megaURLConfirmationString = [megaURLString stringByAppendingString:afterSlashesString];
-        [[MEGASdkManager sharedMEGASdk] querySignupLink:megaURLConfirmationString];
-        self.link = nil;
-        return YES;
-    }
-    return NO;
+- (void)showBackupLinkView {
+    SecurityOptionsTableViewController *securityOptionsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"SecurityOptionsTableViewControllerID"];
+    [securityOptionsTVC.navigationItem setRightBarButtonItem:[self cancelBarButtonItem]];
+    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:securityOptionsTVC];
+    [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
 }
 
-- (BOOL)isNewSignUpLink:(NSString *)afterSlashesString {
-    if (afterSlashesString.length < 10) {
-        return NO;
-    }
-    
-    BOOL isNewSignUpLink = [[afterSlashesString substringToIndex:10] isEqualToString:@"#newsignup"]; // mega://"#newsignup"
-    if (isNewSignUpLink) {
-        NSString *megaURLString = @"https://mega.nz/";
-        megaURLString = [megaURLString stringByAppendingString:afterSlashesString];
-        [[MEGASdkManager sharedMEGASdk] querySignupLink:megaURLString];
-        return YES;
-    }
-    return NO;
-}
-
-- (BOOL)isBackupLink:(NSString *)afterSlashesString {
-    if (afterSlashesString.length < 7) {
-        return NO;
-    }
-    
-    BOOL isBackupLink = [[afterSlashesString substringToIndex:7] isEqualToString:@"#backup"]; //mega://"#backup"
-    if (isBackupLink) {
-        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-            SecurityOptionsTableViewController *securityOptionsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"SecurityOptionsTableViewControllerID"];
-            [securityOptionsTVC.navigationItem setRightBarButtonItem:[self cancelBarButtonItem]];
-            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:securityOptionsTVC];
-            [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
-        } else {
-            [self showPleaseLogInToYourAccountAlert];
-        }
-        return YES;
-    }
-    
-    return NO;
-}
-
-- (BOOL)isIncomingPendingContactsLink:(NSString *)afterSlashesString {
-    if (afterSlashesString.length < 7) {
-        return NO;
-    }
-    
-    BOOL isIncomingPendingContactsLink = [[afterSlashesString substringToIndex:7] isEqualToString:@"#fm/ipc"]; //mega://"#fm/ipc"
-    if (isIncomingPendingContactsLink) {
-        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-            ContactRequestsViewController *contactsRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
-            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:contactsRequestsVC];
-            [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
-        } else {
-            [self showPleaseLogInToYourAccountAlert];
-        }
-        return YES;
-    }
-    
-    return NO;
-}
-
-- (BOOL)isChangeEmailLink:(NSString *)afterSlashesString {
-    if (afterSlashesString.length < 7) {
-        return NO;
-    }
-    
-    BOOL isChangeEmailLink = [[afterSlashesString substringToIndex:7] isEqualToString:@"#verify"]; //mega://"#verify"
-    if (isChangeEmailLink) {
-        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-            NSString *megaURLString = [@"https://mega.nz/" stringByAppendingString:afterSlashesString];
-            [[MEGASdkManager sharedMEGASdk] queryChangeEmailLink:megaURLString];
-        } else {
-            [self showPleaseLogInToYourAccountAlert];
-        }
-        return YES;
-    }
-    
-    return NO;
-}
-
-- (BOOL)isCancelAccountLink:(NSString *)afterSlashesString {
-    if (afterSlashesString.length < 7) {
-        return NO;
-    }
-    
-    BOOL isCancelAccountLink = [[afterSlashesString substringToIndex:7] isEqualToString:@"#cancel"]; //mega://"#cancel"
-    if (isCancelAccountLink) {
-        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-            NSString *megaURLString = [@"https://mega.nz/" stringByAppendingString:afterSlashesString];
-            [[MEGASdkManager sharedMEGASdk] queryCancelLink:megaURLString];
-        } else {
-            [self showPleaseLogInToYourAccountAlert];
-        }
-        return YES;
-    }
-    
-    return NO;
-}
-
-- (BOOL)isRecoverLink:(NSString *)afterSlashesString {
-    if (afterSlashesString.length < 8) {
-        return NO;
-    }
-    
-    BOOL isRecoverLink = [[afterSlashesString substringToIndex:8] isEqualToString:@"#recover"]; //mega://"#recover"
-    if (isRecoverLink) {
-        NSString *megaURLString = [@"https://mega.nz/" stringByAppendingString:afterSlashesString];
-        [[MEGASdkManager sharedMEGASdk] queryResetPasswordLink:megaURLString];
-        return YES;
-    }
-    
-    return NO;
-}
-
-- (BOOL)isChatLink:(NSString *)afterSlashesString {
-    if (afterSlashesString.length < 8) {
-        return NO;
-    }
-    
-    BOOL isChatLink = [[afterSlashesString substringToIndex:8] isEqualToString:@"#fm/chat"]; //mega://"#fm/chat"
-    if (isChatLink) {
-        self.mainTBC.selectedIndex = CHAT;
-    }
-    return isChatLink;
-}
-
-- (BOOL)isLoginRequiredLink:(NSString *)afterSlashesString {
-    if (afterSlashesString.length < 14) {
-        return NO;
-    }
-    
-    BOOL isLoginRequiredLink = [[afterSlashesString substringToIndex:14] isEqualToString:@"#loginrequired"]; //mega://"#loginrequired"
-    if (isLoginRequiredLink) {
-        NSString *session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
-        if (session) {
-            // The user logged in with a previous version of the MEGA app, so the session is stored in the standard
-            // keychain. The session must be stored again so that it will be available for the shared keychain.
-            [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
-            [SAMKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
-        } else {
-            // The user is not logged in, so the standard login will be presented (there is nothing to do in this case)
-        }
-    }
-    return isLoginRequiredLink;
-}
-
-- (BOOL)isHandleLink:(NSString *)afterSlashesString {
-    NSString *megaURLTypeString = [afterSlashesString substringToIndex:1]; // mega://"#"
-    BOOL hasHash = [megaURLTypeString isEqualToString:@"#"];
-    if (hasHash) {
-        self.nodeToPresentBase64Handle = [afterSlashesString substringFromIndex:1];
-        [self presentNode];
-        
-        return YES;
-    }
-    
-    return NO;
+- (void)showContactRequestsView {
+    ContactRequestsViewController *contactsRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
+    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:contactsRequestsVC];
+    [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (void)openIn {
