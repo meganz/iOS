@@ -629,7 +629,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[UINavigationBar appearance] setTintColor:UIColor.whiteColor];
     [[UINavigationBar appearance] setBarTintColor:UIColor.mnz_redF0373A];
     [[UINavigationBar appearance] setTranslucent:NO];
-    [[UIToolbar appearance] setTintColor:UIColor.mnz_redF0373A];
 
     //QLPreviewDocument
     if (@available(iOS 11.0, *)) {
