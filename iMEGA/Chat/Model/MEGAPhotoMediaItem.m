@@ -76,6 +76,30 @@
             playImageView.center = _cachedImageView.center;
             [self.cachedImageView addSubview:playImageView];
         }
+        
+        if (self.node.duration > 0) {
+            UILabel *durationLabel = [[UILabel alloc] init];
+            durationLabel.lineBreakMode = NSLineBreakByWordWrapping;
+            durationLabel.numberOfLines = 0;
+            durationLabel.textColor = [UIColor whiteColor];
+            durationLabel.textAlignment = NSTextAlignmentRight;
+            NSString *textContent = [NSString mnz_stringFromTimeInterval:self.node.duration];
+            NSRange textRange = NSMakeRange(0, textContent.length);
+            NSMutableAttributedString *textString = [[NSMutableAttributedString alloc] initWithString:textContent];
+            UIFont *font = [UIFont mnz_SFUIRegularWithSize:12];
+            [textString addAttribute:NSFontAttributeName value:font range:textRange];
+            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            paragraphStyle.lineSpacing = 1.21;
+            [textString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:textRange];
+            durationLabel.attributedText = textString;
+            durationLabel.layer.shadowOffset = CGSizeMake(0, 1);
+            durationLabel.layer.shadowColor = [[UIColor colorWithRed:0 green:0 blue:0 alpha:0.2] CGColor];
+            durationLabel.layer.shadowOpacity = 1;
+            durationLabel.layer.shadowRadius = 2;
+            [durationLabel sizeToFit];
+            [self.cachedImageView addSubview:durationLabel];
+            durationLabel.frame = CGRectMake(4, self.cachedImageView.frame.size.height - durationLabel.frame.size.height - 4, durationLabel.frame.size.width, durationLabel.frame.size.height);
+        }
     }
 }
 
