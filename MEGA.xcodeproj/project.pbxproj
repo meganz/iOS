@@ -288,6 +288,7 @@
 		77B32279209C6F060037FA89 /* MEGAMessageRichPreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77B32278209C6F060037FA89 /* MEGAMessageRichPreviewView.xib */; };
 		77B3227B20A343A30037FA89 /* CopyrightWarningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 946B2D181F46E5B9009ED32C /* CopyrightWarningViewController.m */; };
 		77B3227C20A343A40037FA89 /* CopyrightWarningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 946B2D181F46E5B9009ED32C /* CopyrightWarningViewController.m */; };
+		77B3227F20A436D60037FA89 /* NSURL+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B3227E20A436D60037FA89 /* NSURL+MNZCategory.m */; };
 		77B53C7520B2DB4500B26F12 /* PWProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B53C7320B2DB4500B26F12 /* PWProgressView.m */; };
 		77C544FF2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C544FE2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m */; };
 		77CAAAE0202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CAAADF202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m */; };
@@ -1149,6 +1150,8 @@
 		77B32275209C6EC00037FA89 /* MEGAMessageRichPreviewView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAMessageRichPreviewView.h; sourceTree = "<group>"; };
 		77B32276209C6EC00037FA89 /* MEGAMessageRichPreviewView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAMessageRichPreviewView.m; sourceTree = "<group>"; };
 		77B32278209C6F060037FA89 /* MEGAMessageRichPreviewView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGAMessageRichPreviewView.xib; sourceTree = "<group>"; };
+		77B3227D20A436D60037FA89 /* NSURL+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURL+MNZCategory.h"; sourceTree = "<group>"; };
+		77B3227E20A436D60037FA89 /* NSURL+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURL+MNZCategory.m"; sourceTree = "<group>"; };
 		77B53C7320B2DB4500B26F12 /* PWProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWProgressView.m; sourceTree = "<group>"; };
 		77B53C7420B2DB4500B26F12 /* PWProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWProgressView.h; sourceTree = "<group>"; };
 		77C544FD2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAPhotoBrowserAnimator.h; sourceTree = "<group>"; };
@@ -2320,6 +2323,8 @@
 				949086871FD5482E002B12BD /* NSAttributedString+MNZCategory.m */,
 				77F43DD72034637300AE4F42 /* UICollectionView+MNZCategory.h */,
 				77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */,
+				77B3227D20A436D60037FA89 /* NSURL+MNZCategory.h */,
+				77B3227E20A436D60037FA89 /* NSURL+MNZCategory.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -3748,6 +3753,7 @@
 				41D21E631D01AEC3002E6296 /* CTAssetsGridSelectedView.m in Sources */,
 				A89E77441EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m in Sources */,
 				5B19713D1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m in Sources */,
+				77B3227F20A436D60037FA89 /* NSURL+MNZCategory.m in Sources */,
 				417279401DB663FA001AC818 /* JSQMessagesVideoThumbnailFactory.m in Sources */,
 				4152269A1A692ECC00EC7BB6 /* Helper.m in Sources */,
 				5B5B4FFF1E681BAC00DBEB3B /* UIFont+MNZCategory.m in Sources */,
