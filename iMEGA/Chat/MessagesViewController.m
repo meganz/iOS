@@ -679,7 +679,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)startUploadAndAttachWithPath:(NSString *)path parentNode:(MEGANode *)parentNode {
-    [self showProgressViewUnderNavigationBar];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self showProgressViewUnderNavigationBar];
+    });
     
     MEGAStartUploadTransferDelegate *startUploadTransferDelegate = [[MEGAStartUploadTransferDelegate alloc] initToUploadToChatWithTotalBytes:^(long long totalBytes) {
         self.totalBytesToUpload += totalBytes;
@@ -734,6 +736,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         self.navigationBarProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
         self.navigationBarProgressView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
         self.navigationBarProgressView.frame = CGRectMake(self.navigationController.navigationBar.bounds.origin.x, self.navigationController.navigationBar.bounds.size.height, self.navigationController.navigationBar.bounds.size.width, 2.0f);
+        self.navigationBarProgressView.transform = CGAffineTransformScale(self.navigationBarProgressView.transform, 1, 2);
         self.navigationBarProgressView.progressTintColor = [UIColor mnz_green00BFA5];
         self.navigationBarProgressView.trackTintColor = [UIColor clearColor];
         
