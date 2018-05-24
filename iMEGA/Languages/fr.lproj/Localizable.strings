@@ -57,7 +57,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA n’arrive pas à se connecter de façon sécurisée par SSL. Vous êtes peut-être sur un réseau Wi-Fi public qui a des exigences supplémentaires.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="Le contenu auquel vous essayez d’accéder n’est pas proposé pour ce compte. Essayez de vous connecter avec le même compte que le client Web mobile.";
+"theContentIsNotAvailableForThisAccount"="Le contenu auquel vous tentez d’accéder n’est pas proposé pour ce compte. Essayez de vous connecter avec le même compte que le client Web mobile.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Le processus prend plus longtemps que prévu. Veuillez patienter.";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -163,11 +163,11 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Lien non disponible";
 /* */
-"fileLinkUnavailableText1"="Cela pourrait être dû aux raisons suivantes :";
+"fileLinkUnavailableText1"="Cela pourrait être dû aux raisons suivantes :";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
 "fileLinkUnavailableText2"="Le fichier a été retiré en raison du non-respect des CGU/PUA.";
 /* */
-"fileLinkUnavailableText3"="URL invalide - le lien auquel vous essayez d'accéder n'existe pas";
+"fileLinkUnavailableText3"="L’URL est invalide. Le lien auquel vous tentez d’accéder n’existe pas.";
 /* */
 "fileLinkUnavailableText4"="Le fichier a été supprimé par l'utilisateur.";
 /* Message shown when a download starts */
@@ -181,13 +181,13 @@
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Le dossier '%@' ne peut pas être créé";
 /* */
-"folderLinkUnavailableText1"="Cela pourrait être dû aux raisons suivantes :";
+"folderLinkUnavailableText1"="Cela pourrait être dû aux raisons suivantes :";
 /* */
-"folderLinkUnavailableText2"="Le lien du dossier a été retiré en raison du non-respect des CGU/PUA.";
+"folderLinkUnavailableText2"="Le lien de dossier a été supprimé en raison du non-respect des CGU/PUA.";
 /* */
-"folderLinkUnavailableText3"="URL invalide - le lien auquel vous essayez d'accéder n'existe pas";
+"folderLinkUnavailableText3"="L’URL est invalide. Le lien auquel vous tentez d’accéder n’existe pas.";
 /* */
-"folderLinkUnavailableText4"="Le lien du dossier a été désactivé par l'utilisateur.";
+"folderLinkUnavailableText4"="Le lien du dossier a été désactivé par l’utilisateur.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Aucune connexion Internet";
 /* Title shown when a folder doesn't have any files */
@@ -269,7 +269,7 @@
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="Ressayer plus tard ou annuler";
 /* Section title of the 'Sort by' */
-"sortTitle"="Trier";
+"sortTitle"="Trier par";
 /* Button title to 'Save' the selected option */
 "save"="Enregistrer";
 /* Sort by option (1/6). This one orders the files alphabethically*/
@@ -347,7 +347,7 @@
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="Copié vers le presse-papiers";
 /* A title for the Copyright Warning dialog. */
-"copyrightWarning"="Avertissement de droits d'auteur";
+"copyrightWarning"="Avertissement de droits d’auteur";
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Avertissement sur les droits d'auteur à tous les utilisateurs";
 /* String already exists: 367, but we need to split paragraphs. */
@@ -377,7 +377,7 @@
 /* Title for a button that copies the key of the link to the clipboard */
 "copyKey"="Copier la clé";
 /* Title shown under the action that allows you to open a file in another app */
-"openIn"="Ouvrir avec...";
+"openIn"="Ouvrir avec…";
 /* */
 "sendToContact"="Envoyer à un contact";
 /* Toast text upon sending a single file to chat */
@@ -505,9 +505,9 @@
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "automaticallyBackupYourPhotos"="Sauvegarder automatiquement vos photos dans le disque nuagique";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Activer le téléversement de la caméra";
+"enableCameraUploadsButton"="Activer les téléversements de la caméra";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Le téléversement de la caméra est activé";
+"cameraUploadsEnabled"="Les téléversements de la caméra sont activés";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Le téléversement de la caméra est terminé";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
@@ -559,9 +559,9 @@
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Suppression du partage";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="Voulez-vous vraiment retirer ce partage ? (Partagé avec 1 contact)";
+"removeOneShareOneContactMessage"="Voulez-vous vraiment supprimer ce partage ? (Partagé avec 1 contact)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="Voulez-vous vraiment retirer ce partage ? (Partagé avec %d contacts)";
+"removeOneShareMultipleContactsMessage"="Voulez-vous vraiment supprimer ce partage ? (Partagé avec %d contacts)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
 "removeMultipleSharesMultipleContactsMessage"="Voulez-vous vraiment retirer ces partages ? (Partagés avec %d contacts)";
 /* Message shown when a share have been removed */
@@ -637,7 +637,7 @@
 /* Title of the Settings section */
 "settingsTitle"="Paramètres";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
-"cameraUploadsLabel"="Téléversement caméra";
+"cameraUploadsLabel"="Téléversements de la caméra";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Corbeille";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -675,9 +675,9 @@
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Si cette option est activée, les nouvelles photos et vidéos seront téléversées.";
 /* Title of the label where the SDK version is shown */
-"sdkVersion"="Version du kit SDK MEGA";
+"sdkVersion"="Version de la trousse SDK MEGA";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="Version du kit SDK de MEGAchat";
+"megachatSdkVersion"="Version de la trousse SDK de MEGAchat";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Mentions";
 /* Title for the MEGA Recovery Key */
@@ -892,9 +892,9 @@
 /*  */
 "insertYourFriendsEmails"="Saisissez les adresses courriel de votre ami :";
 /*  */
-"howItWorks"="Comment ça fonctionne";
+"howItWorks"="Comment cela fonctionne-t-il ?";
 /*  */
-"howItWorksMain"="Votre ami doit créer un compte gratuit sur MEGA et [S]installer au moins une application cliente MEGA[/S] (soit le client de synchro, soit l'une de nos applis mobiles)";
+"howItWorksMain"="Votre ami doit créer un compte gratuit sur MEGA et [S]installer au moins une application client MEGA[/S] (soit le client de synchro, soit l’une de nos applis mobiles)";
 /*  */
 "howItWorksSecondary"="Vous pouvez contacter votre ami de n'importe quelle façon. Le quota vous sera attribué si vous avez saisi ici l'adresse courriel de votre ami avant qu'il ne s'inscrive avec cette adresse.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1201,8 +1201,8 @@
 "twoUsersAreTyping"="%1$s [A]écrivent...[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
 "moreThanTwoUsersAreTyping"="%1$s [A]et plus écrivent...[/A]";
-/* Message box label which shows that user can type message text in this textview */
-"writeAMessage"="Rédiger un message...";
+/* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
+"writeAMessage"="Rédiger un message pour %s...";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="Aucun historique de conversation";
 /* Button which allows to retry send message in chat conversation. */
