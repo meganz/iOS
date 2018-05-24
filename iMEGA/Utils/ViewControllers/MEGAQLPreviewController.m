@@ -1,5 +1,6 @@
 
 #import "MEGAQLPreviewController.h"
+#import "Helper.h"
 
 @interface MEGAQLPreviewController () <UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource>
 
@@ -39,12 +40,12 @@
     return self;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    if (@available(iOS 11.0, *)) {
-        return UIStatusBarStyleDefault;
-    } else {
-        return UIStatusBarStyleLightContent;
-    }
+- (void)viewDidLoad {
+    [Helper configureWhiteNavigationAppearance];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [Helper configureRedNavigationAppearance];
 }
 
 #pragma mark - QLPreviewControllerDataSource
