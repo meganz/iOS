@@ -1239,13 +1239,18 @@
             NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
             NSDate *rateUsDate = [sharedUserDefaults objectForKey:@"rateUsDate"];
             if (rateUsDate) {
-                NSInteger months = [[NSCalendar currentCalendar] components:NSCalendarUnitMonth
-                                                                   fromDate:rateUsDate
-                                                                     toDate:[NSDate date]
-                                                                    options:NSCalendarWrapComponents].month;
-                if (months < 4) {
+                NSInteger weeks = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekOfYear
+                                                                  fromDate:rateUsDate
+                                                                    toDate:[NSDate date]
+                                                                   options:NSCalendarWrapComponents].weekOfYear;
+                if (weeks < 17) {
                     return;
                 }
+            } else {
+                NSTimeInterval sixteenWeeksAgo = -16 * 7 * 24 * 60 * 60;
+                rateUsDate = [NSDate dateWithTimeIntervalSinceNow:sixteenWeeksAgo];
+                [sharedUserDefaults setObject:rateUsDate forKey:@"rateUsDate"];
+                return;
             }
             [SKStoreReviewController requestReview];
             rateUsDate = [NSDate date];
