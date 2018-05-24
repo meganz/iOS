@@ -1037,6 +1037,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                     }
                 }];
             }
+            
             break;
         }
             
@@ -1083,6 +1084,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         default:
             break;
     }
+    [self updateToolbarPlaceHolder];
 }
 
 - (void)scrollToBottomAnimated:(BOOL)animated {
