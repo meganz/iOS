@@ -24,7 +24,7 @@
         <!--Chat Rooms View Controller-->
         <scene sceneID="u3Q-Re-YbU">
             <objects>
-                <viewController id="Li1-XI-VLz" customClass="ChatRoomsViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Li1-XI-VLz" customClass="ChatRoomsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lqj-pM-q0p">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -169,6 +169,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="WDN-Of-Gfv"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="p5b-7o-fgJ">
                         <barButtonItem key="rightBarButtonItem" image="add" id="fu8-g8-gHZ">
@@ -302,21 +303,21 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
+                                                    <exclude reference="1OY-eI-c2l"/>
                                                     <exclude reference="4q9-SF-yOf"/>
                                                     <exclude reference="OrB-QP-gDc"/>
-                                                    <exclude reference="sHU-jE-FZ1"/>
-                                                    <exclude reference="sks-bb-mGq"/>
-                                                    <exclude reference="dP2-30-ita"/>
                                                     <exclude reference="UfA-hW-f1s"/>
-                                                    <exclude reference="ue3-u3-qWe"/>
+                                                    <exclude reference="dP2-30-ita"/>
+                                                    <exclude reference="sHU-jE-FZ1"/>
                                                     <exclude reference="sfm-eA-qWG"/>
-                                                    <exclude reference="1OY-eI-c2l"/>
-                                                    <exclude reference="rKg-1P-bcD"/>
-                                                    <exclude reference="vlh-8Q-b3y"/>
+                                                    <exclude reference="sks-bb-mGq"/>
+                                                    <exclude reference="ue3-u3-qWe"/>
+                                                    <exclude reference="JNp-IH-7eI"/>
                                                     <exclude reference="Nkj-xT-APW"/>
                                                     <exclude reference="PHC-Ik-Dyf"/>
-                                                    <exclude reference="JNp-IH-7eI"/>
+                                                    <exclude reference="rKg-1P-bcD"/>
                                                     <exclude reference="sjH-ZK-v0z"/>
+                                                    <exclude reference="vlh-8Q-b3y"/>
                                                     <exclude reference="M5Q-Lf-CBd"/>
                                                     <exclude reference="pq1-fQ-ek6"/>
                                                 </mask>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -8,6 +8,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -23,31 +24,10 @@
         <scene sceneID="9MH-E6-bcN">
             <objects>
                 <viewController storyboardIdentifier="FolderLinkViewControllerID" id="9ZV-tM-uu1" customClass="FolderLinkViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="phq-C4-flR"/>
-                        <viewControllerLayoutGuide type="bottom" id="B63-wU-db4"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ffw-DJ-D1l">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XS0-b6-FQU">
-                                <rect key="frame" x="0.0" y="559" width="375" height="44"/>
-                                <color key="backgroundColor" red="0.97647058963775635" green="0.97647058963775635" blue="0.97647058963775635" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <items>
-                                    <barButtonItem tag="2" title="Download" id="3v0-rP-iq6">
-                                        <connections>
-                                            <action selector="downloadAction:" destination="9ZV-tM-uu1" id="BGc-xk-nCV"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="SvX-Wp-F0v"/>
-                                    <barButtonItem tag="1" title="Import" id="UE7-2a-Z7U">
-                                        <connections>
-                                            <action selector="importAction:" destination="9ZV-tM-uu1" id="vyb-wJ-QPk"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="lUT-Rt-g8P">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -371,18 +351,37 @@
                                     <outlet property="delegate" destination="9ZV-tM-uu1" id="aCs-Ox-sFt"/>
                                 </connections>
                             </tableView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XS0-b6-FQU">
+                                <rect key="frame" x="0.0" y="559" width="375" height="44"/>
+                                <color key="backgroundColor" red="0.97647058963775635" green="0.97647058963775635" blue="0.97647058963775635" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <items>
+                                    <barButtonItem tag="2" title="Download" id="3v0-rP-iq6">
+                                        <connections>
+                                            <action selector="downloadAction:" destination="9ZV-tM-uu1" id="BGc-xk-nCV"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="SvX-Wp-F0v"/>
+                                    <barButtonItem tag="1" title="Import" id="UE7-2a-Z7U">
+                                        <connections>
+                                            <action selector="importAction:" destination="9ZV-tM-uu1" id="vyb-wJ-QPk"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="XS0-b6-FQU" firstAttribute="bottom" secondItem="B63-wU-db4" secondAttribute="top" id="6o6-g3-RgR"/>
-                            <constraint firstAttribute="trailing" secondItem="lUT-Rt-g8P" secondAttribute="trailing" id="Gj1-4v-wXG"/>
-                            <constraint firstItem="lUT-Rt-g8P" firstAttribute="leading" secondItem="ffw-DJ-D1l" secondAttribute="leading" id="aAB-i6-J45"/>
-                            <constraint firstItem="XS0-b6-FQU" firstAttribute="top" secondItem="lUT-Rt-g8P" secondAttribute="bottom" id="aGL-tH-02J"/>
-                            <constraint firstItem="lUT-Rt-g8P" firstAttribute="top" secondItem="phq-C4-flR" secondAttribute="bottom" id="gBP-Mo-ES5"/>
-                            <constraint firstItem="XS0-b6-FQU" firstAttribute="leading" secondItem="ffw-DJ-D1l" secondAttribute="leading" id="zAy-13-hfC"/>
-                            <constraint firstAttribute="trailing" secondItem="XS0-b6-FQU" secondAttribute="trailing" id="zfK-xG-Uv7"/>
+                            <constraint firstItem="qzi-tQ-ELH" firstAttribute="bottom" secondItem="XS0-b6-FQU" secondAttribute="bottom" id="7Uc-uB-mYm"/>
+                            <constraint firstItem="lUT-Rt-g8P" firstAttribute="top" secondItem="qzi-tQ-ELH" secondAttribute="top" id="DDp-vy-OMK"/>
+                            <constraint firstItem="qzi-tQ-ELH" firstAttribute="trailing" secondItem="lUT-Rt-g8P" secondAttribute="trailing" id="Gj1-4v-wXG"/>
+                            <constraint firstItem="XS0-b6-FQU" firstAttribute="top" secondItem="lUT-Rt-g8P" secondAttribute="bottom" id="RB8-G3-jfz"/>
+                            <constraint firstItem="lUT-Rt-g8P" firstAttribute="leading" secondItem="qzi-tQ-ELH" secondAttribute="leading" id="aAB-i6-J45"/>
+                            <constraint firstItem="qzi-tQ-ELH" firstAttribute="trailing" secondItem="XS0-b6-FQU" secondAttribute="trailing" id="ihY-a9-vK6"/>
+                            <constraint firstItem="XS0-b6-FQU" firstAttribute="leading" secondItem="qzi-tQ-ELH" secondAttribute="leading" id="nfX-6r-y2b"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="qzi-tQ-ELH"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="5HE-bc-Hh9">
                         <barButtonItem key="backBarButtonItem" title=" " id="yce-RA-6Iy"/>
                     </navigationItem>
@@ -437,10 +436,6 @@
         <scene sceneID="L1l-Zr-ARy">
             <objects>
                 <viewController storyboardIdentifier="FileLinkViewControllerID" id="2U9-0D-RuC" customClass="FileLinkViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="VqQ-0h-wpC"/>
-                        <viewControllerLayoutGuide type="bottom" id="za7-Z7-cKF"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="iPt-fM-G85">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -580,41 +575,43 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="9nI-LW-Ied" firstAttribute="centerY" secondItem="4lW-Ow-gtQ" secondAttribute="centerY" id="4M6-4F-yuw"/>
-                            <constraint firstAttribute="trailing" secondItem="GzC-xY-ksk" secondAttribute="trailing" id="4fD-nb-S5f"/>
-                            <constraint firstItem="GzC-xY-ksk" firstAttribute="top" secondItem="VqQ-0h-wpC" secondAttribute="bottom" id="8Oy-lg-ghQ"/>
-                            <constraint firstItem="za7-Z7-cKF" firstAttribute="top" secondItem="GzC-xY-ksk" secondAttribute="bottom" constant="156" id="8gT-pc-itx">
+                            <constraint firstItem="Dre-MF-3h6" firstAttribute="trailing" secondItem="GzC-xY-ksk" secondAttribute="trailing" id="4fD-nb-S5f"/>
+                            <constraint firstItem="GzC-xY-ksk" firstAttribute="top" secondItem="Dre-MF-3h6" secondAttribute="top" id="8Oy-lg-ghQ"/>
+                            <constraint firstItem="Dre-MF-3h6" firstAttribute="bottom" secondItem="GzC-xY-ksk" secondAttribute="bottom" constant="156" id="8gT-pc-itx">
                                 <variation key="heightClass=compact" constant="0.0"/>
                             </constraint>
-                            <constraint firstItem="GzC-xY-ksk" firstAttribute="leading" secondItem="iPt-fM-G85" secondAttribute="leading" id="DAU-4I-zCx"/>
+                            <constraint firstItem="GzC-xY-ksk" firstAttribute="leading" secondItem="Dre-MF-3h6" secondAttribute="leading" id="DAU-4I-zCx"/>
                             <constraint firstItem="GzC-xY-ksk" firstAttribute="leading" secondItem="9nI-LW-Ied" secondAttribute="trailing" constant="-600" id="DqV-5x-hAE"/>
-                            <constraint firstItem="9nI-LW-Ied" firstAttribute="bottom" secondItem="za7-Z7-cKF" secondAttribute="top" id="IeI-Ed-SYi"/>
+                            <constraint firstItem="9nI-LW-Ied" firstAttribute="bottom" secondItem="Dre-MF-3h6" secondAttribute="bottom" id="IeI-Ed-SYi"/>
                             <constraint firstItem="9nI-LW-Ied" firstAttribute="leading" secondItem="iPt-fM-G85" secondAttribute="leadingMargin" constant="-20" id="N1I-ZB-tsJ"/>
                             <constraint firstItem="9nI-LW-Ied" firstAttribute="top" secondItem="GzC-xY-ksk" secondAttribute="bottom" id="QJh-tT-jT8"/>
                             <constraint firstItem="GzC-xY-ksk" firstAttribute="width" secondItem="9nI-LW-Ied" secondAttribute="width" id="U81-QK-shc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9nI-LW-Ied" secondAttribute="trailing" constant="-20" id="VIm-pM-CMI"/>
                             <constraint firstItem="9nI-LW-Ied" firstAttribute="top" secondItem="4lW-Ow-gtQ" secondAttribute="top" id="Y8A-Gv-iLe"/>
                             <constraint firstItem="GzC-xY-ksk" firstAttribute="centerX" secondItem="9nI-LW-Ied" secondAttribute="centerX" id="eGQ-Vs-xhY"/>
-                            <constraint firstItem="9nI-LW-Ied" firstAttribute="top" secondItem="VqQ-0h-wpC" secondAttribute="bottom" constant="180" id="voJ-58-yiH">
+                            <constraint firstItem="9nI-LW-Ied" firstAttribute="top" secondItem="Dre-MF-3h6" secondAttribute="top" constant="180" id="voJ-58-yiH">
                                 <variation key="heightClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="9nI-LW-Ied" firstAttribute="leading" secondItem="GzC-xY-ksk" secondAttribute="trailing" constant="-600" id="wZs-Na-YBa">
                                 <variation key="heightClass=compact" constant="0.0"/>
                             </constraint>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="Dre-MF-3h6"/>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="8gT-pc-itx"/>
                                 <exclude reference="DqV-5x-hAE"/>
                                 <exclude reference="U81-QK-shc"/>
                                 <exclude reference="4M6-4F-yuw"/>
                                 <exclude reference="Y8A-Gv-iLe"/>
                                 <exclude reference="voJ-58-yiH"/>
                                 <exclude reference="wZs-Na-YBa"/>
-                                <exclude reference="8gT-pc-itx"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
                             <mask key="constraints">
                                 <exclude reference="4fD-nb-S5f"/>
+                                <include reference="8gT-pc-itx"/>
                                 <exclude reference="DqV-5x-hAE"/>
                                 <include reference="U81-QK-shc"/>
                                 <exclude reference="eGQ-Vs-xhY"/>
@@ -624,7 +621,6 @@
                                 <include reference="Y8A-Gv-iLe"/>
                                 <exclude reference="voJ-58-yiH"/>
                                 <include reference="wZs-Na-YBa"/>
-                                <include reference="8gT-pc-itx"/>
                             </mask>
                         </variation>
                     </view>
