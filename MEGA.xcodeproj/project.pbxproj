@@ -324,6 +324,7 @@
 		836AEDE52018AD1F00868FC7 /* PasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AEDE42018AD1F00868FC7 /* PasswordView.m */; };
 		836B956F2063EADE003E279B /* SearchInPdfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836B956E2063EADE003E279B /* SearchInPdfViewController.m */; };
 		836E74C42099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 836E74C32099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m */; };
+		83747B1F20ADD16D00BC1AED /* MEGAQLPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83747B1D20ADD16C00BC1AED /* MEGAQLPreviewController.m */; };
 		837A88BF20B42290007B55D1 /* CloudDriveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88BE20B42290007B55D1 /* CloudDriveViewController.m */; };
 		837A88C220B44AA8007B55D1 /* OfflineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88C120B44AA8007B55D1 /* OfflineViewController.m */; };
 		837A88C520B45C11007B55D1 /* SendToViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88C420B45C11007B55D1 /* SendToViewController.m */; };
@@ -1196,6 +1197,8 @@
 		836B956E2063EADE003E279B /* SearchInPdfViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchInPdfViewController.m; sourceTree = "<group>"; };
 		836E74C22099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatChangeGroupNameRequestDelegate.h; sourceTree = "<group>"; };
 		836E74C32099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatChangeGroupNameRequestDelegate.m; sourceTree = "<group>"; };
+		83747B1D20ADD16C00BC1AED /* MEGAQLPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAQLPreviewController.m; sourceTree = "<group>"; };
+		83747B1E20ADD16C00BC1AED /* MEGAQLPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAQLPreviewController.h; sourceTree = "<group>"; };
 		837A88BD20B42290007B55D1 /* CloudDriveViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudDriveViewController.h; sourceTree = "<group>"; };
 		837A88BE20B42290007B55D1 /* CloudDriveViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudDriveViewController.m; sourceTree = "<group>"; };
 		837A88C020B44AA8007B55D1 /* OfflineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OfflineViewController.h; sourceTree = "<group>"; };
@@ -2854,6 +2857,8 @@
 				E8B3FE761DDB379C008A9C82 /* HelpModalViewController.h */,
 				E8B3FE771DDB379C008A9C82 /* HelpModalViewController.m */,
 				5B134B8E1F86260A000E367E /* HelpModalViewController.xib */,
+				83747B1E20ADD16C00BC1AED /* MEGAQLPreviewController.h */,
+				83747B1D20ADD16C00BC1AED /* MEGAQLPreviewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -3592,6 +3597,7 @@
 				41EC68461D76DA93003EC803 /* UIBarButtonItem+Badge.m in Sources */,
 				5BB2E40C20629E2C00E9F45C /* EmptyFooterView.m in Sources */,
 				A89629751FACE78B00F02F7A /* MEGACallManager.m in Sources */,
+				83747B1F20ADD16D00BC1AED /* MEGAQLPreviewController.m in Sources */,
 				946B2D161F46E235009ED32C /* GetLinkTableViewController.m in Sources */,
 				41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */,
 				41D21E651D01AEC3002E6296 /* CTAssetsGridViewCell.m in Sources */,
