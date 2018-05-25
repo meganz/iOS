@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@interface OfflineTableViewController : UITableViewController
+@interface OfflineViewController : UIViewController
 
 @property (nonatomic, strong) NSIndexPath *peekIndexPath;
 
