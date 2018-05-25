@@ -1,4 +1,3 @@
-
 #import <UIKit/UIKit.h>
 
 #import "DisplayMode.h"
@@ -6,7 +5,7 @@
 @class MEGANode;
 @class MEGAUser;
 
-@interface CloudDriveTableViewController : UITableViewController
+@interface CloudDriveViewController : UIViewController
 
 @property (nonatomic, strong) MEGANode *parentNode;
 @property (nonatomic, strong) MEGAUser *user;
