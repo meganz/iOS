@@ -89,11 +89,6 @@
     self.pendingRequestsPresented = NO;
 
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
-    [self.searchController.searchBar setBarTintColor:UIColor.mnz_grayFCFCFC];
-    self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
-    
-    UITextField *searchTextField = [self.searchController.searchBar valueForKey:@"_searchField"];
-    searchTextField.backgroundColor = UIColor.mnz_grayEEEEEE;
     
     [self.createGroupBarButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:1 green:1 blue:1 alpha:.5]} forState:UIControlStateDisabled];
 
