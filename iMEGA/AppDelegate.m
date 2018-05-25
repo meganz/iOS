@@ -1093,22 +1093,37 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (BOOL)isContactLink:(NSString *)afterSlashesString {
-    if (afterSlashesString.length < 3) {
+    if (afterSlashesString.length < 2) {
         return NO;
     }
     
-    NSString *megaURLTypeString = [afterSlashesString substringToIndex:3]; // mega://"#C!"
-    BOOL isContactLink = [megaURLTypeString isEqualToString:@"#C!"];
+    BOOL isContactLink = [[afterSlashesString substringToIndex:2] isEqualToString:@"C!"]; // mega://"C!"
+    BOOL isContactLinkWithHash = [[afterSlashesString substringToIndex:3] isEqualToString:@"#C!"]; // mega://"#C!"
+    
+    NSString *contactLinkHandle;
     if (isContactLink) {
-        NSString *contactLinkHandle = [afterSlashesString substringFromIndex:3];
-        MEGAContactLinkQueryRequestDelegate *delegate = [[MEGAContactLinkQueryRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-            NSString *fullName = [NSString stringWithFormat:@"%@ %@", request.name, request.text];
-            [self presentInviteModalForEmail:request.email fullName:fullName contactLinkHandle:request.nodeHandle];
-        } onError:nil];
-        [[MEGASdkManager sharedMEGASdk] contactLinkQueryWithHandle:[MEGASdk handleForBase64Handle:contactLinkHandle] delegate:delegate];
-
+        contactLinkHandle = [afterSlashesString substringFromIndex:2];
+    } else if (isContactLinkWithHash) {
+        contactLinkHandle = [afterSlashesString substringFromIndex:3];
+    }
+    
+    if (isContactLink || isContactLinkWithHash) {
+        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            uint64_t handle = [MEGASdk handleForBase64Handle:contactLinkHandle];
+            
+            MEGAContactLinkQueryRequestDelegate *delegate = [[MEGAContactLinkQueryRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                NSString *fullName = [NSString stringWithFormat:@"%@ %@", request.name, request.text];
+                [self presentInviteModalForEmail:request.email fullName:fullName contactLinkHandle:request.nodeHandle];
+            } onError:nil];
+            
+            [[MEGASdkManager sharedMEGASdk] contactLinkQueryWithHandle:handle delegate:delegate];
+        } else {
+            [self showPleaseLogInToYourAccountAlert];
+        }
+        
         return YES;
     }
+    
     return NO;
 }
 
