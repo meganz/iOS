@@ -12,7 +12,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
 #import "BrowserViewController.h"
-#import "CloudDriveTableViewController.h"
+#import "CloudDriveViewController.h"
 #import "MainTabBarController.h"
 #import "SearchInPdfViewController.h"
 
@@ -378,17 +378,17 @@
             [navigationController popToRootViewControllerAnimated:NO];
             
             for (MEGANode *node in parentTreeArray) {
-                CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                cloudDriveTVC.parentNode = node;
-                [navigationController pushViewController:cloudDriveTVC animated:NO];
+                CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                cloudDriveVC.parentNode = node;
+                [navigationController pushViewController:cloudDriveVC animated:NO];
             }
             
             switch (node.type) {
                 case MEGANodeTypeFolder:
                 case MEGANodeTypeRubbish: {
-                    CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                    cloudDriveTVC.parentNode = node;
-                    [navigationController pushViewController:cloudDriveTVC animated:NO];
+                    CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                    cloudDriveVC.parentNode = node;
+                    [navigationController pushViewController:cloudDriveVC animated:NO];
                     break;
                 }
                     
