@@ -96,11 +96,12 @@
 #pragma mark - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    TransferTableViewCell *cell;
-    
+    if (indexPath.row > self.transfers.count) {
+        return nil;
+    }
     MEGATransfer *transfer = [self.transfers objectAtIndex:indexPath.row];
     
+    TransferTableViewCell *cell;
     switch (transfer.state) {
         case MEGATransferStateActive:
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"activeTransferCell" forIndexPath:indexPath];
