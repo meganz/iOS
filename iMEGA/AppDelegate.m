@@ -1121,7 +1121,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
             MEGAContactLinkQueryRequestDelegate *delegate = [[MEGAContactLinkQueryRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                 NSString *fullName = [NSString stringWithFormat:@"%@ %@", request.name, request.text];
                 [self presentInviteModalForEmail:request.email fullName:fullName contactLinkHandle:request.nodeHandle image:request.file];
-            } onError:nil];
+            } onError:^(MEGAError *error) {
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
+            }];
             
             [[MEGASdkManager sharedMEGASdk] contactLinkQueryWithHandle:handle delegate:delegate];
         } else {
