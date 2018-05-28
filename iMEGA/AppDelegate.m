@@ -28,6 +28,7 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
+#import "UIImage+GKContact.h"
 #import "UIApplication+MNZCategory.h"
 
 #import "BrowserViewController.h"
@@ -58,6 +59,7 @@
 #import "CustomModalAlertViewController.h"
 
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
+#import "MEGAContactLinkQueryRequestDelegate.h"
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGAGetPublicNodeRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
@@ -83,6 +85,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeChangeEmailLink,
     URLTypeCancelAccountLink,
     URLTypeRecoverLink,
+    URLTypeContactLink,
     URLTypeChatLink,
     URLTypeLoginRequiredLink,
     URLTypeHandleLink
@@ -830,6 +833,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         return;
     }
     
+    if ([self isContactLink:afterSlashesString]) {
+        self.urlType = URLTypeContactLink;
+        return;
+    }
+    
     if ([self isChatLink:afterSlashesString]) {
         self.urlType = URLTypeChatLink;
         return;
@@ -1089,6 +1097,103 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
     
     return NO;
+}
+
+- (BOOL)isContactLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 2) {
+        return NO;
+    }
+    
+    BOOL isContactLink = [[afterSlashesString substringToIndex:2] isEqualToString:@"C!"]; // mega://"C!"
+    BOOL isContactLinkWithHash = [[afterSlashesString substringToIndex:3] isEqualToString:@"#C!"]; // mega://"#C!"
+    
+    NSString *contactLinkHandle;
+    if (isContactLink) {
+        contactLinkHandle = [afterSlashesString substringFromIndex:2];
+    } else if (isContactLinkWithHash) {
+        contactLinkHandle = [afterSlashesString substringFromIndex:3];
+    }
+    
+    if (isContactLink || isContactLinkWithHash) {
+        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            uint64_t handle = [MEGASdk handleForBase64Handle:contactLinkHandle];
+            
+            MEGAContactLinkQueryRequestDelegate *delegate = [[MEGAContactLinkQueryRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                NSString *fullName = [NSString stringWithFormat:@"%@ %@", request.name, request.text];
+                [self presentInviteModalForEmail:request.email fullName:fullName contactLinkHandle:request.nodeHandle image:request.file];
+            } onError:nil];
+            
+            [[MEGASdkManager sharedMEGASdk] contactLinkQueryWithHandle:handle delegate:delegate];
+        } else {
+            [self showPleaseLogInToYourAccountAlert];
+        }
+        
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (void)presentInviteModalForEmail:(NSString *)email fullName:(NSString *)fullName contactLinkHandle:(uint64_t)contactLinkHandle image:(NSString *)imageOnBase64URLEncoding {
+    CustomModalAlertViewController *inviteOrDismissModal = [[CustomModalAlertViewController alloc] init];
+    inviteOrDismissModal.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    
+    if (imageOnBase64URLEncoding.mnz_isEmpty) {
+        inviteOrDismissModal.image = [UIImage imageForName:fullName.uppercaseString size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor colorFromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:64.0f]];
+    } else {
+        inviteOrDismissModal.roundImage = YES;
+        NSData *imageData = [[NSData alloc] initWithBase64EncodedString:[NSString mnz_base64FromBase64URLEncoding:imageOnBase64URLEncoding] options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        inviteOrDismissModal.image = [UIImage imageWithData:imageData];
+    }
+    
+    inviteOrDismissModal.viewTitle = fullName;
+    
+    __weak UIViewController *weakVisibleVC = [UIApplication mnz_visibleViewController];
+    __weak CustomModalAlertViewController *weakInviteOrDismissModal = inviteOrDismissModal;
+    void (^completion)(void) = ^{
+        MEGAInviteContactRequestDelegate *delegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1 presentSuccessOver:weakVisibleVC completion:nil];
+        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd handle:contactLinkHandle delegate:delegate];
+        [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:nil];
+    };
+    
+    void (^onDismiss)(void) = ^{
+        [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:nil];
+    };
+    
+    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
+    if (user && user.visibility == MEGAUserVisibilityVisible) {
+        inviteOrDismissModal.detail = [AMLocalizedString(@"alreadyAContact", @"Error message displayed when trying to invite a contact who is already added.") stringByReplacingOccurrencesOfString:@"%s" withString:email];
+        inviteOrDismissModal.action = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+        inviteOrDismissModal.completion = onDismiss;
+    } else {
+        BOOL isInOutgoingContactRequest = NO;
+        MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
+        for (NSInteger i = 0; i < outgoingContactRequestList.size.integerValue; i++) {
+            MEGAContactRequest *contactRequest = [outgoingContactRequestList contactRequestAtIndex:i];
+            if ([email isEqualToString:contactRequest.targetEmail]) {
+                isInOutgoingContactRequest = YES;
+                break;
+            }
+        }
+        if (isInOutgoingContactRequest) {
+            inviteOrDismissModal.image = [UIImage imageNamed:@"inviteSent"];
+            inviteOrDismissModal.viewTitle = AMLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
+            NSString *detailText = AMLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
+            detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:email];
+            inviteOrDismissModal.detail = detailText;
+            inviteOrDismissModal.boldInDetail = email;
+            inviteOrDismissModal.action = AMLocalizedString(@"close", nil);
+            inviteOrDismissModal.completion = onDismiss;
+        } else {
+            inviteOrDismissModal.detail = email;
+            inviteOrDismissModal.action = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
+            inviteOrDismissModal.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+            inviteOrDismissModal.completion = completion;
+            inviteOrDismissModal.onDismiss = onDismiss;
+        }
+    }
+    
+    [[UIApplication mnz_visibleViewController] presentViewController:inviteOrDismissModal animated:YES completion:nil];
 }
 
 - (BOOL)isChatLink:(NSString *)afterSlashesString {
