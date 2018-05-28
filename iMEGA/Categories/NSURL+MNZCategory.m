@@ -1,6 +1,16 @@
 
 #import "NSURL+MNZCategory.h"
 
+#import "FileLinkViewController.h"
+#import "FolderLinkViewController.h"
+#import "MEGAGetPublicNodeRequestDelegate.h"
+#import "MEGANavigationController.h"
+#import "MEGANode+MNZCategory.h"
+#import "MEGAPhotoBrowserViewController.h"
+#import "MEGASdkManager.h"
+#import "NSString+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
+
 @implementation NSURL (MNZCategory)
 
 - (URLType)mnz_type {
@@ -102,6 +112,58 @@
     }
     
     return afterSlashesString;
+}
+
+#pragma mark - Link processing
+
+- (void)mnz_showLinkView {
+    switch ([self mnz_type]) {
+        case URLTypeFileLink:
+            [self showFileLinkView];
+            break;
+            
+        case URLTypeFolderLink:
+            [self showFolderLinkView];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)showFileLinkView {
+    NSString *fileLinkURLString = [self mnz_MEGAURL];
+    MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+        if (!request.flag) {
+            MEGANode *node = request.publicNode;
+            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+                MEGAPhotoBrowserViewController *photoBrowserVC = [node mnz_photoBrowserWithNodes:@[node] folderLink:NO displayMode:DisplayModeFileLink enableMoveToRubbishBin:NO];
+                photoBrowserVC.publicLink = fileLinkURLString;
+                [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];
+                
+                return;
+            }
+        }
+        MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
+        FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
+        fileLinkVC.fileLinkString = fileLinkURLString;
+        
+        [UIApplication.mnz_visibleViewController presentViewController:fileLinkNavigationController animated:YES completion:nil];
+    }];
+    
+    [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:fileLinkURLString delegate:delegate];
+}
+
+- (void)showFolderLinkView {
+    NSString *folderLinkURLString = [self mnz_MEGAURL];
+    MEGANavigationController *folderNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FolderLinkNavigationControllerID"];
+    
+    FolderLinkViewController *folderlinkVC = folderNavigationController.viewControllers.firstObject;
+    
+    [folderlinkVC setIsFolderRootNode:YES];
+    [folderlinkVC setFolderLinkString:folderLinkURLString];
+    
+    [UIApplication.mnz_visibleViewController presentViewController:folderNavigationController animated:YES completion:nil];
 }
 
 @end
