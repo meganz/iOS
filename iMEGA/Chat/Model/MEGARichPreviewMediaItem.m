@@ -9,11 +9,13 @@
 #import "MEGAMessageRichPreviewView.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGASdkManager.h"
+#import "NSURL+MNZCategory.h"
 #import "UIFont+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 
 @interface MEGARichPreviewMediaItem()
 
-@property (nonatomic) UIView *cachedDialogView;
+@property (nonatomic) MEGAMessageRichPreviewView *cachedDialogView;
 
 @end
 
@@ -80,19 +82,28 @@
     
     // Content:
     dialogView.contentTextView.dataDetectorTypes = UIDataDetectorTypeAll;
-    dialogView.contentTextView.text = self.message.containsMeta.richPreview.text;
-    dialogView.titleLabel.text = self.message.containsMeta.richPreview.title;
-    dialogView.descriptionLabel.text = self.message.containsMeta.richPreview.previewDescription;
-    dialogView.linkLabel.text = self.message.containsMeta.richPreview.url;
-    NSString *imageString = self.message.containsMeta.richPreview.image;
-    if (imageString) {
-        NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imageString options:NSDataBase64DecodingIgnoreUnknownCharacters];
-        dialogView.imageImageView.image = [UIImage imageWithData:imageData];
-    }
-    NSString *iconString = self.message.containsMeta.richPreview.icon;
-    if (iconString) {
-        NSData *iconData = [[NSData alloc] initWithBase64EncodedString:iconString options:NSDataBase64DecodingIgnoreUnknownCharacters];
-        dialogView.iconImageView.image = [UIImage imageWithData:iconData];
+    if (self.message.type == MEGAChatMessageTypeContainsMeta) {
+        dialogView.contentTextView.text = self.message.containsMeta.richPreview.text;
+        dialogView.titleLabel.text = self.message.containsMeta.richPreview.title;
+        dialogView.descriptionLabel.text = self.message.containsMeta.richPreview.previewDescription;
+        dialogView.linkLabel.text = self.message.containsMeta.richPreview.url;
+        NSString *imageString = self.message.containsMeta.richPreview.image;
+        if (imageString) {
+            NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imageString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+            dialogView.imageImageView.image = [UIImage imageWithData:imageData];
+        }
+        NSString *iconString = self.message.containsMeta.richPreview.icon;
+        if (iconString) {
+            NSData *iconData = [[NSData alloc] initWithBase64EncodedString:iconString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+            dialogView.iconImageView.image = [UIImage imageWithData:iconData];
+        }
+    } else if (self.message.node) {
+        dialogView.contentTextView.text = self.message.content;
+        dialogView.titleLabel.text = self.message.node ? self.message.node.name : @"";
+        dialogView.descriptionLabel.text = self.message.node ? [NSByteCountFormatter stringFromByteCount:self.message.node.size.longLongValue countStyle:NSByteCountFormatterCountStyleMemory] : 0;
+        dialogView.linkLabel.text = @"www.mega.nz";
+        [dialogView.imageImageView mnz_setImageForExtension:(self.message.node ? self.message.node.name.pathExtension : @"")];
+        dialogView.iconImageView.image = [UIImage imageNamed:@"favicon"];
     }
 
     // Bubble:
@@ -109,10 +120,11 @@
     CGFloat bubbleWidth = [[UIDevice currentDevice] mnz_widthForChatBubble];
     CGFloat maxTextViewWidth = bubbleWidth - 20.0f;
     UIFont *messageFont = [UIFont mnz_SFUIRegularWithSize:15.0f];
-    CGRect messageRect = [self.message.containsMeta.richPreview.text boundingRectWithSize:CGSizeMake(maxTextViewWidth, CGFLOAT_MAX)
-                                                                                  options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                                                               attributes:@{ NSFontAttributeName : messageFont }
-                                                                                  context:nil];
+    NSString *text = self.message.type == MEGAChatMessageTypeContainsMeta ? self.message.containsMeta.richPreview.text : self.message.content;
+    CGRect messageRect = [text boundingRectWithSize:CGSizeMake(maxTextViewWidth, CGFLOAT_MAX)
+                                            options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                         attributes:@{ NSFontAttributeName : messageFont }
+                                            context:nil];
     // The bubble height is the message plus the rich preview height plus the margins, @see MEGAMessageRichPreviewView.xib
     CGFloat bubbleHeight = 10.0f + messageRect.size.height + 10.0f + 104.0f + 3.0f;
     return CGSizeMake(bubbleWidth, bubbleHeight);
@@ -127,7 +139,7 @@
 }
 
 - (id)mediaData {
-    return self.message.containsMeta.richPreview.text;
+    return self.message.type == MEGAChatMessageTypeContainsMeta ? self.message.containsMeta.richPreview.text : self.message.content;
 }
 
 #pragma mark - NSObject

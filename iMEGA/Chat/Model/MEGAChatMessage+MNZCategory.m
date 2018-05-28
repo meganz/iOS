@@ -5,16 +5,22 @@
 
 #import "MEGAAttachmentMediaItem.h"
 #import "MEGADialogMediaItem.h"
+#import "MEGAFetchNodesRequestDelegate.h"
+#import "MEGAGetPublicNodeRequestDelegate.h"
+#import "MEGALoginToFolderLinkRequestDelegate.h"
 #import "MEGAPhotoMediaItem.h"
 #import "MEGARichPreviewMediaItem.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "NSURL+MNZCategory.h"
 
 static const void *chatRoomTagKey = &chatRoomTagKey;
 static const void *attributedTextTagKey = &attributedTextTagKey;
 static const void *warningDialogTagKey = &warningDialogTagKey;
+static const void *MEGALinkTagKey = &MEGALinkTagKey;
+static const void *nodeTagKey = &nodeTagKey;
 
 @implementation MEGAChatMessage (MNZCategory)
 
@@ -33,11 +39,45 @@ static const void *warningDialogTagKey = &warningDialogTagKey;
 - (BOOL)isMediaMessage {
     BOOL mediaMessage = NO;
     
-    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.warningDialog > MEGAChatMessageWarningDialogNone) || self.type == MEGAChatMessageTypeContainsMeta)) {
+    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.warningDialog > MEGAChatMessageWarningDialogNone) || self.type == MEGAChatMessageTypeContainsMeta || self.node)) {
         mediaMessage = YES;
     }
     
     return mediaMessage;
+}
+
+- (BOOL)containsMEGALink {
+    if (self.MEGALink) {
+        return YES;
+    }
+    
+    NSDataDetector* linkDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
+    for (NSTextCheckingResult *match in [linkDetector matchesInString:self.content options:0 range:NSMakeRange(0, self.content.length)]) {
+        URLType type = [match.URL mnz_type];
+        if (type == URLTypeFileLink || type == URLTypeFolderLink) {
+            self.MEGALink = match.URL;
+            if (type == URLTypeFileLink) {
+                MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                    self.node = request.publicNode;
+                }];
+                [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:[self.MEGALink mnz_MEGAURL] delegate:delegate];
+            } else if (type == URLTypeFolderLink) {
+                MEGALoginToFolderLinkRequestDelegate *loginDelegate = [[MEGALoginToFolderLinkRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                    MEGAFetchNodesRequestDelegate *fetchNodesDelegate = [[MEGAFetchNodesRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                        if (!request.flag) {
+                            self.node = [MEGASdkManager sharedMEGASdkFolder].rootNode;
+                        }
+                    }];
+                    [[MEGASdkManager sharedMEGASdkFolder] fetchNodesWithDelegate:fetchNodesDelegate];
+                }];
+                [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:[self.MEGALink mnz_MEGAURL] delegate:loginDelegate];
+            }
+
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 - (NSString *)text {
@@ -247,6 +287,8 @@ static const void *warningDialogTagKey = &warningDialogTagKey;
         case MEGAChatMessageTypeNormal: {
             if (self.warningDialog > MEGAChatMessageWarningDialogNone) {
                 media = [[MEGADialogMediaItem alloc] initWithMEGAChatMessage:self];
+            } else if (self.node) {
+                media = [[MEGARichPreviewMediaItem alloc] initWithMEGAChatMessage:self];
             }
             
             break;
@@ -266,7 +308,7 @@ static const void *warningDialogTagKey = &warningDialogTagKey;
 #pragma mark - NSObject
 
 - (NSUInteger)hash {
-    NSUInteger contentHash = self.type == MEGAChatMessageTypeAttachment ? [self.nodeList nodeAtIndex:0].handle : self.content.hash;
+    NSUInteger contentHash = self.type == MEGAChatMessageTypeAttachment ? [self.nodeList nodeAtIndex:0].handle : self.content.hash ^ self.node.hash;
     NSUInteger metaHash = self.type == MEGAChatMessageTypeContainsMeta ? self.containsMeta.type : MEGAChatContainsMetaTypeInvalid;
     return self.senderId.hash ^ self.date.hash ^ contentHash ^ self.warningDialog ^ metaHash;
 }
@@ -299,6 +341,22 @@ static const void *warningDialogTagKey = &warningDialogTagKey;
 
 - (void)setWarningDialog:(MEGAChatMessageWarningDialog)warningDialog {
     objc_setAssociatedObject(self, &warningDialogTagKey, [NSNumber numberWithInteger:warningDialog], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSURL *)MEGALink {
+    return objc_getAssociatedObject(self, MEGALinkTagKey);
+}
+
+- (void)setMEGALink:(NSURL *)MEGALink {
+    objc_setAssociatedObject(self, &MEGALinkTagKey, MEGALink, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (MEGANode *)node {
+    return objc_getAssociatedObject(self, nodeTagKey);
+}
+
+- (void)setNode:(MEGANode *)node {
+    objc_setAssociatedObject(self, &nodeTagKey, node, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end
