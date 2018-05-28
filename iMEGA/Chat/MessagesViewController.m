@@ -89,7 +89,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 @property (nonatomic) CGFloat lastBottomInset;
 @property (nonatomic) CGFloat lastVerticalOffset;
 
-@property (nonatomic) NSMutableArray<MEGAChatMessage *> *observedMessages;
+@property (nonatomic) NSMutableSet<MEGAChatMessage *> *observedDialogMessages;
+@property (nonatomic) NSMutableSet<MEGAChatMessage *> *observedNodeMessages;
 @property (nonatomic) NSUInteger richLinkWarningCounterValue;
 
 @end
@@ -224,7 +225,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     _whoIsTypingTimersMutableDictionary = [[NSMutableDictionary alloc] init];
     
     // Array of observed messages:
-    self.observedMessages = [[NSMutableArray<MEGAChatMessage *> alloc] init];
+    self.observedDialogMessages = [[NSMutableSet<MEGAChatMessage *> alloc] init];
+    self.observedNodeMessages = [[NSMutableSet<MEGAChatMessage *> alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -291,8 +293,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)dealloc {
-    for (MEGAChatMessage *message in self.observedMessages) {
+    for (MEGAChatMessage *message in self.observedDialogMessages) {
         [message removeObserver:self forKeyPath:@"warningDialog"];
+    }
+    for (MEGAChatMessage *message in self.observedNodeMessages) {
+        [message removeObserver:self forKeyPath:@"node"];
     }
 }
 
@@ -978,7 +983,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             if (message.temporalId == messageToReload.temporalId) {
                 message.warningDialog = skippedDialogs.integerValue >= 3 ? MEGAChatMessageWarningDialogStandard : MEGAChatMessageWarningDialogInitial;
                 [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:i inSection:0]]];
-                [self.observedMessages addObject:message];
+                [self.observedDialogMessages addObject:message];
                 [message addObserver:self forKeyPath:@"warningDialog" options:NSKeyValueObservingOptionNew context:nil];
             }
         }
@@ -988,14 +993,16 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
     MEGAChatMessage *messageToReload = (MEGAChatMessage *)object;
     
-    if (messageToReload.warningDialog == MEGAChatMessageWarningDialogDismiss) {
-        [[MEGASdkManager sharedMEGASdk] setRichLinkWarningCounterValue:++self.richLinkWarningCounterValue];
+    if ([keyPath isEqualToString:@"warningDialog"]) {
+        if (messageToReload.warningDialog == MEGAChatMessageWarningDialogDismiss) {
+            [[MEGASdkManager sharedMEGASdk] setRichLinkWarningCounterValue:++self.richLinkWarningCounterValue];
+        }
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
         for (NSUInteger i = 0; i < self.messages.count; i++) {
             MEGAChatMessage *message = [self.messages objectAtIndex:i];
-            if (message.temporalId == messageToReload.temporalId) {
+            if (message.messageId == messageToReload.messageId) {
                 [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:i inSection:0]]];
             }
         }
@@ -1319,6 +1326,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
+    
+    if (message.containsMEGALink) {
+        [self.observedNodeMessages addObject:message];
+        [message addObserver:self forKeyPath:@"node" options:NSKeyValueObservingOptionNew context:nil];
+    }
     
     cell.accessoryButton.hidden = YES;
     
@@ -1915,7 +1927,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                         MEGAChatMessage *oldMessage = filteredArray.firstObject;
                         if (oldMessage.warningDialog > MEGAChatMessageWarningDialogNone) {
                             message.warningDialog = oldMessage.warningDialog;
-                            [self.observedMessages addObject:message];
+                            [self.observedDialogMessages addObject:message];
                             [message addObserver:self forKeyPath:@"warningDialog" options:NSKeyValueObservingOptionNew context:nil];
                         }
                         NSUInteger index = [self.messages indexOfObject:oldMessage];
