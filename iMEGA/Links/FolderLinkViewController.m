@@ -19,7 +19,6 @@
 #import "MainTabBarController.h"
 #import "UnavailableLinkView.h"
 #import "LoginViewController.h"
-#import "OfflineTableViewController.h"
 #import "BrowserViewController.h"
 #import "CustomActionViewController.h"
 
@@ -69,7 +68,6 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
-    self.tableView.tableHeaderView = self.searchController.searchBar;
     self.definesPresentationContext = YES;
     
     isLoginDone = NO;
