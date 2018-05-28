@@ -33,6 +33,7 @@
 #import "MEGAToolbarContentView.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "NSURL+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 
 #import <UserNotifications/UserNotifications.h>
@@ -1670,6 +1671,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         }
     } else if (message.type == MEGAChatMessageTypeContainsMeta) {
         [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:message.containsMeta.richPreview.url]];
+    } else if (message.node) {
+        [message.MEGALink mnz_showLinkView];
     }
 }
 

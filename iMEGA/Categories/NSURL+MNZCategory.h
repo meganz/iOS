@@ -25,4 +25,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (NSString *)mnz_MEGAURL;
 - (NSString *)mnz_afterSlashesString;
 
+- (void)mnz_showLinkView;
+
 @end

@@ -43,12 +43,9 @@
 #import "ContactsViewController.h"
 #import "CreateAccountViewController.h"
 #import "DisplayMode.h"
-#import "FileLinkViewController.h"
-#import "FolderLinkViewController.h"
 #import "LaunchViewController.h"
 #import "LoginViewController.h"
 #import "MainTabBarController.h"
-#import "MEGAPhotoBrowserViewController.h"
 #import "MessagesViewController.h"
 #import "MyAccountHallViewController.h"
 #import "OfflineTableViewController.h"
@@ -62,7 +59,6 @@
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
-#import "MEGAGetPublicNodeRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAPasswordLinkRequestDelegate.h"
@@ -756,13 +752,15 @@
             break;
             
         case URLTypeFileLink:
-            [self showFileLinkView:[url mnz_MEGAURL]];
+            [url mnz_showLinkView];
+            self.link = nil;
             
             break;
             
         case URLTypeFolderLink:
-            [self showFolderLinkView:[url mnz_MEGAURL]];
-            
+            [url mnz_showLinkView];
+            self.link = nil;
+
             break;
             
         case URLTypeEncryptedLink:
@@ -849,42 +847,6 @@
     if (self.window.rootViewController.presentedViewController != nil) {
         [self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
     }
-}
-
-- (void)showFileLinkView:(NSString *)fileLinkURLString {
-    MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-        if (!request.flag) {
-            MEGANode *node = request.publicNode;
-            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                MEGAPhotoBrowserViewController *photoBrowserVC = [node mnz_photoBrowserWithNodes:@[node] folderLink:NO displayMode:DisplayModeFileLink enableMoveToRubbishBin:NO];
-                photoBrowserVC.publicLink = fileLinkURLString;
-                [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];
-                
-                return;
-            }
-        }
-        MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
-        FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
-        fileLinkVC.fileLinkString = fileLinkURLString;
-        
-        [UIApplication.mnz_visibleViewController presentViewController:fileLinkNavigationController animated:YES completion:nil];
-    }];
-    
-    [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:fileLinkURLString delegate:delegate];
-    self.link = nil;
-}
-
-- (void)showFolderLinkView:(NSString *)folderLinkURLString {
-    MEGANavigationController *folderNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FolderLinkNavigationControllerID"];
-    
-    FolderLinkViewController *folderlinkVC = folderNavigationController.viewControllers.firstObject;
-    
-    [folderlinkVC setIsFolderRootNode:YES];
-    [folderlinkVC setFolderLinkString:folderLinkURLString];
-    
-    [UIApplication.mnz_visibleViewController presentViewController:folderNavigationController animated:YES completion:nil];
-    
-    self.link = nil;
 }
 
 - (void)showEncryptedLinkAlert:(NSString *)encryptedLinkURLString {
