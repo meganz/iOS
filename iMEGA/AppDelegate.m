@@ -1120,7 +1120,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             
             MEGAContactLinkQueryRequestDelegate *delegate = [[MEGAContactLinkQueryRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                 NSString *fullName = [NSString stringWithFormat:@"%@ %@", request.name, request.text];
-                [self presentInviteModalForEmail:request.email fullName:fullName contactLinkHandle:request.nodeHandle];
+                [self presentInviteModalForEmail:request.email fullName:fullName contactLinkHandle:request.nodeHandle image:request.file];
             } onError:nil];
             
             [[MEGASdkManager sharedMEGASdk] contactLinkQueryWithHandle:handle delegate:delegate];
@@ -1134,10 +1134,18 @@ typedef NS_ENUM(NSUInteger, URLType) {
     return NO;
 }
 
-- (void)presentInviteModalForEmail:(NSString *)email fullName:(NSString *)fullName contactLinkHandle:(uint64_t)contactLinkHandle {
+- (void)presentInviteModalForEmail:(NSString *)email fullName:(NSString *)fullName contactLinkHandle:(uint64_t)contactLinkHandle image:(NSString *)imageOnBase64URLEncoding {
     CustomModalAlertViewController *inviteOrDismissModal = [[CustomModalAlertViewController alloc] init];
     inviteOrDismissModal.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    inviteOrDismissModal.image = [UIImage imageForName:fullName.uppercaseString size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor colorFromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:64.0f]];
+    
+    if (imageOnBase64URLEncoding.mnz_isEmpty) {
+        inviteOrDismissModal.image = [UIImage imageForName:fullName.uppercaseString size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor colorFromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:64.0f]];
+    } else {
+        inviteOrDismissModal.roundImage = YES;
+        NSData *imageData = [[NSData alloc] initWithBase64EncodedString:[NSString mnz_base64FromBase64URLEncoding:imageOnBase64URLEncoding] options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        inviteOrDismissModal.image = [UIImage imageWithData:imageData];
+    }
+    
     inviteOrDismissModal.viewTitle = fullName;
     
     __weak UIViewController *weakVisibleVC = [UIApplication mnz_visibleViewController];
