@@ -12,55 +12,62 @@
     
     NSString *afterSlashesString = [self mnz_afterSlashesString];
     
-    if ([[afterSlashesString substringToIndex:2] isEqualToString:@"#!"]) {
+    if (afterSlashesString.length < 2) {
+        return URLTypeDefault;
+    }
+    
+    if (afterSlashesString.length >= 2 && [[afterSlashesString substringToIndex:2] isEqualToString:@"#!"]) {
         return URLTypeFileLink;
     }
     
-    if ([[afterSlashesString substringToIndex:3] isEqualToString:@"#F!"]) {
+    if (afterSlashesString.length >= 3 && [[afterSlashesString substringToIndex:3] isEqualToString:@"#F!"]) {
         return URLTypeFolderLink;
     }
     
-    if ([[afterSlashesString substringToIndex:3] isEqualToString:@"#P!"]) {
+    if (afterSlashesString.length >= 3 && [[afterSlashesString substringToIndex:3] isEqualToString:@"#P!"]) {
         return URLTypeEncryptedLink;
     }
     
-    if ([[afterSlashesString substringToIndex:8] isEqualToString:@"#confirm"] || [[afterSlashesString substringToIndex:7] isEqualToString:@"confirm"]) {
+    if (afterSlashesString.length >= 8 && [[afterSlashesString substringToIndex:8] isEqualToString:@"#confirm"]) {
+        return URLTypeConfirmationLink;
+    }
+    if (afterSlashesString.length >= 7 && [[afterSlashesString substringToIndex:7] isEqualToString:@"confirm"]) {
         return URLTypeConfirmationLink;
     }
     
-    if ([[afterSlashesString substringToIndex:10] isEqualToString:@"#newsignup"]) {
+    if (afterSlashesString.length >= 10 && [[afterSlashesString substringToIndex:10] isEqualToString:@"#newsignup"]) {
         return URLTypeNewSignUpLink;
     }
     
-    if ([[afterSlashesString substringToIndex:7] isEqualToString:@"#backup"]) {
+    if (afterSlashesString.length >= 7 && [[afterSlashesString substringToIndex:7] isEqualToString:@"#backup"]) {
         return URLTypeBackupLink;
     }
     
-    if ([[afterSlashesString substringToIndex:7] isEqualToString:@"#fm/ipc"]) {
+    if (afterSlashesString.length >= 7 && [[afterSlashesString substringToIndex:7] isEqualToString:@"#fm/ipc"]) {
         return URLTypeIncomingPendingContactsLink;
     }
     
-    if ([[afterSlashesString substringToIndex:7] isEqualToString:@"#verify"]) {
+    if (afterSlashesString.length >= 7 && [[afterSlashesString substringToIndex:7] isEqualToString:@"#verify"]) {
         return URLTypeChangeEmailLink;
     }
     
-    if ([[afterSlashesString substringToIndex:7] isEqualToString:@"#cancel"]) {
+    if (afterSlashesString.length >= 7 && [[afterSlashesString substringToIndex:7] isEqualToString:@"#cancel"]) {
         return URLTypeCancelAccountLink;
     }
     
-    if ([[afterSlashesString substringToIndex:8] isEqualToString:@"#recover"]) {
+    if (afterSlashesString.length >= 8 && [[afterSlashesString substringToIndex:8] isEqualToString:@"#recover"]) {
         return URLTypeRecoverLink;
     }
     
-    if ([[afterSlashesString substringToIndex:8] isEqualToString:@"#fm/chat"]) {
+    if (afterSlashesString.length >= 8 && [[afterSlashesString substringToIndex:8] isEqualToString:@"#fm/chat"]) {
         return URLTypeChatLink;
     }
     
-    if ([[afterSlashesString substringToIndex:14] isEqualToString:@"#loginrequired"]) {
+    if (afterSlashesString.length >= 14 && [[afterSlashesString substringToIndex:14] isEqualToString:@"#loginrequired"]) {
         return URLTypeLoginRequiredLink;
     }
     
-    if ([afterSlashesString hasPrefix:@"#"]) {
+    if (afterSlashesString.length >= 1 && [afterSlashesString hasPrefix:@"#"]) {
         return URLTypeHandleLink;
     }
     
@@ -89,7 +96,9 @@
         for (NSUInteger i = 3; i < components.count; i++) {
             afterSlashesString = [NSString stringWithFormat:@"%@%@/", afterSlashesString, [components objectAtIndex:i]];
         }
-        afterSlashesString = [afterSlashesString substringToIndex:(afterSlashesString.length - 1)];
+        if (afterSlashesString.length > 0) {
+            afterSlashesString = [afterSlashesString substringToIndex:(afterSlashesString.length - 1)];
+        }
     }
     
     return afterSlashesString;
