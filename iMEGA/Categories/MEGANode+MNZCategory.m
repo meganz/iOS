@@ -25,6 +25,7 @@
 #import "MEGANavigationController.h"
 #import "MyAccountHallViewController.h"
 #import "PreviewDocumentViewController.h"
+#import "MEGAQLPreviewController.h"
 
 @implementation MEGANode (MNZCategory)
 
@@ -76,14 +77,27 @@
             NSURL *path = [NSURL fileURLWithPath:previewDocumentPath];
             MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:path];
             return megaAVViewController;
+        } else if (@available(iOS 11.0, *)) {
+            if ([previewDocumentPath.pathExtension isEqualToString:@"pdf"]) {
+                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+                PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
+                previewController.api = api;
+                previewController.filesPathsArray = @[previewDocumentPath];
+                previewController.nodeFileIndex = 0;
+                previewController.node = self;
+                
+                return navigationController;
+            } else {
+                MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentPath];
+                previewController.currentPreviewItemIndex = 0;
+                
+                return previewController;
+            }
         } else {
-            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
-            PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
-            previewController.api = api;
-            previewController.filesPathsArray = @[previewDocumentPath];
-            previewController.nodeFileIndex = 0;
+            MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentPath];
+            previewController.currentPreviewItemIndex = 0;
             
-            return navigationController;
+            return previewController;
         }
     } else if (self.name.mnz_isAudiovisualContentUTI && [api httpServerStart:YES port:4443]) {
         MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:self folderLink:isFolderLink];
