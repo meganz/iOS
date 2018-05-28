@@ -296,9 +296,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     for (MEGAChatMessage *message in self.observedDialogMessages) {
         [message removeObserver:self forKeyPath:@"warningDialog"];
     }
+    [self.observedDialogMessages removeAllObjects];
     for (MEGAChatMessage *message in self.observedNodeMessages) {
         [message removeObserver:self forKeyPath:@"node"];
     }
+    [self.observedNodeMessages removeAllObjects];
 }
 
 #pragma mark - Private
@@ -983,8 +985,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             if (message.temporalId == messageToReload.temporalId) {
                 message.warningDialog = skippedDialogs.integerValue >= 3 ? MEGAChatMessageWarningDialogStandard : MEGAChatMessageWarningDialogInitial;
                 [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:i inSection:0]]];
-                [self.observedDialogMessages addObject:message];
-                [message addObserver:self forKeyPath:@"warningDialog" options:NSKeyValueObservingOptionNew context:nil];
+                if (![self.observedDialogMessages containsObject:message]) {
+                    [self.observedDialogMessages addObject:message];
+                    [message addObserver:self forKeyPath:@"warningDialog" options:NSKeyValueObservingOptionNew context:nil];
+                }
             }
         }
     });
@@ -1328,8 +1332,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     
     if (message.containsMEGALink) {
-        [self.observedNodeMessages addObject:message];
-        [message addObserver:self forKeyPath:@"node" options:NSKeyValueObservingOptionNew context:nil];
+        if (![self.observedNodeMessages containsObject:message]) {
+            [self.observedNodeMessages addObject:message];
+            [message addObserver:self forKeyPath:@"node" options:NSKeyValueObservingOptionNew context:nil];
+        }
     }
     
     cell.accessoryButton.hidden = YES;
@@ -1927,8 +1933,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                         MEGAChatMessage *oldMessage = filteredArray.firstObject;
                         if (oldMessage.warningDialog > MEGAChatMessageWarningDialogNone) {
                             message.warningDialog = oldMessage.warningDialog;
-                            [self.observedDialogMessages addObject:message];
-                            [message addObserver:self forKeyPath:@"warningDialog" options:NSKeyValueObservingOptionNew context:nil];
+                            if (![self.observedDialogMessages containsObject:message]) {
+                                [self.observedDialogMessages addObject:message];
+                                [message addObserver:self forKeyPath:@"warningDialog" options:NSKeyValueObservingOptionNew context:nil];
+                            }
                         }
                         NSUInteger index = [self.messages indexOfObject:oldMessage];
                         [self.messages replaceObjectAtIndex:index withObject:message];
