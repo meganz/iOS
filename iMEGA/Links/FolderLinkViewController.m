@@ -348,7 +348,6 @@
         UIPopoverPresentationController *popController = [actionController popoverPresentationController];
         popController.delegate = actionController;
         popController.barButtonItem = sender;
-//        popController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
     } else {
         actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }
