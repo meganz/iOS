@@ -35,4 +35,6 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 - (BOOL)mnz_isPureEmojiString;
 - (NSInteger)mnz_emojiCount;
 
++ (NSString *)mnz_base64FromBase64URLEncoding:(NSString *)base64URLEncondingString;
+
 @end
