@@ -3,6 +3,7 @@
 
 #import <objc/runtime.h>
 
+#import "Helper.h"
 #import "MEGAAttachmentMediaItem.h"
 #import "MEGADialogMediaItem.h"
 #import "MEGAFetchNodesRequestDelegate.h"
@@ -21,6 +22,7 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
 static const void *warningDialogTagKey = &warningDialogTagKey;
 static const void *MEGALinkTagKey = &MEGALinkTagKey;
 static const void *nodeTagKey = &nodeTagKey;
+static const void *nodeDetailsTagKey = &nodeDetailsTagKey;
 
 @implementation MEGAChatMessage (MNZCategory)
 
@@ -65,7 +67,9 @@ static const void *nodeTagKey = &nodeTagKey;
                 MEGALoginToFolderLinkRequestDelegate *loginDelegate = [[MEGALoginToFolderLinkRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                     MEGAFetchNodesRequestDelegate *fetchNodesDelegate = [[MEGAFetchNodesRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                         if (!request.flag) {
-                            self.node = [MEGASdkManager sharedMEGASdkFolder].rootNode;
+                            MEGANode *node = [MEGASdkManager sharedMEGASdkFolder].rootNode;
+                            self.nodeDetails = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
+                            self.node = node;
                         }
                     }];
                     [[MEGASdkManager sharedMEGASdkFolder] fetchNodesWithDelegate:fetchNodesDelegate];
@@ -357,6 +361,14 @@ static const void *nodeTagKey = &nodeTagKey;
 
 - (void)setNode:(MEGANode *)node {
     objc_setAssociatedObject(self, &nodeTagKey, node, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSString *)nodeDetails {
+    return objc_getAssociatedObject(self, nodeDetailsTagKey);
+}
+
+- (void)setNodeDetails:(NSString *)nodeDetails {
+    objc_setAssociatedObject(self, &nodeDetailsTagKey, nodeDetails, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end
