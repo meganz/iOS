@@ -14,6 +14,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeChangeEmailLink,
     URLTypeCancelAccountLink,
     URLTypeRecoverLink,
+    URLTypeContactLink,
     URLTypeChatLink,
     URLTypeLoginRequiredLink,
     URLTypeHandleLink

@@ -29,6 +29,7 @@
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
+#import "UIImage+GKContact.h"
 #import "UIApplication+MNZCategory.h"
 
 #import "BrowserViewController.h"
@@ -37,7 +38,7 @@
 #import "ChangePasswordViewController.h"
 #import "ChatRoomsViewController.h"
 #import "CheckEmailAndFollowTheLinkViewController.h"
-#import "CloudDriveTableViewController.h"
+#import "CloudDriveViewController.h"
 #import "ConfirmAccountViewController.h"
 #import "ContactRequestsViewController.h"
 #import "ContactsViewController.h"
@@ -48,7 +49,6 @@
 #import "MainTabBarController.h"
 #import "MessagesViewController.h"
 #import "MyAccountHallViewController.h"
-#import "OfflineTableViewController.h"
 #import "SecurityOptionsTableViewController.h"
 #import "SettingsTableViewController.h"
 #import "SharedItemsViewController.h"
@@ -605,38 +605,46 @@
 
 - (void)setupAppearance {
     
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setBarTintColor:[UIColor mnz_redF0373A]];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor}];
+    [[UINavigationBar appearance] setTintColor:UIColor.whiteColor];
+    [[UINavigationBar appearance] setBarTintColor:UIColor.mnz_redF0373A];
     [[UINavigationBar appearance] setTranslucent:NO];
-    
+
+    //QLPreviewDocument
+    if (@available(iOS 11.0, *)) {
+        [[UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[[QLPreviewController class]]] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.blackColor}];
+        [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[QLPreviewController class]]] setTextColor:UIColor.mnz_redF0373A];
+        [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[QLPreviewController class]]] setTintColor:UIColor.mnz_redF0373A];
+        [[UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[[QLPreviewController class]]] setBarTintColor:UIColor.whiteColor];
+    }
+
     //To tint the color of the prompt.
-    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:[UIColor whiteColor]];
+    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:UIColor.whiteColor];
     
     [[UISearchBar appearance] setTranslucent:NO];
-    [[UISearchBar appearance] setBackgroundColor:[UIColor mnz_grayFCFCFC]];
-    [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:[UIColor mnz_grayEEEEEE]];
+    [[UISearchBar appearance] setBackgroundColor:UIColor.mnz_grayFCFCFC];
+    [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:UIColor.mnz_grayEEEEEE];
     
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
     
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
-    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:[UIColor whiteColor]];
-    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UIToolbar class]]] setTintColor:[UIColor mnz_redF0373A]];
-    
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:UIColor.whiteColor];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UIToolbar class]]] setTintColor:UIColor.mnz_redF0373A];
+
     [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"backArrow"]];
     [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backArrow"]];
     
-    [[UITextField appearance] setTintColor:[UIColor mnz_green00BFA5]];
+    [[UITextField appearance] setTintColor:UIColor.mnz_green00BFA5];
     
     [[UIView appearanceWhenContainedInInstancesOfClasses:@[[UIAlertController class]]] setTintColor:[UIColor mnz_redF0373A]];
     
-    [[UIProgressView appearance] setTintColor:[UIColor mnz_redF0373A]];
+    [[UIProgressView appearance] setTintColor:UIColor.mnz_redF0373A];
     
     [SVProgressHUD setFont:[UIFont mnz_SFUIRegularWithSize:12.0f]];
     [SVProgressHUD setRingThickness:2.0];
     [SVProgressHUD setRingNoTextRadius:18.0];
-    [SVProgressHUD setBackgroundColor:[UIColor mnz_grayF7F7F7]];
-    [SVProgressHUD setForegroundColor:[UIColor mnz_gray666666]];
+    [SVProgressHUD setBackgroundColor:UIColor.mnz_grayF7F7F7];
+    [SVProgressHUD setForegroundColor:UIColor.mnz_gray666666];
     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
     [SVProgressHUD setHapticsEnabled:YES];
     
@@ -820,6 +828,16 @@
 
             break;
             
+        case URLTypeContactLink:
+            if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+                [url mnz_showLinkView];
+            } else {
+                [self showPleaseLogInToYourAccountAlert];
+            }
+
+            
+            break;
+            
         case URLTypeChatLink:
             self.mainTBC.selectedIndex = CHAT;
 
@@ -905,21 +923,21 @@
     if ([type isEqualToString:@"mega.ios.search"]) {
         self.mainTBC.selectedIndex = CLOUD;
         MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:CLOUD];
-        CloudDriveTableViewController *cloudDriveTVC = navigationController.viewControllers.firstObject;
+        CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
         if (self.quickActionType) { //Coming from didFinishLaunchingWithOptions
             if ([LTHPasscodeViewController doesPasscodeExist]) {
-                [cloudDriveTVC activateSearch]; // Cloud Drive already presented, so activate search bar
+                [cloudDriveVC activateSearch]; // Cloud Drive already presented, so activate search bar
             } else {
-                cloudDriveTVC.homeQuickActionSearch = YES; //Search will become active after the Cloud Drive did appear
+                cloudDriveVC.homeQuickActionSearch = YES; //Search will become active after the Cloud Drive did appear
             }
         } else {
-            [cloudDriveTVC activateSearch];
+            [cloudDriveVC activateSearch];
         }
     } else if ([type isEqualToString:@"mega.ios.upload"]) {
         self.mainTBC.selectedIndex = CLOUD;
         MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:CLOUD];
-        CloudDriveTableViewController *cloudDriveTVC = navigationController.viewControllers.firstObject;
-        [cloudDriveTVC presentUploadAlertController];
+        CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
+        [cloudDriveVC presentUploadAlertController];
     } else if ([type isEqualToString:@"mega.ios.offline"]) {
         [self showOffline];
     } else {
@@ -1281,17 +1299,17 @@
     
     NSArray *parentTreeArray = node.mnz_parentTreeArray;
     for (MEGANode *node in parentTreeArray) {
-        CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-        cloudDriveTVC.parentNode = node;
-        [navigationController pushViewController:cloudDriveTVC animated:NO];
+        CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+        cloudDriveVC.parentNode = node;
+        [navigationController pushViewController:cloudDriveVC animated:NO];
     }
     
     switch (node.type) {
         case MEGANodeTypeFolder:
         case MEGANodeTypeRubbish: {
-            CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveTVC.parentNode = node;
-            [navigationController pushViewController:cloudDriveTVC animated:NO];
+            CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveVC.parentNode = node;
+            [navigationController pushViewController:cloudDriveVC animated:NO];
             break;
         }
             
