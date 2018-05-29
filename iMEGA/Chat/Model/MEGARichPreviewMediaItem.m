@@ -6,6 +6,7 @@
 #import "JSQMessagesBubbleImageFactory.h"
 #import "JSQMessagesMediaViewBubbleImageMasker.h"
 
+#import "Helper.h"
 #import "MEGAMessageRichPreviewView.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGASdkManager.h"
@@ -98,11 +99,17 @@
             dialogView.iconImageView.image = [UIImage imageWithData:iconData];
         }
     } else if (self.message.node) {
+        URLType type = [self.message.MEGALink mnz_type];
         dialogView.contentTextView.text = self.message.content;
         dialogView.titleLabel.text = self.message.node ? self.message.node.name : @"";
         dialogView.descriptionLabel.text = self.message.node ? [NSByteCountFormatter stringFromByteCount:self.message.node.size.longLongValue countStyle:NSByteCountFormatterCountStyleMemory] : 0;
         dialogView.linkLabel.text = @"www.mega.nz";
-        [dialogView.imageImageView mnz_setImageForExtension:(self.message.node ? self.message.node.name.pathExtension : @"")];
+        if (type == URLTypeFileLink) {
+            [dialogView.imageImageView mnz_setImageForExtension:self.message.node.name.pathExtension];
+        } else if (type == URLTypeFolderLink) {
+            dialogView.imageImageView.image = [Helper folderImage];
+            dialogView.descriptionLabel.text = [NSString stringWithFormat:@"%@\n%@", self.message.nodeDetails, dialogView.descriptionLabel.text];
+        }
         dialogView.iconImageView.image = [UIImage imageNamed:@"favicon"];
     }
 
