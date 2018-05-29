@@ -24,6 +24,10 @@
     [super viewDidLoad];
     if (self.image) {
         self.imageView.image = self.image;
+        if (self.shouldRoundImage) {
+            self.imageView.layer.cornerRadius = (self.imageView.image.size.height / 4);
+            self.imageView.clipsToBounds = YES;
+        }
     }
     
     self.titleLabel.text = self.viewTitle;
