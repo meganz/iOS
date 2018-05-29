@@ -40,7 +40,6 @@
 @property (nonatomic) NSString *nodeFilePath;
 @property (nonatomic) NSCache<NSNumber *, UIImage *> *thumbnailCache;
 @property (nonatomic) BOOL thumbnailsPopulated;
-@property (nonatomic, getter=isSearchTapped) BOOL searchTapped;
 @property (nonatomic) PDFSelection *searchedItem NS_AVAILABLE_IOS(11.0);
 
 @end
@@ -51,11 +50,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self configureNavigation];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
     [self configureNavigation];
 }
 
@@ -75,8 +69,6 @@
             MEGALogError(@"Create directory at path failed with error: %@", error);
         }
     }
-    
-    _searchTapped = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -97,10 +89,6 @@
                 }
             }
         }
-    }
-    
-    if (!self.isSearchTapped) {
-        [Helper configureRedNavigationAppearance];
     }
 
     [super viewWillDisappear:animated];
@@ -130,7 +118,12 @@
         [self.imageView mnz_setImageForExtension:[self.filesPathsArray objectAtIndex:self.nodeFileIndex].pathExtension];
     }
     
-    [Helper configureWhiteNavigationAppearance];
+    if (@available(iOS 11.0, *)) {
+        self.navigationController.navigationBar.barTintColor = [UIColor colorFromHexString:@"FCFCFC"];
+        self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]};
+    } else {
+        [Helper configureWhiteNavigationAppearance];
+    }
 }
 
 - (void)loadPreview {
@@ -409,8 +402,6 @@
     searchInPdfVC.pdfDocument = self.pdfView.document;
     searchInPdfVC.delegate = self;
     [self presentViewController:searchInPdfNavigation animated:YES completion:nil];
-    
-    self.searchTapped = YES;
 }
 
 - (void)loadPdfKit:(NSURL *)url {

@@ -27,6 +27,9 @@
     self.searchBar.showsCancelButton = YES;
     self.searchBar.tintColor = [UIColor redColor];
     self.navigationItem.titleView = self.searchBar;
+    
+    self.navigationController.navigationBar.barTintColor = [UIColor colorFromHexString:@"FCFCFC"];
+    self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]};
 }
 
 - (void)viewDidAppear:(BOOL)animated {
