@@ -469,32 +469,14 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YBb-De-ukf">
                                         <rect key="frame" x="0.0" y="241" width="375" height="362"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JP0-wf-1Tc" userLabel="Name Label">
-                                                <rect key="frame" x="162.5" y="50" width="51.5" height="24"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="174" id="9IZ-ia-Kdb">
-                                                        <variation key="heightClass=compact" constant="18"/>
-                                                    </constraint>
-                                                </constraints>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JP0-wf-1Tc" userLabel="Name Label">
+                                                <rect key="frame" x="20" y="50" width="335" height="24"/>
                                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="20"/>
                                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
-                                                <variation key="default">
-                                                    <mask key="constraints">
-                                                        <exclude reference="9IZ-ia-Kdb"/>
-                                                    </mask>
-                                                </variation>
-                                                <variation key="heightClass=compact">
-                                                    <mask key="constraints">
-                                                        <include reference="9IZ-ia-Kdb"/>
-                                                    </mask>
-                                                </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zOn-5Q-P3K" userLabel="Info Label">
-                                                <rect key="frame" x="169" y="82" width="38.5" height="18"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="18" id="FRe-OI-3TK"/>
-                                                </constraints>
+                                                <rect key="frame" x="20" y="82" width="335" height="18"/>
                                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -525,9 +507,13 @@
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="Jw5-t8-g06" secondAttribute="bottom" constant="50" id="9Sa-uT-FCO"/>
                                             <constraint firstItem="zOn-5Q-P3K" firstAttribute="top" secondItem="JP0-wf-1Tc" secondAttribute="bottom" constant="8" id="DAD-88-BYy"/>
+                                            <constraint firstItem="zOn-5Q-P3K" firstAttribute="leading" secondItem="YBb-De-ukf" secondAttribute="leading" constant="20" id="Nh4-jZ-JJm"/>
                                             <constraint firstItem="Jw5-t8-g06" firstAttribute="centerX" secondItem="YBb-De-ukf" secondAttribute="centerX" id="Sko-xW-m6H"/>
+                                            <constraint firstItem="JP0-wf-1Tc" firstAttribute="leading" secondItem="YBb-De-ukf" secondAttribute="leading" constant="20" id="XXA-TL-U8a"/>
                                             <constraint firstItem="JP0-wf-1Tc" firstAttribute="top" secondItem="YBb-De-ukf" secondAttribute="top" constant="50" id="eEK-lh-Eia"/>
+                                            <constraint firstAttribute="trailing" secondItem="zOn-5Q-P3K" secondAttribute="trailing" constant="20" id="kDA-9q-EMV"/>
                                             <constraint firstItem="JP0-wf-1Tc" firstAttribute="centerX" secondItem="YBb-De-ukf" secondAttribute="centerX" id="qa1-UM-Q5w"/>
+                                            <constraint firstAttribute="trailing" secondItem="JP0-wf-1Tc" secondAttribute="trailing" constant="20" id="vnE-tB-kYw"/>
                                             <constraint firstItem="zOn-5Q-P3K" firstAttribute="centerX" secondItem="YBb-De-ukf" secondAttribute="centerX" id="xCv-Yb-Ta1"/>
                                         </constraints>
                                     </view>
