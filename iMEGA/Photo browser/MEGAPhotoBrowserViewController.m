@@ -419,8 +419,7 @@
         case MEGAPhotoModeOriginal: {
             MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithProgress:transferProgress completion:transferCompletion];
             NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:YES];
-            NSString *appData = [[NSString new] mnz_appDataToGenerateThumbnailAndPreview];
-            [self.api startDownloadNode:node localPath:temporaryImagePath appData:appData delegate:delegate];
+            [self.api startDownloadNode:node localPath:temporaryImagePath appData:nil delegate:delegate];
 
             break;
         }

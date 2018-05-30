@@ -2684,11 +2684,6 @@ void uncaughtExceptionHandler(NSException *exception) {
             return;
         }
         
-        if ([transfer.appData containsString:@"generate_fa"]) {
-            [transfer mnz_generateFileAttributes];
-            return;
-        }
-        
         MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
         if (!offlineNodeExist) {
             MEGALogDebug(@"Transfer finish: insert node to DB: base64 handle: %@ - local path: %@", node.base64Handle, transfer.path);

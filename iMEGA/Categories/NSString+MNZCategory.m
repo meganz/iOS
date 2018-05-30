@@ -59,10 +59,6 @@ static NSString* const B = @"[B]";
     return [self stringByAppendingString:[NSString stringWithFormat:@">CU=%ld", operationCount]];
 }
 
-- (NSString *)mnz_appDataToGenerateThumbnailAndPreview {
-    return [self stringByAppendingString:@">generate_fa"];
-}
-
 - (NSString *)mnz_appDataToSaveInPhotosApp {
     return [self stringByAppendingString:@">SaveInPhotosApp"];
 }
