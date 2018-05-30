@@ -31,8 +31,7 @@
     }
 }
 
-- (void)mnz_setThumbnailByNodeHandle:(uint64_t)nodeHandle {
-    MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:nodeHandle];
+- (void)mnz_setThumbnailByNode:(MEGANode *)node {
     if (node.hasThumbnail) {
         NSString *thumbnailFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:node.base64Handle];
         if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
