@@ -17,7 +17,6 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 #pragma mark - appData
 
 - (NSString *)mnz_appDataToSaveCameraUploadsCount:(NSUInteger)operationCount;
-- (NSString *)mnz_appDataToGenerateThumbnailAndPreview;
 - (NSString *)mnz_appDataToSaveInPhotosApp;
 - (NSString *)mnz_appDataToAttachToChatID:(uint64_t)chatId;
 - (NSString *)mnz_appDataToSaveCoordinates:(NSString *)coordinates;

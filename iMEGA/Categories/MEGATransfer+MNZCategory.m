@@ -23,10 +23,6 @@
             NSArray *appDataComponentComponentsArray = [appDataComponent componentsSeparatedByString:@"="];
             NSString *appDataType = appDataComponentComponentsArray.firstObject;
             
-            if ([appDataType isEqualToString:@"generate_fa"]) {
-                [self mnz_generateFileAttributes];
-            }
-            
             if ([appDataType isEqualToString:@"SaveInPhotosApp"]) {
                 [self mnz_saveInPhotosApp];
             }
@@ -63,24 +59,6 @@
             }
         }
     }
-}
-
-- (void)mnz_generateFileAttributes {
-    MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];
-    
-    NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
-    BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
-    if (!thumbnailExists) {
-        [[MEGASdkManager sharedMEGASdk] createThumbnail:[NSHomeDirectory() stringByAppendingPathComponent:self.path] destinatioPath:thumbnailFilePath];
-    }
-    
-    NSString *previewFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
-    BOOL previewExists = [[NSFileManager defaultManager] fileExistsAtPath:previewFilePath];
-    if (!previewExists) {
-        [[MEGASdkManager sharedMEGASdk] createPreview:[NSHomeDirectory() stringByAppendingPathComponent:self.path] destinatioPath:previewFilePath];
-    }
-    
-    [self mnz_setNodeCoordinates];
 }
 
 - (void)mnz_saveInPhotosApp {
