@@ -90,7 +90,7 @@
 
     self.nameLabel.text = self.node.name;
     if (self.node.type == MEGANodeTypeFile) {
-        [self.thumbnailImageView mnz_setThumbnailByNodeHandle:self.node.handle];
+        [self.thumbnailImageView mnz_setThumbnailByNode:self.node];
     } else if (self.node.type == MEGANodeTypeFolder) {
         [self.thumbnailImageView mnz_imageForNode:self.node];
     }
