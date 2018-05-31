@@ -113,11 +113,7 @@
     UIImageView *imageView = [header viewWithTag:100];
     
     if (self.node.isFile) {
-        if (self.displayMode == DisplayModeFileLink || self.displayMode == DisplayModeFolderLink) {
-            [imageView mnz_setImageForExtension:self.node.name.pathExtension];
-        } else {
-            [imageView mnz_setThumbnailByNodeHandle:self.node.handle];
-        }
+        [imageView mnz_setThumbnailByNode:self.node];
     } else if (self.node.isFolder) {
         [imageView mnz_imageForNode:self.node];
         info.text = [Helper filesAndFoldersInFolderNode:self.node api:[MEGASdkManager sharedMEGASdk]];

@@ -157,7 +157,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     _unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 6, 30, 30)];
     self.unreadLabel.font = [UIFont mnz_SFUIMediumWithSize:12.0f];
-    self.unreadLabel.textColor = [UIColor mnz_redF0373A];
+    self.unreadLabel.textColor = [UIColor whiteColor];
     self.unreadLabel.userInteractionEnabled = YES;
     
     if (self.presentingViewController && self.parentViewController) {
