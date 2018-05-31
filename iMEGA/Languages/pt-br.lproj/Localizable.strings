@@ -1349,7 +1349,7 @@
 "generalDescriptionParagraph5"="Assinatura PRO LITE: 4,99 € (US$ 4,99) por mês ou 49,99 € (US$ 49,99) por ano - oferece 200 GB de espaço de armazenamento e 1 TB de cota de transferência por mês. \nAssinatura PRO I: 9,99 € (US$ 9,99) por mês ou 99,99 € (US$ 99,99) por ano -  oferece 1 TB de espaço de armazenamento e 2 TB de cota de transferência por mês. \nAssinatura PRO II: 19,99 € (US$ 19,99) por mês ou 199,99 € (US$ 199,99) por ano - oferece 4 TB de espaço de armazenamento e 8 TB de cota de transferência por mês. \nAssinatura PRO III: 29,99 € (US$ 29,99) por mês ou 299,99 € (US$ 299,99) por ano - oferece 8 TB de espaço de armazenamento e 16 TB de cota de transferência por mês.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Para mais informações, consulte o nosso site: \nMóvel - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nDesktop - https://mega.nz/";
+"generalDescriptionParagraph6"="Para mais informações, consulte o nosso site: https://mega.nz/\nTermos de serviço: https://mega.nz/terms\nPolítica de privacidade: https://mega.nz/privacy";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="Chamada recebida...";
 /* Notification text body shown when you have missed one audio call */
