@@ -941,9 +941,10 @@ static MEGAIndexer *indexer;
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle color:(UIColor *)color {
     NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title attributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:color}];
     
+    UIColor *colorWithAlpha = [color colorWithAlphaComponent:0.8];
     if (![subtitle isEqualToString:@""]) {
         subtitle = [NSString stringWithFormat:@"\n%@", subtitle];
-        NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:color}];
+        NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:colorWithAlpha}];
         
         [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
     }

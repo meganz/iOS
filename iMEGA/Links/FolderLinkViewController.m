@@ -783,7 +783,7 @@
              return [UIImage imageNamed:@"searchEmptyState"];
          }
         
-        return [UIImage imageNamed:@"emptyFolder"];
+        return [UIImage imageNamed:@"folderEmptyState"];
     } else {
         return [UIImage imageNamed:@"noInternetEmptyState"];
     }
