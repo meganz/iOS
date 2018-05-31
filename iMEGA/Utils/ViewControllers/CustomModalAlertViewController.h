@@ -7,6 +7,7 @@
 @property (nonatomic, strong) void (^onDismiss)(void);
 
 @property (nonatomic) UIImage *image;
+@property (getter=shouldRoundImage) BOOL roundImage;
 @property (nonatomic) NSString *viewTitle;
 @property (nonatomic) NSString *detail;
 @property (nonatomic) NSString *boldInDetail;

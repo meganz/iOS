@@ -12,7 +12,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
 #import "BrowserViewController.h"
-#import "CloudDriveTableViewController.h"
+#import "CloudDriveViewController.h"
 #import "MainTabBarController.h"
 #import "SearchInPdfViewController.h"
 
@@ -20,6 +20,7 @@
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGAStore.h"
+#import "MEGAQLPreviewController.h"
 
 @interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol> {
     MEGATransfer *previewDocumentTransfer;
@@ -39,6 +40,7 @@
 @property (nonatomic) NSString *nodeFilePath;
 @property (nonatomic) NSCache<NSNumber *, UIImage *> *thumbnailCache;
 @property (nonatomic) BOOL thumbnailsPopulated;
+@property (nonatomic, getter=isSearchTapped) BOOL searchTapped;
 @property (nonatomic) PDFSelection *searchedItem NS_AVAILABLE_IOS(11.0);
 
 @end
@@ -49,6 +51,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self configureNavigation];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self configureNavigation];
 }
 
@@ -68,6 +75,8 @@
             MEGALogError(@"Create directory at path failed with error: %@", error);
         }
     }
+    
+    _searchTapped = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -90,6 +99,10 @@
         }
     }
     
+    if (!self.isSearchTapped) {
+        [Helper configureRedNavigationAppearance];
+    }
+
     [super viewWillDisappear:animated];
 }
 
@@ -117,11 +130,7 @@
         [self.imageView mnz_setImageForExtension:[self.filesPathsArray objectAtIndex:self.nodeFileIndex].pathExtension];
     }
     
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-    [[UINavigationBar appearance] setTintColor:[UIColor mnz_redFF4D52]];
-    [[UINavigationBar appearance] setBarTintColor:[UIColor colorFromHexString:@"FCFCFC"]];
-    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:[UIColor blackColor]];
-    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:[UIColor blackColor]];
+    [Helper configureWhiteNavigationAppearance];
 }
 
 - (void)loadPreview {
@@ -140,7 +149,7 @@
 - (NSURL *)documentUrl {
     if (previewDocumentTransfer.path) {
         return [NSURL fileURLWithPath:previewDocumentTransfer.path];
-    } else if (self.node){
+    } else if (self.node && self.nodeFilePath){
         return [NSURL fileURLWithPath:self.nodeFilePath];
     } else {
         self.title = [self.filesPathsArray objectAtIndex:self.nodeFileIndex].lastPathComponent;
@@ -270,7 +279,27 @@
         return;
     }
     
-    [self loadPreview];
+    if (self.isViewLoaded && self.view.window) {
+        if (@available(iOS 11.0, *)) {
+            if ([transfer.path.pathExtension isEqualToString:@"pdf"]) {
+                [self loadPdfKit:[NSURL fileURLWithPath:transfer.path]];
+            } else {
+                [self presentMEGAQlPreviewController];
+            }
+        } else {
+            [self presentMEGAQlPreviewController];
+        }
+    }
+}
+
+- (void)presentMEGAQlPreviewController {
+    MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentTransfer.path];
+    [previewController setModalPresentationStyle:UIModalPresentationCustom];
+    [previewController setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[UIApplication mnz_visibleViewController] presentViewController:previewController animated:YES completion:nil];
+    }];
 }
 
 #pragma mark - CustomActionViewControllerDelegate
@@ -349,17 +378,17 @@
             [navigationController popToRootViewControllerAnimated:NO];
             
             for (MEGANode *node in parentTreeArray) {
-                CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                cloudDriveTVC.parentNode = node;
-                [navigationController pushViewController:cloudDriveTVC animated:NO];
+                CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                cloudDriveVC.parentNode = node;
+                [navigationController pushViewController:cloudDriveVC animated:NO];
             }
             
             switch (node.type) {
                 case MEGANodeTypeFolder:
                 case MEGANodeTypeRubbish: {
-                    CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                    cloudDriveTVC.parentNode = node;
-                    [navigationController pushViewController:cloudDriveTVC animated:NO];
+                    CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                    cloudDriveVC.parentNode = node;
+                    [navigationController pushViewController:cloudDriveVC animated:NO];
                     break;
                 }
                     
@@ -375,12 +404,13 @@
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
 - (IBAction)searchTapped:(id)sender {
-    self.collectionView.hidden = YES;
     UINavigationController *searchInPdfNavigation = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"SearchInPdfNavigationID"];
     SearchInPdfViewController *searchInPdfVC = searchInPdfNavigation.viewControllers.firstObject;
     searchInPdfVC.pdfDocument = self.pdfView.document;
     searchInPdfVC.delegate = self;
     [self presentViewController:searchInPdfNavigation animated:YES completion:nil];
+    
+    self.searchTapped = YES;
 }
 
 - (void)loadPdfKit:(NSURL *)url {
@@ -492,6 +522,10 @@
 #pragma mark - SearchInPdfViewControllerProtocol
 
 - (void)didSelectSearchResult:(PDFSelection *)result {
+    if (!self.collectionView.hidden) {
+        self.collectionView.hidden = YES;
+        self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"thumbnailsView"];
+    }
     result.color = UIColor.yellowColor;
     [self.pdfView setCurrentSelection:result];
     [self.pdfView setScaleFactor:self.pdfView.scaleFactorForSizeToFit];
