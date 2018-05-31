@@ -997,6 +997,7 @@
                         <outlet property="extendedNavigationBar_label" destination="MdS-Ni-oWl" id="HNV-d5-3XV"/>
                         <outlet property="extendedNavigationBar_view" destination="wDx-UO-1Th" id="GoH-OZ-AgV"/>
                         <outlet property="tableView" destination="7Nx-88-DiR" id="71N-lJ-L7M"/>
+                        <outlet property="tableViewTopConstraint" destination="x5t-Oa-91e" id="WWz-oD-RF7"/>
                         <outlet property="toolBarCopyBarButtonItem" destination="szH-Sn-BED" id="3cX-Nu-bUy"/>
                         <outlet property="toolBarMoveBarButtonItem" destination="7Sv-uf-KA4" id="g3C-EQ-WoC"/>
                         <outlet property="toolBarNewFolderBarButtonItem" destination="Rgo-oZ-vnm" id="RJE-19-g4s"/>
@@ -1129,7 +1130,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="140" height="200"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V8G-a8-b4E">
-                                                    <rect key="frame" x="63.333333333333336" y="82" width="13.333333333333336" height="36"/>
+                                                    <rect key="frame" x="63.666666666666664" y="82.333333333333329" width="13.333333333333336" height="36"/>
                                                     <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="30"/>
                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2373,7 +2374,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqJ-As-d7B">
-                                                            <rect key="frame" x="60" y="12.333333333333336" width="300" height="18"/>
+                                                            <rect key="frame" x="60" y="12.666666666666664" width="300" height="18"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
