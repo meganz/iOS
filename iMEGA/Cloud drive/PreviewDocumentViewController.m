@@ -202,6 +202,8 @@
     CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
     actionController.node = self.node;
     actionController.actionDelegate = self;
+    actionController.displayMode = self.isLink ? DisplayModeFileLink : DisplayModeCloudDrive;
+    
     if ([[UIDevice currentDevice] iPadDevice]) {
         actionController.modalPresentationStyle = UIModalPresentationPopover;
         UIPopoverPresentationController *popController = [actionController popoverPresentationController];
