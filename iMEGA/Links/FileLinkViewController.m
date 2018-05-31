@@ -183,8 +183,7 @@
     if (self.node.isFolder) {
         [self.thumbnailImageView mnz_imageForNode:self.node];
     } else {
-        NSString *extension = name.pathExtension;
-        [self.thumbnailImageView mnz_setImageForExtension:extension];
+        [self.thumbnailImageView mnz_setThumbnailByNode:self.node];
     }
     
     [self setUIItemsHidden:NO];
@@ -256,9 +255,9 @@
 - (void)open {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if (self.node.name.mnz_isImagePathExtension || self.node.name.mnz_isVideoPathExtension) {
-            [self.node mnz_openImageInNavigationController:self.navigationController withNodes:@[self.node] folderLink:NO displayMode:2];
+            [self.node mnz_openImageInNavigationController:self.navigationController withNodes:@[self.node] folderLink:YES displayMode:2];
         } else {
-            [self.node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+            [self.node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
         }
     }
 }
