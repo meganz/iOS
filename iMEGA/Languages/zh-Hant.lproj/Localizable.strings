@@ -55,7 +55,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="您已從其他位置登出該設備";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="伺服器 SSL 金鑰未能認證。您可能會收到第三方攻擊。";
+"sslUnverified_alertTitle"="MEGA無法安全地透過SSL金鑰連線。您使用的公共WiFi可能有附加條件。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="您嘗試存取的內容與此帳戶不匹配。請使用與手機用戶端相同的帳戶登入。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -1201,8 +1201,8 @@
 "twoUsersAreTyping"="%1$s [A]正在打字...[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
 "moreThanTwoUsersAreTyping"="%1$s [A]和其他人正在打字...[/A]";
-/* Message box label which shows that user can type message text in this textview */
-"writeAMessage"="書寫訊息...";
+/* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
+"writeAMessage"="Write a message to %s...";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="沒有對話歷史記錄";
 /* Button which allows to retry send message in chat conversation. */
@@ -1443,7 +1443,7 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="您還記得你的密碼嗎？";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset your password without data loss. Please make sure you remember your password.";
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
 /* Text next to a toggle that if enabled won't appear again */

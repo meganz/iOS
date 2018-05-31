@@ -28,6 +28,7 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
+#import "UIImage+GKContact.h"
 #import "UIApplication+MNZCategory.h"
 
 #import "BrowserViewController.h"
@@ -36,7 +37,7 @@
 #import "ChangePasswordViewController.h"
 #import "ChatRoomsViewController.h"
 #import "CheckEmailAndFollowTheLinkViewController.h"
-#import "CloudDriveTableViewController.h"
+#import "CloudDriveViewController.h"
 #import "ConfirmAccountViewController.h"
 #import "ContactRequestsViewController.h"
 #import "ContactsViewController.h"
@@ -50,7 +51,6 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "MessagesViewController.h"
 #import "MyAccountHallViewController.h"
-#import "OfflineTableViewController.h"
 #import "SecurityOptionsTableViewController.h"
 #import "SettingsTableViewController.h"
 #import "SharedItemsViewController.h"
@@ -59,6 +59,7 @@
 #import "CustomModalAlertViewController.h"
 
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
+#import "MEGAContactLinkQueryRequestDelegate.h"
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGAGetPublicNodeRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
@@ -84,6 +85,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeChangeEmailLink,
     URLTypeCancelAccountLink,
     URLTypeRecoverLink,
+    URLTypeContactLink,
     URLTypeChatLink,
     URLTypeLoginRequiredLink,
     URLTypeHandleLink
@@ -625,38 +627,46 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)setupAppearance {
     
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setBarTintColor:[UIColor mnz_redF0373A]];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor}];
+    [[UINavigationBar appearance] setTintColor:UIColor.whiteColor];
+    [[UINavigationBar appearance] setBarTintColor:UIColor.mnz_redF0373A];
     [[UINavigationBar appearance] setTranslucent:NO];
-    
+
+    //QLPreviewDocument
+    if (@available(iOS 11.0, *)) {
+        [[UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[[QLPreviewController class]]] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.blackColor}];
+        [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[QLPreviewController class]]] setTextColor:UIColor.mnz_redF0373A];
+        [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[QLPreviewController class]]] setTintColor:UIColor.mnz_redF0373A];
+        [[UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[[QLPreviewController class]]] setBarTintColor:UIColor.whiteColor];
+    }
+
     //To tint the color of the prompt.
-    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:[UIColor whiteColor]];
+    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:UIColor.whiteColor];
     
     [[UISearchBar appearance] setTranslucent:NO];
-    [[UISearchBar appearance] setBackgroundColor:[UIColor mnz_grayFCFCFC]];
-    [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:[UIColor mnz_grayEEEEEE]];
+    [[UISearchBar appearance] setBackgroundColor:UIColor.mnz_grayFCFCFC];
+    [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:UIColor.mnz_grayEEEEEE];
     
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
     
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
-    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:[UIColor whiteColor]];
-    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UIToolbar class]]] setTintColor:[UIColor mnz_redF0373A]];
-    
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:UIColor.whiteColor];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UIToolbar class]]] setTintColor:UIColor.mnz_redF0373A];
+
     [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"backArrow"]];
     [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backArrow"]];
     
-    [[UITextField appearance] setTintColor:[UIColor mnz_green00BFA5]];
+    [[UITextField appearance] setTintColor:UIColor.mnz_green00BFA5];
     
     [[UIView appearanceWhenContainedInInstancesOfClasses:@[[UIAlertController class]]] setTintColor:[UIColor mnz_redF0373A]];
     
-    [[UIProgressView appearance] setTintColor:[UIColor mnz_redF0373A]];
+    [[UIProgressView appearance] setTintColor:UIColor.mnz_redF0373A];
     
     [SVProgressHUD setFont:[UIFont mnz_SFUIRegularWithSize:12.0f]];
     [SVProgressHUD setRingThickness:2.0];
     [SVProgressHUD setRingNoTextRadius:18.0];
-    [SVProgressHUD setBackgroundColor:[UIColor mnz_grayF7F7F7]];
-    [SVProgressHUD setForegroundColor:[UIColor mnz_gray666666]];
+    [SVProgressHUD setBackgroundColor:UIColor.mnz_grayF7F7F7];
+    [SVProgressHUD setForegroundColor:UIColor.mnz_gray666666];
     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
     [SVProgressHUD setHapticsEnabled:YES];
     
@@ -820,6 +830,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     if ([self isRecoverLink:afterSlashesString]) {
         self.urlType = URLTypeRecoverLink;
+        return;
+    }
+    
+    if ([self isContactLink:afterSlashesString]) {
+        self.urlType = URLTypeContactLink;
         return;
     }
     
@@ -1084,6 +1099,105 @@ typedef NS_ENUM(NSUInteger, URLType) {
     return NO;
 }
 
+- (BOOL)isContactLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 2) {
+        return NO;
+    }
+    
+    BOOL isContactLink = [[afterSlashesString substringToIndex:2] isEqualToString:@"C!"]; // mega://"C!"
+    BOOL isContactLinkWithHash = [[afterSlashesString substringToIndex:3] isEqualToString:@"#C!"]; // mega://"#C!"
+    
+    NSString *contactLinkHandle;
+    if (isContactLink) {
+        contactLinkHandle = [afterSlashesString substringFromIndex:2];
+    } else if (isContactLinkWithHash) {
+        contactLinkHandle = [afterSlashesString substringFromIndex:3];
+    }
+    
+    if (isContactLink || isContactLinkWithHash) {
+        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            uint64_t handle = [MEGASdk handleForBase64Handle:contactLinkHandle];
+            
+            MEGAContactLinkQueryRequestDelegate *delegate = [[MEGAContactLinkQueryRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                NSString *fullName = [NSString stringWithFormat:@"%@ %@", request.name, request.text];
+                [self presentInviteModalForEmail:request.email fullName:fullName contactLinkHandle:request.nodeHandle image:request.file];
+            } onError:^(MEGAError *error) {
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
+            }];
+            
+            [[MEGASdkManager sharedMEGASdk] contactLinkQueryWithHandle:handle delegate:delegate];
+        } else {
+            [self showPleaseLogInToYourAccountAlert];
+        }
+        
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (void)presentInviteModalForEmail:(NSString *)email fullName:(NSString *)fullName contactLinkHandle:(uint64_t)contactLinkHandle image:(NSString *)imageOnBase64URLEncoding {
+    CustomModalAlertViewController *inviteOrDismissModal = [[CustomModalAlertViewController alloc] init];
+    inviteOrDismissModal.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    
+    if (imageOnBase64URLEncoding.mnz_isEmpty) {
+        inviteOrDismissModal.image = [UIImage imageForName:fullName.uppercaseString size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor colorFromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:64.0f]];
+    } else {
+        inviteOrDismissModal.roundImage = YES;
+        NSData *imageData = [[NSData alloc] initWithBase64EncodedString:[NSString mnz_base64FromBase64URLEncoding:imageOnBase64URLEncoding] options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        inviteOrDismissModal.image = [UIImage imageWithData:imageData];
+    }
+    
+    inviteOrDismissModal.viewTitle = fullName;
+    
+    __weak UIViewController *weakVisibleVC = [UIApplication mnz_visibleViewController];
+    __weak CustomModalAlertViewController *weakInviteOrDismissModal = inviteOrDismissModal;
+    void (^completion)(void) = ^{
+        MEGAInviteContactRequestDelegate *delegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1 presentSuccessOver:weakVisibleVC completion:nil];
+        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd handle:contactLinkHandle delegate:delegate];
+        [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:nil];
+    };
+    
+    void (^onDismiss)(void) = ^{
+        [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:nil];
+    };
+    
+    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
+    if (user && user.visibility == MEGAUserVisibilityVisible) {
+        inviteOrDismissModal.detail = [AMLocalizedString(@"alreadyAContact", @"Error message displayed when trying to invite a contact who is already added.") stringByReplacingOccurrencesOfString:@"%s" withString:email];
+        inviteOrDismissModal.action = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+        inviteOrDismissModal.completion = onDismiss;
+    } else {
+        BOOL isInOutgoingContactRequest = NO;
+        MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
+        for (NSInteger i = 0; i < outgoingContactRequestList.size.integerValue; i++) {
+            MEGAContactRequest *contactRequest = [outgoingContactRequestList contactRequestAtIndex:i];
+            if ([email isEqualToString:contactRequest.targetEmail]) {
+                isInOutgoingContactRequest = YES;
+                break;
+            }
+        }
+        if (isInOutgoingContactRequest) {
+            inviteOrDismissModal.image = [UIImage imageNamed:@"inviteSent"];
+            inviteOrDismissModal.viewTitle = AMLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
+            NSString *detailText = AMLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
+            detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:email];
+            inviteOrDismissModal.detail = detailText;
+            inviteOrDismissModal.boldInDetail = email;
+            inviteOrDismissModal.action = AMLocalizedString(@"close", nil);
+            inviteOrDismissModal.completion = onDismiss;
+        } else {
+            inviteOrDismissModal.detail = email;
+            inviteOrDismissModal.action = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
+            inviteOrDismissModal.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+            inviteOrDismissModal.completion = completion;
+            inviteOrDismissModal.onDismiss = onDismiss;
+        }
+    }
+    
+    [[UIApplication mnz_visibleViewController] presentViewController:inviteOrDismissModal animated:YES completion:nil];
+}
+
 - (BOOL)isChatLink:(NSString *)afterSlashesString {
     if (afterSlashesString.length < 8) {
         return NO;
@@ -1147,21 +1261,21 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([type isEqualToString:@"mega.ios.search"]) {
         self.mainTBC.selectedIndex = CLOUD;
         MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:CLOUD];
-        CloudDriveTableViewController *cloudDriveTVC = navigationController.viewControllers.firstObject;
+        CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
         if (self.quickActionType) { //Coming from didFinishLaunchingWithOptions
             if ([LTHPasscodeViewController doesPasscodeExist]) {
-                [cloudDriveTVC activateSearch]; // Cloud Drive already presented, so activate search bar
+                [cloudDriveVC activateSearch]; // Cloud Drive already presented, so activate search bar
             } else {
-                cloudDriveTVC.homeQuickActionSearch = YES; //Search will become active after the Cloud Drive did appear
+                cloudDriveVC.homeQuickActionSearch = YES; //Search will become active after the Cloud Drive did appear
             }
         } else {
-            [cloudDriveTVC activateSearch];
+            [cloudDriveVC activateSearch];
         }
     } else if ([type isEqualToString:@"mega.ios.upload"]) {
         self.mainTBC.selectedIndex = CLOUD;
         MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:CLOUD];
-        CloudDriveTableViewController *cloudDriveTVC = navigationController.viewControllers.firstObject;
-        [cloudDriveTVC presentUploadAlertController];
+        CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
+        [cloudDriveVC presentUploadAlertController];
     } else if ([type isEqualToString:@"mega.ios.offline"]) {
         [self showOffline];
     } else {
@@ -1523,17 +1637,17 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     NSArray *parentTreeArray = node.mnz_parentTreeArray;
     for (MEGANode *node in parentTreeArray) {
-        CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-        cloudDriveTVC.parentNode = node;
-        [navigationController pushViewController:cloudDriveTVC animated:NO];
+        CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+        cloudDriveVC.parentNode = node;
+        [navigationController pushViewController:cloudDriveVC animated:NO];
     }
     
     switch (node.type) {
         case MEGANodeTypeFolder:
         case MEGANodeTypeRubbish: {
-            CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveTVC.parentNode = node;
-            [navigationController pushViewController:cloudDriveTVC animated:NO];
+            CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveVC.parentNode = node;
+            [navigationController pushViewController:cloudDriveVC animated:NO];
             break;
         }
             
@@ -2395,6 +2509,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         case MEGARequestTypeLogout: {            
             [Helper logout];
             [SVProgressHUD dismiss];
+            [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
             
             if (self.messageForSuspendedAccount) {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:self.messageForSuspendedAccount preferredStyle:UIAlertControllerStyleAlert];

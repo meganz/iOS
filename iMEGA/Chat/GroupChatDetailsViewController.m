@@ -23,14 +23,14 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
 
-@property (strong, nonatomic) IBOutlet UIView *emptyHeaderView;
-@property (strong, nonatomic) IBOutlet UIView *participantsHeaderView;
+@property (nonatomic) UIView *emptyHeaderView;
+@property (nonatomic) UIView *actionsSectionEmptyFooterView;
+@property (nonatomic) UIView *sharedFoldersEmptyFooterView;
+
+@property (weak, nonatomic) IBOutlet UIView *participantsHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *participantsHeaderViewLabel;
-
-@property (strong, nonatomic) IBOutlet UIView *actionsSectionEmptyFooterView;
-@property (strong, nonatomic) IBOutlet UIView *sharedFoldersEmptyFooterView;
 
 @property (strong, nonatomic) NSMutableArray *participantsMutableArray;
 
@@ -46,14 +46,13 @@
     [super viewDidLoad];
     
     self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
-    
     self.navigationItem.title = AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context");
     
     self.nameLabel.text = self.chatRoom.title;
     
-    self.emptyHeaderView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyHeaderView" owner:self options:nil] firstObject];
-    self.actionsSectionEmptyFooterView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyFooterView" owner:self options:nil] firstObject];
-    self.sharedFoldersEmptyFooterView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyFooterView" owner:self options:nil] firstObject];
+    self.emptyHeaderView = [NSBundle.mainBundle loadNibNamed:@"EmptyHeaderView" owner:self options:nil].firstObject;
+    self.actionsSectionEmptyFooterView = [NSBundle.mainBundle loadNibNamed:@"EmptyFooterView" owner:self options:nil].firstObject;
+    self.sharedFoldersEmptyFooterView = [NSBundle.mainBundle loadNibNamed:@"EmptyFooterView" owner:self options:nil].firstObject;
     
     CGSize avatarSize = self.avatarImageView.frame.size;
     UIImage *avatarImage = [UIImage imageForName:self.chatRoom.title.uppercaseString size:avatarSize backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(avatarSize.width/2.0f)]];

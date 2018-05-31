@@ -157,7 +157,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     _unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 6, 30, 30)];
     self.unreadLabel.font = [UIFont mnz_SFUIMediumWithSize:12.0f];
-    self.unreadLabel.textColor = [UIColor mnz_redF0373A];
+    self.unreadLabel.textColor = [UIColor whiteColor];
     self.unreadLabel.userInteractionEnabled = YES;
     
     if (self.presentingViewController && self.parentViewController) {
@@ -254,6 +254,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
     self.lastBottomInset = self.collectionView.scrollIndicatorInsets.bottom;
     self.lastVerticalOffset = self.collectionView.contentOffset.y;
+    
+    self.unreadMessages = 0;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -478,10 +480,16 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)customToolbarContentView {
     self.inputToolbar.contentView.textView.placeHolderTextColor = [UIColor mnz_grayCCCCCC];
-    self.inputToolbar.contentView.textView.placeHolder = AMLocalizedString(@"writeAMessage", @"Message box label which shows that user can type message text in this textview");
     self.inputToolbar.contentView.textView.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
     self.inputToolbar.contentView.textView.textColor = [UIColor mnz_black333333];
     self.inputToolbar.contentView.textView.tintColor = [UIColor mnz_green00BFA5];
+    [self updateToolbarPlaceHolder];
+}
+
+- (void)updateToolbarPlaceHolder {
+    NSString *title = self.chatRoom.hasCustomTitle ? [NSString stringWithFormat:@"\"%@\"", self.chatRoom.title] : self.chatRoom.title;
+    NSString *placeholder = [AMLocalizedString(@"writeAMessage", @"This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to \"Chat room topic\"... Write a message to Contact Name1, Contact Name2, Contact Name3") stringByReplacingOccurrencesOfString:@"%s" withString:title];
+    self.inputToolbar.contentView.textView.placeHolder = placeholder;
 }
 
 - (BOOL)showDateBetweenMessage:(MEGAChatMessage *)message previousMessage:(MEGAChatMessage *)previousMessage {
@@ -671,7 +679,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)startUploadAndAttachWithPath:(NSString *)path parentNode:(MEGANode *)parentNode {
-    [self showProgressViewUnderNavigationBar];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self showProgressViewUnderNavigationBar];
+    });
     
     MEGAStartUploadTransferDelegate *startUploadTransferDelegate = [[MEGAStartUploadTransferDelegate alloc] initToUploadToChatWithTotalBytes:^(long long totalBytes) {
         self.totalBytesToUpload += totalBytes;
@@ -726,6 +736,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         self.navigationBarProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
         self.navigationBarProgressView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
         self.navigationBarProgressView.frame = CGRectMake(self.navigationController.navigationBar.bounds.origin.x, self.navigationController.navigationBar.bounds.size.height, self.navigationController.navigationBar.bounds.size.width, 2.0f);
+        self.navigationBarProgressView.transform = CGAffineTransformScale(self.navigationBarProgressView.transform, 1, 2);
         self.navigationBarProgressView.progressTintColor = [UIColor mnz_green00BFA5];
         self.navigationBarProgressView.trackTintColor = [UIColor clearColor];
         
@@ -794,6 +805,15 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 - (void)jumpToBottomPressed:(UITapGestureRecognizer *)recognizer {
     [self scrollToBottomAnimated:YES];
     [self hideJumpToBottom];
+}
+
+- (void)hideUnreadMessagesLabelIfNeeded {
+    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForItem:(self.messages.count - 1) inSection:0];
+    if (self.unreadMessages && [[self.collectionView indexPathsForVisibleItems] containsObject:lastIndexPath]) {
+        NSIndexPath *indexPathForCellWithUnreadMessagesLabel = [self indexPathForCellWithUnreadMessagesLabel];
+        self.unreadMessages = 0;
+        [self.collectionView reloadItemsAtIndexPaths:@[indexPathForCellWithUnreadMessagesLabel]];
+    }
 }
 
 - (void)setTypingIndicator {
@@ -996,6 +1016,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 - (void)didPressAccessoryButton:(UIButton *)sender {
     switch (sender.tag) {
         case MEGAChatAccessoryButtonCamera: {
+            self.inputToolbar.hidden = YES;
             if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType:completionHandler:)]) {
                 [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL permissionGranted) {
                     if (permissionGranted) {
@@ -1016,13 +1037,17 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                     }
                 }];
             }
+            
             break;
         }
             
         case MEGAChatAccessoryButtonUpload: {
+            self.inputToolbar.hidden = YES;
             NSString *alertControllerTitle = AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
             UIAlertController *selectOptionAlertController = [UIAlertController alertControllerWithTitle:alertControllerTitle message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-            [selectOptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+            [selectOptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                self.inputToolbar.hidden = NO;
+            }]];
             
             UIAlertAction *sendFromCloudDriveAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fromCloudDrive", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
@@ -1059,6 +1084,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         default:
             break;
     }
+    [self updateToolbarPlaceHolder];
 }
 
 - (void)scrollToBottomAnimated:(BOOL)animated {
@@ -1893,6 +1919,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             
         case MEGAChatRoomChangeTypeParticipants: {
             [self customNavigationBarLabel];
+            [self updateToolbarPlaceHolder];
             
             [self.collectionView performBatchUpdates:^{
                 [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
@@ -1906,6 +1933,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             
         case MEGAChatRoomChangeTypeTitle:
             [self customNavigationBarLabel];
+            [self updateToolbarPlaceHolder];
+            
             break;
             
         case MEGAChatRoomChangeTypeUserTyping: {

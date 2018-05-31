@@ -59,7 +59,11 @@
             [self.iconImageView mnz_imageForNode:node];
         }
     } else {
-        [self.iconImageView mnz_imageForNode:node];
+        if (transfer.type == MEGATransferTypeDownload) {
+            [self.iconImageView mnz_imageForNode:node];
+        } else {
+            [self.iconImageView mnz_setImageForExtension:transfer.fileName.pathExtension];
+        }
     }
     
     [self configureCellState];
