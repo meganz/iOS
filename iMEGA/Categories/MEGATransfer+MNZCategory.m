@@ -76,7 +76,7 @@
 }
 
 - (void)mnz_setNodeCoordinates {
-    if (self.fileName.mnz_isImagePathExtension || self.fileName.mnz_isImagePathExtension) {
+    if (self.fileName.mnz_isImagePathExtension || self.fileName.mnz_isVideoPathExtension) {
         MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];
         if (node.latitude && node.longitude) {
             return;
