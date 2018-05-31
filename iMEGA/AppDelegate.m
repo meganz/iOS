@@ -2031,7 +2031,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 MEGATransfer *transfer = [transferList transferAtIndex:i];
                 [transfer mnz_cancelPendingCUTransfer];
                 
-                if ([transfer.appData containsString:@"CU"] && [CameraUploads syncManager].isCameraUploadsEnabled && [CameraUploads syncManager].isUseCellularConnectionEnabled && ![MEGAReachabilityManager isReachableViaWWAN]) {
+                if ([transfer.appData containsString:@"CU"] && [CameraUploads syncManager].isCameraUploadsEnabled && ([MEGAReachabilityManager isReachableViaWiFi] || [CameraUploads syncManager].isUseCellularConnectionEnabled)) {
                     MEGALogInfo(@"Camera Upload should be delayed");
                     [CameraUploads syncManager].shouldCameraUploadsBeDelayed = YES;
                 }
