@@ -767,15 +767,21 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)processLink:(NSURL *)url {
+    if (self.window.rootViewController.presentedViewController) {
+        [self.window.rootViewController dismissViewControllerAnimated:NO completion:^{
+            [self urlLinkType:url];
+        }];
+    } else {
+        [self urlLinkType:url];
+    }
+}
+
+- (void)urlLinkType:(NSURL *)url {
     NSString *afterSlashesString = [[url absoluteString] substringFromIndex:7]; // "mega://" = 7 characters
-        
+
     if (afterSlashesString.length < 2) {
         [self showLinkNotValid];
         return;
-    }
-        
-    if (self.window.rootViewController.presentedViewController) {
-        [self.window.rootViewController dismissViewControllerAnimated:NO completion:nil];
     }
     
     if ([[url absoluteString] rangeOfString:@"file:///"].location != NSNotFound) {
@@ -783,7 +789,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [self openIn];
         return;
     }
-        
+    
     if ([self isFileLink:afterSlashesString]) {
         self.urlType = URLTypeFileLink;
         return;
