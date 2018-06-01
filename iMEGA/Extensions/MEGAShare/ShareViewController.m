@@ -17,6 +17,7 @@
 #import "MEGASdk.h"
 #import "MEGASdkManager.h"
 #import "MEGATransferDelegate.h"
+#import "NSString+MNZCategory.h"
 
 #define kAppKey @"EVtjzb7R"
 #define kUserAgent @"MEGAiOS"
@@ -532,7 +533,8 @@
         [[NSFileManager defaultManager] removeItemAtPath:localPath error:nil];
     } else {
         // The file is not in MEGA.
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localPath parent:parentNode appData:nil isSourceTemporary:YES delegate:self];
+        NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localPath.mnz_coordinatesOfPhotoOrVideo];
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localPath parent:parentNode appData:appData isSourceTemporary:YES delegate:self];
     }
 }
 

@@ -30,6 +30,7 @@
 #import "MEGAStartUploadTransferDelegate.h"
 #import "MEGAStore.h"
 #import "MEGAToolbarContentView.h"
+#import "MEGATransfer+MNZCategory.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
@@ -671,22 +672,25 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     if (sourceType == UIImagePickerControllerSourceTypeCamera) {
         MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToShareThroughChatWithSourceType:sourceType filePathCompletion:^(NSString *filePath, UIImagePickerControllerSourceType sourceType) {
             MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-            [self startUploadAndAttachWithPath:filePath parentNode:parentNode];
+            [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:nil];
         }];
         
         [self presentViewController:imagePickerController animated:YES completion:nil];
     }
 }
 
-- (void)startUploadAndAttachWithPath:(NSString *)path parentNode:(MEGANode *)parentNode {
+- (void)startUploadAndAttachWithPath:(NSString *)path parentNode:(MEGANode *)parentNode appData:(NSString *)appData {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self showProgressViewUnderNavigationBar];
     });
     
-    MEGAStartUploadTransferDelegate *startUploadTransferDelegate = [[MEGAStartUploadTransferDelegate alloc] initToUploadToChatWithTotalBytes:^(long long totalBytes) {
+    MEGAStartUploadTransferDelegate *startUploadTransferDelegate = [[MEGAStartUploadTransferDelegate alloc] initToUploadToChatWithTotalBytes:^(MEGATransfer *transfer) {
+        long long totalBytes = transfer.totalBytes.longLongValue;
         self.totalBytesToUpload += totalBytes;
         self.remainingBytesToUpload += totalBytes;
-    } progress:^(float transferredBytes, float totalBytes) {
+    } progress:^(MEGATransfer *transfer) {
+        float transferredBytes = transfer.transferredBytes.floatValue;
+        float totalBytes = transfer.totalBytes.floatValue;
         float asignableProgresRegardWithTotal = (totalBytes / self.totalBytesToUpload);
         float transferProgress = (transferredBytes / totalBytes);
         float currentAsignableProgressForThisTransfer = (transferProgress * asignableProgresRegardWithTotal);
@@ -700,7 +704,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                 [self.navigationBarProgressView setProgress:currentAsignableProgressForThisTransfer animated:YES];
             }
         }
-    } completion:^(long long totalBytes) {
+    } completion:^(MEGATransfer *transfer) {
+        long long totalBytes = transfer.totalBytes.longLongValue;
         float progressCompletedRegardWithTotal = ((float)totalBytes / self.totalBytesToUpload);
         self.totalProgressOfTransfersCompleted += progressCompletedRegardWithTotal;
         self.remainingBytesToUpload -= totalBytes;
@@ -710,7 +715,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         }
     }];
     
-    NSString *appData = [NSString stringWithFormat:@"attachToChatID=%llu", self.chatRoom.chatId];
+    if (!appData) {
+        appData = [NSString new];
+    }
+    appData = [appData mnz_appDataToAttachToChatID:self.chatRoom.chatId];
+    
     [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:path parent:parentNode appData:appData isSourceTemporary:YES delegate:startUploadTransferDelegate];
 }
 
@@ -981,7 +990,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 - (void)uploadAssets:(NSArray<PHAsset *> *)assets toParentNode:(MEGANode *)parentNode {
     for (PHAsset *asset in assets) {
         MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initToShareThroughChatWithAsset:asset filePath:^(NSString *filePath) {
-            [self startUploadAndAttachWithPath:filePath parentNode:parentNode];
+            NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
+            [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:appData];
         } node:^(MEGANode *node) {
             [self attachOrCopyAndAttachNode:node toParentNode:parentNode];
         } error:^(NSError *error) {
