@@ -85,6 +85,7 @@
                 previewController.filesPathsArray = @[previewDocumentPath];
                 previewController.nodeFileIndex = 0;
                 previewController.node = self;
+                previewController.isLink = isFolderLink;
                 
                 return navigationController;
             } else {
@@ -115,6 +116,7 @@
                 PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
                 previewController.node = self;
                 previewController.api = api;
+                previewController.isLink = isFolderLink;
                 return navigationController;
             }
             return nil;

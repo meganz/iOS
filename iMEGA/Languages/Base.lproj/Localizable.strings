@@ -1480,3 +1480,5 @@
 "continueOrRestartVideoMessage"="%1$s will continue at %2$s";
 /*  */
 "resume"="Resume";
+/* Title to preview document */
+"previewContent"="Preview Content";

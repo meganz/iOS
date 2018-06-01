@@ -33,9 +33,9 @@
 
 @property (weak, nonatomic) UILabel *navigationBarLabel;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
@@ -91,19 +91,26 @@
     [self.navigationController.view setBackgroundColor:[UIColor mnz_grayF9F9F9]];
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
-    [self.navigationItem setTitle:AMLocalizedString(@"folderLink", nil)];
+    self.navigationItem.title = AMLocalizedString(@"folderLink", nil);
     
-    self.editBarButtonItem.title = AMLocalizedString(@"select", nil);
-    self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
+    self.moreBarButtonItem.title = nil;
+    self.moreBarButtonItem.image = [UIImage imageNamed:@"moreSelected"];
+    self.navigationItem.rightBarButtonItems = @[self.moreBarButtonItem];
     
-    [self.importBarButtonItem setTitle:AMLocalizedString(@"import", nil)];
-    [self.downloadBarButtonItem setTitle:AMLocalizedString(@"downloadButton", @"Download")];
+    self.importBarButtonItem.title = AMLocalizedString(@"import", nil);
+    self.downloadBarButtonItem.title = AMLocalizedString(@"downloadButton", @"Download");
+
+    self.navigationController.topViewController.toolbarItems = self.toolbar.items;
+    [self.navigationController setToolbarHidden:NO animated:YES];
+    self.navigationController.toolbar.barTintColor = UIColor.whiteColor;
     
+    self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label.");
+
     if (self.isFolderRootNode) {
         [MEGASdkManager sharedMEGASdkFolder];
         [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:self.folderLinkString delegate:self];
 
-        [self.navigationItem setLeftBarButtonItem:_cancelBarButtonItem];
+        self.navigationItem.leftBarButtonItem = self.closeBarButtonItem;
         
         [self setActionButtonsEnabled:NO];
     } else {
@@ -189,9 +196,9 @@
         UILabel *label = [Helper customNavigationBarLabelWithTitle:self.parentNode.name subtitle:AMLocalizedString(@"folderLink", nil)];
         label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
         self.navigationBarLabel = label;
-        [self.navigationItem setTitleView:self.navigationBarLabel];
+        self.navigationItem.titleView = self.navigationBarLabel;
     } else {
-        [self.navigationItem setTitle:AMLocalizedString(@"folderLink", nil)];
+        self.navigationItem.title = AMLocalizedString(@"folderLink", nil);
     }
 }
 
@@ -201,15 +208,15 @@
     [self disableUIItems];
     
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
-    [unavailableLinkView.imageView setImage:[UIImage imageNamed:@"invalidFolderLink"]];
-    [unavailableLinkView.titleLabel setText:AMLocalizedString(@"linkUnavailable", nil)];
+    unavailableLinkView.imageView.image = [UIImage imageNamed:@"invalidFolderLink"];
+    unavailableLinkView.titleLabel.text = AMLocalizedString(@"linkUnavailable", nil);
     
     NSString *folderLinkUnavailableText = [NSString stringWithFormat:@"%@\n%@\n%@\n%@", AMLocalizedString(@"folderLinkUnavailableText1", nil), AMLocalizedString(@"folderLinkUnavailableText2", nil), AMLocalizedString(@"folderLinkUnavailableText3", nil), AMLocalizedString(@"folderLinkUnavailableText4", nil)];
 
     unavailableLinkView.textLabel.text = folderLinkUnavailableText;
     
     if ([[UIDevice currentDevice] iPhone4X]) {
-        [unavailableLinkView.imageViewCenterYLayoutConstraint setConstant:-64];
+        unavailableLinkView.imageViewCenterYLayoutConstraint.constant = -64;
     }
     
     [self.tableView setBackgroundView:unavailableLinkView];
@@ -225,7 +232,7 @@
 }
 
 - (void)setActionButtonsEnabled:(BOOL)boolValue {
-    [_editBarButtonItem setEnabled:boolValue];
+    [_moreBarButtonItem setEnabled:boolValue];
     
     [_importBarButtonItem setEnabled:boolValue];
     [_downloadBarButtonItem setEnabled:boolValue];
@@ -324,6 +331,29 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)moreAction:(UIBarButtonItem *)sender {
+    if (self.tableView.isEditing) {
+        [self setEditing:NO animated:YES];
+        return;
+    }
+    
+    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
+    actionController.node = self.parentNode;
+    actionController.displayMode = DisplayModeFolderLink;
+    actionController.actionDelegate = self;
+    actionController.actionSender = sender;
+    
+    if ([[UIDevice currentDevice] iPadDevice]) {
+        actionController.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
+        popController.delegate = actionController;
+        popController.barButtonItem = sender;
+    } else {
+        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    }
+    [self presentViewController:actionController animated:YES completion:nil];
+}
+
 - (IBAction)editAction:(UIBarButtonItem *)sender {
     BOOL enableEditing = !self.tableView.isEditing;
     [self setEditing:enableEditing animated:YES];
@@ -337,17 +367,19 @@
     [self setToolbarButtonsEnabled:!editing];
     
     if (editing) {
-        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+        self.moreBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+        self.moreBarButtonItem.image = nil;
 
         [self.navigationItem setLeftBarButtonItem:_selectAllBarButtonItem];
     } else {
-        self.editBarButtonItem.title = AMLocalizedString(@"select", nil);
-        
+        self.moreBarButtonItem.title = nil;
+        self.moreBarButtonItem.image = [UIImage imageNamed:@"moreSelected"];
+
         [self setAllNodesSelected:NO];
         _selectedNodesArray = nil;
 
         if (self.isFolderRootNode) {
-            [self.navigationItem setLeftBarButtonItem:_cancelBarButtonItem];
+            [self.navigationItem setLeftBarButtonItem:_closeBarButtonItem];
         } else {
             [self.navigationItem setLeftBarButtonItem:nil];
         }
@@ -751,7 +783,7 @@
              return [UIImage imageNamed:@"searchEmptyState"];
          }
         
-        return [UIImage imageNamed:@"emptyFolder"];
+        return [UIImage imageNamed:@"folderEmptyState"];
     } else {
         return [UIImage imageNamed:@"noInternetEmptyState"];
     }
@@ -918,6 +950,19 @@
             self.selectedNodesArray = [NSMutableArray arrayWithObject:node];
             [self importAction:nil];
             break;
+            
+        case MegaNodeActionTypeSelect: {
+            BOOL enableEditing = !self.tableView.isEditing;
+            [self setEditing:enableEditing animated:YES];
+            break;
+        }
+            
+        case MegaNodeActionTypeShare: {
+            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.folderLinkString] applicationActivities:nil];
+            activityVC.popoverPresentationController.barButtonItem = sender;
+            [self presentViewController:activityVC animated:YES completion:nil];
+            break;
+        }
             
         default:
             break;
