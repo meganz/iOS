@@ -8,7 +8,8 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageWarningDialog) {
     MEGAChatMessageWarningDialogDismiss,
     MEGAChatMessageWarningDialogNone,
     MEGAChatMessageWarningDialogInitial,
-    MEGAChatMessageWarningDialogStandard
+    MEGAChatMessageWarningDialogStandard,
+    MEGAChatMessageWarningDialogConfirmation
 };
 
 @interface MEGAChatMessage (MNZCategory) <JSQMessageData>

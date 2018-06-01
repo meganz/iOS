@@ -74,9 +74,43 @@
     
     // Content:
     dialogView.headingLabel.text = self.message.content;
-    dialogView.neverButton.hidden = self.message.warningDialog != MEGAChatMessageWarningDialogStandard;
     dialogView.delegate = self;
     
+    switch (self.message.warningDialog) {
+        case MEGAChatMessageWarningDialogInitial:
+            dialogView.titleLabel.text = AMLocalizedString(@"enableRichUrlPreviews", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.");
+            dialogView.descriptionLabel.text = AMLocalizedString(@"richPreviewsFooter", @"Explanation of rich URL previews, given when users can enable/disable them, either in settings or in dialogs");
+            [dialogView.alwaysAllowButton setTitle:AMLocalizedString(@"alwaysAllow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.") forState:UIControlStateNormal];
+            [dialogView.notNowButton setTitle:AMLocalizedString(@"notNow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.") forState:UIControlStateNormal];
+            
+            [dialogView.neverButton removeFromSuperview];
+            
+            break;
+            
+        case MEGAChatMessageWarningDialogStandard:
+            dialogView.titleLabel.text = AMLocalizedString(@"enableRichUrlPreviews", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.");
+            dialogView.descriptionLabel.text = AMLocalizedString(@"richPreviewsFooter", @"Explanation of rich URL previews, given when users can enable/disable them, either in settings or in dialogs");
+            [dialogView.alwaysAllowButton setTitle:AMLocalizedString(@"alwaysAllow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.") forState:UIControlStateNormal];
+            [dialogView.notNowButton setTitle:AMLocalizedString(@"notNow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.") forState:UIControlStateNormal];
+            [dialogView.neverButton setTitle:AMLocalizedString(@"never", @"") forState:UIControlStateNormal];
+            
+            break;
+            
+        case MEGAChatMessageWarningDialogConfirmation:
+            dialogView.titleLabel.text = AMLocalizedString(@"richUrlPreviews", @"Title used in settings that enables the generation of link previews in the chat");
+            dialogView.descriptionLabel.text = AMLocalizedString(@"richPreviewsConfirmation", @"After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings.");
+            [dialogView.alwaysAllowButton setTitle:AMLocalizedString(@"yes", nil) forState:UIControlStateNormal];
+            dialogView.alwaysAllowButton.tag = MEGAMessageDialogOptionYes;
+            [dialogView.notNowButton setTitle:AMLocalizedString(@"no", nil) forState:UIControlStateNormal];
+            
+            [dialogView.neverButton removeFromSuperview];
+
+            break;
+            
+        default:
+            break;
+    }
+        
     // Bubble:
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:[UIApplication sharedApplication].userInterfaceLayoutDirection];
     JSQMessagesMediaViewBubbleImageMasker *messageMediaViewBubleImageMasker = [[JSQMessagesMediaViewBubbleImageMasker alloc] initWithBubbleImageFactory:bubbleFactory];
@@ -88,31 +122,68 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    CGFloat displaySize = [[UIDevice currentDevice] mnz_widthForChatBubble];
-    return CGSizeMake(displaySize, 228.0f);
+    CGFloat bubbleWidth = [[UIDevice currentDevice] mnz_widthForChatBubble];
+    CGFloat headingHeight = [self headingHeight];
+    CGFloat descriptionHeight = [self descriptionHeight];
+
+    CGFloat optionsHeight = self.message.warningDialog == MEGAChatMessageWarningDialogStandard ? 134.0f : 89.0f;
+    
+    // @see MEGAMessageDialogView.xib
+    CGFloat bubbleHeight = 10.0f + headingHeight + 10.0f + 10.0f + 36.0f + 10.0f + descriptionHeight + 9.0f + optionsHeight + 3.0f;
+    return CGSizeMake(bubbleWidth, bubbleHeight);
 }
 
 - (NSUInteger)mediaHash {
     return self.hash;
 }
 
+#pragma mark - Private
+
+- (CGFloat)headingHeight {
+    CGFloat bubbleWidth = [[UIDevice currentDevice] mnz_widthForChatBubble];
+    CGFloat maxMessageTextViewWidth = bubbleWidth - 20.0f;
+    UIFont *messageFont = [UIFont mnz_SFUIRegularWithSize:15.0f];
+    CGRect messageRect = [self.message.content boundingRectWithSize:CGSizeMake(maxMessageTextViewWidth, CGFLOAT_MAX)
+                                                            options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                                         attributes:@{ NSFontAttributeName : messageFont }
+                                                            context:nil];
+    return messageRect.size.height;
+}
+
+- (CGFloat)descriptionHeight {
+    CGFloat bubbleWidth = [[UIDevice currentDevice] mnz_widthForChatBubble];
+    CGFloat maxDialogTextViewWidth = bubbleWidth - 120.0f;
+    UIFont *dialogFont = [UIFont mnz_SFUIRegularWithSize:12.0f];
+    NSString *dialogText = self.message.warningDialog == MEGAChatMessageWarningDialogConfirmation ? AMLocalizedString(@"richPreviewsConfirmation", @"After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings.") : AMLocalizedString(@"richPreviewsFooter", @"Explanation of rich URL previews, given when users can enable/disable them, either in settings or in dialogs");
+    CGRect dialogRect = [dialogText boundingRectWithSize:CGSizeMake(maxDialogTextViewWidth, CGFLOAT_MAX)
+                                                 options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                              attributes:@{ NSFontAttributeName : dialogFont }
+                                                 context:nil];
+    return dialogRect.size.height;
+}
+
 #pragma mark - MEGAMessageDialogViewDelegate
 
 - (void)dialogView:(MEGAMessageDialogView *)dialogView chosedOption:(MEGAMessageDialogOption)option {
     switch (option) {
-        case MEGAMessageDialogOptionNever:
-            [[MEGASdkManager sharedMEGASdk] enableRichPreviews:NO];
+        case MEGAMessageDialogOptionAlwaysAllow:
+            [[MEGASdkManager sharedMEGASdk] enableRichPreviews:YES];
             self.message.warningDialog = MEGAChatMessageWarningDialogNone;
             
             break;
             
-        case MEGAMessageDialogOptionNotNow:
+        case MEGAMessageDialogOptionNotNowOrNo:
             self.message.warningDialog = MEGAChatMessageWarningDialogDismiss;
 
             break;
             
-        case MEGAMessageDialogOptionAlwaysAccept:
-            [[MEGASdkManager sharedMEGASdk] enableRichPreviews:YES];
+        case MEGAMessageDialogOptionNever:
+            self.message.warningDialog = MEGAChatMessageWarningDialogConfirmation;
+            
+            break;
+            
+        case MEGAMessageDialogOptionYes:
+            [[MEGASdkManager sharedMEGASdk] enableRichPreviews:NO];
             self.message.warningDialog = MEGAChatMessageWarningDialogNone;
 
             break;
