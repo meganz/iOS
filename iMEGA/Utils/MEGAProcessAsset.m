@@ -116,7 +116,15 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
      requestImageDataForAsset:self.asset
      options:options
      resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
-         [self proccessImageData:imageData withInfo:info];
+         NSData *data;
+         if (self.shareThroughChat && [dataUTI isEqualToString:@"public.heic"]) {
+             UIImage *image = [UIImage imageWithData:imageData];
+             data = UIImageJPEGRepresentation(image, 0.75);
+         } else {
+             data = imageData;
+         }
+         
+         [self proccessImageData:data withInfo:info];
      }];
 }
 

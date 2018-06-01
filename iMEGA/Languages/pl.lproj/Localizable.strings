@@ -63,9 +63,9 @@
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="Serwery są aktualnie zajęte. Proszę czekać.";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
-"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+"unableToReachMega"="Brak połączenia z MEGA. Sprawdź swoje połączenie do sieci i spróbuj ponownie.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
-"tooManyRequest"="Too many requests. Please wait.";
+"tooManyRequest"="Za dużo zgłoszeń. Proszę czekać.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Zaloguj się do swojego konta.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -1201,8 +1201,8 @@
 "twoUsersAreTyping"="%1$s [A]piszą...[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
 "moreThanTwoUsersAreTyping"="%1$s [A]i pozostali piszą...[/A]";
-/* Message box label which shows that user can type message text in this textview */
-"writeAMessage"="Napisz wiadomość...";
+/* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
+"writeAMessage"="Write a message to %s...";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="Brak historii rozmowy";
 /* Button which allows to retry send message in chat conversation. */
@@ -1443,13 +1443,13 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="Czy pamiętasz swoje hasło?";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset your password without data loss. Please make sure you remember your password.";
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="Don’t show me again";
+"dontShowAgain"="Nie pokazuj ponownie";
 /* Label for test password button and titles */
-"testPassword"="Test Password";
+"testPassword"="Hasło testowe";
 /* Label for recovery key button */
 "backupRecoveryKey"="Kopia klucza";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
@@ -1461,7 +1461,7 @@
 /* A dialog title to export the Recovery Key for the current user. */
 "exportRecoveryKey"="Eksportowanie klucza";
 /* Title to confirm that you want to logout */
-"proceedToLogout"="Proceed to logout";
+"proceedToLogout"="Wyloguj się";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
 /* state previous to import a file */

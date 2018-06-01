@@ -171,7 +171,7 @@
 /* */
 "fileLinkUnavailableText4"="O arquivo foi apagado pelo usuário.";
 /* Message shown when a download starts */
-"downloadStarted"="Descarregamento iniciado";
+"downloadStarted"="Download iniciado";
 /* Title for the folder link view */
 "folderLink"="Link da pasta";
 /* Button title which downloads a file/folder to your device */
@@ -189,7 +189,7 @@
 /* */
 "folderLinkUnavailableText4"="O link desta pasta foi desativado pelo usuário.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
-"noInternetConnection"="Sem ligação à internet";
+"noInternetConnection"="Não há conexão à Internet";
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Pasta vazia";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
@@ -269,7 +269,7 @@
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="Tente novamente mais tarde ou cancele";
 /* Section title of the 'Sort by' */
-"sortTitle"="ORGANIZAR POR";
+"sortTitle"="Ordenar por";
 /* Button title to 'Save' the selected option */
 "save"="Salvar";
 /* Sort by option (1/6). This one orders the files alphabethically*/
@@ -613,7 +613,7 @@
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Você tem certeza de que quer sair destes compartilhamentos?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
-"share"="Partilhar";
+"share"="Compartilhar";
 /* Select all items/elements on the list */
 "selectAll"="Selecionar tudo";
 /*  */
@@ -814,7 +814,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Confirmar novo e-mail";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="Trocar email";
+"changeEmail"="Alterar email";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="O e-mail novo e o e-mail antigo não podem ser o mesmo";
 /* Error message shown when you have not written the same email when confirming a new one */
@@ -938,9 +938,9 @@
 /* Button to remove avatar. Try to keep the text short (as in English) */
 "removeAvatar"="Remover avatar";
 /* button that allows the user the change his avatar */
-"changeAvatar"="Mudar avatar";
+"changeAvatar"="Alterar o avatar";
 /* Button title that allows the user change his name */
-"changeName"="Mudar de nome";
+"changeName"="Alterar o nome";
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="Você mudou o seu perfil com sucesso.";
 /* Hint text for the first name (Placeholder) */
@@ -1201,8 +1201,8 @@
 "twoUsersAreTyping"="%1$s [A]estão escrevendo...[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
 "moreThanTwoUsersAreTyping"="%1$s [A]e outros estão escrevendo...[/A]";
-/* Message box label which shows that user can type message text in this textview */
-"writeAMessage"="Escreva uma mensagem...";
+/* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
+"writeAMessage"="Escrever uma mensagem para %s...";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="Esta conversa não tem histórico";
 /* Button which allows to retry send message in chat conversation. */
@@ -1349,7 +1349,7 @@
 "generalDescriptionParagraph5"="Assinatura PRO LITE: 4,99 € (US$ 4,99) por mês ou 49,99 € (US$ 49,99) por ano - oferece 200 GB de espaço de armazenamento e 1 TB de cota de transferência por mês. \nAssinatura PRO I: 9,99 € (US$ 9,99) por mês ou 99,99 € (US$ 99,99) por ano -  oferece 1 TB de espaço de armazenamento e 2 TB de cota de transferência por mês. \nAssinatura PRO II: 19,99 € (US$ 19,99) por mês ou 199,99 € (US$ 199,99) por ano - oferece 4 TB de espaço de armazenamento e 8 TB de cota de transferência por mês. \nAssinatura PRO III: 29,99 € (US$ 29,99) por mês ou 299,99 € (US$ 299,99) por ano - oferece 8 TB de espaço de armazenamento e 16 TB de cota de transferência por mês.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Para mais informações, consulte o nosso site: \nMóvel - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nDesktop - https://mega.nz/";
+"generalDescriptionParagraph6"="Para mais informações, consulte o nosso site: https://mega.nz/\nTermos de serviço: https://mega.nz/terms\nPolítica de privacidade: https://mega.nz/privacy";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="Chamada recebida...";
 /* Notification text body shown when you have missed one audio call */
@@ -1453,7 +1453,7 @@
 /* Label for recovery key button */
 "backupRecoveryKey"="Salvar chave de recuperação";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
-"testPasswordText"="Por favor, verifique a sua senha abaixo, para garantir que você se lembra dela. Se você perder a sua senha, perderá o acesso aos seus dados MEGA. [A]Mais informações[/A]";
+"testPasswordText"="Por favor, verifique a sua senha abaixo, para garantir que você se lembra dela. Se você perder a sua senha, perderá o acesso aos seus dados no MEGA. [A]Mais informações[/A]";
 /* Title text for the account confirmation. */
 "confirm"="Confirmar";
 /* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
@@ -1477,6 +1477,6 @@
 /* Title to alert user the possibility of resume playing the video or start from the beginning */
 "resumePlayback"="Retomar a reprodução?";
 /* Message to show the user info (name and time) about the resume of the video */
-"continueOrRestartVideoMessage"="%1$s will continue at %2$s";
+"continueOrRestartVideoMessage"="%1$s continuará a partir de %2$s";
 /*  */
 "resume"="Continuar";

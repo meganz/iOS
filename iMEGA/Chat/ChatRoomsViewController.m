@@ -110,6 +110,10 @@
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     
     [self.chatListItemArray removeAllObjects];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     [self.tableView reloadData];
 }
 

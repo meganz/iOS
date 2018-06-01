@@ -55,7 +55,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Ihre Sitzung wurde beendet";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="Der Server-SSL-Schlüssel kann nicht verifiziert werden. Es könnte ein Man-in-the-middle-Angriff vorliegen.";
+"sslUnverified_alertTitle"="MEGA kann keine gesicherte SSL-Verbindung aufbauen. Möglicherweise müssen Sie sich zunächst in den WLAN-Hotspot einloggen.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Dieser Account kann auf die gewünschte Datei nicht zugreifen. Bitte nutzen Sie denselben Account wie im Browser.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -1201,8 +1201,8 @@
 "twoUsersAreTyping"="%1$s [A]tippen...[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
 "moreThanTwoUsersAreTyping"="%1$s [A]und weitere tippen...[/A]";
-/* Message box label which shows that user can type message text in this textview */
-"writeAMessage"="Nachricht schreiben...";
+/* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
+"writeAMessage"="Nachricht an %s...";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="Keine Nachrichten vorhanden";
 /* Button which allows to retry send message in chat conversation. */
@@ -1338,9 +1338,9 @@
 "languageRestartNotification"="Spracheinstellung geändert. Tippen zum Neustart.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA is a secure cloud storage service that gives you 50 GB free storage space. Unlike other cloud storage providers, your data is encrypted and decrypted by your client devices only and never by us.";
+"generalDescriptionParagraph1"="MEGA ist sicherer Speicherplatz in der Cloud mit 50 kostenlosen GB. Im Gegensatz zu allen anderen großen Anbietern erfolgt die Ver- und Entschlüsselung der Daten ausschließlich auf den Endgeräten der Benutzer.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="Upload your files from your smartphone or tablet, then search, store, download, stream, view, share, rename or delete your files any time, from any device, anywhere. Share folders with your contacts and see their updates in real time.";
+"generalDescriptionParagraph2"="Laden Sie Ihre Dateien von Ihrem Smartphone oder Tablet hoch, dann durchsuchen, speichern, downloaden, streamen, betrachten, teilen oder löschen Sie sie - jederzeit und von jedem Gerät an jedem Ort der Welt mit Internetzugang. Geben Sie Ordner mit Echtzeit-Änderungsverfolgung an Ihre Kontakte frei.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="The encryption process means we cannot access or reset your password so you MUST remember it (unless you have your Recovery Key backed up) or you will lose access to your stored files.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
@@ -1443,7 +1443,7 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="Können Sie sich noch an Ihr Passwort erinnern?";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset you password without data loss. Please make sure you remember your password.";
+"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset your password without data loss. Please make sure you remember your password.";
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
 /* Text next to a toggle that if enabled won't appear again */
