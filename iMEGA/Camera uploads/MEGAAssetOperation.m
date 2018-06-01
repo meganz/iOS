@@ -6,6 +6,7 @@
 #import "NSString+MNZCategory.h"
 #import "MEGAProcessAsset.h"
 #import "MEGAReachabilityManager.h"
+#import "MEGATransfer+MNZCategory.h"
 
 @interface MEGAAssetOperation () <MEGATransferDelegate, MEGARequestDelegate> {
     BOOL executing;
@@ -91,10 +92,12 @@
         NSString *name = filePath.lastPathComponent;
         NSString *newName = [self newNameForName:name];
         
-        NSString *appData = nil;
+        NSString *appData = [NSString new];
         if (self.automatically) {
-            appData = [NSString stringWithFormat:@"CU=%ld", [[[CameraUploads syncManager] assetsOperationQueue] operationCount]];
+            appData = [appData mnz_appDataToSaveCameraUploadsCount:[[[CameraUploads syncManager] assetsOperationQueue] operationCount]];
         }
+        
+        appData = [appData mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
         
         if (![name isEqualToString:newName]) {
             NSString *newFilePath = [self.uploadsDirectory stringByAppendingPathComponent:newName];
