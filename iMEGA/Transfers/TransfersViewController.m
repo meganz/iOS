@@ -14,9 +14,9 @@
     BOOL areTransfersPaused;
 }
 
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *pauseBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *resumeBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *pauseBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *resumeBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *transfersSegmentedControl;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -96,11 +96,12 @@
 #pragma mark - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    TransferTableViewCell *cell;
-    
+    if (indexPath.row > self.transfers.count) {
+        return nil;
+    }
     MEGATransfer *transfer = [self.transfers objectAtIndex:indexPath.row];
     
+    TransferTableViewCell *cell;
     switch (transfer.state) {
         case MEGATransferStateActive:
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"activeTransferCell" forIndexPath:indexPath];
@@ -114,10 +115,6 @@
     [cell configureCellForTransfer:transfer delegate:self];
     
     return cell;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

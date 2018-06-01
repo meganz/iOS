@@ -969,7 +969,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="cancelBarButtonItem" destination="chL-MJ-s8I" id="4Ow-r2-XQY"/>
                         <outlet property="changePasswordButton" destination="Ugg-UB-5iL" id="rrD-tl-euI"/>
                         <outlet property="confirmPasswordImageView" destination="fp2-Td-e9h" id="zAh-rJ-iuZ"/>
                         <outlet property="confirmPasswordLineView" destination="py9-Rd-k8X" id="BeQ-rF-T5H"/>
@@ -1057,11 +1056,6 @@
                     </variation>
                 </view>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bhb-cj-fvD" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <barButtonItem image="cancelIcon" width="22" id="chL-MJ-s8I" userLabel="Cancel Bar Button Item">
-                    <connections>
-                        <action selector="cancelAction:" destination="Xlz-H7-CBT" id="L7y-yk-xDt"/>
-                    </connections>
-                </barButtonItem>
             </objects>
             <point key="canvasLocation" x="96.799999999999997" y="-1198.6506746626687"/>
         </scene>
@@ -2488,7 +2482,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="cancelIcon" width="16" height="16"/>
         <image name="key" width="32" height="32"/>
         <image name="keyDouble" width="32" height="32"/>
         <image name="mailBig" width="124" height="96"/>

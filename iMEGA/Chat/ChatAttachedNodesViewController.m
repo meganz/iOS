@@ -20,15 +20,15 @@
 
 @interface ChatAttachedNodesViewController ()
 
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) NSMutableArray *selectedNodesMutableArray;
 
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
 
 @end
 

@@ -377,7 +377,7 @@
 /* Title for a button that copies the key of the link to the clipboard */
 "copyKey"="Copia chiave";
 /* Title shown under the action that allows you to open a file in another app */
-"openIn"="Aprire";
+"openIn"="Apri con...";
 /* */
 "sendToContact"="Invia a contatto";
 /* Toast text upon sending a single file to chat */
@@ -1201,8 +1201,8 @@
 "twoUsersAreTyping"="%1$s [A]stanno scrivendo...[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
 "moreThanTwoUsersAreTyping"="%1$s [A]ed altri stanno scrivendo...[/A]";
-/* Message box label which shows that user can type message text in this textview */
-"writeAMessage"="Scrivi un messaggio...";
+/* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
+"writeAMessage"="Scrivi un messaggio a %s...";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="Nessuna conversazione";
 /* Button which allows to retry send message in chat conversation. */
@@ -1349,7 +1349,7 @@
 "generalDescriptionParagraph5"="Abbonamento PRO LITE: €4.99 (US$4.99) al mese o €49.99 (US$49.99) l'anno ti danno 200 GB di spazio di archiviazione e 1 TB di banda di trasferimento mensile.\n Abbonamento PRO I: €9.99 (US$9.99) al mese o €99.99 (US$99.99) l'anno ti danno 1 TB di spazio di archiviazione e 2 TB di banda di trasferimento mensile.\n Abbonamento PRO II: €19.99 (US$19.99) al mese o €199.99 (US$199.99) l'anno ti danno 4 TB di spazio di archiviazione e 8 TB di banda di trasferimento mensile.\n Abbonamento PRO III: €29.99 (US$29.99) al mese o €299.99 (US$299.99) l'anno ti danno 8 TB di spazio di archiviazione e 16 TB di banda di trasferimento mensile.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Per più informazioni, per favore visita il nostro sito web:\nMobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nDesktop - https://mega.nz/";
+"generalDescriptionParagraph6"="Per più informazioni, per favore visita il nostro sito web: https://mega.nz/\nTermini di Servizio: https://mega.nz/terms\nPolitica sulla Privacy: https://mega.nz/privacy";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="Chiamata in corso...";
 /* Notification text body shown when you have missed one audio call */
@@ -1443,7 +1443,7 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="Ricordi la tua password?";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="A causa della tecnologia di criptazione utilizzata da MEGA non è possibile resettare la password senza una perdita di dati. Per favore, fa' in modo di ricordare la tua password.";
+"remindPasswordText"="A causa della tecnologia di criptazione utilizzata da MEGA non è possibile resettare la password senza una perdita di dati. Per favore, fai in modo di ricordare la tua password.";
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Prima di effettuare il logout TI raccomandiamo di esportare la tua Chiave di Recupero in un posto sicuro. Ricorda che non potrai resettare la tua password se la dimentichi.";
 /* Text next to a toggle that if enabled won't appear again */
