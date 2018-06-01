@@ -7,5 +7,6 @@
 @property (nonatomic, strong) MEGASdk *api;
 @property (nonatomic, strong) NSArray<NSString *> *filesPathsArray;
 @property (nonatomic) NSInteger nodeFileIndex;
+@property (nonatomic) BOOL isLink;
 
 @end

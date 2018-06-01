@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Nfe-XI-un1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Nfe-XI-un1">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -46,19 +47,15 @@
         <scene sceneID="iAh-eN-ko9">
             <objects>
                 <viewController storyboardIdentifier="SharedItemsViewControllerID" id="2AR-na-hSZ" customClass="SharedItemsViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="dh1-Ek-IuR"/>
-                        <viewControllerLayoutGuide type="bottom" id="fva-ER-85X"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="DkV-FA-Q2Q">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="irZ-5P-oP0">
-                                <rect key="frame" x="-4" y="0.0" width="383" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ZP5-yh-meM">
-                                        <rect key="frame" x="8" y="7" width="367" height="31"/>
+                                        <rect key="frame" x="8" y="7" width="359" height="31"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="k1T-uS-zCm"/>
                                         </constraints>
@@ -211,15 +208,17 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="bc0-wE-0j5" firstAttribute="leading" secondItem="DkV-FA-Q2Q" secondAttribute="leading" id="HB9-Rl-FAV"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="irZ-5P-oP0" secondAttribute="trailing" constant="-20" id="Ov4-Li-OIX"/>
+                            <constraint firstItem="irZ-5P-oP0" firstAttribute="trailing" secondItem="N4c-5o-hcf" secondAttribute="trailing" id="Aib-tu-uSu"/>
+                            <constraint firstItem="N4c-5o-hcf" firstAttribute="leading" secondItem="irZ-5P-oP0" secondAttribute="leading" id="Gnl-JN-e0a"/>
+                            <constraint firstItem="bc0-wE-0j5" firstAttribute="leading" secondItem="N4c-5o-hcf" secondAttribute="leading" id="HB9-Rl-FAV"/>
                             <constraint firstItem="bc0-wE-0j5" firstAttribute="top" secondItem="irZ-5P-oP0" secondAttribute="bottom" id="Ru7-f5-JwL"/>
-                            <constraint firstItem="irZ-5P-oP0" firstAttribute="top" secondItem="dh1-Ek-IuR" secondAttribute="bottom" id="V0f-UG-gHL"/>
-                            <constraint firstItem="irZ-5P-oP0" firstAttribute="leading" secondItem="DkV-FA-Q2Q" secondAttribute="leadingMargin" constant="-20" id="Ws8-VV-PIE"/>
-                            <constraint firstItem="fva-ER-85X" firstAttribute="top" secondItem="bc0-wE-0j5" secondAttribute="bottom" id="bSu-MA-sGQ"/>
-                            <constraint firstAttribute="trailing" secondItem="bc0-wE-0j5" secondAttribute="trailing" id="gnL-lx-kSr"/>
+                            <constraint firstItem="irZ-5P-oP0" firstAttribute="top" secondItem="N4c-5o-hcf" secondAttribute="top" id="V0f-UG-gHL"/>
+                            <constraint firstItem="N4c-5o-hcf" firstAttribute="bottom" secondItem="bc0-wE-0j5" secondAttribute="bottom" id="bSu-MA-sGQ"/>
+                            <constraint firstItem="N4c-5o-hcf" firstAttribute="trailing" secondItem="bc0-wE-0j5" secondAttribute="trailing" id="gnL-lx-kSr"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="N4c-5o-hcf"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="dyl-mV-SkG">
                         <barButtonItem key="backBarButtonItem" title=" " id="0b1-fX-6Hc"/>
                     </navigationItem>
@@ -254,6 +253,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.97647058963775635" green="0.97647058963775635" blue="0.97647058963775635" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <viewLayoutGuide key="safeArea" id="WiI-cT-f3O"/>
                     <items/>
                     <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </toolbar>
@@ -308,6 +308,6 @@
         <image name="selectAll" width="22" height="22"/>
         <image name="shareGray" width="32" height="32"/>
         <image name="shareWith" width="38" height="32"/>
-        <image name="sharedItemsIcon" width="29" height="26"/>
+        <image name="sharedItemsIcon" width="31" height="28"/>
     </resources>
 </document>

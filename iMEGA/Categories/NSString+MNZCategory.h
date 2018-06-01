@@ -47,5 +47,6 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 - (NSInteger)mnz_emojiCount;
 
 - (NSString *)mnz_coordinatesOfPhotoOrVideo;
++ (NSString *)mnz_base64FromBase64URLEncoding:(NSString *)base64URLEncondingString;
 
 @end

@@ -562,4 +562,14 @@ static NSString* const B = @"[B]";
     return nil;
 }
 
++ (NSString *)mnz_base64FromBase64URLEncoding:(NSString *)base64URLEncondingString {
+    base64URLEncondingString = [base64URLEncondingString stringByReplacingOccurrencesOfString:@"-" withString:@"+"];
+    base64URLEncondingString = [base64URLEncondingString stringByReplacingOccurrencesOfString:@"_" withString:@"/"];
+    
+    NSUInteger paddedLength = base64URLEncondingString.length + (4 - (base64URLEncondingString.length % 4));
+    NSString *base64FromBase64URLEncoding = [base64URLEncondingString stringByPaddingToLength:paddedLength withString:@"=" startingAtIndex:0];
+    
+    return base64FromBase64URLEncoding;
+}
+
 @end
