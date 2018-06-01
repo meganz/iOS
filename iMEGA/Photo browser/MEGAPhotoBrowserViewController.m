@@ -5,7 +5,7 @@
 #import "SVProgressHUD.h"
 
 #import "BrowserViewController.h"
-#import "CloudDriveTableViewController.h"
+#import "CloudDriveViewController.h"
 #import "CustomActionViewController.h"
 #import "Helper.h"
 #import "MainTabBarController.h"
@@ -419,7 +419,7 @@
         case MEGAPhotoModeOriginal: {
             MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithProgress:transferProgress completion:transferCompletion];
             NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:YES];
-            [self.api startDownloadNode:node localPath:temporaryImagePath appData:@"generate_fa" delegate:delegate];
+            [self.api startDownloadNode:node localPath:temporaryImagePath appData:nil delegate:delegate];
 
             break;
         }
@@ -907,17 +907,17 @@
             [navigationController popToRootViewControllerAnimated:NO];
             
             for (MEGANode *node in parentTreeArray) {
-                CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                cloudDriveTVC.parentNode = node;
-                [navigationController pushViewController:cloudDriveTVC animated:NO];
+                CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                cloudDriveVC.parentNode = node;
+                [navigationController pushViewController:cloudDriveVC animated:NO];
             }
             
             switch (node.type) {
                 case MEGANodeTypeFolder:
                 case MEGANodeTypeRubbish: {
-                    CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                    cloudDriveTVC.parentNode = node;
-                    [navigationController pushViewController:cloudDriveTVC animated:NO];
+                    CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                    cloudDriveVC.parentNode = node;
+                    [navigationController pushViewController:cloudDriveVC animated:NO];
                     break;
                 }
                     

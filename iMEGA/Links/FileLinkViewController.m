@@ -1,43 +1,34 @@
 #import "FileLinkViewController.h"
 
-#import <QuickLook/QuickLook.h>
-#import <MobileCoreServices/MobileCoreServices.h>
-
 #import "SVProgressHUD.h"
-#import "SAMKeychain.h"
 
 #import "Helper.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGASdkManager.h"
-#import "MyAccountHallViewController.h"
 #import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
-#import "LoginViewController.h"
-#import "MainTabBarController.h"
-#import "BrowserViewController.h"
 #import "UnavailableLinkView.h"
-#import "OfflineTableViewController.h"
-#import "NodeTableViewCell.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGANavigationController.h"
-#import "MEGAStore.h"
+#import "CustomActionViewController.h"
 
-@interface FileLinkViewController () <UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate>
+@interface FileLinkViewController () <MEGARequestDelegate, CustomActionViewControllerDelegate>
 
 @property (strong, nonatomic) MEGANode *node;
 
 @property (strong, nonatomic) UILabel *navigationBarLabel;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIView *mainView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *folderAndFilesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *previewButton;
 
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
-
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic, getter=isFolderEmpty) BOOL folderEmpty;
 
@@ -52,29 +43,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [_folderAndFilesLabel setText:@""];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.cancelBarButtonItem.title = AMLocalizedString(@"close", @"A button label.");
+    self.moreBarButtonItem.image = [UIImage imageNamed:@"moreSelected"];
+    self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
+    self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
     
-    [self setEdgesForExtendedLayout:UIRectEdgeNone];
-    if (self.fileLinkMode == FileLinkModeDefault) {
-        [_cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
-        [self.navigationItem setRightBarButtonItem:_cancelBarButtonItem];
-        
-        [self setUIItemsHidden:YES];
-        [SVProgressHUD show];
-        [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:self.fileLinkString delegate:self];
-    } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
-        _node = self.nodeFromFolderLink;
-        
-        [self setNodeInfo];
-        if (_node.isFolder) {
-            self.folderAndFilesLabel.text = [Helper filesAndFoldersInFolderNode:self.node api:[MEGASdkManager sharedMEGASdkFolder]];
-            
-            if ([[MEGASdkManager sharedMEGASdkFolder] numberChildrenForParent:_node] == 0) {
-                [self setFolderEmpty:YES];
-                [_tableView setUserInteractionEnabled:NO];
-            }
-        }
-    }
+    self.importBarButtonItem.title = AMLocalizedString(@"import", nil);
+    self.downloadBarButtonItem.title = AMLocalizedString(@"downloadButton", @"Download");
+    
+    self.navigationController.topViewController.toolbarItems = self.toolbar.items;
+    [self.navigationController setToolbarHidden:NO animated:YES];
+    self.navigationController.toolbar.barTintColor = UIColor.whiteColor;
+    self.navigationController.toolbar.backgroundColor = UIColor.whiteColor;
+
+    [self.previewButton setTitle:AMLocalizedString(@"previewContent", @"Title to preview document") forState:UIControlStateNormal];
+    
+    [self setUIItemsHidden:YES];
+    [SVProgressHUD show];
+    [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:self.fileLinkString delegate:self];
     
     if (@available(iOS 11.0, *)) {
         self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
@@ -102,19 +89,18 @@
 #pragma mark - Private
 
 - (void)setNavigationBarTitleLabel {
-    if ([self.node name] != nil) {
-        UILabel *label = [Helper customNavigationBarLabelWithTitle:self.node.name subtitle:((self.fileLinkMode == FileLinkModeDefault) ? AMLocalizedString(@"fileLink", nil) : AMLocalizedString(@"folderLink", nil))];
+    if (self.node.name != nil) {
+        UILabel *label = [Helper customNavigationBarLabelWithTitle:self.node.name subtitle:AMLocalizedString(@"fileLink", nil)];
         label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
         self.navigationBarLabel = label;
-        [self.navigationItem setTitleView:self.navigationBarLabel];
+        self.navigationItem.titleView = self.navigationBarLabel;
     } else {
-        [self.navigationItem setTitle:AMLocalizedString(@"fileLink", nil)];
+        self.navigationItem.title = AMLocalizedString(@"fileLink", nil);
     }
 }
 
 - (void)setUIItemsHidden:(BOOL)boolValue {
-    [_mainView setHidden:boolValue];
-    [_tableView setHidden:boolValue];
+    self.mainView.hidden = boolValue;
 }
 
 - (void)showUnavailableLinkView {
@@ -127,9 +113,9 @@
 
 - (void)showEmptyStateViewWithTitle:(NSString *)title text:(NSString *)text {
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
-    [unavailableLinkView setFrame:self.view.bounds];
-    [unavailableLinkView.imageView setImage:[UIImage imageNamed:@"invalidFileLink"]];
-    [unavailableLinkView.titleLabel setText:title];
+    unavailableLinkView.frame = self.view.bounds;
+    unavailableLinkView.imageView.image = [UIImage imageNamed:@"invalidFileLink"];
+    unavailableLinkView.titleLabel.text = title;
     unavailableLinkView.textLabel.text = text;
     
     if ([[UIDevice currentDevice] iPhone4X] && ![text isEqualToString:@""]) {
@@ -181,38 +167,23 @@
     UIAlertController *decryptionKeyNotValidAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyNotValid", @"Alert title shown when you have written a decryption key not valid") message:nil preferredStyle:UIAlertControllerStyleAlert];
     
     [decryptionKeyNotValidAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"nil") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-         [self showDecryptionAlert];
+        [self showDecryptionAlert];
     }]];
     
     [self presentViewController:decryptionKeyNotValidAlertController animated:YES completion:nil];
 }
 
 - (void)setNodeInfo {
-    NSString *name = [_node name];
-    [_nameLabel setText:name];
+    NSString *name = self.node.name;
+    self.nameLabel.text = name;
     [self setNavigationBarTitleLabel];
     
-    NSString *sizeString;
-    if (self.fileLinkMode == FileLinkModeDefault) {
-        sizeString = [NSByteCountFormatter stringFromByteCount:[[self.node size] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
-    } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
-        sizeString = [NSByteCountFormatter stringFromByteCount:[[[MEGASdkManager sharedMEGASdkFolder] sizeForNode:self.nodeFromFolderLink] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
-    }
-    [_sizeLabel setText:sizeString];
+    self.sizeLabel.text = [NSByteCountFormatter stringFromByteCount:[[self.node size] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
     
-    if ([_node isFolder]) {
+    if (self.node.isFolder) {
         [self.thumbnailImageView mnz_imageForNode:self.node];
     } else {
-        NSString *extension = [name pathExtension];
-        [self.thumbnailImageView mnz_setImageForExtension:extension];
-        
-        CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)(extension), NULL);
-        if (UTTypeConformsTo(fileUTI, kUTTypeImage) || [QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
-            [_tableView reloadData];
-        }
-        if (fileUTI) {
-            CFRelease(fileUTI);
-        }
+        [self.thumbnailImageView mnz_setThumbnailByNode:self.node];
     }
     
     [self setUIItemsHidden:NO];
@@ -243,115 +214,62 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)import {
-    switch (self.fileLinkMode) {
-        case FileLinkModeDefault:
-            [self.node mnz_fileLinkImportFromViewController:self isFolderLink:NO];
+- (IBAction)importAction:(UIBarButtonItem *)sender {
+    [self import];
+}
 
-            break;
-            
-        case FileLinkModeNodeFromFolderLink:
-            [self.nodeFromFolderLink mnz_fileLinkImportFromViewController:self isFolderLink:YES];
+- (IBAction)downloadAction:(UIBarButtonItem *)sender {
+    [self download];
+}
 
-            break;
+- (IBAction)openAction:(UIBarButtonItem *)sender {
+    [self open];
+}
+
+- (IBAction)moreAction:(UIBarButtonItem *)sender {
+    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
+    actionController.node = self.node;
+    actionController.displayMode = DisplayModeFileLink;
+    actionController.actionDelegate = self;
+    actionController.actionSender = sender;
+    
+    if ([[UIDevice currentDevice] iPadDevice]) {
+        actionController.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
+        popController.delegate = actionController;
+        popController.barButtonItem = sender;
+    } else {
+        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }
+    [self presentViewController:actionController animated:YES completion:nil];
+}
+
+- (void)import {
+    [self.node mnz_fileLinkImportFromViewController:self isFolderLink:NO];
 }
 
 - (void)download {
-    switch (self.fileLinkMode) {
-        case FileLinkModeDefault:
-            [self.node mnz_fileLinkDownloadFromViewController:self isFolderLink:NO];
-
-            break;
-            
-        case FileLinkModeNodeFromFolderLink:
-            [self.nodeFromFolderLink mnz_fileLinkDownloadFromViewController:self isFolderLink:YES];
-
-            break;
-    }
+    [self.node mnz_fileLinkDownloadFromViewController:self isFolderLink:NO];
 }
 
 - (void)open {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        BOOL isFolderLink = self.fileLinkMode == FileLinkModeNodeFromFolderLink;
         if (self.node.name.mnz_isImagePathExtension || self.node.name.mnz_isVideoPathExtension) {
-            [self.node mnz_openImageInNavigationController:self.navigationController withNodes:@[self.node] folderLink:isFolderLink displayMode:2];
+            [self.node mnz_openImageInNavigationController:self.navigationController withNodes:@[self.node] folderLink:YES displayMode:2];
         } else {
-            [self.node mnz_openNodeInNavigationController:self.navigationController folderLink:isFolderLink];
+            [self.node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
         }
     }
-}
-
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return (self.fileLinkMode == FileLinkModeNodeFromFolderLink && self.node.isFolder) ? 2 : 3;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NodeTableViewCell *cell;
-    cell = [self.tableView dequeueReusableCellWithIdentifier:@"NodeDetailsTableViewCellID" forIndexPath:indexPath];
-    if (cell == nil) {
-        cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NodeDetailsTableViewCellID"];
-    }
-    
-    switch (indexPath.row) {
-        case 0: {
-            [cell.thumbnailImageView setImage:[UIImage imageNamed:@"infoImport"]];
-            cell.nameLabel.text = AMLocalizedString(@"import", nil);
-            break;
-        }
-            
-        case 1: {
-            [cell.thumbnailImageView setImage:[UIImage imageNamed:@"infoDownload"]];
-            [cell.nameLabel setText:AMLocalizedString(@"downloadButton", nil)];
-            break;
-        }
-            
-        case 2: {
-            [cell.thumbnailImageView setImage:[UIImage imageNamed:@"infoOpen"]];
-            [cell.nameLabel setText:AMLocalizedString(@"openButton", nil)];
-            break;
-        }
-    }
-    
-    if ([self isFolderEmpty]) {
-        [cell.thumbnailImageView setAlpha:0.4];
-        [cell.nameLabel setAlpha:0.4];
-    }
-    
-    return cell;
-}
-
-#pragma mark - UITableViewDelegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.row) {
-        case  0:
-            [self import];
-            break;
-            
-        case 1:
-            [self download];
-            break;
-            
-        case 2:
-            [self open];
-            break;
-    }
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     
-    if ([error type]) {
-        switch ([error type]) {
+    if (error.type) {
+        switch (error.type) {
             case MEGAErrorTypeApiEArgs: {
-                if ([request type] == MEGARequestTypeGetPublicNode) {
+                if (request.type == MEGARequestTypeGetPublicNode) {
                     if (self.decryptionAlertControllerHasBeenPresented) {
                         [self showDecryptionKeyNotValidAlert];
                     } else {
@@ -362,14 +280,14 @@
             }
                 
             case MEGAErrorTypeApiENoent: {
-                if ([request type] == MEGARequestTypeGetPublicNode) {
+                if (request.type == MEGARequestTypeGetPublicNode) {
                     [self showUnavailableLinkView];
                 }
                 break;
             }
                 
             case MEGAErrorTypeApiEIncomplete: {
-                if ([request type] == MEGARequestTypeGetPublicNode) {
+                if (request.type == MEGARequestTypeGetPublicNode) {
                     [self showDecryptionAlert];
                 }
                 break;
@@ -382,10 +300,10 @@
         return;
     }
     
-    switch ([request type]) {
+    switch (request.type) {
             
         case MEGARequestTypeGetPublicNode: {
-            if ([request flag]) {
+            if (request.flag) {
                 if (self.decryptionAlertControllerHasBeenPresented) { //Link without key, after entering a bad one
                     [self showDecryptionKeyNotValidAlert];
                 } else { //Link with invalid key
@@ -394,14 +312,42 @@
                 return;
             }
             
-            self.node = [request publicNode];
+            self.node = request.publicNode;
             
             [self setNodeInfo];
             
             [SVProgressHUD dismiss];
             break;
         }
-      
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - CustomActionViewControllerDelegate
+
+- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender{
+    switch (action) {
+        case MegaNodeActionTypeDownload:
+            [self download];
+            break;
+            
+        case MegaNodeActionTypeOpen:
+            [self open];
+            break;
+            
+        case MegaNodeActionTypeImport:
+            [self import];
+            break;
+            
+        case MegaNodeActionTypeShare: {
+            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.fileLinkString] applicationActivities:nil];
+            activityVC.popoverPresentationController.barButtonItem = sender;
+            [self presentViewController:activityVC animated:YES completion:nil];
+            break;
+        }
+            
         default:
             break;
     }

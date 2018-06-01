@@ -2,7 +2,7 @@
 #import "SendToChatActivity.h"
 
 #import "MEGANavigationController.h"
-#import "SendToTableViewController.h"
+#import "SendToViewController.h"
 
 @interface SendToChatActivity ()
 
@@ -39,8 +39,8 @@
 
 - (UIViewController *)activityViewController {
     MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"SendToNavigationControllerID"];
-    SendToTableViewController *sendToTableViewController = navigationController.viewControllers.firstObject;
-    sendToTableViewController.nodes = self.nodes;
+    SendToViewController *sendToViewController = navigationController.viewControllers.firstObject;
+    sendToViewController.nodes = self.nodes;
     
     return navigationController;
 }
