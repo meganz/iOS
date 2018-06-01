@@ -525,18 +525,6 @@ static NSString* const B = @"[B]";
     return emojiCount;
 }
 
-+ (NSString *)mnz_coordinatesOfPHAsset:(PHAsset *)phasset {
-    if (phasset.location) {
-        NSNumber *latitude = [NSNumber numberWithDouble:phasset.location.coordinate.latitude];
-        NSNumber *longitude = [NSNumber numberWithDouble:phasset.location.coordinate.longitude];
-        if (latitude && longitude) {
-            return [NSString stringWithFormat:@"%@&%@", latitude, longitude];
-        }
-    }
-    
-    return nil;
-}
-
 - (NSString *)mnz_coordinatesOfPhotoOrVideo {
     if (self.mnz_isImagePathExtension) {
         NSData *data = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:self]]];

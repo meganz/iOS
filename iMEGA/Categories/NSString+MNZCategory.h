@@ -46,7 +46,6 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 - (BOOL)mnz_isPureEmojiString;
 - (NSInteger)mnz_emojiCount;
 
-+ (NSString *)mnz_coordinatesOfPHAsset:(PHAsset *)phasset;
 - (NSString *)mnz_coordinatesOfPhotoOrVideo;
 
 @end

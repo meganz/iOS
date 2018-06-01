@@ -986,7 +986,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 - (void)uploadAssets:(NSArray<PHAsset *> *)assets toParentNode:(MEGANode *)parentNode {
     for (PHAsset *asset in assets) {
         MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initToShareThroughChatWithAsset:asset filePath:^(NSString *filePath) {
-            NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:[NSString mnz_coordinatesOfPHAsset:asset]];
+            NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
             [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:appData];
         } node:^(MEGANode *node) {
             [self attachOrCopyAndAttachNode:node toParentNode:parentNode];
