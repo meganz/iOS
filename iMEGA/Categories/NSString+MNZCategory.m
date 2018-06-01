@@ -543,6 +543,9 @@ static NSString* const B = @"[B]";
         CGImageSourceRef imageData = CGImageSourceCreateWithData((CFDataRef)data, NULL);
         if (imageData) {
             NSDictionary *metadata = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imageData, 0, NULL);
+            
+            CFRelease(imageData);
+            
             NSDictionary *exifDictionary = [metadata objectForKey:(NSString *)kCGImagePropertyGPSDictionary];
             if (exifDictionary) {
                 NSNumber *latitude = [exifDictionary objectForKey:@"Latitude"];
@@ -551,8 +554,6 @@ static NSString* const B = @"[B]";
                     return [NSString stringWithFormat:@"%@&%@", latitude, longitude];
                 }
             }
-            
-            CFRelease(imageData);
         }
     }
     
