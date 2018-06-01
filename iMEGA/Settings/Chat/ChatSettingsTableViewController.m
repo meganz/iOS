@@ -187,7 +187,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     NSString *footerTitle;
     if (section == 2) {
-        footerTitle = AMLocalizedString(@"richPreviewsFooter", @"Explanation of rich URL previews, given when users can enable/disable them, either in settings or in dialogs");
+        footerTitle = AMLocalizedString(@"richPreviewsFooter", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.");
     }
     return footerTitle;
 }

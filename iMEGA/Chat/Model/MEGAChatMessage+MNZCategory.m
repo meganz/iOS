@@ -52,6 +52,9 @@ static const void *nodeDetailsTagKey = &nodeDetailsTagKey;
     if (self.MEGALink) {
         return YES;
     }
+    if (!self.content) {
+        return NO;
+    }
     
     NSDataDetector* linkDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
     for (NSTextCheckingResult *match in [linkDetector matchesInString:self.content options:0 range:NSMakeRange(0, self.content.length)]) {
