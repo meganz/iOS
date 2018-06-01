@@ -27,6 +27,12 @@
     self.searchBar.showsCancelButton = YES;
     self.searchBar.tintColor = [UIColor redColor];
     self.navigationItem.titleView = self.searchBar;
+    
+    if ([UIDevice currentDevice].iPadDevice) {
+        UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(iPadCancelSearch)];
+        [cancel setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redF0373A} forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItem = cancel;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -44,6 +50,12 @@
     [self.searchBar resignFirstResponder];
 
     [super viewDidDisappear:animated];
+}
+
+#pragma mark - Private
+
+- (void)iPadCancelSearch {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource

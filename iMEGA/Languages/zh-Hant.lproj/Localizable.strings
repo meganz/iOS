@@ -55,7 +55,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="您已從其他位置登出該設備";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="伺服器 SSL 金鑰未能認證。您可能會收到第三方攻擊。";
+"sslUnverified_alertTitle"="MEGA無法安全地透過SSL金鑰連線。您使用的公共WiFi可能有附加條件。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="您嘗試存取的內容與此帳戶不匹配。請使用與手機用戶端相同的帳戶登入。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
