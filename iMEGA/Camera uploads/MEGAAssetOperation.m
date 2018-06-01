@@ -97,7 +97,7 @@
             appData = [appData mnz_appDataToSaveCameraUploadsCount:[[[CameraUploads syncManager] assetsOperationQueue] operationCount]];
         }
         
-        appData = [appData mnz_appDataToSaveCoordinates:[NSString mnz_coordinatesOfPHAsset:self.phasset]];
+        appData = [appData mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
         
         if (![name isEqualToString:newName]) {
             NSString *newFilePath = [self.uploadsDirectory stringByAppendingPathComponent:newName];
