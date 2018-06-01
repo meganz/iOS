@@ -10,8 +10,6 @@
 #import "NSFileManager+MNZCategory.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGASdkManager.h"
-#import "MEGAStartUploadTransferDelegate.h"
-#import "MEGATransfer+MNZCategory.h"
 
 @interface MEGAImagePickerController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 

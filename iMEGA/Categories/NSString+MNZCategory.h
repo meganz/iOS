@@ -1,8 +1,6 @@
 
 #import <Foundation/Foundation.h>
 
-@class PHAsset;
-
 typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 @interface NSString (MNZCategory)
