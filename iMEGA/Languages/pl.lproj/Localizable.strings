@@ -63,9 +63,9 @@
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="Serwery są aktualnie zajęte. Proszę czekać.";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
-"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+"unableToReachMega"="Brak połączenia z MEGA. Sprawdź swoje połączenie do sieci i spróbuj ponownie.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
-"tooManyRequest"="Too many requests. Please wait.";
+"tooManyRequest"="Za dużo zgłoszeń. Proszę czekać.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Zaloguj się do swojego konta.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -1447,9 +1447,9 @@
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="Don’t show me again";
+"dontShowAgain"="Nie pokazuj ponownie";
 /* Label for test password button and titles */
-"testPassword"="Test Password";
+"testPassword"="Hasło testowe";
 /* Label for recovery key button */
 "backupRecoveryKey"="Kopia klucza";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
@@ -1461,7 +1461,7 @@
 /* A dialog title to export the Recovery Key for the current user. */
 "exportRecoveryKey"="Eksportowanie klucza";
 /* Title to confirm that you want to logout */
-"proceedToLogout"="Proceed to logout";
+"proceedToLogout"="Wyloguj się";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
 /* state previous to import a file */

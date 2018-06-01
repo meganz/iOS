@@ -95,7 +95,7 @@
                 MEGANode *node = [self.message.nodeList nodeAtIndex:0];
                 filename = node.name;
                 size = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory];
-                [contactView.avatarImage mnz_setThumbnailByNodeHandle:node.handle];
+                [contactView.avatarImage mnz_setThumbnailByNode:node];
                 contactView.headingLabel.text = AMLocalizedString(@"uploadedFile", @"A summary message when a user has attached one file into the chat.");
             } else {
                 filename = [NSString stringWithFormat:AMLocalizedString(@"files", nil), totalNodes];
