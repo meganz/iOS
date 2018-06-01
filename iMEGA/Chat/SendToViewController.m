@@ -1,5 +1,4 @@
-
-#import "SendToTableViewController.h"
+#import "SendToViewController.h"
 
 #import "UIImage+GKContact.h"
 #import "UIScrollView+EmptyDataSet.h"
@@ -17,8 +16,9 @@
 #import "ContactTableViewCell.h"
 #import "ChatRoomCell.h"
 
-@interface SendToTableViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
+@interface SendToViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *sendBarButtonItem;
 
@@ -41,7 +41,7 @@
 
 @end
 
-@implementation SendToTableViewController
+@implementation SendToViewController
 
 #pragma mark - Lifecycle
 

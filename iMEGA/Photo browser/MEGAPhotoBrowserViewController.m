@@ -5,7 +5,7 @@
 #import "SVProgressHUD.h"
 
 #import "BrowserViewController.h"
-#import "CloudDriveTableViewController.h"
+#import "CloudDriveViewController.h"
 #import "CustomActionViewController.h"
 #import "Helper.h"
 #import "MainTabBarController.h"
@@ -230,7 +230,7 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView.tag == 1) {
         NSInteger newIndex = (scrollView.contentOffset.x + self.gapBetweenPages) / scrollView.frame.size.width;
-        if (newIndex != self.currentIndex) {
+        if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
             self.currentIndex = newIndex;
             [self resetZooms];
             [self reloadTitle];
@@ -419,7 +419,7 @@
         case MEGAPhotoModeOriginal: {
             MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithProgress:transferProgress completion:transferCompletion];
             NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:YES];
-            [self.api startDownloadNode:node localPath:temporaryImagePath appData:@"generate_fa" delegate:delegate];
+            [self.api startDownloadNode:node localPath:temporaryImagePath appData:nil delegate:delegate];
 
             break;
         }
@@ -469,10 +469,12 @@
                 frame.size.width = newWidth;
             }
             
-            UIScrollView *zoomableView = (UIScrollView *)imageView.superview;
-            CGFloat zoomScale = zoomableView.zoomScale;
-            frame.size.width *= zoomScale;
-            frame.size.height *= zoomScale;
+            if ([imageView.superview isKindOfClass:UIScrollView.class]) {
+                UIScrollView *zoomableView = (UIScrollView *)imageView.superview;
+                CGFloat zoomScale = zoomableView.zoomScale;
+                frame.size.width *= zoomScale;
+                frame.size.height *= zoomScale;
+            }
             
             imageView.frame = frame;
         }
@@ -739,7 +741,7 @@
 #pragma mark - MEGAPhotoBrowserPickerDelegate
 
 - (void)updateCurrentIndexTo:(NSUInteger)newIndex {
-    if (newIndex != self.currentIndex) {
+    if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
         self.currentIndex = newIndex;
         [self reloadUI];
     }
@@ -905,17 +907,17 @@
             [navigationController popToRootViewControllerAnimated:NO];
             
             for (MEGANode *node in parentTreeArray) {
-                CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                cloudDriveTVC.parentNode = node;
-                [navigationController pushViewController:cloudDriveTVC animated:NO];
+                CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                cloudDriveVC.parentNode = node;
+                [navigationController pushViewController:cloudDriveVC animated:NO];
             }
             
             switch (node.type) {
                 case MEGANodeTypeFolder:
                 case MEGANodeTypeRubbish: {
-                    CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                    cloudDriveTVC.parentNode = node;
-                    [navigationController pushViewController:cloudDriveTVC animated:NO];
+                    CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                    cloudDriveVC.parentNode = node;
+                    [navigationController pushViewController:cloudDriveVC animated:NO];
                     break;
                 }
                     

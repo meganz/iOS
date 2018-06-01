@@ -135,6 +135,7 @@ static MEGAIndexer *indexer;
                                 @"dcr":@"raw",
                                 @"db":@"web_lang",
                                 @"dbf":@"web_lang",
+                                @"dhtml":@"web_data",
                                 @"dll":@"web_lang",
                                 @"dng":@"raw",
                                 @"doc":@"word",
@@ -154,6 +155,7 @@ static MEGAIndexer *indexer;
                                 @"gsheet":@"spreadsheet",
                                 @"gz":@"compressed",
                                 @"h":@"web_lang",
+                                @"html":@"web_data",
                                 @"heic":@"image",
                                 @"hpp":@"web_lang",
                                 @"iff":@"audio",
@@ -224,7 +226,6 @@ static MEGAIndexer *indexer;
                                 @"sql":@"web_lang",
                                 @"srf":@"raw",
                                 @"srt":@"text",
-                                @"stl":@"3d",
                                 @"svg":@"vector",
                                 @"svgz":@"vector",
                                 @"tar":@"compressed",
@@ -563,7 +564,8 @@ static MEGAIndexer *indexer;
                     NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
                     downloadsDirectory = [downloadsDirectory stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
                     relativeFilePath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
-                    appData = @"SaveInPhotosApp";
+                    
+                    appData = [[NSString new] mnz_appDataToSaveInPhotosApp];
                 }
                 [[MEGASdkManager sharedMEGASdk] startDownloadNode:[api authorizeNode:node] localPath:relativeFilePath appData:appData];
             }
@@ -940,9 +942,10 @@ static MEGAIndexer *indexer;
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle color:(UIColor *)color {
     NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title attributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:color}];
     
+    UIColor *colorWithAlpha = [color colorWithAlphaComponent:0.8];
     if (![subtitle isEqualToString:@""]) {
         subtitle = [NSString stringWithFormat:@"\n%@", subtitle];
-        NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:color}];
+        NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:colorWithAlpha}];
         
         [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
     }
@@ -961,16 +964,16 @@ static MEGAIndexer *indexer;
     searchController.searchResultsUpdater = searchResultsUpdaterDelegate;
     searchController.searchBar.delegate = searchBarDelegate;
     searchController.dimsBackgroundDuringPresentation = NO;
-    
+    searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     searchController.searchBar.translucent = NO;
-    searchController.searchBar.barTintColor = [UIColor mnz_grayF1F1F2];
-    searchController.searchBar.tintColor = [UIColor mnz_redF0373A];
+    searchController.searchBar.barTintColor = UIColor.mnz_grayFCFCFC;
+    searchController.searchBar.tintColor = UIColor.mnz_redF0373A;
     
     UITextField *searchTextField = [searchController.searchBar valueForKey:@"_searchField"];
     searchTextField.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
-    searchTextField.backgroundColor = [UIColor whiteColor];
-    searchTextField.textColor = [UIColor mnz_black333333];
-    searchTextField.tintColor = [UIColor mnz_green00BFA5];
+    searchTextField.backgroundColor = UIColor.mnz_grayEEEEEE;
+    searchTextField.textColor = UIColor.mnz_black333333;
+    searchTextField.tintColor = UIColor.mnz_green00BFA5;
     
     return searchController;
 }
@@ -986,6 +989,24 @@ static MEGAIndexer *indexer;
         
         [UIApplication.mnz_visibleViewController presentViewController:safariViewController animated:YES completion:nil];
     }
+}
+
++ (void)configureRedNavigationAppearance {
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor}];
+    [[UINavigationBar appearance] setTintColor:UIColor.whiteColor];
+    [[UINavigationBar appearance] setBarTintColor:UIColor.mnz_redF0373A];
+    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:UIColor.mnz_redF0373A];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:UIColor.whiteColor];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor} forState:UIControlStateNormal];
+}
+
++ (void)configureWhiteNavigationAppearance {
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+    [[UINavigationBar appearance] setTintColor:[UIColor mnz_redFF4D52]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorFromHexString:@"FCFCFC"]];
+    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:UIColor.blackColor];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:UIColor.blackColor];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redF0373A} forState:UIControlStateNormal];
 }
 
 #pragma mark - Logout

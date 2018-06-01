@@ -1201,8 +1201,8 @@
 "twoUsersAreTyping"="%1$s [A]yazıyor...[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
 "moreThanTwoUsersAreTyping"="%1$s [A]ve diğerleri yazıyor...[/A]";
-/* Message box label which shows that user can type message text in this textview */
-"writeAMessage"="Bir mesaj yaz...";
+/* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
+"writeAMessage"="Mesaj yaz: %s...";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="Konuşma geçmişi yok";
 /* Button which allows to retry send message in chat conversation. */
@@ -1349,7 +1349,7 @@
 "generalDescriptionParagraph5"="PRO LITE aboneliği: Aylık 4.99 Avro (4.99 ABD Doları) veya yıllık 49.99 Avro (49.99 ABD Doları), 200 GB depolama alanı ve 1 TB transfer kotası verir.\nPRO I aboneliği: Aylık 9.99 Avro (9.99 ABD Doları) veya yıllık 99.99 Avro (99.99 ABD Doları), 1 TB depolama alanı ve ayda 2 TB transfer kotası verir.[BR]PRO II aboneliği: Aylık 19.99 Avro (19.99 ABD Doları) veya yıllık 199.99 Avro (199.99 ABD Doları) 4 TB depolama alanı ve ayda 8 TB aktarım kotası verir.\nPRO III aboneliği: Aylık 29.99 Avro (29.99 ABD Doları) veya yıllık 299.99 Avro (299.99 ABD Doları), 8 TB depolama alanı ve aylık 16 TB transfer kotası verir.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Daha fazla bilgi için web sitemizi kontrol edin:\nMobil - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nMasaüstü - https://mega.nz/";
+"generalDescriptionParagraph6"="Daha fazla bilgi için web sitemizi kontrol edin: https://mega.nz\nHizmet Koşulları: https://mega.nz/terms\nGizlilik İlkesi: https://mega.nz/privacy";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="Aranıyor...";
 /* Notification text body shown when you have missed one audio call */
@@ -1443,7 +1443,7 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="Parolanızı hatırlıyor musunuz?";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="MEGA'nın şifreleme teknolojisi veri kaybına uğramadan parola kurtarmayı imkansız kılar. Lütfen parolanızı hatırladığınıza emin olun.";
+"remindPasswordText"="MEGA'nın şifreleme teknolojisi veri kaybına uğramadan parola kurtarmayı imkansız kılar. Lütfen parolanızı hatırladığınıza emin olun.                                ";
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Çıkış yapmadan önce Kurtarma Anahtarını güvenli bir konuma aktarmanızı tavsiye ederim. Parolanızı unuttuğunuzda sıfırlayamayacağınızı unutmayın.";
 /* Text next to a toggle that if enabled won't appear again */

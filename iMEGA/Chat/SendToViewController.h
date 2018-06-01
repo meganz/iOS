@@ -1,7 +1,6 @@
-
 #import <UIKit/UIKit.h>
 
-@interface SendToTableViewController : UITableViewController
+@interface SendToViewController : UIViewController
 
 @property (strong, nonatomic) NSArray *nodes;
 
