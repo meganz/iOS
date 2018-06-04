@@ -1091,6 +1091,10 @@
 "addParticipants"="เพิ่มผู้เข้าร่วม";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="สถานะ";
+/* Title used in settings that enables the generation of link previews in the chat */
+"richUrlPreviews"="Rich URL previews";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"richPreviewsFooter"="Enhance the MEGAchat experience. URL content will be retrieved without end-to-end encryption.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="การโทรด้วยเสียงและวิดีโอ";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1221,6 +1225,16 @@
 "done"="เรียบร้อย";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="ส่งไฟล์";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"enableRichUrlPreviews"="Enable rich URL previews";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"alwaysAllow"="Always Allow";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"notNow"="Not Now";
+/* */
+"never"="ไม่เคยมี";
+/* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
+"richPreviewsConfirmation"="You are disabling rich URL previews permanently. You can re-enable rich URL previews in your settings. Do you want to proceed?";
 /* */
 "warning"="คำเตือน";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
@@ -1349,7 +1363,7 @@
 "generalDescriptionParagraph5"="สมัครใช้งาน PRO LITE: 4.99 ยูโร (4.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 49.99 ยูโร (49.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 200 GB และโควต้าการถ่ายโอน 1 TB ต่อเดือน\nสมัครใช้งาน PRO I: 9.99 ยูโร (9.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 99.99 ยูโร (99.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 1 TB และโควต้าการถ่ายโอน 2 TB ต่อเดือน\nสมัครใช้งาน PRO II: 19.99 ยูโร (19.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 199.99 ยูโร (199.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 4 TB และโควต้าการถ่ายโอน 8 TB ต่อเดือน\nสมัครใช้งาน PRO III: 29.99 ยูโร (29.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 299.99 ยูโร (299.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 8 TB และโควต้าการถ่ายโอน 16 TB ต่อเดือน";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="สำหรับข้อมูลเพิ่มเติม กรุณาตรวจสอบได้ที่เว็บไซต์ของเรา:\nอุปกรณ์มือถือ - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nเดสก์ทอป - https://mega.nz/";
+"generalDescriptionParagraph6"="สำหรับข้อมูลเพิ่มเติม กรุณาตรวจสอบได้ที่เว็บไซต์ของเรา: https://mega.nz/\nเงื่อนไขการให้บริการ: https://mega.nz/terms\nนโยบายส่วนบุคคล: https://mega.nz/privacy";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="กำลังโทร...";
 /* Notification text body shown when you have missed one audio call */
@@ -1480,3 +1494,5 @@
 "continueOrRestartVideoMessage"="%1$s will continue at %2$s";
 /*  */
 "resume"="ต่อ";
+/* Title to preview document */
+"previewContent"="Preview Content";

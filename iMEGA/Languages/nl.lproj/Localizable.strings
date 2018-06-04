@@ -1091,6 +1091,10 @@
 "addParticipants"="Deelnemers toevoegen";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
+/* Title used in settings that enables the generation of link previews in the chat */
+"richUrlPreviews"="Rich URL previews";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"richPreviewsFooter"="Verbeter de MEGAchat ervaring. URL inhoud wordt binnengehaald zonder eind-tot-eind codering.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Spraak en Video oproepen";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1221,6 +1225,16 @@
 "done"="Voltooid";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Verzend bestanden";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"enableRichUrlPreviews"="Rijke URL weergave inschakelen";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"alwaysAllow"="Altijd Toestaan";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"notNow"="Niet Nu";
+/* */
+"never"="Nooit";
+/* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
+"richPreviewsConfirmation"="U schakelt rijke URL weergave permanent uit. U kunt rijke URL weergave opnieuw inschakelen in uw instellingen. Wilt u doorgaan?";
 /* */
 "warning"="Waarschuwing";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
@@ -1443,7 +1457,7 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="Herinnert u zich uw wachtwoord?";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="Door MEGA's coderings-technologie bent u niet in staat uw wachtwoord te resetten zonder gegevens verlies. Zorg ervoor dat u uw wachtwoord onthoud. ";
+"remindPasswordText"="Door MEGA's coderings-technologie bent u niet in staat uw wachtwoord te resetten zonder gegevens verlies. Zorg ervoor dat u uw wachtwoord onthoud.";
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Voordat u uitlogt raden we u aan uw Herstelsleutel te exporteren naar een veilige plek. Merk op dat u uw wachtwoord niet kunt resetten als u het vergeet.";
 /* Text next to a toggle that if enabled won't appear again */
@@ -1463,7 +1477,7 @@
 /* Title to confirm that you want to logout */
 "proceedToLogout"="Doorgaan met uitloggen";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="U staat op het punt om uit te loggen, test uw wachtwoord om er zeker van te zijn dat u het onthoudt. Als u uw wachtwoord verliest, verliest u toegang tot uw MEGA gegevens. ";
+"testPasswordLogoutText"="U staat op het punt om uit te loggen, test uw wachtwoord om er zeker van te zijn dat u het onthoudt. Als u uw wachtwoord verliest, verliest u toegang tot uw MEGA gegevens.";
 /* state previous to import a file */
 "loading"="Laden...";
 /*   */
@@ -1480,3 +1494,5 @@
 "continueOrRestartVideoMessage"="%1$s wordt hervat bij %2$s";
 /*  */
 "resume"="Doorgaan";
+/* Title to preview document */
+"previewContent"="Preview Content";
