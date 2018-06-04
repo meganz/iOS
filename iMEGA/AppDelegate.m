@@ -745,9 +745,15 @@
 
 - (void)processLink:(NSURL *)url {
     if (self.window.rootViewController.presentedViewController) {
-        [self.window.rootViewController dismissViewControllerAnimated:NO completion:nil];
+        [self.window.rootViewController dismissViewControllerAnimated:NO completion:^{
+            [self urlLinkType:url];
+        }];
+    } else {
+        [self urlLinkType:url];
     }
-    
+}
+
+- (void)urlLinkType:(NSURL *)url {
     switch ([url mnz_type]) {
         case URLTypeDefault:
             [self showLinkNotValid];
