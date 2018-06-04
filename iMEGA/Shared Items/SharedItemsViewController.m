@@ -14,7 +14,7 @@
 #import "NSMutableArray+MNZCategory.h"
 
 #import "BrowserViewController.h"
-#import "CloudDriveTableViewController.h"
+#import "CloudDriveViewController.h"
 #import "ContactsViewController.h"
 #import "SharedItemsTableViewCell.h"
 #import "CustomActionViewController.h"
@@ -28,7 +28,7 @@
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIView *sharedItemsSegmentedControlView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *sharedItemsSegmentedControl;
@@ -79,7 +79,6 @@
     self.tableView.emptyDataSetDelegate = self;
     
     [self.navigationController.view setBackgroundColor:[UIColor mnz_grayF9F9F9]];
-    [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
     self.navigationItem.title = AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
     
@@ -100,7 +99,7 @@
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.tableView.tableHeaderView = self.searchController.searchBar;
-    self.definesPresentationContext = YES;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
     [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
 }
 
@@ -353,7 +352,8 @@
     NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
     nodeInfoVC.node = node;
     nodeInfoVC.nodeInfoDelegate = self;
-    
+    nodeInfoVC.incomingShareChildView = self.sharedItemsSegmentedControl.selectedSegmentIndex == 0;
+
     [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
 }
 
@@ -821,11 +821,11 @@
 
     switch ([node type]) {
         case MEGANodeTypeFolder: {
-            CloudDriveTableViewController *cloudTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            [cloudTVC setParentNode:node];
-            [cloudTVC setDisplayMode:DisplayModeCloudDrive];
+            CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            [cloudDriveVC setParentNode:node];
+            [cloudDriveVC setDisplayMode:DisplayModeCloudDrive];
             
-            [self.navigationController pushViewController:cloudTVC animated:YES];
+            [self.navigationController pushViewController:cloudDriveVC animated:YES];
             break;
         }
         
@@ -951,12 +951,12 @@
         }
     }
     
-    CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-    cloudDriveTVC.parentNode = node;
-    cloudDriveTVC.displayMode = DisplayModeCloudDrive;
-    cloudDriveTVC.incomingShareChildView = (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0);
+    CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+    cloudDriveVC.parentNode = node;
+    cloudDriveVC.displayMode = DisplayModeCloudDrive;
+    cloudDriveVC.incomingShareChildView = (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0);
     
-    return cloudDriveTVC;
+    return cloudDriveVC;
 }
 
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
@@ -1021,9 +1021,7 @@
         text = AMLocalizedString(@"noInternetConnection",  nil);
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
@@ -1031,25 +1029,25 @@
     if ([MEGAReachabilityManager isReachable]) {
         if (self.searchController.isActive) {
             if (self.searchController.searchBar.text.length > 0) {
-                return [UIImage imageNamed:@"emptySearch"];
+                return [UIImage imageNamed:@"searchEmptyState"];
             } else {
                 return nil;
             }
         } else {
             switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
                 case 0: { //Incoming
-                    image = [UIImage imageNamed:@"emptySharedItemsIncoming"];
+                    image = [UIImage imageNamed:@"incomingEmptyState"];
                     break;
                 }
                     
                 case 1: { //Outgoing
-                    image = [UIImage imageNamed:@"emptySharedItemsOutgoing"];
+                    image = [UIImage imageNamed:@"outgoingEmptyState"];
                     break;
                 }
             }
         }
     } else {
-        image = [UIImage imageNamed:@"noInternetConnection"];
+        image = [UIImage imageNamed:@"noInternetEmptyState"];
     }
     
     return image;
@@ -1184,17 +1182,17 @@
         [navigation popToRootViewControllerAnimated:NO];
         
         for (MEGANode *node in parentTreeArray) {
-            CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveTVC.parentNode = node;
-            [navigation pushViewController:cloudDriveTVC animated:NO];
+            CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveVC.parentNode = node;
+            [navigation pushViewController:cloudDriveVC animated:NO];
         }
         
         switch (node.type) {
             case MEGANodeTypeFolder:
             case MEGANodeTypeRubbish: {
-                CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                cloudDriveTVC.parentNode = node;
-                [navigation pushViewController:cloudDriveTVC animated:NO];
+                CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                cloudDriveVC.parentNode = node;
+                [navigation pushViewController:cloudDriveVC animated:NO];
                 break;
             }
                 

@@ -7,9 +7,6 @@
 [submodule "iMEGA/Vendor/GKContactImage"]
 	path = iMEGA/Vendor/GKContactImage
 	url = https://github.com/gekitz/GKContactImage.git
-[submodule "iMEGA/Vendor/Reachability"]
-	path = iMEGA/Vendor/Reachability
-	url = https://github.com/tonymillion/Reachability.git
 [submodule "iMEGA/Vendor/LTHPasscodeViewController"]
 	path = iMEGA/Vendor/LTHPasscodeViewController
 url=https://github.com/meganz/LTHPasscodeViewController.git

@@ -5,7 +5,7 @@
 #import "SVProgressHUD.h"
 
 #import "BrowserViewController.h"
-#import "CloudDriveTableViewController.h"
+#import "CloudDriveViewController.h"
 #import "CustomActionViewController.h"
 #import "Helper.h"
 #import "MainTabBarController.h"
@@ -36,6 +36,8 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet PieChartView *pieChartView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *customActionsButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *leftToolbarItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *rightToolbarItem;
 
 @property (nonatomic) NSMutableArray<MEGANode *> *mediaNodes;
 @property (nonatomic) NSCache<NSString *, UIScrollView *> *imageViewsCache;
@@ -97,6 +99,14 @@
     self.pieChartView.datasource = self;
     self.pieChartView.layer.cornerRadius = self.pieChartView.frame.size.width/2;
     self.pieChartView.layer.masksToBounds = YES;
+    
+    if (self.displayMode == DisplayModeFileLink) {
+        self.leftToolbarItem.image = nil;
+        self.leftToolbarItem.title = AMLocalizedString(@"download", nil);
+
+        self.rightToolbarItem.image = nil;
+        self.rightToolbarItem.title = AMLocalizedString(@"import", @"Button title that triggers the importing link action");
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -164,13 +174,25 @@
 
 - (void)reloadTitleForIndex:(NSUInteger)newIndex {
     NSString *subtitle;
-    if (self.mediaNodes.count == 1) {
-        subtitle = AMLocalizedString(@"indexOfTotalFile", @"Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file.");
-    } else {
-        subtitle = AMLocalizedString(@"indexOfTotalFiles", @"Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files.");
+    
+    switch (self.displayMode) {
+        case DisplayModeFileLink:
+            subtitle = AMLocalizedString(@"fileLink", @"Title for the file link view");
+            
+            break;
+            
+        default: {
+            if (self.mediaNodes.count == 1) {
+                subtitle = AMLocalizedString(@"indexOfTotalFile", @"Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file.");
+            } else {
+                subtitle = AMLocalizedString(@"indexOfTotalFiles", @"Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files.");
+            }
+            subtitle = [subtitle stringByReplacingOccurrencesOfString:@"%1$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)newIndex+1]];
+            subtitle = [subtitle stringByReplacingOccurrencesOfString:@"%2$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.mediaNodes.count]];
+            
+            break;
+        }
     }
-    subtitle = [subtitle stringByReplacingOccurrencesOfString:@"%1$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)newIndex+1]];
-    subtitle = [subtitle stringByReplacingOccurrencesOfString:@"%2$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.mediaNodes.count]];
     
     UILabel *titleLabel = [Helper customNavigationBarLabelWithTitle:[self.mediaNodes objectAtIndex:newIndex].name subtitle:subtitle color:[UIColor mnz_black333333]];
     titleLabel.adjustsFontSizeToFitWidth = YES;
@@ -182,8 +204,9 @@
 - (void)resetZooms {
     for (MEGANode *node in self.mediaNodes) {
         UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
-        if (zoomableView) {
+        if (zoomableView && zoomableView.zoomScale != 1.0f) {
             zoomableView.zoomScale = 1.0f;
+            [self resizeImageView:(UIImageView *)zoomableView.subviews.firstObject];
         }
     }
 }
@@ -191,17 +214,29 @@
 - (void)toggleTransparentInterfaceForDismissal:(BOOL)transparent {
     self.view.backgroundColor = transparent ? [UIColor clearColor] : [UIColor whiteColor];
     self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = transparent ? 0.0f : 1.0f;
+    
+    // Toggle the play button:
+    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    if (node.name.mnz_isVideoPathExtension) {
+        UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
+        if (zoomableView) {
+            zoomableView.subviews.lastObject.hidden = transparent;
+        }
+    }
 }
 
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView.tag == 1) {
-        self.currentIndex = (scrollView.contentOffset.x + self.gapBetweenPages) / scrollView.frame.size.width;
-        [self resetZooms];
-        [self reloadTitle];
-        [self airplayDisplayCurrentImage];
-        [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
+        NSInteger newIndex = (scrollView.contentOffset.x + self.gapBetweenPages) / scrollView.frame.size.width;
+        if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
+            self.currentIndex = newIndex;
+            [self resetZooms];
+            [self reloadTitle];
+            [self airplayDisplayCurrentImage];
+            [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
+        }
     }
 }
 
@@ -212,9 +247,11 @@
         }
         CGFloat newIndexFloat = (scrollView.contentOffset.x + self.gapBetweenPages) / scrollView.frame.size.width;
         NSUInteger newIndex = floor(newIndexFloat);
-        if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
-            [self reloadTitleForIndex:newIndex];
-            [self loadNearbyImagesFromIndex:newIndex];
+        if (@available(iOS 10.0, *)) {
+            if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
+                [self reloadTitleForIndex:newIndex];
+                [self loadNearbyImagesFromIndex:newIndex];
+            }
         }
     }
 }
@@ -235,6 +272,9 @@
             if (![[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                 [self setupNode:node forImageView:(UIImageView *)view withMode:MEGAPhotoModeOriginal];
             }
+            if (!self.interfaceHidden) {
+                [self singleTapGesture:nil];
+            }
         } else {
             scrollView.subviews.lastObject.hidden = YES;
         }
@@ -247,7 +287,7 @@
         if (node.name.mnz_isVideoPathExtension && scale == 1.0f) {
             scrollView.subviews.lastObject.hidden = NO;
         }
-        [self correctOriginForView:view scaledAt:scale];
+        [self resizeImageView:(UIImageView *)view];
     }
 }
 
@@ -379,7 +419,7 @@
         case MEGAPhotoModeOriginal: {
             MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithProgress:transferProgress completion:transferCompletion];
             NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:YES];
-            [self.api startDownloadNode:node localPath:temporaryImagePath appData:@"generate_fa" delegate:delegate];
+            [self.api startDownloadNode:node localPath:temporaryImagePath appData:nil delegate:delegate];
 
             break;
         }
@@ -429,10 +469,12 @@
                 frame.size.width = newWidth;
             }
             
-            UIScrollView *zoomableView = (UIScrollView *)imageView.superview;
-            CGFloat zoomScale = zoomableView.zoomScale;
-            frame.size.width *= zoomScale;
-            frame.size.height *= zoomScale;
+            if ([imageView.superview isKindOfClass:UIScrollView.class]) {
+                UIScrollView *zoomableView = (UIScrollView *)imageView.superview;
+                CGFloat zoomScale = zoomableView.zoomScale;
+                frame.size.width *= zoomScale;
+                frame.size.height *= zoomScale;
+            }
             
             imageView.frame = frame;
         }
@@ -466,6 +508,8 @@
     CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
     actionController.node = [self.mediaNodes objectAtIndex:self.currentIndex];
     actionController.actionDelegate = self;
+    actionController.displayMode = self.displayMode;
+    
     if ([[UIDevice currentDevice] iPadDevice]) {
         actionController.modalPresentationStyle = UIModalPresentationPopover;
         UIPopoverPresentationController *popController = [actionController popoverPresentationController];
@@ -478,37 +522,61 @@
     [self presentViewController:actionController animated:YES completion:nil];
 }
 
-- (IBAction)didPressThumbnailsButton:(UIBarButtonItem *)sender {
-    MEGAPhotoBrowserPickerViewController *pickerVC = [[UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil] instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserPickerViewControllerID"];
-    pickerVC.mediaNodes = self.mediaNodes;
-    pickerVC.delegate = self;
-    pickerVC.api = self.api;
-    [self presentViewController:pickerVC animated:YES completion:nil];
-}
-
-- (IBAction)didPressOpenIn:(UIBarButtonItem *)sender {
+- (IBAction)didPressLeftToolbarButton:(UIBarButtonItem *)sender {
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
     
-    UIActivityViewController *activityViewController;
-    if (node.name.mnz_videoPathExtension) {
-        activityViewController = [Helper activityViewControllerForNodes:@[node] button:sender];
-    } else {
-        MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
-        NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
-        if (node.name.mnz_imagePathExtension) {
-            SaveToCameraRollActivity *saveToCameraRollActivity = [[SaveToCameraRollActivity alloc] initWithNode:node];
-            [activitiesMutableArray addObject:saveToCameraRollActivity];
+    switch (self.displayMode) {
+        case DisplayModeFileLink:
+            [node mnz_fileLinkDownloadFromViewController:self isFolderLink:NO];
+            
+            break;
+            
+        default: {
+            MEGAPhotoBrowserPickerViewController *pickerVC = [[UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil] instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserPickerViewControllerID"];
+            pickerVC.mediaNodes = self.mediaNodes;
+            pickerVC.delegate = self;
+            pickerVC.api = self.api;
+            [self presentViewController:pickerVC animated:YES completion:nil];
+            
+            break;
         }
-        activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[activityItemProvider] applicationActivities:activitiesMutableArray];
-        [activityViewController setExcludedActivityTypes:@[UIActivityTypeSaveToCameraRoll, UIActivityTypeCopyToPasteboard]];
-        activityViewController.popoverPresentationController.barButtonItem = sender;
     }
+}
+
+- (IBAction)didPressRightToolbarButton:(UIBarButtonItem *)sender {
+    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
     
-    activityViewController.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
-        [self reloadUI];
-    };
-    
-    [self presentViewController:activityViewController animated:YES completion:nil];
+    switch (self.displayMode) {
+        case DisplayModeFileLink:
+            [node mnz_fileLinkImportFromViewController:self isFolderLink:NO];
+
+            break;
+            
+        default: {
+            UIActivityViewController *activityViewController;
+            if (node.name.mnz_videoPathExtension) {
+                activityViewController = [Helper activityViewControllerForNodes:@[node] button:sender];
+            } else {
+                MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
+                NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
+                if (node.name.mnz_imagePathExtension) {
+                    SaveToCameraRollActivity *saveToCameraRollActivity = [[SaveToCameraRollActivity alloc] initWithNode:node];
+                    [activitiesMutableArray addObject:saveToCameraRollActivity];
+                }
+                activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[activityItemProvider] applicationActivities:activitiesMutableArray];
+                activityViewController.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll, UIActivityTypeCopyToPasteboard];
+                activityViewController.popoverPresentationController.barButtonItem = sender;
+            }
+            
+            activityViewController.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
+                [self reloadUI];
+            };
+            
+            [self presentViewController:activityViewController animated:YES completion:nil];
+
+            break;
+        }
+    }
 }
 
 #pragma mark - Gesture recognizers
@@ -587,6 +655,9 @@
                 zoomRect.origin.x = tapPoint.x - zoomRect.size.width / 2;
                 zoomRect.origin.y = tapPoint.y - zoomRect.size.height / 2;
                 [zoomableView zoomToRect:zoomRect animated:NO];
+                if (!self.interfaceHidden) {
+                    [self singleTapGesture:nil];
+                }
             } else {
                 zoomableView.zoomScale = newScale;
             }
@@ -617,7 +688,7 @@
 
 - (void)playVideo:(UIButton *)sender {
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
-    UIViewController *playerVC = [node mnz_viewControllerForNodeInFolderLink:(self.api==[MEGASdkManager sharedMEGASdkFolder])];
+    UIViewController *playerVC = [node mnz_viewControllerForNodeInFolderLink:(self.api == [MEGASdkManager sharedMEGASdkFolder])];
     [self presentViewController:playerVC animated:YES completion:nil];
 }
 
@@ -670,7 +741,10 @@
 #pragma mark - MEGAPhotoBrowserPickerDelegate
 
 - (void)updateCurrentIndexTo:(NSUInteger)newIndex {
-    self.currentIndex = newIndex;
+    if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
+        self.currentIndex = newIndex;
+        [self reloadUI];
+    }
 }
 
 #pragma mark - PieChartViewDelegate
@@ -716,15 +790,44 @@
 
 #pragma mark - CustomActionViewControllerDelegate
 
-- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender{
+- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender {
     switch (action) {
-        case MegaNodeActionTypeShare:
-            [self didPressOpenIn:self.customActionsButton];
+        case MegaNodeActionTypeShare: {
+            UIActivityViewController *activityVC;
+            
+            switch (self.displayMode) {
+                case DisplayModeFileLink: {
+                    activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.publicLink] applicationActivities:nil];
+                    [activityVC setExcludedActivityTypes:@[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]];
+                    [activityVC.popoverPresentationController setBarButtonItem:sender];
+                    
+                    break;
+                }
+                    
+                default:
+                    activityVC = [Helper activityViewControllerForNodes:@[node] button:sender];
+                    break;
+            }
+            
+            activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
+                [self reloadUI];
+            };
+            [self presentViewController:activityVC animated:YES completion:nil];
+            
             break;
-
+        }
+            
         case MegaNodeActionTypeDownload:
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-            [node mnz_downloadNodeOverwriting:NO];
+            switch (self.displayMode) {
+                case DisplayModeFileLink:
+                    [node mnz_fileLinkDownloadFromViewController:self isFolderLink:NO];
+                    break;
+                    
+                default:
+                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+                    [node mnz_downloadNodeOverwriting:NO];
+                    break;
+            }
             break;
             
         case MegaNodeActionTypeFileInfo: {
@@ -772,6 +875,16 @@
             [node mnz_moveToTheRubbishBinInViewController:self];
             break;
             
+        case MegaNodeActionTypeImport:
+            [node mnz_fileLinkImportFromViewController:self isFolderLink:NO];
+            break;
+            
+        case MegaNodeActionTypeOpen:
+            if (self.node.name.mnz_isVideoPathExtension) {
+                [self playVideo:nil];
+            }
+            break;
+            
         default:
             break;
     }
@@ -786,7 +899,7 @@
 
     [self dismissViewControllerAnimated:YES completion:^{
         [self.delegate photoBrowser:self willDismissWithNode:node];
-        UIViewController *visibleViewController = [UIApplication mnz_visibleViewController];
+        UIViewController *visibleViewController = UIApplication.mnz_visibleViewController;
         if ([visibleViewController isKindOfClass:MainTabBarController.class]) {
             NSArray *parentTreeArray = node.mnz_parentTreeArray;
 
@@ -794,17 +907,17 @@
             [navigationController popToRootViewControllerAnimated:NO];
             
             for (MEGANode *node in parentTreeArray) {
-                CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                cloudDriveTVC.parentNode = node;
-                [navigationController pushViewController:cloudDriveTVC animated:NO];
+                CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                cloudDriveVC.parentNode = node;
+                [navigationController pushViewController:cloudDriveVC animated:NO];
             }
             
             switch (node.type) {
                 case MEGANodeTypeFolder:
                 case MEGANodeTypeRubbish: {
-                    CloudDriveTableViewController *cloudDriveTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                    cloudDriveTVC.parentNode = node;
-                    [navigationController pushViewController:cloudDriveTVC animated:NO];
+                    CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                    cloudDriveVC.parentNode = node;
+                    [navigationController pushViewController:cloudDriveVC animated:NO];
                     break;
                 }
                     

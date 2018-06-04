@@ -15,7 +15,6 @@
 #import "DevicePermissionsHelper.h"
 #import "DisplayMode.h"
 #import "MainTabBarController.h"
-#import "MEGAAssetsPickerController.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGACopyRequestDelegate.h"
@@ -31,6 +30,7 @@
 #import "MEGAStartUploadTransferDelegate.h"
 #import "MEGAStore.h"
 #import "MEGAToolbarContentView.h"
+#import "MEGATransfer+MNZCategory.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
@@ -158,7 +158,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     _unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 6, 30, 30)];
     self.unreadLabel.font = [UIFont mnz_SFUIMediumWithSize:12.0f];
-    self.unreadLabel.textColor = [UIColor mnz_redF0373A];
+    self.unreadLabel.textColor = [UIColor whiteColor];
     self.unreadLabel.userInteractionEnabled = YES;
     
     if (self.presentingViewController && self.parentViewController) {
@@ -255,6 +255,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
     self.lastBottomInset = self.collectionView.scrollIndicatorInsets.bottom;
     self.lastVerticalOffset = self.collectionView.contentOffset.y;
+    
+    self.unreadMessages = 0;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -432,7 +434,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     }
     contactsVC.participantsMutableDictionary = [self.participantsMutableDictionary copy];
     
-    contactsVC.userSelected = ^void(NSArray *users) {
+    contactsVC.userSelected = ^void(NSArray *users, NSString *groupName) {
         if (addParticipant) {
             for (NSInteger i = 0; i < users.count; i++) {
                 if (self.shouldStopInvitingContacts) {
@@ -446,7 +448,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             message.chatRoom = self.chatRoom;
             [self.messages addObject:message];
             [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];
-            [self finishSendingMessageAnimated:YES];
+            [self updateUnreadMessagesLabel:0];
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self finishSendingMessageAnimated:YES];
+            });
         }
     };
     
@@ -475,10 +481,16 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)customToolbarContentView {
     self.inputToolbar.contentView.textView.placeHolderTextColor = [UIColor mnz_grayCCCCCC];
-    self.inputToolbar.contentView.textView.placeHolder = AMLocalizedString(@"writeAMessage", @"Message box label which shows that user can type message text in this textview");
     self.inputToolbar.contentView.textView.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
     self.inputToolbar.contentView.textView.textColor = [UIColor mnz_black333333];
     self.inputToolbar.contentView.textView.tintColor = [UIColor mnz_green00BFA5];
+    [self updateToolbarPlaceHolder];
+}
+
+- (void)updateToolbarPlaceHolder {
+    NSString *title = self.chatRoom.hasCustomTitle ? [NSString stringWithFormat:@"\"%@\"", self.chatRoom.title] : self.chatRoom.title;
+    NSString *placeholder = [AMLocalizedString(@"writeAMessage", @"This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to \"Chat room topic\"... Write a message to Contact Name1, Contact Name2, Contact Name3") stringByReplacingOccurrencesOfString:@"%s" withString:title];
+    self.inputToolbar.contentView.textView.placeHolder = placeholder;
 }
 
 - (BOOL)showDateBetweenMessage:(MEGAChatMessage *)message previousMessage:(MEGAChatMessage *)previousMessage {
@@ -602,9 +614,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         }
     }
     
-    //TODO: Show text in chattingWithLabel when its string is translated.
-//    self.openMessageHeaderView.chattingWithLabel.text = AMLocalizedString(@"chattingWith", @"Title show above the name of the persons with whom you're chatting");
-    self.openMessageHeaderView.chattingWithLabel.text = nil;
+    self.openMessageHeaderView.chattingWithLabel.text = AMLocalizedString(@"chattingWith", @"Title show above the name of the persons with whom you're chatting");
     self.openMessageHeaderView.conversationWithLabel.text = participantsNames;
     self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
     self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
@@ -662,20 +672,25 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     if (sourceType == UIImagePickerControllerSourceTypeCamera) {
         MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToShareThroughChatWithSourceType:sourceType filePathCompletion:^(NSString *filePath, UIImagePickerControllerSourceType sourceType) {
             MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-            [self startUploadAndAttachWithPath:filePath parentNode:parentNode];
+            [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:nil];
         }];
         
         [self presentViewController:imagePickerController animated:YES completion:nil];
     }
 }
 
-- (void)startUploadAndAttachWithPath:(NSString *)path parentNode:(MEGANode *)parentNode {
-    [self showProgressViewUnderNavigationBar];
+- (void)startUploadAndAttachWithPath:(NSString *)path parentNode:(MEGANode *)parentNode appData:(NSString *)appData {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self showProgressViewUnderNavigationBar];
+    });
     
-    MEGAStartUploadTransferDelegate *startUploadTransferDelegate = [[MEGAStartUploadTransferDelegate alloc] initToUploadToChatWithTotalBytes:^(long long totalBytes) {
+    MEGAStartUploadTransferDelegate *startUploadTransferDelegate = [[MEGAStartUploadTransferDelegate alloc] initToUploadToChatWithTotalBytes:^(MEGATransfer *transfer) {
+        long long totalBytes = transfer.totalBytes.longLongValue;
         self.totalBytesToUpload += totalBytes;
         self.remainingBytesToUpload += totalBytes;
-    } progress:^(float transferredBytes, float totalBytes) {
+    } progress:^(MEGATransfer *transfer) {
+        float transferredBytes = transfer.transferredBytes.floatValue;
+        float totalBytes = transfer.totalBytes.floatValue;
         float asignableProgresRegardWithTotal = (totalBytes / self.totalBytesToUpload);
         float transferProgress = (transferredBytes / totalBytes);
         float currentAsignableProgressForThisTransfer = (transferProgress * asignableProgresRegardWithTotal);
@@ -689,7 +704,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                 [self.navigationBarProgressView setProgress:currentAsignableProgressForThisTransfer animated:YES];
             }
         }
-    } completion:^(long long totalBytes) {
+    } completion:^(MEGATransfer *transfer) {
+        long long totalBytes = transfer.totalBytes.longLongValue;
         float progressCompletedRegardWithTotal = ((float)totalBytes / self.totalBytesToUpload);
         self.totalProgressOfTransfersCompleted += progressCompletedRegardWithTotal;
         self.remainingBytesToUpload -= totalBytes;
@@ -699,7 +715,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         }
     }];
     
-    NSString *appData = [NSString stringWithFormat:@"attachToChatID=%llu", self.chatRoom.chatId];
+    if (!appData) {
+        appData = [NSString new];
+    }
+    appData = [appData mnz_appDataToAttachToChatID:self.chatRoom.chatId];
+    
     [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:path parent:parentNode appData:appData isSourceTemporary:YES delegate:startUploadTransferDelegate];
 }
 
@@ -724,6 +744,13 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             self.navigationBarProgressView.hidden = NO;
         });
     } else {
+        self.navigationBarProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
+        self.navigationBarProgressView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
+        self.navigationBarProgressView.frame = CGRectMake(self.navigationController.navigationBar.bounds.origin.x, self.navigationController.navigationBar.bounds.size.height, self.navigationController.navigationBar.bounds.size.width, 2.0f);
+        self.navigationBarProgressView.transform = CGAffineTransformScale(self.navigationBarProgressView.transform, 1, 2);
+        self.navigationBarProgressView.progressTintColor = [UIColor mnz_green00BFA5];
+        self.navigationBarProgressView.trackTintColor = [UIColor clearColor];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             self.navigationBarProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
             self.navigationBarProgressView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
@@ -747,6 +774,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self.messages removeAllObjects];
     [self.messages addObject:message];
     [self.collectionView reloadData];
+    [self updateUnreadMessagesLabel:0];
     [self.nodesLoaded removeAllObjects];
 }
 
@@ -762,15 +790,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)showOrHideJumpToBottom {
-    NSInteger item = [self.collectionView numberOfItemsInSection:0] - 2;
-    if (item >= 0) {
-        NSIndexPath *secondByTheEndIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
-        NSArray<NSIndexPath *> *indexPathsForVisibleItems = [self.collectionView indexPathsForVisibleItems];
-        if ([indexPathsForVisibleItems containsObject:secondByTheEndIndexPath]) {
-            [self hideJumpToBottom];
-        } else if (indexPathsForVisibleItems.count > 0) {
-            [self showJumpToBottomWithMessage:AMLocalizedString(@"jumpToLatest", @"Label in a button that allows to jump to the latest item")];
-        }
+    CGFloat verticalIncrementToShow = self.view.frame.size.height * 1.5;
+    if (self.collectionView.contentSize.height - self.collectionView.contentOffset.y < verticalIncrementToShow) {
+        [self hideJumpToBottom];
+    } else {
+        [self showJumpToBottomWithMessage:AMLocalizedString(@"jumpToLatest", @"Label in a button that allows to jump to the latest item")];
     }
 }
 
@@ -781,9 +805,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     if (self.jumpToBottomView.alpha > 0) {
         return;
     }
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:0.2 delay:0.3 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.jumpToBottomView.alpha = 1.0f;
-    }];
+    } completion:nil];
 }
 
 - (void)hideJumpToBottom {
@@ -798,6 +822,15 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 - (void)jumpToBottomPressed:(UITapGestureRecognizer *)recognizer {
     [self scrollToBottomAnimated:YES];
     [self hideJumpToBottom];
+}
+
+- (void)hideUnreadMessagesLabelIfNeeded {
+    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForItem:(self.messages.count - 1) inSection:0];
+    if (self.unreadMessages && [[self.collectionView indexPathsForVisibleItems] containsObject:lastIndexPath]) {
+        NSIndexPath *indexPathForCellWithUnreadMessagesLabel = [self indexPathForCellWithUnreadMessagesLabel];
+        self.unreadMessages = 0;
+        [self.collectionView reloadItemsAtIndexPaths:@[indexPathForCellWithUnreadMessagesLabel]];
+    }
 }
 
 - (void)setTypingIndicator {
@@ -863,6 +896,26 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self setTypingIndicator];
 }
 
+- (NSIndexPath *)indexPathForCellWithUnreadMessagesLabel {
+    return [NSIndexPath indexPathForItem:(self.messages.count - self.unreadMessages) inSection:0];
+}
+
+- (void)updateUnreadMessagesLabel:(NSUInteger)unreads {
+    if (!self.unreadMessages) {
+        return;
+    }
+    
+    NSIndexPath *unreadMessagesIndexPath;
+    if (unreads == 0) {
+        unreadMessagesIndexPath = [self indexPathForCellWithUnreadMessagesLabel];
+        self.unreadMessages = unreads;
+    } else {
+        self.unreadMessages = unreads;
+        unreadMessagesIndexPath = [self indexPathForCellWithUnreadMessagesLabel];
+    }
+    [self.collectionView reloadItemsAtIndexPaths:@[unreadMessagesIndexPath]];
+}
+
 #pragma mark - Gesture recognizer
 
 - (void)hideInputToolbar {
@@ -914,12 +967,15 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         message = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:text];
         message.chatRoom = self.chatRoom;
         [self.messages addObject:message];
-        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];        
+        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];
+        [self updateUnreadMessagesLabel:0];
     }
     
     MEGALogInfo(@"didPressSendButton %@", message);
     
-    [self finishSendingMessageAnimated:YES];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self finishSendingMessageAnimated:YES];
+    });
 
     [[MEGASdkManager sharedMEGAChatSdk] sendStopTypingNotificationForChat:self.chatRoom.chatId];
 
@@ -942,7 +998,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 - (void)uploadAssets:(NSArray<PHAsset *> *)assets toParentNode:(MEGANode *)parentNode {
     for (PHAsset *asset in assets) {
         MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initToShareThroughChatWithAsset:asset filePath:^(NSString *filePath) {
-            [self startUploadAndAttachWithPath:filePath parentNode:parentNode];
+            NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
+            [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:appData];
         } node:^(MEGANode *node) {
             [self attachOrCopyAndAttachNode:node toParentNode:parentNode];
         } error:^(NSError *error) {
@@ -966,7 +1023,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             }
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-            [self presentViewController:alertController animated:YES completion:nil];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self presentViewController:alertController animated:YES completion:nil];
+            });
         }];
         [processAsset prepare];
     }
@@ -975,6 +1034,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 - (void)didPressAccessoryButton:(UIButton *)sender {
     switch (sender.tag) {
         case MEGAChatAccessoryButtonCamera: {
+            self.inputToolbar.hidden = YES;
             if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType:completionHandler:)]) {
                 [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL permissionGranted) {
                     if (permissionGranted) {
@@ -995,13 +1055,17 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                     }
                 }];
             }
+            
             break;
         }
             
         case MEGAChatAccessoryButtonUpload: {
+            self.inputToolbar.hidden = YES;
             NSString *alertControllerTitle = AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
             UIAlertController *selectOptionAlertController = [UIAlertController alertControllerWithTitle:alertControllerTitle message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-            [selectOptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+            [selectOptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                self.inputToolbar.hidden = NO;
+            }]];
             
             UIAlertAction *sendFromCloudDriveAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fromCloudDrive", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
@@ -1038,6 +1102,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         default:
             break;
     }
+    [self updateToolbarPlaceHolder];
 }
 
 - (void)scrollToBottomAnimated:(BOOL)animated {
@@ -1132,6 +1197,15 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         }
     }
     return [self.avatarImageFactory avatarImageWithImage:avatar];
+}
+
+- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForUnreadMessagesLabelAtIndexPath:(NSIndexPath *)indexPath {
+    NSIndexPath *unreadMessagesIndexPath = [self indexPathForCellWithUnreadMessagesLabel];
+    if (self.unreadMessages && indexPath.section == unreadMessagesIndexPath.section && indexPath.item == unreadMessagesIndexPath.item) {
+        NSString *formatString = self.unreadMessages == 1 ? AMLocalizedString(@"unreadMessage", @"Label in chat rooms that indicates how many messages are unread. Singular and as short as possible.") : AMLocalizedString(@"unreadMessages", @"Label in chat rooms that indicates how many messages are unread. Plural and as short as possible.");
+        return [[NSAttributedString alloc] initWithString:[[NSString stringWithFormat:formatString, (unsigned long)self.unreadMessages] uppercaseString]];
+    }
+    return nil;
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
@@ -1279,7 +1353,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    [self showOrHideJumpToBottom];
+    if (!decelerate) {
+        [self showOrHideJumpToBottom];
+    }
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
@@ -1436,6 +1512,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 #pragma mark - JSQMessages collection view flow layout delegate
 
 #pragma mark - Adjusting cell label heights
+
+- (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForUnreadMessagesLabelAtIndexPath:(NSIndexPath *)indexPath {
+    NSIndexPath *unreadMessagesIndexPath = [self indexPathForCellWithUnreadMessagesLabel];
+    return (self.unreadMessages && indexPath.section == unreadMessagesIndexPath.section && indexPath.item == unreadMessagesIndexPath.item) ? 44.0f : 0.0f;
+}
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                    layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
@@ -1637,6 +1718,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         case MEGAChatMessageTypeContact: {
             [self.messages addObject:message];
             [self finishReceivingMessage];
+
+            NSUInteger unreads = [message.senderId isEqualToString:self.senderId] ? 0 : self.unreadMessages + 1;
+            [self updateUnreadMessagesLabel:unreads];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSUInteger items = [self.collectionView numberOfItemsInSection:0];
@@ -1765,6 +1849,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                     message.chatRoom = self.chatRoom;
                     [self.messages addObject:message];
                     [self finishReceivingMessage];
+
+                    NSUInteger unreads = [message.senderId isEqualToString:self.senderId] ? 0 : self.unreadMessages + 1;
+                    [self updateUnreadMessagesLabel:unreads];
+                    
                     [self loadNodesFromMessage:message atTheBeginning:YES];
                     if ([[MEGASdkManager sharedMEGAChatSdk] myUserHandle] == message.userHandle) {
                         [self scrollToBottomAnimated:YES];
@@ -1849,6 +1937,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             
         case MEGAChatRoomChangeTypeParticipants: {
             [self customNavigationBarLabel];
+            [self updateToolbarPlaceHolder];
             
             [self.collectionView performBatchUpdates:^{
                 [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
@@ -1862,6 +1951,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             
         case MEGAChatRoomChangeTypeTitle:
             [self customNavigationBarLabel];
+            [self updateToolbarPlaceHolder];
+            
             break;
             
         case MEGAChatRoomChangeTypeUserTyping: {

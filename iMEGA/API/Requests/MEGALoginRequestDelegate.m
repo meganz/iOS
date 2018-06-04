@@ -5,8 +5,8 @@
 #import "SVProgressHUD.h"
 
 #import "LaunchViewController.h"
-
 #import "MEGAStore.h"
+#import "UIApplication+MNZCategory.h"
 
 @interface MEGALoginRequestDelegate ()
 
@@ -94,7 +94,7 @@
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         
-        [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
         
         return;
     }

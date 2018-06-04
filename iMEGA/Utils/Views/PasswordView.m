@@ -47,7 +47,12 @@
 #pragma mark - UITextFieldDelegate
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
+    self.rightImageView.hidden = NO;
     [self.delegate passwordViewBeginEditing];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    self.rightImageView.hidden = YES;
 }
 
 @end

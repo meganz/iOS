@@ -9,7 +9,7 @@
 #import "PasswordStrengthIndicatorView.h"
 #import "PasswordView.h"
 
-@interface ChangePasswordViewController () <MEGARequestDelegate, UITextFieldDelegate>
+@interface ChangePasswordViewController () <MEGARequestDelegate, UITextFieldDelegate, MEGAGlobalDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *currentPasswordImageView;
 @property (weak, nonatomic) IBOutlet UITextField *currentPasswordTextField;
@@ -49,13 +49,7 @@
     
     if (self.changeType == ChangeTypePassword) {
         self.navigationItem.title = AMLocalizedString(@"changePasswordLabel", @"Section title where you can change your MEGA's password");
-        
-        [self configureTextFieldStyle:self.currentPasswordView.passwordTextField];
-        self.currentPasswordView.passwordTextField.placeholder = AMLocalizedString(@"currentPassword", @"Placeholder text to explain that the current password should be written on this text field.");
-        self.currentPasswordView.passwordTextField.tag = 3;
-        self.currentPasswordView.leftImageView.image = [UIImage imageNamed:@"padlock"];
-        self.currentPasswordView.leftImageView.tintColor = UIColor.mnz_gray777777;
-        
+        self.currentPasswordView.hidden = YES;
         [self configureTextFieldStyle:self.theNewPasswordView.passwordTextField];
         self.theNewPasswordView.passwordTextField.placeholder = AMLocalizedString(@"newPassword", @"Placeholder text to explain that the new password should be written on this text field.");
         self.theNewPasswordView.passwordTextField.tag = 4;
@@ -70,7 +64,7 @@
 
         [self.changePasswordButton setTitle:AMLocalizedString(@"changePasswordLabel", @"Section title where you can change your MEGA's password") forState:UIControlStateNormal];
         
-        [self.currentPasswordView.passwordTextField becomeFirstResponder];
+        [self.theNewPasswordView.passwordTextField becomeFirstResponder];
     } else if (self.changeType == ChangeTypeEmail) {
         self.currentPasswordView.hidden = self.theNewPasswordView.hidden = self.confirmPasswordView.hidden = YES;
         
@@ -132,7 +126,16 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(emailHasChanged) name:@"emailHasChanged" object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
 #pragma mark - Private
@@ -160,16 +163,8 @@
 
 - (BOOL)validatePasswordForm {
     [self hidePasswordErrorView:self.theNewPasswordView constraint:self.theNewPasswordViewHeightConstraint];
-    [self hidePasswordErrorView:self.currentPasswordView constraint:self.currentPasswordViewHeightConstraint];
     [self hidePasswordErrorView:self.confirmPasswordView constraint:self.confirmPasswordViewHeightConstraint];
     
-    if (self.changeType == ChangeTypePassword) {
-        if (self.currentPasswordView.passwordTextField.text.length == 0) {
-            [self showPasswordErrorView:self.currentPasswordView constraint:self.currentPasswordViewHeightConstraint message:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
-            [self.currentPasswordView.passwordTextField becomeFirstResponder];
-            return NO;
-        }
-    }
     if (![self validatePassword:self.theNewPasswordView.passwordTextField.text]) {
         if (self.theNewPasswordView.passwordTextField.text.length == 0) {
             [self showPasswordErrorView:self.theNewPasswordView constraint:self.theNewPasswordViewHeightConstraint message:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
@@ -180,6 +175,7 @@
             self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
             [self.confirmPasswordView.passwordTextField becomeFirstResponder];
         }
+        
         return NO;
     }
     
@@ -187,12 +183,6 @@
         [self showPasswordErrorView:self.theNewPasswordView constraint:self.theNewPasswordViewHeightConstraint message:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
         self.passwordStrengthIndicatorView.customView.hidden = YES;
         self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
-        [self.theNewPasswordView.passwordTextField becomeFirstResponder];
-        return NO;
-    }
-    
-    if ([self.currentPasswordView.passwordTextField.text isEqualToString:self.theNewPasswordView.passwordTextField.text]) {
-        [self showPasswordErrorView:self.theNewPasswordView constraint:self.theNewPasswordViewHeightConstraint message: AMLocalizedString(@"oldAndNewPasswordMatch", @"The old and the new password can not match")];
         [self.theNewPasswordView.passwordTextField becomeFirstResponder];
         return NO;
     }
@@ -254,14 +244,14 @@
         }
             
         case 1: {
-            if ([self.currentPasswordTextField.text isEqualToString:@""] || [self.confirmPasswordTextField.text isEqualToString:@""]) {
+            if ((self.changeType != ChangeTypePassword && [self.currentPasswordTextField.text isEqualToString:@""]) || [self.confirmPasswordTextField.text isEqualToString:@""]) {
                 isAnyTextFieldEmpty = YES;
             }
             break;
         }
             
         case 2: {
-            if ([self.currentPasswordTextField.text isEqualToString:@""] || [self.theNewPasswordTextField.text isEqualToString:@""]) {
+            if ((self.changeType != ChangeTypePassword && [self.currentPasswordTextField.text isEqualToString:@""]) || [self.theNewPasswordTextField.text isEqualToString:@""]) {
                 isAnyTextFieldEmpty = YES;
             }
             break;
@@ -275,14 +265,14 @@
         }
             
         case 4: {
-            if ([self.currentPasswordView.passwordTextField.text isEqualToString:@""] || [self.confirmPasswordView.passwordTextField.text isEqualToString:@""]) {
+            if ((self.changeType != ChangeTypePassword && [self.currentPasswordView.passwordTextField.text isEqualToString:@""]) || [self.confirmPasswordView.passwordTextField.text isEqualToString:@""]) {
                 isAnyTextFieldEmpty = YES;
             }
             break;
         }
             
         case 5: {
-            if ([self.currentPasswordView.passwordTextField.text isEqualToString:@""] || [self.theNewPasswordView.passwordTextField.text isEqualToString:@""]) {
+            if ((self.changeType != ChangeTypePassword && [self.currentPasswordView.passwordTextField.text isEqualToString:@""]) || [self.theNewPasswordView.passwordTextField.text isEqualToString:@""]) {
                 isAnyTextFieldEmpty = YES;
             }
             break;
@@ -303,7 +293,10 @@
         if (self.changeType == ChangeTypePassword) {
             if ([self validatePasswordForm]) {
                 self.changePasswordButton.enabled = NO;
-                [[MEGASdkManager sharedMEGASdk] changePassword:self.currentPasswordView.passwordTextField.text newPassword:self.theNewPasswordView.passwordTextField.text delegate:self];
+                [[MEGASdkManager sharedMEGASdk] changePassword:nil newPassword:self.theNewPasswordView.passwordTextField.text delegate:self];
+            } else {
+                self.passwordStrengthIndicatorView.customView.hidden = YES;
+                self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
             }
         } else if (self.changeType == ChangeTypeEmail) {
             if ([self validateEmail]) {
@@ -337,7 +330,7 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     BOOL shoulBeCreateAccountButtonGray = NO;
-    if ([text isEqualToString:@""] || (([[MEGASdkManager sharedMEGASdk] passwordStrength:self.theNewPasswordView.passwordTextField.text] == PasswordStrengthVeryWeak) && self.changeType == ChangeTypePassword)) {
+    if (([text isEqualToString:@""] || (([[MEGASdkManager sharedMEGASdk] passwordStrength:text] == PasswordStrengthVeryWeak))) && self.changeType == ChangeTypePassword) {
         shoulBeCreateAccountButtonGray = YES;
     } else {
         shoulBeCreateAccountButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
@@ -423,6 +416,58 @@
     return YES;
 }
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    switch (textField.tag) {
+        case 3:
+            self.currentPasswordView.rightImageView.hidden = NO;
+            break;
+            
+        case 4:
+            self.theNewPasswordView.rightImageView.hidden = NO;
+            break;
+            
+        case 5:
+            self.confirmPasswordView.rightImageView.hidden = NO;
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    switch (textField.tag) {
+        case 3:
+            self.currentPasswordView.rightImageView.hidden = YES;
+            break;
+            
+        case 4:
+            self.theNewPasswordView.rightImageView.hidden = YES;
+            break;
+            
+        case 5:
+            self.confirmPasswordView.rightImageView.hidden = YES;
+            break;
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - MEGAGlobalDelegate
+
+- (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
+    NSInteger count = userList.size.integerValue;
+    for (NSInteger i = 0 ; i < count; i++) {
+        MEGAUser *user = [userList userAtIndex:i];
+        if (user.handle == [MEGASdkManager sharedMEGASdk].myUser.handle && user.changes == MEGAUserChangeTypeEmail) {
+            NSString *emailChangedString = [AMLocalizedString(@"congratulationsNewEmailAddress", @"The [X] will be replaced with the e-mail address.") stringByReplacingOccurrencesOfString:@"[X]" withString:user.email];
+            [SVProgressHUD showSuccessWithStatus:emailChangedString];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
+}
+
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
@@ -433,7 +478,8 @@
             case MEGAErrorTypeApiEArgs: {
                 if (request.type == MEGARequestTypeChangePassword) {
                     [self showPasswordErrorView:self.currentPasswordView constraint:self.currentPasswordViewHeightConstraint message:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
-                    [self.currentPasswordTextField becomeFirstResponder];
+                    [self.theNewPasswordView.passwordTextField becomeFirstResponder];
+                    //self.theNewPasswordView.passwordTextField.text = self.confirmPasswordView.passwordTextField.text = @"";
                 }
                 break;
             }

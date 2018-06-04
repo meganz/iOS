@@ -10,7 +10,7 @@
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
 
 #import "BrowserViewController.h"
-#import "CloudDriveTableViewController.h"
+#import "CloudDriveViewController.h"
 #import "ChatRoomsViewController.h"
 #import "CustomActionViewController.h"
 #import "ContactTableViewCell.h"
@@ -29,14 +29,14 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
 
-@property (strong, nonatomic) IBOutlet UIView *emptyHeaderView;
-@property (strong, nonatomic) IBOutlet UIView *participantsHeaderView;
+@property (nonatomic) UIView *emptyHeaderView;
+@property (nonatomic) UIView *actionsSectionEmptyFooterView;
+@property (nonatomic) UIView *sharedFoldersEmptyFooterView;
+
+@property (weak, nonatomic) IBOutlet UIView *participantsHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *participantsHeaderViewLabel;
-
-@property (strong, nonatomic) IBOutlet UIView *actionsSectionEmptyFooterView;
-@property (strong, nonatomic) IBOutlet UIView *sharedFoldersEmptyFooterView;
 
 @property (nonatomic, strong) MEGAUser *user;
 @property (nonatomic, strong) MEGANodeList *incomingNodeListForUser;
@@ -61,10 +61,10 @@
     self.nameLabel.text = self.userName;
     self.emailLabel.text = self.userEmail;
     
-    self.emptyHeaderView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyHeaderView" owner:self options:nil] firstObject];
-    self.actionsSectionEmptyFooterView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyFooterView" owner:self options:nil] firstObject];
-    self.sharedFoldersEmptyFooterView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyFooterView" owner:self options:nil] firstObject];
-    
+    self.emptyHeaderView = [NSBundle.mainBundle loadNibNamed:@"EmptyHeaderView" owner:self options:nil].firstObject;
+    self.actionsSectionEmptyFooterView = [NSBundle.mainBundle loadNibNamed:@"EmptyFooterView" owner:self options:nil].firstObject;
+    self.sharedFoldersEmptyFooterView = [NSBundle.mainBundle loadNibNamed:@"EmptyFooterView" owner:self options:nil].firstObject;
+
     self.incomingNodeListForUser = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
     
     if (@available(iOS 11.0, *)) {
@@ -210,6 +210,7 @@
         if (self.contactDetailsMode == ContactDetailsModeDefault) {
             switch (indexPath.row) {
                 case 0: //Send Message
+                    cell.avatarImageView.image = [UIImage imageNamed:@"sendMessage"];
                     cell.nameLabel.text = AMLocalizedString(@"sendMessage", @"Title to perform the action of sending a message to a contact.");
                     break;
                     
@@ -359,11 +360,11 @@
             }
         }
     } else if (indexPath.section == 1) { //Show incoming shared folder contents
-        CloudDriveTableViewController *cloudTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+        CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
         MEGANode *incomingNode = [self.incomingNodeListForUser nodeAtIndex:indexPath.row];
-        cloudTVC.parentNode = incomingNode;
-        cloudTVC.displayMode = DisplayModeCloudDrive;
-        [self.navigationController pushViewController:cloudTVC animated:YES];
+        cloudDriveVC.parentNode = incomingNode;
+        cloudDriveVC.displayMode = DisplayModeCloudDrive;
+        [self.navigationController pushViewController:cloudDriveVC animated:YES];
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];

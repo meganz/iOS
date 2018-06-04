@@ -55,11 +55,17 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Tu sesión ha sido cerrada de este dispositivo desde otra localización";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="La clave SSL no se ha podido verificar. Tus comunicaciones podrían estar siendo interceptadas por un atacante.";
+"sslUnverified_alertTitle"="MEGA no se puede conectar de forma segura a través de SSL. Es posible que estés conectado a una WiFi pública con requisitos adicionales.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="El contenido al que estás intentando acceder no pertenece a esta cuenta. Inicia sesión con la misma cuenta que tienes en el navegador.";
-/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
+/* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Tardando más de lo previsto. Por favor, espera...";
+/* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
+"serversAreTooBusy"="Servidores ocupados. Por favor, espera.";
+/* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
+"unableToReachMega"="No se puede acceder a MEGA. Comprueba tu conexión o inténtalo más tarde.";
+/* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
+"tooManyRequest"="Demasiadas peticiones. Por favor espera.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Por favor, inicia sesión en tu cuenta.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -79,9 +85,9 @@
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
 "megaAccessText"="Obtén acceso totalmente cifrado en cualquier lugar, en cualquier momento.";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="Iniciar sesión";
+"login"="Iniciar Sesión";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="Crear cuenta";
+"createAccount"="Crear Cuenta";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Correo electrónico y/o contraseña no válidos. Por favor, inténtalo de nuevo";
 /* Error message when to many attempts to login */
@@ -252,6 +258,12 @@
 "folderAndFiles"="1 carpeta • %d archivos";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="En cola";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="En pausa";
+/* Label for the state of a transfer when is being completing - (String as short as possible). */
+"Completing..."="Completando...";
+/* Label for the state of a transfer when is being retrying - (String as short as possible). */
+"Retrying..."="Reintentando...";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Hay descargas pendientes";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -521,7 +533,7 @@
 /* Title of the Contacts section */
 "contactsTitle"="Contactos";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
-"oneFolderShared"="Compartiendo una carpeta";
+"oneFolderShared"="1 carpeta";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d carpetas";
 /* Item menu option to add a contact writting his/her email */
@@ -639,7 +651,7 @@
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="Español";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
-"sendFeedbackLabel"="Enviar comentarios";
+"sendFeedbackLabel"="Enviar valoración";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Por favor, escribe tus comentarios:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
@@ -648,6 +660,8 @@
 "privacyPolicyLabel"="Política de privacidad";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Términos de servicio";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Reglamento de protección de datos";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="No";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -671,7 +685,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Cambiar contraseña";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="Exportar la Clave de recuperación y guardarla en un sitio seguro te permite establecer una nueva contraseña sin pérdida de datos. ";
+"exportMasterKeyFooter"="Si exportas la Clave de recuperación y la guardas en un lugar seguro podrás cambiar la contraseña sin perder tus datos.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="¿Por qué necesito la Clave de recuperación?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -687,7 +701,7 @@
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="En el dispositivo";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
-"clearOfflineFiles"="Eliminar archivos en Sin conexión";
+"clearOfflineFiles"="Eliminar archivos sin conexión";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="Borrar caché";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
@@ -766,12 +780,8 @@
 "confirmPassword"="Confirmar contraseña";
 /* Success message shown when the password has been changed */
 "passwordChanged"="Tu contraseña ha sido cambiada.";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="La nueva contraseña no puede coincidir con la antigua.";
 /* An option to reset the password. */
 "forgotPassword"="¿Has olvidado tu contraseña?";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="Puedes restablecer tu contraseña si sigues el enlace de recuperación que será enviado a tu correo electrónico.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Este enlace de recuperación ha caducado, por favor inténtalo de nuevo.";
 /* Headline of the password reset recovery procedure */
@@ -786,26 +796,9 @@
 "youRecoveryKeyIsGoingTo"="Tu Clave de recuperación se utilizará para establecer una nueva contraseña. Por favor, introduce tu nueva contraseña.";
 /*  */
 "yourPasswordHasBeenReset"="Tu contraseña ha sido restablecida con éxito. Por favor accede a tu cuenta.";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Si tienes una copia de tu Clave de recuperación, puedes restablecer tu contraseña seleccionando SÍ. Ningún dato se perderá en el proceso.";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="Puedes todavía exportar la Clave de recuperación si tienes una sesión de MEGA activa en un navegador en este o en otro ordenador. Si no es así, ya no puedes descifrar tu cuenta existente, pero puedes empezar una nueva cuenta con la misma dirección de correo electrónico seleccionando NO.";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="¿Tienes una copia de tu Clave de recuperación?";
-/* Headline when the user chose YES */
-"great"="¡Bien!";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Por favor, introduce tu correo electrónico a continuación. Recibirás un enlace de recuperación que te permitirá enviar tu Clave de recuperación y restablecer tu contraseña.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Enviar";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="¡Vaya!";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Debido a nuestro paradigma de cifrado punto a punto, no podrás acceder a tus datos sin tu contraseña o una copia de seguridad de la Clave de recuperación.";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="Puedes aparcar tu cuenta existente y empezar con una nueva usando la misma dirección de correo electrónico. Tus datos se conservarán durante al menos 60 días. En caso de que recuerdes la contraseña de la cuenta aparcada, por favor, ponte en contacto con support@mega.nz";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="Por favor introduce la dirección de correo electrónico a continuación. Recibirás un enlace que te permitirá aparcar la cuenta.";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Aparcar cuenta";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -971,7 +964,7 @@
 /* Button title for the section where you can see the 'Purchase history' related to your account */
 "purchaseHistory"="Historial de compras";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
-"incomingShares"="Carpetas compartidas";
+"incomingShares"="Carpetas compartidas entrantes";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
 "of %@"="de %@";
 /* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
@@ -1003,7 +996,7 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Selecciona el tipo de cuenta:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Una suscripción anual es un 17% más barata que 12 pagos mensuales";
+"twoMonthsFree"="La suscripción anual es un 17% más barata que 12 pagos mensuales";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Plan actual:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
@@ -1064,6 +1057,8 @@
 "chat"="Chat";
 /* Empty Conversations section */
 "noConversations"="No hay conversaciones";
+/* Empty Conversations description */
+"noConversationsDescription"="Chatea de forma segura con tus contactos mediante el cifrado punto a punto";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Chat desactivado";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1092,8 +1087,14 @@
 "changedGroupChatNameTo"="[A] cambió el nombre del grupo a '[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Añadir participante...";
+/* Menu item to add participants to a chat */
+"addParticipants"="Añadir participantes";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Estado";
+/* Title used in settings that enables the generation of link previews in the chat */
+"richUrlPreviews"="Rich URL previews";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"richPreviewsFooter"="Mejora tu experiencia con MEGAchat. El contenido de la URL se recuperará sin cifrado punto a punto.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Llamadas y videollamadas";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1160,6 +1161,8 @@
 "renameGroup"="Renombrar grupo";
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="Cambiar imagen del perfil del grupo";
+/* Text used as hint to give the user information to write a name for the group chat. */
+"enterGroupName"="Escribe el nombre del grupo";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Abandonar";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1198,8 +1201,12 @@
 "chatNotFound"="Chat no encontrado";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ está escribiendo ...";
-/* Message box label which shows that user can type message text in this textview */
-"writeAMessage"="Escribir un mensaje...";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s [A]están escribiendo...[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s [A]y otros están escribiendo...[/A]";
+/* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
+"writeAMessage"="Escribe un mensaje a %s...";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="No hay historial";
 /* Button which allows to retry send message in chat conversation. */
@@ -1218,6 +1225,16 @@
 "done"="Listo";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Enviar archivos";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"enableRichUrlPreviews"="Activa la vista previa de la URL enriquecida";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"alwaysAllow"="Permitir siempre";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"notNow"="Ahora no";
+/* */
+"never"="Nunca";
+/* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
+"richPreviewsConfirmation"="You are disabling rich URL previews permanently. You can re-enable rich URL previews in your settings. Do you want to proceed?";
 /* */
 "warning"="Advertencia";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
@@ -1245,7 +1262,7 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s ya es un contacto";
 /* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="Contacto enviado: %s ";
+"sentContact"="Contacto enviado: %s";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="%s contactos enviados.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
@@ -1261,9 +1278,13 @@
 /* A summary message when a user has attached many files at once into the chat. */
 "uploadedFiles"="Ha subido estos archivos:";
 /* Label in a button that allows to jump to the latest item */
-"jumpToLatest"="Jump to latest";
+"jumpToLatest"="Ir al más reciente";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Nuevos mensajes";
+/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
+"unreadMessage"="%lu mensaje no leído";
+/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
+"unreadMessages"="%lu mensajes no leídos";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="La suscripción se renueva automáticamente con la misma duración y precio elegidos inicialmente. Puedes desactivar la renovación automática de la suscripción A MEGA PRO en la página de ajustes de iTunes hasta 24 horas antes de la renovación programada. Para gestionar tu suscripción, simplemente ve a la App Store, inicia sesión con tu Apple ID al final de la página (si no has hecho esto todavía) y pulsa en “Ver ID de Apple”. Podrás ver la página con los detalles de tu cuenta, donde puedes gestionar las suscripciones que has contratado. Desde aquí, puedes seleccionar la suscripción A MEGA PRO y ver cuando será renovada, cambiar el tipo de suscripción o desactivar la opción de renovación automática para luego cancelar tu suscripción.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1282,7 +1303,7 @@
 /* Label to show that an Internal error occurs during a SDK operation. */
 "Internal error"="Error interno";
 /* Label to show that an error of Invalid argument occurs during a SDK operation. */
-"Invalid argument"="Argumento no válido ";
+"Invalid argument"="Argumento no válido";
 /* Label to show that a request error occurs during a SDK operation. */
 "Request failed, retrying"="Petición fallida, reintentando";
 /* Label to show that the rate limit has been reached during a SDK operation. */
@@ -1342,7 +1363,7 @@
 "generalDescriptionParagraph5"="Suscripción PRO LITE: 4,99€ (US$4.99)  al mes o 49,99€ (US$49.99) al año, con 200 GB de espacio de almacenamiento y 1 TB de cuota de transferencia al mes.\nSuscripción PRO I: 9,99€ (US$9.99) al mes o 99,99€ (US$99.99) al año, con 1 TB de espacio de almacenamiento y 2 TB de cuota de transferencia al mes.\nSuscripción PRO II: 19,99€ al mes (US$19.99) o 199,99€ (US$199.99) al año, con 4 TB de espacio de almacenamiento y 8 TB de cuota de transferencia al mes.\nSuscripción PRO III: 29,99€ (US$29.99) al mes o 299,99€ (US$299.99) al año, con 8 TB de espacio de almacenamiento y 16 TB de cuota de transferencia al mes.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Para más información, entra en nuestra página web:\nPara móvil - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nPara ordenador - https://mega.nz/";
+"generalDescriptionParagraph6"="Para más información, entra en nuestra web:https://mega.nz/\nTérminos de servicio: https://mega.nz/terms\nPolítica de privacidad: https://mega.nz/privacy";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="Llamando...";
 /* Notification text body shown when you have missed one audio call */
@@ -1433,3 +1454,45 @@
 "previousVersions"="Versiones anteriores";
 /* Title of section to display information of all current versions of files. */
 "currentVersions"="Versiones actuales";
+/* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
+"remindPasswordTitle"="¿Recuerdas tu contraseña?";
+/* Text that describes why the user should test his/her password */
+"remindPasswordText"="Debido a la tecnología de cifrado de MEGA, no puedes restablecer la contraseña sin perder tus datos. Por favor, asegúrate de recordar tu contraseña.";
+/* Text that describes why the user should test his/her password before logging out */
+"remindPasswordLogoutText"="Antes de cerrar la sesión, te recomendamos que guardes la Clave de recuperación en un lugar seguro. Ten en cuenta que no podrás restablecer tu contraseña si se te olvida.";
+/* Text next to a toggle that if enabled won't appear again */
+"dontShowAgain"="No volver a mostrar";
+/* Label for test password button and titles */
+"testPassword"="Prueba la contraseña";
+/* Label for recovery key button */
+"backupRecoveryKey"="Guarda tu Clave de recuperación";
+/* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
+"testPasswordText"="Escribe tu contraseña a continuación para asegurarte de que la recuerdas. Si pierdes tu contraseña, perderás el acceso a tus datos en MEGA. [A]Más información[/A]";
+/* Title text for the account confirmation. */
+"confirm"="Confirmar";
+/* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
+"passwordAccepted"="Contraseña correcta";
+/* A dialog title to export the Recovery Key for the current user. */
+"exportRecoveryKey"="Exportar Clave de recuperación";
+/* Title to confirm that you want to logout */
+"proceedToLogout"="Cerrar la sesión";
+/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
+"testPasswordLogoutText"="Estás a punto de cerrar la sesión. Prueba tu contraseña para asegurarte de que la recuerdes. Si pierdes tu contraseña, perderás el acceso a tus datos en MEGA.";
+/* state previous to import a file */
+"loading"="Cargando…";
+/*   */
+"next"="Siguiente";
+/* Button title to allow the user ignore something */
+"ignore"="Ignorar";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Abrir navegador";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="Reiniciar";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="¿Reanudar la reproducción?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%1$s continuará desde %2$s";
+/*  */
+"resume"="Reanudar";
+/* Title to preview document */
+"previewContent"="Preview Content";

@@ -9,11 +9,12 @@
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
-#import "NSMutableAttributedString+MNZCategory.h"
+#import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
+#import "MEGAChatChangeGroupNameRequestDelegate.h"
 
 #import "ChatRoomCell.h"
 #import "ChatSettingsTableViewController.h"
@@ -109,6 +110,10 @@
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     
     [self.chatListItemArray removeAllObjects];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     [self.tableView reloadData];
 }
 
@@ -127,11 +132,19 @@
     }
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.tableView reloadEmptyDataSet];
+    } completion:nil];
+}
+
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     NSString *text = @"";
-    if (self.searchController.isActive ) {
+    if (self.searchController.isActive) {
         if (self.searchController.searchBar.text.length > 0) {
             text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
         }
@@ -143,30 +156,43 @@
                 text = AMLocalizedString(@"noInternetConnection",  @"Text shown on the app when you don't have connection to the internet or when you have lost it");
             }
         } else {
-            return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"noConversations", @"Empty Conversations section") sectionTitle:AMLocalizedString(@"conversations", @"Conversations section")];
+            text = AMLocalizedString(@"noConversations", @"Empty Conversations section");
         }
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
+    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
+}
+
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    NSString *text = @"";
+
+    if (self.searchController.isActive) {
+        text = @"";
+    } else {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+            text = AMLocalizedString(@"noConversationsDescription", @"Empty Conversations description");
+        }
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:14.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
-
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     if ([MEGAReachabilityManager isReachable]) {
         // TODO: We need change this image with a custom image provided by design team
         if (self.searchController.isActive) {
             if (self.searchController.searchBar.text.length > 0) {
-                return [UIImage imageNamed:@"emptySearch"];
+                return [UIImage imageNamed:@"searchEmptyState"];
             } else {
                 return nil;
             }
         } else {
-            return [UIImage imageNamed:@"emptyContacts"];
+            return [UIImage imageNamed:@"chatEmptyState"];
         }
     } else {
-        return [UIImage imageNamed:@"noInternetConnection"];
+        return [UIImage imageNamed:@"noInternetEmptyState"];
     }
 }
 
@@ -180,16 +206,14 @@
         }
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:20.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    return [[NSAttributedString alloc] initWithString:text attributes:[Helper buttonTextAttributesForEmptyState]];
 }
 
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
     UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
     UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
     
-    return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
+    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
@@ -348,12 +372,11 @@
 }
 
 - (void)updateCell:(ChatRoomCell *)cell forChatListItem:(MEGAChatListItem *)item {
-    NSString *senderString;
-    if(item.isGroup && item.lastMessageSender != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
-        senderString = [chatRoom peerFullnameByHandle:item.lastMessageSender];
-    }
     switch (item.lastMessageType) {
+        case 255:
+            cell.chatLastMessage.text = AMLocalizedString(@"loading", @"state previous to import a file");
+            cell.chatLastTime.hidden = YES;
+            break;
         case MEGAChatMessageTypeInvalid: {
             cell.chatLastMessage.text = AMLocalizedString(@"noConversationHistory", @"Information if there are no history messages in current chat conversation");
             cell.chatLastTime.hidden = YES;
@@ -361,6 +384,10 @@
         }
             
         case MEGAChatMessageTypeAttachment: {
+            NSString *senderString;
+            if (item.group) {
+                senderString = [self actionAuthorNameInChatListItem:item];
+            }
             NSString *lastMessageString = item.lastMessage;
             NSArray *componentsArray = [lastMessageString componentsSeparatedByString:@"\x01"];
             if (componentsArray.count == 1) {
@@ -371,12 +398,14 @@
                 lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", componentsArray.count]];
             }
             cell.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, lastMessageString] : lastMessageString;
-            cell.chatLastTime.hidden = NO;
-            cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
             break;
         }
             
         case MEGAChatMessageTypeContact: {
+            NSString *senderString;
+            if (item.group) {
+                senderString = [self actionAuthorNameInChatListItem:item];
+            }
             NSString *lastMessageString = item.lastMessage;
             NSArray *componentsArray = [lastMessageString componentsSeparatedByString:@"\x01"];
             if (componentsArray.count == 1) {
@@ -387,18 +416,121 @@
                 lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", componentsArray.count]];
             }
             cell.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, lastMessageString] : lastMessageString;
+            break;
+        }
+            
+        case MEGAChatMessageTypeTruncate: {
+            NSString *senderString = [self actionAuthorNameInChatListItem:item];
+            NSString *lastMessageString = AMLocalizedString(@"clearedTheChatHistory", @"A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history.");
+            lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"[A]" withString:senderString];
+            cell.chatLastMessage.text = lastMessageString;
+            break;
+        }
+            
+        case MEGAChatMessageTypePrivilegeChange: {
+            NSString *fullNameDidAction = [self actionAuthorNameInChatListItem:item];
+            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
+            NSString *fullNameReceiveAction = [chatRoom peerFullnameByHandle:item.lastMessageHandle];
+            
+            if (fullNameReceiveAction.length == 0) {
+                MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:item.lastMessageHandle];
+                if (moUser) {
+                    fullNameReceiveAction = moUser.fullName;
+                } else {
+                    fullNameReceiveAction = @"";
+                }
+            }
+            
+            NSString *wasChangedToBy = AMLocalizedString(@"wasChangedToBy", @"A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith.");
+            wasChangedToBy = [wasChangedToBy stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
+            NSString *privilige;
+            switch (item.lastMessagePriv) {
+                case 0:
+                    privilige = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
+                    break;
+                    
+                case 2:
+                    privilige = AMLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.");
+                    break;
+                    
+                case 3:
+                    privilige = AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat");
+                    break;
+                    
+                default:
+                    break;
+            }
+            wasChangedToBy = [wasChangedToBy stringByReplacingOccurrencesOfString:@"[B]" withString:privilige];
+            wasChangedToBy = [wasChangedToBy stringByReplacingOccurrencesOfString:@"[C]" withString:fullNameDidAction];
+            cell.chatLastMessage.text = wasChangedToBy;
+            break;
+        }
+            
+        case MEGAChatMessageTypeAlterParticipants: {
+            NSString *fullNameDidAction = [self actionAuthorNameInChatListItem:item];
+            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
+            NSString *fullNameReceiveAction = [chatRoom peerFullnameByHandle:item.lastMessageHandle];
+            
+            if (fullNameReceiveAction.length == 0) {
+                MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:item.lastMessageHandle];
+                if (moUser) {
+                    fullNameReceiveAction = moUser.fullName;
+                } else {
+                    fullNameReceiveAction = @"";
+                }
+            }
+            
+            switch (item.lastMessagePriv) {
+                case -1: {
+                    if (fullNameDidAction && ![fullNameReceiveAction isEqualToString:fullNameDidAction]) {
+                        NSString *wasRemovedFromTheGroupChatBy = AMLocalizedString(@"wasRemovedFromTheGroupChatBy", @"A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank.");
+                        wasRemovedFromTheGroupChatBy = [wasRemovedFromTheGroupChatBy stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
+                        wasRemovedFromTheGroupChatBy = [wasRemovedFromTheGroupChatBy stringByReplacingOccurrencesOfString:@"[B]" withString:fullNameDidAction];
+                        cell.chatLastMessage.text = wasRemovedFromTheGroupChatBy;
+                    } else {
+                        NSString *leftTheGroupChat = AMLocalizedString(@"leftTheGroupChat", @"A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat.");
+                        leftTheGroupChat = [leftTheGroupChat stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
+                        cell.chatLastMessage.text = leftTheGroupChat;
+                    }
+                    break;
+                }
+                    
+                case -2: {
+                    NSString *joinedTheGroupChatByInvitationFrom = AMLocalizedString(@"joinedTheGroupChatByInvitationFrom", @"A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank.");
+                    joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
+                    joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[B]" withString:fullNameDidAction];
+                    cell.chatLastMessage.text = joinedTheGroupChatByInvitationFrom;
+                    break;
+                }
+                    
+                default:
+                    break;
+            }
             cell.chatLastTime.hidden = NO;
             cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
             break;
         }
             
+        case MEGAChatMessageTypeChatTitle: {
+            NSString *senderString = [self actionAuthorNameInChatListItem:item];
+            NSString *changedGroupChatNameTo = AMLocalizedString(@"changedGroupChatNameTo", @"A hint message in a group chat to indicate the group chat name is changed to a new one. Please keep %s when translating this string which will be replaced with the name at runtime.");
+            changedGroupChatNameTo = [changedGroupChatNameTo stringByReplacingOccurrencesOfString:@"[A]" withString:senderString];
+            changedGroupChatNameTo = [changedGroupChatNameTo stringByReplacingOccurrencesOfString:@"[B]" withString:(item.lastMessage ? item.lastMessage : @" ")];
+            cell.chatLastMessage.text = changedGroupChatNameTo;
+            break;
+        }
+            
         default: {
+            NSString *senderString;
+            if (item.group && item.lastMessageSender != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
+                senderString = [self actionAuthorNameInChatListItem:item];
+            }
             cell.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, item.lastMessage] : item.lastMessage;
-            cell.chatLastTime.hidden = NO;
-            cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
             break;
         }
     }
+    cell.chatLastTime.hidden = NO;
+    cell.chatLastTime.text = [item.lastMessageDate compare:twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
 }
 
 - (void)customNavigationBarLabel {
@@ -521,6 +653,18 @@
     }] mutableCopy];
 }
 
+- (NSString *)actionAuthorNameInChatListItem:(MEGAChatListItem *)item {
+    NSString *actionAuthor;
+    if (item.lastMessageSender == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
+        actionAuthor = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
+    } else {
+        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
+        actionAuthor = [chatRoom peerFullnameByHandle:item.lastMessageSender];
+    }
+    
+    return actionAuthor;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)addTapped:(UIBarButtonItem *)sender {
@@ -528,7 +672,7 @@
     ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
     contactsVC.contactsMode = ContactsModeChatStartConversation;
     MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-    contactsVC.userSelected =^void(NSArray *users) {
+    contactsVC.userSelected = ^void(NSArray *users, NSString *groupName) {
         if (users.count == 1) {
             MEGAUser *user = [users objectAtIndex:0];
             MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
@@ -536,7 +680,7 @@
                 MEGALogInfo(@"%@", chatRoom);
                 NSInteger i = 0;
                 for (i = 0; i < self.chatListItemArray.count; i++){
-                    if (chatRoom.chatId == [[self.chatListItemArray objectAtIndex:i] chatId]) {
+                    if (chatRoom.chatId == [(MEGAChatRoom *)[self.chatListItemArray objectAtIndex:i] chatId]) {
                         break;
                     }
                 }
@@ -564,7 +708,12 @@
             
             MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
                 messagesVC.chatRoom = chatRoom;
-                [self.navigationController pushViewController:messagesVC animated:YES];                
+                if (groupName) {
+                    MEGAChatChangeGroupNameRequestDelegate *changeGroupNameRequestDelegate = [[MEGAChatChangeGroupNameRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
+                        [self.navigationController pushViewController:messagesVC animated:YES];
+                    }];
+                    [[MEGASdkManager sharedMEGAChatSdk] setChatTitle:chatRoom.chatId title:groupName delegate:changeGroupNameRequestDelegate];
+                }
             }];
             [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:YES peers:peerList delegate:createChatGroupRequestDelegate];
         }

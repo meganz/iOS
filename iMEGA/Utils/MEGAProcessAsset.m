@@ -3,11 +3,17 @@
 
 #import "ChatVideoUploadQuality.h"
 #import "NSFileManager+MNZCategory.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+
 #import "SDAVAssetExportSession.h"
 #import "UIApplication+MNZCategory.h"
 
 static void *ProcessAssetProgressContext = &ProcessAssetProgressContext;
+
+
+
+static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 
 @interface MEGAProcessAsset ()
 
@@ -82,36 +88,55 @@ static void *ProcessAssetProgressContext = &ProcessAssetProgressContext;
         options.version = PHImageRequestOptionsVersionOriginal;
     }
     
-    // Optimized image
-    if (self.toShareThroughChat) {
-        options.synchronous = YES;
-        options.resizeMode = PHImageRequestOptionsResizeModeExact;
-        [[PHImageManager defaultManager] requestImageForAsset:self.asset targetSize:CGSizeMake(1000, 1000) contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-            if (result) {
-                NSData *imageData = UIImageJPEGRepresentation(result, 0.75);
-                [self proccessImageData:imageData withInfo:info];
-            } else {
-                NSError *error = [info objectForKey:@"PHImageErrorKey"];
-                MEGALogError(@"Request image data for asset: %@ failed with error: %@", self.asset, error);
-                if (self.retries < 20) {
-                    self.retries++;
-                    [self requestImageAsset];
+    
+    if (self.toShareThroughChat && ![MEGAReachabilityManager isReachableViaWiFi]) {
+        NSUInteger totalPixels = self.asset.pixelWidth * self.asset.pixelHeight;
+        float factor = MIN(sqrtf((float)DOWNSCALE_IMAGES_PX / totalPixels), 1);
+        if (factor >= 1) {
+            [self requestImageWithOptions:options];
+        } else { // Optimize image
+            options.synchronous = YES;
+            options.resizeMode = PHImageRequestOptionsResizeModeExact;
+            [[PHImageManager defaultManager] requestImageForAsset:self.asset targetSize:CGSizeMake(self.asset.pixelWidth * factor, self.asset.pixelHeight * factor) contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+                if (result) {
+                    NSData *imageData = UIImageJPEGRepresentation(result, 0.75);
+                    [self proccessImageData:imageData withInfo:info];
                 } else {
-                    if (self.error) {
-                        MEGALogDebug(@"Max attempts reached");
-                        self.error(error);
+                    NSError *error = [info objectForKey:@"PHImageErrorKey"];
+                    MEGALogError(@"Request image data for asset: %@ failed with error: %@", self.asset, error);
+                    if (self.retries < 20) {
+                        self.retries++;
+                        [self requestImageAsset];
+                    } else {
+                        if (self.error) {
+                            MEGALogDebug(@"Max attempts reached");
+                            self.error(error);
+                        }
                     }
                 }
-            }
-        }];
+            }];
+        }
     } else {
-        [[PHImageManager defaultManager]
-         requestImageDataForAsset:self.asset
-         options:options
-         resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
-             [self proccessImageData:imageData withInfo:info];
-         }];
+        [self requestImageWithOptions:options];
     }
+}
+
+// Request image and don't downscale it
+- (void)requestImageWithOptions:(PHImageRequestOptions *)options {
+    [[PHImageManager defaultManager]
+     requestImageDataForAsset:self.asset
+     options:options
+     resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
+         NSData *data;
+         if (self.shareThroughChat && [dataUTI isEqualToString:@"public.heic"]) {
+             UIImage *image = [UIImage imageWithData:imageData];
+             data = UIImageJPEGRepresentation(image, 0.75);
+         } else {
+             data = imageData;
+         }
+         
+         [self proccessImageData:data withInfo:info];
+     }];
 }
 
 - (void)requestVideoAsset {

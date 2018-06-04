@@ -9,6 +9,7 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "MEGAActivityItemProvider.h"
 #import "MEGANode+MNZCategory.h"
@@ -45,13 +46,9 @@ static MEGAIndexer *indexer;
     
     if (languagesSupportedIDs == nil) {
         languagesSupportedIDs = [NSArray arrayWithObjects:@"ar",
-                                 @"bg",
-                                 @"cs",
                                  @"de",
                                  @"en",
                                  @"es",
-                                 @"fa",
-                                 @"fi",
                                  @"fr",
                                  @"he",
                                  @"id",
@@ -61,13 +58,8 @@ static MEGAIndexer *indexer;
                                  @"nl",
                                  @"pl",
                                  @"pt-br",
-                                 @"pt",
                                  @"ro",
                                  @"ru",
-                                 @"sk",
-                                 @"sl",
-                                 @"sr",
-                                 @"sv",
                                  @"th",
                                  @"tl",
                                  @"tr",
@@ -103,11 +95,13 @@ static MEGAIndexer *indexer;
                                 @"3dm":@"3d",
                                 @"3fr":@"raw",
                                 @"3g2":@"video",
+                                @"3ga":@"audio",
                                 @"3gp":@"video",
                                 @"7z":@"compressed",
                                 @"aac":@"audio",
+                                @"abr":@"photoshop",
                                 @"ac3":@"audio",
-                                @"accdb":@"database",
+                                @"accdb":@"web_lang",
                                 @"aep":@"after_effects",
                                 @"aet":@"after_effects",
                                 @"ai":@"illustrator",
@@ -118,78 +112,71 @@ static MEGAIndexer *indexer;
                                 @"apk":@"executable",
                                 @"app":@"executable",
                                 @"arw":@"raw",
-                                @"as":@"fla_lang",
-                                @"asc":@"fla_lang",
                                 @"ascii":@"text",
                                 @"asf":@"video",
                                 @"asp":@"web_lang",
                                 @"aspx":@"web_lang",
-                                @"asx":@"playlist",
                                 @"avi":@"video",
                                 @"bay":@"raw",
-                                @"bmp":@"graphic",
+                                @"bin":@"executable",
+                                @"bmp":@"image",
                                 @"bz2":@"compressed",
-                                @"c":@"source_code",
-                                @"cc":@"source_code",
+                                @"c":@"web_lang",
+                                @"cc":@"web_lang",
                                 @"cdr":@"vector",
                                 @"cgi":@"web_lang",
-                                @"class":@"java",
+                                @"class":@"web_data",
                                 @"com":@"executable",
-                                @"cpp":@"source_code",
+                                @"cmd":@"executable",
+                                @"cpp":@"web_lang",
                                 @"cr2":@"raw",
                                 @"css":@"web_data",
-                                @"cxx":@"source_code",
+                                @"cxx":@"web_lang",
                                 @"dcr":@"raw",
-                                @"db":@"database",
-                                @"dbf":@"database",
-                                @"dhtml":@"html",
-                                @"dll":@"source_code",
+                                @"db":@"web_lang",
+                                @"dbf":@"web_lang",
+                                @"dhtml":@"web_data",
+                                @"dll":@"web_lang",
                                 @"dng":@"raw",
                                 @"doc":@"word",
                                 @"docx":@"word",
                                 @"dotx":@"word",
                                 @"dwg":@"cad",
-                                @"dwt":@"dreamweaver",
                                 @"dxf":@"cad",
                                 @"dmg":@"dmg",
                                 @"eps":@"vector",
                                 @"exe":@"executable",
                                 @"fff":@"raw",
-                                @"fla":@"flash",
                                 @"flac":@"audio",
-                                @"flv":@"video",
                                 @"fnt":@"font",
                                 @"fon":@"font",
                                 @"gadget":@"executable",
-                                @"gif":@"graphic",
-                                @"gpx":@"gis",
+                                @"gif":@"image",
                                 @"gsheet":@"spreadsheet",
                                 @"gz":@"compressed",
-                                @"h":@"source_code",
-                                @"hpp":@"source_code",
-                                @"htm":@"html",
-                                @"html":@"html",
+                                @"h":@"web_lang",
+                                @"html":@"web_data",
+                                @"heic":@"image",
+                                @"hpp":@"web_lang",
                                 @"iff":@"audio",
                                 @"inc":@"web_lang",
                                 @"indd":@"indesign",
-                                @"jar":@"java",
-                                @"java":@"java",
+                                @"jar":@"web_data",
+                                @"java":@"web_data",
                                 @"jpeg":@"image",
                                 @"jpg":@"image",
                                 @"js":@"web_data",
                                 @"key":@"keynote",
-                                @"kml":@"gis",
                                 @"log":@"text",
-                                @"m":@"source_code",
-                                @"mm":@"source_code",
-                                @"m3u":@"playlist",
+                                @"m":@"web_lang",
+                                @"mm":@"web_lang",
                                 @"m4v":@"video",
                                 @"m4a":@"audio",
                                 @"max":@"3d",
-                                @"mdb":@"database",
+                                @"mdb":@"web_lang",
                                 @"mef":@"raw",
-                                @"mid":@"midi",
-                                @"midi":@"midi",
+                                @"mid":@"audio",
+                                @"midi":@"audio",
                                 @"mkv":@"video",
                                 @"mov":@"video",
                                 @"mp3":@"audio",
@@ -204,14 +191,13 @@ static MEGAIndexer *indexer;
                                 @"obj":@"3d",
                                 @"odp":@"generic",
                                 @"ods":@"spreadsheet",
-                                @"odt":@"text",
+                                @"odt":@"openoffice",
                                 @"ogv":@"video",
                                 @"otf":@"font",
                                 @"ots":@"spreadsheet",
                                 @"orf":@"raw",
                                 @"pages":@"pages",
-                                @"pcast":@"podcast",
-                                @"pdb":@"database",
+                                @"pdb":@"web_lang",
                                 @"pdf":@"pdf",
                                 @"pef":@"raw",
                                 @"php":@"web_lang",
@@ -220,8 +206,7 @@ static MEGAIndexer *indexer;
                                 @"php5":@"web_lang",
                                 @"phtml":@"web_lang",
                                 @"pl":@"web_lang",
-                                @"pls":@"playlist",
-                                @"png":@"graphic",
+                                @"png":@"image",
                                 @"ppj":@"premiere",
                                 @"pps":@"powerpoint",
                                 @"ppt":@"powerpoint",
@@ -230,42 +215,36 @@ static MEGAIndexer *indexer;
                                 @"psb":@"photoshop",
                                 @"psd":@"photoshop",
                                 @"py":@"web_lang",
-                                @"ra":@"real_audio",
-                                @"ram":@"real_audio",
                                 @"rar":@"compressed",
-                                @"rm":@"real_audio",
                                 @"rtf":@"text",
                                 @"rw2":@"raw",
                                 @"rwl":@"raw",
-                                @"sh":@"source_code",
+                                @"sh":@"web_lang",
                                 @"shtml":@"web_data",
                                 @"sitx":@"compressed",
                                 @"sketch":@"sketch",
-                                @"sql":@"database",
+                                @"sql":@"web_lang",
                                 @"srf":@"raw",
-                                @"srt":@"subtitles",
-                                @"stl":@"3d",
+                                @"srt":@"text",
                                 @"svg":@"vector",
                                 @"svgz":@"vector",
-                                @"swf":@"swf",
                                 @"tar":@"compressed",
                                 @"tbz":@"compressed",
-                                @"tga":@"graphic",
+                                @"tga":@"image",
                                 @"tgz":@"compressed",
-                                @"tif":@"graphic",
-                                @"tiff":@"graphic",
+                                @"tif":@"image",
+                                @"tiff":@"image",
                                 @"torrent":@"torrent",
                                 @"ttf":@"font",
                                 @"txt":@"text",
-                                @"vcf":@"vcard",
-                                @"vob":@"video_vob",
+                                @"vob":@"video",
                                 @"wav":@"audio",
                                 @"webm":@"video",
                                 @"wma":@"audio",
                                 @"wmv":@"video",
                                 @"wpd":@"text",
                                 @"wps":@"word",
-                                @"xhtml":@"html",
+                                @"Xd":@"experiencedesign",
                                 @"xlr":@"spreadsheet",
                                 @"xls":@"excel",
                                 @"xlsx":@"excel",
@@ -276,14 +255,6 @@ static MEGAIndexer *indexer;
     }
     
     return fileTypesDictionary;
-}
-
-+ (NSString *)fileTypeIconForExtension:(NSString *)extension {
-    NSString *fileTypeIconString = [self.fileTypesDictionary valueForKey:extension];
-    if (fileTypeIconString == nil) {
-        fileTypeIconString = @"generic";
-    }
-    return fileTypeIconString;
 }
 
 + (UIImage *)genericImage {
@@ -338,94 +309,6 @@ static MEGAIndexer *indexer;
         defaultPhotoImage = [UIImage imageNamed:@"image"];
     }
     return defaultPhotoImage;
-}
-
-+ (UIImage *)imageForNode:(MEGANode *)node {
-    
-    switch ([node type]) {
-        case MEGANodeTypeFolder: {
-            if ([node.name isEqualToString:@"Camera Uploads"]) {
-                return [self folderCameraUploadsImage];
-            } else {
-                if (node.isInShare) {
-                    return [self incomingFolderImage];
-                } else if (node.isOutShare) {
-                    return [self outgoingFolderImage];
-                } else {
-                    return [self folderImage];
-                }
-            }
-            break;
-        }
-            
-        case MEGANodeTypeFile: {
-            NSString *nodePathExtension = node.name.pathExtension;
-            return [self imageForExtension:nodePathExtension];
-            break;
-        }
-            
-        default:
-            return [self genericImage];
-    }
-}
-
-+ (UIImage *)imageForExtension:(NSString *)extension {
-    extension = extension.lowercaseString;
-    UIImage *image;
-    if ([extension isEqualToString:@"jpg"] || [extension isEqualToString:@"jpeg"]) {
-        image = [Helper defaultPhotoImage];
-    } else {
-        NSString *filetypeImage = [self.fileTypesDictionary valueForKey:extension];
-        if (filetypeImage && filetypeImage.length > 0) {
-            image = [UIImage imageNamed:filetypeImage];
-        } else {
-            return [self genericImage];
-        }
-    }
-    return image;
-}
-
-+ (UIImage *)infoImageForNode:(MEGANode *)node {
-    
-    switch ([node type]) {
-        case MEGANodeTypeFolder: {
-            if ([node.name isEqualToString:@"Camera Uploads"]) {
-                return [UIImage imageNamed:@"info_folder_image"];
-            } else {
-                if ([[MEGASdkManager sharedMEGASdk] isSharedNode:node]) {
-                    return [UIImage imageNamed:@"info_folder_outgoing"];
-                } else {
-                    return [UIImage imageNamed:@"info_folder"];
-                }
-            }
-            break;
-        }
-            
-        case MEGANodeTypeFile: {
-            NSString *nodePathExtension = node.name.pathExtension;
-            return [self infoImageForExtension:nodePathExtension];
-            break;
-        }
-            
-        default:
-            return [UIImage imageNamed:@"info_generic"];
-    }
-}
-
-+ (UIImage *)infoImageForExtension:(NSString *)extension {
-    extension = extension.lowercaseString;
-    UIImage *image;
-    if ([extension isEqualToString:@"jpg"] || [extension isEqualToString:@"jpeg"]) {
-        image = [UIImage imageNamed:@"info_image"];
-    } else {
-        NSString *filetypeImage = [self.fileTypesDictionary valueForKey:extension];
-        if (filetypeImage && filetypeImage.length > 0) {
-            image = [UIImage imageNamed:[NSString stringWithFormat:@"info_%@", filetypeImage]];
-        } else {
-            return [UIImage imageNamed:@"info_generic"];
-        }
-    }
-    return image;
 }
 
 + (UIImage *)downloadedArrowImage {
@@ -673,7 +556,7 @@ static MEGAIndexer *indexer;
                 if ((node.name.mnz_isImagePathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (node.name.mnz_videoPathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
                     [node mnz_copyToGalleryFromTemporaryPath:temporaryPath];
                 } else {
-                    [Helper copyNode:node from:temporaryPath to:relativeFilePath api:api];
+                    [Helper moveNode:node from:temporaryPath to:relativeFilePath api:api];
                 }
             } else {
                 NSString *appData = nil;
@@ -681,7 +564,8 @@ static MEGAIndexer *indexer;
                     NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
                     downloadsDirectory = [downloadsDirectory stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
                     relativeFilePath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
-                    appData = @"SaveInPhotosApp";
+                    
+                    appData = [[NSString new] mnz_appDataToSaveInPhotosApp];
                 }
                 [[MEGASdkManager sharedMEGASdk] startDownloadNode:[api authorizeNode:node] localPath:relativeFilePath appData:appData];
             }
@@ -707,8 +591,25 @@ static MEGAIndexer *indexer;
     NSRange replaceRange = [relativeFilePath rangeOfString:@"Documents/"];
     if (replaceRange.location != NSNotFound) {
         NSString *result = [relativeFilePath stringByReplacingCharactersInRange:replaceRange withString:@""];
-        [[NSFileManager defaultManager] copyItemAtPath:itemPath toPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath] error:nil];
-        [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[result decomposedStringWithCanonicalMapping]];
+        NSError *error;
+        if ([[NSFileManager defaultManager] copyItemAtPath:itemPath toPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath] error:&error]) {
+            [[MEGAStore shareInstance] insertOfflineNode:node api:api path:result.decomposedStringWithCanonicalMapping];
+        } else {
+            MEGALogError(@"Failed to copy from %@ to %@ with error: %@", itemPath, relativeFilePath, error);
+        }
+    }
+}
+
++ (void)moveNode:(MEGANode *)node from:(NSString *)itemPath to:(NSString *)relativeFilePath api:(MEGASdk *)api {
+    NSRange replaceRange = [relativeFilePath rangeOfString:@"Documents/"];
+    if (replaceRange.location != NSNotFound) {
+        NSString *result = [relativeFilePath stringByReplacingCharactersInRange:replaceRange withString:@""];
+        NSError *error;
+        if ([[NSFileManager defaultManager] moveItemAtPath:itemPath toPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath] error:&error]) {
+            [[MEGAStore shareInstance] insertOfflineNode:node api:api path:result.decomposedStringWithCanonicalMapping];
+        } else {
+            MEGALogError(@"Failed to move from %@ to %@ with error: %@", itemPath, relativeFilePath, error);
+        }
     }
 }
 
@@ -757,10 +658,10 @@ static MEGAIndexer *indexer;
         [api getThumbnailNode:node destinationFilePath:thumbnailFilePath];
         if ([cell isKindOfClass:[NodeTableViewCell class]]) {
             NodeTableViewCell *nodeTableViewCell = cell;
-            [nodeTableViewCell.thumbnailImageView setImage:[Helper imageForNode:node]];
+            [nodeTableViewCell.thumbnailImageView mnz_imageForNode:node];
         } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
             PhotoCollectionViewCell *photoCollectionViewCell = cell;
-            [photoCollectionViewCell.thumbnailImageView setImage:[Helper imageForNode:node]];
+            [photoCollectionViewCell.thumbnailImageView mnz_imageForNode:node];
         }
     }
 }
@@ -1024,6 +925,14 @@ static MEGAIndexer *indexer;
     return spaceHeight;
 }
 
++ (NSDictionary *)titleAttributesForEmptyState {
+    return @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:UIColor.mnz_black333333};
+}
+
++ (NSDictionary *)buttonTextAttributesForEmptyState {
+    return @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor};
+}
+
 #pragma mark - Utils for UI
 
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
@@ -1033,13 +942,17 @@ static MEGAIndexer *indexer;
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle color:(UIColor *)color {
     NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title attributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:color}];
     
-    subtitle = [NSString stringWithFormat:@"\n%@", subtitle];
-    NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:color}];
-    
-    [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
+    UIColor *colorWithAlpha = [color colorWithAlphaComponent:0.8];
+    if (![subtitle isEqualToString:@""]) {
+        subtitle = [NSString stringWithFormat:@"\n%@", subtitle];
+        NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:colorWithAlpha}];
+        
+        [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
+    }
     
     UILabel *label = [[UILabel alloc] init];
-    [label setNumberOfLines:2];
+    [label setNumberOfLines:[subtitle isEqualToString:@""] ? 1 : 2];
+    
     [label setTextAlignment:NSTextAlignmentCenter];
     [label setAttributedText:titleMutableAttributedString];
     
@@ -1051,16 +964,16 @@ static MEGAIndexer *indexer;
     searchController.searchResultsUpdater = searchResultsUpdaterDelegate;
     searchController.searchBar.delegate = searchBarDelegate;
     searchController.dimsBackgroundDuringPresentation = NO;
-    
+    searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     searchController.searchBar.translucent = NO;
-    searchController.searchBar.barTintColor = [UIColor mnz_grayF1F1F2];
-    searchController.searchBar.tintColor = [UIColor mnz_redF0373A];
+    searchController.searchBar.barTintColor = UIColor.mnz_grayFCFCFC;
+    searchController.searchBar.tintColor = UIColor.mnz_redF0373A;
     
     UITextField *searchTextField = [searchController.searchBar valueForKey:@"_searchField"];
     searchTextField.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
-    searchTextField.backgroundColor = [UIColor whiteColor];
-    searchTextField.textColor = [UIColor mnz_black333333];
-    searchTextField.tintColor = [UIColor mnz_green00BFA5];
+    searchTextField.backgroundColor = UIColor.mnz_grayEEEEEE;
+    searchTextField.textColor = UIColor.mnz_black333333;
+    searchTextField.tintColor = UIColor.mnz_green00BFA5;
     
     return searchController;
 }
@@ -1074,8 +987,26 @@ static MEGAIndexer *indexer;
             safariViewController.view.tintColor = [UIColor mnz_redF0373A];
         }
         
-        [[UIApplication mnz_visibleViewController] presentViewController:safariViewController animated:YES completion:nil];
+        [UIApplication.mnz_visibleViewController presentViewController:safariViewController animated:YES completion:nil];
     }
+}
+
++ (void)configureRedNavigationAppearance {
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor}];
+    [[UINavigationBar appearance] setTintColor:UIColor.whiteColor];
+    [[UINavigationBar appearance] setBarTintColor:UIColor.mnz_redF0373A];
+    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:UIColor.mnz_redF0373A];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:UIColor.whiteColor];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor} forState:UIControlStateNormal];
+}
+
++ (void)configureWhiteNavigationAppearance {
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+    [[UINavigationBar appearance] setTintColor:[UIColor mnz_redFF4D52]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorFromHexString:@"FCFCFC"]];
+    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:UIColor.blackColor];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:UIColor.blackColor];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redF0373A} forState:UIControlStateNormal];
 }
 
 #pragma mark - Logout
@@ -1143,7 +1074,7 @@ static MEGAIndexer *indexer;
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[MEGASdkManager sharedMEGASdk] logout];
         }]];
-        [[UIApplication mnz_visibleViewController] presentViewController:alertController animated:YES completion:nil];
+        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
     } else {
         [[MEGASdkManager sharedMEGASdk] logout];
     }
@@ -1316,7 +1247,7 @@ static MEGAIndexer *indexer;
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"recoveryKeyCopiedToClipboard", @"Title of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported - (String as short as possible).") message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-    [[UIApplication mnz_visibleViewController] presentViewController:alertController animated:YES completion:nil];
+    [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
     
     [[MEGASdkManager sharedMEGASdk] masterKeyExported];
 }
@@ -1335,7 +1266,7 @@ static MEGAIndexer *indexer;
         enableLog ? [[MEGALogger sharedLogger] startLogging] : [[MEGALogger sharedLogger] stopLogging];
     }]];
     
-    [[UIApplication mnz_visibleViewController] presentViewController:logAlertController animated:YES completion:nil];
+    [UIApplication.mnz_visibleViewController presentViewController:logAlertController animated:YES completion:nil];
 }
 
 @end

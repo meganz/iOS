@@ -3,13 +3,13 @@
 /* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSCameraUsageDescription"="MEGA heeft toegang tot uw camera wanneer uw een video, foto of een gesprek maakt in de applicatie.";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSPhotoLibraryUsageDescription"="MEGA heeft toegang tot uw foto's en/of video's wanneer u sommige selecteert om te uploaden of wanneer u de Camera Uploads heeft ingeschakeld.";
+"NSPhotoLibraryUsageDescription"="MEGA heeft toegang tot uw foto's /video's wanneer u ze upload, deel ze via de chat en als de Camera Uploads is ingeschakeld.";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSContactsUsageDescription"="MEGA krijgt toegang tot uw contacten wanneer u sommige selecteert om op te slaan/exporteren.";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryAddUsageDescription"="MEGA heeft toegang tot uw foto galerij nodig om foto's en video's naar de galerij van uw apparaat toe te voegen.";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSFaceIDUsageDescription"="MEGA heeft toegang tot Gezicht ID om er voor te zorgen dat u makkelijk de applicatie kunt openen als u deze optie inschakelt.";
+"NSFaceIDUsageDescription"="MEGA biedt Gezichts-ID om voor u makkelijk het app's wachtwoord te ontgrendelen als u deze optie inschakeld.";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
 "quickActionSearchString"="Zoeken";
 /*  */
