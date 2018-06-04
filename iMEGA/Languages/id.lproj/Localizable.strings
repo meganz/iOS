@@ -58,8 +58,14 @@
 "sslUnverified_alertTitle"="SSL key server tidak bisa diverifikasi. Anda mungkin mengalami serangan man-in-the-middle.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Konten yang ingin Anda akses tidak tersedia untuk akun ini. Coba masuk dengan akun yang sama seperti di klien web seluler.";
-/* Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in */
+/* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Prosesnya memakan waktu lebih lama dari yang diperkirakan. Mohon tunggu...";
+/* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
+"serversAreTooBusy"="Server sangat sibuk. Harap tunggu.";
+/* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
+"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+/* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
+"tooManyRequest"="Too many requests. Please wait.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Harap masuk ke akun anda";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -81,7 +87,7 @@
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Masuk";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="Buat Akun";
+"createAccount"="Buat akun";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="E-mail atau password tidak sah. Harap coba kembali";
 /* Error message when to many attempts to login */
@@ -121,7 +127,7 @@
 /*  */
 "passwordStrong"="Password ini akan menahan serangan brute-force yang paling rumit. Harap pastikan bahwa anda akan mengingat password anda.";
 /*  */
-"agreeWithTheMEGATermsOfService"="Saya menerima <a href='terms'>Ketentuan Penggunaan</a> MEGA";
+"agreeWithTheMEGATermsOfService"="Saya setuju dengan <a href='terms'>Kebijakan Pelayanan MEGA</a>";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Masukan nama yang benar";
 /*  */
@@ -149,7 +155,7 @@
 /* Title for the file link view */
 "fileLink"="Pranala berkas";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="Buka";
+"openButton"="Bukan";
 /* Error message shown when you try to download something bigger than the space available in your device */
 "fileTooBigMessage"="File yang anda coba untuk download lebih besar dari memori yang tersedia.";
 /* Error message shown when you try to open something bigger than the free space in your device */
@@ -185,7 +191,7 @@
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Koneksi internet tidak tersedia";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="Kosongkan Folder";
+"emptyFolder"="Tidak ada file di folder";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Tidak ada berkas di Cloud Drive anda";
 /* Button title shown in empty views when you can 'Add files' */
@@ -252,6 +258,12 @@
 "folderAndFiles"="1 folder • %d file";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Dimasukan antrian";
+/* A label to indicate a paused state for a transfer item (upload/download). */
+"paused"="Berhenti sementara";
+/* Label for the state of a transfer when is being completing - (String as short as possible). */
+"Completing..."="Melengkapi ...";
+/* Label for the state of a transfer when is being retrying - (String as short as possible). */
+"Retrying..."="Mencoba lagi ...";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Terdapat pending download";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -341,7 +353,7 @@
 /* String already exists: 367, but we need to split paragraphs. */
 "copyrightMessagePart1"="MEGA menghargai hak cipta orang lain dan mengharuskan pengguna layanan MEGA cloud menuruti hukum hak cipta.";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="Anda dilarang keras menggunakan layanan MEGA cloud untuk melanggar hak cipta. Anda tidak boleh upload, download, simpan, bagi, menampilkan, stream, mendistribusi, email, link, mentransmisi atau membuat tersedia file, data, atau kontent apapun yang melanggar hak cipta atau hak milik perorangan atau lembaga.";
+"copyrightMessagePart2"="Anda dilarang menggunakan layanan MEGA cloud untuk melanggar hak cipta. Anda tidak boleh mengunggah, mengunduh, menyimpan, berbagi, menampilkan, mengalirkan, mendistribusikan, mengirim email, menautkan, mengirimkan atau menyediakan file, data, atau konten yang melanggar hak cipta atau hak kepemilikan orang lain atau entitas lainnya.";
 /* button caption text that the user clicks when he agrees */
 "agree"="Setuju";
 /* button caption text that the user clicks when he disagrees */
@@ -385,7 +397,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Links terhapus";
 /* Title show when a file is being downloaded */
-"downloading"="Sedang mengunduh";
+"downloading"="Downloading";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Apakah anda ingin membatalkan download?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -493,9 +505,9 @@
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "automaticallyBackupYourPhotos"="Backup foto anda ke Cloud Drive secara otomatis";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Aktifkan Camera Uploads";
+"enableCameraUploadsButton"="Aktifkan Upload Kamera";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Camera Uploads diaktifkan";
+"cameraUploadsEnabled"="Kamera upload teraktifkan";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Upload kamera selesai";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
@@ -633,7 +645,7 @@
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Pilihan keamanan";
 /* Title of one of the Settings sections where you can see things 'About' the app */
-"about"="Perihal";
+"about"="Tentang";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Bahasa";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
@@ -648,6 +660,8 @@
 "privacyPolicyLabel"="Kebijakan Privasi";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Ketentuan Penggunaan";
+/* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
+"dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Off";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -671,7 +685,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Ubah kata sandi";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="Meng-ekspor Master Key dan menyimpan nya dalam tempat yang aman;  membolehkan anda untuk mengganti password tanpa kehilangan data";
+"exportMasterKeyFooter"="Meng-ekspor Recovery Key dan menyimpan nya di tempat yang aman membolehkan anda mengatur password baru tanpa kehilangan data.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Mengapa saya butuh Recovery Key?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -766,12 +780,8 @@
 "confirmPassword"="Konfirmasi password";
 /* Success message shown when the password has been changed */
 "passwordChanged"="Kata sandi anda telah dirubah.";
-/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
-"oldAndNewPasswordMatch"="Password baru dan lama tidak sama.";
 /* An option to reset the password. */
 "forgotPassword"="Lupa password?";
-/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="Anda dapat me-reset password anda dengan mengikuti recovery link yang akan dikirim ke email anda.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Recovery link ini telah kadaluarsa, harap coba kembali.";
 /* Headline of the password reset recovery procedure */
@@ -786,26 +796,9 @@
 "youRecoveryKeyIsGoingTo"="Recovery Key anda akan dipakai untuk me-reset password anda. Harap, masukan password baru anda.";
 /*  */
 "yourPasswordHasBeenReset"="Password telah sukses direset. Harap masuk ke akun anda sekarang.";
-/* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Jika anda memiliki backup dari Recovery Key anda, anda dapat me-reset password anda dengan memilih IYA. Tidak ada data akan hilang.";
-/* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="Anda masih tetap dapat meng-ekspor Recovery Key anda sekarang jika anda memiliki sesi MEGA yang aktif pada browser lainnya pada komputer ini atau komputer lain. Jika anda tidak memilikinya, anda tidak lagi dapat men-dekripsi akun anda, namun anda dapat memulai akun baru dengan alamat e-mail yang sama dengan memilih TIDAK.";
-/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="Anda punya backup dari Recovery Key anda?";
-/* Headline when the user chose YES */
-"great"="Bagus!";
-/* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Harap masukan alamat email anda di bawah. Anda akan menerima recovery link yang membolehkan anda untuk memasukan Recovery Key anda dan me-reset password anda.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Kirim";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="Oops!";
-/* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Karena encryption paradigm menyeluruh kami, anda tidak akan dapat meng-akses data anda tanpa password anda atau backup dari Recovery Key anda.";
-/* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="Anda dapat memparkir akun anda dan memulai ulang dengan email yang sama. Data anda akan kami simpan selama setidaknya 60 hari. Jika anda mengingat password dari akun yang sedang anda parkir, harap kontak support@mega.nz";
-/* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="Harap masukan alamat email anda di bawah ini. Anda akan menerima recovery link yang akan membolehkan anda memparkir akun anda.";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Parkir akun";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -839,7 +832,7 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Sesi berakhir";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Ubah Passcode";
+"changePasscodeLabel"="Ganti passcode";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="Passcode sederhana";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
@@ -879,7 +872,7 @@
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
 "buyPRO"="Beli PRO";
 /* Caption of a button to upgrade the account to Pro status */
-"upgrade"="Tingkatkan";
+"upgrade"="Upgrade";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Melihat dan mengedit profil";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -963,7 +956,7 @@
 /* Title for MEGA "Available" space. */
 "availableLabel"="Tersedia";
 /* title of the My Account screen */
-"accountType"="Tipe Akun: ";
+"accountType"="Tipe Akun:";
 /* Text relative to the MEGA account level. UPPER CASE */
 "free"="GRATIS";
 /* Text that shows the expiry date of the account PRO level */
@@ -1064,6 +1057,8 @@
 "chat"="Chat";
 /* Empty Conversations section */
 "noConversations"="Tidak ada percakapan";
+/* Empty Conversations description */
+"noConversationsDescription"="Start chatting securely with your contacts using end-to-end encryption";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Percakapan dinonaktifkan";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1092,8 +1087,14 @@
 "changedGroupChatNameTo"="[A] mengganti nama percakapan grup menjadi '[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Tambah participant...";
+/* Menu item to add participants to a chat */
+"addParticipants"="Tambahkan peserta";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
+/* Title used in settings that enables the generation of link previews in the chat */
+"richUrlPreviews"="Rich URL previews";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"richPreviewsFooter"="Enhance the MEGAchat experience. URL content will be retrieved without end-to-end encryption.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Suara dan Panggilan Suara";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1160,6 +1161,8 @@
 "renameGroup"="Namakan Grup";
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="Ganti Avatar Grup";
+/* Text used as hint to give the user information to write a name for the group chat. */
+"enterGroupName"="Enter group name";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Tinggalkan";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1187,7 +1190,7 @@
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="Percakapan dengan %@";
 /* Title show above the name of the persons with whom you're chatting */
-"chattingWith"="Chatting with";
+"chattingWith"="Chatting dengan";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA melindungi chat anda dengan enkripsi menyeluruh (diatur oleh pengguna) yang memberikan jaminan keamanan:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1198,8 +1201,12 @@
 "chatNotFound"="Percakapan tidak ditemukan";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ sedang mengetik ...";
-/* Message box label which shows that user can type message text in this textview */
-"writeAMessage"="Tulis pesan...";
+/* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
+"twoUsersAreTyping"="%1$s [A]sedang mengetik..[/A]";
+/* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
+"moreThanTwoUsersAreTyping"="%1$s [A]dan lainnya sedang mengetik...[/A]";
+/* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
+"writeAMessage"="Write a message to %s...";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="Tidak ada riwayat percakapan";
 /* Button which allows to retry send message in chat conversation. */
@@ -1218,6 +1225,16 @@
 "done"="Selesai";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Kirim file";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"enableRichUrlPreviews"="Enable rich URL previews";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"alwaysAllow"="Always Allow";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"notNow"="Not Now";
+/* */
+"never"="Tidak pernah";
+/* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
+"richPreviewsConfirmation"="You are disabling rich URL previews permanently. You can re-enable rich URL previews in your settings. Do you want to proceed?";
 /* */
 "warning"="Peringatan";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
@@ -1253,17 +1270,21 @@
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="Melampirkan %s file.";
 /* A summary message when a user sent the information of one contact through the chat. */
-"sharedContact"="Shared this contact:";
+"sharedContact"="Bagikan kontak ini:";
 /* A summary message when a user sent the information of some contacts at once through the chat. */
-"sharedContacts"="Shared these contacts:";
+"sharedContacts"="Bagikan kontak ini:";
 /* A summary message when a user has attached one file into the chat. */
-"uploadedFile"="Uploaded this file:";
+"uploadedFile"="Unggah file ini:";
 /* A summary message when a user has attached many files at once into the chat. */
-"uploadedFiles"="Uploaded these files:";
+"uploadedFiles"="Unggah file-file ini:";
 /* Label in a button that allows to jump to the latest item */
 "jumpToLatest"="Jump to latest";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="New messages";
+/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
+"unreadMessage"="%lu unread message";
+/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
+"unreadMessages"="%lu unread messages";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Subskripsi diperbaharui secara otomatis untuk periode subskripsi yang berkelanjutan dengan durasi dan harga yang sama dengan pilihan awal. Anda dapat mematikan pembaharuan otomatis subskripsi MEGA PRO anda selambatnya 24 jam sebelum pembayaran subskripsi berikutnya jatuh tempo di halaman settings akun iTunes anda. Untuk mengatur subskripsi anda, klik pada ikon App Store pada handset anda, masuk dengan Apple ID pada bagian bawah halaman (Jika anda belum masuk) dan klik Lihat ID. Anda akan dibawa ke halaman akun anda dimana anda dapat men-skroll ke bawah untuk Mengatur Subskripsi App. Dari sana, anda dapat memilih subskripsi MEGA PRO anda dan melihat tanggal pembaharuan anda yang telah dijadwalkan, pilih paket subskripsi yang berbeda atau tekan on-off switch untuk mematikan pembaharuan otomatis subskripsi anda.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1326,7 +1347,7 @@
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Error tidak diketahui";
 /* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="Anda harus me-restart MEGA setelah mengganti bahasa";
+"languageRestartAlert"="Anda harus me-restart MEGA setelah mengubah bahasa";
 /* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
 "languageRestartNotification"="Bahasa terganti. Tap untuk merestart.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
@@ -1342,25 +1363,25 @@
 "generalDescriptionParagraph5"="PRO LITE subscription: €4.99 (US$4.99) per month or €49.99 (US$49.99) per year gives you 200 GB of storage space and 1 TB of transfer quota per month.\nPRO I subscription: €9.99 (US$9.99) per month or €99.99 (US$99.99) per year gives you 1 TB of storage space and 2 TB of transfer quota per month.\nPRO II subscription: €19.99 (US$19.99) per month or €199.99 (US$199.99) per year gives you 4 TB of storage space and 8 TB of transfer quota per month.\nPRO III subscription: €29.99 (US$29.99) per month or €299.99 (US$299.99) per year gives you 8 TB of storage space and 16 TB of transfer quota per month.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="For more info, please check our website:\nMobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nDesktop - https://mega.nz/";
+"generalDescriptionParagraph6"="For more info, please check our website: https://mega.nz/\nTerms of Service: https://mega.nz/terms\nPrivacy Policy: https://mega.nz/privacy";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="Panggilan...";
 /* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="Missed audio call";
+"missedAudioCall"="Panggilan audio tidak terjawab";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A] missed audio calls";
+"missedAudioCalls"="[A] panggilan audio tidak terjawab";
 /* Notification text body shown when you have missed one video call */
-"missedVideoCall"="Missed video call";
+"missedVideoCall"="Panggilan video tidak terjawab";
 /* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A] missed video calls";
+"missedVideoCalls"="[A] panggilan video tidak terjawab";
 /* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="Missed audio call and missed video call";
+"missedAudioCallAndMissedVideoCall"="Panggilan audio tidak terjawab dan panggilan video tidak terjawab";
 /* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="Missed audio call and [A] missed video calls";
+"missedAudioCallAndMissedVideoCalls"="Panggilan audio tidak terjawab dan [A] meleset panggilan video";
 /* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A] missed audio calls and missed video call";
+"missedAudioCallsAndMissedVideoCall"="[A] panggilan audio tidak terjawab dan panggilan video tidak terjawab";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";
+"missedAudioCallsAndMissedVideoCalls"="[A] panggilan audio tidak terjawab dan [B] meleset panggilan video";
 /* Button title to see the available bonus */
 "getBonus"="Get Bonus";
 /* QR Code label, used in Settings as title. String as short as possible */
@@ -1433,3 +1454,45 @@
 "previousVersions"="Previous Versions";
 /* Title of section to display information of all current versions of files. */
 "currentVersions"="Versi Saat Ini";
+/* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
+"remindPasswordTitle"="Apa anda ingat password anda?";
+/* Text that describes why the user should test his/her password */
+"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset your password without data loss. Please make sure you remember your password.";
+/* Text that describes why the user should test his/her password before logging out */
+"remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
+/* Text next to a toggle that if enabled won't appear again */
+"dontShowAgain"="Don’t show me again";
+/* Label for test password button and titles */
+"testPassword"="Test Password";
+/* Label for recovery key button */
+"backupRecoveryKey"="Backup Recovery Key";
+/* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
+"testPasswordText"="Silakan uji kata sandi Anda di bawah ini untuk memastikan Anda mengingatnya. Jika Anda kehilangan kata sandi Anda, Anda akan kehilangan akses ke data MEGA Anda. [A]Pelajari lebih lanjut[/A]";
+/* Title text for the account confirmation. */
+"confirm"="Konfirm";
+/* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
+"passwordAccepted"="Password diterima";
+/* A dialog title to export the Recovery Key for the current user. */
+"exportRecoveryKey"="Export Recovery Key";
+/* Title to confirm that you want to logout */
+"proceedToLogout"="Proceed to logout";
+/* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
+"testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+/* state previous to import a file */
+"loading"="Memuat...";
+/*   */
+"next"="Berikut";
+/* Button title to allow the user ignore something */
+"ignore"="Abaikan";
+/* Button title to allow the user open the default browser */
+"openBrowser"="Open browser";
+/* A label for the Restart button to relaunch MEGAsync. */
+"restart"="Restart";
+/* Title to alert user the possibility of resume playing the video or start from the beginning */
+"resumePlayback"="Resume playback?";
+/* Message to show the user info (name and time) about the resume of the video */
+"continueOrRestartVideoMessage"="%1$s will continue at %2$s";
+/*  */
+"resume"="Lanjutkan";
+/* Title to preview document */
+"previewContent"="Preview Content";

@@ -46,7 +46,7 @@
         TestPasswordViewController *testPasswordViewController = testPasswordNavigation.viewControllers.firstObject;
         testPasswordViewController.logout = self.isLoggingOut;
         
-        [[UIApplication mnz_visibleViewController] presentViewController:testPasswordNavigation animated:YES completion:nil];
+        [UIApplication.mnz_visibleViewController presentViewController:testPasswordNavigation animated:YES completion:nil];
     }];
 }
 

@@ -40,7 +40,7 @@
         PasswordReminderViewController *passwordReminderViewController = [[UIStoryboard storyboardWithName:@"PasswordReminder" bundle:nil] instantiateViewControllerWithIdentifier:@"PasswordReminderViewControllerID"];
         passwordReminderViewController.logout = self.isLoggingOut;
         
-        [[UIApplication mnz_visibleViewController] presentViewController:passwordReminderViewController animated:YES completion:nil];
+        [UIApplication.mnz_visibleViewController presentViewController:passwordReminderViewController animated:YES completion:nil];
     } else {
         if (self.isLoggingOut) {
             [Helper logoutAfterPasswordReminder];

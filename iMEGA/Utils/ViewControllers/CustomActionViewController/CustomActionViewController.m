@@ -3,6 +3,7 @@
 #import "Helper.h"
 #import "MEGASdkManager.h"
 #import "MEGANode+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
 #define kCollectionViewHeaderHeight 80
@@ -110,10 +111,11 @@
     info.text = [Helper sizeAndDateForNode:self.node api:[MEGASdkManager sharedMEGASdk]];
     
     UIImageView *imageView = [header viewWithTag:100];
+    
     if (self.node.isFile) {
-        [imageView mnz_setThumbnailByNodeHandle:self.node.handle];
+        [imageView mnz_setThumbnailByNode:self.node];
     } else if (self.node.isFolder) {
-        imageView.image = [Helper imageForNode:self.node];
+        [imageView mnz_imageForNode:self.node];
         info.text = [Helper filesAndFoldersInFolderNode:self.node api:[MEGASdkManager sharedMEGASdk]];
     }
     
@@ -184,7 +186,14 @@
         [actions addObject:[self actionDownload]];
         if (self.node.isFile) {
             [actions addObject:[self actionOpen]];
+        } else {
+            [actions addObject:[self actionSelectNodes]];
+            [actions addObject:[self actionShare]];
         }
+    } else if (self.displayMode == DisplayModeFileLink) {
+        [actions addObject:[self actionImport]];
+        [actions addObject:[self actionDownload]];
+        [actions addObject:[self actionShare]];
     } else {
         switch (accessType) {
             case MEGAShareTypeAccessRead:
@@ -216,6 +225,7 @@
                     if (self.isIncomingShareChildView) {
                         [actions addObject:[self actionLeaveSharing]];
                     }
+                    [actions addObject:[self actionMoveToRubbishBin]];
                 }
                 break;
                 
@@ -232,7 +242,7 @@
                     if (self.isIncomingShareChildView) {
                         [actions addObject:[self actionLeaveSharing]];
                     }
-                    if (self.displayMode == DisplayModeCloudDrive) {
+                    if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeNodeInfo) {
                         [actions addObject:[self actionMoveToRubbishBin]];
                     } else if (self.displayMode == DisplayModeRubbishBin) {
                         [actions addObject:[self actionRemove]];
@@ -315,7 +325,7 @@
 }
 
 - (MegaActionNode *)actionImport {
-    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"import", nil) iconName: @"infoImport" andActionType:MegaNodeActionTypeImport];
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"import", nil) iconName: @"import" andActionType:MegaNodeActionTypeImport];
 }
 
 - (MegaActionNode *)actionOpen {
@@ -328,6 +338,10 @@
 
 - (MegaActionNode *)actionRemoveVersion {
     return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"delete", nil) iconName: @"remove" andActionType:MegaNodeActionTypeRemove];
+}
+
+- (MegaActionNode *)actionSelectNodes {
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"select", nil) iconName: @"selected" andActionType:MegaNodeActionTypeSelect];
 }
 
 #pragma mark - IBActions

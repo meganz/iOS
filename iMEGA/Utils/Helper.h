@@ -28,16 +28,11 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 #pragma mark - Images
 
-+ (NSString *)fileTypeIconForExtension:(NSString *)extension;
-
-+ (UIImage *)imageForNode:(MEGANode *)node;
-+ (UIImage *)imageForExtension:(NSString *)extension;
-
-+ (UIImage *)infoImageForNode:(MEGANode *)node;
-+ (UIImage *)infoImageForExtension:(NSString *)extension;
++ (NSDictionary *)fileTypesDictionary;
 
 + (UIImage *)genericImage;
 + (UIImage *)folderImage;
++ (UIImage *)folderCameraUploadsImage;
 + (UIImage *)incomingFolderImage;
 + (UIImage *)outgoingFolderImage;
 + (UIImage *)defaultPhotoImage;
@@ -112,6 +107,9 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (CGFloat)verticalOffsetForEmptyStateWithNavigationBarSize:(CGSize)navigationBarSize searchBarActive:(BOOL)isSearchBarActive;
 + (CGFloat)spaceHeightForEmptyState;
 
++ (NSDictionary *)titleAttributesForEmptyState;
++ (NSDictionary *)buttonTextAttributesForEmptyState;
+
 #pragma mark - Utils for UI
 
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
@@ -120,6 +118,10 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (UISearchController *)customSearchControllerWithSearchResultsUpdaterDelegate:(id<UISearchResultsUpdating>)searchResultsUpdaterDelegate searchBarDelegate:(id<UISearchBarDelegate>)searchBarDelegate;
 
 + (void)presentSafariViewControllerWithURL:(NSURL *)url;
+
++ (void)configureRedNavigationAppearance;
++ (void)configureWhiteNavigationAppearance;
+    
 + (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ __nullable)(void))completion;
 + (void)showMasterKeyCopiedAlert;
 

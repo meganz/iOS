@@ -12,6 +12,7 @@
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "DisplayMode.h"
@@ -19,15 +20,15 @@
 
 @interface ChatAttachedNodesViewController ()
 
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) NSMutableArray *selectedNodesMutableArray;
 
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
 
 @end
 
@@ -282,10 +283,10 @@
                 cell.thumbnailImageView.image = [UIImage imageWithContentsOfFile:request.file];
             }];
             [[MEGASdkManager sharedMEGASdk] getThumbnailNode:currentNode destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
-            cell.thumbnailImageView.image = [Helper imageForNode:currentNode];
+            [cell.thumbnailImageView mnz_imageForNode:currentNode];
         }
     } else {
-        cell.thumbnailImageView.image = [Helper imageForNode:currentNode];
+        [cell.thumbnailImageView mnz_imageForNode:currentNode];
     }
     
     return cell;

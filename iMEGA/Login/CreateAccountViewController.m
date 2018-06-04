@@ -299,7 +299,7 @@
 }
 
 - (IBAction)termOfServiceTouchUpInside:(UIButton *)sender {
-    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://mega.nz/ios_terms.html"]];
+    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://mega.nz/terms"]];
 }
 
 - (IBAction)createAccountTouchUpInside:(id)sender {
@@ -331,10 +331,34 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     self.activeTextField = textField;
+    switch (textField.tag) {
+        case 3:
+            self.passwordView.rightImageView.hidden = NO;
+            break;
+            
+        case 4:
+            self.retypePasswordView.rightImageView.hidden = NO;
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     self.activeTextField = nil;
+    switch (textField.tag) {
+        case 3:
+            self.passwordView.rightImageView.hidden = YES;
+            break;
+            
+        case 4:
+            self.retypePasswordView.rightImageView.hidden = YES;
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
@@ -396,7 +420,7 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    switch ([textField tag]) {
+    switch (textField.tag) {
         case 0:
             [self.lastNameTextField becomeFirstResponder];
             break;

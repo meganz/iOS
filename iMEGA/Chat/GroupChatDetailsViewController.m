@@ -23,14 +23,14 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
 
-@property (strong, nonatomic) IBOutlet UIView *emptyHeaderView;
-@property (strong, nonatomic) IBOutlet UIView *participantsHeaderView;
+@property (nonatomic) UIView *emptyHeaderView;
+@property (nonatomic) UIView *actionsSectionEmptyFooterView;
+@property (nonatomic) UIView *sharedFoldersEmptyFooterView;
+
+@property (weak, nonatomic) IBOutlet UIView *participantsHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *participantsHeaderViewLabel;
-
-@property (strong, nonatomic) IBOutlet UIView *actionsSectionEmptyFooterView;
-@property (strong, nonatomic) IBOutlet UIView *sharedFoldersEmptyFooterView;
 
 @property (strong, nonatomic) NSMutableArray *participantsMutableArray;
 
@@ -46,14 +46,13 @@
     [super viewDidLoad];
     
     self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
-    
-    self.navigationItem.title = AMLocalizedString(@"groupInfo", @"Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group");
+    self.navigationItem.title = AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context");
     
     self.nameLabel.text = self.chatRoom.title;
     
-    self.emptyHeaderView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyHeaderView" owner:self options:nil] firstObject];
-    self.actionsSectionEmptyFooterView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyFooterView" owner:self options:nil] firstObject];
-    self.sharedFoldersEmptyFooterView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyFooterView" owner:self options:nil] firstObject];
+    self.emptyHeaderView = [NSBundle.mainBundle loadNibNamed:@"EmptyHeaderView" owner:self options:nil].firstObject;
+    self.actionsSectionEmptyFooterView = [NSBundle.mainBundle loadNibNamed:@"EmptyFooterView" owner:self options:nil].firstObject;
+    self.sharedFoldersEmptyFooterView = [NSBundle.mainBundle loadNibNamed:@"EmptyFooterView" owner:self options:nil].firstObject;
     
     CGSize avatarSize = self.avatarImageView.frame.size;
     UIImage *avatarImage = [UIImage imageForName:self.chatRoom.title.uppercaseString size:avatarSize backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(avatarSize.width/2.0f)]];
@@ -175,7 +174,7 @@
     }
     contactsVC.participantsMutableDictionary = participantsMutableDictionary.copy;
     
-    contactsVC.userSelected = ^void(NSArray *users) {
+    contactsVC.userSelected = ^void(NSArray *users, NSString *groupName) {
         for (NSInteger i = 0; i < users.count; i++) {
             MEGAUser *user = [users objectAtIndex:i];
             [[MEGASdkManager sharedMEGAChatSdk] inviteToChat:self.chatRoom.chatId user:user.handle privilege:MEGAChatRoomPrivilegeStandard delegate:self];
@@ -290,7 +289,7 @@
     } else if (indexPath.section == 1) {
         if ((indexPath.row == 0) && (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator)) {
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsParticipantEmailTypeID" forIndexPath:indexPath];
-            cell.leftImageView = nil;
+            cell.leftImageView.image = [UIImage imageNamed:@"inviteToChat"];
             cell.emailLabel.text = AMLocalizedString(@"addParticipant", @"Button label. Allows to add contacts in current chat conversation.");
             cell.onlineStatusView.backgroundColor = nil;
             cell.rightImageView.image = nil;
@@ -570,6 +569,7 @@
         case MEGAChatRoomChangeTypeUnreadCount:
             break;
             
+        case MEGAChatRoomChangeTypeOwnPriv:
         case MEGAChatRoomChangeTypeParticipants:            
             [self setParticipants];
             [self.tableView reloadData];
@@ -586,7 +586,6 @@
             [self.navigationController popToRootViewControllerAnimated:YES];
             break;
             
-        case MEGAChatRoomChangeTypeOwnPriv:
         case MEGAChatRoomChangeTypeUserStopTyping:
             break;
             
