@@ -1,8 +1,10 @@
 
 #import "NSString+MNZCategory.h"
 
+#import <AVKit/AVKit.h>
 #import <CommonCrypto/CommonDigest.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+#import <Photos/Photos.h>
 
 #import "MEGAChatSdk.h"
 
@@ -50,6 +52,26 @@ static NSString* const B = @"[B]";
     
     return [multimediaExtensionsSet containsObject:self.pathExtension.lowercaseString];
 }
+
+#pragma mark - appData
+
+- (NSString *)mnz_appDataToSaveCameraUploadsCount:(NSUInteger)operationCount {
+    return [self stringByAppendingString:[NSString stringWithFormat:@">CU=%ld", operationCount]];
+}
+
+- (NSString *)mnz_appDataToSaveInPhotosApp {
+    return [self stringByAppendingString:@">SaveInPhotosApp"];
+}
+
+- (NSString *)mnz_appDataToAttachToChatID:(uint64_t)chatId {
+    return [self stringByAppendingString:[NSString stringWithFormat:@">attachToChatID=%llu", chatId]];
+}
+
+- (NSString *)mnz_appDataToSaveCoordinates:(NSString *)coordinates {
+    return (coordinates ? [self stringByAppendingString:[NSString stringWithFormat:@">setCoordinates=%@", coordinates]] : self);
+}
+
+#pragma mark - Utils
 
 + (NSString *)mnz_stringWithoutUnitOfComponents:(NSArray *)componentsSeparatedByStringArray {
     NSString *countString = [componentsSeparatedByStringArray objectAtIndex:0];
@@ -501,6 +523,43 @@ static NSString* const B = @"[B]";
      }];
     
     return emojiCount;
+}
+
+- (NSString *)mnz_coordinatesOfPhotoOrVideo {
+    if (self.mnz_isImagePathExtension) {
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:self]]];
+        CGImageSourceRef imageData = CGImageSourceCreateWithData((CFDataRef)data, NULL);
+        if (imageData) {
+            NSDictionary *metadata = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imageData, 0, NULL);
+            
+            CFRelease(imageData);
+            
+            NSDictionary *exifDictionary = [metadata objectForKey:(NSString *)kCGImagePropertyGPSDictionary];
+            if (exifDictionary) {
+                NSNumber *latitude = [exifDictionary objectForKey:@"Latitude"];
+                NSNumber *longitude = [exifDictionary objectForKey:@"Longitude"];
+                if (latitude && longitude) {
+                    return [NSString stringWithFormat:@"%@&%@", latitude, longitude];
+                }
+            }
+        }
+    }
+    
+    if (self.mnz_isVideoPathExtension) {
+        AVAsset *asset = [AVAsset assetWithURL:[NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:self]]];
+        for (AVMetadataItem *item in asset.metadata) {
+            if ([item.commonKey isEqualToString:AVMetadataCommonKeyLocation]) {
+                NSString *latlon = item.stringValue;
+                NSString *latitude  = [latlon substringToIndex:8];
+                NSString *longitude = [latlon substringWithRange:NSMakeRange(8, 9)];
+                if (latitude && longitude) {
+                    return [NSString stringWithFormat:@"%@&%@", latitude, longitude];
+                }
+            }
+        }
+    }
+    
+    return nil;
 }
 
 + (NSString *)mnz_base64FromBase64URLEncoding:(NSString *)base64URLEncondingString {

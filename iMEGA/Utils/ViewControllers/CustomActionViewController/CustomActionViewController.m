@@ -111,6 +111,7 @@
     info.text = [Helper sizeAndDateForNode:self.node api:[MEGASdkManager sharedMEGASdk]];
     
     UIImageView *imageView = [header viewWithTag:100];
+    
     if (self.node.isFile) {
         [imageView mnz_setThumbnailByNode:self.node];
     } else if (self.node.isFolder) {
@@ -185,6 +186,9 @@
         [actions addObject:[self actionDownload]];
         if (self.node.isFile) {
             [actions addObject:[self actionOpen]];
+        } else {
+            [actions addObject:[self actionSelectNodes]];
+            [actions addObject:[self actionShare]];
         }
     } else if (self.displayMode == DisplayModeFileLink) {
         [actions addObject:[self actionImport]];
@@ -321,7 +325,7 @@
 }
 
 - (MegaActionNode *)actionImport {
-    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"import", nil) iconName: @"infoImport" andActionType:MegaNodeActionTypeImport];
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"import", nil) iconName: @"import" andActionType:MegaNodeActionTypeImport];
 }
 
 - (MegaActionNode *)actionOpen {
@@ -334,6 +338,10 @@
 
 - (MegaActionNode *)actionRemoveVersion {
     return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"delete", nil) iconName: @"remove" andActionType:MegaNodeActionTypeRemove];
+}
+
+- (MegaActionNode *)actionSelectNodes {
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"select", nil) iconName: @"selected" andActionType:MegaNodeActionTypeSelect];
 }
 
 #pragma mark - IBActions

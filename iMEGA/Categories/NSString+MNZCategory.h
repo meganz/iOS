@@ -12,6 +12,15 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 @property (nonatomic, readonly, getter=mnz_isVideoPathExtension) BOOL mnz_videoPathExtension;
 @property (nonatomic, readonly, getter=mnz_isMultimediaPathExtension) BOOL mnz_multimediaPathExtension;
 
+#pragma mark - appData
+
+- (NSString *)mnz_appDataToSaveCameraUploadsCount:(NSUInteger)operationCount;
+- (NSString *)mnz_appDataToSaveInPhotosApp;
+- (NSString *)mnz_appDataToAttachToChatID:(uint64_t)chatId;
+- (NSString *)mnz_appDataToSaveCoordinates:(NSString *)coordinates;
+
+#pragma mark - Utils
+
 + (NSString *)mnz_stringWithoutUnitOfComponents:(NSArray *)componentsSeparatedByStringArray;
 + (NSString *)mnz_stringWithoutCountOfComponents:(NSArray *)componentsSeparatedByStringArray;
 
@@ -35,6 +44,7 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 - (BOOL)mnz_isPureEmojiString;
 - (NSInteger)mnz_emojiCount;
 
+- (NSString *)mnz_coordinatesOfPhotoOrVideo;
 + (NSString *)mnz_base64FromBase64URLEncoding:(NSString *)base64URLEncondingString;
 
 @end

@@ -41,11 +41,19 @@
 }
 
 - (void)viewDidLoad {
-    [Helper configureWhiteNavigationAppearance];
+    [super viewDidLoad];
+    if (@available(iOS 11.0, *)) {} else {
+        [Helper configureWhiteNavigationAppearance];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [Helper configureRedNavigationAppearance];
+    [super viewWillDisappear:animated];
+    if (@available(iOS 11.0, *)) {} else {
+        if (!self.presentedViewController) {
+            [Helper configureRedNavigationAppearance];
+        }
+    }
 }
 
 #pragma mark - QLPreviewControllerDataSource
