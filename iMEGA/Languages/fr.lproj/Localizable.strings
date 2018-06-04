@@ -727,7 +727,7 @@
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
 "cancelYourAccount"="Annuler votre compte";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
-"youWillLooseAllData"="Vous perdrez toutes les données associées à ce compte. Voulez-vous vraiment continuer ?";
+"youWillLooseAllData"="Vous perdrez toutes les données associées à ce compte. Souhaitez-vous vraiment poursuivre ?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
 "ifYouCantAccessYourEmailAccount"="Si vous ne pouvez pas accéder à vos courriels veuillez contacter support@mega.nz";
 /* During account cancellation (deletion) */
@@ -992,7 +992,7 @@
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%@ par mois";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
-"choosePlan"="Choisir une des offres ci-dessous :";
+"choosePlan"="Choisissez une des offres ci-dessous :";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Sélectionner un type de compte :";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
@@ -1091,6 +1091,10 @@
 "addParticipants"="Ajouter des participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="État";
+/* Title used in settings that enables the generation of link previews in the chat */
+"richUrlPreviews"="Rich URL previews";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"richPreviewsFooter"="Améliorez l’expérience MEGAchat. Le contenu des URL sera récupéré sans chiffrement de bout en bout.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Appels vocaux et vidéos";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1221,6 +1225,16 @@
 "done"="Terminé";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Envoyer des fichiers";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"enableRichUrlPreviews"="Activer les aperçus d’URL enrichis";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"alwaysAllow"="Toujours autoriser";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"notNow"="Pas maintenant";
+/* */
+"never"="Jamais";
+/* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
+"richPreviewsConfirmation"="Vous êtes sur le point de désactiver les aperçus d’URL enrichis en permanence. Vous pourrez réactiver les aperçus d’URL enrichis dans vos paramètres. Souhaitez-vous poursuivre ?";
 /* */
 "warning"="Avertissement";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
@@ -1480,3 +1494,5 @@
 "continueOrRestartVideoMessage"="%1$s continuera à %2$s";
 /*  */
 "resume"="Reprendre";
+/* Title to preview document */
+"previewContent"="Preview Content";
