@@ -594,6 +594,21 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
                 }
             }
+        } else if ([userActivity.activityType isEqualToString:@"NSUserActivityTypeBrowsingWeb"]) {
+            NSURL *universalLinkURL = userActivity.webpageURL;
+            if (universalLinkURL) {
+                // TODO: Replace with methods from NSURL category
+                NSArray<NSString *> *components = [universalLinkURL.absoluteString componentsSeparatedByString:@"/"];
+                NSString *afterSlashesString = @"";
+                for (NSUInteger i = 3; i < components.count; i++) {
+                    afterSlashesString = [NSString stringWithFormat:@"%@%@/", afterSlashesString, [components objectAtIndex:i]];
+                }
+                if (afterSlashesString.length > 0) {
+                    afterSlashesString = [afterSlashesString substringToIndex:(afterSlashesString.length - 1)];
+                }
+                self.link = universalLinkURL;
+                [self processLink:[NSURL URLWithString:[NSString stringWithFormat:@"mega://%@", afterSlashesString]]];
+            }
         }
         return YES;
     } else {
@@ -1380,7 +1395,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)showLinkNotValid {
-    [self showEmptyStateViewWithImageNamed:@"noInternetEmptyState" title:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid") text:@""];
+    [Helper presentSafariViewControllerWithURL:self.link];
     self.link = nil;
     self.urlType = URLTypeDefault;
 }
