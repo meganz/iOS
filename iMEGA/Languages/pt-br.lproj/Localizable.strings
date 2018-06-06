@@ -307,9 +307,9 @@
 /* Message shown when a upload starts */
 "uploadStarted_Message"="Carregamento iniciado";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
-"fileMovedToTheRubbishBin_alertTitle"="Este arquivo foi movido para o Lixo Eletronico";
+"fileMovedToTheRubbishBin_alertTitle"="Este arquivo foi movido para a Lixeira";
 /* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
-"folderMovedToTheRubbishBin_alertTitle"="Esta pasta foi movida para o Lixo";
+"folderMovedToTheRubbishBin_alertTitle"="Esta pasta foi movida para a Lixeira";
 /* Alert title shown when you are seeing the details of a file and you moved it from another location */
 "fileMoved_alertTitle"="Este arquivo foi movido";
 /* Alert title shown when you are seeing the details of a folder and you moved it from another location */
@@ -1091,6 +1091,10 @@
 "addParticipants"="Adicionar participantes";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
+/* Title used in settings that enables the generation of link previews in the chat */
+"richUrlPreviews"="Rich URL previews";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"richPreviewsFooter"="Aprimore a sua experiência no MEGAchat. O conteúdo de URLs será recuperado sem criptografia de ponta a ponta.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Chamadas de voz e vídeo";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1221,6 +1225,16 @@
 "done"="OK";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Enviar arquivos";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"enableRichUrlPreviews"="Ativar visualização de URLs avançadas";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"alwaysAllow"="Permitir sempre";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"notNow"="Agora não";
+/* */
+"never"="Nunca";
+/* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
+"richPreviewsConfirmation"="Você vai desativar permanentemente a visualização de URL avançada. Você pode reativá-la nas suas configurações. Você quer prosseguir?";
 /* */
 "warning"="Aviso";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
@@ -1480,3 +1494,5 @@
 "continueOrRestartVideoMessage"="%1$s continuará a partir de %2$s";
 /*  */
 "resume"="Continuar";
+/* Title to preview document */
+"previewContent"="Preview Content";
