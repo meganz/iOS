@@ -166,7 +166,13 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                      }
                      
                      AVAssetTrack *videoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
-                     BOOL shouldEncodeVideo = [self shouldEncodeVideoWithVideoTrack:videoTrack videoQuality:videoQuality];
+                     
+                     BOOL shouldEncodeVideo;
+                     if ([filePath.pathExtension.lowercaseString isEqualToString:@"mp4"] && videoQuality >= ChatVideoUploadQualityHigh) {
+                         shouldEncodeVideo = NO;
+                     } else {
+                         shouldEncodeVideo = [self shouldEncodeVideoWithVideoTrack:videoTrack videoQuality:videoQuality];
+                     }
                      
                      if (self.toShareThroughChat && videoQuality < ChatVideoUploadQualityOriginal && shouldEncodeVideo) {
                          filePath = [filePath stringByDeletingPathExtension];

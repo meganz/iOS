@@ -174,6 +174,10 @@
             videoQualityString = AMLocalizedString(@"medium", @"Medium");
             break;
             
+        case ChatVideoUploadQualityHigh:
+            videoQualityString = AMLocalizedString(@"high", @"High");
+            break;
+            
         case ChatVideoUploadQualityOriginal:
             videoQualityString = AMLocalizedString(@"original", @"Original");
             break;

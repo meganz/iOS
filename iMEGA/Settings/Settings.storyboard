@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qvR-uV-YnP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qvR-uV-YnP">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -2297,7 +2297,6 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="redCheckmarkImageView" destination="8nq-Rt-qMq" id="DoB-yj-uD7"/>
-                                            <outlet property="titleLabel" destination="2VX-EY-OIW" id="aUt-Hw-H5g"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectableTableViewCellID" id="23F-Ag-M67" customClass="SelectableTableViewCell">
@@ -2307,7 +2306,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Original" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EwQ-qD-uvm">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="High" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EwQ-qD-uvm">
                                                     <rect key="frame" x="15" y="11.5" width="308" height="20"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -2330,8 +2329,40 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="redCheckmarkImageView" destination="6Pj-rQ-Azk" id="Tkx-Ki-Ifo"/>
-                                            <outlet property="titleLabel" destination="EwQ-qD-uvm" id="237-YI-pHF"/>
+                                            <outlet property="redCheckmarkImageView" destination="6Pj-rQ-Azk" id="cWZ-gL-AAi"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectableTableViewCellID" id="myF-RZ-kqD" customClass="SelectableTableViewCell">
+                                        <rect key="frame" x="0.0" y="167" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="myF-RZ-kqD" id="7Qv-GM-k2G">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Original" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WWI-ql-EGc">
+                                                    <rect key="frame" x="15" y="11.5" width="308" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="red_checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="MV6-Pj-dAQ">
+                                                    <rect key="frame" x="338" y="11" width="22" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="22" id="wid-J7-8GK"/>
+                                                        <constraint firstAttribute="height" constant="22" id="xBq-dB-RNd"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="MV6-Pj-dAQ" firstAttribute="centerY" secondItem="7Qv-GM-k2G" secondAttribute="centerY" id="3E7-uC-bId"/>
+                                                <constraint firstItem="WWI-ql-EGc" firstAttribute="centerY" secondItem="7Qv-GM-k2G" secondAttribute="centerY" id="Oj9-EE-lCz"/>
+                                                <constraint firstAttribute="trailing" secondItem="MV6-Pj-dAQ" secondAttribute="trailing" constant="15" id="XZu-GV-C1X"/>
+                                                <constraint firstItem="MV6-Pj-dAQ" firstAttribute="leading" relation="lessThanOrEqual" secondItem="WWI-ql-EGc" secondAttribute="trailing" constant="15" id="iRq-Q5-m4B"/>
+                                                <constraint firstItem="WWI-ql-EGc" firstAttribute="leading" secondItem="7Qv-GM-k2G" secondAttribute="leading" constant="15" id="w1V-1N-1vf"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="redCheckmarkImageView" destination="MV6-Pj-dAQ" id="h6V-Fy-vDh"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -2346,12 +2377,10 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="JLm-jg-8ux"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="highLabel" destination="EwQ-qD-uvm" id="JRC-Tt-bxM"/>
                         <outlet property="lowLabel" destination="XoM-lP-ezB" id="hn9-uR-iSe"/>
-                        <outlet property="lowRedCheckmark" destination="n62-4Y-BDI" id="bwM-2P-BNK"/>
                         <outlet property="mediumLabel" destination="2VX-EY-OIW" id="dXu-rb-gOD"/>
-                        <outlet property="mediumRedCheckmark" destination="8nq-Rt-qMq" id="pE0-Gm-cBA"/>
-                        <outlet property="originalLabel" destination="EwQ-qD-uvm" id="hyQ-Fu-8oO"/>
-                        <outlet property="originalRedCheckmark" destination="6Pj-rQ-Azk" id="Mmh-a6-E1T"/>
+                        <outlet property="originalLabel" destination="WWI-ql-EGc" id="HRB-Wh-vg5"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v3b-dG-mZW" userLabel="First Responder" sceneMemberID="firstResponder"/>
