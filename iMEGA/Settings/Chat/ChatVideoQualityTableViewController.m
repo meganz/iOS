@@ -6,13 +6,9 @@
 @interface ChatVideoQualityTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *lowLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *lowRedCheckmark;
-
 @property (weak, nonatomic) IBOutlet UILabel *mediumLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *mediumRedCheckmark;
-
+@property (weak, nonatomic) IBOutlet UILabel *highLabel;
 @property (weak, nonatomic) IBOutlet UILabel *originalLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *originalRedCheckmark;
 
 @property (weak, nonatomic) NSIndexPath *currentChatVideoQualityIndexPath;
 
@@ -27,6 +23,7 @@
     
     _lowLabel.text = AMLocalizedString(@"low", @"Low");
     _mediumLabel.text = AMLocalizedString(@"medium", nil);
+    _highLabel.text = AMLocalizedString(@"high", @"High");
     _originalLabel.text = AMLocalizedString(@"original", @"Original");
 }
 
@@ -52,8 +49,12 @@
             _currentChatVideoQualityIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
             break;
             
-        case ChatVideoUploadQualityOriginal:
+        case ChatVideoUploadQualityHigh:
             _currentChatVideoQualityIndexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+            break;
+            
+        case ChatVideoUploadQualityOriginal:
+            _currentChatVideoQualityIndexPath = [NSIndexPath indexPathForRow:3 inSection:0];
             break;
             
         default:
@@ -71,7 +72,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 4;
 }
 
 #pragma mark - UITableViewDelegate
@@ -97,6 +98,10 @@
             break;
             
         case 2:
+            [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityHigh) forKey:@"ChatVideoQuality"];
+            break;
+            
+        case 3:
             [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityOriginal) forKey:@"ChatVideoQuality"];
             break;
             
