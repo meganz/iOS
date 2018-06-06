@@ -1091,6 +1091,10 @@
 "addParticipants"="Katılımcı ekle";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Durum";
+/* Title used in settings that enables the generation of link previews in the chat */
+"richUrlPreviews"="Rich URL previews";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"richPreviewsFooter"="MEGAchat deneyiminizi geliştirin. URL içeriği uçtan uca şifreleme olmadan alınacaktır.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Sesli ve görüntülü arama";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1221,6 +1225,16 @@
 "done"="Tamam";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Dosyaları gönder";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"enableRichUrlPreviews"="Zengin URL önizlemelerini etkinleştir";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"alwaysAllow"="Her Zaman İzin Ver";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"notNow"="Şimdi Değil";
+/* */
+"never"="Hiçbir zaman";
+/* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
+"richPreviewsConfirmation"="Zengin URL önizlemelerini kalıcı olarak devre dışı bırakıyorsunuz. Ayarlarınızdan tekrar etkinleştirebilirsiniz. Devam etmek istiyor musunuz?";
 /* */
 "warning"="Uyarı";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
@@ -1443,7 +1457,7 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="Parolanızı hatırlıyor musunuz?";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="MEGA'nın şifreleme teknolojisi veri kaybına uğramadan parola kurtarmayı imkansız kılar. Lütfen parolanızı hatırladığınıza emin olun.                                ";
+"remindPasswordText"="MEGA'nın şifreleme teknolojisi veri kaybına uğramadan parola kurtarmayı imkansız kılar. Lütfen parolanızı hatırladığınıza emin olun.";
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Çıkış yapmadan önce Kurtarma Anahtarını güvenli bir konuma aktarmanızı tavsiye ederim. Parolanızı unuttuğunuzda sıfırlayamayacağınızı unutmayın.";
 /* Text next to a toggle that if enabled won't appear again */
@@ -1480,3 +1494,5 @@
 "continueOrRestartVideoMessage"="%1$s, %2$s aşamasından devam edecek";
 /*  */
 "resume"="Devam et";
+/* Title to preview document */
+"previewContent"="Preview Content";
