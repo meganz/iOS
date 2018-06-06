@@ -25,6 +25,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 
 @property (nonatomic, assign) NSUInteger retries;
 @property (nonatomic, getter=toShareThroughChat) BOOL shareThroughChat;
+@property (nonatomic, getter=isCameraUploads) BOOL cameraUploads;
 
 @property (nonatomic, strong) UIProgressView *progressView;
 
@@ -32,7 +33,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 
 @implementation MEGAProcessAsset
 
-- (instancetype)initWithAsset:(PHAsset *)asset parentNode:(MEGANode *)parentNode filePath:(void (^)(NSString *filePath))filePath node:(void(^)(MEGANode *node))node error:(void (^)(NSError *error))error {
+- (instancetype)initWithAsset:(PHAsset *)asset parentNode:(MEGANode *)parentNode cameraUploads:(BOOL)cameraUploads filePath:(void (^)(NSString *filePath))filePath node:(void(^)(MEGANode *node))node error:(void (^)(NSError *error))error {
     self = [super init];
     
     if (self) {
@@ -42,6 +43,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         _error = error;
         _retries = 0;
         _parentNode = parentNode;
+        _cameraUploads = cameraUploads;
     }
     
     return self;
@@ -59,6 +61,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         _retries = 0;
         _shareThroughChat = YES;
         _parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
+        _cameraUploads = NO;
     }
     
     return self;
@@ -174,15 +177,19 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                          shouldEncodeVideo = [self shouldEncodeVideoWithVideoTrack:videoTrack videoQuality:videoQuality];
                      }
                      
-                     if (self.toShareThroughChat && videoQuality < ChatVideoUploadQualityOriginal && shouldEncodeVideo) {
+                     if ((self.toShareThroughChat || !self.isCameraUploads) && videoQuality < ChatVideoUploadQualityOriginal && shouldEncodeVideo) {
+                         if (!self.toShareThroughChat) videoQuality = ChatVideoUploadQualityHigh;
                          filePath = [filePath stringByDeletingPathExtension];
                          filePath = [filePath stringByAppendingPathExtension:@"mp4"];
                          [self deleteLocalFileIfExists:filePath];
                          
-                         float bpsByQuality = [self bpsByVideoTrack:videoTrack videoQuality:videoQuality];
                          CGSize videoSize = [self sizeByVideoTrack:videoTrack videoQuality:videoQuality];
+                         float bpsByQuality = [self bpsByVideoTrack:videoTrack videoQuality:videoQuality];
                          float bps = (videoTrack.estimatedDataRate < bpsByQuality) ? videoTrack.estimatedDataRate : bpsByQuality;
-                         float fps = (videoTrack.nominalFrameRate < 30) ? videoTrack.nominalFrameRate : 30;
+                         float fps = 30;
+                         if (videoTrack.nominalFrameRate < 30 || videoQuality == ChatVideoUploadQualityHigh) {
+                             fps = videoTrack.nominalFrameRate;
+                         }
                          
                          SDAVAssetExportSession *encoder = [SDAVAssetExportSession.alloc initWithAsset:asset];
                          encoder.outputFileType = AVFileTypeMPEG4;
@@ -195,7 +202,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                          AVVideoCompressionPropertiesKey:@
                              {
                              AVVideoAverageBitRateKey:@(bps),
-                             AVVideoExpectedSourceFrameRateKey:@(fps),
+                             AVVideoAverageNonDroppableFrameRateKey:@(fps),
                              AVVideoProfileLevelKey:AVVideoProfileLevelH264HighAutoLevel,
                              },
                          };
@@ -477,11 +484,13 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         height = videoTrack.naturalSize.width;
     }
     
-    CGFloat heightByQuality = [self heightByVideoTrack:videoTrack videoQuality:videoQuality];
-    
-    if (height > heightByQuality) {
-        width = width * heightByQuality / height;
-        height = heightByQuality;
+    if (videoQuality < ChatVideoUploadQualityHigh) {
+        CGFloat heightByQuality = [self heightByVideoTrack:videoTrack videoQuality:videoQuality];
+        
+        if (height > heightByQuality) {
+            width = width * heightByQuality / height;
+            height = heightByQuality;
+        }
     }
     
     return CGSizeMake(width, height);
@@ -502,8 +511,10 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 - (float)bpsByVideoTrack:(AVAssetTrack *)videoTrack videoQuality:(ChatVideoUploadQuality)videoQuality {
     if (videoQuality == ChatVideoUploadQualityLow) {
         return 1500000.0f;
-    } else { // ChatVideoUploadQualityMedium
+    } else if (videoQuality == ChatVideoUploadQualityMedium) { // ChatVideoUploadQualityMedium
         return 3400000.0f;
+    } else {
+        return videoTrack.estimatedDataRate;
     }
 }
 
