@@ -1013,11 +1013,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (BOOL)isBackupLink:(NSString *)afterSlashesString {
-    if (afterSlashesString.length < 7) {
+    if (afterSlashesString.length < 6) {
         return NO;
     }
     
-    BOOL isBackupLink = [[afterSlashesString substringToIndex:7] isEqualToString:@"#backup"]; //mega://"#backup"
+    BOOL isBackupLink = [afterSlashesString isEqualToString:@"#backup"] || [afterSlashesString isEqualToString:@"backup"]; //mega://"#backup" //mega://"backup"
     if (isBackupLink) {
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             SecurityOptionsTableViewController *securityOptionsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"SecurityOptionsTableViewControllerID"];
