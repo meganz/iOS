@@ -49,10 +49,10 @@
 #import "LaunchViewController.h"
 #import "LoginViewController.h"
 #import "MainTabBarController.h"
+#import "MasterKeyViewController.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "MessagesViewController.h"
 #import "MyAccountHallViewController.h"
-#import "SecurityOptionsTableViewController.h"
 #import "SettingsTableViewController.h"
 #import "SharedItemsViewController.h"
 #import "UnavailableLinkView.h"
@@ -1035,9 +1035,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
     BOOL isBackupLink = [afterSlashesString isEqualToString:@"#backup"] || [afterSlashesString isEqualToString:@"backup"]; //mega://"#backup" //mega://"backup"
     if (isBackupLink) {
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-            SecurityOptionsTableViewController *securityOptionsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"SecurityOptionsTableViewControllerID"];
-            [securityOptionsTVC.navigationItem setRightBarButtonItem:[self cancelBarButtonItem]];
-            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:securityOptionsTVC];
+            MasterKeyViewController *masterKeyVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"MasterKeyViewControllerID"];
+            masterKeyVC.navigationItem.rightBarButtonItem = [self cancelBarButtonItem];
+            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:masterKeyVC];
             [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
         } else {
             [self showPleaseLogInToYourAccountAlert];
