@@ -1450,7 +1450,15 @@ typedef NS_ENUM(NSUInteger, URLType) {
     changePasswordVC.link = link;
     
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:changePasswordVC];
-    [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+    
+    UIViewController *visibleViewController = UIApplication.mnz_visibleViewController;
+    if ([visibleViewController isKindOfClass:UIAlertController.class]) {
+        [visibleViewController dismissViewControllerAnimated:NO completion:^{
+            [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+        }];
+    } else {
+        [visibleViewController presentViewController:navigationController animated:YES completion:nil];
+    }
 }
 
 - (void)requestUserName {
