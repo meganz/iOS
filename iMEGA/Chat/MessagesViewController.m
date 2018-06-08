@@ -995,6 +995,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             if (message.temporalId == messageToReload.temporalId) {
                 message.warningDialog = skippedDialogs.integerValue >= 3 ? MEGAChatMessageWarningDialogStandard : MEGAChatMessageWarningDialogInitial;
                 [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:i inSection:0]]];
+                [self scrollToBottomAnimated:YES];
                 if (![self.observedDialogMessages containsObject:message]) {
                     [self.observedDialogMessages addObject:message];
                     [message addObserver:self forKeyPath:@"warningDialog" options:NSKeyValueObservingOptionNew context:nil];
@@ -1018,6 +1019,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             MEGAChatMessage *message = [self.messages objectAtIndex:i];
             if (message.messageId == messageToReload.messageId) {
                 [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:i inSection:0]]];
+                [self scrollToBottomAnimated:YES];
             }
         }
     });
