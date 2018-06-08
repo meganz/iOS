@@ -126,10 +126,10 @@
     CGFloat headingHeight = [self headingHeight];
     CGFloat descriptionHeight = [self descriptionHeight];
 
-    CGFloat optionsHeight = self.message.warningDialog == MEGAChatMessageWarningDialogStandard ? 134.0f : 89.0f;
+    CGFloat optionsHeight = self.message.warningDialog == MEGAChatMessageWarningDialogStandard ? 132.0f : 88.0f;
     
     // @see MEGAMessageDialogView.xib
-    CGFloat bubbleHeight = 10.0f + headingHeight + 10.0f + 10.0f + 36.0f + 10.0f + descriptionHeight + 9.0f + optionsHeight + 3.0f;
+    CGFloat bubbleHeight = 10.0f + headingHeight + 10.0f + 10.0f + 36.0f + 10.0f + 73.0f + 10.0f + optionsHeight + 3.0f;
     return CGSizeMake(bubbleWidth, bubbleHeight);
 }
 

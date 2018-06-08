@@ -24,14 +24,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="URL" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Lj-e3-Q6c">
-                    <rect key="frame" x="10" y="10" width="263" height="18"/>
+                    <rect key="frame" x="10" y="10" width="263" height="17"/>
                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WJ4-Um-tsU">
-                    <rect key="frame" x="3" y="38" width="277" height="270"/>
+                    <rect key="frame" x="3" y="37" width="277" height="271"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="privacy_warning_ico" translatesAutoresizingMaskIntoConstraints="NO" id="Hlg-o0-T4G">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="privacy_warning_ico" translatesAutoresizingMaskIntoConstraints="NO" id="Hlg-o0-T4G">
                             <rect key="frame" x="10" y="10" width="84" height="84"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="84" id="1ZY-cZ-7W3"/>
@@ -49,13 +49,13 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You are disabling rich URL previews permanently. You can re-enable rich URL previews in your settings. Do you want to proceed?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tMl-50-u3C">
-                            <rect key="frame" x="104" y="56" width="163" height="72"/>
+                            <rect key="frame" x="104" y="56" width="163" height="73"/>
                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                             <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="86P-Mc-Tr9">
-                            <rect key="frame" x="20" y="138" width="237" height="44"/>
+                            <rect key="frame" x="20" y="139" width="237" height="44"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="pV0-wc-fUn"/>
@@ -69,7 +69,7 @@
                             </connections>
                         </button>
                         <button tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ha-5c-sT3">
-                            <rect key="frame" x="20" y="226" width="237" height="44"/>
+                            <rect key="frame" x="20" y="227" width="237" height="44"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="qry-JO-zpR"/>
@@ -83,7 +83,7 @@
                             </connections>
                         </button>
                         <button tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nc4-kW-7Bl">
-                            <rect key="frame" x="20" y="182" width="237" height="44"/>
+                            <rect key="frame" x="20" y="183" width="237" height="44"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="SJv-kE-kIQ"/>
@@ -109,6 +109,7 @@
                         <constraint firstItem="f56-7K-RgY" firstAttribute="top" secondItem="WJ4-Um-tsU" secondAttribute="top" constant="10" id="Q15-hX-0ve"/>
                         <constraint firstItem="86P-Mc-Tr9" firstAttribute="leading" secondItem="WJ4-Um-tsU" secondAttribute="leading" constant="20" id="Qpy-rC-8Sc"/>
                         <constraint firstAttribute="trailing" secondItem="tMl-50-u3C" secondAttribute="trailing" constant="10" id="SHP-oR-kWK"/>
+                        <constraint firstItem="86P-Mc-Tr9" firstAttribute="top" secondItem="Hlg-o0-T4G" secondAttribute="bottom" constant="45" id="dd8-cm-azZ"/>
                         <constraint firstItem="tMl-50-u3C" firstAttribute="top" secondItem="f56-7K-RgY" secondAttribute="bottom" constant="10" id="hXo-YF-2rl"/>
                         <constraint firstItem="Nc4-kW-7Bl" firstAttribute="leading" secondItem="WJ4-Um-tsU" secondAttribute="leading" constant="20" id="iOZ-bH-mkZ"/>
                         <constraint firstItem="2ha-5c-sT3" firstAttribute="top" secondItem="Nc4-kW-7Bl" secondAttribute="bottom" id="mj5-Re-Ytu"/>
@@ -147,6 +148,6 @@
         </view>
     </objects>
     <resources>
-        <image name="privacy_warning_ico" width="86" height="86"/>
+        <image name="privacy_warning_ico" width="84" height="110"/>
     </resources>
 </document>
