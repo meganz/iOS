@@ -41,11 +41,30 @@ static const void *nodeDetailsTagKey = &nodeDetailsTagKey;
 - (BOOL)isMediaMessage {
     BOOL mediaMessage = NO;
     
-    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.warningDialog > MEGAChatMessageWarningDialogNone) || self.type == MEGAChatMessageTypeContainsMeta || self.node)) {
+    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.warningDialog > MEGAChatMessageWarningDialogNone) || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.node)) {
         mediaMessage = YES;
     }
     
     return mediaMessage;
+}
+
+- (BOOL)containsMetaAnyValue {
+    if (self.containsMeta.richPreview.title && ![self.containsMeta.richPreview.title isEqualToString:@""]) {
+        return YES;
+    }
+    if (self.containsMeta.richPreview.previewDescription && ![self.containsMeta.richPreview.previewDescription isEqualToString:@""]) {
+        return YES;
+    }
+    if (self.containsMeta.richPreview.image && ![self.containsMeta.richPreview.image isEqualToString:@""]) {
+        return YES;
+    }
+    if (self.containsMeta.richPreview.icon && ![self.containsMeta.richPreview.icon isEqualToString:@""]) {
+        return YES;
+    }
+    if (self.containsMeta.richPreview.url && ![self.containsMeta.richPreview.url isEqualToString:@""]) {
+        return YES;
+    }
+    return NO;
 }
 
 - (BOOL)containsMEGALink {
