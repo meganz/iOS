@@ -475,17 +475,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     MEGALogDebug(@"Application open URL %@, source application %@", url, sourceApplication);
-    self.link = url;
     
-    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-        if (![LTHPasscodeViewController doesPasscodeExist] && isFetchNodesDone) {
-            [self processLink:self.link];
-        }
-    } else {
-        if (![LTHPasscodeViewController doesPasscodeExist]) {
-            [self processLink:self.link];
-        }
-    }
+    self.link = url;
+    [self manageLink:url];
     
     return YES;
 }
@@ -606,8 +598,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 if (afterSlashesString.length > 0) {
                     afterSlashesString = [afterSlashesString substringToIndex:(afterSlashesString.length - 1)];
                 }
-                self.link = universalLinkURL;
-                [self processLink:[NSURL URLWithString:[NSString stringWithFormat:@"mega://%@", afterSlashesString]]];
+                self.link = [NSURL URLWithString:[NSString stringWithFormat:@"mega://%@", afterSlashesString]];
+                
+                [self manageLink:self.link];
             }
         }
         return YES;
@@ -781,6 +774,18 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [Helper setSelectedOptionOnLink:0];
 }
 
+- (void)manageLink:(NSURL *)url {
+    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        if (![LTHPasscodeViewController doesPasscodeExist] && isFetchNodesDone) {
+            [self processLink:url];
+        }
+    } else {
+        if (![LTHPasscodeViewController doesPasscodeExist]) {
+            [self processLink:url];
+        }
+    }
+}
+
 - (void)processLink:(NSURL *)url {
     if (self.window.rootViewController.presentedViewController) {
         [self.window.rootViewController dismissViewControllerAnimated:NO completion:^{
@@ -875,7 +880,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
         return;
     }
     
-    [self showLinkNotValid];
+    [Helper presentSafariViewControllerWithURL:self.link];
+    self.link = nil;
+    self.urlType = URLTypeDefault;
 }
 
 - (void)dismissPresentedViews {
@@ -897,26 +904,37 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)showFileLinkView:(NSString *)fileLinkURLString {
-    MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-        if (!request.flag) {
+    MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+        if (error.type) {
+            [self presentFileLinkViewForLink:fileLinkURLString request:request error:error];
+        } else {
             MEGANode *node = request.publicNode;
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 MEGAPhotoBrowserViewController *photoBrowserVC = [node mnz_photoBrowserWithNodes:@[node] folderLink:NO displayMode:DisplayModeFileLink enableMoveToRubbishBin:NO];
                 photoBrowserVC.publicLink = fileLinkURLString;
-                [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];
                 
-                return;
+                [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];
+            } else {
+                [self presentFileLinkViewForLink:fileLinkURLString request:request error:error];
             }
         }
-        MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
-        FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
-        fileLinkVC.fileLinkString = fileLinkURLString;
         
-        [UIApplication.mnz_visibleViewController presentViewController:fileLinkNavigationController animated:YES completion:nil];
+        [SVProgressHUD dismiss];
     }];
     
+    [SVProgressHUD show];
     [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:fileLinkURLString delegate:delegate];
     self.link = nil;
+}
+
+- (void)presentFileLinkViewForLink:(NSString *)link request:(MEGARequest *)request error:(MEGAError *)error {
+    MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
+    FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
+    fileLinkVC.fileLinkString = link;
+    fileLinkVC.request = request;
+    fileLinkVC.error = error;
+    
+    [UIApplication.mnz_visibleViewController presentViewController:fileLinkNavigationController animated:YES completion:nil];
 }
 
 - (BOOL)isFolderLink:(NSString *)afterSlashesString {
@@ -1395,7 +1413,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)showLinkNotValid {
-    [Helper presentSafariViewControllerWithURL:self.link];
+    [self showEmptyStateViewWithImageNamed:@"invalidFileLink" title:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid") text:@""];
     self.link = nil;
     self.urlType = URLTypeDefault;
 }
