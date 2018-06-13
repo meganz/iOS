@@ -598,9 +598,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 if (afterSlashesString.length > 0) {
                     afterSlashesString = [afterSlashesString substringToIndex:(afterSlashesString.length - 1)];
                 }
-                self.link = [NSURL URLWithString:[NSString stringWithFormat:@"mega://%@", afterSlashesString]];
+                self.link = universalLinkURL;
                 
-                [self manageLink:self.link];
+                [self manageLink:[NSURL URLWithString:[NSString stringWithFormat:@"mega://%@", afterSlashesString]]];
             }
         }
         return YES;
