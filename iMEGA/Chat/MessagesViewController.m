@@ -1707,7 +1707,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         case MEGAChatMessageTypePrivilegeChange:
         case MEGAChatMessageTypeChatTitle:
         case MEGAChatMessageTypeAttachment:
-        case MEGAChatMessageTypeContact: {
+        case MEGAChatMessageTypeContact:
+        case MEGAChatMessageTypeCallEnded:{
             [self.messages addObject:message];
             [self finishReceivingMessage];
 
@@ -1762,7 +1763,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             case MEGAChatMessageTypePrivilegeChange:
             case MEGAChatMessageTypeChatTitle:
             case MEGAChatMessageTypeAttachment:
-            case MEGAChatMessageTypeContact: {
+            case MEGAChatMessageTypeContact:
+            case MEGAChatMessageTypeCallEnded: {
                 if (!message.isDeleted) {
                     [self.messages insertObject:message atIndex:0];
                 }

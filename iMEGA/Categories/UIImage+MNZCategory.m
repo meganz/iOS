@@ -289,4 +289,27 @@
     return qrImage;
 }
 
++ (UIImage *)mnz_imageByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason {
+    UIImage *endCallReasonImage;
+    
+    switch (endCallReason) {
+        case MEGAChatMessageEndCallReasonEnded:
+            endCallReasonImage = [UIImage imageNamed:@"callEnd"];
+            break;
+            
+        case MEGAChatMessageEndCallReasonRejected:
+        case MEGAChatMessageEndCallReasonFailed:
+        case MEGAChatMessageEndCallReasonCancelled:
+        case MEGAChatMessageEndCallReasonNoAnswer:
+            endCallReasonImage = [UIImage imageNamed:@"missedCall"];
+            break;
+            
+        default:
+            endCallReasonImage = nil;
+            break;
+    }
+    
+    return endCallReasonImage;
+}
+
 @end
