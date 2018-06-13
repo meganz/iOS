@@ -3,6 +3,7 @@
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "MEGAAttachmentMediaItem.h"
+#import "MEGACallEndedMediaItem.h"
 
 #import "MEGAPhotoMediaItem.h"
 #import "NSString+MNZCategory.h"
@@ -33,7 +34,7 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
     if (self.isDeleted) {
         mediaMessage = NO;
     } else {
-        if (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment) {
+        if (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || self.type == MEGAChatMessageTypeCallEnded) {
             mediaMessage = YES;
         }
     }
@@ -221,7 +222,10 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
 }
 
 - (id<JSQMessageMediaData>)media {
-    if (self.type == MEGAChatMessageTypeContact) {
+    if (self.type == MEGAChatMessageTypeCallEnded) {
+        MEGACallEndedMediaItem *callEndedMediaItem = [[MEGACallEndedMediaItem alloc] initWithMEGAChatMessage:self];
+        return callEndedMediaItem;
+    } else if (self.type == MEGAChatMessageTypeContact) {
         MEGAAttachmentMediaItem *attachmentMediaItem = [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:self];
         return attachmentMediaItem;
     } else if (self.type == MEGAChatMessageTypeAttachment) {
