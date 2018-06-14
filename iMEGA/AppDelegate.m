@@ -777,7 +777,9 @@
 - (void)urlLinkType:(NSURL *)url {
     switch ([url mnz_type]) {
         case URLTypeDefault:
-            [self showLinkNotValid];
+            [Helper presentSafariViewControllerWithURL:self.link];
+            self.link = nil;
+            self.urlType = URLTypeDefault;
             
             break;
             
@@ -882,13 +884,6 @@
         case URLTypeHandleLink:
             self.nodeToPresentBase64Handle = [[url mnz_afterSlashesString] substringFromIndex:1];
             [self presentNode];
-            
-            break;
-            
-        default:
-            [Helper presentSafariViewControllerWithURL:self.link];
-            self.link = nil;
-            self.urlType = URLTypeDefault;
             
             break;
     }

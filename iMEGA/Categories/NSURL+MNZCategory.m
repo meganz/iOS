@@ -63,6 +63,10 @@
         return URLTypeIncomingPendingContactsLink;
     }
     
+    if (afterSlashesString.length >= 6 && [[afterSlashesString substringToIndex:6] isEqualToString:@"fm/ipc"]) {
+        return URLTypeIncomingPendingContactsLink;
+    }
+    
     if (afterSlashesString.length >= 7 && [[afterSlashesString substringToIndex:7] isEqualToString:@"#verify"]) {
         return URLTypeChangeEmailLink;
     }
