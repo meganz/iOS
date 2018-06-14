@@ -49,10 +49,10 @@
 #import "LaunchViewController.h"
 #import "LoginViewController.h"
 #import "MainTabBarController.h"
+#import "MasterKeyViewController.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "MessagesViewController.h"
 #import "MyAccountHallViewController.h"
-#import "SecurityOptionsTableViewController.h"
 #import "SettingsTableViewController.h"
 #import "SharedItemsViewController.h"
 #import "UnavailableLinkView.h"
@@ -475,17 +475,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     MEGALogDebug(@"Application open URL %@, source application %@", url, sourceApplication);
-    self.link = url;
     
-    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-        if (![LTHPasscodeViewController doesPasscodeExist] && isFetchNodesDone) {
-            [self processLink:self.link];
-        }
-    } else {
-        if (![LTHPasscodeViewController doesPasscodeExist]) {
-            [self processLink:self.link];
-        }
-    }
+    self.link = url;
+    [self manageLink:url];
     
     return YES;
 }
@@ -593,6 +585,22 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     }];
                     [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
                 }
+            }
+        } else if ([userActivity.activityType isEqualToString:@"NSUserActivityTypeBrowsingWeb"]) {
+            NSURL *universalLinkURL = userActivity.webpageURL;
+            if (universalLinkURL) {
+                // TODO: Replace with methods from NSURL category
+                NSArray<NSString *> *components = [universalLinkURL.absoluteString componentsSeparatedByString:@"/"];
+                NSString *afterSlashesString = @"";
+                for (NSUInteger i = 3; i < components.count; i++) {
+                    afterSlashesString = [NSString stringWithFormat:@"%@%@/", afterSlashesString, [components objectAtIndex:i]];
+                }
+                if (afterSlashesString.length > 0) {
+                    afterSlashesString = [afterSlashesString substringToIndex:(afterSlashesString.length - 1)];
+                }
+                self.link = universalLinkURL;
+                
+                [self manageLink:[NSURL URLWithString:[NSString stringWithFormat:@"mega://%@", afterSlashesString]]];
             }
         }
         return YES;
@@ -766,6 +774,18 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [Helper setSelectedOptionOnLink:0];
 }
 
+- (void)manageLink:(NSURL *)url {
+    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        if (![LTHPasscodeViewController doesPasscodeExist] && isFetchNodesDone) {
+            [self processLink:url];
+        }
+    } else {
+        if (![LTHPasscodeViewController doesPasscodeExist]) {
+            [self processLink:url];
+        }
+    }
+}
+
 - (void)processLink:(NSURL *)url {
     if (self.window.rootViewController.presentedViewController) {
         [self.window.rootViewController dismissViewControllerAnimated:NO completion:^{
@@ -860,7 +880,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
         return;
     }
     
-    [self showLinkNotValid];
+    [Helper presentSafariViewControllerWithURL:self.link];
+    self.link = nil;
+    self.urlType = URLTypeDefault;
 }
 
 - (void)dismissPresentedViews {
@@ -882,26 +904,37 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)showFileLinkView:(NSString *)fileLinkURLString {
-    MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-        if (!request.flag) {
+    MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+        if (error.type) {
+            [self presentFileLinkViewForLink:fileLinkURLString request:request error:error];
+        } else {
             MEGANode *node = request.publicNode;
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 MEGAPhotoBrowserViewController *photoBrowserVC = [node mnz_photoBrowserWithNodes:@[node] folderLink:NO displayMode:DisplayModeFileLink enableMoveToRubbishBin:NO];
                 photoBrowserVC.publicLink = fileLinkURLString;
-                [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];
                 
-                return;
+                [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];
+            } else {
+                [self presentFileLinkViewForLink:fileLinkURLString request:request error:error];
             }
         }
-        MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
-        FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
-        fileLinkVC.fileLinkString = fileLinkURLString;
         
-        [UIApplication.mnz_visibleViewController presentViewController:fileLinkNavigationController animated:YES completion:nil];
+        [SVProgressHUD dismiss];
     }];
     
+    [SVProgressHUD show];
     [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:fileLinkURLString delegate:delegate];
     self.link = nil;
+}
+
+- (void)presentFileLinkViewForLink:(NSString *)link request:(MEGARequest *)request error:(MEGAError *)error {
+    MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
+    FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
+    fileLinkVC.fileLinkString = link;
+    fileLinkVC.request = request;
+    fileLinkVC.error = error;
+    
+    [UIApplication.mnz_visibleViewController presentViewController:fileLinkNavigationController animated:YES completion:nil];
 }
 
 - (BOOL)isFolderLink:(NSString *)afterSlashesString {
@@ -1020,9 +1053,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
     BOOL isBackupLink = [afterSlashesString isEqualToString:@"#backup"] || [afterSlashesString isEqualToString:@"backup"]; //mega://"#backup" //mega://"backup"
     if (isBackupLink) {
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-            SecurityOptionsTableViewController *securityOptionsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"SecurityOptionsTableViewControllerID"];
-            [securityOptionsTVC.navigationItem setRightBarButtonItem:[self cancelBarButtonItem]];
-            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:securityOptionsTVC];
+            MasterKeyViewController *masterKeyVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"MasterKeyViewControllerID"];
+            masterKeyVC.navigationItem.rightBarButtonItem = [self cancelBarButtonItem];
+            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:masterKeyVC];
             [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
         } else {
             [self showPleaseLogInToYourAccountAlert];
@@ -1380,7 +1413,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)showLinkNotValid {
-    [self showEmptyStateViewWithImageNamed:@"noInternetEmptyState" title:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid") text:@""];
+    [self showEmptyStateViewWithImageNamed:@"invalidFileLink" title:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid") text:@""];
     self.link = nil;
     self.urlType = URLTypeDefault;
 }
@@ -1865,12 +1898,6 @@ void uncaughtExceptionHandler(NSException *exception) {
         } else if (buttonIndex == 1) {
             [[MEGASdkManager sharedMEGASdk] logout];
         }
-    } else if ((alertView.tag == 2 && buttonIndex == 1) || (alertView.tag == 3 && buttonIndex == 1)) { //masterKeyLoggedInAlertView, masterKeyLoggedOutAlertView
-        NSString *masterKey = (alertView.tag == 2) ? [[MEGASdkManager sharedMEGASdk] masterKey] : [[alertView textFieldAtIndex:0] text];
-        [self presentChangeViewType:ChangeTypeResetPassword email:self.emailOfNewSignUpLink masterKey:masterKey link:self.recoveryLink];
-        
-        self.emailOfNewSignUpLink = nil;
-        self.recoveryLink = nil;
     }
 }
 
@@ -2487,21 +2514,28 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [self presentConfirmViewControllerType:ConfirmTypeCancelAccount link:request.link email:request.email];
             } else if (self.urlType == URLTypeRecoverLink) {
                 if (request.flag) {
+                    UIAlertController *masterKeyLoggedInAlertController;
                     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-                        UIAlertView *masterKeyLoggedInAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") message:AMLocalizedString(@"youRecoveryKeyIsGoingTo", @"Text of the alert after opening the recovery link to reset pass being logged.") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-                        masterKeyLoggedInAlertView.tag = 2;
-                        [masterKeyLoggedInAlertView show];
+                        masterKeyLoggedInAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") message:AMLocalizedString(@"youRecoveryKeyIsGoingTo", @"Text of the alert after opening the recovery link to reset pass being logged.") preferredStyle:UIAlertControllerStyleAlert];
                     } else {
-                        UIAlertView *masterKeyLoggedOutAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") message:AMLocalizedString(@"pleaseEnterYourRecoveryKey", @"A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process.") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-                        masterKeyLoggedOutAlertView.tag = 3;
-                        masterKeyLoggedOutAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-                        UITextField *textField = [masterKeyLoggedOutAlertView textFieldAtIndex:0];
-                        textField.placeholder = AMLocalizedString(@"recoveryKey", @"Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password.");
-                        [masterKeyLoggedOutAlertView show];
+                        masterKeyLoggedInAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") message:AMLocalizedString(@"pleaseEnterYourRecoveryKey", @"A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process.") preferredStyle:UIAlertControllerStyleAlert];
+                        [masterKeyLoggedInAlertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+                            textField.placeholder = AMLocalizedString(@"recoveryKey", @"Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password.");
+                        }];
                     }
+                    
+                    [masterKeyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                    [masterKeyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                        NSString *masterKey = masterKeyLoggedInAlertController.textFields.count ? masterKeyLoggedInAlertController.textFields[0].text : [[MEGASdkManager sharedMEGASdk] masterKey];
+                        [self presentChangeViewType:ChangeTypeResetPassword email:self.emailOfNewSignUpLink masterKey:masterKey link:self.recoveryLink];
+                        self.emailOfNewSignUpLink = nil;
+                        self.recoveryLink = nil;
+                    }]];
                     
                     self.emailOfNewSignUpLink = request.email;
                     self.recoveryLink = request.link;
+                    
+                    [UIApplication.mnz_visibleViewController presentViewController:masterKeyLoggedInAlertController animated:YES completion:nil];
                 } else {
                     [self presentChangeViewType:ChangeTypeParkAccount email:request.email masterKey:nil link:request.link];
                 }
