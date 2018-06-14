@@ -3,16 +3,18 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
+#import "MEGAGetPublicNodeRequestDelegate.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGASdkManager.h"
+#import "MEGAReachabilityManager.h"
 #import "NSString+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
-#import "UnavailableLinkView.h"
-#import "MEGAReachabilityManager.h"
 #import "CustomActionViewController.h"
+#import "UnavailableLinkView.h"
 
-@interface FileLinkViewController () <MEGARequestDelegate, CustomActionViewControllerDelegate>
+@interface FileLinkViewController () <CustomActionViewControllerDelegate>
 
 @property (strong, nonatomic) MEGANode *node;
 
@@ -60,8 +62,8 @@
     [self.previewButton setTitle:AMLocalizedString(@"previewContent", @"Title to preview document") forState:UIControlStateNormal];
     
     [self setUIItemsHidden:YES];
-    [SVProgressHUD show];
-    [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:self.fileLinkString delegate:self];
+    
+    [self processRequestResult];
     
     if (@available(iOS 11.0, *)) {
         self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
@@ -88,6 +90,60 @@
 
 #pragma mark - Private
 
+- (void)processRequestResult {
+    [SVProgressHUD dismiss];
+    
+    if (self.error.type) {
+        switch (self.error.type) {
+            case MEGAErrorTypeApiEArgs: {
+                if (self.decryptionAlertControllerHasBeenPresented) {
+                    [self showDecryptionKeyNotValidAlert];
+                } else {
+                    [self showLinkNotValid];
+                }
+                break;
+            }
+                
+            case MEGAErrorTypeApiENoent: {
+                [self showUnavailableLinkView];
+                break;
+            }
+                
+            case MEGAErrorTypeApiEIncomplete: {
+                [self showDecryptionAlert];
+                break;
+            }
+                
+            default:
+                break;
+        }
+        
+        return;
+    }
+    
+    if (self.request.flag) {
+        if (self.decryptionAlertControllerHasBeenPresented) { //Link without key, after entering a bad one
+            [self showDecryptionKeyNotValidAlert];
+        } else { //Link with invalid key
+            [self showLinkNotValid];
+        }
+        return;
+    }
+    
+    self.node = self.request.publicNode;
+    
+    if (self.node.name.mnz_isImagePathExtension || self.node.name.mnz_isVideoPathExtension) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            MEGAPhotoBrowserViewController *photoBrowserVC = [self.node mnz_photoBrowserWithNodes:@[self.node] folderLink:NO displayMode:DisplayModeFileLink enableMoveToRubbishBin:NO];
+            photoBrowserVC.publicLink = self.fileLinkString;
+            
+            [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];
+        }];
+    } else {
+        [self setNodeInfo];
+    }
+}
+
 - (void)setNavigationBarTitleLabel {
     if (self.node.name != nil) {
         UILabel *label = [Helper customNavigationBarLabelWithTitle:self.node.name subtitle:AMLocalizedString(@"fileLink", nil)];
@@ -101,10 +157,11 @@
 
 - (void)setUIItemsHidden:(BOOL)boolValue {
     self.mainView.hidden = boolValue;
+    self.previewButton.hidden = boolValue;
 }
 
 - (void)showUnavailableLinkView {
-    [SVProgressHUD dismiss];
+    self.moreBarButtonItem.enabled = self.downloadBarButtonItem.enabled = self.importBarButtonItem.enabled = NO;
     
     NSString *fileLinkUnavailableText = [NSString stringWithFormat:@"%@\n%@\n%@\n%@", AMLocalizedString(@"fileLinkUnavailableText1", nil), AMLocalizedString(@"fileLinkUnavailableText2", nil), AMLocalizedString(@"fileLinkUnavailableText3", nil), AMLocalizedString(@"fileLinkUnavailableText4", nil)];
     
@@ -126,15 +183,10 @@
 }
 
 - (void)showLinkNotValid {
-    [SVProgressHUD dismiss];
-    
     [self showEmptyStateViewWithTitle:AMLocalizedString(@"linkNotValid", nil) text:@""];
 }
 
-
 - (void)showDecryptionAlert {
-    [SVProgressHUD dismiss];
-    
     UIAlertController *decryptionAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyAlertTitle", @"Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents") message:AMLocalizedString(@"decryptionKeyAlertMessage", @"Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents") preferredStyle:UIAlertControllerStyleAlert];
     
     [decryptionAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
@@ -152,7 +204,14 @@
             NSString *linkString = ([[key substringToIndex:1] isEqualToString:@"!"]) ? self.fileLinkString : [self.fileLinkString stringByAppendingString:@"!"];
             linkString = [linkString stringByAppendingString:key];
             
-            [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:linkString delegate:self];
+            MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+                self.request = request;
+                self.error = error;
+                [self processRequestResult];
+            }];
+            
+            [SVProgressHUD show];
+            [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:linkString delegate:delegate];
         }
     }];
     decryptAlertAction.enabled = NO;
@@ -259,69 +318,6 @@
         } else {
             [self.node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
         }
-    }
-}
-
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    
-    if (error.type) {
-        switch (error.type) {
-            case MEGAErrorTypeApiEArgs: {
-                if (request.type == MEGARequestTypeGetPublicNode) {
-                    if (self.decryptionAlertControllerHasBeenPresented) {
-                        [self showDecryptionKeyNotValidAlert];
-                    } else {
-                        [self showLinkNotValid];
-                    }
-                }
-                break;
-            }
-                
-            case MEGAErrorTypeApiENoent: {
-                if (request.type == MEGARequestTypeGetPublicNode) {
-                    [self showUnavailableLinkView];
-                }
-                break;
-            }
-                
-            case MEGAErrorTypeApiEIncomplete: {
-                if (request.type == MEGARequestTypeGetPublicNode) {
-                    [self showDecryptionAlert];
-                }
-                break;
-            }
-                
-            default:
-                break;
-        }
-        
-        return;
-    }
-    
-    switch (request.type) {
-            
-        case MEGARequestTypeGetPublicNode: {
-            if (request.flag) {
-                if (self.decryptionAlertControllerHasBeenPresented) { //Link without key, after entering a bad one
-                    [self showDecryptionKeyNotValidAlert];
-                } else { //Link with invalid key
-                    [self showLinkNotValid];
-                }
-                return;
-            }
-            
-            self.node = request.publicNode;
-            
-            [self setNodeInfo];
-            
-            [SVProgressHUD dismiss];
-            break;
-        }
-            
-        default:
-            break;
     }
 }
 
