@@ -257,7 +257,7 @@ static NSString* const B = @"[B]";
     }
 }
 
-- (NSString*)SHA256 {
+- (NSString *)SHA256 {
     unsigned int outputLength = CC_SHA256_DIGEST_LENGTH;
     unsigned char output[outputLength];
     
@@ -272,10 +272,14 @@ static NSString* const B = @"[B]";
     return hash;
 }
 
-#pragma mark - Emoji utils
+- (BOOL)mnz_isDecimalNumber {
+    NSCharacterSet *decimalDigitInvertedCharacterSet = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+    NSRange range = [self rangeOfCharacterFromSet:decimalDigitInvertedCharacterSet];
+    
+    return (range.location == NSNotFound);
+}
 
-- (BOOL)mnz_containsEmoji
-{
+- (BOOL)mnz_containsEmoji {
     __block BOOL containsEmoji = NO;
     
     [self enumerateSubstringsInRange:NSMakeRange(0,

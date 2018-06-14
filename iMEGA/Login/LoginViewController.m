@@ -4,13 +4,16 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
+#import "MEGAMultiFactorAuthCheckRequestDelegate.h"
 #import "MEGANavigationController.h"
+#import "MEGALoginRequestDelegate.h"
 #import "MEGALogger.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGALoginRequestDelegate.h"
+#import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 
 #import "CreateAccountViewController.h"
+#import "TwoFactorAuthenticationViewController.h"
 #import "PasswordView.h"
 
 @interface LoginViewController () <UITextFieldDelegate, MEGARequestDelegate>
@@ -65,6 +68,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
     [self.navigationItem setTitle:AMLocalizedString(@"login", nil)];
     
     [[MEGALogger sharedLogger] enableChatlogs];
@@ -101,12 +106,22 @@
             self.email = self.emailTextField.text;
             self.password = self.passwordView.passwordTextField.text;
             
-            NSOperationQueue *operationQueue = [NSOperationQueue new];
-            
-            NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
-                                                                                    selector:@selector(generateKeys)
-                                                                                      object:nil];
-            [operationQueue addOperation:operation];
+            MEGAMultiFactorAuthCheckRequestDelegate *delegate = [[MEGAMultiFactorAuthCheckRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+                if (request.flag) {
+                    TwoFactorAuthenticationViewController *twoFactorAuthenticationVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"TwoFactorAuthenticationViewControllerID"];
+                    twoFactorAuthenticationVC.twoFAMode = TwoFactorAuthenticationLogin;
+                    twoFactorAuthenticationVC.email = self.email;
+                    twoFactorAuthenticationVC.password = self.password;
+                    
+                    [self.navigationController pushViewController:twoFactorAuthenticationVC animated:YES];
+                } else {
+                    NSOperationQueue *operationQueue = [NSOperationQueue new];
+                    
+                    NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(generateKeys) object:nil];
+                    [operationQueue addOperation:operation];
+                }
+            }];
+            [[MEGASdkManager sharedMEGASdk] multiFactorAuthCheckWithEmail:self.email delegate:delegate];
         }
     }
 }

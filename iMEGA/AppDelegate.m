@@ -667,6 +667,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [[UITextField appearance] setTintColor:UIColor.mnz_green00BFA5];
     
+    [[UITextView appearance] setTintColor:UIColor.mnz_green00BFA5];
+    
     [[UIView appearanceWhenContainedInInstancesOfClasses:@[[UIAlertController class]]] setTintColor:[UIColor mnz_redF0373A]];
     
     [[UIProgressView appearance] setTintColor:UIColor.mnz_redF0373A];

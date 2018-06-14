@@ -3,10 +3,13 @@
 
 #import "SVProgressHUD.h"
 
+#import "MEGAMultiFactorAuthCheckRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 
 #import "ChangePasswordViewController.h"
+#import "DisablingTwoFactorAuthenticationTableViewController.h"
+#import "EnableTwoFactorAuthenticationTableViewController.h"
 #import "QRSettingsTableViewController.h"
 
 @interface SecurityOptionsTableViewController () <UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate>
@@ -15,6 +18,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *masterKeyRightDetailLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *changePasswordLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *twoFactorAuthenticationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *twoFactorAuthenticationRightDetailLabel;
+@property (getter=isTwoFactorAuthenticationEnabled) BOOL twoFactorAuthenticationEnabled;
 
 @property (weak, nonatomic) IBOutlet UILabel *qrCodeLabel;
 
@@ -38,6 +45,9 @@
     
     [self.changePasswordLabel setText:AMLocalizedString(@"changePasswordLabel", @"The name for the change password label")];
     
+    self.twoFactorAuthenticationLabel.text = AMLocalizedString(@"twoFactorAuthentication", @"");
+    self.twoFactorAuthenticationRightDetailLabel.text = @"";
+    
     self.qrCodeLabel.text = AMLocalizedString(@"qrCode", @"QR Code label, used in Settings as title. String as short as possible");
     
     self.changeEmailLabel.text = AMLocalizedString(@"changeEmail", @"The title of the alert dialog to change the email associated to an account.");
@@ -52,6 +62,8 @@
     
     [self isMasterKeyExported];
     
+    [self twoFactorAuthenticationStatus];
+    
     [self.tableView reloadData];
 }
 
@@ -63,9 +75,20 @@
     self.masterKeyRightDetailLabel.text = isMasterKeyExported ? AMLocalizedString(@"saved", @"State shown if something is 'Saved' (String as short as possible).") : @"";
 }
 
+- (void)twoFactorAuthenticationStatus {
+    MEGAMultiFactorAuthCheckRequestDelegate *delegate = [[MEGAMultiFactorAuthCheckRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+        self.twoFactorAuthenticationEnabled = request.flag;
+        self.twoFactorAuthenticationRightDetailLabel.text = self.twoFactorAuthenticationEnabled ? AMLocalizedString(@"on", nil) : AMLocalizedString(@"off", nil);
+        [self.tableView reloadData];
+    }];
+    [[MEGASdkManager sharedMEGASdk] multiFactorAuthCheckWithEmail:[[MEGASdkManager sharedMEGASdk] myEmail] delegate:delegate];
+}
+
 - (void)pushChangeViewControllerType:(ChangeType)changeType {
     ChangePasswordViewController *changePasswordVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ChangePasswordViewControllerID"];
     changePasswordVC.changeType = changeType;
+    changePasswordVC.twoFactorAuthenticationEnabled = self.twoFactorAuthenticationEnabled;
+    
     [self.navigationController pushViewController:changePasswordVC animated:YES];
 }
 
@@ -87,6 +110,10 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (section == 1) {
+        return 2;
+    }
+    
     return 1;
 }
 
@@ -113,7 +140,17 @@
         }
             
         case 1: {
-            [self pushChangeViewControllerType:ChangeTypePassword];
+            if (indexPath.row == 0) {
+                [self pushChangeViewControllerType:ChangeTypePassword];
+            } else {
+                if (self.isTwoFactorAuthenticationEnabled) {
+                    DisablingTwoFactorAuthenticationTableViewController *disablingTwoFactorAuthenticationTVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"DisablingTwoFactorAuthenticationTableViewControllerID"];
+                    [self.navigationController pushViewController:disablingTwoFactorAuthenticationTVC animated:YES];
+                } else {
+                    EnableTwoFactorAuthenticationTableViewController *enableTwoFactorAuthenticationTVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"EnableTwoFactorAuthenticationTableViewControllerID"];
+                    [self.navigationController pushViewController:enableTwoFactorAuthenticationTVC animated:YES];
+                }
+            }
             break;
         }
             
@@ -146,15 +183,23 @@
         return;
     }
     
-    if (request.type == MEGARequestTypeKillSession) {
-        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"sessionsClosed", @"Message shown when you click on 'Close other session' to block every session that is opened on other devices except the current one")];
-    } else if (request.type == MEGARequestTypeGetRecoveryLink) {
-        ChangePasswordViewController *changePasswordVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChangePasswordViewControllerID"];
-        changePasswordVC.emailIsChangingTitleLabel.text = AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
-        changePasswordVC.emailIsChangingDescriptionLabel.text = AMLocalizedString(@"ifYouCantAccessYourEmailAccount", @"Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account.");
-        self.view = changePasswordVC.emailIsChangingView;
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(passwordReset) name:@"passwordReset" object:nil];
+    switch (request.type) {
+        case MEGARequestTypeKillSession:
+            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"sessionsClosed", @"Message shown when you click on 'Close other session' to block every session that is opened on other devices except the current one")];
+            break;
+            
+        case MEGARequestTypeGetRecoveryLink: {
+            ChangePasswordViewController *changePasswordVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChangePasswordViewControllerID"];
+            changePasswordVC.emailIsChangingTitleLabel.text = AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
+            changePasswordVC.emailIsChangingDescriptionLabel.text = AMLocalizedString(@"ifYouCantAccessYourEmailAccount", @"Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account.");
+            self.view = changePasswordVC.emailIsChangingView;
+            
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(passwordReset) name:@"passwordReset" object:nil];
+            break;
+        }
+            
+        default:
+            break;
     }
 }
 

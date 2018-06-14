@@ -1482,3 +1482,29 @@
 "resume"="Resume";
 /* Title to preview document */
 "previewContent"="Preview Content";
+/*  */
+"twoFactorAuthentication"="Two-Factor Authentication";
+/*  */
+"setupTwoFactorAuthentication"="Setup Two-Factor Authentication";
+/*  */
+"whyYouDoNeedTwoFactorAuthentication"="Why do you need two-factor authentication?";
+/*  */
+"whyYouDoNeedTwoFactorAuthenticationDescription"="Two-factor authentication is a second layer of security for your account. Which means that even if someone knows your password they cannot access it, without also having access to the six digit code only you have access to.";
+/* */
+"noAuthenticatorAppInstalled"="There's no authenticator app installed.";
+/*  */
+"twoFactorAuthenticationEnabled"="Two-Factor Authentication Enabled";
+/*  */
+"twoFactorAuthenticationEnabledDescription"="Next time you login to your account you will be asked to enter a 6-digit code provided by your authentication app.";
+/*  */
+"twoFactorAuthenticationDisabled"="Two Factor Authentication Disabled";
+/*  */
+"scanOrCopyTheSeed"="1. Scan or copy the seed to your authenticator app";
+/*  */
+"testAuthenticator"="2. Test authenticator";
+/*  */
+"testAuthenticatorDescription"="After setting up your seed on your authenticator app enter the 6-digit code provided.";
+/*  */
+"sixDigitCode"="6-digit code";
+/*  */
+"verify"="Verify";

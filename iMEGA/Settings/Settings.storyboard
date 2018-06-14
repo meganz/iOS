@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qvR-uV-YnP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qvR-uV-YnP">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -7,7 +7,9 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -612,12 +614,36 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="ReP-3Y-IQ7" detailTextLabel="pyq-cH-Ore" style="IBUITableViewCellStyleValue1" id="g0I-t0-Llw" userLabel="Two-Factor Authentication Table View Cell">
+                                        <rect key="frame" x="0.0" y="195" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g0I-t0-Llw" id="pAD-1X-JV5">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Two-Factor Authentication" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ReP-3Y-IQ7" userLabel="Two-Factor Authentication Label">
+                                                    <rect key="frame" x="16" y="12" width="213" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Off" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pyq-cH-Ore" userLabel="Disabled Label">
+                                                    <rect key="frame" x="314.5" y="12" width="25.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="" footerTitle="" id="ngR-d2-JR9">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="ftc-Dy-Nzs" style="IBUITableViewCellStyleDefault" id="zCB-iT-z7k" userLabel="Change Email Table View Cell">
-                                        <rect key="frame" x="0.0" y="215" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="259" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zCB-iT-z7k" id="pOq-Hs-3AP">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -638,7 +664,7 @@
                             <tableViewSection headerTitle="" footerTitle="" id="DIb-cs-pWo">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="IER-Qw-muP" style="IBUITableViewCellStyleDefault" id="etO-9p-087" userLabel="Change Email Table View Cell">
-                                        <rect key="frame" x="0.0" y="279" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="323" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="etO-9p-087" id="aP8-YV-7Gv">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -659,7 +685,7 @@
                             <tableViewSection headerTitle="" footerTitle="" id="iCu-Aj-k5u">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="6Dq-qt-Jc3" style="IBUITableViewCellStyleDefault" id="cNw-4r-zFD" userLabel="Change Email Table View Cell">
-                                        <rect key="frame" x="0.0" y="343" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="387" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cNw-4r-zFD" id="gMr-ld-HPQ">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -693,6 +719,8 @@
                         <outlet property="masterKeyLabel" destination="CZT-vM-cFP" id="OOF-mQ-3v7"/>
                         <outlet property="masterKeyRightDetailLabel" destination="c7i-ho-QAZ" id="PpN-W1-llS"/>
                         <outlet property="qrCodeLabel" destination="ftc-Dy-Nzs" id="W3h-ZW-sbs"/>
+                        <outlet property="twoFactorAuthenticationLabel" destination="ReP-3Y-IQ7" id="8gm-uo-g1N"/>
+                        <outlet property="twoFactorAuthenticationRightDetailLabel" destination="pyq-cH-Ore" id="Ax6-xK-Cgd"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I4m-YE-vxx" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -703,10 +731,6 @@
         <scene sceneID="4x0-Jc-Zk5">
             <objects>
                 <viewController storyboardIdentifier="ChangePasswordViewControllerID" id="Xlz-H7-CBT" customClass="ChangePasswordViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Irl-e6-ySl"/>
-                        <viewControllerLayoutGuide type="bottom" id="VZo-0t-mkr"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="04O-9E-IbZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -962,11 +986,12 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="X4i-4p-UHf" firstAttribute="leading" secondItem="04O-9E-IbZ" secondAttribute="leading" id="GPg-yK-wvG"/>
+                            <constraint firstItem="X4i-4p-UHf" firstAttribute="leading" secondItem="Lre-oP-pq6" secondAttribute="leading" id="GPg-yK-wvG"/>
                             <constraint firstItem="X4i-4p-UHf" firstAttribute="top" secondItem="04O-9E-IbZ" secondAttribute="top" id="ZdB-hg-U5c"/>
                             <constraint firstAttribute="bottom" secondItem="X4i-4p-UHf" secondAttribute="bottom" id="eoF-dp-Qds"/>
-                            <constraint firstAttribute="trailing" secondItem="X4i-4p-UHf" secondAttribute="trailing" id="sPc-Q1-dRI"/>
+                            <constraint firstItem="Lre-oP-pq6" firstAttribute="trailing" secondItem="X4i-4p-UHf" secondAttribute="trailing" id="sPc-Q1-dRI"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="Lre-oP-pq6"/>
                     </view>
                     <connections>
                         <outlet property="changePasswordButton" destination="Ugg-UB-5iL" id="rrD-tl-euI"/>
@@ -1049,6 +1074,7 @@
                         <constraint firstItem="KOe-X4-Z3n" firstAttribute="top" secondItem="1oP-CL-t7s" secondAttribute="top" constant="92" id="jy1-JR-eqB"/>
                         <constraint firstItem="HrE-UQ-dj9" firstAttribute="leading" secondItem="1oP-CL-t7s" secondAttribute="leading" constant="30" id="lBE-kl-S10"/>
                     </constraints>
+                    <viewLayoutGuide key="safeArea" id="qvW-C7-dyf"/>
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="jy1-JR-eqB"/>
@@ -1292,6 +1318,7 @@
                         </label>
                     </subviews>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <viewLayoutGuide key="safeArea" id="WnA-LK-Ro0"/>
                 </view>
             </objects>
             <point key="canvasLocation" x="-1329" y="272"/>
@@ -1572,10 +1599,6 @@
         <scene sceneID="joR-2d-oWE">
             <objects>
                 <viewController storyboardIdentifier="MasterKeyViewControllerID" id="mZP-69-mDb" customClass="MasterKeyViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ZYY-Wx-QsZ"/>
-                        <viewControllerLayoutGuide type="bottom" id="y6m-cX-iAG"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="inr-l3-pAM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1698,31 +1721,32 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="right" secondItem="iif-ej-krY" secondAttribute="rightMargin" id="6Qr-4S-NhG"/>
+                            <constraint firstItem="pPu-oh-inR" firstAttribute="right" secondItem="iif-ej-krY" secondAttribute="rightMargin" id="6Qr-4S-NhG"/>
                             <constraint firstItem="jTL-gV-SRV" firstAttribute="height" secondItem="MbZ-sd-Eec" secondAttribute="height" id="BWh-3s-rvc"/>
-                            <constraint firstItem="iif-ej-krY" firstAttribute="left" secondItem="inr-l3-pAM" secondAttribute="left" id="DsO-H0-eCH"/>
-                            <constraint firstItem="iif-ej-krY" firstAttribute="top" secondItem="ZYY-Wx-QsZ" secondAttribute="bottom" id="Kpl-y6-JJq"/>
+                            <constraint firstItem="iif-ej-krY" firstAttribute="left" secondItem="pPu-oh-inR" secondAttribute="left" id="DsO-H0-eCH"/>
+                            <constraint firstItem="iif-ej-krY" firstAttribute="top" secondItem="pPu-oh-inR" secondAttribute="top" id="Kpl-y6-JJq"/>
                             <constraint firstItem="MbZ-sd-Eec" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="inr-l3-pAM" secondAttribute="leadingMargin" constant="15" id="Lgi-rh-OmP"/>
                             <constraint firstItem="jTL-gV-SRV" firstAttribute="leading" secondItem="MbZ-sd-Eec" secondAttribute="trailing" id="SKn-Pw-97x"/>
                             <constraint firstItem="MbZ-sd-Eec" firstAttribute="centerX" secondItem="jTL-gV-SRV" secondAttribute="centerX" id="co1-N3-nQg"/>
                             <constraint firstItem="jTL-gV-SRV" firstAttribute="top" secondItem="iif-ej-krY" secondAttribute="bottom" constant="25" id="fWB-8z-IWQ"/>
                             <constraint firstItem="MbZ-sd-Eec" firstAttribute="width" secondItem="jTL-gV-SRV" secondAttribute="width" id="fYv-MF-WWu"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="jTL-gV-SRV" secondAttribute="trailing" constant="15" id="h7t-Ky-yPm"/>
+                            <constraint firstItem="pPu-oh-inR" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="jTL-gV-SRV" secondAttribute="trailing" constant="15" id="h7t-Ky-yPm"/>
                             <constraint firstItem="MbZ-sd-Eec" firstAttribute="centerY" secondItem="jTL-gV-SRV" secondAttribute="centerY" id="lrA-yn-eHT"/>
                             <constraint firstItem="jTL-gV-SRV" firstAttribute="top" secondItem="MbZ-sd-Eec" secondAttribute="bottom" id="mh1-M1-8mX"/>
                             <constraint firstItem="MbZ-sd-Eec" firstAttribute="height" secondItem="jTL-gV-SRV" secondAttribute="height" id="mwO-Ok-wmY"/>
                             <constraint firstItem="MbZ-sd-Eec" firstAttribute="top" secondItem="iif-ej-krY" secondAttribute="bottom" constant="25" id="n3o-O3-Ezr"/>
                             <constraint firstItem="jTL-gV-SRV" firstAttribute="centerX" secondItem="iif-ej-krY" secondAttribute="centerX" id="nvo-ua-6nV"/>
-                            <constraint firstItem="jTL-gV-SRV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="inr-l3-pAM" secondAttribute="leading" constant="15" id="p50-gY-DxA"/>
-                            <constraint firstItem="MbZ-sd-Eec" firstAttribute="centerX" secondItem="inr-l3-pAM" secondAttribute="centerX" id="rL6-JW-A0R"/>
+                            <constraint firstItem="jTL-gV-SRV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pPu-oh-inR" secondAttribute="leading" constant="15" id="p50-gY-DxA"/>
+                            <constraint firstItem="MbZ-sd-Eec" firstAttribute="centerX" secondItem="pPu-oh-inR" secondAttribute="centerX" id="rL6-JW-A0R"/>
                             <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="MbZ-sd-Eec" secondAttribute="trailing" constant="15" id="s6o-3T-xwX"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="pPu-oh-inR"/>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="h7t-Ky-yPm"/>
                                 <exclude reference="mwO-Ok-wmY"/>
                                 <exclude reference="SKn-Pw-97x"/>
                                 <exclude reference="fWB-8z-IWQ"/>
-                                <exclude reference="h7t-Ky-yPm"/>
                                 <exclude reference="mh1-M1-8mX"/>
                                 <exclude reference="nvo-ua-6nV"/>
                                 <exclude reference="p50-gY-DxA"/>

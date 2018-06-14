@@ -122,7 +122,7 @@
 
 #pragma mark - QR generation
 
-+ (UIImage *)mnz_qrImageFromString:(NSString *)qrString withSize:(CGSize)size {
++ (UIImage *)mnz_qrImageFromString:(NSString *)qrString withSize:(CGSize)size color:(UIColor *)color {
     NSData *qrData = [qrString dataUsingEncoding:NSISOLatin1StringEncoding];
     NSString *qrCorrectionLevel = @"H";
     
@@ -132,7 +132,7 @@
     
     CIFilter *colorFilter = [CIFilter filterWithName:@"CIFalseColor"];
     [colorFilter setValue:qrFilter.outputImage forKey:@"inputImage"];
-    [colorFilter setValue:[CIColor colorWithRed:0.94f green:0.22f blue:0.23f] forKey:@"inputColor0"];
+    [colorFilter setValue:[CIColor colorWithCGColor:color.CGColor] forKey:@"inputColor0"];
     [colorFilter setValue:[CIColor colorWithRed:1.0f green:1.0f blue:1.0f] forKey:@"inputColor1"];
     
     CIImage *ciImage = colorFilter.outputImage;
