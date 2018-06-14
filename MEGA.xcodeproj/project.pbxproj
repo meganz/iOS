@@ -289,7 +289,6 @@
 		77B3227B20A343A30037FA89 /* CopyrightWarningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 946B2D181F46E5B9009ED32C /* CopyrightWarningViewController.m */; };
 		77B3227C20A343A40037FA89 /* CopyrightWarningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 946B2D181F46E5B9009ED32C /* CopyrightWarningViewController.m */; };
 		77B3227F20A436D60037FA89 /* NSURL+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B3227E20A436D60037FA89 /* NSURL+MNZCategory.m */; };
-		77B53C7520B2DB4500B26F12 /* PWProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B53C7320B2DB4500B26F12 /* PWProgressView.m */; };
 		77C544FF2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C544FE2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m */; };
 		77CAAAE0202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CAAADF202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m */; };
 		77CAAAE3202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CAAAE2202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m */; };
@@ -547,6 +546,7 @@
 		A85740C72032F6E70033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
 		A85740C82032F6E80033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
 		A85740C92032F6E80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
+		A8665F5220ADA1600044F8F6 /* PWProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = A8665F5020ADA1600044F8F6 /* PWProgressView.m */; };
 		A86FC4FC1EBB4999006053A6 /* MEGAPhotoMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A86FC4FB1EBB4999006053A6 /* MEGAPhotoMediaItem.m */; };
 		A88BFFCF1F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
 		A88BFFD01F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
@@ -1156,8 +1156,6 @@
 		77B32278209C6F060037FA89 /* MEGAMessageRichPreviewView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGAMessageRichPreviewView.xib; sourceTree = "<group>"; };
 		77B3227D20A436D60037FA89 /* NSURL+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURL+MNZCategory.h"; sourceTree = "<group>"; };
 		77B3227E20A436D60037FA89 /* NSURL+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURL+MNZCategory.m"; sourceTree = "<group>"; };
-		77B53C7320B2DB4500B26F12 /* PWProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWProgressView.m; sourceTree = "<group>"; };
-		77B53C7420B2DB4500B26F12 /* PWProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWProgressView.h; sourceTree = "<group>"; };
 		77C544FD2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAPhotoBrowserAnimator.h; sourceTree = "<group>"; };
 		77C544FE2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAPhotoBrowserAnimator.m; sourceTree = "<group>"; };
 		77CAAADE202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAPhotoBrowserPickerViewController.h; sourceTree = "<group>"; };
@@ -1347,6 +1345,8 @@
 		A85740C12032F6B80033034C /* MOChatDraft+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOChatDraft+CoreDataProperties.h"; sourceTree = "<group>"; };
 		A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOChatDraft+CoreDataClass.m"; sourceTree = "<group>"; };
 		A85740C32032F6B80033034C /* MOChatDraft+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOChatDraft+CoreDataClass.h"; sourceTree = "<group>"; };
+		A8665F5020ADA1600044F8F6 /* PWProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWProgressView.m; sourceTree = "<group>"; };
+		A8665F5120ADA1600044F8F6 /* PWProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWProgressView.h; sourceTree = "<group>"; };
 		A86FC4FB1EBB4999006053A6 /* MEGAPhotoMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAPhotoMediaItem.m; sourceTree = "<group>"; };
 		A88BFFC81F0A52E90081BCE3 /* libcares.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcares.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcares.a; sourceTree = "<group>"; };
 		A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcryptopp.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcryptopp.a; sourceTree = "<group>"; };
@@ -1791,7 +1791,7 @@
 		415226671A692EBD00EC7BB6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				77B53C7220B2DB4500B26F12 /* PWProgressView */,
+				A8665F4F20ADA1600044F8F6 /* PWProgressView */,
 				834AD6002024692200D2527F /* MGSwipeTableCell */,
 				5BD4A01B1F8385EC000E24E6 /* FrameAccessor */,
 				5B22F9721F8373EC00D2B156 /* VENTokenField */,
@@ -2679,16 +2679,6 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
-		77B53C7220B2DB4500B26F12 /* PWProgressView */ = {
-			isa = PBXGroup;
-			children = (
-				77B53C7320B2DB4500B26F12 /* PWProgressView.m */,
-				77B53C7420B2DB4500B26F12 /* PWProgressView.h */,
-			);
-			name = PWProgressView;
-			path = Vendor/PWProgressView/PWProgressView;
-			sourceTree = "<group>";
-		};
 		77D9A5692023538600B48470 /* Photo browser */ = {
 			isa = PBXGroup;
 			children = (
@@ -2917,6 +2907,16 @@
 				83747B1D20ADD16C00BC1AED /* MEGAQLPreviewController.m */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		A8665F4F20ADA1600044F8F6 /* PWProgressView */ = {
+			isa = PBXGroup;
+			children = (
+				A8665F5020ADA1600044F8F6 /* PWProgressView.m */,
+				A8665F5120ADA1600044F8F6 /* PWProgressView.h */,
+			);
+			name = PWProgressView;
+			path = Vendor/PWProgressView/PWProgressView;
 			sourceTree = "<group>";
 		};
 		A8AA4F6D1ED4295800E7BA23 /* API */ = {
@@ -3237,6 +3237,9 @@
 							com.apple.Push = {
 								enabled = 1;
 							};
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
 							com.apple.iCloud = {
 								enabled = 1;
 							};
@@ -3515,6 +3518,7 @@
 				5BFA346B1FAB4169005BFC4E /* MEGARemoveRequestDelegate.m in Sources */,
 				7747B2D8208625B50011814E /* Reachability.m in Sources */,
 				417279471DB663FA001AC818 /* JSQLocationMediaItem.m in Sources */,
+				A8665F5220ADA1600044F8F6 /* PWProgressView.m in Sources */,
 				41D21E6E1D01AEC3002E6296 /* CTAssetsPickerController.m in Sources */,
 				417279341DB663FA001AC818 /* NSBundle+JSQMessages.m in Sources */,
 				417279411DB663FA001AC818 /* JSQAudioMediaViewAttributes.m in Sources */,
@@ -3737,7 +3741,6 @@
 				41AC33A81A926C27005118AF /* HeaderCollectionReusableView.m in Sources */,
 				E8B519271AC9CD8000BB7324 /* TransferTableViewCell.m in Sources */,
 				4172793C1DB663FA001AC818 /* JSQMessagesBubbleImageFactory.m in Sources */,
-				77B53C7520B2DB4500B26F12 /* PWProgressView.m in Sources */,
 				9437B93F1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m in Sources */,
 				41D14F711B8603AF0005A27A /* ProductDetailTableViewCell.m in Sources */,
 				E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */,

@@ -150,25 +150,37 @@
 
 - (void)showFileLinkView {
     NSString *fileLinkURLString = [self mnz_MEGAURL];
-    MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-        if (!request.flag) {
+    MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+        if (error.type) {
+            [self presentFileLinkViewForLink:fileLinkURLString request:request error:error];
+        } else {
             MEGANode *node = request.publicNode;
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 MEGAPhotoBrowserViewController *photoBrowserVC = [node mnz_photoBrowserWithNodes:@[node] folderLink:NO displayMode:DisplayModeFileLink enableMoveToRubbishBin:NO];
                 photoBrowserVC.publicLink = fileLinkURLString;
-                [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];
                 
-                return;
+                [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];
+            } else {
+                [self presentFileLinkViewForLink:fileLinkURLString request:request error:error];
             }
         }
-        MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
-        FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
-        fileLinkVC.fileLinkString = fileLinkURLString;
         
-        [UIApplication.mnz_visibleViewController presentViewController:fileLinkNavigationController animated:YES completion:nil];
+        [SVProgressHUD dismiss];
     }];
     
+    [SVProgressHUD show];
     [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:fileLinkURLString delegate:delegate];
+}
+
+
+- (void)presentFileLinkViewForLink:(NSString *)link request:(MEGARequest *)request error:(MEGAError *)error {
+    MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
+    FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
+    fileLinkVC.fileLinkString = link;
+    fileLinkVC.request = request;
+    fileLinkVC.error = error;
+    
+    [UIApplication.mnz_visibleViewController presentViewController:fileLinkNavigationController animated:YES completion:nil];
 }
 
 - (void)showFolderLinkView {

@@ -81,7 +81,7 @@ static const void *nodeDetailsTagKey = &nodeDetailsTagKey;
         if (type == URLTypeFileLink || type == URLTypeFolderLink) {
             self.MEGALink = match.URL;
             if (type == URLTypeFileLink) {
-                MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
                     self.node = request.publicNode;
                 }];
                 [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:[self.MEGALink mnz_MEGAURL] delegate:delegate];
