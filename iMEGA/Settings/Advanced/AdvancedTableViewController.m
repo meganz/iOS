@@ -4,12 +4,16 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
+#import "MEGAMultiFactorAuthCheckRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
 
 #import "ChangePasswordViewController.h"
+
+#import "TwoFactorAuthenticationViewController.h"
+#import "TwoFactorAuthentication.h"
 
 @interface AdvancedTableViewController () <UIAlertViewDelegate, MEGAGlobalDelegate, MEGARequestDelegate> {
     NSByteCountFormatter *byteCountFormatter;
@@ -36,6 +40,8 @@
 @property (nonatomic, copy) NSString *offlineSizeString;
 @property (nonatomic, copy) NSString *cacheSizeString;
 
+@property (getter=isTwoFactorAuthenticationEnabled) BOOL twoFactorAuthenticationEnabled;
+
 @end
 
 @implementation AdvancedTableViewController
@@ -54,6 +60,11 @@
     
     _offlineSizeString = @"...";
     _cacheSizeString = @"...";
+    
+    MEGAMultiFactorAuthCheckRequestDelegate *delegate = [[MEGAMultiFactorAuthCheckRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+        self.twoFactorAuthenticationEnabled = request.flag;
+    }];
+    [[MEGASdkManager sharedMEGASdk] multiFactorAuthCheckWithEmail:[[MEGASdkManager sharedMEGASdk] myEmail] delegate:delegate];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -154,7 +165,14 @@
         }
     } else if (alertView.tag == 1) {
         if (buttonIndex == 1) {
-            [[MEGASdkManager sharedMEGASdk] cancelAccountWithDelegate:self];
+            if (self.isTwoFactorAuthenticationEnabled) {
+                TwoFactorAuthenticationViewController *twoFactorAuthenticationVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"TwoFactorAuthenticationViewControllerID"];
+                twoFactorAuthenticationVC.twoFAMode = TwoFactorAuthenticationCancelAccount;
+                
+                [self.navigationController pushViewController:twoFactorAuthenticationVC animated:YES];
+            } else {
+                [[MEGASdkManager sharedMEGASdk] cancelAccountWithDelegate:self];
+            }
         }
     }
 }

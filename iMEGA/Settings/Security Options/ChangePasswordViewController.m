@@ -6,6 +6,7 @@
 #import "NSString+MNZCategory.h"
 #import "SVProgressHUD.h"
 
+#import "TwoFactorAuthenticationViewController.h"
 #import "PasswordStrengthIndicatorView.h"
 #import "PasswordView.h"
 
@@ -292,16 +293,32 @@
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if (self.changeType == ChangeTypePassword) {
             if ([self validatePasswordForm]) {
-                self.changePasswordButton.enabled = NO;
-                [[MEGASdkManager sharedMEGASdk] changePassword:nil newPassword:self.theNewPasswordView.passwordTextField.text delegate:self];
+                if (self.isTwoFactorAuthenticationEnabled) {
+                    TwoFactorAuthenticationViewController *twoFactorAuthenticationVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"TwoFactorAuthenticationViewControllerID"];
+                    twoFactorAuthenticationVC.twoFAMode = TwoFactorAuthenticationChangePassword;
+                    twoFactorAuthenticationVC.newerPassword = self.theNewPasswordView.passwordTextField.text;
+                    
+                    [self.navigationController pushViewController:twoFactorAuthenticationVC animated:YES];
+                } else {
+                    self.changePasswordButton.enabled = NO;
+                    [[MEGASdkManager sharedMEGASdk] changePassword:nil newPassword:self.theNewPasswordView.passwordTextField.text delegate:self];
+                }
             } else {
                 self.passwordStrengthIndicatorView.customView.hidden = YES;
                 self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
             }
         } else if (self.changeType == ChangeTypeEmail) {
             if ([self validateEmail]) {
-                self.changePasswordButton.enabled = NO;
-                [[MEGASdkManager sharedMEGASdk] changeEmail:self.confirmPasswordTextField.text delegate:self];
+                if (self.isTwoFactorAuthenticationEnabled) {
+                    TwoFactorAuthenticationViewController *twoFactorAuthenticationVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"TwoFactorAuthenticationViewControllerID"];
+                    twoFactorAuthenticationVC.twoFAMode = TwoFactorAuthenticationChangeEmail;
+                    twoFactorAuthenticationVC.email = self.confirmPasswordTextField.text;
+                    
+                    [self.navigationController pushViewController:twoFactorAuthenticationVC animated:YES];
+                } else {
+                    self.changePasswordButton.enabled = NO;
+                    [[MEGASdkManager sharedMEGASdk] changeEmail:self.confirmPasswordTextField.text delegate:self];
+                }
             } else {
                 self.theNewPasswordImageView.image = [UIImage imageNamed:@"errorEmail"];
                 self.confirmPasswordImageView.image = [UIImage imageNamed:@"errorEmailConfirm"];
@@ -534,7 +551,7 @@
         case MEGARequestTypeChangePassword: {
             [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"passwordChanged", @"The label showed when your password has been changed")];
             
-            [self.navigationController popViewControllerAnimated:YES];
+            [self.navigationController popToViewController:self.navigationController.viewControllers[2] animated:YES];
             break;
         }
             
@@ -553,6 +570,8 @@
                     if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"passwordReset" object:nil];
                         title = AMLocalizedString(@"passwordChanged", @"The label showed when your password has been changed");
+                        
+                        [self.navigationController popToViewController:self.navigationController.viewControllers[2] animated:YES];
                     } else {
                         title = AMLocalizedString(@"yourPasswordHasBeenReset", nil);
                     }
@@ -560,9 +579,8 @@
                     title = AMLocalizedString(@"yourAccounHasBeenParked", nil);
                 }
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    [self dismissViewControllerAnimated:YES completion:nil];
-                }]];
+                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                
                 [self presentViewController:alertController animated:YES completion:nil];
             }
             

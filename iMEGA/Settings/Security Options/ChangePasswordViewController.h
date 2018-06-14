@@ -19,4 +19,6 @@ typedef NS_ENUM(NSUInteger, ChangeType) {
 @property (weak, nonatomic) IBOutlet UILabel *emailIsChangingTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *emailIsChangingDescriptionLabel;
 
+@property (getter=isTwoFactorAuthenticationEnabled) BOOL twoFactorAuthenticationEnabled;
+
 @end
