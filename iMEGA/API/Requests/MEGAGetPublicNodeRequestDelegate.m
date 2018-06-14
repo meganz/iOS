@@ -3,13 +3,13 @@
 
 @interface MEGAGetPublicNodeRequestDelegate ()
 
-@property (nonatomic, copy) void (^completion)(MEGARequest *request);
+@property (nonatomic, copy) void (^completion)(MEGARequest *request, MEGAError *error);
 
 @end
 
 @implementation MEGAGetPublicNodeRequestDelegate
 
-- (instancetype)initWithCompletion:(void (^)(MEGARequest *request))completion {
+- (instancetype)initWithCompletion:(void (^)(MEGARequest *request, MEGAError *error))completion {
     self = [super init];
     if (self) {
         _completion = completion;
@@ -26,12 +26,8 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     [super onRequestFinish:api request:request error:error];
     
-    if (error.type != MEGAErrorTypeApiOk) {
-        return;
-    }
-    
     if (self.completion) {
-        self.completion(request);
+        self.completion(request, error);
     }
 }
 
