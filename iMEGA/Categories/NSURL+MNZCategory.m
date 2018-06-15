@@ -98,6 +98,10 @@
         return URLTypeHandleLink;
     }
     
+    if (afterSlashesString.length >= 12 && [[afterSlashesString substringToIndex:12] isEqualToString:@"achievements"]) {
+        return URLTypeAchievementsLink;
+    }
+    
     return type;
 }
 
