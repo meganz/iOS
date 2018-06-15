@@ -1169,7 +1169,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
-    if (message.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
+    if (message.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle] || message.type == MEGAChatMessageTypeCallEnded) {
         return nil;
     }
     if (indexPath.item < self.messages.count-1) {
