@@ -889,7 +889,7 @@
             
         case URLTypeAchievementsLink:
             [self openAchievements];
-            return;
+            break;
     }
 }
 
@@ -938,12 +938,14 @@
 }
 
 - (void)openAchievements {
-    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"] && [[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
+    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         MainTabBarController *mainTBC = (MainTabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
         mainTBC.selectedIndex = MYACCOUNT;
         MEGANavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:MYACCOUNT];
         MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
-        [myAccountHallVC openAchievements];
+        if ([[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
+            [myAccountHallVC openAchievements];
+        }
     } else {
         [self showPleaseLogInToYourAccountAlert];
     }
