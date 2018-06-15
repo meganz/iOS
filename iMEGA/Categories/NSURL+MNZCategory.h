@@ -1,24 +1,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSUInteger, URLType) {
-    URLTypeDefault,
-    URLTypeFileLink,
-    URLTypeFolderLink,
-    URLTypeEncryptedLink,
-    URLTypeConfirmationLink,
-    URLTypeOpenInLink,
-    URLTypeNewSignUpLink,
-    URLTypeBackupLink,
-    URLTypeIncomingPendingContactsLink,
-    URLTypeChangeEmailLink,
-    URLTypeCancelAccountLink,
-    URLTypeRecoverLink,
-    URLTypeContactLink,
-    URLTypeChatLink,
-    URLTypeLoginRequiredLink,
-    URLTypeHandleLink
-};
+#import "URLType.h"
 
 @interface NSURL (MNZCategory)
 

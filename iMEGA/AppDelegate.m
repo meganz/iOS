@@ -886,6 +886,10 @@
             [self presentNode];
             
             break;
+            
+        case URLTypeAchievementsLink:
+            [self openAchievements];
+            return;
     }
 }
 
@@ -931,6 +935,18 @@
     ContactRequestsViewController *contactsRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:contactsRequestsVC];
     [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+}
+
+- (void)openAchievements {
+    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"] && [[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
+        MainTabBarController *mainTBC = (MainTabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
+        mainTBC.selectedIndex = MYACCOUNT;
+        MEGANavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:MYACCOUNT];
+        MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
+        [myAccountHallVC openAchievements];
+    } else {
+        [self showPleaseLogInToYourAccountAlert];
+    }
 }
 
 - (void)openIn {
