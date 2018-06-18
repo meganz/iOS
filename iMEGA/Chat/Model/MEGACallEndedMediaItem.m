@@ -63,7 +63,7 @@
                                        contactViewSize.width,
                                        contactViewSize.height);
         
-        contactView.callEndedImageView.image = [UIImage mnz_imageByEndCallReason:self.message.termCode];
+        contactView.callEndedImageView.image = [UIImage mnz_imageByEndCallReason:self.message.termCode userHandle:self.message.userHandle];
         contactView.callEndedLabel.text = [NSString mnz_stringByEndCallReason:self.message.termCode userHandle:self.message.userHandle duration:self.message.duration];
         self.cachedContactView = contactView;
     }

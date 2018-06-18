@@ -289,19 +289,32 @@
     return qrImage;
 }
 
-+ (UIImage *)mnz_imageByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason {
++ (UIImage *)mnz_imageByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason userHandle:(uint64_t)userHandle {
     UIImage *endCallReasonImage;
     
     switch (endCallReason) {
         case MEGAChatMessageEndCallReasonEnded:
-            endCallReasonImage = [UIImage imageNamed:@"callEnd"];
+            endCallReasonImage = [UIImage imageNamed:@"callEnded"];
             break;
             
         case MEGAChatMessageEndCallReasonRejected:
+            endCallReasonImage = [UIImage imageNamed:@"callRejected"];
+            break;
+            
         case MEGAChatMessageEndCallReasonFailed:
+            endCallReasonImage = [UIImage imageNamed:@"callFailed"];
+            break;
+            
         case MEGAChatMessageEndCallReasonCancelled:
+            endCallReasonImage = [UIImage imageNamed:@"callCancelled"];
+            break;
+            
         case MEGAChatMessageEndCallReasonNoAnswer:
-            endCallReasonImage = [UIImage imageNamed:@"missedCall"];
+            if (userHandle == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
+                endCallReasonImage = [UIImage imageNamed:@"callFailed"];
+            } else {
+                endCallReasonImage = [UIImage imageNamed:@"missedCall"];
+            }
             break;
             
         default:
