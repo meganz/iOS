@@ -214,7 +214,7 @@ static NSString* const B = @"[B]";
     return onlineStatusString;
 }
 
-+ (NSString *)mnz_stringByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason userHandle:(uint64_t)userHande duration:(NSInteger)duration {
++ (NSString *)mnz_stringByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason userHandle:(uint64_t)userHandle duration:(NSInteger)duration {
     NSString *endCallReasonString;
     switch (endCallReason) {
         case MEGAChatMessageEndCallReasonEnded: {
@@ -229,7 +229,7 @@ static NSString* const B = @"[B]";
             break;
             
         case MEGAChatMessageEndCallReasonNoAnswer:
-            if (userHande == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
+            if (userHandle == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
                 endCallReasonString = AMLocalizedString(@"callWasNotAnswered", @"When an active call of user A with user B had not answered");
             } else {
                 endCallReasonString = AMLocalizedString(@"missedCall", @"Title of the notification for a missed call");

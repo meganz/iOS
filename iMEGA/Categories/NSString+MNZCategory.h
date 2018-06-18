@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 + (NSString *)mnz_stringByMissedAudioCalls:(NSInteger)missedAudioCalls andMissedVideoCalls:(NSInteger)missedVideoCalls;
 
 + (NSString *)chatStatusString:(MEGAChatStatus)onlineStatus;
-+ (NSString *)mnz_stringByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason userHandle:(uint64_t)userHande duration:(NSInteger)duration;
++ (NSString *)mnz_stringByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason userHandle:(uint64_t)userHandle duration:(NSInteger)duration;
 
 - (BOOL)mnz_isValidEmail;
 
