@@ -32,6 +32,8 @@
     
     self.getContactLinksOptionDelegate = [[MEGAGetAttrUserRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
         self.autoAcceptSwitch.on = request.flag;
+    } onError:^(MEGAError *error) {
+        self.autoAcceptSwitch.on = error.type == MEGAErrorTypeApiENoent;
     }];
     [[MEGASdkManager sharedMEGASdk] getContactLinksOptionWithDelegate:self.getContactLinksOptionDelegate];
 }
