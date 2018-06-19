@@ -10,6 +10,7 @@
 #import "MEGAMessageRichPreviewView.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGASdkManager.h"
+#import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
 #import "UIFont+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
@@ -85,18 +86,31 @@
     dialogView.contentTextView.dataDetectorTypes = UIDataDetectorTypeAll;
     if (self.message.type == MEGAChatMessageTypeContainsMeta) {
         dialogView.contentTextView.text = self.message.containsMeta.richPreview.text;
-        dialogView.titleLabel.text = self.message.containsMeta.richPreview.title;
-        dialogView.descriptionLabel.text = self.message.containsMeta.richPreview.previewDescription;
+        if (self.message.containsMeta.richPreview.title.mnz_isEmpty) {
+            dialogView.titleLabel.hidden = YES;
+        } else {
+            dialogView.titleLabel.text = self.message.containsMeta.richPreview.title;
+        }
+        
+        if (self.message.containsMeta.richPreview.previewDescription.mnz_isEmpty) {
+            dialogView.descriptionLabel.hidden = YES;
+        } else {
+            dialogView.descriptionLabel.text = self.message.containsMeta.richPreview.previewDescription;
+        }
         dialogView.linkLabel.text = self.message.containsMeta.richPreview.url;
         NSString *imageString = self.message.containsMeta.richPreview.image;
         if (imageString) {
             NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imageString options:NSDataBase64DecodingIgnoreUnknownCharacters];
             dialogView.imageImageView.image = [UIImage imageWithData:imageData];
+        } else {
+            dialogView.imageView.hidden = YES;
         }
         NSString *iconString = self.message.containsMeta.richPreview.icon;
         if (iconString) {
             NSData *iconData = [[NSData alloc] initWithBase64EncodedString:iconString options:NSDataBase64DecodingIgnoreUnknownCharacters];
             dialogView.iconImageView.image = [UIImage imageWithData:iconData];
+        } else {
+            dialogView.iconImageView.hidden = YES;
         }
     } else if (self.message.node) {
         URLType type = [self.message.MEGALink mnz_type];
@@ -132,8 +146,24 @@
                                             options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
                                          attributes:@{ NSFontAttributeName : messageFont }
                                             context:nil];
+    
+    CGFloat richPreviewInfoHeight;
+    if (self.message.containsMeta.richPreview.image) {
+        richPreviewInfoHeight = 84.0f;
+    } else {
+        if (self.message.containsMeta.richPreview.title.mnz_isEmpty) {
+            richPreviewInfoHeight = (15.0f * self.cachedDialogView.descriptionLabel.numberOfLines) + 10.0f + 14.0f;
+        } else if (self.message.containsMeta.richPreview.previewDescription.mnz_isEmpty) {
+            richPreviewInfoHeight = 18.0f + 10.0f + 14.0f;
+        } else if (self.message.containsMeta.richPreview.title.mnz_isEmpty && self.message.containsMeta.richPreview.previewDescription.mnz_isEmpty) {
+            richPreviewInfoHeight = 10.0f + 14.0f;
+        } else {
+            richPreviewInfoHeight = 84.0f;
+        }
+    }
     // The bubble height is the message plus the rich preview height plus the margins, @see MEGAMessageRichPreviewView.xib
-    CGFloat bubbleHeight = 10.0f + messageRect.size.height + 10.0f + 104.0f + 3.0f;
+    CGFloat bubbleHeight = 10.0f + messageRect.size.height + 10.0f + (10.0f + richPreviewInfoHeight + 10.0f) + 3.0f;
+    
     return CGSizeMake(bubbleWidth, bubbleHeight);
 }
 
