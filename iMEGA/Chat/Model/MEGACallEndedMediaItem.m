@@ -32,7 +32,7 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    return CGSizeMake([[UIScreen mainScreen] bounds].size.width - 50, 48.0f);
+    return CGSizeMake([[UIDevice currentDevice] mnz_widthForChatBubble], 48.0f);
 }
 
 #pragma mark - Setters
