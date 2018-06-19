@@ -567,18 +567,9 @@
         } else if ([userActivity.activityType isEqualToString:@"NSUserActivityTypeBrowsingWeb"]) {
             NSURL *universalLinkURL = userActivity.webpageURL;
             if (universalLinkURL) {
-                // TODO: Replace with methods from NSURL category
-                NSArray<NSString *> *components = [universalLinkURL.absoluteString componentsSeparatedByString:@"/"];
-                NSString *afterSlashesString = @"";
-                for (NSUInteger i = 3; i < components.count; i++) {
-                    afterSlashesString = [NSString stringWithFormat:@"%@%@/", afterSlashesString, [components objectAtIndex:i]];
-                }
-                if (afterSlashesString.length > 0) {
-                    afterSlashesString = [afterSlashesString substringToIndex:(afterSlashesString.length - 1)];
-                }
                 self.link = universalLinkURL;
                 
-                [self manageLink:[NSURL URLWithString:[NSString stringWithFormat:@"mega://%@", afterSlashesString]]];
+                [self manageLink:[NSURL URLWithString:[NSString stringWithFormat:@"mega://%@", [universalLinkURL mnz_afterSlashesString]]]];
             }
         }
         return YES;
