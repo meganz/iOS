@@ -115,8 +115,8 @@
     } else if (self.message.node) {
         URLType type = [self.message.MEGALink mnz_type];
         dialogView.contentTextView.text = self.message.content;
-        dialogView.titleLabel.text = self.message.node ? self.message.node.name : @"";
-        dialogView.descriptionLabel.text = self.message.node ? [NSByteCountFormatter stringFromByteCount:self.message.node.size.longLongValue countStyle:NSByteCountFormatterCountStyleMemory] : 0;
+        dialogView.titleLabel.text = self.message.node.name;
+        dialogView.descriptionLabel.text = [NSByteCountFormatter stringFromByteCount:self.message.nodeSize.longLongValue countStyle:NSByteCountFormatterCountStyleMemory];
         dialogView.linkLabel.text = @"www.mega.nz";
         if (type == URLTypeFileLink) {
             [dialogView.imageImageView mnz_setImageForExtension:self.message.node.name.pathExtension];

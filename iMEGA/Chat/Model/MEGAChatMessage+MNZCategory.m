@@ -23,6 +23,7 @@ static const void *warningDialogTagKey = &warningDialogTagKey;
 static const void *MEGALinkTagKey = &MEGALinkTagKey;
 static const void *nodeTagKey = &nodeTagKey;
 static const void *nodeDetailsTagKey = &nodeDetailsTagKey;
+static const void *nodeSizeTagKey = &nodeSizeTagKey;
 
 @implementation MEGAChatMessage (MNZCategory)
 
@@ -82,6 +83,7 @@ static const void *nodeDetailsTagKey = &nodeDetailsTagKey;
             self.MEGALink = match.URL;
             if (type == URLTypeFileLink) {
                 MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+                    self.nodeSize = request.publicNode.size;
                     self.node = request.publicNode;
                 }];
                 [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:[self.MEGALink mnz_MEGAURL] delegate:delegate];
@@ -91,7 +93,9 @@ static const void *nodeDetailsTagKey = &nodeDetailsTagKey;
                         if (!request.flag) {
                             MEGANode *node = [MEGASdkManager sharedMEGASdkFolder].rootNode;
                             self.nodeDetails = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
+                            self.nodeSize = [[MEGASdkManager sharedMEGASdkFolder] sizeForNode:node];
                             self.node = node;
+                            [[MEGASdkManager sharedMEGASdkFolder] logout];
                         }
                     }];
                     [[MEGASdkManager sharedMEGASdkFolder] fetchNodesWithDelegate:fetchNodesDelegate];
@@ -391,6 +395,14 @@ static const void *nodeDetailsTagKey = &nodeDetailsTagKey;
 
 - (void)setNodeDetails:(NSString *)nodeDetails {
     objc_setAssociatedObject(self, &nodeDetailsTagKey, nodeDetails, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSNumber *)nodeSize {
+    return objc_getAssociatedObject(self, nodeSizeTagKey);
+}
+
+- (void)setNodeSize:(NSNumber *)nodeSize {
+    objc_setAssociatedObject(self, &nodeSizeTagKey, nodeSize, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end
