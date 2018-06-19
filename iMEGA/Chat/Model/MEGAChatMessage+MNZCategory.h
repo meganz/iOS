@@ -20,6 +20,7 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageWarningDialog) {
 @property (copy, nonatomic) NSURL *MEGALink;
 @property (copy, nonatomic) MEGANode *node;
 @property (copy, nonatomic) NSString *nodeDetails;
+@property (copy, nonatomic) NSNumber *nodeSize;
 
 - (BOOL)containsMEGALink;
 
