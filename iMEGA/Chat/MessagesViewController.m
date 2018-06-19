@@ -143,6 +143,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(download:message:)];
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(addContact:message:)];
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(revoke:message:indexPath:)];
+    [JSQMessagesCollectionViewCell registerMenuAction:@selector(removeRichPreview:message:indexPath:)];
 
     [self setupMenuController:[UIMenuController sharedMenuController]];
     
@@ -673,7 +674,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     UIMenuItem *downloadMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"saveForOffline", @"Caption of a button to edit the files that are selected") action:@selector(download:message:)];
     UIMenuItem *addContactMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") action:@selector(addContact:message:)];
     UIMenuItem *revokeMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"revoke", @"A button title to revoke the access to an attachment in a chat.") action:@selector(revoke:message:indexPath:)];
-    menuController.menuItems = @[importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem, revokeMenuItem];
+    UIMenuItem *removeRichLinkMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"removePreview", @"Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases).") action:@selector(removeRichPreview:message:indexPath:)];
+    menuController.menuItems = @[importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem, revokeMenuItem, removeRichLinkMenuItem];
 }
 
 - (void)loadNodesFromMessage:(MEGAChatMessage *)message atTheBeginning:(BOOL)atTheBeginning {
@@ -1473,7 +1475,27 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         case MEGAChatMessageTypeRevokeAttachment:
             break;
             
-        case MEGAChatMessageTypeNormal:
+        case MEGAChatMessageTypeNormal: {
+            //All messages
+            if (action == @selector(copy:)) return YES;
+            
+            //Your messages
+            if ([message.senderId isEqualToString:self.senderId]) {
+                if (action == @selector(delete:)) {
+                    if (message.isDeletable) {
+                        if (!self.editMessage || self.editMessage.messageId != message.messageId) {
+                            return YES;
+                        }
+                    }
+                }
+                
+                if (action == @selector(edit:message:)) {
+                    if (message.isEditable) return YES;
+                }
+            }
+            break;
+        }
+            
         case MEGAChatMessageTypeContainsMeta: {
             //All messages
             if (action == @selector(copy:)) return YES;
@@ -1489,6 +1511,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                 }
                 
                 if (action == @selector(edit:message:)) {
+                    if (message.isEditable) return YES;
+                }
+                
+                if (action == @selector(removeRichPreview:message:indexPath:)) {
                     if (message.isEditable) return YES;
                 }
             }
@@ -1556,6 +1582,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         [self revoke:sender message:message indexPath:indexPath];
         return;
     }
+    if (action == @selector(removeRichPreview:message:indexPath:)) {
+        [self removeRichPreview:sender message:message indexPath:indexPath];
+        return;
+    }
     
     if (action == @selector(delete:)) {
         MEGAChatMessage *deleteMessage = [[MEGASdkManager sharedMEGAChatSdk] deleteMessageForChat:self.chatRoom.chatId messageId:message.messageId];
@@ -1606,6 +1636,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         
 - (void)revoke:(id)sender message:(MEGAChatMessage *)message indexPath:(NSIndexPath *)indexPath {
     [[MEGASdkManager sharedMEGAChatSdk] revokeAttachmentMessageForChat:self.chatRoom.chatId messageId:message.messageId];
+}
+
+- (void)removeRichPreview:(id)sender message:(MEGAChatMessage *)message indexPath:(NSIndexPath *)indexPath {
+    [[MEGASdkManager sharedMEGAChatSdk] removeRichLinkForChat:self.chatRoom.chatId messageId:message.messageId];
 }
 
 #pragma mark - JSQMessages collection view flow layout delegate
