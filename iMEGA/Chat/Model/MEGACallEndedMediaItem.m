@@ -8,7 +8,7 @@
 
 @interface MEGACallEndedMediaItem ()
 
-@property (strong, nonatomic) UIView *cachedContactView;
+@property (strong, nonatomic) UIView *cachedCallEndedView;
 @property (copy, nonatomic) MEGAChatMessage *message;
 
 @end
@@ -21,30 +21,26 @@
     self = [super init];
     if (self) {
         _message = message;
-        _cachedContactView = nil;
+        _cachedCallEndedView = nil;
     }
     return self;
 }
 
 - (void)clearCachedMediaViews {
     [super clearCachedMediaViews];
-    _cachedContactView = nil;
-}
-
-- (CGSize)mediaViewDisplaySize {
-    return CGSizeMake([[UIDevice currentDevice] mnz_widthForChatBubble], 48.0f);
+    _cachedCallEndedView = nil;
 }
 
 #pragma mark - Setters
 
 - (void)setMessage:(MEGAChatMessage *)message {
     _message = [message copy];
-    _cachedContactView = nil;
+    _cachedCallEndedView = nil;
 }
 
 - (void)setAppliesMediaViewMaskAsOutgoing:(BOOL)appliesMediaViewMaskAsOutgoing {
     [super setAppliesMediaViewMaskAsOutgoing:appliesMediaViewMaskAsOutgoing];
-    _cachedContactView = nil;
+    _cachedCallEndedView = nil;
 }
 
 #pragma mark - JSQMessageMediaData protocol
@@ -54,25 +50,33 @@
         return nil;
     }
     
-    if (self.cachedContactView == nil) {
-        MEGAMessageCallEndedView *contactView = [[[NSBundle bundleForClass:[MEGAMessageCallEndedView class]] loadNibNamed:@"MEGAMessageCallEndedView" owner:self options:nil] objectAtIndex:0];
+    if (self.cachedCallEndedView == nil) {
+        MEGAMessageCallEndedView *callEndedView = [[[NSBundle bundleForClass:[MEGAMessageCallEndedView class]] loadNibNamed:@"MEGAMessageCallEndedView" owner:self options:nil] objectAtIndex:0];
         // Sizes:
-        CGSize contactViewSize = [self mediaViewDisplaySize];
-        contactView.frame = CGRectMake(contactView.frame.origin.x,
-                                       contactView.frame.origin.y,
-                                       contactViewSize.width,
-                                       contactViewSize.height);
+        CGSize callEndedViewSize = [self mediaViewDisplaySize];
+        callEndedView.frame = CGRectMake(callEndedView.frame.origin.x,
+                                       callEndedView.frame.origin.y,
+                                       callEndedViewSize.width,
+                                       callEndedViewSize.height);
         
-        contactView.callEndedImageView.image = [UIImage mnz_imageByEndCallReason:self.message.termCode userHandle:self.message.userHandle];
-        contactView.callEndedLabel.text = [NSString mnz_stringByEndCallReason:self.message.termCode userHandle:self.message.userHandle duration:self.message.duration];
-        self.cachedContactView = contactView;
+        callEndedView.callEndedImageView.image = [UIImage mnz_imageByEndCallReason:self.message.termCode userHandle:self.message.userHandle];
+        callEndedView.callEndedLabel.text = [NSString mnz_stringByEndCallReason:self.message.termCode userHandle:self.message.userHandle duration:self.message.duration];
+        self.cachedCallEndedView = callEndedView;
     }
     
-    return self.cachedContactView;
+    return self.cachedCallEndedView;
+}
+
+- (CGSize)mediaViewDisplaySize {
+    return CGSizeMake([[UIDevice currentDevice] mnz_widthForChatBubble], 48.0f);
 }
 
 - (NSUInteger)mediaHash {
     return self.hash;
+}
+
+- (NSString *)mediaDataType {
+    return @"MEGACallEnded";
 }
 
 #pragma mark - NSObject
@@ -84,10 +88,6 @@
 - (NSString *)description {
     return [NSString stringWithFormat:@"<%@: image=%@, appliesMediaViewMaskAsOutgoing=%@>",
             [self class], self.message, @(self.appliesMediaViewMaskAsOutgoing)];
-}
-
-- (NSString *)mediaDataType {
-    return @"MEGACallEnded";
 }
 
 #pragma mark - NSCoding
