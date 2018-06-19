@@ -929,6 +929,18 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self.collectionView reloadItemsAtIndexPaths:@[unreadMessagesIndexPath]];
 }
 
+- (void)updateOffsetForCellAtIndexPath:(NSIndexPath *)indexPath previousHeight:(CGFloat)previousHeight {
+    if ([[self.collectionView indexPathsForVisibleItems] containsObject:indexPath]) {
+        UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+        CGFloat currentHeight = cell.frame.size.height;
+        CGFloat verticalIncrement = currentHeight - previousHeight;
+        if (verticalIncrement > 0) {
+            CGPoint newOffset = CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y + verticalIncrement);
+            [self.collectionView setContentOffset:newOffset animated:YES];
+        }
+    }
+}
+
 #pragma mark - Gesture recognizer
 
 - (void)hideInputToolbar {
@@ -993,9 +1005,12 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         for (NSUInteger i = 0; i < self.messages.count; i++) {
             MEGAChatMessage *message = [self.messages objectAtIndex:i];
             if (message.temporalId == messageToReload.temporalId) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
+                UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+                CGFloat previousHeight = cell.frame.size.height;
                 message.warningDialog = skippedDialogs.integerValue >= 3 ? MEGAChatMessageWarningDialogStandard : MEGAChatMessageWarningDialogInitial;
-                [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:i inSection:0]]];
-                [self scrollToBottomAnimated:YES];
+                [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                [self updateOffsetForCellAtIndexPath:indexPath previousHeight:previousHeight];
                 if (![self.observedDialogMessages containsObject:message]) {
                     [self.observedDialogMessages addObject:message];
                     [message addObserver:self forKeyPath:@"warningDialog" options:NSKeyValueObservingOptionNew context:nil];
@@ -1018,8 +1033,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         for (NSUInteger i = 0; i < self.messages.count; i++) {
             MEGAChatMessage *message = [self.messages objectAtIndex:i];
             if (message.messageId == messageToReload.messageId) {
-                [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:i inSection:0]]];
-                [self scrollToBottomAnimated:YES];
+                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
+                UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+                CGFloat previousHeight = cell.frame.size.height;
+                [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                [self updateOffsetForCellAtIndexPath:indexPath previousHeight:previousHeight];
             }
         }
     });
@@ -2002,8 +2020,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                 NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
                 if (message.isEdited) {
+                    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+                    CGFloat previousHeight = cell.frame.size.height;
                     [self.messages replaceObjectAtIndex:index withObject:message];
                     [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                    [self updateOffsetForCellAtIndexPath:indexPath previousHeight:previousHeight];
                 }
                 if (message.isDeleted) {
                     [self.messages removeObjectAtIndex:index];

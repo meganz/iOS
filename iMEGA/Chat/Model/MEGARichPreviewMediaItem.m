@@ -147,18 +147,16 @@
                                          attributes:@{ NSFontAttributeName : messageFont }
                                             context:nil];
     
-    CGFloat richPreviewInfoHeight;
-    if (self.message.containsMeta.richPreview.image) {
-        richPreviewInfoHeight = 84.0f;
-    } else {
-        if (self.message.containsMeta.richPreview.title.mnz_isEmpty) {
-            richPreviewInfoHeight = (15.0f * self.cachedDialogView.descriptionLabel.numberOfLines) + 10.0f + 14.0f;
-        } else if (self.message.containsMeta.richPreview.previewDescription.mnz_isEmpty) {
-            richPreviewInfoHeight = 18.0f + 10.0f + 14.0f;
-        } else if (self.message.containsMeta.richPreview.title.mnz_isEmpty && self.message.containsMeta.richPreview.previewDescription.mnz_isEmpty) {
-            richPreviewInfoHeight = 10.0f + 14.0f;
-        } else {
-            richPreviewInfoHeight = 84.0f;
+    CGFloat richPreviewInfoHeight = 84.0f;
+    if (self.message.type == MEGAChatMessageTypeContainsMeta) {
+        if (!self.message.containsMeta.richPreview.image) {
+            if (self.message.containsMeta.richPreview.title.mnz_isEmpty) {
+                richPreviewInfoHeight = (15.0f * self.cachedDialogView.descriptionLabel.numberOfLines) + 10.0f + 14.0f;
+            } else if (self.message.containsMeta.richPreview.previewDescription.mnz_isEmpty) {
+                richPreviewInfoHeight = 18.0f + 10.0f + 14.0f;
+            } else if (self.message.containsMeta.richPreview.title.mnz_isEmpty && self.message.containsMeta.richPreview.previewDescription.mnz_isEmpty) {
+                richPreviewInfoHeight = 10.0f + 14.0f;
+            }
         }
     }
     // The bubble height is the message plus the rich preview height plus the margins, @see MEGAMessageRichPreviewView.xib
