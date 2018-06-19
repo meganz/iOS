@@ -315,7 +315,10 @@ static NSString* const B = @"[B]";
             } else if (minutes == 1) {
                 return [NSString stringWithFormat:AMLocalizedString(@"xHours1Minute", nil), (int)hours];
             } else {
-                return [NSString stringWithFormat:AMLocalizedString(@"xHoursxMinutes", nil), (int)hours, (int)minutes];
+                NSString *durationString = AMLocalizedString(@"xHoursxMinutes", nil);
+                durationString = [durationString stringByReplacingOccurrencesOfString:@"%1$d" withString:[NSString stringWithFormat:@"%lu", hours]];
+                durationString = [durationString stringByReplacingOccurrencesOfString:@"%2$d" withString:[NSString stringWithFormat:@"%lu", minutes]];
+                return durationString;
             }
         }
     } else if (minutes > 0) {

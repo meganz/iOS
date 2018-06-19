@@ -1511,4 +1511,4 @@
 /* */
 "xHours1Minute"="%d hours, 1 minute";
 /* */
-"xHoursxMinutes"="%d hours, %d minutes";
+"xHoursxMinutes"="%1$d hours, %2$d minutes";
