@@ -1482,3 +1482,7 @@
 "resume"="Resume";
 /* Title to preview document */
 "previewContent"="Preview Content";
+/* Alert title shown when users try to stream an unsupported audio/video file */
+"fileNotSupported"="File not supported";
+/* Alert message shown when users try to stream an unsupported audio/video file */
+"message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
