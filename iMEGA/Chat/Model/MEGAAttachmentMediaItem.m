@@ -14,6 +14,7 @@
 @interface MEGAAttachmentMediaItem ()
 
 @property (strong, nonatomic) UIView *cachedContactView;
+@property (copy, nonatomic) MEGAChatMessage *message;
 
 @end
 

@@ -520,6 +520,17 @@
             break;
         }
             
+        case MEGAChatMessageTypeCallEnded: {
+            char SOH = 0x01;
+            NSString *separator = [NSString stringWithFormat:@"%c", SOH];
+            NSArray *array = [item.lastMessage componentsSeparatedByString:separator];
+            NSInteger duration = [[array objectAtIndex:0] integerValue];
+            MEGAChatMessageEndCallReason endCallReason = [[array objectAtIndex:1] integerValue];
+            NSString *lastMessage = [NSString mnz_stringByEndCallReason:endCallReason userHandle:item.lastMessageSender duration:duration];
+            cell.chatLastMessage.text = lastMessage;
+            break;
+        }
+            
         default: {
             NSString *senderString;
             if (item.group && item.lastMessageSender != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
