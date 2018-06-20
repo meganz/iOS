@@ -5,6 +5,7 @@
 
 #import "Helper.h"
 #import "MEGAAttachmentMediaItem.h"
+#import "MEGACallEndedMediaItem.h"
 #import "MEGADialogMediaItem.h"
 #import "MEGAFetchNodesRequestDelegate.h"
 #import "MEGAGetPublicNodeRequestDelegate.h"
@@ -42,7 +43,7 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
 - (BOOL)isMediaMessage {
     BOOL mediaMessage = NO;
     
-    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.warningDialog > MEGAChatMessageWarningDialogNone) || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.node)) {
+    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.warningDialog > MEGAChatMessageWarningDialogNone) || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.node || self.type == MEGAChatMessageTypeCallEnded)) {
         mediaMessage = YES;
     }
     
@@ -323,6 +324,10 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
             
             break;
         }
+            
+        case MEGAChatMessageTypeCallEnded:
+            media = [[MEGACallEndedMediaItem alloc] initWithMEGAChatMessage:self];
+            break;
             
         default:
             break;

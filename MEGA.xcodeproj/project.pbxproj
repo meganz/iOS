@@ -540,6 +540,9 @@
 		A82E5BF41F3470B5003C149C /* Spotlight_file.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF21F3470B5003C149C /* Spotlight_file.png */; };
 		A82E5BF51F3470B5003C149C /* Spotlight_folder.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF31F3470B5003C149C /* Spotlight_folder.png */; };
 		A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */; };
+		A841E63C20CAB460005E1D1B /* MEGAMessageCallEndedView.m in Sources */ = {isa = PBXBuildFile; fileRef = A841E63B20CAB460005E1D1B /* MEGAMessageCallEndedView.m */; };
+		A841E63E20CAB477005E1D1B /* MEGAMessageCallEndedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A841E63D20CAB477005E1D1B /* MEGAMessageCallEndedView.xib */; };
+		A841E64120CE6681005E1D1B /* MEGACallEndedMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A841E64020CE6681005E1D1B /* MEGACallEndedMediaItem.m */; };
 		A85740C42032F6B80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
 		A85740C52032F6B80033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
 		A85740C62032F6E70033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
@@ -1342,6 +1345,11 @@
 		A82E5BF31F3470B5003C149C /* Spotlight_folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Spotlight_folder.png; path = Spotlight/Spotlight_folder.png; sourceTree = "<group>"; };
 		A83892411EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatMessage+MNZCategory.h"; sourceTree = "<group>"; };
 		A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGAChatMessage+MNZCategory.m"; sourceTree = "<group>"; };
+		A841E63A20CAB460005E1D1B /* MEGAMessageCallEndedView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAMessageCallEndedView.h; sourceTree = "<group>"; };
+		A841E63B20CAB460005E1D1B /* MEGAMessageCallEndedView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAMessageCallEndedView.m; sourceTree = "<group>"; };
+		A841E63D20CAB477005E1D1B /* MEGAMessageCallEndedView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGAMessageCallEndedView.xib; sourceTree = "<group>"; };
+		A841E63F20CE6681005E1D1B /* MEGACallEndedMediaItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGACallEndedMediaItem.h; sourceTree = "<group>"; };
+		A841E64020CE6681005E1D1B /* MEGACallEndedMediaItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGACallEndedMediaItem.m; sourceTree = "<group>"; };
 		A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOChatDraft+CoreDataProperties.m"; sourceTree = "<group>"; };
 		A85740C12032F6B80033034C /* MOChatDraft+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOChatDraft+CoreDataProperties.h"; sourceTree = "<group>"; };
 		A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOChatDraft+CoreDataClass.m"; sourceTree = "<group>"; };
@@ -1734,6 +1742,9 @@
 				A8C262AC1FA1D85E006172CE /* MEGARemoteImageView.m */,
 				A8C262AE1FA1D876006172CE /* MEGALocalImageView.h */,
 				A8C262AF1FA1D876006172CE /* MEGALocalImageView.m */,
+				A841E63A20CAB460005E1D1B /* MEGAMessageCallEndedView.h */,
+				A841E63B20CAB460005E1D1B /* MEGAMessageCallEndedView.m */,
+				A841E63D20CAB477005E1D1B /* MEGAMessageCallEndedView.xib */,
 				774FA65F2090C0030061DD85 /* MEGAMessageDialogView.h */,
 				774FA6602090C0030061DD85 /* MEGAMessageDialogView.m */,
 				774FA65D2090BF9F0061DD85 /* MEGAMessageDialogView.xib */,
@@ -2353,6 +2364,8 @@
 				A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */,
 				A8B1F4701F0A9A080057520C /* MEGAPhotoMediaItem.h */,
 				A86FC4FB1EBB4999006053A6 /* MEGAPhotoMediaItem.m */,
+				A841E63F20CE6681005E1D1B /* MEGACallEndedMediaItem.h */,
+				A841E64020CE6681005E1D1B /* MEGACallEndedMediaItem.m */,
 				774FA6622090F5A20061DD85 /* MEGADialogMediaItem.h */,
 				774FA6632090F5A20061DD85 /* MEGADialogMediaItem.m */,
 				77B32272209C6DE80037FA89 /* MEGARichPreviewMediaItem.h */,
@@ -3365,6 +3378,7 @@
 				5BB68CA220359B5400B03C00 /* PasswordStrengthIndicatorView.xib in Resources */,
 				41A72F1F1C22EA1600516603 /* LTHPasscodeViewController.bundle in Resources */,
 				E8CD198A1A9270CB00CB8B2A /* UnavailableLinkView.xib in Resources */,
+				A841E63E20CAB477005E1D1B /* MEGAMessageCallEndedView.xib in Resources */,
 				417279331DB663FA001AC818 /* JSQMessagesAssets.bundle in Resources */,
 				9462A1811FDFFD4800008F32 /* MEGAToolbarTextContentView.xib in Resources */,
 				A89E77491EA605A900ADC0D2 /* MEGAMessageAttachmentView.xib in Resources */,
@@ -3725,6 +3739,7 @@
 				5BD4A0221F838606000E24E6 /* ScrollViewFrameAccessor.m in Sources */,
 				832E102F202CB8AE00BDD30F /* NodeInfoViewController.m in Sources */,
 				417279431DB663FA001AC818 /* JSQMessagesCollectionViewFlowLayout.m in Sources */,
+				A841E63C20CAB460005E1D1B /* MEGAMessageCallEndedView.m in Sources */,
 				4172794A1DB663FA001AC818 /* JSQMessagesAvatarImage.m in Sources */,
 				417279461DB663FA001AC818 /* JSQAudioMediaItem.m in Sources */,
 				9462A1841FDFFD8B00008F32 /* MEGAToolbarContentView.m in Sources */,
@@ -3740,6 +3755,7 @@
 				411E712F1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m in Sources */,
 				4131997B1BD7BD5D002CD6EA /* DTTimePeriodCollection.m in Sources */,
 				946BD1331FEBBE4E00B76785 /* MEGAToolbarSelectedAssets.m in Sources */,
+				A841E64120CE6681005E1D1B /* MEGACallEndedMediaItem.m in Sources */,
 				41AC33A81A926C27005118AF /* HeaderCollectionReusableView.m in Sources */,
 				E8B519271AC9CD8000BB7324 /* TransferTableViewCell.m in Sources */,
 				4172793C1DB663FA001AC818 /* JSQMessagesBubbleImageFactory.m in Sources */,

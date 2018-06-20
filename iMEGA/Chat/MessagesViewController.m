@@ -1270,7 +1270,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
-    if (message.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
+    if (message.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle] || message.type == MEGAChatMessageTypeCallEnded) {
         return nil;
     }
     if (indexPath.item < self.messages.count-1) {
@@ -1852,7 +1852,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         case MEGAChatMessageTypePrivilegeChange:
         case MEGAChatMessageTypeChatTitle:
         case MEGAChatMessageTypeAttachment:
-        case MEGAChatMessageTypeContact: {
+        case MEGAChatMessageTypeContact:
+        case MEGAChatMessageTypeCallEnded:{
             [self.messages addObject:message];
             [self finishReceivingMessage];
 
@@ -1908,6 +1909,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             case MEGAChatMessageTypeChatTitle:
             case MEGAChatMessageTypeAttachment:
             case MEGAChatMessageTypeContact:
+            case MEGAChatMessageTypeCallEnded:
             case MEGAChatMessageTypeContainsMeta: {
                 if (!message.isDeleted) {
                     [self.messages insertObject:message atIndex:0];
