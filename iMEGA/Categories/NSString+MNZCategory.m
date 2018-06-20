@@ -242,7 +242,11 @@ static NSString* const B = @"[B]";
             break;
             
         case MEGAChatMessageEndCallReasonCancelled:
-            endCallReasonString = AMLocalizedString(@"callWasCancelled", @"When an active call of user A with user B had cancelled");
+            if (userHandle == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
+                endCallReasonString = AMLocalizedString(@"callWasCancelled", @"When an active call of user A with user B had cancelled");
+            } else {
+                endCallReasonString = AMLocalizedString(@"missedCall", @"Title of the notification for a missed call");
+            }
             break;
             
         default:

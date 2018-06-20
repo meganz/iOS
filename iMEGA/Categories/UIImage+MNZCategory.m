@@ -306,7 +306,11 @@
             break;
             
         case MEGAChatMessageEndCallReasonCancelled:
-            endCallReasonImage = [UIImage imageNamed:@"callCancelled"];
+            if (userHandle == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
+                endCallReasonImage = [UIImage imageNamed:@"callCancelled"];
+            } else {
+                endCallReasonImage = [UIImage imageNamed:@"missedCall"];
+            }
             break;
             
         case MEGAChatMessageEndCallReasonNoAnswer:
