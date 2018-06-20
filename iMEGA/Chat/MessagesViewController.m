@@ -826,7 +826,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)setTypingIndicator {
-    self.showTypingIndicator = self.whoIsTypingMutableArray.count;
+    self.showTypingIndicator = self.whoIsTypingMutableArray.count > 0;
     switch (self.whoIsTypingMutableArray.count) {
         case 0:
             self.footerView.typingLabel.text = @"";
@@ -1949,17 +1949,17 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             
         case MEGAChatRoomChangeTypeUserTyping: {
             if (chat.userTypingHandle != api.myUserHandle) {
-                NSIndexPath *lastCell = [NSIndexPath indexPathForItem:([self.collectionView numberOfItemsInSection:0] - 1) inSection:0];
-                if ([[self.collectionView indexPathsForVisibleItems] containsObject:lastCell]) {
-                    [self scrollToBottomAnimated:YES];
-                }
-                
                 NSString *userTypingEmail = [chat peerEmailByHandle:chat.userTypingHandle];
                 if (![self.whoIsTypingMutableArray containsObject:userTypingEmail]) {
                     [self.whoIsTypingMutableArray addObject:userTypingEmail];
                 }
                 
                 [self setTypingIndicator];
+                
+                NSIndexPath *lastCell = [NSIndexPath indexPathForItem:([self.collectionView numberOfItemsInSection:0] - 1) inSection:0];
+                if ([[self.collectionView indexPathsForVisibleItems] containsObject:lastCell]) {
+                    [self scrollToBottomAnimated:YES];
+                }
                 
                 NSTimer *userTypingTimer = [self.whoIsTypingTimersMutableDictionary objectForKey:userTypingEmail];
                 if (userTypingTimer) {
