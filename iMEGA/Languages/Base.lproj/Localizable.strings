@@ -35,7 +35,7 @@
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Please give MEGA app permission to access your photo library in Settings";
 /* Alert message shown when the user tries to download an empty folder  */
-"emptyFolderMessage"="You can't download an empty folder";
+"emptyFolderMessage"="You can’t download an empty folder";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Your account has already been activated. Please log in.";
 /* Message shown when the user clicks on an link that is not valid */
@@ -127,7 +127,7 @@
 /*  */
 "passwordStrong"="This password will withstand most sophisticated brute-force attacks. Please ensure that you will remember it.";
 /*  */
-"agreeWithTheMEGATermsOfService"="I agree with the MEGA <a href='terms'>Terms of Service</a>";
+"agreeWithTheMEGATermsOfService"="I agree with the MEGA <a href=’terms’>Terms of Service</a>";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Enter a valid name";
 /*  */
@@ -179,7 +179,7 @@
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="The folder you are trying to download is bigger than the available memory.";
 /* Error message shown when a folder can't be created. */
-"folderCreationError"="The folder '%@' can't be created";
+"folderCreationError"="The folder ‘%@’ can’t be created";
 /* */
 "folderLinkUnavailableText1"="This could be due to the following reasons:";
 /* */
@@ -261,9 +261,9 @@
 /* A label to indicate a paused state for a transfer item (upload/download). */
 "paused"="Paused";
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
-"Completing..."="Completing...";
+"Completing..."="Completing…";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
-"Retrying..."="Retrying...";
+"Retrying..."="Retrying…";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="There are pending downloads";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -527,7 +527,7 @@
 /* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
 "cameraUploadsWillBeDisabled"="Camera Uploads will be disabled";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
-"cameraUploadsDisabled_alertView_message"="Camera Uploads will be disabled, because you don't have enough space on your device";
+"cameraUploadsDisabled_alertView_message"="Camera Uploads will be disabled, because you don’t have enough space on your device";
 /* Title of the Offline section */
 "offline"="Offline";
 /* Title of the Contacts section */
@@ -711,9 +711,9 @@
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="All the items in the rubbish bin will be deleted";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
-"dontUseHttp"="Don't use HTTP";
+"dontUseHttp"="Don’t use HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
-"transfersSectionFooter"="Enable this option only if your transfers don't start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.";
+"transfersSectionFooter"="Enable this option only if your transfers don’t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Image and video downloads";
 /* Section title where you can enable the option 'Save images in gallery' */
@@ -721,7 +721,7 @@
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Save videos in gallery";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
-"imageAndVideoDownloadsFooter"="Save iOS compatible images and videos in your device’s gallery (Note: images and videos won't be saved in Offline).";
+"imageAndVideoDownloadsFooter"="Save iOS compatible images and videos in your device’s gallery (Note: images and videos won’t be saved in Offline).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Currently using %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -729,7 +729,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="You will lose all data associated with this account. Are you sure you want to proceed?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="If you can't access your email, please contact support@mega.nz.";
+"ifYouCantAccessYourEmailAccount"="If you can’t access your email, please contact support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Cancellation link has expired.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -1084,13 +1084,17 @@
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
 "wasChangedToBy"="[A] was changed to [B] by [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="[A] changed group chat name to '[B]'.";
+"changedGroupChatNameTo"="[A] changed group chat name to ‘[B]’.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Add Participant…";
 /* Menu item to add participants to a chat */
 "addParticipants"="Add participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
+/* Title used in settings that enables the generation of link previews in the chat */
+"richUrlPreviews"="Rich URL previews";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"richPreviewsFooter"="Enhance the MEGAchat experience. URL content will be retrieved without end-to-end encryption.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Voice and Video Calls";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1202,7 +1206,7 @@
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
 "moreThanTwoUsersAreTyping"="%1$s [A]and more are typing…[/A]";
 /* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
-"writeAMessage"="Write a message to %s...";
+"writeAMessage"="Write a message to %s…";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="No conversation history";
 /* Button which allows to retry send message in chat conversation. */
@@ -1221,6 +1225,18 @@
 "done"="Done";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Send Files";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"enableRichUrlPreviews"="Enable rich URL previews";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"alwaysAllow"="Always Allow";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"notNow"="Not Now";
+/* */
+"never"="Never";
+/* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
+"richPreviewsConfirmation"="You are disabling rich URL previews permanently. You can re-enable rich URL previews in your settings. Do you want to proceed?";
+/* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
+"removePreview"="Remove preview";
 /* */
 "warning"="Warning";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
@@ -1242,7 +1258,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Are you sure you want to abort the registration?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="If you have misspelled your email address, correct it and click 'Resend'.";
+"misspelledEmailAddress"="If you have misspelled your email address, correct it and click ‘Resend’.";
 /* A button to resend the email confirmation. */
 "resend"="Resend";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1272,7 +1288,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu unread messages";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven’t already done so) and then click View ID. You’ll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
 /* A button title to revoke the access to an attachment in a chat. */
@@ -1482,6 +1498,36 @@
 "resume"="Resume";
 /* Title to preview document */
 "previewContent"="Preview Content";
+/* Title of the notification for a missed call */
+"missedCall"="Missed call";
+/* When an outgoing call of user A with user B had been rejected by user B */
+"callWasRejected"="Call was rejected";
+/* When an active call of user A with user B had cancelled */
+"callWasCancelled"="Call was cancelled";
+/* When an active call of user A with user B had not answered */
+"callWasNotAnswered"="Call was not answered";
+/* When an active call of user A with user B had failed */
+"callFailed"="Call failed";
+/* When an active call of user A with user B had ended */
+"callEnded"="Call ended.";
+/* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
+"duration"="Duration: %@";
+/* */
+"xSeconds"="%d seconds";
+/* */
+"1Second"="1 second";
+/* */
+"1Hour"="1 hour";
+/* */
+"xHours"="%d hours";
+/* */
+"1Hour1Minute"="1 hour, 1 minute";
+/* */
+"1HourxMinutes"="1 hour, %d minutes";
+/* */
+"xHours1Minute"="%d hours, 1 minute";
+/* */
+"xHoursxMinutes"="%1$d hours, %2$d minutes";
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="File not supported";
 /* Alert message shown when users try to stream an unsupported audio/video file */

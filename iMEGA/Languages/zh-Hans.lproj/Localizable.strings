@@ -661,7 +661,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="服务条款";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
-"dataProtectionRegulationLabel"="Data Protection Regulation";
+"dataProtectionRegulationLabel"="数据保护条例";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="关闭";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -1235,6 +1235,8 @@
 "never"="从不";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
 "richPreviewsConfirmation"="您正在永久禁用扩展网址预览。您可以在设置中重新启用扩展网址预览。你想继续吗？";
+/* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
+"removePreview"="删除预览";
 /* */
 "warning"="警告";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
@@ -1496,3 +1498,37 @@
 "resume"="恢复";
 /* Title to preview document */
 "previewContent"="Preview Content";
+/* Title of the notification for a missed call */
+"missedCall"="未接来电";
+/* When an outgoing call of user A with user B had been rejected by user B */
+"callWasRejected"="Call was rejected";
+/* When an active call of user A with user B had cancelled */
+"callWasCancelled"="Call was cancelled";
+/* When an active call of user A with user B had not answered */
+"callWasNotAnswered"="Call was not answered";
+/* When an active call of user A with user B had failed */
+"callFailed"="Call failed";
+/* When an active call of user A with user B had ended */
+"callEnded"="Call ended.";
+/* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
+"duration"="Duration: %@";
+/* */
+"xSeconds"="%d seconds";
+/* */
+"1Second"="1 second";
+/* */
+"1Hour"="1 hour";
+/* */
+"xHours"="%d hours";
+/* */
+"1Hour1Minute"="1 hour, 1 minute";
+/* */
+"1HourxMinutes"="1 hour, %d minutes";
+/* */
+"xHours1Minute"="%d hours, 1 minute";
+/* */
+"xHoursxMinutes"="%1$d hours, %2$d minutes";
+/* Alert title shown when users try to stream an unsupported audio/video file */
+"fileNotSupported"="File not supported";
+/* Alert message shown when users try to stream an unsupported audio/video file */
+"message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
