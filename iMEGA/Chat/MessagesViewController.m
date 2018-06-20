@@ -18,6 +18,7 @@
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGACopyRequestDelegate.h"
+#import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAImagePickerController.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGAMessagesTypingIndicatorFoorterView.h"
@@ -33,6 +34,7 @@
 #import "MEGATransfer+MNZCategory.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "NSURL+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 
 #import <UserNotifications/UserNotifications.h>
@@ -89,6 +91,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 @property (nonatomic) CGFloat lastBottomInset;
 @property (nonatomic) CGFloat lastVerticalOffset;
 
+@property (nonatomic) NSMutableSet<MEGAChatMessage *> *observedDialogMessages;
+@property (nonatomic) NSMutableSet<MEGAChatMessage *> *observedNodeMessages;
+@property (nonatomic) NSUInteger richLinkWarningCounterValue;
+
 @end
 
 @implementation MessagesViewController
@@ -137,6 +143,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(download:message:)];
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(addContact:message:)];
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(revoke:message:indexPath:)];
+    [JSQMessagesCollectionViewCell registerMenuAction:@selector(removeRichPreview:message:indexPath:)];
 
     [self setupMenuController:[UIMenuController sharedMenuController]];
     
@@ -219,6 +226,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     _whoIsTypingMutableArray = [[NSMutableArray alloc] init];
     _whoIsTypingTimersMutableDictionary = [[NSMutableDictionary alloc] init];
+    
+    // Array of observed messages:
+    self.observedDialogMessages = [[NSMutableSet<MEGAChatMessage *> alloc] init];
+    self.observedNodeMessages = [[NSMutableSet<MEGAChatMessage *> alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -282,6 +293,17 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)dismissChatRoom {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)dealloc {
+    for (MEGAChatMessage *message in self.observedDialogMessages) {
+        [message removeObserver:self forKeyPath:@"warningDialog"];
+    }
+    [self.observedDialogMessages removeAllObjects];
+    for (MEGAChatMessage *message in self.observedNodeMessages) {
+        [message removeObserver:self forKeyPath:@"node"];
+    }
+    [self.observedNodeMessages removeAllObjects];
 }
 
 #pragma mark - Private
@@ -652,7 +674,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     UIMenuItem *downloadMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"saveForOffline", @"Caption of a button to edit the files that are selected") action:@selector(download:message:)];
     UIMenuItem *addContactMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") action:@selector(addContact:message:)];
     UIMenuItem *revokeMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"revoke", @"A button title to revoke the access to an attachment in a chat.") action:@selector(revoke:message:indexPath:)];
-    menuController.menuItems = @[importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem, revokeMenuItem];
+    UIMenuItem *removeRichLinkMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"removePreview", @"Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases).") action:@selector(removeRichPreview:message:indexPath:)];
+    menuController.menuItems = @[importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem, revokeMenuItem, removeRichLinkMenuItem];
 }
 
 - (void)loadNodesFromMessage:(MEGAChatMessage *)message atTheBeginning:(BOOL)atTheBeginning {
@@ -826,7 +849,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)setTypingIndicator {
-    self.showTypingIndicator = self.whoIsTypingMutableArray.count;
+    self.showTypingIndicator = self.whoIsTypingMutableArray.count > 0;
     switch (self.whoIsTypingMutableArray.count) {
         case 0:
             self.footerView.typingLabel.text = @"";
@@ -908,6 +931,18 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self.collectionView reloadItemsAtIndexPaths:@[unreadMessagesIndexPath]];
 }
 
+- (void)updateOffsetForCellAtIndexPath:(NSIndexPath *)indexPath previousHeight:(CGFloat)previousHeight {
+    if ([[self.collectionView indexPathsForVisibleItems] containsObject:indexPath]) {
+        UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+        CGFloat currentHeight = cell.frame.size.height;
+        CGFloat verticalIncrement = currentHeight - previousHeight;
+        if (verticalIncrement > 0) {
+            CGPoint newOffset = CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y + verticalIncrement);
+            [self.collectionView setContentOffset:newOffset animated:YES];
+        }
+    }
+}
+
 #pragma mark - Gesture recognizer
 
 - (void)hideInputToolbar {
@@ -927,19 +962,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [super didReceiveMenuWillShowNotification:notification];
 }
 
-#pragma mark - JSQMessagesViewController method overrides
+#pragma mark - Rich links support
 
-- (void)didPressSendButton:(UIButton *)button
-           withMessageText:(NSString *)text
-                  senderId:(NSString *)senderId
-         senderDisplayName:(NSString *)senderDisplayName
-                      date:(NSDate *)date {
-    
-    if (text.mnz_isEmpty) {
-        return;
-    }
-    
+- (MEGAChatMessage *)sendMessage:(NSString *)text {
     MEGAChatMessage *message;
+    
     if (self.editMessage) {
         if ([self.editMessage.content isEqualToString:self.inputToolbar.contentView.textView.text]) {
             //If the user didn't change anything on the message that was editing, just go out of edit mode.
@@ -968,10 +995,84 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     dispatch_async(dispatch_get_main_queue(), ^{
         [self finishSendingMessageAnimated:YES];
     });
-
+    
     [[MEGASdkManager sharedMEGAChatSdk] sendStopTypingNotificationForChat:self.chatRoom.chatId];
-
+    
     [self hideJumpToBottom];
+    return message;
+}
+
+- (void)reloadMessage:(MEGAChatMessage *)messageToReload skippedDialogs:(NSNumber *)skippedDialogs {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for (NSUInteger i = 0; i < self.messages.count; i++) {
+            MEGAChatMessage *message = [self.messages objectAtIndex:i];
+            if (message.temporalId == messageToReload.temporalId) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
+                UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+                CGFloat previousHeight = cell.frame.size.height;
+                message.warningDialog = skippedDialogs.integerValue >= 3 ? MEGAChatMessageWarningDialogStandard : MEGAChatMessageWarningDialogInitial;
+                [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                [self updateOffsetForCellAtIndexPath:indexPath previousHeight:previousHeight];
+                if (![self.observedDialogMessages containsObject:message]) {
+                    [self.observedDialogMessages addObject:message];
+                    [message addObserver:self forKeyPath:@"warningDialog" options:NSKeyValueObservingOptionNew context:nil];
+                }
+            }
+        }
+    });
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    MEGAChatMessage *messageToReload = (MEGAChatMessage *)object;
+    
+    if ([keyPath isEqualToString:@"warningDialog"]) {
+        if (messageToReload.warningDialog == MEGAChatMessageWarningDialogDismiss) {
+            [[MEGASdkManager sharedMEGASdk] setRichLinkWarningCounterValue:++self.richLinkWarningCounterValue];
+        }
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for (NSUInteger i = 0; i < self.messages.count; i++) {
+            MEGAChatMessage *message = [self.messages objectAtIndex:i];
+            if (message.messageId == messageToReload.messageId) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
+                UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+                CGFloat previousHeight = cell.frame.size.height;
+                [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                [self updateOffsetForCellAtIndexPath:indexPath previousHeight:previousHeight];
+            }
+        }
+    });
+}
+
+#pragma mark - JSQMessagesViewController method overrides
+
+- (void)didPressSendButton:(UIButton *)button
+           withMessageText:(NSString *)text
+                  senderId:(NSString *)senderId
+         senderDisplayName:(NSString *)senderDisplayName
+                      date:(NSDate *)date {
+    
+    if (text.mnz_isEmpty) {
+        return;
+    }
+    
+    MEGAChatMessage *message = [self sendMessage:text];
+    
+    if ([MEGAChatSdk hasUrl:text]) {
+        MEGAGetAttrUserRequestDelegate *delegate = [[MEGAGetAttrUserRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+            if (request.flag) {
+                [self reloadMessage:message skippedDialogs:request.number];
+                self.richLinkWarningCounterValue = request.number.unsignedIntegerValue;
+            }
+        } error:^(MEGARequest *request, MEGAError *error) {
+            if (request.flag) {
+                [self reloadMessage:message skippedDialogs:request.number];
+                self.richLinkWarningCounterValue = request.number.unsignedIntegerValue;
+            }
+        }];
+        [[MEGASdkManager sharedMEGASdk] shouldShowRichLinkWarningWithDelegate:delegate];
+    }
 }
 
 - (void)messagesInputToolbar:(MEGAInputToolbar *)toolbar didPressSendButton:(UIButton *)sender toAttachAssets:(NSArray<PHAsset *> *)assets {
@@ -1193,7 +1294,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
-    if (message.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
+    if (message.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle] || message.type == MEGAChatMessageTypeCallEnded) {
         return nil;
     }
     if (indexPath.item < self.messages.count-1) {
@@ -1288,6 +1389,13 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
+    
+    if (message.containsMEGALink) {
+        if (![self.observedNodeMessages containsObject:message]) {
+            [self.observedNodeMessages addObject:message];
+            [message addObserver:self forKeyPath:@"node" options:NSKeyValueObservingOptionNew context:nil];
+        }
+    }
     
     cell.accessoryButton.hidden = YES;
     
@@ -1412,6 +1520,31 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             break;
         }
             
+        case MEGAChatMessageTypeContainsMeta: {
+            //All messages
+            if (action == @selector(copy:)) return YES;
+            
+            //Your messages
+            if ([message.senderId isEqualToString:self.senderId]) {
+                if (action == @selector(delete:)) {
+                    if (message.isDeletable) {
+                        if (!self.editMessage || self.editMessage.messageId != message.messageId) {
+                            return YES;
+                        }
+                    }
+                }
+                
+                if (action == @selector(edit:message:)) {
+                    if (message.isEditable) return YES;
+                }
+                
+                if (action == @selector(removeRichPreview:message:indexPath:)) {
+                    if (message.isEditable) return YES;
+                }
+            }
+            break;
+        }
+            
         case MEGAChatMessageTypeAlterParticipants:
         case MEGAChatMessageTypeTruncate:
         case MEGAChatMessageTypePrivilegeChange:
@@ -1473,6 +1606,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         [self revoke:sender message:message indexPath:indexPath];
         return;
     }
+    if (action == @selector(removeRichPreview:message:indexPath:)) {
+        [self removeRichPreview:sender message:message indexPath:indexPath];
+        return;
+    }
     
     if (action == @selector(delete:)) {
         MEGAChatMessage *deleteMessage = [[MEGASdkManager sharedMEGAChatSdk] deleteMessageForChat:self.chatRoom.chatId messageId:message.messageId];
@@ -1523,6 +1660,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         
 - (void)revoke:(id)sender message:(MEGAChatMessage *)message indexPath:(NSIndexPath *)indexPath {
     [[MEGASdkManager sharedMEGAChatSdk] revokeAttachmentMessageForChat:self.chatRoom.chatId messageId:message.messageId];
+}
+
+- (void)removeRichPreview:(id)sender message:(MEGAChatMessage *)message indexPath:(NSIndexPath *)indexPath {
+    [[MEGASdkManager sharedMEGAChatSdk] removeRichLinkForChat:self.chatRoom.chatId messageId:message.messageId];
 }
 
 #pragma mark - JSQMessages collection view flow layout delegate
@@ -1618,6 +1759,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             chatAttachedContactsVC.message = message;
             [self.navigationController pushViewController:chatAttachedContactsVC animated:YES];
         }
+    } else if (message.type == MEGAChatMessageTypeContainsMeta) {
+        [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:message.containsMeta.richPreview.url]];
+    } else if (message.node) {
+        [message.MEGALink mnz_showLinkView];
     }
 }
 
@@ -1731,7 +1876,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         case MEGAChatMessageTypePrivilegeChange:
         case MEGAChatMessageTypeChatTitle:
         case MEGAChatMessageTypeAttachment:
-        case MEGAChatMessageTypeContact: {
+        case MEGAChatMessageTypeContact:
+        case MEGAChatMessageTypeCallEnded:{
             [self.messages addObject:message];
             [self finishReceivingMessage];
 
@@ -1786,7 +1932,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             case MEGAChatMessageTypePrivilegeChange:
             case MEGAChatMessageTypeChatTitle:
             case MEGAChatMessageTypeAttachment:
-            case MEGAChatMessageTypeContact: {
+            case MEGAChatMessageTypeContact:
+            case MEGAChatMessageTypeCallEnded:
+            case MEGAChatMessageTypeContainsMeta: {
                 if (!message.isDeleted) {
                     [self.messages insertObject:message atIndex:0];
                 }
@@ -1877,7 +2025,15 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"temporalId == %" PRIu64, message.temporalId];
                     NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
                     if (filteredArray.count) {
-                        NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
+                        MEGAChatMessage *oldMessage = filteredArray.firstObject;
+                        if (oldMessage.warningDialog > MEGAChatMessageWarningDialogNone) {
+                            message.warningDialog = oldMessage.warningDialog;
+                            if (![self.observedDialogMessages containsObject:message]) {
+                                [self.observedDialogMessages addObject:message];
+                                [message addObserver:self forKeyPath:@"warningDialog" options:NSKeyValueObservingOptionNew context:nil];
+                            }
+                        }
+                        NSUInteger index = [self.messages indexOfObject:oldMessage];
                         [self.messages replaceObjectAtIndex:index withObject:message];
                         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
                         [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
@@ -1924,8 +2080,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                 NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
                 if (message.isEdited) {
+                    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+                    CGFloat previousHeight = cell.frame.size.height;
                     [self.messages replaceObjectAtIndex:index withObject:message];
                     [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                    [self updateOffsetForCellAtIndexPath:indexPath previousHeight:previousHeight];
                 }
                 if (message.isDeleted) {
                     [self.messages removeObjectAtIndex:index];
@@ -1973,17 +2132,17 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             
         case MEGAChatRoomChangeTypeUserTyping: {
             if (chat.userTypingHandle != api.myUserHandle) {
-                NSIndexPath *lastCell = [NSIndexPath indexPathForItem:([self.collectionView numberOfItemsInSection:0] - 1) inSection:0];
-                if ([[self.collectionView indexPathsForVisibleItems] containsObject:lastCell]) {
-                    [self scrollToBottomAnimated:YES];
-                }
-                
                 NSString *userTypingEmail = [chat peerEmailByHandle:chat.userTypingHandle];
                 if (![self.whoIsTypingMutableArray containsObject:userTypingEmail]) {
                     [self.whoIsTypingMutableArray addObject:userTypingEmail];
                 }
                 
                 [self setTypingIndicator];
+                
+                NSIndexPath *lastCell = [NSIndexPath indexPathForItem:([self.collectionView numberOfItemsInSection:0] - 1) inSection:0];
+                if ([[self.collectionView indexPathsForVisibleItems] containsObject:lastCell]) {
+                    [self scrollToBottomAnimated:YES];
+                }
                 
                 NSTimer *userTypingTimer = [self.whoIsTypingTimersMutableDictionary objectForKey:userTypingEmail];
                 if (userTypingTimer) {

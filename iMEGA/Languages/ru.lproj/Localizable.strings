@@ -29,7 +29,7 @@
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="Пожалуйста, предоставьте приложению MEGA доступ к камере в настройках";
 /* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
-"cameraPermissionsInCall"="Пожалуйста, разрешите приложению MEGA доступ к камере в «Настройках». В случае продолжения звонок прекратится, так как приложение будет перезапущено.";
+"cameraPermissionsInCall"="Пожалуйста, разрешите приложению MEGA доступ к камере в «Настройках». В случае продолжения звонок прекратится, так как приложение будет перезапущено.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="Пожалуйста, разрешите приложению MEGA использовать микрофон в меню настроек";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
@@ -1091,6 +1091,10 @@
 "addParticipants"="Добавить участников";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Статус";
+/* Title used in settings that enables the generation of link previews in the chat */
+"richUrlPreviews"="Превью URL";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"richPreviewsFooter"="Расширьте возможности MEGAchat. Содержимое URL-адреса будет извлекаться без сквозного шифрования.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Голосовые и Видео Звонки";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1221,6 +1225,18 @@
 "done"="Готово";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Послать файлы";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"enableRichUrlPreviews"="Включить превью URL";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"alwaysAllow"="Всегда разрешать";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"notNow"="Не сейчас";
+/* */
+"never"="Никогда";
+/* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
+"richPreviewsConfirmation"="Вы отключаете превью URL насовсем. Их можно включить позже в «настройках». Продолжить";
+/* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
+"removePreview"="Удалить превью";
 /* */
 "warning"="Предупреждение";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
@@ -1480,3 +1496,39 @@
 "continueOrRestartVideoMessage"="%1$s продолжится на %2$s";
 /*  */
 "resume"="Возобновить";
+/* Title to preview document */
+"previewContent"="Предпросмотр";
+/* Title of the notification for a missed call */
+"missedCall"="Пропущенный звонок";
+/* When an outgoing call of user A with user B had been rejected by user B */
+"callWasRejected"="Call was rejected";
+/* When an active call of user A with user B had cancelled */
+"callWasCancelled"="Call was cancelled";
+/* When an active call of user A with user B had not answered */
+"callWasNotAnswered"="Call was not answered";
+/* When an active call of user A with user B had failed */
+"callFailed"="Call failed";
+/* When an active call of user A with user B had ended */
+"callEnded"="Call ended.";
+/* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
+"duration"="Duration: %@";
+/* */
+"xSeconds"="%d seconds";
+/* */
+"1Second"="1 second";
+/* */
+"1Hour"="1 hour";
+/* */
+"xHours"="%d hours";
+/* */
+"1Hour1Minute"="1 hour, 1 minute";
+/* */
+"1HourxMinutes"="1 hour, %d minutes";
+/* */
+"xHours1Minute"="%d hours, 1 minute";
+/* */
+"xHoursxMinutes"="%1$d hours, %2$d minutes";
+/* Alert title shown when users try to stream an unsupported audio/video file */
+"fileNotSupported"="File not supported";
+/* Alert message shown when users try to stream an unsupported audio/video file */
+"message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
