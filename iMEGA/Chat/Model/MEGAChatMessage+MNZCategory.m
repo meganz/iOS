@@ -1,18 +1,30 @@
 
 #import "MEGAChatMessage+MNZCategory.h"
-#import "MEGASdkManager.h"
-#import "MEGAStore.h"
-#import "MEGAAttachmentMediaItem.h"
-#import "MEGACallEndedMediaItem.h"
-
-#import "MEGAPhotoMediaItem.h"
-#import "NSString+MNZCategory.h"
-#import "NSAttributedString+MNZCategory.h"
 
 #import <objc/runtime.h>
 
+#import "Helper.h"
+#import "MEGAAttachmentMediaItem.h"
+#import "MEGACallEndedMediaItem.h"
+#import "MEGADialogMediaItem.h"
+#import "MEGAFetchNodesRequestDelegate.h"
+#import "MEGAGetPublicNodeRequestDelegate.h"
+#import "MEGALoginToFolderLinkRequestDelegate.h"
+#import "MEGAPhotoMediaItem.h"
+#import "MEGARichPreviewMediaItem.h"
+#import "MEGASdkManager.h"
+#import "MEGAStore.h"
+#import "NSAttributedString+MNZCategory.h"
+#import "NSString+MNZCategory.h"
+#import "NSURL+MNZCategory.h"
+
 static const void *chatRoomTagKey = &chatRoomTagKey;
 static const void *attributedTextTagKey = &attributedTextTagKey;
+static const void *warningDialogTagKey = &warningDialogTagKey;
+static const void *MEGALinkTagKey = &MEGALinkTagKey;
+static const void *nodeTagKey = &nodeTagKey;
+static const void *nodeDetailsTagKey = &nodeDetailsTagKey;
+static const void *nodeSizeTagKey = &nodeSizeTagKey;
 
 @implementation MEGAChatMessage (MNZCategory)
 
@@ -31,15 +43,72 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
 - (BOOL)isMediaMessage {
     BOOL mediaMessage = NO;
     
-    if (self.isDeleted) {
-        mediaMessage = NO;
-    } else {
-        if (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || self.type == MEGAChatMessageTypeCallEnded) {
-            mediaMessage = YES;
-        }
+    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.warningDialog > MEGAChatMessageWarningDialogNone) || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.node || self.type == MEGAChatMessageTypeCallEnded)) {
+        mediaMessage = YES;
     }
     
     return mediaMessage;
+}
+
+- (BOOL)containsMetaAnyValue {
+    if (self.containsMeta.richPreview.title && ![self.containsMeta.richPreview.title isEqualToString:@""]) {
+        return YES;
+    }
+    if (self.containsMeta.richPreview.previewDescription && ![self.containsMeta.richPreview.previewDescription isEqualToString:@""]) {
+        return YES;
+    }
+    if (self.containsMeta.richPreview.image && ![self.containsMeta.richPreview.image isEqualToString:@""]) {
+        return YES;
+    }
+    if (self.containsMeta.richPreview.icon && ![self.containsMeta.richPreview.icon isEqualToString:@""]) {
+        return YES;
+    }
+    if (self.containsMeta.richPreview.url && ![self.containsMeta.richPreview.url isEqualToString:@""]) {
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL)containsMEGALink {
+    if (self.MEGALink) {
+        return YES;
+    }
+    if (!self.content) {
+        return NO;
+    }
+    
+    NSDataDetector* linkDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
+    for (NSTextCheckingResult *match in [linkDetector matchesInString:self.content options:0 range:NSMakeRange(0, self.content.length)]) {
+        URLType type = [match.URL mnz_type];
+        if (type == URLTypeFileLink || type == URLTypeFolderLink) {
+            self.MEGALink = match.URL;
+            if (type == URLTypeFileLink) {
+                MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+                    self.nodeSize = request.publicNode.size;
+                    self.node = request.publicNode;
+                }];
+                [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:[self.MEGALink mnz_MEGAURL] delegate:delegate];
+            } else if (type == URLTypeFolderLink) {
+                MEGALoginToFolderLinkRequestDelegate *loginDelegate = [[MEGALoginToFolderLinkRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                    MEGAFetchNodesRequestDelegate *fetchNodesDelegate = [[MEGAFetchNodesRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                        if (!request.flag) {
+                            MEGANode *node = [MEGASdkManager sharedMEGASdkFolder].rootNode;
+                            self.nodeDetails = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
+                            self.nodeSize = [[MEGASdkManager sharedMEGASdkFolder] sizeForNode:node];
+                            self.node = node;
+                            [[MEGASdkManager sharedMEGASdkFolder] logout];
+                        }
+                    }];
+                    [[MEGASdkManager sharedMEGASdkFolder] fetchNodesWithDelegate:fetchNodesDelegate];
+                }];
+                [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:[self.MEGALink mnz_MEGAURL] delegate:loginDelegate];
+            }
+
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 - (NSString *)text {
@@ -208,7 +277,7 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
                                                                              font:[UIFont mnz_SFUIRegularWithSize:fontSize]
                                                                             color:textColor];
         
-        if (self.isEdited) {
+        if (self.isEdited && self.type != MEGAChatMessageTypeContainsMeta) {
             NSAttributedString *edited = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"edited", @"A log message in a chat to indicate that the message has been edited by the user.") attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularItalicWithSize:12.0f], NSForegroundColorAttributeName:textColor}];
             NSMutableAttributedString *attributedText = [self.attributedText mutableCopy];
             [attributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
@@ -222,23 +291,49 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
 }
 
 - (id<JSQMessageMediaData>)media {
-    if (self.type == MEGAChatMessageTypeCallEnded) {
-        MEGACallEndedMediaItem *callEndedMediaItem = [[MEGACallEndedMediaItem alloc] initWithMEGAChatMessage:self];
-        return callEndedMediaItem;
-    } else if (self.type == MEGAChatMessageTypeContact) {
-        MEGAAttachmentMediaItem *attachmentMediaItem = [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:self];
-        return attachmentMediaItem;
-    } else if (self.type == MEGAChatMessageTypeAttachment) {
-        MEGANode *node = [self.nodeList nodeAtIndex:0];
-        if (self.nodeList.size.integerValue > 1 || (!node.name.mnz_isImagePathExtension && !node.name.mnz_isVideoPathExtension)) {
-            MEGAAttachmentMediaItem *attachmentMediaItem = [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:self];
-            return attachmentMediaItem;
-        } else {
-            MEGAPhotoMediaItem *photoItem = [[MEGAPhotoMediaItem alloc] initWithMEGANode:node];
-            return photoItem;
+    id<JSQMessageMediaData> media = nil;
+    
+    switch (self.type) {
+        case MEGAChatMessageTypeContact:
+            media = [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:self];
+            break;
+            
+        case MEGAChatMessageTypeAttachment: {
+            MEGANode *node = [self.nodeList nodeAtIndex:0];
+            if (self.nodeList.size.integerValue > 1 || (!node.name.mnz_isImagePathExtension && !node.name.mnz_isVideoPathExtension)) {
+                media = [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:self];
+            } else {
+                media = [[MEGAPhotoMediaItem alloc] initWithMEGANode:node];
+            }
+            
+            break;
         }
+            
+        case MEGAChatMessageTypeContainsMeta: {
+            media = [[MEGARichPreviewMediaItem alloc] initWithMEGAChatMessage:self];
+            
+            break;
+        }
+            
+        case MEGAChatMessageTypeNormal: {
+            if (self.warningDialog > MEGAChatMessageWarningDialogNone) {
+                media = [[MEGADialogMediaItem alloc] initWithMEGAChatMessage:self];
+            } else if (self.node) {
+                media = [[MEGARichPreviewMediaItem alloc] initWithMEGAChatMessage:self];
+            }
+            
+            break;
+        }
+            
+        case MEGAChatMessageTypeCallEnded:
+            media = [[MEGACallEndedMediaItem alloc] initWithMEGAChatMessage:self];
+            break;
+            
+        default:
+            break;
     }
-    return nil;
+    
+    return media;
 }
 
 - (NSUInteger)messageHash {
@@ -248,8 +343,9 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
 #pragma mark - NSObject
 
 - (NSUInteger)hash {
-    NSUInteger contentHash = self.type == MEGAChatMessageTypeAttachment ? [self.nodeList nodeAtIndex:0].handle : self.content.hash;
-    return self.senderId.hash ^ self.date.hash ^ contentHash;
+    NSUInteger contentHash = self.type == MEGAChatMessageTypeAttachment ? [self.nodeList nodeAtIndex:0].handle : self.content.hash ^ self.node.hash;
+    NSUInteger metaHash = self.type == MEGAChatMessageTypeContainsMeta ? self.containsMeta.type : MEGAChatContainsMetaTypeInvalid;
+    return self.senderId.hash ^ self.date.hash ^ contentHash ^ self.warningDialog ^ metaHash;
 }
 
 - (id)debugQuickLookObject {
@@ -272,6 +368,46 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
 
 - (void)setAttributedText:(NSAttributedString *)attributedText {
     objc_setAssociatedObject(self, &attributedTextTagKey, attributedText, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (MEGAChatMessageWarningDialog)warningDialog {
+    return ((NSNumber *)objc_getAssociatedObject(self, warningDialogTagKey)).integerValue;
+}
+
+- (void)setWarningDialog:(MEGAChatMessageWarningDialog)warningDialog {
+    objc_setAssociatedObject(self, &warningDialogTagKey, [NSNumber numberWithInteger:warningDialog], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSURL *)MEGALink {
+    return objc_getAssociatedObject(self, MEGALinkTagKey);
+}
+
+- (void)setMEGALink:(NSURL *)MEGALink {
+    objc_setAssociatedObject(self, &MEGALinkTagKey, MEGALink, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (MEGANode *)node {
+    return objc_getAssociatedObject(self, nodeTagKey);
+}
+
+- (void)setNode:(MEGANode *)node {
+    objc_setAssociatedObject(self, &nodeTagKey, node, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSString *)nodeDetails {
+    return objc_getAssociatedObject(self, nodeDetailsTagKey);
+}
+
+- (void)setNodeDetails:(NSString *)nodeDetails {
+    objc_setAssociatedObject(self, &nodeDetailsTagKey, nodeDetails, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSNumber *)nodeSize {
+    return objc_getAssociatedObject(self, nodeSizeTagKey);
+}
+
+- (void)setNodeSize:(NSNumber *)nodeSize {
+    objc_setAssociatedObject(self, &nodeSizeTagKey, nodeSize, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end
