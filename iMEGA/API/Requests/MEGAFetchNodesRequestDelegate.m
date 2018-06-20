@@ -1,29 +1,18 @@
 
-#import "MEGAGetAttrUserRequestDelegate.h"
+#import "MEGAFetchNodesRequestDelegate.h"
 
-@interface MEGAGetAttrUserRequestDelegate ()
+@interface MEGAFetchNodesRequestDelegate ()
 
 @property (nonatomic, copy) void (^completion)(MEGARequest *request);
-@property (nonatomic, copy) void (^error)(MEGARequest *request, MEGAError *error);
 
 @end
 
-@implementation MEGAGetAttrUserRequestDelegate
+@implementation MEGAFetchNodesRequestDelegate
 
 - (instancetype)initWithCompletion:(void (^)(MEGARequest *request))completion {
     self = [super init];
     if (self) {
         _completion = completion;
-    }
-    
-    return self;
-}
-
-- (instancetype)initWithCompletion:(void (^)(MEGARequest *request))completion error:(void (^)(MEGARequest *request, MEGAError *error))error {
-    self = [super init];
-    if (self) {
-        _completion = completion;
-        _error = error;
     }
     
     return self;
@@ -38,10 +27,7 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     [super onRequestFinish:api request:request error:error];
     
-    if (error.type) {
-        if (self.error) {
-            self.error(request, error);
-        }
+    if (error.type != MEGAErrorTypeApiOk) {
         return;
     }
     
