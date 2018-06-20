@@ -36,11 +36,6 @@
     _cachedContactView = nil;
 }
 
-- (CGSize)mediaViewDisplaySize {
-    CGFloat displaySize = [[UIDevice currentDevice] mnz_widthForChatBubble];
-    return CGSizeMake(displaySize, 144.0f);
-}
-
 #pragma mark - Setters
 
 - (void)setMessage:(MEGAChatMessage *)message {
@@ -148,8 +143,17 @@
     return self.cachedContactView;
 }
 
+- (CGSize)mediaViewDisplaySize {
+    CGFloat displaySize = [[UIDevice currentDevice] mnz_widthForChatBubble];
+    return CGSizeMake(displaySize, 144.0f);
+}
+
 - (NSUInteger)mediaHash {
     return self.hash;
+}
+
+- (NSString *)mediaDataType {
+    return @"MEGAAttachment";
 }
 
 #pragma mark - NSObject
@@ -161,10 +165,6 @@
 - (NSString *)description {
     return [NSString stringWithFormat:@"<%@: image=%@, appliesMediaViewMaskAsOutgoing=%@>",
             [self class], self.message, @(self.appliesMediaViewMaskAsOutgoing)];
-}
-
-- (NSString *)mediaDataType {
-    return @"MEGAAttachment";
 }
 
 #pragma mark - NSCoding
