@@ -4,5 +4,6 @@
 @interface MyAccountHallViewController : MyAccountBaseViewController
 
 - (void)openOffline;
+- (void)openAchievements;
 
 @end

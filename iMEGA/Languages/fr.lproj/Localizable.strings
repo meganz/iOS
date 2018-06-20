@@ -509,7 +509,7 @@
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Les téléversements de la caméra sont activés";
 /* Message shown when the camera uploads have been completed */
-"cameraUploadsComplete"="Le téléversement de la caméra est terminé";
+"cameraUploadsComplete"="Téléversement de la caméra terminé";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "cameraUploadsUploadingFile"="Téléversement d'%1$d de %2$d fichier";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -727,7 +727,7 @@
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
 "cancelYourAccount"="Annuler votre compte";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
-"youWillLooseAllData"="Vous perdrez toutes les données associées à ce compte. Voulez-vous vraiment continuer ?";
+"youWillLooseAllData"="Vous perdrez toutes les données associées à ce compte. Souhaitez-vous vraiment poursuivre ?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
 "ifYouCantAccessYourEmailAccount"="Si vous ne pouvez pas accéder à vos courriels veuillez contacter support@mega.nz";
 /* During account cancellation (deletion) */
@@ -992,7 +992,7 @@
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%@ par mois";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
-"choosePlan"="Choisir une des offres ci-dessous :";
+"choosePlan"="Choisissez une des offres ci-dessous :";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Sélectionner un type de compte :";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
@@ -1091,6 +1091,10 @@
 "addParticipants"="Ajouter des participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="État";
+/* Title used in settings that enables the generation of link previews in the chat */
+"richUrlPreviews"="Aperçus d’URL enrichis";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"richPreviewsFooter"="Améliorez l’expérience MEGAchat. Le contenu des URL sera récupéré sans chiffrement de bout en bout.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Appels vocaux et vidéos";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1221,6 +1225,18 @@
 "done"="Terminé";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Envoyer des fichiers";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"enableRichUrlPreviews"="Activer les aperçus d’URL enrichis";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"alwaysAllow"="Toujours autoriser";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"notNow"="Pas maintenant";
+/* */
+"never"="Jamais";
+/* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
+"richPreviewsConfirmation"="Vous êtes sur le point de désactiver les aperçus d’URL enrichis en permanence. Vous pourrez réactiver les aperçus d’URL enrichis dans vos paramètres. Souhaitez-vous poursuivre ?";
+/* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
+"removePreview"="Supprimer l’aperçu";
 /* */
 "warning"="Avertissement";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
@@ -1480,3 +1496,39 @@
 "continueOrRestartVideoMessage"="%1$s continuera à %2$s";
 /*  */
 "resume"="Reprendre";
+/* Title to preview document */
+"previewContent"="Aperçu du contenu";
+/* Title of the notification for a missed call */
+"missedCall"="Appel manqué";
+/* When an outgoing call of user A with user B had been rejected by user B */
+"callWasRejected"="Call was rejected";
+/* When an active call of user A with user B had cancelled */
+"callWasCancelled"="Call was cancelled";
+/* When an active call of user A with user B had not answered */
+"callWasNotAnswered"="Call was not answered";
+/* When an active call of user A with user B had failed */
+"callFailed"="Call failed";
+/* When an active call of user A with user B had ended */
+"callEnded"="Call ended.";
+/* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
+"duration"="Duration: %@";
+/* */
+"xSeconds"="%d seconds";
+/* */
+"1Second"="1 second";
+/* */
+"1Hour"="1 hour";
+/* */
+"xHours"="%d hours";
+/* */
+"1Hour1Minute"="1 hour, 1 minute";
+/* */
+"1HourxMinutes"="1 hour, %d minutes";
+/* */
+"xHours1Minute"="%d hours, 1 minute";
+/* */
+"xHoursxMinutes"="%1$d hours, %2$d minutes";
+/* Alert title shown when users try to stream an unsupported audio/video file */
+"fileNotSupported"="File not supported";
+/* Alert message shown when users try to stream an unsupported audio/video file */
+"message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";

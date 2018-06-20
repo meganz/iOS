@@ -121,6 +121,18 @@ https://github.com/PureLayout/PureLayout/blob/master/LICENSE
 
 --------------------------------------------------------------------
 
+#### PWProgressView
+https://github.com/pwillsey/PWProgressView
+
+Copyright (c) 2015 Peter Willsey
+
+###### License:
+The MIT License (MIT)
+
+https://github.com/pwillsey/PWProgressView/blob/master/LICENSE
+
+--------------------------------------------------------------------
+
 #### Reachability
 https://github.com/tonymillion/Reachability
 
