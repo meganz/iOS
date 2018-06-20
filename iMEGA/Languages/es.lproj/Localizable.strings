@@ -353,7 +353,7 @@
 /* String already exists: 367, but we need to split paragraphs. */
 "copyrightMessagePart1"="MEGA respeta los derechos de propiedad intelectual de terceros y exige a los usuarios de MEGA que respeten las leyes de propiedad intelectual.";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="Está terminantemente prohibido utilizar el servicio en la nube de MEGA para infringir derechos de propiedad intelectual. No puedes subir, descargar, almacenar, compartir, mostrar, reproducir, distribuir, enviar por email, vincular o poner a disposición de ninguna forma archivos, datos o contenido que infrinjan derechos de propiedad intelectual de cualquier persona o entidad.";
+"copyrightMessagePart2"="Queda terminantemente prohibido utilizar el servicio en la nube de MEGA para infringir derechos de propiedad intelectual. No puedes subir, descargar, almacenar, compartir, mostrar, reproducir, distribuir, enviar por email, vincular o poner a disposición de ninguna forma archivos, datos o contenido que infrinjan derechos de propiedad intelectual de cualquier persona o entidad.";
 /* button caption text that the user clicks when he agrees */
 "agree"="Acepto";
 /* button caption text that the user clicks when he disagrees */
@@ -575,7 +575,7 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Añadir desde contactos";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Añadir un contacto";
+"addContact"="Añadir contacto";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Correo electrónico del contacto";
 /* Button title to 'Add' the contact to your contacts list */
@@ -1092,7 +1092,7 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Estado";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Rich URL previews";
+"richUrlPreviews"="Vista previa de la URL enriquecida";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="Mejora tu experiencia con MEGAchat. El contenido de la URL se recuperará sin cifrado punto a punto.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1234,7 +1234,9 @@
 /* */
 "never"="Nunca";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="You are disabling rich URL previews permanently. You can re-enable rich URL previews in your settings. Do you want to proceed?";
+"richPreviewsConfirmation"="La vista previa de los URL enrequecidas se desactivará de forma permanente. Puede volver a activarla desde Ajustes. ¿Quieres continuar?";
+/* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
+"removePreview"="Eliminar vista previa";
 /* */
 "warning"="Advertencia";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
@@ -1389,7 +1391,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="Auto-aceptar";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="Los contactos que escanean tu Código QR se añadiran automáticamente a tu lista de contactos.";
+"autoAcceptFooter"="Los contactos que escanean tu Código QR se añadirán automáticamente a tu lista de contactos.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="Restablecer código QR";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1495,4 +1497,38 @@
 /*  */
 "resume"="Reanudar";
 /* Title to preview document */
-"previewContent"="Preview Content";
+"previewContent"="Vista previa del contenido";
+/* Title of the notification for a missed call */
+"missedCall"="Llamada perdida";
+/* When an outgoing call of user A with user B had been rejected by user B */
+"callWasRejected"="Call was rejected";
+/* When an active call of user A with user B had cancelled */
+"callWasCancelled"="Call was cancelled";
+/* When an active call of user A with user B had not answered */
+"callWasNotAnswered"="Call was not answered";
+/* When an active call of user A with user B had failed */
+"callFailed"="Call failed";
+/* When an active call of user A with user B had ended */
+"callEnded"="Call ended.";
+/* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
+"duration"="Duration: %@";
+/* */
+"xSeconds"="%d seconds";
+/* */
+"1Second"="1 second";
+/* */
+"1Hour"="1 hour";
+/* */
+"xHours"="%d hours";
+/* */
+"1Hour1Minute"="1 hour, 1 minute";
+/* */
+"1HourxMinutes"="1 hour, %d minutes";
+/* */
+"xHours1Minute"="%d hours, 1 minute";
+/* */
+"xHoursxMinutes"="%1$d hours, %2$d minutes";
+/* Alert title shown when users try to stream an unsupported audio/video file */
+"fileNotSupported"="File not supported";
+/* Alert message shown when users try to stream an unsupported audio/video file */
+"message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
