@@ -1012,10 +1012,14 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                 CGFloat previousHeight = cell.frame.size.height;
                 message.warningDialog = skippedDialogs.integerValue >= 3 ? MEGAChatMessageWarningDialogStandard : MEGAChatMessageWarningDialogInitial;
                 [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
-                [self updateOffsetForCellAtIndexPath:indexPath previousHeight:previousHeight];
                 if (![self.observedDialogMessages containsObject:message]) {
                     [self.observedDialogMessages addObject:message];
                     [message addObserver:self forKeyPath:@"warningDialog" options:NSKeyValueObservingOptionNew context:nil];
+                }
+                if (self.inputToolbar.contentView.textView.isFirstResponder) {
+                    [self.inputToolbar.contentView.textView resignFirstResponder];
+                } else {
+                    [self updateOffsetForCellAtIndexPath:indexPath previousHeight:previousHeight];
                 }
             }
         }
