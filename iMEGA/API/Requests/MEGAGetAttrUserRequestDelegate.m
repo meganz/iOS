@@ -4,7 +4,7 @@
 @interface MEGAGetAttrUserRequestDelegate ()
 
 @property (nonatomic, copy) void (^completion)(MEGARequest *request);
-@property (nonatomic, copy) void (^onError)(MEGAError *error);
+@property (nonatomic, copy) void (^error)(MEGARequest *request, MEGAError *error);
 
 @end
 
@@ -19,11 +19,11 @@
     return self;
 }
 
-- (instancetype)initWithCompletion:(void (^)(MEGARequest *request))completion onError:(void (^)(MEGAError *error))onError{
+- (instancetype)initWithCompletion:(void (^)(MEGARequest *request))completion error:(void (^)(MEGARequest *request, MEGAError *error))error {
     self = [super init];
     if (self) {
         _completion = completion;
-        _onError = onError;
+        _error = error;
     }
     
     return self;
@@ -39,8 +39,8 @@
     [super onRequestFinish:api request:request error:error];
     
     if (error.type) {
-        if (self.onError) {
-            self.onError(error);
+        if (self.error) {
+            self.error(request, error);
         }
         return;
     }
