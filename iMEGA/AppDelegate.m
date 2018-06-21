@@ -883,6 +883,9 @@
         case URLTypeAchievementsLink:
             [self openAchievements];
             break;
+            
+        default:
+            break;
     }
 }
 
