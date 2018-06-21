@@ -716,12 +716,18 @@
 "transfersSectionFooter"="Ative essa opção somente se a sua transferência não começar. Em circunstâncias normais, HTTP é suficiente, pois todas as transferências já estão criptografadas.";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Imagem e vídeo de downloads";
+/* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
+"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Media captured from within the app";
 /* Section title where you can enable the option 'Save images in gallery' */
 "saveImagesInGallery"="Guardar imagens na galeria";
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Salvar vídeos na galeria";
+/* Section title where you can enable the option 'Save media in gallery' */
+"saveMediaInGallery"="Save media in gallery";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Salvar iOS imagens compatíveis e vídeos na galeria do seu dispositivo (Nota: As imagens e vídeos não serão salvas no off-line).";
+/* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
+"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Enable this option to save photos taken and videos recorded from within the app in the gallery";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Atualmente usando %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
