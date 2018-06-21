@@ -716,12 +716,18 @@
 "transfersSectionFooter"="Увімкніть цю опцію, тільки якщо ваші передачі не розпочинаються. В звичайних обставинах HTTP достатньо для передач, так як усі ваші дані уже зашифровано.";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Завантаження зображень та відео";
+/* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
+"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Media captured from within the app";
 /* Section title where you can enable the option 'Save images in gallery' */
 "saveImagesInGallery"="Зберегти зображення в галереї";
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Зберегти відео в галереї";
+/* Section title where you can enable the option 'Save media in gallery' */
+"saveMediaInGallery"="Save media in gallery";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Зберегти iOS сумісні картинки та відео у галереї вашого пристрою (Примітка: зображення і відео не будуть доступні автономно).";
+/* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
+"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Enable this option to save photos taken and videos recorded from within the app in the gallery";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Використовується %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
