@@ -58,13 +58,7 @@
     _offlineSizeString = @"...";
     _cacheSizeString = @"...";
     
-    PHAuthorizationStatus phAuthorizationStatus = [PHPhotoLibrary authorizationStatus];
-    if (phAuthorizationStatus == PHAuthorizationStatusAuthorized) {
-        if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isSaveMediaCapturedToGalleryEnabled"]) {
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isSaveMediaCapturedToGalleryEnabled"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        }
-    }
+    [self checkAuthorizationStatus];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -123,6 +117,30 @@
 }
 
 #pragma mark - Private
+
+- (void)checkAuthorizationStatus {
+    PHAuthorizationStatus phAuthorizationStatus = [PHPhotoLibrary authorizationStatus];
+    switch (phAuthorizationStatus) {
+        case PHAuthorizationStatusRestricted:
+        case PHAuthorizationStatusDenied: {
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isSaveMediaCapturedToGalleryEnabled"]) {
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+            break;
+        }
+            
+        case PHAuthorizationStatusAuthorized:
+            if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isSaveMediaCapturedToGalleryEnabled"]) {
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+            break;
+            
+        default:
+            break;
+    }
+}
 
 - (void)deleteFolderContentsInPath:(NSString *)folderPath {
     NSFileManager *fileManager = [NSFileManager defaultManager];
