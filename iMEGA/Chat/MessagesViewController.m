@@ -1134,17 +1134,15 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
                                 switch (status) {
-                                    case PHAuthorizationStatusNotDetermined:
-                                        break;
                                     case PHAuthorizationStatusAuthorized: {
                                         dispatch_async(dispatch_get_main_queue(), ^{
                                             [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
                                         });
                                         break;
                                     }
-                                    case PHAuthorizationStatusRestricted: {
-                                        break;
-                                    }
+                                    
+                                    case PHAuthorizationStatusNotDetermined:
+                                    case PHAuthorizationStatusRestricted:
                                     case PHAuthorizationStatusDenied:{
                                         dispatch_async(dispatch_get_main_queue(), ^{
                                             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
@@ -1153,6 +1151,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                                         });
                                         break;
                                     }
+                                    
                                     default:
                                         break;
                                 }
