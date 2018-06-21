@@ -97,7 +97,8 @@
         } else {
             dialogView.descriptionLabel.text = self.message.containsMeta.richPreview.previewDescription;
         }
-        dialogView.linkLabel.text = self.message.containsMeta.richPreview.url;
+        NSURL *url = [NSURL URLWithString:self.message.containsMeta.richPreview.url];
+        dialogView.linkLabel.text = url.host;
         NSString *imageString = self.message.containsMeta.richPreview.image;
         if (imageString) {
             NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imageString options:NSDataBase64DecodingIgnoreUnknownCharacters];
