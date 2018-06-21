@@ -55,7 +55,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Bạn đã bị đăng xuất ra bơi một phiên đăng nhập từ chỗ khác";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="Không xác thực được SSL key từ máy chủ. Xem chừng bạn đã bị tác động bởi người hack trung gian.";
+"sslUnverified_alertTitle"="MEGA không thực hiện đuợc kết nối bảo mật thông qua xác thực SSL. Có thể do thiết bị đang dùng mạng WiFi công cộng cần được phải chỉnh thêm.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -1487,7 +1487,7 @@
 /* Button title to allow the user ignore something */
 "ignore"="Bỏ Qua";
 /* Button title to allow the user open the default browser */
-"openBrowser"="Open browser";
+"openBrowser"="Mở trình duyệt";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="Khởi động lại MEGAsync";
 /* Title to alert user the possibility of resume playing the video or start from the beginning */
