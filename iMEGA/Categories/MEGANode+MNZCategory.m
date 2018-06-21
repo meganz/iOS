@@ -110,13 +110,7 @@
             return previewController;
         }
     } else if (self.name.mnz_isAudiovisualContentUTI && [api httpServerStart:YES port:4443]) {
-        NSURL *path;
-        if (isFolderLink) {
-            path = [[MEGASdkManager sharedMEGASdkFolder] httpServerGetLocalLink:self];
-        } else {
-            path = [[MEGASdkManager sharedMEGASdk] httpServerGetLocalLink:self];
-        }
-        
+        NSURL *path = [api httpServerGetLocalLink:self];
         AVURLAsset *asset = [AVURLAsset assetWithURL:path];
         
         if (asset.playable) {
