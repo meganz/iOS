@@ -203,7 +203,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                              {
                              AVVideoAverageBitRateKey:@(bps),
                              AVVideoAverageNonDroppableFrameRateKey:@(fps),
-                             AVVideoProfileLevelKey:AVVideoProfileLevelH264HighAutoLevel,
+                             AVVideoProfileLevelKey:AVVideoProfileLevelH264BaselineAutoLevel,
                              },
                          };
                          encoder.audioSettings = @
@@ -218,7 +218,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                          [encoder addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionNew context:ProcessAssetProgressContext];
                          
                          UIAlertController *alertView = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"processingFile", @"Status text at the end of an upload") message:@"\n\n" preferredStyle:UIAlertControllerStyleAlert];
-                         [alertView addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                         [alertView addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
                              [encoder removeObserver:self forKeyPath:@"progress" context:ProcessAssetProgressContext];
                              [encoder cancelExport];
                          }]];
@@ -485,11 +485,16 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     }
     
     if (videoQuality < ChatVideoUploadQualityHigh) {
-        CGFloat heightByQuality = [self heightByVideoTrack:videoTrack videoQuality:videoQuality];
-        
-        if (height > heightByQuality) {
-            width = width * heightByQuality / height;
-            height = heightByQuality;
+        CGFloat shortSideByQuality = [self shortSideByQuality:videoTrack videoQuality:videoQuality];
+        CGFloat shortSide = (width > height) ? height : width;
+        if (shortSide > shortSideByQuality) {
+            if (width > height) {
+                width = width * shortSideByQuality / height;
+                height = shortSideByQuality;
+            } else {
+                height = height * shortSideByQuality / width;
+                width = shortSideByQuality;
+            }
         }
     }
     
@@ -499,9 +504,9 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 - (BOOL)shouldEncodeVideoWithVideoTrack:(AVAssetTrack *)videoTrack videoQuality:(ChatVideoUploadQuality)videoQuality {
     CGFloat shorterSize = (videoTrack.naturalSize.width > videoTrack.naturalSize.height) ? videoTrack.naturalSize.height : videoTrack.naturalSize.width;
     
-    CGFloat heightByQuality = [self heightByVideoTrack:videoTrack videoQuality:videoQuality];
+    CGFloat shortSideByQuality = [self shortSideByQuality:videoTrack videoQuality:videoQuality];
     
-    if (shorterSize > heightByQuality) {
+    if (shorterSize > shortSideByQuality) {
         return YES;
     }
     
@@ -512,13 +517,13 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     if (videoQuality == ChatVideoUploadQualityLow) {
         return 1500000.0f;
     } else if (videoQuality == ChatVideoUploadQualityMedium) { // ChatVideoUploadQualityMedium
-        return 3400000.0f;
+        return 3000000.0f;
     } else {
         return videoTrack.estimatedDataRate;
     }
 }
 
-- (CGFloat)heightByVideoTrack:(AVAssetTrack *)videoTrack videoQuality:(ChatVideoUploadQuality)videoQuality {
+- (CGFloat)shortSideByQuality:(AVAssetTrack *)videoTrack videoQuality:(ChatVideoUploadQuality)videoQuality {
     if (videoQuality == ChatVideoUploadQualityLow) {
         return 480.0f;
     } else {
