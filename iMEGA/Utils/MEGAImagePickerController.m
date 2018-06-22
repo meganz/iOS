@@ -134,6 +134,60 @@
     }
 }
 
+- (void)actionForImagePath:(NSString *)imagePath {
+    if (self.toUploadSomething) {
+        self.filePath = [imagePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:YES];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else if (self.toChangeAvatar) {
+        NSString *avatarFilePath = [self createAvatarWithImagePath:imagePath];
+        [[MEGASdkManager sharedMEGASdk] setAvatarUserWithSourceFilePath:avatarFilePath];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else if (self.toShareThroughChat) {
+        [[MEGASdkManager sharedMEGASdk] createPreview:imagePath destinatioPath:imagePath];
+        self.filePath = [imagePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+        [self prepareUploadDestination];
+    }
+}
+
+- (void)actionForVideo {
+    if (self.toUploadSomething) {
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:YES];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else if (self.toShareThroughChat) {
+        [self prepareUploadDestination];
+    }
+}
+
+- (void)createAssetType:(PHAssetResourceType)type filePath:(NSString *)filePath {
+    NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+        PHAssetCreationRequest *assetCreationRequest = [PHAssetCreationRequest creationRequestForAsset];
+        [assetCreationRequest addResourceWithType:type fileURL:fileURL options:nil];
+    } completionHandler:^(BOOL success, NSError * _Nullable nserror) {
+        if (success) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                switch (type) {
+                    case PHAssetResourceTypePhoto:
+                        [self actionForImagePath:filePath];
+                        break;
+                    case PHAssetResourceTypeVideo:
+                        [self actionForVideo];
+                        break;
+                        
+                    default:
+                        break;
+                }
+            });
+        } else {
+            MEGALogError(@"Creation request for asset failed: %@ (Domain: %@ - Code:%ld)", nserror.localizedDescription, nserror.domain, nserror.code);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self dismissViewControllerAnimated:YES completion:nil];
+            });
+        }
+    }];
+}
+
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
@@ -143,6 +197,7 @@
     formatter.locale = locale;
     
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+    
     if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeImage]) {
         NSString *imageName = [NSString stringWithFormat:@"%@.jpg", [formatter stringFromDate:[NSDate date]]];
         NSString *imagePath = (self.toUploadSomething || self.toShareThroughChat) ? [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:imageName] : [NSTemporaryDirectory() stringByAppendingPathComponent:imageName];
@@ -150,32 +205,17 @@
         NSData *imageData = UIImageJPEGRepresentation(image, 1);
         [imageData writeToFile:imagePath atomically:YES];
         
-        NSURL *imageURL = [NSURL fileURLWithPath:imagePath];
+        if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isSaveMediaCapturedToGalleryEnabled"]) {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
         
-        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-            PHAssetCreationRequest *assetCreationRequest = [PHAssetCreationRequest creationRequestForAsset];
-            [assetCreationRequest addResourceWithType:PHAssetResourceTypePhoto fileURL:imageURL options:nil];
-            
-        } completionHandler:^(BOOL success, NSError * _Nullable nserror) {
-            if (success) {
-                if (self.toUploadSomething) {
-                    self.filePath = [imagePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
-                    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:YES];
-                } else if (self.toChangeAvatar) {
-                    NSString *avatarFilePath = [self createAvatarWithImagePath:imagePath];
-                    [[MEGASdkManager sharedMEGASdk] setAvatarUserWithSourceFilePath:avatarFilePath];
-                } else if (self.toShareThroughChat) {
-                    [[MEGASdkManager sharedMEGASdk] createPreview:imagePath destinatioPath:imagePath];
-                    self.filePath = [imagePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
-                    [self prepareUploadDestination];
-                    return;
-                }
-            } else {
-                MEGALogError(@"Creation request for asset failed: %@ (Domain: %@ - Code:%ld)", nserror.localizedDescription, nserror.domain, nserror.code);
-            }
-        }];
-        
-        [self dismissViewControllerAnimated:YES completion:nil];
+        BOOL isSaveMediaCapturedToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"isSaveMediaCapturedToGalleryEnabled"];
+        if (isSaveMediaCapturedToGalleryEnabled) {
+            [self createAssetType:PHAssetResourceTypePhoto filePath:imagePath];
+        } else {
+            [self actionForImagePath:imagePath];
+        }
     } else if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeMovie]) {
         NSURL *videoUrl = (NSURL *)[info objectForKey:UIImagePickerControllerMediaURL];
         NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:videoUrl.path error:nil];
@@ -184,18 +224,23 @@
         NSString *localFilePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:videoName];
         NSError *error = nil;
         self.filePath = [localFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+        
         if ([[NSFileManager defaultManager] moveItemAtPath:videoUrl.path toPath:localFilePath error:&error]) {
-            if (self.toUploadSomething) {
-                [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:YES];
-            } else if (self.toShareThroughChat) {
-                [self prepareUploadDestination];
-                return;
+            if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isSaveMediaCapturedToGalleryEnabled"]) {
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+            
+            BOOL isSaveMediaCapturedToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"isSaveMediaCapturedToGalleryEnabled"];
+            if (isSaveMediaCapturedToGalleryEnabled) {
+                [self createAssetType:PHAssetResourceTypeVideo filePath:localFilePath];
+            } else {
+                [self actionForVideo];
             }
         } else {
             MEGALogError(@"Move item at path failed with error: %@", error);
+            [self dismissViewControllerAnimated:YES completion:nil];
         }
-        
-        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
