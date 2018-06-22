@@ -29,7 +29,7 @@
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="Пожалуйста, предоставьте приложению MEGA доступ к камере в настройках";
 /* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
-"cameraPermissionsInCall"="Пожалуйста, разрешите приложению MEGA доступ к камере в «Настройках». В случае продолжения звонок прекратится, так как приложение будет перезапущено.";
+"cameraPermissionsInCall"="Пожалуйста, разрешите приложению MEGA доступ к камере в «Настройках». В случае продолжения звонок прекратится, так как приложение будет перезапущено.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="Пожалуйста, разрешите приложению MEGA использовать микрофон в меню настроек";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
@@ -716,12 +716,18 @@
 "transfersSectionFooter"="Включите эту опцию, только если передача не начинается. Обычно HTTP достаточно, так как все передачи уже зашифрованы.";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Загрузка изображений и видео";
+/* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
+"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Media captured from within the app";
 /* Section title where you can enable the option 'Save images in gallery' */
 "saveImagesInGallery"="Сохранить изображения в галерею";
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Сохранить видео в галерею";
+/* Section title where you can enable the option 'Save media in gallery' */
+"saveMediaInGallery"="Save media in gallery";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Сохранить совместимые с iOS изображения и видео в галерее устройства (Примечание: изображения и видео не сохранятся локально).";
+/* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
+"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Enable this option to save photos taken and videos recorded from within the app in the gallery";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Сейчас занимает %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -1092,7 +1098,7 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Статус";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Rich URL previews";
+"richUrlPreviews"="Превью URL";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="Расширьте возможности MEGAchat. Содержимое URL-адреса будет извлекаться без сквозного шифрования.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1235,6 +1241,8 @@
 "never"="Никогда";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
 "richPreviewsConfirmation"="Вы отключаете превью URL насовсем. Их можно включить позже в «настройках». Продолжить";
+/* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
+"removePreview"="Удалить превью";
 /* */
 "warning"="Предупреждение";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
@@ -1495,4 +1503,38 @@
 /*  */
 "resume"="Возобновить";
 /* Title to preview document */
-"previewContent"="Preview Content";
+"previewContent"="Предпросмотр";
+/* Title of the notification for a missed call */
+"missedCall"="Пропущенный звонок";
+/* When an outgoing call of user A with user B had been rejected by user B */
+"callWasRejected"="Call was rejected";
+/* When an active call of user A with user B had cancelled */
+"callWasCancelled"="Call was cancelled";
+/* When an active call of user A with user B had not answered */
+"callWasNotAnswered"="Call was not answered";
+/* When an active call of user A with user B had failed */
+"callFailed"="Call failed";
+/* When an active call of user A with user B had ended */
+"callEnded"="Call ended.";
+/* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
+"duration"="Duration: %@";
+/* */
+"xSeconds"="%d seconds";
+/* */
+"1Second"="1 second";
+/* */
+"1Hour"="1 hour";
+/* */
+"xHours"="%d hours";
+/* */
+"1Hour1Minute"="1 hour, 1 minute";
+/* */
+"1HourxMinutes"="1 hour, %d minutes";
+/* */
+"xHours1Minute"="%d hours, 1 minute";
+/* */
+"xHoursxMinutes"="%1$d hours, %2$d minutes";
+/* Alert title shown when users try to stream an unsupported audio/video file */
+"fileNotSupported"="File not supported";
+/* Alert message shown when users try to stream an unsupported audio/video file */
+"message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";

@@ -25,6 +25,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *statusRightDetailLabel;
 @property (nonatomic, getter=isInvalidStatus) BOOL invalidStatus;
 
+@property (weak, nonatomic) IBOutlet UILabel *richPreviewsLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *richPreviewsSwitch;
+
 @property (weak, nonatomic) IBOutlet UILabel *useMobileDataLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *useMobileDataSwitch;
 
@@ -46,11 +49,13 @@
     
     self.statusLabel.text = AMLocalizedString(@"status", @"Title that refers to the status of the chat (Either Online or Offline)");
     
+    self.richPreviewsLabel.text = AMLocalizedString(@"richUrlPreviews", @"Title used in settings that enables the generation of link previews in the chat");
+    
     self.useMobileDataLabel.text = AMLocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
     
     self.videoQualityLabel.text = AMLocalizedString(@"videoQuality", @"Title that refers to the status of the chat (Either Online or Offline)");
         
-    BOOL isChatEnabled = ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) ? YES : NO;
+    BOOL isChatEnabled = [NSUserDefaults.standardUserDefaults boolForKey:@"IsChatEnabled"];
     [self.chatSwitch setOn:isChatEnabled animated:YES];
     if (isChatEnabled) {
         BOOL isMobileDataEnabledForChat = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsMobileDataEnabledForChat"];
@@ -60,6 +65,8 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         [self.useMobileDataSwitch setOn:NO animated:YES];
     }
+    
+    self.richPreviewsSwitch.on = [NSUserDefaults.standardUserDefaults boolForKey:@"richLinks"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -124,6 +131,10 @@
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"IsChatEnabled"];
         [[MEGALogger sharedLogger] enableSDKlogs];
     }
+}
+
+- (IBAction)richPreviewsValueChanged:(UISwitch *)sender {
+    [[MEGASdkManager sharedMEGASdk] enableRichPreviews:sender.isOn];
 }
 
 - (IBAction)useMobileDataValueChanged:(UISwitch *)sender {
@@ -195,7 +206,7 @@
     NSInteger numberOfSections = 1;
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
         //TODO: Enable "Use Mobile Data" section when possible
-        numberOfSections = 3;
+        numberOfSections = 4;
     }
     
     return numberOfSections;
@@ -212,31 +223,35 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSString *titleForHeader;
-    if (section == 3) {
+    if (section == 4) {
         titleForHeader = AMLocalizedString(@"voiceAndVideoCalls", @"Section title of a button where you can enable mobile data for voice and video calls.");
     }
     return titleForHeader;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    NSString *titleForFooter;
-    if (section == 1) {
-        titleForFooter = AMLocalizedString(@"qualityOfVideosUploadedToAChat", @"Footer text to explain the meaning of the functionaly 'Video quality' for videos uploaded to a chat.");
+
+    NSString *footerTitle;
+    if (section == 2) {
+        footerTitle = AMLocalizedString(@"richPreviewsFooter", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.");
     }
-    return titleForFooter;
+    if (section == 3) {
+        footerTitle = AMLocalizedString(@"qualityOfVideosUploadedToAChat", @"Footer text to explain the meaning of the functionaly 'Video quality' for videos uploaded to a chat.");
+    }
+    return footerTitle;
 }
 
 #pragma mark - UITableViewDelegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:1]]) {
-        ChatVideoQualityTableViewController *chatVideoQualityVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatVideoQualityTableViewControllerID"];
-        [self.navigationController pushViewController:chatVideoQualityVC animated:YES];
-    }
-    
-    if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:2]] && !self.isInvalidStatus) {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {    
+    if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:1]] && !self.isInvalidStatus) {
         ChatStatusTableViewController *chatStatusTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatStatusTableViewControllerID"];
         [self.navigationController pushViewController:chatStatusTVC animated:YES];
+    }
+    
+    if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:3]]) {
+        ChatVideoQualityTableViewController *chatVideoQualityVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatVideoQualityTableViewControllerID"];
+        [self.navigationController pushViewController:chatVideoQualityVC animated:YES];
     }
 }
 

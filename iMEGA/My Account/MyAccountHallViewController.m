@@ -119,6 +119,16 @@
     self.maxStorage = accountDetails.storageMax;
 }
 
+- (void)openAchievements {
+    NSArray *viewControllers = self.navigationController.viewControllers;
+    if (viewControllers.count > 1) {
+        [self.navigationController popToRootViewControllerAnimated:NO];
+    }
+    
+    NSIndexPath *achievementsIndexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+    [self tableView:self.tableView didSelectRowAtIndexPath:achievementsIndexPath];
+}
+
 - (void)openOffline {
     NSArray *viewControllers = self.navigationController.viewControllers;
     if (viewControllers.count > 1) {
