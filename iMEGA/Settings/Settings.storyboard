@@ -1992,7 +1992,9 @@
                             <outlet property="delegate" destination="er2-Fn-lfg" id="Hd9-4P-Ewe"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="GPK-V0-xKb"/>
+                    <navigationItem key="navigationItem" id="GPK-V0-xKb">
+                        <barButtonItem key="backBarButtonItem" title=" " id="4km-6t-WFt"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="chatLabel" destination="FY1-wX-1My" id="EfD-Gu-OjV"/>
                         <outlet property="chatSwitch" destination="8ys-wU-1hr" id="1l9-KQ-PEE"/>
