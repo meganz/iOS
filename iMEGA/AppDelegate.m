@@ -90,7 +90,7 @@
 
 @property (nonatomic, strong) UIAlertController *overquotaAlertView;
 
-@property (nonatomic, strong) UIAlertController *API_ESIDAlertView;
+@property (nonatomic, strong) UIAlertController *API_ESIDAlertController;
 
 @property (nonatomic, weak) MainTabBarController *mainTBC;
 
@@ -1971,10 +1971,10 @@ void uncaughtExceptionHandler(NSException *exception) {
                 }
                 
                 if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeLogout) {
-                    if (!self.API_ESIDAlertView || UIApplication.mnz_visibleViewController.presentedViewController != self.API_ESIDAlertView) {
-                        self.API_ESIDAlertView = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"loggedOut_alertTitle", nil) message:AMLocalizedString(@"loggedOutFromAnotherLocation", nil) preferredStyle:UIAlertControllerStyleAlert];
-                        [self.API_ESIDAlertView addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                        [UIApplication.mnz_visibleViewController presentViewController:self.API_ESIDAlertView animated:YES completion:nil];
+                    if (!self.API_ESIDAlertController || UIApplication.mnz_visibleViewController.presentedViewController != self.API_ESIDAlertController) {
+                        self.API_ESIDAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"loggedOut_alertTitle", nil) message:AMLocalizedString(@"loggedOutFromAnotherLocation", nil) preferredStyle:UIAlertControllerStyleAlert];
+                        [self.API_ESIDAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                        [UIApplication.mnz_visibleViewController presentViewController:self.API_ESIDAlertController animated:YES completion:nil];
                         [Helper logout];
                     }
                 }
