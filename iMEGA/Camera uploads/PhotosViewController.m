@@ -259,8 +259,7 @@
     
     [self.photosCollectionView reloadData];
     
-    [self updateCurrentState];
-    [self updateProgressOrComplete];
+    [self updateProgressWithKnownCameraUploadInProgress:NO];
     
     if ([self.photosCollectionView allowsMultipleSelection]) {
         self.navigationItem.title = AMLocalizedString(@"selectTitle", @"Select items");
@@ -271,7 +270,7 @@
 
 - (void)internetConnectionChanged {
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
-    [self updateCurrentState];
+    [self updateCurrentStateWithKnownCameraUploadInProgress:NO];
 }
 
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
@@ -292,17 +291,7 @@
     self.deleteBarButtonItem.enabled = boolValue;
 }
 
-- (void)updateProgressOrComplete {
-    if ([CameraUploads syncManager].assetsOperationQueue.operationCount > 0) {
-        [self updateProgress];
-    } else {
-        self.totalPhotosUploading = 0;
-        self.currentPhotosUploaded = 0;
-        self.currentState = MEGACameraUploadsStateCompleted;
-    }
-}
-
-- (void)updateProgress {
+- (void)updateProgressWithKnownCameraUploadInProgress:(BOOL)knownCameraUploadInProgress {
     if ([CameraUploads syncManager].assetsOperationQueue.operationCount > 0) {
         if ([CameraUploads syncManager].assetsOperationQueue.operationCount > self.totalPhotosUploading) {
             self.totalPhotosUploading = [CameraUploads syncManager].assetsOperationQueue.operationCount;
@@ -320,15 +309,24 @@
         progressText = [progressText stringByReplacingOccurrencesOfString:@"%2$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.totalPhotosUploading]];
         
         self.photosUploadedLabel.text = progressText;
-        self.currentState = MEGACameraUploadsStateUploading;
+    } else {
+        self.totalPhotosUploading = 0;
+        self.currentPhotosUploaded = 0;
     }
+    [self updateCurrentStateWithKnownCameraUploadInProgress:knownCameraUploadInProgress];
 }
 
-- (void)updateCurrentState {
+- (void)updateCurrentStateWithKnownCameraUploadInProgress:(BOOL)knownCameraUploadInProgress {
     if ([MEGAReachabilityManager isReachable]) {
         if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-            if (self.currentState != MEGACameraUploadsStateCompleted && self.currentState != MEGACameraUploadsStateUploading) {
-                self.currentState = MEGACameraUploadsStateUnknown;
+            if ([CameraUploads syncManager].assetsOperationQueue.operationCount > 0) {
+                self.currentState = MEGACameraUploadsStateUploading;
+            } else {
+                if (knownCameraUploadInProgress) {
+                    self.currentState = MEGACameraUploadsStateUnknown;
+                } else {
+                    self.currentState = MEGACameraUploadsStateCompleted;
+                }
             }
         } else {
             if (self.photosByMonthYearArray.count == 0) {
@@ -898,20 +896,20 @@
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if ([transfer.appData containsString:@"CU"] && [MEGAReachabilityManager isReachable]) {
-        [self updateProgress];
+    if ([transfer.appData containsString:@"CU"]) {
+        [self updateProgressWithKnownCameraUploadInProgress:YES];
     }
 }
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if ([transfer.appData containsString:@"CU"] && [MEGAReachabilityManager isReachable]) {
-        [self updateProgress];
+    if ([transfer.appData containsString:@"CU"]) {
+        [self updateProgressWithKnownCameraUploadInProgress:YES];
     }
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if ([transfer.appData containsString:@"CU"]) {
-        [self updateProgressOrComplete];
+        [self updateProgressWithKnownCameraUploadInProgress:YES];
     }
 }
 
