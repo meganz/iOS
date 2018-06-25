@@ -2226,9 +2226,13 @@ void uncaughtExceptionHandler(NSException *exception) {
                     UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
                     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
                     
-                    [self dismissPresentedViews];
-                    
-                    [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+                    if (self.window.rootViewController.presentedViewController) {
+                        [self.window.rootViewController dismissViewControllerAnimated:YES completion:^{
+                            [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+                        }];
+                    } else {
+                        [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+                    }
                 }]];
                 [UIApplication.mnz_visibleViewController presentViewController:self.overquotaAlertView animated:YES completion:nil];
                 isOverquota = NO;
