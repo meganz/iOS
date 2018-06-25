@@ -118,9 +118,9 @@
         dialogView.contentTextView.text = self.message.content;
         dialogView.titleLabel.text = self.message.node.name;
         dialogView.descriptionLabel.text = [NSByteCountFormatter stringFromByteCount:self.message.nodeSize.longLongValue countStyle:NSByteCountFormatterCountStyleMemory];
-        dialogView.linkLabel.text = @"www.mega.nz";
+        dialogView.linkLabel.text = @"mega.nz";
         if (type == URLTypeFileLink) {
-            [dialogView.imageImageView mnz_setImageForExtension:self.message.node.name.pathExtension];
+            [dialogView.imageImageView mnz_setThumbnailByNode:self.message.node];
         } else if (type == URLTypeFolderLink) {
             dialogView.imageImageView.image = [Helper folderImage];
             dialogView.descriptionLabel.text = [NSString stringWithFormat:@"%@\n%@", self.message.nodeDetails, dialogView.descriptionLabel.text];
