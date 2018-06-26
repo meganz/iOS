@@ -85,7 +85,6 @@
     
     self.cellInset = 1.0f;
     self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
-    [self reloadUI];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -101,6 +100,7 @@
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
+    [self reloadUI];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -204,6 +204,16 @@
             self.stateView.hidden = YES;
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             break;
+            
+        case MEGACameraUploadsStateUnknown:
+            self.stateView.hidden = NO;
+            self.photosUploadedProgressView.hidden = YES;
+            self.photosUploadedLabel.hidden = YES;
+            self.stateLabel.hidden = NO;
+            self.stateLabel.text = AMLocalizedString(@"loading", nil);
+            self.toggleCameraUploadsButton.hidden = NO;
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            break;
     }
     
     _currentState = currentState;
@@ -249,7 +259,7 @@
     
     [self.photosCollectionView reloadData];
     
-    [self updateCurrentState];
+    [self updateProgressWithKnownCameraUploadInProgress:NO];
     
     if ([self.photosCollectionView allowsMultipleSelection]) {
         self.navigationItem.title = AMLocalizedString(@"selectTitle", @"Select items");
@@ -260,8 +270,7 @@
 
 - (void)internetConnectionChanged {
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
-    
-    [self updateCurrentState];
+    [self updateCurrentStateWithKnownCameraUploadInProgress:NO];
 }
 
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
@@ -282,34 +291,42 @@
     self.deleteBarButtonItem.enabled = boolValue;
 }
 
-- (void)updateProgressData {
+- (void)updateProgressWithKnownCameraUploadInProgress:(BOOL)knownCameraUploadInProgress {
     if ([CameraUploads syncManager].assetsOperationQueue.operationCount > 0) {
-        self.totalPhotosUploading = [CameraUploads syncManager].assetsOperationQueue.operationCount + self.currentPhotosUploaded;
-        [self updateProgressUI];
-        self.currentState = MEGACameraUploadsStateUploading;
-    }
-}
-
-- (void)updateProgressUI {
-    self.photosUploadedProgressView.progress = (float)((float)self.currentPhotosUploaded/(float)self.totalPhotosUploading);
-
-    NSString *progressText;
-    if (self.totalPhotosUploading == 1) {
-        progressText = AMLocalizedString(@"cameraUploadsUploadingFile", @"Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file.");
+        if ([CameraUploads syncManager].assetsOperationQueue.operationCount > self.totalPhotosUploading) {
+            self.totalPhotosUploading = [CameraUploads syncManager].assetsOperationQueue.operationCount;
+        }
+        self.currentPhotosUploaded = self.totalPhotosUploading - [CameraUploads syncManager].assetsOperationQueue.operationCount;
+        self.photosUploadedProgressView.progress = (float)((float)self.currentPhotosUploaded/(float)self.totalPhotosUploading);
+        
+        NSString *progressText;
+        if (self.totalPhotosUploading == 1) {
+            progressText = AMLocalizedString(@"cameraUploadsUploadingFile", @"Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file.");
+        } else {
+            progressText = AMLocalizedString(@"cameraUploadsUploadingFiles", @"Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files.");
+        }
+        progressText = [progressText stringByReplacingOccurrencesOfString:@"%1$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.currentPhotosUploaded]];
+        progressText = [progressText stringByReplacingOccurrencesOfString:@"%2$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.totalPhotosUploading]];
+        
+        self.photosUploadedLabel.text = progressText;
     } else {
-        progressText = AMLocalizedString(@"cameraUploadsUploadingFiles", @"Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files.");
+        self.totalPhotosUploading = 0;
+        self.currentPhotosUploaded = 0;
     }
-    progressText = [progressText stringByReplacingOccurrencesOfString:@"%1$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.currentPhotosUploaded]];
-    progressText = [progressText stringByReplacingOccurrencesOfString:@"%2$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.totalPhotosUploading]];
-    
-    self.photosUploadedLabel.text = progressText;
+    [self updateCurrentStateWithKnownCameraUploadInProgress:knownCameraUploadInProgress];
 }
 
-- (void)updateCurrentState {
+- (void)updateCurrentStateWithKnownCameraUploadInProgress:(BOOL)knownCameraUploadInProgress {
     if ([MEGAReachabilityManager isReachable]) {
         if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-            if (self.currentState != MEGACameraUploadsStateUploading) {
-                self.currentState = MEGACameraUploadsStateCompleted;
+            if ([CameraUploads syncManager].assetsOperationQueue.operationCount > 0) {
+                self.currentState = MEGACameraUploadsStateUploading;
+            } else {
+                if (knownCameraUploadInProgress) {
+                    self.currentState = MEGACameraUploadsStateUnknown;
+                } else {
+                    self.currentState = MEGACameraUploadsStateCompleted;
+                }
             }
         } else {
             if (self.photosByMonthYearArray.count == 0) {
@@ -879,21 +896,20 @@
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    [self updateProgressData];
+    if ([transfer.appData containsString:@"CU"]) {
+        [self updateProgressWithKnownCameraUploadInProgress:YES];
+    }
 }
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    [self updateProgressData];
+    if ([transfer.appData containsString:@"CU"]) {
+        [self updateProgressWithKnownCameraUploadInProgress:YES];
+    }
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if ([CameraUploads syncManager].assetsOperationQueue.operationCount == 1) {
-        self.totalPhotosUploading = 0;
-        self.currentPhotosUploaded = 0;
-        self.currentState = MEGACameraUploadsStateCompleted;
-    } else {
-        self.currentPhotosUploaded++;
-        [self updateProgressUI];
+    if ([transfer.appData containsString:@"CU"]) {
+        [self updateProgressWithKnownCameraUploadInProgress:YES];
     }
 }
 

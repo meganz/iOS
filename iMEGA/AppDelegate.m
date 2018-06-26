@@ -1749,8 +1749,16 @@ void uncaughtExceptionHandler(NSException *exception) {
     completionHandler();
 }
 
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler {
+    completionHandler(UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionSound);
+}
+
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-    [self openChatRoomWithChatNumber:notification.userInfo[@"chatId"]];
+    if (@available(iOS 10, *)) {} else {
+        if ([[UIApplication sharedApplication] applicationState] != UIApplicationStateActive) {
+            [self openChatRoomWithChatNumber:notification.userInfo[@"chatId"]];
+        }
+    }
 }
 
 #pragma mark - MEGAPurchasePricingDelegate
