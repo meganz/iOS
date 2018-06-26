@@ -38,7 +38,6 @@
         
     } else {
         MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
-        MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"appPurchaseDisabled", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
