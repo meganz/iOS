@@ -176,7 +176,7 @@
     NSString *message = [NSString stringWithFormat:@"%@ (Domain: %@ - Code:%ld)", error.localizedDescription, error.domain, (long)error.code];
     MEGALogDebug(@"Disable Camera Uploads: %@", message);
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"cameraUploadsWillBeDisabled", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"cameraUploadsWillBeDisabled", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
