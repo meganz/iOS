@@ -37,12 +37,6 @@
         
     } else {
         MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"appPurchaseDisabled", nil)
-                                                            message:nil
-                                                           delegate:nil
-                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                  otherButtonTitles:nil, nil];
-        [alertView show];
     }
 }
 
