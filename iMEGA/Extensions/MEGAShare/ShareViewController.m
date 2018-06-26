@@ -421,7 +421,7 @@
     return newestDate;
 }
 
-#pragma mark - Share Extension Code
+#pragma mark - Share Extension
 
 - (void)downloadData:(NSURL *)url andUploadToParentNode:(MEGANode *)parentNode {
     NSURL *urlToDownload = url;
@@ -439,8 +439,7 @@
                                                                                  } else {
                                                                                      [self uploadData:location toParentNode:parentNode withFileName:response.suggestedFilename];
                                                                                  }
-                                                                         
-                                                                     }];
+                                                                             }];
     [downloadTask resume];
 }
 
@@ -463,13 +462,12 @@
     }
 }
 
-- (void)uploadData:(id)data toParentNode:(MEGANode *)parentNode {
+- (void)uploadData:(NSURL *)url toParentNode:(MEGANode *)parentNode {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *storagePath = [self shareExtensionStorage];
     NSError *error = nil;
     
-    if ([data class] == NSURL.class) {
-        NSURL *url = (NSURL *)data;
+    if (url.class == NSURL.class) {
         NSString *path = url.path;
         NSString *lastPathComponent;
         NSMutableArray<NSString *> *fileNameComponents = [[path.lastPathComponent componentsSeparatedByString:@"."] mutableCopy];
@@ -487,7 +485,7 @@
             [self oneUnsupportedMore];
         }
     } else {
-        MEGALogError(@"Share extension error, %@ object received instead of NSURL or UIImage", [data class]);
+        MEGALogError(@"Share extension error, %@ object received instead of NSURL or UIImage", url.class);
         [self oneUnsupportedMore];
     }
 }
@@ -599,7 +597,7 @@
         for (NSItemProvider *attachment in content.attachments) {
             if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeImage]) {
                 BOOL isPNG = [attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypePNG];
-                [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeImage options:nil completionHandler:^(id data, NSError *error){
+                [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeImage options:nil completionHandler:^(id data, NSError *error) {
                     if ([data class] == UIImage.class) {
                         UIImage *image = (UIImage *)data;
                         [self uploadImage:image toParentNode:parentNode isPNG:isPNG];
@@ -611,16 +609,16 @@
                     }
                 }];
             } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeMovie]) {
-                [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeMovie options:nil completionHandler:^(id data, NSError *error){
+                [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeMovie options:nil completionHandler:^(id data, NSError *error) {
                     [self uploadData:(NSURL *)data toParentNode:parentNode];
                 }];
             } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeFileURL]) {
                 // This type includes kUTTypeText, so kUTTypeText is omitted
-                [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeFileURL options:nil completionHandler:^(id data, NSError *error){
+                [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeFileURL options:nil completionHandler:^(id data, NSError *error) {
                     [self uploadData:(NSURL *)data toParentNode:parentNode];
                 }];
             } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeURL]) {
-                [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeURL options:nil completionHandler:^(id data, NSError *error){
+                [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeURL options:nil completionHandler:^(id data, NSError *error) {
                     [self downloadData:(NSURL *)data andUploadToParentNode:parentNode];
                 }];
             } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeVCard]) {
