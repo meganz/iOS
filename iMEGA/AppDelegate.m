@@ -265,7 +265,11 @@
         
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"IsChatEnabled"] == nil) {
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
+            [sharedUserDefaults setBool:YES forKey:@"IsChatEnabled"];
             [[NSUserDefaults standardUserDefaults] synchronize];
+        } else {
+            BOOL isChatEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"];
+            [sharedUserDefaults setBool:isChatEnabled forKey:@"IsChatEnabled"];
         }
         
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
@@ -2125,6 +2129,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 }
                 if (isAccountFirstLogin) {
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
+                    [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"IsChatEnabled"];
                 }
             }
             [self showMainTabBar];

@@ -45,6 +45,8 @@
 @property (nonatomic) BOOL passcodePresented;
 @property (nonatomic) BOOL passcodeToBePresented;
 
+@property (nonatomic) NSUserDefaults *sharedUserDefaults;
+
 @end
 
 @implementation ShareViewController
@@ -52,8 +54,10 @@
 #pragma mark - Lifecycle
 
 - (void)viewDidLoad {
-    if ([[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] boolForKey:@"logging"]) {
-        [[MEGALogger sharedLogger] enableSDKlogs];
+    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+
+    self.sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+    if ([self.sharedUserDefaults boolForKey:@"logging"]) {
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"logs"] path];
         if (![fileManager fileExistsAtPath:logsPath]) {
@@ -75,7 +79,7 @@
     
 #ifdef DEBUG
     [MEGASdk setLogLevel:MEGALogLevelMax];
-    [[MEGALogger sharedLogger] enableSDKlogs];
+    [MEGAChatSdk setCatchException:false];
 #else
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
@@ -97,6 +101,20 @@
     
     self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     if (self.session) {
+        if ([self.sharedUserDefaults boolForKey:@"IsChatEnabled"]) {
+            if (![MEGASdkManager sharedMEGAChatSdk]) {
+                [MEGASdkManager createSharedMEGAChatSdk];
+            }
+            [[MEGALogger sharedLogger] enableChatlogs];
+            MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:self.session];
+            if (chatInit == MEGAChatInitError) {
+                MEGALogError(@"Init Karere with session failed");
+                [[MEGASdkManager sharedMEGAChatSdk] logout];
+            }
+        } else {
+            [[MEGALogger sharedLogger] enableSDKlogs];
+        }
+        
         [[LTHPasscodeViewController sharedUser] setDelegate:self];
         if ([MEGAReachabilityManager isReachable]) {
             if ([LTHPasscodeViewController doesPasscodeExist]) {
@@ -110,6 +128,10 @@
             } else {
                 [self presentDocumentPicker];
             }
+        }
+        
+        if ([self.sharedUserDefaults boolForKey:@"useHttpsOnly"]) {
+            [[MEGASdkManager sharedMEGASdk] useHttpsOnly:YES];
         }
     } else {
         [self requireLogin];
@@ -167,7 +189,7 @@
 #pragma mark - Language
 
 - (void)languageCompatibility {
-    NSString *languageCode = [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] objectForKey:@"languageCode"];
+    NSString *languageCode = [self.sharedUserDefaults objectForKey:@"languageCode"];
     if (languageCode) {
         [[LocalizationSystem sharedLocalSystem] setLanguage:languageCode];
         [[MEGASdkManager sharedMEGASdk] setLanguageCode:languageCode];
@@ -250,10 +272,8 @@
     [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:[UIColor whiteColor]];
     
     [[UISearchBar appearance] setTranslucent:NO];
-    [[UISearchBar appearance] setBackgroundColor:[UIColor mnz_grayF1F1F2]];
-    [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:[UIColor mnz_grayF1F1F2]];
-    
-    [[UISegmentedControl appearance] setTintColor:[UIColor mnz_redF0373A]];
+    [[UISearchBar appearance] setBackgroundColor:UIColor.mnz_grayFCFCFC];
+    [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:UIColor.mnz_grayEEEEEE];
     
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
     
@@ -264,8 +284,8 @@
     [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"backArrow"]];
     [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backArrow"]];
     
-    [[UITextField appearance] setTintColor:[UIColor mnz_green00BFA5]];
-    
+    [[UITextField appearance] setTintColor:UIColor.mnz_green00BFA5];
+        
     [[UIView appearanceWhenContainedInInstancesOfClasses:@[[UIAlertController class]]] setTintColor:[UIColor mnz_redF0373A]];
     
     [[UIProgressView appearance] setTintColor:[UIColor mnz_redF0373A]];
@@ -419,6 +439,11 @@
         }
     }
     return newestDate;
+}
+
+void uncaughtExceptionHandler(NSException *exception) {
+    MEGALogError(@"Exception name: %@\nreason: %@\nuser info: %@\n", exception.name, exception.reason, exception.userInfo);
+    MEGALogError(@"Stack trace: %@", [exception callStackSymbols]);
 }
 
 #pragma mark - Share Extension
@@ -720,6 +745,7 @@
             
             self.fetchNodesDone = YES;
             [self.launchVC.view removeFromSuperview];
+            [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
             [self presentDocumentPicker];
             break;
         }
