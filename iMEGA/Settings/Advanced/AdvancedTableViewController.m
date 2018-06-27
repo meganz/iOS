@@ -13,7 +13,7 @@
 
 #import "ChangePasswordViewController.h"
 
-@interface AdvancedTableViewController () <UIAlertViewDelegate, MEGAGlobalDelegate, MEGARequestDelegate> {
+@interface AdvancedTableViewController () <MEGAGlobalDelegate, MEGARequestDelegate> {
     NSByteCountFormatter *byteCountFormatter;
 }
 
@@ -218,20 +218,6 @@
     }];
 }
 
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (alertView.tag == 0) {
-        if (buttonIndex == 1) {
-            [[MEGASdkManager sharedMEGASdk] cleanRubbishBin];
-        }
-    } else if (alertView.tag == 1) {
-        if (buttonIndex == 1) {
-            [[MEGASdkManager sharedMEGASdk] cancelAccountWithDelegate:self];
-        }
-    }
-}
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -359,18 +345,24 @@
             
         case 2: { //Rubbish Bin
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                UIAlertView *emptyRubbishBinAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"emptyRubbishBinAlertTitle", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-                emptyRubbishBinAlertView.tag = 0;
-                [emptyRubbishBinAlertView show];
+                UIAlertController *emptyRubbishBinAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"emptyRubbishBinAlertTitle", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+                [emptyRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [emptyRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [[MEGASdkManager sharedMEGASdk] cleanRubbishBin];
+                }]];
+                [self presentViewController:emptyRubbishBinAlertController animated:YES completion:nil];
             }
             break;
         }
             
         case 6: { //Cancel account
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                UIAlertView *cancelAccountAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"youWillLooseAllData", @"Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted.") message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-                cancelAccountAlertView.tag = 1;
-                [cancelAccountAlertView show];
+                UIAlertController *cancelAccountAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"youWillLooseAllData", @"Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted.") message:nil preferredStyle:UIAlertControllerStyleAlert];
+                [cancelAccountAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [cancelAccountAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [[MEGASdkManager sharedMEGASdk] cancelAccountWithDelegate:self];
+                }]];
+                [self presentViewController:cancelAccountAlertController animated:YES completion:nil];
             }
             break;
         }

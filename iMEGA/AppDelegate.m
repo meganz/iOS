@@ -70,11 +70,10 @@
 
 #define kFirstRun @"FirstRun"
 
-@interface AppDelegate () <UIAlertViewDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, PKPushRegistryDelegate, MEGAPurchasePricingDelegate> {
+@interface AppDelegate () <UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, PKPushRegistryDelegate, MEGAPurchasePricingDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
     
-    UIAlertView *overquotaAlertView;
     BOOL isOverquota;
     
     BOOL isFirstFetchNodesRequestUpdate;
@@ -89,8 +88,9 @@
 @property (nonatomic, strong) NSString *quickActionType;
 @property (nonatomic, strong) NSString *messageForSuspendedAccount;
 
+@property (nonatomic, strong) UIAlertController *overquotaAlertView;
 
-@property (nonatomic, strong) UIAlertView *API_ESIDAlertView;
+@property (nonatomic, strong) UIAlertController *API_ESIDAlertController;
 
 @property (nonatomic, weak) MainTabBarController *mainTBC;
 
@@ -332,10 +332,12 @@
         }
     }
     
-    if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied && [[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        MEGALogInfo(@"Disable Camera Uploads");
-        [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
-    }
+    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+         if (status == PHAuthorizationStatusDenied && [CameraUploads syncManager].isCameraUploadsEnabled) {
+             MEGALogInfo(@"Disable Camera Uploads");
+             [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
+         }
+     }];
     
     self.indexer = [[MEGAIndexer alloc] init];
     [Helper setIndexer:self.indexer];
@@ -881,6 +883,9 @@
         case URLTypeAchievementsLink:
             [self openAchievements];
             break;
+            
+        default:
+            break;
     }
 }
 
@@ -1058,7 +1063,7 @@
 - (void)showOverquotaAlert {
     [self disableCameraUploads];
     
-    if (!overquotaAlertView.visible) {
+    if (!UIApplication.mnz_visibleViewController.presentedViewController || UIApplication.mnz_visibleViewController.presentedViewController != self.overquotaAlertView) {
         isOverquota = YES;
         [[MEGASdkManager sharedMEGASdk] getAccountDetails];
     }
@@ -1100,12 +1105,9 @@
 }
 
 - (void)showPleaseLogInToYourAccountAlert {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"pleaseLogInToYourAccount", nil)
-                                                    message:nil
-                                                   delegate:self
-                                          cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                          otherButtonTitles:nil];
-    [alert show];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"pleaseLogInToYourAccount", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)presentConfirmViewControllerType:(ConfirmType)confirmType link:(NSString *)link email:(NSString *)email {
@@ -1541,25 +1543,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if ((alertView.tag == 0) && (buttonIndex == 1)) {
-        UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
-        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-        
-        [self dismissPresentedViews];
-        
-        [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
-    } else if ([alertView tag] == 1) { //alreadyLoggedInAlertView
-        if (buttonIndex == 0) {
-            _emailOfNewSignUpLink = nil;
-        } else if (buttonIndex == 1) {
-            [[MEGASdkManager sharedMEGASdk] logout];
-        }
-    }
-}
-
 #pragma mark - LTHPasscodeViewControllerDelegate
 
 - (void)passcodeWasEnteredSuccessfully {
@@ -1970,20 +1953,18 @@ void uncaughtExceptionHandler(NSException *exception) {
                     } else if (self.urlType == URLTypeRecoverLink) {
                         alertTitle = AMLocalizedString(@"recoveryLinkHasExpired", @"Message shown during forgot your password process if the link to reset password has expired");
                     }
-                    UIAlertView *linkHasExpiredAlertView = [[UIAlertView alloc] initWithTitle:alertTitle message:nil delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
-                    [linkHasExpiredAlertView show];
+                    UIAlertController *linkHasExpiredAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
+                    [linkHasExpiredAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                    [UIApplication.mnz_visibleViewController presentViewController:linkHasExpiredAlertController animated:YES completion:nil];
                 }
                 break;
             }
                 
             case MEGAErrorTypeApiENoent: {
                 if ([request type] == MEGARequestTypeQuerySignUpLink) {
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
-                                                                    message:AMLocalizedString(@"accountAlreadyConfirmed", @"Account already confirmed.")
-                                                                   delegate:self
-                                                          cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                          otherButtonTitles:nil];
-                    [alert show];
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"accountAlreadyConfirmed", @"Account already confirmed.") preferredStyle:UIAlertControllerStyleAlert];
+                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                    [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
                 } else if ([request type] == MEGARequestTypeQueryRecoveryLink) {
                     [self showLinkNotValid];
                 }
@@ -1998,9 +1979,10 @@ void uncaughtExceptionHandler(NSException *exception) {
                 }
                 
                 if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeLogout) {
-                    if (![_API_ESIDAlertView isVisible]) {
-                        _API_ESIDAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"loggedOut_alertTitle", nil) message:AMLocalizedString(@"loggedOutFromAnotherLocation", nil) delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
-                        [_API_ESIDAlertView show];
+                    if (!self.API_ESIDAlertController || UIApplication.mnz_visibleViewController.presentedViewController != self.API_ESIDAlertController) {
+                        self.API_ESIDAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"loggedOut_alertTitle", nil) message:AMLocalizedString(@"loggedOutFromAnotherLocation", nil) preferredStyle:UIAlertControllerStyleAlert];
+                        [self.API_ESIDAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                        [UIApplication.mnz_visibleViewController presentViewController:self.API_ESIDAlertController animated:YES completion:nil];
                         [Helper logout];
                     }
                 }
@@ -2061,12 +2043,9 @@ void uncaughtExceptionHandler(NSException *exception) {
                 
             case MEGAErrorTypeApiEBlocked: {
                 if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeFetchNodes) {
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
-                                                                    message:AMLocalizedString(@"accountBlocked", @"Error message when trying to login and the account is blocked")
-                                                                   delegate:self
-                                                          cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                          otherButtonTitles:nil];
-                    [alert show];
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"accountBlocked", @"Error message when trying to login and the account is blocked") preferredStyle:UIAlertControllerStyleAlert];
+                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                    [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
                     [api logout];
                 }
                 
@@ -2155,13 +2134,14 @@ void uncaughtExceptionHandler(NSException *exception) {
 
                 if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
                     _emailOfNewSignUpLink = [request email];
-                    UIAlertView *alreadyLoggedInAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"alreadyLoggedInAlertTitle", nil)
-                                                                        message:AMLocalizedString(@"alreadyLoggedInAlertMessage", nil)
-                                                                       delegate:self
-                                                              cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                                              otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-                    [alreadyLoggedInAlertView setTag:1];
-                    [alreadyLoggedInAlertView show];
+                    UIAlertController *alreadyLoggedInAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"alreadyLoggedInAlertTitle", nil) message:AMLocalizedString(@"alreadyLoggedInAlertMessage", nil) preferredStyle:UIAlertControllerStyleAlert];
+                    [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        _emailOfNewSignUpLink = nil;
+                    }]];
+                    [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                        [[MEGASdkManager sharedMEGASdk] logout];
+                    }]];
+                    [UIApplication.mnz_visibleViewController presentViewController:alreadyLoggedInAlertController animated:YES completion:nil];
                 } else {
                     if ([self.window.rootViewController isKindOfClass:[MEGANavigationController class]]) {
                         MEGANavigationController *navigationController = (MEGANavigationController *)self.window.rootViewController;
@@ -2247,13 +2227,22 @@ void uncaughtExceptionHandler(NSException *exception) {
             [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:[request megaAccountDetails]];
             
             if (isOverquota) {
-                if ([[request megaAccountDetails] type] > MEGAAccountTypeFree) {
-                    overquotaAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"overquotaAlert_title", nil) message:AMLocalizedString(@"quotaExceeded", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
-                } else {
-                    overquotaAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"overquotaAlert_title", nil) message:AMLocalizedString(@"overquotaAlert_message", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-                }
-                [overquotaAlertView setTag:0];
-                [overquotaAlertView show];
+                NSString *overquotaMessage = [[request megaAccountDetails] type] > MEGAAccountTypeFree ? AMLocalizedString(@"quotaExceeded", nil) : AMLocalizedString(@"overquotaAlert_message", nil);
+                self.overquotaAlertView = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"overquotaAlert_title", nil) message:overquotaMessage preferredStyle:UIAlertControllerStyleAlert];
+                [self.overquotaAlertView addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [self.overquotaAlertView addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+                    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+                    
+                    if (self.window.rootViewController.presentedViewController) {
+                        [self.window.rootViewController dismissViewControllerAnimated:YES completion:^{
+                            [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+                        }];
+                    } else {
+                        [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+                    }
+                }]];
+                [UIApplication.mnz_visibleViewController presentViewController:self.overquotaAlertView animated:YES completion:nil];
                 isOverquota = NO;
             }
             
