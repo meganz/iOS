@@ -766,11 +766,11 @@
 }
 
 - (void)urlLinkType:(NSURL *)url {
-    switch ([url mnz_type]) {
+    self.urlType = [url mnz_type];
+    switch (self.urlType) {
         case URLTypeDefault:
             [Helper presentSafariViewControllerWithURL:self.link];
             self.link = nil;
-            self.urlType = URLTypeDefault;
             
             break;
             

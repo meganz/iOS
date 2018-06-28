@@ -55,7 +55,7 @@
         return URLTypeNewSignUpLink;
     }
     
-    if (afterSlashesString.length >= 7 && [[afterSlashesString substringToIndex:7] isEqualToString:@"#backup"]) {
+    if ((afterSlashesString.length >= 7 && [[afterSlashesString substringToIndex:7] isEqualToString:@"#backup"]) || (afterSlashesString.length >= 6 && [[afterSlashesString substringToIndex:6] isEqualToString:@"backup"])) {
         return URLTypeBackupLink;
     }
     
