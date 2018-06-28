@@ -1,6 +1,8 @@
 
 #import "AdvancedTableViewController.h"
 
+#import <Photos/Photos.h>
+
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
@@ -11,11 +13,10 @@
 #import "NSString+MNZCategory.h"
 
 #import "ChangePasswordViewController.h"
-
 #import "TwoFactorAuthenticationViewController.h"
 #import "TwoFactorAuthentication.h"
 
-@interface AdvancedTableViewController () <UIAlertViewDelegate, MEGAGlobalDelegate, MEGARequestDelegate> {
+@interface AdvancedTableViewController () <MEGAGlobalDelegate, MEGARequestDelegate> {
     NSByteCountFormatter *byteCountFormatter;
 }
 
@@ -29,13 +30,14 @@
 @property (weak, nonatomic) IBOutlet UISwitch *photosSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *videosSwitch;
 
-@property (weak, nonatomic) IBOutlet UITableViewCell *savePhotosTableViewCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *saveVideosTableViewCell;
-
 @property (weak, nonatomic) IBOutlet UILabel *cancelAccountLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *dontUseHttpLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *useHttpsOnlySwitch;
+
+// Photos taken and videos recorded from within the app
+@property (weak, nonatomic) IBOutlet UILabel *saveMediaInGalleryLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *saveMediaInGallerySwitch;
 
 @property (nonatomic, copy) NSString *offlineSizeString;
 @property (nonatomic, copy) NSString *cacheSizeString;
@@ -61,6 +63,8 @@
     _offlineSizeString = @"...";
     _cacheSizeString = @"...";
     
+    [self checkAuthorizationStatus];
+    
     MEGAMultiFactorAuthCheckRequestDelegate *delegate = [[MEGAMultiFactorAuthCheckRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
         self.twoFactorAuthenticationEnabled = request.flag;
     }];
@@ -76,6 +80,7 @@
     [self.dontUseHttpLabel setText:AMLocalizedString(@"dontUseHttp", @"Text next to a switch that allows disabling the HTTP protocol for transfers")];
     [self.savePhotosLabel setText:AMLocalizedString(@"saveImagesInGallery", @"Section title where you can enable the option 'Save images in gallery'")];
     [self.saveVideosLabel setText:AMLocalizedString(@"saveVideosInGallery", @"Section title where you can enable the option 'Save videos in gallery'")];
+    [self.saveMediaInGalleryLabel setText:AMLocalizedString(@"saveMediaInGallery", @"Section title where you can enable the option 'Save media in gallery'")];
     
     BOOL useHttpsOnly = [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] boolForKey:@"useHttpsOnly"];
     [self.useHttpsOnlySwitch setOn:useHttpsOnly];
@@ -85,6 +90,9 @@
     
     BOOL isSaveVideoToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"];
     [self.videosSwitch setOn:isSaveVideoToGalleryEnabled];
+    
+    BOOL isSaveMediaCapturedToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"isSaveMediaCapturedToGalleryEnabled"];
+    [self.saveMediaInGallerySwitch setOn:isSaveMediaCapturedToGalleryEnabled];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
@@ -119,6 +127,30 @@
 }
 
 #pragma mark - Private
+
+- (void)checkAuthorizationStatus {
+    PHAuthorizationStatus phAuthorizationStatus = [PHPhotoLibrary authorizationStatus];
+    switch (phAuthorizationStatus) {
+        case PHAuthorizationStatusRestricted:
+        case PHAuthorizationStatusDenied: {
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isSaveMediaCapturedToGalleryEnabled"]) {
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+            break;
+        }
+            
+        case PHAuthorizationStatusAuthorized:
+            if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isSaveMediaCapturedToGalleryEnabled"]) {
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+            break;
+            
+        default:
+            break;
+    }
+}
 
 - (void)deleteFolderContentsInPath:(NSString *)folderPath {
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -156,31 +188,50 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (alertView.tag == 0) {
-        if (buttonIndex == 1) {
-            [[MEGASdkManager sharedMEGASdk] cleanRubbishBin];
-        }
-    } else if (alertView.tag == 1) {
-        if (buttonIndex == 1) {
-            if (self.isTwoFactorAuthenticationEnabled) {
-                TwoFactorAuthenticationViewController *twoFactorAuthenticationVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"TwoFactorAuthenticationViewControllerID"];
-                twoFactorAuthenticationVC.twoFAMode = TwoFactorAuthenticationCancelAccount;
-                
-                [self.navigationController pushViewController:twoFactorAuthenticationVC animated:YES];
-            } else {
-                [[MEGASdkManager sharedMEGASdk] cancelAccountWithDelegate:self];
+- (IBAction)mediaInGallerySwitchChanged:(UISwitch *)sender {
+    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+        switch (status) {
+            case PHAuthorizationStatusNotDetermined:
+                break;
+            case PHAuthorizationStatusAuthorized: {
+                [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                break;
             }
+            case PHAuthorizationStatusRestricted: {
+                break;
+            }
+            case PHAuthorizationStatusDenied:{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (self.saveMediaInGallerySwitch.isOn) {
+                        UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Alert message to explain that the MEGA app needs permission to access your device photos") preferredStyle:UIAlertControllerStyleAlert];
+                        
+                        [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+                        
+                        [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                        }]];
+                        
+                        [self presentViewController:permissionsAlertController animated:YES completion:nil];
+                        
+                        [self.saveMediaInGallerySwitch setOn:NO animated:YES];
+                    } else {
+                        [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+                        [[NSUserDefaults standardUserDefaults] synchronize];
+                    }
+                });
+                break;
+            }
+            default:
+                break;
         }
-    }
+    }];
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 6;
+    return 7;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -208,6 +259,10 @@
             
         case 4: //Downloads
             titleHeader = AMLocalizedString(@"imageAndVideoDownloadsHeader", @"Title header that refers to where do you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section");
+            break;
+            
+        case 5: //Photos taken and video recorded from within the app
+            titleHeader = AMLocalizedString(@"photosTakenAndVideoRecordedFromWithinTheAppHeader", @"Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section");
             break;
     }
     return titleHeader;
@@ -247,6 +302,11 @@
             
         case 4: { //Image and videos downloads
             titleFooter = AMLocalizedString(@"imageAndVideoDownloadsFooter", @"Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled");
+            break;
+        }
+            
+        case 5: { //Photos taken and video recorded from within the app
+            titleFooter = AMLocalizedString(@"photosTakenAndVideoRecordedFromWithinTheAppFooter", @"Footer text that explain what happen if the options 'Save media in gallery’ is enabled");
             break;
         }
     }
@@ -295,18 +355,31 @@
             
         case 2: { //Rubbish Bin
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                UIAlertView *emptyRubbishBinAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"emptyRubbishBinAlertTitle", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-                emptyRubbishBinAlertView.tag = 0;
-                [emptyRubbishBinAlertView show];
+                UIAlertController *emptyRubbishBinAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"emptyRubbishBinAlertTitle", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+                [emptyRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [emptyRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [[MEGASdkManager sharedMEGASdk] cleanRubbishBin];
+                }]];
+                [self presentViewController:emptyRubbishBinAlertController animated:YES completion:nil];
             }
             break;
         }
             
-        case 5: { //Cancel account
+        case 6: { //Cancel account
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                UIAlertView *cancelAccountAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"youWillLooseAllData", @"Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted.") message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-                cancelAccountAlertView.tag = 1;
-                [cancelAccountAlertView show];
+                UIAlertController *cancelAccountAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"youWillLooseAllData", @"Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted.") message:nil preferredStyle:UIAlertControllerStyleAlert];
+                [cancelAccountAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [cancelAccountAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    if (self.isTwoFactorAuthenticationEnabled) {
+                        TwoFactorAuthenticationViewController *twoFactorAuthenticationVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"TwoFactorAuthenticationViewControllerID"];
+                        twoFactorAuthenticationVC.twoFAMode = TwoFactorAuthenticationCancelAccount;
+                        
+                        [self.navigationController pushViewController:twoFactorAuthenticationVC animated:YES];
+                    } else {
+                        [[MEGASdkManager sharedMEGASdk] cancelAccountWithDelegate:self];
+                    }
+                }]];
+                [self presentViewController:cancelAccountAlertController animated:YES completion:nil];
             }
             break;
         }

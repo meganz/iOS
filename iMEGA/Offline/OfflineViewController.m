@@ -269,7 +269,13 @@ static NSString *kisDirectory = @"kisDirectory";
             
             if (!isDirectory) {
                 if (fileName.mnz_isMultimediaPathExtension) {
-                    [self.offlineMultimediaFiles addObject:[fileURL path]];
+                    AVURLAsset *asset = [AVURLAsset assetWithURL:fileURL];
+                    if (asset.playable) {
+                        [self.offlineMultimediaFiles addObject:[fileURL path]];
+                    } else {
+                        offsetIndex++;
+                        [self.offlineFiles addObject:[fileURL path]];                        
+                    }
                 } else {
                     offsetIndex++;
                     [self.offlineFiles addObject:[fileURL path]];
@@ -490,6 +496,17 @@ static NSString *kisDirectory = @"kisDirectory";
     }
 }
 
+- (MEGAQLPreviewController *)qlPreviewControllerForIndexPath:(NSIndexPath *)indexPath {
+    MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithArrayOfFiles:self.offlineFiles];
+    
+    NSInteger selectedIndexFile = [[[self.offlineSortedItems objectAtIndex:indexPath.row] objectForKey:kIndex] integerValue];
+    previewController.currentPreviewItemIndex = selectedIndexFile;
+    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    return previewController;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -648,8 +665,16 @@ static NSString *kisDirectory = @"kisDirectory";
             [self.navigationController pushViewController:offlineVC animated:YES];
         }
     } else if (previewDocumentPath.mnz_isMultimediaPathExtension) {
-        MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
-        [self presentViewController:megaAVViewController animated:YES completion:nil];
+        AVURLAsset *asset = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
+        
+        if (asset.playable) {
+            MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
+            [self presentViewController:megaAVViewController animated:YES completion:nil];
+        } else {
+            MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
+            [self presentViewController:previewController animated:YES completion:nil];
+        }
+        
     } else if ([previewDocumentPath.pathExtension isEqualToString:@"pdf"]){
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
         PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
@@ -658,13 +683,8 @@ static NSString *kisDirectory = @"kisDirectory";
         [self presentViewController:navigationController animated:YES completion:nil];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     } else {
-        MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithArrayOfFiles:self.offlineFiles];
-        
-        NSInteger selectedIndexFile = [[[self.offlineSortedItems objectAtIndex:indexPath.row] objectForKey:kIndex] integerValue];
-        previewController.currentPreviewItemIndex = selectedIndexFile;
+        MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
         [self presentViewController:previewController animated:YES completion:nil];
-        
-        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }
 
@@ -693,10 +713,10 @@ static NSString *kisDirectory = @"kisDirectory";
         return;
     }
 }
-    
+
 - (void)setTableViewEditing:(BOOL)editing animated:(BOOL)animated {
     [self.tableView setEditing:editing animated:animated];
-        
+    
     if (editing) {
         if (!isSwipeEditing) {
             self.navigationItem.rightBarButtonItem = self.editBarButtonItem;
@@ -950,8 +970,14 @@ static NSString *kisDirectory = @"kisDirectory";
         
         return offlineVC;
     } else if (previewDocumentPath.mnz_isMultimediaPathExtension) {
-        MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
-        return megaAVViewController;
+        AVURLAsset *asset = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
+        
+        if (asset.playable) {
+            MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
+            return megaAVViewController;
+        } else {
+            return [self qlPreviewControllerForIndexPath:indexPath];
+        }
     } else if ([previewDocumentPath.pathExtension isEqualToString:@"pdf"]){
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
         PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
@@ -962,14 +988,7 @@ static NSString *kisDirectory = @"kisDirectory";
         
         return navigationController;
     } else {
-        MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithArrayOfFiles:self.offlineFiles];
-        
-        NSInteger selectedIndexFile = [[[self.offlineSortedItems objectAtIndex:indexPath.row] objectForKey:kIndex] integerValue];
-        previewController.currentPreviewItemIndex = selectedIndexFile;
-        
-        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-        
-        return previewController;
+        return [self qlPreviewControllerForIndexPath:indexPath];
     }
     
     return nil;

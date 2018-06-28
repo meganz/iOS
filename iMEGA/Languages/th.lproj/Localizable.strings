@@ -55,7 +55,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="คุณได้ออกจากระบบของอุปกรณ์นี้จากตำแหน่งที่ตั้งอื่น";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="คีย์ SSL ของเซิร์ฟเวอร์ไม่สามารถตรวจสอบได้ คุณอาจจะได้รับผลกระทบจากการลักลอบดักข้อมูล";
+"sslUnverified_alertTitle"="MEGA ไม่สามารถเชื่อมต่ออย่างปลอดภัยผ่าน SSL คุณอาจใช้ WiFi สาธารณะร่วมกับข้อกำหนดเพิ่มเติมอย่างอื่น";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="เนื้อหาที่คุณพยายามเข้าถึง ไม่สามารถใช้งานได้กับบัญชีนี้ ลองลงชื่อเข้าใช้ด้วยบัญชีเดียวกันกับในเว็บไคลเอ็นต์บนมือถืออีกครั้ง";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -127,7 +127,7 @@
 /*  */
 "passwordStrong"="รหัสผ่านนี้จะสามารถป้องกันการโจมตีแบบ brute-force ที่มีความซับซ้อนได้ กรุณาตรวจสอบอีกครั้งว่าคุณจะสามารถจำรหัสผ่านเหล่านี้ได้";
 /*  */
-"agreeWithTheMEGATermsOfService"="ฉันเห็นด้วยกับ<a href='terms'>ข้อกำหนดในการบริการ</a> ของ MEGA";
+"agreeWithTheMEGATermsOfService"="ฉันเห็นด้วยกับ<a href='terms'>เงื่อนไขการให้บริการ</a>ของ MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="กรอกชื่อให้ถูกต้อง";
 /*  */
@@ -135,7 +135,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="รหัสผ่านไม่ตรงกัน";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="คุณจะต้องเห็นด้วยกับข้อตกลงและเงื่อนไขการให้บริการในการลงทะเบียนบัญชีผู้ใช้บน MEGA";
+"termsCheckboxUnselected"="คุณจะต้องเห็นด้วยกับเงื่อนไขการให้บริการในการลงทะเบียนบัญชีผู้ใช้บน MEGA";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="ที่อยู่อีเมลนี้เคยลงทะเบียนกับ MEGA แล้ว";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -657,11 +657,11 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="บัญชีอีเมลยังไม่มีในการตั้งค่าบนอุปกรณ์ของคุณ";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="นโยบายความเป็นส่วนตัว";
+"privacyPolicyLabel"="นโยบายสิทธิส่วนบุคคล";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="ข้อตกลงในการใช้งาน";
+"termsOfServicesLabel"="เงื่อนไขการให้บริการ";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
-"dataProtectionRegulationLabel"="Data Protection Regulation";
+"dataProtectionRegulationLabel"="หลักคุ้มครองข้อมูลส่วนบุคคล";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="ปิด";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -716,12 +716,18 @@
 "transfersSectionFooter"="เปิดใช้งานตัวเลือกนี้เฉพาะเมื่อการถ่ายโอนของคุณไม่เริ่มทำงาน โดยปกติ HTTP จะยังมีการเข้ารหัสลับระหว่างการถ่ายโอนข้อมูลอยู่แล้ว";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="ดาวน์โหลดรูปภาพและวิดีโอ";
+/* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
+"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Media captured from within the app";
 /* Section title where you can enable the option 'Save images in gallery' */
 "saveImagesInGallery"="บันทึกรูปภาพลงในแกลเลอรี่";
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="บันทึกวิดีโอลงในแกลเลอรี่";
+/* Section title where you can enable the option 'Save media in gallery' */
+"saveMediaInGallery"="Save media in gallery";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="iOS รองรับการบันทึกรูปภาพและวิดีโอที่แกลเลอรีบนอุปกรณ์ของคุณ (หมายเหตุ: รูปภาพและวิดีโอจะไม่ถูกบันทึกไว้ในออฟไลน์)";
+/* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
+"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Enable this option to save photos taken and videos recorded from within the app in the gallery";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="ใช้ไปแล้ว %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -1058,7 +1064,7 @@
 /* Empty Conversations section */
 "noConversations"="ไม่มีการสนทนา";
 /* Empty Conversations description */
-"noConversationsDescription"="Start chatting securely with your contacts using end-to-end encryption";
+"noConversationsDescription"="เริ่มแชทอย่างปลอดภัยกับผู้ติดต่อของคุณโดยใช้การเข้ารหัสแบบต้นทางถึงปลาย";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="แชทถูกปิดใช้งาน";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1092,9 +1098,9 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="สถานะ";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Rich URL previews";
+"richUrlPreviews"="ตัวอย่าง URL ที่หลากหลาย";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Enhance the MEGAchat experience. URL content will be retrieved without end-to-end encryption.";
+"richPreviewsFooter"="เพิ่มประสบการณ์ MEGAchat โดยที่เนื้อหา URL จะได้รับการดึงข้อมูลโดยไม่มีการเข้ารหัสแบบต้นทางถึงปลาย";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="การโทรด้วยเสียงและวิดีโอ";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1162,7 +1168,7 @@
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="เปลี่ยนรูปโปรไฟล์ของกลุ่ม";
 /* Text used as hint to give the user information to write a name for the group chat. */
-"enterGroupName"="Enter group name";
+"enterGroupName"="กรอกชื่อกลุ่ม";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="ออก";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1206,7 +1212,7 @@
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
 "moreThanTwoUsersAreTyping"="%1$s [A]และคนอื่น ๆ กำลังพิมพ์...[/A]";
 /* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
-"writeAMessage"="Write a message to %s...";
+"writeAMessage"="เขียนข้อความถึง %s...";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="ไม่มีประวัติการสนทนา";
 /* Button which allows to retry send message in chat conversation. */
@@ -1226,15 +1232,17 @@
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="ส่งไฟล์";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"enableRichUrlPreviews"="Enable rich URL previews";
+"enableRichUrlPreviews"="เปิดใช้ตัวอย่าง URL ที่หลากหลาย";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"alwaysAllow"="Always Allow";
+"alwaysAllow"="อนุญาตเสมอ";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"notNow"="Not Now";
+"notNow"="ไม่ใช่ตอนนี้";
 /* */
 "never"="ไม่เคยมี";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="You are disabling rich URL previews permanently. You can re-enable rich URL previews in your settings. Do you want to proceed?";
+"richPreviewsConfirmation"="คุณกำลังปิดใช้ตัวอย่าง URL ที่หลากหลายอย่างถาวร คุณสามารถเปิดใช้ตัวอย่าง URL ที่หลากหลายได้ในการตั้งค่าของคุณ คุณต้องการดำเนินการต่อหรือไม่";
+/* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
+"removePreview"="นำตัวอย่างออก";
 /* */
 "warning"="คำเตือน";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
@@ -1363,7 +1371,7 @@
 "generalDescriptionParagraph5"="สมัครใช้งาน PRO LITE: 4.99 ยูโร (4.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 49.99 ยูโร (49.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 200 GB และโควต้าการถ่ายโอน 1 TB ต่อเดือน\nสมัครใช้งาน PRO I: 9.99 ยูโร (9.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 99.99 ยูโร (99.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 1 TB และโควต้าการถ่ายโอน 2 TB ต่อเดือน\nสมัครใช้งาน PRO II: 19.99 ยูโร (19.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 199.99 ยูโร (199.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 4 TB และโควต้าการถ่ายโอน 8 TB ต่อเดือน\nสมัครใช้งาน PRO III: 29.99 ยูโร (29.99 ดอลลาร์สหรัฐ) ต่อเดือนหรือ 299.99 ยูโร (299.99 ดอลลาร์สหรัฐ) ต่อปีจะให้พื้นที่เก็บข้อมูล 8 TB และโควต้าการถ่ายโอน 16 TB ต่อเดือน";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="สำหรับข้อมูลเพิ่มเติม กรุณาตรวจสอบได้ที่เว็บไซต์ของเรา: https://mega.nz/\nเงื่อนไขการให้บริการ: https://mega.nz/terms\nนโยบายส่วนบุคคล: https://mega.nz/privacy";
+"generalDescriptionParagraph6"="สำหรับข้อมูลเพิ่มเติม กรุณาตรวจสอบได้ที่เว็บไซต์ของเรา: https://mega.nz/\nเงื่อนไขการให้บริการ: https://mega.nz/terms\nนโยบายสิทธิส่วนบุคคล: https://mega.nz/privacy";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="กำลังโทร...";
 /* Notification text body shown when you have missed one audio call */
@@ -1423,7 +1431,7 @@
 /* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
 "created"="วันที่สร้าง";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
-"contains"="ประกอบด้วย";
+"contains"="จำนวน";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
 "modified"="วันที่แก้ไข";
 /* used for example when a folder is shared with 2 or more users */
@@ -1485,14 +1493,48 @@
 /* Button title to allow the user ignore something */
 "ignore"="ละเว้น";
 /* Button title to allow the user open the default browser */
-"openBrowser"="Open browser";
+"openBrowser"="เปิดเบราว์เซอร์";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="รีสตาร์ท";
 /* Title to alert user the possibility of resume playing the video or start from the beginning */
-"resumePlayback"="Resume playback?";
+"resumePlayback"="เล่นต่อหรือไม่";
 /* Message to show the user info (name and time) about the resume of the video */
-"continueOrRestartVideoMessage"="%1$s will continue at %2$s";
+"continueOrRestartVideoMessage"="%1$s จะดำเนินต่อไปที่ %2$s";
 /*  */
 "resume"="ต่อ";
 /* Title to preview document */
-"previewContent"="Preview Content";
+"previewContent"="ดูตัวอย่างเนื้อหา";
+/* Title of the notification for a missed call */
+"missedCall"="สายที่ไม่ได้รับ";
+/* When an outgoing call of user A with user B had been rejected by user B */
+"callWasRejected"="Call was rejected";
+/* When an active call of user A with user B had cancelled */
+"callWasCancelled"="Call was cancelled";
+/* When an active call of user A with user B had not answered */
+"callWasNotAnswered"="Call was not answered";
+/* When an active call of user A with user B had failed */
+"callFailed"="Call failed";
+/* When an active call of user A with user B had ended */
+"callEnded"="Call ended.";
+/* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
+"duration"="Duration: %@";
+/* */
+"xSeconds"="%d seconds";
+/* */
+"1Second"="1 second";
+/* */
+"1Hour"="1 hour";
+/* */
+"xHours"="%d hours";
+/* */
+"1Hour1Minute"="1 hour, 1 minute";
+/* */
+"1HourxMinutes"="1 hour, %d minutes";
+/* */
+"xHours1Minute"="%d hours, 1 minute";
+/* */
+"xHoursxMinutes"="%1$d hours, %2$d minutes";
+/* Alert title shown when users try to stream an unsupported audio/video file */
+"fileNotSupported"="File not supported";
+/* Alert message shown when users try to stream an unsupported audio/video file */
+"message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";

@@ -73,8 +73,6 @@
     self.navigationItem.rightBarButtonItem = (self.isChoosingTheAccountType) ? nil : self.skipBarButtonItem;
     self.skipBarButtonItem.title = AMLocalizedString(@"skipButton", @"Button title that skips the current action");
     
-    [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
-    
     [self getIndexPositionsForProLevels];
     
     [self initCurrentPlan];

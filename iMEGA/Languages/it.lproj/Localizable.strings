@@ -716,12 +716,18 @@
 "transfersSectionFooter"="Attiva questa opzione solo se i tuoi trasferimenti non partono. Nelle situazioni normali HTTP soddisfa i requisiti di sicurezza in quanto tutti i trasferimenti sono già criptati.";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Download di immagini e video";
+/* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
+"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Media captured from within the app";
 /* Section title where you can enable the option 'Save images in gallery' */
 "saveImagesInGallery"="Salva immagini nella galleria";
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Salva video nella galleria";
+/* Section title where you can enable the option 'Save media in gallery' */
+"saveMediaInGallery"="Save media in gallery";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Salva immagini e video compatibili con iOS nella galleria del tuo dispositivo (nota: immagini e video non saranno salvati in Offline).";
+/* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
+"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Enable this option to save photos taken and videos recorded from within the app in the gallery";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Attualmente %s usati";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -1092,7 +1098,7 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Stato";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Rich URL previews";
+"richUrlPreviews"="Anteprime arricchite degli URL";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="Migliora l'esperienza di MEGAchat. I contenuti URL verranno recuperati senza la criptazione end-to-end.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1235,6 +1241,8 @@
 "never"="Mai";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
 "richPreviewsConfirmation"="Stai disattivando l'anteprima ricca degli URL permanentemente. Puoi riattivare l'anteprima ricca degli URL nelle tue Impostazioni. Vuoi procedere?";
+/* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
+"removePreview"="Rimuovi anteprima";
 /* */
 "warning"="Attenzione";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
@@ -1495,4 +1503,38 @@
 /*  */
 "resume"="Riprendi";
 /* Title to preview document */
-"previewContent"="Preview Content";
+"previewContent"="Anteprima del contenuto";
+/* Title of the notification for a missed call */
+"missedCall"="Chiamata persa";
+/* When an outgoing call of user A with user B had been rejected by user B */
+"callWasRejected"="Call was rejected";
+/* When an active call of user A with user B had cancelled */
+"callWasCancelled"="Call was cancelled";
+/* When an active call of user A with user B had not answered */
+"callWasNotAnswered"="Call was not answered";
+/* When an active call of user A with user B had failed */
+"callFailed"="Call failed";
+/* When an active call of user A with user B had ended */
+"callEnded"="Call ended.";
+/* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
+"duration"="Duration: %@";
+/* */
+"xSeconds"="%d seconds";
+/* */
+"1Second"="1 second";
+/* */
+"1Hour"="1 hour";
+/* */
+"xHours"="%d hours";
+/* */
+"1Hour1Minute"="1 hour, 1 minute";
+/* */
+"1HourxMinutes"="1 hour, %d minutes";
+/* */
+"xHours1Minute"="%d hours, 1 minute";
+/* */
+"xHoursxMinutes"="%1$d hours, %2$d minutes";
+/* Alert title shown when users try to stream an unsupported audio/video file */
+"fileNotSupported"="File not supported";
+/* Alert message shown when users try to stream an unsupported audio/video file */
+"message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";

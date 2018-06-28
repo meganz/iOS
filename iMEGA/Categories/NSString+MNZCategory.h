@@ -2,6 +2,7 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM (NSInteger, MEGAChatStatus);
+typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 
 @interface NSString (MNZCategory)
 
@@ -29,6 +30,7 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 + (NSString *)mnz_stringByMissedAudioCalls:(NSInteger)missedAudioCalls andMissedVideoCalls:(NSInteger)missedVideoCalls;
 
 + (NSString *)chatStatusString:(MEGAChatStatus)onlineStatus;
++ (NSString *)mnz_stringByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason userHandle:(uint64_t)userHandle duration:(NSInteger)duration;
 
 - (BOOL)mnz_isValidEmail;
 
@@ -37,6 +39,7 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 - (NSString *)mnz_removeWebclientFormatters;
 
 + (NSString *)mnz_stringFromTimeInterval:(NSTimeInterval)interval;
++ (NSString *)mnz_stringFromCallDuration:(NSInteger)duration;
 
 - (NSString *)SHA256;
 

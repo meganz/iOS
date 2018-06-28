@@ -55,7 +55,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Bạn đã bị đăng xuất ra bơi một phiên đăng nhập từ chỗ khác";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="Không xác thực được SSL key từ máy chủ. Xem chừng bạn đã bị tác động bởi người hack trung gian.";
+"sslUnverified_alertTitle"="MEGA không thực hiện đuợc kết nối bảo mật thông qua xác thực SSL. Có thể do thiết bị đang dùng mạng WiFi công cộng cần được phải chỉnh thêm.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -716,12 +716,18 @@
 "transfersSectionFooter"="Chỉ nên bật tính năng này khi các phiên truyền tải lên/xuống không hoạt động. Trong các trường hợp bình thường, giao thức HTTP rất thích hợp để truyền tải các nội dung mã hóa.";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Tải hình ảnh và video";
+/* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
+"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Media captured from within the app";
 /* Section title where you can enable the option 'Save images in gallery' */
 "saveImagesInGallery"="Lưu hình ảnh nhận được vào máy";
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Lưu video nhận được vào máy";
+/* Section title where you can enable the option 'Save media in gallery' */
+"saveMediaInGallery"="Save media in gallery";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Chức năng này lưu lại những hình ảnh và video phù hợp với iOS vào điện thoại (Ghi chú: hình ảnh và video sẽ được lưu thẳng vào điện thoại, không phải mục Ngoại Tuyến).";
+/* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
+"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Enable this option to save photos taken and videos recorded from within the app in the gallery";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Hiện đang dùng %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -1206,7 +1212,7 @@
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
 "moreThanTwoUsersAreTyping"="%1$s [A]và vài người khác đang viết tin nhắn...[/A]";
 /* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
-"writeAMessage"="Write a message to %s...";
+"writeAMessage"="Write a message to %s…";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="Không có lịch sử trò chuyện";
 /* Button which allows to retry send message in chat conversation. */
@@ -1235,6 +1241,8 @@
 "never"="Không bao giờ";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
 "richPreviewsConfirmation"="You are disabling rich URL previews permanently. You can re-enable rich URL previews in your settings. Do you want to proceed?";
+/* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
+"removePreview"="Remove preview";
 /* */
 "warning"="Cảnh báo";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
@@ -1248,11 +1256,11 @@
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="Đã đọc xong";
 /* Notification text body shown when you have received a new chat message */
-"newMessage"="Có Tin Nhắn Mới";
+"newMessage"="Nhận đuợc Tin Nhắn mới";
 /* Notification text body shown when you have received a contact request */
-"contactRequest"="Có Lời Mời Thêm Danh Bạ";
+"contactRequest"="Có lời mời thêm Danh Bạ";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder"="Tạo Thư Mục Chia Sẻ Mới";
+"newSharedFolder"="Nhận đuợc một Thư Mục Chia Sẻ mới";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Bạn có chắc muốn hủy bỏ việc đăng ký?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
@@ -1485,7 +1493,7 @@
 /* Button title to allow the user ignore something */
 "ignore"="Bỏ Qua";
 /* Button title to allow the user open the default browser */
-"openBrowser"="Open browser";
+"openBrowser"="Mở trình duyệt";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="Khởi động lại MEGAsync";
 /* Title to alert user the possibility of resume playing the video or start from the beginning */
@@ -1496,3 +1504,37 @@
 "resume"="Tiếp tục truyền tải";
 /* Title to preview document */
 "previewContent"="Preview Content";
+/* Title of the notification for a missed call */
+"missedCall"="Missed call";
+/* When an outgoing call of user A with user B had been rejected by user B */
+"callWasRejected"="Call was rejected";
+/* When an active call of user A with user B had cancelled */
+"callWasCancelled"="Call was cancelled";
+/* When an active call of user A with user B had not answered */
+"callWasNotAnswered"="Call was not answered";
+/* When an active call of user A with user B had failed */
+"callFailed"="Call failed";
+/* When an active call of user A with user B had ended */
+"callEnded"="Call ended.";
+/* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
+"duration"="Duration: %@";
+/* */
+"xSeconds"="%d seconds";
+/* */
+"1Second"="1 second";
+/* */
+"1Hour"="1 hour";
+/* */
+"xHours"="%d hours";
+/* */
+"1Hour1Minute"="1 hour, 1 minute";
+/* */
+"1HourxMinutes"="1 hour, %d minutes";
+/* */
+"xHours1Minute"="%d hours, 1 minute";
+/* */
+"xHoursxMinutes"="%1$d hours, %2$d minutes";
+/* Alert title shown when users try to stream an unsupported audio/video file */
+"fileNotSupported"="File not supported";
+/* Alert message shown when users try to stream an unsupported audio/video file */
+"message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
