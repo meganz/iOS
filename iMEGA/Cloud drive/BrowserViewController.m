@@ -157,10 +157,19 @@
             break;
         }
             
-        case BrowserActionOpenIn:
+        case BrowserActionOpenIn: {
+            [self setupDefaultElements];
+            
+            self.toolBarSaveInMegaBarButtonItem.title = AMLocalizedString(@"upload", nil);
+            [self.toolBarSaveInMegaBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f]} forState:UIControlStateNormal];
+            [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarSaveInMegaBarButtonItem]];
+            break;
+        }
+            
         case BrowserActionShareExtension: {
             [self setupDefaultElements];
             
+            self.navigationItem.rightBarButtonItem = nil;
             self.toolBarSaveInMegaBarButtonItem.title = AMLocalizedString(@"upload", nil);
             [self.toolBarSaveInMegaBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f]} forState:UIControlStateNormal];
             [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarSaveInMegaBarButtonItem]];
@@ -318,7 +327,7 @@
             promptString = (selectedNodesCount <= 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), selectedNodesCount] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), selectedNodesCount];
         }
         self.navigationItem.prompt = promptString;
-    } else if (self.browserAction != BrowserActionDocumentProvider) {
+    } else if (self.browserAction != BrowserActionDocumentProvider && self.browserAction != BrowserActionShareExtension) {
         self.navigationItem.prompt = AMLocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
     }
 }
@@ -528,8 +537,6 @@
                 MEGALogError(@"Remove item at path failed with error: %@", error);
             }
         }
-    } else if (self.browserAction == BrowserActionShareExtension) {
-        [self.browserViewControllerDelegate uploadToParentNode:nil];
     }
     
     [self dismiss];

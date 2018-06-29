@@ -192,43 +192,52 @@
 }
 
 - (IBAction)sendAction:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        self.pendingAttachNodeOperations = (self.nodes.count * self.selectedGroupChatsMutableArray.count) + (self.nodes.count * self.selectedUsersMutableArray.count);
-        
-        MEGAChatAttachNodeRequestDelegate *chatAttachNodeRequestDelegate = [[MEGAChatAttachNodeRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
-            if (--self.pendingAttachNodeOperations == 0) {
-                [self showSuccessMessage];
-            }
-        }];
-        
-        for (MEGANode *node in self.nodes) {
-            for (MEGAChatListItem *chatListItem in self.selectedGroupChatsMutableArray) {
-                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatListItem.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
-            }
-            
-            for (MEGAUser *user in self.selectedUsersMutableArray) {
-                MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
-                if (chatRoom) {
-                    [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
-                } else {
-                    MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
-                    MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
-                    [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
-                    MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
-                        [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
-                    }];
-                    [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
+    switch (self.sendMode) {
+        case SendModeCloud: {
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                self.pendingAttachNodeOperations = (self.nodes.count * self.selectedGroupChatsMutableArray.count) + (self.nodes.count * self.selectedUsersMutableArray.count);
+                
+                MEGAChatAttachNodeRequestDelegate *chatAttachNodeRequestDelegate = [[MEGAChatAttachNodeRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
+                    if (--self.pendingAttachNodeOperations == 0) {
+                        [self showSuccessMessage];
+                    }
+                }];
+                
+                for (MEGANode *node in self.nodes) {
+                    for (MEGAChatListItem *chatListItem in self.selectedGroupChatsMutableArray) {
+                        [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatListItem.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
+                    }
+                    
+                    for (MEGAUser *user in self.selectedUsersMutableArray) {
+                        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
+                        if (chatRoom) {
+                            [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
+                        } else {
+                            MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
+                            MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
+                            [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
+                            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
+                            }];
+                            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
+                        }
+                    }
                 }
+                
+                if (self.searchController.isActive) {
+                    self.searchController.active = NO;
+                }
+                
+                [self dismissViewControllerAnimated:YES completion:nil];
             }
+
+            break;
         }
-        
-        
-        
-        if (self.searchController.isActive) {
-            self.searchController.active = NO;
-        }
-        
-        [self dismissViewControllerAnimated:YES completion:nil];
+            
+        case SendModeShareExtension:
+            [self.sendToViewControllerDelegate sendToChats:self.selectedGroupChatsMutableArray andUsers:self.selectedUsersMutableArray];
+            
+            break;
     }
 }
 
