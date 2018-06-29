@@ -7,7 +7,7 @@
 #import "MEGANavigationController.h"
 #import "MEGAPurchase.h"
 
-@interface ProductDetailViewController () <MEGAPurchaseDelegate, UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate> {
+@interface ProductDetailViewController () <MEGAPurchaseDelegate, UITableViewDataSource, UITableViewDelegate> {
     BOOL isPurchased;
 }
 
@@ -94,16 +94,6 @@
     [[MEGAPurchase sharedInstance] restorePurchase];
 }
 
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if ((alertView.tag) == 0 && (buttonIndex == 0)) {
-        if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentedViewController] != nil) {
-            [[[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentedViewController] dismissViewControllerAnimated:YES completion:nil];
-        }
-    }
-}
-
 - (void)presentProductUnavailableAlertController {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"productNotAvailable", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
@@ -157,10 +147,13 @@
         isPurchased = YES;
         
         if (isRestore) {
-            UIAlertView *updatedAlert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"thankYou_title", nil) message:AMLocalizedString(@"purchaseRestore_message", nil) delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
-            [updatedAlert setDelegate:self];
-            [updatedAlert setTag:0];
-            [updatedAlert show];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"thankYou_title", nil)  message:AMLocalizedString(@"purchaseRestore_message", nil) preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentedViewController] != nil) {
+                    [[[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentedViewController] dismissViewControllerAnimated:YES completion:nil];
+                }
+            }]];
+            [self presentViewController:alertController animated:YES completion:nil];
         } else {
             if (self.presentingViewController) {
                 [self dismissViewControllerAnimated:YES completion:nil];
@@ -170,18 +163,21 @@
 }
 
 - (void)failedPurchase:(NSInteger)errorCode message:(NSString *)errorMessage {
-    UIAlertView *failedPurchaseAlert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"failedPurchase_title", nil) message:AMLocalizedString(@"failedPurchase_message", nil) delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
-    [failedPurchaseAlert show];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"failedPurchase_title", nil)  message:AMLocalizedString(@"failedPurchase_message", nil) preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)incompleteRestore {
-    UIAlertView *incompleteRestoreAlert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"incompleteRestore_title", nil) message:AMLocalizedString(@"incompleteRestore_message", nil) delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
-    [incompleteRestoreAlert show];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"incompleteRestore_title", nil)  message:AMLocalizedString(@"incompleteRestore_message", nil) preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)failedRestore:(NSInteger)errorCode message:(NSString *)errorMessage {
-    UIAlertView *failedRestoreAlert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"failedRestore_title", nil) message:AMLocalizedString(@"failedRestore_message", nil) delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
-    [failedRestoreAlert show];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"failedRestore_title", nil)  message:AMLocalizedString(@"failedRestore_message", nil) preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 @end

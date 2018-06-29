@@ -171,7 +171,7 @@
 }
 
 - (NSString *)mediaDataType {
-    return (NSString *)kUTTypeText;
+    return (NSString *)kUTTypePlainText;
 }
 
 - (id)mediaData {
