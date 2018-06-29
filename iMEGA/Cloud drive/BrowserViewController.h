@@ -33,7 +33,7 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
 @property (nonatomic, copy) void(^selectedNodes)(NSArray *);
 @property (nonatomic, strong) NSMutableDictionary *selectedNodesMutableDictionary;
 
-@property (nonatomic, weak) id <BrowserViewControllerDelegate> browserViewControllerDelegate;
+@property (nonatomic, weak) id<BrowserViewControllerDelegate> browserViewControllerDelegate;
 
 @end
 

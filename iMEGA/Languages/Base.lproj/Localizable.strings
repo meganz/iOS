@@ -379,6 +379,8 @@
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Open in…";
 /* */
+"uploadToMega"="Upload to MEGA";
+/* */
 "sendToContact"="Send to contact";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="File sent to chat";
