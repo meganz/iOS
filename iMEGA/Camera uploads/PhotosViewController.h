@@ -8,7 +8,8 @@ typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
     MEGACameraUploadsStateUploading,
     MEGACameraUploadsStateCompleted,
     MEGACameraUploadsStateNoInternetConnection,
-    MEGACameraUploadsStateEmpty
+    MEGACameraUploadsStateEmpty,
+    MEGACameraUploadsStateUnknown
 };
 
 @interface PhotosViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, MEGARequestDelegate, MEGATransferDelegate, MEGAGlobalDelegate>
