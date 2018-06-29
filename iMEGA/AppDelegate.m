@@ -332,12 +332,14 @@
         }
     }
     
-    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-         if (status == PHAuthorizationStatusDenied && [CameraUploads syncManager].isCameraUploadsEnabled) {
-             MEGALogInfo(@"Disable Camera Uploads");
-             [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
-         }
-     }];
+    if ([CameraUploads syncManager].isCameraUploadsEnabled) {
+        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+            if (status == PHAuthorizationStatusDenied) {
+                MEGALogInfo(@"Disable Camera Uploads");
+                [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
+            }
+        }];
+    }
     
     self.indexer = [[MEGAIndexer alloc] init];
     [Helper setIndexer:self.indexer];
