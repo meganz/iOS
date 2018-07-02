@@ -380,6 +380,8 @@
 "openIn"="Open in…";
 /* */
 "uploadToMega"="Upload to MEGA";
+/* Foother shown in the Share Extension telling that a file can be renamed if tapped */
+"tapFileToRename"="Tap file to rename";
 /* */
 "sendToContact"="Send to contact";
 /* Toast text upon sending a single file to chat */

@@ -87,12 +87,44 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="destinationCell" id="vmt-Vt-iaJ">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="destinationCell" id="vmt-Vt-iaJ">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vmt-Vt-iaJ" id="T2p-cK-Zcv">
+                                    <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="fileCell" id="kbu-be-94e">
+                                <rect key="frame" x="0.0" y="99.5" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kbu-be-94e" id="9s3-wn-0Je">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lzS-fg-WVH">
+                                            <rect key="frame" x="10" y="10" width="40" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="40" id="Zl9-WQ-8pk"/>
+                                                <constraint firstAttribute="height" constant="40" id="myH-C6-tNg"/>
+                                            </constraints>
+                                        </imageView>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="J5f-ej-bEi">
+                                            <rect key="frame" x="60" y="10.5" width="305" height="18"/>
+                                            <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="J5f-ej-bEi" firstAttribute="top" secondItem="9s3-wn-0Je" secondAttribute="top" constant="10" id="Of0-ho-vTz"/>
+                                        <constraint firstAttribute="trailing" secondItem="J5f-ej-bEi" secondAttribute="trailing" constant="10" id="Q05-Cs-dVs"/>
+                                        <constraint firstItem="J5f-ej-bEi" firstAttribute="leading" secondItem="lzS-fg-WVH" secondAttribute="trailing" constant="10" id="Yee-02-SXK"/>
+                                        <constraint firstItem="lzS-fg-WVH" firstAttribute="leading" secondItem="9s3-wn-0Je" secondAttribute="leading" constant="10" id="oCH-F0-zTG"/>
+                                        <constraint firstItem="lzS-fg-WVH" firstAttribute="top" secondItem="9s3-wn-0Je" secondAttribute="top" constant="10" id="s0A-7h-Vlv"/>
+                                        <constraint firstAttribute="bottom" secondItem="lzS-fg-WVH" secondAttribute="bottom" constant="10" id="vOH-qx-DBr"/>
+                                        <constraint firstAttribute="bottom" secondItem="J5f-ej-bEi" secondAttribute="bottom" constant="10" id="vkr-WO-5vC"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
