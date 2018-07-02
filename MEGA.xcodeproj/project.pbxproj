@@ -281,6 +281,7 @@
 		7754ED9920B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754ED9820B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m */; };
 		7754ED9C20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754ED9B20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m */; };
 		775652D7203AD2FC009E7EC8 /* ContactLinkQRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775652D6203AD2FC009E7EC8 /* ContactLinkQRViewController.m */; };
+		775D9C0B20EA0D49001BF1E8 /* ShareAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 775D9C0A20EA0D49001BF1E8 /* ShareAttachment.m */; };
 		777E9229203EB0E200266229 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 777E9228203EB0E100266229 /* CoreImage.framework */; };
 		777E922D203EE14B00266229 /* QRSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 777E922C203EE14B00266229 /* QRSettingsTableViewController.m */; };
 		77892E9B20E4FFBA0020A533 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41EABF161DA7C5250087271C /* Chat.storyboard */; };
@@ -1162,6 +1163,8 @@
 		7754ED9B20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAFetchNodesRequestDelegate.m; path = API/Requests/MEGAFetchNodesRequestDelegate.m; sourceTree = "<group>"; };
 		775652D5203AD2FC009E7EC8 /* ContactLinkQRViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactLinkQRViewController.h; sourceTree = "<group>"; };
 		775652D6203AD2FC009E7EC8 /* ContactLinkQRViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContactLinkQRViewController.m; sourceTree = "<group>"; };
+		775D9C0920EA0D49001BF1E8 /* ShareAttachment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareAttachment.h; sourceTree = "<group>"; };
+		775D9C0A20EA0D49001BF1E8 /* ShareAttachment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareAttachment.m; sourceTree = "<group>"; };
 		777E9228203EB0E100266229 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		777E922B203EE14B00266229 /* QRSettingsTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QRSettingsTableViewController.h; sourceTree = "<group>"; };
 		777E922C203EE14B00266229 /* QRSettingsTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QRSettingsTableViewController.m; sourceTree = "<group>"; };
@@ -2708,6 +2711,15 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
+		775D9C0820EA0CF3001BF1E8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				775D9C0920EA0D49001BF1E8 /* ShareAttachment.h */,
+				775D9C0A20EA0D49001BF1E8 /* ShareAttachment.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		77D9A5692023538600B48470 /* Photo browser */ = {
 			isa = PBXGroup;
 			children = (
@@ -2875,6 +2887,7 @@
 		943F8B101EF26E9C00AFD89F /* MEGAShare */ = {
 			isa = PBXGroup;
 			children = (
+				775D9C0820EA0CF3001BF1E8 /* Model */,
 				94598D741F0CD53A00B57144 /* Share.storyboard */,
 				943F8B1E1EF2704900AFD89F /* ShareViewController.h */,
 				943F8B1F1EF2705300AFD89F /* ShareViewController.m */,
@@ -3932,6 +3945,7 @@
 				77892E9F20E5029B0020A533 /* MOUser+CoreDataProperties.m in Sources */,
 				5BEACE2A1FB474060010E02F /* MEGAUser+MNZCategory.m in Sources */,
 				94892C901EFBEA1F00AEAC25 /* SAMKeychain.m in Sources */,
+				775D9C0B20EA0D49001BF1E8 /* ShareAttachment.m in Sources */,
 				941135561F01004000D33428 /* ShareFolderActivity.m in Sources */,
 				5BEACE241FB473940010E02F /* UIImageView+MNZCategory.m in Sources */,
 				941135511F00FFC700D33428 /* Helper.m in Sources */,
