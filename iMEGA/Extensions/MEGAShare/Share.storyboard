@@ -78,7 +78,7 @@
             </objects>
             <point key="canvasLocation" x="1396" y="-85.007496251874073"/>
         </scene>
-        <!--Share Files Destination Table View Controller-->
+        <!--MEGA-->
         <scene sceneID="8eQ-gp-Vks">
             <objects>
                 <tableViewController id="ROS-kx-Ul6" customClass="ShareFilesDestinationTableViewController" sceneMemberID="viewController">
@@ -101,7 +101,18 @@
                             <outlet property="delegate" destination="ROS-kx-Ul6" id="SMo-b1-xu8"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="EIN-oG-7DO"/>
+                    <navigationItem key="navigationItem" title="MEGA" id="EIN-oG-7DO">
+                        <barButtonItem key="backBarButtonItem" title=" " id="YVA-jd-7lf"/>
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="9bI-gF-qP7">
+                            <color key="tintColor" red="0.94117647058823528" green="0.21568627450980393" blue="0.22745098039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="cancelAction:" destination="ROS-kx-Ul6" id="6Uo-xY-qSn"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cancelBarButtonItem" destination="9bI-gF-qP7" id="ZtE-3g-ghz"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ISJ-CD-Hdf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
