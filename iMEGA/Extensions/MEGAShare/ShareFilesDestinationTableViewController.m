@@ -61,10 +61,15 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"destinationCell"];
         }
         
+        UIImageView *imageView = cell.contentView.subviews.firstObject;
+        UILabel *label = cell.contentView.subviews.lastObject;
+
         if (indexPath.row == 0) {
-            cell.textLabel.text = AMLocalizedString(@"uploadToMega", nil);
+            imageView.image = [UIImage imageNamed:@"upload"];
+            label.text = AMLocalizedString(@"uploadToMega", nil);
         } else if (indexPath.row == 1) {
-            cell.textLabel.text = AMLocalizedString(@"sendToContact", nil);
+            imageView.image = [UIImage imageNamed:@"sendMessage"];
+            label.text = AMLocalizedString(@"sendToContact", nil);
         }
     } else if (indexPath.section == 1) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"fileCell" forIndexPath:indexPath];
