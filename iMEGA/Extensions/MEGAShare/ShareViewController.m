@@ -545,7 +545,11 @@ void uncaughtExceptionHandler(NSException *exception) {
                 
             case ShareAttachmentTypeURL: {
                 NSURL *url = attachment.content;
-                [self downloadData:url andUploadToParentNode:parentNode];
+                if (self.users || self.chats) {
+                    [self performSendMessage:attachment.name];
+                } else {
+                    [self downloadData:url andUploadToParentNode:parentNode];
+                }
                 
                 break;
             }
@@ -594,6 +598,29 @@ void uncaughtExceptionHandler(NSException *exception) {
             [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
         }
     }
+}
+
+- (void)performSendMessage:(NSString *)message {
+    for (MEGAChatListItem *chatListItem in self.chats) {
+        [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:chatListItem.chatId message:message];
+    }
+    
+    for (MEGAUser *user in self.users) {
+        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
+        if (chatRoom) {
+            [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:chatRoom.chatId message:message];
+        } else {
+            MEGALogDebug(@"There is not a chat with %@, create the chat and send message", user.email);
+            MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
+            [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
+            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:chatRoom.chatId message:message];
+            }];
+            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
+        }
+    }
+    
+    [self onePendingLess];
 }
 
 - (void)downloadData:(NSURL *)url andUploadToParentNode:(MEGANode *)parentNode {
