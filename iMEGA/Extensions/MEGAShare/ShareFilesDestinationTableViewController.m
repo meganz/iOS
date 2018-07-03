@@ -78,7 +78,12 @@
         }
         
         ShareAttachment *attachment = [[ShareAttachment attachmentsArray] objectAtIndex:indexPath.row];
-        NSString *extension = [attachment.name componentsSeparatedByString:@"."].lastObject;
+        NSString *extension;
+        if (attachment.type == ShareAttachmentTypeURL) {
+            extension = @"html";
+        } else {
+            extension = [attachment.name componentsSeparatedByString:@"."].lastObject;
+        }
         UIImageView *imageView = cell.contentView.subviews.firstObject;
         UITextField *textField = cell.contentView.subviews.lastObject;
         [imageView mnz_setImageForExtension:extension];
@@ -139,6 +144,7 @@
             [self.navigationController pushViewController:sendToViewController animated:YES];
         }
     }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - IBActions

@@ -36,6 +36,7 @@ static NSMutableArray<ShareAttachment *> *_attachmentsArray;
 + (void)addURL:(NSURL *)url {
     ShareAttachment *shareAttachment = [[ShareAttachment alloc] init];
     shareAttachment.type = ShareAttachmentTypeURL;
+    shareAttachment.name = url.absoluteString;
     shareAttachment.content = url;
     [[ShareAttachment attachmentsArray] addObject:shareAttachment];
 }
