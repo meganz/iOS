@@ -470,46 +470,74 @@ void uncaughtExceptionHandler(NSException *exception) {
     for (NSItemProvider *itemProvider in content.attachments) {
         if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypeImage]) {
             [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypeImage options:nil completionHandler:^(id data, NSError *error) {
-                if ([data class] == UIImage.class) {
-                    UIImage *image = (UIImage *)data;
-                    [ShareAttachment addImage:image fromItemProvider:itemProvider];
-                } else if ([[data class] isSubclassOfClass:NSData.class]) {
-                    UIImage *image = [UIImage imageWithData:data];
-                    [ShareAttachment addImage:image fromItemProvider:itemProvider];
+                if (error) {
+                    [self handleError:error];
+                } else {
+                    if ([data class] == UIImage.class) {
+                        UIImage *image = (UIImage *)data;
+                        [ShareAttachment addImage:image fromItemProvider:itemProvider];
+                    } else if ([[data class] isSubclassOfClass:NSData.class]) {
+                        UIImage *image = [UIImage imageWithData:data];
+                        [ShareAttachment addImage:image fromItemProvider:itemProvider];
+                    } else {
+                        NSURL *url = (NSURL *)data;
+                        [ShareAttachment addFileURL:url];
+                    }
+                }
+            }];
+        } else if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypeMovie]) {
+            [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypeMovie options:nil completionHandler:^(id data, NSError *error) {
+                if (error) {
+                    [self handleError:error];
                 } else {
                     NSURL *url = (NSURL *)data;
                     [ShareAttachment addFileURL:url];
                 }
             }];
-        } else if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypeMovie]) {
-            [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypeMovie options:nil completionHandler:^(id data, NSError *error) {
-                NSURL *url = (NSURL *)data;
-                [ShareAttachment addFileURL:url];
-            }];
         } else if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypeFileURL]) {
             // This type includes kUTTypeText, so kUTTypeText is omitted
             [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypeFileURL options:nil completionHandler:^(id data, NSError *error) {
-                NSURL *url = (NSURL *)data;
-                [ShareAttachment addFileURL:url];
+                if (error) {
+                    [self handleError:error];
+                } else {
+                    NSURL *url = (NSURL *)data;
+                    [ShareAttachment addFileURL:url];
+                }
             }];
         } else if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypeURL]) {
             [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypeURL options:nil completionHandler:^(id data, NSError *error) {
-                NSURL *url = (NSURL *)data;
-                [ShareAttachment addURL:url];
+                if (error) {
+                    [self handleError:error];
+                } else {
+                    NSURL *url = (NSURL *)data;
+                    [ShareAttachment addURL:url];
+                }
             }];
         } else if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypeVCard]) {
             [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypeVCard options:nil completionHandler:^(NSData *vCardData, NSError *error) {
-                [ShareAttachment addContact:vCardData];
+                if (error) {
+                    [self handleError:error];
+                } else {
+                    [ShareAttachment addContact:vCardData];
+                }
             }];
         } else if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypePlainText]) {
             [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypePlainText options:nil completionHandler:^(id data, NSError *error) {
-                NSString *text = (NSString *)data;
-                [ShareAttachment addPlainText:text];
+                if (error) {
+                    [self handleError:error];
+                } else {
+                    NSString *text = (NSString *)data;
+                    [ShareAttachment addPlainText:text];
+                }
             }];
         } else if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypeData]) {
             [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypeData options:nil completionHandler:^(id data, NSError *error) {
-                NSURL *url = (NSURL *)data;
-                [ShareAttachment addFileURL:url];
+                if (error) {
+                    [self handleError:error];
+                } else {
+                    NSURL *url = (NSURL *)data;
+                    [ShareAttachment addFileURL:url];
+                }
             }];
         } else {
             self.unsupportedAssets++;
@@ -519,6 +547,11 @@ void uncaughtExceptionHandler(NSException *exception) {
     if (self.pendingAssets == self.unsupportedAssets) {
         [self alertIfNeededAndDismiss];
     }
+}
+
+- (void)handleError:(NSError *)error {
+    MEGALogError(@"loadItemForTypeIdentifier failed with error %@", error);
+    [self oneUnsupportedMore];
 }
 
 - (void)performUploadToParentNode:(MEGANode *)parentNode {
