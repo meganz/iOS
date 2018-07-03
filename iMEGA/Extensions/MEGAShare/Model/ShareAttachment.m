@@ -49,6 +49,14 @@ static NSMutableArray<ShareAttachment *> *_attachmentsArray;
     [[ShareAttachment attachmentsArray] addObject:shareAttachment];
 }
 
++ (void)addPlainText:(NSString *)text {
+    ShareAttachment *shareAttachment = [[ShareAttachment alloc] init];
+    shareAttachment.type = ShareAttachmentTypePlainText;
+    shareAttachment.name = [ShareAttachment suggestedNameForPlainText];
+    shareAttachment.content = text;
+    [[ShareAttachment attachmentsArray] addObject:shareAttachment];
+}
+
 #pragma mark - Naming
 
 + (NSString *)suggestedNameForItemProvider:(NSItemProvider *)itemProvider {
@@ -57,7 +65,7 @@ static NSMutableArray<ShareAttachment *> *_attachmentsArray;
     if (@available(iOS 11.0, *)) {
         suggestedName = itemProvider.suggestedName;
     } else {
-        NSString *name = [[NSUUID UUID] UUIDString];
+        NSString *name = [NSUUID UUID].UUIDString;
         NSString *extension = [itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypePNG] ? @"png" : @"jpg";
         suggestedName = [NSString stringWithFormat:@"%@.%@", name, extension];
     }
@@ -96,12 +104,16 @@ static NSMutableArray<ShareAttachment *> *_attachmentsArray;
     }
 
     if (suggestedName.length == 0) {
-        suggestedName = [[NSUUID UUID] UUIDString];
+        suggestedName = [NSUUID UUID].UUIDString;
     }
     
     suggestedName = [suggestedName stringByAppendingString:@".vcf"];
     
     return suggestedName;
+}
+
++ (NSString *)suggestedNameForPlainText {
+    return [[NSUUID UUID].UUIDString stringByAppendingString:@".txt"];
 }
 
 @end

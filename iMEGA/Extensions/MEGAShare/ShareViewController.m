@@ -27,7 +27,7 @@
 
 #define MNZ_ANIMATION_TIME 0.35
 
-@interface ShareViewController () <MEGARequestDelegate, MEGATransferDelegate, LTHPasscodeViewControllerDelegate>
+@interface ShareViewController () <MEGARequestDelegate, MEGATransferDelegate, MEGAChatRoomDelegate, LTHPasscodeViewControllerDelegate>
 
 @property (nonatomic) UIViewController *browserVC;
 @property (nonatomic) unsigned long pendingAssets;
@@ -501,6 +501,11 @@ void uncaughtExceptionHandler(NSException *exception) {
             [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypeVCard options:nil completionHandler:^(NSData *vCardData, NSError *error) {
                 [ShareAttachment addContact:vCardData];
             }];
+        } else if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypePlainText]) {
+            [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypePlainText options:nil completionHandler:^(id data, NSError *error) {
+                NSString *text = (NSString *)data;
+                [ShareAttachment addPlainText:text];
+            }];
         } else if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypeData]) {
             [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypeData options:nil completionHandler:^(id data, NSError *error) {
                 NSURL *url = (NSURL *)data;
@@ -567,6 +572,23 @@ void uncaughtExceptionHandler(NSException *exception) {
                 
                 break;
             }
+                
+            case ShareAttachmentTypePlainText: {
+                NSString *text = attachment.content;
+                if (self.users || self.chats) {
+                    [self performSendMessage:text];
+                } else {
+                    NSString *storagePath = [self shareExtensionStorage];
+                    NSString *tempPath = [storagePath stringByAppendingPathComponent:attachment.name];
+                    NSError *error;
+                    if ([text writeToFile:tempPath atomically:YES encoding:NSUTF8StringEncoding error:&error]) {
+                        [self smartUploadLocalPath:tempPath parent:parentNode];
+                    } else {
+                        MEGALogError(@".txt writeToFile failed:\n- At path: %@\n- With error: %@", tempPath, error);
+                        [self oneUnsupportedMore];
+                    }
+                }
+            }
         }
     }
 }
@@ -602,25 +624,31 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)performSendMessage:(NSString *)message {
     for (MEGAChatListItem *chatListItem in self.chats) {
-        [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:chatListItem.chatId message:message];
+        [self sendMessage:message toChat:chatListItem.chatId];
     }
     
     for (MEGAUser *user in self.users) {
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
         if (chatRoom) {
-            [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:chatRoom.chatId message:message];
+            [self sendMessage:message toChat:chatRoom.chatId];
         } else {
             MEGALogDebug(@"There is not a chat with %@, create the chat and send message", user.email);
             MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
             [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
             MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
-                [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:chatRoom.chatId message:message];
+                [self sendMessage:message toChat:chatRoom.chatId];
             }];
             [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
         }
     }
     
     [self onePendingLess];
+}
+
+- (void)sendMessage:(NSString *)message toChat:(uint64_t)chatId {
+    [[MEGASdkManager sharedMEGAChatSdk] openChatRoom:chatId delegate:self];
+    [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:chatId message:message];
+    self.pendingAssets++;
 }
 
 - (void)downloadData:(NSURL *)url andUploadToParentNode:(MEGANode *)parentNode {
@@ -695,7 +723,11 @@ void uncaughtExceptionHandler(NSException *exception) {
     if (remoteNode) {
         if (remoteNode.parentHandle == parentNode.handle) {
             // The file is already in the folder, nothing to do.
-            [self onePendingLess];
+            if (self.users || self.chats) {
+                [self performAttachNodeHandle:remoteNode.handle];
+            } else {
+                [self onePendingLess];
+            }
         } else {
             if ([remoteNode.name isEqualToString:localPath.lastPathComponent]) {
                 // The file is already in MEGA, in other folder, has to be copied to this folder.
@@ -833,7 +865,11 @@ void uncaughtExceptionHandler(NSException *exception) {
         }
             
         case MEGARequestTypeCopy: {
-            [self onePendingLess];
+            if (self.users || self.chats) {
+                [self performAttachNodeHandle:request.nodeHandle];
+            } else {
+                [self onePendingLess];
+            }
             break;
         }
             
@@ -873,6 +909,16 @@ void uncaughtExceptionHandler(NSException *exception) {
         [self performAttachNodeHandle:transfer.nodeHandle];
     } else {
         [self onePendingLess];
+    }
+}
+
+#pragma mark - MEGAChatRoomDelegate
+
+- (void)onMessageUpdate:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
+    if ([message hasChangedForType:MEGAChatMessageChangeTypeStatus]) {
+        if (message.status == MEGAChatMessageStatusServerReceived) {
+            [self onePendingLess];
+        }
     }
 }
 
