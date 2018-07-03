@@ -171,6 +171,11 @@
 #pragma mark - UITextFieldDelegate
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
+    ShareAttachment *attachment = [[ShareAttachment attachmentsArray] objectAtIndex:textField.tag];
+    if (attachment.type == ShareAttachmentTypeURL) {
+        return;
+    }
+    
     NSString *name = textField.text;
     NSString *extension = [name componentsSeparatedByString:@"."].lastObject;
 
