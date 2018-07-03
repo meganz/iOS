@@ -6,7 +6,8 @@ typedef NS_ENUM(NSUInteger, ShareAttachmentType) {
     ShareAttachmentTypeImage,
     ShareAttachmentTypeFile,
     ShareAttachmentTypeURL,
-    ShareAttachmentTypeContact
+    ShareAttachmentTypeContact,
+    ShareAttachmentTypePlainText
 };
 
 @interface ShareAttachment : NSObject
@@ -20,5 +21,6 @@ typedef NS_ENUM(NSUInteger, ShareAttachmentType) {
 + (void)addFileURL:(NSURL *)url;
 + (void)addURL:(NSURL *)url;
 + (void)addContact:(NSData *)vCardData;
++ (void)addPlainText:(NSString *)text;
 
 @end
