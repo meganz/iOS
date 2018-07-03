@@ -12,6 +12,7 @@
 
 @property (weak, nonatomic) UINavigationController *navigationController;
 @property (weak, nonatomic) ShareViewController *shareViewController;
+@property (nonatomic) NSUserDefaults *sharedUserDefaults;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 
@@ -24,14 +25,24 @@
     
     self.navigationController = (UINavigationController *)self.parentViewController;
     self.shareViewController = (ShareViewController *)self.navigationController.parentViewController;
-    
+    self.sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+
     self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", nil);
+    
+    // Add observers to get notified when the extension goes to background and comes back to foreground:
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActive)
+                                                 name:NSExtensionHostDidBecomeActiveNotification
+                                               object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [self.navigationController setToolbarHidden:YES animated:animated];
+}
+
+- (void)didBecomeActive {
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
@@ -67,9 +78,11 @@
         if (indexPath.row == 0) {
             imageView.image = [UIImage imageNamed:@"upload"];
             label.text = AMLocalizedString(@"uploadToMega", nil);
+            label.enabled = cell.userInteractionEnabled = YES;
         } else if (indexPath.row == 1) {
             imageView.image = [UIImage imageNamed:@"sendMessage"];
             label.text = AMLocalizedString(@"sendToContact", nil);
+            label.enabled = cell.userInteractionEnabled = [self.sharedUserDefaults boolForKey:@"IsChatEnabled"];
         }
     } else if (indexPath.section == 1) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"fileCell" forIndexPath:indexPath];
