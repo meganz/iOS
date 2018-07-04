@@ -507,6 +507,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     self.inputToolbar.contentView.textView.textColor = [UIColor mnz_black333333];
     self.inputToolbar.contentView.textView.tintColor = [UIColor mnz_green00BFA5];
     [self updateToolbarPlaceHolder];
+    self.inputToolbar.contentView.textView.delegate = self;
+    self.inputToolbar.contentView.textView.text = [[MEGAStore shareInstance] fetchChatDraftWithChatId:self.chatRoom.chatId].text;
 }
 
 - (void)updateToolbarPlaceHolder {
@@ -1862,6 +1864,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     } else if (textLength == 0) {
         [[MEGASdkManager sharedMEGAChatSdk] sendStopTypingNotificationForChat:self.chatRoom.chatId];
     }
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
 }
 
 #pragma mark - MEGAChatRoomDelegate
