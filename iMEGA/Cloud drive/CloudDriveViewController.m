@@ -1935,6 +1935,10 @@
             [node mnz_removeSharing];
             break;
             
+        case MegaNodeActionTypeRestore:
+            [node mnz_restore];
+            break;
+            
         default:
             break;
     }

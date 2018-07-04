@@ -180,6 +180,11 @@
     MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node];
     
     NSMutableArray *actions = [NSMutableArray new];
+        
+    MEGANode *restoreNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.node.restoreHandle];
+    if (restoreNode && ![[MEGASdkManager sharedMEGASdk] isNodeInRubbish:restoreNode] && [[MEGASdkManager sharedMEGASdk] isNodeInRubbish:self.node]) {
+        [actions addObject:[self actionRestoreNode]];
+    }
     
     if (self.displayMode == DisplayModeFolderLink) {
         [actions addObject:[self actionImport]];
@@ -342,6 +347,10 @@
 
 - (MegaActionNode *)actionSelectNodes {
     return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"select", nil) iconName: @"selected" andActionType:MegaNodeActionTypeSelect];
+}
+
+- (MegaActionNode *)actionRestoreNode {
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"restore", nil) iconName: @"restore" andActionType:MegaNodeActionTypeRestore];
 }
 
 #pragma mark - IBActions
