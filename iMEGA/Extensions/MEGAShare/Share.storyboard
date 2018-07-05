@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14295.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14270.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -85,7 +85,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="hIK-nl-xug">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.9882352941176471" green="0.9882352941176471" blue="0.9882352941176471" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="destinationCell" id="vmt-Vt-iaJ">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
@@ -102,7 +102,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rWg-Ig-Wt8">
-                                            <rect key="frame" x="52" y="10.5" width="281" height="23"/>
+                                            <rect key="frame" x="60" y="10" width="265" height="18"/>
                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                             <color key="textColor" red="0.082352941176470587" green="0.078431372549019607" blue="0.070588235294117646" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -111,13 +111,14 @@
                                     <constraints>
                                         <constraint firstItem="ncI-aJ-C8I" firstAttribute="top" secondItem="T2p-cK-Zcv" secondAttribute="top" constant="8" id="2NJ-cL-i6U"/>
                                         <constraint firstAttribute="bottom" secondItem="ncI-aJ-C8I" secondAttribute="bottom" constant="8" id="CPz-Is-m7T"/>
-                                        <constraint firstItem="rWg-Ig-Wt8" firstAttribute="leading" secondItem="ncI-aJ-C8I" secondAttribute="trailing" constant="8" id="FyM-Qb-8oK"/>
+                                        <constraint firstItem="rWg-Ig-Wt8" firstAttribute="leading" secondItem="ncI-aJ-C8I" secondAttribute="trailing" constant="16" id="FyM-Qb-8oK"/>
                                         <constraint firstItem="ncI-aJ-C8I" firstAttribute="leading" secondItem="T2p-cK-Zcv" secondAttribute="leading" constant="16" id="PKk-xp-uip"/>
                                         <constraint firstItem="rWg-Ig-Wt8" firstAttribute="top" secondItem="T2p-cK-Zcv" secondAttribute="top" constant="10" id="Pss-Lt-Wqc"/>
                                         <constraint firstAttribute="bottom" secondItem="rWg-Ig-Wt8" secondAttribute="bottom" constant="10" id="a9i-h3-A4v"/>
-                                        <constraint firstAttribute="trailing" secondItem="rWg-Ig-Wt8" secondAttribute="trailing" constant="8" id="yvX-Cd-qmB"/>
+                                        <constraint firstAttribute="trailing" secondItem="rWg-Ig-Wt8" secondAttribute="trailing" constant="16" id="yvX-Cd-qmB"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <inset key="separatorInset" minX="58" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="fileCell" id="kbu-be-94e">
                                 <rect key="frame" x="0.0" y="99.5" width="375" height="44"/>
@@ -134,7 +135,7 @@
                                             </constraints>
                                         </imageView>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="J5f-ej-bEi">
-                                            <rect key="frame" x="60" y="10.5" width="305" height="18"/>
+                                            <rect key="frame" x="60" y="10" width="305" height="18"/>
                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                             <textInputTraits key="textInputTraits"/>
@@ -150,6 +151,7 @@
                                         <constraint firstAttribute="bottom" secondItem="J5f-ej-bEi" secondAttribute="bottom" constant="10" id="vkr-WO-5vC"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>
