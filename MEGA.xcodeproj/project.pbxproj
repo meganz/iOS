@@ -1146,6 +1146,8 @@
 		5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAMoveRequestDelegate.m; path = API/Requests/MEGAMoveRequestDelegate.m; sourceTree = "<group>"; };
 		7720C5B3206A931E00F995D1 /* MEGATransfer+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGATransfer+MNZCategory.h"; sourceTree = "<group>"; };
 		7720C5B4206A931E00F995D1 /* MEGATransfer+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MEGATransfer+MNZCategory.m"; sourceTree = "<group>"; };
+		773DF39A20EE1470004C3418 /* SendMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SendMode.h; sourceTree = "<group>"; };
+		773DF39B20EE14C1004C3418 /* ShareAttachmentType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareAttachmentType.h; sourceTree = "<group>"; };
 		7747B2D6208623660011814E /* Reachability.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		7747B2D7208623660011814E /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		77485F82207CB6D3007402B1 /* MEGAGetPublicNodeRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAGetPublicNodeRequestDelegate.h; path = API/Requests/MEGAGetPublicNodeRequestDelegate.h; sourceTree = "<group>"; };
@@ -2624,9 +2626,11 @@
 		5B2417E620527F5900C8DDE2 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				5B72A14B20D3A69C007FE4FD /* URLType.h */,
 				5B2417E720527FB800C8DDE2 /* DisplayMode.h */,
 				83681574202AFA1700CA8EFC /* MegaNodeActionType.h */,
+				773DF39A20EE1470004C3418 /* SendMode.h */,
+				773DF39B20EE14C1004C3418 /* ShareAttachmentType.h */,
+				5B72A14B20D3A69C007FE4FD /* URLType.h */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
