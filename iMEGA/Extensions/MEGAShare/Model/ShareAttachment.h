@@ -1,14 +1,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSUInteger, ShareAttachmentType) {
-    ShareAttachmentTypePNG,
-    ShareAttachmentTypeImage,
-    ShareAttachmentTypeFile,
-    ShareAttachmentTypeURL,
-    ShareAttachmentTypeContact,
-    ShareAttachmentTypePlainText
-};
+#import "ShareAttachmentType.h"
 
 @interface ShareAttachment : NSObject
 

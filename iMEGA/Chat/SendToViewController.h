@@ -2,11 +2,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MEGAChatListItem.h"
-
-typedef NS_ENUM(NSUInteger, SendMode) {
-    SendModeCloud,
-    SendModeShareExtension
-};
+#import "SendMode.h"
 
 @protocol SendToViewControllerDelegate <NSObject>
 - (void)sendToChats:(NSArray<MEGAChatListItem *> *)chats andUsers:(NSArray<MEGAUser *> *)users;
