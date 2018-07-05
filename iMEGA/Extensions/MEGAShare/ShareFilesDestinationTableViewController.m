@@ -16,6 +16,8 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 
+@property (weak, nonatomic) UITextField *activeTextField;
+
 @end
 
 @implementation ShareFilesDestinationTableViewController
@@ -163,6 +165,9 @@
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
+    if (self.activeTextField && self.activeTextField.isFirstResponder) {
+        [self.activeTextField resignFirstResponder];
+    }
     [self.shareViewController dismissWithCompletionHandler:^{
         [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Cancel tapped" code:-1 userInfo:nil]];
     }];
@@ -171,6 +176,7 @@
 #pragma mark - UITextFieldDelegate
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
+    self.activeTextField = textField;
     ShareAttachment *attachment = [[ShareAttachment attachmentsArray] objectAtIndex:textField.tag];
     if (attachment.type == ShareAttachmentTypeURL) {
         return;
@@ -198,6 +204,7 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
+    self.activeTextField = nil;
     
     return YES;
 }
