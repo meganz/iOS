@@ -64,6 +64,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *carbonCopyBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *restoreBarButtonItem;
 
 @property (strong, nonatomic) UISearchController *searchController;
 
@@ -412,6 +413,10 @@
         
         if (self.selectedNodesArray.count == 0) {
             [self setToolbarActionsEnabled:NO];
+        } else {
+            if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
+                [self setToolbarActionsEnabled:YES];
+            }
         }
         
         allNodesSelected = NO;
@@ -984,7 +989,7 @@
             if (self.displayMode == DisplayModeCloudDrive) {
                 [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.shareBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
             } else { //Rubbish Bin
-                [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
+                [self.toolbar setItems:@[self.restoreBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
             }
             
             break;
@@ -1001,6 +1006,13 @@
     self.moveBarButtonItem.enabled = boolValue;
     self.carbonCopyBarButtonItem.enabled = boolValue;
     self.deleteBarButtonItem.enabled = boolValue;
+    self.restoreBarButtonItem.enabled = boolValue;
+    for (MEGANode *n in self.selectedNodesArray) {
+        if (!n.mnz_isRestorable) {
+            self.restoreBarButtonItem.enabled = NO;
+            break;
+        }
+    }
 }
 
 - (void)toolbarActionsForNodeArray:(NSArray *)nodeArray {
@@ -1666,6 +1678,14 @@
         actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }
     [self presentViewController:actionController animated:YES completion:nil];
+}
+
+- (IBAction)restoreTouchUpInside:(UIBarButtonItem *)sender {
+    for (MEGANode *node in self.selectedNodesArray) {        
+        [node mnz_restore];
+    }
+    
+    [self setTableViewEditing:NO animated:YES];
 }
 
 #pragma mark - UISearchBarDelegate

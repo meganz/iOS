@@ -33,6 +33,7 @@
 
 - (NSMutableArray *)mnz_parentTreeArray;
 - (NSString *)mnz_fileType;
+- (BOOL)mnz_isRestorable;
 
 #pragma mark - Versions
 
