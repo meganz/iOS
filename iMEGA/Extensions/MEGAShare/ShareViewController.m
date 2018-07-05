@@ -107,20 +107,7 @@
     
     self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     if (self.session) {
-        if ([self.sharedUserDefaults boolForKey:@"IsChatEnabled"]) {
-            if (![MEGASdkManager sharedMEGAChatSdk]) {
-                [MEGASdkManager createSharedMEGAChatSdk];
-            }
-            [[MEGALogger sharedLogger] enableChatlogs];
-            MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:self.session];
-            if (chatInit == MEGAChatInitError) {
-                MEGALogError(@"Init Karere with session failed");
-                [[MEGASdkManager sharedMEGAChatSdk] logout];
-            }
-        } else {
-            [[MEGALogger sharedLogger] enableSDKlogs];
-        }
-        
+        [self initChatAndStartLogging];
         [self fetchAttachments];
         
         [[LTHPasscodeViewController sharedUser] setDelegate:self];
@@ -177,6 +164,8 @@
     if (self.session) {
         if (self.loginRequiredNC) {
             [self.loginRequiredNC dismissViewControllerAnimated:YES completion:nil];
+            [self initChatAndStartLogging];
+            [self fetchAttachments];
         }
         if ([LTHPasscodeViewController doesPasscodeExist] && !self.passcodePresented) {
             [self presentPasscode];
@@ -247,6 +236,22 @@
 }
 
 #pragma mark - Login and Setup
+
+- (void)initChatAndStartLogging {
+    if ([self.sharedUserDefaults boolForKey:@"IsChatEnabled"]) {
+        if (![MEGASdkManager sharedMEGAChatSdk]) {
+            [MEGASdkManager createSharedMEGAChatSdk];
+        }
+        [[MEGALogger sharedLogger] enableChatlogs];
+        MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:self.session];
+        if (chatInit == MEGAChatInitError) {
+            MEGALogError(@"Init Karere with session failed");
+            [[MEGASdkManager sharedMEGAChatSdk] logout];
+        }
+    } else {
+        [[MEGALogger sharedLogger] enableSDKlogs];
+    }
+}
 
 - (void)requireLogin {
     // The user either needs to login or logged in before the current version of the MEGA app, so there is

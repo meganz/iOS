@@ -203,9 +203,9 @@
 }
 
 - (IBAction)sendAction:(UIBarButtonItem *)sender {
-    switch (self.sendMode) {
-        case SendModeCloud: {
-            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        switch (self.sendMode) {
+            case SendModeCloud: {
                 self.pendingAttachNodeOperations = (self.nodes.count * self.selectedGroupChatsMutableArray.count) + (self.nodes.count * self.selectedUsersMutableArray.count);
                 
                 MEGAChatAttachNodeRequestDelegate *chatAttachNodeRequestDelegate = [[MEGAChatAttachNodeRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
@@ -240,15 +240,15 @@
                 }
                 
                 [self dismissViewControllerAnimated:YES completion:nil];
+                
+                break;
             }
-
-            break;
+                
+            case SendModeShareExtension:
+                [self.sendToViewControllerDelegate sendToChats:self.selectedGroupChatsMutableArray andUsers:self.selectedUsersMutableArray];
+                
+                break;
         }
-            
-        case SendModeShareExtension:
-            [self.sendToViewControllerDelegate sendToChats:self.selectedGroupChatsMutableArray andUsers:self.selectedUsersMutableArray];
-            
-            break;
     }
 }
 
