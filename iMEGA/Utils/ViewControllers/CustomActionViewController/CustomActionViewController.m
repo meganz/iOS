@@ -236,8 +236,10 @@
                 
             case MEGAShareTypeAccessOwner:
                 if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeRubbishBin || self.displayMode == DisplayModeNodeInfo) {
-                    [actions addObject:[self actionShare]];
-                    [actions addObject:[self actionDownload]];
+                    if (self.displayMode != DisplayModeRubbishBin) {
+                        [actions addObject:[self actionShare]];
+                        [actions addObject:[self actionDownload]];
+                    }
                     if (self.displayMode != DisplayModeNodeInfo) {
                         [actions addObject:[self actionFileInfo]];
                     }
