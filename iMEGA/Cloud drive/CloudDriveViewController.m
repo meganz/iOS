@@ -450,15 +450,31 @@
     isSwipeEditing = YES;
     self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
     
-    UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:[self.tableView cellForRowAtIndexPath:indexPath]];
-        [self presentViewController:activityVC animated:YES completion:nil];
-        [self setTableViewEditing:NO animated:YES];
-    }];
-    shareAction.image = [UIImage imageNamed:@"shareGray"];
-    shareAction.backgroundColor = [UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1];
+    if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
+        MEGANode *restoreNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.restoreHandle];
+        if (restoreNode && ![[MEGASdkManager sharedMEGASdk] isNodeInRubbish:restoreNode]) {
+            UIContextualAction *restoreAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+                [node mnz_restore];
+                [self setTableViewEditing:NO animated:YES];
+            }];
+            restoreAction.image = [UIImage imageNamed:@"restore"];
+            restoreAction.backgroundColor = [UIColor colorWithRed:0 green:0.75 blue:0.65 alpha:1];
+            
+            return [UISwipeActionsConfiguration configurationWithActions:@[restoreAction]];
+        }
+    } else {
+        UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+            [self presentViewController:activityVC animated:YES completion:nil];
+            [self setTableViewEditing:NO animated:YES];
+        }];
+        shareAction.image = [UIImage imageNamed:@"shareGray"];
+        shareAction.backgroundColor = [UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1];
+        
+        return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
+    }
     
-    return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
+    return [UISwipeActionsConfiguration configurationWithActions:@[]];
 }
 
 #pragma clang diagnostic pop
@@ -1868,17 +1884,30 @@
             return nil;
         }
         
-        MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"shareGray"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:[self.tableView cellForRowAtIndexPath:indexPath]];
-            [self presentViewController:activityVC animated:YES completion:nil];
-            return YES;
-        }];
-        [shareButton iconTintColor:[UIColor whiteColor]];
-        
-        return @[shareButton];
-    } else {
-        return nil;
+        if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
+            MEGANode *restoreNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.restoreHandle];
+            if (restoreNode && ![[MEGASdkManager sharedMEGASdk] isNodeInRubbish:restoreNode]) {
+                MGSwipeButton *restoreButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"restore"] backgroundColor:[UIColor colorWithRed:0.0 green:0.75 blue:0.65 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+                    [node mnz_restore];
+                    return YES;
+                }];
+                [restoreButton iconTintColor:[UIColor whiteColor]];
+                
+                return @[restoreButton];
+            }
+        } else {
+            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"shareGray"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+                UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+                [self presentViewController:activityVC animated:YES completion:nil];
+                return YES;
+            }];
+            [shareButton iconTintColor:[UIColor whiteColor]];
+            
+            return @[shareButton];
+        }
     }
+    
+    return nil;
 }
 
 #pragma mark - CustomActionViewControllerDelegate
