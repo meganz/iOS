@@ -426,6 +426,11 @@
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView leadingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     isSwipeEditing = YES;
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+    
+    if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
+        return [UISwipeActionsConfiguration configurationWithActions:@[]];
+    }
+    
     self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
     
     UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
@@ -1871,14 +1876,17 @@
     self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
     
     if (direction == MGSwipeDirectionLeftToRight && [[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {
-        
-        MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor colorWithRed:0.0 green:0.75 blue:0.65 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-            [self downloadAction:nil];
-            return YES;
-        }];
-        [downloadButton iconTintColor:[UIColor whiteColor]];
-        
-        return @[downloadButton];
+        if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
+            return nil;
+        } else {
+            MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor colorWithRed:0.0 green:0.75 blue:0.65 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+                [self downloadAction:nil];
+                return YES;
+            }];
+            [downloadButton iconTintColor:[UIColor whiteColor]];
+            
+            return @[downloadButton];
+        }
     } else if (direction == MGSwipeDirectionRightToLeft) {
         if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) {
             return nil;
