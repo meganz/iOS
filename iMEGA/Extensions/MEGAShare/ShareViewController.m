@@ -30,9 +30,10 @@
 @interface ShareViewController () <MEGARequestDelegate, MEGATransferDelegate, MEGAChatRoomDelegate, LTHPasscodeViewControllerDelegate>
 
 @property (nonatomic) UIViewController *browserVC;
-@property (nonatomic) unsigned long pendingAssets;
-@property (nonatomic) unsigned long totalAssets;
-@property (nonatomic) unsigned long unsupportedAssets;
+@property (nonatomic) NSUInteger pendingAssets;
+@property (nonatomic) NSUInteger totalAssets;
+@property (nonatomic) NSUInteger unsupportedAssets;
+@property (nonatomic) NSUInteger alreadyInDestinationAssets;
 @property (nonatomic) float progress;
 
 @property (nonatomic) UINavigationController *loginRequiredNC;
@@ -470,7 +471,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     NSExtensionItem *content = self.extensionContext.inputItems[0];
     self.totalAssets = self.pendingAssets = content.attachments.count;
     self.progress = 0;
-    self.unsupportedAssets = 0;
+    self.unsupportedAssets = self.alreadyInDestinationAssets = 0;
 
     for (NSItemProvider *itemProvider in content.attachments) {
         if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypeImage]) {
@@ -764,6 +765,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             if (self.users || self.chats) {
                 [self performAttachNodeHandle:remoteNode.handle];
             } else {
+                self.alreadyInDestinationAssets++;
                 [self onePendingLess];
             }
         } else {
@@ -798,8 +800,13 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)alertIfNeededAndDismiss {
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
     [SVProgressHUD dismiss];
-    if (self.unsupportedAssets > 0) {
-        NSString *message = AMLocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
+    if (self.unsupportedAssets > 0 || self.alreadyInDestinationAssets > 0) {
+        NSString *message;
+        if (self.unsupportedAssets > 0) {
+            message = AMLocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
+        } else {
+            message = [NSString stringWithFormat:AMLocalizedString(@"filesAlreadyExistMessage", @"Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder"), self.alreadyInDestinationAssets];
+        }
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self dismissWithCompletionHandler:^{
