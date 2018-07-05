@@ -379,7 +379,7 @@
             }
             
             if (@available(iOS 10.0, *)) {
-                [self.megaCallManager endCall:call];
+                [self.megaProviderDelegate reportEndCall:call];
             }
             
             break;

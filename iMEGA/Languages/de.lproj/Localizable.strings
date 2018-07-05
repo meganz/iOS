@@ -1297,8 +1297,6 @@
 "autorenewableDescription"="Abonnements verlängern sich am Ende der laufenden Zahlungsperiode automatisch zum gleichen Preis und für die gleiche Dauer. Sie können das Abonnement bis zu 24 Stunden vor Fälligkeit der nächsten Zahlung in Ihren iTunes-Einstellungen stornieren: Gehen Sie in den App Store und loggen Sie sich (falls nötig) mit Ihrer Apple ID ein. Gehen Sie dann auf die Seite Ihres Benutzerkontos und scrollen Sie zur Abonnementverwaltung. Dort können Sie Ihr MEGA PRO-Abonnement auswählen, das Datum der nächsten Fälligkeit einsehen, auf ein anderes Paket wechseln und die automatische Verlängerung ein- und ausschalten.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
-/* A button title to revoke the access to an attachment in a chat. */
-"revoke"="Entfernen";
 /* Label in login screen to inform about the chat initialization proccess */
 "connecting"="Verbindung wird aufgebaut...";
 /* Inform user that there were unsupported assets in the share extension */

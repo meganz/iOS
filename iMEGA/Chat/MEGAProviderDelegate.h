@@ -13,5 +13,6 @@
 
 - (void)reportIncomingCall:(MEGAChatCall *)call user:(MEGAUser *)user;
 - (void)reportOutgoingCall:(MEGAChatCall *)call;
+- (void)reportEndCall:(MEGAChatCall *)call;
 
 @end

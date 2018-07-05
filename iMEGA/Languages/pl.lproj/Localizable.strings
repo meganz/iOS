@@ -1297,8 +1297,6 @@
 "autorenewableDescription"="Sukskrypcja odnawiania jest automatycznie po upływie terminu ważności konta, z zachowaniem identycznego okresu trwania oraz ceny. Możesz wyłączyć automatyczne odnawianie subskrypcji MEGA PRO nie poźniej niż 24 godziny przed terminem wygaśnięcia konta. Datę wygaśnięcia możesz znaleźć na stronach iTunes. Aby zmienić ustawienia subskrypcji, kliknij w App Store a następnie na dole ekranu kliknij \"Zobacz ID\". Zostaniesz przekierowany do strony gdzie na dole znajdziesz link \"Zarządzaj subskrypcjami\". Na tej stronie wybierz MEGA PRO a następnie zmień ustawienia.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Otwórz MEGA i zapisz się aby kontynuować";
-/* A button title to revoke the access to an attachment in a chat. */
-"revoke"="Odrzuć";
 /* Label in login screen to inform about the chat initialization proccess */
 "connecting"="Trwa łączenie...";
 /* Inform user that there were unsupported assets in the share extension */

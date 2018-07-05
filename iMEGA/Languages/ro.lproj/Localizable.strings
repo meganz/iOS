@@ -1297,8 +1297,6 @@
 "autorenewableDescription"="Abonamentele sunt reînnoite automat pentru perioade de abonare succesive de aceeaşi durată şi la acelaşi preţ ca şi perioada iniţială aleasă. Poţi dezactiva reînnoirea automată a abonamentului tău MEGA PRO nu mai târziu de 24 de ore înainte ca următoarea ta plată pentru abonament să se realizeze prin pagina de setări a contului iTunes. Pentru a gestiona abonamentele, clic pe pictograma App Store de pe telefon, conectează-te cu ID-ul Apple în partea de jos a paginii (dacă nu ai făcut deja acest lucru), iar apoi clic pe Afişaţi ID. Vei ajunge la pagina contului tău unde poţi să derula în jos pentru a gestiona abonamentele aplicaţiilor. De acolo poţi selecta abonamentul MEGA PRO şi să vezi data de reînnoire programată, alege un pachet de abonament diferit sau setează comutatorul on-off la off pentru a dezactiva reînnoirea automată a abonamentului.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Deschide MEGA şi autentifică-te pentru a continua";
-/* A button title to revoke the access to an attachment in a chat. */
-"revoke"="Revocă";
 /* Label in login screen to inform about the chat initialization proccess */
 "connecting"="Se conectează…";
 /* Inform user that there were unsupported assets in the share extension */
