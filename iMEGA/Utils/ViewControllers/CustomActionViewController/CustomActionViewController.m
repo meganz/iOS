@@ -180,9 +180,8 @@
     MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node];
     
     NSMutableArray *actions = [NSMutableArray new];
-        
-    MEGANode *restoreNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.node.restoreHandle];
-    if (restoreNode && ![[MEGASdkManager sharedMEGASdk] isNodeInRubbish:restoreNode] && [[MEGASdkManager sharedMEGASdk] isNodeInRubbish:self.node]) {
+    
+    if (self.node.mnz_isRestorable) {
         [actions addObject:[self actionRestoreNode]];
     }
     
