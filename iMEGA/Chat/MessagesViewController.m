@@ -343,30 +343,34 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     NSString *chatRoomTitle = self.chatRoom.title ? self.chatRoom.title : @"";
     NSString *chatRoomState;
     
-    MEGAChatConnection connectionState = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
-    switch (connectionState) {
-        case MEGAChatConnectionOffline:
-        case MEGAChatConnectionInProgress:            
-        case MEGAChatConnectionLogging:
-            chatRoomState = AMLocalizedString(@"connecting", nil);
-            self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:MEGAChatStatusOffline];
-            
-            break;
-            
-        case MEGAChatConnectionOnline:
-            if (self.chatRoom.isGroup) {
-                if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
-                    chatRoomState = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
-                }
-            } else {
-                if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
-                    chatRoomState = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
+    if (self.chatRoom.archived) {
+        chatRoomState = AMLocalizedString(@"archived", @"Title of flag of archived chats.");
+    } else {
+        MEGAChatConnection connectionState = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
+        switch (connectionState) {
+            case MEGAChatConnectionOffline:
+            case MEGAChatConnectionInProgress:
+            case MEGAChatConnectionLogging:
+                chatRoomState = AMLocalizedString(@"connecting", nil);
+                self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:MEGAChatStatusOffline];
+                
+                break;
+                
+            case MEGAChatConnectionOnline:
+                if (self.chatRoom.isGroup) {
+                    if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
+                        chatRoomState = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
+                    }
                 } else {
-                    chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
-                    self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+                    if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
+                        chatRoomState = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
+                    } else {
+                        chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+                        self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+                    }
                 }
-            }
-            break;
+                break;
+        }
     }
     
     if (chatRoomState) {
