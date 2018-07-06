@@ -300,6 +300,7 @@
 		77F1DBE52056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F1DBE42056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m */; };
 		77F43DD92034637300AE4F42 /* UICollectionView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */; };
 		830EF9A420062F3800FAA947 /* DevicePermissionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */; };
+		831FBEA220EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 831FBEA120EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m */; };
 		832E1025202B09AE00BDD30F /* NodeActionCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E1023202B09AE00BDD30F /* NodeActionCollectionViewCell.m */; };
 		832E1026202B09AE00BDD30F /* NodeActionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832E1024202B09AE00BDD30F /* NodeActionCollectionViewCell.xib */; };
 		832E102A202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E1028202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.m */; };
@@ -1181,6 +1182,8 @@
 		77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+MNZCategory.m"; sourceTree = "<group>"; };
 		830EF9A220062F3800FAA947 /* DevicePermissionsHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DevicePermissionsHelper.h; sourceTree = "<group>"; };
 		830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DevicePermissionsHelper.m; sourceTree = "<group>"; };
+		831FBEA020EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAArchiveChatRequestDelegate.h; sourceTree = "<group>"; };
+		831FBEA120EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAArchiveChatRequestDelegate.m; sourceTree = "<group>"; };
 		832E1022202B09AE00BDD30F /* NodeActionCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeActionCollectionViewCell.h; sourceTree = "<group>"; };
 		832E1023202B09AE00BDD30F /* NodeActionCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeActionCollectionViewCell.m; sourceTree = "<group>"; };
 		832E1024202B09AE00BDD30F /* NodeActionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NodeActionCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -2902,6 +2905,8 @@
 				5B222A73205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m */,
 				836E74C22099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.h */,
 				836E74C32099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m */,
+				831FBEA020EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.h */,
+				831FBEA120EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m */,
 			);
 			name = Chat;
 			path = API/Chat;
@@ -3605,6 +3610,7 @@
 				7754ED9920B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m in Sources */,
 				4131997C1BD7BD5D002CD6EA /* DTTimePeriodGroup.m in Sources */,
 				830EF9A420062F3800FAA947 /* DevicePermissionsHelper.m in Sources */,
+				831FBEA220EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m in Sources */,
 				77F1DBDC2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.m in Sources */,
 				5BDE180C1F500EE000CD9F82 /* MyAccountBaseViewController.m in Sources */,
 				41EAAE4D1D06B49400622FAF /* UICollectionView+CTAssetsPickerController.m in Sources */,
