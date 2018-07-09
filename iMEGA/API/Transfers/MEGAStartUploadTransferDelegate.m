@@ -3,9 +3,9 @@
 
 @interface MEGAStartUploadTransferDelegate ()
 
-@property (nonatomic, copy) void (^totalBytes)(long long totalBytes);
-@property (nonatomic, copy) void (^progress)(float transferredBytes, float totalBytes);
-@property (nonatomic, copy) void (^completion)(long long transferTotalBytes);
+@property (nonatomic, copy) void (^totalBytes)(MEGATransfer *transfer);
+@property (nonatomic, copy) void (^progress)(MEGATransfer *transfer);
+@property (nonatomic, copy) void (^completion)(MEGATransfer *transfer);
 
 @end
 
@@ -13,7 +13,16 @@
 
 #pragma mark - Initialization
 
-- (instancetype)initToUploadToChatWithTotalBytes:(void (^)(long long totalBytes))totalBytes progress:(void (^)(float transferredBytes, float totalBytes))progress completion:(void (^)(long long totalBytes))completion {
+- (instancetype)initWithCompletion:(void (^)(MEGATransfer *transfer))completion {
+    self = [super init];
+    if (self) {
+        _completion = completion;
+    }
+    
+    return self;
+}
+
+- (instancetype)initToUploadToChatWithTotalBytes:(void (^)(MEGATransfer *transfer))totalBytes progress:(void (^)(MEGATransfer *transfer))progress completion:(void (^)(MEGATransfer *transfer))completion {
     self = [super init];
     if (self) {
         _totalBytes = totalBytes;
@@ -30,13 +39,13 @@
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
     if (self.totalBytes) {
-        self.totalBytes(transfer.totalBytes.longLongValue);
+        self.totalBytes(transfer);
     }
 }
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     if (self.progress) {
-         self.progress(transfer.transferredBytes.floatValue, transfer.totalBytes.floatValue);
+         self.progress(transfer);
     }
 }
 
@@ -44,7 +53,7 @@
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
     if (self.completion) {
-        self.completion(transfer.totalBytes.longLongValue);
+        self.completion(transfer);
     }
     
     if (error.type) return;

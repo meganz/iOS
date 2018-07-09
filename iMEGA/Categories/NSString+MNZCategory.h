@@ -2,6 +2,7 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM (NSInteger, MEGAChatStatus);
+typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 
 @interface NSString (MNZCategory)
 
@@ -12,6 +13,15 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 @property (nonatomic, readonly, getter=mnz_isVideoPathExtension) BOOL mnz_videoPathExtension;
 @property (nonatomic, readonly, getter=mnz_isMultimediaPathExtension) BOOL mnz_multimediaPathExtension;
 
+#pragma mark - appData
+
+- (NSString *)mnz_appDataToSaveCameraUploadsCount:(NSUInteger)operationCount;
+- (NSString *)mnz_appDataToSaveInPhotosApp;
+- (NSString *)mnz_appDataToAttachToChatID:(uint64_t)chatId;
+- (NSString *)mnz_appDataToSaveCoordinates:(NSString *)coordinates;
+
+#pragma mark - Utils
+
 + (NSString *)mnz_stringWithoutUnitOfComponents:(NSArray *)componentsSeparatedByStringArray;
 + (NSString *)mnz_stringWithoutCountOfComponents:(NSArray *)componentsSeparatedByStringArray;
 
@@ -20,6 +30,7 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 + (NSString *)mnz_stringByMissedAudioCalls:(NSInteger)missedAudioCalls andMissedVideoCalls:(NSInteger)missedVideoCalls;
 
 + (NSString *)chatStatusString:(MEGAChatStatus)onlineStatus;
++ (NSString *)mnz_stringByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason userHandle:(uint64_t)userHandle duration:(NSInteger)duration;
 
 - (BOOL)mnz_isValidEmail;
 
@@ -28,6 +39,7 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 - (NSString *)mnz_removeWebclientFormatters;
 
 + (NSString *)mnz_stringFromTimeInterval:(NSTimeInterval)interval;
++ (NSString *)mnz_stringFromCallDuration:(NSInteger)duration;
 
 - (NSString*)SHA256;
 
@@ -35,6 +47,7 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 - (BOOL)mnz_isPureEmojiString;
 - (NSInteger)mnz_emojiCount;
 
+- (NSString *)mnz_coordinatesOfPhotoOrVideo;
 + (NSString *)mnz_base64FromBase64URLEncoding:(NSString *)base64URLEncondingString;
 
 @end

@@ -17,6 +17,7 @@
 #import "MEGASdk.h"
 #import "MEGASdkManager.h"
 #import "MEGATransferDelegate.h"
+#import "NSString+MNZCategory.h"
 
 #define kAppKey @"EVtjzb7R"
 #define kUserAgent @"MEGAiOS"
@@ -454,7 +455,7 @@
     NSString *imageName = [NSString stringWithFormat:@"%@.%@", [formatter stringFromDate:[NSDate date]], isPNG ? @"png" : @"jpg"];
     NSString *tempPath = [storagePath stringByAppendingPathComponent:imageName];
 
-    if (isPNG ? [UIImagePNGRepresentation(image) writeToFile:tempPath atomically:YES] : [UIImageJPEGRepresentation(image, 1) writeToFile:tempPath atomically:YES]) {
+    if (isPNG ? [UIImagePNGRepresentation(image) writeToFile:tempPath atomically:YES] : [UIImageJPEGRepresentation(image, 0.75) writeToFile:tempPath atomically:YES]) {
         [self smartUploadLocalPath:tempPath parent:parentNode];
     } else {
         MEGALogError(@"Write image failed:\n- At path: %@\n- With error: %@", tempPath, error);
@@ -469,8 +470,15 @@
     
     if ([data class] == NSURL.class) {
         NSURL *url = (NSURL *)data;
-        NSString *path = [url path];
-        NSString *tempPath = [storagePath stringByAppendingPathComponent:[path lastPathComponent]];
+        NSString *path = url.path;
+        NSString *lastPathComponent;
+        NSMutableArray<NSString *> *fileNameComponents = [[path.lastPathComponent componentsSeparatedByString:@"."] mutableCopy];
+        if (fileNameComponents.count > 1) {
+            NSString *extension = fileNameComponents.lastObject.lowercaseString;
+            [fileNameComponents replaceObjectAtIndex:(fileNameComponents.count - 1) withObject:extension];
+        }
+        lastPathComponent = [fileNameComponents componentsJoinedByString:@"."];
+        NSString *tempPath = [storagePath stringByAppendingPathComponent:lastPathComponent];
         
         if ([fileManager copyItemAtPath:path toPath:tempPath error:&error]) {
             [self smartUploadLocalPath:tempPath parent:parentNode];
@@ -532,7 +540,8 @@
         [[NSFileManager defaultManager] removeItemAtPath:localPath error:nil];
     } else {
         // The file is not in MEGA.
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localPath parent:parentNode appData:nil isSourceTemporary:YES delegate:self];
+        NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localPath.mnz_coordinatesOfPhotoOrVideo];
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localPath parent:parentNode appData:appData isSourceTemporary:YES delegate:self];
     }
 }
 

@@ -89,7 +89,7 @@
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Criar conta";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="E-mail e/ou senha inválidos. Por favor, tente novamente.";
+"invalidMailOrPassword"="Email e/ou senha inválidos. Por favor, tente novamente.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Você tentou entrar muitas vezes. Por favor, espere até %@ e tente novamente.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -99,7 +99,7 @@
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Digite um email válido";
 /* Add contacts and share dialog error message when user try to add wrong email address */
-"theEmailAddressFormatIsInvalid"="O formato do e-mail é inválido";
+"theEmailAddressFormatIsInvalid"="O formato do email é inválido";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="Digite uma senha válida";
 /* Hint text to suggest that the user has to write his email */
@@ -197,15 +197,15 @@
 /* Button title shown in empty views when you can 'Add files' */
 "addFiles"="Adicionar arquivos";
 /* Title shown when you make a search and there is 'No Results' */
-"noResults"="Sem resultados";
+"noResults"="Não há resultados";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Esvaziar a lixeira";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Nenhum arquivo salvo para uso offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="Sem contatos";
+"contactsEmptyState_title"="Não há contatos";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="Nenhuma entrada de pastas compartilhadas";
+"noIncomingSharedItemsEmptyState_text"="Não há pastas compartilhadas com você";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="Não há pastas compartilhadas por você";
 /* Title of Contacts requests section */
@@ -305,11 +305,11 @@
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
 "filesAlreadyExistMessage"="%d arquivos selecionados já foram enviados para esta pasta.";
 /* Message shown when a upload starts */
-"uploadStarted_Message"="Carregamento iniciado";
+"uploadStarted_Message"="Upload iniciado";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
-"fileMovedToTheRubbishBin_alertTitle"="Este arquivo foi movido para o Lixo Eletronico";
+"fileMovedToTheRubbishBin_alertTitle"="Este arquivo foi movido para a Lixeira";
 /* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
-"folderMovedToTheRubbishBin_alertTitle"="Esta pasta foi movida para o Lixo";
+"folderMovedToTheRubbishBin_alertTitle"="Esta pasta foi movida para a Lixeira";
 /* Alert title shown when you are seeing the details of a file and you moved it from another location */
 "fileMoved_alertTitle"="Este arquivo foi movido";
 /* Alert title shown when you are seeing the details of a folder and you moved it from another location */
@@ -525,7 +525,7 @@
 /* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
 "xSelected"="%d selecionados";
 /* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
-"cameraUploadsWillBeDisabled"="Carregamentos de câmera será desativada";
+"cameraUploadsWillBeDisabled"="Uploads da câmera será desativado";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
 "cameraUploadsDisabled_alertView_message"="Camera Uploads será desativada, porque você não tem espaço suficiente no seu dispositivo";
 /* Title of the Offline section */
@@ -583,9 +583,9 @@
 /* Success message shown when a contact has been invited */
 "requestSent"="Solicitação enviada";
 /* Add contacts and share dialog error message when user try to add your own email address */
-"noNeedToAddYourOwnEmailAddress"="Não é necessário adicionar seu próprio e-mail";
+"noNeedToAddYourOwnEmailAddress"="Não é necessário adicionar o seu próprio email";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="Você já tem um contato com este e-mail";
+"alreadyHaveAContactWithThatEmailAddress"="Você já tem um contato com este email";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="O usuário [X] foi convidado, e aparecerá na sua lista de contatos assim que aceitar.";
 /* Success message shown when some contacts have been invited */
@@ -605,7 +605,7 @@
 /* Label shown when a contact request is pending */
 "pending"="Pendente";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
-"contactWithoutEmail"="Este contato não tem e-mail";
+"contactWithoutEmail"="Este contato não tem um email";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Sair";
 /* Alert message shown when the user tap on the leave share action for one inshare */
@@ -655,7 +655,7 @@
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Por favor, escreva seu comentário aqui:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
-"noEmailAccountConfigured"="Não tem conta de e-mail configurada no seu dispositivo";
+"noEmailAccountConfigured"="Não há uma conta de email configurada no seu dispositivo";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Política de privacidade";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
@@ -669,7 +669,7 @@
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Opções";
 /* Option title to enable upload videos with Camera Uploads */
-"uploadVideosLabel"="Carregamento de vídeos";
+"uploadVideosLabel"="Upload de vídeos";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Somente quando estiver carregando";
 /* Footer text to explain the Camera Uploads functionality */
@@ -716,12 +716,18 @@
 "transfersSectionFooter"="Ative essa opção somente se a sua transferência não começar. Em circunstâncias normais, HTTP é suficiente, pois todas as transferências já estão criptografadas.";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Imagem e vídeo de downloads";
+/* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
+"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Arquivos multimídia criados no aplicativo";
 /* Section title where you can enable the option 'Save images in gallery' */
 "saveImagesInGallery"="Guardar imagens na galeria";
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Salvar vídeos na galeria";
+/* Section title where you can enable the option 'Save media in gallery' */
+"saveMediaInGallery"="Salvar arquivos multimídia na galeria";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Salvar iOS imagens compatíveis e vídeos na galeria do seu dispositivo (Nota: As imagens e vídeos não serão salvas no off-line).";
+/* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
+"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Ative esta opção para salvar na galeria as fotos e os vídeos criados no aplicativo";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Atualmente usando %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -1056,7 +1062,7 @@
 /* Chat section header */
 "chat"="Chat";
 /* Empty Conversations section */
-"noConversations"="Sem conversações";
+"noConversations"="Não há conversas";
 /* Empty Conversations description */
 "noConversationsDescription"="Converse com segurança com os seus contatos usando criptografia de ponta a ponta";
 /* Title show when the chat is disabled */
@@ -1091,6 +1097,10 @@
 "addParticipants"="Adicionar participantes";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
+/* Title used in settings that enables the generation of link previews in the chat */
+"richUrlPreviews"="Visualização de URLs avançadas";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"richPreviewsFooter"="Aprimore a sua experiência no MEGAchat. O conteúdo de URLs será recuperado sem criptografia de ponta a ponta.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Chamadas de voz e vídeo";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1221,6 +1231,18 @@
 "done"="OK";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Enviar arquivos";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"enableRichUrlPreviews"="Ativar visualização de URLs avançadas";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"alwaysAllow"="Permitir sempre";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"notNow"="Agora não";
+/* */
+"never"="Nunca";
+/* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
+"richPreviewsConfirmation"="Você vai desativar permanentemente a visualização de URL avançada. Você pode reativá-la nas suas configurações. Você quer prosseguir?";
+/* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
+"removePreview"="Remover visualização";
 /* */
 "warning"="Aviso";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
@@ -1375,7 +1397,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="Auto-aceitar";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="Os contatos que escaneiam o seu código QR serão automaticamente adicionados à sua lista de contatos.";
+"autoAcceptFooter"="Os contatos que escanearem o seu código QR serão automaticamente adicionados à sua lista de contatos.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="Resetar código QR";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1480,3 +1502,39 @@
 "continueOrRestartVideoMessage"="%1$s continuará a partir de %2$s";
 /*  */
 "resume"="Continuar";
+/* Title to preview document */
+"previewContent"="Visualização do conteúdo";
+/* Title of the notification for a missed call */
+"missedCall"="Chamada perdida";
+/* When an outgoing call of user A with user B had been rejected by user B */
+"callWasRejected"="A chamada foi rejeitada";
+/* When an active call of user A with user B had cancelled */
+"callWasCancelled"="A chamada foi cancelada";
+/* When an active call of user A with user B had not answered */
+"callWasNotAnswered"="A chamada não foi respondida";
+/* When an active call of user A with user B had failed */
+"callFailed"="Call failed";
+/* When an active call of user A with user B had ended */
+"callEnded"="Call ended.";
+/* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
+"duration"="Duração: %@";
+/* */
+"xSeconds"="%d segundos";
+/* */
+"1Second"="1 segundo";
+/* */
+"1Hour"="1 hora";
+/* */
+"xHours"="%d horas";
+/* */
+"1Hour1Minute"="1 hora, 1 minuto";
+/* */
+"1HourxMinutes"="1 hora, %d minutos";
+/* */
+"xHours1Minute"="%d horas, 1 minuto";
+/* */
+"xHoursxMinutes"="%1$d horas, %2$d minutos";
+/* Alert title shown when users try to stream an unsupported audio/video file */
+"fileNotSupported"="Arquivo não suportado";
+/* Alert message shown when users try to stream an unsupported audio/video file */
+"message_fileNotSupported"="Você pode salvar o arquivo para uso offline e abri-lo em um aplicativo compatível.";

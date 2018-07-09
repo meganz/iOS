@@ -716,12 +716,18 @@
 "transfersSectionFooter"="Schakel deze optie alleen in als uw transfers niet starten. In normale omstandigheden is HTTP voldoende als alle transfers al zijn gecodeerd.";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Foto en video downloads";
+/* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
+"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Media opgenomen vanuit de app";
 /* Section title where you can enable the option 'Save images in gallery' */
 "saveImagesInGallery"="Bewaar afbeeldingen in galerij";
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Bewaar video's in galerij";
+/* Section title where you can enable the option 'Save media in gallery' */
+"saveMediaInGallery"="Media opslaan in gallerij";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Bewaar iOS compatible afbeeldingen en video's in de galerij van uw apparaat (Let op: afbeeldingen en video's worden niet in Offline opgeslagen).";
+/* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
+"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Deze optie inschakelen om gemaakte foto's en opgenomen video's op te slaan vanuit de app in de galerij";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Momenteel %s in gebruik";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -1091,6 +1097,10 @@
 "addParticipants"="Deelnemers toevoegen";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
+/* Title used in settings that enables the generation of link previews in the chat */
+"richUrlPreviews"="Rijke URL weergave";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"richPreviewsFooter"="Verbeter de MEGAchat ervaring. URL inhoud wordt binnengehaald zonder eind-tot-eind codering.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Spraak en Video oproepen";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1221,6 +1231,18 @@
 "done"="Voltooid";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Verzend bestanden";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"enableRichUrlPreviews"="Rijke URL weergave inschakelen";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"alwaysAllow"="Altijd Toestaan";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"notNow"="Niet Nu";
+/* */
+"never"="Nooit";
+/* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
+"richPreviewsConfirmation"="U schakelt rijke URL weergave permanent uit. U kunt rijke URL weergave opnieuw inschakelen in uw instellingen. Wilt u doorgaan?";
+/* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
+"removePreview"="Weergave verwijderen";
 /* */
 "warning"="Waarschuwing";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
@@ -1349,7 +1371,7 @@
 "generalDescriptionParagraph5"="PRO LITE abonnement: €4.99 (US$4.99) per maand of €49.99 (US$49.99) per jaar biedt u 200 GB aan opslag ruimte en 1 TB aan overdracht tegoed per maand.\nPRO I abonnement: €9.99 (US$9.99) per maand of €99.99 (US$99.99) per jaar biedt u 1 TB aan opslag ruimte en 2 TB aan overdracht tegoed per maand.\nPRO II abonnement: €19.99 (US$19.99) per maand of €199.99 (US$199.99) per jaar biedt u 4 TB aan opslag ruimte en 8 TB aan overdracht tegoed per maand.\nPRO III abonnement: €29.99 (US$29.99) per maand of €299.99 (US$299.99) per jaar biedt u 8 TB aan opslag ruimte en 16 TB aan overdracht tegoed per maand.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Voor meer info, kom naar onze website: https://mega.nz/\nAlgemene Voorwaarden: https://mega.nz/terms\nGeheimhoudingsbeleid: https://mega.nz/privacy";
+"generalDescriptionParagraph6"="Voor meer informatie, controleer onze website: https://mega.nz/\nAlgemene Voorwaarden: https://mega.nz/terms\nGeheimhouding Beleid: https://mega.nz/privacy";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="Bellen...";
 /* Notification text body shown when you have missed one audio call */
@@ -1443,7 +1465,7 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="Herinnert u zich uw wachtwoord?";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="Door MEGA's coderings-technologie bent u niet in staat uw wachtwoord te resetten zonder gegevens verlies. Zorg ervoor dat u uw wachtwoord onthoud. ";
+"remindPasswordText"="Door MEGA's coderings-technologie bent u niet in staat uw wachtwoord te resetten zonder gegevens verlies. Zorg ervoor dat u uw wachtwoord onthoud.";
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Voordat u uitlogt raden we u aan uw Herstelsleutel te exporteren naar een veilige plek. Merk op dat u uw wachtwoord niet kunt resetten als u het vergeet.";
 /* Text next to a toggle that if enabled won't appear again */
@@ -1463,7 +1485,7 @@
 /* Title to confirm that you want to logout */
 "proceedToLogout"="Doorgaan met uitloggen";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="U staat op het punt om uit te loggen, test uw wachtwoord om er zeker van te zijn dat u het onthoudt. Als u uw wachtwoord verliest, verliest u toegang tot uw MEGA gegevens. ";
+"testPasswordLogoutText"="U staat op het punt om uit te loggen, test uw wachtwoord om er zeker van te zijn dat u het onthoudt. Als u uw wachtwoord verliest, verliest u toegang tot uw MEGA gegevens.";
 /* state previous to import a file */
 "loading"="Laden...";
 /*   */
@@ -1480,3 +1502,39 @@
 "continueOrRestartVideoMessage"="%1$s wordt hervat bij %2$s";
 /*  */
 "resume"="Doorgaan";
+/* Title to preview document */
+"previewContent"="Inhoud Weergeven";
+/* Title of the notification for a missed call */
+"missedCall"="Gemiste oproep";
+/* When an outgoing call of user A with user B had been rejected by user B */
+"callWasRejected"="Oproep was geweigerd";
+/* When an active call of user A with user B had cancelled */
+"callWasCancelled"="Oproep was geannuleerd";
+/* When an active call of user A with user B had not answered */
+"callWasNotAnswered"="Oproep was niet beantwoord";
+/* When an active call of user A with user B had failed */
+"callFailed"="Call failed";
+/* When an active call of user A with user B had ended */
+"callEnded"="Call ended.";
+/* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
+"duration"="Duur: %@";
+/* */
+"xSeconds"="%d seconden";
+/* */
+"1Second"="1 seconde";
+/* */
+"1Hour"="1 uur";
+/* */
+"xHours"="%d uren";
+/* */
+"1Hour1Minute"="1 uur, 1 minuut";
+/* */
+"1HourxMinutes"="1 uur, %d minuten";
+/* */
+"xHours1Minute"="%d uren, 1 minuut";
+/* */
+"xHoursxMinutes"="%1$d uren, %2$d minuten";
+/* Alert title shown when users try to stream an unsupported audio/video file */
+"fileNotSupported"="Bestand niet ondersteund";
+/* Alert message shown when users try to stream an unsupported audio/video file */
+"message_fileNotSupported"="U kunt het opslaan voor Offline en het openen in een bestaanbare app.";
