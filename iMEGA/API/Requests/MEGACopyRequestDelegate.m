@@ -5,7 +5,7 @@
 
 @interface MEGACopyRequestDelegate ()
 
-@property (nonatomic, copy) void (^completion)(void);
+@property (nonatomic, copy) void (^completion)(MEGARequest *request);
 
 @end
 
@@ -13,7 +13,7 @@
 
 #pragma mark - Initialization
 
-- (instancetype)initToAttachToChatWithCompletion:(void (^)(void))completion {
+- (instancetype)initWithCompletion:(void (^)(MEGARequest *request))completion {
     self = [super init];
     if (self) {
         _completion = completion;
@@ -37,7 +37,7 @@
     }
     
     if (self.completion) {
-        self.completion();
+        self.completion(request);
     }
 }
 

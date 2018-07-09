@@ -1542,3 +1542,5 @@
 "fileNotSupported"="File not supported";
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
+/* Success message shown after forwarding messages to other chats */
+"messagesSent"="Messages sent";
