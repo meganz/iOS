@@ -810,6 +810,7 @@
             if (self.isArchivedChatsRowVisible) {
                 if (indexPath.section == 0) {
                     ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"archivedChatsCell" forIndexPath:indexPath];
+                    cell.avatarImageView.image = [UIImage imageNamed:@"archiveChat"];
                     cell.chatTitle.text = AMLocalizedString(@"archivedChats", @"Title of archived chats button");
                     cell.chatLastMessage.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.archivedChatListItemList.size];
                     return cell;
