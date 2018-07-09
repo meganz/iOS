@@ -7,6 +7,7 @@
 #import "MEGASdkManager.h"
 #import "MEGANode+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 
 @interface SaveToCameraRollActivity () <MEGATransferDelegate>
 
@@ -51,7 +52,7 @@
         downloadsDirectory = [downloadsDirectory stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
         NSString *offlineNameString = [[MEGASdkManager sharedMEGASdkFolder] escapeFsIncompatible:self.node.name];
         NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
-        [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:localPath appData:@"SaveInPhotosApp" delegate:self];
+        [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp] delegate:self];
     }
 }
 

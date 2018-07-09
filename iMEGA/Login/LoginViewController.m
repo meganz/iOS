@@ -195,7 +195,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"CreateAccountStoryboardSegueID"] && [sender isKindOfClass:[NSString class]]) {
-        CreateAccountViewController *createAccountVC = (CreateAccountViewController *)segue.destinationViewController;
+        MEGANavigationController *createAccountNC = (MEGANavigationController *)segue.destinationViewController;
+        CreateAccountViewController *createAccountVC = (CreateAccountViewController *)createAccountNC.childViewControllers.firstObject;
         [createAccountVC setEmailString:sender];
     }
 }

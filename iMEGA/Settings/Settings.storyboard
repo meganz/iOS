@@ -1347,7 +1347,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="" footerTitle="Currently using 256 MB" id="HIb-nR-Kap">
+                            <tableViewSection headerTitle="" footerTitle="Currently using 256 MB" id="HIb-nR-Kap" userLabel="Clear cache">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AdvancedCell" textLabel="ogF-KK-8A5" style="IBUITableViewCellStyleDefault" id="lD2-qj-pj2" userLabel="Clear Cache Table View Cell">
                                         <rect key="frame" x="0.0" y="139.5" width="375" height="44"/>
@@ -1389,7 +1389,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="TRANSFERS" id="Omu-b7-TCb" userLabel="useHttpsOnly">
+                            <tableViewSection headerTitle="TRANSFERS" id="Omu-b7-TCb" userLabel="Transfers">
                                 <string key="footerTitle">Enable this option only if your transfers don't start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</string>
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="NgY-Fi-hpk" userLabel="Don't use HTTP Table View Cell">
@@ -1519,10 +1519,54 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection id="Aud-92-mag">
+                            <tableViewSection footerTitle="Enable this option to save photos taken and videos recorded from within the app to the gallery" id="4rI-FB-rsU" userLabel="Save media to gallery">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="932-md-qrY" userLabel="Save to gallery Table View Cell">
+                                        <rect key="frame" x="0.0" y="674" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="932-md-qrY" id="uRA-az-Dr6">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="uU3-hV-B7S" userLabel="Save to Gallery Switch">
+                                                    <rect key="frame" x="311" y="6" width="51" height="31"/>
+                                                    <color key="onTintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="mediaInGallerySwitchChanged:" destination="Zqt-Yf-u7D" eventType="valueChanged" id="kcF-MB-P4N"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Save media in gallery" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4YB-6E-Htm" userLabel="Save to Galllery">
+                                                    <rect key="frame" x="15" y="11" width="288" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="uU3-hV-B7S" secondAttribute="trailing" constant="15" id="78Q-L2-bM8"/>
+                                                <constraint firstItem="uU3-hV-B7S" firstAttribute="leading" secondItem="4YB-6E-Htm" secondAttribute="trailing" constant="8" id="N5m-Lm-xvX"/>
+                                                <constraint firstItem="4YB-6E-Htm" firstAttribute="leading" secondItem="uRA-az-Dr6" secondAttribute="leading" constant="15" id="Q9A-l7-MwD"/>
+                                                <constraint firstItem="4YB-6E-Htm" firstAttribute="trailing" secondItem="uRA-az-Dr6" secondAttribute="trailingMargin" id="Wp3-Kr-sJ5"/>
+                                                <constraint firstItem="4YB-6E-Htm" firstAttribute="top" secondItem="uRA-az-Dr6" secondAttribute="topMargin" constant="3" id="YXj-as-wj3"/>
+                                                <constraint firstItem="uU3-hV-B7S" firstAttribute="top" secondItem="uRA-az-Dr6" secondAttribute="topMargin" constant="-2" id="eF4-sD-S57"/>
+                                                <constraint firstItem="4YB-6E-Htm" firstAttribute="leading" secondItem="uRA-az-Dr6" secondAttribute="leadingMargin" constant="15" id="emM-vt-ezt"/>
+                                                <constraint firstItem="uU3-hV-B7S" firstAttribute="trailing" secondItem="uRA-az-Dr6" secondAttribute="trailingMargin" id="peN-Di-yNX"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="Wp3-Kr-sJ5"/>
+                                                    <exclude reference="emM-vt-ezt"/>
+                                                    <exclude reference="peN-Di-yNX"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="Aud-92-mag" userLabel="Cancel account">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AdvancedCell" textLabel="Cab-ov-Gol" style="IBUITableViewCellStyleDefault" id="v47-Zp-rZ5" userLabel="Clear Offline Files Table View Cell">
-                                        <rect key="frame" x="0.0" y="674" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="774" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="v47-Zp-rZ5" id="Zjj-Ay-Iax">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -1556,10 +1600,10 @@
                         <outlet property="dontUseHttpLabel" destination="1kL-0h-YiN" id="dTh-da-9fl"/>
                         <outlet property="emptyRubbishBinLabel" destination="c4p-Ce-HHU" id="BpO-vs-BwL"/>
                         <outlet property="photosSwitch" destination="kXr-NU-yFc" id="pMD-zN-OWf"/>
+                        <outlet property="saveMediaInGalleryLabel" destination="4YB-6E-Htm" id="EXR-mc-Kl2"/>
+                        <outlet property="saveMediaInGallerySwitch" destination="uU3-hV-B7S" id="2vf-HH-H6L"/>
                         <outlet property="savePhotosLabel" destination="gFD-P4-mTY" id="tda-4j-GxT"/>
-                        <outlet property="savePhotosTableViewCell" destination="qCA-HQ-nS1" id="JXc-6u-cVc"/>
                         <outlet property="saveVideosLabel" destination="IIQ-d9-Fdl" id="r3m-el-iaA"/>
-                        <outlet property="saveVideosTableViewCell" destination="2uJ-Cf-XIf" id="I5y-gX-gS8"/>
                         <outlet property="useHttpsOnlySwitch" destination="Vyq-Yn-Bxz" id="eDN-vd-W8p"/>
                         <outlet property="videosSwitch" destination="7Cc-dW-hDg" id="B5Z-6l-2hG"/>
                     </connections>
@@ -1823,16 +1867,16 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="VOICE AND VIDEO CALLS" id="vGa-mh-a18">
+                            <tableViewSection footerTitle="Enhance the MEGAchat experience. URL content will be retrieved without end-to-end encryption." id="vGa-mh-a18">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="cL9-c1-YGJ" userLabel="Use mobile data Table View Cell">
-                                        <rect key="frame" x="0.0" y="191" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="163" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cL9-c1-YGJ" id="IfR-nI-PY0">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Use mobile data" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fkD-bH-uof">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Rich URL previews" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fkD-bH-uof">
                                                     <rect key="frame" x="15" y="15" width="288" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="lFP-zG-Drn"/>
@@ -1845,6 +1889,7 @@
                                                     <rect key="frame" x="311" y="9" width="51" height="31"/>
                                                     <color key="onTintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
+                                                        <action selector="richPreviewsValueChanged:" destination="er2-Fn-lfg" eventType="valueChanged" id="84c-Yn-mqx"/>
                                                         <action selector="useMobileDataValueChanged:" destination="er2-Fn-lfg" eventType="valueChanged" id="um5-gF-gwL"/>
                                                     </connections>
                                                 </switch>
@@ -1868,6 +1913,51 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="VOICE AND VIDEO CALLS" id="OQd-6y-cBj">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="If6-4l-Djd" userLabel="Use mobile data Table View Cell">
+                                        <rect key="frame" x="0.0" y="291" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="If6-4l-Djd" id="Cr7-TZ-sYO">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Use mobile data" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QIc-tp-7cM">
+                                                    <rect key="frame" x="15" y="15" width="288" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="r7C-JS-0DA"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Vls-o6-tqJ">
+                                                    <rect key="frame" x="311" y="9" width="51" height="31"/>
+                                                    <color key="onTintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="useMobileDataValueChanged:" destination="er2-Fn-lfg" eventType="valueChanged" id="Txc-a8-Ue3"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="QIc-tp-7cM" firstAttribute="top" secondItem="Cr7-TZ-sYO" secondAttribute="topMargin" constant="4" id="1Lg-xQ-3Fm"/>
+                                                <constraint firstItem="QIc-tp-7cM" firstAttribute="leading" secondItem="Cr7-TZ-sYO" secondAttribute="leading" constant="15" id="Bsz-0d-3H5"/>
+                                                <constraint firstItem="Vls-o6-tqJ" firstAttribute="leading" secondItem="QIc-tp-7cM" secondAttribute="trailing" constant="8" id="G1s-aZ-Jp9"/>
+                                                <constraint firstItem="Vls-o6-tqJ" firstAttribute="top" secondItem="Cr7-TZ-sYO" secondAttribute="topMargin" constant="-2" id="MNB-Z2-aC8"/>
+                                                <constraint firstItem="QIc-tp-7cM" firstAttribute="leading" secondItem="Cr7-TZ-sYO" secondAttribute="leadingMargin" id="dsa-Qg-obu"/>
+                                                <constraint firstAttribute="trailing" secondItem="Vls-o6-tqJ" secondAttribute="trailing" constant="15" id="e7T-z0-WvP"/>
+                                                <constraint firstItem="Vls-o6-tqJ" firstAttribute="trailing" secondItem="Cr7-TZ-sYO" secondAttribute="trailingMargin" id="xVU-xK-JRV"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="dsa-Qg-obu"/>
+                                                    <exclude reference="xVU-xK-JRV"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="er2-Fn-lfg" id="N4l-Lo-TmI"/>
@@ -1878,10 +1968,12 @@
                     <connections>
                         <outlet property="chatLabel" destination="FY1-wX-1My" id="EfD-Gu-OjV"/>
                         <outlet property="chatSwitch" destination="8ys-wU-1hr" id="1l9-KQ-PEE"/>
+                        <outlet property="richPreviewsLabel" destination="fkD-bH-uof" id="dsH-N0-b3O"/>
+                        <outlet property="richPreviewsSwitch" destination="bKk-pd-RXW" id="5kK-zG-Npw"/>
                         <outlet property="statusLabel" destination="dmC-l2-KSe" id="eps-kf-BPw"/>
                         <outlet property="statusRightDetailLabel" destination="ryg-f2-PvZ" id="xhn-Zk-CRN"/>
-                        <outlet property="useMobileDataLabel" destination="fkD-bH-uof" id="9p5-b8-ApQ"/>
-                        <outlet property="useMobileDataSwitch" destination="bKk-pd-RXW" id="wyb-fe-5RU"/>
+                        <outlet property="useMobileDataLabel" destination="QIc-tp-7cM" id="vNE-nx-TSa"/>
+                        <outlet property="useMobileDataSwitch" destination="Vls-o6-tqJ" id="S0n-cO-9Kh"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CPm-1U-8WP" userLabel="First Responder" sceneMemberID="firstResponder"/>

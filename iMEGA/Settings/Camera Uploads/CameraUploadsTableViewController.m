@@ -3,6 +3,7 @@
 #import <Photos/Photos.h>
 
 #import "MEGAReachabilityManager.h"
+#import "MEGATransfer+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
 #import "CameraUploads.h"
@@ -77,9 +78,7 @@
         if (transferList.size.integerValue > 0) {
             for (NSInteger i = 0; i < transferList.size.integerValue; i++) {
                 MEGATransfer *transfer = [transferList transferAtIndex:i];
-                NSArray *appDataComponentsArray = [transfer.appData componentsSeparatedByString:@"="];
-                NSString *appDataFirstComponentString = [appDataComponentsArray objectAtIndex:0];
-                if ([appDataFirstComponentString isEqualToString:@"CU"]) {
+                if ([transfer.appData containsString:@"CU"]) {
                     [[MEGASdkManager sharedMEGASdk] cancelTransfer:transfer];
                 }
             }
@@ -149,11 +148,7 @@
         if (transferList.size.integerValue > 0) {
             for (NSInteger i = 0; i < transferList.size.integerValue; i++) {
                 MEGATransfer *transfer = [transferList transferAtIndex:i];
-                NSArray *appDataComponentsArray = [transfer.appData componentsSeparatedByString:@"="];
-                NSString *appDataFirstComponentString = [appDataComponentsArray objectAtIndex:0];
-                if ([appDataFirstComponentString isEqualToString:@"CU"] && transfer.fileName.mnz_isVideoPathExtension) {
-                    [[MEGASdkManager sharedMEGASdk] cancelTransfer:transfer];
-                }
+                [transfer mnz_cancelPendingCUVideoTransfer];
             }
         }
     }

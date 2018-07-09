@@ -716,12 +716,18 @@
 "transfersSectionFooter"="Bu seçeneği sadece aktarmalarınız başlamazsa etkinleştirin. Normal koşullarda, tüm aktarmalar zaten şifreli olduğu için HTTP tatmin edicidir.";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Görsel ve video indirmeleri";
+/* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
+"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Uygulama içinden çekilen medya";
 /* Section title where you can enable the option 'Save images in gallery' */
 "saveImagesInGallery"="Görselleri galeriye kaydet";
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Videoları galeriye kaydet";
+/* Section title where you can enable the option 'Save media in gallery' */
+"saveMediaInGallery"="Medyaları galeriye kaydet";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="iOS uyumlu resim ve videoları cihazınızın galerisine kaydedin (Not: Resimler ve videolar Çevrimdışı kaydedilmez)";
+/* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
+"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Uygulama içinden çekilen fotoğrafların ve videoların galerinize kaydedilmesi için bu seçeneği etkinleştirin";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Şu anda %s kullanılıyor";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -1091,6 +1097,10 @@
 "addParticipants"="Katılımcı ekle";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Durum";
+/* Title used in settings that enables the generation of link previews in the chat */
+"richUrlPreviews"="Zengin URL önizlemeleri";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"richPreviewsFooter"="MEGAchat deneyiminizi geliştirin. URL içeriği uçtan uca şifreleme olmadan alınacaktır.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Sesli ve görüntülü arama";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1221,6 +1231,18 @@
 "done"="Tamam";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Dosyaları gönder";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"enableRichUrlPreviews"="Zengin URL önizlemelerini etkinleştir";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"alwaysAllow"="Her Zaman İzin Ver";
+/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+"notNow"="Şimdi Değil";
+/* */
+"never"="Hiçbir zaman";
+/* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
+"richPreviewsConfirmation"="Zengin URL önizlemelerini kalıcı olarak devre dışı bırakıyorsunuz. Ayarlarınızdan tekrar etkinleştirebilirsiniz. Devam etmek istiyor musunuz?";
+/* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
+"removePreview"="Önizlemeyi kaldır";
 /* */
 "warning"="Uyarı";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
@@ -1443,7 +1465,7 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="Parolanızı hatırlıyor musunuz?";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="MEGA'nın şifreleme teknolojisi veri kaybına uğramadan parola kurtarmayı imkansız kılar. Lütfen parolanızı hatırladığınıza emin olun.                                ";
+"remindPasswordText"="MEGA'nın şifreleme teknolojisi veri kaybına uğramadan parola kurtarmayı imkansız kılar. Lütfen parolanızı hatırladığınıza emin olun.";
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Çıkış yapmadan önce Kurtarma Anahtarını güvenli bir konuma aktarmanızı tavsiye ederim. Parolanızı unuttuğunuzda sıfırlayamayacağınızı unutmayın.";
 /* Text next to a toggle that if enabled won't appear again */
@@ -1480,3 +1502,39 @@
 "continueOrRestartVideoMessage"="%1$s, %2$s aşamasından devam edecek";
 /*  */
 "resume"="Devam et";
+/* Title to preview document */
+"previewContent"="İçerik Önizlemesi";
+/* Title of the notification for a missed call */
+"missedCall"="Cevapsız çağrı";
+/* When an outgoing call of user A with user B had been rejected by user B */
+"callWasRejected"="Arama reddedildi";
+/* When an active call of user A with user B had cancelled */
+"callWasCancelled"="Arama iptal edildi";
+/* When an active call of user A with user B had not answered */
+"callWasNotAnswered"="Arama cevaplanmadı";
+/* When an active call of user A with user B had failed */
+"callFailed"="Call failed";
+/* When an active call of user A with user B had ended */
+"callEnded"="Call ended.";
+/* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
+"duration"="Süre: %@";
+/* */
+"xSeconds"="%d saniye";
+/* */
+"1Second"="1 saniye";
+/* */
+"1Hour"="1 saat";
+/* */
+"xHours"="%d saat";
+/* */
+"1Hour1Minute"="1 saat, 1 dakika";
+/* */
+"1HourxMinutes"="1 saat, %d dakika";
+/* */
+"xHours1Minute"="%d saat, 1 dakika";
+/* */
+"xHoursxMinutes"="%1$d saat, %2$d dakika";
+/* Alert title shown when users try to stream an unsupported audio/video file */
+"fileNotSupported"="Dosya desteklenmiyor";
+/* Alert message shown when users try to stream an unsupported audio/video file */
+"message_fileNotSupported"="Çevrimdışı olarak kaydedip uyumlu bir uygulamada açabilirsiniz.";
