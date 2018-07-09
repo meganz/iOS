@@ -165,7 +165,7 @@
 /* */
 "fileLinkUnavailableText1"="Isto pode ser devido às seguintes razões:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="O arquivo foi removido por causa de uma violação Termos de Serviços / Política de Uso Aceitável.";
+"fileLinkUnavailableText2"="O arquivo foi removido por causa de uma infração dos Termos de serviço.";
 /* */
 "fileLinkUnavailableText3"="URL inválida - o link que você está tentando acessar não existe";
 /* */
@@ -183,7 +183,7 @@
 /* */
 "folderLinkUnavailableText1"="Isto pode ser devido às seguintes razões:";
 /* */
-"folderLinkUnavailableText2"="O link desta pasta foi eliminado por uma violação dos nossos Termos de serviço.";
+"folderLinkUnavailableText2"="O link desta pasta foi eliminado por uma infração dos nossos Termos de serviço.";
 /* */
 "folderLinkUnavailableText3"="URL inválida - o link que você está tentando acessar não existe";
 /* */
@@ -717,17 +717,17 @@
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Imagem e vídeo de downloads";
 /* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
-"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Media captured from within the app";
+"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Arquivos multimídia criados no aplicativo";
 /* Section title where you can enable the option 'Save images in gallery' */
 "saveImagesInGallery"="Guardar imagens na galeria";
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Salvar vídeos na galeria";
 /* Section title where you can enable the option 'Save media in gallery' */
-"saveMediaInGallery"="Save media in gallery";
+"saveMediaInGallery"="Salvar arquivos multimídia na galeria";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Salvar iOS imagens compatíveis e vídeos na galeria do seu dispositivo (Nota: As imagens e vídeos não serão salvas no off-line).";
 /* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
-"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Enable this option to save photos taken and videos recorded from within the app in the gallery";
+"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Ative esta opção para salvar na galeria as fotos e os vídeos criados no aplicativo";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Atualmente usando %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -1505,34 +1505,46 @@
 /* Title of the notification for a missed call */
 "missedCall"="Chamada perdida";
 /* When an outgoing call of user A with user B had been rejected by user B */
-"callWasRejected"="Call was rejected";
+"callWasRejected"="A chamada foi rejeitada";
 /* When an active call of user A with user B had cancelled */
-"callWasCancelled"="Call was cancelled";
+"callWasCancelled"="A chamada foi cancelada";
 /* When an active call of user A with user B had not answered */
-"callWasNotAnswered"="Call was not answered";
+"callWasNotAnswered"="A chamada não foi respondida";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed";
+"callFailed"="Falha na llamada";
 /* When an active call of user A with user B had ended */
-"callEnded"="Call ended.";
+"callEnded"="Chamada finalizada.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
-"duration"="Duration: %@";
+"duration"="Duração: %@";
 /* */
-"xSeconds"="%d seconds";
+"xSeconds"="%d segundos";
 /* */
-"1Second"="1 second";
+"1Second"="1 segundo";
 /* */
-"1Hour"="1 hour";
+"1Hour"="1 hora";
 /* */
-"xHours"="%d hours";
+"xHours"="%d horas";
 /* */
-"1Hour1Minute"="1 hour, 1 minute";
+"1Hour1Minute"="1 hora, 1 minuto";
 /* */
-"1HourxMinutes"="1 hour, %d minutes";
+"1HourxMinutes"="1 hora, %d minutos";
 /* */
-"xHours1Minute"="%d hours, 1 minute";
+"xHours1Minute"="%d horas, 1 minuto";
 /* */
-"xHoursxMinutes"="%1$d hours, %2$d minutes";
+"xHoursxMinutes"="%1$d horas, %2$d minutos";
 /* Alert title shown when users try to stream an unsupported audio/video file */
-"fileNotSupported"="File not supported";
+"fileNotSupported"="Arquivo não suportado";
 /* Alert message shown when users try to stream an unsupported audio/video file */
-"message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
+"message_fileNotSupported"="Você pode salvar o arquivo para uso offline e abri-lo em um aplicativo compatível.";
+/* Title of archived chats button */
+"archivedChats"="Chats arquivados";
+/* Confirmation message on archive chat dialog for user to confirm. */
+"archiveChatMessage"="Você tem certeza de que quer arquivar esta conversa?";
+/* Confirmation message for user to confirm it will unarchive an archived chat. */
+"unarchiveChatMessage"="Você tem certeza de que quer deixar de arquivar esta conversa?";
+/* The title of the dialog to unarchive an archived chat. */
+"unarchiveChat"="Deixar de arquivar chat";
+/* Title of button to archive chats. */
+"archiveChat"="Arquivar chat";
+/* Title of flag of archived chats. */
+"archived"="Arquivado";
