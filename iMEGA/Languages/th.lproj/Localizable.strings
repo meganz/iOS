@@ -717,17 +717,17 @@
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="ดาวน์โหลดรูปภาพและวิดีโอ";
 /* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
-"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Media captured from within the app";
+"photosTakenAndVideoRecordedFromWithinTheAppHeader"="สื่อที่ถ่ายจากภายในแอป";
 /* Section title where you can enable the option 'Save images in gallery' */
 "saveImagesInGallery"="บันทึกรูปภาพลงในแกลเลอรี่";
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="บันทึกวิดีโอลงในแกลเลอรี่";
 /* Section title where you can enable the option 'Save media in gallery' */
-"saveMediaInGallery"="Save media in gallery";
+"saveMediaInGallery"="บันทึกสื่อในแกลเลอรี่";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="iOS รองรับการบันทึกรูปภาพและวิดีโอที่แกลเลอรีบนอุปกรณ์ของคุณ (หมายเหตุ: รูปภาพและวิดีโอจะไม่ถูกบันทึกไว้ในออฟไลน์)";
 /* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
-"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Enable this option to save photos taken and videos recorded from within the app in the gallery";
+"photosTakenAndVideoRecordedFromWithinTheAppFooter"="เปิดใช้งานตัวเลือกนี้เพื่อบันทึกรูปภาพที่ถ่ายและวิดีโอที่บันทึกจากภายในแอปในแกลเลอรี่";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="ใช้ไปแล้ว %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -1106,7 +1106,7 @@
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="ใช้ข้อมูลมือถือ";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
-"autoAway"="อัตโนมัติทันที";
+"autoAway"="ไม่อยู่อัตโนมัติ";
 /* */
 "xMinutes"="[X] นาที";
 /* */
@@ -1118,7 +1118,7 @@
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="สถานะคงอยู่";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
-"maintainMyChosenStatusAppearance"="รักษาสถานะของฉันเลือกปรากฏ แม้จะไม่มีอุปกรณ์เชื่อมต่อ";
+"maintainMyChosenStatusAppearance"="รักษาลักษณะที่ปรากฏของฉันไว้แม้จะไม่มีอุปกรณ์เชื่อมต่อก็ตาม";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(มีการแก้ไข)";
 /*  */
@@ -1362,7 +1362,7 @@
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph2"="อัปโหลดไฟล์จากสมาร์ทโฟนหรือแท็บเล็ตแล้วค้นหา จัดเก็บ ดาวน์โหลด สตรีม ดู แชร์ เปลี่ยนชื่อหรือลบไฟล์ของคุณได้ตลอดเวลาจากอุปกรณ์ใดก็ได้จากทุกที่ แชร์โฟลเดอร์กับผู้ติดต่อของคุณและดูข้อมูลอัปเดตของพวกเขาในแบบเรียลไทม์";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph3"="ขั้นตอนการเข้ารหัสหมายความว่า เราไม่สามารถเข้าถึงหรือรีเซ็ตรหัสผ่านของคุณได้ ดังนั้นคุณต้องจำรหัสผ่าน (ยกเว้นกรณีที่คุณได้สำรองข้อมูลคีย์การกู้คืนไว้แล้ว) มิฉะนั้นคุณจะสูญเสียการเข้าถึงไฟล์ที่จัดเก็บไว้";
+"generalDescriptionParagraph3"="ขั้นตอนการเข้ารหัสหมายความว่า เราไม่สามารถเข้าถึงหรือรีเซ็ตรหัสผ่านของคุณได้ ดังนั้นคุณต้องจำรหัสผ่าน (ยกเว้นกรณีที่คุณได้สำรองคีย์การกู้คืนไว้แล้ว) มิฉะนั้นคุณจะสูญเสียการเข้าถึงไฟล์ที่จัดเก็บไว้";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="ภายในแอปพลิเคชันคุณสามารถอัปเกรดพื้นที่เก็บข้อมูลและโควต้าการถ่ายโอนด้วยการสมัครรายเดือนหรือรายปี";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
@@ -1505,34 +1505,46 @@
 /* Title of the notification for a missed call */
 "missedCall"="สายที่ไม่ได้รับ";
 /* When an outgoing call of user A with user B had been rejected by user B */
-"callWasRejected"="Call was rejected";
+"callWasRejected"="การโทรถูกปฏิเสธ";
 /* When an active call of user A with user B had cancelled */
-"callWasCancelled"="Call was cancelled";
+"callWasCancelled"="การโทรถูกยกเลิกแล้ว";
 /* When an active call of user A with user B had not answered */
-"callWasNotAnswered"="Call was not answered";
+"callWasNotAnswered"="ไม่ได้รับสาย";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed";
+"callFailed"="ติดต่อไม่ได้";
 /* When an active call of user A with user B had ended */
-"callEnded"="Call ended.";
+"callEnded"="จบการสนทนา";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
-"duration"="Duration: %@";
+"duration"="ระยะเวลา: %@";
 /* */
-"xSeconds"="%d seconds";
+"xSeconds"="%d วินาที";
 /* */
-"1Second"="1 second";
+"1Second"="1 วินาที";
 /* */
-"1Hour"="1 hour";
+"1Hour"="1 ชั่วโมง";
 /* */
-"xHours"="%d hours";
+"xHours"="%d ชั่วโมง";
 /* */
-"1Hour1Minute"="1 hour, 1 minute";
+"1Hour1Minute"="1 ชั่วโมง 1 นาที";
 /* */
-"1HourxMinutes"="1 hour, %d minutes";
+"1HourxMinutes"="1 ชั่วโมง %d นาที";
 /* */
-"xHours1Minute"="%d hours, 1 minute";
+"xHours1Minute"="%d ชั่วโมง 1 นาที";
 /* */
-"xHoursxMinutes"="%1$d hours, %2$d minutes";
+"xHoursxMinutes"="%1$d ชั่วโมง %2$d นาที";
 /* Alert title shown when users try to stream an unsupported audio/video file */
-"fileNotSupported"="File not supported";
+"fileNotSupported"="ไฟล์ไม่ได้รับการสนับสนุน";
 /* Alert message shown when users try to stream an unsupported audio/video file */
-"message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
+"message_fileNotSupported"="คุณสามารถบันทึกไว้สำหรับออฟไลน์และเปิดไว้ในแอปที่รองรับ";
+/* Title of archived chats button */
+"archivedChats"="จัดเก็บแชท";
+/* Confirmation message on archive chat dialog for user to confirm. */
+"archiveChatMessage"="คุณแน่ใจหรือไม่ว่าต้องการยกเลิกจัดเก็บการสนทนานี้";
+/* Confirmation message for user to confirm it will unarchive an archived chat. */
+"unarchiveChatMessage"="คุณแน่ใจหรือไม่ว่าต้องการยกเลิกจัดเก็บการสนทนานี้";
+/* The title of the dialog to unarchive an archived chat. */
+"unarchiveChat"="ยกเลิกจัดเก็บการสนทนา";
+/* Title of button to archive chats. */
+"archiveChat"="จัดเก็บแชท";
+/* Title of flag of archived chats. */
+"archived"="จัดเก็บ";
