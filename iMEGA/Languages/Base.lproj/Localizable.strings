@@ -1277,14 +1277,6 @@
 "attachedFile"="Attached: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="Attached %s files.";
-/* A summary message when a user sent the information of one contact through the chat. */
-"sharedContact"="Shared this contact:";
-/* A summary message when a user sent the information of some contacts at once through the chat. */
-"sharedContacts"="Shared these contacts:";
-/* A summary message when a user has attached one file into the chat. */
-"uploadedFile"="Uploaded this file:";
-/* A summary message when a user has attached many files at once into the chat. */
-"uploadedFiles"="Uploaded these files:";
 /* Label in a button that allows to jump to the latest item */
 "jumpToLatest"="Jump to latest";
 /* Label in a button that allows to jump to the latest message */
