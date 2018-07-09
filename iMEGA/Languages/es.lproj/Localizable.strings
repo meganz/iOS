@@ -1369,7 +1369,7 @@
 "generalDescriptionParagraph5"="Suscripción PRO LITE: 4,99€ (US$4.99)  al mes o 49,99€ (US$49.99) al año, con 200 GB de espacio de almacenamiento y 1 TB de cuota de transferencia al mes.\nSuscripción PRO I: 9,99€ (US$9.99) al mes o 99,99€ (US$99.99) al año, con 1 TB de espacio de almacenamiento y 2 TB de cuota de transferencia al mes.\nSuscripción PRO II: 19,99€ al mes (US$19.99) o 199,99€ (US$199.99) al año, con 4 TB de espacio de almacenamiento y 8 TB de cuota de transferencia al mes.\nSuscripción PRO III: 29,99€ (US$29.99) al mes o 299,99€ (US$299.99) al año, con 8 TB de espacio de almacenamiento y 16 TB de cuota de transferencia al mes.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Para más información, entra en nuestra web:https://mega.nz/\nTérminos de servicio: https://mega.nz/terms\nPolítica de privacidad: https://mega.nz/privacy";
+"generalDescriptionParagraph6"="Para más información, entra en nuestra web: https://mega.nz/\n Términos de servicio: https://mega.nz/terms\n Política de privacidad: https://mega.nz/privacy";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="Llamando...";
 /* Notification text body shown when you have missed one audio call */
