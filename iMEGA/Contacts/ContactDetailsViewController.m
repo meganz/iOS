@@ -249,7 +249,7 @@
                     break;
                     
                 case 1: //Archive chat
-                    cell.avatarImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unarchive"] : [UIImage imageNamed:@"archive"];
+                    cell.avatarImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
                     cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
                     cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redF0373A : UIColor.mnz_black333333;
                     cell.lineView.hidden = [self.tableView numberOfRowsInSection:0] == 2;

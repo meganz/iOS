@@ -134,10 +134,10 @@
 
 - (void)showArchiveChatAlertAtIndexPath:(NSIndexPath *)indexPath {
     NSString *title = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChatMessage", @"Confirmation message for user to confirm it will unarchive an archived chat.") : AMLocalizedString(@"archiveChatMessage", @"Confirmation message on archive chat dialog for user to confirm.");
-    UIAlertController *leaveAlertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    UIAlertController *archiveAlertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [archiveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
-    [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [archiveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         MEGAArchiveChatRequestDelegate *archiveChatRequesDelegate = [[MEGAArchiveChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
             self.chatRoom = chatRoom;
             [self.tableView reloadData];
@@ -146,13 +146,13 @@
     }]];
     
     if ([[UIDevice currentDevice] iPadDevice]) {
-        leaveAlertController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popoverPresentationController = [leaveAlertController popoverPresentationController];
+        archiveAlertController.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popoverPresentationController = [archiveAlertController popoverPresentationController];
         CGRect deleteRect = [self.tableView rectForRowAtIndexPath:indexPath];
         popoverPresentationController.sourceRect = deleteRect;
         popoverPresentationController.sourceView = self.tableView;
     }
-    [self presentViewController:leaveAlertController animated:YES completion:nil];
+    [self presentViewController:archiveAlertController animated:YES completion:nil];
 }
 
 - (void)showLeaveChatAlertAtIndexPath:(NSIndexPath *)indexPath {
@@ -275,12 +275,13 @@
             case MEGAChatRoomPrivilegeStandard: {
                 switch (indexPath.row) {
                     case 0: {
-                        cell.leftImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unarchive"] : [UIImage imageNamed:@"archive"];
+                        cell.leftImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
                         cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
                         cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redF0373A : UIColor.mnz_black333333;
                         break;
                     }
                     case 1: {
+                        cell.leftImageView.image = [UIImage imageNamed:@"leaveGroup"];
                         cell.nameLabel.text = AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
                         cell.nameLabel.textColor = UIColor.mnz_redF0373A;
                         cell.lineView.hidden = YES;
@@ -309,7 +310,7 @@
                             cell.leftImageView.image = [UIImage imageNamed:@"clearChatHistory"];
                             cell.nameLabel.text = AMLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.");
                         } else if (indexPath.row == 2) {
-                            cell.leftImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unarchive"] : [UIImage imageNamed:@"archive"];
+                            cell.leftImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
                             cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
                             cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redF0373A : UIColor.mnz_black333333;
                         } else if (indexPath.row == 3) {
