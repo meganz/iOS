@@ -35,6 +35,7 @@
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
+#import "SendToViewController.h"
 #import "UIImage+MNZCategory.h"
 
 #import <UserNotifications/UserNotifications.h>
@@ -752,7 +753,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             // The file is already in the folder, attach node.
             [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:self.chatRoom.chatId node:node.handle delegate:self];
         } else {
-            MEGACopyRequestDelegate *copyRequestDelegate = [[MEGACopyRequestDelegate alloc] initToAttachToChatWithCompletion:^{
+            MEGACopyRequestDelegate *copyRequestDelegate = [[MEGACopyRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                 [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:self.chatRoom.chatId node:node.handle delegate:self];
             }];
             // The file is already in MEGA, in other folder, has to be copied to this folder.
@@ -1418,6 +1419,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                                               NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
     }
     
+    if (message.shouldShowForwardAccessory) {
+        [cell.accessoryButton setImage:[UIImage imageNamed:@"forward"] forState:UIControlStateNormal];
+        cell.accessoryButton.hidden = NO;
+    }
+    
     if (message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
         cell.contentView.alpha = 0.7f;
         if (message.status == MEGAChatMessageStatusSendingManual) {
@@ -1848,6 +1854,25 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
         
         [self presentViewController:alertController animated:YES completion:nil];
+    } else if (message.shouldShowForwardAccessory) {
+        UIStoryboard *chatStoryboard = [UIStoryboard storyboardWithName:@"Chat" bundle:nil];
+        UINavigationController *sendToNC = [chatStoryboard instantiateViewControllerWithIdentifier:@"SendToNavigationControllerID"];
+        SendToViewController *sendToViewController = sendToNC.viewControllers.firstObject;
+        sendToViewController.sendMode = SendModeForward;
+        sendToViewController.messages = @[message];
+        sendToViewController.completion = ^(uint64_t chatId) {
+            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
+            MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
+            messagesVC.chatRoom = chatRoom;
+            
+            UINavigationController *chatNC = (UINavigationController *)self.parentViewController;
+            [chatNC pushViewController:messagesVC animated:YES];
+            [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
+            NSMutableArray *viewControllers = chatNC.viewControllers.mutableCopy;
+            [viewControllers removeObjectAtIndex:(viewControllers.count - 2)];
+            chatNC.viewControllers = viewControllers;
+        };
+        [self presentViewController:sendToNC animated:YES completion:nil];
     }
 }
 

@@ -2,6 +2,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MEGAChatListItem.h"
+#import "MEGAChatMessage.h"
 #import "SendMode.h"
 
 @protocol SendToViewControllerDelegate <NSObject>
@@ -10,8 +11,10 @@
 
 @interface SendToViewController : UIViewController
 
-@property (strong, nonatomic) NSArray *nodes;
+@property (nonatomic) NSArray *nodes;
+@property (nonatomic) NSArray<MEGAChatMessage *> *messages;
 @property (nonatomic) SendMode sendMode;
+@property (nonatomic) void (^completion)(uint64_t chatId);
 
 @property (nonatomic, weak) id<SendToViewControllerDelegate> sendToViewControllerDelegate;
 
