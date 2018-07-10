@@ -147,6 +147,7 @@
                     <constraints>
                         <constraint firstItem="TO4-7T-aZZ" firstAttribute="leading" secondItem="out-hG-Jo5" secondAttribute="leading" id="DEc-CX-zVj"/>
                         <constraint firstAttribute="bottom" secondItem="TO4-7T-aZZ" secondAttribute="bottom" id="Ddk-3M-B3u"/>
+                        <constraint firstAttribute="height" constant="104" id="Xnk-FH-vVH"/>
                         <constraint firstItem="TO4-7T-aZZ" firstAttribute="top" secondItem="out-hG-Jo5" secondAttribute="top" id="k6O-GA-clZ"/>
                         <constraint firstAttribute="trailing" secondItem="TO4-7T-aZZ" secondAttribute="trailing" id="qHH-4a-0RK"/>
                     </constraints>
@@ -176,6 +177,7 @@
                 <outlet property="imageImageView" destination="GW4-UE-c2n" id="6so-uL-Lb5"/>
                 <outlet property="imageView" destination="ncy-Z3-STn" id="Tjh-Uc-Uog"/>
                 <outlet property="linkLabel" destination="ohQ-Fw-GPd" id="VGX-Ag-BbR"/>
+                <outlet property="richViewHeightConstraint" destination="Xnk-FH-vVH" id="dto-CH-ghR"/>
                 <outlet property="titleLabel" destination="UVp-JU-QNG" id="3bY-6z-iNp"/>
             </connections>
             <point key="canvasLocation" x="24.5" y="-137.5"/>
