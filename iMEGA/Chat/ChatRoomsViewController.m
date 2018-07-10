@@ -316,7 +316,8 @@
 }
 
 - (void)insertRowByChatListItem:(MEGAChatListItem *)item {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    NSInteger section = self.isArchivedChatsRowVisible ? 1 : 0;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:section];
     if (self.searchController.isActive) {
         [self.searchChatListItemArray insertObject:item atIndex:indexPath.row];
     } else {
@@ -351,9 +352,10 @@
 - (void)updateChatIdIndexPathDictionary {
     [self.chatIdIndexPathDictionary removeAllObjects];
     NSInteger i = 0;
+    NSInteger section = self.isArchivedChatsRowVisible ? 1 : 0;
     NSArray *tempArray = self.searchController.isActive ? self.searchChatListItemArray : self.chatListItemArray;
     for (MEGAChatListItem *item in tempArray) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:section];
         [self.chatIdIndexPathDictionary setObject:indexPath forKey:@(item.chatId)];
         i++;
     }
@@ -940,30 +942,24 @@
             self.isScrollAtTop = NO;
             self.isArchivedChatsRowVisible = NO;
             [self.tableView beginUpdates];
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationTop];
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
             [self.tableView endUpdates];
+            [self updateChatIdIndexPathDictionary];
         }
         
         if (self.isScrollAtTop && scrollView.contentOffset.y < 0 && !self.isArchivedChatsRowVisible) {
             self.isArchivedChatsRowVisible = YES;
             [self.tableView beginUpdates];
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationTop];
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationMiddle];
             [self.tableView endUpdates];
-        }
-        
-        if (scrollView.contentOffset.y < -(scrollView.frame.size.height * 0.2)) {
-            self.isScrollAtTop = YES;
+            [self updateChatIdIndexPathDictionary];
         }
     }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {      // called when scroll view grinds to a halt
     if (self.chatRoomsType == ChatRoomsTypeDefault) {
-        if (scrollView.contentOffset.y > 0) {
-            self.isScrollAtTop = NO;
-        } else {
-            self.isScrollAtTop = YES;
-        }
+        self.isScrollAtTop = scrollView.contentOffset.y > 0 ? NO : YES;
     }
 }
 
@@ -1032,6 +1028,18 @@
         [self insertRowByChatListItem:item];
     } else {
         NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(item.chatId)];
+        
+        if (!indexPath && [item hasChangedForType:MEGAChatListItemChangeTypeArchived]) {
+            if (self.searchController.isActive && ![self.searchController.searchBar.text isEqualToString:@""] && [item.title containsString:self.searchController.searchBar.text]) {
+                [self insertRowByChatListItem:item];
+                self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+                if (self.isArchivedChatsRowVisible) {
+                    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+                }
+                return;
+            }
+        }
+        
         if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
             ChatRoomCell *cell = (ChatRoomCell *)[self.tableView cellForRowAtIndexPath:indexPath];
             switch (item.changes) {
@@ -1061,6 +1069,14 @@
                     if (self.chatListItemArray.count > 0) {
                         [self.chatListItemArray replaceObjectAtIndex:indexPath.row withObject:item];
                         [self updateCell:cell forChatListItem:item];
+                    }
+                    break;
+                    
+                case MEGAChatListItemChangeTypeArchived:
+                    [self deleteRowByChatId:item.chatId];
+                    self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+                    if (self.isArchivedChatsRowVisible) {
+                        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
                     }
                     break;
                     
