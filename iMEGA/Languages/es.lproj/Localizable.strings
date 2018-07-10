@@ -1297,8 +1297,6 @@
 "autorenewableDescription"="La suscripción se renueva automáticamente con la misma duración y precio elegidos inicialmente. Puedes desactivar la renovación automática de la suscripción A MEGA PRO en la página de ajustes de iTunes hasta 24 horas antes de la renovación programada. Para gestionar tu suscripción, simplemente ve a la App Store, inicia sesión con tu Apple ID al final de la página (si no has hecho esto todavía) y pulsa en “Ver ID de Apple”. Podrás ver la página con los detalles de tu cuenta, donde puedes gestionar las suscripciones que has contratado. Desde aquí, puedes seleccionar la suscripción A MEGA PRO y ver cuando será renovada, cambiar el tipo de suscripción o desactivar la opción de renovación automática para luego cancelar tu suscripción.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Abre MEGA e inicia sesión para continuar";
-/* A button title to revoke the access to an attachment in a chat. */
-"revoke"="Revocar";
 /* Label in login screen to inform about the chat initialization proccess */
 "connecting"="Conectando...";
 /* Inform user that there were unsupported assets in the share extension */
@@ -1371,7 +1369,7 @@
 "generalDescriptionParagraph5"="Suscripción PRO LITE: 4,99€ (US$4.99)  al mes o 49,99€ (US$49.99) al año, con 200 GB de espacio de almacenamiento y 1 TB de cuota de transferencia al mes.\nSuscripción PRO I: 9,99€ (US$9.99) al mes o 99,99€ (US$99.99) al año, con 1 TB de espacio de almacenamiento y 2 TB de cuota de transferencia al mes.\nSuscripción PRO II: 19,99€ al mes (US$19.99) o 199,99€ (US$199.99) al año, con 4 TB de espacio de almacenamiento y 8 TB de cuota de transferencia al mes.\nSuscripción PRO III: 29,99€ (US$29.99) al mes o 299,99€ (US$299.99) al año, con 8 TB de espacio de almacenamiento y 16 TB de cuota de transferencia al mes.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Para más información, entra en nuestra web:https://mega.nz/\nTérminos de servicio: https://mega.nz/terms\nPolítica de privacidad: https://mega.nz/privacy";
+"generalDescriptionParagraph6"="Para más información, entra en nuestra web: https://mega.nz/\n Términos de servicio: https://mega.nz/terms\n Política de privacidad: https://mega.nz/privacy";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="Llamando...";
 /* Notification text body shown when you have missed one audio call */

@@ -310,6 +310,8 @@
         [cell.thumbnailImageView mnz_imageForNode:node];
         
         cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
+        
+        cell.versionedImageView.hidden = YES;
     }
     
     cell.nodeHandle = [node handle];
@@ -1807,8 +1809,9 @@
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEAccess) {
             if ([transfer type] ==  MEGATransferTypeUpload) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"permissionTitle", nil) message:AMLocalizedString(@"permissionMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
-                [alertView show];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"permissionTitle", nil) message:AMLocalizedString(@"permissionMessage", nil) preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [self presentViewController:alertController animated:YES completion:nil];
             }
         } else if ([error type] == MEGAErrorTypeApiEIncomplete) {
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];

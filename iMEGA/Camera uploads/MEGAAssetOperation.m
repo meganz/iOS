@@ -7,6 +7,7 @@
 #import "MEGAProcessAsset.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGATransfer+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 
 @interface MEGAAssetOperation () <MEGATransferDelegate, MEGARequestDelegate> {
     BOOL executing;
@@ -175,12 +176,9 @@
     NSString *message = [NSString stringWithFormat:@"%@ (Domain: %@ - Code:%ld)", error.localizedDescription, error.domain, (long)error.code];
     MEGALogDebug(@"Disable Camera Uploads: %@", message);
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"cameraUploadsWillBeDisabled", nil)
-                                                            message:message
-                                                           delegate:self
-                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                  otherButtonTitles:nil];
-        [alertView show];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"cameraUploadsWillBeDisabled", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
     });
 }

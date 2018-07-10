@@ -508,6 +508,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     self.inputToolbar.contentView.textView.textColor = [UIColor mnz_black333333];
     self.inputToolbar.contentView.textView.tintColor = [UIColor mnz_green00BFA5];
     [self updateToolbarPlaceHolder];
+    self.inputToolbar.contentView.textView.delegate = self;
+    self.inputToolbar.contentView.textView.text = [[MEGAStore shareInstance] fetchChatDraftWithChatId:self.chatRoom.chatId].text;
 }
 
 - (void)updateToolbarPlaceHolder {
@@ -674,7 +676,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     UIMenuItem *importMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"import", @"Caption of a button to edit the files that are selected") action:@selector(import:message:)];
     UIMenuItem *downloadMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"saveForOffline", @"Caption of a button to edit the files that are selected") action:@selector(download:message:)];
     UIMenuItem *addContactMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") action:@selector(addContact:message:)];
-    UIMenuItem *revokeMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"revoke", @"A button title to revoke the access to an attachment in a chat.") action:@selector(revoke:message:indexPath:)];
+    UIMenuItem *revokeMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"delete", @"") action:@selector(revoke:message:indexPath:)];
     UIMenuItem *removeRichLinkMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"removePreview", @"Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases).") action:@selector(removeRichPreview:message:indexPath:)];
     menuController.menuItems = @[importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem, revokeMenuItem, removeRichLinkMenuItem];
 }
@@ -1231,13 +1233,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self hideJumpToBottom];
 }
 
-- (void)didEndAnimatingAfterButton:(UIButton *)sender {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self scrollToBottomAnimated:YES];
-    });
-}
-
 - (void)jsq_setCollectionViewInsetsTopValue:(CGFloat)top bottomValue:(CGFloat)bottom {
+    if (self.inputToolbar.frame.size.height == 0.0f) {
+        return;
+    }
+    
     CGRect bounds = self.collectionView.bounds;
     CGFloat increment = bottom - self.collectionView.contentInset.bottom;
     
@@ -1887,6 +1887,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     } else if (textLength == 0) {
         [[MEGASdkManager sharedMEGAChatSdk] sendStopTypingNotificationForChat:self.chatRoom.chatId];
     }
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
 }
 
 #pragma mark - MEGAChatRoomDelegate
