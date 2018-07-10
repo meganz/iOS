@@ -7,7 +7,6 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
-#import "MEGANode.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
@@ -23,7 +22,6 @@
 #import "MainTabBarController.h"
 #import "MEGAAVViewController.h"
 #import "MEGANavigationController.h"
-#import "MyAccountHallViewController.h"
 #import "PreviewDocumentViewController.h"
 #import "MEGAQLPreviewController.h"
 
@@ -317,10 +315,7 @@
                 UIViewController *rootVC = UIApplication.sharedApplication.delegate.window.rootViewController;
                 if ([rootVC isKindOfClass:MainTabBarController.class]) {
                     MainTabBarController *mainTBC = (MainTabBarController *)rootVC;
-                    mainTBC.selectedIndex = MYACCOUNT;
-                    MEGANavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:MYACCOUNT];
-                    MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
-                    [myAccountHallVC openOffline];
+                    [mainTBC showOffline];
                 }
                 
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];

@@ -10,7 +10,6 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
-#import "MyAccountHallViewController.h"
 #import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
@@ -483,10 +482,7 @@
         [self dismissViewControllerAnimated:YES completion:^{
             if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] isKindOfClass:[MainTabBarController class]]) {
                 MainTabBarController *mainTBC = (MainTabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
-                mainTBC.selectedIndex = MYACCOUNT;
-                MEGANavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:MYACCOUNT];
-                MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
-                [myAccountHallVC openOffline];
+                [mainTBC showOffline];
             }
             
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
@@ -510,8 +506,6 @@
         LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
         [self.navigationController pushViewController:loginVC animated:YES];
     }
-    
-    //TODO: Make a logout in sharedMEGASdkFolder after download the link or the selected nodes.
 }
 
 - (IBAction)importAction:(UIBarButtonItem *)sender {

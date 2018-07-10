@@ -1004,7 +1004,18 @@ static MEGAIndexer *indexer;
     [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redF0373A} forState:UIControlStateNormal];
 }
 
-#pragma mark - Logout
+#pragma mark - Manage session
+
++ (BOOL)hasSession_alertIfNot {
+    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        return YES;
+    } else {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"pleaseLogInToYourAccount", @"Alert title shown when you need to log in to continue with the action you want to do") message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+        return NO;
+    }
+}
 
 + (void)logout {
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
