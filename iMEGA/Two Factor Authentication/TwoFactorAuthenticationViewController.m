@@ -111,6 +111,12 @@
     }
 }
 
+- (void)showInvalidCode {
+    [self tintCodeWithColor:UIColor.mnz_redD90007];
+    self.invalidCodeImageView.hidden = self.invalidCodeLabel.hidden = NO;
+    self.verifyButton.backgroundColor = UIColor.mnz_grayEEEEEE;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)lostYourAuthenticatorDeviceTouchUpInside:(UIButton *)sender {
@@ -124,6 +130,20 @@
         switch (self.twoFAMode) {
             case TwoFactorAuthenticationLogin: {
                 MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
+                loginRequestDelegate.errorCompletion = ^(MEGAError *error) {
+                    switch (error.type) {
+                        case MEGAErrorTypeApiENoent:
+                            [self.navigationController popViewControllerAnimated:YES];
+                            break;
+                            
+                        case MEGAErrorTypeApiEFailed:
+                            [self showInvalidCode];
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                };
                 [[MEGASdkManager sharedMEGASdk] multiFactorAuthLoginWithEmail:self.email password:self.password pin:code delegate:loginRequestDelegate];
                 break;
             }
@@ -210,9 +230,7 @@
         switch (error.type) {
             case MEGAErrorTypeApiEFailed:
             case MEGAErrorTypeApiEExpired:
-                [self tintCodeWithColor:UIColor.mnz_redD90007];
-                self.invalidCodeImageView.hidden = self.invalidCodeLabel.hidden = NO;
-                self.verifyButton.backgroundColor = UIColor.mnz_grayEEEEEE;
+                [self showInvalidCode];
                 break;
                 
             default:
