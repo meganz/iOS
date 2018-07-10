@@ -1297,8 +1297,6 @@
 "autorenewableDescription"="此订阅将会自动更新续订，续订内容与您一开始选择的订阅时间与价格一致。您可以于您的iTunes账户设定页面关闭MEGA PRO的订阅自动更新续订，必须于您的下一个订阅缴款期限的24小时之前执行此操作。欲管理您的订阅内容，只需点击您手机上的App Store图标，可以在页面下方以您的Apple账号登入（如果您还没有这样做），然后点击查看账号。您会被带到您的账户页面，就可以向下滚动到管理应用程序订阅。在那里，您可以选择你的MEGA PRO订阅和查看您预定的续约日期，选择不同的计划或切换开关至关闭以停用您的自动续订。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="开启MEGA并登入以继续";
-/* A button title to revoke the access to an attachment in a chat. */
-"revoke"="撤除";
 /* Label in login screen to inform about the chat initialization proccess */
 "connecting"="正在连接...";
 /* Inform user that there were unsupported assets in the share extension */

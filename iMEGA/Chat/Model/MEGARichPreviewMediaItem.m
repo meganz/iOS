@@ -39,6 +39,24 @@
     _cachedDialogView = nil;
 }
 
+#pragma mark - Private
+
+- (CGFloat)richPreviewInfoHeight {
+    CGFloat richPreviewInfoHeight = 84.0f;
+    if (self.message.type == MEGAChatMessageTypeContainsMeta) {
+        if (!self.message.containsMeta.richPreview.image) {
+            if (self.message.containsMeta.richPreview.title.mnz_isEmpty && self.message.containsMeta.richPreview.previewDescription.mnz_isEmpty) {
+                richPreviewInfoHeight = 10.0f + 14.0f;
+            } else if (self.message.containsMeta.richPreview.title.mnz_isEmpty) {
+                richPreviewInfoHeight = (15.0f * self.cachedDialogView.descriptionLabel.numberOfLines) + 10.0f + 14.0f;
+            } else if (self.message.containsMeta.richPreview.previewDescription.mnz_isEmpty) {
+                richPreviewInfoHeight = 18.0f + 10.0f + 14.0f;
+            }
+        }
+    }
+    return richPreviewInfoHeight;
+}
+
 #pragma mark - Setters
 
 - (void)setMessage:(MEGAChatMessage *)message {
@@ -113,14 +131,15 @@
         } else {
             dialogView.iconImageView.hidden = YES;
         }
+        dialogView.richViewHeightConstraint.constant = 10.0f + [self richPreviewInfoHeight] + 10.0f;
     } else if (self.message.node) {
         URLType type = [self.message.MEGALink mnz_type];
         dialogView.contentTextView.text = self.message.content;
         dialogView.titleLabel.text = self.message.node.name;
         dialogView.descriptionLabel.text = [NSByteCountFormatter stringFromByteCount:self.message.nodeSize.longLongValue countStyle:NSByteCountFormatterCountStyleMemory];
-        dialogView.linkLabel.text = @"www.mega.nz";
+        dialogView.linkLabel.text = @"mega.nz";
         if (type == URLTypeFileLink) {
-            [dialogView.imageImageView mnz_setImageForExtension:self.message.node.name.pathExtension];
+            [dialogView.imageImageView mnz_setThumbnailByNode:self.message.node];
         } else if (type == URLTypeFolderLink) {
             dialogView.imageImageView.image = [Helper folderImage];
             dialogView.descriptionLabel.text = [NSString stringWithFormat:@"%@\n%@", self.message.nodeDetails, dialogView.descriptionLabel.text];
@@ -148,18 +167,7 @@
                                          attributes:@{ NSFontAttributeName : messageFont }
                                             context:nil];
     
-    CGFloat richPreviewInfoHeight = 84.0f;
-    if (self.message.type == MEGAChatMessageTypeContainsMeta) {
-        if (!self.message.containsMeta.richPreview.image) {
-            if (self.message.containsMeta.richPreview.title.mnz_isEmpty) {
-                richPreviewInfoHeight = (15.0f * self.cachedDialogView.descriptionLabel.numberOfLines) + 10.0f + 14.0f;
-            } else if (self.message.containsMeta.richPreview.previewDescription.mnz_isEmpty) {
-                richPreviewInfoHeight = 18.0f + 10.0f + 14.0f;
-            } else if (self.message.containsMeta.richPreview.title.mnz_isEmpty && self.message.containsMeta.richPreview.previewDescription.mnz_isEmpty) {
-                richPreviewInfoHeight = 10.0f + 14.0f;
-            }
-        }
-    }
+    CGFloat richPreviewInfoHeight = [self richPreviewInfoHeight];
     // The bubble height is the message plus the rich preview height plus the margins, @see MEGAMessageRichPreviewView.xib
     CGFloat bubbleHeight = 10.0f + messageRect.size.height + 10.0f + (10.0f + richPreviewInfoHeight + 10.0f) + 3.0f;
     
@@ -171,7 +179,7 @@
 }
 
 - (NSString *)mediaDataType {
-    return (NSString *)kUTTypeText;
+    return (NSString *)kUTTypePlainText;
 }
 
 - (id)mediaData {
