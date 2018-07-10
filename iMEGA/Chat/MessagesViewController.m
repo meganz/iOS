@@ -25,6 +25,7 @@
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
+#import "MEGALinkManager.h"
 #import "MEGAOpenMessageHeaderView.h"
 #import "MEGAProcessAsset.h"
 #import "MEGAReachabilityManager.h"
@@ -1765,7 +1766,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     } else if (message.type == MEGAChatMessageTypeContainsMeta) {
         [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:message.containsMeta.richPreview.url]];
     } else if (message.node) {
-        [message.MEGALink mnz_showLinkView];
+        [MEGALinkManager showFileLinkView];
     }
 }
 

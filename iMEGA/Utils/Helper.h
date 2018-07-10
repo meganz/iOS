@@ -125,7 +125,9 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ __nullable)(void))completion;
 + (void)showMasterKeyCopiedAlert;
 
-#pragma mark - Logout
+#pragma mark - Manage session
+
++ (BOOL)hasSession_alertIfNot;
 
 + (void)logout;
 + (void)logoutFromConfirmAccount;

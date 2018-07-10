@@ -4,12 +4,16 @@
 #import <UserNotifications/UserNotifications.h>
 
 #import "CallViewController.h"
+#import "ChatRoomsViewController.h"
+#import "DevicePermissionsHelper.h"
+#import "Helper.h"
+#import "MEGANavigationController.h"
 #import "MEGAProviderDelegate.h"
 #import "MessagesViewController.h"
 #import "MEGAChatCall+MNZCategory.h"
+#import "MyAccountHallViewController.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
-#import "DevicePermissionsHelper.h"
 
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate, MEGAChatCallDelegate>
 
@@ -132,6 +136,35 @@
     for (UITabBarItem *tabBarItem in self.tabBar.items) {
         [self reloadInsetsForTabBarItem:tabBarItem];
     }
+}
+
+#pragma mark - Public
+
+- (void)openChatRoomNumber:(NSNumber *)chatNumber {
+    if (chatNumber) {
+        self.selectedIndex = CHAT;
+        MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CHAT];
+        ChatRoomsViewController *chatRoomsVC = navigationController.viewControllers.firstObject;
+        [chatRoomsVC openChatRoomWithID:chatNumber.unsignedLongLongValue];
+    }
+}
+
+- (void)showAchievements {
+    if ([Helper hasSession_alertIfNot]) {
+        self.selectedIndex = MYACCOUNT;
+        MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:MYACCOUNT];
+        MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
+        if ([[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
+            [myAccountHallVC openAchievements];
+        }
+    }
+}
+
+- (void)showOffline {
+    self.selectedIndex = MYACCOUNT;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:MYACCOUNT];
+    MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
+    [myAccountHallVC openOffline];
 }
 
 #pragma mark - Private
