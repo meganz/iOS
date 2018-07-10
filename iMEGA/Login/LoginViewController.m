@@ -106,22 +106,9 @@
             self.email = self.emailTextField.text;
             self.password = self.passwordView.passwordTextField.text;
             
-            MEGAMultiFactorAuthCheckRequestDelegate *delegate = [[MEGAMultiFactorAuthCheckRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
-                if (request.flag) {
-                    TwoFactorAuthenticationViewController *twoFactorAuthenticationVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"TwoFactorAuthenticationViewControllerID"];
-                    twoFactorAuthenticationVC.twoFAMode = TwoFactorAuthenticationLogin;
-                    twoFactorAuthenticationVC.email = self.email;
-                    twoFactorAuthenticationVC.password = self.password;
-                    
-                    [self.navigationController pushViewController:twoFactorAuthenticationVC animated:YES];
-                } else {
-                    NSOperationQueue *operationQueue = [NSOperationQueue new];
-                    
-                    NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(generateKeys) object:nil];
-                    [operationQueue addOperation:operation];
-                }
-            }];
-            [[MEGASdkManager sharedMEGASdk] multiFactorAuthCheckWithEmail:self.email delegate:delegate];
+            NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(generateKeys) object:nil];
+            NSOperationQueue *operationQueue = [NSOperationQueue new];
+            [operationQueue addOperation:operation];
         }
     }
 }
@@ -143,6 +130,16 @@
     NSString *publicKey  = [[MEGASdkManager sharedMEGASdk] hashForBase64pwkey:privateKey email:self.email];
     
     MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
+    loginRequestDelegate.errorCompletion = ^(MEGAError *error) {
+        if (error.type == MEGAErrorTypeApiEMFARequired) {
+            TwoFactorAuthenticationViewController *twoFactorAuthenticationVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"TwoFactorAuthenticationViewControllerID"];
+            twoFactorAuthenticationVC.twoFAMode = TwoFactorAuthenticationLogin;
+            twoFactorAuthenticationVC.email = self.email;
+            twoFactorAuthenticationVC.password = self.password;
+            
+            [self.navigationController pushViewController:twoFactorAuthenticationVC animated:YES];
+        }
+    };
     [[MEGASdkManager sharedMEGASdk] fastLoginWithEmail:self.email stringHash:publicKey base64pwKey:privateKey delegate:loginRequestDelegate];
 }
 
