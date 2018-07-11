@@ -35,7 +35,6 @@
 #import "MEGATransfer+MNZCategory.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
-#import "NSURL+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 
 #import <UserNotifications/UserNotifications.h>
@@ -1764,9 +1763,12 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             [self.navigationController pushViewController:chatAttachedContactsVC animated:YES];
         }
     } else if (message.type == MEGAChatMessageTypeContainsMeta) {
-        [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:message.containsMeta.richPreview.url]];
+        NSURL *url = [NSURL URLWithString:message.containsMeta.richPreview.url];
+        [MEGALinkManager setLinkURL:url];
+        [MEGALinkManager processLinkURL:url];
     } else if (message.node) {
-        [MEGALinkManager showFileLinkView];
+        [MEGALinkManager setLinkURL:message.MEGALink];
+        [MEGALinkManager processLinkURL:message.MEGALink];
     }
 }
 
