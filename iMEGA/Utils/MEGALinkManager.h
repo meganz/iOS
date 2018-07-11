@@ -44,7 +44,7 @@
 
 + (void)showLinkNotValid;
 
-+ (void)presentConfirmViewControllerType:(ConfirmType)confirmType link:(NSString *)link email:(NSString *)email;
++ (void)presentConfirmViewWithURLType:(URLType)urlType link:(NSString *)link email:(NSString *)email;
 
 + (void)showFileLinkView;
 

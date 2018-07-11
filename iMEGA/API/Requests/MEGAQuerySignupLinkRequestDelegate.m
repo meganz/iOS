@@ -38,7 +38,7 @@
 
 - (void)manageQuerySignupLinkRequest {
     if (self.urlType == URLTypeConfirmationLink) {
-        [MEGALinkManager presentConfirmViewControllerType:ConfirmTypeAccount link:[MEGALinkManager linkURL].absoluteString email:self.email];
+        [MEGALinkManager presentConfirmViewWithURLType:URLTypeConfirmationLink link:[MEGALinkManager linkURL].absoluteString email:self.email];
     } else if (self.urlType == URLTypeNewSignUpLink && [MEGALinkManager emailOfNewSignUpLink])  {
         UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
         if ([rootViewController isKindOfClass:[MEGANavigationController class]]) {
