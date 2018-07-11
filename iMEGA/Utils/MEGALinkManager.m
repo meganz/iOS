@@ -37,6 +37,9 @@ static URLType urlType;
 
 static NSString *emailOfNewSignUpLink;
 
+static NSMutableArray *nodesFromLinkMutableArray;
+static LinkOption linkOption;
+
 static NSString *nodeToPresentBase64Handle;
 
 @implementation MEGALinkManager
@@ -74,14 +77,36 @@ static NSString *nodeToPresentBase64Handle;
 
 #pragma mark - Utils to manage links when you are not logged
 
++ (NSMutableArray *)nodesFromLinkMutableArray {
+    if (nodesFromLinkMutableArray == nil) {
+        nodesFromLinkMutableArray = [[NSMutableArray alloc] init];
+    }
+    
+    return nodesFromLinkMutableArray;
+}
+
++ (LinkOption)selectedOption {
+    return linkOption;
+}
+
++ (void)setSelectedOption:(LinkOption)selectedOption {
+    linkOption = selectedOption;
+}
+
++ (void)resetUtilsForLinksWithoutSession {
+    [[MEGALinkManager nodesFromLinkMutableArray] removeAllObjects];
+    
+    [MEGALinkManager setSelectedOption:LinkOptionDefault];
+}
+
 + (void)processSelectedOptionOnLink {
-    if ([Helper selectedOptionOnLink] == 0) {
+    if ([MEGALinkManager selectedOption] == LinkOptionDefault) {
         return;
     }
     
-    switch ([Helper selectedOptionOnLink]) {
-        case 1: { //Import file from link
-            MEGANode *node = [Helper linkNode];
+    switch ([MEGALinkManager selectedOption]) {
+        case LinkOptionImportNode: {
+            MEGANode *node = [[MEGALinkManager nodesFromLinkMutableArray] firstObject];
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
             [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
             
@@ -91,8 +116,8 @@ static NSString *nodeToPresentBase64Handle;
             break;
         }
             
-        case 2: { //Download file from link
-            MEGANode *node = [Helper linkNode];
+        case LinkOptionDownloadNode: {
+            MEGANode *node = [[MEGALinkManager nodesFromLinkMutableArray] firstObject];
             if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
                 return;
             }
@@ -105,17 +130,18 @@ static NSString *nodeToPresentBase64Handle;
             break;
         }
             
-        case 3: { //Import folder or nodes from link
+        case LinkOptionImportFolderOrNodes: {
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
             BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
             [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
-            browserVC.selectedNodesArray = [NSArray arrayWithArray:[Helper nodesFromLinkMutableArray]];
+            browserVC.selectedNodesArray = [NSArray arrayWithArray:[MEGALinkManager nodesFromLinkMutableArray]];
+            
             [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
             break;
         }
             
-        case 4: { //Download folder or nodes from link
-            for (MEGANode *node in [Helper nodesFromLinkMutableArray]) {
+        case LinkOptionDownloadFolderOrNodes: {
+            for (MEGANode *node in [MEGALinkManager nodesFromLinkMutableArray]) {
                 if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:YES]) {
                     return;
                 }
@@ -125,7 +151,7 @@ static NSString *nodeToPresentBase64Handle;
             [mainTBC showOffline];
             
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-            for (MEGANode *node in [Helper nodesFromLinkMutableArray]) {
+            for (MEGANode *node in [MEGALinkManager nodesFromLinkMutableArray]) {
                 [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES shouldOverwrite:NO];
             }
             break;
@@ -135,9 +161,7 @@ static NSString *nodeToPresentBase64Handle;
             break;
     }
     
-    [Helper setLinkNode:nil];
-    [[Helper nodesFromLinkMutableArray] removeAllObjects];
-    [Helper setSelectedOptionOnLink:0];
+    [MEGALinkManager resetUtilsForLinksWithoutSession];
 }
 
 #pragma mark - Spotlight

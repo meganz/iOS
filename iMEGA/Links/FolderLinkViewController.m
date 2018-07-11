@@ -11,15 +11,17 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
+#import "MEGALinkManager.h"
 #import "UIImageView+MNZCategory.h"
 
+#import "BrowserViewController.h"
+#import "CustomActionViewController.h"
 #import "DisplayMode.h"
 #import "NodeTableViewCell.h"
 #import "MainTabBarController.h"
-#import "UnavailableLinkView.h"
 #import "LoginViewController.h"
-#import "BrowserViewController.h"
-#import "CustomActionViewController.h"
+#import "LinkOption.h"
+#import "UnavailableLinkView.h"
 
 @interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, CustomActionViewControllerDelegate> {
     
@@ -349,8 +351,7 @@
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
-    [Helper setLinkNode:nil];
-    [Helper setSelectedOptionOnLink:0];
+    [MEGALinkManager resetUtilsForLinksWithoutSession];
     
     [[MEGASdkManager sharedMEGASdkFolder] logout];
     
@@ -497,11 +498,11 @@
         }];
     } else {
         if (self.selectedNodesArray.count != 0) {
-            [[Helper nodesFromLinkMutableArray] addObjectsFromArray:_selectedNodesArray];
+            [[MEGALinkManager nodesFromLinkMutableArray] addObjectsFromArray:self.selectedNodesArray];
         } else {
-            [[Helper nodesFromLinkMutableArray] addObject:_parentNode];
+            [[MEGALinkManager nodesFromLinkMutableArray] addObject:self.parentNode];
         }
-        [Helper setSelectedOptionOnLink:4]; //Download folder or nodes from link
+        [MEGALinkManager setSelectedOption:LinkOptionDownloadFolderOrNodes];
         
         LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
         [self.navigationController pushViewController:loginVC animated:YES];
@@ -527,14 +528,14 @@
         }];
     } else {
         if (self.selectedNodesArray.count != 0) {
-            [[Helper nodesFromLinkMutableArray] addObjectsFromArray:_selectedNodesArray];
+            [[MEGALinkManager nodesFromLinkMutableArray] addObjectsFromArray:self.selectedNodesArray];
         } else {
             if (self.parentNode == nil) {
                 return;
             }
-            [[Helper nodesFromLinkMutableArray] addObject:self.parentNode];
+            [[MEGALinkManager nodesFromLinkMutableArray] addObject:self.parentNode];
         }
-        [Helper setSelectedOptionOnLink:3]; //Import folder or nodes from link
+        [MEGALinkManager setSelectedOption:LinkOptionImportFolderOrNodes];
         
         LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
         [self.navigationController pushViewController:loginVC animated:YES];

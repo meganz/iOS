@@ -5,6 +5,7 @@
 #import "Helper.h"
 #import "MEGAGetPublicNodeRequestDelegate.h"
 #import "MEGANode+MNZCategory.h"
+#import "MEGALinkManager.h"
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "NSString+MNZCategory.h"
@@ -265,9 +266,7 @@
 #pragma mark - IBActions
 
 - (IBAction)cancelTouchUpInside:(UIBarButtonItem *)sender {
-    
-    [Helper setLinkNode:nil];
-    [Helper setSelectedOptionOnLink:0];
+    [MEGALinkManager resetUtilsForLinksWithoutSession];
     
     [SVProgressHUD dismiss];
     

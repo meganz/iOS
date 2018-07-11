@@ -60,15 +60,6 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 + (NSString *)pathForSharedSandboxCacheDirectory:(NSString *)directory;
 
-#pragma mark - Utils for links when you are not logged
-
-+ (MEGANode *)linkNode;
-+ (void)setLinkNode:(MEGANode *)node;
-+ (NSMutableArray *)nodesFromLinkMutableArray;
-
-+ (NSInteger)selectedOptionOnLink;
-+ (void)setSelectedOptionOnLink:(NSInteger)option;
-
 #pragma mark - Utils downloaded and downloading nodes
 
 + (NSMutableDictionary *)downloadingNodes;

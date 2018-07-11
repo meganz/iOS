@@ -1137,6 +1137,7 @@
 		5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeNameViewController.m; sourceTree = "<group>"; };
 		5BDE180A1F500DEE00CD9F82 /* MyAccountBaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyAccountBaseViewController.h; sourceTree = "<group>"; };
 		5BDE180B1F500DEE00CD9F82 /* MyAccountBaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyAccountBaseViewController.m; sourceTree = "<group>"; };
+		5BE08A0820F4DB0100950D30 /* LinkOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LinkOption.h; sourceTree = "<group>"; };
 		5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGARemoveRequestDelegate.m; path = API/Requests/MEGARemoveRequestDelegate.m; sourceTree = "<group>"; };
 		5BFA346A1FAB4169005BFC4E /* MEGARemoveRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGARemoveRequestDelegate.h; path = API/Requests/MEGARemoveRequestDelegate.h; sourceTree = "<group>"; };
 		5BFA346C1FAB6282005BFC4E /* MEGAMoveRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAMoveRequestDelegate.h; path = API/Requests/MEGAMoveRequestDelegate.h; sourceTree = "<group>"; };
@@ -2622,6 +2623,7 @@
 				5B72A14B20D3A69C007FE4FD /* URLType.h */,
 				5B2417E720527FB800C8DDE2 /* DisplayMode.h */,
 				83681574202AFA1700CA8EFC /* MegaNodeActionType.h */,
+				5BE08A0820F4DB0100950D30 /* LinkOption.h */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
