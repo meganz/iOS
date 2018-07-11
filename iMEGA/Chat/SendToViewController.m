@@ -253,15 +253,17 @@
             break;
         }
         case MEGAChatMessageTypeContact: {
-            MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[message userEmailAtIndex:0]];
-            if (user) {
-                [[MEGASdkManager sharedMEGAChatSdk] attachContactsToChat:chatId contacts:@[user]];
-                if (--self.pendingForwardOperations == 0) {
-                    if (self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count == 1) {
-                        [self goToDestinationChatAndDismiss:chatId];
-                    } else {
-                        [self showSuccessMessage];
-                    }
+            NSMutableArray<MEGAUser *> *users = [[NSMutableArray<MEGAUser *> alloc] initWithCapacity:message.usersCount];
+            for (NSUInteger i = 0; i < message.usersCount; i++) {
+                MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[message userEmailAtIndex:i]];
+                [users addObject:user];
+            }
+            [[MEGASdkManager sharedMEGAChatSdk] attachContactsToChat:chatId contacts:users];
+            if (--self.pendingForwardOperations == 0) {
+                if (self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count == 1) {
+                    [self goToDestinationChatAndDismiss:chatId];
+                } else {
+                    [self showSuccessMessage];
                 }
             }
             
