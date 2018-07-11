@@ -73,8 +73,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 @property (strong, nonatomic) UIProgressView *navigationBarProgressView;
 
-@property (strong, nonatomic) UIBarButtonItem * videoCallBarButtonItem;
-@property (strong, nonatomic) UIBarButtonItem * audioCallBarButtonItem;
+@property (strong, nonatomic) NSArray<UIBarButtonItem *> *leftBarButtonItems;
+@property (strong, nonatomic) UIBarButtonItem *videoCallBarButtonItem;
+@property (strong, nonatomic) UIBarButtonItem *audioCallBarButtonItem;
 
 @property (nonatomic) long long totalBytesToUpload;
 @property (nonatomic) long long remainingBytesToUpload;
@@ -95,6 +96,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 @property (nonatomic) NSMutableSet<MEGAChatMessage *> *observedDialogMessages;
 @property (nonatomic) NSMutableSet<MEGAChatMessage *> *observedNodeMessages;
 @property (nonatomic) NSUInteger richLinkWarningCounterValue;
+
+@property (nonatomic) BOOL selectingMessages;
+@property (nonatomic) NSMutableArray<MEGAChatMessage *> *selectedMessages;
 
 @end
 
@@ -140,6 +144,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
      //Register custom menu actions for cells.
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(edit:message:)];
+    [JSQMessagesCollectionViewCell registerMenuAction:@selector(forward:message:)];
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(import:message:)];
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(download:message:)];
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(addContact:message:)];
@@ -169,10 +174,14 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     self.unreadLabel.textColor = [UIColor whiteColor];
     self.unreadLabel.userInteractionEnabled = YES;
     
+    self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.leftBarButtonItem = nil;
+
     if (self.presentingViewController && self.parentViewController) {
         _unreadBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.unreadLabel];
         UIBarButtonItem *chatBackBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"chat", @"Chat section header") style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
-        self.navigationItem.leftBarButtonItems = @[chatBackBarButtonItem, self.unreadBarButtonItem];
+        
+        self.leftBarButtonItems = @[chatBackBarButtonItem, self.unreadBarButtonItem];
     } else {
         //TODO: leftItemsSupplementBackButton
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 66, 44)];
@@ -182,9 +191,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         [view addSubview:imageView];
         [view addSubview:self.unreadLabel];
         
-        UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:view];
-        self.navigationItem.leftBarButtonItems = @[backBarButtonItem];
+        self.leftBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:view]];
     }
+    self.navigationItem.leftBarButtonItems = self.leftBarButtonItems;
+
     self.stopInvitingContacts = NO;
     
     self.navigationController.interactivePopGestureRecognizer.delegate = nil;
@@ -231,6 +241,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     // Array of observed messages:
     self.observedDialogMessages = [[NSMutableSet<MEGAChatMessage *> alloc] init];
     self.observedNodeMessages = [[NSMutableSet<MEGAChatMessage *> alloc] init];
+    
+    // Selection:
+    self.selectingMessages = NO;
+    self.selectedMessages = [[NSMutableArray<MEGAChatMessage *> alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -243,6 +257,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self customNavigationBarLabel];
     [self rightBarButtonItems];
     [self updateUnreadLabel];
+    [self customForwardingToolbar];
     
     self.inputToolbar.contentView.textView.text = [[MEGAStore shareInstance] fetchChatDraftWithChatId:self.chatRoom.chatId].text;
 }
@@ -333,75 +348,92 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     }
 }
 
-- (void)customNavigationBarLabel {    
-    if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
-        self.inputToolbar.hidden = YES;
-    } else {
-        self.inputToolbar.hidden = NO;
-    }
-    
+- (void)customNavigationBarLabel {
     UILabel *label = [[UILabel alloc] init];
-    NSString *chatRoomTitle = self.chatRoom.title ? self.chatRoom.title : @"";
-    NSString *chatRoomState;
     
-    MEGAChatConnection connectionState = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
-    switch (connectionState) {
-        case MEGAChatConnectionOffline:
-        case MEGAChatConnectionInProgress:            
-        case MEGAChatConnectionLogging:
-            chatRoomState = AMLocalizedString(@"connecting", nil);
-            self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:MEGAChatStatusOffline];
-            
-            break;
-            
-        case MEGAChatConnectionOnline:
-            if (self.chatRoom.isGroup) {
-                if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
-                    chatRoomState = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
-                }
-            } else {
-                if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
-                    chatRoomState = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
-                } else {
-                    chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
-                    self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
-                }
-            }
-            break;
-    }
-    
-    if (chatRoomState) {
-        label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:chatRoomState];
-        self.lastChatRoomStateString = chatRoomState;
+    if (self.selectingMessages) {
+        self.inputToolbar.hidden = YES;
+
+        label.text = [NSString stringWithFormat:AMLocalizedString(@"xSelected", nil), self.selectedMessages.count];
+        label.font = [UIFont mnz_SFUISemiBoldWithSize:17.0f];
+        label.textColor = UIColor.whiteColor;
+        
+        self.navigationItem.leftBarButtonItems = @[];
     } else {
-        label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:@""];
+        self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+
+        NSString *chatRoomTitle = self.chatRoom.title ? self.chatRoom.title : @"";
+        NSString *chatRoomState;
+        
+        MEGAChatConnection connectionState = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
+        switch (connectionState) {
+            case MEGAChatConnectionOffline:
+            case MEGAChatConnectionInProgress:
+            case MEGAChatConnectionLogging:
+                chatRoomState = AMLocalizedString(@"connecting", nil);
+                self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:MEGAChatStatusOffline];
+                
+                break;
+                
+            case MEGAChatConnectionOnline:
+                if (self.chatRoom.isGroup) {
+                    if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
+                        chatRoomState = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
+                    }
+                } else {
+                    if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
+                        chatRoomState = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
+                    } else {
+                        chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+                        self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+                    }
+                }
+                break;
+        }
+        
+        if (chatRoomState) {
+            label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:chatRoomState];
+            self.lastChatRoomStateString = chatRoomState;
+        } else {
+            label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:@""];
+        }
+        
+        label.adjustsFontSizeToFitWidth = YES;
+        label.minimumScaleFactor = 0.8f;
+        label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
+        
+        label.userInteractionEnabled = YES;
+        label.superview.userInteractionEnabled = YES;
+        
+        UITapGestureRecognizer *titleTapRecognizer =
+        [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatRoomTitleDidTap)];
+        label.gestureRecognizers = @[titleTapRecognizer];
+        
+        self.navigationItem.leftBarButtonItems = self.leftBarButtonItems;
     }
     
-    label.adjustsFontSizeToFitWidth = YES;
-    label.minimumScaleFactor = 0.8f;
-    label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
     [self.navigationItem setTitleView:label];
-    
-    label.userInteractionEnabled = YES;
-    label.superview.userInteractionEnabled = YES;
-    
-    UITapGestureRecognizer *titleTapRecognizer =
-    [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatRoomTitleDidTap)];
-    label.gestureRecognizers = @[titleTapRecognizer];
 }
 
 - (void)rightBarButtonItems {
-    if (self.chatRoom.isGroup) {
-        if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
-            UIBarButtonItem *addContactBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"addContact"] style:UIBarButtonItemStyleDone target:self action:@selector(presentAddOrAttachParticipantToGroup:)];
-            self.navigationItem.rightBarButtonItem = addContactBarButtonItem;
-        }
+    if (self.selectingMessages) {
+        UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStyleDone target:self action:@selector(cancelSelecting:)];
+        self.navigationItem.rightBarButtonItems = @[cancelBarButtonItem];
     } else {
-        _videoCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"videoCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
-        _audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audioCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
-        self.videoCallBarButtonItem.tag = 1;
-        self.navigationItem.rightBarButtonItems = @[self.videoCallBarButtonItem, self.audioCallBarButtonItem];
-        self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard) && [MEGAReachabilityManager isReachable]);
+        if (self.chatRoom.isGroup) {
+            if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
+                UIBarButtonItem *addContactBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"addContact"] style:UIBarButtonItemStyleDone target:self action:@selector(presentAddOrAttachParticipantToGroup:)];
+                self.navigationItem.rightBarButtonItems = @[addContactBarButtonItem];
+            } else {
+                self.navigationItem.rightBarButtonItems = @[];
+            }
+        } else {
+            _videoCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"videoCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
+            _audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audioCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
+            self.videoCallBarButtonItem.tag = 1;
+            self.navigationItem.rightBarButtonItems = @[self.videoCallBarButtonItem, self.audioCallBarButtonItem];
+            self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard) && [MEGAReachabilityManager isReachable]);
+        }
     }
 }
 
@@ -673,12 +705,13 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)setupMenuController:(UIMenuController *)menuController {
     UIMenuItem *editMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected") action:@selector(edit:message:)];
+    UIMenuItem *forwardMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"forward", @"Item of a menu to forward a message chat to another chatroom") action:@selector(forward:message:)];
     UIMenuItem *importMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"import", @"Caption of a button to edit the files that are selected") action:@selector(import:message:)];
     UIMenuItem *downloadMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"saveForOffline", @"Caption of a button to edit the files that are selected") action:@selector(download:message:)];
     UIMenuItem *addContactMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") action:@selector(addContact:message:)];
     UIMenuItem *revokeMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"delete", @"") action:@selector(revoke:message:indexPath:)];
     UIMenuItem *removeRichLinkMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"removePreview", @"Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases).") action:@selector(removeRichPreview:message:indexPath:)];
-    menuController.menuItems = @[importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem, revokeMenuItem, removeRichLinkMenuItem];
+    menuController.menuItems = @[forwardMenuItem, importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem, revokeMenuItem, removeRichLinkMenuItem];
 }
 
 - (void)loadNodesFromMessage:(MEGAChatMessage *)message atTheBeginning:(BOOL)atTheBeginning {
@@ -1052,6 +1085,67 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     });
 }
 
+#pragma mark - Selection
+
+- (void)customForwardingToolbar {
+    UIBarButtonItem *shareBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(doNothing)];
+    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem *forwardBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"forwardToolbar"] style:UIBarButtonItemStyleDone target:self action:@selector(forwardSelectedMessages)];
+    [self setToolbarItems:@[shareBarButtonItem, flexibleItem, forwardBarButtonItem]];
+}
+
+- (void)updateForwardingToolbar {
+    for (UIBarButtonItem *item in self.toolbarItems) {
+        item.enabled = self.selectedMessages.count > 0;
+    }
+}
+
+- (void)cancelSelecting:(id)sender {
+    self.selectingMessages = NO;
+    [self.selectedMessages removeAllObjects];
+    [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
+    [self rightBarButtonItems];
+    
+    [self.navigationController setToolbarHidden:YES animated:YES];
+    
+    [self customNavigationBarLabel];
+    [self updateForwardingToolbar];
+}
+
+- (void)toggleSelectedMessage:(MEGAChatMessage *)message atIndexPath:(NSIndexPath *)indexPath {
+    if ([self.selectedMessages containsObject:message]) {
+        [self.selectedMessages removeObject:message];
+    } else {
+        [self.selectedMessages addObject:message];
+    }
+    [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+    
+    [self customNavigationBarLabel];
+    [self updateForwardingToolbar];
+}
+
+- (void)forwardSelectedMessages {
+    UIStoryboard *chatStoryboard = [UIStoryboard storyboardWithName:@"Chat" bundle:nil];
+    UINavigationController *sendToNC = [chatStoryboard instantiateViewControllerWithIdentifier:@"SendToNavigationControllerID"];
+    SendToViewController *sendToViewController = sendToNC.viewControllers.firstObject;
+    sendToViewController.sendMode = SendModeForward;
+    sendToViewController.messages = [self.selectedMessages copy];
+    sendToViewController.completion = ^(uint64_t chatId) {
+        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
+        MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
+        messagesVC.chatRoom = chatRoom;
+        
+        UINavigationController *chatNC = (UINavigationController *)self.parentViewController;
+        [chatNC pushViewController:messagesVC animated:YES];
+        [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
+        NSMutableArray *viewControllers = chatNC.viewControllers.mutableCopy;
+        [viewControllers removeObjectAtIndex:(viewControllers.count - 2)];
+        chatNC.viewControllers = viewControllers;
+    };
+    [self presentViewController:sendToNC animated:YES completion:nil];
+    [self cancelSelecting:nil];
+}
+
 #pragma mark - JSQMessagesViewController method overrides
 
 - (void)didPressSendButton:(UIButton *)button
@@ -1187,7 +1281,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             NSString *alertControllerTitle = AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
             UIAlertController *selectOptionAlertController = [UIAlertController alertControllerWithTitle:alertControllerTitle message:nil preferredStyle:UIAlertControllerStyleActionSheet];
             [selectOptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                self.inputToolbar.hidden = NO;
+                self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
             }]];
             
             UIAlertAction *sendFromCloudDriveAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fromCloudDrive", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -1441,6 +1535,15 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         cell.textView.attributedText = message.attributedText;
     }
     
+    if (self.selectingMessages) {
+        cell.accessoryButton.hidden = YES;
+        cell.avatarImageView.hidden = YES;
+        cell.selectionImageView.hidden = ![self.selectedMessages containsObject:message];
+    } else {
+        cell.avatarImageView.hidden = NO;
+        cell.selectionImageView.hidden = YES;
+    }
+    
     return cell;
 }
 
@@ -1511,7 +1614,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         case MEGAChatMessageTypeNormal: {
             //All messages
             if (action == @selector(copy:)) return YES;
-            
+            if (action == @selector(forward:message:)) return YES;
+
             //Your messages
             if ([message.senderId isEqualToString:self.senderId]) {
                 if (action == @selector(delete:)) {
@@ -1532,7 +1636,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         case MEGAChatMessageTypeContainsMeta: {
             //All messages
             if (action == @selector(copy:)) return YES;
-            
+            if (action == @selector(forward:message:)) return YES;
+
             //Your messages
             if ([message.senderId isEqualToString:self.senderId]) {
                 if (action == @selector(delete:)) {
@@ -1564,7 +1669,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             
         case MEGAChatMessageTypeAttachment: {
             if (action == @selector(download:message:)) return YES;
-            
+            if (action == @selector(forward:message:)) return YES;
+
             if ([message.senderId isEqualToString:self.senderId]) {
                 if (action == @selector(revoke:message:indexPath:) && message.isDeletable) return YES;
             } else {
@@ -1574,6 +1680,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         }
             
         case MEGAChatMessageTypeContact: {
+            if (action == @selector(forward:message:)) return YES;
+
             if ([message.senderId isEqualToString:self.senderId]) {
                 if (action == @selector(delete:)) {
                     if (message.isDeletable) return YES;
@@ -1597,6 +1705,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     if (action == @selector(edit:message:)) {
         [self edit:sender message:message];
+        return;
+    }
+    if (action == @selector(forward:message:)) {
+        [self forward:sender message:message];
         return;
     }
     if (action == @selector(import:message:)) {
@@ -1635,6 +1747,18 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self.inputToolbar.contentView.textView becomeFirstResponder];
     self.inputToolbar.contentView.textView.text = message.content;
     self.editMessage = message;
+}
+
+- (void)forward:(id)sender message:(MEGAChatMessage *)message {
+    self.selectingMessages = YES;
+    [self.selectedMessages addObject:message];
+    [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
+    [self rightBarButtonItems];
+    
+    [self.navigationController setToolbarHidden:NO animated:YES];
+    
+    [self customNavigationBarLabel];
+    [self updateForwardingToolbar];
 }
 
 - (void)import:(id)sender message:(MEGAChatMessage *)message {
@@ -1735,48 +1859,58 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self hideInputToolbar];
     
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
-    if (message.type == MEGAChatMessageTypeAttachment) {
-        if (message.nodeList.size.unsignedIntegerValue == 1) {
-            MEGANode *node = [message.nodeList nodeAtIndex:0];
-            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                NSArray *reverseArray = [[[self.nodesLoaded reverseObjectEnumerator] allObjects] mutableCopy];
-                [node mnz_openImageInNavigationController:self.navigationController withNodes:reverseArray folderLink:NO displayMode:DisplayModeSharedItem enableMoveToRubbishBin:NO];
+    
+    if (self.selectingMessages) {
+        [self toggleSelectedMessage:message atIndexPath:indexPath];
+    } else {
+        if (message.type == MEGAChatMessageTypeAttachment) {
+            if (message.nodeList.size.unsignedIntegerValue == 1) {
+                MEGANode *node = [message.nodeList nodeAtIndex:0];
+                if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+                    NSArray *reverseArray = [[[self.nodesLoaded reverseObjectEnumerator] allObjects] mutableCopy];
+                    [node mnz_openImageInNavigationController:self.navigationController withNodes:reverseArray folderLink:NO displayMode:DisplayModeSharedItem enableMoveToRubbishBin:NO];
+                } else {
+                    [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+                }
             } else {
-                [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+                NSArray *reverseArray = [[[self.nodesLoaded reverseObjectEnumerator] allObjects] mutableCopy];
+                ChatAttachedNodesViewController *chatAttachedNodesVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatAttachedNodesViewControllerID"];
+                chatAttachedNodesVC.message = message;
+                chatAttachedNodesVC.nodesLoadedInChatroom = reverseArray;
+                [self.navigationController pushViewController:chatAttachedNodesVC animated:YES];
             }
-        } else {
-            NSArray *reverseArray = [[[self.nodesLoaded reverseObjectEnumerator] allObjects] mutableCopy];
-            ChatAttachedNodesViewController *chatAttachedNodesVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatAttachedNodesViewControllerID"];
-            chatAttachedNodesVC.message = message;
-            chatAttachedNodesVC.nodesLoadedInChatroom = reverseArray;
-            [self.navigationController pushViewController:chatAttachedNodesVC animated:YES];
-        }
-    } else if (message.type == MEGAChatMessageTypeContact) {
-        if (message.usersCount == 1) {
-            NSString *userEmail = [message userEmailAtIndex:0];
-            MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:userEmail];
-            if ((user != nil) && (user.visibility == MEGAUserVisibilityVisible)) { //It's one of your contacts, open 'Contact Info' view
-                ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
-                contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
-                contactDetailsVC.userEmail          = userEmail;
-                contactDetailsVC.userName           = [message userNameAtIndex:0];
-                contactDetailsVC.userHandle         = [message userHandleAtIndex:0];
-                [self.navigationController pushViewController:contactDetailsVC animated:YES];
+        } else if (message.type == MEGAChatMessageTypeContact) {
+            if (message.usersCount == 1) {
+                NSString *userEmail = [message userEmailAtIndex:0];
+                MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:userEmail];
+                if ((user != nil) && (user.visibility == MEGAUserVisibilityVisible)) { //It's one of your contacts, open 'Contact Info' view
+                    ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
+                    contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
+                    contactDetailsVC.userEmail          = userEmail;
+                    contactDetailsVC.userName           = [message userNameAtIndex:0];
+                    contactDetailsVC.userHandle         = [message userHandleAtIndex:0];
+                    [self.navigationController pushViewController:contactDetailsVC animated:YES];
+                }
+            } else {
+                ChatAttachedContactsViewController *chatAttachedContactsVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatAttachedContactsViewControllerID"];
+                chatAttachedContactsVC.message = message;
+                [self.navigationController pushViewController:chatAttachedContactsVC animated:YES];
             }
-        } else {
-            ChatAttachedContactsViewController *chatAttachedContactsVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatAttachedContactsViewControllerID"];
-            chatAttachedContactsVC.message = message;
-            [self.navigationController pushViewController:chatAttachedContactsVC animated:YES];
+        } else if (message.type == MEGAChatMessageTypeContainsMeta) {
+            [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:message.containsMeta.richPreview.url]];
+        } else if (message.node) {
+            [message.MEGALink mnz_showLinkView];
         }
-    } else if (message.type == MEGAChatMessageTypeContainsMeta) {
-        [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:message.containsMeta.richPreview.url]];
-    } else if (message.node) {
-        [message.MEGALink mnz_showLinkView];
     }
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapCellAtIndexPath:(NSIndexPath *)indexPath touchLocation:(CGPoint)touchLocation {
-    [self hideInputToolbar];
+    if (self.selectingMessages) {
+        MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
+        [self toggleSelectedMessage:message atIndexPath:indexPath];
+    } else {
+        [self hideInputToolbar];
+    }
 }
 
 #pragma mark - JSQMessagesComposerTextViewPasteDelegate methods
@@ -1855,24 +1989,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         
         [self presentViewController:alertController animated:YES completion:nil];
     } else if (message.shouldShowForwardAccessory) {
-        UIStoryboard *chatStoryboard = [UIStoryboard storyboardWithName:@"Chat" bundle:nil];
-        UINavigationController *sendToNC = [chatStoryboard instantiateViewControllerWithIdentifier:@"SendToNavigationControllerID"];
-        SendToViewController *sendToViewController = sendToNC.viewControllers.firstObject;
-        sendToViewController.sendMode = SendModeForward;
-        sendToViewController.messages = @[message];
-        sendToViewController.completion = ^(uint64_t chatId) {
-            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
-            MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-            messagesVC.chatRoom = chatRoom;
-            
-            UINavigationController *chatNC = (UINavigationController *)self.parentViewController;
-            [chatNC pushViewController:messagesVC animated:YES];
-            [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
-            NSMutableArray *viewControllers = chatNC.viewControllers.mutableCopy;
-            [viewControllers removeObjectAtIndex:(viewControllers.count - 2)];
-            chatNC.viewControllers = viewControllers;
-        };
-        [self presentViewController:sendToNC animated:YES completion:nil];
+        [self.selectedMessages addObject:message];
+        [self forwardSelectedMessages];
     }
 }
 
