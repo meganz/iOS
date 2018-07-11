@@ -9,6 +9,7 @@
 #import "Helper.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGANodeList+MNZCategory.h"
+#import "MEGALinkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARemoveRequestDelegate.h"
 #import "MEGARenameRequestDelegate.h"
@@ -324,11 +325,11 @@
             }];
         } else {
             if (isFolderLink) {
-                [[Helper nodesFromLinkMutableArray] addObject:self];
-                [Helper setSelectedOptionOnLink:4]; //Download folder or nodes from link
+                [[MEGALinkManager nodesFromLinkMutableArray] addObject:self];
+                [MEGALinkManager setSelectedOption:LinkOptionDownloadFolderOrNodes];
             } else {
-                [Helper setLinkNode:self];
-                [Helper setSelectedOptionOnLink:2]; //Download file from link
+                [[MEGALinkManager nodesFromLinkMutableArray] addObject:self];
+                [MEGALinkManager setSelectedOption:LinkOptionDownloadNode];
             }
             
             LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
@@ -350,11 +351,11 @@
             }];
         } else {
             if (isFolderLink) {
-                [[Helper nodesFromLinkMutableArray] addObject:self];
-                [Helper setSelectedOptionOnLink:3]; //Import folder or nodes from link
+                [[MEGALinkManager nodesFromLinkMutableArray] addObject:self];
+                [MEGALinkManager setSelectedOption:LinkOptionImportFolderOrNodes];
             } else {
-                [Helper setLinkNode:self];
-                [Helper setSelectedOptionOnLink:1]; //Import file from link
+                [[MEGALinkManager nodesFromLinkMutableArray] addObject:self];
+                [MEGALinkManager setSelectedOption:LinkOptionImportNode];
             }
             
             LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];

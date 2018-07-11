@@ -28,10 +28,6 @@
 #import "ShareFolderActivity.h"
 #import "SendToChatActivity.h"
 
-static MEGANode *linkNode;
-static NSInteger linkNodeOption;
-static NSMutableArray *nodesFromLinkMutableArray;
-
 static NSUInteger totalOperations;
 static BOOL copyToPasteboard;
 
@@ -438,32 +434,6 @@ static MEGAIndexer *indexer;
         [fileManager createDirectoryAtPath:destinationPath withIntermediateDirectories:YES attributes:nil error:nil];
     }
     return destinationPath;
-}
-
-#pragma mark - Utils for links when you are not logged
-
-+ (MEGANode *)linkNode {
-    return linkNode;
-}
-
-+ (void)setLinkNode:(MEGANode *)node {
-    linkNode = node;
-}
-
-+ (NSMutableArray *)nodesFromLinkMutableArray {
-    if (nodesFromLinkMutableArray == nil) {
-        nodesFromLinkMutableArray = [[NSMutableArray alloc] init];
-    }
-    
-    return nodesFromLinkMutableArray;
-}
-
-+ (NSInteger)selectedOptionOnLink {
-    return linkNodeOption;
-}
-
-+ (void)setSelectedOptionOnLink:(NSInteger)option {
-    linkNodeOption = option;
 }
 
 #pragma mark - Utils download and downloading nodes

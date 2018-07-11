@@ -1,6 +1,7 @@
 
 #import <Foundation/Foundation.h>
 
+#import "LinkOption.h"
 #import "ConfirmAccountViewController.h"
 #import "URLType.h"
 
@@ -20,6 +21,13 @@
 + (void)setEmailOfNewSignUpLink:(NSString *)emailOfNewSignUpLink;
 
 #pragma mark - Utils to manage links when you are not logged
+
++ (NSMutableArray *)nodesFromLinkMutableArray;
+
++ (LinkOption)selectedOption;
++ (void)setSelectedOption:(LinkOption)selectedOption;
+
++ (void)resetUtilsForLinksWithoutSession;
 
 + (void)processSelectedOptionOnLink;
 
