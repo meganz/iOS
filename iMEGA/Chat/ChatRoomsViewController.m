@@ -88,10 +88,12 @@
             case ChatRoomsTypeDefault:
                 self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
                 self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+                self.addBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
                 break;
                 
             case ChatRoomsTypeArchived:
                 self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+                self.navigationItem.rightBarButtonItem = nil;
                 break;
         }
         
@@ -108,7 +110,6 @@
             self.tableView.tableHeaderView = nil;
         }
         
-        self.addBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
     } else {
         self.addBarButtonItem.enabled = NO;
         self.tableView.tableHeaderView = nil;
@@ -894,7 +895,16 @@
     [self.navigationController pushViewController:messagesVC animated:YES];
 }
 
-- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {    
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.isArchivedChatsRowVisible && indexPath.section == 0) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
     
     //TODO: While the "More" action only shows "Info" on a UIAlertController with UIAlertControllerStyleActionSheet style, it will replaced by the "Info" action itself
