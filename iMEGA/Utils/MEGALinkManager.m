@@ -409,11 +409,11 @@ static NSString *nodeToPresentBase64Handle;
     [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
 }
 
-+ (void)presentConfirmViewControllerType:(ConfirmType)confirmType link:(NSString *)link email:(NSString *)email {
++ (void)presentConfirmViewWithURLType:(URLType)urlType link:(NSString *)link email:(NSString *)email {
     MEGANavigationController *confirmAccountNavigationController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ConfirmAccountNavigationControllerID"];
     
     ConfirmAccountViewController *confirmAccountVC = confirmAccountNavigationController.viewControllers.firstObject;
-    confirmAccountVC.confirmType = confirmType;
+    confirmAccountVC.urlType = urlType;
     confirmAccountVC.confirmationLinkString = link;
     confirmAccountVC.emailString = email;
     

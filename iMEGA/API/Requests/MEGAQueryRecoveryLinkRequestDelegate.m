@@ -90,9 +90,9 @@
         }
     } else {
         if ([MEGALinkManager urlType] == URLTypeChangeEmailLink) {
-            [MEGALinkManager presentConfirmViewControllerType:ConfirmTypeEmail link:request.link email:request.email];
+            [MEGALinkManager presentConfirmViewWithURLType:URLTypeChangeEmailLink link:request.link email:request.email];
         } else if ([MEGALinkManager urlType] == URLTypeCancelAccountLink) {
-            [MEGALinkManager presentConfirmViewControllerType:ConfirmTypeCancelAccount link:request.link email:request.email];
+            [MEGALinkManager presentConfirmViewWithURLType:URLTypeCancelAccountLink link:request.link email:request.email];
         } else if ([MEGALinkManager urlType] == URLTypeRecoverLink) {
             if (request.flag) {
                 UIAlertController *masterKeyLoggedInAlertController;

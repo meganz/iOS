@@ -4,8 +4,10 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
+#import "MEGALinkManager.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
+#import "MEGASdkManager.h"
 #import "PasswordView.h"
 #import "UIApplication+MNZCategory.h"
 
@@ -45,13 +47,13 @@
         self.logoTopLayoutConstraint.constant = 24.f;
     }
     
-    if (self.confirmType == ConfirmTypeAccount) {
+    if (self.urlType == URLTypeConfirmationLink) {
         self.confirmTextLabel.text = AMLocalizedString(@"confirmText", @"Text shown on the confirm account view to remind the user what to do");
         [self.confirmAccountButton setTitle:AMLocalizedString(@"confirmAccountButton", @"Button title that triggers the confirm account action") forState:UIControlStateNormal];
-    } else if (self.confirmType == ConfirmTypeEmail) {
+    } else if (self.urlType == URLTypeChangeEmailLink) {
         self.confirmTextLabel.text = AMLocalizedString(@"verifyYourEmailAddress_description", @"Text shown on the confirm email view to remind the user what to do");
         [self.confirmAccountButton setTitle:AMLocalizedString(@"confirmEmail", @"Button text for the user to confirm their change of email address.") forState:UIControlStateNormal];
-    } else if (self.confirmType == ConfirmTypeCancelAccount) {
+    } else if (self.urlType == URLTypeCancelAccountLink) {
         self.confirmTextLabel.text = AMLocalizedString(@"enterYourPasswordToConfirmThatYouWanToClose", @"Account closure, message shown when you click on the link in the email to confirm the closure of your account");
         [self.confirmAccountButton setTitle:AMLocalizedString(@"closeAccount", @"Account closure, password check dialog when user click on closure email.") forState:UIControlStateNormal];
     }
@@ -81,11 +83,11 @@
         if ([self validateForm]) {
             [SVProgressHUD show];
             [self lockUI:YES];
-            if (self.confirmType == ConfirmTypeAccount) {
+            if (self.urlType == URLTypeConfirmationLink) {
                 [[MEGASdkManager sharedMEGASdk] confirmAccountWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
-            } else if (self.confirmType == ConfirmTypeEmail) {
+            } else if (self.urlType == URLTypeChangeEmailLink) {
                 [[MEGASdkManager sharedMEGASdk] confirmChangeEmailWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
-            } else if (self.confirmType == ConfirmTypeCancelAccount) {
+            } else if (self.urlType == URLTypeCancelAccountLink) {
                 [[MEGASdkManager sharedMEGASdk] confirmCancelAccountWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
             }
         }
@@ -95,11 +97,13 @@
 - (IBAction)cancelTouchUpInside:(UIButton *)sender {
     [self.passwordView.passwordTextField resignFirstResponder];
 
-    if (self.confirmType == ConfirmTypeAccount) {
+    if (self.urlType == URLTypeConfirmationLink) {
         NSString *message = AMLocalizedString(@"areYouSureYouWantToAbortTheRegistration", @"Asking whether the user really wants to abort/stop the registration process or continue on.");
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [MEGALinkManager resetLinkAndURLType];
+            
             if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionId"]) {
                 [[MEGASdkManager sharedMEGASdk] logout];
                 [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionId"];
