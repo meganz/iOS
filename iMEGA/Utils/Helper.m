@@ -32,9 +32,6 @@ static MEGANode *linkNode;
 static NSInteger linkNodeOption;
 static NSMutableArray *nodesFromLinkMutableArray;
 
-static NSUInteger totalOperations;
-static BOOL copyToPasteboard;
-
 static MEGAIndexer *indexer;
 
 @implementation Helper
@@ -708,13 +705,7 @@ static MEGAIndexer *indexer;
     return [NSString mnz_stringByFiles:files andFolders:folders];
 }
 
-+ (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray button:(UIBarButtonItem *)shareBarButtonItem {
-    return [self activityViewControllerForNodes:nodesArray sender:shareBarButtonItem];
-}
-
 + (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id)sender {
-    totalOperations = nodesArray.count;
-    
     NSMutableArray *activityItemsMutableArray = [[NSMutableArray alloc] init];
     NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
     
@@ -722,7 +713,6 @@ static MEGAIndexer *indexer;
     
     GetLinkActivity *getLinkActivity = [[GetLinkActivity alloc] initWithNodes:nodesArray];
     [activitiesMutableArray addObject:getLinkActivity];
-    [Helper setCopyToPasteboard:NO];
     
     NodesAre nodesAre = [Helper checkPropertiesForSharingNodes:nodesArray];
     
@@ -785,28 +775,12 @@ static MEGAIndexer *indexer;
     if ([[sender class] isEqual:UIBarButtonItem.class]) {
         activityVC.popoverPresentationController.barButtonItem = sender;
     } else {
-        UIView *presentationView = (UIView*)sender;
+        UIView *presentationView = (UIView *)sender;
         activityVC.popoverPresentationController.sourceView = presentationView;
         activityVC.popoverPresentationController.sourceRect = CGRectMake(0, 0, presentationView.frame.size.width/2, presentationView.frame.size.height/2);
     }
     
     return activityVC;
-}
-
-+ (void)setTotalOperations:(NSUInteger)total {
-    totalOperations = total;
-}
-
-+ (NSUInteger)totalOperations {
-    return totalOperations;
-}
-
-+ (void)setCopyToPasteboard:(BOOL)boolValue {
-    copyToPasteboard = boolValue;
-}
-
-+ (BOOL)copyToPasteboard {
-    return copyToPasteboard;
 }
 
 + (NodesAre)checkPropertiesForSharingNodes:(NSArray *)nodesArray {

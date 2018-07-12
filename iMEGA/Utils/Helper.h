@@ -91,11 +91,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (NSString *)dateWithISO8601FormatOfRawTime:(time_t)rawtime;
 + (NSString *)filesAndFoldersInFolderNode:(MEGANode *)node api:(MEGASdk *)api;
 
-+ (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray button:(UIBarButtonItem *)shareBarButtonItem;
 + (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id)sender;
-+ (NSUInteger)totalOperations;
-+ (void)setCopyToPasteboard:(BOOL)boolValue;
-+ (BOOL)copyToPasteboard;
 
 + (void)setIndexer:(MEGAIndexer* )megaIndexer;
 
