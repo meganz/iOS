@@ -86,7 +86,7 @@
         
         switch (self.chatRoomsType) {
             case ChatRoomsTypeDefault:
-                self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
+                self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] chatListItems];
                 self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
                 self.addBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
                 break;
@@ -1128,7 +1128,7 @@
     if (chatId == ~(uint64_t)0 && newState == MEGAChatConnectionOnline) {
         // Now it's safe to trigger a reordering of the list:
         self.chatListItemArray = [NSMutableArray new];
-        self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
+        self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] chatListItems];
         [self reorderList];
         [self.tableView reloadData];
     }
