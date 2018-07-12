@@ -1,9 +1,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MEGASdk.h"
-
 #import "MEGAIndexer.h"
+#import "MEGAChatMessage.h"
+#import "MEGASdk.h"
 
 #define kIsEraseAllLocalDataEnabled @"IsEraseAllLocalDataEnabled"
 
@@ -91,6 +91,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (NSString *)dateWithISO8601FormatOfRawTime:(time_t)rawtime;
 + (NSString *)filesAndFoldersInFolderNode:(MEGANode *)node api:(MEGASdk *)api;
 
++ (UIActivityViewController *)activityViewControllerForChatMessages:(NSArray<MEGAChatMessage *> *)messages sender:(id)sender;
 + (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id)sender;
 
 + (void)setIndexer:(MEGAIndexer* )megaIndexer;

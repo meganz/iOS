@@ -1088,7 +1088,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 #pragma mark - Selection
 
 - (void)customForwardingToolbar {
-    UIBarButtonItem *shareBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(doNothing)];
+    UIBarButtonItem *shareBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareSelectedMessages:)];
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *forwardBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"forwardToolbar"] style:UIBarButtonItemStyleDone target:self action:@selector(forwardSelectedMessages)];
     [self setToolbarItems:@[shareBarButtonItem, flexibleItem, forwardBarButtonItem]];
@@ -1144,6 +1144,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     };
     [self presentViewController:sendToNC animated:YES completion:nil];
     [self cancelSelecting:nil];
+}
+
+- (void)shareSelectedMessages:(UIBarButtonItem *)sender {
+    UIActivityViewController *activityViewController = [Helper activityViewControllerForChatMessages:self.selectedMessages sender:sender];
+    [self presentViewController:activityViewController animated:YES completion:nil];
 }
 
 #pragma mark - JSQMessagesViewController method overrides
