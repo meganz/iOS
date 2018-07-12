@@ -449,7 +449,7 @@
 }
 
 - (IBAction)shareAction:(UIBarButtonItem *)sender {
-    UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedItemsDictionary.allValues button:self.shareBarButtonItem];
+    UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedItemsDictionary.allValues sender:self.shareBarButtonItem];
     [self presentViewController:activityVC animated:YES completion:nil];
 }
 

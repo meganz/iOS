@@ -555,7 +555,7 @@
         default: {
             UIActivityViewController *activityViewController;
             if (node.name.mnz_videoPathExtension) {
-                activityViewController = [Helper activityViewControllerForNodes:@[node] button:sender];
+                activityViewController = [Helper activityViewControllerForNodes:@[node] sender:sender];
             } else {
                 MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
                 NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
@@ -805,7 +805,7 @@
                 }
                     
                 default:
-                    activityVC = [Helper activityViewControllerForNodes:@[node] button:sender];
+                    activityVC = [Helper activityViewControllerForNodes:@[node] sender:sender];
                     break;
             }
             
