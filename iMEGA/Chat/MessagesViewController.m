@@ -2180,6 +2180,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             break;
         }
             
+        case MEGAChatRoomChangeTypeArchive:
+            [self customNavigationBarLabel];
+            break;
+            
         default:
             break;
     }
