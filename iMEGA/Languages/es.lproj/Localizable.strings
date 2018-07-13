@@ -894,7 +894,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Obtén %1$s de almacenamiento y %2$s de transferencia por cada invitación";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="[$19119]";
+-"inviteYourFriendsExplanation"="Selecciona contactos de tu agenda o introduce direcciones de correo electrónico.";
 /*  */
 "insertYourFriendsEmails"="Introduce el correo electrónico de tu(s) amigo(s):";
 /*  */
