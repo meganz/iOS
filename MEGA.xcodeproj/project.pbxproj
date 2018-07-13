@@ -1220,6 +1220,7 @@
 		83681575202AFBC000CA8EFC /* CustomActionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomActionViewController.h; sourceTree = "<group>"; };
 		83681576202AFBC000CA8EFC /* CustomActionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomActionViewController.m; sourceTree = "<group>"; };
 		83681577202AFBC000CA8EFC /* CustomActionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomActionViewController.xib; sourceTree = "<group>"; };
+		836A987C20F8C8DA00EC719B /* ChatRoomsType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatRoomsType.h; sourceTree = "<group>"; };
 		836AEDDB2018830E00868FC7 /* PasswordReminderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PasswordReminderViewController.h; sourceTree = "<group>"; };
 		836AEDDC2018830E00868FC7 /* PasswordReminderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PasswordReminderViewController.m; sourceTree = "<group>"; };
 		836AEDDE20188F3C00868FC7 /* TestPasswordViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestPasswordViewController.h; sourceTree = "<group>"; };
@@ -2611,6 +2612,7 @@
 				5B72A14B20D3A69C007FE4FD /* URLType.h */,
 				5B2417E720527FB800C8DDE2 /* DisplayMode.h */,
 				83681574202AFA1700CA8EFC /* MegaNodeActionType.h */,
+				836A987C20F8C8DA00EC719B /* ChatRoomsType.h */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
