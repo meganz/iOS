@@ -79,6 +79,7 @@
             callEndedReason = CXCallEndedReasonFailed;
             break;
             
+        case MEGAChatCallTermCodeCallReqCancel:
         case MEGAChatCallTermCodeUserHangup:
             if (!call.localTermCode) {
                 callEndedReason = CXCallEndedReasonRemoteEnded;

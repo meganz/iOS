@@ -770,11 +770,11 @@
 }
 
 - (void)urlLinkType:(NSURL *)url {
-    switch ([url mnz_type]) {
+    self.urlType = [url mnz_type];
+    switch (self.urlType) {
         case URLTypeDefault:
             [Helper presentSafariViewControllerWithURL:self.link];
             self.link = nil;
-            self.urlType = URLTypeDefault;
             
             break;
             
@@ -833,7 +833,10 @@
             if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
                 [[MEGASdkManager sharedMEGASdk] queryChangeEmailLink:[url mnz_MEGAURL]];
             } else {
-                [self showPleaseLogInToYourAccountAlert];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"needToBeLoggedInToCompleteYourEmailChange", @"Error message when a user attempts to change their email without an active login session.") message:nil preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                
+                [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
             }
             
             break;

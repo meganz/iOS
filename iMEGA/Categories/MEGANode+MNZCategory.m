@@ -346,7 +346,13 @@
             }
             
             LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-            [viewController.navigationController pushViewController:loginVC animated:YES];
+            if (viewController.navigationController) {
+                [viewController.navigationController pushViewController:loginVC animated:YES];
+            } else {
+                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:loginVC];
+                [navigationController addCancelButton];
+                [viewController presentViewController:navigationController animated:YES completion:nil];
+            }
         }
     }
 }
@@ -372,7 +378,13 @@
             }
             
             LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-            [viewController.navigationController pushViewController:loginVC animated:YES];
+            if (viewController.navigationController) {
+                [viewController.navigationController pushViewController:loginVC animated:YES];
+            } else {
+                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:loginVC];
+                [navigationController addCancelButton];
+                [viewController presentViewController:navigationController animated:YES completion:nil];
+            }
         }
     }
 }

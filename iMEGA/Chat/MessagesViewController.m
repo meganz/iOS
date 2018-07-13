@@ -507,6 +507,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     self.inputToolbar.contentView.textView.textColor = [UIColor mnz_black333333];
     self.inputToolbar.contentView.textView.tintColor = [UIColor mnz_green00BFA5];
     [self updateToolbarPlaceHolder];
+    self.inputToolbar.contentView.textView.delegate = self;
+    self.inputToolbar.contentView.textView.text = [[MEGAStore shareInstance] fetchChatDraftWithChatId:self.chatRoom.chatId].text;
 }
 
 - (void)updateToolbarPlaceHolder {
@@ -1230,13 +1232,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self hideJumpToBottom];
 }
 
-- (void)didEndAnimatingAfterButton:(UIButton *)sender {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self scrollToBottomAnimated:YES];
-    });
-}
-
 - (void)jsq_setCollectionViewInsetsTopValue:(CGFloat)top bottomValue:(CGFloat)bottom {
+    if (self.inputToolbar.frame.size.height == 0.0f) {
+        return;
+    }
+    
     CGRect bounds = self.collectionView.bounds;
     CGFloat increment = bottom - self.collectionView.contentInset.bottom;
     
@@ -1862,6 +1862,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     } else if (textLength == 0) {
         [[MEGASdkManager sharedMEGAChatSdk] sendStopTypingNotificationForChat:self.chatRoom.chatId];
     }
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
 }
 
 #pragma mark - MEGAChatRoomDelegate
