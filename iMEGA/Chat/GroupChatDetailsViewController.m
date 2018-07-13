@@ -304,33 +304,28 @@
             case MEGAChatRoomPrivilegeModerator: {
                 switch (indexPath.row) {
                     case 0: {
-                        if (indexPath.row == 0) {
-                            cell.leftImageView.image = [UIImage imageNamed:@"renameGroup"];
-                            cell.nameLabel.text = AMLocalizedString(@"renameGroup", @"The title of a menu button which allows users to rename a group chat.");
-                        } else if (indexPath.row == 2) {//TODO: esto no lo entiendo nunca se ejecutará
-                            cell.nameLabel.text = AMLocalizedString(@"changeGroupAvatar", @"Title of the action that allows you to change the avatar of a group chat.");
-                        }
+                        cell.leftImageView.image = [UIImage imageNamed:@"renameGroup"];
+                        cell.nameLabel.text = AMLocalizedString(@"renameGroup", @"The title of a menu button which allows users to rename a group chat.");
                         break;
                     }
                         
                     case 1:
-                    case 2:
-                    case 3: {
-                        if (indexPath.row == 1) {
-                            cell.leftImageView.image = [UIImage imageNamed:@"clearChatHistory"];
-                            cell.nameLabel.text = AMLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.");
-                        } else if (indexPath.row == 2) {
-                            cell.leftImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
-                            cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
-                            cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redF0373A : UIColor.mnz_black333333;
-                        } else if (indexPath.row == 3) {
-                            cell.leftImageView.image = [UIImage imageNamed:@"leaveGroup"];
-                            cell.nameLabel.text = AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
-                            cell.nameLabel.textColor = UIColor.mnz_redF0373A;
-                            cell.lineView.hidden = YES;
-                        }
+                        cell.leftImageView.image = [UIImage imageNamed:@"clearChatHistory"];
+                        cell.nameLabel.text = AMLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.");
                         break;
-                    }
+                        
+                    case 2:
+                        cell.leftImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
+                        cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
+                        cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redF0373A : UIColor.mnz_black333333;
+                        break;
+                        
+                    case 3:
+                        cell.leftImageView.image = [UIImage imageNamed:@"leaveGroup"];
+                        cell.nameLabel.text = AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
+                        cell.nameLabel.textColor = UIColor.mnz_redF0373A;
+                        cell.lineView.hidden = YES;
+                        break;
                 }
                 break;
             }
@@ -381,7 +376,7 @@
                 break;
                 
             case MEGAChatRoomPrivilegeRm:
-                permissionsImage = [UIImage imageNamed:@"cancelIcon"];
+                permissionsImage = nil;
                 break;
                 
             case MEGAChatRoomPrivilegeRo:
