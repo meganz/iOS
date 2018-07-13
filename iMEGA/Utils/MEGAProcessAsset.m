@@ -130,7 +130,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 
 - (void)requestVideoAsset {
     PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
-    options.version = PHImageRequestOptionsVersionOriginal;
+    options.version = PHVideoRequestOptionsVersionOriginal;
     options.networkAccessAllowed = YES;
     [[PHImageManager defaultManager]
      requestAVAssetForVideo:self.asset

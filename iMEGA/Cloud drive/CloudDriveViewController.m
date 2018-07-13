@@ -311,6 +311,8 @@
         [cell.thumbnailImageView mnz_imageForNode:node];
         
         cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
+        
+        cell.versionedImageView.hidden = YES;
     }
     
     cell.nodeHandle = [node handle];

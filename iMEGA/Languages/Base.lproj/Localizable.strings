@@ -68,6 +68,8 @@
 "tooManyRequest"="Too many requests. Please wait.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Please log in to your account.";
+/* Error message when a user attempts to change their email without an active login session. */
+"needToBeLoggedInToCompleteYourEmailChange"="You need to be logged in to complete your email change. Please log in again with your current email address and then click on your confirmation link again.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA SPACE";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -1277,14 +1279,6 @@
 "attachedFile"="Attached: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="Attached %s files.";
-/* A summary message when a user sent the information of one contact through the chat. */
-"sharedContact"="Shared this contact:";
-/* A summary message when a user sent the information of some contacts at once through the chat. */
-"sharedContacts"="Shared these contacts:";
-/* A summary message when a user has attached one file into the chat. */
-"uploadedFile"="Uploaded this file:";
-/* A summary message when a user has attached many files at once into the chat. */
-"uploadedFiles"="Uploaded these files:";
 /* Label in a button that allows to jump to the latest item */
 "jumpToLatest"="Jump to latest";
 /* Label in a button that allows to jump to the latest message */

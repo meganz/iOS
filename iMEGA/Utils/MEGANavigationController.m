@@ -31,4 +31,21 @@
     return UIStatusBarStyleLightContent;
 }
 
+#pragma mark - Public
+
+- (void)addCancelButton {
+    self.viewControllers.firstObject.navigationItem.rightBarButtonItem = [self cancelBarButtonItem];
+}
+
+#pragma mark - Private
+
+- (UIBarButtonItem *)cancelBarButtonItem {
+    UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStylePlain target:nil action:@selector(dismissNavigationController)];
+    return cancelBarButtonItem;
+}
+
+- (void)dismissNavigationController {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 @end

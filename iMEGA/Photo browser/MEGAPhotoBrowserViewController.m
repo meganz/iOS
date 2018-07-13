@@ -157,6 +157,16 @@
     self.scrollView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width + self.gapBetweenPages, self.view.frame.size.height);
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.mediaNodes.count, self.scrollView.frame.size.height);
     
+    if (self.currentIndex >= self.mediaNodes.count) {
+        MEGALogError(@"MEGAPhotoBrowserViewController tried to show the node at index %lu, with %lu items in the array of nodes", self.currentIndex, self.mediaNodes.count);
+        if (self.mediaNodes.count > 0) {
+            self.currentIndex = self.mediaNodes.count - 1;
+        } else {
+            [self dismissViewControllerAnimated:YES completion:nil];
+            return;
+        }
+    }
+    
     [self loadNearbyImagesFromIndex:self.currentIndex];
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
     UIScrollView *zoomableViewForInitialNode = [self.imageViewsCache objectForKey:node.base64Handle];

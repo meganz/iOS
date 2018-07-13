@@ -12,5 +12,6 @@
 @property (weak, nonatomic) IBOutlet UIView *imageView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *richViewHeightConstraint;
 
 @end

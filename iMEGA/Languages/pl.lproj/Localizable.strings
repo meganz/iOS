@@ -717,17 +717,17 @@
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Pobieranie zdjęć i filmów";
 /* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
-"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Media captured from within the app";
+"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Media przechwycone z poziomu aplikacji";
 /* Section title where you can enable the option 'Save images in gallery' */
 "saveImagesInGallery"="Zapisz zdjęcia w galerii";
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Zapisz filmy w galerii";
 /* Section title where you can enable the option 'Save media in gallery' */
-"saveMediaInGallery"="Save media in gallery";
+"saveMediaInGallery"="Zapisz multimedia w galerii";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Zapisz zdjęcia i filmy kompatybilne z IOS na urządzenie (Pamiętaj: zdjęcia i filmy nie będą dostępne Offline).";
 /* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
-"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Enable this option to save photos taken and videos recorded from within the app in the gallery";
+"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Włącz tę opcję, aby zapisywać zrobione zdjęcia i filmy nagrane z poziomu aplikacji w galerii";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Obecnie używane %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -1369,7 +1369,7 @@
 "generalDescriptionParagraph5"="Subskrypcja PRO LITE: €4.99 (US$4.99) na miesiąc lub €49.99 (US$49.99) na rok otrzymasz 200 GB powierzchni i 1 TB na transfer plików miesięcznie.\nSubskrypcja PRO I : €9.99 (US$9.99) na miesiąc lub €99.99 (US$99.99) na rok otrzymasz 1 TB powierzchni i 2 TB na transfer plików miesięcznie.\nSubskrypcja PRO II: €19.99 (US$19.99) na miesiąc lub €199.99 (US$199.99) na rok otrzymasz 4 TB powierzchni i 8 TB na transfer plików miesięcznie.\nSubskrypcja PRO III: €29.99 (US$29.99) na miesiąc lub €299.99 (US$299.99) na rok otrzymasz 8 TB powierzchni and 16 TB na transfer plików miesięcznie.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Po więcej informacji przejdź do strony: https://mega.nz/\nRegulamin: https://mega.nz/terms.html\nPolityka prywatności: https://mega.nz/privacy.html";
+"generalDescriptionParagraph6"="Po więcej informacji przejdź do strony: https://mega.nz/\nRegulamin: https://mega.nz/terms\nPolityka prywatności: https://mega.nz/privacy";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="Dzwonię...";
 /* Notification text body shown when you have missed one audio call */
@@ -1505,34 +1505,34 @@
 /* Title of the notification for a missed call */
 "missedCall"="Opuszczone rozmowy";
 /* When an outgoing call of user A with user B had been rejected by user B */
-"callWasRejected"="Call was rejected";
+"callWasRejected"="Połączenie zostało odrzucone";
 /* When an active call of user A with user B had cancelled */
-"callWasCancelled"="Call was cancelled";
+"callWasCancelled"="Połączenie zostało anulowane";
 /* When an active call of user A with user B had not answered */
-"callWasNotAnswered"="Call was not answered";
+"callWasNotAnswered"="Połączenie nie zostało odebrane";
 /* When an active call of user A with user B had failed */
 "callFailed"="Call failed";
 /* When an active call of user A with user B had ended */
 "callEnded"="Call ended.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
-"duration"="Duration: %@";
+"duration"="Trwanie: %@";
 /* */
-"xSeconds"="%d seconds";
+"xSeconds"="%d sekund";
 /* */
-"1Second"="1 second";
+"1Second"="1 skunda";
 /* */
-"1Hour"="1 hour";
+"1Hour"="1 godzina";
 /* */
-"xHours"="%d hours";
+"xHours"="%d godzin";
 /* */
-"1Hour1Minute"="1 hour, 1 minute";
+"1Hour1Minute"="1 godzina, 1 minuta";
 /* */
-"1HourxMinutes"="1 hour, %d minutes";
+"1HourxMinutes"="1 godzina, %d minut";
 /* */
-"xHours1Minute"="%d hours, 1 minute";
+"xHours1Minute"="%d godzin, 1 minuta";
 /* */
-"xHoursxMinutes"="%1$d hours, %2$d minutes";
+"xHoursxMinutes"="%1$d godzin, %2$d minut";
 /* Alert title shown when users try to stream an unsupported audio/video file */
-"fileNotSupported"="File not supported";
+"fileNotSupported"="Plik nie jest obsługiwany";
 /* Alert message shown when users try to stream an unsupported audio/video file */
-"message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
+"message_fileNotSupported"="Możesz zapisać go w trybie offline i otworzyć w kompatybilnej aplikacji.";

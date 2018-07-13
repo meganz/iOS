@@ -122,16 +122,19 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    self.navigationController.toolbarHidden = NO;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGASdkFolder] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    self.navigationController.toolbarHidden = YES;
     
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGARequestDelegate:self];

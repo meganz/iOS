@@ -1298,7 +1298,7 @@
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="פתח MEGA והתחבר על מנת להמשיך";
 /* Label in login screen to inform about the chat initialization proccess */
-"connecting"="Connecting…";
+"connecting"="מתחבר...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="מספר פריטים לא שותפו עם MEGA";
 /* Notification message shown when a transfer failed. Keep colon. */
