@@ -1548,3 +1548,5 @@
 "archiveChat"="Archive Chat";
 /* Title of flag of archived chats. */
 "archived"="Archived";
+/* Title of empty state view for archived chats. */
+"noArchivedChats"="No Archived Chats";
