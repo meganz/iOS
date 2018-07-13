@@ -1236,13 +1236,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self hideJumpToBottom];
 }
 
-- (void)didEndAnimatingAfterButton:(UIButton *)sender {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self scrollToBottomAnimated:YES];
-    });
-}
-
 - (void)jsq_setCollectionViewInsetsTopValue:(CGFloat)top bottomValue:(CGFloat)bottom {
+    if (self.inputToolbar.frame.size.height == 0.0f) {
+        return;
+    }
+    
     CGRect bounds = self.collectionView.bounds;
     CGFloat increment = bottom - self.collectionView.contentInset.bottom;
     
