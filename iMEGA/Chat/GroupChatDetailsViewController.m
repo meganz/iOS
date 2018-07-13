@@ -240,8 +240,11 @@
     NSInteger numberOfRows = 0;
     if (section == 0) {
         switch (self.chatRoom.ownPrivilege) {
-            case MEGAChatRoomPrivilegeUnknown:
             case MEGAChatRoomPrivilegeRm:
+                numberOfRows = 1;
+                break;
+                
+            case MEGAChatRoomPrivilegeUnknown:
             case MEGAChatRoomPrivilegeRo:
             case MEGAChatRoomPrivilegeStandard:
                 //TODO: When possible, re-add the row "Notifications".
@@ -269,8 +272,15 @@
     if (indexPath.section == 0) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsLeaveGroupTypeID" forIndexPath:indexPath];
         switch (self.chatRoom.ownPrivilege) {
-            case MEGAChatRoomPrivilegeUnknown:
+                
             case MEGAChatRoomPrivilegeRm:
+                cell.leftImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
+                cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
+                cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redF0373A : UIColor.mnz_black333333;
+                cell.lineView.hidden = YES;
+                break;
+                
+            case MEGAChatRoomPrivilegeUnknown:
             case MEGAChatRoomPrivilegeRo:
             case MEGAChatRoomPrivilegeStandard: {
                 switch (indexPath.row) {

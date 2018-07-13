@@ -173,7 +173,15 @@
                 text = AMLocalizedString(@"noInternetConnection",  @"Text shown on the app when you don't have connection to the internet or when you have lost it");
             }
         } else {
-            text = AMLocalizedString(@"noConversations", @"Empty Conversations section");
+            switch (self.chatRoomsType) {
+                case ChatRoomsTypeDefault:
+                    text = AMLocalizedString(@"noConversations", @"Empty Conversations section");
+                    break;
+                    
+                case ChatRoomsTypeArchived:
+                    text = AMLocalizedString(@"noArchivedChats", @"Title of empty state view for archived chats.");
+                    break;
+            }
         }
     }
     
@@ -187,7 +195,14 @@
         text = @"";
     } else {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-            text = AMLocalizedString(@"noConversationsDescription", @"Empty Conversations description");
+            switch (self.chatRoomsType) {
+                case ChatRoomsTypeDefault:
+                    text = AMLocalizedString(@"noConversationsDescription", @"Empty Conversations description");
+                    break;
+                    
+                case ChatRoomsTypeArchived:
+                    break;
+            }
         }
     }
     
@@ -206,7 +221,13 @@
                 return nil;
             }
         } else {
-            return [UIImage imageNamed:@"chatEmptyState"];
+            switch (self.chatRoomsType) {
+                case ChatRoomsTypeDefault:
+                    return [UIImage imageNamed:@"chatEmptyState"];
+                    
+                case ChatRoomsTypeArchived:
+                    return [UIImage imageNamed:@"chatsArchivedEmptyState"];
+            }
         }
     } else {
         return [UIImage imageNamed:@"noInternetEmptyState"];
@@ -219,7 +240,13 @@
         if (![[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
             text = AMLocalizedString(@"enable", @"Text button shown when the chat is disabled and if tapped the chat will be enabled");
         } else if (!self.searchController.isActive) {
-            text = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
+            switch (self.chatRoomsType) {
+                case ChatRoomsTypeDefault:
+                    text = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
+                    
+                case ChatRoomsTypeArchived:
+                    return nil;
+            }
         }
     }
     
@@ -905,42 +932,57 @@
 
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
-    
-    //TODO: While the "More" action only shows "Info" on a UIAlertController with UIAlertControllerStyleActionSheet style, it will replaced by the "Info" action itself
-    UITableViewRowAction *infoAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-        [self presentGroupOrContactDetailsForChatListItem:chatListItem];
-    }];
-    infoAction.backgroundColor = [UIColor mnz_grayCCCCCC];
-    
-    UITableViewRowAction *deleteAction = nil;
-    if (chatListItem.isGroup) {
-        deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:AMLocalizedString(@"leave", @"A button label. The button allows the user to leave the conversation.")  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-            UIAlertController *leaveAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"youWillNoLongerHaveAccessToThisConversation", @"Alert text that explains what means confirming the action 'Leave'") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-            [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                [self.tableView setEditing:NO];
-            }]];
+    switch (self.chatRoomsType) {
+        case ChatRoomsTypeDefault: {
+            MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
             
-            [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"leave", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                [[MEGASdkManager sharedMEGAChatSdk] leaveChat:chatListItem.chatId];
-                [self.tableView setEditing:NO];
-            }]];
+            //TODO: While the "More" action only shows "Info" on a UIAlertController with UIAlertControllerStyleActionSheet style, it will replaced by the "Info" action itself
+            UITableViewRowAction *infoAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+                [self presentGroupOrContactDetailsForChatListItem:chatListItem];
+            }];
+            infoAction.backgroundColor = [UIColor mnz_grayCCCCCC];
             
-            leaveAlertController.modalPresentationStyle = UIModalPresentationPopover;
-            CGRect deleteRect = [self.tableView rectForRowAtIndexPath:indexPath];
-            leaveAlertController.popoverPresentationController.sourceRect = deleteRect;
-            leaveAlertController.popoverPresentationController.sourceView = self.view;
+            UITableViewRowAction *deleteAction = nil;
+            if (chatListItem.isGroup) {
+                deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:AMLocalizedString(@"leave", @"A button label. The button allows the user to leave the conversation.")  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+                    UIAlertController *leaveAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"youWillNoLongerHaveAccessToThisConversation", @"Alert text that explains what means confirming the action 'Leave'") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+                    [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                        [self.tableView setEditing:NO];
+                    }]];
+                    
+                    [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"leave", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                        [[MEGASdkManager sharedMEGAChatSdk] leaveChat:chatListItem.chatId];
+                        [self.tableView setEditing:NO];
+                    }]];
+                    
+                    leaveAlertController.modalPresentationStyle = UIModalPresentationPopover;
+                    CGRect deleteRect = [self.tableView rectForRowAtIndexPath:indexPath];
+                    leaveAlertController.popoverPresentationController.sourceRect = deleteRect;
+                    leaveAlertController.popoverPresentationController.sourceView = self.view;
+                    
+                    [self presentViewController:leaveAlertController animated:YES completion:nil];
+                }];
+            } else {
+                deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:AMLocalizedString(@"close", @"A button label. The button allows the user to close the conversation.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+                    //TODO: When possible, allow deleting a 1on1 conversation.
+                }];
+            }
+            deleteAction.backgroundColor = [UIColor mnz_redFF333A];
             
-            [self presentViewController:leaveAlertController animated:YES completion:nil];
-        }];
-    } else {
-        deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:AMLocalizedString(@"close", @"A button label. The button allows the user to close the conversation.")  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-            //TODO: When possible, allow deleting a 1on1 conversation.
-        }];
+            return chatListItem.isGroup ? @[deleteAction, infoAction] : @[infoAction];
+        }
+            
+        case ChatRoomsTypeArchived: {
+            UITableViewRowAction *unarchiveAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+                MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
+                MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
+                [[MEGASdkManager sharedMEGAChatSdk] archiveChat:chatRoom.chatId archive:NO];
+            }];
+            unarchiveAction.backgroundColor = [UIColor mnz_green00BFA5];
+            
+            return @[unarchiveAction];
+        }
     }
-    deleteAction.backgroundColor = [UIColor mnz_redFF333A];
-    
-    return chatListItem.isGroup ? @[deleteAction, infoAction] : @[infoAction];
 }
 
 #pragma mark - UIScrolViewDelegate
@@ -1040,14 +1082,12 @@
         NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(item.chatId)];
         
         if (!indexPath && [item hasChangedForType:MEGAChatListItemChangeTypeArchived]) {
-            if (self.searchController.isActive && ![self.searchController.searchBar.text isEqualToString:@""] && [item.title containsString:self.searchController.searchBar.text]) {
-                [self insertRowByChatListItem:item];
-                self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
-                if (self.isArchivedChatsRowVisible) {
-                    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
-                }
-                return;
+            [self insertRowByChatListItem:item];
+            self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+            if (self.isArchivedChatsRowVisible) {
+                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
             }
+            return;
         }
         
         if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
