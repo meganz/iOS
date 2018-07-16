@@ -8,7 +8,7 @@
 #import "ShareViewController.h"
 #import "UIImageView+MNZCategory.h"
 
-@interface ShareFilesDestinationTableViewController () <UITextFieldDelegate>
+@interface ShareFilesDestinationTableViewController () <UITextFieldDelegate, MEGAChatDelegate>
 
 @property (weak, nonatomic) UINavigationController *navigationController;
 @property (weak, nonatomic) ShareViewController *shareViewController;
@@ -17,6 +17,8 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 
 @property (weak, nonatomic) UITextField *activeTextField;
+
+@property (nonatomic, getter=isChatReady) BOOL chatReady;
 
 @end
 
@@ -47,6 +49,13 @@
     [super viewWillAppear:animated];
     
     [self.navigationController setToolbarHidden:YES animated:animated];
+    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
 }
 
 - (void)didBecomeActive {
@@ -93,10 +102,26 @@
             imageView.image = [UIImage imageNamed:@"upload"];
             label.text = AMLocalizedString(@"uploadToMega", nil);
             label.enabled = cell.userInteractionEnabled = YES;
+            cell.accessoryView = nil;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         } else if (indexPath.row == 1) {
             imageView.image = [UIImage imageNamed:@"sendMessage"];
             label.text = AMLocalizedString(@"sendToContact", nil);
-            label.enabled = cell.userInteractionEnabled = [self.sharedUserDefaults boolForKey:@"IsChatEnabled"];
+            label.enabled = cell.userInteractionEnabled = [self.sharedUserDefaults boolForKey:@"IsChatEnabled"] && self.isChatReady;
+            
+            if ([self.sharedUserDefaults boolForKey:@"IsChatEnabled"]) {
+                if (self.isChatReady) {
+                    cell.accessoryView = nil;
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                } else {
+                    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+                    [activityIndicator startAnimating];
+                    cell.accessoryView = activityIndicator;
+                }
+            } else {
+                cell.accessoryView = nil;
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }
         }
     } else if (indexPath.section == 1) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"fileCell" forIndexPath:indexPath];
@@ -219,6 +244,21 @@
     self.activeTextField = nil;
     
     return YES;
+}
+
+#pragma mark - MEGAChatDelegate
+
+- (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
+    MEGALogInfo(@"onChatConnectionStateUpdate: %@, new state: %d", [MEGASdk base64HandleForUserHandle:chatId], newState);
+    
+    // INVALID_HANDLE = ~(uint64_t)0
+    if (chatId == ~(uint64_t)0 && newState == MEGAChatConnectionOnline) {
+        self.chatReady = YES;
+    } else {
+        self.chatReady = NO;
+    }
+    
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 @end

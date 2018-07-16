@@ -29,7 +29,6 @@
 
 @interface ShareViewController () <MEGARequestDelegate, MEGATransferDelegate, MEGAChatRoomDelegate, LTHPasscodeViewControllerDelegate>
 
-@property (nonatomic) UIViewController *browserVC;
 @property (nonatomic) NSUInteger pendingAssets;
 @property (nonatomic) NSUInteger totalAssets;
 @property (nonatomic) NSUInteger unsupportedAssets;
