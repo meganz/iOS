@@ -413,6 +413,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     }
     
     [self.navigationItem setTitleView:label];
+    [self updateCollectionViewInsets];
 }
 
 - (void)rightBarButtonItems {
@@ -977,6 +978,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             [self.collectionView setContentOffset:newOffset animated:YES];
         }
     }
+}
+
+- (void)updateCollectionViewInsets {
+    [self jsq_setCollectionViewInsetsTopValue:0.0f bottomValue:self.inputToolbar.frame.size.height];
 }
 
 #pragma mark - Gesture recognizer
@@ -1803,6 +1808,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self.selectedMessages addObject:message];
     [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
     [self rightBarButtonItems];
+    
+    if (self.inputToolbar.contentView.textView.isFirstResponder) {
+        [self.inputToolbar.contentView.textView resignFirstResponder];
+    }
     
     [self.navigationController setToolbarHidden:NO animated:YES];
     
