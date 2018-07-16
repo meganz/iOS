@@ -10,6 +10,7 @@
 @property (nonatomic) id content;
 
 + (NSMutableArray<ShareAttachment *> *)attachmentsArray;
++ (void)addGIF:(NSData *)data fromItemProvider:(NSItemProvider *)itemProvider;
 + (void)addImage:(UIImage *)image fromItemProvider:(NSItemProvider *)itemProvider;
 + (void)addFileURL:(NSURL *)url;
 + (void)addURL:(NSURL *)url;
