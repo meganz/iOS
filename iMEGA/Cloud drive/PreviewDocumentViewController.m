@@ -323,27 +323,25 @@
         }
             
         case MegaNodeActionTypeCopy:
+        case MegaNodeActionTypeMove:
+        case MegaNodeActionTypeImport:
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
                 [self presentViewController:navigationController animated:YES completion:nil];
                 
                 BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
                 browserVC.selectedNodesArray = @[node];
-                [browserVC setBrowserAction:BrowserActionCopy];
+                BrowserAction browserAction;
+                if (action == MegaNodeActionTypeCopy) {
+                    browserAction = BrowserActionCopy;
+                } else if (action == BrowserActionMove) {
+                    browserAction = BrowserActionMove;
+                } else {
+                    browserAction = BrowserActionImport;
+                }
+                [browserVC setBrowserAction:browserAction];
             }
             break;
-            
-        case MegaNodeActionTypeMove: {
-            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-            [self presentViewController:navigationController animated:YES completion:nil];
-            
-            BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-            browserVC.selectedNodesArray = @[node];
-            if ([self.api accessLevelForNode:node] == MEGAShareTypeAccessOwner) {
-                [browserVC setBrowserAction:BrowserActionMove];
-            }
-            break;
-        }
             
         case MegaNodeActionTypeRename: {
             [node mnz_renameNodeInViewController:self completion:^(MEGARequest *request) {
