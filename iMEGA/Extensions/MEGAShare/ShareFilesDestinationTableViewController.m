@@ -22,6 +22,8 @@
 
 @implementation ShareFilesDestinationTableViewController
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -35,6 +37,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActive)
                                                  name:NSExtensionHostDidBecomeActiveNotification
                                                object:nil];
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    tapGesture.cancelsTouchesInView = NO;
+    [self.tableView addGestureRecognizer:tapGesture];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -45,6 +51,12 @@
 
 - (void)didBecomeActive {
     [self.tableView reloadData];
+}
+
+#pragma mark - Private
+
+- (void)hideKeyboard {
+    [self.view endEditing:YES];
 }
 
 #pragma mark - Table view data source
