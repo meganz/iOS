@@ -1130,17 +1130,61 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     SendToViewController *sendToViewController = sendToNC.viewControllers.firstObject;
     sendToViewController.sendMode = SendModeForward;
     sendToViewController.messages = [self.selectedMessages copy];
-    sendToViewController.completion = ^(uint64_t chatId) {
-        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
-        MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-        messagesVC.chatRoom = chatRoom;
+    sendToViewController.sourceChatId = self.chatRoom.chatId;
+    sendToViewController.completion = ^(NSArray<NSNumber *> *chatIdNumbers, NSArray<MEGAChatMessage *> *sentMessages) {
+        BOOL selfForwarded = NO, showSuccess = NO;
         
-        UINavigationController *chatNC = (UINavigationController *)self.parentViewController;
-        [chatNC pushViewController:messagesVC animated:YES];
-        [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
-        NSMutableArray *viewControllers = chatNC.viewControllers.mutableCopy;
-        [viewControllers removeObjectAtIndex:(viewControllers.count - 2)];
-        chatNC.viewControllers = viewControllers;
+        for (NSNumber *chatIdNumber in chatIdNumbers) {
+            uint64_t chatId = chatIdNumber.unsignedLongLongValue;
+            if (chatId == self.chatRoom.chatId) {
+                selfForwarded = YES;
+                break;
+            }
+        }
+        
+        if (selfForwarded) {
+            for (MEGAChatMessage *message in sentMessages) {
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"temporalId == %" PRIu64, message.temporalId];
+                NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
+                if (filteredArray.count) {
+                    MEGALogWarning(@"Forwarded message was already added to the array, probably onMessageUpdate received before now.");
+                } else {
+                    message.chatRoom = self.chatRoom;
+                    [self.messages addObject:message];
+                    [self finishReceivingMessage];
+                    
+                    NSUInteger unreads = [message.senderId isEqualToString:self.senderId] ? 0 : self.unreadMessages + 1;
+                    [self updateUnreadMessagesLabel:unreads];
+                    
+                    if ([[MEGASdkManager sharedMEGAChatSdk] myUserHandle] == message.userHandle) {
+                        [self scrollToBottomAnimated:YES];
+                    }
+                    
+                    if (message.type == MEGAChatMessageTypeAttachment) {
+                        [self loadNodesFromMessage:message atTheBeginning:YES];
+                    }
+                }
+            }
+            showSuccess = YES;
+        } else if (chatIdNumbers.count == 1) {
+            uint64_t chatId = chatIdNumbers.firstObject.unsignedLongLongValue;
+            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
+            MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
+            messagesVC.chatRoom = chatRoom;
+            
+            UINavigationController *chatNC = (UINavigationController *)self.parentViewController;
+            [chatNC pushViewController:messagesVC animated:YES];
+            [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
+            NSMutableArray *viewControllers = chatNC.viewControllers.mutableCopy;
+            [viewControllers removeObjectAtIndex:(viewControllers.count - 2)];
+            chatNC.viewControllers = viewControllers;
+        } else {
+            showSuccess = YES;
+        }
+        
+        if (showSuccess) {
+            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"messagesSent", @"Success message shown after forwarding messages to other chats")];
+        }
     };
     [self presentViewController:sendToNC animated:YES completion:nil];
     [self cancelSelecting:nil];
@@ -2035,7 +2079,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         case MEGAChatMessageTypeCallEnded:{
             [self.messages addObject:message];
             [self finishReceivingMessage];
-
+            
             NSUInteger unreads = [message.senderId isEqualToString:self.senderId] ? 0 : self.unreadMessages + 1;
             [self updateUnreadMessagesLabel:unreads];
             
@@ -2164,39 +2208,41 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                 break;
                 
             case MEGAChatMessageStatusServerReceived: {
-                if (message.type == MEGAChatMessageTypeAttachment) {
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"temporalId == %" PRIu64, message.temporalId];
+                NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
+                
+                if (filteredArray.count) {
+                    MEGAChatMessage *oldMessage = filteredArray.firstObject;
+                    if (oldMessage.warningDialog > MEGAChatMessageWarningDialogNone) {
+                        message.warningDialog = oldMessage.warningDialog;
+                        if (![self.observedDialogMessages containsObject:message]) {
+                            [self.observedDialogMessages addObject:message];
+                            [message addObserver:self forKeyPath:@"warningDialog" options:NSKeyValueObservingOptionNew context:nil];
+                        }
+                    }
+                    NSUInteger index = [self.messages indexOfObject:oldMessage];
+                    [self.messages replaceObjectAtIndex:index withObject:message];
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+                    [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                } else {
                     message.chatRoom = self.chatRoom;
                     [self.messages addObject:message];
                     [self finishReceivingMessage];
-
+                    
                     NSUInteger unreads = [message.senderId isEqualToString:self.senderId] ? 0 : self.unreadMessages + 1;
                     [self updateUnreadMessagesLabel:unreads];
-                    
-                    [self loadNodesFromMessage:message atTheBeginning:YES];
+
                     if ([[MEGASdkManager sharedMEGAChatSdk] myUserHandle] == message.userHandle) {
                         [self scrollToBottomAnimated:YES];
                     }
-                } else {
-                    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"temporalId == %" PRIu64, message.temporalId];
-                    NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
-                    if (filteredArray.count) {
-                        MEGAChatMessage *oldMessage = filteredArray.firstObject;
-                        if (oldMessage.warningDialog > MEGAChatMessageWarningDialogNone) {
-                            message.warningDialog = oldMessage.warningDialog;
-                            if (![self.observedDialogMessages containsObject:message]) {
-                                [self.observedDialogMessages addObject:message];
-                                [message addObserver:self forKeyPath:@"warningDialog" options:NSKeyValueObservingOptionNew context:nil];
-                            }
-                        }
-                        NSUInteger index = [self.messages indexOfObject:oldMessage];
-                        [self.messages replaceObjectAtIndex:index withObject:message];
-                        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-                        [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                    
+                    if (message.type == MEGAChatMessageTypeAttachment) {
+                        [self loadNodesFromMessage:message atTheBeginning:YES];
                     } else {
-                        MEGALogWarning(@"Message to update is not in the array of messages");
-                        NSAssert(filteredArray.count, @"Message to update is not in the array of messages");
+                        MEGALogWarning(@"Message to update was not in the array of messages, probably forwarded, added.");
                     }
                 }
+
                 break;
             }
                 
