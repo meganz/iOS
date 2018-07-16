@@ -181,6 +181,10 @@
     
     NSMutableArray *actions = [NSMutableArray new];
     
+    if (self.node.mnz_isRestorable) {
+        [actions addObject:[self actionRestoreNode]];
+    }
+    
     if (self.displayMode == DisplayModeFolderLink) {
         [actions addObject:[self actionImport]];
         [actions addObject:[self actionDownload]];
@@ -231,8 +235,10 @@
                 
             case MEGAShareTypeAccessOwner:
                 if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeRubbishBin || self.displayMode == DisplayModeNodeInfo) {
-                    [actions addObject:[self actionShare]];
-                    [actions addObject:[self actionDownload]];
+                    if (self.displayMode != DisplayModeRubbishBin) {
+                        [actions addObject:[self actionShare]];
+                        [actions addObject:[self actionDownload]];
+                    }
                     if (self.displayMode != DisplayModeNodeInfo) {
                         [actions addObject:[self actionFileInfo]];
                     }
@@ -342,6 +348,10 @@
 
 - (MegaActionNode *)actionSelectNodes {
     return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"select", nil) iconName: @"selected" andActionType:MegaNodeActionTypeSelect];
+}
+
+- (MegaActionNode *)actionRestoreNode {
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"restore", nil) iconName: @"restore" andActionType:MegaNodeActionTypeRestore];
 }
 
 #pragma mark - IBActions
