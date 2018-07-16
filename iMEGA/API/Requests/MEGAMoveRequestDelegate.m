@@ -104,36 +104,40 @@
             
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudRubbishBin"] status:message];
         } else {
-            NSString *message;
-            if (self.numberOfFiles == 0) {
-                if (self.numberOfFolders == 1) {
-                    message = AMLocalizedString(@"moveFolderMessage", @"Success message shown when you have moved 1 folder");
-                } else {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFoldersMessage", @"Success message shown when you have moved {1+} folders"), self.numberOfFolders];
-                }
-            } else if (self.numberOfFiles == 1) {
-                if (self.numberOfFolders == 0) {
-                    message = AMLocalizedString(@"moveFileMessage", @"Success message shown when you have moved 1 file");
-                } else if (self.numberOfFolders == 1) {
-                    message = AMLocalizedString(@"moveFileFolderMessage", @"Success message shown when you have moved 1 file and 1 folder");
-                } else {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFileFoldersMessage", @"Success message shown when you have moved 1 file and {1+} folders"), self.numberOfFolders];
-                }
+            if (self.restore) {
+                [SVProgressHUD dismiss];
             } else {
-                if (self.numberOfFolders == 0) {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesMessage", @"Success message shown when you have moved {1+} files"), self.numberOfFiles];
-                } else if (self.numberOfFolders == 1) {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesFolderMessage", @"Success message shown when you have moved {1+} files and 1 folder"), self.numberOfFiles];
+                NSString *message;
+                if (self.numberOfFiles == 0) {
+                    if (self.numberOfFolders == 1) {
+                        message = AMLocalizedString(@"moveFolderMessage", @"Success message shown when you have moved 1 folder");
+                    } else {
+                        message = [NSString stringWithFormat:AMLocalizedString(@"moveFoldersMessage", @"Success message shown when you have moved {1+} folders"), self.numberOfFolders];
+                    }
+                } else if (self.numberOfFiles == 1) {
+                    if (self.numberOfFolders == 0) {
+                        message = AMLocalizedString(@"moveFileMessage", @"Success message shown when you have moved 1 file");
+                    } else if (self.numberOfFolders == 1) {
+                        message = AMLocalizedString(@"moveFileFolderMessage", @"Success message shown when you have moved 1 file and 1 folder");
+                    } else {
+                        message = [NSString stringWithFormat:AMLocalizedString(@"moveFileFoldersMessage", @"Success message shown when you have moved 1 file and {1+} folders"), self.numberOfFolders];
+                    }
                 } else {
-                    message = AMLocalizedString(@"moveFilesFoldersMessage", @"Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders");
-                    NSString *filesString = [NSString stringWithFormat:@"%lu", self.numberOfFiles];
-                    NSString *foldersString = [NSString stringWithFormat:@"%lu", self.numberOfFolders];
-                    message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
-                    message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
+                    if (self.numberOfFolders == 0) {
+                        message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesMessage", @"Success message shown when you have moved {1+} files"), self.numberOfFiles];
+                    } else if (self.numberOfFolders == 1) {
+                        message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesFolderMessage", @"Success message shown when you have moved {1+} files and 1 folder"), self.numberOfFiles];
+                    } else {
+                        message = AMLocalizedString(@"moveFilesFoldersMessage", @"Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders");
+                        NSString *filesString = [NSString stringWithFormat:@"%lu", self.numberOfFiles];
+                        NSString *foldersString = [NSString stringWithFormat:@"%lu", self.numberOfFolders];
+                        message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
+                        message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
+                    }
                 }
+                
+                [SVProgressHUD showSuccessWithStatus:message];
             }
-            
-            [SVProgressHUD showSuccessWithStatus:message];
         }
         
         if (self.completion) {

@@ -304,6 +304,15 @@
     }
 }
 
+- (void)mnz_restore {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        MEGANode *restoreNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.restoreHandle];
+        MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initWithFiles:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:nil];
+        moveRequestDelegate.restore = YES;
+        [[MEGASdkManager sharedMEGASdk] moveNode:self newParent:restoreNode delegate:moveRequestDelegate];
+    }
+}
+
 #pragma mark - File links
 
 - (void)mnz_fileLinkDownloadFromViewController:(UIViewController *)viewController isFolderLink:(BOOL)isFolderLink {
@@ -587,6 +596,15 @@
     }
     
     return fileType;
+}
+
+- (BOOL)mnz_isRestorable {
+    MEGANode *restoreNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.restoreHandle];
+    if (restoreNode && ![[MEGASdkManager sharedMEGASdk] isNodeInRubbish:restoreNode] && [[MEGASdkManager sharedMEGASdk] isNodeInRubbish:self]) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 #pragma mark - Versions
