@@ -16,6 +16,14 @@ static NSMutableArray<ShareAttachment *> *_attachmentsArray;
     return _attachmentsArray;
 }
 
++ (void)addGIF:(NSData *)data fromItemProvider:(NSItemProvider *)itemProvider {
+    ShareAttachment *shareAttachment = [[ShareAttachment alloc] init];
+    shareAttachment.type = ShareAttachmentTypeGIF;
+    shareAttachment.name = [ShareAttachment suggestedNameForGIFWithItemProvider:itemProvider];
+    shareAttachment.content = data;
+    [[ShareAttachment attachmentsArray] addObject:shareAttachment];
+}
+
 + (void)addImage:(UIImage *)image fromItemProvider:(NSItemProvider *)itemProvider {
     ShareAttachment *shareAttachment = [[ShareAttachment alloc] init];
     BOOL isPNG = [itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypePNG];
@@ -58,6 +66,19 @@ static NSMutableArray<ShareAttachment *> *_attachmentsArray;
 }
 
 #pragma mark - Naming
+
++ (NSString *)suggestedNameForGIFWithItemProvider:(NSItemProvider *)itemProvider {
+    NSString *suggestedName;
+    
+    if (@available(iOS 11.0, *)) {
+        suggestedName = itemProvider.suggestedName;
+    } else {
+        NSString *name = [NSUUID UUID].UUIDString;
+        suggestedName = [NSString stringWithFormat:@"%@.gif", name];
+    }
+    
+    return suggestedName;
+}
 
 + (NSString *)suggestedNameForItemProvider:(NSItemProvider *)itemProvider {
     NSString *suggestedName;

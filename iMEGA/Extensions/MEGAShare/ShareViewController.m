@@ -473,7 +473,20 @@ void uncaughtExceptionHandler(NSException *exception) {
     self.unsupportedAssets = self.alreadyInDestinationAssets = 0;
 
     for (NSItemProvider *itemProvider in content.attachments) {
-        if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypeImage]) {
+        if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypeGIF]) {
+            [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypeGIF options:nil completionHandler:^(id data, NSError *error) {
+                if (error) {
+                    [self handleError:error];
+                } else {
+                    if ([[data class] isSubclassOfClass:NSData.class]) {
+                        [ShareAttachment addGIF:(NSData *)data fromItemProvider:itemProvider];
+                    } else {
+                        NSURL *url = (NSURL *)data;
+                        [ShareAttachment addFileURL:url];
+                    }
+                }
+            }];
+        } else if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypeImage]) {
             [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypeImage options:nil completionHandler:^(id data, NSError *error) {
                 if (error) {
                     [self handleError:error];
@@ -565,6 +578,20 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     for (ShareAttachment *attachment in [ShareAttachment attachmentsArray]) {
         switch (attachment.type) {
+            case ShareAttachmentTypeGIF: {
+                NSString *storagePath = [self shareExtensionStorage];
+                NSString *tempPath = [storagePath stringByAppendingPathComponent:attachment.name];
+                NSData *data = attachment.content;
+                if ([data writeToFile:tempPath atomically:YES]) {
+                    [self smartUploadLocalPath:tempPath parent:parentNode];
+                } else {
+                    MEGALogError(@".gif writeToFile failed at path: %@", tempPath);
+                    [self oneUnsupportedMore];
+                }
+                
+                break;
+            }
+                
             case ShareAttachmentTypePNG: {
                 UIImage *image = attachment.content;
                 [self uploadImage:image withName:attachment.name toParentNode:parentNode isPNG:YES];
