@@ -757,7 +757,17 @@
     cell.unreadView.hidden = NO;
     cell.unreadView.backgroundColor = UIColor.mnz_gray777777;
     cell.unreadView.layer.cornerRadius = 4;
+    NSArray *constraints = cell.unreadView.constraints;
+    for (NSLayoutConstraint *constraint in constraints) {
+        if (constraint.firstAttribute == NSLayoutAttributeHeight) {
+            constraint.constant = 20;
+        }
+        if (constraint.firstAttribute == NSLayoutAttributeWidth) {
+            constraint.constant = 14;
+        }
+    }
     cell.unreadCount.text = AMLocalizedString(@"archived", @"Title of flag of archived chats.").uppercaseString;
+
     return cell;
 }
 
@@ -932,49 +942,30 @@
 
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
+
     switch (self.chatRoomsType) {
         case ChatRoomsTypeDefault: {
-            MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
             
             //TODO: While the "More" action only shows "Info" on a UIAlertController with UIAlertControllerStyleActionSheet style, it will replaced by the "Info" action itself
             UITableViewRowAction *infoAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
                 [self presentGroupOrContactDetailsForChatListItem:chatListItem];
             }];
-            infoAction.backgroundColor = [UIColor mnz_grayCCCCCC];
+            infoAction.backgroundColor = UIColor.mnz_grayCCCCCC;
             
-            UITableViewRowAction *deleteAction = nil;
-            if (chatListItem.isGroup && chatListItem.ownPrivilege >= MEGAChatRoomPrivilegeRo) {
-                deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:AMLocalizedString(@"leave", @"A button label. The button allows the user to leave the conversation.")  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-                    UIAlertController *leaveAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"youWillNoLongerHaveAccessToThisConversation", @"Alert text that explains what means confirming the action 'Leave'") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-                    [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                        [self.tableView setEditing:NO];
-                    }]];
-                    
-                    [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"leave", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                        [[MEGASdkManager sharedMEGAChatSdk] leaveChat:chatListItem.chatId];
-                        [self.tableView setEditing:NO];
-                    }]];
-                    
-                    leaveAlertController.modalPresentationStyle = UIModalPresentationPopover;
-                    CGRect deleteRect = [self.tableView rectForRowAtIndexPath:indexPath];
-                    leaveAlertController.popoverPresentationController.sourceRect = deleteRect;
-                    leaveAlertController.popoverPresentationController.sourceView = self.view;
-                    
-                    [self presentViewController:leaveAlertController animated:YES completion:nil];
-                }];
-            }
-            deleteAction.backgroundColor = [UIColor mnz_redFF333A];
-            
-            return (chatListItem.isGroup && chatListItem.ownPrivilege >= MEGAChatRoomPrivilegeRo) ? @[deleteAction, infoAction] : @[infoAction];
+            UITableViewRowAction *archiveAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:AMLocalizedString(@"archiveChat", @"Title of button to archive chats.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+                [[MEGASdkManager sharedMEGAChatSdk] archiveChat:chatListItem.chatId archive:YES];
+            }];
+            archiveAction.backgroundColor = UIColor.mnz_green00BFA5;
+
+            return @[archiveAction, infoAction];
         }
             
         case ChatRoomsTypeArchived: {
             UITableViewRowAction *unarchiveAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-                MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
-                MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
-                [[MEGASdkManager sharedMEGAChatSdk] archiveChat:chatRoom.chatId archive:NO];
+                [[MEGASdkManager sharedMEGAChatSdk] archiveChat:chatListItem.chatId archive:NO];
             }];
-            unarchiveAction.backgroundColor = [UIColor mnz_green00BFA5];
+            unarchiveAction.backgroundColor = UIColor.mnz_green00BFA5;
             
             return @[unarchiveAction];
         }
@@ -998,7 +989,7 @@
         if (self.isScrollAtTop && scrollView.contentOffset.y < 0 && !self.isArchivedChatsRowVisible) {
             self.isArchivedChatsRowVisible = YES;
             [self.tableView beginUpdates];
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationMiddle];
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationTop];
             [self.tableView endUpdates];
             [self updateChatIdIndexPathDictionary];
         }

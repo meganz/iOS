@@ -134,7 +134,7 @@
 
 - (void)showArchiveChatAlertAtIndexPath:(NSIndexPath *)indexPath {
     NSString *title = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChatMessage", @"Confirmation message for user to confirm it will unarchive an archived chat.") : AMLocalizedString(@"archiveChatMessage", @"Confirmation message on archive chat dialog for user to confirm.");
-    UIAlertController *archiveAlertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *archiveAlertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
     [archiveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     [archiveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -145,31 +145,17 @@
         [[MEGASdkManager sharedMEGAChatSdk] archiveChat:self.chatRoom.chatId archive:!self.chatRoom.isArchived delegate:archiveChatRequesDelegate];
     }]];
     
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        archiveAlertController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popoverPresentationController = [archiveAlertController popoverPresentationController];
-        CGRect deleteRect = [self.tableView rectForRowAtIndexPath:indexPath];
-        popoverPresentationController.sourceRect = deleteRect;
-        popoverPresentationController.sourceView = self.tableView;
-    }
     [self presentViewController:archiveAlertController animated:YES completion:nil];
 }
 
 - (void)showLeaveChatAlertAtIndexPath:(NSIndexPath *)indexPath {
-    UIAlertController *leaveAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"youWillNoLongerHaveAccessToThisConversation", @"Alert text that explains what means confirming the action 'Leave'") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *leaveAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"youWillNoLongerHaveAccessToThisConversation", @"Alert text that explains what means confirming the action 'Leave'") message:nil preferredStyle:UIAlertControllerStyleAlert];
     [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"leave", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [[MEGASdkManager sharedMEGAChatSdk] leaveChat:self.chatRoom.chatId];
     }]];
     
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        leaveAlertController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popoverPresentationController = [leaveAlertController popoverPresentationController];
-        CGRect deleteRect = [self.tableView rectForRowAtIndexPath:indexPath];
-        popoverPresentationController.sourceRect = deleteRect;
-        popoverPresentationController.sourceView = self.tableView;
-    }
     [self presentViewController:leaveAlertController animated:YES completion:nil];
 }
 
