@@ -1009,10 +1009,13 @@
     self.carbonCopyBarButtonItem.enabled = boolValue;
     self.deleteBarButtonItem.enabled = boolValue;
     self.restoreBarButtonItem.enabled = boolValue;
-    for (MEGANode *n in self.selectedNodesArray) {
-        if (!n.mnz_isRestorable) {
-            self.restoreBarButtonItem.enabled = NO;
-            break;
+    
+    if ((self.displayMode == DisplayModeRubbishBin) && boolValue) {
+        for (MEGANode *n in self.selectedNodesArray) {
+            if (!n.mnz_isRestorable) {
+                self.restoreBarButtonItem.enabled = NO;
+                break;
+            }
         }
     }
 }
