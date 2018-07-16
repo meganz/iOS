@@ -41,7 +41,10 @@
 @property (nonatomic, strong) NSMutableArray *selectedUsersMutableArray;
 
 @property (nonatomic) NSUInteger pendingAttachNodeOperations;
+
 @property (nonatomic) NSUInteger pendingForwardOperations;
+@property (nonatomic) NSMutableArray<NSNumber *> *chatIdNumbers;
+@property (nonatomic) NSMutableArray<MEGAChatMessage *> *sentMessages;
 
 @end
 
@@ -183,60 +186,46 @@
 }
 
 - (void)showSuccessMessage {
-    switch (self.sendMode) {
-        case SendModeCloud: {
-            NSString *status;
-            if (self.nodes.count == 1) {
-                if ((self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count) == 1) {
-                    status = AMLocalizedString(@"fileSentToChat", @"Toast text upon sending a single file to chat");
-                } else {
-                    status = [NSString stringWithFormat:AMLocalizedString(@"fileSentToXChats", @"Success message when the attachment has been sent to a many chats"), (self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count) ];
-                }
-            } else {
-                if ((self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count) == 1) {
-                    status = AMLocalizedString(@"filesSentToChat", @"Toast text upon sending multiple files to chat");
-                } else {
-                    status = [NSString stringWithFormat:AMLocalizedString(@"xfilesSentSuccesfully", @"success message when sending multiple files. Please do not modify the %d placeholder."), self.nodes.count];
-                }
-            }
-            
-            [SVProgressHUD showSuccessWithStatus:status];
-            
-            break;
+    NSString *status;
+    if (self.nodes.count == 1) {
+        if ((self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count) == 1) {
+            status = AMLocalizedString(@"fileSentToChat", @"Toast text upon sending a single file to chat");
+        } else {
+            status = [NSString stringWithFormat:AMLocalizedString(@"fileSentToXChats", @"Success message when the attachment has been sent to a many chats"), (self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count) ];
         }
-            
-        case SendModeForward:
+    } else {
+        if ((self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count) == 1) {
+            status = AMLocalizedString(@"filesSentToChat", @"Toast text upon sending multiple files to chat");
+        } else {
+            status = [NSString stringWithFormat:AMLocalizedString(@"xfilesSentSuccesfully", @"success message when sending multiple files. Please do not modify the %d placeholder."), self.nodes.count];
+        }
+    }
+    
+    [SVProgressHUD showSuccessWithStatus:status];
+}
+
+- (void)completeForwardingMessage:(MEGAChatMessage *)message toChat:(uint64_t)chatId {
+    @synchronized(self.sentMessages) {
+        if (chatId == self.sourceChatId && message.type != MEGAChatMessageTypeAttachment) {
+            [self.sentMessages addObject:message];
+        }
+        
+        if (--self.pendingForwardOperations == 0) {
             [self dismissViewControllerAnimated:YES completion:^{
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"messagesSent", @"Success message shown after forwarding messages to other chats")];
+                self.completion(self.chatIdNumbers, self.sentMessages);
             }];
-            
-            break;
-            
-        default:
-            break;
+        }
     }
 }
 
-- (void)goToDestinationChatAndDismiss:(uint64_t)chatId {
-    [self dismissViewControllerAnimated:YES completion:^{
-        self.completion(chatId);
-    }];
-}
-
-- (void)forwardMessage:(MEGAChatMessage *)message toChats:(NSMutableArray<NSNumber *> *)chatIdNumbers {
+- (void)forwardMessage:(MEGAChatMessage *)message {
     switch (message.type) {
         case MEGAChatMessageTypeNormal:
         case MEGAChatMessageTypeContainsMeta: {
-            for (NSNumber *chatIdNumber in chatIdNumbers) {
+            for (NSNumber *chatIdNumber in self.chatIdNumbers) {
                 uint64_t chatId = chatIdNumber.unsignedLongLongValue;
-                [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:chatId message:message.content];
-                if (--self.pendingForwardOperations == 0) {
-                    if (chatIdNumbers.count == 1) {
-                        [self goToDestinationChatAndDismiss:chatId];
-                    } else {
-                        [self showSuccessMessage];
-                    }
-                }
+                MEGAChatMessage *newMessage = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:chatId message:message.content];
+                [self completeForwardingMessage:newMessage toChat:chatId];
             }
             
             break;
@@ -247,16 +236,10 @@
                 MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[message userEmailAtIndex:i]];
                 [users addObject:user];
             }
-            for (NSNumber *chatIdNumber in chatIdNumbers) {
+            for (NSNumber *chatIdNumber in self.chatIdNumbers) {
                 uint64_t chatId = chatIdNumber.unsignedLongLongValue;
-                [[MEGASdkManager sharedMEGAChatSdk] attachContactsToChat:chatId contacts:users];
-                if (--self.pendingForwardOperations == 0) {
-                    if (chatIdNumbers.count == 1) {
-                        [self goToDestinationChatAndDismiss:chatId];
-                    } else {
-                        [self showSuccessMessage];
-                    }
-                }
+                MEGAChatMessage *newMessage = [[MEGASdkManager sharedMEGAChatSdk] attachContactsToChat:chatId contacts:users];
+                [self completeForwardingMessage:newMessage toChat:chatId];
             }
             
             break;
@@ -264,16 +247,16 @@
             
         case MEGAChatMessageTypeAttachment: {
             MEGACopyRequestDelegate *copyRequestDelegate = [[MEGACopyRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                [self attachNode:request.nodeHandle toChats:chatIdNumbers];
+                [self attachNode:request.nodeHandle];
             }];
             
             MEGANode *node = [message.nodeList mnz_nodesArrayFromNodeList].firstObject;
             if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] == MEGAShareTypeAccessOwner) {
-                [self attachNode:node.handle toChats:chatIdNumbers];
+                [self attachNode:node.handle];
             } else {
                 MEGANode *remoteNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
                 if (remoteNode && [[MEGASdkManager sharedMEGASdk] accessLevelForNode:remoteNode] == MEGAShareTypeAccessOwner) {
-                    [self attachNode:remoteNode.handle toChats:chatIdNumbers];
+                    [self attachNode:remoteNode.handle];
                 } else {
                     MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
                     if (myChatFilesNode) {
@@ -296,18 +279,12 @@
     }
 }
 
-- (void)attachNode:(uint64_t)handle toChats:(NSMutableArray<NSNumber *> *)chatIdNumbers {
+- (void)attachNode:(uint64_t)handle {
     MEGAChatAttachNodeRequestDelegate *chatAttachNodeRequestDelegate = [[MEGAChatAttachNodeRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest *request, MEGAChatError *error) {
-        if (--self.pendingForwardOperations == 0) {
-            if (chatIdNumbers.count == 1) {
-                [self goToDestinationChatAndDismiss:request.chatHandle];
-            } else {
-                [self showSuccessMessage];
-            }
-        }
+        [self completeForwardingMessage:request.chatMessage toChat:request.chatHandle];
     }];
     
-    for (NSNumber *chatIdNumber in chatIdNumbers) {
+    for (NSNumber *chatIdNumber in self.chatIdNumbers) {
         uint64_t chatId = chatIdNumber.unsignedLongLongValue;
         [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatId node:handle delegate:chatAttachNodeRequestDelegate];
     }
@@ -369,15 +346,16 @@
             case SendModeForward: {
                 NSUInteger destinationCount = self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count;
                 self.pendingForwardOperations = self.messages.count * destinationCount;
+                self.sentMessages = [[NSMutableArray<MEGAChatMessage *> alloc] initWithCapacity:self.messages.count];
                 
                 for (MEGAChatMessage *message in self.messages) {
-                    NSMutableArray<NSNumber *> *chatIdNumbers = [[NSMutableArray<NSNumber *> alloc] init];
+                    self.chatIdNumbers = [[NSMutableArray<NSNumber *> alloc] init];
                     
                     for (MEGAChatListItem *chatListItem in self.selectedGroupChatsMutableArray) {
-                        @synchronized(chatIdNumbers) {
-                            [chatIdNumbers addObject:@(chatListItem.chatId)];
-                            if (chatIdNumbers.count == destinationCount) {
-                                [self forwardMessage:message toChats:chatIdNumbers];
+                        @synchronized(self.chatIdNumbers) {
+                            [self.chatIdNumbers addObject:@(chatListItem.chatId)];
+                            if (self.chatIdNumbers.count == destinationCount) {
+                                [self forwardMessage:message];
                             }
                         }
                     }
@@ -385,10 +363,10 @@
                     for (MEGAUser *user in self.selectedUsersMutableArray) {
                         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
                         if (chatRoom) {
-                            @synchronized(chatIdNumbers) {
-                                [chatIdNumbers addObject:@(chatRoom.chatId)];
-                                if (chatIdNumbers.count == destinationCount) {
-                                    [self forwardMessage:message toChats:chatIdNumbers];
+                            @synchronized(self.chatIdNumbers) {
+                                [self.chatIdNumbers addObject:@(chatRoom.chatId)];
+                                if (self.chatIdNumbers.count == destinationCount) {
+                                    [self forwardMessage:message];
                                 }
                             }
                         } else {
@@ -396,10 +374,10 @@
                             MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
                             [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
                             MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
-                                @synchronized(chatIdNumbers) {
-                                    [chatIdNumbers addObject:@(chatRoom.chatId)];
-                                    if (chatIdNumbers.count == destinationCount) {
-                                        [self forwardMessage:message toChats:chatIdNumbers];
+                                @synchronized(self.chatIdNumbers) {
+                                    [self.chatIdNumbers addObject:@(chatRoom.chatId)];
+                                    if (self.chatIdNumbers.count == destinationCount) {
+                                        [self forwardMessage:message];
                                     }
                                 }
                             }];
