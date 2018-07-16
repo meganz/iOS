@@ -89,10 +89,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bKm-zc-lgI" userLabel="Unread View">
-                                                    <rect key="frame" x="380" y="35" width="14" height="14"/>
+                                                    <rect key="frame" x="378.33333333333331" y="35" width="15.666666666666686" height="14"/>
                                                     <subviews>
                                                         <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="U" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RGB-uG-ZWn">
-                                                            <rect key="frame" x="2" y="1.3333333333333357" width="10" height="12"/>
+                                                            <rect key="frame" x="4" y="1.3333333333333357" width="7.6666666666666679" height="12"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="10"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -102,9 +102,8 @@
                                                     <color key="backgroundColor" red="1" green="0.20000000000000001" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="RGB-uG-ZWn" firstAttribute="centerY" secondItem="bKm-zc-lgI" secondAttribute="centerY" id="1Fc-7f-g8R"/>
+                                                        <constraint firstAttribute="width" secondItem="RGB-uG-ZWn" secondAttribute="width" constant="8" id="Elz-X6-L5O"/>
                                                         <constraint firstItem="RGB-uG-ZWn" firstAttribute="centerX" secondItem="bKm-zc-lgI" secondAttribute="centerX" id="Rvk-RU-tGG"/>
-                                                        <constraint firstItem="RGB-uG-ZWn" firstAttribute="leading" secondItem="bKm-zc-lgI" secondAttribute="leading" constant="2" id="TML-Mf-g7s"/>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="14" id="Z2t-Dx-ciU"/>
                                                         <constraint firstAttribute="height" constant="14" id="pRq-4l-t97"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
