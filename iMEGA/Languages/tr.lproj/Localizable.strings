@@ -998,7 +998,7 @@
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="aylık %@";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
-"choosePlan"="Aşağıdaki planlardan birini seçin:";
+"choosePlan"="Aşağıdaki tarifelerden birini seçin:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Bir hesap türü seçin:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
@@ -1106,7 +1106,7 @@
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Mobil Veriyi Kullan";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
-"autoAway"="Oto-dışarda";
+"autoAway"="Oto-dışarıda";
 /* */
 "xMinutes"="[X] dakika";
 /* */
@@ -1114,7 +1114,7 @@
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="[X] dakika işlem yapılmadığında beni 'Dışarıda' olarak göster.";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfter1MinuteOfInactivity"="1 dakika boyunca işlem yapılmadığında beni uzakta olarak göster";
+"showMeAwayAfter1MinuteOfInactivity"="1 dakika boyunca işlem yapılmadığında beni dışarıda olarak göster";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Tekrarlayan Durum";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1124,7 +1124,7 @@
 /*  */
 "online"="Çevrim içi";
 /*  */
-"away"="Uzakta";
+"away"="Dışarıda";
 /*  */
 "busy"="Meşgul";
 /* title of the contact properties screen */
@@ -1252,7 +1252,7 @@
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="Kuyruktaki indirmeleriniz hesabınız için bulunmakta olan aktarma kotasını geçmektedir ve bu nedenle aksatılabilir.";
 /* Button title to see the available pro plans in MEGA */
-"seePlans"="Paketleri görüntüleyin";
+"seePlans"="Tarifeleri görüntüleyin";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="Son ver";
 /* Notification text body shown when you have received a new chat message */
@@ -1511,9 +1511,9 @@
 /* When an active call of user A with user B had not answered */
 "callWasNotAnswered"="Arama cevaplanmadı";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed";
+"callFailed"="Arama başarısız.";
 /* When an active call of user A with user B had ended */
-"callEnded"="Call ended.";
+"callEnded"="Arama sona erdi.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Süre: %@";
 /* */
@@ -1536,3 +1536,15 @@
 "fileNotSupported"="Dosya desteklenmiyor";
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="Çevrimdışı olarak kaydedip uyumlu bir uygulamada açabilirsiniz.";
+/* Title of archived chats button */
+"archivedChats"="Arşivlenen sohbetler";
+/* Confirmation message on archive chat dialog for user to confirm. */
+"archiveChatMessage"="Bu sohbeti arşivlemek istediğinizden emin misiniz?";
+/* Confirmation message for user to confirm it will unarchive an archived chat. */
+"unarchiveChatMessage"="Bu sohbeti arşivden çıkartmak istediğinize emin misiniz?";
+/* The title of the dialog to unarchive an archived chat. */
+"unarchiveChat"="Arşivden çıkart";
+/* Title of button to archive chats. */
+"archiveChat"="Sohbeti Arşivle";
+/* Title of flag of archived chats. */
+"archived"="Arşivlendi";

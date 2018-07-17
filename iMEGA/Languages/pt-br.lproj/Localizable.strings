@@ -165,7 +165,7 @@
 /* */
 "fileLinkUnavailableText1"="Isto pode ser devido às seguintes razões:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="O arquivo foi removido por causa de uma violação Termos de Serviços / Política de Uso Aceitável.";
+"fileLinkUnavailableText2"="O arquivo foi removido por causa de uma infração dos Termos de serviço.";
 /* */
 "fileLinkUnavailableText3"="URL inválida - o link que você está tentando acessar não existe";
 /* */
@@ -183,7 +183,7 @@
 /* */
 "folderLinkUnavailableText1"="Isto pode ser devido às seguintes razões:";
 /* */
-"folderLinkUnavailableText2"="O link desta pasta foi eliminado por uma violação dos nossos Termos de serviço.";
+"folderLinkUnavailableText2"="O link desta pasta foi eliminado por uma infração dos nossos Termos de serviço.";
 /* */
 "folderLinkUnavailableText3"="URL inválida - o link que você está tentando acessar não existe";
 /* */
@@ -1511,9 +1511,9 @@
 /* When an active call of user A with user B had not answered */
 "callWasNotAnswered"="A chamada não foi respondida";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed";
+"callFailed"="Falha na llamada";
 /* When an active call of user A with user B had ended */
-"callEnded"="Call ended.";
+"callEnded"="Chamada finalizada.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Duração: %@";
 /* */
@@ -1536,3 +1536,15 @@
 "fileNotSupported"="Arquivo não suportado";
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="Você pode salvar o arquivo para uso offline e abri-lo em um aplicativo compatível.";
+/* Title of archived chats button */
+"archivedChats"="Chats arquivados";
+/* Confirmation message on archive chat dialog for user to confirm. */
+"archiveChatMessage"="Você tem certeza de que quer arquivar esta conversa?";
+/* Confirmation message for user to confirm it will unarchive an archived chat. */
+"unarchiveChatMessage"="Você tem certeza de que quer deixar de arquivar esta conversa?";
+/* The title of the dialog to unarchive an archived chat. */
+"unarchiveChat"="Deixar de arquivar chat";
+/* Title of button to archive chats. */
+"archiveChat"="Arquivar chat";
+/* Title of flag of archived chats. */
+"archived"="Arquivado";
