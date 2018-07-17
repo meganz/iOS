@@ -46,7 +46,6 @@
 
 @interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITableViewDelegate, UITableViewDataSource> {
     BOOL allNodesSelected;
-    BOOL isSwipeEditing;
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
@@ -431,7 +430,6 @@
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView leadingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    isSwipeEditing = YES;
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
     
     if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
@@ -459,7 +457,6 @@
         return [UISwipeActionsConfiguration configurationWithActions:@[]];
     }
     
-    isSwipeEditing = YES;
     self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
     
     if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
@@ -1473,21 +1470,17 @@
 - (void)setTableViewEditing:(BOOL)editing animated:(BOOL)animated {
     [self.tableView setEditing:editing animated:animated];
 
-    if (!isSwipeEditing) {
-        [self updateNavigationBarTitle];
-    }
+    [self updateNavigationBarTitle];
     
     if (editing) {
-        if (!isSwipeEditing) {
-            self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
-            self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
-            self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
-            [self.toolbar setAlpha:0.0];
-            [self.tabBarController.tabBar addSubview:self.toolbar];
-            [UIView animateWithDuration:0.33f animations:^ {
-                [self.toolbar setAlpha:1.0];
-            }];
-        }
+        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+        self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
+        self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+        [self.toolbar setAlpha:0.0];
+        [self.tabBarController.tabBar addSubview:self.toolbar];
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:1.0];
+        }];
     } else {
         self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
         [self setNavigationBarButtonItems];
@@ -1509,8 +1502,6 @@
         
         [self setToolbarActionsEnabled:NO];
     }
-    
-    isSwipeEditing = NO;
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
