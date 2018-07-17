@@ -72,7 +72,8 @@ static NSMutableArray<ShareAttachment *> *_attachmentsArray;
     
     if (@available(iOS 11.0, *)) {
         suggestedName = itemProvider.suggestedName;
-    } else {
+    }
+    if (!suggestedName) {
         NSString *name = [NSUUID UUID].UUIDString;
         suggestedName = [NSString stringWithFormat:@"%@.gif", name];
     }
@@ -85,7 +86,8 @@ static NSMutableArray<ShareAttachment *> *_attachmentsArray;
     
     if (@available(iOS 11.0, *)) {
         suggestedName = itemProvider.suggestedName;
-    } else {
+    }
+    if (!suggestedName) {
         NSString *name = [NSUUID UUID].UUIDString;
         NSString *extension = [itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypePNG] ? @"png" : @"jpg";
         suggestedName = [NSString stringWithFormat:@"%@.%@", name, extension];

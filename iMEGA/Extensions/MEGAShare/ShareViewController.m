@@ -579,15 +579,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     for (ShareAttachment *attachment in [ShareAttachment attachmentsArray]) {
         switch (attachment.type) {
             case ShareAttachmentTypeGIF: {
-                NSString *storagePath = [self shareExtensionStorage];
-                NSString *tempPath = [storagePath stringByAppendingPathComponent:attachment.name];
-                NSData *data = attachment.content;
-                if ([data writeToFile:tempPath atomically:YES]) {
-                    [self smartUploadLocalPath:tempPath parent:parentNode];
-                } else {
-                    MEGALogError(@".gif writeToFile failed at path: %@", tempPath);
-                    [self oneUnsupportedMore];
-                }
+                [self writeDataAndUpload:attachment toParentNode:parentNode];
                 
                 break;
             }
@@ -625,15 +617,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
                 
             case ShareAttachmentTypeContact: {
-                NSString *storagePath = [self shareExtensionStorage];
-                NSString *tempPath = [storagePath stringByAppendingPathComponent:attachment.name];
-                NSData *vCardData = attachment.content;
-                if ([vCardData writeToFile:tempPath atomically:YES]) {
-                    [self smartUploadLocalPath:tempPath parent:parentNode];
-                } else {
-                    MEGALogError(@".vcf writeToFile failed at path: %@", tempPath);
-                    [self oneUnsupportedMore];
-                }
+                [self writeDataAndUpload:attachment toParentNode:parentNode];
                 
                 break;
             }
@@ -769,6 +753,18 @@ void uncaughtExceptionHandler(NSException *exception) {
         }
     } else {
         MEGALogError(@"Share extension error, %@ object received instead of NSURL or UIImage", url.class);
+        [self oneUnsupportedMore];
+    }
+}
+
+- (void)writeDataAndUpload:(ShareAttachment *)attachment toParentNode:(MEGANode *)parentNode {
+    NSString *storagePath = [self shareExtensionStorage];
+    NSString *tempPath = [storagePath stringByAppendingPathComponent:attachment.name];
+    NSData *data = attachment.content;
+    if ([data writeToFile:tempPath atomically:YES]) {
+        [self smartUploadLocalPath:tempPath parent:parentNode];
+    } else {
+        MEGALogError(@"writeToFile failed at path: %@", tempPath);
         [self oneUnsupportedMore];
     }
 }
