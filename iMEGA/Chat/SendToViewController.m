@@ -9,6 +9,7 @@
 #import "Helper.h"
 #import "MEGAChatAttachNodeRequestDelegate.h"
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
+#import "MEGAChatMessage+MNZCategory.h"
 #import "MEGACopyRequestDelegate.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGANodeList+MNZCategory.h"
@@ -231,14 +232,9 @@
             break;
         }
         case MEGAChatMessageTypeContact: {
-            NSMutableArray<MEGAUser *> *users = [[NSMutableArray<MEGAUser *> alloc] initWithCapacity:message.usersCount];
-            for (NSUInteger i = 0; i < message.usersCount; i++) {
-                MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[message userEmailAtIndex:i]];
-                [users addObject:user];
-            }
             for (NSNumber *chatIdNumber in self.chatIdNumbers) {
                 uint64_t chatId = chatIdNumber.unsignedLongLongValue;
-                MEGAChatMessage *newMessage = [[MEGASdkManager sharedMEGAChatSdk] attachContactsToChat:chatId contacts:users];
+                MEGAChatMessage *newMessage = [[MEGASdkManager sharedMEGAChatSdk] forwardContactFromChat:message.chatRoom.chatId messageId:message.messageId targetChatId:chatId];
                 [self completeForwardingMessage:newMessage toChat:chatId];
             }
             
