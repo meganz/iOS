@@ -171,6 +171,8 @@
         }
     }
     
+    [self updateNavigationBarTitle];
+    
     [self.tableView reloadData];
 }
 
@@ -356,6 +358,21 @@
     [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
 }
 
+- (void)updateNavigationBarTitle {
+    NSString *navigationTitle;
+    if (self.tableView.isEditing) {
+        if (self.selectedNodesMutableArray.count == 0) {
+            navigationTitle = AMLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
+        } else {
+            navigationTitle = (self.selectedNodesMutableArray.count == 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedNodesMutableArray.count] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedNodesMutableArray.count];
+        }
+    } else {
+        navigationTitle = AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
+    }
+    
+    self.navigationItem.title = navigationTitle;
+}
+
 #pragma mark - Utils
 
 - (void)selectSegment:(NSUInteger)index {
@@ -381,6 +398,8 @@
     [super setEditing:editing animated:animated];
     
     [self.tableView setEditing:editing animated:animated];
+    
+    [self updateNavigationBarTitle];
     
     if (editing) {
         self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
@@ -453,6 +472,8 @@
     } else if (self.selectedNodesMutableArray.count >= 1) {
         [self toolbarItemsSetEnabled:YES];
     }
+    
+    [self updateNavigationBarTitle];
     
     [self.tableView reloadData];
 }
@@ -774,6 +795,7 @@
             [_selectedNodesMutableArray addObject:node];
         }
         
+        [self updateNavigationBarTitle];
         [self toolbarItemsSetEnabled:YES];
         
         NSUInteger nodeListSize = 0;
@@ -826,7 +848,8 @@
                 [_selectedNodesMutableArray removeObject:n];
             }
         }
-        
+                
+        [self updateNavigationBarTitle];
         if (self.selectedNodesMutableArray.count == 0) {
             [self toolbarItemsSetEnabled:NO];
         }

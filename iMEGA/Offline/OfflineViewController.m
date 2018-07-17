@@ -291,6 +291,8 @@ static NSString *kisDirectory = @"kisDirectory";
         }
     }
     
+    [self updateNavigationBarTitle];
+    
     [self.tableView reloadData];
 }
 
@@ -506,6 +508,25 @@ static NSString *kisDirectory = @"kisDirectory";
     return previewController;
 }
 
+- (void)updateNavigationBarTitle {
+    NSString *navigationTitle;
+    if (self.tableView.isEditing) {
+        if (self.selectedItems.count == 0) {
+            navigationTitle = AMLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
+        } else {
+            navigationTitle = (self.selectedItems.count == 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedItems.count] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedItems.count];
+        }
+    } else {
+        if (self.folderPathFromOffline == nil) {
+            navigationTitle = AMLocalizedString(@"offline", @"Offline");
+        } else {
+            navigationTitle = [self.folderPathFromOffline lastPathComponent];
+        }
+    }
+    
+    self.navigationItem.title = navigationTitle;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -631,6 +652,8 @@ static NSString *kisDirectory = @"kisDirectory";
         NSURL *filePathURL = [[self itemAtIndexPath:indexPath] objectForKey:kPath];
         [self.selectedItems addObject:filePathURL];
         
+        [self updateNavigationBarTitle];
+        
         if (self.selectedItems.count > 0) {
             [self.activityBarButtonItem setEnabled:![self isDirectorySelected]];
             [self.deleteBarButtonItem setEnabled:YES];
@@ -699,6 +722,8 @@ static NSString *kisDirectory = @"kisDirectory";
             }
         }
         
+        [self updateNavigationBarTitle];
+        
         if (self.selectedItems.count == 0) {
             [self.activityBarButtonItem setEnabled:NO];
             [self.deleteBarButtonItem setEnabled:NO];
@@ -715,6 +740,8 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (void)setTableViewEditing:(BOOL)editing animated:(BOOL)animated {
     [self.tableView setEditing:editing animated:animated];
+    
+    [self updateNavigationBarTitle];
     
     if (editing) {
         self.navigationItem.rightBarButtonItem = self.editBarButtonItem;
@@ -802,6 +829,8 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.activityBarButtonItem setEnabled:![self isDirectorySelected]];
         [self.deleteBarButtonItem setEnabled:YES];
     }
+    
+    [self updateNavigationBarTitle];
     
     [self.tableView reloadData];
 }
