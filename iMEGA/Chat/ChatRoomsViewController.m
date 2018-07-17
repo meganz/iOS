@@ -728,7 +728,11 @@
         actionAuthor = [chatRoom peerFullnameByHandle:item.lastMessageSender];
     }
     
-    return actionAuthor;
+    if (!actionAuthor) {
+        actionAuthor = [[[MEGAStore shareInstance] fetchUserWithUserHandle:item.lastMessageSender] fullName];
+    }
+    
+    return actionAuthor ? actionAuthor : @"?";
 }
 
 - (NSInteger)numberOfChatRooms {
