@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eDp-9x-QPr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eDp-9x-QPr">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -24,7 +24,7 @@
         <!--Chat Rooms View Controller-->
         <scene sceneID="u3Q-Re-YbU">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Li1-XI-VLz" customClass="ChatRoomsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChatRoomsViewControllerID" automaticallyAdjustsScrollViewInsets="NO" id="Li1-XI-VLz" customClass="ChatRoomsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lqj-pM-q0p">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -89,10 +89,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bKm-zc-lgI" userLabel="Unread View">
-                                                    <rect key="frame" x="380" y="35" width="14" height="14"/>
+                                                    <rect key="frame" x="378.33333333333331" y="35" width="15.666666666666686" height="14"/>
                                                     <subviews>
                                                         <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="U" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RGB-uG-ZWn">
-                                                            <rect key="frame" x="2" y="1.3333333333333357" width="10" height="12"/>
+                                                            <rect key="frame" x="4" y="1.3333333333333357" width="7.6666666666666679" height="12"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="10"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -102,9 +102,8 @@
                                                     <color key="backgroundColor" red="1" green="0.20000000000000001" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="RGB-uG-ZWn" firstAttribute="centerY" secondItem="bKm-zc-lgI" secondAttribute="centerY" id="1Fc-7f-g8R"/>
+                                                        <constraint firstAttribute="width" secondItem="RGB-uG-ZWn" secondAttribute="width" constant="8" id="Elz-X6-L5O"/>
                                                         <constraint firstItem="RGB-uG-ZWn" firstAttribute="centerX" secondItem="bKm-zc-lgI" secondAttribute="centerX" id="Rvk-RU-tGG"/>
-                                                        <constraint firstItem="RGB-uG-ZWn" firstAttribute="leading" secondItem="bKm-zc-lgI" secondAttribute="leading" constant="2" id="TML-Mf-g7s"/>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="14" id="Z2t-Dx-ciU"/>
                                                         <constraint firstAttribute="height" constant="14" id="pRq-4l-t97"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
@@ -151,6 +150,78 @@
                                             <outlet property="onlineStatusView" destination="lRT-kC-JWt" id="4Pv-nl-TFb"/>
                                             <outlet property="unreadCount" destination="RGB-uG-ZWn" id="ffB-CF-AKh"/>
                                             <outlet property="unreadView" destination="bKm-zc-lgI" id="EX4-V7-DGZ"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="archivedChatsCell" rowHeight="44" id="cfR-Os-cFP" customClass="ChatRoomCell">
+                                        <rect key="frame" x="0.0" y="92" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cfR-Os-cFP" id="2fj-Z1-exs">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EjH-u2-ZM3">
+                                                    <rect key="frame" x="15" y="8" width="28" height="28"/>
+                                                    <color key="tintColor" red="0.80477464200000004" green="0.0" blue="0.041726302360000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="28" id="26b-c2-oRp"/>
+                                                        <constraint firstAttribute="height" constant="28" id="oRT-Sr-cMB"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="info_sharedWithArrow" translatesAutoresizingMaskIntoConstraints="NO" id="SXx-eV-RxZ">
+                                                    <rect key="frame" x="381" y="14.666666666666664" width="15" height="15"/>
+                                                    <color key="tintColor" red="0.80477464200000004" green="0.0" blue="0.041726302360000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="15" id="GLV-V1-xMx"/>
+                                                        <constraint firstAttribute="height" constant="15" id="kiV-J7-DWe"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W4j-FT-gw0">
+                                                    <rect key="frame" x="58" y="13" width="38.666666666666657" height="18"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="18" id="E9I-1M-ZNA"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                                                    <color key="textColor" red="0.85098039215686272" green="0.0" blue="0.027450980392156862" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dgy-cs-KGM" userLabel="Line View">
+                                                    <rect key="frame" x="58" y="43" width="356" height="0.0"/>
+                                                    <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" id="9K1-jz-DSZ"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Li-Tj-WWS">
+                                                    <rect key="frame" x="329.33333333333331" y="15" width="43.666666666666686" height="14"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="14" id="nqS-M4-ZnI"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.5607843137254902" green="0.55686274509803924" blue="0.58039215686274503" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="6Li-Tj-WWS" firstAttribute="centerY" secondItem="2fj-Z1-exs" secondAttribute="centerY" id="3Dr-2y-Jyq"/>
+                                                <constraint firstItem="EjH-u2-ZM3" firstAttribute="centerY" secondItem="2fj-Z1-exs" secondAttribute="centerY" id="4bf-sH-v3y"/>
+                                                <constraint firstAttribute="trailing" secondItem="dgy-cs-KGM" secondAttribute="trailing" id="Ihb-BC-Kba"/>
+                                                <constraint firstAttribute="bottom" secondItem="dgy-cs-KGM" secondAttribute="bottom" constant="1" id="Owh-RX-WIN"/>
+                                                <constraint firstItem="W4j-FT-gw0" firstAttribute="leading" secondItem="EjH-u2-ZM3" secondAttribute="trailing" constant="15" id="VoO-o7-y8e"/>
+                                                <constraint firstItem="W4j-FT-gw0" firstAttribute="centerY" secondItem="2fj-Z1-exs" secondAttribute="centerY" id="hYD-6u-3Km"/>
+                                                <constraint firstItem="EjH-u2-ZM3" firstAttribute="leading" secondItem="2fj-Z1-exs" secondAttribute="leading" constant="15" id="nV0-rM-SUi"/>
+                                                <constraint firstAttribute="trailing" secondItem="SXx-eV-RxZ" secondAttribute="trailing" constant="18" id="sne-je-7pg"/>
+                                                <constraint firstItem="SXx-eV-RxZ" firstAttribute="leading" secondItem="6Li-Tj-WWS" secondAttribute="trailing" constant="8" id="viV-pj-Yg0"/>
+                                                <constraint firstItem="SXx-eV-RxZ" firstAttribute="centerY" secondItem="2fj-Z1-exs" secondAttribute="centerY" id="w2V-ny-TBN"/>
+                                                <constraint firstItem="dgy-cs-KGM" firstAttribute="leading" secondItem="W4j-FT-gw0" secondAttribute="leading" id="z23-KA-WZL"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <outlet property="avatarImageView" destination="EjH-u2-ZM3" id="zFU-PN-Xrh"/>
+                                            <outlet property="chatLastMessage" destination="6Li-Tj-WWS" id="sZ6-qO-ISh"/>
+                                            <outlet property="chatTitle" destination="W4j-FT-gw0" id="gn9-uL-nmG"/>
+                                            <outlet property="lineView" destination="dgy-cs-KGM" id="ngn-HJ-Xhh"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1538,6 +1609,7 @@
         <image name="chatIcon" width="31" height="28"/>
         <image name="chatSelectedIcon" width="31" height="28"/>
         <image name="hudNoCamera" width="28" height="28"/>
+        <image name="info_sharedWithArrow" width="22" height="22"/>
         <image name="micOff" width="64" height="64"/>
         <image name="micOn" width="64" height="64"/>
         <image name="readPermissions" width="46" height="44"/>

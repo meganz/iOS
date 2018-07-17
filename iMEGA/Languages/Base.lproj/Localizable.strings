@@ -68,6 +68,8 @@
 "tooManyRequest"="Too many requests. Please wait.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Please log in to your account.";
+/* Error message when a user attempts to change their email without an active login session. */
+"needToBeLoggedInToCompleteYourEmailChange"="You need to be logged in to complete your email change. Please log in again with your current email address and then click on your confirmation link again.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA SPACE";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -1507,7 +1509,7 @@
 /* When an active call of user A with user B had not answered */
 "callWasNotAnswered"="Call was not answered";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed";
+"callFailed"="Call failed.";
 /* When an active call of user A with user B had ended */
 "callEnded"="Call ended.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
@@ -1536,3 +1538,17 @@
 "forward"="Forward";
 /* Success message shown after forwarding messages to other chats */
 "messagesSent"="Messages sent";
+/* Title of archived chats button */
+"archivedChats"="Archived chats";
+/* Confirmation message on archive chat dialog for user to confirm. */
+"archiveChatMessage"="Are you sure you want to archive this conversation?";
+/* Confirmation message for user to confirm it will unarchive an archived chat. */
+"unarchiveChatMessage"="Are you sure you want to unarchive this conversation?";
+/* The title of the dialog to unarchive an archived chat. */
+"unarchiveChat"="Unarchive Chat";
+/* Title of button to archive chats. */
+"archiveChat"="Archive Chat";
+/* Title of flag of archived chats. */
+"archived"="Archived";
+/* Title of empty state view for archived chats. */
+"noArchivedChats"="No Archived Chats";
