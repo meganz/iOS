@@ -1405,7 +1405,7 @@
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="Pindai Kode";
 /* Label that encourage the user to line the QR to scan with the camera */
-"lineCodeWithCamera"="Sejajarkan kode QR untuk memindainya dengan kamera perangkat Anda";
+"lineCodeWithCamera"="Line up the QR code to scan it with your device’s camera";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
 "invalidCode"="Kode salah";
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
@@ -1463,11 +1463,11 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="Apa anda ingat password anda?";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="Karena teknologi enkripsi MEGA, Anda tidak dapat mengatur ulang kata sandi tanpa kehilangan data. Harap pastikan Anda mengingat kata sandi Anda.";
+"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset your password without data loss. Please make sure you remember your password.";
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Sebelum keluar, kami sarankan Anda mengekspor Kunci Pemulihan Anda ke tempat yang aman. Perhatikan bahwa Anda tidak dapat mengatur ulang kata sandi Anda jika Anda melupakannya.";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="Jangan tunjukkan saya lagi";
+"dontShowAgain"="Don’t show me again";
 /* Label for test password button and titles */
 "testPassword"="Uji Kata Sandi";
 /* Label for recovery key button */
@@ -1511,7 +1511,7 @@
 /* When an active call of user A with user B had not answered */
 "callWasNotAnswered"="Call was not answered";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed";
+"callFailed"="Call failed.";
 /* When an active call of user A with user B had ended */
 "callEnded"="Call ended.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
@@ -1536,3 +1536,15 @@
 "fileNotSupported"="File not supported";
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
+/* Title of archived chats button */
+"archivedChats"="Archived chats";
+/* Confirmation message on archive chat dialog for user to confirm. */
+"archiveChatMessage"="Are you sure you want to archive this conversation?";
+/* Confirmation message for user to confirm it will unarchive an archived chat. */
+"unarchiveChatMessage"="Are you sure you want to unarchive this conversation?";
+/* The title of the dialog to unarchive an archived chat. */
+"unarchiveChat"="Unarchive Chat";
+/* Title of button to archive chats. */
+"archiveChat"="Archive Chat";
+/* Title of flag of archived chats. */
+"archived"="Archived";

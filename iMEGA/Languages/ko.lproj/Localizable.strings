@@ -1511,7 +1511,7 @@
 /* When an active call of user A with user B had not answered */
 "callWasNotAnswered"="통화에 응답하지 않았음";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed";
+"callFailed"="Call failed.";
 /* When an active call of user A with user B had ended */
 "callEnded"="Call ended.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
@@ -1536,3 +1536,15 @@
 "fileNotSupported"="지원하지 않는 파일";
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="오프라인용으로 저장하고 호환되는 앱에서 열 수 있습니다";
+/* Title of archived chats button */
+"archivedChats"="보관된 대화";
+/* Confirmation message on archive chat dialog for user to confirm. */
+"archiveChatMessage"="이 대화를 보관하시겠습니까?";
+/* Confirmation message for user to confirm it will unarchive an archived chat. */
+"unarchiveChatMessage"="이 보관된 대화를 삭제하시겠습니까?";
+/* The title of the dialog to unarchive an archived chat. */
+"unarchiveChat"="보관된 대화 삭제";
+/* Title of button to archive chats. */
+"archiveChat"="대화 보관";
+/* Title of flag of archived chats. */
+"archived"="보관됨";

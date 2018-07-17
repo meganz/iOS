@@ -29,7 +29,6 @@
 
 @interface ShareViewController () <MEGARequestDelegate, MEGATransferDelegate, MEGAChatRoomDelegate, LTHPasscodeViewControllerDelegate>
 
-@property (nonatomic) UIViewController *browserVC;
 @property (nonatomic) NSUInteger pendingAssets;
 @property (nonatomic) NSUInteger totalAssets;
 @property (nonatomic) NSUInteger unsupportedAssets;
@@ -472,80 +471,79 @@ void uncaughtExceptionHandler(NSException *exception) {
     self.totalAssets = self.pendingAssets = content.attachments.count;
     self.progress = 0;
     self.unsupportedAssets = self.alreadyInDestinationAssets = 0;
+    
+    // This ordered array is needed because the allKeys properties of the classSupport dictionary are unordered, and the order here is determining
+    NSArray<NSString *> *typeIdentifiers = @[(NSString *)kUTTypeGIF,
+                                             (NSString *)kUTTypeImage,
+                                             (NSString *)kUTTypeMovie,
+                                             (NSString *)kUTTypeFileURL,
+                                             (NSString *)kUTTypeURL,
+                                             (NSString *)kUTTypeVCard,
+                                             (NSString *)kUTTypePlainText,
+                                             (NSString *)kUTTypeData];
+    
+    NSDictionary<NSString *, NSArray<Class> *> *classesSupported = @{(NSString *)kUTTypeGIF : @[NSData.class, NSURL.class],
+                                                                     (NSString *)kUTTypeImage : @[UIImage.class, NSData.class, NSURL.class],
+                                                                     (NSString *)kUTTypeMovie : @[NSURL.class],
+                                                                     (NSString *)kUTTypeFileURL : @[NSURL.class],
+                                                                     (NSString *)kUTTypeURL : @[NSURL.class],
+                                                                     (NSString *)kUTTypeVCard : @[NSData.class],
+                                                                     (NSString *)kUTTypePlainText : @[NSString.class],
+                                                                     (NSString *)kUTTypeData : @[NSURL.class]};
 
     for (NSItemProvider *itemProvider in content.attachments) {
-        if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypeImage]) {
-            [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypeImage options:nil completionHandler:^(id data, NSError *error) {
-                if (error) {
-                    [self handleError:error];
-                } else {
-                    if ([data class] == UIImage.class) {
-                        UIImage *image = (UIImage *)data;
-                        [ShareAttachment addImage:image fromItemProvider:itemProvider];
-                    } else if ([[data class] isSubclassOfClass:NSData.class]) {
-                        UIImage *image = [UIImage imageWithData:data];
-                        [ShareAttachment addImage:image fromItemProvider:itemProvider];
+        BOOL unsupported = YES;
+        
+        for (NSString *typeIdentifier in typeIdentifiers) {
+            if ([itemProvider hasItemConformingToTypeIdentifier:typeIdentifier]) {
+                [itemProvider loadItemForTypeIdentifier:typeIdentifier options:nil completionHandler:^(id data, NSError *error) {
+                    if (error) {
+                        [self handleError:error];
                     } else {
-                        NSURL *url = (NSURL *)data;
-                        [ShareAttachment addFileURL:url];
+                        for (Class supportedClass in [classesSupported objectForKey:typeIdentifier]) {
+                            if ([[data class] isSubclassOfClass:supportedClass]) {
+                                if (supportedClass == NSData.class) {
+                                    if ([typeIdentifier isEqualToString:(NSString *)kUTTypeGIF]) {
+                                        [ShareAttachment addGIF:(NSData *)data fromItemProvider:itemProvider];
+                                    } else if ([typeIdentifier isEqualToString:(NSString *)kUTTypeImage]) {
+                                        UIImage *image = [UIImage imageWithData:data];
+                                        [ShareAttachment addImage:image fromItemProvider:itemProvider];
+                                    } else if ([typeIdentifier isEqualToString:(NSString *)kUTTypeVCard]) {
+                                        [ShareAttachment addContact:data];
+                                    }
+                                    
+                                    break;
+                                } else if (supportedClass == NSURL.class) {
+                                    NSURL *url = (NSURL *)data;
+                                    if (url.isFileURL) {
+                                        [ShareAttachment addFileURL:url];
+                                    } else {
+                                        [ShareAttachment addURL:url];
+                                    }
+                                    
+                                    break;
+                                } else if (supportedClass == UIImage.class) {
+                                    UIImage *image = (UIImage *)data;
+                                    [ShareAttachment addImage:image fromItemProvider:itemProvider];
+                                    
+                                    break;
+                                } else if (supportedClass == NSString.class) {
+                                    NSString *text = (NSString *)data;
+                                    [ShareAttachment addPlainText:text];
+                                    
+                                    break;
+                                }
+                            }
+                        }
                     }
-                }
-            }];
-        } else if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypeMovie]) {
-            [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypeMovie options:nil completionHandler:^(id data, NSError *error) {
-                if (error) {
-                    [self handleError:error];
-                } else {
-                    NSURL *url = (NSURL *)data;
-                    [ShareAttachment addFileURL:url];
-                }
-            }];
-        } else if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypeFileURL]) {
-            // This type includes kUTTypeText, so kUTTypeText is omitted
-            [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypeFileURL options:nil completionHandler:^(id data, NSError *error) {
-                if (error) {
-                    [self handleError:error];
-                } else {
-                    NSURL *url = (NSURL *)data;
-                    [ShareAttachment addFileURL:url];
-                }
-            }];
-        } else if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypeURL]) {
-            [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypeURL options:nil completionHandler:^(id data, NSError *error) {
-                if (error) {
-                    [self handleError:error];
-                } else {
-                    NSURL *url = (NSURL *)data;
-                    [ShareAttachment addURL:url];
-                }
-            }];
-        } else if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypeVCard]) {
-            [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypeVCard options:nil completionHandler:^(NSData *vCardData, NSError *error) {
-                if (error) {
-                    [self handleError:error];
-                } else {
-                    [ShareAttachment addContact:vCardData];
-                }
-            }];
-        } else if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypePlainText]) {
-            [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypePlainText options:nil completionHandler:^(id data, NSError *error) {
-                if (error) {
-                    [self handleError:error];
-                } else {
-                    NSString *text = (NSString *)data;
-                    [ShareAttachment addPlainText:text];
-                }
-            }];
-        } else if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypeData]) {
-            [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypeData options:nil completionHandler:^(id data, NSError *error) {
-                if (error) {
-                    [self handleError:error];
-                } else {
-                    NSURL *url = (NSURL *)data;
-                    [ShareAttachment addFileURL:url];
-                }
-            }];
-        } else {
+                }];
+                
+                unsupported = NO;
+                break;
+            }
+        }
+        
+        if (unsupported) {
             self.unsupportedAssets++;
         }
     }
@@ -566,6 +564,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     for (ShareAttachment *attachment in [ShareAttachment attachmentsArray]) {
         switch (attachment.type) {
+            case ShareAttachmentTypeGIF: {
+                [self writeDataAndUpload:attachment toParentNode:parentNode];
+                
+                break;
+            }
+                
             case ShareAttachmentTypePNG: {
                 UIImage *image = attachment.content;
                 [self uploadImage:image withName:attachment.name toParentNode:parentNode isPNG:YES];
@@ -599,15 +603,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
                 
             case ShareAttachmentTypeContact: {
-                NSString *storagePath = [self shareExtensionStorage];
-                NSString *tempPath = [storagePath stringByAppendingPathComponent:attachment.name];
-                NSData *vCardData = attachment.content;
-                if ([vCardData writeToFile:tempPath atomically:YES]) {
-                    [self smartUploadLocalPath:tempPath parent:parentNode];
-                } else {
-                    MEGALogError(@".vcf writeToFile failed at path: %@", tempPath);
-                    [self oneUnsupportedMore];
-                }
+                [self writeDataAndUpload:attachment toParentNode:parentNode];
                 
                 break;
             }
@@ -728,6 +724,12 @@ void uncaughtExceptionHandler(NSException *exception) {
         NSString *tempPath = [storagePath stringByAppendingPathComponent:name];
         NSError *error = nil;
         
+        if ([[NSFileManager defaultManager] fileExistsAtPath:tempPath]) {
+            if (![[NSFileManager defaultManager] removeItemAtPath:tempPath error:&error]) {
+                MEGALogError(@"Remove item failed:\n- At path: %@\n- With error: %@", tempPath, error);
+            }
+        }
+        
         BOOL success = NO;
         if (sourceMovable) {
             success = [[NSFileManager defaultManager] moveItemAtPath:url.path toPath:tempPath error:&error];
@@ -743,6 +745,18 @@ void uncaughtExceptionHandler(NSException *exception) {
         }
     } else {
         MEGALogError(@"Share extension error, %@ object received instead of NSURL or UIImage", url.class);
+        [self oneUnsupportedMore];
+    }
+}
+
+- (void)writeDataAndUpload:(ShareAttachment *)attachment toParentNode:(MEGANode *)parentNode {
+    NSString *storagePath = [self shareExtensionStorage];
+    NSString *tempPath = [storagePath stringByAppendingPathComponent:attachment.name];
+    NSData *data = attachment.content;
+    if ([data writeToFile:tempPath atomically:YES]) {
+        [self smartUploadLocalPath:tempPath parent:parentNode];
+    } else {
+        MEGALogError(@"writeToFile failed at path: %@", tempPath);
         [self oneUnsupportedMore];
     }
 }

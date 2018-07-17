@@ -1511,9 +1511,9 @@
 /* When an active call of user A with user B had not answered */
 "callWasNotAnswered"="着信に応答されませんでした";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed";
+"callFailed"="通話に失敗しました。";
 /* When an active call of user A with user B had ended */
-"callEnded"="Call ended.";
+"callEnded"="通話が終了しました。";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="通話時間：%@";
 /* */
@@ -1536,3 +1536,15 @@
 "fileNotSupported"="ファイルがサポートされていません";
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="オフライン用に保存し、互換性のあるアプリで開くことができます。";
+/* Title of archived chats button */
+"archivedChats"="圧縮されたチャット";
+/* Confirmation message on archive chat dialog for user to confirm. */
+"archiveChatMessage"="この会話を圧縮してもよろしいですか？　";
+/* Confirmation message for user to confirm it will unarchive an archived chat. */
+"unarchiveChatMessage"="この会話を解凍してもよろしいですか？　";
+/* The title of the dialog to unarchive an archived chat. */
+"unarchiveChat"="チャットを解凍";
+/* Title of button to archive chats. */
+"archiveChat"="チャットを圧縮";
+/* Title of flag of archived chats. */
+"archived"="圧縮済み";
