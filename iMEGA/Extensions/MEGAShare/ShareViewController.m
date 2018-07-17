@@ -724,6 +724,12 @@ void uncaughtExceptionHandler(NSException *exception) {
         NSString *tempPath = [storagePath stringByAppendingPathComponent:name];
         NSError *error = nil;
         
+        if ([[NSFileManager defaultManager] fileExistsAtPath:tempPath]) {
+            if (![[NSFileManager defaultManager] removeItemAtPath:tempPath error:&error]) {
+                MEGALogError(@"Remove item failed:\n- At path: %@\n- With error: %@", tempPath, error);
+            }
+        }
+        
         BOOL success = NO;
         if (sourceMovable) {
             success = [[NSFileManager defaultManager] moveItemAtPath:url.path toPath:tempPath error:&error];
