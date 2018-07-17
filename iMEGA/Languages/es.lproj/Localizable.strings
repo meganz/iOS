@@ -165,7 +165,7 @@
 /* */
 "fileLinkUnavailableText1"="Esto puede deberse a las siguientes razones:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="Este archivo fue removido por una violación de los términos de servicio y / o condiciones de uso.";
+"fileLinkUnavailableText2"="Este archivo ha sido eliminado por infringir los Términos de servicio y/o condiciones de uso.";
 /* */
 "fileLinkUnavailableText3"="URL Inválida - El enlace al que deseas acceder no existe.";
 /* */
@@ -183,7 +183,7 @@
 /* */
 "folderLinkUnavailableText1"="Esto puede deberse a las siguientes razones:";
 /* */
-"folderLinkUnavailableText2"="El enlace de la carpeta ha sido eliminado debido a una violación de nuestros Términos de servicio.";
+"folderLinkUnavailableText2"="El enlace de la carpeta ha sido eliminado por infringir nuestros Términos de servicio.";
 /* */
 "folderLinkUnavailableText3"="URL Inválida - El enlace al que deseas acceder no existe.";
 /* */
@@ -717,17 +717,17 @@
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Descargas de imágenes y vídeos";
 /* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
-"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Media captured from within the app";
+"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Archivos multimedia creados desde la aplicación";
 /* Section title where you can enable the option 'Save images in gallery' */
 "saveImagesInGallery"="Guardar imágenes en la galería";
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Guardar vídeos en la galería";
 /* Section title where you can enable the option 'Save media in gallery' */
-"saveMediaInGallery"="Save media in gallery";
+"saveMediaInGallery"="Guarda archivos multimedia en la galería";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Guardar las imágenes y los vídeos compatibles con iOS en la galería del dispositivo (Nota: las imágenes y los vídeos no serán guardados en Sin conexión).";
 /* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
-"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Enable this option to save photos taken and videos recorded from within the app in the gallery";
+"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Activa esta opción para guardar en la galería las fotos y los videos creados desde la aplicación";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Actualmente en uso %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -1297,8 +1297,6 @@
 "autorenewableDescription"="La suscripción se renueva automáticamente con la misma duración y precio elegidos inicialmente. Puedes desactivar la renovación automática de la suscripción A MEGA PRO en la página de ajustes de iTunes hasta 24 horas antes de la renovación programada. Para gestionar tu suscripción, simplemente ve a la App Store, inicia sesión con tu Apple ID al final de la página (si no has hecho esto todavía) y pulsa en “Ver ID de Apple”. Podrás ver la página con los detalles de tu cuenta, donde puedes gestionar las suscripciones que has contratado. Desde aquí, puedes seleccionar la suscripción A MEGA PRO y ver cuando será renovada, cambiar el tipo de suscripción o desactivar la opción de renovación automática para luego cancelar tu suscripción.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Abre MEGA e inicia sesión para continuar";
-/* A button title to revoke the access to an attachment in a chat. */
-"revoke"="Revocar";
 /* Label in login screen to inform about the chat initialization proccess */
 "connecting"="Conectando...";
 /* Inform user that there were unsupported assets in the share extension */
@@ -1371,7 +1369,7 @@
 "generalDescriptionParagraph5"="Suscripción PRO LITE: 4,99€ (US$4.99)  al mes o 49,99€ (US$49.99) al año, con 200 GB de espacio de almacenamiento y 1 TB de cuota de transferencia al mes.\nSuscripción PRO I: 9,99€ (US$9.99) al mes o 99,99€ (US$99.99) al año, con 1 TB de espacio de almacenamiento y 2 TB de cuota de transferencia al mes.\nSuscripción PRO II: 19,99€ al mes (US$19.99) o 199,99€ (US$199.99) al año, con 4 TB de espacio de almacenamiento y 8 TB de cuota de transferencia al mes.\nSuscripción PRO III: 29,99€ (US$29.99) al mes o 299,99€ (US$299.99) al año, con 8 TB de espacio de almacenamiento y 16 TB de cuota de transferencia al mes.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Para más información, entra en nuestra web:https://mega.nz/\nTérminos de servicio: https://mega.nz/terms\nPolítica de privacidad: https://mega.nz/privacy";
+"generalDescriptionParagraph6"="Para más información, entra en nuestra web: https://mega.nz/\n Términos de servicio: https://mega.nz/terms\n Política de privacidad: https://mega.nz/privacy";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="Llamando...";
 /* Notification text body shown when you have missed one audio call */
@@ -1507,34 +1505,46 @@
 /* Title of the notification for a missed call */
 "missedCall"="Llamada perdida";
 /* When an outgoing call of user A with user B had been rejected by user B */
-"callWasRejected"="Call was rejected";
+"callWasRejected"="La llamada ha sido rechazada";
 /* When an active call of user A with user B had cancelled */
-"callWasCancelled"="Call was cancelled";
+"callWasCancelled"="La llamada has sido cancelada";
 /* When an active call of user A with user B had not answered */
-"callWasNotAnswered"="Call was not answered";
+"callWasNotAnswered"="La llamada no ha sido respondida";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed";
+"callFailed"="Llamada fallida.";
 /* When an active call of user A with user B had ended */
-"callEnded"="Call ended.";
+"callEnded"="Fin de llamada.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
-"duration"="Duration: %@";
+"duration"="Duración: %@";
 /* */
-"xSeconds"="%d seconds";
+"xSeconds"="%d segundos";
 /* */
-"1Second"="1 second";
+"1Second"="1 segundo";
 /* */
-"1Hour"="1 hour";
+"1Hour"="1 hora";
 /* */
-"xHours"="%d hours";
+"xHours"="%d horas";
 /* */
-"1Hour1Minute"="1 hour, 1 minute";
+"1Hour1Minute"="1 hora, 1 minuto";
 /* */
-"1HourxMinutes"="1 hour, %d minutes";
+"1HourxMinutes"="1 hora, %d minutos";
 /* */
-"xHours1Minute"="%d hours, 1 minute";
+"xHours1Minute"="%d horas, 1 minuto";
 /* */
-"xHoursxMinutes"="%1$d hours, %2$d minutes";
+"xHoursxMinutes"="%1$d horas, %2$d minutos";
 /* Alert title shown when users try to stream an unsupported audio/video file */
-"fileNotSupported"="File not supported";
+"fileNotSupported"="Archivo no soportado";
 /* Alert message shown when users try to stream an unsupported audio/video file */
-"message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
+"message_fileNotSupported"="Puede guardarlo en Sin conexión y abrirlo con una aplicación compatible.";
+/* Title of archived chats button */
+"archivedChats"="Chats archivados";
+/* Confirmation message on archive chat dialog for user to confirm. */
+"archiveChatMessage"="¿Seguro que quieres archivar esta conversación?";
+/* Confirmation message for user to confirm it will unarchive an archived chat. */
+"unarchiveChatMessage"="¿Estás seguro de que quieres restaurar esta conversación?";
+/* The title of the dialog to unarchive an archived chat. */
+"unarchiveChat"="Restaurar chat";
+/* Title of button to archive chats. */
+"archiveChat"="Archivar chat";
+/* Title of flag of archived chats. */
+"archived"="Archivado";

@@ -27,8 +27,7 @@
     BOOL isLoginDone;
     BOOL isFetchNodesDone;
     BOOL isFolderLinkNotValid;
-    
-    UIAlertView *decryptionAlertView;
+    BOOL isValidatingDecryptionKey;
 }
 
 @property (weak, nonatomic) UILabel *navigationBarLabel;
@@ -123,16 +122,19 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    self.navigationController.toolbarHidden = NO;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGASdkFolder] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    self.navigationController.toolbarHidden = YES;
     
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGARequestDelegate:self];
@@ -260,29 +262,47 @@
 }
 
 - (void)showDecryptionAlert {
-    if (decryptionAlertView == nil) {
-        decryptionAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"decryptionKeyAlertTitle", nil)
-                                                         message:AMLocalizedString(@"decryptionKeyAlertMessage", nil)
-                                                        delegate:self
-                                               cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                               otherButtonTitles:AMLocalizedString(@"decrypt", nil), nil];
-    }
+    UIAlertController *decryptionAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyAlertTitle", nil) message:AMLocalizedString(@"decryptionKeyAlertMessage", nil) preferredStyle:UIAlertControllerStyleAlert];
     
-    [decryptionAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    UITextField *textField = [decryptionAlertView textFieldAtIndex:0];
-    [textField setPlaceholder:AMLocalizedString(@"decryptionKey", nil)];
-    [decryptionAlertView setTag:1];
-    [decryptionAlertView show];
+    [decryptionAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = AMLocalizedString(@"decryptionKey", nil);
+        [textField addTarget:self action:@selector(decryptionTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    }];
+    
+    [decryptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [[MEGASdkManager sharedMEGASdkFolder] logout];
+        [decryptionAlertController.textFields.firstObject resignFirstResponder];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    [decryptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"decrypt", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSString *linkString;
+        NSString *key = decryptionAlertController.textFields.firstObject.text;
+        if ([[key substringToIndex:1] isEqualToString:@"!"]) {
+            linkString = self.folderLinkString;
+        } else {
+            linkString = [self.folderLinkString stringByAppendingString:@"!"];
+        }
+        linkString = [linkString stringByAppendingString:key];
+        
+        isValidatingDecryptionKey = YES;
+        
+        [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:linkString delegate:self];
+    }]];
+    
+    decryptionAlertController.actions.lastObject.enabled = NO;
+    
+    [self presentViewController:decryptionAlertController animated:YES completion:nil];
 }
 
 - (void)showDecryptionKeyNotValidAlert {
-    UIAlertView *decryptionKeyNotValidAlertView  = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"decryptionKeyNotValid", nil)
-                                                                              message:nil
-                                                                             delegate:self
-                                                                    cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                                    otherButtonTitles:nil];
-    [decryptionKeyNotValidAlertView setTag:2];
-    [decryptionKeyNotValidAlertView show];
+    isValidatingDecryptionKey = NO;
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyNotValid", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [self showDecryptionAlert];
+    }]];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)navigateToNodeWithBase64Handle:(NSString *)base64Handle {
@@ -315,6 +335,15 @@
                 }
             }
         }
+    }
+}
+
+- (void)decryptionTextFieldDidChange:(UITextField *)sender {
+    if (self.presentedViewController) {
+        UIAlertController *decryptionAlertController = (UIAlertController *)self.presentedViewController;
+        UITextField *decryptionTextField = decryptionAlertController.textFields.firstObject;
+        UIAlertAction *okAction = decryptionAlertController.actions.lastObject;
+        okAction.enabled = decryptionTextField.text.length > 0;
     }
 }
 
@@ -528,42 +557,6 @@
             [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
         }
     }
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (alertView.tag == 1) { //Decryption key
-        if (buttonIndex == 0) {
-            [[MEGASdkManager sharedMEGASdkFolder] logout];
-            
-            [[decryptionAlertView textFieldAtIndex:0] resignFirstResponder];
-            [self dismissViewControllerAnimated:YES completion:nil];
-        } else if (buttonIndex == 1) {
-            NSString *linkString;
-            NSString *key = [[alertView textFieldAtIndex:0] text];
-            if ([[key substringToIndex:1] isEqualToString:@"!"]) {
-                linkString = self.folderLinkString;
-            } else {
-                linkString = [self.folderLinkString stringByAppendingString:@"!"];
-            }
-            linkString = [linkString stringByAppendingString:key];
-            
-            [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:linkString delegate:self];
-        }
-    } else if (alertView.tag == 2) { //Decryption key not valid
-        [self showDecryptionAlert];
-    }
-}
-
-- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
-    if (alertView.tag == 1) {
-        NSString *decryptionKey = [[alertView textFieldAtIndex:0] text];
-        if ([decryptionKey isEqualToString:@""]) {
-            return NO;
-        }
-    }
-    return YES;
 }
 
 #pragma mark - UITableViewDataSource
@@ -837,7 +830,7 @@
         switch (error.type) {
             case MEGAErrorTypeApiEArgs: {
                 if (request.type == MEGARequestTypeLogin) {
-                    if (decryptionAlertView.visible) { //If the user have written the key
+                    if (isValidatingDecryptionKey) { //If the user have written the key
                         [self showDecryptionKeyNotValidAlert];
                     } else {
                         [self showLinkNotValid];
@@ -889,7 +882,7 @@
                 
                 [SVProgressHUD dismiss];
                 
-                if (decryptionAlertView.visible) { //Link without key, after entering a bad one
+                if (isValidatingDecryptionKey) { //Link without key, after entering a bad one
                     [self showDecryptionKeyNotValidAlert];
                 } else { //Link with invalid key
                     [self showLinkNotValid];

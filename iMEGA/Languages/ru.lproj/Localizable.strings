@@ -717,17 +717,17 @@
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Загрузка изображений и видео";
 /* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
-"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Media captured from within the app";
+"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Медиа, снятое в приложении";
 /* Section title where you can enable the option 'Save images in gallery' */
 "saveImagesInGallery"="Сохранить изображения в галерею";
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Сохранить видео в галерею";
 /* Section title where you can enable the option 'Save media in gallery' */
-"saveMediaInGallery"="Save media in gallery";
+"saveMediaInGallery"="Сохранять медиа в галерее";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Сохранить совместимые с iOS изображения и видео в галерее устройства (Примечание: изображения и видео не сохранятся локально).";
 /* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
-"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Enable this option to save photos taken and videos recorded from within the app in the gallery";
+"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Включите эту опцию, чтобы сохранять в галерею фото и видео, снятые в приложении";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Сейчас занимает %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -1072,7 +1072,7 @@
 /* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
 "disable"="Отключить";
 /* Conversations section */
-"conversations"="Диалоги";
+"conversations"="Разговоры";
 /* A button on a dialog which invites a contact to join MEGA. */
 "invite"="Пригласить";
 /* A log message in a chat to indicate that the message has been deleted by the user. */
@@ -1297,8 +1297,6 @@
 "autorenewableDescription"="Подписки продлеваются автоматически на тот же срок по такой же цене. Вы можете отключить автоматическое продление подписки MEGA PRO не позднее чем за 24 часа до следующего платежа в настройках учётной записи iTunes. Для управления подписками просто нажмите на значок App Store в телефоне, войдите со своим Apple ID внизу страницы (если вы этого ещё не сделали) и нажмите View ID. Вы попадёте на страницу своей учётной записи, прокрутите её вниз до управления подписками приложений. Там вы можете выбрать свою подписку MEGA PRO и посмотреть запланированную дату продления. Выберите другой план подписки или нажмите на переключатель «вкл/выкл» для отключения автоматического продления подписок.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Откройте MEGA и войдите, чтобы продолжить";
-/* A button title to revoke the access to an attachment in a chat. */
-"revoke"="Отозвать";
 /* Label in login screen to inform about the chat initialization proccess */
 "connecting"="Соединение…";
 /* Inform user that there were unsupported assets in the share extension */
@@ -1507,34 +1505,46 @@
 /* Title of the notification for a missed call */
 "missedCall"="Пропущенный звонок";
 /* When an outgoing call of user A with user B had been rejected by user B */
-"callWasRejected"="Call was rejected";
+"callWasRejected"="Вызов был отклонён";
 /* When an active call of user A with user B had cancelled */
-"callWasCancelled"="Call was cancelled";
+"callWasCancelled"="Вызов был отменён";
 /* When an active call of user A with user B had not answered */
-"callWasNotAnswered"="Call was not answered";
+"callWasNotAnswered"="Вызов был пропущен";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed";
+"callFailed"="Вызов не удался.";
 /* When an active call of user A with user B had ended */
-"callEnded"="Call ended.";
+"callEnded"="Вызов окончен.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
-"duration"="Duration: %@";
+"duration"="Длительность: %@";
 /* */
-"xSeconds"="%d seconds";
+"xSeconds"="%d сек.";
 /* */
-"1Second"="1 second";
+"1Second"="1 сек.";
 /* */
-"1Hour"="1 hour";
+"1Hour"="1 час";
 /* */
-"xHours"="%d hours";
+"xHours"="%d ч.";
 /* */
-"1Hour1Minute"="1 hour, 1 minute";
+"1Hour1Minute"="1 час, 1 минута";
 /* */
-"1HourxMinutes"="1 hour, %d minutes";
+"1HourxMinutes"="1 ч., %d мин.";
 /* */
-"xHours1Minute"="%d hours, 1 minute";
+"xHours1Minute"="%d ч., 1 мин.";
 /* */
-"xHoursxMinutes"="%1$d hours, %2$d minutes";
+"xHoursxMinutes"="%1$d ч., %2$d мин.";
 /* Alert title shown when users try to stream an unsupported audio/video file */
-"fileNotSupported"="File not supported";
+"fileNotSupported"="Файл не поддерживается";
 /* Alert message shown when users try to stream an unsupported audio/video file */
-"message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
+"message_fileNotSupported"="Вы можете сохранить его локально и открыть в совместимом приложении.";
+/* Title of archived chats button */
+"archivedChats"="Архивные чаты";
+/* Confirmation message on archive chat dialog for user to confirm. */
+"archiveChatMessage"="Вы действительно хотите архивировать этот разговор?";
+/* Confirmation message for user to confirm it will unarchive an archived chat. */
+"unarchiveChatMessage"="Вы действительно хотите разархивировать этот разговор?";
+/* The title of the dialog to unarchive an archived chat. */
+"unarchiveChat"="Разархивация чата";
+/* Title of button to archive chats. */
+"archiveChat"="Архивация чата";
+/* Title of flag of archived chats. */
+"archived"="Архивировано";

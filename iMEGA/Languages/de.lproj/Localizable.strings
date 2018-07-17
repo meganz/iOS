@@ -1297,8 +1297,6 @@
 "autorenewableDescription"="Abonnements verlängern sich am Ende der laufenden Zahlungsperiode automatisch zum gleichen Preis und für die gleiche Dauer. Sie können das Abonnement bis zu 24 Stunden vor Fälligkeit der nächsten Zahlung in Ihren iTunes-Einstellungen stornieren: Gehen Sie in den App Store und loggen Sie sich (falls nötig) mit Ihrer Apple ID ein. Gehen Sie dann auf die Seite Ihres Benutzerkontos und scrollen Sie zur Abonnementverwaltung. Dort können Sie Ihr MEGA PRO-Abonnement auswählen, das Datum der nächsten Fälligkeit einsehen, auf ein anderes Paket wechseln und die automatische Verlängerung ein- und ausschalten.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
-/* A button title to revoke the access to an attachment in a chat. */
-"revoke"="Entfernen";
 /* Label in login screen to inform about the chat initialization proccess */
 "connecting"="Verbindung wird aufgebaut...";
 /* Inform user that there were unsupported assets in the share extension */
@@ -1513,7 +1511,7 @@
 /* When an active call of user A with user B had not answered */
 "callWasNotAnswered"="Call was not answered";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed";
+"callFailed"="Call failed.";
 /* When an active call of user A with user B had ended */
 "callEnded"="Call ended.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
@@ -1538,3 +1536,15 @@
 "fileNotSupported"="File not supported";
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
+/* Title of archived chats button */
+"archivedChats"="Archivierte Chats";
+/* Confirmation message on archive chat dialog for user to confirm. */
+"archiveChatMessage"="Wollen Sie diesen Chat archivieren?";
+/* Confirmation message for user to confirm it will unarchive an archived chat. */
+"unarchiveChatMessage"="Wollen Sie diesen Chat dearchivieren?";
+/* The title of the dialog to unarchive an archived chat. */
+"unarchiveChat"="Chat dearchivieren";
+/* Title of button to archive chats. */
+"archiveChat"="Chat archivieren";
+/* Title of flag of archived chats. */
+"archived"="Archiviert";

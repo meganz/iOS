@@ -22,6 +22,7 @@
 - (void)mnz_leaveSharingInViewController:(UIViewController *)viewController;
 - (void)mnz_removeSharing;
 - (void)mnz_copyToGalleryFromTemporaryPath:(NSString *)path;
+- (void)mnz_restore;
 
 #pragma mark - File links
 
@@ -32,6 +33,7 @@
 
 - (NSMutableArray *)mnz_parentTreeArray;
 - (NSString *)mnz_fileType;
+- (BOOL)mnz_isRestorable;
 
 #pragma mark - Versions
 
