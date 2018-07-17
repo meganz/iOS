@@ -483,9 +483,7 @@
         [_selectedNodesMutableArray removeAllObjects];
         [_selectedSharesMutableArray removeAllObjects];
         
-        if (allNodesSelected) {
-            [self selectAllAction:_selectAllBarButtonItem];
-        }
+        [self updateNavigationBarTitle];
 
         [self toolbarItemsForSharedItems];
         [self toolbarItemsSetEnabled:NO];
