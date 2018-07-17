@@ -202,6 +202,7 @@
     CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
     actionController.node = self.node;
     actionController.actionDelegate = self;
+    actionController.actionSender = sender;
     actionController.displayMode = self.isLink ? DisplayModeFileLink : DisplayModeCloudDrive;
     
     if ([[UIDevice currentDevice] iPadDevice]) {
