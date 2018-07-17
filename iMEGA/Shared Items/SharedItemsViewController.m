@@ -22,7 +22,6 @@
 
 @interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, CustomActionViewControllerDelegate> {
     BOOL allNodesSelected;
-    BOOL isSwipeEditing;
 }
 
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
@@ -384,15 +383,13 @@
     [self.tableView setEditing:editing animated:animated];
     
     if (editing) {
-        if (!isSwipeEditing) {
-            self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
-            self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
-            [self.toolbar setAlpha:0.0];
-            [self.tabBarController.tabBar addSubview:self.toolbar];
-            [UIView animateWithDuration:0.33f animations:^ {
-                [self.toolbar setAlpha:1.0];
-            }];
-        }
+        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+        self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+        [self.toolbar setAlpha:0.0];
+        [self.tabBarController.tabBar addSubview:self.toolbar];
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:1.0];
+        }];
     } else {
         self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
         allNodesSelected = NO;
@@ -415,8 +412,6 @@
         
         [self toolbarItemsSetEnabled:NO];
     }
-    
-    isSwipeEditing = NO;
 }
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -842,21 +837,11 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self toolbarItemsForSharedItems];
-    [self setEditing:YES animated:YES];
-}
-
-- (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self setEditing:NO animated:YES];
-}
-
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
     
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = [self nodeAtIndexPath:indexPath];
-    isSwipeEditing = YES;
     self.selectedNodesMutableArray = [[NSMutableArray alloc] initWithObjects:node, nil];
     if (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0) { //incoming
         UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {

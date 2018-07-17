@@ -14,7 +14,6 @@
 
 @interface NodeVersionsViewController () <UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate, MEGADelegate> {
     BOOL allNodesSelected;
-    BOOL isSwipeEditing;
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
@@ -201,7 +200,6 @@
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView leadingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    isSwipeEditing = YES;
     MEGANode *node = [self nodeForIndexPath:indexPath];
     
     UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
@@ -218,7 +216,6 @@
     if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node] < MEGAShareTypeAccessFull) {
         return [UISwipeActionsConfiguration configurationWithActions:@[]];
     }
-    isSwipeEditing = YES;
     self.selectedNodesArray = [NSMutableArray arrayWithObject:[self nodeForIndexPath:indexPath]];
     
     NSMutableArray *rightActions = [NSMutableArray new];
@@ -265,16 +262,13 @@
     
     [self.tableView setEditing:editing animated:animated];
     
-    if (!isSwipeEditing) {
-        [self updateNavigationBarTitle];
-    }
+    [self updateNavigationBarTitle];
+    
     if (editing) {
-        if (!isSwipeEditing) {
-            self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
-            self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
-            self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
-            [self.navigationController setToolbarHidden:NO animated:YES];
-        }
+        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+        self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
+        self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+        [self.navigationController setToolbarHidden:NO animated:YES];
     } else {
         self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
 
@@ -290,9 +284,7 @@
         self.selectedNodesArray = [NSMutableArray new];
 
         [self setToolbarActionsEnabled:NO];
-    }
-    
-    isSwipeEditing = NO;
+    }        
 }
 
 - (void)setToolbarActionsEnabled:(BOOL)boolValue {
