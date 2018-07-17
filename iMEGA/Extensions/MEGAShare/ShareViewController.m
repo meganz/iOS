@@ -243,10 +243,14 @@
             [MEGASdkManager createSharedMEGAChatSdk];
         }
         [[MEGALogger sharedLogger] enableChatlogs];
-        MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:self.session];
-        if (chatInit == MEGAChatInitError) {
-            MEGALogError(@"Init Karere with session failed");
-            [[MEGASdkManager sharedMEGAChatSdk] logout];
+        
+        MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initState];
+        if (chatInit == MEGAChatInitNotDone) {
+            chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:self.session];
+            if (chatInit == MEGAChatInitError) {
+                MEGALogError(@"Init Karere with session failed");
+                [[MEGASdkManager sharedMEGAChatSdk] logout];
+            }
         }
     } else {
         [[MEGALogger sharedLogger] enableSDKlogs];
