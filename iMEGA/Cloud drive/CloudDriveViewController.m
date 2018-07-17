@@ -436,8 +436,6 @@
         return [UISwipeActionsConfiguration configurationWithActions:@[]];
     }
     
-    self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
-    
     UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         if ([node mnz_downloadNodeOverwriting:NO]) {
             [self reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:node.base64Handle]];
@@ -457,8 +455,6 @@
         return [UISwipeActionsConfiguration configurationWithActions:@[]];
     }
     
-    self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
-    
     if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
         MEGANode *restoreNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.restoreHandle];
         if (restoreNode && ![[MEGASdkManager sharedMEGASdk] isNodeInRubbish:restoreNode]) {
@@ -473,7 +469,7 @@
         }
     } else {
         UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[node] sender:[self.tableView cellForRowAtIndexPath:indexPath]];
             [self presentViewController:activityVC animated:YES completion:nil];
             [self setTableViewEditing:NO animated:YES];
         }];
@@ -1888,7 +1884,6 @@
     
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
-    self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
     
     if (direction == MGSwipeDirectionLeftToRight && [[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {
         if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {

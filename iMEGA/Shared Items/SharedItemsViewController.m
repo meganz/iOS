@@ -865,7 +865,6 @@
     
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = [self nodeAtIndexPath:indexPath];
-    self.selectedNodesMutableArray = [[NSMutableArray alloc] initWithObjects:node, nil];
     if (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0) { //incoming
         UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [self leaveShareAction:nil];
@@ -1088,7 +1087,6 @@
     expansionSettings.threshold = 2;
     
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    self.selectedNodesMutableArray = [[NSMutableArray alloc] initWithObjects:[self nodeAtIndexPath:indexPath], nil];
     
     if (direction == MGSwipeDirectionRightToLeft) {
         if (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0) { //incoming
