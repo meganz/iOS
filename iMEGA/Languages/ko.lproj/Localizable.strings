@@ -68,6 +68,8 @@
 "tooManyRequest"="요청이 너무 많습니다. 기다려주세요.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="당신의 계정에 로그인하세요.";
+/* Error message when a user attempts to change their email without an active login session. */
+"needToBeLoggedInToCompleteYourEmailChange"="이메일 변경을 완료하려면 로그인하여야 합니다. 현재 이메일 주소로 다시 로그인한 후, 확인 링크를 다시 클릭하세요.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA 저장공간";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -378,6 +380,10 @@
 "copyKey"="키 복사";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="다른 곳에서 열기...";
+/* */
+"uploadToMega"="MEGA에 업로드";
+/* Footer shown in the Share Extension telling that a file can be renamed if tapped */
+"tapFileToRename"="Tap file to rename";
 /* */
 "sendToContact"="연락처에게 보내기";
 /* Toast text upon sending a single file to chat */
@@ -1277,14 +1283,6 @@
 "attachedFile"="첨부됨: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s개의 파일 첨부함.";
-/* A summary message when a user sent the information of one contact through the chat. */
-"sharedContact"="이 연락처 공유함:";
-/* A summary message when a user sent the information of some contacts at once through the chat. */
-"sharedContacts"="이 연락처들 공유함:";
-/* A summary message when a user has attached one file into the chat. */
-"uploadedFile"="이 파일 업로드함:";
-/* A summary message when a user has attached many files at once into the chat. */
-"uploadedFiles"="이 파일들 업로드함:";
 /* Label in a button that allows to jump to the latest item */
 "jumpToLatest"="최근으로 이동";
 /* Label in a button that allows to jump to the latest message */
@@ -1358,13 +1356,13 @@
 "languageRestartNotification"="언어가 변경되었습니다. 재시작하려면 탭하세요.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA는 당신에게 50 GB의 무료 저장 공간을 주는 안전한 클라우드 저장소 서비스입니다. 다른 클라우드 저장소 제공자들과 달리, 당신의 데이터는 우리가 아닌 당신의 클라이언트 기기에서만 암호화되고 해독됩니다.";
+"generalDescriptionParagraph1"="MEGA는 모바일 기기를 위한 전용 앱과 함께 표준 웹 브라우저를 통해 사용 가능한 이용자가 통제하는 암호화된 클라우드 저장소를 제공합니다. 다른 클라우드 저장소 제공자들과 달리 당신의 데이터는 절대 우리가 아니라 당신의 클라이언트 기기를 통해 암호화되고 해독됩니다.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph2"="당신의 스마트폰이나 태블릿에서 파일을 업로드하고, 어느 기기에서나 어디서든지 당신의 파일을 검색, 보관, 다운로드, 스트림, 보기, 공유, 이름변경 또는 삭제하세요. 당신의 연락처와 폴더를 공유하고 그들의 업데이트를 실시간으로 보세요.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="암호화 과정은 우리가 당신의 비밀번호에 접근하거나 초기화할 수 없기 때문에 반드시 기억해야한다는 것입니다 (복구 키를 백업하지 않는 이상) 그렇지 않으면 저장된 파일에 대한 접근을 잃게 됩니다.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="앱에서 월간 또는 연간 구독으로 저장 공간과 전송 할당량을 업그레이드할 수 있습니다.";
+"generalDescriptionParagraph4"="MEGA는 모든 가입 회원에게 넉넉한 50 GB의 무료 저장소를 보너스 도전 과제와 함께 제공하며, 더 높은 제한을 가진 유료 요금제를 제공합니다:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="PRO LITE 구독권: 매월 €4.99 (US$4.99) 또는 매년 €49.99 (US$49.99)에 200 GB의 저장 공간과 1 TB의 대역폭을 매달 드립니다.\nPRO I 구독권: 매월 €9.99 (US$9.99) 또는 매년 €99.99 (US$99.99)에 1 TB의 저장 공간과 2 TB의 대역폭을 매달 드립니다.\nPRO II 구독권: 매월 €19.99 (US$19.99) 또는 매년 €199.99 (US$199.99)에 4 TB의 저장 공간과 8 TB의 대역폭을 매달 드립니다.\nPRO III 구독권: 매월 €29.99 (US$29.99) 또는 매년 €299.99 (US$299.99)에 8 TB의 저장 공간과 16 TB의 대역폭을 매달 드립니다.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
@@ -1511,9 +1509,9 @@
 /* When an active call of user A with user B had not answered */
 "callWasNotAnswered"="통화에 응답하지 않았음";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed.";
+"callFailed"="통화 실패";
 /* When an active call of user A with user B had ended */
-"callEnded"="Call ended.";
+"callEnded"="통화 종료.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="시간: %@";
 /* */
@@ -1536,6 +1534,10 @@
 "fileNotSupported"="지원하지 않는 파일";
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="오프라인용으로 저장하고 호환되는 앱에서 열 수 있습니다";
+/* Item of a menu to forward a message chat to another chatroom */
+"forward"="전달";
+/* Success message shown after forwarding messages to other chats */
+"messagesSent"="Messages sent";
 /* Title of archived chats button */
 "archivedChats"="보관된 대화";
 /* Confirmation message on archive chat dialog for user to confirm. */
@@ -1548,3 +1550,5 @@
 "archiveChat"="대화 보관";
 /* Title of flag of archived chats. */
 "archived"="보관됨";
+/* Title of empty state view for archived chats. */
+"noArchivedChats"="No Archived Chats";
