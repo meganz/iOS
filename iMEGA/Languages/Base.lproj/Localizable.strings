@@ -1505,7 +1505,7 @@
 /* When an active call of user A with user B had not answered */
 "callWasNotAnswered"="Call was not answered";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed";
+"callFailed"="Call failed.";
 /* When an active call of user A with user B had ended */
 "callEnded"="Call ended.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
@@ -1530,3 +1530,17 @@
 "fileNotSupported"="File not supported";
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
+/* Title of archived chats button */
+"archivedChats"="Archived chats";
+/* Confirmation message on archive chat dialog for user to confirm. */
+"archiveChatMessage"="Are you sure you want to archive this conversation?";
+/* Confirmation message for user to confirm it will unarchive an archived chat. */
+"unarchiveChatMessage"="Are you sure you want to unarchive this conversation?";
+/* The title of the dialog to unarchive an archived chat. */
+"unarchiveChat"="Unarchive Chat";
+/* Title of button to archive chats. */
+"archiveChat"="Archive Chat";
+/* Title of flag of archived chats. */
+"archived"="Archived";
+/* Title of empty state view for archived chats. */
+"noArchivedChats"="No Archived Chats";

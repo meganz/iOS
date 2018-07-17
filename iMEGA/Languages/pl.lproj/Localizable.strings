@@ -1511,9 +1511,9 @@
 /* When an active call of user A with user B had not answered */
 "callWasNotAnswered"="Połączenie nie zostało odebrane";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed";
+"callFailed"="Nieudane połączenie.";
 /* When an active call of user A with user B had ended */
-"callEnded"="Call ended.";
+"callEnded"="Połączenie zakończone.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Trwanie: %@";
 /* */
@@ -1536,3 +1536,15 @@
 "fileNotSupported"="Plik nie jest obsługiwany";
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="Możesz zapisać go w trybie offline i otworzyć w kompatybilnej aplikacji.";
+/* Title of archived chats button */
+"archivedChats"="Zarchiwizowane czaty";
+/* Confirmation message on archive chat dialog for user to confirm. */
+"archiveChatMessage"="Czy na pewno chcesz zarchiwizować tę rozmowę?";
+/* Confirmation message for user to confirm it will unarchive an archived chat. */
+"unarchiveChatMessage"="Czy na pewno chcesz cofnąć archiwizację tej rozmowy?";
+/* The title of the dialog to unarchive an archived chat. */
+"unarchiveChat"="Unarchive Chat";
+/* Title of button to archive chats. */
+"archiveChat"="Archiwum czatu";
+/* Title of flag of archived chats. */
+"archived"="Zarchiwizowane";

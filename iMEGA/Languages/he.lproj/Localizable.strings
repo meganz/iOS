@@ -1511,7 +1511,7 @@
 /* When an active call of user A with user B had not answered */
 "callWasNotAnswered"="Call was not answered";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed";
+"callFailed"="Call failed.";
 /* When an active call of user A with user B had ended */
 "callEnded"="Call ended.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
@@ -1536,3 +1536,15 @@
 "fileNotSupported"="File not supported";
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
+/* Title of archived chats button */
+"archivedChats"="צ'אטים בארכיון";
+/* Confirmation message on archive chat dialog for user to confirm. */
+"archiveChatMessage"="האם אתה בטוח שאתה רוצה להעביר את השיחה הזו לארכיון?";
+/* Confirmation message for user to confirm it will unarchive an archived chat. */
+"unarchiveChatMessage"="האם אתה בטוח שברצונך להוציא את השיחה הזאת מהארכיון?";
+/* The title of the dialog to unarchive an archived chat. */
+"unarchiveChat"="הוצא צ'אט מהארכיון";
+/* Title of button to archive chats. */
+"archiveChat"="ארכיון צ'אט";
+/* Title of flag of archived chats. */
+"archived"="בארכיון";
