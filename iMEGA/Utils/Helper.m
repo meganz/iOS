@@ -489,7 +489,6 @@ static MEGAIndexer *indexer;
         }
     }
     
-    UIAlertView *alertView;
     if ([nodeSizeNumber longLongValue] == 0) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emptyFolderMessage", @"Message fon an alert when the user tries download an empty folder")];
         return NO;
@@ -497,21 +496,17 @@ static MEGAIndexer *indexer;
     
     NSNumber *freeSizeNumber = [[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize];
     if ([freeSizeNumber longLongValue] < [nodeSizeNumber longLongValue]) {
+        UIAlertController *alertController;
+        
         if ([node type] == MEGANodeTypeFile) {
-            alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something")
-                                                   message:AMLocalizedString(@"fileTooBigMessage", @"The file you are trying to download is bigger than the avaliable memory.")
-                                                  delegate:self
-                                         cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                         otherButtonTitles:nil];
+            alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something") message:AMLocalizedString(@"fileTooBigMessage", @"The file you are trying to download is bigger than the avaliable memory.") preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         } else if ([node type] == MEGANodeTypeFolder) {
-            alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something")
-                                                   message:AMLocalizedString(@"folderTooBigMessage", @"The folder you are trying to download is bigger than the avaliable memory.")
-                                                  delegate:self
-                                         cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                         otherButtonTitles:nil];
+            alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something") message:AMLocalizedString(@"folderTooBigMessage", @"The folder you are trying to download is bigger than the avaliable memory.") preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         }
         
-        [alertView show];
+        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
         return NO;
     }
     return YES;

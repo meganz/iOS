@@ -1297,8 +1297,6 @@
 "autorenewableDescription"="يتم تجديد الاشتراكات تلقائيا لفترات اشتراك المتتالية لنفس المدة وبنفس سعر الباقة الأولى التي تم اختيارها. يمكنك إيقاف التجديد التلقائي من اشتراكك MEGA برو في موعد أقصاه 24 ساعة قبل دفع اشتراكك المقبل ومن خلال صفحة إعدادات الحساب الخاصة بك في اي تيونز. لإدارة الاشتراكات الخاصة بك، ببساطة انقر على أيقونة المتجر على الهاتف الخاص بك، قم بتسجيل الدخول باستخدام معرف أبل الخاص بك في أسفل الصفحة (إذا لم تكن قد فعلت ذلك) ثم انقر فوق عرض ID. سوف يتم نقلك إلى صفحة الحساب الخاص بك حيث يمكنك النزل لأسفل الى إدارة التطبيقات والاشتراكات. من هناك، يمكنك تحديد اشتراكك MEGA برو وعرض تاريخ التجديد المقرر، واختيار حزمة الاشتراك مختلفة أو تعطيل أو تشغيل التجديد التلقائي لاشتراكك.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="افتح MEGA و سجل دخولك للاستمرار";
-/* A button title to revoke the access to an attachment in a chat. */
-"revoke"="إلغاء";
 /* Label in login screen to inform about the chat initialization proccess */
 "connecting"="جاري الاتصال...";
 /* Inform user that there were unsupported assets in the share extension */
@@ -1371,7 +1369,7 @@
 "generalDescriptionParagraph5"="اشتراك برو لايت: 4،99 € (4،99 $) في الشهر أو 49،99 € (49،99 $) سنويا يمنحك 200 غيغابايت من مساحة التخزين و 1 تيرابايت من حصة نقل في الشهر.\nاشتراك برو 1: 9.99 € (9.99 دولار أمريكي) في الشهر أو 99.99 € (99.99 دولار أمريكي) سنويا يمنحك 1 تيرابايت من مساحة التخزين و 2 تيرابايت من حصة نقل شهريا.\nاشتراك برو 2: 19.99 يورو (19.99 دولار أمريكي) في الشهر أو 199.99 يورو (199.99 دولار أمريكي) سنويا يمنحك 4 تيرابايت من مساحة التخزين و 8 تيرابايت من حصة النقل شهريا.\nاشتراك برو 3: 29.99 € (29.99 دولار أمريكي) في الشهر أو 299.99 € (299.99 دولار أمريكي) سنويا يمنحك 8 تيرابايت من مساحة التخزين و 16 تيرابايت من حصة نقل في الشهر.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="لمزيد من المعلومات ، الرجاء زيارة موقعنا:\nالجوال - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nسطح المكتب - https://mega.nz/";
+"generalDescriptionParagraph6"="For more info, please check our website: https://mega.nz/\nTerms of Service: https://mega.nz/terms\nPrivacy Policy: https://mega.nz/privacy";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="جار الاتصال";
 /* Notification text body shown when you have missed one audio call */
@@ -1513,7 +1511,7 @@
 /* When an active call of user A with user B had not answered */
 "callWasNotAnswered"="Call was not answered";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed";
+"callFailed"="Call failed.";
 /* When an active call of user A with user B had ended */
 "callEnded"="Call ended.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
@@ -1538,3 +1536,15 @@
 "fileNotSupported"="File not supported";
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
+/* Title of archived chats button */
+"archivedChats"="Archived chats";
+/* Confirmation message on archive chat dialog for user to confirm. */
+"archiveChatMessage"="Are you sure you want to archive this conversation?";
+/* Confirmation message for user to confirm it will unarchive an archived chat. */
+"unarchiveChatMessage"="Are you sure you want to unarchive this conversation?";
+/* The title of the dialog to unarchive an archived chat. */
+"unarchiveChat"="Unarchive Chat";
+/* Title of button to archive chats. */
+"archiveChat"="Archive Chat";
+/* Title of flag of archived chats. */
+"archived"="Archived";

@@ -1,6 +1,8 @@
 
 #import "MEGADialogMediaItem.h"
 
+#import <MobileCoreServices/UTCoreTypes.h>
+
 #import "JSQMessagesBubbleImageFactory.h"
 #import "JSQMessagesMediaViewBubbleImageMasker.h"
 
@@ -30,6 +32,31 @@
 - (void)clearCachedMediaViews {
     [super clearCachedMediaViews];
     _cachedDialogView = nil;
+}
+
+#pragma mark - Private
+
+- (CGFloat)headingHeight {
+    CGFloat bubbleWidth = [[UIDevice currentDevice] mnz_widthForChatBubble];
+    CGFloat maxMessageTextViewWidth = bubbleWidth - 20.0f;
+    UIFont *messageFont = [UIFont mnz_SFUIRegularWithSize:15.0f];
+    CGRect messageRect = [self.message.content boundingRectWithSize:CGSizeMake(maxMessageTextViewWidth, CGFLOAT_MAX)
+                                                            options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                                         attributes:@{ NSFontAttributeName : messageFont }
+                                                            context:nil];
+    return messageRect.size.height;
+}
+
+- (CGFloat)descriptionHeight {
+    CGFloat bubbleWidth = [[UIDevice currentDevice] mnz_widthForChatBubble];
+    CGFloat maxDialogTextViewWidth = bubbleWidth - 120.0f;
+    UIFont *dialogFont = [UIFont mnz_SFUIRegularWithSize:12.0f];
+    NSString *dialogText = self.message.warningDialog == MEGAChatMessageWarningDialogConfirmation ? AMLocalizedString(@"richPreviewsConfirmation", @"After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings.") : AMLocalizedString(@"richPreviewsFooter", @"Explanation of rich URL previews, given when users can enable/disable them, either in settings or in dialogs");
+    CGRect dialogRect = [dialogText boundingRectWithSize:CGSizeMake(maxDialogTextViewWidth, CGFLOAT_MAX)
+                                                 options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                              attributes:@{ NSFontAttributeName : dialogFont }
+                                                 context:nil];
+    return dialogRect.size.height;
 }
 
 #pragma mark - Setters
@@ -124,7 +151,6 @@
 - (CGSize)mediaViewDisplaySize {
     CGFloat bubbleWidth = [[UIDevice currentDevice] mnz_widthForChatBubble];
     CGFloat headingHeight = [self headingHeight];
-    CGFloat descriptionHeight = [self descriptionHeight];
 
     CGFloat optionsHeight = self.message.warningDialog == MEGAChatMessageWarningDialogStandard ? 132.0f : 88.0f;
     
@@ -137,29 +163,12 @@
     return self.hash;
 }
 
-#pragma mark - Private
-
-- (CGFloat)headingHeight {
-    CGFloat bubbleWidth = [[UIDevice currentDevice] mnz_widthForChatBubble];
-    CGFloat maxMessageTextViewWidth = bubbleWidth - 20.0f;
-    UIFont *messageFont = [UIFont mnz_SFUIRegularWithSize:15.0f];
-    CGRect messageRect = [self.message.content boundingRectWithSize:CGSizeMake(maxMessageTextViewWidth, CGFLOAT_MAX)
-                                                            options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                                         attributes:@{ NSFontAttributeName : messageFont }
-                                                            context:nil];
-    return messageRect.size.height;
+- (NSString *)mediaDataType {
+    return (NSString *)kUTTypePlainText;
 }
 
-- (CGFloat)descriptionHeight {
-    CGFloat bubbleWidth = [[UIDevice currentDevice] mnz_widthForChatBubble];
-    CGFloat maxDialogTextViewWidth = bubbleWidth - 120.0f;
-    UIFont *dialogFont = [UIFont mnz_SFUIRegularWithSize:12.0f];
-    NSString *dialogText = self.message.warningDialog == MEGAChatMessageWarningDialogConfirmation ? AMLocalizedString(@"richPreviewsConfirmation", @"After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings.") : AMLocalizedString(@"richPreviewsFooter", @"Explanation of rich URL previews, given when users can enable/disable them, either in settings or in dialogs");
-    CGRect dialogRect = [dialogText boundingRectWithSize:CGSizeMake(maxDialogTextViewWidth, CGFLOAT_MAX)
-                                                 options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                              attributes:@{ NSFontAttributeName : dialogFont }
-                                                 context:nil];
-    return dialogRect.size.height;
+- (id)mediaData {
+    return self.message.content;
 }
 
 #pragma mark - MEGAMessageDialogViewDelegate
@@ -200,10 +209,6 @@
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"<%@: message=%@>", [self class], self.message];
-}
-
-- (NSString *)mediaDataType {
-    return @"MEGADialog";
 }
 
 #pragma mark - NSCoding

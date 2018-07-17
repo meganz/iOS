@@ -319,12 +319,10 @@
                         } else {
                             missedAudioCalls = 1;
                             missedVideoCalls = 0;
-                        }
-                        BOOL isThereANotificationForThisChatRoom = NO;
+                        }                        
                         
                         for (UNNotification *notification in notifications) {
                             if ([[MEGASdk base64HandleForUserHandle:call.chatId] isEqualToString:notification.request.identifier]) {
-                                isThereANotificationForThisChatRoom = YES;
                                 missedAudioCalls = [notification.request.content.userInfo[@"missedAudioCalls"] integerValue];
                                 missedVideoCalls = [notification.request.content.userInfo[@"missedVideoCalls"] integerValue];
                                 if (call.hasRemoteVideo) {
@@ -379,7 +377,7 @@
             }
             
             if (@available(iOS 10.0, *)) {
-                [self.megaCallManager endCall:call];
+                [self.megaProviderDelegate reportEndCall:call];
             }
             
             break;

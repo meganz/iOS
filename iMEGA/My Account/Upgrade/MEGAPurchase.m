@@ -1,6 +1,7 @@
 
 #import "MEGAPurchase.h"
 #import "SVProgressHUD.h"
+#import "UIApplication+MNZCategory.h"
 
 @implementation MEGAPurchase
 
@@ -50,22 +51,16 @@
             [[SKPaymentQueue defaultQueue] addPayment:paymentRequest];
         } else {
             MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"appPurchaseDisabled", nil)
-                                                                message:nil
-                                                               delegate:nil
-                                                      cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                      otherButtonTitles:nil, nil];
-            [alertView show];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"appPurchaseDisabled", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+            [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
         }
         
     } else {
         MEGALogWarning(@"[StoreKit] Product \"%@\" not found", product.productIdentifier);
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:AMLocalizedString(@"productNotFound", nil), product.productIdentifier]
-                                                            message:nil
-                                                           delegate:nil
-                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                  otherButtonTitles:nil, nil];
-        [alertView show];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:AMLocalizedString(@"productNotFound", nil), product.productIdentifier] message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
     }
 }
 
@@ -75,8 +70,10 @@
         [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
         
     } else {
-        UIAlertView *settingsAlert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"allowPurchase_title", nil) message:AMLocalizedString(@"allowPurchase_message", nil) delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
-        [settingsAlert show];
+        MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"allowPurchase_title", nil) message:AMLocalizedString(@"allowPurchase_message", nil) preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
     }
 }
 
