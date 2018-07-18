@@ -180,6 +180,8 @@
             if (self.isParentBrowser) {
                 self.selectedNodesMutableDictionary = [[NSMutableDictionary alloc] init];
             }
+            
+            [self.tableView setEditing:YES];
             break;
         }
             
@@ -394,10 +396,6 @@
     boolValue ? (cell.thumbnailImageView.alpha = 1.0) : (cell.thumbnailImageView.alpha = 0.5);
 }
 
-- (void)setNodeTableViewCell:(NodeTableViewCell *)cell selected:(BOOL)boolValue {
-    cell.checkImageView.hidden = boolValue ? NO : YES;
-}
-
 - (void)pushBrowserWithParentNode:(MEGANode *)parentNode {
     BrowserViewController *browserVC = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserViewControllerID"];
     browserVC.browserAction = self.browserAction;
@@ -604,11 +602,7 @@
     MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
     
     if (self.browserAction == BrowserActionSendFromCloudDrive) {
-        if (node.isFolder) {
-            [self setNodeTableViewCell:cell selected:NO];
-        } else {
-            ([self.selectedNodesMutableDictionary objectForKey:node.base64Handle] != nil) ? [self setNodeTableViewCell:cell selected:YES] : [self setNodeTableViewCell:cell selected:NO];
-        }
+        [self.selectedNodesMutableDictionary objectForKey:node.base64Handle] ? [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone] : [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
     } else if (self.browserAction == BrowserActionDocumentProvider) {
         //TODO: Document Provider
     } else {
@@ -648,6 +642,15 @@
     return cell;
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.browserAction == BrowserActionSendFromCloudDrive) {
+        MEGANode *node = [self nodeAtIndexPath:indexPath];
+        return node.isFile;
+    } else {
+        return YES;
+    }
+}
+
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -658,17 +661,9 @@
     } else {
         switch (self.browserAction) {
             case BrowserActionSendFromCloudDrive: {
-                NodeTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-                if (cell.checkImageView.hidden) {
-                    [self.selectedNodesMutableDictionary setObject:selectedNode forKey:selectedNode.base64Handle];
-                    [self setNodeTableViewCell:cell selected:YES];
-                } else {
-                    [self.selectedNodesMutableDictionary removeObjectForKey:selectedNode.base64Handle];
-                    [self setNodeTableViewCell:cell selected:NO];
-                }
-                
+                [self.selectedNodesMutableDictionary setObject:selectedNode forKey:selectedNode.base64Handle];
                 [self updatePromptTitle];
-                break;
+                return;
             }
                 
             case BrowserActionDocumentProvider: {
@@ -685,6 +680,25 @@
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    if (self.browserAction == BrowserActionSendFromCloudDrive) {
+        MEGANode *deselectedNode = [self nodeAtIndexPath:indexPath];
+        if ([self.selectedNodesMutableDictionary objectForKey:deselectedNode.base64Handle]) {
+            [self.selectedNodesMutableDictionary removeObjectForKey:deselectedNode.base64Handle];
+            [self updatePromptTitle];
+        }
+    }
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.browserAction == BrowserActionSendFromCloudDrive) {
+        MEGANode *node = [self nodeAtIndexPath:indexPath];
+        return node.isFile;
+    } else {
+        return YES;
+    }
 }
 
 #pragma mark - UISearchBarDelegate
