@@ -1196,6 +1196,7 @@ static MEGAIndexer *indexer;
     [sharedUserDefaults removeObjectForKey:@"extensions-passcode"];
     [sharedUserDefaults removeObjectForKey:@"treeCompleted"];
     [sharedUserDefaults removeObjectForKey:@"useHttpsOnly"];
+    [sharedUserDefaults removeObjectForKey:@"IsChatEnabled"];
     [sharedUserDefaults synchronize];
 }
 
