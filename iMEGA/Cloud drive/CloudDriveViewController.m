@@ -1890,7 +1890,7 @@
             return nil;
         } else {
             MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor colorWithRed:0.0 green:0.75 blue:0.65 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-                [self downloadAction:nil];
+                [node mnz_downloadNodeOverwriting:NO];
                 return YES;
             }];
             [downloadButton iconTintColor:[UIColor whiteColor]];
@@ -1915,7 +1915,7 @@
             }
         } else {
             MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"shareGray"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-                UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+                UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[node] sender:[self.tableView cellForRowAtIndexPath:indexPath]];
                 [self presentViewController:activityVC animated:YES completion:nil];
                 return YES;
             }];

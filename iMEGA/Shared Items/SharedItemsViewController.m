@@ -865,7 +865,7 @@
     MEGANode *node = [self nodeAtIndexPath:indexPath];
     if (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0) { //incoming
         UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-            [self leaveShareAction:nil];
+            [node mnz_leaveSharingInViewController:self];
             [self setEditing:NO animated:YES];
         }];
         shareAction.image = [UIImage imageNamed:@"leaveShare"];
@@ -873,7 +873,7 @@
         return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
     } else { //outcoming
         UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-            [self removeShareAction:nil];
+            [node mnz_removeSharing];
             [self setEditing:NO animated:YES];
         }];
         shareAction.image = [UIImage imageNamed:@"removeShare"];
@@ -1085,11 +1085,12 @@
     expansionSettings.threshold = 2;
     
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    MEGANode *node = [self nodeAtIndexPath:indexPath];
     
     if (direction == MGSwipeDirectionRightToLeft) {
         if (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0) { //incoming
             MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"leaveShare"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-                [self leaveShareAction:nil];
+                [node mnz_leaveSharingInViewController:self];
                 return YES;
             }];
             [shareButton iconTintColor:[UIColor whiteColor]];
@@ -1097,7 +1098,7 @@
             return @[shareButton];
         } else { //outcoming
             MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"removeShare"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-                [self removeShareAction:nil];
+                [node mnz_removeSharing];
                 return YES;
             }];
             [shareButton iconTintColor:[UIColor whiteColor]];
