@@ -961,7 +961,8 @@ static MEGAIndexer *indexer;
     searchController.dimsBackgroundDuringPresentation = NO;
     searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     searchController.searchBar.translucent = NO;
-    searchController.searchBar.barTintColor = UIColor.mnz_grayFCFCFC;
+    searchController.searchBar.backgroundImage = [UIImage imageWithCGImage:(__bridge CGImageRef)(UIColor.clearColor)];
+    searchController.searchBar.barTintColor = UIColor.whiteColor;
     searchController.searchBar.tintColor = UIColor.mnz_redF0373A;
     
     UITextField *searchTextField = [searchController.searchBar valueForKey:@"_searchField"];

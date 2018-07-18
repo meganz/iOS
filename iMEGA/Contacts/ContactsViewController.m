@@ -657,6 +657,10 @@
             }
             break;
     }
+    
+    if (self.contactsMode == ContactsModeChatCreateGroup) {
+        self.searchController.searchBar.barTintColor = UIColor.mnz_grayFCFCFC;
+    }
 }
 
 #pragma mark - IBActions
