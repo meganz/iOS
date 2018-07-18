@@ -68,6 +68,8 @@
 "tooManyRequest"="Çok fazla istek. Lütfen bekleyin.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Lütfen oturum açın.";
+/* Error message when a user attempts to change their email without an active login session. */
+"needToBeLoggedInToCompleteYourEmailChange"="E-posta değişikliğini tamamlamak için oturum açmış olmanız gerekmektedir. Mevcut e-posta adresinizle tekrar oturum açın ve sonra onay bağlantısına tıklayın.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA ALAN";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -378,6 +380,10 @@
 "copyKey"="Anahtarı kopyala";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Uygulamada aç...";
+/* */
+"uploadToMega"="MEGA'ya yükle";
+/* Footer shown in the Share Extension telling that a file can be renamed if tapped */
+"tapFileToRename"="Yeniden adlandırmak için dosyaya dokunun";
 /* */
 "sendToContact"="Kişiye gönder";
 /* Toast text upon sending a single file to chat */
@@ -1277,14 +1283,6 @@
 "attachedFile"="Ekli: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="Ekli %s dosya.";
-/* A summary message when a user sent the information of one contact through the chat. */
-"sharedContact"="Bu kişiyi paylaştı:";
-/* A summary message when a user sent the information of some contacts at once through the chat. */
-"sharedContacts"="Bu kişileri paylaştı:";
-/* A summary message when a user has attached one file into the chat. */
-"uploadedFile"="Bu dosyayı yükledi:";
-/* A summary message when a user has attached many files at once into the chat. */
-"uploadedFiles"="Bu dosyaları yükledi:";
 /* Label in a button that allows to jump to the latest item */
 "jumpToLatest"="En sona git";
 /* Label in a button that allows to jump to the latest message */
@@ -1358,13 +1356,13 @@
 "languageRestartNotification"="Dil değiştirildi. Tekrar başlatmak için dokunun.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA size 50 GB boş alan sağlayan güvenli bir bulut depolama hizmetidir. Diğer bulut depolama sağlayıcılarından farklı olarak, verileriniz yalnızca istemci cihazlarınız tarafından şifrelenir ve şifre çözülür ve şifreler asla tarafımızca çözülmez.";
+"generalDescriptionParagraph1"="MEGA standart internet tarayıcıları üzerinden, mobil cihazlara özel uygulamalar ile birlikte kullanıcı kontrolünde şifreli bulut depolama hizmeti sunar. Diğer bulut hizmeti sağlayıcılarının aksine, verilerinizin şifreleme ve deşifreleme işlemleri sadece istemci cihazlarınız tarafından yapılır.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph2"="Dosyalarını akıllı telefondan veya tabletten yükle, sonra istediğin yer ve zamanda istediğin cihazdan ara, depola, indir, yayınla, görüntüle, paylaş, yeniden adlandır veya sil. Dosyalarını kişilerinle gerçek zamanlı olarak paylaş ve onların güncellemelerini gör.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="Şifreleme işlemi, parolanıza erişemediğimiz veya parolanızı sıfırlayamadığımız anlamına gelir. O nedenle MUTLAKA hatırlamalısınız (Kurtarma Anahtarınızı yedeklemediğiniz sürece) veya kayıtlı dosyalarınıza erişimi kaybedeceksiniz.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="Uygulamanın içinde depolama alanınızı yükseltebilir ve kotayı aylık veya yıllık abonelik ile aktarabilirsiniz.";
+"generalDescriptionParagraph4"="MEGA tüm kayıtlı kullanıcılarına bonus başarımlarla 50 GB'a kadar ücretsiz depolama alanı ve daha yüksek sınırlara sahip ücretli tarifeler sunmaktadır:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="PRO LITE aboneliği: Aylık 4.99 Avro (4.99 ABD Doları) veya yıllık 49.99 Avro (49.99 ABD Doları), 200 GB depolama alanı ve 1 TB transfer kotası verir.\nPRO I aboneliği: Aylık 9.99 Avro (9.99 ABD Doları) veya yıllık 99.99 Avro (99.99 ABD Doları), 1 TB depolama alanı ve ayda 2 TB transfer kotası verir.[BR]PRO II aboneliği: Aylık 19.99 Avro (19.99 ABD Doları) veya yıllık 199.99 Avro (199.99 ABD Doları) 4 TB depolama alanı ve ayda 8 TB aktarım kotası verir.\nPRO III aboneliği: Aylık 29.99 Avro (29.99 ABD Doları) veya yıllık 299.99 Avro (299.99 ABD Doları), 8 TB depolama alanı ve aylık 16 TB transfer kotası verir.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
@@ -1511,7 +1509,7 @@
 /* When an active call of user A with user B had not answered */
 "callWasNotAnswered"="Arama cevaplanmadı";
 /* When an active call of user A with user B had failed */
-"callFailed"="Arama başarısız.";
+"callFailed"="Arama başarısız";
 /* When an active call of user A with user B had ended */
 "callEnded"="Arama sona erdi.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
@@ -1536,6 +1534,10 @@
 "fileNotSupported"="Dosya desteklenmiyor";
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="Çevrimdışı olarak kaydedip uyumlu bir uygulamada açabilirsiniz.";
+/* Item of a menu to forward a message chat to another chatroom */
+"forward"="İlet";
+/* Success message shown after forwarding messages to other chats */
+"messagesSent"="Messages sent";
 /* Title of archived chats button */
 "archivedChats"="Arşivlenen sohbetler";
 /* Confirmation message on archive chat dialog for user to confirm. */
@@ -1548,3 +1550,5 @@
 "archiveChat"="Sohbeti Arşivle";
 /* Title of flag of archived chats. */
 "archived"="Arşivlendi";
+/* Title of empty state view for archived chats. */
+"noArchivedChats"="No Archived Chats";
