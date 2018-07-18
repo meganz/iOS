@@ -547,7 +547,8 @@
                 [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[localFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:appData isSourceTemporary:YES];
             } else {
                 MEGALogError(@"Move item at path failed with error: %@", error);
-                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"fileTooBigMessage_open", @"Message shown when there are errors trying to copy or move locally a file before being uploaded to MEGA")];
+                NSString *status = [NSString stringWithFormat:@"Move item failed with error %@", error];
+                [SVProgressHUD showErrorWithStatus:status];
             }
             
             [self dismiss];
