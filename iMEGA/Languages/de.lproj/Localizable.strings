@@ -68,6 +68,8 @@
 "tooManyRequest"="Too many requests. Please wait.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Bitte melden Sie sich an.";
+/* Error message when a user attempts to change their email without an active login session. */
+"needToBeLoggedInToCompleteYourEmailChange"="Um Ihre E-Mail-Adresse zu ändern, müssen Sie sich zunächst einloggen. Bitte benutzen Sie hierzu ihre bestehende E-Mail-Adresse. Klicken Sie dann erneut auf den Bestäigungslink.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA SPEICHER";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -378,6 +380,10 @@
 "copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Öffnen in...";
+/* */
+"uploadToMega"="Auf MEGA hochladen";
+/* Footer shown in the Share Extension telling that a file can be renamed if tapped */
+"tapFileToRename"="Tap file to rename";
 /* */
 "sendToContact"="An Kontakt schicken";
 /* Toast text upon sending a single file to chat */
@@ -1277,14 +1283,6 @@
 "attachedFile"="Angehängt: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s Dateien angehängt.";
-/* A summary message when a user sent the information of one contact through the chat. */
-"sharedContact"="Hat diesen Kontakt geteilt:";
-/* A summary message when a user sent the information of some contacts at once through the chat. */
-"sharedContacts"="Hat die folgenden Kontakte geteilt:";
-/* A summary message when a user has attached one file into the chat. */
-"uploadedFile"="Hat diese Datei hochgeladen:";
-/* A summary message when a user has attached many files at once into the chat. */
-"uploadedFiles"="Hat diese Dateien hochgeladen:";
 /* Label in a button that allows to jump to the latest item */
 "jumpToLatest"="Zur neuesten";
 /* Label in a button that allows to jump to the latest message */
@@ -1364,12 +1362,12 @@
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="The encryption process means we cannot access or reset your password so you MUST remember it (unless you have your Recovery Key backed up) or you will lose access to your stored files.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="In der App können Sie Ihren Speicherplatz und Ihr Transfervolumen per Monats- oder Jahresabo aufstocken.";
+"generalDescriptionParagraph4"="MEGA offers a generous 50 GB free storage for all registered users with bonus achievements, and offers paid plans with much higher limits:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="PRO LITE subscription: €4.99 (US$4.99) per month or €49.99 (US$49.99) per year gives you 200 GB of storage space and 1 TB of transfer quota per month.\nPRO I subscription: €9.99 (US$9.99) per month or €99.99 (US$99.99) per year gives you 1 TB of storage space and 2 TB of transfer quota per month.\nPRO II subscription: €19.99 (US$19.99) per month or €199.99 (US$199.99) per year gives you 4 TB of storage space and 8 TB of transfer quota per month.\nPRO III subscription: €29.99 (US$29.99) per month or €299.99 (US$299.99) per year gives you 8 TB of storage space and 16 TB of transfer quota per month.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Mehr Informationen auf unserer Website:\nMobile - https://mega.nz/mobile_terms.html - https://mega.nz/mobile_privacy.html\nDesktop - https://mega.nz/";
+"generalDescriptionParagraph6"="For more info, please check our website: https://mega.nz/\nTerms of Service: https://mega.nz/terms\nPrivacy Policy: https://mega.nz/privacy";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="ruft an";
 /* Notification text body shown when you have missed one audio call */
@@ -1511,7 +1509,7 @@
 /* When an active call of user A with user B had not answered */
 "callWasNotAnswered"="Call was not answered";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed.";
+"callFailed"="Call failed";
 /* When an active call of user A with user B had ended */
 "callEnded"="Call ended.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
@@ -1536,6 +1534,10 @@
 "fileNotSupported"="File not supported";
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
+/* Item of a menu to forward a message chat to another chatroom */
+"forward"="Forward";
+/* Success message shown after forwarding messages to other chats */
+"messagesSent"="Messages sent";
 /* Title of archived chats button */
 "archivedChats"="Archivierte Chats";
 /* Confirmation message on archive chat dialog for user to confirm. */
@@ -1548,3 +1550,5 @@
 "archiveChat"="Chat archivieren";
 /* Title of flag of archived chats. */
 "archived"="Archiviert";
+/* Title of empty state view for archived chats. */
+"noArchivedChats"="No Archived Chats";

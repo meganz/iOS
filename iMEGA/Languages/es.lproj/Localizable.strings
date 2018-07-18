@@ -68,6 +68,8 @@
 "tooManyRequest"="Demasiadas peticiones. Por favor espera.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Por favor, inicia sesión en tu cuenta.";
+/* Error message when a user attempts to change their email without an active login session. */
+"needToBeLoggedInToCompleteYourEmailChange"="Necesitas estar conectado para completar el cambio de correo electrónico. Por favor accede a tu cuenta con la dirección de correo actual y pulsa de nuevo el enlace de confirmación.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="Espacio MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -378,6 +380,10 @@
 "copyKey"="Copiar clave";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Abrir en...";
+/* */
+"uploadToMega"="Subir a MEGA";
+/* Footer shown in the Share Extension telling that a file can be renamed if tapped */
+"tapFileToRename"="Tocar el archivo para renombrar";
 /* */
 "sendToContact"="Enviar a contacto";
 /* Toast text upon sending a single file to chat */
@@ -1277,14 +1283,6 @@
 "attachedFile"="Adjunto: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s archivos adjuntos.";
-/* A summary message when a user sent the information of one contact through the chat. */
-"sharedContact"="Ha compartido este contacto:";
-/* A summary message when a user sent the information of some contacts at once through the chat. */
-"sharedContacts"="Ha compartido estos contactos:";
-/* A summary message when a user has attached one file into the chat. */
-"uploadedFile"="Ha subido este archivo:";
-/* A summary message when a user has attached many files at once into the chat. */
-"uploadedFiles"="Ha subido estos archivos:";
 /* Label in a button that allows to jump to the latest item */
 "jumpToLatest"="Ir al más reciente";
 /* Label in a button that allows to jump to the latest message */
@@ -1358,13 +1356,13 @@
 "languageRestartNotification"="Idioma cambiado. Pulsa para abrir la aplicación.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA es un servicio de almacenamiento seguro en la nube que te brinda 50 GB de espacio de almacenamiento gratuito. A diferencia de otros proveedores de almacenamiento en la nube, tus datos son cifrados y descifrados únicamente por tus dispositivos y nunca por nosotros.";
+"generalDescriptionParagraph1"="MEGA ofrece un servicio de almacenamiento en la nube cifrado y controlado por el usuario a través del navegador web y de la aplicación para dispositivos móviles.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph2"="Sube tus archivos desde tu smartphone o tablet, luego busca, almacena, descarga, muestra, reproduce, comparte, renombra o elimina tus archivos en cualquier momento, desde cualquier dispositivo, desde cualquier lugar. Comparte carpetas con tus contactos y comprueba sus actualizaciones en tiempo real.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="El proceso de cifrado implica que no podemos acceder o restablecer tu contraseña por lo que DEBES recordarla (a menos que tengas copia de seguridad de tu Clave de recuperación) o perderás el acceso a tus archivos almacenados.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="Dentro de la aplicación, puedes actualizar tu espacio de almacenamiento y cuota de transferencia con una suscripción mensual o anual.";
+"generalDescriptionParagraph4"="MEGA brinda un almacenamiento gratuito de 50 GB sujeto al programa de logros para todos los usuarios registrados, y ofrece planes de pago con límites mucho más amplios:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="Suscripción PRO LITE: 4,99€ (US$4.99)  al mes o 49,99€ (US$49.99) al año, con 200 GB de espacio de almacenamiento y 1 TB de cuota de transferencia al mes.\nSuscripción PRO I: 9,99€ (US$9.99) al mes o 99,99€ (US$99.99) al año, con 1 TB de espacio de almacenamiento y 2 TB de cuota de transferencia al mes.\nSuscripción PRO II: 19,99€ al mes (US$19.99) o 199,99€ (US$199.99) al año, con 4 TB de espacio de almacenamiento y 8 TB de cuota de transferencia al mes.\nSuscripción PRO III: 29,99€ (US$29.99) al mes o 299,99€ (US$299.99) al año, con 8 TB de espacio de almacenamiento y 16 TB de cuota de transferencia al mes.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
@@ -1511,7 +1509,7 @@
 /* When an active call of user A with user B had not answered */
 "callWasNotAnswered"="La llamada no ha sido respondida";
 /* When an active call of user A with user B had failed */
-"callFailed"="Llamada fallida.";
+"callFailed"="Llamada fallida";
 /* When an active call of user A with user B had ended */
 "callEnded"="Fin de llamada.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
@@ -1536,6 +1534,10 @@
 "fileNotSupported"="Archivo no soportado";
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="Puede guardarlo en Sin conexión y abrirlo con una aplicación compatible.";
+/* Item of a menu to forward a message chat to another chatroom */
+"forward"="Reenviar";
+/* Success message shown after forwarding messages to other chats */
+"messagesSent"="Messages sent";
 /* Title of archived chats button */
 "archivedChats"="Chats archivados";
 /* Confirmation message on archive chat dialog for user to confirm. */
@@ -1548,3 +1550,5 @@
 "archiveChat"="Archivar chat";
 /* Title of flag of archived chats. */
 "archived"="Archivado";
+/* Title of empty state view for archived chats. */
+"noArchivedChats"="No Archived Chats";
