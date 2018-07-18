@@ -1065,9 +1065,9 @@
 }
 
 
-#pragma mark - Swipe Delegate
+#pragma mark - MGSwipeTableCellDelegate
 
-- (BOOL)swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction {
+- (BOOL)swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction fromPoint:(CGPoint)point {
     if (direction == MGSwipeDirectionLeftToRight) {
         return NO;
     }

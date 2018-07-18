@@ -420,9 +420,9 @@
     [self presentViewController:actionController animated:YES completion:nil];
 }
 
-#pragma mark - Swipe Delegate
+#pragma mark - MGSwipeTableCellDelegate
 
-- (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction {
+- (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction fromPoint:(CGPoint)point {
     MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node];
     if (direction == MGSwipeDirectionRightToLeft && accessType < MEGAShareTypeAccessFull) {
         return NO;
