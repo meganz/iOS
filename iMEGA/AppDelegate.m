@@ -265,7 +265,11 @@
         
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"IsChatEnabled"] == nil) {
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
+            [sharedUserDefaults setBool:YES forKey:@"IsChatEnabled"];
             [[NSUserDefaults standardUserDefaults] synchronize];
+        } else {
+            BOOL isChatEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"];
+            [sharedUserDefaults setBool:isChatEnabled forKey:@"IsChatEnabled"];
         }
         
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
@@ -441,14 +445,16 @@
         [Helper logout];
     }
     
-    if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] == 0) {
+    if ([[[[MEGASdkManager sharedMEGASdk] downloadTransfers] size] integerValue] == 0) {
         [self removeUnfinishedTransfersOnFolder:[Helper pathForOffline]];
         
         NSError *error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:[[NSFileManager defaultManager] downloadsDirectory] error:&error]) {
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
-        
+    }
+    if ([[[[MEGASdkManager sharedMEGASdk] uploadTransfers] size] integerValue] == 0) {
+        NSError *error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:[[NSFileManager defaultManager] uploadsDirectory] error:&error]) {
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
@@ -2109,6 +2115,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 }
                 if (isAccountFirstLogin) {
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
+                    [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"IsChatEnabled"];
                 }
             }
             [self showMainTabBar];

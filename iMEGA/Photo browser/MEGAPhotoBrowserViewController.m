@@ -324,11 +324,19 @@
                 if ([[NSFileManager defaultManager] fileExistsAtPath:previewPath]) {
                     imageView.image = [UIImage imageWithContentsOfFile:previewPath];
                 } else {
-                    NSString *thumbnailPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
-                    if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailPath]) {
-                        imageView.image = [UIImage imageWithContentsOfFile:thumbnailPath];
+                    if (node.hasPreview) {
+                        [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
+                    } else {
+                        NSString *thumbnailPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
+                        if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailPath]) {
+                            imageView.image = [UIImage imageWithContentsOfFile:thumbnailPath];
+                        } else if (node.hasThumbnail && !node.name.mnz_isImagePathExtension) {
+                            [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeThumbnail];
+                        }
+                        if (node.name.mnz_isImagePathExtension) {
+                            [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
+                        }
                     }
-                    [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
                 }
             }
             
@@ -408,7 +416,7 @@
                 MEGAGetThumbnailRequestDelegate *delegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:requestCompletion];
                 NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
                 [self.api getThumbnailNode:node destinationFilePath:path delegate:delegate];
-            } else {
+            } else if (node.name.mnz_isImagePathExtension) {
                 [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
             }
             
@@ -420,7 +428,7 @@
                 NSString *path = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
                 [self.api getPreviewNode:node destinationFilePath:path delegate:delegate];
                 [self addActivityIndicatorToView:imageView];
-            } else {
+            } else if (node.name.mnz_isImagePathExtension) {
                 [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
             }
             
