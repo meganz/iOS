@@ -1665,6 +1665,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 #pragma mark - Custom menu items
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+    if (self.selectingMessages) return NO;
+    
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     switch (message.type) {
         case MEGAChatMessageTypeInvalid:
