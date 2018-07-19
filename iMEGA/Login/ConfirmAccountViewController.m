@@ -199,6 +199,12 @@
                 [self presentViewController:alreadyLoggedInAlertController animated:YES completion:nil];
                 break;
             }
+                
+            case MEGAErrorTypeApiEExist: {
+                [self lockUI:NO];
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailAlreadyInUse", @"Error shown when the user tries to change his mail to one that is already used")];
+                break;
+            }
 
             default:
                 [self lockUI:NO];

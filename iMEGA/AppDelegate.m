@@ -445,14 +445,16 @@
         [Helper logout];
     }
     
-    if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] == 0) {
+    if ([[[[MEGASdkManager sharedMEGASdk] downloadTransfers] size] integerValue] == 0) {
         [self removeUnfinishedTransfersOnFolder:[Helper pathForOffline]];
         
         NSError *error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:[[NSFileManager defaultManager] downloadsDirectory] error:&error]) {
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
-        
+    }
+    if ([[[[MEGASdkManager sharedMEGASdk] uploadTransfers] size] integerValue] == 0) {
+        NSError *error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:[[NSFileManager defaultManager] uploadsDirectory] error:&error]) {
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
