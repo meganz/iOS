@@ -228,6 +228,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     if (@available(iOS 10.0, *)) {
         [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
         [[UNUserNotificationCenter currentNotificationCenter] removePendingNotificationRequestsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
+        self.collectionView.prefetchingEnabled = NO;
     }
     
     // Tap gesture for Jump to bottom view:
