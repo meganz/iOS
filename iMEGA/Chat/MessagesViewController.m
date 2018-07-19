@@ -1128,7 +1128,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         if ([self.selectedMessages containsObject:message]) {
             [self.selectedMessages removeObject:message];
         } else {
-            [self.selectedMessages addObject:message];
+            NSUInteger index = [self.selectedMessages indexOfObject:message inSortedRange:(NSRange){0, self.selectedMessages.count} options:NSBinarySearchingInsertionIndex usingComparator:^NSComparisonResult(MEGAChatMessage *obj1, MEGAChatMessage *obj2) {
+                return [obj1.date compare:obj2.date];
+            }];
+            [self.selectedMessages insertObject:message atIndex:index];
         }
         [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
         
