@@ -1124,15 +1124,17 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)toggleSelectedMessage:(MEGAChatMessage *)message atIndexPath:(NSIndexPath *)indexPath {
-    if ([self.selectedMessages containsObject:message]) {
-        [self.selectedMessages removeObject:message];
-    } else {
-        [self.selectedMessages addObject:message];
+    if (message.type == MEGAChatMessageTypeNormal || message.type == MEGAChatMessageTypeContainsMeta || message.type == MEGAChatMessageTypeContact || message.type == MEGAChatMessageTypeAttachment) {
+        if ([self.selectedMessages containsObject:message]) {
+            [self.selectedMessages removeObject:message];
+        } else {
+            [self.selectedMessages addObject:message];
+        }
+        [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+        
+        [self customNavigationBarLabel];
+        [self updateForwardingToolbar];
     }
-    [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
-    
-    [self customNavigationBarLabel];
-    [self updateForwardingToolbar];
 }
 
 - (void)forwardSelectedMessages {
@@ -1598,7 +1600,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     if (self.selectingMessages) {
         cell.accessoryButton.hidden = YES;
         cell.avatarImageView.hidden = YES;
-        cell.selectionImageView.hidden = NO;
+        cell.selectionImageView.hidden = !(message.type == MEGAChatMessageTypeNormal || message.type == MEGAChatMessageTypeContainsMeta || message.type == MEGAChatMessageTypeContact || message.type == MEGAChatMessageTypeAttachment);
         cell.selectionImageView.image = [self.selectedMessages containsObject:message] ? [UIImage imageNamed:@"checkBoxSelected"] : [UIImage imageNamed:@"checkBoxUnselected"];
     } else {
         cell.avatarImageView.hidden = NO;
