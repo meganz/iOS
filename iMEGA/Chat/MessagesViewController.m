@@ -1181,7 +1181,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                     }
                 }
             }
-            showSuccess = YES;
+            showSuccess = chatIdNumbers.count > 1;
         } else if (chatIdNumbers.count == 1) {
             uint64_t chatId = chatIdNumbers.firstObject.unsignedLongLongValue;
             MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
