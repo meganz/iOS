@@ -55,10 +55,6 @@
     self.image = [UIImage imageWithContentsOfFile:imagePath];
     if (self.image) {
         self.cachedImageView.image = self.image;
-        
-        CGRect frame = self.cachedImageView.frame;
-        frame.size.height = frame.size.width * (self.image.size.height / self.image.size.width);
-        self.cachedImageView.frame = frame;
 
         if (self.node.name.mnz_isMultimediaPathExtension) {
             UIImageView *playImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"playButton"]];
