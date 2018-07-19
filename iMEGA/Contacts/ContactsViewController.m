@@ -100,7 +100,8 @@
     [super viewWillAppear:animated];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     
@@ -111,7 +112,8 @@
     [super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
@@ -209,7 +211,6 @@
         }
             
         case ContactsModeChatStartConversation: {
-            self.tableView.backgroundColor = [UIColor mnz_grayFCFCFC];
             self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
             self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem];
             break;
@@ -217,7 +218,6 @@
             
         case ContactsModeChatAddParticipant:
         case ContactsModeChatAttachParticipant: {
-            self.tableView.backgroundColor = [UIColor mnz_grayFCFCFC];
             self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", nil);
             self.addParticipantBarButtonItem.title = AMLocalizedString(@"ok", nil);
             [self setTableViewEditing:YES animated:NO];
@@ -661,6 +661,10 @@
     if (self.contactsMode == ContactsModeChatCreateGroup) {
         self.searchController.searchBar.barTintColor = UIColor.mnz_grayFCFCFC;
     }
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
 }
 
 #pragma mark - IBActions
