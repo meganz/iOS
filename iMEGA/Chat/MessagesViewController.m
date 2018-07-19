@@ -1598,7 +1598,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     if (self.selectingMessages) {
         cell.accessoryButton.hidden = YES;
         cell.avatarImageView.hidden = YES;
-        cell.selectionImageView.hidden = ![self.selectedMessages containsObject:message];
+        cell.selectionImageView.hidden = NO;
+        cell.selectionImageView.image = [self.selectedMessages containsObject:message] ? [UIImage imageNamed:@"checkBoxSelected"] : [UIImage imageNamed:@"checkBoxUnselected"];
     } else {
         cell.avatarImageView.hidden = NO;
         cell.selectionImageView.hidden = YES;
