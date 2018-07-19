@@ -730,7 +730,13 @@ static MEGAIndexer *indexer;
                 for (NSUInteger i = 0; i < message.usersCount; i++) {
                     MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[message userEmailAtIndex:i]];
                     CNContact *cnContact = user.mnz_cnContact;
-                    NSData *vCardData = [CNContactVCardSerialization dataWithContacts:@[cnContact] error:nil];
+                    NSData *vCardData = [CNContactVCardSerialization dataWithContacts:@[cnContact] error:nil];                    
+                    NSString* vcString = [[NSString alloc] initWithData:vCardData encoding:NSUTF8StringEncoding];
+                    NSString* base64Image = [cnContact.imageData base64EncodedStringWithOptions:0];
+                    NSString* vcardImageString = [[@"PHOTO;TYPE=JPEG;ENCODING=BASE64:" stringByAppendingString:base64Image] stringByAppendingString:@"\n"];
+                    vcString = [vcString stringByReplacingOccurrencesOfString:@"END:VCARD" withString:[vcardImageString stringByAppendingString:@"END:VCARD"]];
+                    vCardData = [vcString dataUsingEncoding:NSUTF8StringEncoding];
+                    
                     NSString *tempPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[[user mnz_fullName] stringByAppendingString:@".vcf"]];
                     if ([vCardData writeToFile:tempPath atomically:YES]) {
                         [activityItemsMutableArray addObject:[NSURL fileURLWithPath:tempPath]];
