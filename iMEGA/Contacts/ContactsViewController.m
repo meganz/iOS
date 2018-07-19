@@ -24,15 +24,15 @@
 #import "ContactLinkQRViewController.h"
 #import "ContactTableViewCell.h"
 #import "ShareFolderActivity.h"
-#import "UsersListViewController.h"
+#import "ItemListViewController.h"
 
-@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, UsersListViewControllerProtocol, UISearchControllerDelegate, UIScrollViewDelegate>
+@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerProtocol, UISearchControllerDelegate, UIScrollViewDelegate>
 
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (weak, nonatomic) IBOutlet UIView *usersListView;
+@property (weak, nonatomic) IBOutlet UIView *itemListView;
 @property (weak, nonatomic) IBOutlet UIView *contactsHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *contactsHeaderViewLabel;
 @property (weak, nonatomic) IBOutlet UIView *contactsTopLineHeaderView;
@@ -54,7 +54,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *usersListViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *itemListViewHeightConstraint;
 
 @property (weak, nonatomic) IBOutlet UIView *searchFixedView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchFixedViewHeightConstraint;
@@ -72,7 +72,7 @@
 
 @property (nonatomic, strong) NSMutableArray *searchVisibleUsersArray;
 @property (strong, nonatomic) UISearchController *searchController;
-@property (strong, nonatomic) UsersListViewController *usersListVC;
+@property (strong, nonatomic) ItemListViewController *itemListVC;
 
 @end
 
@@ -602,32 +602,32 @@
 
 - (void)addUserToList:(MEGAUser *)user {
     if (self.childViewControllers.count) {
-        [self.usersListVC addUser:user];
+        [self.itemListVC addItem:[[ItemListModel alloc] initWithUser:user]];
     } else {
         [UIView animateWithDuration:.25 animations:^{
-            self.usersListViewHeightConstraint.constant = 110;
+            self.itemListViewHeightConstraint.constant = 110;
             [self.view layoutIfNeeded];
         } completion:^(BOOL finished) {
-            UsersListViewController *usersList = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"UsersListViewControllerID"];
-            self.usersListVC = usersList;
-            self.usersListVC.userListDelegate = self;
+            ItemListViewController *usersList = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ItemListViewControllerID"];
+            self.itemListVC = usersList;
+            self.itemListVC.itemListDelegate = self;
             [self addChildViewController:usersList];
-            usersList.view.frame = self.usersListView.bounds;
-            [self.usersListView addSubview:usersList.view];
+            usersList.view.frame = self.itemListView.bounds;
+            [self.itemListView addSubview:usersList.view];
             [usersList didMoveToParentViewController:self];
-            [self.usersListVC addUser:user];
+            [self.itemListVC addItem:[[ItemListModel alloc] initWithUser:user]];
         }];
     }
 }
 
 - (void)removeUsersListSubview {
-    UsersListViewController *usersList = self.childViewControllers.lastObject;
+    ItemListViewController *usersList = self.childViewControllers.lastObject;
     [usersList willMoveToParentViewController:nil];
     [usersList.view removeFromSuperview];
     [usersList removeFromParentViewController];
     [self.view layoutIfNeeded];
     [UIView animateWithDuration:.25 animations:^ {
-        self.usersListViewHeightConstraint.constant = 0;
+        self.itemListViewHeightConstraint.constant = 0;
         [self.view layoutIfNeeded];
     }];
 }
@@ -1189,12 +1189,12 @@
         
         [self updatePromptTitle];
         
-        if (self.usersListVC) {
-            [self.usersListVC removeUser:user];
+        if (self.itemListVC) {
+            [self.itemListVC removeItem:[[ItemListModel alloc] initWithUser:user]];
         }
         
         if (self.selectedUsersArray.count == 0) {
-            if (self.usersListVC) {
+            if (self.itemListVC) {
                 [self removeUsersListSubview];
             }
             if (self.contactsMode != ContactsModeChatStartConversation) {
@@ -1543,9 +1543,10 @@
     [self setContactRequestBarButtomItemWithValue:incomingContactsLists.size.integerValue];
 }
 
-#pragma mark - UsersListViewControllerProtocol
+#pragma mark - ItemListViewControllerProtocol
 
-- (void)removeSelectedUser:(MEGAUser *)user {
+- (void)removeSelectedItem:(id)item {
+    MEGAUser *user = (MEGAUser *)item;
     NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
     [self.tableView deselectRowAtIndexPath:[self.indexPathsMutableDictionary objectForKey:base64Handle] animated:YES];
     [self.selectedUsersArray removeObject:user];

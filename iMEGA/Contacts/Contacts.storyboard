@@ -500,6 +500,7 @@
                         <outlet property="deleteBarButtonItem" destination="wgy-rg-Fjg" id="idp-L0-R7m"/>
                         <outlet property="editBarButtonItem" destination="EF0-GJ-VNE" id="UsC-Ca-lDB"/>
                         <outlet property="insertAnEmailBarButtonItem" destination="EYv-wx-auj" id="SJD-wz-lKl"/>
+                        <outlet property="itemListViewHeightConstraint" destination="M3c-hM-0jP" id="5eu-kt-8N3"/>
                         <outlet property="searchFixedView" destination="pPF-c3-Klm" id="9fI-UB-bBc"/>
                         <outlet property="searchFixedViewHeightConstraint" destination="HZ6-gj-bzt" id="eRw-r1-yzB"/>
                         <outlet property="selectAllBarButtonItem" destination="Llm-yt-C3F" id="EGI-Ug-yJ5"/>
@@ -507,7 +508,6 @@
                         <outlet property="tableView" destination="nKV-wF-xCm" id="70Y-aH-yDi"/>
                         <outlet property="toolbar" destination="jvh-Sx-iEq" id="8PY-cj-jej"/>
                         <outlet property="usersListView" destination="nEj-Ji-K4x" id="TNg-12-Y7h"/>
-                        <outlet property="usersListViewHeightConstraint" destination="M3c-hM-0jP" id="gru-3F-b7o"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R5H-yC-IzG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1782,10 +1782,10 @@
             </objects>
             <point key="canvasLocation" x="3258" y="-858"/>
         </scene>
-        <!--Users List View Controller-->
+        <!--Item List View Controller-->
         <scene sceneID="bW5-Dn-jZa">
             <objects>
-                <viewController storyboardIdentifier="UsersListViewControllerID" id="HSA-9V-kLf" customClass="UsersListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ItemListViewControllerID" id="HSA-9V-kLf" customClass="ItemListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ire-th-B1l">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1800,7 +1800,7 @@
                                     <inset key="sectionInset" minX="10" minY="5" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="UserCollectionViewCellID" id="rYt-IJ-bA7" customClass="UserCollectionViewCell">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ItemCollectionViewCellID" id="rYt-IJ-bA7" customClass="ItemCollectionViewCell">
                                         <rect key="frame" x="10" y="7.5" width="80" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
