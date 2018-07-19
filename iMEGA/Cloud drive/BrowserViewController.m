@@ -322,11 +322,10 @@
 - (void)updatePromptTitle {
     if (self.browserAction == BrowserActionSendFromCloudDrive) {
         NSString *promptString;
-        NSUInteger selectedNodesCount = self.selectedNodesMutableDictionary.count;
-        if (selectedNodesCount == 0) {
+        if (self.selectedNodesMutableDictionary.count == 0) {
             promptString = AMLocalizedString(@"selectFiles", @"Text of the button for user to select files in MEGA.");
         } else {
-            promptString = (selectedNodesCount <= 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), selectedNodesCount] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), selectedNodesCount];
+            promptString = (self.selectedNodesMutableDictionary.count == 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedNodesMutableDictionary.count] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedNodesMutableDictionary.count];
         }
         self.navigationItem.prompt = promptString;
     } else if (self.browserAction != BrowserActionDocumentProvider && self.browserAction != BrowserActionShareExtension) {
