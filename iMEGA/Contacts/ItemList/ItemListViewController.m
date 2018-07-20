@@ -36,7 +36,7 @@
 - (void)removeItem:(ItemListModel *)item {
     [self.collectionView performBatchUpdates:^{
         [self.collectionView deleteItemsAtIndexPaths:@[[self indexPathForItem:item]]];
-        [self.items removeObject:item];
+        [self deleteItemFromList:item];
     } completion:nil];
 }
 
@@ -62,6 +62,19 @@
     return nil;
 }
 
+- (void)deleteItemFromList:(ItemListModel *)item {
+    ItemListModel *itemFinded = nil;
+    for (ItemListModel *itemInList in self.items) {
+        if ([item isEqual:itemInList]) {
+            itemFinded = itemInList;
+            break;
+        }
+    }
+    if (itemFinded) {
+        [self.items removeObject:itemFinded];
+    }
+}
+
 #pragma mark - CollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -69,13 +82,13 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    ItemCollectionViewCell *userCell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"ItemCollectionViewCellID" forIndexPath:indexPath];
+    ItemCollectionViewCell *itemCell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"ItemCollectionViewCellID" forIndexPath:indexPath];
     ItemListModel *item = [self.items objectAtIndex:indexPath.row];
 
-    userCell.nameLabel.text = item.name;
-    [userCell.avatarImageView mnz_setImageForUserHandle:item.handle];
+    itemCell.nameLabel.text = item.name;
+    [itemCell.avatarImageView mnz_setImageForUserHandle:item.handle];
     
-    return userCell;
+    return itemCell;
 }
 
 @end
