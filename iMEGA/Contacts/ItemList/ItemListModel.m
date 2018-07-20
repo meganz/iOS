@@ -30,9 +30,9 @@
 
 - (BOOL)isGroup {
     if (self.chat) {
-        return NO;
-    } else {
         return YES;
+    } else {
+        return NO;
     }
 }
 

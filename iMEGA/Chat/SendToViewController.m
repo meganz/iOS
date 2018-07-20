@@ -513,7 +513,7 @@
             break;
     }
     
-    if (self.selectedUsersMutableArray.count == 0 && self.itemListVC) {
+    if ((self.selectedUsersMutableArray.count + self.selectedGroupChatsMutableArray.count) == 0 && self.itemListVC) {
         [self removeUsersListSubview];
     }
     
@@ -607,7 +607,7 @@
         }
     }
     
-    if (self.selectedUsersMutableArray.count == 0 && self.itemListVC) {
+    if ((self.selectedUsersMutableArray.count + self.selectedGroupChatsMutableArray.count) == 0 && self.itemListVC) {
         [self removeUsersListSubview];
     }
     
