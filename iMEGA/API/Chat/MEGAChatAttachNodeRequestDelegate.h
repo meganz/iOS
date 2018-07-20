@@ -5,6 +5,6 @@
 
 - (id)init NS_UNAVAILABLE;
 
-- (instancetype)initWithCompletion:(void (^)(MEGAChatError *error))completion;
+- (instancetype)initWithCompletion:(void (^)(MEGAChatRequest *request, MEGAChatError *error))completion;
 
 @end
