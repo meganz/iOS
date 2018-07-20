@@ -48,7 +48,7 @@
     if (self.user) {
         return self.user.handle;
     } else {
-        return self.chat.peerHandle;
+        return self.chat.chatId;
     }
 }
 
