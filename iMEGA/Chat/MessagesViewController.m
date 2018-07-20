@@ -1118,7 +1118,6 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self.navigationController setToolbarHidden:YES animated:YES];
     
     [self customNavigationBarLabel];
-    [self updateForwardingToolbar];
 }
 
 - (void)toggleSelectedMessage:(MEGAChatMessage *)message atIndexPath:(NSIndexPath *)indexPath {
@@ -1167,13 +1166,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                     [self.messages addObject:message];
                     [self finishReceivingMessage];
                     
-                    NSUInteger unreads = [message.senderId isEqualToString:self.senderId] ? 0 : self.unreadMessages + 1;
-                    [self updateUnreadMessagesLabel:unreads];
-                    
-                    if ([[MEGASdkManager sharedMEGAChatSdk] myUserHandle] == message.userHandle) {
-                        [self scrollToBottomAnimated:YES];
-                    }
-                    
+                    [self updateUnreadMessagesLabel:0];
+                    [self scrollToBottomAnimated:YES];
+
                     if (message.type == MEGAChatMessageTypeAttachment) {
                         [self loadNodesFromMessage:message atTheBeginning:YES];
                     }
@@ -1576,11 +1571,6 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                                               NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
     }
     
-    if (message.shouldShowForwardAccessory) {
-        [cell.accessoryButton setImage:[UIImage imageNamed:@"forward"] forState:UIControlStateNormal];
-        cell.accessoryButton.hidden = NO;
-    }
-    
     if (message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
         cell.contentView.alpha = 0.7f;
         if (message.status == MEGAChatMessageStatusSendingManual) {
@@ -1606,6 +1596,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     } else {
         cell.avatarImageView.hidden = NO;
         cell.selectionImageView.hidden = YES;
+        if (message.shouldShowForwardAccessory) {
+            [cell.accessoryButton setImage:[UIImage imageNamed:@"forward"] forState:UIControlStateNormal];
+            cell.accessoryButton.hidden = NO;
+        }
     }
     
     return cell;
