@@ -1012,7 +1012,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     dispatch_async(dispatch_get_main_queue(), ^{
         for (NSUInteger i = 0; i < self.messages.count; i++) {
             MEGAChatMessage *message = [self.messages objectAtIndex:i];
-            if (message.temporalId == messageToReload.temporalId) {
+            if ([message.senderId isEqualToString:self.senderId] && message.temporalId == messageToReload.temporalId && [message.date isEqualToDate:messageToReload.date]) {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
                 UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
                 CGFloat previousHeight = cell.frame.size.height;
