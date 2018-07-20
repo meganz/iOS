@@ -633,7 +633,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)performAttachNodeHandle:(uint64_t)nodeHandle {
-    MEGAChatAttachNodeRequestDelegate *chatAttachNodeRequestDelegate = [[MEGAChatAttachNodeRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
+    MEGAChatAttachNodeRequestDelegate *chatAttachNodeRequestDelegate = [[MEGAChatAttachNodeRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest *request, MEGAChatError *error) {
         if (error.type) {
             [self oneUnsupportedMore];
         } else {
