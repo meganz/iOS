@@ -500,6 +500,7 @@
                         <outlet property="deleteBarButtonItem" destination="wgy-rg-Fjg" id="idp-L0-R7m"/>
                         <outlet property="editBarButtonItem" destination="EF0-GJ-VNE" id="UsC-Ca-lDB"/>
                         <outlet property="insertAnEmailBarButtonItem" destination="EYv-wx-auj" id="SJD-wz-lKl"/>
+                        <outlet property="itemListView" destination="nEj-Ji-K4x" id="xz1-HU-QcL"/>
                         <outlet property="itemListViewHeightConstraint" destination="M3c-hM-0jP" id="5eu-kt-8N3"/>
                         <outlet property="searchFixedView" destination="pPF-c3-Klm" id="9fI-UB-bBc"/>
                         <outlet property="searchFixedViewHeightConstraint" destination="HZ6-gj-bzt" id="eRw-r1-yzB"/>
@@ -507,7 +508,6 @@
                         <outlet property="shareFolderWithBarButtonItem" destination="43b-TZ-Eh5" id="0tk-cU-sUm"/>
                         <outlet property="tableView" destination="nKV-wF-xCm" id="70Y-aH-yDi"/>
                         <outlet property="toolbar" destination="jvh-Sx-iEq" id="8PY-cj-jej"/>
-                        <outlet property="usersListView" destination="nEj-Ji-K4x" id="TNg-12-Y7h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R5H-yC-IzG" userLabel="First Responder" sceneMemberID="firstResponder"/>
