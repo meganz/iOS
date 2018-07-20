@@ -355,9 +355,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     if (self.selectingMessages) {
         self.inputToolbar.hidden = YES;
 
-        label.text = [NSString stringWithFormat:AMLocalizedString(@"xSelected", nil), self.selectedMessages.count];
-        label.font = [UIFont mnz_SFUISemiBoldWithSize:17.0f];
-        label.textColor = UIColor.whiteColor;
+        label = [Helper customNavigationBarLabelWithTitle:[NSString stringWithFormat:AMLocalizedString(@"xSelected", nil), self.selectedMessages.count] subtitle:@""];
         
         self.navigationItem.leftBarButtonItems = @[];
     } else {
@@ -404,10 +402,6 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:@""];
         }
         
-        label.adjustsFontSizeToFitWidth = YES;
-        label.minimumScaleFactor = 0.8f;
-        label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
-        
         label.userInteractionEnabled = YES;
         label.superview.userInteractionEnabled = YES;
         
@@ -417,6 +411,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         
         self.navigationItem.leftBarButtonItems = self.leftBarButtonItems;
     }
+    
+    label.adjustsFontSizeToFitWidth = YES;
+    label.minimumScaleFactor = 0.8f;
+    label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
     
     [self.navigationItem setTitleView:label];
     [self updateCollectionViewInsets];
