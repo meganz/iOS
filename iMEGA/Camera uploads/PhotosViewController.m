@@ -58,8 +58,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 
 @property (nonatomic) MEGACameraUploadsState currentState;
-@property (nonatomic) NSUInteger totalPhotosUploading;
-@property (nonatomic) NSUInteger currentPhotosUploaded;
+@property (nonatomic) NSUInteger maxPendingFiles;
 
 @property (nonatomic) NSIndexPath *browsingIndexPath;
 
@@ -292,26 +291,25 @@
 }
 
 - (void)updateProgressWithKnownCameraUploadInProgress:(BOOL)knownCameraUploadInProgress {
-    if ([CameraUploads syncManager].assetsOperationQueue.operationCount > 0) {
-        if ([CameraUploads syncManager].assetsOperationQueue.operationCount > self.totalPhotosUploading) {
-            self.totalPhotosUploading = [CameraUploads syncManager].assetsOperationQueue.operationCount;
+    NSUInteger pendingFiles = [CameraUploads syncManager].assetsOperationQueue.operationCount;
+    if (pendingFiles) {
+        if (pendingFiles > self.maxPendingFiles) {
+            self.maxPendingFiles = pendingFiles;
         }
-        self.currentPhotosUploaded = self.totalPhotosUploading - [CameraUploads syncManager].assetsOperationQueue.operationCount;
-        self.photosUploadedProgressView.progress = (float)((float)self.currentPhotosUploaded/(float)self.totalPhotosUploading);
+        
+        float uploadedFiles = self.maxPendingFiles - pendingFiles;
+        self.photosUploadedProgressView.progress = (float) (uploadedFiles / (float) self.maxPendingFiles);
         
         NSString *progressText;
-        if (self.totalPhotosUploading == 1) {
-            progressText = AMLocalizedString(@"cameraUploadsUploadingFile", @"Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file.");
+        if (pendingFiles == 1) {
+            progressText = AMLocalizedString(@"cameraUploadsPendingFile", @"Message shown while uploading files. Singular.");
         } else {
-            progressText = AMLocalizedString(@"cameraUploadsUploadingFiles", @"Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files.");
+            progressText = [NSString stringWithFormat:AMLocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), pendingFiles];
         }
-        progressText = [progressText stringByReplacingOccurrencesOfString:@"%1$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.currentPhotosUploaded]];
-        progressText = [progressText stringByReplacingOccurrencesOfString:@"%2$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.totalPhotosUploading]];
         
         self.photosUploadedLabel.text = progressText;
     } else {
-        self.totalPhotosUploading = 0;
-        self.currentPhotosUploaded = 0;
+        self.maxPendingFiles = 0;
     }
     [self updateCurrentStateWithKnownCameraUploadInProgress:knownCameraUploadInProgress];
 }

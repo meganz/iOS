@@ -152,6 +152,8 @@
 "alreadyLoggedInAlertTitle"="Sei collegato con un altro account";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="Se acconsenti, l'account corrente verrà disconnesso e tutti i dati non in linea saranno cancellati. Vuoi continuare?";
+/* Error shown when the user tries to change his mail to one that is already used */
+"emailAlreadyInUse"="Errore. Questo indirizzo email è già in uso.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Hai bisogno di liberare un pò di spazio";
 /* Title for the file link view */
@@ -516,10 +518,10 @@
 "cameraUploadsEnabled"="Upload Camera attivati";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Caricamenti dalla fotocamera completi";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"cameraUploadsUploadingFile"="Caricamento di %1$d su %2$d file";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"cameraUploadsUploadingFiles"="Caricamento di %1$d su %2$d file";
+/* Message shown while uploading files. Singular. */
+"cameraUploadsPendingFile"="Upload in progress, 1 file pending";
+/* Message shown while uploading files. Plural. */
+"cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d su %2$d file";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */

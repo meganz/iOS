@@ -152,6 +152,8 @@
 "alreadyLoggedInAlertTitle"="הינך מחובר עם חשבון אחר";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="אם הינך מסכים, החשבון הנוכחי ינותק וכל המידע שהורד יימחק. האם אתה רוצה להמשיך?";
+/* Error shown when the user tries to change his mail to one that is already used */
+"emailAlreadyInUse"="שגיאה. כתובת מייל הזאת כבר נמצאת בשימוש.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="הינך צריך יותר מקום אחסון במכשיר";
 /* Title for the file link view */
@@ -516,10 +518,10 @@
 "cameraUploadsEnabled"="העלאות תמונות מהמצלמה אופשר!";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Camera uploads complete";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"cameraUploadsUploadingFile"="מעלה %1$d מתוך קובץ %2$d";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"cameraUploadsUploadingFiles"="מעלה %1$d מתוך %2$d קבצים";
+/* Message shown while uploading files. Singular. */
+"cameraUploadsPendingFile"="Upload in progress, 1 file pending";
+/* Message shown while uploading files. Plural. */
+"cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d מתוך קובץ %2$d";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -1226,7 +1228,7 @@
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="מחק הודעה";
 /*  */
-"fromCloudDrive"="From Cloud drive";
+"fromCloudDrive"="From Cloud Drive";
 /*  */
 "fromDevice"="From device";
 /* referring to a contact in the contact list of the user */
