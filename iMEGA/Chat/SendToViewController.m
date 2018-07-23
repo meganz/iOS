@@ -21,7 +21,7 @@
 #import "ChatRoomCell.h"
 #import "ItemListViewController.h"
 
-@interface SendToViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, UISearchControllerDelegate, UIScrollViewDelegate, ItemListViewControllerProtocol>
+@interface SendToViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, UISearchControllerDelegate, ItemListViewControllerProtocol, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
@@ -54,6 +54,8 @@
 @property (nonatomic) NSUInteger pendingForwardOperations;
 @property (nonatomic) NSMutableArray<NSNumber *> *chatIdNumbers;
 @property (nonatomic) NSMutableArray<MEGAChatMessage *> *sentMessages;
+
+@property (nonatomic) UIPanGestureRecognizer *panOnTable;
 
 @end
 
@@ -98,14 +100,19 @@
     [self groupAndOrderUserAndGroupChats];
     
     [self.tableView setEditing:YES];
+    
+    self.panOnTable = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(shouldDismissSearchController)];
+    self.panOnTable.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 #pragma mark - Private
@@ -222,7 +229,26 @@
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification {
-    [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
+    [self.tableView addGestureRecognizer:self.panOnTable];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    [self shouldDismissSearchController];
+    [self.tableView removeGestureRecognizer:self.panOnTable];
+}
+
+- (void)shouldDismissSearchController {
+    switch (self.sendMode) {
+        case SendModeCloud:
+        case SendModeShareExtension:
+            if (self.searchController.isActive) {
+                [self.searchController dismissViewControllerAnimated:NO completion:nil];
+            }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (void)addItemToList:(ItemListModel *)item {
@@ -716,22 +742,6 @@
     }
 }
 
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    switch (self.sendMode) {
-        case SendModeCloud:
-        case SendModeShareExtension:
-            if (self.searchController.isActive) {
-                [self.searchController dismissViewControllerAnimated:NO completion:nil];
-            }
-            break;
-            
-        default:
-            break;
-    }
-}
-
 #pragma mark - ItemListViewControllerProtocol
 
 - (void)removeSelectedItem:(id)item {
@@ -757,6 +767,12 @@
     }
     
     [self updateNavigationBarTitle];
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
 }
 
 @end
