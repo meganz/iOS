@@ -29,7 +29,9 @@
         [self.users addObject:user];
         [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.users.count-1 inSection:0]]];
     } completion:^(BOOL finished) {
-        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.users.count-1 inSection:0] atScrollPosition:UICollectionViewScrollPositionRight animated:YES];
+        if (self.users.count) {
+            [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.users.count-1 inSection:0] atScrollPosition:UICollectionViewScrollPositionRight animated:YES];
+        }
     }];
 }
 

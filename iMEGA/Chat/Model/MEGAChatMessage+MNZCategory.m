@@ -111,6 +111,16 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
     return NO;
 }
 
+- (BOOL)shouldShowForwardAccessory {
+    BOOL shouldShowForwardAccessory = NO;
+    
+    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.node)) {
+        shouldShowForwardAccessory = YES;
+    }
+    
+    return shouldShowForwardAccessory;
+}
+
 - (BOOL)localPreview {
     if (self.type == MEGAChatMessageTypeAttachment) {
         MEGANode *node = [self.nodeList nodeAtIndex:0];

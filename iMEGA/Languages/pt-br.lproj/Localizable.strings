@@ -27,13 +27,13 @@
 /* Alert title to attract attention */
 "attention"="Atenção";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="Por favor, dê permissão à MEGA para aceder à sua Câmera nas suas Definições";
+"cameraPermissions"="Você deve dar permissão ao MEGA para acessar a sua Câmera nos Ajustes";
 /* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
 "cameraPermissionsInCall"="Acesse as Configurações do seu dispositivo para permitir que o app MEGA acesse a sua câmera. Ao fazer isso, a chamada terminará, porque o aplicativo se reiniciará.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="Acesse as Configurações do seu dispositivo para permitir que o app MEGA acesse o seu microfone.";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="Por favor, dê permissão à MEGA para aceder às suas fotos nas Definições";
+"photoLibraryPermissions"="Você deve dar permissão ao MEGA para acessar às suas fotos nos Ajustes";
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="Não é possível baixar uma pasta vazia";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
@@ -152,6 +152,8 @@
 "alreadyLoggedInAlertTitle"="Você está logado com outra conta";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="Se você concorda, a conta atual será desconectada e todos os dados off-line serão apagados. Pretende continuar?";
+/* Error shown when the user tries to change his mail to one that is already used */
+"emailAlreadyInUse"="Erro. Este endereço de e-mail já está em uso.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Você precisa libertar algum espaço no seu dispositivo";
 /* Title for the file link view */
@@ -491,7 +493,7 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Pasta compartilhada";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="%d pastas compartilhadas com sucesso.";
+"sharedFolders_success"="%d pastas compartilhadas corretamente.";
 /* Button title that triggers the importing link action */
 "import"="Importar";
 /* Message shown when a file has been imported */
@@ -507,7 +509,7 @@
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="Selecione os itens";
 /* Button title that skips the current action */
-"skipButton"="Avançar";
+"skipButton"="Pular";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "automaticallyBackupYourPhotos"="Faça backup automático das suas fotos para a Nuvem de arquivos";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
@@ -516,10 +518,10 @@
 "cameraUploadsEnabled"="Uploads da câmera ativos";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Uploads da câmera concluídos";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"cameraUploadsUploadingFile"="Fazendo upload %1$d de %2$d arquivo";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"cameraUploadsUploadingFiles"="Fazendo upload %1$d de %2$d arquivos";
+/* Message shown while uploading files. Singular. */
+"cameraUploadsPendingFile"="Upload in progress, 1 file pending";
+/* Message shown while uploading files. Plural. */
+"cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d de %2$d arquivo";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -543,7 +545,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d pastas";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="Insira um email";
+"addFromEmail"="Digite um email";
 /* Title of Shared Items section */
 "sharedItems"="Itens Compartilhados";
 /* Title of the tab bar item for the Shared Items section */
@@ -571,7 +573,7 @@
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
 "removeMultipleSharesMultipleContactsMessage"="Tem certeza de que deseja remover estas ações? (Compartilhado com %d contatos)";
 /* Message shown when a share have been removed */
-"shareRemoved"="Compartilhamento removido com sucesso";
+"shareRemoved"="Compartilhamento removido corretamente";
 /* Message shown when some shares have been removed */
 "sharesRemoved"="ações removido";
 /* Text shown next to name of the "Owner" of the folder that is being shared */
@@ -807,7 +809,7 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Sua chave de recuperação vai ser usado para redefinir sua senha. Por favor, insira sua nova senha.";
 /*  */
-"yourPasswordHasBeenReset"="A sua senha foi resetada com sucesso. Por favor, faça login na sua conta agora.";
+"yourPasswordHasBeenReset"="A sua senha foi resetada corretamente. Por favor, faça login na sua conta agora.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Enviar";
 /* The title of the screen to park an account. */
@@ -954,7 +956,7 @@
 /* Button title that allows the user change his name */
 "changeName"="Alterar o nome";
 /* Success message when changing profile information. */
-"youHaveSuccessfullyChangedYourProfile"="Você mudou o seu perfil com sucesso.";
+"youHaveSuccessfullyChangedYourProfile"="Você mudou o seu perfil corretamente.";
 /* Hint text for the first name (Placeholder) */
 "firstName"="Nome";
 /* Hint text for the last name (Placeholder) */
@@ -968,7 +970,7 @@
 /* Title for MEGA "Available" space. */
 "availableLabel"="Disponível";
 /* title of the My Account screen */
-"accountType"="Tipo da conta:";
+"accountType"="Tipo de conta:";
 /* Text relative to the MEGA account level. UPPER CASE */
 "free"="GRÁTIS";
 /* Text that shows the expiry date of the account PRO level */
@@ -1154,7 +1156,7 @@
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
 "contactCredentials"="Credenciais do contato";
 /* "Verify user" dialog description */
-"thisIsBestDoneInRealLife"="O melhor jeito de fazer isso é pessoalmente, na vida real. Se você tem outro canal verificado como OTR ou PGP, você também pode usá-lo.";
+"thisIsBestDoneInRealLife"="O melhor jeito de fazer isso é pessoalmente, na vida real. Se você tiver outro canal confiável como OTR ou PGP, você também pode usá-lo.";
 /* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
 "yourCredentials"="Suas credenciais";
 /* Button to reset the password */
@@ -1162,7 +1164,7 @@
 /* Button title */
 "approve"="Validar";
 /* start a chat/conversation */
-"startConversation"="Iniciar conversa";
+"startConversation"="Iniciar chat";
 /* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
 "group"="Grupo";
 /* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
