@@ -127,6 +127,7 @@
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     
     [self.chatListItemArray removeAllObjects];
+    [self.chatIdIndexPathDictionary removeAllObjects];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
