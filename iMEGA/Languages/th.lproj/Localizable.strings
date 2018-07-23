@@ -152,6 +152,8 @@
 "alreadyLoggedInAlertTitle"="คุณได้เข้าสู่ระบบด้วยบัญชีอื่น";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="ถ้าคุณเห็นด้วย บัญชีปัจจุบันของคุณจะออกจากระบบและข้อมูลออฟไลน์ทั้งหมดจะถูกลบเช่นเดียวกัน คุณต้องการที่จะดำเนินการต่อหรือไม่";
+/* Error shown when the user tries to change his mail to one that is already used */
+"emailAlreadyInUse"="ผิดพลาด ชื่อบัญชีนี้ได้ถูกใช้งานไปแล้ว";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="คุณจำเป็นต้องเพิ่มพื้นที่ว่างบนอุปกรณ์ของคุณ";
 /* Title for the file link view */
@@ -516,10 +518,10 @@
 "cameraUploadsEnabled"="เปิดใช้งานอัปโหลดจากกล้อง";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="การอัปโหลดกล้องเสร็จสมบูรณ์";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"cameraUploadsUploadingFile"="กำลังอัปโหลดไฟล์ %1$d จาก %2$d ไฟล์";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"cameraUploadsUploadingFiles"="กำลังอัปโหลดไฟล์ %1$d จาก %2$d ไฟล์";
+/* Message shown while uploading files. Singular. */
+"cameraUploadsPendingFile"="Upload in progress, 1 file pending";
+/* Message shown while uploading files. Plural. */
+"cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="ไฟล์ %1$d จาก %2$d ไฟล์";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */

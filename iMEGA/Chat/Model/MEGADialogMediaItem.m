@@ -44,7 +44,37 @@
                                                             options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
                                                          attributes:@{ NSFontAttributeName : messageFont }
                                                             context:nil];
-    return messageRect.size.height;
+    
+    return roundf(messageRect.size.height + 0.5f);
+}
+
+- (CGFloat)titleHeight {
+    CGFloat bubbleWidth = [[UIDevice currentDevice] mnz_widthForChatBubble];
+    CGFloat maxTitleTextViewWidth = bubbleWidth - 120.0f;
+    UIFont *titleFont = [UIFont mnz_SFUIMediumWithSize:15.0f];
+    NSString *titleText;
+    switch (self.message.warningDialog) {
+        case MEGAChatMessageWarningDialogInitial:
+            titleText = AMLocalizedString(@"enableRichUrlPreviews", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.");
+            break;
+            
+        case MEGAChatMessageWarningDialogStandard:
+            titleText = AMLocalizedString(@"enableRichUrlPreviews", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.");
+            break;
+            
+        case MEGAChatMessageWarningDialogConfirmation:
+            titleText = AMLocalizedString(@"richUrlPreviews", @"Title used in settings that enables the generation of link previews in the chat");
+            break;
+            
+        default:
+            break;
+    }
+    
+    CGRect titleRect = [titleText boundingRectWithSize:CGSizeMake(maxTitleTextViewWidth, CGFLOAT_MAX)
+                                               options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                            attributes:@{NSFontAttributeName : titleFont}
+                                               context:nil];
+    return titleRect.size.height;
 }
 
 - (CGFloat)descriptionHeight {
@@ -111,6 +141,7 @@
             [dialogView.notNowButton setTitle:AMLocalizedString(@"notNow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.") forState:UIControlStateNormal];
             
             [dialogView.neverButton removeFromSuperview];
+            [dialogView.lineView removeFromSuperview];
             
             break;
             
@@ -131,6 +162,7 @@
             [dialogView.notNowButton setTitle:AMLocalizedString(@"no", nil) forState:UIControlStateNormal];
             
             [dialogView.neverButton removeFromSuperview];
+            [dialogView.lineView removeFromSuperview];
 
             break;
             
@@ -151,12 +183,20 @@
 - (CGSize)mediaViewDisplaySize {
     CGFloat bubbleWidth = [[UIDevice currentDevice] mnz_widthForChatBubble];
     CGFloat headingHeight = [self headingHeight];
+    CGFloat titleHeight = [self titleHeight];
+    CGFloat descriptionHeight = [self descriptionHeight];
+    
+    CGFloat imageHeight = 110.0f;
+    CGFloat titleAndDescriptionHeight = (titleHeight + 3.0f + descriptionHeight + 3.0f);
+    if (imageHeight > titleAndDescriptionHeight) {
+        titleAndDescriptionHeight = 110.0f + 14.0f;
+    }
 
     CGFloat optionsHeight = self.message.warningDialog == MEGAChatMessageWarningDialogStandard ? 132.0f : 88.0f;
     
     // @see MEGAMessageDialogView.xib
-    CGFloat bubbleHeight = 10.0f + headingHeight + 10.0f + 10.0f + 36.0f + 10.0f + 73.0f + 10.0f + optionsHeight + 3.0f;
-    return CGSizeMake(bubbleWidth, bubbleHeight);
+    CGFloat bubbleHeight = 10.0f + headingHeight + 10.0f + 10.0f + titleAndDescriptionHeight + optionsHeight + 3.0f;
+    return CGSizeMake(bubbleWidth, roundf(bubbleHeight + 0.5f));
 }
 
 - (NSUInteger)mediaHash {
