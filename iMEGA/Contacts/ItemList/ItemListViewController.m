@@ -64,15 +64,15 @@
 }
 
 - (void)deleteItemFromList:(ItemListModel *)item {
-    ItemListModel *itemFinded = nil;
+    ItemListModel *itemFound = nil;
     for (ItemListModel *itemInList in self.items) {
         if ([item isEqual:itemInList]) {
-            itemFinded = itemInList;
+            itemFound = itemInList;
             break;
         }
     }
-    if (itemFinded) {
-        [self.items removeObject:itemFinded];
+    if (itemFound) {
+        [self.items removeObject:itemFound];
     }
 }
 
