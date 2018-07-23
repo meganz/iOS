@@ -26,7 +26,7 @@
 #import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
 
-@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerProtocol, UISearchControllerDelegate, UIScrollViewDelegate>
+@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerProtocol, UISearchControllerDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
@@ -74,6 +74,8 @@
 @property (strong, nonatomic) UISearchController *searchController;
 @property (strong, nonatomic) ItemListViewController *itemListVC;
 
+@property (nonatomic) UIPanGestureRecognizer *panOnTable;
+
 @end
 
 @implementation ContactsViewController
@@ -94,6 +96,9 @@
     [self.createGroupBarButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:1 green:1 blue:1 alpha:.5]} forState:UIControlStateDisabled];
 
     [self setupContacts];
+    
+    self.panOnTable = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(shouldDismissSearchController)];
+    self.panOnTable.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -101,6 +106,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
@@ -113,6 +119,7 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
@@ -664,7 +671,28 @@
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification {
-    [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
+    [self.tableView addGestureRecognizer:self.panOnTable];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    [self shouldDismissSearchController];
+    [self.tableView removeGestureRecognizer:self.panOnTable];
+}
+
+- (void)shouldDismissSearchController {
+    switch (self.contactsMode) {
+        case ContactsModeChatStartConversation:
+        case ContactsModeChatAddParticipant:
+        case ContactsModeChatAttachParticipant:
+        case ContactsModeChatCreateGroup:
+            if (self.searchController.isActive) {
+                [self.searchController dismissViewControllerAnimated:NO completion:nil];
+            }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark - IBActions
@@ -1280,24 +1308,6 @@
     return titleForDeleteConfirmationButton;
 }
 
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    switch (self.contactsMode) {
-        case ContactsModeChatStartConversation:
-        case ContactsModeChatAddParticipant:
-        case ContactsModeChatAttachParticipant:
-        case ContactsModeChatCreateGroup:
-            if (self.searchController.isActive) {
-                [self.searchController dismissViewControllerAnimated:NO completion:nil];
-            }
-            break;
-            
-        default:
-            break;
-    }
-}
-
 #pragma mark - UIViewControllerPreviewingDelegate
 
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
@@ -1554,6 +1564,12 @@
     if (self.selectedUsersArray.count == 0) {
         [self removeUsersListSubview];
     }
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
 }
 
 @end
