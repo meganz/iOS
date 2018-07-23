@@ -736,7 +736,12 @@
 
 - (void)removeSelectedItem:(id)item {
     
-    [self.selectedUsersMutableArray removeObject:item];
+    if ([[item class] isEqual:MEGAUser.class]) {
+        [self.selectedUsersMutableArray removeObject:item];
+    } else {
+        [self.selectedGroupChatsMutableArray removeObject:item];
+    }
+    
     NSMutableArray *arrayOfObejcts =  self.searchController.isActive ? self.searchedUsersAndGroupChatsMutableArray : self.usersAndGroupChatsMutableArray;
     
     for (id object in arrayOfObejcts) {
