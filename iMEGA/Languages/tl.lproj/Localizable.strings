@@ -152,6 +152,8 @@
 "alreadyLoggedInAlertTitle"="Ikaw ay nakalogged in sa ibang account";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="Kung ikaw ay papayag, ang inyong kasalukuyang account ay ila-log out at lahat ng Offline data ay mapapahi. Gusto mo pa bang magpatuloy?";
+/* Error shown when the user tries to change his mail to one that is already used */
+"emailAlreadyInUse"="Error. Ginagamit na ang email address na ito.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Kailangang magbawas upang mabakante ang inyong device.";
 /* Title for the file link view */
@@ -516,10 +518,10 @@
 "cameraUploadsEnabled"="Pinagana ang Camera Uploads";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Camera uploads complete";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"cameraUploadsUploadingFile"="Uploading %1$d of %2$d file";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"cameraUploadsUploadingFiles"="Uploading %1$d of %2$d files";
+/* Message shown while uploading files. Singular. */
+"cameraUploadsPendingFile"="Upload in progress, 1 file pending";
+/* Message shown while uploading files. Plural. */
+"cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d of %2$d file";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -1226,7 +1228,7 @@
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Burahin ang mensahe";
 /*  */
-"fromCloudDrive"="From Cloud drive";
+"fromCloudDrive"="From Cloud Drive";
 /*  */
 "fromDevice"="From device";
 /* referring to a contact in the contact list of the user */

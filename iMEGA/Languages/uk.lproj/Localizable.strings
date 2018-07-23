@@ -152,6 +152,8 @@
 "alreadyLoggedInAlertTitle"="Ви увійшли в інший обліковий запис";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="Якщо ви згодні, відбудеться вихід з вашого поточного акаунту і всі локальні дані буде стерто. Бажаєте продовжити?";
+/* Error shown when the user tries to change his mail to one that is already used */
+"emailAlreadyInUse"="Помилка. Ця е-пошта вже використовується.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Вам потрібно звільнити деякий простір на вашому пристрої";
 /* Title for the file link view */
@@ -516,10 +518,10 @@
 "cameraUploadsEnabled"="Відвантаження з камери увімкнено";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Camera uploads complete";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"cameraUploadsUploadingFile"="Uploading %1$d of %2$d file";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"cameraUploadsUploadingFiles"="Uploading %1$d of %2$d files";
+/* Message shown while uploading files. Singular. */
+"cameraUploadsPendingFile"="Upload in progress, 1 file pending";
+/* Message shown while uploading files. Plural. */
+"cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d of %2$d file";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -1226,7 +1228,7 @@
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Видалити повідомлення";
 /*  */
-"fromCloudDrive"="From Cloud drive";
+"fromCloudDrive"="From Cloud Drive";
 /*  */
 "fromDevice"="From device";
 /* referring to a contact in the contact list of the user */

@@ -152,6 +152,8 @@
 "alreadyLoggedInAlertTitle"="다른 계정으로 로그인하였습니다";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="동의하면, 현재 계정이 로그아웃되고 모든 오프라인 데이터가 삭제됩니다. 계속하시겠습니까?";
+/* Error shown when the user tries to change his mail to one that is already used */
+"emailAlreadyInUse"="오류. 이 이메일 주소는 이미 사용중입니다.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="장치에 여유 공간이 필요합니다";
 /* Title for the file link view */
@@ -516,10 +518,10 @@
 "cameraUploadsEnabled"="카메라 업로드 활성화됨";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="카메라 업로드 완료";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"cameraUploadsUploadingFile"="파일 %2$d개 중 %1$d번째 파일 업로드중";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"cameraUploadsUploadingFiles"="파일 %2$d개 중 %1$d번째 파일 업로드중";
+/* Message shown while uploading files. Singular. */
+"cameraUploadsPendingFile"="Upload in progress, 1 file pending";
+/* Message shown while uploading files. Plural. */
+"cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="파일 %2$d개 중 %1$d개";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
