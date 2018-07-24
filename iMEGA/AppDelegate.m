@@ -2524,9 +2524,9 @@ void uncaughtExceptionHandler(NSException *exception) {
         
         MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
         if (!offlineNodeExist) {
-            MEGALogDebug(@"Transfer finish: insert node to DB: base64 handle: %@ - local path: %@", node.base64Handle, transfer.path);
             NSRange replaceRange = [transfer.path rangeOfString:@"Documents/"];
             if (replaceRange.location != NSNotFound) {
+                MEGALogDebug(@"Transfer finish: insert node to DB: base64 handle: %@ - local path: %@", node.base64Handle, transfer.path);
                 NSString *result = [transfer.path stringByReplacingCharactersInRange:replaceRange withString:@""];
                 [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[result decomposedStringWithCanonicalMapping]];
             }
