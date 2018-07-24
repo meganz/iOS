@@ -28,7 +28,6 @@ static NSString *kisDirectory = @"kisDirectory";
 @interface OfflineViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, MGSwipeTableCellDelegate, UITableViewDataSource, UITableViewDelegate> {
     NSString *previewDocumentPath;
     BOOL allItemsSelected;
-    BOOL isSwipeEditing;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -292,6 +291,8 @@ static NSString *kisDirectory = @"kisDirectory";
         }
     }
     
+    [self updateNavigationBarTitle];
+    
     [self.tableView reloadData];
 }
 
@@ -507,6 +508,25 @@ static NSString *kisDirectory = @"kisDirectory";
     return previewController;
 }
 
+- (void)updateNavigationBarTitle {
+    NSString *navigationTitle;
+    if (self.tableView.isEditing) {
+        if (self.selectedItems.count == 0) {
+            navigationTitle = AMLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
+        } else {
+            navigationTitle = (self.selectedItems.count == 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedItems.count] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedItems.count];
+        }
+    } else {
+        if (self.folderPathFromOffline == nil) {
+            navigationTitle = AMLocalizedString(@"offline", @"Offline");
+        } else {
+            navigationTitle = [self.folderPathFromOffline lastPathComponent];
+        }
+    }
+    
+    self.navigationItem.title = navigationTitle;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -632,6 +652,8 @@ static NSString *kisDirectory = @"kisDirectory";
         NSURL *filePathURL = [[self itemAtIndexPath:indexPath] objectForKey:kPath];
         [self.selectedItems addObject:filePathURL];
         
+        [self updateNavigationBarTitle];
+        
         if (self.selectedItems.count > 0) {
             [self.activityBarButtonItem setEnabled:![self isDirectorySelected]];
             [self.deleteBarButtonItem setEnabled:YES];
@@ -700,6 +722,8 @@ static NSString *kisDirectory = @"kisDirectory";
             }
         }
         
+        [self updateNavigationBarTitle];
+        
         if (self.selectedItems.count == 0) {
             [self.activityBarButtonItem setEnabled:NO];
             [self.deleteBarButtonItem setEnabled:NO];
@@ -717,18 +741,18 @@ static NSString *kisDirectory = @"kisDirectory";
 - (void)setTableViewEditing:(BOOL)editing animated:(BOOL)animated {
     [self.tableView setEditing:editing animated:animated];
     
+    [self updateNavigationBarTitle];
+    
     if (editing) {
-        if (!isSwipeEditing) {
-            self.navigationItem.rightBarButtonItem = self.editBarButtonItem;
-            self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
-            
-            self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
-            [self.toolbar setAlpha:0.0];
-            [self.tabBarController.tabBar addSubview:self.toolbar];
-            [UIView animateWithDuration:0.33f animations:^ {
-                [self.toolbar setAlpha:1.0];
-            }];
-        }
+        self.navigationItem.rightBarButtonItem = self.editBarButtonItem;
+        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+        
+        self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+        [self.toolbar setAlpha:0.0];
+        [self.tabBarController.tabBar addSubview:self.toolbar];
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:1.0];
+        }];
     } else {
         self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
         self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
@@ -752,8 +776,6 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.activityBarButtonItem setEnabled:NO];
         [self.deleteBarButtonItem setEnabled:NO];
     }
-    
-    isSwipeEditing = NO;
 }
 
 
@@ -764,8 +786,7 @@ static NSString *kisDirectory = @"kisDirectory";
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
-- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    isSwipeEditing = YES;
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {    
     UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Share" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
         NSString *itemPath = [[self currentOfflinePath] stringByAppendingPathComponent:[cell itemNameString]];
@@ -808,6 +829,8 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.activityBarButtonItem setEnabled:![self isDirectorySelected]];
         [self.deleteBarButtonItem setEnabled:YES];
     }
+    
+    [self updateNavigationBarTitle];
     
     [self.tableView reloadData];
 }
@@ -1082,9 +1105,9 @@ static NSString *kisDirectory = @"kisDirectory";
     }
 }
 
-#pragma mark - Swipe Delegate
+#pragma mark - MGSwipeTableCellDelegate
 
-- (BOOL)swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction {
+- (BOOL)swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction fromPoint:(CGPoint)point {
     if (self.tableView.isEditing) {
         return NO;
     }

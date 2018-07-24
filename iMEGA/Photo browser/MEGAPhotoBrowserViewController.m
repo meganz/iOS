@@ -157,6 +157,16 @@
     self.scrollView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width + self.gapBetweenPages, self.view.frame.size.height);
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.mediaNodes.count, self.scrollView.frame.size.height);
     
+    if (self.currentIndex >= self.mediaNodes.count) {
+        MEGALogError(@"MEGAPhotoBrowserViewController tried to show the node at index %lu, with %lu items in the array of nodes", self.currentIndex, self.mediaNodes.count);
+        if (self.mediaNodes.count > 0) {
+            self.currentIndex = self.mediaNodes.count - 1;
+        } else {
+            [self dismissViewControllerAnimated:YES completion:nil];
+            return;
+        }
+    }
+    
     [self loadNearbyImagesFromIndex:self.currentIndex];
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
     UIScrollView *zoomableViewForInitialNode = [self.imageViewsCache objectForKey:node.base64Handle];
@@ -314,11 +324,19 @@
                 if ([[NSFileManager defaultManager] fileExistsAtPath:previewPath]) {
                     imageView.image = [UIImage imageWithContentsOfFile:previewPath];
                 } else {
-                    NSString *thumbnailPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
-                    if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailPath]) {
-                        imageView.image = [UIImage imageWithContentsOfFile:thumbnailPath];
+                    if (node.hasPreview) {
+                        [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
+                    } else {
+                        NSString *thumbnailPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
+                        if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailPath]) {
+                            imageView.image = [UIImage imageWithContentsOfFile:thumbnailPath];
+                        } else if (node.hasThumbnail && !node.name.mnz_isImagePathExtension) {
+                            [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeThumbnail];
+                        }
+                        if (node.name.mnz_isImagePathExtension) {
+                            [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
+                        }
                     }
-                    [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
                 }
             }
             
@@ -398,7 +416,7 @@
                 MEGAGetThumbnailRequestDelegate *delegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:requestCompletion];
                 NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
                 [self.api getThumbnailNode:node destinationFilePath:path delegate:delegate];
-            } else {
+            } else if (node.name.mnz_isImagePathExtension) {
                 [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
             }
             
@@ -410,7 +428,7 @@
                 NSString *path = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
                 [self.api getPreviewNode:node destinationFilePath:path delegate:delegate];
                 [self addActivityIndicatorToView:imageView];
-            } else {
+            } else if (node.name.mnz_isImagePathExtension) {
                 [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
             }
             
@@ -508,13 +526,13 @@
     CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
     actionController.node = [self.mediaNodes objectAtIndex:self.currentIndex];
     actionController.actionDelegate = self;
+    actionController.actionSender = sender;
     actionController.displayMode = self.displayMode;
     
     if ([[UIDevice currentDevice] iPadDevice]) {
         actionController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
-        popController.delegate = actionController;
-        popController.barButtonItem = sender;
+        actionController.popoverPresentationController.delegate = actionController;
+        actionController.popoverPresentationController.barButtonItem = sender;
     } else {
         actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }
@@ -555,7 +573,7 @@
         default: {
             UIActivityViewController *activityViewController;
             if (node.name.mnz_videoPathExtension) {
-                activityViewController = [Helper activityViewControllerForNodes:@[node] button:sender];
+                activityViewController = [Helper activityViewControllerForNodes:@[node] sender:sender];
             } else {
                 MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
                 NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
@@ -805,7 +823,7 @@
                 }
                     
                 default:
-                    activityVC = [Helper activityViewControllerForNodes:@[node] button:sender];
+                    activityVC = [Helper activityViewControllerForNodes:@[node] sender:sender];
                     break;
             }
             
