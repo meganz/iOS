@@ -26,7 +26,6 @@
 }
 
 - (id)item {
-    
     NSString *activityType = [self activityType];
     BOOL activityValue = !([activityType isEqualToString:@"OpenInActivity"] || [activityType isEqualToString:@"GetLinkActivity"] || [activityType isEqualToString:@"RemoveLinkActivity"] || [activityType isEqualToString:@"ShareFolderActivity"] || [activityType isEqualToString:@"SaveToCameraRollActivity"] || [activityType isEqualToString:@"RemoveSharingActivity"]);
     if (activityValue) {

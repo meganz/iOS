@@ -1,4 +1,7 @@
+
 #import "MEGAUser.h"
+
+#import <Contacts/Contacts.h>
 
 @interface MEGAUser (MNZCategory)
 
@@ -9,6 +12,9 @@
  *
  */
 @property (nonatomic, readonly) NSString *mnz_fullName;
+
 @property (nonatomic, readonly) NSString *mnz_firstName;
+
+@property (nonatomic, readonly) CNContact *mnz_cnContact;
 
 @end

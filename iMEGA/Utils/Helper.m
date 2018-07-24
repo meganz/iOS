@@ -13,10 +13,12 @@
 
 #import "MEGAActivityItemProvider.h"
 #import "MEGANode+MNZCategory.h"
+#import "MEGANodeList+MNZCategory.h"
 #import "MEGALogger.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
+#import "MEGAUser+MNZCategory.h"
 
 #import "CameraUploads.h"
 #import "GetLinkActivity.h"
@@ -31,9 +33,6 @@
 static MEGANode *linkNode;
 static NSInteger linkNodeOption;
 static NSMutableArray *nodesFromLinkMutableArray;
-
-static NSUInteger totalOperations;
-static BOOL copyToPasteboard;
 
 static MEGAIndexer *indexer;
 
@@ -708,13 +707,95 @@ static MEGAIndexer *indexer;
     return [NSString mnz_stringByFiles:files andFolders:folders];
 }
 
-+ (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray button:(UIBarButtonItem *)shareBarButtonItem {
-    return [self activityViewControllerForNodes:nodesArray sender:shareBarButtonItem];
++ (UIActivityViewController *)activityViewControllerForChatMessages:(NSArray<MEGAChatMessage *> *)messages sender:(id)sender {
+    NSUInteger stringCount = 0, fileCount = 0;
+
+    NSMutableArray *activityItemsMutableArray = [[NSMutableArray alloc] init];
+    NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
+    
+    NSMutableArray *excludedActivityTypesMutableArray = [[NSMutableArray alloc] initWithArray:@[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]];
+    
+    NSMutableArray<MEGANode *> *nodes = [[NSMutableArray<MEGANode *> alloc] init];
+    
+    for (MEGAChatMessage *message in messages) {
+        switch (message.type) {
+            case MEGAChatMessageTypeNormal:
+            case MEGAChatMessageTypeContainsMeta:
+                [activityItemsMutableArray addObject:message.content];
+                stringCount++;
+                
+                break;
+                
+            case MEGAChatMessageTypeContact: {
+                for (NSUInteger i = 0; i < message.usersCount; i++) {
+                    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[message userEmailAtIndex:i]];
+                    CNContact *cnContact = user.mnz_cnContact;
+                    NSData *vCardData = [CNContactVCardSerialization dataWithContacts:@[cnContact] error:nil];                    
+                    NSString* vcString = [[NSString alloc] initWithData:vCardData encoding:NSUTF8StringEncoding];
+                    NSString* base64Image = [cnContact.imageData base64EncodedStringWithOptions:0];
+                    NSString* vcardImageString = [[@"PHOTO;TYPE=JPEG;ENCODING=BASE64:" stringByAppendingString:base64Image] stringByAppendingString:@"\n"];
+                    vcString = [vcString stringByReplacingOccurrencesOfString:@"END:VCARD" withString:[vcardImageString stringByAppendingString:@"END:VCARD"]];
+                    vCardData = [vcString dataUsingEncoding:NSUTF8StringEncoding];
+                    
+                    NSString *tempPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[[user mnz_fullName] stringByAppendingString:@".vcf"]];
+                    if ([vCardData writeToFile:tempPath atomically:YES]) {
+                        [activityItemsMutableArray addObject:[NSURL fileURLWithPath:tempPath]];
+                        fileCount++;
+                    }
+                }
+                
+                break;
+            }
+                
+            case MEGAChatMessageTypeAttachment: {
+                MEGANode *node = [message.nodeList mnz_nodesArrayFromNodeList].firstObject;
+                MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
+                if (offlineNodeExist) {
+                    NSURL *offlineURL = [NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath]];
+                    [activityItemsMutableArray addObject:offlineURL];
+                    fileCount++;
+                } else {
+                    [nodes addObject:node];
+                    MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
+                    [activityItemsMutableArray addObject:activityItemProvider];
+                }
+
+                break;
+            }
+                
+            default:
+                break;
+        }
+    }
+    
+    if (stringCount == 0 && fileCount < 5 && nodes.count == 0) {
+        [excludedActivityTypesMutableArray removeObject:UIActivityTypeSaveToCameraRoll];
+    }
+    
+    if (stringCount == 0 && fileCount == 0 && nodes.count == 1) {
+        [excludedActivityTypesMutableArray removeObject:UIActivityTypeAirDrop];
+    }
+    
+    if (stringCount == 0 && fileCount == 0 && nodes.count > 0) {
+        GetLinkActivity *getLinkActivity = [[GetLinkActivity alloc] initWithNodes:nodes];
+        [activitiesMutableArray addObject:getLinkActivity];
+    }
+    
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItemsMutableArray applicationActivities:activitiesMutableArray];
+    [activityVC setExcludedActivityTypes:excludedActivityTypesMutableArray];
+    
+    if ([[sender class] isEqual:UIBarButtonItem.class]) {
+        activityVC.popoverPresentationController.barButtonItem = sender;
+    } else {
+        UIView *presentationView = (UIView *)sender;
+        activityVC.popoverPresentationController.sourceView = presentationView;
+        activityVC.popoverPresentationController.sourceRect = CGRectMake(0, 0, presentationView.frame.size.width/2, presentationView.frame.size.height/2);
+    }
+    
+    return activityVC;
 }
 
 + (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id)sender {
-    totalOperations = nodesArray.count;
-    
     NSMutableArray *activityItemsMutableArray = [[NSMutableArray alloc] init];
     NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
     
@@ -722,7 +803,6 @@ static MEGAIndexer *indexer;
     
     GetLinkActivity *getLinkActivity = [[GetLinkActivity alloc] initWithNodes:nodesArray];
     [activitiesMutableArray addObject:getLinkActivity];
-    [Helper setCopyToPasteboard:NO];
     
     NodesAre nodesAre = [Helper checkPropertiesForSharingNodes:nodesArray];
     
@@ -785,28 +865,12 @@ static MEGAIndexer *indexer;
     if ([[sender class] isEqual:UIBarButtonItem.class]) {
         activityVC.popoverPresentationController.barButtonItem = sender;
     } else {
-        UIView *presentationView = (UIView*)sender;
+        UIView *presentationView = (UIView *)sender;
         activityVC.popoverPresentationController.sourceView = presentationView;
         activityVC.popoverPresentationController.sourceRect = CGRectMake(0, 0, presentationView.frame.size.width/2, presentationView.frame.size.height/2);
     }
     
     return activityVC;
-}
-
-+ (void)setTotalOperations:(NSUInteger)total {
-    totalOperations = total;
-}
-
-+ (NSUInteger)totalOperations {
-    return totalOperations;
-}
-
-+ (void)setCopyToPasteboard:(BOOL)boolValue {
-    copyToPasteboard = boolValue;
-}
-
-+ (BOOL)copyToPasteboard {
-    return copyToPasteboard;
 }
 
 + (NodesAre)checkPropertiesForSharingNodes:(NSArray *)nodesArray {
@@ -961,7 +1025,8 @@ static MEGAIndexer *indexer;
     searchController.dimsBackgroundDuringPresentation = NO;
     searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     searchController.searchBar.translucent = NO;
-    searchController.searchBar.barTintColor = UIColor.mnz_grayFCFCFC;
+    searchController.searchBar.backgroundImage = [UIImage imageWithCGImage:(__bridge CGImageRef)(UIColor.clearColor)];
+    searchController.searchBar.barTintColor = UIColor.whiteColor;
     searchController.searchBar.tintColor = UIColor.mnz_redF0373A;
     
     UITextField *searchTextField = [searchController.searchBar valueForKey:@"_searchField"];
@@ -1196,6 +1261,7 @@ static MEGAIndexer *indexer;
     [sharedUserDefaults removeObjectForKey:@"extensions-passcode"];
     [sharedUserDefaults removeObjectForKey:@"treeCompleted"];
     [sharedUserDefaults removeObjectForKey:@"useHttpsOnly"];
+    [sharedUserDefaults removeObjectForKey:@"IsChatEnabled"];
     [sharedUserDefaults synchronize];
 }
 

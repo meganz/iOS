@@ -41,6 +41,7 @@
     MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"SendToNavigationControllerID"];
     SendToViewController *sendToViewController = navigationController.viewControllers.firstObject;
     sendToViewController.nodes = self.nodes;
+    sendToViewController.sendMode = SendModeCloud;
     
     return navigationController;
 }

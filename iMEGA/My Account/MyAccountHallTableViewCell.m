@@ -7,7 +7,7 @@
     [super setSelected:selected animated:animated];
     
     if (selected) {
-        self.lineView.backgroundColor = [UIColor mnz_grayCCCCCC];
+        self.lineView.backgroundColor = UIColor.mnz_grayCCCCCC;
     }
 }
 
@@ -16,12 +16,12 @@
     
     if (highlighted) {
         UIView *view = [[UIView alloc] init];
-        view.backgroundColor = [UIColor mnz_grayF7F7F7];
+        view.backgroundColor = UIColor.clearColor;
         self.selectedBackgroundView = view;
         
-        self.pendingView.backgroundColor = [UIColor mnz_redFF4D52];
+        self.pendingView.backgroundColor = UIColor.mnz_redFF4D52;
         
-        self.lineView.backgroundColor = [UIColor mnz_grayCCCCCC];
+        self.lineView.backgroundColor = UIColor.mnz_grayCCCCCC;
     }
 }
 

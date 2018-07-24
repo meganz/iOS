@@ -55,7 +55,7 @@
         return URLTypeNewSignUpLink;
     }
     
-    if (afterSlashesString.length >= 7 && [[afterSlashesString substringToIndex:7] isEqualToString:@"#backup"]) {
+    if ((afterSlashesString.length >= 7 && [[afterSlashesString substringToIndex:7] isEqualToString:@"#backup"]) || (afterSlashesString.length >= 6 && [[afterSlashesString substringToIndex:6] isEqualToString:@"backup"])) {
         return URLTypeBackupLink;
     }
     
@@ -164,6 +164,13 @@
         } else {
             MEGANode *node = request.publicNode;
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+                NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
+                if (![[NSFileManager defaultManager] fileExistsAtPath:previewsDirectory]) {
+                    NSError *nserror;
+                    if (![[NSFileManager defaultManager] createDirectoryAtPath:previewsDirectory withIntermediateDirectories:NO attributes:nil error:&nserror]) {
+                        MEGALogError(@"Create directory at path failed with error: %@", nserror);
+                    }
+                }
                 MEGAPhotoBrowserViewController *photoBrowserVC = [node mnz_photoBrowserWithNodes:@[node] folderLink:NO displayMode:DisplayModeFileLink enableMoveToRubbishBin:NO];
                 photoBrowserVC.publicLink = fileLinkURLString;
                 

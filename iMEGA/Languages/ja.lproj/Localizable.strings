@@ -68,6 +68,8 @@
 "tooManyRequest"="要求が多すぎます。お待ちください。";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="あなたのアカウントにログインして下さい。";
+/* Error message when a user attempts to change their email without an active login session. */
+"needToBeLoggedInToCompleteYourEmailChange"="メールの変更を完了するには、ログインする必要があります。現在のメールアドレスで再度ログインしてから、確認リンクをもう一度クリックしてください。";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA の超デカスペース";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -150,6 +152,8 @@
 "alreadyLoggedInAlertTitle"="他のアカウントからすでにログイン中です。";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="同意すれば、現在のアカウントはログアウトされ、全てのオフラインデータは消去されます。このまま続けますか？";
+/* Error shown when the user tries to change his mail to one that is already used */
+"emailAlreadyInUse"="エラー。入力したメールアドレスは既に使用されています。";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="デバイス上にスペースを作って下さい。";
 /* Title for the file link view */
@@ -379,6 +383,10 @@
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="開けるのに使うのは...";
 /* */
+"uploadToMega"="MEGAにアップロード";
+/* Footer shown in the Share Extension telling that a file can be renamed if tapped */
+"tapFileToRename"="名前を変更するにはファイルをタップ";
+/* */
 "sendToContact"="知り合いに送る";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="ファイルがチャットに送信されました";
@@ -510,10 +518,10 @@
 "cameraUploadsEnabled"="カメラアップロードは有効です";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="カメラアップロードが完了しました";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"cameraUploadsUploadingFile"="%1$d/%2$dファイルをアップロード";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"cameraUploadsUploadingFiles"="%1$d/%2$dファイルをアップロード";
+/* Message shown while uploading files. Singular. */
+"cameraUploadsPendingFile"="Upload in progress, 1 file pending";
+/* Message shown while uploading files. Plural. */
+"cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d/%2$dファイル";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -717,17 +725,17 @@
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="イメージとビデオダウンロード";
 /* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
-"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Media captured from within the app";
+"photosTakenAndVideoRecordedFromWithinTheAppHeader"="アプリ内でキャプチャされたメディア";
 /* Section title where you can enable the option 'Save images in gallery' */
 "saveImagesInGallery"="ギャラリーに画像を保存する";
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="ギャラリーに動画を保存する";
 /* Section title where you can enable the option 'Save media in gallery' */
-"saveMediaInGallery"="Save media in gallery";
+"saveMediaInGallery"="ギャラリーにメディアを保存";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="iOS対応の画像と動画をあなたの端末のギャラリーに保存します（注意：画像と動画はオフラインで保存されません）。";
 /* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
-"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Enable this option to save photos taken and videos recorded from within the app in the gallery";
+"photosTakenAndVideoRecordedFromWithinTheAppFooter"="このオプションを有効にすると、アプリ内で撮影した写真や動画をギャラリーに保存できます";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="利用している領域 %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -1277,14 +1285,6 @@
 "attachedFile"="%s添付された:";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s個のファイルを添付しました。";
-/* A summary message when a user sent the information of one contact through the chat. */
-"sharedContact"="この連絡先を共有しました：";
-/* A summary message when a user sent the information of some contacts at once through the chat. */
-"sharedContacts"="これらの連絡先を共有しました：";
-/* A summary message when a user has attached one file into the chat. */
-"uploadedFile"="このファイルをアップロードしました：";
-/* A summary message when a user has attached many files at once into the chat. */
-"uploadedFiles"="これらのファイルをアップロードしました：";
 /* Label in a button that allows to jump to the latest item */
 "jumpToLatest"="最新項目にジャンプ";
 /* Label in a button that allows to jump to the latest message */
@@ -1358,18 +1358,20 @@
 "languageRestartNotification"="言語が変更されました。タップして再起動します。";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGAは安全なクラウドストレージサービスで、50 GB無料ストレージ容量をご提供しております。他のクラウドストレージプロバイダとは異なり、あなたのデータはあなたのクライアント端末によってのみ暗号化され、復号されます（当社では決して行いません）。";
+"generalDescriptionParagraph1"="MEGAは、標準のウェブブラウザを通じてユーザー制御の暗号化クラウドストレージを、モバイル端末用の専用アプリケーションとともにご提供いたします。他のクラウドストレージプロバイダとは異なり、あなたのデータはあなたのクライアント端末によってのみ暗号化され、復号されます（当社では決して行いません）。";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph2"="スマートフォンやタブレットからファイルをアップロードしてから、いつでも、どこでも、どんな端末からでも、ファイルの検索、保存、ダウンロード、ストリーム配信、表示、共有、名前の変更、削除を行うことができます。あなたの連絡先とフォルダを共有し、連絡先の最新情報をリアルタイムで表示します。";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="暗号化プロセスでは、当社はあなたのパスワードにアクセスしたり、それをリセットしたりすることができないため、あなたはパスワードを必ず覚えておく必要があります（復元キーをバックアップしない限り）。そうしないと、保存されたファイルにアクセスできなくなります。";
+/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
+"generalDescriptionVideoChat"="エンドツーエンドのユーザー暗号化MEGAビデオチャットは完全なプライバシー保護を可能にし、2016年からブラウザを通じてご利用いただいております。これはモバイルアプリにも拡張され、複数の端末間でチャット履歴にアクセスできます。またユーザー様は、MEGAクラウドドライブからチャットに簡単にファイルも追加できます。";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="アプリ内では、毎月または年間のサブスクリプションで、ストレージスペースと転送容量をアップグレードすることができます。";
+"generalDescriptionParagraph4"="MEGAは、ボーナスを達成された、ご登録済みの全ユーザー様に50 GBの豊富な無料ストレージをご提供しております。また、上限がはるかに高い有料プランもご用意しております：";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="PRO LITEサブスクリプション：月額4.99ユーロ（4.99米ドル）または年間49.99ユーロ（49.99米ドル）で、200GBのストレージ容量と毎月1TBの転送容量をご提供いたします。\nPRO Iサブスクリプション：月額9.99ユーロ（9.99米ドル）または年間99.99ユーロ（99.99米ドル）で、1TBのストレージ容量と毎月2TBの転送容量をご提供いたします。\nPRO II サブスクリプション：月額19.99ユーロ（19.99米ドル）または年間199.99ユーロ（199.99米ドル）で、4TBのストレージ容量と毎月8TBの転送容量をご提供いたします。\nPRO IIIサブスクリプション：月額29.99ユーロ（29.99米ドル）または年間299.99ユーロ（299.99米ドル）で、8TBのストレージ容量と毎月16TBの転送容量をご提供いたします。";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="詳細については、当社のウェブサイトをご覧ください：https://mega.nz/\nご利用規約：https://mega.nz/terms\nプライバシーポリシー： https://mega.nz/privacy";
+"generalDescriptionParagraph6"="詳細については、当社のウェブサイトをご覧ください：https://mega.nz/\nご利用規約：https://mega.nz/terms\nプライバシーポリシー：https://mega.nz/privacy";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="着信中…";
 /* Notification text body shown when you have missed one audio call */
@@ -1505,34 +1507,52 @@
 /* Title of the notification for a missed call */
 "missedCall"="不在着信";
 /* When an outgoing call of user A with user B had been rejected by user B */
-"callWasRejected"="Call was rejected";
+"callWasRejected"="着信が拒否されました。";
 /* When an active call of user A with user B had cancelled */
-"callWasCancelled"="Call was cancelled";
+"callWasCancelled"="着信が取り消されました。";
 /* When an active call of user A with user B had not answered */
-"callWasNotAnswered"="Call was not answered";
+"callWasNotAnswered"="着信に応答されませんでした";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed";
+"callFailed"="通話に失敗しました";
 /* When an active call of user A with user B had ended */
-"callEnded"="Call ended.";
+"callEnded"="通話が終了しました。";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
-"duration"="Duration: %@";
+"duration"="通話時間：%@";
 /* */
-"xSeconds"="%d seconds";
+"xSeconds"="%d秒";
 /* */
-"1Second"="1 second";
+"1Second"="1秒";
 /* */
-"1Hour"="1 hour";
+"1Hour"="1時間";
 /* */
-"xHours"="%d hours";
+"xHours"="%d時間";
 /* */
-"1Hour1Minute"="1 hour, 1 minute";
+"1Hour1Minute"="1時間、1分";
 /* */
-"1HourxMinutes"="1 hour, %d minutes";
+"1HourxMinutes"="1時間、%d分";
 /* */
-"xHours1Minute"="%d hours, 1 minute";
+"xHours1Minute"="%d時間、1分";
 /* */
-"xHoursxMinutes"="%1$d hours, %2$d minutes";
+"xHoursxMinutes"="%1$d時間、%2$d分";
 /* Alert title shown when users try to stream an unsupported audio/video file */
-"fileNotSupported"="File not supported";
+"fileNotSupported"="ファイルがサポートされていません";
 /* Alert message shown when users try to stream an unsupported audio/video file */
-"message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
+"message_fileNotSupported"="オフライン用に保存し、互換性のあるアプリで開くことができます。";
+/* Item of a menu to forward a message chat to another chatroom */
+"forward"="転送";
+/* Success message shown after forwarding messages to other chats */
+"messagesSent"="Messages sent";
+/* Title of archived chats button */
+"archivedChats"="圧縮されたチャット";
+/* Confirmation message on archive chat dialog for user to confirm. */
+"archiveChatMessage"="この会話を圧縮してもよろしいですか？　";
+/* Confirmation message for user to confirm it will unarchive an archived chat. */
+"unarchiveChatMessage"="この会話を解凍してもよろしいですか？　";
+/* The title of the dialog to unarchive an archived chat. */
+"unarchiveChat"="チャットを解凍";
+/* Title of button to archive chats. */
+"archiveChat"="チャットを圧縮";
+/* Title of flag of archived chats. */
+"archived"="圧縮済み";
+/* Title of empty state view for archived chats. */
+"noArchivedChats"="No Archived Chats";
