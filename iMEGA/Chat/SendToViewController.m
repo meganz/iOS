@@ -242,7 +242,7 @@
         case SendModeCloud:
         case SendModeShareExtension:
             if (self.searchController.isActive) {
-                [self.searchController dismissViewControllerAnimated:NO completion:nil];
+                [self.searchController.searchBar resignFirstResponder];
             }
             break;
             
