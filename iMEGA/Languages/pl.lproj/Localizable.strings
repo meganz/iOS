@@ -1363,6 +1363,8 @@
 "generalDescriptionParagraph2"="Wgrywaj pliki ze swojego telefonu lub tableta, następnie łatwo wyszukuj, przechowuj, pobieraj, udostępniaj i usuwaj w dowonym czasie, z dowolnego urządzenia i z dowolnego miejsca. Udostępniach katalogi swoim znajomym i obserwuj zmiany na żywo.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="Procesz szyfrowania powoduje, że nie mamy dostępu oraz możliwości zresetowania Twojego hasła, dlatego hasło MUSISZ pamiętać (chyba, że posiadasz kopię klucza) lub stracisz dostęp do przechowywanych plików.";
+/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
+"generalDescriptionVideoChat"="Kompleksowy, zaszyfrowany przez użytkownika czat wideo MEGA zapewnia całkowitą prywatność i jest dostępny przez przeglądarkę od 2016 roku. Został rozszerzony na naszą aplikację mobilną, z historią czatów dostępną na wielu urządzeniach. Użytkownicy mogą także łatwo dodawać pliki do czatu ze swojego dysku MEGA w chmurze.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA oferuje hojne 50 GB bezpłatnej przestrzeni dyskowej dla wszystkich zarejestrowanych użytkowników z premiowymi osiągnięciami i oferuje płatne plany o znacznie wyższych limitach:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
