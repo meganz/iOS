@@ -168,11 +168,7 @@
     }
     
     [self loadNearbyImagesFromIndex:self.currentIndex];
-    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
-    UIScrollView *zoomableViewForInitialNode = [self.imageViewsCache objectForKey:node.base64Handle];
-    CGRect targetFrame = zoomableViewForInitialNode.frame;
-    targetFrame.origin.x += self.gapBetweenPages;
-    [self.scrollView scrollRectToVisible:targetFrame animated:NO];
+    self.scrollView.contentOffset = CGPointMake(self.currentIndex * (self.view.frame.size.width + self.gapBetweenPages), 0);
     [self reloadTitle];
     [self airplayDisplayCurrentImage];
     [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
