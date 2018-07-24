@@ -612,21 +612,38 @@ static NSString* const B = @"[B]";
 
 - (NSString *)mnz_coordinatesOfPhotoOrVideo {
     if (self.mnz_isImagePathExtension) {
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:self]]];
-        CGImageSourceRef imageData = CGImageSourceCreateWithData((CFDataRef)data, NULL);
-        if (imageData) {
-            NSDictionary *metadata = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imageData, 0, NULL);
-            
-            CFRelease(imageData);
-            
-            NSDictionary *exifDictionary = [metadata objectForKey:(NSString *)kCGImagePropertyGPSDictionary];
-            if (exifDictionary) {
-                NSNumber *latitude = [exifDictionary objectForKey:@"Latitude"];
-                NSNumber *longitude = [exifDictionary objectForKey:@"Longitude"];
-                if (latitude && longitude) {
-                    return [NSString stringWithFormat:@"%@&%@", latitude, longitude];
+        NSURL *fileURL;
+        if ([self containsString:@"/tmp/"]) {
+            fileURL = [NSURL fileURLWithPath:self];
+        } else {
+            fileURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:self]];
+        }
+        
+        if ([[NSFileManager defaultManager] fileExistsAtPath:fileURL.path]) {
+            NSData *data = [NSData dataWithContentsOfURL:fileURL];
+            if (data) {
+                CGImageSourceRef imageData = CGImageSourceCreateWithData((CFDataRef)data, NULL);
+                if (imageData) {
+                    NSDictionary *metadata = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imageData, 0, NULL);
+                    
+                    CFRelease(imageData);
+                    
+                    NSDictionary *exifDictionary = [metadata objectForKey:(NSString *)kCGImagePropertyGPSDictionary];
+                    if (exifDictionary) {
+                        NSNumber *latitude = [exifDictionary objectForKey:@"Latitude"];
+                        NSNumber *longitude = [exifDictionary objectForKey:@"Longitude"];
+                        if (latitude && longitude) {
+                            return [NSString stringWithFormat:@"%@&%@", latitude, longitude];
+                        }
+                    }
+                } else {
+                    MEGALogError(@"Create image source with data returns nil");
                 }
+            } else {
+                MEGALogError(@"The data object could not be created");
             }
+        } else {
+            MEGALogError(@"The file does not exist or its existence could not be determined. File path %@", fileURL);
         }
     }
     
