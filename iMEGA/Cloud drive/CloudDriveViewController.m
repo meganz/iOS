@@ -487,7 +487,8 @@
 #pragma mark - UIViewControllerPreviewingDelegate
 
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
+    CGPoint rowPoint = [self.view convertPoint:location toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:rowPoint];
     if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
         return nil;
     }
@@ -1661,10 +1662,9 @@
     
     if ([[UIDevice currentDevice] iPadDevice]) {
         actionController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
-        popController.delegate = actionController;
-        popController.sourceView = sender;
-        popController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
+        actionController.popoverPresentationController.delegate = actionController;
+        actionController.popoverPresentationController.sourceView = sender;
+        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
     } else {
         actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }

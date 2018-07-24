@@ -152,6 +152,8 @@
 "alreadyLoggedInAlertTitle"="Hay iniciada una sesión con otra cuenta";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="Si aceptas, se cerrará la sesión actual y los datos en Sin conexión serán eliminados. ¿Quieres continuar?";
+/* Error shown when the user tries to change his mail to one that is already used */
+"emailAlreadyInUse"="Error. Este correo electrónico ya está asociado a una cuenta MEGA.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Tienes que liberar espacio";
 /* Title for the file link view */
@@ -516,10 +518,10 @@
 "cameraUploadsEnabled"="Subidas de la cámara activadas";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Subidas de la cámara completadas";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"cameraUploadsUploadingFile"="Subiendo %1$d de %2$d archivo";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"cameraUploadsUploadingFiles"="Subiendo %1$d de %2$d archivos";
+/* Message shown while uploading files. Singular. */
+"cameraUploadsPendingFile"="Upload in progress, 1 file pending";
+/* Message shown while uploading files. Plural. */
+"cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d de %2$d archivo";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -807,7 +809,7 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Tu Clave de recuperación se utilizará para establecer una nueva contraseña. Por favor, introduce tu nueva contraseña.";
 /*  */
-"yourPasswordHasBeenReset"="Tu contraseña ha sido restablecida con éxito. Por favor accede a tu cuenta.";
+"yourPasswordHasBeenReset"="Has restablecido tu contraseña. Por favor accede a tu cuenta.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Enviar";
 /* The title of the screen to park an account. */
@@ -818,7 +820,7 @@
 /* Caption of the button to proceed */
 "startNewAccount"="Crear una cuenta nueva";
 /*  */
-"yourAccounHasBeenParked"="Tu antigua cuenta se ha aparcado con éxito. Ahora puedes acceder a tu nueva cuenta.";
+"yourAccounHasBeenParked"="Has aparcado tu cuenta antigua. Ahora puedes acceder a tu nueva cuenta.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Nuevo correo electrónico";
 /* Button text for the user to confirm their change of email address. */
@@ -954,7 +956,7 @@
 /* Button title that allows the user change his name */
 "changeName"="Cambiar nombre";
 /* Success message when changing profile information. */
-"youHaveSuccessfullyChangedYourProfile"="Has modificado tu perfil con éxito.";
+"youHaveSuccessfullyChangedYourProfile"="Has modificado tu perfil correctamente.";
 /* Hint text for the first name (Placeholder) */
 "firstName"="Nombre";
 /* Hint text for the last name (Placeholder) */
