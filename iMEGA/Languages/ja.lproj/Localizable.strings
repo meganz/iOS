@@ -152,6 +152,8 @@
 "alreadyLoggedInAlertTitle"="他のアカウントからすでにログイン中です。";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="同意すれば、現在のアカウントはログアウトされ、全てのオフラインデータは消去されます。このまま続けますか？";
+/* Error shown when the user tries to change his mail to one that is already used */
+"emailAlreadyInUse"="エラー。入力したメールアドレスは既に使用されています。";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="デバイス上にスペースを作って下さい。";
 /* Title for the file link view */
@@ -516,10 +518,10 @@
 "cameraUploadsEnabled"="カメラアップロードは有効です";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="カメラアップロードが完了しました";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"cameraUploadsUploadingFile"="%1$d/%2$dファイルをアップロード";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"cameraUploadsUploadingFiles"="%1$d/%2$dファイルをアップロード";
+/* Message shown while uploading files. Singular. */
+"cameraUploadsPendingFile"="Upload in progress, 1 file pending";
+/* Message shown while uploading files. Plural. */
+"cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d/%2$dファイル";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */

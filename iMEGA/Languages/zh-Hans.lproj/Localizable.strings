@@ -152,6 +152,8 @@
 "alreadyLoggedInAlertTitle"="您已经使用其他账户登录了";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="如果您同意，当前的账户将被登出并且所有离线数据将被删除。是否要继续？";
+/* Error shown when the user tries to change his mail to one that is already used */
+"emailAlreadyInUse"="发生错误，此电子信箱已被使用。";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="您的设备内存不足";
 /* Title for the file link view */
@@ -516,10 +518,10 @@
 "cameraUploadsEnabled"="已开启相机上传";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="从相机上传成功";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"cameraUploadsUploadingFile"="正在上传 %1$d 个文件，共%2$d个文件中。";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"cameraUploadsUploadingFiles"="正在上传 %1$d 个文件，共%2$d个文件中。";
+/* Message shown while uploading files. Singular. */
+"cameraUploadsPendingFile"="Upload in progress, 1 file pending";
+/* Message shown while uploading files. Plural. */
+"cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%2$d 个文件中的 %1$d 个文件";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -1356,7 +1358,7 @@
 "languageRestartNotification"="语言设置完成。点击重新启动。";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA提供极为安全的云端存储服务，您可享有50 GB 的免费储存空间。不同于其他云端空间供应商，您的资料仅由用户端设备进行加密和解密，而从不是经由我们加解密。";
+"generalDescriptionParagraph1"="MEGA通过网页浏览器以及移动客户端的应用程序提供由用户控制的加密云储存服务。不同于其他云储存供应商，您的数据仅由用户客户端设备进行加密与解密，而从不是经由我们加解密。";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph2"="从您的智能手机或平板电脑上传您的文件后，随时可从任何设备搜索、储存、下载、串流、查看、共享、重新命名或删除您的文件。并可与您的联系人共享文件夹，随时查看其更新。";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */

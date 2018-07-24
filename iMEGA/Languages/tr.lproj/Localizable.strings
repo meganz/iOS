@@ -152,6 +152,8 @@
 "alreadyLoggedInAlertTitle"="Başka bir hesapla oturum açtınız";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="Kabul ederseniz, mevcut hesaıbınızın oturumu kapatılacak ve tüm Çevrimdışı veriler silinecek. Devam etmek istiyor musunuz?";
+/* Error shown when the user tries to change his mail to one that is already used */
+"emailAlreadyInUse"="Hata. Bu eposta zaten kullanılıyor.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Cihazınızda biraz alan boşaltmanız gerekiyor";
 /* Title for the file link view */
@@ -516,10 +518,10 @@
 "cameraUploadsEnabled"="Kamera Yüklemeleri etkinleştirildi";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Kamera yüklemeleri tamamlandı";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"cameraUploadsUploadingFile"="%2$d dosyadan %1$d tanesi yükleniyor";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"cameraUploadsUploadingFiles"="%2$d dosyadan %1$d tanesi yükleniyor";
+/* Message shown while uploading files. Singular. */
+"cameraUploadsPendingFile"="Upload in progress, 1 file pending";
+/* Message shown while uploading files. Plural. */
+"cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%2$d dosyadan %1$d tanesi";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */

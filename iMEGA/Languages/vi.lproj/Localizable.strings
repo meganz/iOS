@@ -152,6 +152,8 @@
 "alreadyLoggedInAlertTitle"="Bạn đang xác thực một tài khoản khác với tài khoản bạn đang đăng nhập";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="Nếu bạn đồng ý, tài khoản này sẽ bị đăng xuất ra và tất cả tệp tin được lưu Ngoại Tuyến sẽ bị xóa. Bạn có muốn tiếp tục không?";
+/* Error shown when the user tries to change his mail to one that is already used */
+"emailAlreadyInUse"="Lỗi. Địa chỉ email này đã có người sử dụng.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Bạn cần tạo thêm chỗ trống trong thiết bị của bạn";
 /* Title for the file link view */
@@ -516,10 +518,10 @@
 "cameraUploadsEnabled"="Camera Uploads đang được bật";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Camera uploads đã đăng tải xong";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"cameraUploadsUploadingFile"="Đang tải lên %1$d trong tổng %2$d tệp";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"cameraUploadsUploadingFiles"="Đang tải lên %1$d trong tổng %2$d tệp";
+/* Message shown while uploading files. Singular. */
+"cameraUploadsPendingFile"="Upload in progress, 1 file pending";
+/* Message shown while uploading files. Plural. */
+"cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d trong tổng %2$d tệp";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
