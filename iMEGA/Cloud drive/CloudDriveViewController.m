@@ -46,7 +46,6 @@
 
 @interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITableViewDelegate, UITableViewDataSource> {
     BOOL allNodesSelected;
-    BOOL isSwipeEditing;
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
@@ -64,6 +63,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *carbonCopyBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *restoreBarButtonItem;
 
 @property (strong, nonatomic) UISearchController *searchController;
 
@@ -310,6 +310,8 @@
         [cell.thumbnailImageView mnz_imageForNode:node];
         
         cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
+        
+        cell.versionedImageView.hidden = YES;
     }
     
     cell.nodeHandle = [node handle];
@@ -412,6 +414,10 @@
         
         if (self.selectedNodesArray.count == 0) {
             [self setToolbarActionsEnabled:NO];
+        } else {
+            if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
+                [self setToolbarActionsEnabled:YES];
+            }
         }
         
         allNodesSelected = NO;
@@ -424,9 +430,11 @@
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView leadingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    isSwipeEditing = YES;
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
-    self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+    
+    if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
+        return [UISwipeActionsConfiguration configurationWithActions:@[]];
+    }
     
     UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         if ([node mnz_downloadNodeOverwriting:NO]) {
@@ -447,18 +455,31 @@
         return [UISwipeActionsConfiguration configurationWithActions:@[]];
     }
     
-    isSwipeEditing = YES;
-    self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
+    if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
+        MEGANode *restoreNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.restoreHandle];
+        if (restoreNode && ![[MEGASdkManager sharedMEGASdk] isNodeInRubbish:restoreNode]) {
+            UIContextualAction *restoreAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+                [node mnz_restore];
+                [self setTableViewEditing:NO animated:YES];
+            }];
+            restoreAction.image = [UIImage imageNamed:@"restore"];
+            restoreAction.backgroundColor = [UIColor colorWithRed:0 green:0.75 blue:0.65 alpha:1];
+            
+            return [UISwipeActionsConfiguration configurationWithActions:@[restoreAction]];
+        }
+    } else {
+        UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[node] sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+            [self presentViewController:activityVC animated:YES completion:nil];
+            [self setTableViewEditing:NO animated:YES];
+        }];
+        shareAction.image = [UIImage imageNamed:@"shareGray"];
+        shareAction.backgroundColor = [UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1];
+        
+        return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
+    }
     
-    UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:[self.tableView cellForRowAtIndexPath:indexPath]];
-        [self presentViewController:activityVC animated:YES completion:nil];
-        [self setTableViewEditing:NO animated:YES];
-    }];
-    shareAction.image = [UIImage imageNamed:@"shareGray"];
-    shareAction.backgroundColor = [UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1];
-    
-    return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
+    return [UISwipeActionsConfiguration configurationWithActions:@[]];
 }
 
 #pragma clang diagnostic pop
@@ -466,7 +487,8 @@
 #pragma mark - UIViewControllerPreviewingDelegate
 
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
+    CGPoint rowPoint = [self.view convertPoint:location toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:rowPoint];
     if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
         return nil;
     }
@@ -640,7 +662,7 @@
                                                                       style:UIPreviewActionStyleDefault
                                                                     handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
                                                                         CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
-                                                                        UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[cloudDriveVC.parentNode] button:nil];
+                                                                        UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[cloudDriveVC.parentNode] sender:nil];
                                                                         [rootViewController presentViewController:activityVC animated:YES completion:nil];
                                                                     }];
             
@@ -963,7 +985,7 @@
             if (self.displayMode == DisplayModeCloudDrive) {
                 [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.shareBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
             } else { //Rubbish Bin
-                [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
+                [self.toolbar setItems:@[self.restoreBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
             }
             
             break;
@@ -980,6 +1002,16 @@
     self.moveBarButtonItem.enabled = boolValue;
     self.carbonCopyBarButtonItem.enabled = boolValue;
     self.deleteBarButtonItem.enabled = boolValue;
+    self.restoreBarButtonItem.enabled = boolValue;
+    
+    if ((self.displayMode == DisplayModeRubbishBin) && boolValue) {
+        for (MEGANode *n in self.selectedNodesArray) {
+            if (!n.mnz_isRestorable) {
+                self.restoreBarButtonItem.enabled = NO;
+                break;
+            }
+        }
+    }
 }
 
 - (void)toolbarActionsForNodeArray:(NSArray *)nodeArray {
@@ -1159,11 +1191,10 @@
 - (void)updateNavigationBarTitle {
     NSString *navigationTitle;
     if (self.tableView.isEditing) {
-        NSNumber *selectedNodesCount = [NSNumber numberWithUnsignedInteger:self.selectedNodesArray.count];
-        if (selectedNodesCount.unsignedIntegerValue == 0) {
+        if (self.selectedNodesArray.count == 0) {
             navigationTitle = AMLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
         } else {
-            navigationTitle = (selectedNodesCount.integerValue <= 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), selectedNodesCount.unsignedIntegerValue] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), selectedNodesCount.unsignedIntegerValue];
+            navigationTitle = (self.selectedNodesArray.count == 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedNodesArray.count] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedNodesArray.count];
         }
     } else {
         switch (self.displayMode) {
@@ -1435,21 +1466,17 @@
 - (void)setTableViewEditing:(BOOL)editing animated:(BOOL)animated {
     [self.tableView setEditing:editing animated:animated];
 
-    if (!isSwipeEditing) {
-        [self updateNavigationBarTitle];
-    }
+    [self updateNavigationBarTitle];
     
     if (editing) {
-        if (!isSwipeEditing) {
-            self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
-            self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
-            self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
-            [self.toolbar setAlpha:0.0];
-            [self.tabBarController.tabBar addSubview:self.toolbar];
-            [UIView animateWithDuration:0.33f animations:^ {
-                [self.toolbar setAlpha:1.0];
-            }];
-        }
+        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+        self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
+        self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+        [self.toolbar setAlpha:0.0];
+        [self.tabBarController.tabBar addSubview:self.toolbar];
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:1.0];
+        }];
     } else {
         self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
         [self setNavigationBarButtonItems];
@@ -1471,8 +1498,6 @@
         
         [self setToolbarActionsEnabled:NO];
     }
-    
-    isSwipeEditing = NO;
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
@@ -1492,7 +1517,7 @@
 }
 
 - (IBAction)shareAction:(UIBarButtonItem *)sender {
-    UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray button:self.shareBarButtonItem];
+    UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:self.shareBarButtonItem];
     [self presentViewController:activityVC animated:YES completion:nil];
 }
 
@@ -1637,14 +1662,21 @@
     
     if ([[UIDevice currentDevice] iPadDevice]) {
         actionController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
-        popController.delegate = actionController;
-        popController.sourceView = sender;
-        popController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
+        actionController.popoverPresentationController.delegate = actionController;
+        actionController.popoverPresentationController.sourceView = sender;
+        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
     } else {
         actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }
     [self presentViewController:actionController animated:YES completion:nil];
+}
+
+- (IBAction)restoreTouchUpInside:(UIBarButtonItem *)sender {
+    for (MEGANode *node in self.selectedNodesArray) {        
+        [node mnz_restore];
+    }
+    
+    [self setTableViewEditing:NO animated:YES];
 }
 
 #pragma mark - UISearchBarDelegate
@@ -1825,9 +1857,9 @@
     }
 }
 
-#pragma mark - Swipe Delegate
+#pragma mark - MGSwipeTableCellDelegate
 
-- (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction {
+- (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction fromPoint:(CGPoint)point {
     return !self.tableView.isEditing;
 }
 
@@ -1852,33 +1884,48 @@
     
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
-    self.selectedNodesArray = [[NSMutableArray alloc] initWithObjects:node, nil];
     
     if (direction == MGSwipeDirectionLeftToRight && [[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {
-        
-        MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor colorWithRed:0.0 green:0.75 blue:0.65 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-            [self downloadAction:nil];
-            return YES;
-        }];
-        [downloadButton iconTintColor:[UIColor whiteColor]];
-        
-        return @[downloadButton];
+        if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
+            return nil;
+        } else {
+            MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor colorWithRed:0.0 green:0.75 blue:0.65 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+                [node mnz_downloadNodeOverwriting:NO];
+                return YES;
+            }];
+            [downloadButton iconTintColor:[UIColor whiteColor]];
+            
+            return @[downloadButton];
+        }
     } else if (direction == MGSwipeDirectionRightToLeft) {
         if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) {
             return nil;
         }
         
-        MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"shareGray"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:[self.tableView cellForRowAtIndexPath:indexPath]];
-            [self presentViewController:activityVC animated:YES completion:nil];
-            return YES;
-        }];
-        [shareButton iconTintColor:[UIColor whiteColor]];
-        
-        return @[shareButton];
-    } else {
-        return nil;
+        if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
+            MEGANode *restoreNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.restoreHandle];
+            if (restoreNode && ![[MEGASdkManager sharedMEGASdk] isNodeInRubbish:restoreNode]) {
+                MGSwipeButton *restoreButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"restore"] backgroundColor:[UIColor colorWithRed:0.0 green:0.75 blue:0.65 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+                    [node mnz_restore];
+                    return YES;
+                }];
+                [restoreButton iconTintColor:[UIColor whiteColor]];
+                
+                return @[restoreButton];
+            }
+        } else {
+            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"shareGray"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+                UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[node] sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+                [self presentViewController:activityVC animated:YES completion:nil];
+                return YES;
+            }];
+            [shareButton iconTintColor:[UIColor whiteColor]];
+            
+            return @[shareButton];
+        }
     }
+    
+    return nil;
 }
 
 #pragma mark - CustomActionViewControllerDelegate
@@ -1933,6 +1980,10 @@
             
         case MegaNodeActionTypeRemoveSharing:
             [node mnz_removeSharing];
+            break;
+            
+        case MegaNodeActionTypeRestore:
+            [node mnz_restore];
             break;
             
         default:

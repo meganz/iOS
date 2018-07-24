@@ -175,8 +175,9 @@
     unavailableLinkView.titleLabel.text = title;
     unavailableLinkView.textLabel.text = text;
     
+    unavailableLinkView.imageViewCenterYLayoutConstraint.constant = -(self.navigationController.navigationBar.frame.size.height + self.toolbar.frame.size.height);
     if ([[UIDevice currentDevice] iPhone4X] && ![text isEqualToString:@""]) {
-        [unavailableLinkView.imageViewCenterYLayoutConstraint setConstant:-64];
+        unavailableLinkView.imageViewCenterYLayoutConstraint.constant *= 2;
     }
     
     [self.view addSubview:unavailableLinkView];
@@ -294,9 +295,8 @@
     
     if ([[UIDevice currentDevice] iPadDevice]) {
         actionController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
-        popController.delegate = actionController;
-        popController.barButtonItem = sender;
+        actionController.popoverPresentationController.delegate = actionController;
+        actionController.popoverPresentationController.barButtonItem = sender;
     } else {
         actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }

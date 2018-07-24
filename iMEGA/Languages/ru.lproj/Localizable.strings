@@ -68,6 +68,8 @@
 "tooManyRequest"="Слишком много запросов. Пожалуйста, подождите.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Пожалуйста, авторизируйтесь.";
+/* Error message when a user attempts to change their email without an active login session. */
+"needToBeLoggedInToCompleteYourEmailChange"="Чтобы изменить адрес электронной почты, необходимо войти в свою учётную запись. Пожалуйста, снова войдите с текущим адресом электронной почты и затем перейдите по ссылке подтверждения.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="ПРОСТРАНСТВО MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -150,6 +152,8 @@
 "alreadyLoggedInAlertTitle"="Вы зашли под другой учётной записью";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="Если вы согласны, будет произведён выход из учётной записи, и все локальные данные будут удалены. Продолжить?";
+/* Error shown when the user tries to change his mail to one that is already used */
+"emailAlreadyInUse"="Ошибка. Этот адрес уже используется.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Нужно освободить больше места";
 /* Title for the file link view */
@@ -379,6 +383,10 @@
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Открыть в…";
 /* */
+"uploadToMega"="Загрузить на MEGA";
+/* Footer shown in the Share Extension telling that a file can be renamed if tapped */
+"tapFileToRename"="Коснитесь файла для переименования";
+/* */
 "sendToContact"="Послать контакту";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="Файл отправлен в чат";
@@ -510,10 +518,10 @@
 "cameraUploadsEnabled"="Закачки с камеры включены!";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Загрузки из камеры завершены";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"cameraUploadsUploadingFile"="Загрузка файлов: %1$d из %2$d";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"cameraUploadsUploadingFiles"="Загрузка файлов: %1$d из %2$d";
+/* Message shown while uploading files. Singular. */
+"cameraUploadsPendingFile"="Upload in progress, 1 file pending";
+/* Message shown while uploading files. Plural. */
+"cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="файлы: %1$d из %2$d";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -717,17 +725,17 @@
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Загрузка изображений и видео";
 /* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
-"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Media captured from within the app";
+"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Медиа, снятое в приложении";
 /* Section title where you can enable the option 'Save images in gallery' */
 "saveImagesInGallery"="Сохранить изображения в галерею";
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Сохранить видео в галерею";
 /* Section title where you can enable the option 'Save media in gallery' */
-"saveMediaInGallery"="Save media in gallery";
+"saveMediaInGallery"="Сохранять медиа в галерее";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Сохранить совместимые с iOS изображения и видео в галерее устройства (Примечание: изображения и видео не сохранятся локально).";
 /* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
-"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Enable this option to save photos taken and videos recorded from within the app in the gallery";
+"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Включите эту опцию, чтобы сохранять в галерею фото и видео, снятые в приложении";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Сейчас занимает %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -1072,7 +1080,7 @@
 /* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
 "disable"="Отключить";
 /* Conversations section */
-"conversations"="Диалоги";
+"conversations"="Разговоры";
 /* A button on a dialog which invites a contact to join MEGA. */
 "invite"="Пригласить";
 /* A log message in a chat to indicate that the message has been deleted by the user. */
@@ -1277,14 +1285,6 @@
 "attachedFile"="Прикреплено: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="Прикреплено файлов: %s.";
-/* A summary message when a user sent the information of one contact through the chat. */
-"sharedContact"="Поделился контактом:";
-/* A summary message when a user sent the information of some contacts at once through the chat. */
-"sharedContacts"="Поделился контактами:";
-/* A summary message when a user has attached one file into the chat. */
-"uploadedFile"="Загрузил файл:";
-/* A summary message when a user has attached many files at once into the chat. */
-"uploadedFiles"="Загрузил файлы:";
 /* Label in a button that allows to jump to the latest item */
 "jumpToLatest"="К последнему";
 /* Label in a button that allows to jump to the latest message */
@@ -1358,13 +1358,15 @@
 "languageRestartNotification"="Язык изменён. Коснитесь для перезапуска.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA — это поставщик услуг безопасного облачного хранения данных с 50 ГБ бесплатного свободного пространства. В отличие от других облачных хранилищ, здесь данные шифруют и расшифровывают только ваши устройства, а не мы.";
+"generalDescriptionParagraph1"="MEGA предоставляет услуги зашифрованного облачного хранения данных, управляемого пользователем, в обычных веб-браузерах и специальных приложениях для мобильных устройств. В отличие от других облачных хранилищ, здесь данные шифруют и расшифровывают только ваши устройства, а не мы.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph2"="Загружайте файлы со своего смартфона или планшета, и ищите, храните, скачивайте, транслируйте, просматривайте, раздавайте, переименовывайте или удаляйте файлы когда угодно, с любого устройства, где угодно. Делитесь папками со своими контактами и следите за изменениями в реальном времени.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="Процесс шифрования означает, что мы не можем получить доступ или сбросить пароль, поэтому вы ДОЛЖНЫ его запомнить (если у вас нет резервной копии ключа восстановления), иначе вы потеряете доступ к сохранённым файлам.";
+/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
+"generalDescriptionVideoChat"="Видеочат MEGA со сквозным пользовательским шифрованием обеспечивает полную конфиденциальность и доступен в браузере с 2016 года. После добавления чата в наше мобильное приложение его история стала доступна на нескольких устройствах. Пользователи также могут легко добавлять файлы в чат из своего облачного диска MEGA.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="В приложении вы можете расширить место для хранения и квоту передач с месячной или годовой подпиской.";
+"generalDescriptionParagraph4"="MEGA предлагает до 50 ГБ хранилища бесплатно всем зарегистрированным пользователям c бонусными достижениями, а также платные подписки с гораздо более высокими лимитами:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="Подписка PRO LITE: 4.99 € (4.99 $ США) в месяц или 49.99 € (49.99 $ США) в год предоставляет 200 ГБ дискового пространства и 1 ТБ трафика в месяц.\nПодписка PRO I: 9.99 € (9.99 $ США) в месяц или 99.99 € (99.99 $ США) в год предоставляет 1 ТБ дискового пространства и 2 ТБ трафика в месяц.\nПодписка PRO II: 19.99 € (19.99 $ США) в месяц или 199.99 € (199.99 $ США) в год предоставляет 4 ТБ дискового пространства и 8 ТБ трафика в месяц.\nПодписка PRO III: 29.99 € (29.99 $ США) в месяц или 299.99 € (299.99 $ США) в год предоставляет 8 ТБ дискового пространства и 16 TB ТБ трафика в месяц.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
@@ -1505,34 +1507,52 @@
 /* Title of the notification for a missed call */
 "missedCall"="Пропущенный звонок";
 /* When an outgoing call of user A with user B had been rejected by user B */
-"callWasRejected"="Call was rejected";
+"callWasRejected"="Вызов был отклонён";
 /* When an active call of user A with user B had cancelled */
-"callWasCancelled"="Call was cancelled";
+"callWasCancelled"="Вызов был отменён";
 /* When an active call of user A with user B had not answered */
-"callWasNotAnswered"="Call was not answered";
+"callWasNotAnswered"="Вызов был пропущен";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed";
+"callFailed"="Вызов не удался";
 /* When an active call of user A with user B had ended */
-"callEnded"="Call ended.";
+"callEnded"="Вызов окончен.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
-"duration"="Duration: %@";
+"duration"="Длительность: %@";
 /* */
-"xSeconds"="%d seconds";
+"xSeconds"="%d сек.";
 /* */
-"1Second"="1 second";
+"1Second"="1 сек.";
 /* */
-"1Hour"="1 hour";
+"1Hour"="1 час";
 /* */
-"xHours"="%d hours";
+"xHours"="%d ч.";
 /* */
-"1Hour1Minute"="1 hour, 1 minute";
+"1Hour1Minute"="1 час, 1 минута";
 /* */
-"1HourxMinutes"="1 hour, %d minutes";
+"1HourxMinutes"="1 ч., %d мин.";
 /* */
-"xHours1Minute"="%d hours, 1 minute";
+"xHours1Minute"="%d ч., 1 мин.";
 /* */
-"xHoursxMinutes"="%1$d hours, %2$d minutes";
+"xHoursxMinutes"="%1$d ч., %2$d мин.";
 /* Alert title shown when users try to stream an unsupported audio/video file */
-"fileNotSupported"="File not supported";
+"fileNotSupported"="Файл не поддерживается";
 /* Alert message shown when users try to stream an unsupported audio/video file */
-"message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
+"message_fileNotSupported"="Вы можете сохранить его локально и открыть в совместимом приложении.";
+/* Item of a menu to forward a message chat to another chatroom */
+"forward"="Вперёд";
+/* Success message shown after forwarding messages to other chats */
+"messagesSent"="Messages sent";
+/* Title of archived chats button */
+"archivedChats"="Архивные чаты";
+/* Confirmation message on archive chat dialog for user to confirm. */
+"archiveChatMessage"="Вы действительно хотите архивировать этот разговор?";
+/* Confirmation message for user to confirm it will unarchive an archived chat. */
+"unarchiveChatMessage"="Вы действительно хотите разархивировать этот разговор?";
+/* The title of the dialog to unarchive an archived chat. */
+"unarchiveChat"="Разархивация чата";
+/* Title of button to archive chats. */
+"archiveChat"="Архивация чата";
+/* Title of flag of archived chats. */
+"archived"="Архивировано";
+/* Title of empty state view for archived chats. */
+"noArchivedChats"="No Archived Chats";

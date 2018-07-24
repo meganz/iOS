@@ -2,4 +2,6 @@
 
 @interface MEGANavigationController : UINavigationController
 
+- (void)addCancelButton;
+
 @end
