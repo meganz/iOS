@@ -674,7 +674,7 @@
             break;
     }
     
-    if (self.searchController.isActive) {
+    if (self.searchController.searchBar.isFirstResponder) {
         self.searchController.searchBar.text = @"";
     }
     
@@ -715,6 +715,10 @@
             
         default:
             break;
+    }
+    
+    if (self.searchController.searchBar.isFirstResponder) {
+        self.searchController.searchBar.text = @"";
     }
     
     if ((self.selectedUsersMutableArray.count + self.selectedGroupChatsMutableArray.count) == 0 && self.itemListVC) {

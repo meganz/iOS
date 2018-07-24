@@ -1183,7 +1183,7 @@
                 [self.selectedUsersArray addObject:user];
                 self.createGroupBarButtonItem.enabled = (self.selectedUsersArray.count > 1);
                 [self addUserToList:user];
-                if (self.searchController.isActive) {
+                if (self.searchController.searchBar.isFirstResponder) {
                     self.searchController.searchBar.text = @"";
                 }
                 return;
@@ -1230,6 +1230,13 @@
                 self.createGroupBarButtonItem.enabled = NO;
             }
         }
+        
+        if (self.contactsMode != (ContactsModeChatAddParticipant|ContactsModeChatAttachParticipant|ContactsModeChatCreateGroup)) {
+            if (self.searchController.searchBar.isFirstResponder) {
+                self.searchController.searchBar.text = @"";
+            }
+        }
+        
         return;
     }
 }
