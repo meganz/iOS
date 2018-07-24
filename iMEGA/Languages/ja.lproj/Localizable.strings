@@ -1363,6 +1363,8 @@
 "generalDescriptionParagraph2"="スマートフォンやタブレットからファイルをアップロードしてから、いつでも、どこでも、どんな端末からでも、ファイルの検索、保存、ダウンロード、ストリーム配信、表示、共有、名前の変更、削除を行うことができます。あなたの連絡先とフォルダを共有し、連絡先の最新情報をリアルタイムで表示します。";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="暗号化プロセスでは、当社はあなたのパスワードにアクセスしたり、それをリセットしたりすることができないため、あなたはパスワードを必ず覚えておく必要があります（復元キーをバックアップしない限り）。そうしないと、保存されたファイルにアクセスできなくなります。";
+/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
+"generalDescriptionVideoChat"="エンドツーエンドのユーザー暗号化MEGAビデオチャットは完全なプライバシー保護を可能にし、2016年からブラウザを通じてご利用いただいております。これはモバイルアプリにも拡張され、複数の端末間でチャット履歴にアクセスできます。またユーザー様は、MEGAクラウドドライブからチャットに簡単にファイルも追加できます。";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGAは、ボーナスを達成された、ご登録済みの全ユーザー様に50 GBの豊富な無料ストレージをご提供しております。また、上限がはるかに高い有料プランもご用意しております：";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */

@@ -1363,6 +1363,8 @@
 "generalDescriptionParagraph2"="העלאה קבצים מהטלפון או מהטאבלט שלך, לאחר מכן תוכל לחפש, לאחסן, להוריד, לשדר, לצפות, לשתף, לשנות שם או למחוק את הקבצים שלך בכל זמן, מכל מכשיר, בכל מקום. שתף תיקיות עם אנשי הקשר שלך וראה את ההעלאות שלהם בזמן אמת.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="תהליך ההצפנה הוא כזה שאנו לא יכול לגשת או לאפס את הסיסמא שלך ולכן עליך לזכור אותה (אלא אם כן יש לך מפתח שחזור מגובה) או שתאבד גישה לכל המידע שלך.";
+/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
+"generalDescriptionVideoChat"="End-to-end user-encrypted MEGA video chat allows for total privacy, and has been available through the browser since 2016. It has been extended to our mobile app, with chat history accessible across multiple devices. Users can also easily add files to a chat from their MEGA Cloud Drive.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA offers a generous 50 GB free storage for all registered users with bonus achievements, and offers paid plans with much higher limits:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
