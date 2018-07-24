@@ -487,7 +487,8 @@
 #pragma mark - UIViewControllerPreviewingDelegate
 
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
+    CGPoint rowPoint = [self.view convertPoint:location toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:rowPoint];
     if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
         return nil;
     }
