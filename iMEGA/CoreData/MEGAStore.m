@@ -36,7 +36,7 @@ static MEGAStore *_megaStore = nil;
 
 - (void)configureMEGAStore {
     _managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
-    NSURL *storeURL = [[self applicationSupportDirectory] URLByAppendingPathComponent:@"MEGACD.sqlite"];
+    NSURL *storeURL = [self storeURL];
     
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_managedObjectModel];
@@ -44,7 +44,7 @@ static MEGAStore *_megaStore = nil;
                               NSInferMappingModelAutomaticallyOption : @YES };
     
     if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
-        MEGALogError(@"Unresolved error %@, %@", error, [error userInfo]);
+        MEGALogError(@"Unresolved error %@, %@", error, error.userInfo);
         abort();
     }
     
@@ -54,8 +54,29 @@ static MEGAStore *_megaStore = nil;
     }
 }
 
-- (NSURL *)applicationSupportDirectory {
-    return [[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil];
+- (NSURL *)storeURL {
+    NSString *dbName = @"MEGACD.sqlite";
+    NSError *error;
+    NSFileManager *fileManager = NSFileManager.defaultManager;
+    NSURL *groupSupportURL = [[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"GroupSupport"];
+    if (![fileManager fileExistsAtPath:groupSupportURL.path]) {
+        if (![fileManager createDirectoryAtURL:groupSupportURL withIntermediateDirectories:NO attributes:nil error:&error]) {
+            MEGALogError(@"Error creating GroupSupport directory in the shared sandbox: %@", error);
+            abort();
+        }
+    }
+    
+    NSURL *applicationSupportDirectoryURL = [fileManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+    NSURL *oldStoreURL = [applicationSupportDirectoryURL URLByAppendingPathComponent:dbName];
+    NSURL *newStoreURL = [groupSupportURL URLByAppendingPathComponent:dbName];
+
+    if ([fileManager fileExistsAtPath:oldStoreURL.path]) {
+        if (![fileManager moveItemAtURL:oldStoreURL toURL:newStoreURL error:&error]) {
+            MEGALogError(@"Error moving MEGACD.sqlite to the GroupSupport directory in the shared sandbox: %@", error);
+        }
+    }
+    
+    return newStoreURL;
 }
 
 - (void)saveContext {

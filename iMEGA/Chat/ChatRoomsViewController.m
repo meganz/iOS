@@ -23,7 +23,7 @@
 #import "GroupChatDetailsViewController.h"
 #import "MessagesViewController.h"
 
-@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate>
+@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate>
 
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
@@ -31,11 +31,15 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
 
 @property (nonatomic, strong) MEGAChatListItemList *chatListItemList;
+@property (nonatomic, strong) MEGAChatListItemList *archivedChatListItemList;
 @property (nonatomic, strong) NSMutableArray *chatListItemArray;
 @property (nonatomic, strong) NSMutableArray *searchChatListItemArray;
 @property (nonatomic, strong) NSMutableDictionary *chatIdIndexPathDictionary;
 
 @property (strong, nonatomic) UISearchController *searchController;
+
+@property (assign, nonatomic) BOOL isArchivedChatsRowVisible;
+@property (assign, nonatomic) BOOL isScrollAtTop;
 
 @end
 
@@ -79,7 +83,21 @@
     [self customNavigationBarLabel];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-        self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
+        
+        switch (self.chatRoomsType) {
+            case ChatRoomsTypeDefault:
+                self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] chatListItems];
+                self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+                self.addBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
+                break;
+                
+            case ChatRoomsTypeArchived:
+                self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+                self.navigationItem.rightBarButtonItem = nil;
+                break;
+        }
+        
+
         if (self.chatListItemList.size) {
             [self reorderList];
             
@@ -92,7 +110,6 @@
             self.tableView.tableHeaderView = nil;
         }
         
-        self.addBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
     } else {
         self.addBarButtonItem.enabled = NO;
         self.tableView.tableHeaderView = nil;
@@ -110,6 +127,7 @@
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     
     [self.chatListItemArray removeAllObjects];
+    [self.chatIdIndexPathDictionary removeAllObjects];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -156,7 +174,15 @@
                 text = AMLocalizedString(@"noInternetConnection",  @"Text shown on the app when you don't have connection to the internet or when you have lost it");
             }
         } else {
-            text = AMLocalizedString(@"noConversations", @"Empty Conversations section");
+            switch (self.chatRoomsType) {
+                case ChatRoomsTypeDefault:
+                    text = AMLocalizedString(@"noConversations", @"Empty Conversations section");
+                    break;
+                    
+                case ChatRoomsTypeArchived:
+                    text = AMLocalizedString(@"noArchivedChats", @"Title of empty state view for archived chats.");
+                    break;
+            }
         }
     }
     
@@ -170,7 +196,14 @@
         text = @"";
     } else {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-            text = AMLocalizedString(@"noConversationsDescription", @"Empty Conversations description");
+            switch (self.chatRoomsType) {
+                case ChatRoomsTypeDefault:
+                    text = AMLocalizedString(@"noConversationsDescription", @"Empty Conversations description");
+                    break;
+                    
+                case ChatRoomsTypeArchived:
+                    break;
+            }
         }
     }
     
@@ -189,7 +222,13 @@
                 return nil;
             }
         } else {
-            return [UIImage imageNamed:@"chatEmptyState"];
+            switch (self.chatRoomsType) {
+                case ChatRoomsTypeDefault:
+                    return [UIImage imageNamed:@"chatEmptyState"];
+                    
+                case ChatRoomsTypeArchived:
+                    return [UIImage imageNamed:@"chatsArchivedEmptyState"];
+            }
         }
     } else {
         return [UIImage imageNamed:@"noInternetEmptyState"];
@@ -202,7 +241,13 @@
         if (![[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
             text = AMLocalizedString(@"enable", @"Text button shown when the chat is disabled and if tapped the chat will be enabled");
         } else if (!self.searchController.isActive) {
-            text = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
+            switch (self.chatRoomsType) {
+                case ChatRoomsTypeDefault:
+                    text = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
+                    
+                case ChatRoomsTypeArchived:
+                    return nil;
+            }
         }
     }
     
@@ -300,7 +345,8 @@
 }
 
 - (void)insertRowByChatListItem:(MEGAChatListItem *)item {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    NSInteger section = self.isArchivedChatsRowVisible ? 1 : 0;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:section];
     if (self.searchController.isActive) {
         [self.searchChatListItemArray insertObject:item atIndex:indexPath.row];
     } else {
@@ -335,9 +381,10 @@
 - (void)updateChatIdIndexPathDictionary {
     [self.chatIdIndexPathDictionary removeAllObjects];
     NSInteger i = 0;
+    NSInteger section = self.isArchivedChatsRowVisible ? 1 : 0;
     NSArray *tempArray = self.searchController.isActive ? self.searchChatListItemArray : self.chatListItemArray;
     for (MEGAChatListItem *item in tempArray) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:section];
         [self.chatIdIndexPathDictionary setObject:indexPath forKey:@(item.chatId)];
         i++;
     }
@@ -545,19 +592,28 @@
 }
 
 - (void)customNavigationBarLabel {
-    NSString *onlineStatusString = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] onlineStatus]];
-    
-    if (onlineStatusString) {
-        UILabel *label = [Helper customNavigationBarLabelWithTitle:AMLocalizedString(@"chat", @"Chat section header") subtitle:onlineStatusString];
-        label.adjustsFontSizeToFitWidth = YES;
-        label.minimumScaleFactor = 0.8f;
-        label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
-        label.userInteractionEnabled = YES;
-        label.gestureRecognizers = @[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatRoomTitleDidTap)]];
-        [self.navigationItem setTitleView:label];
-    } else {
-        self.navigationItem.titleView = nil;
-        self.navigationItem.title = AMLocalizedString(@"chat", @"Chat section header");
+    switch (self.chatRoomsType) {
+        case ChatRoomsTypeDefault: {
+            NSString *onlineStatusString = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] onlineStatus]];
+            
+            if (onlineStatusString) {
+                UILabel *label = [Helper customNavigationBarLabelWithTitle:AMLocalizedString(@"chat", @"Chat section header") subtitle:onlineStatusString];
+                label.adjustsFontSizeToFitWidth = YES;
+                label.minimumScaleFactor = 0.8f;
+                label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
+                label.userInteractionEnabled = YES;
+                label.gestureRecognizers = @[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatRoomTitleDidTap)]];
+                [self.navigationItem setTitleView:label];
+            } else {
+                self.navigationItem.titleView = nil;
+                self.navigationItem.title = AMLocalizedString(@"chat", @"Chat section header");
+            }
+        }
+            break;
+            
+        case ChatRoomsTypeArchived:
+            self.navigationItem.title = AMLocalizedString(@"archivedChats", @"Title of archived chats button");
+            break;
     }
 }
 
@@ -673,7 +729,81 @@
         actionAuthor = [chatRoom peerFullnameByHandle:item.lastMessageSender];
     }
     
-    return actionAuthor;
+    if (!actionAuthor) {
+        actionAuthor = [[[MEGAStore shareInstance] fetchUserWithUserHandle:item.lastMessageSender] fullName];
+    }
+    
+    return actionAuthor ? actionAuthor : @"?";
+}
+
+- (NSInteger)numberOfChatRooms {
+    NSInteger numberOfChatRooms = 0;
+    if (self.searchController.isActive) {
+        numberOfChatRooms = self.searchChatListItemArray.count;
+    } else {
+        numberOfChatRooms = self.chatListItemArray.count;
+    }
+    
+    return numberOfChatRooms;
+}
+
+- (void)showChatRoomAtIndexPath:(NSIndexPath *)indexPath {
+    MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
+    MEGAChatRoom *chatRoom         = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
+    
+    MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
+    messagesVC.chatRoom                = chatRoom;
+    
+    [self.navigationController pushViewController:messagesVC animated:YES];
+}
+
+- (UITableViewCell *)archivedChatRoomCellForIndexPath:(NSIndexPath *)indexPath {
+    ChatRoomCell *cell = (ChatRoomCell *)[self chatRoomCellForIndexPath:indexPath];
+    cell.unreadView.hidden = NO;
+    cell.unreadView.backgroundColor = UIColor.mnz_gray777777;
+    cell.unreadView.layer.cornerRadius = 4;
+    NSArray *constraints = cell.unreadView.constraints;
+    for (NSLayoutConstraint *constraint in constraints) {
+        if (constraint.firstAttribute == NSLayoutAttributeHeight) {
+            constraint.constant = 20;
+        }
+        if (constraint.firstAttribute == NSLayoutAttributeWidth) {
+            constraint.constant = 14;
+        }
+    }
+    cell.unreadCount.text = AMLocalizedString(@"archived", @"Title of flag of archived chats.").uppercaseString;
+
+    return cell;
+}
+
+- (UITableViewCell *)chatRoomCellForIndexPath:(NSIndexPath *)indexPath {
+    ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"chatRoomCell" forIndexPath:indexPath];
+    
+    MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
+    
+    MEGALogInfo(@"%@", chatListItem);
+    
+    cell.chatTitle.text = chatListItem.title;
+    [self updateCell:cell forChatListItem:chatListItem];
+    
+    if (chatListItem.isGroup) {
+        cell.onlineStatusView.hidden = YES;
+        UIImage *avatar = [UIImage imageForName:chatListItem.title.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
+        
+        cell.avatarImageView.image = avatar;
+    } else {
+        [cell.avatarImageView mnz_setImageForUserHandle:chatListItem.peerHandle];
+        cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:chatListItem.peerHandle]];
+        cell.onlineStatusView.hidden             = NO;
+    }
+    
+    [self updateCell:cell forUnreadCountChange:chatListItem.unreadCount];
+    
+    if (@available(iOS 11.0, *)) {
+        cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
+    }
+    
+    return cell;
 }
 
 #pragma mark - IBActions
@@ -735,97 +865,154 @@
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    NSInteger numberOfRows = 0;
-    if (self.searchController.isActive) {
-        numberOfRows = self.searchChatListItemArray.count;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (self.isArchivedChatsRowVisible) {
+        return 2;
     } else {
-        numberOfRows = self.chatListItemArray.count;
+        return 1;
     }
-    
-    return numberOfRows;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+
+    if (self.isArchivedChatsRowVisible) {
+        if (section == 0) {
+            return 1;
+        } else {
+            return [self numberOfChatRooms];
+        }
+    } else {
+        return [self numberOfChatRooms];
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.isArchivedChatsRowVisible) {
+        if (indexPath.section == 0) {
+            return 44;
+        } else {
+            return 60;
+        }
+    } else {
+        return 60;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"chatRoomCell" forIndexPath:indexPath];
-    
-    MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
-    
-    MEGALogInfo(@"%@", chatListItem);
-    
-    cell.chatTitle.text = chatListItem.title;
-    [self updateCell:cell forChatListItem:chatListItem];
-    
-    if (chatListItem.isGroup) {
-        cell.onlineStatusView.hidden = YES;
-        UIImage *avatar = [UIImage imageForName:chatListItem.title.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
-        
-        cell.avatarImageView.image = avatar;
-    } else {
-        [cell.avatarImageView mnz_setImageForUserHandle:chatListItem.peerHandle];
-        cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:chatListItem.peerHandle]];
-        cell.onlineStatusView.hidden             = NO;
+    switch (self.chatRoomsType) {
+        case ChatRoomsTypeDefault: {
+            if (self.isArchivedChatsRowVisible) {
+                if (indexPath.section == 0) {
+                    ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"archivedChatsCell" forIndexPath:indexPath];
+                    cell.avatarImageView.image = [UIImage imageNamed:@"archiveChat"];
+                    cell.chatTitle.text = AMLocalizedString(@"archivedChats", @"Title of archived chats button");
+                    cell.chatLastMessage.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.archivedChatListItemList.size];
+                    return cell;
+                } else {
+                    return [self chatRoomCellForIndexPath:indexPath];
+                }
+            } else {
+                return [self chatRoomCellForIndexPath:indexPath];
+            }
+        }
+            
+        case ChatRoomsTypeArchived:
+            return [self archivedChatRoomCellForIndexPath:indexPath];
     }
-    
-    [self updateCell:cell forUnreadCountChange:chatListItem.unreadCount];
-    
-    if (@available(iOS 11.0, *)) {
-        cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
-    }
-    
-    return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
-    MEGAChatRoom *chatRoom         = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
-    
-    MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-    messagesVC.chatRoom                = chatRoom;
-    
-    [self.navigationController pushViewController:messagesVC animated:YES];
+    if (self.isArchivedChatsRowVisible) {
+        if (indexPath.section == 0) {
+            ChatRoomsViewController *archivedChatRooms = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatRoomsViewControllerID"];
+            [self.navigationController pushViewController:archivedChatRooms animated:YES];
+            archivedChatRooms.chatRoomsType = ChatRoomsTypeArchived;
+        } else {
+            [self showChatRoomAtIndexPath:indexPath];
+        }
+    } else {
+        [self showChatRoomAtIndexPath:indexPath];
+    }
 }
 
-- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {    
-    MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
-    
-    //TODO: While the "More" action only shows "Info" on a UIAlertController with UIAlertControllerStyleActionSheet style, it will replaced by the "Info" action itself
-    UITableViewRowAction *infoAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-        [self presentGroupOrContactDetailsForChatListItem:chatListItem];
-    }];
-    infoAction.backgroundColor = [UIColor mnz_grayCCCCCC];
-    
-    UITableViewRowAction *deleteAction = nil;
-    if (chatListItem.isGroup) {
-        deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:AMLocalizedString(@"leave", @"A button label. The button allows the user to leave the conversation.")  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-            UIAlertController *leaveAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"youWillNoLongerHaveAccessToThisConversation", @"Alert text that explains what means confirming the action 'Leave'") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-            [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                [self.tableView setEditing:NO];
-            }]];
-            
-            [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"leave", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                [[MEGASdkManager sharedMEGAChatSdk] leaveChat:chatListItem.chatId];
-                [self.tableView setEditing:NO];
-            }]];
-            
-            leaveAlertController.modalPresentationStyle = UIModalPresentationPopover;
-            CGRect deleteRect = [self.tableView rectForRowAtIndexPath:indexPath];
-            leaveAlertController.popoverPresentationController.sourceRect = deleteRect;
-            leaveAlertController.popoverPresentationController.sourceView = self.view;
-            
-            [self presentViewController:leaveAlertController animated:YES completion:nil];
-        }];
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.isArchivedChatsRowVisible && indexPath.section == 0) {
+        return NO;
     } else {
-        deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:AMLocalizedString(@"close", @"A button label. The button allows the user to close the conversation.")  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-            //TODO: When possible, allow deleting a 1on1 conversation.
-        }];
+        return YES;
     }
-    deleteAction.backgroundColor = [UIColor mnz_redFF333A];
+}
+
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return chatListItem.isGroup ? @[deleteAction, infoAction] : @[infoAction];
+    MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
+
+    switch (self.chatRoomsType) {
+        case ChatRoomsTypeDefault: {
+            
+            //TODO: While the "More" action only shows "Info" on a UIAlertController with UIAlertControllerStyleActionSheet style, it will replaced by the "Info" action itself
+            UITableViewRowAction *infoAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+                [self presentGroupOrContactDetailsForChatListItem:chatListItem];
+            }];
+            infoAction.backgroundColor = UIColor.mnz_grayCCCCCC;
+            
+            UITableViewRowAction *archiveAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:AMLocalizedString(@"archiveChat", @"Title of button to archive chats.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+                [[MEGASdkManager sharedMEGAChatSdk] archiveChat:chatListItem.chatId archive:YES];
+            }];
+            archiveAction.backgroundColor = UIColor.mnz_green00BFA5;
+
+            return @[archiveAction, infoAction];
+        }
+            
+        case ChatRoomsTypeArchived: {
+            UITableViewRowAction *unarchiveAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+                [[MEGASdkManager sharedMEGAChatSdk] archiveChat:chatListItem.chatId archive:NO];
+            }];
+            unarchiveAction.backgroundColor = UIColor.mnz_green00BFA5;
+            
+            return @[unarchiveAction];
+        }
+    }
+}
+
+#pragma mark - UIScrolViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    if (self.chatRoomsType == ChatRoomsTypeDefault) {
+        if (scrollView.contentOffset.y > 0 && self.isArchivedChatsRowVisible) {
+            self.isScrollAtTop = NO;
+            self.isArchivedChatsRowVisible = NO;
+            [self.tableView beginUpdates];
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView endUpdates];
+            [self updateChatIdIndexPathDictionary];
+        }
+        
+        if (self.isScrollAtTop && scrollView.contentOffset.y < 0 && !self.isArchivedChatsRowVisible) {
+            self.isArchivedChatsRowVisible = YES;
+            [self.tableView beginUpdates];
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationTop];
+            [self.tableView endUpdates];
+            [self updateChatIdIndexPathDictionary];
+        }
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {      // called when scroll view grinds to a halt
+    if (self.chatRoomsType == ChatRoomsTypeDefault) {
+        self.isScrollAtTop = scrollView.contentOffset.y > 0 ? NO : YES;
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (self.chatRoomsType == ChatRoomsTypeDefault) {
+        if (scrollView.contentOffset.y > 0) {
+            self.isScrollAtTop = NO;
+        }
+    }
 }
 
 #pragma mark - UISearchBarDelegate
@@ -885,6 +1072,16 @@
         [self insertRowByChatListItem:item];
     } else {
         NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(item.chatId)];
+        
+        if (!indexPath && [item hasChangedForType:MEGAChatListItemChangeTypeArchived]) {
+            [self insertRowByChatListItem:item];
+            self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+            if (self.isArchivedChatsRowVisible) {
+                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+            }
+            return;
+        }
+        
         if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
             ChatRoomCell *cell = (ChatRoomCell *)[self.tableView cellForRowAtIndexPath:indexPath];
             switch (item.changes) {
@@ -914,6 +1111,14 @@
                     if (self.chatListItemArray.count > 0) {
                         [self.chatListItemArray replaceObjectAtIndex:indexPath.row withObject:item];
                         [self updateCell:cell forChatListItem:item];
+                    }
+                    break;
+                    
+                case MEGAChatListItemChangeTypeArchived:
+                    [self deleteRowByChatId:item.chatId];
+                    self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+                    if (self.isArchivedChatsRowVisible) {
+                        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
                     }
                     break;
                     
@@ -955,7 +1160,7 @@
     if (chatId == ~(uint64_t)0 && newState == MEGAChatConnectionOnline) {
         // Now it's safe to trigger a reordering of the list:
         self.chatListItemArray = [NSMutableArray new];
-        self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
+        self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] chatListItems];
         [self reorderList];
         [self.tableView reloadData];
     }

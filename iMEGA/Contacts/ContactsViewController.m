@@ -249,7 +249,6 @@
                                                               nil]
                                                     forState:UIControlStateNormal];
             self.navigationItem.rightBarButtonItems = @[self.createGroupBarButtonItem];
-            self.createGroupBarButtonItem.enabled = NO;
             self.contactsMode = ContactsModeChatNamingGroup;
             [self.tableView setEditing:NO animated:YES];
             break;
@@ -867,8 +866,7 @@
 }
 
 - (IBAction)groupNameCanged:(UITextField *)sender {
-    self.insertedGroupName = sender.text;
-    self.createGroupBarButtonItem.enabled = self.insertedGroupName.length > 0;
+    self.insertedGroupName = sender.text;    
 }
 
 #pragma mark - UITableViewDataSource

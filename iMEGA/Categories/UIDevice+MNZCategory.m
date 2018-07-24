@@ -244,7 +244,7 @@ static const NSUInteger MAX_BUFFER_32MB = 33554432; // 32 MB
     } else {
         displaySize = screenWidth;
     }
-    displaySize -= 92.0f;
+    displaySize -= 104.0f;
     if (displaySize > kMaxBubbleWidth) {
         displaySize = kMaxBubbleWidth;
     }

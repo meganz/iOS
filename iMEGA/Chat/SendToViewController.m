@@ -9,6 +9,10 @@
 #import "Helper.h"
 #import "MEGAChatAttachNodeRequestDelegate.h"
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
+#import "MEGAChatMessage+MNZCategory.h"
+#import "MEGACopyRequestDelegate.h"
+#import "MEGACreateFolderRequestDelegate.h"
+#import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MEGAUser+MNZCategory.h"
@@ -39,6 +43,10 @@
 
 @property (nonatomic) NSUInteger pendingAttachNodeOperations;
 
+@property (nonatomic) NSUInteger pendingForwardOperations;
+@property (nonatomic) NSMutableArray<NSNumber *> *chatIdNumbers;
+@property (nonatomic) NSMutableArray<MEGAChatMessage *> *sentMessages;
+
 @end
 
 @implementation SendToViewController
@@ -51,7 +59,19 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
-    self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+    switch (self.sendMode) {
+        case SendModeCloud:
+        case SendModeForward:
+            self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+
+            break;
+            
+        case SendModeShareExtension:
+            self.navigationItem.leftBarButtonItem = nil;
+
+            break;
+    }
+    
     self.sendBarButtonItem.title = AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
     [self.sendBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.f]} forState:UIControlStateNormal];
     
@@ -185,6 +205,127 @@
     [SVProgressHUD showSuccessWithStatus:status];
 }
 
+- (void)completeForwardingMessage:(MEGAChatMessage *)message toChat:(uint64_t)chatId {
+    @synchronized(self.sentMessages) {
+        if (chatId == self.sourceChatId && message.type != MEGAChatMessageTypeAttachment) {
+            [self.sentMessages addObject:message];
+        }
+        
+        if (--self.pendingForwardOperations == 0) {
+            [self dismissViewControllerAnimated:YES completion:^{
+                self.completion(self.chatIdNumbers, self.sentMessages);
+            }];
+        }
+    }
+}
+
+- (void)forwardMessage:(MEGAChatMessage *)message {
+    switch (message.type) {
+        case MEGAChatMessageTypeNormal:
+        case MEGAChatMessageTypeContainsMeta: {
+            for (NSNumber *chatIdNumber in self.chatIdNumbers) {
+                uint64_t chatId = chatIdNumber.unsignedLongLongValue;
+                MEGAChatMessage *newMessage = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:chatId message:message.content];
+                [self completeForwardingMessage:newMessage toChat:chatId];
+            }
+            
+            break;
+        }
+        case MEGAChatMessageTypeContact: {
+            for (NSNumber *chatIdNumber in self.chatIdNumbers) {
+                uint64_t chatId = chatIdNumber.unsignedLongLongValue;
+                MEGAChatMessage *newMessage = [[MEGASdkManager sharedMEGAChatSdk] forwardContactFromChat:message.chatRoom.chatId messageId:message.messageId targetChatId:chatId];
+                [self completeForwardingMessage:newMessage toChat:chatId];
+            }
+            
+            break;
+        }
+            
+        case MEGAChatMessageTypeAttachment: {
+            MEGACopyRequestDelegate *copyRequestDelegate = [[MEGACopyRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                [self attachNode:request.nodeHandle];
+            }];
+            
+            MEGANode *node = [message.nodeList mnz_nodesArrayFromNodeList].firstObject;
+            if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] == MEGAShareTypeAccessOwner) {
+                [self attachNode:node.handle];
+            } else {
+                MEGANode *remoteNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
+                if (remoteNode && [[MEGASdkManager sharedMEGASdk] accessLevelForNode:remoteNode] == MEGAShareTypeAccessOwner) {
+                    [self attachNode:remoteNode.handle];
+                } else {
+                    MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
+                    if (myChatFilesNode) {
+                        [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:myChatFilesNode delegate:copyRequestDelegate];
+                    } else {
+                        MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                            MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+                            [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:myChatFilesNode delegate:copyRequestDelegate];
+                        }];
+                        [[MEGASdkManager sharedMEGASdk] createFolderWithName:@"My chat files" parent:[[MEGASdkManager sharedMEGASdk] rootNode] delegate:createFolderRequestDelegate];
+                    }
+                }
+            }
+            
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
+- (void)attachNode:(uint64_t)handle {
+    MEGAChatAttachNodeRequestDelegate *chatAttachNodeRequestDelegate = [[MEGAChatAttachNodeRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest *request, MEGAChatError *error) {
+        [self completeForwardingMessage:request.chatMessage toChat:request.chatHandle];
+    }];
+    
+    for (NSNumber *chatIdNumber in self.chatIdNumbers) {
+        uint64_t chatId = chatIdNumber.unsignedLongLongValue;
+        [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatId node:handle delegate:chatAttachNodeRequestDelegate];
+    }
+}
+
+- (NSString *)participantsNamesForChatRoom:(MEGAChatRoom *)chatRoom {
+    NSString *participantsNames = @"";
+    for (NSUInteger i = 0; i < chatRoom.peerCount; i++) {
+        NSString *peerName;
+        NSString *peerFirstname = [chatRoom peerFirstnameAtIndex:i];
+        if (peerFirstname.length > 0 && ![[peerFirstname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]) {
+            peerName = peerFirstname;
+        } else {
+            NSString *peerLastname = [chatRoom peerLastnameAtIndex:i];
+            if (peerLastname.length > 0 && ![[peerLastname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]) {
+                peerName = peerLastname;
+            }
+        }
+        
+        if (!peerName.length) {
+            peerName = [chatRoom peerEmailByHandle:[chatRoom peerHandleAtIndex:i]];
+        }
+        
+        if (chatRoom.peerCount == 1 || (i + 1) == chatRoom.peerCount) {
+            participantsNames = [participantsNames stringByAppendingString:peerName ? peerName : @"Unknown user"];
+        } else {
+            participantsNames = [participantsNames stringByAppendingString:[NSString stringWithFormat:@"%@, ", peerName]];
+        }
+    }
+    
+    NSString *myName = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
+    BOOL isNameEmpty = [[myName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
+    if (isNameEmpty) {
+        myName = [[MEGASdkManager sharedMEGAChatSdk] myEmail];;
+    }
+    myName = [NSString stringWithFormat:@"%@ (%@)", myName, AMLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")];
+    if (chatRoom.peerCount) {
+        participantsNames = [participantsNames stringByAppendingString:[NSString stringWithFormat:@", %@", myName]];
+    } else {
+        participantsNames = myName;
+    }
+    
+    return participantsNames;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
@@ -193,42 +334,101 @@
 
 - (IBAction)sendAction:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        self.pendingAttachNodeOperations = (self.nodes.count * self.selectedGroupChatsMutableArray.count) + (self.nodes.count * self.selectedUsersMutableArray.count);
-        
-        MEGAChatAttachNodeRequestDelegate *chatAttachNodeRequestDelegate = [[MEGAChatAttachNodeRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
-            if (--self.pendingAttachNodeOperations == 0) {
-                [self showSuccessMessage];
-            }
-        }];
-        
-        for (MEGANode *node in self.nodes) {
-            for (MEGAChatListItem *chatListItem in self.selectedGroupChatsMutableArray) {
-                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatListItem.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
-            }
-            
-            for (MEGAUser *user in self.selectedUsersMutableArray) {
-                MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
-                if (chatRoom) {
-                    [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
-                } else {
-                    MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
-                    MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
-                    [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
-                    MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
-                        [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
-                    }];
-                    [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
+        switch (self.sendMode) {
+            case SendModeCloud: {
+                self.pendingAttachNodeOperations = (self.nodes.count * self.selectedGroupChatsMutableArray.count) + (self.nodes.count * self.selectedUsersMutableArray.count);
+                
+                MEGAChatAttachNodeRequestDelegate *chatAttachNodeRequestDelegate = [[MEGAChatAttachNodeRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest *request, MEGAChatError *error) {
+                    if (--self.pendingAttachNodeOperations == 0) {
+                        [self showSuccessMessage];
+                    }
+                }];
+                
+                for (MEGANode *node in self.nodes) {
+                    for (MEGAChatListItem *chatListItem in self.selectedGroupChatsMutableArray) {
+                        [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatListItem.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
+                    }
+                    
+                    for (MEGAUser *user in self.selectedUsersMutableArray) {
+                        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
+                        if (chatRoom) {
+                            [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
+                        } else {
+                            MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
+                            MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
+                            [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
+                            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
+                            }];
+                            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
+                        }
+                    }
                 }
+                
+                if (self.searchController.isActive) {
+                    self.searchController.active = NO;
+                }
+                
+                [self dismissViewControllerAnimated:YES completion:nil];
+                
+                break;
+            }
+                
+            case SendModeShareExtension:
+                [self.sendToViewControllerDelegate sendToChats:self.selectedGroupChatsMutableArray andUsers:self.selectedUsersMutableArray];
+                
+                break;
+                
+            case SendModeForward: {
+                NSUInteger destinationCount = self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count;
+                self.pendingForwardOperations = self.messages.count * destinationCount;
+                self.sentMessages = [[NSMutableArray<MEGAChatMessage *> alloc] initWithCapacity:self.messages.count];
+                
+                for (MEGAChatMessage *message in self.messages) {
+                    self.chatIdNumbers = [[NSMutableArray<NSNumber *> alloc] init];
+                    
+                    for (MEGAChatListItem *chatListItem in self.selectedGroupChatsMutableArray) {
+                        @synchronized(self.chatIdNumbers) {
+                            [self.chatIdNumbers addObject:@(chatListItem.chatId)];
+                            if (self.chatIdNumbers.count == destinationCount) {
+                                [self forwardMessage:message];
+                            }
+                        }
+                    }
+                    
+                    for (MEGAUser *user in self.selectedUsersMutableArray) {
+                        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
+                        if (chatRoom) {
+                            @synchronized(self.chatIdNumbers) {
+                                [self.chatIdNumbers addObject:@(chatRoom.chatId)];
+                                if (self.chatIdNumbers.count == destinationCount) {
+                                    [self forwardMessage:message];
+                                }
+                            }
+                        } else {
+                            MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
+                            MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
+                            [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
+                            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                                @synchronized(self.chatIdNumbers) {
+                                    [self.chatIdNumbers addObject:@(chatRoom.chatId)];
+                                    if (self.chatIdNumbers.count == destinationCount) {
+                                        [self forwardMessage:message];
+                                    }
+                                }
+                            }];
+                            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
+                        }
+                    }
+                }
+                
+                if (self.searchController.isActive) {
+                    self.searchController.active = NO;
+                }
+                
+                break;
             }
         }
-        
-        
-        
-        if (self.searchController.isActive) {
-            self.searchController.active = NO;
-        }
-        
-        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
@@ -286,9 +486,7 @@
             cell.chatTitle.text = chatListItem.title;
             
             MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
-            NSString *participants = AMLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat");
-            NSString *xParticipants = [NSString stringWithFormat:@"%lu %@", (unsigned long)chatRoom.peerCount, participants];
-            cell.chatLastMessage.text = xParticipants;
+            cell.chatLastMessage.text = [self participantsNamesForChatRoom:chatRoom];
             cell.chatLastTime.hidden = YES;
             
             if (@available(iOS 11.0, *)) {
