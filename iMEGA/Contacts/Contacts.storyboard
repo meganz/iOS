@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="CSm-b8-KOc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="CSm-b8-KOc">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -32,7 +32,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="nKV-wF-xCm">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="contactCell" rowHeight="60" id="pNm-oN-god" customClass="ContactTableViewCell">
@@ -467,7 +467,7 @@
                             <constraint firstItem="pPF-c3-Klm" firstAttribute="top" secondItem="iIe-3e-qN1" secondAttribute="top" id="bLS-JT-93s"/>
                             <constraint firstItem="nEj-Ji-K4x" firstAttribute="leading" secondItem="iIe-3e-qN1" secondAttribute="leading" id="dd5-aN-TAn"/>
                             <constraint firstItem="nKV-wF-xCm" firstAttribute="top" secondItem="nEj-Ji-K4x" secondAttribute="bottom" id="xxg-ZM-dpF"/>
-                            <constraint firstItem="iIe-3e-qN1" firstAttribute="bottom" secondItem="nKV-wF-xCm" secondAttribute="bottom" id="zxS-j1-oeF"/>
+                            <constraint firstAttribute="bottom" secondItem="nKV-wF-xCm" secondAttribute="bottom" id="zxS-j1-oeF"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="iIe-3e-qN1"/>
                     </view>
@@ -500,14 +500,14 @@
                         <outlet property="deleteBarButtonItem" destination="wgy-rg-Fjg" id="idp-L0-R7m"/>
                         <outlet property="editBarButtonItem" destination="EF0-GJ-VNE" id="UsC-Ca-lDB"/>
                         <outlet property="insertAnEmailBarButtonItem" destination="EYv-wx-auj" id="SJD-wz-lKl"/>
+                        <outlet property="itemListView" destination="nEj-Ji-K4x" id="xz1-HU-QcL"/>
+                        <outlet property="itemListViewHeightConstraint" destination="M3c-hM-0jP" id="5eu-kt-8N3"/>
                         <outlet property="searchFixedView" destination="pPF-c3-Klm" id="9fI-UB-bBc"/>
                         <outlet property="searchFixedViewHeightConstraint" destination="HZ6-gj-bzt" id="eRw-r1-yzB"/>
                         <outlet property="selectAllBarButtonItem" destination="Llm-yt-C3F" id="EGI-Ug-yJ5"/>
                         <outlet property="shareFolderWithBarButtonItem" destination="43b-TZ-Eh5" id="0tk-cU-sUm"/>
                         <outlet property="tableView" destination="nKV-wF-xCm" id="70Y-aH-yDi"/>
                         <outlet property="toolbar" destination="jvh-Sx-iEq" id="8PY-cj-jej"/>
-                        <outlet property="usersListView" destination="nEj-Ji-K4x" id="TNg-12-Y7h"/>
-                        <outlet property="usersListViewHeightConstraint" destination="M3c-hM-0jP" id="gru-3F-b7o"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R5H-yC-IzG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -584,14 +584,14 @@
                             <rect key="frame" x="0.0" y="0.0" width="240" height="1"/>
                             <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="1" id="Ajn-gQ-nLh"/>
+                                <constraint firstAttribute="height" constant="0.5" id="Ajn-gQ-nLh"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nDv-QW-Upt">
                             <rect key="frame" x="0.0" y="22" width="240" height="1"/>
                             <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="1" id="Xqy-yP-FRD"/>
+                                <constraint firstAttribute="height" constant="0.5" id="Xqy-yP-FRD"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -1782,10 +1782,10 @@
             </objects>
             <point key="canvasLocation" x="3258" y="-858"/>
         </scene>
-        <!--Users List View Controller-->
+        <!--Item List View Controller-->
         <scene sceneID="bW5-Dn-jZa">
             <objects>
-                <viewController storyboardIdentifier="UsersListViewControllerID" id="HSA-9V-kLf" customClass="UsersListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ItemListViewControllerID" id="HSA-9V-kLf" customClass="ItemListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ire-th-B1l">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1800,7 +1800,7 @@
                                     <inset key="sectionInset" minX="10" minY="5" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="UserCollectionViewCellID" id="rYt-IJ-bA7" customClass="UserCollectionViewCell">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ItemCollectionViewCellID" id="rYt-IJ-bA7" customClass="ItemCollectionViewCell">
                                         <rect key="frame" x="10" y="7.5" width="80" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">

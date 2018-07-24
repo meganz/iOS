@@ -7,7 +7,7 @@
     
     if (selected) {
         UIView *view = [[UIView alloc] init];
-        view.backgroundColor = UIColor.whiteColor;
+        view.backgroundColor = UIColor.clearColor;
         view.userInteractionEnabled = NO;
         self.selectedBackgroundView = view;
         
@@ -20,7 +20,7 @@
     
     if (highlighted) {
         UIView *view = [[UIView alloc] init];
-        view.backgroundColor = UIColor.whiteColor;
+        view.backgroundColor = UIColor.clearColor;
         self.selectedBackgroundView = view;
         
         self.lineView.backgroundColor = UIColor.mnz_grayCCCCCC;
