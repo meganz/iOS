@@ -98,8 +98,7 @@
             contactView.detailLabel.text = size;
         } else { // MEGAChatMessageTypeContact
             if (self.message.usersCount == 1) {
-                NSString *userNameInitial = [NSString stringWithFormat:@"%@", [[self.message userNameAtIndex:0].uppercaseString substringToIndex:1]];
-                [contactView.avatarImage mnz_setImageForChatSharedContactHandle:[self.message userHandleAtIndex:0] initial:userNameInitial];
+                [contactView.avatarImage mnz_setImageForUserHandle:[self.message userHandleAtIndex:0]];
                 contactView.titleLabel.text = [self.message userNameAtIndex:0];
                 contactView.detailLabel.text = [self.message userEmailAtIndex:0];
             } else {
