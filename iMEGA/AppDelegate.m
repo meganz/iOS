@@ -1799,13 +1799,12 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
         }
         
-        if (([user handle] == [[[MEGASdkManager sharedMEGASdk] myUser] handle])) {
+        if (user.handle == [MEGASdkManager sharedMEGASdk].myUser.handle) {
             if (user.isOwnChange == 0) { //If the change is external
                 if ([user hasChangedType:MEGAUserChangeTypeAvatar]) { //If you have changed your avatar, remove the old and request the new one
                     NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
                     NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
-                    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
-                    if (fileExists) {
+                    if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
                         [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:nil];
                     }
                     [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
@@ -1827,6 +1826,14 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
         } else {
             if (user.changes) {
+                if ([user hasChangedType:MEGAUserChangeTypeAvatar]) {
+                    NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
+                    NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
+                    if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
+                        [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:nil];
+                    }
+                    [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
+                }
                 if ([user hasChangedType:MEGAUserChangeTypeFirstname]) {
                     [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
                 }
