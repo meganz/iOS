@@ -5,6 +5,8 @@
 #import "MEGAAssetOperation.h"
 #import "MEGACreateFolderRequestDelegate.h"
 
+#import "MEGAStore.h"
+
 @interface MEGAAssetsPickerController () <CTAssetsPickerControllerDelegate>
 
 @property (nonatomic) MEGANode *parentNode;
@@ -100,6 +102,7 @@
             operationQueue.qualityOfService = NSOperationQualityOfServiceUtility;
             operationQueue.maxConcurrentOperationCount = 1;
             for (PHAsset *asset in assets) {
+                [[MEGAStore shareInstance] insertUploadTransferWithLocalIdentifier:asset.localIdentifier];
                 MEGAAssetOperation *assetOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:self.parentNode automatically:NO];
                 [operationQueue addOperation:assetOperation];
             }

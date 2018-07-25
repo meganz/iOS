@@ -10,6 +10,9 @@
 
 #import "TransferTableViewCell.h"
 
+#import "MEGAStore.h"
+#import <Photos/Photos.h>
+
 @interface TransfersViewController () <UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGATransferDelegate, TransferTableViewCellDelegate> {
     BOOL areTransfersPaused;
 }
@@ -23,6 +26,8 @@
 
 @property (strong, nonatomic) NSMutableDictionary *transfersMutableDictionary;
 @property (strong, nonatomic) NSMutableArray *transfers;
+
+@property (nonatomic) PHFetchResult *uploadTransfersQueued;
 
 @end
 
@@ -47,6 +52,7 @@
     [super viewWillAppear:animated];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCoreDataChangeNotification:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
     
     self.navigationItem.title = AMLocalizedString(@"transfers", @"Transfers");
     
@@ -74,7 +80,8 @@
     [super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
+
     [[MEGASdkManager sharedMEGASdk] removeMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGATransferDelegate:self];
     
@@ -99,20 +106,29 @@
     if (indexPath.row > self.transfers.count) {
         return nil;
     }
-    MEGATransfer *transfer = [self.transfers objectAtIndex:indexPath.row];
+    
+    id transferItem = [self.transfers objectAtIndex:indexPath.row];
     
     TransferTableViewCell *cell;
-    switch (transfer.state) {
-        case MEGATransferStateActive:
-            cell = [self.tableView dequeueReusableCellWithIdentifier:@"activeTransferCell" forIndexPath:indexPath];
-            break;
-            
-        default:
-            cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferCell" forIndexPath:indexPath];
-            break;
+
+    if ([transferItem isKindOfClass:MEGATransfer.class]) {
+        MEGATransfer *transfer = (MEGATransfer *)transferItem;
+        switch (transfer.state) {
+            case MEGATransferStateActive:
+                cell = [self.tableView dequeueReusableCellWithIdentifier:@"activeTransferCell" forIndexPath:indexPath];
+                break;
+                
+            default:
+                cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferCell" forIndexPath:indexPath];
+                break;
+        }
+        [cell configureCellForTransfer:transfer delegate:self];
+
+    } else {
+        PHAsset *asset = (PHAsset *)transferItem;
+        cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferCell" forIndexPath:indexPath];
+        [cell configureCellForAsset:asset delegate:self];
     }
-    
-    [cell configureCellForTransfer:transfer delegate:self];
     
     return cell;
 }
@@ -156,6 +172,8 @@
 }
 
 - (void)getAllTransfers {
+    [self getQueuedUploadTransfers];
+
     MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] transfers];
     if ([transferList.size integerValue] != 0) {
         [self mergeTransfers:transferList];
@@ -168,6 +186,8 @@
 }
 
 - (void)getDownloadTransfers {
+    self.uploadTransfersQueued = nil;
+
     MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] downloadTransfers];
     if ([transferList.size integerValue] != 0) {
         [self mergeTransfers:transferList];
@@ -180,6 +200,8 @@
 }
 
 - (void)getUploadTransfers {
+    [self getQueuedUploadTransfers];
+
     MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] uploadTransfers];
     if ([transferList.size integerValue] != 0) {
         [self mergeTransfers:transferList];
@@ -189,7 +211,6 @@
     if ([transferList.size integerValue] != 0) {
         [self mergeTransfers:transferList];
     }
-    
 }
 
 - (void)mergeTransfers:(MEGATransferList *)transferList {
@@ -225,7 +246,19 @@
     [self.transfers addObjectsFromArray:activeTransfers];
     [self.transfers addObjectsFromArray:inactiveTransfers];
     
+    for (int i = 0; i < self.uploadTransfersQueued.count; i++) {
+        [self.transfers addObject:[self.uploadTransfersQueued objectAtIndex:i]];
+    }
     [self.tableView reloadData];
+}
+
+- (void)getQueuedUploadTransfers {
+    NSArray *uploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
+    NSMutableArray *localIdentifiers = [NSMutableArray new];
+    for (MOUploadTransfer *uploadTransfer in uploadTransfers) {
+        [localIdentifiers addObject:uploadTransfer.localIdentifier];
+    }
+    self.uploadTransfersQueued = [PHAsset fetchAssetsWithLocalIdentifiers:localIdentifiers options:nil];
 }
 
 - (void)cleanTransfersList {
@@ -255,12 +288,18 @@
     if ([transferList.size integerValue] != 0) {
         [[MEGASdkManager sharedMEGASdkFolder] cancelTransfersForDirection:direction delegate:self];
     }
+    
+    if (direction == 1) {
+        [[MEGAStore shareInstance] removeAllUploadTransfers];
+    }
 }
 
 - (NSIndexPath *)indexPathForTransfer:(MEGATransfer *)transfer {
     for (int i = 0; i < self.transfers.count; i++) {
-        if (transfer.nodeHandle == [[self.transfers objectAtIndex:i] nodeHandle]) {
-            return [NSIndexPath indexPathForRow:i inSection:0];
+        if ([[self.transfers objectAtIndex:i] isKindOfClass:MEGATransfer.class]) {
+            if (transfer.nodeHandle == [[self.transfers objectAtIndex:i] nodeHandle]) {
+                return [NSIndexPath indexPathForRow:i inSection:0];
+            }
         }
     }
     return nil;
@@ -276,6 +315,14 @@
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
     self.pauseBarButtonItem.enabled = boolValue;
     self.cancelBarButtonItem.enabled = boolValue;
+}
+
+- (void)handleCoreDataChangeNotification:(NSNotification *)notification {
+    for (NSManagedObject *managedObject in [notification.userInfo objectForKey:NSDeletedObjectsKey]) {
+        if ([managedObject isKindOfClass:MOUploadTransfer.class]) {
+            [self reloadView];
+        }
+    }
 }
 
 #pragma mark - IBActions

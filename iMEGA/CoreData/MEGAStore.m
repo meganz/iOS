@@ -310,4 +310,54 @@ static MEGAStore *_megaStore = nil;
     return array.firstObject;
 }
 
+#pragma mark - MOUploadTransfer entity
+
+- (void)insertUploadTransferWithLocalIdentifier:(NSString *)localIdentifier {
+    MOUploadTransfer *mOUploadTransfer = [NSEntityDescription insertNewObjectForEntityForName:@"MOUploadTransfer" inManagedObjectContext:self.managedObjectContext];
+    mOUploadTransfer.localIdentifier = localIdentifier;
+    
+    MEGALogDebug(@"Save context - insert MOUploadTransfer with local identifier %@", localIdentifier);
+    
+    [self saveContext];
+}
+
+- (void)deleteUploadTransferWithLocalIdentifier:(NSString *)localIdentifier {
+    MOUploadTransfer *mOUploadTransfer = [self fetchTransferUpdateWithLocalIdentifier:localIdentifier];
+    
+    if (mOUploadTransfer) {
+        [self.managedObjectContext deleteObject:mOUploadTransfer];
+        
+        MEGALogDebug(@"Save context - remove MOUploadTransfer with local identifier %@", mOUploadTransfer.localIdentifier);
+    }
+    
+    [self saveContext];
+}
+
+- (NSArray<MOUploadTransfer *> *)fetchUploadTransfers {
+    NSFetchRequest *request = [MOUploadTransfer fetchRequest];
+    
+    NSError *error;
+    
+    return [self.managedObjectContext executeFetchRequest:request error:&error];
+}
+
+- (MOUploadTransfer *)fetchTransferUpdateWithLocalIdentifier:(NSString *)localIdentifier {
+    NSFetchRequest *request = [MOUploadTransfer fetchRequest];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"localIdentifier == %@", localIdentifier];
+    request.predicate = predicate;
+    
+    NSError *error;
+    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    return array.firstObject;
+}
+
+- (void)removeAllUploadTransfers {
+    NSArray<MOUploadTransfer *> *uploadTransfers = [self fetchUploadTransfers];
+    for (MOUploadTransfer *uploadTransfer in uploadTransfers) {
+        [self deleteUploadTransferWithLocalIdentifier:uploadTransfer.localIdentifier];
+    }
+}
+
 @end

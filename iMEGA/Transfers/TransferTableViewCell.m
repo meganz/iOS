@@ -5,10 +5,24 @@
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGASdkManager.h"
 #import "UIImageView+MNZCategory.h"
+#import <Photos/Photos.h>
+#import "MEGAStore.h"
 
 @interface TransferTableViewCell ()
 
+@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *arrowImageView;
+@property (weak, nonatomic) IBOutlet UILabel *infoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *percentageLabel;
+@property (weak, nonatomic) IBOutlet UILabel *speedLabel;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UIButton *pauseButton;
+@property (weak, nonatomic) IBOutlet UIView *lineView;
+
 @property (assign, nonatomic) BOOL isPaused;
+@property (strong, nonatomic) MEGATransfer *transfer;
+@property (strong, nonatomic) PHAsset *asset;
 
 @end
 
@@ -70,6 +84,28 @@
     [self configureCellState];
 }
 
+- (void)configureCellForAsset:(PHAsset *)asset delegate:(id<TransferTableViewCellDelegate>)delegate {
+    self.delegate = delegate;
+    self.asset = asset;
+    
+    PHAssetResource *assetResource = [PHAssetResource assetResourcesForAsset:self.asset].firstObject;
+    self.nameLabel.text = assetResource.originalFilename;
+
+    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+    options.version = PHImageRequestOptionsVersionCurrent;
+    options.networkAccessAllowed = YES;
+    
+    [[PHImageManager defaultManager] requestImageForAsset:self.asset targetSize:self.iconImageView.frame.size contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        if (result) {
+            self.iconImageView.image = result;
+        } else {
+            [self.iconImageView mnz_setImageForExtension:assetResource.originalFilename.pathExtension];
+        }
+    }];
+    
+    [self queuedStateLayout];
+}
+
 - (void)updatePercentAndSpeedLabelsForTransfer:(MEGATransfer *)transfer {
     self.transfer = transfer;
     
@@ -95,6 +131,7 @@
     switch (self.transfer.state) {
             
         case MEGATransferStateActive:
+            self.pauseButton.hidden = NO;
             [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
             [self updatePercentAndSpeedLabelsForTransfer:self.transfer];
             break;
@@ -123,6 +160,7 @@
 }
 
 - (void)inactiveStateLayout {
+    self.pauseButton.hidden = NO;
     [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
     self.percentageLabel.textColor = UIColor.mnz_gray666666;
     
@@ -133,16 +171,28 @@
     }
 }
 
+- (void)queuedStateLayout {
+    self.pauseButton.hidden = YES;
+    self.percentageLabel.textColor = UIColor.mnz_gray666666;
+    self.arrowImageView.image = [Helper uploadQueuedTransferImage];
+    self.percentageLabel.text = AMLocalizedString(@"queued", @"Queued");
+}
+
 #pragma mark - IBActions
 
 - (IBAction)cancelTransfer:(id)sender {
-    if ([[MEGASdkManager sharedMEGASdk] transferByTag:self.transfer.tag] != nil) {
-        [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:self.transfer.tag];
-    } else {
-        if ([[MEGASdkManager sharedMEGASdkFolder] transferByTag:self.transfer.tag] != nil) {
-            [[MEGASdkManager sharedMEGASdkFolder] cancelTransferByTag:self.transfer.tag];
+    if (self.transfer) {
+        if ([[MEGASdkManager sharedMEGASdk] transferByTag:self.transfer.tag] != nil) {
+            [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:self.transfer.tag];
+        } else {
+            if ([[MEGASdkManager sharedMEGASdkFolder] transferByTag:self.transfer.tag] != nil) {
+                [[MEGASdkManager sharedMEGASdkFolder] cancelTransferByTag:self.transfer.tag];
+            }
         }
+    } else if (self.asset) {
+        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:self.asset.localIdentifier];
     }
+    
 }
 
 - (IBAction)pauseTransfer:(id)sender {
