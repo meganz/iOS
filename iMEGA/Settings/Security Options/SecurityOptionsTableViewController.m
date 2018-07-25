@@ -8,8 +8,7 @@
 #import "MEGASdkManager.h"
 
 #import "ChangePasswordViewController.h"
-#import "DisablingTwoFactorAuthenticationTableViewController.h"
-#import "EnableTwoFactorAuthenticationTableViewController.h"
+#import "SetupTwoFactorAuthenticationTableViewController.h"
 #import "QRSettingsTableViewController.h"
 
 @interface SecurityOptionsTableViewController () <UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate>
@@ -143,13 +142,8 @@
             if (indexPath.row == 0) {
                 [self pushChangeViewControllerType:ChangeTypePassword];
             } else {
-                if (self.isTwoFactorAuthenticationEnabled) {
-                    DisablingTwoFactorAuthenticationTableViewController *disablingTwoFactorAuthenticationTVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"DisablingTwoFactorAuthenticationTableViewControllerID"];
-                    [self.navigationController pushViewController:disablingTwoFactorAuthenticationTVC animated:YES];
-                } else {
-                    EnableTwoFactorAuthenticationTableViewController *enableTwoFactorAuthenticationTVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"EnableTwoFactorAuthenticationTableViewControllerID"];
-                    [self.navigationController pushViewController:enableTwoFactorAuthenticationTVC animated:YES];
-                }
+                SetupTwoFactorAuthenticationTableViewController *disablingTwoFactorAuthenticationTVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"SetupTwoFactorAuthenticationTableViewControllerID"];
+                [self.navigationController pushViewController:disablingTwoFactorAuthenticationTVC animated:YES];
             }
             break;
         }
