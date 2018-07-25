@@ -8,6 +8,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGATransfer+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+#import "MEGAStore.h"
 
 @interface MEGAAssetOperation () <MEGATransferDelegate, MEGARequestDelegate> {
     BOOL executing;
@@ -115,6 +116,7 @@
     } node:^(MEGANode *node) {
         if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == self.parentNode.handle) {
             MEGALogDebug(@"The asset exists in MEGA in the parent folder");
+            [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:self.phasset.localIdentifier];
             [self completeOperation];
             if ([[[CameraUploads syncManager] assetsOperationQueue] operationCount] == 1 && self.automatically) {
                 [[CameraUploads syncManager] resetOperationQueue];
@@ -123,6 +125,7 @@
             [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:self.parentNode delegate:self];
         }
     } error:^(NSError *error) {
+        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:self.phasset.localIdentifier];
         [self manageError:error];
     }];
     [processAsset prepare];
@@ -225,6 +228,10 @@
 
 #pragma mark - MEGARequestDelegate
 
+- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
+    [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:self.phasset.localIdentifier];
+}
+
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         return;
@@ -245,6 +252,10 @@
 }
 
 #pragma mark - MEGATransferDelegate
+
+- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+    [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:self.phasset.localIdentifier];
+}
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     if ([self isCancelled]) {

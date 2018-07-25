@@ -5,6 +5,7 @@
 #import "MOUser.h"
 #import "MOChatDraft+CoreDataProperties.h"
 #import "MOMediaDestination+CoreDataProperties.h"
+#import "MOUploadTransfer+CoreDataProperties.h"
 
 @interface MEGAStore : NSObject
 
@@ -42,5 +43,12 @@
 - (void)insertOrUpdateMediaDestinationWithFingerprint:(NSString *)fingerprint destination:(NSNumber *)destination timescale:(NSNumber *)timescale;
 - (void)deleteMediaDestinationWithFingerprint:(NSString *)fingerprint;
 - (MOMediaDestination *)fetchMediaDestinationWithFingerprint:(NSString *)fingerprint;
+
+#pragma mark - MOUploadTransfer entity
+
+- (void)insertUploadTransferWithLocalIdentifier:(NSString *)localIdentifier;
+- (void)deleteUploadTransferWithLocalIdentifier:(NSString *)localIdentifier;
+- (NSArray<MOUploadTransfer *> *)fetchUploadTransfers;
+- (void)removeAllUploadTransfers;
 
 @end
