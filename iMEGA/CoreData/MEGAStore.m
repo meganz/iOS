@@ -312,9 +312,10 @@ static MEGAStore *_megaStore = nil;
 
 #pragma mark - MOUploadTransfer entity
 
-- (void)insertUploadTransferWithLocalIdentifier:(NSString *)localIdentifier {
+- (void)insertUploadTransferWithLocalIdentifier:(NSString *)localIdentifier parentNodeHandle:(uint64_t)parentNodeHandle {
     MOUploadTransfer *mOUploadTransfer = [NSEntityDescription insertNewObjectForEntityForName:@"MOUploadTransfer" inManagedObjectContext:self.managedObjectContext];
     mOUploadTransfer.localIdentifier = localIdentifier;
+    mOUploadTransfer.parentNodeHandle = [NSNumber numberWithUnsignedLongLong:parentNodeHandle];
     
     MEGALogDebug(@"Save context - insert MOUploadTransfer with local identifier %@", localIdentifier);
     
