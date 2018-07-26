@@ -92,6 +92,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 @property (nonatomic) CGFloat lastBottomInset;
 @property (nonatomic) CGFloat lastVerticalOffset;
+@property (nonatomic) CGFloat initialToolbarHeight;
 
 @property (nonatomic) NSMutableSet<MEGAChatMessage *> *observedDialogMessages;
 @property (nonatomic) NSMutableSet<MEGAChatMessage *> *observedNodeMessages;
@@ -267,6 +268,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [super viewDidAppear:animated];
     
     [self showOrHideJumpToBottom];
+    self.initialToolbarHeight = self.inputToolbar.frame.size.height;
 }
 
 - (void)willEnterForeground {
@@ -1386,7 +1388,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)jsq_setCollectionViewInsetsTopValue:(CGFloat)top bottomValue:(CGFloat)bottom {
-    if (self.inputToolbar.frame.size.height == 0.0f) {
+    if (self.inputToolbar.frame.size.height < self.initialToolbarHeight) {
         return;
     }
     
