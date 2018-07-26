@@ -987,7 +987,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)updateCollectionViewInsets {
-    [self jsq_setCollectionViewInsetsTopValue:0.0f bottomValue:self.inputToolbar.frame.size.height];
+    [self jsq_setCollectionViewInsetsTopValue:0.0f bottomValue:self.lastBottomInset];
 }
 
 #pragma mark - Gesture recognizer
@@ -1399,6 +1399,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     self.collectionView.contentInset = insets;
     self.collectionView.scrollIndicatorInsets = insets;
     self.jumpToBottomConstraint.constant = bottom + 27.0f;
+    self.lastBottomInset = bottom;
 
     if (increment > 0) {
         bounds.origin.y += increment;
