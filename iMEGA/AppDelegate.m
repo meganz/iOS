@@ -1437,7 +1437,7 @@
     NSString *applicationSupportDirectoryString = applicationSupportDirectoryURL.path;
     NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryString error:&error];
     for (NSString *filename in applicationSupportContent) {
-        if ([filename containsString:@"megaclient"]) {
+        if ([filename containsString:@"megaclient"] || [filename containsString:@"karere"]) {
             NSString *destinationPath = [groupSupportPath stringByAppendingPathComponent:filename];
             if ([fileManager fileExistsAtPath:destinationPath]) {
                 if (![fileManager removeItemAtPath:destinationPath error:&error]) {
