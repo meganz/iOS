@@ -470,13 +470,12 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     }
 }
 
-- (CGSize)sizeByVideoTrack:(AVAssetTrack *)videoTrack videoQuality:(ChatVideoUploadQuality)videoQuality {
-    CGSize size = videoTrack.naturalSize;
+- (CGSize)sizeByVideoTrack:(AVAssetTrack *)videoTrack videoQuality:(ChatVideoUploadQuality)videoQuality {    
     CGAffineTransform transform = videoTrack.preferredTransform;
     
     CGFloat width, height;
-    // Source video recorded in landscape
-    if ((size.width == transform.tx && size.height == transform.ty) || (transform.tx == 0 && transform.ty == 0)) {
+    CGFloat videoAngleInDegree  = atan2(transform.b, transform.a) * 180 / M_PI;
+    if (videoAngleInDegree == 0 || videoAngleInDegree == 180) {
         width = videoTrack.naturalSize.width;
         height = videoTrack.naturalSize.height;
     } else { // Source video recorded in portrait
