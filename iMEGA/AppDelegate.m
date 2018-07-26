@@ -64,6 +64,7 @@
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAPasswordLinkRequestDelegate.h"
 #import "MEGAShowPasswordReminderRequestDelegate.h"
+#import "MEGAAssetOperation.h"
 
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
@@ -1867,6 +1868,20 @@ void uncaughtExceptionHandler(NSException *exception) {
                 }
             }
         }
+        
+        NSArray<MOUploadTransfer *> *uploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
+        
+        if (uploadTransfers.count) {
+            NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
+            operationQueue.qualityOfService = NSOperationQualityOfServiceUtility;
+            operationQueue.maxConcurrentOperationCount = 1;
+            
+            for (MOUploadTransfer *uploadTransfer in uploadTransfers) {
+                MEGAAssetOperation *assetOperation = [[MEGAAssetOperation alloc] initWithPHAsset:[PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransfer.localIdentifier] options:nil].firstObject parentNode:[[MEGASdkManager sharedMEGASdk] nodeForHandle:uploadTransfer.parentNodeHandle.unsignedLongLongValue] automatically:NO];
+                [operationQueue addOperation:assetOperation];
+            }
+        }
+
     } else {
         NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
         MEGALogDebug(@"Spotlight indexing %lu nodes updated", nodesToIndex.count);

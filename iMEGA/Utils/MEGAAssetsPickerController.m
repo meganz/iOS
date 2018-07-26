@@ -101,8 +101,9 @@
             NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
             operationQueue.qualityOfService = NSOperationQualityOfServiceUtility;
             operationQueue.maxConcurrentOperationCount = 1;
+            
             for (PHAsset *asset in assets) {
-                [[MEGAStore shareInstance] insertUploadTransferWithLocalIdentifier:asset.localIdentifier];
+                [[MEGAStore shareInstance] insertUploadTransferWithLocalIdentifier:asset.localIdentifier parentNodeHandle:self.parentNode.handle];
                 MEGAAssetOperation *assetOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:self.parentNode automatically:NO];
                 [operationQueue addOperation:assetOperation];
             }

@@ -48,7 +48,7 @@
 }
 
 - (void)start {
-    self.uploadsDirectory = [[NSFileManager defaultManager] uploadsDirectory];
+    self.uploadsDirectory = [NSFileManager defaultManager].uploadsDirectory;
     
     if (self.automatically) {
         if (![CameraUploads syncManager].isCameraUploadsEnabled) {
@@ -87,6 +87,10 @@
         [self willChangeValueForKey:@"isFinished"];
         finished = YES;
         [self didChangeValueForKey:@"isFinished"];
+        return;
+    }
+        
+    if (![[MEGAStore shareInstance] fetchTransferUpdateWithLocalIdentifier:self.phasset.localIdentifier]) {
         return;
     }
     
