@@ -519,9 +519,9 @@
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Wgrywanie plików z kamery zakończone";
 /* Message shown while uploading files. Singular. */
-"cameraUploadsPendingFile"="Upload in progress, 1 file pending";
+"cameraUploadsPendingFile"="Trwa przesyłanie, 1 plik oczekuje";
 /* Message shown while uploading files. Plural. */
-"cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
+"cameraUploadsPendingFiles"="Trwa przesyłanie, oczekują %lu pliki";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d z %2$d plik";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -1392,6 +1392,18 @@
 "missedAudioCallsAndMissedVideoCalls"="[A] nieodebrane połączenia głosowe i [B] nieodebrane rozmowy video";
 /* Button title to see the available bonus */
 "getBonus"="Odbierz bonus";
+/* Text shown under the title 'Video quality' that explains what it means */
+"qualityOfVideosUploadedToAChat"="Quality of videos uploaded to a chat";
+/* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
+"videoQuality"="Video quality";
+/* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
+"low"="Low";
+/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+"high"="High";
+/* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
+"original"="Oryginalny";
+/* Label for the status of a transfer when is being preparing - (String as short as possible). */
+"preparing..."="Przygotowywanie...";
 /* QR Code label, used in Settings as title. String as short as possible */
 "qrCode"="Kod QR";
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
@@ -1541,7 +1553,7 @@
 /* Item of a menu to forward a message chat to another chatroom */
 "forward"="Do przodu";
 /* Success message shown after forwarding messages to other chats */
-"messagesSent"="Messages sent";
+"messagesSent"="Wiadomość wysłana";
 /* Title of archived chats button */
 "archivedChats"="Zarchiwizowane czaty";
 /* Confirmation message on archive chat dialog for user to confirm. */
@@ -1555,4 +1567,4 @@
 /* Title of flag of archived chats. */
 "archived"="Zarchiwizowane";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="No Archived Chats";
+"noArchivedChats"="Brak zarchiwizowanych czatów";
