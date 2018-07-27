@@ -467,7 +467,7 @@
         userHasChanged = YES;
     }
     
-    return  userHasChanged;
+    return userHasChanged;
 }
 
 - (void)setNavigationBarTitle {

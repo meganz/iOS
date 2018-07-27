@@ -8,6 +8,4 @@
 - (void)mnz_setImageForExtension:(NSString *)extension;
 - (void)mnz_imageForNode:(MEGANode *)node;
 
-- (void)mnz_setImageForChatSharedContactHandle:(uint64_t)userHandle initial:(NSString*)initial;
-
 @end
