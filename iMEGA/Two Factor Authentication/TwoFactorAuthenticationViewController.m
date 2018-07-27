@@ -6,6 +6,9 @@
 #import "MEGALoginRequestDelegate.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
+
+#import "CustomModalAlertViewController.h"
 
 @interface TwoFactorAuthenticationViewController () <UITextViewDelegate, MEGARequestDelegate>
 
@@ -160,6 +163,10 @@
                 [[MEGASdkManager sharedMEGASdk] multiFactorAuthCancelAccountWithPin:code delegate:self];
                 break;
                 
+            case TwoFactorAuthenticationEnable:
+                [[MEGASdkManager sharedMEGASdk] multiFactorAuthEnableWithPin:code delegate:self];
+                break;
+                
             case TwoFactorAuthenticationDisable:
                  [[MEGASdkManager sharedMEGASdk] multiFactorAuthDisableWithPin:code delegate:self];
                 break;
@@ -255,10 +262,23 @@
         }
             
         case MEGARequestTypeMultiFactorAuthSet:
-            if (!request.flag) {
-                [self.navigationController popToViewController:self.navigationController.viewControllers[2] animated:YES];
+            if (request.flag) {
+                CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
+                customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+                customModalAlertVC.image = [UIImage imageNamed:@""];
+                customModalAlertVC.viewTitle = AMLocalizedString(@"twoFactorAuthenticationEnabled", @"");
+                customModalAlertVC.detail = AMLocalizedString(@"twoFactorAuthenticationEnabledDescription", @"");
+                customModalAlertVC.action = AMLocalizedString(@"close", @"");
                 
-                NSString *message = [NSString stringWithFormat:AMLocalizedString(@"twoFactorAuthenticationDisabledMessage", @""), [[MEGASdkManager sharedMEGASdk] myEmail]];
+                __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
+                customModalAlertVC.completion = ^{
+                    [weakCustom dismissViewControllerAnimated:YES completion:^{
+                        [self.navigationController popToViewController:self.navigationController.viewControllers[2] animated:YES];
+                    }];
+                };
+                
+                [UIApplication.mnz_visibleViewController presentViewController:customModalAlertVC animated:YES completion:nil];
+            } else {
                 
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"twoFactorAuthenticationDisabled", @"") message:message preferredStyle:UIAlertControllerStyleAlert];
                 

@@ -6,7 +6,7 @@
 #import "UIApplication+MNZCategory.h"
 
 #import "CustomModalAlertViewController.h"
-#import "EnablingTwoFactorAuthenticationTableViewController.h"
+#import "EnablingTwoFactorAuthenticationViewController.h"
 #import "MEGASdkManager.h"
 #import "MEGAMultiFactorAuthCheckRequestDelegate.h"
 #import "TwoFactorAuthentication.h"
@@ -87,7 +87,7 @@
         case MEGARequestTypeMultiFactorAuthGet: {
             [SVProgressHUD dismiss];
             
-            EnablingTwoFactorAuthenticationTableViewController *enablingTwoFactorAuthenticationTVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"EnablingTwoFactorAuthenticationTableViewControllerID"];
+            EnablingTwoFactorAuthenticationViewController *enablingTwoFactorAuthenticationTVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"EnablingTwoFactorAuthenticationViewControllerID"];
             enablingTwoFactorAuthenticationTVC.seed = request.text; //Returns the Base32 secret code needed to configure multi-factor authentication.
             
             [self.navigationController pushViewController:enablingTwoFactorAuthenticationTVC animated:YES];

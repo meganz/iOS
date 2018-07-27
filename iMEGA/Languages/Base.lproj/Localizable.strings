@@ -1559,8 +1559,6 @@
 /*  */
 "twoFactorAuthentication"="Two-Factor Authentication";
 /*  */
-"setupTwoFactorAuthentication"="Setup Two-Factor Authentication";
-/*  */
 "whyYouDoNeedTwoFactorAuthentication"="Why do you need two-factor authentication?";
 /*  */
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Two-factor authentication is a second layer of security for your account. Which means that even if someone knows your password they cannot access it, without also having access to the six digit code only you have access to.";
@@ -1573,13 +1571,6 @@
 /*  */
 "twoFactorAuthenticationDisabled"="Two Factor Authentication Disabled";
 /*  */
-"scanOrCopyTheSeed"="1. Scan or copy the seed to your authenticator app";
-/*  */
-"testAuthenticator"="2. Test authenticator";
-/*  */
-"testAuthenticatorDescription"="After setting up your seed on your authenticator app enter the 6-digit code provided.";
-/*  */
-"sixDigitCode"="6-digit code";
+"scanOrCopyTheSeed"="Scan or copy the seed in your authenticator app.";
 /*  */
 "verify"="Verify";
-
