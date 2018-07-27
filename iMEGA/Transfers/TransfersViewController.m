@@ -297,7 +297,7 @@
 - (NSIndexPath *)indexPathForTransfer:(MEGATransfer *)transfer {
     for (int i = 0; i < self.transfers.count; i++) {
         if ([[self.transfers objectAtIndex:i] isKindOfClass:MEGATransfer.class]) {
-            if (transfer.nodeHandle == [[self.transfers objectAtIndex:i] nodeHandle]) {
+            if (transfer.tag == [[self.transfers objectAtIndex:i] tag]) {
                 return [NSIndexPath indexPathForRow:i inSection:0];
             }
         }
@@ -501,8 +501,6 @@
         TransferTableViewCell *cell = (TransferTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         if ([cell.reuseIdentifier isEqualToString:@"activeTransferCell"]) {
             [cell updatePercentAndSpeedLabelsForTransfer:transfer];
-        } else {
-            [self reloadView];
         }
     }
 }
