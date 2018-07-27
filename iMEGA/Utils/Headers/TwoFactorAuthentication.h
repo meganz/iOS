@@ -4,6 +4,7 @@ typedef NS_ENUM (NSInteger, TwoFactorAuthentication) {
     TwoFactorAuthenticationChangePassword,
     TwoFactorAuthenticationChangeEmail,
     TwoFactorAuthenticationCancelAccount,
+    TwoFactorAuthenticationEnable,
     TwoFactorAuthenticationDisable,
     TwoFactorAuthenticationTotal
 };
