@@ -1404,8 +1404,6 @@
 "original"="Original";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="Preparing...";
-/* Alert title shown when you try to select more than one video to send them through the chat */
-"sendVideosOneByOne"="Please, send videos one by one";
 /* QR Code label, used in Settings as title. String as short as possible */
 "qrCode"="QR Code";
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
