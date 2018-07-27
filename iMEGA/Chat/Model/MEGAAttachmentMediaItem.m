@@ -127,7 +127,7 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    CGFloat displaySize = [[UIDevice currentDevice] mnz_widthForChatBubble];
+    CGFloat displaySize = [[UIDevice currentDevice] mnz_maxSideForChatBubbleWithMedia:NO];
     return CGSizeMake(displaySize, 60.0f);
 }
 
