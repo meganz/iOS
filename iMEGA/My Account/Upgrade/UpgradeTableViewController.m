@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIView *chooseFromOneOfThePlansHeaderView;
 @property (weak, nonatomic) IBOutlet UIView *chooseFromOneOfThePlansPROHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *chooseFromOneOfThePlansLabel;
+@property (weak, nonatomic) IBOutlet UILabel *chooseFromOneOfThePlansProLabel;
 
 @property (weak, nonatomic) IBOutlet UIView *currentPlanView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *currentPlanViewHeightLayoutConstraint;
@@ -60,6 +61,8 @@
     
     self.title = (self.isChoosingTheAccountType) ? AMLocalizedString(@"chooseYourAccountType", nil) : AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
     self.chooseFromOneOfThePlansLabel.text = (self.isChoosingTheAccountType) ? AMLocalizedString(@"selectOneAccountType", @"") : AMLocalizedString(@"choosePlan", @"Header that help you with the upgrading process explaining that you have to choose one of the plans below to continue");
+    
+    self.chooseFromOneOfThePlansProLabel.text = AMLocalizedString(@"choosePlan", @"Header that help you with the upgrading process explaining that you have to choose one of the plans below to continue");
     
     self.currentPlanLabel.text = AMLocalizedString(@"currentPlan", @"Text shown on the upgrade account page above the current PRO plan subscription");
 

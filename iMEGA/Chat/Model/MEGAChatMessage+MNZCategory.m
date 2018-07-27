@@ -121,6 +121,18 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
     return shouldShowForwardAccessory;
 }
 
+- (BOOL)localPreview {
+    if (self.type == MEGAChatMessageTypeAttachment) {
+        MEGANode *node = [self.nodeList nodeAtIndex:0];
+        NSString *previewFilePath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"] stringByAppendingPathComponent:node.base64Handle];
+        
+        if ([[NSFileManager defaultManager] fileExistsAtPath:previewFilePath]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 - (NSString *)text {
     NSString *text;
     uint64_t myHandle = [[MEGASdkManager sharedMEGAChatSdk] myUserHandle];
@@ -288,9 +300,8 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
                                                                             color:textColor];
         
         if (self.isEdited && self.type != MEGAChatMessageTypeContainsMeta) {
-            NSAttributedString *edited = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"edited", @"A log message in a chat to indicate that the message has been edited by the user.") attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularItalicWithSize:12.0f], NSForegroundColorAttributeName:textColor}];
+            NSAttributedString *edited = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"edited", @"A log message in a chat to indicate that the message has been edited by the user.")] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularItalicWithSize:12.0f], NSForegroundColorAttributeName:textColor}];
             NSMutableAttributedString *attributedText = [self.attributedText mutableCopy];
-            [attributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
             [attributedText appendAttributedString:edited];
             self.attributedText = attributedText;
         }
@@ -347,7 +358,7 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
 }
 
 - (NSUInteger)messageHash {
-    return [self hash];
+    return self.hash;
 }
 
 #pragma mark - NSObject
@@ -355,7 +366,7 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
 - (NSUInteger)hash {
     NSUInteger contentHash = self.type == MEGAChatMessageTypeAttachment ? [self.nodeList nodeAtIndex:0].handle : self.content.hash ^ self.node.hash;
     NSUInteger metaHash = self.type == MEGAChatMessageTypeContainsMeta ? self.containsMeta.type : MEGAChatContainsMetaTypeInvalid;
-    return self.senderId.hash ^ self.date.hash ^ contentHash ^ self.warningDialog ^ metaHash;
+    return self.senderId.hash ^ self.date.hash ^ contentHash ^ self.warningDialog ^ metaHash ^ self.localPreview;
 }
 
 - (id)debugQuickLookObject {
