@@ -99,7 +99,9 @@
     self.cachedImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
     self.cachedImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.cachedImageView.clipsToBounds = YES;
-    self.cachedImageView.layer.cornerRadius = 5;
+    self.cachedImageView.layer.cornerRadius = 4.0f;
+    self.cachedImageView.layer.borderColor = UIColor.mnz_black000000_01.CGColor;
+    self.cachedImageView.layer.borderWidth = 1.0f;
     
     if (@available(iOS 11.0, *)) {
         self.cachedImageView.accessibilityIgnoresInvertColors = YES;
@@ -125,8 +127,19 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    CGFloat width = [[UIDevice currentDevice] mnz_widthForChatBubble];
-    CGFloat height = self.image ? width * (self.image.size.height / self.image.size.width) : width;
+    CGFloat width, height;
+    CGFloat maxSide = [[UIDevice currentDevice] mnz_maxSideForChatBubbleWithMedia:YES];
+    if (self.image) {
+        if (self.image.size.width > self.image.size.height) {
+            width = maxSide;
+            height = width * (self.image.size.height / self.image.size.width);
+        } else {
+            height = maxSide;
+            width = height * (self.image.size.width / self.image.size.height);
+        }
+    } else {
+        width = height = maxSide;
+    }
     
     return CGSizeMake(width, height);
 }
