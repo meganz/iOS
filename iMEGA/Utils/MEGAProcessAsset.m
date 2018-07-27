@@ -11,8 +11,6 @@
 
 static void *ProcessAssetProgressContext = &ProcessAssetProgressContext;
 
-
-
 static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 
 @interface MEGAProcessAsset ()
@@ -23,11 +21,25 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 @property (nonatomic, copy) void (^error)(NSError *error);
 @property (nonatomic, strong) MEGANode *parentNode;
 
+@property (nonatomic, copy) NSMutableArray <PHAsset *> *assets;
+@property (nonatomic, copy) void (^filePaths)(NSArray <NSString *> *filePaths);
+@property (nonatomic, copy) void (^nodes)(NSArray <MEGANode *> *nodes);
+@property (nonatomic, copy) void (^errors)(NSArray <NSError *> *errors);
+@property (nonatomic, copy) NSMutableArray <NSString *> *filePathsArray;
+@property (nonatomic, copy) NSMutableArray <MEGANode *> *nodesArray;
+@property (nonatomic, copy) NSMutableArray <NSError *> *errorsArray;
+@property (nonatomic) double totalDuration;
+@property (nonatomic) double currentProgress;
+@property (nonatomic) BOOL cancelExportByUser;
+@property (nonatomic) BOOL exportAssetFailed;
+
 @property (nonatomic, assign) NSUInteger retries;
 @property (nonatomic, getter=toShareThroughChat) BOOL shareThroughChat;
 @property (nonatomic, getter=isCameraUploads) BOOL cameraUploads;
 
 @property (nonatomic, strong) UIProgressView *progressView;
+@property (nonatomic, weak) UIAlertController *alertController;
+@property (nonatomic) dispatch_semaphore_t semaphore;
 
 @end
 
@@ -67,22 +79,90 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     return self;
 }
 
+- (instancetype)initToShareThroughChatWithAssets:(NSArray<PHAsset *> *)assets filePaths:(void (^)(NSArray<NSString *> *))filePaths nodes:(void (^)(NSArray<MEGANode *> *))nodes errors:(void (^)(NSArray<NSError *> *))errors {
+    self = [super init];
+    
+    if (self) {
+        _semaphore = dispatch_semaphore_create(0);
+        _assets = [[NSMutableArray alloc] initWithArray:assets];
+        _filePaths = filePaths;
+        _nodes = nodes;
+        _errors = errors;
+        _retries = 0;
+        _filePathsArray = [[NSMutableArray alloc] init];
+        _nodesArray = [[NSMutableArray alloc] init];
+        _errorsArray = [[NSMutableArray alloc] init];
+        _shareThroughChat = YES;
+        _parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
+        _cameraUploads = NO;
+        for (PHAsset *asset in assets) {
+            if (asset.mediaType == PHAssetMediaTypeVideo) {
+                _totalDuration += asset.duration;
+            }
+        }
+    }
+    
+    return self;
+    
+}
+
 - (void)prepare {
-    switch (self.asset.mediaType) {
-        case PHAssetMediaTypeImage:
-            [self requestImageAsset];
-            break;
-            
-        case PHAssetMediaTypeVideo:
-            [self requestVideoAsset];
-            break;
-            
-        default:
-            break;
+    if (self.assets) {
+        for (NSUInteger i = 0; i < self.assets.count; i++) {
+            PHAsset *asset = [self.assets objectAtIndex:i];
+            switch (asset.mediaType) {
+                case PHAssetMediaTypeImage: {
+                    [self requestImageAsset:asset];
+                    break;
+                }
+                    
+                case PHAssetMediaTypeVideo: {
+                    [self requestVideoAsset:asset];
+                    break;
+                }
+                    
+                default:
+                    break;
+            }
+            dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^(void) {
+            [self.alertController dismissViewControllerAnimated:YES completion:^{
+                if (self.exportAssetFailed) {
+                    NSString *message = message = AMLocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
+                    UIAlertController  *videoExportFailedController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
+                    [videoExportFailedController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDestructive handler:nil]];
+                    [[UIApplication mnz_visibleViewController] presentViewController:videoExportFailedController animated:YES completion:nil];
+                }
+            }];
+        });
+        if (self.filePaths && self.filePathsArray.count) {
+            self.filePaths(self.filePathsArray);
+        }
+        if (self.nodes && self.nodesArray.count) {
+            self.nodes(self.nodesArray);
+        }
+        if (self.errors && self.errorsArray.count) {
+            self.errors(self.errorsArray);
+        }
+    } else {
+        switch (self.asset.mediaType) {
+            case PHAssetMediaTypeImage:
+                [self requestImageAsset:self.asset];
+                break;
+                
+            case PHAssetMediaTypeVideo:
+                [self requestVideoAsset:self.asset];
+                break;
+                
+            default:
+                break;
+        }
     }
 }
 
-- (void)requestImageAsset {
+- (void)requestImageAsset:(PHAsset *)asset {
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
     options.networkAccessAllowed = YES;
     if (self.retries < 10) {
@@ -93,41 +173,46 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     
     
     if (self.toShareThroughChat && ![MEGAReachabilityManager isReachableViaWiFi]) {
-        NSUInteger totalPixels = self.asset.pixelWidth * self.asset.pixelHeight;
+        NSUInteger totalPixels = asset.pixelWidth * asset.pixelHeight;
         float factor = MIN(sqrtf((float)DOWNSCALE_IMAGES_PX / totalPixels), 1);
         if (factor >= 1) {
-            [self requestImageWithOptions:options];
+            [self requestImageForAsset:asset options:options];
         } else { // Optimize image
             options.synchronous = YES;
             options.resizeMode = PHImageRequestOptionsResizeModeExact;
-            [[PHImageManager defaultManager] requestImageForAsset:self.asset targetSize:CGSizeMake(self.asset.pixelWidth * factor, self.asset.pixelHeight * factor) contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+            [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(asset.pixelWidth * factor, asset.pixelHeight * factor) contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
                 if (result) {
                     NSData *imageData = UIImageJPEGRepresentation(result, 0.75);
-                    [self proccessImageData:imageData withInfo:info];
+                    [self proccessImageData:imageData asset:asset withInfo:info];
                 } else {
                     NSError *error = [info objectForKey:@"PHImageErrorKey"];
-                    MEGALogError(@"Request image data for asset: %@ failed with error: %@", self.asset, error);
+                    MEGALogError(@"[PA] Request image data for asset: %@ failed with error: %@", asset, error);
                     if (self.retries < 20) {
                         self.retries++;
-                        [self requestImageAsset];
+                        [self requestImageAsset:asset];
                     } else {
                         if (self.error) {
-                            MEGALogDebug(@"Max attempts reached");
+                            MEGALogDebug(@"[PA] Max attempts reached");
                             self.error(error);
+                        }
+                        if (self.errors) {
+                            MEGALogDebug(@"[PA] Max attempts reached");
+                            [self.errorsArray addObject:error];
+                            dispatch_semaphore_signal(self.semaphore);
                         }
                     }
                 }
             }];
         }
     } else {
-        [self requestImageWithOptions:options];
+        [self requestImageForAsset:asset options:options];
     }
 }
 
 // Request image and don't downscale it
-- (void)requestImageWithOptions:(PHImageRequestOptions *)options {
+- (void)requestImageForAsset:(PHAsset *)asset options:(PHImageRequestOptions *)options {
     [[PHImageManager defaultManager]
-     requestImageDataForAsset:self.asset
+     requestImageDataForAsset:asset
      options:options
      resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
          NSData *data;
@@ -138,22 +223,22 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
              data = imageData;
          }
          
-         [self proccessImageData:data withInfo:info];
+         [self proccessImageData:data asset:asset withInfo:info];
      }];
 }
 
-- (void)requestVideoAsset {
+- (void)requestVideoAsset:(PHAsset *)asset {
     PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
     options.version = PHVideoRequestOptionsVersionOriginal;
     options.networkAccessAllowed = YES;
     [[PHImageManager defaultManager]
-     requestAVAssetForVideo:self.asset
-     options:options resultHandler:^(AVAsset *asset, AVAudioMix *audioMix, NSDictionary *info) {
-         if (asset) {
-             if ([asset isKindOfClass:[AVURLAsset class]]) {
-                 NSURL *avassetUrl = [(AVURLAsset *)asset URL];
+     requestAVAssetForVideo:asset
+     options:options resultHandler:^(AVAsset *avAsset, AVAudioMix *audioMix, NSDictionary *info) {
+         if (avAsset) {
+             if ([avAsset isKindOfClass:[AVURLAsset class]]) {
+                 NSURL *avassetUrl = [(AVURLAsset *)avAsset URL];
                  NSDictionary *fileAtributes = [[NSFileManager defaultManager] attributesOfItemAtPath:avassetUrl.path error:nil];
-                 __block NSString *filePath = [self filePathAsCreationDateWithInfo:info];
+                 __block NSString *filePath = [self filePathAsCreationDateWithInfo:info asset:asset];
                  [self deleteLocalFileIfExists:filePath];
                  long long fileSize = [[fileAtributes objectForKey:NSFileSize] longLongValue];
                  
@@ -168,7 +253,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                          videoQuality = ChatVideoUploadQualityMedium;
                      }
                      
-                     AVAssetTrack *videoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+                     AVAssetTrack *videoTrack = [[avAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
                      
                      BOOL shouldEncodeVideo;
                      if ([filePath.pathExtension.lowercaseString isEqualToString:@"mp4"] && videoQuality >= ChatVideoUploadQualityHigh) {
@@ -177,8 +262,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                          shouldEncodeVideo = [self shouldEncodeVideoWithVideoTrack:videoTrack videoQuality:videoQuality];
                      }
                      
-                     if ((self.toShareThroughChat || !self.isCameraUploads) && videoQuality < ChatVideoUploadQualityOriginal && shouldEncodeVideo) {
-                         if (!self.toShareThroughChat) videoQuality = ChatVideoUploadQualityHigh;
+                     if (self.toShareThroughChat && videoQuality < ChatVideoUploadQualityOriginal && shouldEncodeVideo) {
                          filePath = [filePath stringByDeletingPathExtension];
                          filePath = [filePath stringByAppendingPathExtension:@"mp4"];
                          [self deleteLocalFileIfExists:filePath];
@@ -191,7 +275,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                              fps = videoTrack.nominalFrameRate;
                          }
                          
-                         SDAVAssetExportSession *encoder = [SDAVAssetExportSession.alloc initWithAsset:asset];
+                         SDAVAssetExportSession *encoder = [[SDAVAssetExportSession alloc] initWithAsset:avAsset];
                          encoder.outputFileType = AVFileTypeMPEG4;
                          encoder.outputURL = [NSURL fileURLWithPath:filePath];
                          encoder.videoSettings = @
@@ -217,21 +301,26 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                          
                          [encoder addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionNew context:ProcessAssetProgressContext];
                          
-                         UIAlertController *alertView = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"processingFile", @"Status text at the end of an upload") message:@"\n\n" preferredStyle:UIAlertControllerStyleAlert];
-                         [alertView addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                             [encoder removeObserver:self forKeyPath:@"progress" context:ProcessAssetProgressContext];
-                             [encoder cancelExport];
-                         }]];
+                         if (!self.alertController) {
+                             NSString *title = [AMLocalizedString(@"preparing...", @"Label for the status of a transfer when is being preparing - (String as short as possible.") stringByAppendingString:@"\n"];
+                             self.alertController = [UIAlertController alertControllerWithTitle:title message:@"\n" preferredStyle:UIAlertControllerStyleAlert];
+                             [self.alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                                 MEGALogDebug(@"[PA] User cancelled the export session");
+                                 self.cancelExportByUser = YES;
+                                 [self shareCancelledOrFailed];
+                                 [encoder cancelExport];
+                             }]];
+                         }
                          
-                         MEGALogDebug(@"Export session start");
+                         MEGALogDebug(@"[PA] Export session started");
                          [encoder exportAsynchronouslyWithCompletionHandler:^{
                               if (encoder.status == AVAssetExportSessionStatusCompleted) {
-                                  [encoder removeObserver:self forKeyPath:@"progress" context:ProcessAssetProgressContext];
-                                  MEGALogDebug(@"Export session finish");
+                                  MEGALogDebug(@"[PA] Export session finished");
+                                  self.currentProgress += asset.duration;
                                   NSError *error;
-                                  NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:self.asset.creationDate forKey:NSFileModificationDate];
+                                  NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:asset.creationDate forKey:NSFileModificationDate];
                                   if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:encoder.outputURL.path error:&error]) {
-                                      MEGALogError(@"Set attributes failed with error: %@", error);
+                                      MEGALogError(@"[PA] Set attributes failed with error: %@", error);
                                   }
                                   NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:filePath];
                                   MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:self.parentNode];
@@ -239,45 +328,59 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                                       if (self.node) {
                                           self.node(node);
                                       }
+                                      if (self.nodes) {
+                                          [self.nodesArray addObject:node];
+                                          dispatch_semaphore_signal(self.semaphore);
+                                      }
                                       if (![[NSFileManager defaultManager] removeItemAtPath:filePath error:&error]) {
-                                          MEGALogError(@"Remove item at path failed with error: %@", error)
+                                          MEGALogError(@"[PA] Remove item at path failed with error: %@", error)
                                       }
                                   } else {
                                       if (self.filePath) {
                                           filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
                                           self.filePath(filePath);
                                       }
+                                      if (self.filePaths) {
+                                          filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                                          [self.filePathsArray addObject:filePath];
+                                          dispatch_semaphore_signal(self.semaphore);
+                                      }
                                   }
-                                  dispatch_async(dispatch_get_main_queue(), ^(void) {
-                                      [alertView dismissViewControllerAnimated:YES completion:nil];
-                                  });
                               }
                               else if (encoder.status == AVAssetExportSessionStatusCancelled) {
-                                  MEGALogDebug(@"Video export cancelled");
+                                  MEGALogDebug(@"[PA] Export session cancelled");
+                                  if (!self.cancelExportByUser) {
+                                      [self shareCancelledOrFailed];
+                                  }
                               }
                               else {
-                                  [encoder removeObserver:self forKeyPath:@"progress" context:ProcessAssetProgressContext];
-                                  MEGALogDebug(@"Video export failed with error: %@ (%ld)", encoder.error.localizedDescription, (long)encoder.error.code);
+                                  MEGALogDebug(@"[PA] Export session failed with error: %@ (%ld)", encoder.error.localizedDescription, (long)encoder.error.code);
+                                  [self shareCancelledOrFailed];
+                                  self.exportAssetFailed = YES;
                               }
+                             [encoder removeObserver:self forKeyPath:@"progress" context:ProcessAssetProgressContext];
                           }];
                          
+                         
                          dispatch_async(dispatch_get_main_queue(), ^(void) {
-                             [[UIApplication mnz_visibleViewController] presentViewController:alertView animated:YES completion:^{
-                                 
-                                 CGFloat margin = 8.0;
-                                 CGRect rect = CGRectMake(margin, 72.0, alertView.view.frame.size.width - margin * 2.0 , 2.0);
-                                 _progressView = [[UIProgressView alloc] initWithFrame:rect];
-                                 self.progressView.progress = 0.0;
-                                 self.progressView.tintColor = [UIColor mnz_redD90007];
-                                 [alertView.view addSubview:self.progressView];
-                             }];
+                             if (UIApplication.mnz_visibleViewController != self.alertController) {
+                                 [[UIApplication mnz_visibleViewController] presentViewController:self.alertController animated:YES completion:^{
+                                     CGFloat margin = 20.0;
+                                     CGRect rect = CGRectMake(margin, 72.0, self.alertController.view.frame.size.width - margin * 2.0 , 2.0);
+                                     self.progressView = [[UIProgressView alloc] initWithFrame:rect];
+                                     self.progressView.progress = 0.0;
+                                     self.progressView.tintColor = [UIColor mnz_redD90007];
+                                     [self.alertController.view addSubview:self.progressView];
+                                 }];
+                             }
                          });
                      } else {
                          NSError *error;
+                         self.currentProgress += asset.duration;
                          if ([[NSFileManager defaultManager] copyItemAtPath:avassetUrl.path toPath:filePath error:&error]) {
-                             NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:self.asset.creationDate forKey:NSFileModificationDate];
+                             NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:asset.creationDate forKey:NSFileModificationDate];
                              if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
-                                 MEGALogError(@"Set attributes failed with error: %@", error);
+                                 MEGALogError(@"[PA] Set attributes failed with error: %@", error);
                              }
 
                              NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:filePath];
@@ -286,19 +389,33 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                                  if (self.node) {
                                      self.node(node);
                                  }
+                                 if (self.nodes) {
+                                     [self.nodesArray addObject:node];
+                                     dispatch_semaphore_signal(self.semaphore);
+                                 }
                                  if (![[NSFileManager defaultManager] removeItemAtPath:filePath error:&error]) {
-                                     MEGALogError(@"Remove item at path failed with error: %@", error)
+                                     MEGALogError(@"[PA] Remove item at path failed with error: %@", error)
                                  }
                              } else {
                                  if (self.filePath) {
                                      filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
                                      self.filePath(filePath);
                                  }
+                                 if (self.filePaths) {
+                                     filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                                     [self.filePathsArray addObject:filePath];
+                                     dispatch_semaphore_signal(self.semaphore);
+                                 }
                              }
                          } else {
-                             MEGALogError(@"Copy item at path failed with error: %@", error);
+                             MEGALogError(@"[PA] Copy item at path failed with error: %@", error);
                              if (self.error) {
                                  self.error(error);
+                             }
+                             if (self.errors) {
+                                 MEGALogDebug(@"[PA] Max attempts reached");
+                                 [self.errorsArray addObject:error];
+                                 dispatch_semaphore_signal(self.semaphore);
                              }
                          }
                      }
@@ -306,14 +423,19 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
              }
          } else {
              NSError *error = [info objectForKey:@"PHImageErrorKey"];
-             MEGALogError(@"Request AVAsset %@ failed with error: %@", self.asset, error);
+             MEGALogError(@"[PA] Request AVAsset %@ failed with error: %@", asset, error);
              if (self.retries < 10) {
                  self.retries++;
-                 [self requestVideoAsset];
+                 [self requestVideoAsset:asset];
              } else {
                  if (self.error) {
-                     MEGALogDebug(@"Max attempts reached");
+                     MEGALogDebug(@"[PA] Max attempts reached");
                      self.error(error);
+                 }
+                 if (self.errors) {
+                     MEGALogDebug(@"[PA] Max attempts reached");
+                     [self.errorsArray addObject:error];
+                     dispatch_semaphore_signal(self.semaphore);
                  }
              }
          }
@@ -324,7 +446,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     if(context == ProcessAssetProgressContext) {
         NSNumber *newProgress = [change objectForKey:NSKeyValueChangeNewKey];
         dispatch_async(dispatch_get_main_queue(), ^(void) {
-            self.progressView.progress = newProgress.floatValue;
+            self.progressView.progress = (self.currentProgress + newProgress.floatValue) / self.totalDuration;
         });
     }
 }
@@ -336,7 +458,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     if (fileExists) {
         NSError *error;
         if (![[NSFileManager defaultManager] removeItemAtPath:filePath error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
+            MEGALogError(@"[PA] Remove item at path failed with error: %@", error);
         }
     }
 }
@@ -351,10 +473,10 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         NSNumber *freeFileSystemSizeInBytes = [dictionary objectForKey:NSFileSystemFreeSize];
         freeSpace = freeFileSystemSizeInBytes.unsignedLongLongValue;
     } else {
-        MEGALogError(@"Obtaining device storage info failed with error: %@", error);
+        MEGALogError(@"[PA] Obtaining device storage info failed with error: %@", error);
     }
     
-    MEGALogDebug(@"File size: %lld - Free size: %lld", fileSize, freeSpace);
+    MEGALogDebug(@"[PA] File size: %lld - Free size: %lld", fileSize, freeSpace);
     if (fileSize > freeSpace) {
         if (self.error) {
             NSDictionary *dict = @{NSLocalizedDescriptionKey:AMLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something")};
@@ -366,8 +488,8 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     return YES;
 }
 
-- (NSString *)filePathAsCreationDateWithInfo:(NSDictionary *)info {
-    MEGALogDebug(@"Asset %@\n%@", self.asset, info);
+- (NSString *)filePathAsCreationDateWithInfo:(NSDictionary *)info asset:(PHAsset *)asset {
+    MEGALogDebug(@"[PA] Asset %@\n%@", asset, info);
     NSString *name;
     
     if (self.originalName) {
@@ -379,20 +501,20 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
             name = imageFileSandbox.lastPathComponent;
         }
     } else {
-        NSString *extension = [self extensionWithInfo:info];
+        NSString *extension = [self extensionWithInfo:info asset:asset];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.dateFormat = @"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss";
         NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
         dateFormatter.locale = locale;
-        name = [[dateFormatter stringFromDate:self.asset.creationDate] stringByAppendingPathExtension:extension];
+        name = [[dateFormatter stringFromDate:asset.creationDate] stringByAppendingPathExtension:extension];
     }
     
     NSString *filePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:name];
     return filePath;
 }
 
-- (NSString *)extensionWithInfo:(NSDictionary *)info {
-    if (self.shareThroughChat && self.asset.mediaType == PHAssetMediaTypeImage) {
+- (NSString *)extensionWithInfo:(NSDictionary *)info asset:(PHAsset *)asset {
+    if (self.shareThroughChat && asset.mediaType == PHAssetMediaTypeImage) {
         return @"jpg";
     }
     
@@ -407,7 +529,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     }
     
     if (!extension) {
-        switch (self.asset.mediaType) {
+        switch (asset.mediaType) {
             case PHAssetMediaTypeImage:
                 extension = @"jpg";
                 break;
@@ -424,47 +546,66 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     return extension.lowercaseString;
 }
 
-- (void)proccessImageData:(NSData *)imageData withInfo:(NSDictionary *)info {
+- (void)proccessImageData:(NSData *)imageData asset:(PHAsset *)asset withInfo:(NSDictionary *)info {
     if (imageData) {
-        NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:self.asset.creationDate];
+        NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:asset.creationDate];
         MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:self.parentNode];
         if (node) {
             if (self.node) {
                 self.node(node);
             }
+            if (self.nodes) {
+                [self.nodesArray addObject:node];
+                dispatch_semaphore_signal(self.semaphore);
+            }
         } else {
-            NSString *filePath = [self filePathAsCreationDateWithInfo:info];
+            NSString *filePath = [self filePathAsCreationDateWithInfo:info asset:asset];
             [self deleteLocalFileIfExists:filePath];
             long long imageSize = imageData.length;
             if ([self hasFreeSpaceOnDiskForWriteFile:imageSize]) {
                 NSError *error;
                 if ([imageData writeToFile:filePath options:NSDataWritingFileProtectionNone error:&error]) {
-                    NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:self.asset.creationDate forKey:NSFileModificationDate];
+                    NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:asset.creationDate forKey:NSFileModificationDate];
                     if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
-                        MEGALogError(@"Set attributes failed with error: %@", error);
+                        MEGALogError(@"[PA] Set attributes failed with error: %@", error);
                     }
                     if (self.filePath) {
                         filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
                         self.filePath(filePath);
                     }
+                    if (self.filePaths) {
+                        filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                        [self.filePathsArray addObject:filePath];
+                        dispatch_semaphore_signal(self.semaphore);
+                    }
                 } else {
                     if (self.error) {
-                        MEGALogError(@"Write to file failed with error %@", error);
+                        MEGALogError(@"[PA] Write to file failed with error %@", error);
                         self.error(error);
+                    }
+                    if (self.errors) {
+                        MEGALogDebug(@"[PA] Max attempts reached");
+                        [self.errorsArray addObject:error];
+                        dispatch_semaphore_signal(self.semaphore);
                     }
                 }
             }
         }
     } else {
         NSError *error = [info objectForKey:@"PHImageErrorKey"];
-        MEGALogError(@"Request image data for asset: %@ failed with error: %@", self.asset, error);
+        MEGALogError(@"[PA] Request image data for asset: %@ failed with error: %@", asset, error);
         if (self.retries < 20) {
             self.retries++;
-            [self requestImageAsset];
+            [self requestImageAsset:asset];
         } else {
             if (self.error) {
-                MEGALogDebug(@"Max attempts reached");
+                MEGALogDebug(@"[PA] Max attempts reached");
                 self.error(error);
+            }
+            if (self.errors) {
+                MEGALogDebug(@"[PA] Max attempts reached");
+                dispatch_semaphore_signal(self.semaphore);
+                [self.errorsArray addObject:error];
             }
         }
     }
@@ -528,6 +669,20 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     } else {
         return 720.0f;
     }
+}
+
+- (void)shareCancelledOrFailed {
+    NSError *error;
+    for (NSString *filePath in self.filePathsArray) {
+        if (![[NSFileManager defaultManager] removeItemAtPath:filePath error:&error]) {
+            MEGALogError(@"[PA] Remove item at path failed with error: %@", error)
+        }
+    }
+    [self.filePathsArray removeAllObjects];
+    [self.nodesArray removeAllObjects];
+    [self.errorsArray removeAllObjects];
+    [self.assets removeAllObjects];
+    dispatch_semaphore_signal(self.semaphore);
 }
 
 @end
