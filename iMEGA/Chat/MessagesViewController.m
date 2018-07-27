@@ -1256,39 +1256,44 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)uploadAssets:(NSArray<PHAsset *> *)assets toParentNode:(MEGANode *)parentNode {
-    for (PHAsset *asset in assets) {
-        MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initToShareThroughChatWithAsset:asset filePath:^(NSString *filePath) {
+    MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initToShareThroughChatWithAssets:assets filePaths:^(NSArray <NSString *> *filePaths) {
+        for (NSString *filePath in filePaths) {
             NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
             [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:appData];
-        } node:^(MEGANode *node) {
+        }
+    } nodes:^(NSArray <MEGANode *> *nodes) {
+        for (MEGANode *node in nodes) {
             [self attachOrCopyAndAttachNode:node toParentNode:parentNode];
-        } error:^(NSError *error) {
-            NSString *message;
-            NSString *title;
-            switch (error.code) {
-                case -1:
-                    title = error.localizedDescription;
-                    message = error.localizedFailureReason;
-                    break;
-                    
-                case -2:
-                    title = AMLocalizedString(@"error", nil);
-                    message = error.localizedDescription;
-                    break;
-                    
-                default:
-                    title = AMLocalizedString(@"error", nil);
-                    message = error.localizedDescription;
-                    break;
-            }
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self presentViewController:alertController animated:YES completion:nil];
-            });
-        }];
+        }
+    } errors:^(NSArray <NSError *> *errors) {
+        NSError *error = errors[0];
+        NSString *message;
+        NSString *title;
+        switch (error.code) {
+            case -1:
+                title = error.localizedDescription;
+                message = error.localizedFailureReason;
+                break;
+
+            case -2:
+                title = AMLocalizedString(@"error", nil);
+                message = error.localizedDescription;
+                break;
+
+            default:
+                title = AMLocalizedString(@"error", nil);
+                message = error.localizedDescription;
+                break;
+        }
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self presentViewController:alertController animated:YES completion:nil];
+        });
+    }];
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
         [processAsset prepare];
-    }
+    });
 }
 
 - (void)didPressAccessoryButton:(UIButton *)sender {

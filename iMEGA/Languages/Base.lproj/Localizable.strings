@@ -1402,8 +1402,8 @@
 "high"="High";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="Original";
-/* Status text at the end of an upload */
-"processingFile"="Processing file";
+/* Label for the status of a transfer when is being preparing - (String as short as possible). */
+"preparing..."="Preparing...";
 /* Alert title shown when you try to select more than one video to send them through the chat */
 "sendVideosOneByOne"="Please, send videos one by one";
 /* QR Code label, used in Settings as title. String as short as possible */
