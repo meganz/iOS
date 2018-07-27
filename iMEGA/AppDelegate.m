@@ -1437,7 +1437,7 @@
     NSString *applicationSupportDirectoryString = applicationSupportDirectoryURL.path;
     NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryString error:&error];
     for (NSString *filename in applicationSupportContent) {
-        if ([filename containsString:@"megaclient"]) {
+        if ([filename containsString:@"megaclient"] || [filename containsString:@"karere"]) {
             NSString *destinationPath = [groupSupportPath stringByAppendingPathComponent:filename];
             if ([fileManager fileExistsAtPath:destinationPath]) {
                 if (![fileManager removeItemAtPath:destinationPath error:&error]) {
@@ -1790,53 +1790,61 @@ void uncaughtExceptionHandler(NSException *exception) {
     for (NSInteger i = 0 ; i < userListCount; i++) {
         MEGAUser *user = [userList userAtIndex:i];
         
-        if ([user hasChangedType:MEGAUserChangeTypeEmail]) {
-            MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:user.handle];
-            if (moUser) {
-                [[MEGAStore shareInstance] updateUserWithUserHandle:user.handle email:user.email];
-            } else {
-                [[MEGAStore shareInstance] insertUserWithUserHandle:user.handle firstname:nil lastname:nil email:user.email];
+        if (user.changes) {
+            if ([user hasChangedType:MEGAUserChangeTypeEmail]) {
+                MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:user.handle];
+                if (moUser) {
+                    [[MEGAStore shareInstance] updateUserWithUserHandle:user.handle email:user.email];
+                } else {
+                    [[MEGAStore shareInstance] insertUserWithUserHandle:user.handle firstname:nil lastname:nil email:user.email];
+                }
             }
-        }
-        
-        if (([user handle] == [[[MEGASdkManager sharedMEGASdk] myUser] handle])) {
+            
             if (user.isOwnChange == 0) { //If the change is external
-                if ([user hasChangedType:MEGAUserChangeTypeAvatar]) { //If you have changed your avatar, remove the old and request the new one
-                    NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
-                    NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
-                    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
-                    if (fileExists) {
-                        [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:nil];
+                if (user.handle == [MEGASdkManager sharedMEGASdk].myUser.handle) {
+                    if ([user hasChangedType:MEGAUserChangeTypeAvatar]) { //If you have changed your avatar, remove the old and request the new one
+                        NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
+                        NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
+                        if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
+                            [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:nil];
+                        }
+                        [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
                     }
-                    [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
-                }
-                
-                if ([user hasChangedType:MEGAUserChangeTypeFirstname]) {
-                    [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeFirstname];
-                }
-                if ([user hasChangedType:MEGAUserChangeTypeLastname]) {
-                    [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname];
-                }
-                if ([user hasChangedType:MEGAUserChangeTypeRichPreviews]) {
-                    [NSUserDefaults.standardUserDefaults removeObjectForKey:@"richLinks"];
-                    MEGAGetAttrUserRequestDelegate *delegate = [[MEGAGetAttrUserRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                        [NSUserDefaults.standardUserDefaults setBool:request.flag forKey:@"richLinks"];
-                    }];
-                    [[MEGASdkManager sharedMEGASdk] isRichPreviewsEnabledWithDelegate:delegate];
+                    
+                    if ([user hasChangedType:MEGAUserChangeTypeFirstname]) {
+                        [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeFirstname];
+                    }
+                    if ([user hasChangedType:MEGAUserChangeTypeLastname]) {
+                        [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname];
+                    }
+                    if ([user hasChangedType:MEGAUserChangeTypeRichPreviews]) {
+                        [NSUserDefaults.standardUserDefaults removeObjectForKey:@"richLinks"];
+                        MEGAGetAttrUserRequestDelegate *delegate = [[MEGAGetAttrUserRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                            [NSUserDefaults.standardUserDefaults setBool:request.flag forKey:@"richLinks"];
+                        }];
+                        [[MEGASdkManager sharedMEGASdk] isRichPreviewsEnabledWithDelegate:delegate];
+                    }
+                } else {
+                    if ([user hasChangedType:MEGAUserChangeTypeAvatar]) {
+                        NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
+                        NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
+                        if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
+                            [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:nil];
+                        }
+                        [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
+                    }
+                    if ([user hasChangedType:MEGAUserChangeTypeFirstname]) {
+                        [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
+                    }
+                    if ([user hasChangedType:MEGAUserChangeTypeLastname]) {
+                        [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
+                    }
                 }
             }
-        } else {
-            if (user.changes) {
-                if ([user hasChangedType:MEGAUserChangeTypeFirstname]) {
-                    [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
-                }
-                if ([user hasChangedType:MEGAUserChangeTypeLastname]) {
-                    [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
-                }
-            } else if (user.visibility == MEGAUserVisibilityVisible) {
-                [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
-                [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
-            }
+            
+        } else if (user.visibility == MEGAUserVisibilityVisible) {
+            [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
+            [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
         }
     }
 }

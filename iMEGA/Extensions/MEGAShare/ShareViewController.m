@@ -422,7 +422,7 @@
     if ([incomingDate compare:extensionDate] == NSOrderedDescending) {
         NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryURL.path error:&error];
         for (NSString *filename in applicationSupportContent) {
-            if ([filename containsString:@"megaclient"]) {
+            if ([filename containsString:@"megaclient"] || [filename containsString:@"karere"]) {
                 if(![fileManager removeItemAtPath:[applicationSupportDirectoryURL.path stringByAppendingPathComponent:filename] error:&error]) {
                     MEGALogError(@"Remove item at path failed with error: %@", error);
                 }
@@ -431,7 +431,7 @@
         
         NSArray *groupSupportPathContent = [fileManager contentsOfDirectoryAtPath:groupSupportURL.path error:&error];
         for (NSString *filename in groupSupportPathContent) {
-            if ([filename containsString:@"megaclient"]) {
+            if ([filename containsString:@"megaclient"] || [filename containsString:@"karere"]) {
                 if (![fileManager copyItemAtURL:[groupSupportURL URLByAppendingPathComponent:filename] toURL:[applicationSupportDirectoryURL URLByAppendingPathComponent:filename] error:&error]) {
                     MEGALogError(@"Copy item at path failed with error: %@", error);
                 }
@@ -446,7 +446,7 @@
     NSDate *newestDate = [[NSDate alloc] initWithTimeIntervalSince1970:0];
     NSArray *pathContent = [fileManager contentsOfDirectoryAtPath:url.path error:&error];
     for (NSString *filename in pathContent) {
-        if ([filename containsString:@"megaclient"]) {
+        if ([filename containsString:@"megaclient"] || [filename containsString:@"karere"]) {
             NSDate *date = [[fileManager attributesOfItemAtPath:[url.path stringByAppendingPathComponent:filename] error:nil] fileModificationDate];
             if ([date compare:newestDate] == NSOrderedDescending) {
                 newestDate = date;

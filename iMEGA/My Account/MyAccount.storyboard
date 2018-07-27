@@ -2247,6 +2247,7 @@
                         <outlet property="chooseFromOneOfThePlansHeaderView" destination="C46-c2-rIL" id="hfC-RA-YEy"/>
                         <outlet property="chooseFromOneOfThePlansLabel" destination="a7a-Tr-vKO" id="fes-64-Ak1"/>
                         <outlet property="chooseFromOneOfThePlansPROHeaderView" destination="mdW-Y6-dKV" id="Oof-Mn-HZi"/>
+                        <outlet property="chooseFromOneOfThePlansProLabel" destination="WI4-7p-JDD" id="o4U-tI-Mdz"/>
                         <outlet property="currentPlanBandwidthLabel" destination="RrN-75-nsw" id="bQl-Xn-YbV"/>
                         <outlet property="currentPlanImageView" destination="gKR-W8-vVI" id="pRs-zl-5Qc"/>
                         <outlet property="currentPlanLabel" destination="YEL-kZ-9DR" id="YTv-Zz-bEL"/>
