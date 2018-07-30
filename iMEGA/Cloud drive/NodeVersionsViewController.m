@@ -6,6 +6,7 @@
 #import "MEGAStore.h"
 #import "MEGASdkManager.h"
 #import "MEGANode+MNZCategory.h"
+#import "MEGANodeList+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "Helper.h"
@@ -142,7 +143,25 @@
     
     } else {
         if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-            [node mnz_openImageInNavigationController:self.navigationController withNodes:self.node.mnz_versions folderLink:NO displayMode:DisplayModeNodeVersions];
+            NSMutableArray<MEGANode *> *mediaNodesArray = [[[MEGASdkManager sharedMEGASdk] versionsForNode:self.node] mnz_mediaNodesMutableArrayFromNodeList];
+            
+            NSUInteger preferredIndex = 0;
+            for (NSUInteger i = 0; i < mediaNodesArray.count; i++) {
+                MEGANode *mediaNode = [mediaNodesArray objectAtIndex:i];
+                if (mediaNode.handle == node.handle) {
+                    preferredIndex = i;
+                    break;
+                }
+            }
+            
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
+            MEGAPhotoBrowserViewController *photoBrowserVC = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
+            photoBrowserVC.api = [MEGASdkManager sharedMEGASdk];
+            photoBrowserVC.mediaNodes = mediaNodesArray;
+            photoBrowserVC.preferredIndex = preferredIndex;
+            photoBrowserVC.displayMode = DisplayModeNodeVersions;
+            
+            [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
         } else {
             [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
         }

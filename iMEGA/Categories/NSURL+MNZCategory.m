@@ -171,7 +171,12 @@
                         MEGALogError(@"Create directory at path failed with error: %@", nserror);
                     }
                 }
-                MEGAPhotoBrowserViewController *photoBrowserVC = [node mnz_photoBrowserWithNodes:@[node] folderLink:NO displayMode:DisplayModeFileLink enableMoveToRubbishBin:NO];
+                
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
+                MEGAPhotoBrowserViewController *photoBrowserVC = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
+                photoBrowserVC.api = [MEGASdkManager sharedMEGASdkFolder];
+                photoBrowserVC.mediaNodes = @[node].mutableCopy;
+                photoBrowserVC.displayMode = DisplayModeFileLink;
                 photoBrowserVC.publicLink = fileLinkURLString;
                 
                 [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];

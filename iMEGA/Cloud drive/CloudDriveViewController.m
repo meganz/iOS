@@ -379,8 +379,7 @@
             
         case MEGANodeTypeFile: {
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList]);
-                [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:NO displayMode:self.displayMode];
+                [self presentMediaNode:node];
             } else {
                 [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
             }
@@ -515,8 +514,7 @@
             
         case MEGANodeTypeFile: {
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList]);
-                return [node mnz_photoBrowserWithNodes:nodesArray folderLink:NO displayMode:self.displayMode enableMoveToRubbishBin:YES];
+                [self presentMediaNode:node];
             } else {
                 UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO];
                 return viewController;
@@ -1332,6 +1330,34 @@
     if (indexPath != nil) {
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
+}
+
+- (void)presentMediaNode:(MEGANode *)node {
+    NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList]);
+    NSMutableArray<MEGANode *> *mediaNodesArray = [[NSMutableArray alloc] initWithCapacity:nodesArray.count];
+    for (MEGANode *n in nodesArray) {
+        if (n.name.mnz_isImagePathExtension || n.name.mnz_isVideoPathExtension) {
+            [mediaNodesArray addObject:n];
+        }
+    }
+    
+    NSUInteger preferredIndex = 0;
+    for (NSUInteger i = 0; i < mediaNodesArray.count; i++) {
+        MEGANode *mediaNode = [mediaNodesArray objectAtIndex:i];
+        if (mediaNode.handle == node.handle) {
+            preferredIndex = i;
+            break;
+        }
+    }
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
+    MEGAPhotoBrowserViewController *photoBrowserVC = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
+    photoBrowserVC.api = [MEGASdkManager sharedMEGASdk];
+    photoBrowserVC.mediaNodes = mediaNodesArray;
+    photoBrowserVC.preferredIndex = preferredIndex;
+    photoBrowserVC.displayMode = self.displayMode;
+    
+    [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
 }
 
 #pragma mark - IBActions

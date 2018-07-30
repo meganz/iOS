@@ -39,7 +39,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *leftToolbarItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *rightToolbarItem;
 
-@property (nonatomic) NSMutableArray<MEGANode *> *mediaNodes;
 @property (nonatomic) NSCache<NSString *, UIScrollView *> *imageViewsCache;
 @property (nonatomic) NSUInteger currentIndex;
 @property (nonatomic) UIImageView *targetImageView;
@@ -63,19 +62,8 @@
     [super viewDidLoad];
     
     self.modalPresentationCapturesStatusBarAppearance = YES;
-
-    self.mediaNodes = [[NSMutableArray<MEGANode *> alloc] init];
     
-    NSUInteger i = 0;
-    for (MEGANode *node in self.nodesArray) {
-        if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-            [self.mediaNodes addObject:node];
-            if (node.handle == self.node.handle) {
-                self.currentIndex = i;
-            }
-            i++;
-        }
-    }
+    self.currentIndex = self.preferredIndex;
     
     self.panGestureInitialPoint = CGPointZero;
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)]];
@@ -894,7 +882,7 @@
             break;
             
         case MegaNodeActionTypeOpen:
-            if (self.node.name.mnz_isVideoPathExtension) {
+            if (node.name.mnz_isVideoPathExtension) {
                 [self playVideo:nil];
             }
             break;
