@@ -327,8 +327,7 @@
 
                 } else {
                     if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                        NSArray *nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
-                        [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:YES displayMode:DisplayModeSharedItem];
+                        [self presentMediaNode:node];
                     } else {
                         [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
                     }
@@ -345,6 +344,30 @@
         UIAlertAction *okAction = decryptionAlertController.actions.lastObject;
         okAction.enabled = decryptionTextField.text.length > 0;
     }
+}
+
+- (void)presentMediaNode:(MEGANode *)node {
+    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdkFolder] nodeForHandle:node.parentHandle];
+    MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:parentNode];
+    NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaNodesMutableArrayFromNodeList];
+    
+    NSUInteger preferredIndex = 0;
+    for (NSUInteger i = 0; i < mediaNodesArray.count; i++) {
+        MEGANode *mediaNode = [mediaNodesArray objectAtIndex:i];
+        if (mediaNode.handle == node.handle) {
+            preferredIndex = i;
+            break;
+        }
+    }
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
+    MEGAPhotoBrowserViewController *photoBrowserVC = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
+    photoBrowserVC.api = [MEGASdkManager sharedMEGASdkFolder];
+    photoBrowserVC.mediaNodes = mediaNodesArray;
+    photoBrowserVC.preferredIndex = preferredIndex;
+    photoBrowserVC.displayMode = DisplayModeSharedItem;
+    
+    [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
 }
 
 #pragma mark - IBActions
@@ -550,7 +573,7 @@
 - (void)openNode:(MEGANode *)node {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-            [node mnz_openImageInNavigationController:self.navigationController withNodes:@[node] folderLink:YES displayMode:2];
+            [self presentMediaNode:node];
         } else {
             [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
         }
@@ -651,8 +674,7 @@
 
         case MEGANodeTypeFile: {
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                NSArray *nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
-                [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:YES displayMode:DisplayModeSharedItem];
+                [self presentMediaNode:node];
             } else {
                 [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
             }

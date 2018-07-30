@@ -261,8 +261,6 @@
     cell.nameLabel.text = currentNode.name;
     cell.infoLabel.text = [Helper sizeAndDateForNode:currentNode api:[MEGASdkManager sharedMEGASdk]];
     
-    //TODO: Show red checkmark if the file is Saved for Offline?
-    
     if (self.tableView.isEditing) {
         NSUInteger selectedNodesCount = self.selectedNodesMutableArray.count;
         for (NSUInteger i = 0; i < selectedNodesCount; i++) {
@@ -295,10 +293,10 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *nodeSelected = [self.message.nodeList nodeAtIndex:indexPath.row];
+    MEGANode *node = [self.message.nodeList nodeAtIndex:indexPath.row];
     
     if (tableView.isEditing) {
-        [self.selectedNodesMutableArray addObject:nodeSelected];
+        [self.selectedNodesMutableArray addObject:node];
         
         [self updatePromptTitle];
         
@@ -307,10 +305,28 @@
         
         return;
     } else {
-        if (nodeSelected.name.mnz_isImagePathExtension || nodeSelected.name.mnz_isVideoPathExtension) {
-            [nodeSelected mnz_openImageInNavigationController:self.navigationController withNodes:self.nodesLoadedInChatroom folderLink:NO displayMode:DisplayModeSharedItem enableMoveToRubbishBin:NO];
+        if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+            NSMutableArray<MEGANode *> *mediaNodesArray = [self.message.nodeList mnz_mediaNodesMutableArrayFromNodeList];
+            
+            NSUInteger preferredIndex = 0;
+            for (NSUInteger i = 0; i < mediaNodesArray.count; i++) {
+                MEGANode *mediaNode = [mediaNodesArray objectAtIndex:i];
+                if (mediaNode.handle == node.handle) {
+                    preferredIndex = i;
+                    break;
+                }
+            }
+
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
+            MEGAPhotoBrowserViewController *photoBrowserVC = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
+            photoBrowserVC.api = [MEGASdkManager sharedMEGASdk];
+            photoBrowserVC.mediaNodes = mediaNodesArray;
+            photoBrowserVC.preferredIndex = preferredIndex;
+            photoBrowserVC.displayMode = DisplayModeSharedItem;
+            
+            [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
         } else {
-            [nodeSelected mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+            [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
         }
     }
     

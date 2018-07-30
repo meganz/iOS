@@ -134,8 +134,11 @@
     
     if (self.node.name.mnz_isImagePathExtension || self.node.name.mnz_isVideoPathExtension) {
         [self dismissViewControllerAnimated:YES completion:^{
-            MEGAPhotoBrowserViewController *photoBrowserVC = [self.node mnz_photoBrowserWithNodes:@[self.node] folderLink:NO displayMode:DisplayModeFileLink enableMoveToRubbishBin:NO];
-            photoBrowserVC.publicLink = self.fileLinkString;
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
+            MEGAPhotoBrowserViewController *photoBrowserVC = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
+            photoBrowserVC.api = [MEGASdkManager sharedMEGASdk];
+            photoBrowserVC.mediaNodes = @[self.node].mutableCopy;
+            photoBrowserVC.displayMode = DisplayModeFileLink;
             
             [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];
         }];
@@ -313,11 +316,7 @@
 
 - (void)open {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        if (self.node.name.mnz_isImagePathExtension || self.node.name.mnz_isVideoPathExtension) {
-            [self.node mnz_openImageInNavigationController:self.navigationController withNodes:@[self.node] folderLink:YES displayMode:2];
-        } else {
-            [self.node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
-        }
+        [self.node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
     }
 }
 
