@@ -738,7 +738,25 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     if (sourceType == UIImagePickerControllerSourceTypeCamera) {
         MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToShareThroughChatWithSourceType:sourceType filePathCompletion:^(NSString *filePath, UIImagePickerControllerSourceType sourceType) {
             MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-            [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:nil];
+            if (filePath.mnz_imagePathExtension) {
+                [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:nil];
+            }
+            if (filePath.mnz_isVideoPathExtension) {
+                NSURL *videoURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:filePath]];
+                MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initToShareThroughChatWithVideoURL:videoURL filePath:^(NSString *filePath) {
+                    NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
+                    [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:appData];
+                } node:nil error:^(NSError *error) {
+                    NSString *title = AMLocalizedString(@"error", nil);
+                    NSString *message = error.localizedDescription;
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self presentViewController:alertController animated:YES completion:nil];
+                    });
+                }];
+                [processAsset prepare];
+            }
         }];
         
         [self presentViewController:imagePickerController animated:YES completion:nil];
@@ -1268,25 +1286,15 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             [self attachOrCopyAndAttachNode:node toParentNode:parentNode];
         }
     } errors:^(NSArray <NSError *> *errors) {
-        NSError *error = errors[0];
+        NSString *title = AMLocalizedString(@"error", nil);
         NSString *message;
-        NSString *title;
-        switch (error.code) {
-            case -1:
-                title = error.localizedDescription;
-                message = error.localizedFailureReason;
-                break;
-
-            case -2:
-                title = AMLocalizedString(@"error", nil);
-                message = error.localizedDescription;
-                break;
-
-            default:
-                title = AMLocalizedString(@"error", nil);
-                message = error.localizedDescription;
-                break;
+        if (errors.count == 1) {
+            NSError *error = errors[0];
+            message = error.localizedDescription;
+        } else {
+            message = AMLocalizedString(@"shareExtensionUnsupportedAssets", nil);
         }
+        
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         dispatch_async(dispatch_get_main_queue(), ^{

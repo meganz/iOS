@@ -30,15 +30,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    NSNumber *videoQualityNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"ChatVideoQuality"];
-    ChatVideoUploadQuality videoQuality;
-    if (videoQualityNumber) {
-        videoQuality = videoQualityNumber.unsignedIntegerValue;
-    } else {
-        [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityMedium) forKey:@"ChatVideoQuality"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        videoQuality = ChatVideoUploadQualityMedium;
-    }
+    ChatVideoUploadQuality videoQuality = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ChatVideoQuality"] unsignedIntegerValue];
     
     switch (videoQuality) {
         case ChatVideoUploadQualityLow:
