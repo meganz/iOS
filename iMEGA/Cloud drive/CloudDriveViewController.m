@@ -379,7 +379,7 @@
             
         case MEGANodeTypeFile: {
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                [self presentMediaNode:node];
+                [self.navigationController presentViewController:[self photoBrowserForMediaNode:node] animated:YES completion:nil];
             } else {
                 [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
             }
@@ -514,7 +514,7 @@
             
         case MEGANodeTypeFile: {
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                [self presentMediaNode:node];
+                return [self photoBrowserForMediaNode:node];
             } else {
                 UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO];
                 return viewController;
@@ -1332,7 +1332,7 @@
     }
 }
 
-- (void)presentMediaNode:(MEGANode *)node {
+- (MEGAPhotoBrowserViewController *)photoBrowserForMediaNode:(MEGANode *)node {
     NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList]);
     NSMutableArray<MEGANode *> *mediaNodesArray = [[NSMutableArray alloc] initWithCapacity:nodesArray.count];
     for (MEGANode *n in nodesArray) {
@@ -1357,7 +1357,7 @@
     photoBrowserVC.preferredIndex = preferredIndex;
     photoBrowserVC.displayMode = self.displayMode;
     
-    [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
+    return photoBrowserVC;
 }
 
 #pragma mark - IBActions
