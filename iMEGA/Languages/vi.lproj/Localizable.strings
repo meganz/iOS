@@ -281,13 +281,13 @@
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
 "nameDescending"="tên (giảm dần)";
 /* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
-"largest"="lớn nhất";
+"largest"="Lớn nhất";
 /* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
-"smallest"="nhỏ nhất";
+"smallest"="Nhỏ nhất";
 /* Sort by option (5/6). This one order the files by its modification date, newer first */
-"newest"="mới nhất";
+"newest"="Mới nhất";
 /* Sort by option (6/6). This one order the files by its modification date, older first */
-"oldest"="cũ nhất";
+"oldest"="Cũ nhất";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
 "choosePhotoVideo"="Chọn ảnh/video";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
@@ -890,7 +890,7 @@
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Xem và sửa thông tin cá nhân";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
-"profile"="Trang cá nhân";
+"profile"="Cá Nhân";
 /* Title of the Achievements section */
 "achievementsTitle"="Trang Thành Tích";
 /* Title of the Used storage section */
@@ -1190,7 +1190,7 @@
 /* Alert text that explains what means confirming the action 'Leave' */
 "youWillNoLongerHaveAccessToThisConversation"="Bạn không còn quyền hạn truy cập cuộc trò chuyện này";
 /* A button label. The button allows the user to leave the conversation. */
-"leaveChat"="Ròi khỏi cuộc trò chuyện";
+"leaveChat"="Rời khỏi Cuộc Trò Chuyện";
 /* Button title that allows the user to leave a group chat. */
 "leaveGroup"="Rời Nhóm Chat";
 /* Label to describe the section where you can see the participants of a group chat */
@@ -1419,7 +1419,7 @@
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="Quét Mã";
 /* Label that encourage the user to line the QR to scan with the camera */
-"lineCodeWithCamera"="Line up the QR code to scan it with your device’s camera";
+"lineCodeWithCamera"="So thẳng hàng camera với mã QR để tiến hành quét.";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
 "invalidCode"="Mã không phù hợp";
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
@@ -1477,11 +1477,11 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="Bạn có còn nhớ mật khẩu của mình không?";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset your password without data loss. Please make sure you remember your password.";
+"remindPasswordText"="Vì dạng thức thuật toán bảo mật của MEGA, mất Mã Phục Hồi và không có mật khẩu sẽ làm toàn bộ dữ liệu không thể lấy lại được. Xin hãy nhớ mật khẩu của chính mình.";
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Trước khi tiến hành việc đăng xuất, chúng tôi khuyên nên lưu lại Mã Khoá Phục Hồi ở một nơi an toàn dễ nhớ. Chú ý rằng, quên mật khẩu và không có mã sẽ không lấy lại được tài khoản.";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="Don’t show me again";
+"dontShowAgain"="Đừng hiện lại nữa";
 /* Label for test password button and titles */
 "testPassword"="Kiểm Tra Mật Khẩu";
 /* Label for recovery key button */
