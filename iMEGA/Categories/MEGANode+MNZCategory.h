@@ -1,12 +1,9 @@
 
-#import "MEGAPhotoBrowserViewController.h"
-
-#import "DisplayMode.h"
-
 @interface MEGANode (MNZCategory) <UITextFieldDelegate>
 
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink;
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink;
+
 - (void)mnz_generateThumbnailForVideoAtPath:(NSURL *)path;
 
 #pragma mark - Actions

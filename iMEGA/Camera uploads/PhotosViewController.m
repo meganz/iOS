@@ -603,24 +603,11 @@
         UICollectionViewCell *cell = [self collectionView:collectionView cellForItemAtIndexPath:indexPath];
         CGRect cellFrame = [collectionView convertRect:cell.frame toView:nil];
         
-        NSUInteger preferredIndex = 0;
-        for (NSUInteger i = 0; i < self.mediaNodesArray.count; i++) {
-            MEGANode *mediaNode = [self.mediaNodesArray objectAtIndex:i];
-            if (mediaNode.handle == node.handle) {
-                preferredIndex = i;
-                break;
-            }
-        }
+        MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:self.mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeCloudDrive presentingNode:node preferredIndex:0];
+        photoBrowserVC.originFrame = cellFrame;
+        photoBrowserVC.delegate = self;
         
-        MEGAPhotoBrowserViewController *photoBrowserViewController = [[UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil] instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
-        photoBrowserViewController.api = [MEGASdkManager sharedMEGASdk];
-        photoBrowserViewController.mediaNodes = self.mediaNodesArray;
-        photoBrowserViewController.preferredIndex = preferredIndex;
-        photoBrowserViewController.originFrame = cellFrame;
-        photoBrowserViewController.delegate = self;
-        photoBrowserViewController.displayMode = DisplayModeCloudDrive;
-
-        [self presentViewController:photoBrowserViewController animated:YES completion:nil];
+        [self presentViewController:photoBrowserVC animated:YES completion:nil];
     } else {
         if ([self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]]) {
             [self.selectedItemsDictionary removeObjectForKey:[NSNumber numberWithLongLong:node.handle]];
@@ -736,22 +723,9 @@
     NSArray *monthPhotosArray = [monthPhotosDictionary objectForKey:monthKey];
     MEGANode *node = [monthPhotosArray objectAtIndex:indexPath.row];
     if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-        NSUInteger preferredIndex = 0;
-        for (NSUInteger i = 0; i < self.mediaNodesArray.count; i++) {
-            MEGANode *mediaNode = [self.mediaNodesArray objectAtIndex:i];
-            if (mediaNode.handle == node.handle) {
-                preferredIndex = i;
-                break;
-            }
-        }
+        MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:self.mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeCloudDrive presentingNode:node preferredIndex:0];
         
-        MEGAPhotoBrowserViewController *photoBrowserViewController = [[UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil] instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
-        photoBrowserViewController.api = [MEGASdkManager sharedMEGASdk];
-        photoBrowserViewController.mediaNodes = self.mediaNodesArray;
-        photoBrowserViewController.preferredIndex = preferredIndex;
-        photoBrowserViewController.displayMode = DisplayModeCloudDrive;
-        
-        return photoBrowserViewController;
+        return photoBrowserVC;
     } else {
         return [node mnz_viewControllerForNodeInFolderLink:NO];
     }

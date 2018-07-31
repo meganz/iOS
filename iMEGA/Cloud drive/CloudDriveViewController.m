@@ -14,11 +14,8 @@
 #import "UIImageView+MNZCategory.h"
 
 #import "Helper.h"
-#import "MEGAAssetsPickerController.h"
 #import "MEGACreateFolderRequestDelegate.h"
-#import "MEGAImagePickerController.h"
 #import "MEGAMoveRequestDelegate.h"
-#import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAPurchase.h"
@@ -32,17 +29,19 @@
 
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
+#import "CustomActionViewController.h"
+#import "CustomModalAlertViewController.h"
+#import "MEGAAssetsPickerController.h"
+#import "MEGAImagePickerController.h"
+#import "MEGANavigationController.h"
+#import "MEGAPhotoBrowserViewController.h"
+#import "NodeInfoViewController.h"
 #import "NodeTableViewCell.h"
 #import "PhotosViewController.h"
 #import "PreviewDocumentViewController.h"
 #import "SortByTableViewController.h"
 #import "SharedItemsViewController.h"
 #import "UpgradeTableViewController.h"
-#import "CustomModalAlertViewController.h"
-
-#import "CustomActionViewController.h"
-
-#import "NodeInfoViewController.h"
 
 @interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITableViewDelegate, UITableViewDataSource> {
     BOOL allNodesSelected;
@@ -1341,21 +1340,7 @@
         }
     }
     
-    NSUInteger preferredIndex = 0;
-    for (NSUInteger i = 0; i < mediaNodesArray.count; i++) {
-        MEGANode *mediaNode = [mediaNodesArray objectAtIndex:i];
-        if (mediaNode.handle == node.handle) {
-            preferredIndex = i;
-            break;
-        }
-    }
-    
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
-    MEGAPhotoBrowserViewController *photoBrowserVC = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
-    photoBrowserVC.api = [MEGASdkManager sharedMEGASdk];
-    photoBrowserVC.mediaNodes = mediaNodesArray;
-    photoBrowserVC.preferredIndex = preferredIndex;
-    photoBrowserVC.displayMode = self.displayMode;
+    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:self.displayMode presentingNode:node preferredIndex:0];
     
     return photoBrowserVC;
 }
