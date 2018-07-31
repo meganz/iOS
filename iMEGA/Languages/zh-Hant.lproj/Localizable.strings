@@ -1393,13 +1393,13 @@
 /* Button title to see the available bonus */
 "getBonus"="獲得獎勵";
 /* Text shown under the title 'Video quality' that explains what it means */
-"qualityOfVideosUploadedToAChat"="Quality of videos uploaded to a chat";
+"qualityOfVideosUploadedToAChat"="上傳到對話中的影片品質";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
-"videoQuality"="Video quality";
+"videoQuality"="影片品質";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
-"low"="Low";
+"low"="低";
 /* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
-"high"="High";
+"high"="高";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="原始檔";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
@@ -1505,7 +1505,7 @@
 /* Button title to allow the user ignore something */
 "ignore"="忽略";
 /* Button title to allow the user open the default browser */
-"openBrowser"="Open browser";
+"openBrowser"="開啟瀏覽器";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="重新啟動";
 /* Title to alert user the possibility of resume playing the video or start from the beginning */
