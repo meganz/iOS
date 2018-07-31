@@ -41,6 +41,8 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 @property (nonatomic, weak) UIAlertController *alertController;
 @property (nonatomic) dispatch_semaphore_t semaphore;
 
+@property (nonatomic, copy) AVAsset *avAsset;
+
 @end
 
 @implementation MEGAProcessAsset
@@ -106,8 +108,29 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     
 }
 
+- (instancetype)initToShareThroughChatWithVideoURL:(NSURL *)videoURL filePath:(void (^)(NSString *))filePath node:(void (^)(MEGANode *))node error:(void (^)(NSError *))error {
+    self = [super init];
+    
+    if (self) {
+        _avAsset = [AVAsset assetWithURL:videoURL];
+        _filePath = filePath;
+        _node = node;
+        _error = error;
+        _retries = 0;
+        _shareThroughChat = YES;
+        _parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
+        _cameraUploads = NO;
+        _totalDuration = CMTimeGetSeconds(self.avAsset.duration);
+    }
+    
+    return self;
+    
+}
+
 - (void)prepare {
-    if (self.assets) {
+    if (self.avAsset) {
+        [self prepareAVAsset];
+    } else if (self.assets) {
         for (NSUInteger i = 0; i < self.assets.count; i++) {
             PHAsset *asset = [self.assets objectAtIndex:i];
             switch (asset.mediaType) {
@@ -262,42 +285,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                      BOOL shouldEncodeVideo = [self shouldEncodeVideoTrack:videoTrack videoQuality:videoQuality extension:filePath.pathExtension];
                      
                      if (shouldEncodeVideo) {
-                         filePath = [filePath stringByDeletingPathExtension];
-                         filePath = [filePath stringByAppendingPathExtension:@"mp4"];
-                         [self deleteLocalFileIfExists:filePath];
-                         
-                         CGSize videoSize = [self sizeByVideoTrack:videoTrack videoQuality:videoQuality];
-                         float bps = [self bpsByVideoTrack:videoTrack videoQuality:videoQuality];
-                         float fps = 30;
-                         if (videoTrack.nominalFrameRate < 30 || videoQuality == ChatVideoUploadQualityHigh) {
-                             fps = videoTrack.nominalFrameRate;
-                         }
-                         
-                         SDAVAssetExportSession *encoder = [[SDAVAssetExportSession alloc] initWithAsset:avAsset];
-                         encoder.outputFileType = AVFileTypeMPEG4;
-                         encoder.outputURL = [NSURL fileURLWithPath:filePath];
-                         encoder.videoSettings = @
-                         {
-                         AVVideoCodecKey:AVVideoCodecH264,
-                         AVVideoWidthKey:@(videoSize.width),
-                         AVVideoHeightKey:@(videoSize.height),
-                         AVVideoCompressionPropertiesKey:@
-                             {
-                             AVVideoAverageBitRateKey:@(bps),
-                             AVVideoAverageNonDroppableFrameRateKey:@(fps),
-                             AVVideoProfileLevelKey:AVVideoProfileLevelH264BaselineAutoLevel,
-                             },
-                         };
-                         encoder.audioSettings = @
-                         {
-                         AVFormatIDKey:@(kAudioFormatMPEG4AAC),
-                         AVNumberOfChannelsKey:@1,
-                         AVSampleRateKey:@44100,
-                         AVEncoderBitRateKey:@128000,
-                         AVEncoderBitRateStrategyKey:AVAudioBitRateStrategy_Variable,
-                         };
-                         
-                         [encoder addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionNew context:ProcessAssetProgressContext];
+                         SDAVAssetExportSession *encoder = [self configureEncoderWithAVAsset:avAsset videoQuality:videoQuality filePath:filePath];
                          
                          if (!self.alertController) {
                              NSString *title = [AMLocalizedString(@"preparing...", @"Label for the status of a transfer when is being preparing - (String as short as possible.") stringByAppendingString:@"\n"];
@@ -363,12 +351,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                          dispatch_async(dispatch_get_main_queue(), ^(void) {
                              if (UIApplication.mnz_visibleViewController != self.alertController) {
                                  [[UIApplication mnz_visibleViewController] presentViewController:self.alertController animated:YES completion:^{
-                                     CGFloat margin = 20.0;
-                                     CGRect rect = CGRectMake(margin, 72.0, self.alertController.view.frame.size.width - margin * 2.0 , 2.0);
-                                     self.progressView = [[UIProgressView alloc] initWithFrame:rect];
-                                     self.progressView.progress = 0.0;
-                                     self.progressView.tintColor = [UIColor mnz_redD90007];
-                                     [self.alertController.view addSubview:self.progressView];
+                                     [self addProgressViewToAlertController];
                                  }];
                              }
                          });
@@ -449,6 +432,76 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     }
 }
 
+- (void)prepareAVAsset {
+    NSURL *avassetUrl = [(AVURLAsset *)self.avAsset URL];
+    __block NSString *filePath = [[avassetUrl.path stringByDeletingPathExtension] stringByAppendingPathExtension:@"mp4"];
+    NSDictionary *fileAtributes = [[NSFileManager defaultManager] attributesOfItemAtPath:avassetUrl.path error:nil];
+    [self deleteLocalFileIfExists:filePath];
+    long long fileSize = [[fileAtributes objectForKey:NSFileSize] longLongValue];
+    
+    if ([self hasFreeSpaceOnDiskForWriteFile:fileSize]) {
+        NSNumber *videoQualityNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"ChatVideoQuality"];
+        ChatVideoUploadQuality videoQuality;
+        if (videoQualityNumber) {
+            videoQuality = videoQualityNumber.unsignedIntegerValue;
+        } else {
+            [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityMedium) forKey:@"ChatVideoQuality"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            videoQuality = ChatVideoUploadQualityMedium;
+        }
+        
+        AVAssetTrack *videoTrack = [[self.avAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+        
+        BOOL shouldEncodeVideo = [self shouldEncodeVideoTrack:videoTrack videoQuality:videoQuality extension:avassetUrl.pathExtension];
+        
+        if (shouldEncodeVideo) {
+            SDAVAssetExportSession *encoder = [self configureEncoderWithAVAsset:self.avAsset videoQuality:videoQuality filePath:filePath];
+            
+            if (!self.alertController) {
+                NSString *title = [AMLocalizedString(@"preparing...", @"Label for the status of a transfer when is being preparing - (String as short as possible.") stringByAppendingString:@"\n"];
+                self.alertController = [UIAlertController alertControllerWithTitle:title message:@"\n" preferredStyle:UIAlertControllerStyleAlert];
+                [self.alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                    MEGALogDebug(@"[PA] User cancelled the export session");
+                    [encoder cancelExport];
+                }]];
+            }
+            
+            MEGALogDebug(@"[PA] Export session started");
+            [encoder exportAsynchronouslyWithCompletionHandler:^{
+                if (encoder.status == AVAssetExportSessionStatusCompleted) {
+                    MEGALogDebug(@"[PA] Export session finished");
+                    self.currentProgress += CMTimeGetSeconds(self.avAsset.duration);
+                    if (self.filePath) {
+                        filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                        self.filePath(filePath);
+                    }
+                }
+                else if (encoder.status == AVAssetExportSessionStatusCancelled) {
+                    MEGALogDebug(@"[PA] Export session cancelled");
+                }
+                else {
+                    MEGALogDebug(@"[PA] Export session failed with error: %@ (%ld)", encoder.error.localizedDescription, (long)encoder.error.code);
+                }
+                [encoder removeObserver:self forKeyPath:@"progress" context:ProcessAssetProgressContext];
+                dispatch_async(dispatch_get_main_queue(), ^(void) {
+                    [self.alertController dismissViewControllerAnimated:YES completion:nil];
+                });
+            }];
+            if (UIApplication.mnz_visibleViewController != self.alertController) {
+                [[UIApplication mnz_visibleViewController].presentingViewController presentViewController:self.alertController animated:YES completion:^{
+                    [self addProgressViewToAlertController];
+                }];
+            }
+        } else {
+            self.currentProgress += CMTimeGetSeconds(self.avAsset.duration);
+            if (self.filePath) {
+                filePath = [avassetUrl.path stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                self.filePath(filePath);
+            }
+        }
+    }
+}
+
 #pragma mark - Private
 
 - (void)deleteLocalFileIfExists:(NSString *)filePath {
@@ -476,11 +529,15 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     
     MEGALogDebug(@"[PA] File size: %lld - Free size: %lld", fileSize, freeSpace);
     if (fileSize > freeSpace) {
+        NSDictionary *dict = @{NSLocalizedDescriptionKey:AMLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something")};
+        NSError *error = [NSError errorWithDomain:MEGAProcessAssetErrorDomain code:-2 userInfo:dict];
         if (self.error) {
-            NSDictionary *dict = @{NSLocalizedDescriptionKey:AMLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something")};
-            NSError *error = [NSError errorWithDomain:MEGAProcessAssetErrorDomain code:-2 userInfo:dict];
             self.error(error);
-        }        
+        }
+        if (self.errors) {
+            [self.errorsArray addObject:error];
+            dispatch_semaphore_signal(self.semaphore);
+        }
         return NO;
     }
     return YES;
@@ -690,6 +747,60 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     [self.errorsArray removeAllObjects];
     [self.assets removeAllObjects];
     dispatch_semaphore_signal(self.semaphore);
+}
+
+- (SDAVAssetExportSession *)configureEncoderWithAVAsset:(AVAsset *)avAsset videoQuality:(ChatVideoUploadQuality)videoQuality filePath:(NSString *)filePath {
+    if (![filePath.pathExtension isEqualToString:@"mp4"]) {
+        filePath = [filePath stringByDeletingPathExtension];
+        filePath = [filePath stringByAppendingPathExtension:@"mp4"];
+    }
+    [self deleteLocalFileIfExists:filePath];
+    
+    AVAssetTrack *videoTrack = [[avAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+    
+    CGSize videoSize = [self sizeByVideoTrack:videoTrack videoQuality:videoQuality];
+    float bps = [self bpsByVideoTrack:videoTrack videoQuality:videoQuality];
+    float fps = 30;
+    if (videoTrack.nominalFrameRate < 30 || videoQuality == ChatVideoUploadQualityHigh) {
+        fps = videoTrack.nominalFrameRate;
+    }
+    
+    SDAVAssetExportSession *encoder = [[SDAVAssetExportSession alloc] initWithAsset:avAsset];
+    encoder.outputFileType = AVFileTypeMPEG4;
+    encoder.outputURL = [NSURL fileURLWithPath:filePath];
+    encoder.videoSettings = @
+    {
+    AVVideoCodecKey:AVVideoCodecH264,
+    AVVideoWidthKey:@(videoSize.width),
+    AVVideoHeightKey:@(videoSize.height),
+    AVVideoCompressionPropertiesKey:@
+        {
+        AVVideoAverageBitRateKey:@(bps),
+        AVVideoAverageNonDroppableFrameRateKey:@(fps),
+        AVVideoProfileLevelKey:AVVideoProfileLevelH264BaselineAutoLevel,
+        },
+    };
+    encoder.audioSettings = @
+    {
+    AVFormatIDKey:@(kAudioFormatMPEG4AAC),
+    AVNumberOfChannelsKey:@1,
+    AVSampleRateKey:@44100,
+    AVEncoderBitRateKey:@128000,
+    AVEncoderBitRateStrategyKey:AVAudioBitRateStrategy_Variable,
+    };
+    
+    [encoder addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionNew context:ProcessAssetProgressContext];
+    
+    return encoder;
+}
+
+- (void)addProgressViewToAlertController {
+    CGFloat margin = 20.0;
+    CGRect rect = CGRectMake(margin, 72.0, self.alertController.view.frame.size.width - margin * 2.0 , 2.0);
+    self.progressView = [[UIProgressView alloc] initWithFrame:rect];
+    self.progressView.progress = 0.0;
+    self.progressView.tintColor = [UIColor mnz_redD90007];
+    [self.alertController.view addSubview:self.progressView];
 }
 
 @end
