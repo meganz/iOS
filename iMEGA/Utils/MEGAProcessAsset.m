@@ -259,21 +259,15 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                      
                      AVAssetTrack *videoTrack = [[avAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
                      
-                     BOOL shouldEncodeVideo;
-                     if ([filePath.pathExtension.lowercaseString isEqualToString:@"mp4"] && videoQuality >= ChatVideoUploadQualityHigh) {
-                         shouldEncodeVideo = NO;
-                     } else {
-                         shouldEncodeVideo = [self shouldEncodeVideoWithVideoTrack:videoTrack videoQuality:videoQuality];
-                     }
+                     BOOL shouldEncodeVideo = [self shouldEncodeVideoTrack:videoTrack videoQuality:videoQuality extension:filePath.pathExtension];
                      
-                     if (self.toShareThroughChat && videoQuality < ChatVideoUploadQualityOriginal && shouldEncodeVideo) {
+                     if (shouldEncodeVideo) {
                          filePath = [filePath stringByDeletingPathExtension];
                          filePath = [filePath stringByAppendingPathExtension:@"mp4"];
                          [self deleteLocalFileIfExists:filePath];
                          
                          CGSize videoSize = [self sizeByVideoTrack:videoTrack videoQuality:videoQuality];
-                         float bpsByQuality = [self bpsByVideoTrack:videoTrack videoQuality:videoQuality];
-                         float bps = (videoTrack.estimatedDataRate < bpsByQuality) ? videoTrack.estimatedDataRate : bpsByQuality;
+                         float bps = [self bpsByVideoTrack:videoTrack videoQuality:videoQuality];
                          float fps = 30;
                          if (videoTrack.nominalFrameRate < 30 || videoQuality == ChatVideoUploadQualityHigh) {
                              fps = videoTrack.nominalFrameRate;
@@ -311,7 +305,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                              [self.alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
                                  MEGALogDebug(@"[PA] User cancelled the export session");
                                  self.cancelExportByUser = YES;
-                                 [self shareCancelledOrFailed];
+                                 [self exportSessionCancelledOrFailed];
                                  [encoder cancelExport];
                              }]];
                          }
@@ -354,12 +348,12 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                               else if (encoder.status == AVAssetExportSessionStatusCancelled) {
                                   MEGALogDebug(@"[PA] Export session cancelled");
                                   if (!self.cancelExportByUser) {
-                                      [self shareCancelledOrFailed];
+                                      [self exportSessionCancelledOrFailed];
                                   }
                               }
                               else {
                                   MEGALogDebug(@"[PA] Export session failed with error: %@ (%ld)", encoder.error.localizedDescription, (long)encoder.error.code);
-                                  [self shareCancelledOrFailed];
+                                  [self exportSessionCancelledOrFailed];
                                   self.exportAssetFailed = YES;
                               }
                              [encoder removeObserver:self forKeyPath:@"progress" context:ProcessAssetProgressContext];
@@ -629,7 +623,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     }
     
     if (videoQuality < ChatVideoUploadQualityHigh) {
-        CGFloat shortSideByQuality = [self shortSideByQuality:videoTrack videoQuality:videoQuality];
+        CGFloat shortSideByQuality = (videoQuality == ChatVideoUploadQualityLow) ? 480.0f : 720.0f;
         CGFloat shortSide = (width > height) ? height : width;
         if (shortSide > shortSideByQuality) {
             if (width > height) {
@@ -645,37 +639,46 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     return CGSizeMake(width, height);
 }
 
-- (BOOL)shouldEncodeVideoWithVideoTrack:(AVAssetTrack *)videoTrack videoQuality:(ChatVideoUploadQuality)videoQuality {
-    CGFloat shorterSize = (videoTrack.naturalSize.width > videoTrack.naturalSize.height) ? videoTrack.naturalSize.height : videoTrack.naturalSize.width;
-    
-    CGFloat shortSideByQuality = [self shortSideByQuality:videoTrack videoQuality:videoQuality];
-    
-    if (shorterSize > shortSideByQuality) {
-        return YES;
+- (BOOL)shouldEncodeVideoTrack:(AVAssetTrack *)videoTrack videoQuality:(ChatVideoUploadQuality)videoQuality extension:(NSString *)extension {
+    if (self.shareThroughChat && videoQuality < ChatVideoUploadQualityOriginal) {
+        if ([extension.lowercaseString isEqualToString:@"mp4"]) {
+            if (videoQuality < ChatVideoUploadQualityHigh) {
+                CGFloat shorterSize = (videoTrack.naturalSize.width > videoTrack.naturalSize.height) ? videoTrack.naturalSize.height : videoTrack.naturalSize.width;
+                
+                CGFloat shortSideByQuality = (videoQuality == ChatVideoUploadQualityLow) ? 480.0f : 720.0f;
+                
+                if (shorterSize > shortSideByQuality) {
+                    return YES;
+                }
+            }
+        } else {
+            return YES;
+        }
     }
     
     return NO;    
 }
 
 - (float)bpsByVideoTrack:(AVAssetTrack *)videoTrack videoQuality:(ChatVideoUploadQuality)videoQuality {
-    if (videoQuality == ChatVideoUploadQualityLow) {
-        return 1500000.0f;
-    } else if (videoQuality == ChatVideoUploadQualityMedium) { // ChatVideoUploadQualityMedium
-        return 3000000.0f;
-    } else {
-        return videoTrack.estimatedDataRate;
+    float bpsByQuality;
+    switch (videoQuality) {
+        case ChatVideoUploadQualityLow:
+            bpsByQuality = 1500000.0f;
+            break;
+            
+        case ChatVideoUploadQualityMedium:
+            bpsByQuality = 3000000.0f;
+            break;
+            
+        default:
+            bpsByQuality = videoTrack.estimatedDataRate;
+            break;
     }
+    
+    return (videoTrack.estimatedDataRate < bpsByQuality) ? videoTrack.estimatedDataRate : bpsByQuality;
 }
 
-- (CGFloat)shortSideByQuality:(AVAssetTrack *)videoTrack videoQuality:(ChatVideoUploadQuality)videoQuality {
-    if (videoQuality == ChatVideoUploadQualityLow) {
-        return 480.0f;
-    } else {
-        return 720.0f;
-    }
-}
-
-- (void)shareCancelledOrFailed {
+- (void)exportSessionCancelledOrFailed {
     NSError *error;
     for (NSString *filePath in self.filePathsArray) {
         if (![[NSFileManager defaultManager] removeItemAtPath:filePath error:&error]) {
