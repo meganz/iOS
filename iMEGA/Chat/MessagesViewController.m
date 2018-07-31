@@ -1,28 +1,20 @@
+
 #import "MessagesViewController.h"
+
+#import <UserNotifications/UserNotifications.h>
 
 #import "SVProgressHUD.h"
 #import "UIImage+GKContact.h"
 
-#import "BrowserViewController.h"
-#import "CallViewController.h"
-#import "ChatAttachedContactsViewController.h"
-#import "ChatAttachedNodesViewController.h"
-#import "ContactsViewController.h"
-#import "ContactDetailsViewController.h"
-#import "GroupChatDetailsViewController.h"
-
 #import "Helper.h"
 #import "DevicePermissionsHelper.h"
 #import "DisplayMode.h"
-#import "MainTabBarController.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGACopyRequestDelegate.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
-#import "MEGAImagePickerController.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGAMessagesTypingIndicatorFoorterView.h"
-#import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAOpenMessageHeaderView.h"
@@ -35,10 +27,20 @@
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
-#import "SendToViewController.h"
 #import "UIImage+MNZCategory.h"
 
-#import <UserNotifications/UserNotifications.h>
+#import "BrowserViewController.h"
+#import "CallViewController.h"
+#import "ChatAttachedContactsViewController.h"
+#import "ChatAttachedNodesViewController.h"
+#import "ContactsViewController.h"
+#import "ContactDetailsViewController.h"
+#import "GroupChatDetailsViewController.h"
+#import "MainTabBarController.h"
+#import "MEGAPhotoBrowserViewController.h"
+#import "MEGAImagePickerController.h"
+#import "MEGANavigationController.h"
+#import "SendToViewController.h"
 
 const CGFloat kGroupChatCellLabelHeight = 35.0f;
 const CGFloat k1on1CellLabelHeight = 28.0f;
@@ -1937,17 +1939,12 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                 MEGANode *node = [message.nodeList nodeAtIndex:0];
                 if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                     NSArray<MEGAChatMessage *> *reverseArray = [[self.attachmentMessages reverseObjectEnumerator] allObjects];
-                    NSMutableArray<MEGANode *> *mediaNodes = [[NSMutableArray<MEGANode *> alloc] initWithCapacity:reverseArray.count];
+                    NSMutableArray<MEGANode *> *mediaNodesArray = [[NSMutableArray<MEGANode *> alloc] initWithCapacity:reverseArray.count];
                     for (MEGAChatMessage *attachmentMessage in reverseArray) {
-                        [mediaNodes addObject:[attachmentMessage.nodeList nodeAtIndex:0]];
+                        [mediaNodesArray addObject:[attachmentMessage.nodeList nodeAtIndex:0]];
                     }
                     
-                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
-                    MEGAPhotoBrowserViewController *photoBrowserVC = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
-                    photoBrowserVC.api = [MEGASdkManager sharedMEGASdk];
-                    photoBrowserVC.mediaNodes = mediaNodes;
-                    photoBrowserVC.preferredIndex = [reverseArray indexOfObject:message];
-                    photoBrowserVC.displayMode = DisplayModeSharedItem;
+                    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeSharedItem presentingNode:nil preferredIndex:[reverseArray indexOfObject:message]];
                     
                     [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
                 } else {

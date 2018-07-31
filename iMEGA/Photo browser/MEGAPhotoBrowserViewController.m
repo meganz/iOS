@@ -56,6 +56,28 @@
 
 @implementation MEGAPhotoBrowserViewController
 
++ (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode presentingNode:(MEGANode *)node preferredIndex:(NSUInteger)preferredIndex {
+    NSUInteger index = preferredIndex;
+    if (node) {
+        for (NSUInteger i = 0; i < mediaNodesArray.count; i++) {
+            MEGANode *mediaNode = [mediaNodesArray objectAtIndex:i];
+            if (mediaNode.handle == node.handle) {
+                index = i;
+                break;
+            }
+        }
+    }
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
+    MEGAPhotoBrowserViewController *photoBrowserVC = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
+    photoBrowserVC.api = api;
+    photoBrowserVC.mediaNodes = mediaNodesArray;
+    photoBrowserVC.preferredIndex = index;
+    photoBrowserVC.displayMode = displayMode;
+    
+    return photoBrowserVC;
+}
+
 #pragma mark - Lifecycle
 
 - (void)viewDidLoad {

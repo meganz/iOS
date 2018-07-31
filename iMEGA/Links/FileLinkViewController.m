@@ -10,9 +10,10 @@
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+#import "UnavailableLinkView.h"
 
 #import "CustomActionViewController.h"
-#import "UnavailableLinkView.h"
+#import "MEGAPhotoBrowserViewController.h"
 
 @interface FileLinkViewController () <CustomActionViewControllerDelegate>
 
@@ -134,11 +135,7 @@
     
     if (self.node.name.mnz_isImagePathExtension || self.node.name.mnz_isVideoPathExtension) {
         [self dismissViewControllerAnimated:YES completion:^{
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
-            MEGAPhotoBrowserViewController *photoBrowserVC = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
-            photoBrowserVC.api = [MEGASdkManager sharedMEGASdk];
-            photoBrowserVC.mediaNodes = @[self.node].mutableCopy;
-            photoBrowserVC.displayMode = DisplayModeFileLink;
+            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[self.node].mutableCopy api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeFileLink presentingNode:self.node preferredIndex:0];
             
             [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];
         }];

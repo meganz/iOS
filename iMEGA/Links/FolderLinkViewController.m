@@ -4,23 +4,24 @@
 #import "SAMKeychain.h"
 #import "UIScrollView+EmptyDataSet.h"
 
+#import "DisplayMode.h"
 #import "Helper.h"
-#import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
-#import "MyAccountHallViewController.h"
+#import "NodeTableViewCell.h"
 #import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
-
-#import "DisplayMode.h"
-#import "NodeTableViewCell.h"
-#import "MainTabBarController.h"
 #import "UnavailableLinkView.h"
-#import "LoginViewController.h"
+
 #import "BrowserViewController.h"
 #import "CustomActionViewController.h"
+#import "LoginViewController.h"
+#import "MainTabBarController.h"
+#import "MEGANavigationController.h"
+#import "MEGAPhotoBrowserViewController.h"
+#import "MyAccountHallViewController.h"
 
 @interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, CustomActionViewControllerDelegate> {
     
@@ -351,21 +352,7 @@
     MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:parentNode];
     NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaNodesMutableArrayFromNodeList];
     
-    NSUInteger preferredIndex = 0;
-    for (NSUInteger i = 0; i < mediaNodesArray.count; i++) {
-        MEGANode *mediaNode = [mediaNodesArray objectAtIndex:i];
-        if (mediaNode.handle == node.handle) {
-            preferredIndex = i;
-            break;
-        }
-    }
-    
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
-    MEGAPhotoBrowserViewController *photoBrowserVC = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
-    photoBrowserVC.api = [MEGASdkManager sharedMEGASdkFolder];
-    photoBrowserVC.mediaNodes = mediaNodesArray;
-    photoBrowserVC.preferredIndex = preferredIndex;
-    photoBrowserVC.displayMode = DisplayModeSharedItem;
+    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdkFolder] displayMode:DisplayModeSharedItem presentingNode:node preferredIndex:0];
     
     [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
 }

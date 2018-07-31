@@ -44,18 +44,19 @@
 #import "ContactRequestsViewController.h"
 #import "ContactsViewController.h"
 #import "CreateAccountViewController.h"
+#import "CustomModalAlertViewController.h"
 #import "DisplayMode.h"
 #import "LaunchViewController.h"
 #import "LoginViewController.h"
 #import "MainTabBarController.h"
 #import "MasterKeyViewController.h"
+#import "MEGAPhotoBrowserViewController.h"
 #import "MessagesViewController.h"
 #import "MyAccountHallViewController.h"
 #import "SettingsTableViewController.h"
 #import "SharedItemsViewController.h"
 #import "UnavailableLinkView.h"
 #import "UpgradeTableViewController.h"
-#import "CustomModalAlertViewController.h"
 
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
 #import "MEGACreateAccountRequestDelegate.h"
@@ -1377,21 +1378,7 @@
                 MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode];
                 NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaNodesMutableArrayFromNodeList];
                 
-                NSUInteger preferredIndex = 0;
-                for (NSUInteger i = 0; i < mediaNodesArray.count; i++) {
-                    MEGANode *mediaNode = [mediaNodesArray objectAtIndex:i];
-                    if (mediaNode.handle == node.handle) {
-                        preferredIndex = i;
-                        break;
-                    }
-                }
-                
-                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
-                MEGAPhotoBrowserViewController *photoBrowserVC = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
-                photoBrowserVC.api = [MEGASdkManager sharedMEGASdk];
-                photoBrowserVC.mediaNodes = mediaNodesArray;
-                photoBrowserVC.preferredIndex = preferredIndex;
-                photoBrowserVC.displayMode = DisplayModeCloudDrive;
+                MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeCloudDrive presentingNode:node preferredIndex:0];
                 
                 [navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
             } else {
