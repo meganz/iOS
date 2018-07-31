@@ -136,6 +136,7 @@
     if (self.node.name.mnz_isImagePathExtension || self.node.name.mnz_isVideoPathExtension) {
         [self dismissViewControllerAnimated:YES completion:^{
             MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[self.node].mutableCopy api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeFileLink presentingNode:self.node preferredIndex:0];
+            photoBrowserVC.publicLink = self.fileLinkString;
             
             [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];
         }];
