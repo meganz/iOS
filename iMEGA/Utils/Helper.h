@@ -96,6 +96,8 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 + (void)setIndexer:(MEGAIndexer* )megaIndexer;
 
++ (NSString *)sequentialNameForNodeNamed:(NSString *)name parentNode:(MEGANode *)parentNode;
+
 #pragma mark - Utils for empty states
 
 + (UIEdgeInsets)capInsetsForEmptyStateButton;

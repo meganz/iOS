@@ -931,6 +931,25 @@ static MEGAIndexer *indexer;
     indexer = megaIndexer;
 }
 
++ (NSString *)sequentialNameForNodeNamed:(NSString *)name parentNode:(MEGANode *)parentNode {
+    NSString *nameWithoutExtension = [name stringByDeletingPathExtension];
+    NSString *extension = [name pathExtension];
+    int index = 0;
+    int listSize = 0;
+    
+    do {
+        if (index != 0) {
+            nameWithoutExtension = [[name stringByDeletingPathExtension] stringByAppendingString:[NSString stringWithFormat:@"_%d", index]];
+        }
+        
+        MEGANodeList *nameNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:parentNode searchString:[nameWithoutExtension stringByAppendingPathExtension:extension]];
+        listSize = [nameNodeList.size intValue];
+        index++;
+    } while (listSize != 0);
+    
+    return [nameWithoutExtension stringByAppendingPathExtension:extension];
+}
+
 #pragma mark - Utils for empty states
 
 + (UIEdgeInsets)capInsetsForEmptyStateButton {

@@ -233,7 +233,7 @@
         MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:uploadTransfer.parentNodeHandle.unsignedLongLongValue];
         MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:self.asset parentNode:parentNode filePath:^(NSString *filePath) {
             NSString *name = filePath.lastPathComponent;
-            NSString *newName = [self sequenceNameForNodeNamed:name parentNode:parentNode];
+            NSString *newName = [Helper sequentialNameForNodeNamed:name parentNode:parentNode];
             
             NSString *appData = [NSString new];
             
@@ -264,27 +264,6 @@
         
         [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:self.asset.localIdentifier];
     }
-}
-
-#pragma mark - Private
-
-- (NSString *)sequenceNameForNodeNamed:(NSString *)name parentNode:(MEGANode *)parentNode {
-    NSString *nameWithoutExtension = [name stringByDeletingPathExtension];
-    NSString *extension = [name pathExtension];
-    int index = 0;
-    int listSize = 0;
-    
-    do {
-        if (index != 0) {
-            nameWithoutExtension = [[name stringByDeletingPathExtension] stringByAppendingString:[NSString stringWithFormat:@"_%d", index]];
-        }
-        
-        MEGANodeList *nameNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:parentNode searchString:[nameWithoutExtension stringByAppendingPathExtension:extension]];
-        listSize = [nameNodeList.size intValue];
-        index++;
-    } while (listSize != 0);
-    
-    return [nameWithoutExtension stringByAppendingPathExtension:extension];
 }
 
 @end
