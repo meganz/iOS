@@ -7,9 +7,6 @@
 #import "UIImageView+MNZCategory.h"
 #import <Photos/Photos.h>
 #import "MEGAStore.h"
-#import "MEGAProcessAsset.h"
-#import "NSString+MNZCategory.h"
-#import "NSFileManager+MNZCategory.h"
 #import "SVProgressHUD.h"
 
 @interface TransferTableViewCell ()
@@ -64,7 +61,8 @@
     self.transfer = transfer;
     
     self.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:self.transfer.fileName];
-    
+    self.pauseButton.hidden = NO;
+
     MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.transfer.nodeHandle];
     switch (self.transfer.type) {
         case MEGATransferTypeDownload: {
@@ -109,6 +107,7 @@
     
     PHAssetResource *assetResource = [PHAssetResource assetResourcesForAsset:self.asset].firstObject;
     self.nameLabel.text = assetResource.originalFilename;
+    self.pauseButton.hidden = YES;
 
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
     options.version = PHImageRequestOptionsVersionCurrent;
@@ -191,7 +190,7 @@
 - (void)queuedStateLayout {
     self.percentageLabel.textColor = UIColor.mnz_gray666666;
     self.arrowImageView.image = [Helper uploadQueuedTransferImage];
-    self.percentageLabel.text = AMLocalizedString(@"queued", @"Queued");
+    self.percentageLabel.text = AMLocalizedString(@"pending", nil);
 }
 
 #pragma mark - IBActions
@@ -207,6 +206,7 @@
         }
     } else if (self.asset) {
         [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:self.asset.localIdentifier];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
     }
 }
 
@@ -226,43 +226,6 @@
                 [[MEGASdkManager sharedMEGASdkFolder] pauseTransferByTag:self.transfer.tag pause:!self.isPaused delegate:pauseTransferDelegate];
             }
         }
-    } else if (self.asset) {
-        
-        MOUploadTransfer *uploadTransfer = [[MEGAStore shareInstance] fetchTransferUpdateWithLocalIdentifier:self.asset.localIdentifier];
-        
-        MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:uploadTransfer.parentNodeHandle.unsignedLongLongValue];
-        MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:self.asset parentNode:parentNode filePath:^(NSString *filePath) {
-            NSString *name = filePath.lastPathComponent;
-            NSString *newName = [Helper sequentialNameForNodeNamed:name parentNode:parentNode];
-            
-            NSString *appData = [NSString new];
-            
-            appData = [appData mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
-            
-            if (![name isEqualToString:newName]) {
-                NSString *newFilePath = [[NSFileManager defaultManager].uploadsDirectory stringByAppendingPathComponent:newName];
-                
-                NSError *error = nil;
-                NSString *absoluteFilePath = [NSHomeDirectory() stringByAppendingPathComponent:filePath];
-                if (![[NSFileManager defaultManager] moveItemAtPath:absoluteFilePath toPath:newFilePath error:&error]) {
-                    MEGALogError(@"Move item at path failed with error: %@", error);
-                }
-                [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[newFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:parentNode appData:appData isSourceTemporary:YES];
-            } else {
-                [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:parentNode appData:appData isSourceTemporary:YES];
-            }
-        } node:^(MEGANode *node) {
-            if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == parentNode.handle) {
-                MEGALogDebug(@"The asset exists in MEGA in the parent folder");
-            } else {
-                [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:parentNode];
-            }
-        } error:^(NSError *error) {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"Transfer failed:", nil), self.nameLabel.text]];
-        }];
-        [processAsset prepare];
-        
-        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:self.asset.localIdentifier];
     }
 }
 

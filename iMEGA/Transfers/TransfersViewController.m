@@ -103,38 +103,58 @@
 #pragma mark - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row > self.transfers.count) {
-        return nil;
-    }
-    
-    id transferItem = [self.transfers objectAtIndex:indexPath.row];
     
     TransferTableViewCell *cell;
 
-    if ([transferItem isKindOfClass:MEGATransfer.class]) {
-        MEGATransfer *transfer = (MEGATransfer *)transferItem;
-        switch (transfer.state) {
-            case MEGATransferStateActive:
-                cell = [self.tableView dequeueReusableCellWithIdentifier:@"activeTransferCell" forIndexPath:indexPath];
-                break;
-                
-            default:
-                cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferCell" forIndexPath:indexPath];
-                break;
+    switch (indexPath.section) {
+        case 0: {
+            MEGATransfer *transfer = [self.transfers objectAtIndex:indexPath.row];
+            switch (transfer.state) {
+                case MEGATransferStateActive:
+                    cell = [self.tableView dequeueReusableCellWithIdentifier:@"activeTransferCell" forIndexPath:indexPath];
+                    break;
+                    
+                default:
+                    cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferCell" forIndexPath:indexPath];
+                    break;
+            }
+            [cell configureCellForTransfer:transfer delegate:self];
+            break;
         }
-        [cell configureCellForTransfer:transfer delegate:self];
-
-    } else {
-        PHAsset *asset = (PHAsset *)transferItem;
-        cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferCell" forIndexPath:indexPath];
-        [cell configureCellForAsset:asset delegate:self];
+            
+        case 1: {
+            PHAsset *asset = [self.uploadTransfersQueued objectAtIndex:indexPath.row];
+            cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferCell" forIndexPath:indexPath];
+            [cell configureCellForAsset:asset delegate:self];
+            break;
+        }
+            
+        default:
+            break;
     }
     
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.transfers.count;
+    switch (section) {
+        case 0:
+            return self.transfers.count;
+
+        case 1:
+            return self.uploadTransfersQueued.count;
+            
+        default:
+            return 0;
+    }
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (self.uploadTransfersQueued.count) {
+        return 2;
+    } else {
+        return 1;
+    }
 }
 
 #pragma mark - UITableViewDelegate
@@ -246,9 +266,6 @@
     [self.transfers addObjectsFromArray:activeTransfers];
     [self.transfers addObjectsFromArray:inactiveTransfers];
     
-    for (int i = 0; i < self.uploadTransfersQueued.count; i++) {
-        [self.transfers addObject:[self.uploadTransfersQueued objectAtIndex:i]];
-    }
     [self.tableView reloadData];
 }
 
@@ -264,6 +281,7 @@
 - (void)cleanTransfersList {
     [self.transfersMutableDictionary removeAllObjects];
     [self.transfers removeAllObjects];
+    self.uploadTransfersQueued = nil;
 }
 
 - (NSString *)keyForTransfer:(MEGATransfer *)transfer {
@@ -346,7 +364,7 @@
 }
 
 - (IBAction)cancelTransfersAction:(UIBarButtonItem *)sender {
-    if (self.transfersMutableDictionary.count == 0) {
+    if (self.transfersMutableDictionary.count == 0 && self.uploadTransfersQueued.count == 0) {
         return;
     }
     NSString *transfersTypeString;
@@ -375,6 +393,7 @@
             case 0: { //All
                 [self cancelTransfersForDirection:0];
                 [self cancelTransfersForDirection:1];
+                self.uploadTransfersQueued = nil;
                 break;
             }
                 
@@ -385,6 +404,7 @@
                 
             case 2: { //Uploads
                 [self cancelTransfersForDirection:1];
+                self.uploadTransfersQueued = nil;
                 break;
             }
         }
@@ -497,11 +517,20 @@
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     
     NSIndexPath *indexPath = [self indexPathForTransfer:transfer];
-    if (indexPath != nil && (transfer.state == MEGATransferStateActive)) {
+    
+    if (indexPath) {
+        [self.transfers replaceObjectAtIndex:indexPath.row withObject:transfer];
+    } else {
+        return;
+    }
+    
+    if (transfer.state == MEGATransferStateActive) {
         TransferTableViewCell *cell = (TransferTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         if ([cell.reuseIdentifier isEqualToString:@"activeTransferCell"]) {
             [cell updatePercentAndSpeedLabelsForTransfer:transfer];
         }
+    } else if (transfer.state == MEGATransferStateCompleting) {
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 

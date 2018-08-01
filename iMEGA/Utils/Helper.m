@@ -30,6 +30,8 @@
 #import "ShareFolderActivity.h"
 #import "SendToChatActivity.h"
 
+#import "MEGAProcessAsset.h"
+
 static MEGANode *linkNode;
 static NSInteger linkNodeOption;
 static NSMutableArray *nodesFromLinkMutableArray;
@@ -931,6 +933,8 @@ static MEGAIndexer *indexer;
     indexer = megaIndexer;
 }
 
+#pragma mark - Utils for transfers
+
 + (NSString *)sequentialNameForNodeNamed:(NSString *)name parentNode:(MEGANode *)parentNode {
     NSString *nameWithoutExtension = [name stringByDeletingPathExtension];
     NSString *extension = [name pathExtension];
@@ -948,6 +952,75 @@ static MEGAIndexer *indexer;
     } while (listSize != 0);
     
     return [nameWithoutExtension stringByAppendingPathExtension:extension];
+}
+
++ (void)startUploadTransferWithLocalIdentifier:(NSString *)localIdentifier {
+    
+    PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[localIdentifier] options:nil].firstObject;
+    
+    MOUploadTransfer *uploadTransfer = [[MEGAStore shareInstance] fetchTransferUpdateWithLocalIdentifier:localIdentifier];
+    
+    if (!uploadTransfer) {
+        return;
+    }
+    
+    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:uploadTransfer.parentNodeHandle.unsignedLongLongValue];
+    MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset parentNode:parentNode filePath:^(NSString *filePath) {
+        NSString *name = filePath.lastPathComponent;
+        NSString *newName = [Helper sequentialNameForNodeNamed:name parentNode:parentNode];
+        
+        NSString *appData = [NSString new];
+        
+        appData = [appData mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
+        
+        if (![name isEqualToString:newName]) {
+            NSString *newFilePath = [[NSFileManager defaultManager].uploadsDirectory stringByAppendingPathComponent:newName];
+            
+            NSError *error = nil;
+            NSString *absoluteFilePath = [NSHomeDirectory() stringByAppendingPathComponent:filePath];
+            if (![[NSFileManager defaultManager] moveItemAtPath:absoluteFilePath toPath:newFilePath error:&error]) {
+                MEGALogError(@"Move item at path failed with error: %@", error);
+            }
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[newFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:parentNode appData:appData isSourceTemporary:YES];
+        } else {
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:parentNode appData:appData isSourceTemporary:YES];
+        }
+        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:asset.localIdentifier];
+    } node:^(MEGANode *node) {
+        if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == parentNode.handle) {
+            MEGALogDebug(@"The asset exists in MEGA in the parent folder");
+        } else {
+            [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:parentNode];
+        }
+        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:asset.localIdentifier];
+        [Helper startPendingUploadTransferIfNeeded];
+    } error:^(NSError *error) {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"Transfer failed:", nil), asset.localIdentifier]];
+        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:asset.localIdentifier];
+        [Helper startPendingUploadTransferIfNeeded];
+    }];
+    [processAsset prepare];
+}
+
++ (void)startPendingUploadTransferIfNeeded {
+    BOOL allUploadTransfersPaused = YES;
+    
+    MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] uploadTransfers];
+    
+    for (int i = 0; i < transferList.size.intValue; i++) {
+        MEGATransfer *transfer = [transferList transferAtIndex:i];
+        
+        if (transfer.state == MEGATransferStateActive) {
+            allUploadTransfersPaused = NO;
+            break;
+        }
+    }
+    
+    NSArray<MOUploadTransfer *> *uploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
+    
+    if (allUploadTransfersPaused && uploadTransfers.count) {
+        [Helper startUploadTransferWithLocalIdentifier:uploadTransfers.firstObject.localIdentifier];
+    }
 }
 
 #pragma mark - Utils for empty states
