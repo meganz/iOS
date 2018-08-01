@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *seedQrImageViewWidthLayoutConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *seedQrImageViewHeightLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UITextView *seedTextView;
+@property (weak, nonatomic) IBOutlet UIView *seedTextViewView;
 
 @property (weak, nonatomic) IBOutlet UIButton *openInButton;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
@@ -40,10 +41,10 @@
     self.firstSectionLabel.text = AMLocalizedString(@"scanOrCopyTheSeed", @"");
     
     NSString *qrString = [NSString stringWithFormat:@"otpauth://totp/MEGA:%@?secret=%@&issuer=MEGA", [[MEGASdkManager sharedMEGASdk] myEmail], self.seed];
-    self.seedQrImageView.image = [UIImage mnz_qrImageFromString:qrString withSize:self.seedQrImageView.frame.size color:UIColor.blackColor];
+    self.seedQrImageView.image = [UIImage mnz_qrImageWithDotsFromString:qrString withSize:self.seedQrImageView.frame.size color:UIColor.blackColor];
     
     self.seedTextView.text = [self seedSplitInGroupsOfFourCharacters];
-    self.seedTextView.layer.borderColor = [UIColor mnz_grayE3E3E3].CGColor;
+    self.seedTextViewView.layer.borderColor = [UIColor mnz_grayE3E3E3].CGColor;
     
     [self.openInButton setTitle:AMLocalizedString(@"openIn", @"Title shown under the action that allows you to open a file in another app") forState:UIControlStateNormal];
     [self.nextButton setTitle:AMLocalizedString(@"next", @"") forState:UIControlStateNormal];
