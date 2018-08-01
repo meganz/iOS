@@ -323,11 +323,11 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                                       }
                                   } else {
                                       if (self.filePath) {
-                                          filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                                          filePath = [encoder.outputURL.path stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
                                           self.filePath(filePath);
                                       }
                                       if (self.filePaths) {
-                                          filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                                          filePath = [encoder.outputURL.path stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
                                           [self.filePathsArray addObject:filePath];
                                           dispatch_semaphore_signal(self.semaphore);
                                       }
@@ -472,7 +472,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                     MEGALogDebug(@"[PA] Export session finished");
                     self.currentProgress += CMTimeGetSeconds(self.avAsset.duration);
                     if (self.filePath) {
-                        filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                        filePath = [encoder.outputURL.path stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
                         self.filePath(filePath);
                     }
                 }
