@@ -899,6 +899,10 @@
             }
             break;
             
+        case MegaNodeActionTypeRemove:
+            [node mnz_removeInViewController:self];
+            break;
+            
         default:
             break;
     }
