@@ -54,11 +54,15 @@
     } else {
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
         customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-        customModalAlertVC.image = nil;
+        customModalAlertVC.image = [UIImage imageNamed:@"2FASetup"];
         customModalAlertVC.viewTitle = AMLocalizedString(@"whyYouDoNeedTwoFactorAuthentication", @"");
-        customModalAlertVC.detail = AMLocalizedString(@"whyYouDoNeedTwoFactorAuthenticationDescription", @"");
+        NSString *detail = AMLocalizedString(@"whatIsTwoFactorAuthentication", @"");
+        detail = [detail stringByAppendingString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"whyYouDoNeedTwoFactorAuthenticationDescription", @"")]];
+        customModalAlertVC.detail = detail;
         customModalAlertVC.action = AMLocalizedString(@"beginSetup", @"");
+        customModalAlertVC.actionColor = [UIColor mnz_green00BFA5];
         customModalAlertVC.dismiss = AMLocalizedString(@"cancel", @"");
+        customModalAlertVC.dismissColor = [UIColor colorFromHexString:@"899B9C"];
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
         customModalAlertVC.completion = ^{
             [SVProgressHUD show];
@@ -72,6 +76,20 @@
         };
         
         [UIApplication.mnz_visibleViewController presentViewController:customModalAlertVC animated:YES completion:nil];
+    }
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    switch (section) {
+        case 0:
+            return AMLocalizedString(@"whatIsTwoFactorAuthentication", @"");
+            break;
+            
+        default:
+            return @"";
+            break;
     }
 }
 

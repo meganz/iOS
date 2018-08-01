@@ -148,7 +148,7 @@
     return image;
 }
 
-+ (UIImage *)mnz_qrImageWithDotsFromString:(NSString *)qrString withSize:(CGSize)size {
++ (UIImage *)mnz_qrImageWithDotsFromString:(NSString *)qrString withSize:(CGSize)size color:(UIColor *)color {
     NSData *qrData = [qrString dataUsingEncoding: NSISOLatin1StringEncoding];
     NSString *qrCorrectionLevel = @"H";
     
@@ -159,7 +159,7 @@
     UIGraphicsBeginImageContextWithOptions(size, NO, 0.0f);
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSaveGState(ctx);
-    CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:0.94f green:0.22f blue:0.23f alpha:1.0f].CGColor);
+    CGContextSetFillColorWithColor(ctx, color.CGColor);
     
     CGImageRef cgImageRef = [[CIContext contextWithOptions:nil] createCGImage:qrFilter.outputImage fromRect:qrFilter.outputImage.extent];
     CFDataRef rawData = CGDataProviderCopyData(CGImageGetDataProvider(cgImageRef));
@@ -227,7 +227,7 @@
     
     CGRect rectTL1 = CGRectMake(referencePaddingX, referencePaddingY, dotWidth * referenceSize, dotHeight * referenceSize);
     UIBezierPath *bezierPathTL1 = [UIBezierPath bezierPathWithRoundedRect:rectTL1 cornerRadius:dotSize];
-    CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:0.94f green:0.22f blue:0.23f alpha:1.0f].CGColor);
+    CGContextSetFillColorWithColor(ctx, color.CGColor);
     [bezierPathTL1 fill];
     
     CGRect rectTL2 = CGRectMake(referencePaddingX * 2, referencePaddingY * 2, dotWidth * (referenceSize - 2), dotHeight * (referenceSize - 2));
@@ -236,7 +236,7 @@
     [bezierPathTL2 fill];
     
     CGRect rectTL3 = CGRectMake(referencePaddingX * 3, referencePaddingY * 3, dotWidth * (referenceSize - 4), dotHeight * (referenceSize - 4));
-    CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:0.94f green:0.22f blue:0.23f alpha:1.0f].CGColor);
+    CGContextSetFillColorWithColor(ctx, color.CGColor);
     CGContextFillEllipseInRect(ctx, rectTL3);
     
     // Draw reference squares at the top right corner:
@@ -247,7 +247,7 @@
 
     CGRect rectTR1 = CGRectMake(size.width - referencePaddingX - (trailingPoints * referencePaddingX) - (dotWidth * referenceSize), referencePaddingY, dotWidth * referenceSize, dotHeight * referenceSize);
     UIBezierPath *bezierPathTR1 = [UIBezierPath bezierPathWithRoundedRect:rectTR1 cornerRadius:dotSize];
-    CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:0.94f green:0.22f blue:0.23f alpha:1.0f].CGColor);
+    CGContextSetFillColorWithColor(ctx, color.CGColor);
     [bezierPathTR1 fill];
     
     CGRect rectTR2 = CGRectMake(size.width - referencePaddingX * 2 - (trailingPoints * referencePaddingX) - (dotWidth * (referenceSize - 2)), referencePaddingY * 2, dotWidth * (referenceSize - 2), dotHeight * (referenceSize - 2));
@@ -256,7 +256,7 @@
     [bezierPathTR2 fill];
     
     CGRect rectTR3 = CGRectMake(size.width - referencePaddingX * 3 - (trailingPoints * referencePaddingX) - (dotWidth * (referenceSize - 4)), referencePaddingY * 3, dotWidth * (referenceSize - 4), dotHeight * (referenceSize - 4));
-    CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:0.94f green:0.22f blue:0.23f alpha:1.0f].CGColor);
+    CGContextSetFillColorWithColor(ctx, color.CGColor);
     CGContextFillEllipseInRect(ctx, rectTR3);
     
     // Draw reference squares at the bottom left corner:
@@ -266,7 +266,7 @@
     
     CGRect rectBL1 = CGRectMake(referencePaddingX, size.height - referencePaddingY - (dotHeight * referenceSize), dotWidth * referenceSize, dotHeight * referenceSize);
     UIBezierPath *bezierPathBL1 = [UIBezierPath bezierPathWithRoundedRect:rectBL1 cornerRadius:dotSize];
-    CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:0.94f green:0.22f blue:0.23f alpha:1.0f].CGColor);
+    CGContextSetFillColorWithColor(ctx, color.CGColor);
     [bezierPathBL1 fill];
     
     CGRect rectBL2 = CGRectMake(referencePaddingX * 2, size.height - referencePaddingY * 2 - (dotHeight * (referenceSize - 2)), dotWidth * (referenceSize - 2), dotHeight * (referenceSize - 2));
@@ -275,7 +275,7 @@
     [bezierPathBL2 fill];
     
     CGRect rectBL3 = CGRectMake(referencePaddingX * 3, size.height - referencePaddingY * 3 - (dotHeight * (referenceSize - 4)), dotWidth * (referenceSize - 4), dotHeight * (referenceSize - 4));
-    CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:0.94f green:0.22f blue:0.23f alpha:1.0f].CGColor);
+    CGContextSetFillColorWithColor(ctx, color.CGColor);
     CGContextFillEllipseInRect(ctx, rectBL3);
     
     // At this point, the QR code is ready:

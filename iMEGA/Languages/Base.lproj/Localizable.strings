@@ -1560,8 +1560,10 @@
 "twoFactorAuthentication"="Two-Factor Authentication";
 /*  */
 "whyYouDoNeedTwoFactorAuthentication"="Why do you need two-factor authentication?";
+/* */
+"whatIsTwoFactorAuthentication"="Two-factor authentication is a second layer of security for your account.";
 /*  */
-"whyYouDoNeedTwoFactorAuthenticationDescription"="Two-factor authentication is a second layer of security for your account. Which means that even if someone knows your password they cannot access it, without also having access to the six digit code only you have access to.";
+"whyYouDoNeedTwoFactorAuthenticationDescription"="Which means that even if someone knows your password they cannot access it, without also having access to the six digit code only you have access to.";
 /* */
 "noAuthenticatorAppInstalled"="There's no authenticator app installed.";
 /*  */
