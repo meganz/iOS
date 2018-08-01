@@ -3,6 +3,7 @@
 
 #import "SVProgressHUD.h"
 
+#import "Helper.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
@@ -12,15 +13,15 @@
 
 @interface TwoFactorAuthenticationViewController () <UITextViewDelegate, MEGARequestDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *authenticatorAppLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 
 @property (weak, nonatomic) IBOutlet UIImageView *invalidCodeImageView;
 @property (weak, nonatomic) IBOutlet UILabel *invalidCodeLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *lostYourAuthenticatorDeviceButton;
+@property (weak, nonatomic) IBOutlet UIImageView *lostYourAuthenticatorDeviceImage;
 
-@property (weak, nonatomic) IBOutlet UIButton *verifyButton;
+@property (nonatomic) NSString *invalidCode;
 
 @end
 
@@ -33,14 +34,15 @@
     
     self.navigationItem.title = AMLocalizedString(@"twoFactorAuthentication", @"");
     
-    self.authenticatorAppLabel.text = AMLocalizedString(@"authenticatorApp", @"");
     self.descriptionLabel.text = AMLocalizedString(@"authenticatorAppDescription", @"");
     
     self.invalidCodeLabel.text = AMLocalizedString(@"invalidCode", @"Error text shown when the user scans a QR that is not valid. String as short as possible.");
     
     [self.lostYourAuthenticatorDeviceButton setTitle:AMLocalizedString(@"lostYourAuthenticationDevice", @"") forState:UIControlStateNormal];
-    
-    [self.verifyButton setTitle:AMLocalizedString(@"verify", @"") forState:UIControlStateNormal];
+    if (self.twoFAMode == TwoFactorAuthenticationLogin) {
+        self.lostYourAuthenticatorDeviceButton.hidden = self.lostYourAuthenticatorDeviceImage.hidden == NO;
+        self.lostYourAuthenticatorDeviceButton.enabled = YES;
+    }
     
     UITextView *firstTextView = [self.view viewWithTag:1];
     [firstTextView becomeFirstResponder];
@@ -65,7 +67,7 @@
         if (currentTextViewTag == 6) {
             [textView resignFirstResponder];
             //Finished introducing the code
-            [self verifyTouchUpInside:self.verifyButton];
+            [self verifyCode];
         } else {
             NSInteger nextTextViewTag = currentTextViewTag + 1;
             UITextView *nextTextView = [self.view viewWithTag:nextTextViewTag];
@@ -117,18 +119,15 @@
 - (void)showInvalidCode {
     [self tintCodeWithColor:UIColor.mnz_redD90007];
     self.invalidCodeImageView.hidden = self.invalidCodeLabel.hidden = NO;
-    self.verifyButton.backgroundColor = UIColor.mnz_grayEEEEEE;
 }
 
-#pragma mark - IBActions
-
-- (IBAction)lostYourAuthenticatorDeviceTouchUpInside:(UIButton *)sender {
-    
-}
-
-- (IBAction)verifyTouchUpInside:(UIButton *)sender {
+- (void)verifyCode {
     if ([self validateCode]) {
         NSString *code = [self code];
+        if ([code isEqualToString:self.invalidCode]) {
+            [self showInvalidCode];
+            return;
+        }
         
         switch (self.twoFAMode) {
             case TwoFactorAuthenticationLogin: {
@@ -177,6 +176,13 @@
     }
 }
 
+
+#pragma mark - IBActions
+
+- (IBAction)lostYourAuthenticatorDeviceTouchUpInside:(UIButton *)sender {
+    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://mega.nz/recovery"]];
+}
+
 #pragma mark - UITextViewDelegate
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
@@ -190,19 +196,20 @@
     self.invalidCodeImageView.hidden = self.invalidCodeLabel.hidden = YES;
 }
 
-- (void)textViewDidEndEditing:(UITextView *)textView {
-    NSString *code = [self code];
-    self.verifyButton.backgroundColor = (code.length == 6) ? UIColor.mnz_redFF4D52 : UIColor.mnz_grayEEEEEE;
-}
-
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if (![text mnz_isDecimalNumber]) {
         return NO;
     }
     
     if (text.length == 6 && [text mnz_isDecimalNumber]) {
+        if ([text isEqualToString:self.invalidCode]) {
+            [self showInvalidCode];
+            return NO;
+        }
+        
         //Code copied in any text view
         [self distributeCode:text];
+        [self verifyCode];
         
         [textView resignFirstResponder];
         return NO;
@@ -229,6 +236,22 @@
     return YES;
 }
 
+#pragma mark - UIResponder
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSString *code = [self code];
+    if (code.mnz_isEmpty) {
+        return;
+    }
+    
+    if ([code isEqualToString:self.invalidCode]) {
+        [self showInvalidCode];
+        return;
+    }
+    
+    [self.view endEditing:YES];
+    [self verifyCode];
+}
 
 #pragma mark - MEGARequestDelegate
 
@@ -237,6 +260,7 @@
         switch (error.type) {
             case MEGAErrorTypeApiEFailed:
             case MEGAErrorTypeApiEExpired:
+                self.invalidCode = request.password;
                 [self showInvalidCode];
                 break;
                 
@@ -247,6 +271,7 @@
         return;
     }
     
+    self.invalidCode = nil;
     switch (request.type) {
         case MEGARequestTypeChangePassword: {
             [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"passwordChanged", @"The label showed when your password has been changed")];
@@ -279,8 +304,7 @@
                 
                 [UIApplication.mnz_visibleViewController presentViewController:customModalAlertVC animated:YES completion:nil];
             } else {
-                
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"twoFactorAuthenticationDisabled", @"") message:message preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"twoFactorAuthenticationDisabled", @"") message:nil preferredStyle:UIAlertControllerStyleAlert];
                 
                 [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
                     [self.navigationController popToViewController:self.navigationController.viewControllers[2] animated:YES];
