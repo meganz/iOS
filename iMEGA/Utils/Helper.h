@@ -96,7 +96,10 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 + (void)setIndexer:(MEGAIndexer* )megaIndexer;
 
+#pragma mark - Utils for transfers
+
 + (NSString *)sequentialNameForNodeNamed:(NSString *)name parentNode:(MEGANode *)parentNode;
++ (void)startPendingUploadTransferIfNeeded;
 
 #pragma mark - Utils for empty states
 

@@ -1869,19 +1869,8 @@ void uncaughtExceptionHandler(NSException *exception) {
                 }
             }
         }
-        
-        NSArray<MOUploadTransfer *> *uploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
-        
-        if (uploadTransfers.count) {
-            NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
-            operationQueue.qualityOfService = NSOperationQualityOfServiceUtility;
-            operationQueue.maxConcurrentOperationCount = 1;
             
-            for (MOUploadTransfer *uploadTransfer in uploadTransfers) {
-                MEGAAssetOperation *assetOperation = [[MEGAAssetOperation alloc] initWithPHAsset:[PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransfer.localIdentifier] options:nil].firstObject parentNode:[[MEGASdkManager sharedMEGASdk] nodeForHandle:uploadTransfer.parentNodeHandle.unsignedLongLongValue] automatically:NO];
-                [operationQueue addOperation:assetOperation];
-            }
-        }
+        [Helper startPendingUploadTransferIfNeeded];
 
     } else {
         NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
@@ -2433,6 +2422,11 @@ void uncaughtExceptionHandler(NSException *exception) {
     if (transfer.type == MEGATransferTypeUpload) {
         [transfer mnz_cancelPendingCUTransfer];
     }
+    
+    if (transfer.state == MEGATransferStatePaused) {
+        [Helper startPendingUploadTransferIfNeeded];
+    }
+
 }
 
 - (void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
@@ -2517,6 +2511,8 @@ void uncaughtExceptionHandler(NSException *exception) {
         }
         
         [transfer mnz_parseAppData];
+        
+        [Helper startPendingUploadTransferIfNeeded];
     }
     
     if (error.type) {
