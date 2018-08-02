@@ -126,8 +126,57 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    CGFloat displaySize = [[UIDevice currentDevice] mnz_maxSideForChatBubbleWithMedia:NO];
-    return CGSizeMake(displaySize, 60.0f);
+    CGFloat maxAttachmentBubbleWidth = [[UIDevice currentDevice] mnz_maxSideForChatBubbleWithMedia:NO] - (10.0f + 40.0f + 10.0f + 10.f);
+    
+    NSString *title;
+    NSString *subtitle;
+    if (self.message.type == MEGAChatMessageTypeAttachment) {
+        NSUInteger totalNodes = [self.message.nodeList.size unsignedIntegerValue];
+        if (totalNodes == 1) {
+            MEGANode *node = [self.message.nodeList nodeAtIndex:0];
+            title = node.name;
+            subtitle = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue countStyle:NSByteCountFormatterCountStyleMemory];
+        } else {
+            title = [NSString stringWithFormat:AMLocalizedString(@"files", nil), totalNodes];
+            NSUInteger totalSize = 0;
+            for (NSUInteger i = 0; i < totalNodes; i++) {
+                totalSize += [[[self.message.nodeList nodeAtIndex:i] size] unsignedIntegerValue];
+            }
+            subtitle = [NSByteCountFormatter stringFromByteCount:totalSize countStyle:NSByteCountFormatterCountStyleMemory];
+        }
+    } else { // MEGAChatMessageTypeContact
+        if (self.message.usersCount == 1) {
+            title = [self.message userNameAtIndex:0];
+            subtitle = [self.message userEmailAtIndex:0];
+        } else {
+            NSNumber *users = [NSNumber numberWithUnsignedInteger:self.message.usersCount];
+            NSString *usersString = AMLocalizedString(@"XContactsSelected", nil);
+            title = [usersString stringByReplacingOccurrencesOfString:@"[X]" withString:users.stringValue];
+            NSString *emails = [self.message userEmailAtIndex:0];
+            for (NSUInteger i = 1; i < self.message.usersCount; i++) {
+                emails = [NSString stringWithFormat:@"%@ %@", emails, [self.message userEmailAtIndex:i]];
+            }
+            subtitle = emails;
+        }
+    }
+    
+    CGRect attachmentTitleRect = [title boundingRectWithSize:CGSizeMake(maxAttachmentBubbleWidth, CGFLOAT_MAX)
+                                                 options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                              attributes:@{NSFontAttributeName : [UIFont mnz_SFUIMediumWithSize:15.0f]}
+                                                 context:nil];
+    
+    CGRect attachmentSubtitleRect = [subtitle boundingRectWithSize:CGSizeMake(maxAttachmentBubbleWidth, CGFLOAT_MAX)
+                                                options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                             attributes:@{NSFontAttributeName : [UIFont mnz_SFUIRegularWithSize:13.0f]}
+                                                context:nil];
+    
+    CGFloat minimumLabelsWidth = (attachmentTitleRect.size.width > attachmentSubtitleRect.size.width) ? attachmentTitleRect.size.width : attachmentSubtitleRect.size.width;
+    
+    // @see MEGAMessageAttachmentView.xib
+    CGFloat attachmentBubbleWidth = 10.0f + 40.0f + 10.0f + minimumLabelsWidth + 10.f;
+    CGFloat attachmentBubbleHeight = (self.message.type == MEGAChatMessageTypeAttachment) ? 60.0f : 64.0f;
+    
+    return CGSizeMake(attachmentBubbleWidth, attachmentBubbleHeight);
 }
 
 - (NSUInteger)mediaHash {
