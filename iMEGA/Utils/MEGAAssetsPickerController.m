@@ -100,7 +100,7 @@
             operationQueue.qualityOfService = NSOperationQualityOfServiceUtility;
             operationQueue.maxConcurrentOperationCount = 1;
             for (PHAsset *asset in assets) {
-                MEGAAssetOperation *assetOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:self.parentNode automatically:NO];
+                MEGAAssetOperation *assetOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:self.parentNode cameraUploads:NO];
                 [operationQueue addOperation:assetOperation];
             }
         } else if (self.toUploadToChat) {

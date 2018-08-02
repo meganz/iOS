@@ -24,15 +24,15 @@
 #import "ContactLinkQRViewController.h"
 #import "ContactTableViewCell.h"
 #import "ShareFolderActivity.h"
-#import "UsersListViewController.h"
+#import "ItemListViewController.h"
 
-@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, UsersListViewControllerProtocol>
+@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerProtocol, UISearchControllerDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (weak, nonatomic) IBOutlet UIView *usersListView;
+@property (weak, nonatomic) IBOutlet UIView *itemListView;
 @property (weak, nonatomic) IBOutlet UIView *contactsHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *contactsHeaderViewLabel;
 @property (weak, nonatomic) IBOutlet UIView *contactsTopLineHeaderView;
@@ -54,7 +54,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *usersListViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *itemListViewHeightConstraint;
 
 @property (weak, nonatomic) IBOutlet UIView *searchFixedView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchFixedViewHeightConstraint;
@@ -72,7 +72,9 @@
 
 @property (nonatomic, strong) NSMutableArray *searchVisibleUsersArray;
 @property (strong, nonatomic) UISearchController *searchController;
-@property (strong, nonatomic) UsersListViewController *usersListVC;
+@property (strong, nonatomic) ItemListViewController *itemListVC;
+
+@property (nonatomic) UIPanGestureRecognizer *panOnTable;
 
 @end
 
@@ -89,17 +91,23 @@
     self.pendingRequestsPresented = NO;
 
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController.delegate = self;
     
     [self.createGroupBarButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:1 green:1 blue:1 alpha:.5]} forState:UIControlStateDisabled];
 
     [self setupContacts];
+    
+    self.panOnTable = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(shouldDismissSearchController)];
+    self.panOnTable.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     
@@ -110,7 +118,9 @@
     [super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
@@ -208,7 +218,6 @@
         }
             
         case ContactsModeChatStartConversation: {
-            self.tableView.backgroundColor = [UIColor mnz_grayFCFCFC];
             self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
             self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem];
             break;
@@ -216,11 +225,12 @@
             
         case ContactsModeChatAddParticipant:
         case ContactsModeChatAttachParticipant: {
-            self.tableView.backgroundColor = [UIColor mnz_grayFCFCFC];
+            self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", nil);
             self.addParticipantBarButtonItem.title = AMLocalizedString(@"ok", nil);
             [self setTableViewEditing:YES animated:NO];
             self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
             self.navigationItem.rightBarButtonItems = @[self.addParticipantBarButtonItem];
+            self.navigationController.toolbarHidden = YES;
             break;
         }
             
@@ -237,6 +247,7 @@
             self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
             self.navigationItem.rightBarButtonItems = @[self.createGroupBarButtonItem];
             self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
+            self.navigationController.toolbarHidden = YES;
             break;
         }
             
@@ -456,7 +467,7 @@
         userHasChanged = YES;
     }
     
-    return  userHasChanged;
+    return userHasChanged;
 }
 
 - (void)setNavigationBarTitle {
@@ -565,7 +576,7 @@
 - (MEGAUser *)userAtIndexPath:(NSIndexPath *)indexPath {
     MEGAUser *user = nil;
     if (indexPath) {
-        if (self.searchController.isActive) {
+        if (self.searchController.isActive && ![self.searchController.searchBar.text isEqual: @""]) {
             user = [self.searchVisibleUsersArray objectAtIndex:indexPath.row];
         } else {
             user = [self.visibleUsersArray objectAtIndex:indexPath.row];
@@ -598,32 +609,32 @@
 
 - (void)addUserToList:(MEGAUser *)user {
     if (self.childViewControllers.count) {
-        [self.usersListVC addUser:user];
+        [self.itemListVC addItem:[[ItemListModel alloc] initWithUser:user]];
     } else {
-        [UIView animateWithDuration:.5 animations:^{
-            self.usersListViewHeightConstraint.constant = 110;
+        [UIView animateWithDuration:.25 animations:^{
+            self.itemListViewHeightConstraint.constant = 110;
             [self.view layoutIfNeeded];
         } completion:^(BOOL finished) {
-            UsersListViewController *usersList = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"UsersListViewControllerID"];
-            self.usersListVC = usersList;
-            self.usersListVC.userListDelegate = self;
+            ItemListViewController *usersList = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ItemListViewControllerID"];
+            self.itemListVC = usersList;
+            self.itemListVC.itemListDelegate = self;
             [self addChildViewController:usersList];
-            usersList.view.frame = self.usersListView.bounds;
-            [self.usersListView addSubview:usersList.view];
+            usersList.view.frame = self.itemListView.bounds;
+            [self.itemListView addSubview:usersList.view];
             [usersList didMoveToParentViewController:self];
-            [self.usersListVC addUser:user];
+            [self.itemListVC addItem:[[ItemListModel alloc] initWithUser:user]];
         }];
     }
 }
 
 - (void)removeUsersListSubview {
-    UsersListViewController *usersList = self.childViewControllers.lastObject;
+    ItemListViewController *usersList = self.childViewControllers.lastObject;
     [usersList willMoveToParentViewController:nil];
     [usersList.view removeFromSuperview];
     [usersList removeFromParentViewController];
     [self.view layoutIfNeeded];
-    [UIView animateWithDuration:.5 animations:^ {
-        self.usersListViewHeightConstraint.constant = 0;
+    [UIView animateWithDuration:.25 animations:^ {
+        self.itemListViewHeightConstraint.constant = 0;
         [self.view layoutIfNeeded];
     }];
 }
@@ -633,6 +644,8 @@
         return;
     }
     switch (self.contactsMode) {
+        case ContactsModeChatAttachParticipant:
+        case ContactsModeChatAddParticipant:
         case ContactsModeChatCreateGroup:
         case ContactsModeChatStartConversation: {
             self.searchFixedViewHeightConstraint.constant = self.searchController.searchBar.frame.size.height;
@@ -647,7 +660,37 @@
                 self.tableView.tableHeaderView = self.searchController.searchBar;
                 [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
                 self.definesPresentationContext = YES;
+                self.searchController.hidesNavigationBarDuringPresentation = YES;
             }
+            break;
+    }
+    
+    if (self.contactsMode == ContactsModeChatCreateGroup) {
+        self.searchController.searchBar.barTintColor = UIColor.mnz_grayFCFCFC;
+    }
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    [self.tableView addGestureRecognizer:self.panOnTable];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    [self shouldDismissSearchController];
+    [self.tableView removeGestureRecognizer:self.panOnTable];
+}
+
+- (void)shouldDismissSearchController {
+    switch (self.contactsMode) {
+        case ContactsModeChatStartConversation:
+        case ContactsModeChatAddParticipant:
+        case ContactsModeChatAttachParticipant:
+        case ContactsModeChatCreateGroup:
+            if (self.searchController.isActive) {
+                [self.searchController.searchBar resignFirstResponder];
+            }
+            break;
+            
+        default:
             break;
     }
 }
@@ -780,6 +823,9 @@
     }
     
     if (self.contactsMode == ContactsModeChatCreateGroup) {
+        if (self.searchController.isActive) {
+            self.searchController.active = NO;
+        }
         [self.navigationController popViewControllerAnimated:YES];
     } else {
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -860,6 +906,9 @@
 
 - (IBAction)addParticipantAction:(UIBarButtonItem *)sender {
     if (self.selectedUsersArray.count > 0) {
+        if (self.searchController.isActive) {
+            self.searchController.active = NO;
+        }
         self.userSelected(self.selectedUsersArray, nil);
         [self dismissViewControllerAnimated:YES completion:nil];
     }
@@ -885,7 +934,7 @@
         } else if (self.contactsMode == ContactsModeChatNamingGroup && section == 1) {
             return self.selectedUsersArray.count;
         }
-        numberOfRows = self.searchController.isActive ? [self.searchVisibleUsersArray count] : [self.visibleUsersArray count];
+        numberOfRows = (self.searchController.isActive && ![self.searchController.searchBar.text isEqual: @""]) ? [self.searchVisibleUsersArray count] : [self.visibleUsersArray count];
     }
     return numberOfRows;
 }
@@ -1124,18 +1173,6 @@
             
         case ContactsModeChatAddParticipant:
         case ContactsModeChatAttachParticipant:
-            if (tableView.isEditing) {
-                MEGAUser *user = [self userAtIndexPath:indexPath];
-                if (!user) {
-                    [SVProgressHUD showErrorWithStatus:@"Invalid user"];
-                    return;
-                }
-                [self.selectedUsersArray addObject:user];
-                self.createGroupBarButtonItem.enabled = YES;
-                return;
-            }
-            break;
-            
         case ContactsModeChatCreateGroup:
             if (tableView.isEditing) {
                 MEGAUser *user = [self userAtIndexPath:indexPath];
@@ -1146,6 +1183,9 @@
                 [self.selectedUsersArray addObject:user];
                 self.createGroupBarButtonItem.enabled = (self.selectedUsersArray.count > 1);
                 [self addUserToList:user];
+                if (self.searchController.searchBar.isFirstResponder) {
+                    self.searchController.searchBar.text = @"";
+                }
                 return;
             }
             break;
@@ -1177,12 +1217,12 @@
         
         [self updatePromptTitle];
         
-        if (self.usersListVC) {
-            [self.usersListVC removeUser:user];
+        if (self.itemListVC) {
+            [self.itemListVC removeItem:[[ItemListModel alloc] initWithUser:user]];
         }
         
         if (self.selectedUsersArray.count == 0) {
-            if (self.usersListVC) {
+            if (self.itemListVC) {
                 [self removeUsersListSubview];
             }
             if (self.contactsMode != ContactsModeChatStartConversation) {
@@ -1190,6 +1230,13 @@
                 self.createGroupBarButtonItem.enabled = NO;
             }
         }
+        
+        if (self.contactsMode != (ContactsModeChatAddParticipant|ContactsModeChatAttachParticipant|ContactsModeChatCreateGroup)) {
+            if (self.searchController.searchBar.isFirstResponder) {
+                self.searchController.searchBar.text = @"";
+            }
+        }
+        
         return;
     }
 }
@@ -1386,13 +1433,30 @@
     self.searchVisibleUsersArray = nil;
 }
 
+#pragma mark - UISearchControllerDelegate
+
+- (void)didPresentSearchController:(UISearchController *)searchController {
+    switch (self.contactsMode) {
+        case ContactsModeChatStartConversation:
+        case ContactsModeChatAddParticipant:
+        case ContactsModeChatAttachParticipant:
+        case ContactsModeChatCreateGroup:
+            searchController.searchBar.showsCancelButton = NO;
+            break;
+            
+        default:
+            searchController.searchBar.showsCancelButton = YES;
+            break;
+    }
+}
+
 #pragma mark - UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     NSString *searchString = searchController.searchBar.text;
     if (searchController.isActive) {
         if ([searchString isEqualToString:@""]) {
-            self.searchVisibleUsersArray = self.visibleUsersArray;
+            [self.searchVisibleUsersArray removeAllObjects];
         } else {
             NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.mnz_fullName contains[c] %@", searchString];
             self.searchVisibleUsersArray = [[self.visibleUsersArray filteredArrayUsingPredicate:resultPredicate] mutableCopy];
@@ -1496,9 +1560,10 @@
     [self setContactRequestBarButtomItemWithValue:incomingContactsLists.size.integerValue];
 }
 
-#pragma mark - UsersListViewControllerProtocol
+#pragma mark - ItemListViewControllerProtocol
 
-- (void)removeSelectedUser:(MEGAUser *)user {
+- (void)removeSelectedItem:(id)item {
+    MEGAUser *user = (MEGAUser *)item;
     NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
     [self.tableView deselectRowAtIndexPath:[self.indexPathsMutableDictionary objectForKey:base64Handle] animated:YES];
     [self.selectedUsersArray removeObject:user];
@@ -1506,6 +1571,12 @@
     if (self.selectedUsersArray.count == 0) {
         [self removeUsersListSubview];
     }
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
 }
 
 @end

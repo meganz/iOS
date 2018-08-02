@@ -1,6 +1,8 @@
 
 #import "MEGANodeList+MNZCategory.h"
 
+#import "NSString+MNZCategory.h"
+
 @implementation MEGANodeList (MNZCategory)
 
 - (NSArray *)mnz_numberOfFilesAndFolders {
@@ -40,6 +42,19 @@
     }
     
     return nodesMutableArray;
+}
+
+- (NSMutableArray *)mnz_mediaNodesMutableArrayFromNodeList {
+    NSUInteger nodeListCount = self.size.unsignedIntegerValue;
+    NSMutableArray *mediaNodesMutableArray = [[NSMutableArray alloc] initWithCapacity:nodeListCount];
+    for (NSUInteger i = 0; i < nodeListCount; i++) {
+        MEGANode *node = [self nodeAtIndex:i];
+        if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+            [mediaNodesMutableArray addObject:node];
+        }
+    }
+    
+    return mediaNodesMutableArray;
 }
 
 @end
