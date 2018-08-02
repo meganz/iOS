@@ -6,11 +6,14 @@
 #import "MEGAStore.h"
 #import "MEGASdkManager.h"
 #import "MEGANode+MNZCategory.h"
+#import "MEGANodeList+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "Helper.h"
 #import "NodeTableViewCell.h"
+
 #import "CustomActionViewController.h"
+#import "MEGAPhotoBrowserViewController.h"
 
 @interface NodeVersionsViewController () <UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate, MEGADelegate> {
     BOOL allNodesSelected;
@@ -142,7 +145,11 @@
     
     } else {
         if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-            [node mnz_openImageInNavigationController:self.navigationController withNodes:self.node.mnz_versions folderLink:NO displayMode:DisplayModeNodeVersions];
+            NSMutableArray<MEGANode *> *mediaNodesArray = [[[MEGASdkManager sharedMEGASdk] versionsForNode:self.node] mnz_mediaNodesMutableArrayFromNodeList];
+            
+            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeNodeVersions presentingNode:node preferredIndex:0];
+            
+            [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
         } else {
             [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
         }

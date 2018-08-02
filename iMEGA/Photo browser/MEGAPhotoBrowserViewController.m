@@ -39,8 +39,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *leftToolbarItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *rightToolbarItem;
 
-@property (nonatomic) NSMutableArray<MEGANode *> *mediaNodes;
-@property (nonatomic) NSCache<NSString *, UIScrollView *> *imageViewsCache;
+@property (nonatomic) NSCache<NSNumber *, UIScrollView *> *imageViewsCache;
 @property (nonatomic) NSUInteger currentIndex;
 @property (nonatomic) UIImageView *targetImageView;
 
@@ -57,25 +56,36 @@
 
 @implementation MEGAPhotoBrowserViewController
 
++ (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode presentingNode:(MEGANode *)node preferredIndex:(NSUInteger)preferredIndex {
+    NSUInteger index = preferredIndex;
+    if (node) {
+        for (NSUInteger i = 0; i < mediaNodesArray.count; i++) {
+            MEGANode *mediaNode = [mediaNodesArray objectAtIndex:i];
+            if (mediaNode.handle == node.handle) {
+                index = i;
+                break;
+            }
+        }
+    }
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
+    MEGAPhotoBrowserViewController *photoBrowserVC = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
+    photoBrowserVC.api = api;
+    photoBrowserVC.mediaNodes = mediaNodesArray;
+    photoBrowserVC.preferredIndex = index;
+    photoBrowserVC.displayMode = displayMode;
+    
+    return photoBrowserVC;
+}
+
 #pragma mark - Lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.modalPresentationCapturesStatusBarAppearance = YES;
-
-    self.mediaNodes = [[NSMutableArray<MEGANode *> alloc] init];
     
-    NSUInteger i = 0;
-    for (MEGANode *node in self.nodesArray) {
-        if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-            [self.mediaNodes addObject:node];
-            if (node.handle == self.node.handle) {
-                self.currentIndex = i;
-            }
-            i++;
-        }
-    }
+    self.currentIndex = self.preferredIndex;
     
     self.panGestureInitialPoint = CGPointZero;
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)]];
@@ -151,7 +161,7 @@
     for (UIView *subview in self.scrollView.subviews) {
         [subview removeFromSuperview];
     }
-    self.imageViewsCache = [[NSCache<NSString *, UIScrollView *> alloc] init];
+    self.imageViewsCache = [[NSCache<NSNumber *, UIScrollView *> alloc] init];
     self.imageViewsCache.countLimit = 1000;
     
     self.scrollView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width + self.gapBetweenPages, self.view.frame.size.height);
@@ -208,8 +218,8 @@
 }
 
 - (void)resetZooms {
-    for (MEGANode *node in self.mediaNodes) {
-        UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
+    for (NSUInteger i = 0; i < self.mediaNodes.count; i++) {
+        UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(i)];
         if (zoomableView && zoomableView.zoomScale != 1.0f) {
             zoomableView.zoomScale = 1.0f;
             [self resizeImageView:(UIImageView *)zoomableView.subviews.firstObject];
@@ -224,7 +234,7 @@
     // Toggle the play button:
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
     if (node.name.mnz_isVideoPathExtension) {
-        UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
+        UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
         if (zoomableView) {
             zoomableView.subviews.lastObject.hidden = transparent;
         }
@@ -304,14 +314,14 @@
         NSUInteger initialIndex = index == 0 ? 0 : index-1;
         NSUInteger finalIndex = index >= self.mediaNodes.count - 1 ? self.mediaNodes.count - 1 : index + 1;
         for (NSUInteger i = initialIndex; i <= finalIndex; i++) {
-            MEGANode *node = [self.mediaNodes objectAtIndex:i];
-            if ([self.imageViewsCache objectForKey:node.base64Handle]) {
+            if ([self.imageViewsCache objectForKey:@(i)]) {
                 continue;
             }
             
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
+            MEGANode *node = [self.mediaNodes objectAtIndex:i];
             NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:NO];
             if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                 imageView.image = [UIImage imageWithContentsOfFile:temporaryImagePath];
@@ -359,7 +369,7 @@
             
             [self.scrollView addSubview:zoomableView];
             
-            [self.imageViewsCache setObject:zoomableView forKey:node.base64Handle];
+            [self.imageViewsCache setObject:zoomableView forKey:@(i)];
         }
     }
 }
@@ -509,7 +519,7 @@
 
 - (IBAction)didPressCloseButton:(UIBarButtonItem *)sender {
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
-    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
+    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
     self.targetImageView = zoomableView.subviews.firstObject;
     [self toggleTransparentInterfaceForDismissal:YES];
 
@@ -597,7 +607,7 @@
 
 - (void)panGesture:(UIPanGestureRecognizer *)panGestureRecognizer {
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
-    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
+    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
     if (zoomableView.zoomScale > 1.0f) {
         return;
     }
@@ -654,7 +664,7 @@
     if (node.name.mnz_isVideoPathExtension) {
         return;
     }
-    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
+    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
     UIView *imageView = zoomableView.subviews.firstObject;
     if (zoomableView) {
         CGFloat newScale = zoomableView.zoomScale > 1.0f ? 1.0f : 5.0f;
@@ -717,8 +727,8 @@
             self.secondWindow.screen = secondScreen;
             self.secondWindow.hidden = NO;
         }
-        MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
-        UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
+        
+        UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
         UIImageView *imageView = (UIImageView *)zoomableView.subviews.firstObject;
         UIImageView *airplayImageView = [[UIImageView alloc] initWithFrame:self.secondWindow.frame];
         airplayImageView.image = imageView.image;
@@ -894,7 +904,7 @@
             break;
             
         case MegaNodeActionTypeOpen:
-            if (self.node.name.mnz_isVideoPathExtension) {
+            if (node.name.mnz_isVideoPathExtension) {
                 [self playVideo:nil];
             }
             break;
@@ -911,7 +921,7 @@
 #pragma mark - NodeInfoViewControllerDelegate
 
 - (void)presentParentNode:(MEGANode *)node {
-    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:node.base64Handle];
+    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
     self.targetImageView = zoomableView.subviews.firstObject;
     [self toggleTransparentInterfaceForDismissal:YES];
 

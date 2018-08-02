@@ -4,23 +4,24 @@
 #import "SAMKeychain.h"
 #import "UIScrollView+EmptyDataSet.h"
 
+#import "DisplayMode.h"
 #import "Helper.h"
-#import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
-#import "MyAccountHallViewController.h"
+#import "NodeTableViewCell.h"
 #import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
-
-#import "DisplayMode.h"
-#import "NodeTableViewCell.h"
-#import "MainTabBarController.h"
 #import "UnavailableLinkView.h"
-#import "LoginViewController.h"
+
 #import "BrowserViewController.h"
 #import "CustomActionViewController.h"
+#import "LoginViewController.h"
+#import "MainTabBarController.h"
+#import "MEGANavigationController.h"
+#import "MEGAPhotoBrowserViewController.h"
+#import "MyAccountHallViewController.h"
 
 @interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, CustomActionViewControllerDelegate> {
     
@@ -327,8 +328,7 @@
 
                 } else {
                     if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                        NSArray *nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
-                        [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:YES displayMode:DisplayModeSharedItem];
+                        [self presentMediaNode:node];
                     } else {
                         [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
                     }
@@ -345,6 +345,16 @@
         UIAlertAction *okAction = decryptionAlertController.actions.lastObject;
         okAction.enabled = decryptionTextField.text.length > 0;
     }
+}
+
+- (void)presentMediaNode:(MEGANode *)node {
+    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdkFolder] nodeForHandle:node.parentHandle];
+    MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:parentNode];
+    NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaNodesMutableArrayFromNodeList];
+    
+    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdkFolder] displayMode:DisplayModeSharedItem presentingNode:node preferredIndex:0];
+    
+    [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
 }
 
 #pragma mark - IBActions
@@ -550,7 +560,7 @@
 - (void)openNode:(MEGANode *)node {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-            [node mnz_openImageInNavigationController:self.navigationController withNodes:@[node] folderLink:YES displayMode:2];
+            [self presentMediaNode:node];
         } else {
             [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
         }
@@ -651,8 +661,7 @@
 
         case MEGANodeTypeFile: {
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                NSArray *nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
-                [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:YES displayMode:DisplayModeSharedItem];
+                [self presentMediaNode:node];
             } else {
                 [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
             }

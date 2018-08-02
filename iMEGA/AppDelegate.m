@@ -44,18 +44,19 @@
 #import "ContactRequestsViewController.h"
 #import "ContactsViewController.h"
 #import "CreateAccountViewController.h"
+#import "CustomModalAlertViewController.h"
 #import "DisplayMode.h"
 #import "LaunchViewController.h"
 #import "LoginViewController.h"
 #import "MainTabBarController.h"
 #import "MasterKeyViewController.h"
+#import "MEGAPhotoBrowserViewController.h"
 #import "MessagesViewController.h"
 #import "MyAccountHallViewController.h"
 #import "SettingsTableViewController.h"
 #import "SharedItemsViewController.h"
 #import "UnavailableLinkView.h"
 #import "UpgradeTableViewController.h"
-#import "CustomModalAlertViewController.h"
 
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
 #import "MEGACreateAccountRequestDelegate.h"
@@ -1374,8 +1375,12 @@
         case MEGANodeTypeFile: {
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.parentHandle];
-                NSArray *childNodes = [[[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode] mnz_nodesArrayFromNodeList];
-                [node mnz_openImageInNavigationController:navigationController withNodes:childNodes folderLink:NO displayMode:DisplayModeCloudDrive];
+                MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode];
+                NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaNodesMutableArrayFromNodeList];
+                
+                MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeCloudDrive presentingNode:node preferredIndex:0];
+                
+                [navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
             } else {
                 [node mnz_openNodeInNavigationController:navigationController folderLink:NO];
             }
