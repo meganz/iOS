@@ -237,11 +237,11 @@
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transferts en pause";
 /* Title shown when the there is not any transfer and they are not paused */
-"transfersEmptyState_titleAll"="Aucun transfert";
+"transfersEmptyState_titleAll"="Il n’y a aucun transfert";
 /* Title shown when the there is not any transfer, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="Aucun téléchargement";
+"transfersEmptyState_titleDownload"="Il n’y a aucun téléchargement";
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="Aucun téléversement";
+"transfersEmptyState_titleUpload"="Il n’y a aucun téléversement";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Disque nuagique";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -519,9 +519,9 @@
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Téléversement de la caméra terminé";
 /* Message shown while uploading files. Singular. */
-"cameraUploadsPendingFile"="Upload in progress, 1 file pending";
+"cameraUploadsPendingFile"="Téléversement en cours, 1 fichier en attente";
 /* Message shown while uploading files. Plural. */
-"cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
+"cameraUploadsPendingFiles"="Téléversement en cours, %lu fichiers en attente";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d de %2$d fichier";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -1392,6 +1392,18 @@
 "missedAudioCallsAndMissedVideoCalls"="[A] appels vocaux et [B] appels vidéo manqués";
 /* Button title to see the available bonus */
 "getBonus"="Obtenir des primes";
+/* Text shown under the title 'Video quality' that explains what it means */
+"qualityOfVideosUploadedToAChat"="Qualité des vidéos téléversées dans une conversation";
+/* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
+"videoQuality"="Qualité des vidéos";
+/* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
+"low"="Basse";
+/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+"high"="Haute";
+/* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
+"original"="Original";
+/* Label for the status of a transfer when is being preparing - (String as short as possible). */
+"preparing..."="Préparation...";
 /* QR Code label, used in Settings as title. String as short as possible */
 "qrCode"="Code QR";
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
@@ -1541,7 +1553,7 @@
 /* Item of a menu to forward a message chat to another chatroom */
 "forward"="Transférer";
 /* Success message shown after forwarding messages to other chats */
-"messagesSent"="Messages sent";
+"messagesSent"="Le message a été envoyé";
 /* Title of archived chats button */
 "archivedChats"="Conversations archivées";
 /* Confirmation message on archive chat dialog for user to confirm. */
@@ -1555,4 +1567,4 @@
 /* Title of flag of archived chats. */
 "archived"="Archivée";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="No Archived Chats";
+"noArchivedChats"="Aucune conversation n’est archivée";

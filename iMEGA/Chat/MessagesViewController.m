@@ -1,28 +1,20 @@
+
 #import "MessagesViewController.h"
+
+#import <UserNotifications/UserNotifications.h>
 
 #import "SVProgressHUD.h"
 #import "UIImage+GKContact.h"
 
-#import "BrowserViewController.h"
-#import "CallViewController.h"
-#import "ChatAttachedContactsViewController.h"
-#import "ChatAttachedNodesViewController.h"
-#import "ContactsViewController.h"
-#import "ContactDetailsViewController.h"
-#import "GroupChatDetailsViewController.h"
-
 #import "Helper.h"
 #import "DevicePermissionsHelper.h"
 #import "DisplayMode.h"
-#import "MainTabBarController.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGACopyRequestDelegate.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
-#import "MEGAImagePickerController.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGAMessagesTypingIndicatorFoorterView.h"
-#import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAOpenMessageHeaderView.h"
@@ -35,10 +27,20 @@
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
-#import "SendToViewController.h"
 #import "UIImage+MNZCategory.h"
 
-#import <UserNotifications/UserNotifications.h>
+#import "BrowserViewController.h"
+#import "CallViewController.h"
+#import "ChatAttachedContactsViewController.h"
+#import "ChatAttachedNodesViewController.h"
+#import "ContactsViewController.h"
+#import "ContactDetailsViewController.h"
+#import "GroupChatDetailsViewController.h"
+#import "MainTabBarController.h"
+#import "MEGAPhotoBrowserViewController.h"
+#import "MEGAImagePickerController.h"
+#import "MEGANavigationController.h"
+#import "SendToViewController.h"
 
 const CGFloat kGroupChatCellLabelHeight = 35.0f;
 const CGFloat k1on1CellLabelHeight = 28.0f;
@@ -69,7 +71,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 @property (nonatomic, getter=shouldStopInvitingContacts) BOOL stopInvitingContacts;
 
 @property (strong, nonatomic) NSMutableDictionary *participantsMutableDictionary;
-@property (strong, nonatomic) NSMutableArray *nodesLoaded;
+@property (strong, nonatomic) NSMutableArray<MEGAChatMessage *> *attachmentMessages;
 
 @property (strong, nonatomic) UIProgressView *navigationBarProgressView;
 
@@ -92,6 +94,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 @property (nonatomic) CGFloat lastBottomInset;
 @property (nonatomic) CGFloat lastVerticalOffset;
+@property (nonatomic) CGFloat initialToolbarHeight;
 
 @property (nonatomic) NSMutableSet<MEGAChatMessage *> *observedDialogMessages;
 @property (nonatomic) NSMutableSet<MEGAChatMessage *> *observedNodeMessages;
@@ -199,7 +202,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     self.navigationController.interactivePopGestureRecognizer.delegate = nil;
     
-    _nodesLoaded = [[NSMutableArray alloc] init];
+    self.attachmentMessages = [[NSMutableArray<MEGAChatMessage *> alloc] init];
 
     // Avatar images
     self.avatarImageFactory = [[JSQMessagesAvatarImageFactory alloc] initWithDiameter:kAvatarImageDiameter];
@@ -267,6 +270,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [super viewDidAppear:animated];
     
     [self showOrHideJumpToBottom];
+    self.initialToolbarHeight = self.inputToolbar.frame.size.height;
 }
 
 - (void)willEnterForeground {
@@ -721,12 +725,14 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)loadNodesFromMessage:(MEGAChatMessage *)message atTheBeginning:(BOOL)atTheBeginning {
     if (message.type == MEGAChatMessageTypeAttachment) {
-        for (NSUInteger i = 0; i < message.nodeList.size.integerValue; i++) {
-            MEGANode *node = [message.nodeList nodeAtIndex:i];
-            if (atTheBeginning) {
-                [self.nodesLoaded insertObject:node atIndex:0];
-            } else {
-                [self.nodesLoaded addObject:node];
+        if (message.nodeList.size.unsignedIntegerValue == 1) {
+            MEGANode *node = [message.nodeList nodeAtIndex:0];
+            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+                if (atTheBeginning) {
+                    [self.attachmentMessages insertObject:message atIndex:0];
+                } else {
+                    [self.attachmentMessages addObject:message];
+                }
             }
         }
     }
@@ -736,7 +742,25 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     if (sourceType == UIImagePickerControllerSourceTypeCamera) {
         MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToShareThroughChatWithSourceType:sourceType filePathCompletion:^(NSString *filePath, UIImagePickerControllerSourceType sourceType) {
             MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-            [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:nil];
+            if (filePath.mnz_imagePathExtension) {
+                [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:nil];
+            }
+            if (filePath.mnz_isVideoPathExtension) {
+                NSURL *videoURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:filePath]];
+                MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initToShareThroughChatWithVideoURL:videoURL filePath:^(NSString *filePath) {
+                    NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
+                    [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:appData];
+                } node:nil error:^(NSError *error) {
+                    NSString *title = AMLocalizedString(@"error", nil);
+                    NSString *message = error.localizedDescription;
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self presentViewController:alertController animated:YES completion:nil];
+                    });
+                }];
+                [processAsset prepare];
+            }
         }];
         
         [self presentViewController:imagePickerController animated:YES completion:nil];
@@ -804,7 +828,9 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)showProgressViewUnderNavigationBar {
     if (self.navigationBarProgressView) {
-        self.navigationBarProgressView.hidden = NO;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.navigationBarProgressView.hidden = NO;
+        });
     } else {
         self.navigationBarProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
         self.navigationBarProgressView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
@@ -814,6 +840,12 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         self.navigationBarProgressView.trackTintColor = [UIColor clearColor];
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            self.navigationBarProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
+            self.navigationBarProgressView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
+            self.navigationBarProgressView.frame = CGRectMake(self.navigationController.navigationBar.bounds.origin.x, self.navigationController.navigationBar.bounds.size.height, self.navigationController.navigationBar.bounds.size.width, 2.0f);
+            self.navigationBarProgressView.progressTintColor = [UIColor mnz_green00BFA5];
+            self.navigationBarProgressView.trackTintColor = [UIColor clearColor];
+            
             [self.navigationController.navigationBar addSubview:self.navigationBarProgressView];
         });
     }
@@ -831,7 +863,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [self.messages addObject:message];
     [self.collectionView reloadData];
     [self updateUnreadMessagesLabel:0];
-    [self.nodesLoaded removeAllObjects];
+    [self.attachmentMessages removeAllObjects];
 }
 
 - (void)internetConnectionChanged {
@@ -985,7 +1017,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)updateCollectionViewInsets {
-    [self jsq_setCollectionViewInsetsTopValue:0.0f bottomValue:self.inputToolbar.frame.size.height];
+    [self jsq_setCollectionViewInsetsTopValue:0.0f bottomValue:self.lastBottomInset];
 }
 
 #pragma mark - Gesture recognizer
@@ -1248,39 +1280,34 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)uploadAssets:(NSArray<PHAsset *> *)assets toParentNode:(MEGANode *)parentNode {
-    for (PHAsset *asset in assets) {
-        MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initToShareThroughChatWithAsset:asset filePath:^(NSString *filePath) {
+    MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initToShareThroughChatWithAssets:assets filePaths:^(NSArray <NSString *> *filePaths) {
+        for (NSString *filePath in filePaths) {
             NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
             [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:appData];
-        } node:^(MEGANode *node) {
+        }
+    } nodes:^(NSArray <MEGANode *> *nodes) {
+        for (MEGANode *node in nodes) {
             [self attachOrCopyAndAttachNode:node toParentNode:parentNode];
-        } error:^(NSError *error) {
-            NSString *message;
-            NSString *title;
-            switch (error.code) {
-                case -1:
-                    title = error.localizedDescription;
-                    message = error.localizedFailureReason;
-                    break;
-                    
-                case -2:
-                    title = AMLocalizedString(@"error", nil);
-                    message = error.localizedDescription;
-                    break;
-                    
-                default:
-                    title = AMLocalizedString(@"error", nil);
-                    message = error.localizedDescription;
-                    break;
-            }
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self presentViewController:alertController animated:YES completion:nil];
-            });
-        }];
+        }
+    } errors:^(NSArray <NSError *> *errors) {
+        NSString *title = AMLocalizedString(@"error", nil);
+        NSString *message;
+        if (errors.count == 1) {
+            NSError *error = errors[0];
+            message = error.localizedDescription;
+        } else {
+            message = AMLocalizedString(@"shareExtensionUnsupportedAssets", nil);
+        }
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self presentViewController:alertController animated:YES completion:nil];
+        });
+    }];
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
         [processAsset prepare];
-    }
+    });
 }
 
 - (void)didPressAccessoryButton:(UIButton *)sender {
@@ -1386,7 +1413,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)jsq_setCollectionViewInsetsTopValue:(CGFloat)top bottomValue:(CGFloat)bottom {
-    if (self.inputToolbar.frame.size.height == 0.0f) {
+    if (self.inputToolbar.frame.size.height < self.initialToolbarHeight) {
         return;
     }
     
@@ -1397,6 +1424,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     self.collectionView.contentInset = insets;
     self.collectionView.scrollIndicatorInsets = insets;
     self.jumpToBottomConstraint.constant = bottom + 27.0f;
+    self.lastBottomInset = bottom;
 
     if (increment > 0) {
         bounds.origin.y += increment;
@@ -1931,16 +1959,21 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             if (message.nodeList.size.unsignedIntegerValue == 1) {
                 MEGANode *node = [message.nodeList nodeAtIndex:0];
                 if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                    NSArray *reverseArray = [[[self.nodesLoaded reverseObjectEnumerator] allObjects] mutableCopy];
-                    [node mnz_openImageInNavigationController:self.navigationController withNodes:reverseArray folderLink:NO displayMode:DisplayModeSharedItem enableMoveToRubbishBin:NO];
+                    NSArray<MEGAChatMessage *> *reverseArray = [[self.attachmentMessages reverseObjectEnumerator] allObjects];
+                    NSMutableArray<MEGANode *> *mediaNodesArray = [[NSMutableArray<MEGANode *> alloc] initWithCapacity:reverseArray.count];
+                    for (MEGAChatMessage *attachmentMessage in reverseArray) {
+                        [mediaNodesArray addObject:[attachmentMessage.nodeList nodeAtIndex:0]];
+                    }
+                    
+                    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeSharedItem presentingNode:nil preferredIndex:[reverseArray indexOfObject:message]];
+                    
+                    [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
                 } else {
                     [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
                 }
             } else {
-                NSArray *reverseArray = [[[self.nodesLoaded reverseObjectEnumerator] allObjects] mutableCopy];
                 ChatAttachedNodesViewController *chatAttachedNodesVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatAttachedNodesViewControllerID"];
                 chatAttachedNodesVC.message = message;
-                chatAttachedNodesVC.nodesLoadedInChatroom = reverseArray;
                 [self.navigationController pushViewController:chatAttachedNodesVC animated:YES];
             }
         } else if (message.type == MEGAChatMessageTypeContact) {

@@ -16,7 +16,7 @@
     
     if (highlighted) {
         UIView *view = [[UIView alloc] init];
-        view.backgroundColor = UIColor.whiteColor;
+        view.backgroundColor = UIColor.clearColor;
         self.selectedBackgroundView = view;
         
         self.pendingView.backgroundColor = UIColor.mnz_redFF4D52;

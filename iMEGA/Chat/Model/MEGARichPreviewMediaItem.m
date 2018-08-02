@@ -158,7 +158,7 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    CGFloat bubbleWidth = [[UIDevice currentDevice] mnz_widthForChatBubble];
+    CGFloat bubbleWidth = [[UIDevice currentDevice] mnz_maxSideForChatBubbleWithMedia:NO];
     CGFloat maxTextViewWidth = bubbleWidth - 20.0f;
     UIFont *messageFont = [UIFont mnz_SFUIRegularWithSize:15.0f];
     NSString *text = self.message.type == MEGAChatMessageTypeContainsMeta ? self.message.containsMeta.richPreview.text : self.message.content;

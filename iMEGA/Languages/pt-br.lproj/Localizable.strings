@@ -203,7 +203,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Não há resultados";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Esvaziar a lixeira";
+"cloudDriveEmptyState_titleRubbishBin"="Lixeira vazia";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Nenhum arquivo salvo para uso offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -223,7 +223,7 @@
 /* Button title to allow the user postpone an action */
 "later"="Depois";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
-"received"="Recebidos";
+"received"="Recebidas";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="Enviadas";
 /* Success message shown when you acepted a contact request */
@@ -233,7 +233,7 @@
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Solicitação eliminada";
 /* Title shown when there's no pending contact requests */
-"noRequestPending"="Não existem convites pendentes";
+"noRequestPending"="Não existem solicitações de contato pendentes";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transferências em pausa";
 /* Title shown when the there is not any transfer and they are not paused */
@@ -253,9 +253,9 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
 "folders"="%d pastas";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="1 pasta de arquivo • 1";
+"folderAndFile"="1 pasta • 1 arquivo";
 /* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
-"foldersAndFiles"="[A] Pastas • [B] Arquivos";
+"foldersAndFiles"="[A] pastas • [B] arquivos";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
 "foldersAndFile"="%d pastas • 1 arquivo";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
@@ -301,7 +301,7 @@
 /* message when trying to create a folder that already exists */
 "folderAlreadyExists"="Pasta já existe";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="Importado de...";
+"uploadFrom"="Importar de...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A] já carregado com o nome [B]";
 /* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
@@ -415,7 +415,7 @@
 /* Title for the action that allows you to move a file or folder */
 "move"="Mover";
 /* Success message shown when you have moved 1 file */
-"moveFileMessage"="1 ficheiro movido";
+"moveFileMessage"="1 arquivo movido";
 /* Success message shown when you have moved {1+} files */
 "moveFilesMessage"="%d arquivos movidos";
 /* Success message shown when you have moved 1 folder */
@@ -429,7 +429,7 @@
 /* Success message shown when you have moved {1+} files and 1 folder */
 "moveFilesFolderMessage"="%d arquivos e 1 pasta movidos";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="[A] ficheiros e [B] pastas movido";
+"moveFilesFoldersMessage"="[A] arquivos e [B] pastas movidos";
 /* List option shown on the details of a file or folder */
 "copy"="Copiar";
 /* Success message shown when you have copied 1 file */
@@ -437,7 +437,7 @@
 /* Success message shown when you have copied {1+} files */
 "copyFilesMessage"="%d arquivos copiados";
 /* Success message shown when you have copied 1 folder */
-"copyFolderMessage"="1 ficheiro copiado";
+"copyFolderMessage"="1 arquivo copiado";
 /* Success message shown when you have copied {1+} folders */
 "copyFoldersMessage"="%d pastas copiadas";
 /* Success message shown when you have copied 1 file and 1 folder */
@@ -447,7 +447,7 @@
 /* Success message shown when you have copied {1+} files and 1 folder */
 "copyFilesFolderMessage"="%ds arquivos e 1 pasta copiados";
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
-"copyFilesFoldersMessage"="[A] ficheiros  e [B] pastas copiado";
+"copyFilesFoldersMessage"="[A] arquivos e [B] pastas copiados";
 /* Title for the action that allows you to rename a file or folder  */
 "rename"="Renomear";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
@@ -581,7 +581,7 @@
 /* Title of the view where you see with who you have shared a folder */
 "sharedWith"="Compartilhado com";
 /* Item menu option to add a contact through your device app Contacts */
-"addFromContacts"="Adicionar a partir dos contatos";
+"addFromContacts"="Adicionar dos contatos";
 /* Alert title shown when you select to add a contact inserting his/her email */
 "addContact"="Adicionar contato";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
@@ -681,7 +681,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Somente quando estiver carregando";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Quando ativado novas fotos e vídeos serão carregados.";
+"cameraUploads_footer"="Ao ativar, será feito o upload de novas fotos e vídeos.";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA - versão do SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
@@ -723,17 +723,17 @@
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
 "transfersSectionFooter"="Ative essa opção somente se a sua transferência não começar. Em circunstâncias normais, HTTP é suficiente, pois todas as transferências já estão criptografadas.";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
-"imageAndVideoDownloadsHeader"="Imagem e vídeo de downloads";
+"imageAndVideoDownloadsHeader"="Downloads de imagens e vídeos";
 /* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
 "photosTakenAndVideoRecordedFromWithinTheAppHeader"="Arquivos multimídia criados no aplicativo";
 /* Section title where you can enable the option 'Save images in gallery' */
-"saveImagesInGallery"="Guardar imagens na galeria";
+"saveImagesInGallery"="Salvar imagens na galeria";
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Salvar vídeos na galeria";
 /* Section title where you can enable the option 'Save media in gallery' */
 "saveMediaInGallery"="Salvar arquivos multimídia na galeria";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
-"imageAndVideoDownloadsFooter"="Salvar iOS imagens compatíveis e vídeos na galeria do seu dispositivo (Nota: As imagens e vídeos não serão salvas no off-line).";
+"imageAndVideoDownloadsFooter"="Salvar imagens e vídeos compatíveis com iOS na galeria do seu dispositivo (aviso: as imagens e os vídeos não serão salvos em Offline).";
 /* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
 "photosTakenAndVideoRecordedFromWithinTheAppFooter"="Ative esta opção para salvar na galeria as fotos e os vídeos criados no aplicativo";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
@@ -852,7 +852,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Apagar dados locais";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Fazer logout e apagar os dados locais após 10 tentativas fracassadas de senha";
+"failedAttempstSectionTitle"="Fazer logout e apagar os dados locais depois de digitar 10 vezes o código incorreto";
 /* Menu item */
 "help"="Ajuda";
 /* Title of the section to access MEGA's help centre */
@@ -904,7 +904,7 @@
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Selecione os contatos da agenda do seu telefone ou digite os endereços de email.";
 /*  */
-"insertYourFriendsEmails"="Insira o(s) email(s) do(s) seu(s) amigo(s):";
+"insertYourFriendsEmails"="Digite o(s) email(s) do(s) seu(s) amigo(s):";
 /*  */
 "howItWorks"="Como funciona";
 /*  */
@@ -966,7 +966,7 @@
 /* Title for "Local" used space. */
 "localLabel"="Local";
 /* Title for "Used" MEGA space. */
-"usedSpaceLabel"="Utilizado";
+"usedSpaceLabel"="Usado";
 /* Title for MEGA "Available" space. */
 "availableLabel"="Disponível";
 /* title of the My Account screen */
@@ -1282,9 +1282,9 @@
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="Enviados %s contatos.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="Em anexo: %s";
+"attachedFile"="Anexou: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
-"attachedXFiles"="Em anexo %s arquivos.";
+"attachedXFiles"="Anexou %s arquivos.";
 /* Label in a button that allows to jump to the latest item */
 "jumpToLatest"="Ir ao mais recente";
 /* Label in a button that allows to jump to the latest message */
@@ -1294,7 +1294,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu mensagens não lidas";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="As assinaturas são automaticamente renovadas por períodos iguais, de igual duração e ao mesmo preço que o período inicial escolhido. Você pode anular a renovação automática da sua assinatura MEGA até 24 horas antes DO próximo pagamento da assinatura fazendo-o através da página de configurações da sua conta iTunes. Para gerenciar suas assinaturas basta clicar no ícone da App Store no seu aparelho, entrar com seu ID da Apple na parte inferior da página (se você ainda não o tiver feito) e, em seguida, clicar em Ver ID. Você será levado à página da sua conta onde rolando para baixo pode gerenciar as suas assinaturas. A partir daqui, você pode selecionar sua assinatura MEGA Pro e ver a sua data de renovação programada, escolher um pacote de assinatura diferente ou puxar o botão on-off para fora para desativar a renovação automática da sua assinatura.";
+"autorenewableDescription"="As assinaturas são renovadas automaticamente por períodos com a mesma duração e o mesmo preço que o período inicial escolhido. Você pode anular a renovação automática da sua assinatura no MEGA até 24 horas antes do próximo pagamento através da página de configurações da sua conta no iTunes. Para gerenciar as suas assinaturas, basta clicar no ícone da App Store no seu dispositivo, fazer login com o seu ID Apple na parte inferior da página (se você ainda tiver feito isso) e então clicar em Ver ID. Você será levado à página da sua conta, na qual deve ir até a opção Assinaturas. A partir daqui, você pode selecionar a sua assinatura PRO do MEGA e ver a data de renovação programada, escolher um pacote de assinatura diferente ou usar o botão on-off para desativar a renovação automática da sua assinatura.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Abra o MEGA e faça o login para continuar";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1360,7 +1360,7 @@
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="O MEGA oferece armazenamento em nuvem criptografado controlado pelo usuário por meio de navegadores padrão, assim como aplicativos para dispositivos móveis. Diferentemente de outros provedores de armazenamento em nuvem, no MEGA os seus dados são criptografados e descriptografados apenas pelos seus dispositivos, e nunca por nós.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="Carregue os seus arquivos a partir do smartphone ou tablet e, em seguida, procure, armazene, transfira, transmita, visualize, compartilhe, mude o nome ou elimine os seus ficheiros a qualquer momento, a partir de qualquer dispositivo, em qualquer lugar. Compartilhe pastas com seus contatos e veja suas atualizações em tempo real.";
+"generalDescriptionParagraph2"="Faça o upload dos seus arquivos a partir do seu smartphone ou tablet e, em seguida, procure, armazene, faça download, transmita, visualize, compartilhe, renomeie ou elimine os seus arquivos a qualquer momento, a partir de qualquer dispositivo, em qualquer lugar. Compartilhe pastas com os seus contatos e veja as atualizações deles em tempo real.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="O processo de criptografia significa que não podemos acessar ou redefinir sua senha você DEVE se lembrar (a menos que você tenha a sua chave de recuperação backup) ou você perderá o acesso aos seus arquivos armazenados.";
 /* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
@@ -1392,6 +1392,18 @@
 "missedAudioCallsAndMissedVideoCalls"="[A] chamadas de áudio e [B] chamadas de vídeo perdidas";
 /* Button title to see the available bonus */
 "getBonus"="Consiga bônus";
+/* Text shown under the title 'Video quality' that explains what it means */
+"qualityOfVideosUploadedToAChat"="Qualidade dos vídeos enviados para um chat";
+/* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
+"videoQuality"="Qualidade dos vídeos";
+/* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
+"low"="Baixa";
+/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+"high"="Alta";
+/* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
+"original"="Original";
+/* Label for the status of a transfer when is being preparing - (String as short as possible). */
+"preparing..."="Preparando...";
 /* QR Code label, used in Settings as title. String as short as possible */
 "qrCode"="Código QR";
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
@@ -1407,7 +1419,7 @@
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="Escanear código";
 /* Label that encourage the user to line the QR to scan with the camera */
-"lineCodeWithCamera"="Alinhe o código QR para escaneá-lo com a câmera do seu dispositivo";
+"lineCodeWithCamera"="Alinhe o código QR para escaneá-lo com a câmera";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
 "invalidCode"="Código inválido";
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
@@ -1429,11 +1441,11 @@
 /* Title of the incoming shared folders of a user in singular */
 "sharedFolder"="Pasta compartilhada";
 /* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
-"created"="Criado";
+"created"="Criação";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
 "contains"="Contém";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
-"modified"="Modificado";
+"modified"="Modificação";
 /* used for example when a folder is shared with 2 or more users */
 "users"="usuários";
 /* user (singular) label indicating is receiving some info, for example shared folders */
@@ -1443,7 +1455,7 @@
 /* Label of the option menu. When clicking this button, the app shows the info of the file */
 "fileInfo"="Informações do arquivo";
 /* Label of the option menu. When clicking this button, the app shows the info of the folder */
-"folderInfo"="Informação da pasta";
+"folderInfo"="Informações da pasta";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="Você quer deletar esta versão?";
 /* Message to notify user the file version will be permanently removed */
