@@ -49,6 +49,9 @@ url=https://github.com/meganz/CTAssetsPickerController.git
 [submodule "iMEGA/Vendor/MGSwipeTableCell"]
 	path = iMEGA/Vendor/MGSwipeTableCell
 	url = https://github.com/MortimerGoro/MGSwipeTableCell.git
+[submodule "iMEGA/Vendor/SDAVAssetExportSession"]
+	path = iMEGA/Vendor/SDAVAssetExportSession
+	url = https://github.com/meganz/SDAVAssetExportSession.git
 [submodule "iMEGA/Vendor/PWProgressView"]
 	path = iMEGA/Vendor/PWProgressView
-	url = https://github.com/pwillsey/PWProgressView
+	url = https://github.com/pwillsey/PWProgressView.git

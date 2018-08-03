@@ -1,15 +1,15 @@
 /* Microphone usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSMicrophoneUsageDescription"="MEGA accesses your microphone when you capture a video or make a call inside the app.";
+"NSMicrophoneUsageDescription"="MEGA cần truy cập khả năng sử dụng mircophone để giúp người sử dụng thực hiện cuộc gọi.";
 /* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSCameraUsageDescription"="MEGA accesses your camera when you capture a video, photo or make a call inside the app.";
+"NSCameraUsageDescription"="MEGA cần truy cập khả năng sử dụng camera để thực hiện việc chụp ảnh và quay video khi người sử dụng yêu cầu.";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSPhotoLibraryUsageDescription"="MEGA cần truy cập vào kho hình ảnh/video để thực hiện đăng tải và chia sẻ qua chat khi nguời sử dụng yêu cầu, và bật chức năng Camera Uploads.";
+"NSPhotoLibraryUsageDescription"="MEGA cần truy cập vào kho hình ảnh/video để thực hiện đăng tải, chia sẻ qua chat khi người sử dụng yêu cầu, và để chức năng Camera Uploads hoạt động.";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSContactsUsageDescription"="MEGA accesses your contacts when you select some of them to save/export.";
+"NSContactsUsageDescription"="MEGA cần truy cập vào sổ danh bạ của điện thoại để thực hiện việc tra cứu khi người sử dụng yêu cầu.";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSPhotoLibraryAddUsageDescription"="MEGA requires access to your photo library to add photos and videos to your device gallery";
+"NSPhotoLibraryAddUsageDescription"="MEGA cần quyền truy cập vào kho hình ảnh để thực hiện việc thêm video và ảnh vào máy";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSFaceIDUsageDescription"="MEGA accesses Face ID to allow you to easily unlock the app’s passcode when you enable this option.";
+"NSFaceIDUsageDescription"="MEGA cần truy cập vào Face ID khi người sử dụng muốn dùng tính năng nhận diện khuôn mặt để thay thế mở khoá bằng mã số.";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
 "quickActionSearchString"="Tìm kiếm";
 /*  */
