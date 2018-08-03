@@ -46,7 +46,7 @@ const CGFloat kGroupChatCellLabelHeight = 35.0f;
 const CGFloat k1on1CellLabelHeight = 28.0f;
 const CGFloat kAvatarImageDiameter = 24.0f;
 
-@interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
+@interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAPhotoBrowserDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
 @property (nonatomic, strong) MEGAMessagesTypingIndicatorFoorterView *footerView;
@@ -102,6 +102,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 @property (nonatomic) BOOL selectingMessages;
 @property (nonatomic) NSMutableArray<MEGAChatMessage *> *selectedMessages;
+
+@property (nonatomic) NSIndexPath *browsingIndexPath;
 
 @end
 
@@ -1630,6 +1632,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         }
     }
     
+    cell.mediaView.hidden = self.browsingIndexPath && indexPath.section == self.browsingIndexPath.section && indexPath.item == self.browsingIndexPath.item;
+    
     return cell;
 }
 
@@ -1965,8 +1969,13 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                         [mediaNodesArray addObject:[attachmentMessage.nodeList nodeAtIndex:0]];
                     }
                     
-                    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeSharedItem presentingNode:nil preferredIndex:[reverseArray indexOfObject:message]];
+                    JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+                    CGRect containerFrame = [cell convertRect:cell.messageBubbleContainerView.frame toView:nil];
                     
+                    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeSharedItem presentingNode:nil preferredIndex:[reverseArray indexOfObject:message]];
+                    photoBrowserVC.delegate = self;
+                    photoBrowserVC.originFrame = containerFrame;
+
                     [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
                 } else {
                     [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
@@ -2106,6 +2115,36 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
     [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
+}
+
+#pragma mark - MEGAPhotoBrowserDelegate
+
+- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser didPresentNode:(MEGANode *)node atIndex:(NSUInteger)index {
+    if (index >= self.attachmentMessages.count) {
+        return;
+    }
+    
+    MEGAChatMessage *message = [self.attachmentMessages objectAtIndex:(self.attachmentMessages.count - 1 - index)];
+    NSUInteger item = [self.messages indexOfObject:message];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item inSection:0];
+    if (indexPath) {
+        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
+        
+        JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+        CGRect containerFrame = [cell convertRect:cell.messageBubbleContainerView.frame toView:nil];
+        photoBrowser.originFrame = containerFrame;
+        if (CGRectIsEmpty(containerFrame)) {
+            self.browsingIndexPath = nil;
+        } else {
+            self.browsingIndexPath = indexPath;
+        }
+    }
+    [self.collectionView reloadData];
+}
+
+- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser willDismissWithNode:(MEGANode *)node {
+    self.browsingIndexPath = nil;
+    [self.collectionView reloadData];
 }
 
 #pragma mark - MEGAChatRoomDelegate

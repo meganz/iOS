@@ -822,7 +822,7 @@
 
 #pragma mark - MEGAPhotoBrowserDelegate
 
-- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser didPresentNode:(MEGANode *)node {
+- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser didPresentNode:(MEGANode *)node atIndex:(NSUInteger)index {
     NSIndexPath *indexPath = [self indexPathForNode:node];
     if (indexPath) {
         [self.photosCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
