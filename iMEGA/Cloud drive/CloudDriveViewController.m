@@ -14,11 +14,8 @@
 #import "UIImageView+MNZCategory.h"
 
 #import "Helper.h"
-#import "MEGAAssetsPickerController.h"
 #import "MEGACreateFolderRequestDelegate.h"
-#import "MEGAImagePickerController.h"
 #import "MEGAMoveRequestDelegate.h"
-#import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAPurchase.h"
@@ -32,17 +29,19 @@
 
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
+#import "CustomActionViewController.h"
+#import "CustomModalAlertViewController.h"
+#import "MEGAAssetsPickerController.h"
+#import "MEGAImagePickerController.h"
+#import "MEGANavigationController.h"
+#import "MEGAPhotoBrowserViewController.h"
+#import "NodeInfoViewController.h"
 #import "NodeTableViewCell.h"
 #import "PhotosViewController.h"
 #import "PreviewDocumentViewController.h"
 #import "SortByTableViewController.h"
 #import "SharedItemsViewController.h"
 #import "UpgradeTableViewController.h"
-#import "CustomModalAlertViewController.h"
-
-#import "CustomActionViewController.h"
-
-#import "NodeInfoViewController.h"
 
 @interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITableViewDelegate, UITableViewDataSource> {
     BOOL allNodesSelected;
@@ -164,7 +163,9 @@
     }
     
     [self requestReview];
-    [self.tableView reloadRowsAtIndexPaths:self.tableView.indexPathsForVisibleRows withRowAnimation:UITableViewRowAnimationNone];
+    [UIView performWithoutAnimation:^{
+        [self.tableView reloadRowsAtIndexPaths:self.tableView.indexPathsForVisibleRows withRowAnimation:UITableViewRowAnimationNone];
+    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -377,8 +378,7 @@
             
         case MEGANodeTypeFile: {
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList]);
-                [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:NO displayMode:self.displayMode];
+                [self.navigationController presentViewController:[self photoBrowserForMediaNode:node] animated:YES completion:nil];
             } else {
                 [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
             }
@@ -513,8 +513,7 @@
             
         case MEGANodeTypeFile: {
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList]);
-                return [node mnz_photoBrowserWithNodes:nodesArray folderLink:NO displayMode:self.displayMode enableMoveToRubbishBin:YES];
+                return [self photoBrowserForMediaNode:node];
             } else {
                 UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO];
                 return viewController;
@@ -1330,6 +1329,20 @@
     if (indexPath != nil) {
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
+}
+
+- (MEGAPhotoBrowserViewController *)photoBrowserForMediaNode:(MEGANode *)node {
+    NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList]);
+    NSMutableArray<MEGANode *> *mediaNodesArray = [[NSMutableArray alloc] initWithCapacity:nodesArray.count];
+    for (MEGANode *n in nodesArray) {
+        if (n.name.mnz_isImagePathExtension || n.name.mnz_isVideoPathExtension) {
+            [mediaNodesArray addObject:n];
+        }
+    }
+    
+    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:self.displayMode presentingNode:node preferredIndex:0];
+    
+    return photoBrowserVC;
 }
 
 #pragma mark - IBActions

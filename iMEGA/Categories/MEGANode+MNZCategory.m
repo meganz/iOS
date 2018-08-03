@@ -29,26 +29,6 @@
 
 @implementation MEGANode (MNZCategory)
 
-- (void)mnz_openImageInNavigationController:(UINavigationController *)navigationController withNodes:(NSArray<MEGANode *> *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(DisplayMode)displayMode {
-    [self mnz_openImageInNavigationController:navigationController withNodes:nodesArray folderLink:isFolderLink displayMode:displayMode enableMoveToRubbishBin:YES];
-}
-
-- (void)mnz_openImageInNavigationController:(UINavigationController *)navigationController withNodes:(NSArray<MEGANode *> *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(DisplayMode)displayMode enableMoveToRubbishBin:(BOOL)enableMoveToRubbishBin {
-    MEGAPhotoBrowserViewController *photoBrowserVC = [self mnz_photoBrowserWithNodes:nodesArray folderLink:isFolderLink displayMode:displayMode enableMoveToRubbishBin:enableMoveToRubbishBin];
-    [navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
-}
-
-- (MEGAPhotoBrowserViewController *)mnz_photoBrowserWithNodes:(NSArray<MEGANode *> *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(DisplayMode)displayMode enableMoveToRubbishBin:(BOOL)enableMoveToRubbishBin {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
-    MEGAPhotoBrowserViewController *photoBrowserVC = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
-    photoBrowserVC.api = isFolderLink ? [MEGASdkManager sharedMEGASdkFolder] : [MEGASdkManager sharedMEGASdk];
-    photoBrowserVC.node = self;
-    photoBrowserVC.nodesArray = nodesArray;
-    photoBrowserVC.displayMode = displayMode;
-    
-    return photoBrowserVC;
-}
-
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink {
     UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink];
     if (viewController) {

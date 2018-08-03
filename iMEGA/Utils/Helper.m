@@ -965,7 +965,7 @@ static MEGAIndexer *indexer;
     }
     
     MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:uploadTransfer.parentNodeHandle.unsignedLongLongValue];
-    MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset parentNode:parentNode filePath:^(NSString *filePath) {
+    MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset parentNode:parentNode cameraUploads:NO filePath:^(NSString *filePath) {
         NSString *name = filePath.lastPathComponent;
         NSString *newName = [Helper sequentialNameForNodeNamed:name parentNode:parentNode];
         
