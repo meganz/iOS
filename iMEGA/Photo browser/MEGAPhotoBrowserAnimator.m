@@ -87,8 +87,7 @@
 
 - (CGAffineTransform)transformForFrame:(CGRect)frame {
     CGFloat xFactor = self.originFrame.size.width / frame.size.width;
-    CGFloat yFactor = xFactor * self.originFrame.size.height / self.originFrame.size.width;
-    return CGAffineTransformMakeScale(xFactor, yFactor);
+    return CGAffineTransformMakeScale(xFactor, xFactor);
 }
 
 - (CGPoint)originCenterPoint {

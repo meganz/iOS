@@ -11,9 +11,12 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
     MEGAPhotoModeOriginal
 };
 
-@protocol MEGAPhotoBrowserDelegate
+@protocol MEGAPhotoBrowserDelegate <NSObject>
 
-- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser didPresentNode:(MEGANode *)node;
+- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser didPresentNode:(MEGANode *)node atIndex:(NSUInteger)index;
+
+@optional
+
 - (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser willDismissWithNode:(MEGANode *)node;
 
 @end
