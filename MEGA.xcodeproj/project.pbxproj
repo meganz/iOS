@@ -213,6 +213,7 @@
 		5B6429DD2020A8CB000E0DCB /* SF-UI-Display-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429DC2020A5E7000E0DCB /* SF-UI-Display-Semibold.otf */; };
 		5B6429E02020A8CF000E0DCB /* SF-UI-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429DB2020A5E6000E0DCB /* SF-UI-Text-Semibold.otf */; };
 		5B6429E42020A9A3000E0DCB /* SF-UI-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429E32020A9A2000E0DCB /* SF-UI-Display-Bold.otf */; };
+		5B64D4EE2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B64D4ED2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m */; };
 		5B71631D203D9CE1001E5FBC /* NodeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226711A692ECC00EC7BB6 /* NodeTableViewCell.m */; };
 		5B71631E203D9D28001E5FBC /* NodeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226711A692ECC00EC7BB6 /* NodeTableViewCell.m */; };
 		5B78F0B21F3C5362007ED721 /* MyAccountHallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B78F0B11F3C5362007ED721 /* MyAccountHallViewController.m */; };
@@ -1129,6 +1130,8 @@
 		5B6429DB2020A5E6000E0DCB /* SF-UI-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Text-Semibold.otf"; path = "Fonts/SF-UI-Text-Semibold.otf"; sourceTree = "<group>"; };
 		5B6429DC2020A5E7000E0DCB /* SF-UI-Display-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Display-Semibold.otf"; path = "Fonts/SF-UI-Display-Semibold.otf"; sourceTree = "<group>"; };
 		5B6429E32020A9A2000E0DCB /* SF-UI-Display-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Display-Bold.otf"; path = "Fonts/SF-UI-Display-Bold.otf"; sourceTree = "<group>"; };
+		5B64D4EC2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnabledTwoFactorAuthenticationViewController.h; sourceTree = "<group>"; };
+		5B64D4ED2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnabledTwoFactorAuthenticationViewController.m; sourceTree = "<group>"; };
 		5B72A14B20D3A69C007FE4FD /* URLType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLType.h; sourceTree = "<group>"; };
 		5B78F0B01F3C5362007ED721 /* MyAccountHallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAccountHallViewController.h; sourceTree = "<group>"; };
 		5B78F0B11F3C5362007ED721 /* MyAccountHallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAccountHallViewController.m; sourceTree = "<group>"; };
@@ -2764,10 +2767,12 @@
 		5BF4B3B120AB05FD00A6E6D7 /* Two Factor Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				5B50DE0620AC1BDD00F2CB09 /* EnablingTwoFactorAuthenticationViewController.h */,
-				5B50DE0520AC1BDC00F2CB09 /* EnablingTwoFactorAuthenticationViewController.m */,
 				5BC4912D20AC457E00F7F952 /* SetupTwoFactorAuthenticationTableViewController.h */,
 				5BC4912E20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m */,
+				5B50DE0620AC1BDD00F2CB09 /* EnablingTwoFactorAuthenticationViewController.h */,
+				5B50DE0520AC1BDC00F2CB09 /* EnablingTwoFactorAuthenticationViewController.m */,
+				5B64D4EC2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.h */,
+				5B64D4ED2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m */,
 			);
 			path = "Two Factor Authentication";
 			sourceTree = "<group>";
@@ -3761,6 +3766,7 @@
 				5BB68CA120359B5400B03C00 /* PasswordStrengthIndicatorView.m in Sources */,
 				5B21C83F2063A70400324517 /* EmptyHeaderView.m in Sources */,
 				E8B519261AC9CD8000BB7324 /* TransfersViewController.m in Sources */,
+				5B64D4EE2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m in Sources */,
 				417279441DB663FA001AC818 /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.m in Sources */,
 				41D21E731D01AEC3002E6296 /* CTAssetThumbnailView.m in Sources */,
 				4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */,
