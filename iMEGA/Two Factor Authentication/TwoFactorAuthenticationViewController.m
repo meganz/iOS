@@ -9,7 +9,7 @@
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 
-#import "CustomModalAlertViewController.h"
+#import "MEGANavigationController.h"
 
 @interface TwoFactorAuthenticationViewController () <UITextViewDelegate, MEGARequestDelegate>
 
@@ -288,21 +288,11 @@
             
         case MEGARequestTypeMultiFactorAuthSet:
             if (request.flag) {
-                CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-                customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-                customModalAlertVC.image = [UIImage imageNamed:@"2FASetup"];
-                customModalAlertVC.viewTitle = AMLocalizedString(@"twoFactorAuthenticationEnabled", @"");
-                customModalAlertVC.detail = AMLocalizedString(@"twoFactorAuthenticationEnabledDescription", @"");
-                customModalAlertVC.action = AMLocalizedString(@"close", @"");
-                customModalAlertVC.actionColor = [UIColor mnz_green00BFA5];
-                __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
-                customModalAlertVC.completion = ^{
-                    [weakCustom dismissViewControllerAnimated:YES completion:^{
-                        [self.navigationController popToViewController:self.navigationController.viewControllers[3] animated:YES];
-                    }];
-                };
+                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"EnabledTwoFactorAuthenticationNavigationControllerID"];
                 
-                [UIApplication.mnz_visibleViewController presentViewController:customModalAlertVC animated:YES completion:nil];
+                [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+                
+                [self.navigationController popToViewController:self.navigationController.viewControllers[3] animated:YES];
             } else {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"twoFactorAuthenticationDisabled", @"") message:nil preferredStyle:UIAlertControllerStyleAlert];
                 

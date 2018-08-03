@@ -1568,7 +1568,7 @@
 "archived"="Archived";
 /* Title of empty state view for archived chats. */
 "noArchivedChats"="No Archived Chats";
-/*  */
+/* A title for the Two-Factor Authentication section on the My Account - Security page. */
 "twoFactorAuthentication"="Two-Factor Authentication";
 /*  */
 "whyYouDoNeedTwoFactorAuthentication"="Why do you need two-factor authentication?";
@@ -1579,9 +1579,14 @@
 /* */
 "noAuthenticatorAppInstalled"="There's no authenticator app installed.";
 /*  */
+/* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="Two-Factor Authentication Enabled";
-/*  */
+/* A message on the dialog shown after 2FA was successfully enabled. */
 "twoFactorAuthenticationEnabledDescription"="Next time you login to your account you will be asked to enter a 6-digit code provided by your authentication app.";
+/* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
+"pleaseSaveYourRecoveryKey"="Please save your Recovery Key and store it in a safe location";
+/* An informational message on the Backup Recovery Key dialog. */
+"twoFactorAuthenticationEnabledWarning"="If you lose access to your account after enabling 2FA and you have not backed up your Recovery Key, MEGA cannot help you gain access to it again.";
 /*  */
 "twoFactorAuthenticationDisabled"="Two Factor Authentication Disabled";
 /*  */
