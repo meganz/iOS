@@ -822,10 +822,11 @@
         [self.shareFolderActivity activityDidFinish:YES];
     }
     
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
+    
     if (self.contactsMode == ContactsModeChatCreateGroup) {
-        if (self.searchController.isActive) {
-            self.searchController.active = NO;
-        }
         [self.navigationController popViewControllerAnimated:YES];
     } else {
         [self dismissViewControllerAnimated:YES completion:nil];
