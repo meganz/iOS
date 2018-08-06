@@ -338,7 +338,9 @@
 - (void)handleCoreDataChangeNotification:(NSNotification *)notification {
     for (NSManagedObject *managedObject in [notification.userInfo objectForKey:NSDeletedObjectsKey]) {
         if ([managedObject isKindOfClass:MOUploadTransfer.class]) {
-            [self reloadView];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self reloadView];
+            });
         }
     }
 }
