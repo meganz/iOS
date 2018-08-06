@@ -1,6 +1,7 @@
 
 #import "MEGAPhotoBrowserViewController.h"
 
+#import "FLAnimatedImage.h"
 #import "PieChartView.h"
 #import "SVProgressHUD.h"
 
@@ -129,11 +130,13 @@
     }
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
     [self.view layoutIfNeeded];
-    [self reloadUI];
+    if (self.isBeingPresented) {
+        [self reloadUI];
+    }
 }
 
 
@@ -286,7 +289,7 @@
         if (node.name.mnz_isImagePathExtension) {
             NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:NO];
             if (![[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
-                [self setupNode:node forImageView:(UIImageView *)view withMode:MEGAPhotoModeOriginal];
+                [self setupNode:node forImageView:(FLAnimatedImageView *)view withMode:MEGAPhotoModeOriginal];
             }
             if (!self.interfaceHidden) {
                 [self singleTapGesture:nil];
@@ -318,17 +321,23 @@
                 continue;
             }
             
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+            FLAnimatedImageView *imageView = [[FLAnimatedImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
             MEGANode *node = [self.mediaNodes objectAtIndex:i];
             NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:NO];
             if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
-                imageView.image = [UIImage imageWithContentsOfFile:temporaryImagePath];
+                if ([node.name.pathExtension isEqualToString:@"gif"]) {
+                    imageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:temporaryImagePath]]];
+                } else {
+                    imageView.image = [UIImage imageWithContentsOfFile:temporaryImagePath];
+                }
             } else {
-                NSString *previewPath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
-                if ([[NSFileManager defaultManager] fileExistsAtPath:previewPath]) {
-                    imageView.image = [UIImage imageWithContentsOfFile:previewPath];
+                if ([node.name.pathExtension isEqualToString:@"gif"]) {
+                    if (node.hasPreview) {
+                        [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
+                    }
+                    [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
                 } else {
                     if (node.hasPreview) {
                         [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
@@ -374,7 +383,7 @@
     }
 }
 
-- (void)setupNode:(MEGANode *)node forImageView:(UIImageView *)imageView withMode:(MEGAPhotoMode)mode {
+- (void)setupNode:(MEGANode *)node forImageView:(FLAnimatedImageView *)imageView withMode:(MEGAPhotoMode)mode {
     [self removeActivityIndicatorsFromView:imageView];
 
     void (^requestCompletion)(MEGARequest *request) = ^(MEGARequest *request) {
@@ -394,7 +403,11 @@
                           duration:0.2
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
-                            imageView.image = [UIImage imageWithContentsOfFile:transfer.path];
+                            if ([node.name.pathExtension isEqualToString:@"gif"]) {
+                                imageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:transfer.path]]];
+                            } else {
+                                imageView.image = [UIImage imageWithContentsOfFile:transfer.path];
+                            }
                             [self resizeImageView:imageView];
                             if (transfer.nodeHandle == [self.mediaNodes objectAtIndex:self.currentIndex].handle) {
                                 self.pieChartView.alpha = 0.0f;
