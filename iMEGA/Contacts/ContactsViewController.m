@@ -890,8 +890,8 @@
 
 - (IBAction)createGroupAction:(UIBarButtonItem *)sender {
     if (self.contactsMode == ContactsModeChatCreateGroup) {
-        if (self.searchController.searchBar.isFirstResponder) {
-            [self.searchController dismissViewControllerAnimated:YES completion:nil];
+        if (self.searchController.isActive) {
+            self.searchController.active = NO;
         }
         ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
         contactsVC.contactsMode = ContactsModeChatNamingGroup;
