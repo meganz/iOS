@@ -50,4 +50,6 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 - (NSString *)mnz_coordinatesOfPhotoOrVideo;
 + (NSString *)mnz_base64FromBase64URLEncoding:(NSString *)base64URLEncondingString;
 
+- (void)mnz_generateTemporaryThumbnailAndPreview;
+
 @end
