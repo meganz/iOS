@@ -59,6 +59,7 @@
 - (void)configureCellForTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate {
     self.delegate = delegate;
     self.transfer = transfer;
+    self.asset = nil;
     
     self.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:self.transfer.fileName];
     self.pauseButton.hidden = NO;
@@ -88,7 +89,7 @@
         }
             
         case MEGATransferTypeUpload: {
-            NSString *transferAbsolutePath = [[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] stringByAppendingString:@"_thumbnail"];
+            NSString *transferAbsolutePath = [[[[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpg"] stringByAppendingString:@"_thumbnail"];
             self.iconImageView.image = [UIImage imageWithContentsOfFile:transferAbsolutePath];
             break;
         }
@@ -104,6 +105,7 @@
 - (void)configureCellForAsset:(PHAsset *)asset delegate:(id<TransferTableViewCellDelegate>)delegate {
     self.delegate = delegate;
     self.asset = asset;
+    self.transfer = nil;
     
     PHAssetResource *assetResource = [PHAssetResource assetResourcesForAsset:self.asset].firstObject;
     self.nameLabel.text = assetResource.originalFilename;

@@ -674,4 +674,29 @@ static NSString* const B = @"[B]";
     return base64FromBase64URLEncoding;
 }
 
+- (void)mnz_generateTemporaryThumbnailAndPreview {
+    NSURL *url = [NSURL fileURLWithPath:self];
+    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:url options:nil];
+    AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+    generator.appliesPreferredTrackTransform = YES;
+    CMTime requestedTime = CMTimeMake(1, 60);
+    CGImageRef imgRef = [generator copyCGImageAtTime:requestedTime actualTime:NULL error:NULL];
+    UIImage *image = [[UIImage alloc] initWithCGImage:imgRef];
+    
+    NSString *tmpImagePath = [[self stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpg"];
+    
+    [UIImageJPEGRepresentation(image, 1) writeToFile:tmpImagePath atomically:YES];
+    
+    CGImageRelease(imgRef);
+    
+    NSString *thumbnailFilePath = [tmpImagePath stringByAppendingString:@"_thumbnail"];
+    [[MEGASdkManager sharedMEGASdk] createThumbnail:tmpImagePath destinatioPath:thumbnailFilePath];
+    
+    
+    NSString *previewFilePath = [tmpImagePath stringByAppendingString:@"_preview"];
+    [[MEGASdkManager sharedMEGASdk] createPreview:tmpImagePath destinatioPath:previewFilePath];
+    
+    [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
+}
+
 @end
