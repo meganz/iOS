@@ -2,7 +2,6 @@
 
 #import "SVProgressHUD.h"
 
-#import "MEGAAssetOperation.h"
 #import "MEGACreateFolderRequestDelegate.h"
 
 #import "MEGAStore.h"

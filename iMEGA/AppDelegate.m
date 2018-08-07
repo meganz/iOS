@@ -65,7 +65,6 @@
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAPasswordLinkRequestDelegate.h"
 #import "MEGAShowPasswordReminderRequestDelegate.h"
-#import "MEGAAssetOperation.h"
 
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
