@@ -247,7 +247,7 @@
             if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
                 CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
                 callVC.chatRoom  = chatRoom;
-                callVC.videoCall = call.hasRemoteVideo;
+                callVC.videoCall = call.hasVideoInitialCall;
                 callVC.callType = CallTypeIncoming;
                 [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
             } else {
@@ -278,7 +278,7 @@
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
         CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
         callVC.chatRoom  = chatRoom;
-        callVC.videoCall = call.hasRemoteVideo;
+        callVC.videoCall = call.hasVideoInitialCall;
         callVC.callType = CallTypeIncoming;
         [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
     }
@@ -334,7 +334,7 @@
             [self.missedCallsDictionary setObject:call forKey:@(call.chatId)];
             [DevicePermissionsHelper audioPermissionWithCompletionHandler:^(BOOL granted) {
                 if (granted) {
-                    if (call.hasRemoteVideo) {
+                    if (call.hasVideoInitialCall) {
                         [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
                             if (granted) {
                                 [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
@@ -368,7 +368,7 @@
             [self.missedCallsDictionary removeObjectForKey:@(call.chatId)];
 
             break;
-        case MEGAChatCallStatusTerminating:
+        case MEGAChatCallStatusTerminatingUserParticipation:
             break;
         case MEGAChatCallStatusDestroyed:
             if (call.isLocalTermCode) {
@@ -380,7 +380,7 @@
                     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
                     [center getDeliveredNotificationsWithCompletionHandler:^(NSArray<UNNotification *> *notifications) {
                         NSInteger missedVideoCalls, missedAudioCalls;
-                        if (call.hasRemoteVideo) {
+                        if (call.hasVideoInitialCall) {
                             missedVideoCalls = 1;
                             missedAudioCalls = 0;
                         } else {
@@ -392,7 +392,7 @@
                             if ([[MEGASdk base64HandleForUserHandle:call.chatId] isEqualToString:notification.request.identifier]) {
                                 missedAudioCalls = [notification.request.content.userInfo[@"missedAudioCalls"] integerValue];
                                 missedVideoCalls = [notification.request.content.userInfo[@"missedVideoCalls"] integerValue];
-                                if (call.hasRemoteVideo) {
+                                if (call.hasVideoInitialCall) {
                                     missedVideoCalls++;
                                 } else {
                                     missedAudioCalls++;
@@ -432,7 +432,7 @@
                         }
                     }
                     
-                    NSString *alertBody = [NSString mnz_stringByMissedAudioCalls:(call.hasRemoteVideo ? 0 : 1) andMissedVideoCalls:(call.hasRemoteVideo ? 1 : 0)];
+                    NSString *alertBody = [NSString mnz_stringByMissedAudioCalls:(call.hasVideoInitialCall ? 0 : 1) andMissedVideoCalls:(call.hasVideoInitialCall ? 1 : 0)];
                     UILocalNotification* localNotification = [[UILocalNotification alloc] init];
                     localNotification.alertTitle = @"MEGA";
                     localNotification.alertBody = [NSString stringWithFormat:@"%@: %@", chatRoom.title, alertBody];
