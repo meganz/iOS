@@ -42,7 +42,7 @@
 }
 
 - (void)reportIncomingCall:(MEGAChatCall *)call user:(MEGAUser *)user {
-    MEGALogDebug(@"[CallKit] Report incoming call %@ with uuid %@, video %@ and email %@", call, call.uuid, call.hasRemoteVideo ? @"YES" : @"NO", user.email);
+    MEGALogDebug(@"[CallKit] Report incoming call %@ with uuid %@, video %@ and email %@", call, call.uuid, call.hasVideoInitialCall ? @"YES" : @"NO", user.email);
     CXCallUpdate *update = [[CXCallUpdate alloc] init];
     update.remoteHandle = [[CXHandle alloc] initWithType:CXHandleTypeEmailAddress value:user.email];
     update.localizedCallerName = user.mnz_fullName;
@@ -50,7 +50,7 @@
     update.supportsGrouping = NO;
     update.supportsUngrouping = NO;
     update.supportsDTMF = NO;
-    update.hasVideo = call.hasRemoteVideo;
+    update.hasVideo = call.hasVideoInitialCall;
     [self.provider reportNewIncomingCallWithUUID:call.uuid update:update completion:^(NSError * _Nullable error) {
         if (error) {
             MEGALogError(@"Report new incoming call failed with error: %@", error);
@@ -150,7 +150,7 @@
         update.supportsGrouping = NO;
         update.supportsUngrouping = NO;
         update.supportsDTMF = NO;
-        update.hasVideo = call.hasRemoteVideo;
+        update.hasVideo = call.hasVideoInitialCall;
         
         [provider reportCallWithUUID:action.callUUID updated:update];
         
@@ -170,7 +170,7 @@
     if (call) {
         CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
         callVC.chatRoom  = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
-        callVC.videoCall = call.hasRemoteVideo;
+        callVC.videoCall = call.hasVideoInitialCall;
         callVC.callType = CallTypeIncoming;
         callVC.megaCallManager = self.megaCallManager;
         callVC.call = call;
