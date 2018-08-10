@@ -68,6 +68,8 @@
 "tooManyRequest"="요청이 너무 많습니다. 기다려주세요.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="당신의 계정에 로그인하세요.";
+/* Error message when a user attempts to change their email without an active login session. */
+"needToBeLoggedInToCompleteYourEmailChange"="이메일 변경을 완료하려면 로그인하여야 합니다. 현재 이메일 주소로 다시 로그인한 후, 확인 링크를 다시 클릭하세요.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA 저장공간";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -150,6 +152,8 @@
 "alreadyLoggedInAlertTitle"="다른 계정으로 로그인하였습니다";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="동의하면, 현재 계정이 로그아웃되고 모든 오프라인 데이터가 삭제됩니다. 계속하시겠습니까?";
+/* Error shown when the user tries to change his mail to one that is already used */
+"emailAlreadyInUse"="오류. 이 이메일 주소는 이미 사용중입니다.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="장치에 여유 공간이 필요합니다";
 /* Title for the file link view */
@@ -379,6 +383,10 @@
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="다른 곳에서 열기...";
 /* */
+"uploadToMega"="MEGA에 업로드";
+/* Footer shown in the Share Extension telling that a file can be renamed if tapped */
+"tapFileToRename"="이름을 변경하려면 파일을 탭하세요";
+/* */
 "sendToContact"="연락처에게 보내기";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="파일이 대화로 전송됨";
@@ -510,10 +518,10 @@
 "cameraUploadsEnabled"="카메라 업로드 활성화됨";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="카메라 업로드 완료";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"cameraUploadsUploadingFile"="파일 %2$d개 중 %1$d번째 파일 업로드중";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"cameraUploadsUploadingFiles"="파일 %2$d개 중 %1$d번째 파일 업로드중";
+/* Message shown while uploading files. Singular. */
+"cameraUploadsPendingFile"="업로드 진행중, 파일 1개 대기중";
+/* Message shown while uploading files. Plural. */
+"cameraUploadsPendingFiles"="업로드 진행중, 파일 %lu개 대기중";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="파일 %2$d개 중 %1$d개";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -1277,14 +1285,6 @@
 "attachedFile"="첨부됨: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s개의 파일 첨부함.";
-/* A summary message when a user sent the information of one contact through the chat. */
-"sharedContact"="이 연락처 공유함:";
-/* A summary message when a user sent the information of some contacts at once through the chat. */
-"sharedContacts"="이 연락처들 공유함:";
-/* A summary message when a user has attached one file into the chat. */
-"uploadedFile"="이 파일 업로드함:";
-/* A summary message when a user has attached many files at once into the chat. */
-"uploadedFiles"="이 파일들 업로드함:";
 /* Label in a button that allows to jump to the latest item */
 "jumpToLatest"="최근으로 이동";
 /* Label in a button that allows to jump to the latest message */
@@ -1297,8 +1297,6 @@
 "autorenewableDescription"="구독은 처음 선택했던 기간과 동일한 가격과 동일한 기간으로 자동으로 연장됩니다. 다음 구독 결제 24시간 전에 당신의 iTunes 계정 설정 페이지에서 자동 결제를 제거할 수 있습니다. 구독을 관라허려면, 휴대전화에서 앱 스토어를 클릭하여 페이지 하단에서 애플 ID로 로그인하세요 (만약 하지 않았다면) 그리고 ID 보기를 클릭하세요. 앱 구독 관리 페이지로 내려갈 수 있는 계정 페이지가 보이게 됩니다. 거기서, MEGA PRO 구독을 선택할 수 있고, 예정된 갱신일을 보고, 다른 구독 패키지 선택 또는 구독의 자동 갱신을 해제할 수 있는 스위치를 끌 수 있습니다.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="계속하려면 MEGA를 열고 로그인하세요";
-/* A button title to revoke the access to an attachment in a chat. */
-"revoke"="철회";
 /* Label in login screen to inform about the chat initialization proccess */
 "connecting"="연결중...";
 /* Inform user that there were unsupported assets in the share extension */
@@ -1360,13 +1358,15 @@
 "languageRestartNotification"="언어가 변경되었습니다. 재시작하려면 탭하세요.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA는 당신에게 50 GB의 무료 저장 공간을 주는 안전한 클라우드 저장소 서비스입니다. 다른 클라우드 저장소 제공자들과 달리, 당신의 데이터는 우리가 아닌 당신의 클라이언트 기기에서만 암호화되고 해독됩니다.";
+"generalDescriptionParagraph1"="MEGA는 모바일 기기를 위한 전용 앱과 함께 표준 웹 브라우저를 통해 사용 가능한 이용자가 통제하는 암호화된 클라우드 저장소를 제공합니다. 다른 클라우드 저장소 제공자들과 달리 당신의 데이터는 절대 우리가 아니라 당신의 클라이언트 기기를 통해 암호화되고 해독됩니다.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph2"="당신의 스마트폰이나 태블릿에서 파일을 업로드하고, 어느 기기에서나 어디서든지 당신의 파일을 검색, 보관, 다운로드, 스트림, 보기, 공유, 이름변경 또는 삭제하세요. 당신의 연락처와 폴더를 공유하고 그들의 업데이트를 실시간으로 보세요.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="암호화 과정은 우리가 당신의 비밀번호에 접근하거나 초기화할 수 없기 때문에 반드시 기억해야한다는 것입니다 (복구 키를 백업하지 않는 이상) 그렇지 않으면 저장된 파일에 대한 접근을 잃게 됩니다.";
+/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
+"generalDescriptionVideoChat"="종단간 이용자 암호화 MEGA 영상 대화는 완전한 프라이버시가 가능하게 하고, 2016년부터 브라우저를 통하여 가능했습니다. 그것은 모바일 앱으로 확장되었고, 여러 기기에서 대화 기록에 접근할 수 있습니다. 이용자들은 그들의 MEGA 클라우드 드라이브에서 대화에 쉽게 파일을 추가할 수 있습니다.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="앱에서 월간 또는 연간 구독으로 저장 공간과 전송 할당량을 업그레이드할 수 있습니다.";
+"generalDescriptionParagraph4"="MEGA는 모든 가입 회원에게 넉넉한 50 GB의 무료 저장소를 보너스 도전 과제와 함께 제공하며, 더 높은 제한을 가진 유료 요금제를 제공합니다:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="PRO LITE 구독권: 매월 €4.99 (US$4.99) 또는 매년 €49.99 (US$49.99)에 200 GB의 저장 공간과 1 TB의 대역폭을 매달 드립니다.\nPRO I 구독권: 매월 €9.99 (US$9.99) 또는 매년 €99.99 (US$99.99)에 1 TB의 저장 공간과 2 TB의 대역폭을 매달 드립니다.\nPRO II 구독권: 매월 €19.99 (US$19.99) 또는 매년 €199.99 (US$199.99)에 4 TB의 저장 공간과 8 TB의 대역폭을 매달 드립니다.\nPRO III 구독권: 매월 €29.99 (US$29.99) 또는 매년 €299.99 (US$299.99)에 8 TB의 저장 공간과 16 TB의 대역폭을 매달 드립니다.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
@@ -1392,6 +1392,18 @@
 "missedAudioCallsAndMissedVideoCalls"="[A]개의 부재중 전화와 [B]개의 부재중 영상통화";
 /* Button title to see the available bonus */
 "getBonus"="보너스 얻기";
+/* Text shown under the title 'Video quality' that explains what it means */
+"qualityOfVideosUploadedToAChat"="Quality of videos uploaded to a chat";
+/* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
+"videoQuality"="Video quality";
+/* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
+"low"="Low";
+/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+"high"="High";
+/* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
+"original"="원본";
+/* Label for the status of a transfer when is being preparing - (String as short as possible). */
+"preparing..."="준비중...";
 /* QR Code label, used in Settings as title. String as short as possible */
 "qrCode"="QR 코드";
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
@@ -1513,9 +1525,9 @@
 /* When an active call of user A with user B had not answered */
 "callWasNotAnswered"="통화에 응답하지 않았음";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed";
+"callFailed"="통화 실패";
 /* When an active call of user A with user B had ended */
-"callEnded"="Call ended.";
+"callEnded"="통화 종료.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="시간: %@";
 /* */
@@ -1538,3 +1550,21 @@
 "fileNotSupported"="지원하지 않는 파일";
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="오프라인용으로 저장하고 호환되는 앱에서 열 수 있습니다";
+/* Item of a menu to forward a message chat to another chatroom */
+"forward"="전달";
+/* Success message shown after forwarding messages to other chats */
+"messagesSent"="메시지 발송됨";
+/* Title of archived chats button */
+"archivedChats"="보관된 대화";
+/* Confirmation message on archive chat dialog for user to confirm. */
+"archiveChatMessage"="이 대화를 보관하시겠습니까?";
+/* Confirmation message for user to confirm it will unarchive an archived chat. */
+"unarchiveChatMessage"="이 보관된 대화를 삭제하시겠습니까?";
+/* The title of the dialog to unarchive an archived chat. */
+"unarchiveChat"="보관된 대화 삭제";
+/* Title of button to archive chats. */
+"archiveChat"="대화 보관";
+/* Title of flag of archived chats. */
+"archived"="보관됨";
+/* Title of empty state view for archived chats. */
+"noArchivedChats"="보관된 대화 없음";

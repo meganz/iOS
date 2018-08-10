@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="B1s-m2-ahE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="B1s-m2-ahE">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -787,9 +787,10 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7Nx-88-DiR">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7Nx-88-DiR">
                                 <rect key="frame" x="0.0" y="44" width="414" height="584"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="nodeCell" id="kam-du-6ZN" customClass="NodeTableViewCell">
@@ -813,10 +814,10 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="3TE-Sk-TLC">
-                                                    <rect key="frame" x="60" y="10" width="290" height="38"/>
+                                                    <rect key="frame" x="60" y="10" width="43.666666666666657" height="38"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="icS-K3-BvR">
-                                                            <rect key="frame" x="0.0" y="0.0" width="290" height="20"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="43.666666666666664" height="20"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="gsr-Pf-ehB"/>
                                                             </constraints>
@@ -825,7 +826,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="cd8-yG-jq7">
-                                                            <rect key="frame" x="0.0" y="20" width="290" height="18"/>
+                                                            <rect key="frame" x="0.0" y="20" width="43.666666666666664" height="18"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="18" id="ApO-Jm-Lhw"/>
                                                             </constraints>
@@ -835,13 +836,6 @@
                                                         </label>
                                                     </subviews>
                                                 </stackView>
-                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="red_checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="KbK-Xg-4Nr">
-                                                    <rect key="frame" x="360" y="19" width="22" height="22"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="22" id="2DR-Aq-WYN"/>
-                                                        <constraint firstAttribute="width" constant="22" id="52s-BW-kSn"/>
-                                                    </constraints>
-                                                </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PNo-mK-cdT" userLabel="Line View">
                                                     <rect key="frame" x="60" y="60" width="354" height="0.0"/>
                                                     <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -855,17 +849,13 @@
                                                 <constraint firstItem="Vuv-kt-XWC" firstAttribute="leading" secondItem="qnO-7l-UvP" secondAttribute="leading" constant="10" id="3f4-vC-Edh"/>
                                                 <constraint firstItem="3TE-Sk-TLC" firstAttribute="top" secondItem="Vuv-kt-XWC" secondAttribute="top" id="8s1-cs-d6d"/>
                                                 <constraint firstItem="3TE-Sk-TLC" firstAttribute="leading" secondItem="Vuv-kt-XWC" secondAttribute="trailing" constant="10" id="FSW-KQ-nlb"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="KbK-Xg-4Nr" secondAttribute="trailing" constant="12" id="aMi-qB-kJM"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3TE-Sk-TLC" secondAttribute="trailing" constant="10" id="Lbn-7v-EAz"/>
                                                 <constraint firstItem="Vuv-kt-XWC" firstAttribute="centerY" secondItem="qnO-7l-UvP" secondAttribute="centerY" id="bA8-y2-nkQ"/>
-                                                <constraint firstItem="Vuv-kt-XWC" firstAttribute="centerY" secondItem="KbK-Xg-4Nr" secondAttribute="centerY" id="eWX-21-FnX"/>
                                                 <constraint firstAttribute="trailing" secondItem="PNo-mK-cdT" secondAttribute="trailing" id="fvi-YW-lAT"/>
-                                                <constraint firstItem="KbK-Xg-4Nr" firstAttribute="leading" secondItem="3TE-Sk-TLC" secondAttribute="trailing" constant="10" id="m2w-we-J3N"/>
                                                 <constraint firstAttribute="bottom" secondItem="PNo-mK-cdT" secondAttribute="bottom" id="uGo-Zs-sFF"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="tintColor" red="0.80477464200000004" green="0.0" blue="0.041726302360000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
-                                            <outlet property="checkImageView" destination="KbK-Xg-4Nr" id="1eX-RM-DB8"/>
                                             <outlet property="infoLabel" destination="cd8-yG-jq7" id="AVp-b7-RCm"/>
                                             <outlet property="lineView" destination="PNo-mK-cdT" id="f3Q-tX-FUG"/>
                                             <outlet property="nameLabel" destination="icS-K3-BvR" id="hmf-RA-DnB"/>
@@ -945,7 +935,6 @@
                                                 <constraint firstAttribute="trailing" secondItem="MnT-ok-C8h" secondAttribute="trailing" constant="4" id="r4o-Is-A4w"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="tintColor" red="0.80477464200000004" green="0.0" blue="0.041726302360000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="cancelButton" destination="MnT-ok-C8h" id="eNZ-T9-ftt"/>
                                             <outlet property="infoLabel" destination="FBG-kz-bQE" id="mdO-yO-L4H"/>
@@ -2005,6 +1994,7 @@
                         <outlet property="moreBarButtonItem" destination="xmA-ZO-bvH" id="iQg-y0-NbF"/>
                         <outlet property="moreMinimizedBarButtonItem" destination="TfH-jP-898" id="5wH-G6-BZ4"/>
                         <outlet property="moveBarButtonItem" destination="M5b-JU-elC" id="1N4-Wk-Qkq"/>
+                        <outlet property="restoreBarButtonItem" destination="J5v-Rg-QUN" id="CFK-E4-oqv"/>
                         <outlet property="selectAllBarButtonItem" destination="i2g-E4-PNq" id="eKA-Xr-jla"/>
                         <outlet property="shareBarButtonItem" destination="ZLw-VN-spf" id="9Sa-ye-tR2"/>
                         <outlet property="tableView" destination="fi8-tJ-WCt" id="bQm-hP-6PT"/>
@@ -2056,6 +2046,12 @@
                     <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <action selector="downloadAction:" destination="MwH-YC-3hO" id="vC2-JP-BEv"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem enabled="NO" image="restore" id="J5v-Rg-QUN" userLabel="Restore Bar Button Item">
+                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <connections>
+                        <action selector="restoreTouchUpInside:" destination="MwH-YC-3hO" id="fww-hy-Lrb"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem systemItem="flexibleSpace" id="f43-7O-RtS"/>
@@ -2631,9 +2627,9 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <image name="more" width="26" height="6"/>
         <image name="moreSelected" width="26" height="6"/>
         <image name="move" width="32" height="32"/>
-        <image name="openWith" width="24" height="24"/>
+        <image name="openWith" width="28" height="28"/>
         <image name="readPermissions" width="46" height="44"/>
-        <image name="red_checkmark" width="22" height="22"/>
+        <image name="restore" width="28" height="28"/>
         <image name="rubbishBin" width="28" height="28"/>
         <image name="search" width="28" height="28"/>
         <image name="selectAll" width="22" height="22"/>

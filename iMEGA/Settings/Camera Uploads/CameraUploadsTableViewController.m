@@ -235,7 +235,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSString *titleForHeader;
     if (section == 1) {
-        titleForHeader = [NSString stringWithFormat:@"%@:", AMLocalizedString(@"options", nil)];
+        titleForHeader = AMLocalizedString(@"options", nil);
     }
     return titleForHeader;
 }

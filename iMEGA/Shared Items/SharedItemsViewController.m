@@ -22,7 +22,6 @@
 
 @interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, CustomActionViewControllerDelegate> {
     BOOL allNodesSelected;
-    BOOL isSwipeEditing;
 }
 
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
@@ -171,6 +170,8 @@
             break;
         }
     }
+    
+    [self updateNavigationBarTitle];
     
     [self.tableView reloadData];
 }
@@ -357,6 +358,21 @@
     [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
 }
 
+- (void)updateNavigationBarTitle {
+    NSString *navigationTitle;
+    if (self.tableView.isEditing) {
+        if (self.selectedNodesMutableArray.count == 0) {
+            navigationTitle = AMLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
+        } else {
+            navigationTitle = (self.selectedNodesMutableArray.count == 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedNodesMutableArray.count] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedNodesMutableArray.count];
+        }
+    } else {
+        navigationTitle = AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
+    }
+    
+    self.navigationItem.title = navigationTitle;
+}
+
 #pragma mark - Utils
 
 - (void)selectSegment:(NSUInteger)index {
@@ -383,16 +399,16 @@
     
     [self.tableView setEditing:editing animated:animated];
     
+    [self updateNavigationBarTitle];
+    
     if (editing) {
-        if (!isSwipeEditing) {
-            self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
-            self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
-            [self.toolbar setAlpha:0.0];
-            [self.tabBarController.tabBar addSubview:self.toolbar];
-            [UIView animateWithDuration:0.33f animations:^ {
-                [self.toolbar setAlpha:1.0];
-            }];
-        }
+        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+        self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+        [self.toolbar setAlpha:0.0];
+        [self.tabBarController.tabBar addSubview:self.toolbar];
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:1.0];
+        }];
     } else {
         self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
         allNodesSelected = NO;
@@ -415,8 +431,6 @@
         
         [self toolbarItemsSetEnabled:NO];
     }
-    
-    isSwipeEditing = NO;
 }
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -459,6 +473,8 @@
         [self toolbarItemsSetEnabled:YES];
     }
     
+    [self updateNavigationBarTitle];
+    
     [self.tableView reloadData];
 }
 
@@ -467,9 +483,7 @@
         [_selectedNodesMutableArray removeAllObjects];
         [_selectedSharesMutableArray removeAllObjects];
         
-        if (allNodesSelected) {
-            [self selectAllAction:_selectAllBarButtonItem];
-        }
+        [self updateNavigationBarTitle];
 
         [self toolbarItemsForSharedItems];
         [self toolbarItemsSetEnabled:NO];
@@ -529,13 +543,13 @@
     actionController.node = node;
     actionController.displayMode = DisplayModeSharedItem;
     actionController.actionDelegate = self;
+    actionController.actionSender = sender;
     actionController.incomingShareChildView = (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0);
     if ([[UIDevice currentDevice] iPadDevice]) {
         actionController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
-        popController.delegate = actionController;
-        popController.sourceView = sender;
-        popController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
+        actionController.popoverPresentationController.delegate = actionController;
+        actionController.popoverPresentationController.sourceView = sender;
+        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
     } else {
         actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }
@@ -577,14 +591,17 @@
 - (IBAction)leaveShareAction:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         NSString *alertMessage = (_selectedNodesMutableArray.count > 1) ? AMLocalizedString(@"leaveSharesAlertMessage", @"Alert message shown when the user tap on the leave share action selecting multipe inshares") : AMLocalizedString(@"leaveShareAlertMessage", @"Alert message shown when the user tap on the leave share action for one inshare");
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"leaveFolder", nil) message:alertMessage delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-        alertView.tag = 0;
-        [alertView show];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"leaveFolder", nil) message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self removeSelectedIncomingShares];
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
     }
 }
 
 - (IBAction)shareAction:(UIBarButtonItem *)sender {
-    UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesMutableArray button:self.shareBarButtonItem];
+    UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesMutableArray sender:self.shareBarButtonItem];
     [self presentViewController:activityVC animated:YES completion:nil];
 }
 
@@ -622,31 +639,12 @@
             alertMessage = [NSString stringWithFormat:AMLocalizedString(@"removeMultipleSharesMultipleContactsMessage", nil), usersMutableArray.count];
         }
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"removeSharing", nil) message:alertMessage delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-        alertView.tag = 1;
-        [alertView show];
-    }
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        switch ([alertView tag]) {
-            case 0: {
-                if (buttonIndex == 1) {
-                    [self removeSelectedIncomingShares];
-                }
-                break;
-            }
-                
-            case 1: {
-                if (buttonIndex == 1) {
-                    [self removeSelectedOutgoingShares];
-                }
-                break;
-            }
-        }
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"removeSharing", nil) message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self removeSelectedOutgoingShares];
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
     }
 }
 
@@ -795,6 +793,7 @@
             [_selectedNodesMutableArray addObject:node];
         }
         
+        [self updateNavigationBarTitle];
         [self toolbarItemsSetEnabled:YES];
         
         NSUInteger nodeListSize = 0;
@@ -847,7 +846,8 @@
                 [_selectedNodesMutableArray removeObject:n];
             }
         }
-        
+                
+        [self updateNavigationBarTitle];
         if (self.selectedNodesMutableArray.count == 0) {
             [self toolbarItemsSetEnabled:NO];
         }
@@ -858,25 +858,14 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self toolbarItemsForSharedItems];
-    [self setEditing:YES animated:YES];
-}
-
-- (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self setEditing:NO animated:YES];
-}
-
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
     
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = [self nodeAtIndexPath:indexPath];
-    isSwipeEditing = YES;
-    self.selectedNodesMutableArray = [[NSMutableArray alloc] initWithObjects:node, nil];
     if (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0) { //incoming
         UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-            [self leaveShareAction:nil];
+            [node mnz_leaveSharingInViewController:self];
             [self setEditing:NO animated:YES];
         }];
         shareAction.image = [UIImage imageNamed:@"leaveShare"];
@@ -884,7 +873,7 @@
         return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
     } else { //outcoming
         UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-            [self removeShareAction:nil];
+            [node mnz_removeSharing];
             [self setEditing:NO animated:YES];
         }];
         shareAction.image = [UIImage imageNamed:@"removeShare"];
@@ -1076,9 +1065,9 @@
 }
 
 
-#pragma mark - Swipe Delegate
+#pragma mark - MGSwipeTableCellDelegate
 
-- (BOOL)swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction {
+- (BOOL)swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction fromPoint:(CGPoint)point {
     if (direction == MGSwipeDirectionLeftToRight) {
         return NO;
     }
@@ -1096,12 +1085,12 @@
     expansionSettings.threshold = 2;
     
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    self.selectedNodesMutableArray = [[NSMutableArray alloc] initWithObjects:[self nodeAtIndexPath:indexPath], nil];
+    MEGANode *node = [self nodeAtIndexPath:indexPath];
     
     if (direction == MGSwipeDirectionRightToLeft) {
         if (self.sharedItemsSegmentedControl.selectedSegmentIndex == 0) { //incoming
             MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"leaveShare"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-                [self leaveShareAction:nil];
+                [node mnz_leaveSharingInViewController:self];
                 return YES;
             }];
             [shareButton iconTintColor:[UIColor whiteColor]];
@@ -1109,7 +1098,7 @@
             return @[shareButton];
         } else { //outcoming
             MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"removeShare"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-                [self removeShareAction:nil];
+                [node mnz_removeSharing];
                 return YES;
             }];
             [shareButton iconTintColor:[UIColor whiteColor]];

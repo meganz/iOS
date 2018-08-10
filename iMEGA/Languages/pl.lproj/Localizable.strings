@@ -68,6 +68,8 @@
 "tooManyRequest"="Za dużo zgłoszeń. Proszę czekać.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Zaloguj się do swojego konta.";
+/* Error message when a user attempts to change their email without an active login session. */
+"needToBeLoggedInToCompleteYourEmailChange"="Musisz być zalogowany a dokończyć zmianę adresu email. Zaloguj się używając dotychczasowego adresu email a następnie kliknij ponownie w link.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA Pojemność";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -150,6 +152,8 @@
 "alreadyLoggedInAlertTitle"="Jesteś zalogowany na inne konto";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="Jeżeli wyrażasz zgodę, to zostaniesz wylogowany z obecnego konta i wszystkie dane offline zostaną usunięte. Czy chcesz kontynuować?";
+/* Error shown when the user tries to change his mail to one that is already used */
+"emailAlreadyInUse"="Błąd: Ten adres email jest już używany.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Zwiększ dostępną, wolną pamięć na urządzeniu";
 /* Title for the file link view */
@@ -379,6 +383,10 @@
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Otwórz...";
 /* */
+"uploadToMega"="Wgraj na MEGA";
+/* Footer shown in the Share Extension telling that a file can be renamed if tapped */
+"tapFileToRename"="Dotknij pliku, aby zmienić nazwę";
+/* */
 "sendToContact"="Wyślij do";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="Plik wysłany do czatu";
@@ -510,10 +518,10 @@
 "cameraUploadsEnabled"="Kamera dostępna!";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Wgrywanie plików z kamery zakończone";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"cameraUploadsUploadingFile"="Wgrywanie %1$d z %2$d pliku";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"cameraUploadsUploadingFiles"="Wgrywanie %1$d z %2$d plików";
+/* Message shown while uploading files. Singular. */
+"cameraUploadsPendingFile"="Trwa przesyłanie, 1 plik oczekuje";
+/* Message shown while uploading files. Plural. */
+"cameraUploadsPendingFiles"="Trwa przesyłanie, oczekują %lu pliki";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d z %2$d plik";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -1277,14 +1285,6 @@
 "attachedFile"="Załączone: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="Załączono %s plików.";
-/* A summary message when a user sent the information of one contact through the chat. */
-"sharedContact"="Udostępniony kontakt:";
-/* A summary message when a user sent the information of some contacts at once through the chat. */
-"sharedContacts"="Udostępnione kontakty:";
-/* A summary message when a user has attached one file into the chat. */
-"uploadedFile"="Wgrany plik:";
-/* A summary message when a user has attached many files at once into the chat. */
-"uploadedFiles"="Wgrane pliki:";
 /* Label in a button that allows to jump to the latest item */
 "jumpToLatest"="Przejdz do ostatniej";
 /* Label in a button that allows to jump to the latest message */
@@ -1297,8 +1297,6 @@
 "autorenewableDescription"="Sukskrypcja odnawiania jest automatycznie po upływie terminu ważności konta, z zachowaniem identycznego okresu trwania oraz ceny. Możesz wyłączyć automatyczne odnawianie subskrypcji MEGA PRO nie poźniej niż 24 godziny przed terminem wygaśnięcia konta. Datę wygaśnięcia możesz znaleźć na stronach iTunes. Aby zmienić ustawienia subskrypcji, kliknij w App Store a następnie na dole ekranu kliknij \"Zobacz ID\". Zostaniesz przekierowany do strony gdzie na dole znajdziesz link \"Zarządzaj subskrypcjami\". Na tej stronie wybierz MEGA PRO a następnie zmień ustawienia.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Otwórz MEGA i zapisz się aby kontynuować";
-/* A button title to revoke the access to an attachment in a chat. */
-"revoke"="Odrzuć";
 /* Label in login screen to inform about the chat initialization proccess */
 "connecting"="Trwa łączenie...";
 /* Inform user that there were unsupported assets in the share extension */
@@ -1360,13 +1358,15 @@
 "languageRestartNotification"="Język został zmieniony. Kliknij aby zrestartować.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA to bezpieczna chmura do przechowywania plików z darmowym limitem 50 GB. W odróżnieniu od innych podobnych rozwiązach, wszystkie Twoje dane są zawsze szyforwane na Twoim urządzeniu.";
+"generalDescriptionParagraph1"="MEGA zapewnia kontrolowane przez użytkownika szyfrowane przechowywanie w chmurze za pośrednictwem standardowych przeglądarek internetowych wraz z dedykowanymi aplikacjami na urządzenia mobilne. W przeciwieństwie do innych dostawców usług przechowywania w chmurze, twoje dane są szyfrowane i odszyfrowywane tylko przez urządzenia klienckie, a nigdy przez nas.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph2"="Wgrywaj pliki ze swojego telefonu lub tableta, następnie łatwo wyszukuj, przechowuj, pobieraj, udostępniaj i usuwaj w dowonym czasie, z dowolnego urządzenia i z dowolnego miejsca. Udostępniach katalogi swoim znajomym i obserwuj zmiany na żywo.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="Procesz szyfrowania powoduje, że nie mamy dostępu oraz możliwości zresetowania Twojego hasła, dlatego hasło MUSISZ pamiętać (chyba, że posiadasz kopię klucza) lub stracisz dostęp do przechowywanych plików.";
+/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
+"generalDescriptionVideoChat"="Kompleksowy, zaszyfrowany przez użytkownika czat wideo MEGA zapewnia całkowitą prywatność i jest dostępny przez przeglądarkę od 2016 roku. Został rozszerzony na naszą aplikację mobilną, z historią czatów dostępną na wielu urządzeniach. Użytkownicy mogą także łatwo dodawać pliki do czatu ze swojego dysku MEGA w chmurze.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="Poprzez aplikację zawsze możesz zwiększyć dostępną powierzchnię na pliki i limit transferu opłacając subskrypcję miesięczną lub roczną.";
+"generalDescriptionParagraph4"="MEGA oferuje hojne 50 GB bezpłatnej przestrzeni dyskowej dla wszystkich zarejestrowanych użytkowników z premiowymi osiągnięciami i oferuje płatne plany o znacznie wyższych limitach:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="Subskrypcja PRO LITE: €4.99 (US$4.99) na miesiąc lub €49.99 (US$49.99) na rok otrzymasz 200 GB powierzchni i 1 TB na transfer plików miesięcznie.\nSubskrypcja PRO I : €9.99 (US$9.99) na miesiąc lub €99.99 (US$99.99) na rok otrzymasz 1 TB powierzchni i 2 TB na transfer plików miesięcznie.\nSubskrypcja PRO II: €19.99 (US$19.99) na miesiąc lub €199.99 (US$199.99) na rok otrzymasz 4 TB powierzchni i 8 TB na transfer plików miesięcznie.\nSubskrypcja PRO III: €29.99 (US$29.99) na miesiąc lub €299.99 (US$299.99) na rok otrzymasz 8 TB powierzchni and 16 TB na transfer plików miesięcznie.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
@@ -1392,6 +1392,18 @@
 "missedAudioCallsAndMissedVideoCalls"="[A] nieodebrane połączenia głosowe i [B] nieodebrane rozmowy video";
 /* Button title to see the available bonus */
 "getBonus"="Odbierz bonus";
+/* Text shown under the title 'Video quality' that explains what it means */
+"qualityOfVideosUploadedToAChat"="Jakość filmów wgrywanych do czatu:";
+/* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
+"videoQuality"="Jakość filmu";
+/* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
+"low"="Niska";
+/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+"high"="Wysoka";
+/* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
+"original"="Oryginalny";
+/* Label for the status of a transfer when is being preparing - (String as short as possible). */
+"preparing..."="Przygotowywanie...";
 /* QR Code label, used in Settings as title. String as short as possible */
 "qrCode"="Kod QR";
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
@@ -1513,9 +1525,9 @@
 /* When an active call of user A with user B had not answered */
 "callWasNotAnswered"="Połączenie nie zostało odebrane";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed";
+"callFailed"="Nieudane połączenie";
 /* When an active call of user A with user B had ended */
-"callEnded"="Call ended.";
+"callEnded"="Połączenie zakończone.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Trwanie: %@";
 /* */
@@ -1538,3 +1550,21 @@
 "fileNotSupported"="Plik nie jest obsługiwany";
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="Możesz zapisać go w trybie offline i otworzyć w kompatybilnej aplikacji.";
+/* Item of a menu to forward a message chat to another chatroom */
+"forward"="Do przodu";
+/* Success message shown after forwarding messages to other chats */
+"messagesSent"="Wiadomość wysłana";
+/* Title of archived chats button */
+"archivedChats"="Zarchiwizowane czaty";
+/* Confirmation message on archive chat dialog for user to confirm. */
+"archiveChatMessage"="Czy na pewno chcesz zarchiwizować tę rozmowę?";
+/* Confirmation message for user to confirm it will unarchive an archived chat. */
+"unarchiveChatMessage"="Czy na pewno chcesz cofnąć archiwizację tej rozmowy?";
+/* The title of the dialog to unarchive an archived chat. */
+"unarchiveChat"="Unarchive Chat";
+/* Title of button to archive chats. */
+"archiveChat"="Archiwum czatu";
+/* Title of flag of archived chats. */
+"archived"="Zarchiwizowane";
+/* Title of empty state view for archived chats. */
+"noArchivedChats"="Brak zarchiwizowanych czatów";
