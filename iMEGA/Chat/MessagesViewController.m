@@ -2124,7 +2124,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         case MEGAChatMessageTypeChatTitle:
         case MEGAChatMessageTypeAttachment:
         case MEGAChatMessageTypeContact:
-        case MEGAChatMessageTypeCallEnded:{
+        case MEGAChatMessageTypeCallEnded:
+        case MEGAChatMessageTypeContainsMeta: {
             [self.messages addObject:message];
             [self finishReceivingMessage];
             
