@@ -7,6 +7,7 @@
 #import "MEGAProcessAsset.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGATransfer+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 
 @interface MEGAAssetOperation () <MEGATransferDelegate, MEGARequestDelegate> {
     BOOL executing;
@@ -15,20 +16,20 @@
 
 @property (nonatomic, strong) PHAsset *phasset;
 @property (nonatomic, strong) MEGANode *parentNode;
-@property (nonatomic, assign) BOOL automatically;
+@property (nonatomic, assign, getter=isCameraUploads) BOOL cameraUploads;
 @property (nonatomic, copy) NSString *uploadsDirectory; // Local directory
 
 @end
 
 @implementation MEGAAssetOperation
 
-- (instancetype)initWithPHAsset:(PHAsset *)asset parentNode:(MEGANode *)parentNode automatically:(BOOL)automatically {
+- (instancetype)initWithPHAsset:(PHAsset *)asset parentNode:(MEGANode *)parentNode cameraUploads:(BOOL)cameraUploads {
     if (self = [super init]) {
         _phasset = asset;
         _parentNode = parentNode;
         executing = NO;
         finished = NO;
-        _automatically = automatically;
+        _cameraUploads = cameraUploads;
     }
     return self;
 }
@@ -48,7 +49,7 @@
 - (void)start {
     self.uploadsDirectory = [[NSFileManager defaultManager] uploadsDirectory];
     
-    if (self.automatically) {
+    if (self.isCameraUploads) {
         if (![CameraUploads syncManager].isCameraUploadsEnabled) {
             [[CameraUploads syncManager] resetOperationQueue];
             return;
@@ -88,12 +89,12 @@
         return;
     }
     
-    MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:self.phasset parentNode:self.parentNode filePath:^(NSString *filePath) {
+    MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:self.phasset parentNode:self.parentNode cameraUploads:self.isCameraUploads filePath:^(NSString *filePath) {
         NSString *name = filePath.lastPathComponent;
         NSString *newName = [self newNameForName:name];
         
         NSString *appData = [NSString new];
-        if (self.automatically) {
+        if (self.isCameraUploads) {
             appData = [appData mnz_appDataToSaveCameraUploadsCount:[[[CameraUploads syncManager] assetsOperationQueue] operationCount]];
         }
         
@@ -115,7 +116,7 @@
         if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == self.parentNode.handle) {
             MEGALogDebug(@"The asset exists in MEGA in the parent folder");
             [self completeOperation];
-            if ([[[CameraUploads syncManager] assetsOperationQueue] operationCount] == 1 && self.automatically) {
+            if ([[[CameraUploads syncManager] assetsOperationQueue] operationCount] == 1 && self.isCameraUploads) {
                 [[CameraUploads syncManager] resetOperationQueue];
             }
         } else {
@@ -155,7 +156,7 @@
     executing = NO;
     finished = YES;
     
-    if (self.automatically) {
+    if (self.isCameraUploads) {
         if (self.phasset) {
             if (self.phasset.mediaType == PHAssetMediaTypeImage) {
                 [[NSUserDefaults standardUserDefaults] setObject:self.phasset.creationDate forKey:kLastUploadPhotoDate];
@@ -175,19 +176,16 @@
     NSString *message = [NSString stringWithFormat:@"%@ (Domain: %@ - Code:%ld)", error.localizedDescription, error.domain, (long)error.code];
     MEGALogDebug(@"Disable Camera Uploads: %@", message);
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"cameraUploadsWillBeDisabled", nil)
-                                                            message:message
-                                                           delegate:self
-                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                  otherButtonTitles:nil];
-        [alertView show];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"cameraUploadsWillBeDisabled", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
     });
 }
 
 - (void)manageError:(NSError *)error {
     if ([error.domain isEqualToString:MEGAProcessAssetErrorDomain]) {
-        if (error.code == - 2 && self.automatically) {
+        if (error.code == - 2 && self.isCameraUploads) {
             [self disableCameraUploadsWithError:error];
         }
     } else {
@@ -209,14 +207,14 @@
                 break;
                 
             case 640: {
-                if (self.automatically) {
+                if (self.isCameraUploads) {
                     [self disableCameraUploadsWithError:error];
                 }
                 break;
             }
                 
             default: {
-                if (self.automatically) {
+                if (self.isCameraUploads) {
                     [self disableCameraUploadsWithError:error];
                 }
                 break;
@@ -241,7 +239,7 @@
             break;
     }
     
-    if (![[[CameraUploads syncManager] assetsOperationQueue] operationCount] && self.automatically) {
+    if (![[[CameraUploads syncManager] assetsOperationQueue] operationCount] && self.isCameraUploads) {
         [[CameraUploads syncManager] resetOperationQueue];
     }
 }
@@ -257,12 +255,12 @@
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEIncomplete) {
-            if (self.automatically) {
+            if (self.isCameraUploads) {
                 [self start];
             } else {
                 [self completeOperation];
             }
-        } else if (self.automatically) {
+        } else if (self.isCameraUploads) {
             [[CameraUploads syncManager] resetOperationQueue];
         }
         return;
@@ -272,7 +270,7 @@
         [self completeOperation];
     }
     
-    if (![[[CameraUploads syncManager] assetsOperationQueue] operationCount] && self.automatically) {
+    if (![[[CameraUploads syncManager] assetsOperationQueue] operationCount] && self.isCameraUploads) {
         [[CameraUploads syncManager] resetOperationQueue];
     }
 }

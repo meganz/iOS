@@ -6,5 +6,6 @@
 - (BOOL)mnz_existsFolderWithName:(NSString *)name;
 
 - (NSArray *)mnz_nodesArrayFromNodeList;
+- (NSMutableArray *)mnz_mediaNodesMutableArrayFromNodeList;
 
 @end

@@ -65,6 +65,10 @@
     [self mnz_setNodeCoordinates];
     
     MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];
+    if (!node) {
+        node = [self publicNode];
+    }
+    
     [node mnz_copyToGalleryFromTemporaryPath:[NSHomeDirectory() stringByAppendingPathComponent:self.path]];
 }
 

@@ -44,18 +44,19 @@
 #import "ContactRequestsViewController.h"
 #import "ContactsViewController.h"
 #import "CreateAccountViewController.h"
+#import "CustomModalAlertViewController.h"
 #import "DisplayMode.h"
 #import "LaunchViewController.h"
 #import "LoginViewController.h"
 #import "MainTabBarController.h"
 #import "MasterKeyViewController.h"
+#import "MEGAPhotoBrowserViewController.h"
 #import "MessagesViewController.h"
 #import "MyAccountHallViewController.h"
 #import "SettingsTableViewController.h"
 #import "SharedItemsViewController.h"
 #import "UnavailableLinkView.h"
 #import "UpgradeTableViewController.h"
-#import "CustomModalAlertViewController.h"
 
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
 #import "MEGACreateAccountRequestDelegate.h"
@@ -70,11 +71,10 @@
 
 #define kFirstRun @"FirstRun"
 
-@interface AppDelegate () <UIAlertViewDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, PKPushRegistryDelegate, MEGAPurchasePricingDelegate> {
+@interface AppDelegate () <UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, PKPushRegistryDelegate, MEGAPurchasePricingDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
     
-    UIAlertView *overquotaAlertView;
     BOOL isOverquota;
     
     BOOL isFirstFetchNodesRequestUpdate;
@@ -89,8 +89,9 @@
 @property (nonatomic, strong) NSString *quickActionType;
 @property (nonatomic, strong) NSString *messageForSuspendedAccount;
 
+@property (nonatomic, strong) UIAlertController *overquotaAlertView;
 
-@property (nonatomic, strong) UIAlertView *API_ESIDAlertView;
+@property (nonatomic, strong) UIAlertController *API_ESIDAlertController;
 
 @property (nonatomic, weak) MainTabBarController *mainTBC;
 
@@ -265,7 +266,11 @@
         
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"IsChatEnabled"] == nil) {
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
+            [sharedUserDefaults setBool:YES forKey:@"IsChatEnabled"];
             [[NSUserDefaults standardUserDefaults] synchronize];
+        } else {
+            BOOL isChatEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"];
+            [sharedUserDefaults setBool:isChatEnabled forKey:@"IsChatEnabled"];
         }
         
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
@@ -332,9 +337,13 @@
         }
     }
     
-    if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied && [[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        MEGALogInfo(@"Disable Camera Uploads");
-        [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
+    if ([CameraUploads syncManager].isCameraUploadsEnabled) {
+        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+            if (status == PHAuthorizationStatusDenied) {
+                MEGALogInfo(@"Disable Camera Uploads");
+                [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
+            }
+        }];
     }
     
     self.indexer = [[MEGAIndexer alloc] init];
@@ -437,14 +446,16 @@
         [Helper logout];
     }
     
-    if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] == 0) {
+    if ([[[[MEGASdkManager sharedMEGASdk] downloadTransfers] size] integerValue] == 0) {
         [self removeUnfinishedTransfersOnFolder:[Helper pathForOffline]];
         
         NSError *error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:[[NSFileManager defaultManager] downloadsDirectory] error:&error]) {
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
-        
+    }
+    if ([[[[MEGASdkManager sharedMEGASdk] uploadTransfers] size] integerValue] == 0) {
+        NSError *error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:[[NSFileManager defaultManager] uploadsDirectory] error:&error]) {
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
@@ -829,7 +840,10 @@
             if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
                 [[MEGASdkManager sharedMEGASdk] queryChangeEmailLink:[url mnz_MEGAURL]];
             } else {
-                [self showPleaseLogInToYourAccountAlert];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"needToBeLoggedInToCompleteYourEmailChange", @"Error message when a user attempts to change their email without an active login session.") message:nil preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                
+                [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
             }
             
             break;
@@ -880,6 +894,9 @@
             
         case URLTypeAchievementsLink:
             [self openAchievements];
+            break;
+            
+        default:
             break;
     }
 }
@@ -1058,7 +1075,7 @@
 - (void)showOverquotaAlert {
     [self disableCameraUploads];
     
-    if (!overquotaAlertView.visible) {
+    if (!UIApplication.mnz_visibleViewController.presentedViewController || UIApplication.mnz_visibleViewController.presentedViewController != self.overquotaAlertView) {
         isOverquota = YES;
         [[MEGASdkManager sharedMEGASdk] getAccountDetails];
     }
@@ -1100,12 +1117,9 @@
 }
 
 - (void)showPleaseLogInToYourAccountAlert {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"pleaseLogInToYourAccount", nil)
-                                                    message:nil
-                                                   delegate:self
-                                          cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                          otherButtonTitles:nil];
-    [alert show];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"pleaseLogInToYourAccount", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)presentConfirmViewControllerType:(ConfirmType)confirmType link:(NSString *)link email:(NSString *)email {
@@ -1361,8 +1375,12 @@
         case MEGANodeTypeFile: {
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.parentHandle];
-                NSArray *childNodes = [[[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode] mnz_nodesArrayFromNodeList];
-                [node mnz_openImageInNavigationController:navigationController withNodes:childNodes folderLink:NO displayMode:DisplayModeCloudDrive];
+                MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode];
+                NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaNodesMutableArrayFromNodeList];
+                
+                MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeCloudDrive presentingNode:node preferredIndex:0];
+                
+                [navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
             } else {
                 [node mnz_openNodeInNavigationController:navigationController folderLink:NO];
             }
@@ -1424,7 +1442,7 @@
     NSString *applicationSupportDirectoryString = applicationSupportDirectoryURL.path;
     NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryString error:&error];
     for (NSString *filename in applicationSupportContent) {
-        if ([filename containsString:@"megaclient"]) {
+        if ([filename containsString:@"megaclient"] || [filename containsString:@"karere"]) {
             NSString *destinationPath = [groupSupportPath stringByAppendingPathComponent:filename];
             if ([fileManager fileExistsAtPath:destinationPath]) {
                 if (![fileManager removeItemAtPath:destinationPath error:&error]) {
@@ -1537,25 +1555,6 @@ void uncaughtExceptionHandler(NSException *exception) {
             [[CameraUploads syncManager] resetOperationQueue];
         } else {
             [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-        }
-    }
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if ((alertView.tag == 0) && (buttonIndex == 1)) {
-        UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
-        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-        
-        [self dismissPresentedViews];
-        
-        [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
-    } else if ([alertView tag] == 1) { //alreadyLoggedInAlertView
-        if (buttonIndex == 0) {
-            _emailOfNewSignUpLink = nil;
-        } else if (buttonIndex == 1) {
-            [[MEGASdkManager sharedMEGASdk] logout];
         }
     }
 }
@@ -1766,8 +1765,16 @@ void uncaughtExceptionHandler(NSException *exception) {
     completionHandler();
 }
 
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler {
+    completionHandler(UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionSound);
+}
+
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-    [self openChatRoomWithChatNumber:notification.userInfo[@"chatId"]];
+    if (@available(iOS 10, *)) {} else {
+        if ([[UIApplication sharedApplication] applicationState] != UIApplicationStateActive) {
+            [self openChatRoomWithChatNumber:notification.userInfo[@"chatId"]];
+        }
+    }
 }
 
 #pragma mark - MEGAPurchasePricingDelegate
@@ -1788,53 +1795,61 @@ void uncaughtExceptionHandler(NSException *exception) {
     for (NSInteger i = 0 ; i < userListCount; i++) {
         MEGAUser *user = [userList userAtIndex:i];
         
-        if ([user hasChangedType:MEGAUserChangeTypeEmail]) {
-            MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:user.handle];
-            if (moUser) {
-                [[MEGAStore shareInstance] updateUserWithUserHandle:user.handle email:user.email];
-            } else {
-                [[MEGAStore shareInstance] insertUserWithUserHandle:user.handle firstname:nil lastname:nil email:user.email];
+        if (user.changes) {
+            if ([user hasChangedType:MEGAUserChangeTypeEmail]) {
+                MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:user.handle];
+                if (moUser) {
+                    [[MEGAStore shareInstance] updateUserWithUserHandle:user.handle email:user.email];
+                } else {
+                    [[MEGAStore shareInstance] insertUserWithUserHandle:user.handle firstname:nil lastname:nil email:user.email];
+                }
             }
-        }
-        
-        if (([user handle] == [[[MEGASdkManager sharedMEGASdk] myUser] handle])) {
+            
             if (user.isOwnChange == 0) { //If the change is external
-                if ([user hasChangedType:MEGAUserChangeTypeAvatar]) { //If you have changed your avatar, remove the old and request the new one
-                    NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
-                    NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
-                    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
-                    if (fileExists) {
-                        [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:nil];
+                if (user.handle == [MEGASdkManager sharedMEGASdk].myUser.handle) {
+                    if ([user hasChangedType:MEGAUserChangeTypeAvatar]) { //If you have changed your avatar, remove the old and request the new one
+                        NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
+                        NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
+                        if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
+                            [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:nil];
+                        }
+                        [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
                     }
-                    [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
-                }
-                
-                if ([user hasChangedType:MEGAUserChangeTypeFirstname]) {
-                    [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeFirstname];
-                }
-                if ([user hasChangedType:MEGAUserChangeTypeLastname]) {
-                    [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname];
-                }
-                if ([user hasChangedType:MEGAUserChangeTypeRichPreviews]) {
-                    [NSUserDefaults.standardUserDefaults removeObjectForKey:@"richLinks"];
-                    MEGAGetAttrUserRequestDelegate *delegate = [[MEGAGetAttrUserRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                        [NSUserDefaults.standardUserDefaults setBool:request.flag forKey:@"richLinks"];
-                    }];
-                    [[MEGASdkManager sharedMEGASdk] isRichPreviewsEnabledWithDelegate:delegate];
+                    
+                    if ([user hasChangedType:MEGAUserChangeTypeFirstname]) {
+                        [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeFirstname];
+                    }
+                    if ([user hasChangedType:MEGAUserChangeTypeLastname]) {
+                        [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname];
+                    }
+                    if ([user hasChangedType:MEGAUserChangeTypeRichPreviews]) {
+                        [NSUserDefaults.standardUserDefaults removeObjectForKey:@"richLinks"];
+                        MEGAGetAttrUserRequestDelegate *delegate = [[MEGAGetAttrUserRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                            [NSUserDefaults.standardUserDefaults setBool:request.flag forKey:@"richLinks"];
+                        }];
+                        [[MEGASdkManager sharedMEGASdk] isRichPreviewsEnabledWithDelegate:delegate];
+                    }
+                } else {
+                    if ([user hasChangedType:MEGAUserChangeTypeAvatar]) {
+                        NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
+                        NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
+                        if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
+                            [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:nil];
+                        }
+                        [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
+                    }
+                    if ([user hasChangedType:MEGAUserChangeTypeFirstname]) {
+                        [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
+                    }
+                    if ([user hasChangedType:MEGAUserChangeTypeLastname]) {
+                        [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
+                    }
                 }
             }
-        } else {
-            if (user.changes) {
-                if ([user hasChangedType:MEGAUserChangeTypeFirstname]) {
-                    [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
-                }
-                if ([user hasChangedType:MEGAUserChangeTypeLastname]) {
-                    [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
-                }
-            } else if (user.visibility == MEGAUserVisibilityVisible) {
-                [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
-                [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
-            }
+            
+        } else if (user.visibility == MEGAUserVisibilityVisible) {
+            [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
+            [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
         }
     }
 }
@@ -1962,20 +1977,18 @@ void uncaughtExceptionHandler(NSException *exception) {
                     } else if (self.urlType == URLTypeRecoverLink) {
                         alertTitle = AMLocalizedString(@"recoveryLinkHasExpired", @"Message shown during forgot your password process if the link to reset password has expired");
                     }
-                    UIAlertView *linkHasExpiredAlertView = [[UIAlertView alloc] initWithTitle:alertTitle message:nil delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
-                    [linkHasExpiredAlertView show];
+                    UIAlertController *linkHasExpiredAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
+                    [linkHasExpiredAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                    [UIApplication.mnz_visibleViewController presentViewController:linkHasExpiredAlertController animated:YES completion:nil];
                 }
                 break;
             }
                 
             case MEGAErrorTypeApiENoent: {
                 if ([request type] == MEGARequestTypeQuerySignUpLink) {
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
-                                                                    message:AMLocalizedString(@"accountAlreadyConfirmed", @"Account already confirmed.")
-                                                                   delegate:self
-                                                          cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                          otherButtonTitles:nil];
-                    [alert show];
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"accountAlreadyConfirmed", @"Account already confirmed.") preferredStyle:UIAlertControllerStyleAlert];
+                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                    [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
                 } else if ([request type] == MEGARequestTypeQueryRecoveryLink) {
                     [self showLinkNotValid];
                 }
@@ -1990,9 +2003,10 @@ void uncaughtExceptionHandler(NSException *exception) {
                 }
                 
                 if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeLogout) {
-                    if (![_API_ESIDAlertView isVisible]) {
-                        _API_ESIDAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"loggedOut_alertTitle", nil) message:AMLocalizedString(@"loggedOutFromAnotherLocation", nil) delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
-                        [_API_ESIDAlertView show];
+                    if (!self.API_ESIDAlertController || UIApplication.mnz_visibleViewController.presentedViewController != self.API_ESIDAlertController) {
+                        self.API_ESIDAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"loggedOut_alertTitle", nil) message:AMLocalizedString(@"loggedOutFromAnotherLocation", nil) preferredStyle:UIAlertControllerStyleAlert];
+                        [self.API_ESIDAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                        [UIApplication.mnz_visibleViewController presentViewController:self.API_ESIDAlertController animated:YES completion:nil];
                         [Helper logout];
                     }
                 }
@@ -2053,12 +2067,9 @@ void uncaughtExceptionHandler(NSException *exception) {
                 
             case MEGAErrorTypeApiEBlocked: {
                 if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeFetchNodes) {
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
-                                                                    message:AMLocalizedString(@"accountBlocked", @"Error message when trying to login and the account is blocked")
-                                                                   delegate:self
-                                                          cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                          otherButtonTitles:nil];
-                    [alert show];
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"accountBlocked", @"Error message when trying to login and the account is blocked") preferredStyle:UIAlertControllerStyleAlert];
+                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                    [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
                     [api logout];
                 }
                 
@@ -2117,6 +2128,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 }
                 if (isAccountFirstLogin) {
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
+                    [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"IsChatEnabled"];
                 }
             }
             [self showMainTabBar];
@@ -2147,13 +2159,14 @@ void uncaughtExceptionHandler(NSException *exception) {
 
                 if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
                     _emailOfNewSignUpLink = [request email];
-                    UIAlertView *alreadyLoggedInAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"alreadyLoggedInAlertTitle", nil)
-                                                                        message:AMLocalizedString(@"alreadyLoggedInAlertMessage", nil)
-                                                                       delegate:self
-                                                              cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                                              otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-                    [alreadyLoggedInAlertView setTag:1];
-                    [alreadyLoggedInAlertView show];
+                    UIAlertController *alreadyLoggedInAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"alreadyLoggedInAlertTitle", nil) message:AMLocalizedString(@"alreadyLoggedInAlertMessage", nil) preferredStyle:UIAlertControllerStyleAlert];
+                    [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        _emailOfNewSignUpLink = nil;
+                    }]];
+                    [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                        [[MEGASdkManager sharedMEGASdk] logout];
+                    }]];
+                    [UIApplication.mnz_visibleViewController presentViewController:alreadyLoggedInAlertController animated:YES completion:nil];
                 } else {
                     if ([self.window.rootViewController isKindOfClass:[MEGANavigationController class]]) {
                         MEGANavigationController *navigationController = (MEGANavigationController *)self.window.rootViewController;
@@ -2239,13 +2252,22 @@ void uncaughtExceptionHandler(NSException *exception) {
             [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:[request megaAccountDetails]];
             
             if (isOverquota) {
-                if ([[request megaAccountDetails] type] > MEGAAccountTypeFree) {
-                    overquotaAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"overquotaAlert_title", nil) message:AMLocalizedString(@"quotaExceeded", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
-                } else {
-                    overquotaAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"overquotaAlert_title", nil) message:AMLocalizedString(@"overquotaAlert_message", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-                }
-                [overquotaAlertView setTag:0];
-                [overquotaAlertView show];
+                NSString *overquotaMessage = [[request megaAccountDetails] type] > MEGAAccountTypeFree ? AMLocalizedString(@"quotaExceeded", nil) : AMLocalizedString(@"overquotaAlert_message", nil);
+                self.overquotaAlertView = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"overquotaAlert_title", nil) message:overquotaMessage preferredStyle:UIAlertControllerStyleAlert];
+                [self.overquotaAlertView addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [self.overquotaAlertView addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+                    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+                    
+                    if (self.window.rootViewController.presentedViewController) {
+                        [self.window.rootViewController dismissViewControllerAnimated:YES completion:^{
+                            [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+                        }];
+                    } else {
+                        [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+                    }
+                }]];
+                [UIApplication.mnz_visibleViewController presentViewController:self.overquotaAlertView animated:YES completion:nil];
                 isOverquota = NO;
             }
             
@@ -2515,9 +2537,9 @@ void uncaughtExceptionHandler(NSException *exception) {
         
         MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
         if (!offlineNodeExist) {
-            MEGALogDebug(@"Transfer finish: insert node to DB: base64 handle: %@ - local path: %@", node.base64Handle, transfer.path);
             NSRange replaceRange = [transfer.path rangeOfString:@"Documents/"];
             if (replaceRange.location != NSNotFound) {
+                MEGALogDebug(@"Transfer finish: insert node to DB: base64 handle: %@ - local path: %@", node.base64Handle, transfer.path);
                 NSString *result = [transfer.path stringByReplacingCharactersInRange:replaceRange withString:@""];
                 [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[result decomposedStringWithCanonicalMapping]];
             }

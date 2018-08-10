@@ -68,6 +68,8 @@
 "tooManyRequest"="تجاوز الحد الاعظمي للطلبات. من فضلك انتظر.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="يرجى تسجيل الدخول إلى حسابك.";
+/* Error message when a user attempts to change their email without an active login session. */
+"needToBeLoggedInToCompleteYourEmailChange"="عليك أن تكون مسجلا لإكمال تغيير البريد الإلكتروني الخاص بك. الرجاء تسجيل الدخول مرة أخرى مع عنوان بريدك الإلكتروني الحالي ثم انقر على رابط التأكيد الخاص بك مرة أخرى.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="مساحة MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -150,6 +152,8 @@
 "alreadyLoggedInAlertTitle"="مسجل دخولك بحساب آخر";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="إذا وافقت، سيتم تسجيل خروج الحساب الحالي بها وسوف يتم مسح جميع البيانات دون اتصال. هل تريد الاستمرار؟";
+/* Error shown when the user tries to change his mail to one that is already used */
+"emailAlreadyInUse"="خطأ. عنوان هذا البريد الإلكتروني هو حاليا مأخوذ.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="تحتاج إلى إفراغ المزيد من مساحة جهازك";
 /* Title for the file link view */
@@ -379,6 +383,10 @@
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="فتح في...";
 /* */
+"uploadToMega"="الرفع الي MEGA";
+/* Footer shown in the Share Extension telling that a file can be renamed if tapped */
+"tapFileToRename"="اضغط على الملف لاعادة التسمية";
+/* */
 "sendToContact"="ارسل الى جهة الاتصال";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="تم إرسال الملف للمحادثة";
@@ -510,10 +518,10 @@
 "cameraUploadsEnabled"="تحميلات الكاميرا مفعلة";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="تحميلات الكاميرا تمت بنجاح";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"cameraUploadsUploadingFile"="رفع %1$d من %2$d ملف";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"cameraUploadsUploadingFiles"="رفع %1$d من %2$d ملفات";
+/* Message shown while uploading files. Singular. */
+"cameraUploadsPendingFile"="جاري الترفيع، ملف واحد قيد الانتظار";
+/* Message shown while uploading files. Plural. */
+"cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d من %2$d ملف";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -723,7 +731,7 @@
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="حفظ الفيديوهات بالاستوديو";
 /* Section title where you can enable the option 'Save media in gallery' */
-"saveMediaInGallery"="Save media in gallery";
+"saveMediaInGallery"="حفظ الوسائط بالمعرض";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="حفظ الصور والفيديوهات المتوافقة مع نظام iOS بمعرض الصور (ملاحظة: لايمكن حفظ الصور والفيديوهات بوضع دون اتصال)";
 /* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
@@ -1098,7 +1106,7 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="الحالة";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Rich URL previews";
+"richUrlPreviews"="مشاهدة محتوى الروابط URL";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="قم بجعل تجربة الدردشة على MEGAchat أجمل من خلال السماح بإظهار محتوى الرابط ولكن دون التشفير المتناظر من طرف الى طرف";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1277,14 +1285,6 @@
 "attachedFile"="المرفق: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s الملفات المرفقة.";
-/* A summary message when a user sent the information of one contact through the chat. */
-"sharedContact"="مشاركة جهة الاتصال:";
-/* A summary message when a user sent the information of some contacts at once through the chat. */
-"sharedContacts"="مشاركة جهات الاتصال:";
-/* A summary message when a user has attached one file into the chat. */
-"uploadedFile"="رفع هذا الملف:";
-/* A summary message when a user has attached many files at once into the chat. */
-"uploadedFiles"="رفع هذه الملفات:";
 /* Label in a button that allows to jump to the latest item */
 "jumpToLatest"="اذهب للأحدث";
 /* Label in a button that allows to jump to the latest message */
@@ -1297,8 +1297,6 @@
 "autorenewableDescription"="يتم تجديد الاشتراكات تلقائيا لفترات اشتراك المتتالية لنفس المدة وبنفس سعر الباقة الأولى التي تم اختيارها. يمكنك إيقاف التجديد التلقائي من اشتراكك MEGA برو في موعد أقصاه 24 ساعة قبل دفع اشتراكك المقبل ومن خلال صفحة إعدادات الحساب الخاصة بك في اي تيونز. لإدارة الاشتراكات الخاصة بك، ببساطة انقر على أيقونة المتجر على الهاتف الخاص بك، قم بتسجيل الدخول باستخدام معرف أبل الخاص بك في أسفل الصفحة (إذا لم تكن قد فعلت ذلك) ثم انقر فوق عرض ID. سوف يتم نقلك إلى صفحة الحساب الخاص بك حيث يمكنك النزل لأسفل الى إدارة التطبيقات والاشتراكات. من هناك، يمكنك تحديد اشتراكك MEGA برو وعرض تاريخ التجديد المقرر، واختيار حزمة الاشتراك مختلفة أو تعطيل أو تشغيل التجديد التلقائي لاشتراكك.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="افتح MEGA و سجل دخولك للاستمرار";
-/* A button title to revoke the access to an attachment in a chat. */
-"revoke"="إلغاء";
 /* Label in login screen to inform about the chat initialization proccess */
 "connecting"="جاري الاتصال...";
 /* Inform user that there were unsupported assets in the share extension */
@@ -1360,13 +1358,15 @@
 "languageRestartNotification"="تم تغيير اللغة ،، اضغط لإعادة التشغيل";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA هي خدمة تخزين سحابية آمنة تمنحك 50 غيغابايت كمساحة تخزين مجانية. خلافا لغيرها من مقدمي سحابة التخزين، يتم تشفير البيانات الخاصة بك وفك التشفير بواسطة أجهزة المستخدم فقط ولن يكون أبدا من قبلنا.";
+"generalDescriptionParagraph1"="تقدم MEGA تخزين سحابي مشفر من طرف المستخدم باستخدام متصفح الانترنت وتطبيقات الموبايل. بخلاف خدمات التخزين السحابي الاخرى، معطياتك ستكون مشفرة وأجهزتك الشخصية ستكون الوحيدة القادرة على فك هذا التشفير حصرا، ونحن لن نكون قادرين على فك هذا التشفير.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph2"="ارفع الملفات الخاصة بك من الهاتف الذكي أو الكمبيوتر اللوحي، ثم ابحث، أو خزن، أو حمل، أو شاهد، أو اعرض، أو شارك، أو أعد تسمية أو احذف الملفات الخاصة بك في أي وقت، من أي جهاز وفي أي مكان. شارك مجلداتك مع جهات اتصالك وشاهد تحديثاتهم مباشرة وقت التحديث.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="تعني عملية التشفير أنه يتعذر علينا الدخول إلى كلمة المرور أو إعادة تعيينها، لذا يجب عليك تذكرها (إلا إذا كان لديك مفتاح الاستعادة كنسخة احتياطية) أو ستفقد إمكانية الدخول إلى الملفات المخزنة.";
+/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
+"generalDescriptionVideoChat"="End-to-end user-encrypted MEGA video chat allows for total privacy, and has been available through the browser since 2016. It has been extended to our mobile app, with chat history accessible across multiple devices. Users can also easily add files to a chat from their MEGA Cloud Drive.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="داخل التطبيق يمكنك ترقية مساحة التخزين الخاصة بك وحصة النقل وذلك باشتراك شهري أو سنوي.";
+"generalDescriptionParagraph4"="تقدم MEGA مساحة تخزين مجانية بحجم 50 غيغا بايت لكل المشتركين بلاضافة الى مكافات على الانجازات. بالاضافة الى باقات مأجورة بمساحات تخزين اكبر.";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="اشتراك برو لايت: 4،99 € (4،99 $) في الشهر أو 49،99 € (49،99 $) سنويا يمنحك 200 غيغابايت من مساحة التخزين و 1 تيرابايت من حصة نقل في الشهر.\nاشتراك برو 1: 9.99 € (9.99 دولار أمريكي) في الشهر أو 99.99 € (99.99 دولار أمريكي) سنويا يمنحك 1 تيرابايت من مساحة التخزين و 2 تيرابايت من حصة نقل شهريا.\nاشتراك برو 2: 19.99 يورو (19.99 دولار أمريكي) في الشهر أو 199.99 يورو (199.99 دولار أمريكي) سنويا يمنحك 4 تيرابايت من مساحة التخزين و 8 تيرابايت من حصة النقل شهريا.\nاشتراك برو 3: 29.99 € (29.99 دولار أمريكي) في الشهر أو 299.99 € (299.99 دولار أمريكي) سنويا يمنحك 8 تيرابايت من مساحة التخزين و 16 تيرابايت من حصة نقل في الشهر.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
@@ -1392,6 +1392,18 @@
 "missedAudioCallsAndMissedVideoCalls"="[A] اتصالات صوتية فائتة و [B] اتصالات مرئية فائتة";
 /* Button title to see the available bonus */
 "getBonus"="احصل على علاوة";
+/* Text shown under the title 'Video quality' that explains what it means */
+"qualityOfVideosUploadedToAChat"="جودة الفيديوهات المرفعة الى الدردشة";
+/* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
+"videoQuality"="جودة الفيديو";
+/* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
+"low"="منخفضة";
+/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+"high"="مرتفعة";
+/* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
+"original"="الأصلي";
+/* Label for the status of a transfer when is being preparing - (String as short as possible). */
+"preparing..."="الاستعداد...";
 /* QR Code label, used in Settings as title. String as short as possible */
 "qrCode"="رمز الاستجابة السريعة";
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
@@ -1503,31 +1515,31 @@
 /*  */
 "resume"="اعادة";
 /* Title to preview document */
-"previewContent"="Preview Content";
+"previewContent"="استعراض المحتوى";
 /* Title of the notification for a missed call */
 "missedCall"="مكالمة فائتة";
 /* When an outgoing call of user A with user B had been rejected by user B */
-"callWasRejected"="Call was rejected";
+"callWasRejected"="تم رفض الاتصال";
 /* When an active call of user A with user B had cancelled */
-"callWasCancelled"="Call was cancelled";
+"callWasCancelled"="تم الغاء الاتصال";
 /* When an active call of user A with user B had not answered */
-"callWasNotAnswered"="Call was not answered";
+"callWasNotAnswered"="لم يجب أحد على الاتصال";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed";
+"callFailed"="فشل الاتصال";
 /* When an active call of user A with user B had ended */
-"callEnded"="Call ended.";
+"callEnded"="انتهاء الاتصال";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Duration: %@";
 /* */
-"xSeconds"="%d seconds";
+"xSeconds"="%d ثانية";
 /* */
-"1Second"="1 second";
+"1Second"="1 ثانية";
 /* */
-"1Hour"="1 hour";
+"1Hour"="1 ساعة";
 /* */
-"xHours"="%d hours";
+"xHours"="%d ساعة";
 /* */
-"1Hour1Minute"="1 hour, 1 minute";
+"1Hour1Minute"="1 ساعة، 1 دقيقة";
 /* */
 "1HourxMinutes"="1 hour, %d minutes";
 /* */
@@ -1535,6 +1547,24 @@
 /* */
 "xHoursxMinutes"="%1$d hours, %2$d minutes";
 /* Alert title shown when users try to stream an unsupported audio/video file */
-"fileNotSupported"="File not supported";
+"fileNotSupported"="الملف غير مدعوم";
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
+/* Item of a menu to forward a message chat to another chatroom */
+"forward"="إعادة توجيه";
+/* Success message shown after forwarding messages to other chats */
+"messagesSent"="تم ارسال الرسائل";
+/* Title of archived chats button */
+"archivedChats"="ارشفة الدردشة";
+/* Confirmation message on archive chat dialog for user to confirm. */
+"archiveChatMessage"="هل تريد ارشفة هذه الدردشة؟";
+/* Confirmation message for user to confirm it will unarchive an archived chat. */
+"unarchiveChatMessage"="هل انت متأكد من رغبتك باعادة الدردشة من الارشفة؟";
+/* The title of the dialog to unarchive an archived chat. */
+"unarchiveChat"="اعادة الدردشة من الارشيف";
+/* Title of button to archive chats. */
+"archiveChat"="ارشفة الدردشة";
+/* Title of flag of archived chats. */
+"archived"="تمت الارشفة";
+/* Title of empty state view for archived chats. */
+"noArchivedChats"="لاتوجد دردشات مؤرشفة";

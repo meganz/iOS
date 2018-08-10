@@ -1,16 +1,17 @@
 
 #import "ShareViewController.h"
 
-#import <ContactsUI/ContactsUI.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "LTHPasscodeViewController.h"
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
-#import "BrowserViewController.h"
 #import "Helper.h"
 #import "LaunchViewController.h"
 #import "LoginRequiredViewController.h"
+#import "MEGAChatAttachNodeRequestDelegate.h"
+#import "MEGAChatCreateChatGroupRequestDelegate.h"
+#import "MEGACreateFolderRequestDelegate.h"
 #import "MEGALogger.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARequestDelegate.h"
@@ -18,18 +19,20 @@
 #import "MEGASdkManager.h"
 #import "MEGATransferDelegate.h"
 #import "NSString+MNZCategory.h"
+#import "ShareAttachment.h"
+#import "ShareFilesDestinationTableViewController.h"
 
 #define kAppKey @"EVtjzb7R"
 #define kUserAgent @"MEGAiOS"
 
 #define MNZ_ANIMATION_TIME 0.35
 
-@interface ShareViewController () <BrowserViewControllerDelegate, MEGARequestDelegate, MEGATransferDelegate, LTHPasscodeViewControllerDelegate>
+@interface ShareViewController () <MEGARequestDelegate, MEGATransferDelegate, MEGAChatRoomDelegate, LTHPasscodeViewControllerDelegate>
 
-@property (nonatomic) UIViewController *browserVC;
-@property (nonatomic) unsigned long pendingAssets;
-@property (nonatomic) unsigned long totalAssets;
-@property (nonatomic) unsigned long unsupportedAssets;
+@property (nonatomic) NSUInteger pendingAssets;
+@property (nonatomic) NSUInteger totalAssets;
+@property (nonatomic) NSUInteger unsupportedAssets;
+@property (nonatomic) NSUInteger alreadyInDestinationAssets;
 @property (nonatomic) float progress;
 
 @property (nonatomic) UINavigationController *loginRequiredNC;
@@ -45,6 +48,11 @@
 @property (nonatomic) BOOL passcodePresented;
 @property (nonatomic) BOOL passcodeToBePresented;
 
+@property (nonatomic) NSUserDefaults *sharedUserDefaults;
+
+@property (nonatomic) NSArray<MEGAChatListItem *> *chats;
+@property (nonatomic) NSArray<MEGAUser *> *users;
+
 @end
 
 @implementation ShareViewController
@@ -52,8 +60,10 @@
 #pragma mark - Lifecycle
 
 - (void)viewDidLoad {
-    if ([[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] boolForKey:@"logging"]) {
-        [[MEGALogger sharedLogger] enableSDKlogs];
+    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+
+    self.sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+    if ([self.sharedUserDefaults boolForKey:@"logging"]) {
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"logs"] path];
         if (![fileManager fileExistsAtPath:logsPath]) {
@@ -75,7 +85,7 @@
     
 #ifdef DEBUG
     [MEGASdk setLogLevel:MEGALogLevelMax];
-    [[MEGALogger sharedLogger] enableSDKlogs];
+    [MEGAChatSdk setCatchException:false];
 #else
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
@@ -97,6 +107,9 @@
     
     self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     if (self.session) {
+        [self initChatAndStartLogging];
+        [self fetchAttachments];
+        
         [[LTHPasscodeViewController sharedUser] setDelegate:self];
         if ([MEGAReachabilityManager isReachable]) {
             if ([LTHPasscodeViewController doesPasscodeExist]) {
@@ -108,8 +121,12 @@
             if ([LTHPasscodeViewController doesPasscodeExist]) {
                 self.passcodeToBePresented = YES;
             } else {
-                [self presentDocumentPicker];
+                [self presentFilesDestinationViewController];
             }
+        }
+        
+        if ([self.sharedUserDefaults boolForKey:@"useHttpsOnly"]) {
+            [[MEGASdkManager sharedMEGASdk] useHttpsOnly:YES];
         }
     } else {
         [self requireLogin];
@@ -147,6 +164,8 @@
     if (self.session) {
         if (self.loginRequiredNC) {
             [self.loginRequiredNC dismissViewControllerAnimated:YES completion:nil];
+            [self initChatAndStartLogging];
+            [self fetchAttachments];
         }
         if ([LTHPasscodeViewController doesPasscodeExist] && !self.passcodePresented) {
             [self presentPasscode];
@@ -167,7 +186,7 @@
 #pragma mark - Language
 
 - (void)languageCompatibility {
-    NSString *languageCode = [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] objectForKey:@"languageCode"];
+    NSString *languageCode = [self.sharedUserDefaults objectForKey:@"languageCode"];
     if (languageCode) {
         [[LocalizationSystem sharedLocalSystem] setLanguage:languageCode];
         [[MEGASdkManager sharedMEGASdk] setLanguageCode:languageCode];
@@ -218,11 +237,31 @@
 
 #pragma mark - Login and Setup
 
+- (void)initChatAndStartLogging {
+    if ([self.sharedUserDefaults boolForKey:@"IsChatEnabled"]) {
+        if (![MEGASdkManager sharedMEGAChatSdk]) {
+            [MEGASdkManager createSharedMEGAChatSdk];
+        }
+        [[MEGALogger sharedLogger] enableChatlogs];
+        
+        MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initState];
+        if (chatInit == MEGAChatInitNotDone) {
+            chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:self.session];
+            if (chatInit == MEGAChatInitError) {
+                MEGALogError(@"Init Karere with session failed");
+                [[MEGASdkManager sharedMEGAChatSdk] logout];
+            }
+        }
+    } else {
+        [[MEGALogger sharedLogger] enableSDKlogs];
+    }
+}
+
 - (void)requireLogin {
     // The user either needs to login or logged in before the current version of the MEGA app, so there is
     // no session stored in the shared keychain. In both scenarios, a ViewController from MEGA app is to be pushed.
     if (!self.loginRequiredNC) {
-        self.loginRequiredNC = [[UIStoryboard storyboardWithName:@"LoginRequired"
+        self.loginRequiredNC = [[UIStoryboard storyboardWithName:@"Share"
                                                           bundle:[NSBundle bundleForClass:[LoginRequiredViewController class]]] instantiateViewControllerWithIdentifier:@"LoginRequiredNavigationControllerID"];
         
         LoginRequiredViewController *loginRequiredVC = self.loginRequiredNC.childViewControllers.firstObject;
@@ -250,10 +289,8 @@
     [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:[UIColor whiteColor]];
     
     [[UISearchBar appearance] setTranslucent:NO];
-    [[UISearchBar appearance] setBackgroundColor:[UIColor mnz_grayF1F1F2]];
-    [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:[UIColor mnz_grayF1F1F2]];
-    
-    [[UISegmentedControl appearance] setTintColor:[UIColor mnz_redF0373A]];
+    [[UISearchBar appearance] setBackgroundColor:UIColor.mnz_grayFCFCFC];
+    [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:UIColor.mnz_grayEEEEEE];
     
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
     
@@ -264,8 +301,8 @@
     [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"backArrow"]];
     [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backArrow"]];
     
-    [[UITextField appearance] setTintColor:[UIColor mnz_green00BFA5]];
-    
+    [[UITextField appearance] setTintColor:UIColor.mnz_green00BFA5];
+        
     [[UIView appearanceWhenContainedInInstancesOfClasses:@[[UIAlertController class]]] setTintColor:[UIColor mnz_redF0373A]];
     
     [[UIProgressView appearance] setTintColor:[UIColor mnz_redF0373A]];
@@ -303,12 +340,9 @@
     [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:self.session delegate:self];
 }
 
-- (void)presentDocumentPicker {
-    UIStoryboard *cloudStoryboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:[NSBundle bundleForClass:BrowserViewController.class]];
-    UINavigationController *navigationController = [cloudStoryboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-    BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-    browserVC.browserAction = BrowserActionShareExtension;
-    browserVC.browserViewControllerDelegate = self;
+- (void)presentFilesDestinationViewController {
+    UIStoryboard *shareStoryboard = [UIStoryboard storyboardWithName:@"Share" bundle:[NSBundle bundleForClass:ShareFilesDestinationTableViewController.class]];
+    UINavigationController *navigationController = [shareStoryboard instantiateViewControllerWithIdentifier:@"FilesDestinationNavigationControllerID"];
     
     [self addChildViewController:navigationController];
     [navigationController.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
@@ -356,6 +390,7 @@
 }
 
 - (void)dismissWithCompletionHandler:(void (^)(void))completion {
+    [[ShareAttachment attachmentsArray] removeAllObjects];
     [UIView animateWithDuration:MNZ_ANIMATION_TIME
                      animations:^{
                          self.view.transform = CGAffineTransformMakeTranslation(0, self.view.frame.size.height);
@@ -369,7 +404,7 @@
 
 - (void)copyDatabasesFromMainApp {
     NSError *error;
-    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSFileManager *fileManager = NSFileManager.defaultManager;
     
     NSURL *applicationSupportDirectoryURL = [fileManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
     if (error) {
@@ -387,7 +422,7 @@
     if ([incomingDate compare:extensionDate] == NSOrderedDescending) {
         NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryURL.path error:&error];
         for (NSString *filename in applicationSupportContent) {
-            if ([filename containsString:@"megaclient"]) {
+            if ([filename containsString:@"megaclient"] || [filename containsString:@"karere"]) {
                 if(![fileManager removeItemAtPath:[applicationSupportDirectoryURL.path stringByAppendingPathComponent:filename] error:&error]) {
                     MEGALogError(@"Remove item at path failed with error: %@", error);
                 }
@@ -396,7 +431,7 @@
         
         NSArray *groupSupportPathContent = [fileManager contentsOfDirectoryAtPath:groupSupportURL.path error:&error];
         for (NSString *filename in groupSupportPathContent) {
-            if ([filename containsString:@"megaclient"]) {
+            if ([filename containsString:@"megaclient"] || [filename containsString:@"karere"]) {
                 if (![fileManager copyItemAtURL:[groupSupportURL URLByAppendingPathComponent:filename] toURL:[applicationSupportDirectoryURL URLByAppendingPathComponent:filename] error:&error]) {
                     MEGALogError(@"Copy item at path failed with error: %@", error);
                 }
@@ -411,7 +446,7 @@
     NSDate *newestDate = [[NSDate alloc] initWithTimeIntervalSince1970:0];
     NSArray *pathContent = [fileManager contentsOfDirectoryAtPath:url.path error:&error];
     for (NSString *filename in pathContent) {
-        if ([filename containsString:@"megaclient"]) {
+        if ([filename containsString:@"megaclient"] || [filename containsString:@"karere"]) {
             NSDate *date = [[fileManager attributesOfItemAtPath:[url.path stringByAppendingPathComponent:filename] error:nil] fileModificationDate];
             if ([date compare:newestDate] == NSOrderedDescending) {
                 newestDate = date;
@@ -421,7 +456,239 @@
     return newestDate;
 }
 
-#pragma mark - Share Extension Code
+void uncaughtExceptionHandler(NSException *exception) {
+    MEGALogError(@"Exception name: %@\nreason: %@\nuser info: %@\n", exception.name, exception.reason, exception.userInfo);
+    MEGALogError(@"Stack trace: %@", [exception callStackSymbols]);
+}
+
+#pragma mark - Share Extension
+
+- (void)fetchAttachments {
+    if (self.extensionContext.inputItems.count == 0) {
+        self.unsupportedAssets = 1;
+        [self alertIfNeededAndDismiss];
+        
+        return;
+    }
+    
+    NSExtensionItem *content = self.extensionContext.inputItems[0];
+    self.totalAssets = self.pendingAssets = content.attachments.count;
+    self.progress = 0;
+    self.unsupportedAssets = self.alreadyInDestinationAssets = 0;
+    
+    // This ordered array is needed because the allKeys properties of the classSupport dictionary are unordered, and the order here is determining
+    NSArray<NSString *> *typeIdentifiers = @[(NSString *)kUTTypeGIF,
+                                             (NSString *)kUTTypeImage,
+                                             (NSString *)kUTTypeMovie,
+                                             (NSString *)kUTTypeFileURL,
+                                             (NSString *)kUTTypeURL,
+                                             (NSString *)kUTTypeVCard,
+                                             (NSString *)kUTTypePlainText,
+                                             (NSString *)kUTTypeData];
+    
+    NSDictionary<NSString *, NSArray<Class> *> *classesSupported = @{(NSString *)kUTTypeGIF : @[NSData.class, NSURL.class],
+                                                                     (NSString *)kUTTypeImage : @[UIImage.class, NSData.class, NSURL.class],
+                                                                     (NSString *)kUTTypeMovie : @[NSURL.class],
+                                                                     (NSString *)kUTTypeFileURL : @[NSURL.class],
+                                                                     (NSString *)kUTTypeURL : @[NSURL.class],
+                                                                     (NSString *)kUTTypeVCard : @[NSData.class],
+                                                                     (NSString *)kUTTypePlainText : @[NSString.class],
+                                                                     (NSString *)kUTTypeData : @[NSURL.class]};
+
+    for (NSItemProvider *itemProvider in content.attachments) {
+        BOOL unsupported = YES;
+        
+        for (NSString *typeIdentifier in typeIdentifiers) {
+            if ([itemProvider hasItemConformingToTypeIdentifier:typeIdentifier]) {
+                [itemProvider loadItemForTypeIdentifier:typeIdentifier options:nil completionHandler:^(id data, NSError *error) {
+                    if (error) {
+                        [self handleError:error];
+                    } else {
+                        for (Class supportedClass in [classesSupported objectForKey:typeIdentifier]) {
+                            if ([[data class] isSubclassOfClass:supportedClass]) {
+                                if (supportedClass == NSData.class) {
+                                    if ([typeIdentifier isEqualToString:(NSString *)kUTTypeGIF]) {
+                                        [ShareAttachment addGIF:(NSData *)data fromItemProvider:itemProvider];
+                                    } else if ([typeIdentifier isEqualToString:(NSString *)kUTTypeImage]) {
+                                        UIImage *image = [UIImage imageWithData:data];
+                                        [ShareAttachment addImage:image fromItemProvider:itemProvider];
+                                    } else if ([typeIdentifier isEqualToString:(NSString *)kUTTypeVCard]) {
+                                        [ShareAttachment addContact:data];
+                                    }
+                                    
+                                    break;
+                                } else if (supportedClass == NSURL.class) {
+                                    NSURL *url = (NSURL *)data;
+                                    if (url.isFileURL) {
+                                        [ShareAttachment addFileURL:url];
+                                    } else {
+                                        [ShareAttachment addURL:url];
+                                    }
+                                    
+                                    break;
+                                } else if (supportedClass == UIImage.class) {
+                                    UIImage *image = (UIImage *)data;
+                                    [ShareAttachment addImage:image fromItemProvider:itemProvider];
+                                    
+                                    break;
+                                } else if (supportedClass == NSString.class) {
+                                    NSString *text = (NSString *)data;
+                                    [ShareAttachment addPlainText:text];
+                                    
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }];
+                
+                unsupported = NO;
+                break;
+            }
+        }
+        
+        if (unsupported) {
+            self.unsupportedAssets++;
+        }
+    }
+    // If there is no supported asset to process, then the extension is done:
+    if (self.pendingAssets == self.unsupportedAssets) {
+        [self alertIfNeededAndDismiss];
+    }
+}
+
+- (void)handleError:(NSError *)error {
+    MEGALogError(@"loadItemForTypeIdentifier failed with error %@", error);
+    [self oneUnsupportedMore];
+}
+
+- (void)performUploadToParentNode:(MEGANode *)parentNode {
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+    [SVProgressHUD show];
+    
+    for (ShareAttachment *attachment in [ShareAttachment attachmentsArray]) {
+        switch (attachment.type) {
+            case ShareAttachmentTypeGIF: {
+                [self writeDataAndUpload:attachment toParentNode:parentNode];
+                
+                break;
+            }
+                
+            case ShareAttachmentTypePNG: {
+                UIImage *image = attachment.content;
+                [self uploadImage:image withName:attachment.name toParentNode:parentNode isPNG:YES];
+                
+                break;
+            }
+                
+            case ShareAttachmentTypeImage: {
+                UIImage *image = attachment.content;
+                [self uploadImage:image withName:attachment.name toParentNode:parentNode isPNG:NO];
+                
+                break;
+            }
+                
+            case ShareAttachmentTypeFile: {
+                NSURL *url = attachment.content;
+                [self uploadData:url withName:attachment.name toParentNode:parentNode isSourceMovable:NO];
+                
+                break;
+            }
+                
+            case ShareAttachmentTypeURL: {
+                NSURL *url = attachment.content;
+                if (self.users || self.chats) {
+                    [self performSendMessage:attachment.name];
+                } else {
+                    [self downloadData:url andUploadToParentNode:parentNode];
+                }
+                
+                break;
+            }
+                
+            case ShareAttachmentTypeContact: {
+                [self writeDataAndUpload:attachment toParentNode:parentNode];
+                
+                break;
+            }
+                
+            case ShareAttachmentTypePlainText: {
+                NSString *text = attachment.content;
+                if (self.users || self.chats) {
+                    [self performSendMessage:text];
+                } else {
+                    NSString *storagePath = [self shareExtensionStorage];
+                    NSString *tempPath = [storagePath stringByAppendingPathComponent:attachment.name];
+                    NSError *error;
+                    if ([text writeToFile:tempPath atomically:YES encoding:NSUTF8StringEncoding error:&error]) {
+                        [self smartUploadLocalPath:tempPath parent:parentNode];
+                    } else {
+                        MEGALogError(@".txt writeToFile failed:\n- At path: %@\n- With error: %@", tempPath, error);
+                        [self oneUnsupportedMore];
+                    }
+                }
+            }
+        }
+    }
+}
+
+- (void)performAttachNodeHandle:(uint64_t)nodeHandle {
+    MEGAChatAttachNodeRequestDelegate *chatAttachNodeRequestDelegate = [[MEGAChatAttachNodeRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest *request, MEGAChatError *error) {
+        if (error.type) {
+            [self oneUnsupportedMore];
+        } else {
+            [self onePendingLess];
+        }
+    }];
+    
+    for (MEGAChatListItem *chatListItem in self.chats) {
+        [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatListItem.chatId node:nodeHandle delegate:chatAttachNodeRequestDelegate];
+    }
+    
+    for (MEGAUser *user in self.users) {
+        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
+        if (chatRoom) {
+            [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:nodeHandle delegate:chatAttachNodeRequestDelegate];
+        } else {
+            MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
+            MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
+            [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
+            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:nodeHandle delegate:chatAttachNodeRequestDelegate];
+            }];
+            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
+        }
+    }
+}
+
+- (void)performSendMessage:(NSString *)message {
+    for (MEGAChatListItem *chatListItem in self.chats) {
+        [self sendMessage:message toChat:chatListItem.chatId];
+    }
+    
+    for (MEGAUser *user in self.users) {
+        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
+        if (chatRoom) {
+            [self sendMessage:message toChat:chatRoom.chatId];
+        } else {
+            MEGALogDebug(@"There is not a chat with %@, create the chat and send message", user.email);
+            MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
+            [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
+            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                [self sendMessage:message toChat:chatRoom.chatId];
+            }];
+            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
+        }
+    }
+    
+    [self onePendingLess];
+}
+
+- (void)sendMessage:(NSString *)message toChat:(uint64_t)chatId {
+    [[MEGASdkManager sharedMEGAChatSdk] openChatRoom:chatId delegate:self];
+    [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:chatId message:message];
+    self.pendingAssets++;
+}
 
 - (void)downloadData:(NSURL *)url andUploadToParentNode:(MEGANode *)parentNode {
     NSURL *urlToDownload = url;
@@ -437,77 +704,63 @@
                                                                                      MEGALogError(@"Share extension error downloading resource at %@: %@", urlToDownload, error);
                                                                                      [self oneUnsupportedMore];
                                                                                  } else {
-                                                                                     [self uploadData:location toParentNode:parentNode withFileName:response.suggestedFilename];
+                                                                                     [self uploadData:location withName:response.suggestedFilename toParentNode:parentNode isSourceMovable:YES];
                                                                                  }
-                                                                         
-                                                                     }];
+                                                                             }];
     [downloadTask resume];
 }
 
-- (void)uploadImage:(UIImage *)image toParentNode:(MEGANode *)parentNode isPNG:(BOOL)isPNG {
+- (void)uploadImage:(UIImage *)image withName:(NSString *)name toParentNode:(MEGANode *)parentNode isPNG:(BOOL)isPNG {
     NSString *storagePath = [self shareExtensionStorage];
-    NSError *error = nil;
-    
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss";
-    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-    formatter.locale = locale;
-    NSString *imageName = [NSString stringWithFormat:@"%@.%@", [formatter stringFromDate:[NSDate date]], isPNG ? @"png" : @"jpg"];
-    NSString *tempPath = [storagePath stringByAppendingPathComponent:imageName];
+    NSString *tempPath = [storagePath stringByAppendingPathComponent:name];
 
     if (isPNG ? [UIImagePNGRepresentation(image) writeToFile:tempPath atomically:YES] : [UIImageJPEGRepresentation(image, 0.75) writeToFile:tempPath atomically:YES]) {
         [self smartUploadLocalPath:tempPath parent:parentNode];
     } else {
-        MEGALogError(@"Write image failed:\n- At path: %@\n- With error: %@", tempPath, error);
+        MEGALogError(@"Image writeToFile failed at path: %@", tempPath);
         [self oneUnsupportedMore];
     }
 }
 
-- (void)uploadData:(id)data toParentNode:(MEGANode *)parentNode {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *storagePath = [self shareExtensionStorage];
-    NSError *error = nil;
-    
-    if ([data class] == NSURL.class) {
-        NSURL *url = (NSURL *)data;
-        NSString *path = url.path;
-        NSString *lastPathComponent;
-        NSMutableArray<NSString *> *fileNameComponents = [[path.lastPathComponent componentsSeparatedByString:@"."] mutableCopy];
-        if (fileNameComponents.count > 1) {
-            NSString *extension = fileNameComponents.lastObject.lowercaseString;
-            [fileNameComponents replaceObjectAtIndex:(fileNameComponents.count - 1) withObject:extension];
-        }
-        lastPathComponent = [fileNameComponents componentsJoinedByString:@"."];
-        NSString *tempPath = [storagePath stringByAppendingPathComponent:lastPathComponent];
-        
-        if ([fileManager copyItemAtPath:path toPath:tempPath error:&error]) {
-            [self smartUploadLocalPath:tempPath parent:parentNode];
-        } else {
-            MEGALogError(@"Copy item failed:\n- At path: %@\n- With error: %@", tempPath, error);
-            [self oneUnsupportedMore];
-        }
-    } else {
-        MEGALogError(@"Share extension error, %@ object received instead of NSURL or UIImage", [data class]);
-        [self oneUnsupportedMore];
-    }
-}
-
-- (void)uploadData:(NSURL *)url toParentNode:(MEGANode *)parentNode withFileName:(NSString *)filename {
+- (void)uploadData:(NSURL *)url withName:(NSString *)name toParentNode:(MEGANode *)parentNode isSourceMovable:(BOOL)sourceMovable {
     if (url.class == NSURL.class) {
-        NSFileManager *fileManager = [NSFileManager defaultManager];
         NSString *storagePath = [self shareExtensionStorage];
-        NSString *path = [url path];
-        NSString *tempPath = [storagePath stringByAppendingPathComponent:filename];
+        NSString *tempPath = [storagePath stringByAppendingPathComponent:name];
         NSError *error = nil;
-        // The file needs to be moved in this case because it is downloaded with a temporal filename
-        if ([fileManager moveItemAtPath:path toPath:tempPath error:&error]) {
+        
+        if ([[NSFileManager defaultManager] fileExistsAtPath:tempPath]) {
+            if (![[NSFileManager defaultManager] removeItemAtPath:tempPath error:&error]) {
+                MEGALogError(@"Remove item failed:\n- At path: %@\n- With error: %@", tempPath, error);
+            }
+        }
+        
+        BOOL success = NO;
+        if (sourceMovable) {
+            success = [[NSFileManager defaultManager] moveItemAtPath:url.path toPath:tempPath error:&error];
+        } else {
+            success = [[NSFileManager defaultManager] copyItemAtPath:url.path toPath:tempPath error:&error];
+        }
+        
+        if (success) {
             [self smartUploadLocalPath:tempPath parent:parentNode];
         } else {
-            MEGALogError(@"Move item failed:\n- At path: %@\n- With error: %@", tempPath, error);
+            MEGALogError(@"%@ item failed:\n- At path: %@\n- With error: %@", sourceMovable ? @"Move" : @"Copy", tempPath, error);
             [self oneUnsupportedMore];
         }
     } else {
-        MEGALogError(@"Share extension error, %@ object received instead of NSURL", url.class);
+        MEGALogError(@"Share extension error, %@ object received instead of NSURL or UIImage", url.class);
+        [self oneUnsupportedMore];
+    }
+}
+
+- (void)writeDataAndUpload:(ShareAttachment *)attachment toParentNode:(MEGANode *)parentNode {
+    NSString *storagePath = [self shareExtensionStorage];
+    NSString *tempPath = [storagePath stringByAppendingPathComponent:attachment.name];
+    NSData *data = attachment.content;
+    if ([data writeToFile:tempPath atomically:YES]) {
+        [self smartUploadLocalPath:tempPath parent:parentNode];
+    } else {
+        MEGALogError(@"writeToFile failed at path: %@", tempPath);
         [self oneUnsupportedMore];
     }
 }
@@ -527,7 +780,12 @@
     if (remoteNode) {
         if (remoteNode.parentHandle == parentNode.handle) {
             // The file is already in the folder, nothing to do.
-            [self onePendingLess];
+            if (self.users || self.chats) {
+                [self performAttachNodeHandle:remoteNode.handle];
+            } else {
+                self.alreadyInDestinationAssets++;
+                [self onePendingLess];
+            }
         } else {
             if ([remoteNode.name isEqualToString:localPath.lastPathComponent]) {
                 // The file is already in MEGA, in other folder, has to be copied to this folder.
@@ -560,8 +818,13 @@
 - (void)alertIfNeededAndDismiss {
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
     [SVProgressHUD dismiss];
-    if (self.unsupportedAssets > 0) {
-        NSString *message = AMLocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
+    if (self.unsupportedAssets > 0 || self.alreadyInDestinationAssets > 0) {
+        NSString *message;
+        if (self.unsupportedAssets > 0) {
+            message = AMLocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
+        } else {
+            message = [NSString stringWithFormat:AMLocalizedString(@"filesAlreadyExistMessage", @"Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder"), self.alreadyInDestinationAssets];
+        }
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self dismissWithCompletionHandler:^{
@@ -580,92 +843,29 @@
 
 - (void)uploadToParentNode:(MEGANode *)parentNode {
     if (parentNode) {
-        // The user tapped "Upload":
-        [self setupAppearance];
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        [SVProgressHUD show];
-        
-        if (self.extensionContext.inputItems.count == 0) {
-            self.unsupportedAssets = 1;
-            [self alertIfNeededAndDismiss];
-            
-            return;
-        }
-        
-        NSExtensionItem *content = self.extensionContext.inputItems[0];
-        self.totalAssets = self.pendingAssets = content.attachments.count;
-        self.progress = 0;
-        self.unsupportedAssets = 0;
-        for (NSItemProvider *attachment in content.attachments) {
-            if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeImage]) {
-                BOOL isPNG = [attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypePNG];
-                [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeImage options:nil completionHandler:^(id data, NSError *error){
-                    if ([data class] == UIImage.class) {
-                        UIImage *image = (UIImage *)data;
-                        [self uploadImage:image toParentNode:parentNode isPNG:isPNG];
-                    } else if ([[data class] isSubclassOfClass:NSData.class]) {
-                        UIImage *image = [UIImage imageWithData:data];
-                        [self uploadImage:image toParentNode:parentNode isPNG:isPNG];
-                    } else {
-                        [self uploadData:(NSURL *)data toParentNode:parentNode];
-                    }
-                }];
-            } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeMovie]) {
-                [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeMovie options:nil completionHandler:^(id data, NSError *error){
-                    [self uploadData:(NSURL *)data toParentNode:parentNode];
-                }];
-            } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeFileURL]) {
-                // This type includes kUTTypeText, so kUTTypeText is omitted
-                [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeFileURL options:nil completionHandler:^(id data, NSError *error){
-                    [self uploadData:(NSURL *)data toParentNode:parentNode];
-                }];
-            } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeURL]) {
-                [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeURL options:nil completionHandler:^(id data, NSError *error){
-                    [self downloadData:(NSURL *)data andUploadToParentNode:parentNode];
-                }];
-            } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeVCard]) {
-                [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeVCard options:nil completionHandler:^(NSData *vCardData, NSError *error) {
-                    NSString *contactFullName;
-                    
-                    NSArray *contacts = [CNContactVCardSerialization contactsWithData:vCardData error:nil];
-                    for (CNContact *contact in contacts) {
-                        contactFullName = [CNContactFormatter stringFromContact:contact style:CNContactFormatterStyleFullName];
-                        if (contactFullName.length == 0) {
-                            contactFullName = [[contact.emailAddresses objectAtIndex:0] value];
-                            if (contactFullName.length == 0) {
-                                self.unsupportedAssets++;
-                            }
-                        }
-                    }
-                    
-                    if (contactFullName.length != 0) {
-                        contactFullName = [contactFullName stringByAppendingString:@".vcf"];
-                        NSString *storagePath = [self shareExtensionStorage];
-                        storagePath = [storagePath stringByAppendingPathComponent:contactFullName];
-                        if ([vCardData writeToFile:storagePath atomically:YES]) {
-                            [self smartUploadLocalPath:storagePath parent:parentNode];
-                        } else {
-                            MEGALogInfo(@".vcf writeToFile failed:\n- Storage path:%@\n", storagePath);
-                        }
-                    }
-                }];
-            } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeData]) {
-                [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeData options:nil completionHandler:^(id data, NSError *error){
-                    [self uploadData:(NSURL *)data toParentNode:parentNode];
-                }];
-            } else {
-                self.unsupportedAssets++;
-            }
-        }
-        // If there is no supported asset to process, then the extension is done:
-        if (self.pendingAssets == self.unsupportedAssets) {
-            [self alertIfNeededAndDismiss];
-        }
+        [self performUploadToParentNode:parentNode];
     } else {
-        // The user tapped "Cancel":
         [self dismissWithCompletionHandler:^{
-            [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Cancel tapped" code:-1 userInfo:nil]];
+            [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Invalid destination" code:-1 userInfo:nil]];
         }];
+    }
+}
+
+#pragma mark - SendToViewControllerDelegate
+
+- (void)sendToChats:(NSArray<MEGAChatListItem *> *)chats andUsers:(NSArray<MEGAUser *> *)users {
+    self.chats = chats;
+    self.users = users;
+    
+    MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
+    if (myChatFilesNode) {
+        [self performUploadToParentNode:myChatFilesNode];
+    } else {
+        MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+            MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+            [self performUploadToParentNode:myChatFilesNode];
+        }];
+        [[MEGASdkManager sharedMEGASdk] createFolderWithName:@"My chat files" parent:[[MEGASdkManager sharedMEGASdk] rootNode] delegate:createFolderRequestDelegate];
     }
 }
 
@@ -722,12 +922,17 @@
             
             self.fetchNodesDone = YES;
             [self.launchVC.view removeFromSuperview];
-            [self presentDocumentPicker];
+            [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
+            [self presentFilesDestinationViewController];
             break;
         }
             
         case MEGARequestTypeCopy: {
-            [self onePendingLess];
+            if (self.users || self.chats) {
+                [self performAttachNodeHandle:request.nodeHandle];
+            } else {
+                [self onePendingLess];
+            }
             break;
         }
             
@@ -763,7 +968,21 @@
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    [self onePendingLess];
+    if (self.users || self.chats) {
+        [self performAttachNodeHandle:transfer.nodeHandle];
+    } else {
+        [self onePendingLess];
+    }
+}
+
+#pragma mark - MEGAChatRoomDelegate
+
+- (void)onMessageUpdate:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
+    if ([message hasChangedForType:MEGAChatMessageChangeTypeStatus]) {
+        if (message.status == MEGAChatMessageStatusServerReceived) {
+            [self onePendingLess];
+        }
+    }
 }
 
 #pragma mark - LTHPasscodeViewControllerDelegate
@@ -776,7 +995,7 @@
                 [self loginToMEGA];
             }
         } else {
-            [self presentDocumentPicker];
+            [self presentFilesDestinationViewController];
         }
     }];
 }

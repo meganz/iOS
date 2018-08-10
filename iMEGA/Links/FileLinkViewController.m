@@ -10,9 +10,10 @@
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+#import "UnavailableLinkView.h"
 
 #import "CustomActionViewController.h"
-#import "UnavailableLinkView.h"
+#import "MEGAPhotoBrowserViewController.h"
 
 @interface FileLinkViewController () <CustomActionViewControllerDelegate>
 
@@ -134,7 +135,7 @@
     
     if (self.node.name.mnz_isImagePathExtension || self.node.name.mnz_isVideoPathExtension) {
         [self dismissViewControllerAnimated:YES completion:^{
-            MEGAPhotoBrowserViewController *photoBrowserVC = [self.node mnz_photoBrowserWithNodes:@[self.node] folderLink:NO displayMode:DisplayModeFileLink enableMoveToRubbishBin:NO];
+            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[self.node].mutableCopy api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeFileLink presentingNode:self.node preferredIndex:0];
             photoBrowserVC.publicLink = self.fileLinkString;
             
             [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];
@@ -295,9 +296,8 @@
     
     if ([[UIDevice currentDevice] iPadDevice]) {
         actionController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
-        popController.delegate = actionController;
-        popController.barButtonItem = sender;
+        actionController.popoverPresentationController.delegate = actionController;
+        actionController.popoverPresentationController.barButtonItem = sender;
     } else {
         actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }
@@ -314,11 +314,7 @@
 
 - (void)open {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        if (self.node.name.mnz_isImagePathExtension || self.node.name.mnz_isVideoPathExtension) {
-            [self.node mnz_openImageInNavigationController:self.navigationController withNodes:@[self.node] folderLink:YES displayMode:2];
-        } else {
-            [self.node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
-        }
+        [self.node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
     }
 }
 

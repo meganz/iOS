@@ -1,7 +1,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UserCollectionViewCell : UICollectionViewCell
+@interface ItemCollectionViewCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;

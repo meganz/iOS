@@ -68,6 +68,48 @@
     [self.provider reportOutgoingCallWithUUID:uuid connectedAtDate:nil];
 }
 
+- (void)reportEndCall:(MEGAChatCall *)call {
+    NSUUID *uuid = [self.megaCallManager UUIDForCall:call];
+    MEGALogDebug(@"[CallKit] Report end call %@ with uuid %@", call, uuid);
+    if (!uuid) return;
+    
+    CXCallEndedReason callEndedReason = 0;
+    switch (call.termCode) {
+        case MEGAChatCallTermCodeError:
+            callEndedReason = CXCallEndedReasonFailed;
+            break;
+            
+        case MEGAChatCallTermCodeCallReject:
+        case MEGAChatCallTermCodeCallReqCancel:
+        case MEGAChatCallTermCodeUserHangup:
+            if (!call.localTermCode) {
+                callEndedReason = CXCallEndedReasonRemoteEnded;
+            }
+            break;
+            
+        case MEGAChatCallTermCodeAnswerTimeout:
+            callEndedReason = CXCallEndedReasonUnanswered;
+            break;
+            
+        case MEGAChatCallTermCodeAnswerElseWhere:
+            callEndedReason = CXCallEndedReasonAnsweredElsewhere;
+            break;
+            
+        case MEGAChatCallTermCodeRejectElseWhere:
+            callEndedReason = CXCallEndedReasonDeclinedElsewhere;
+            break;
+            
+        default:
+            break;
+    }
+    
+    MEGALogDebug(@"[CallKit] Report end call reason %ld", (long)callEndedReason);
+    if (callEndedReason) {
+        [self.provider reportCallWithUUID:uuid endedAtDate:nil reason:callEndedReason];
+    }
+    [self.megaCallManager removeCallByUUID:uuid];
+}
+
 - (void)stopDialerTone {
     [self.player stop];
 }

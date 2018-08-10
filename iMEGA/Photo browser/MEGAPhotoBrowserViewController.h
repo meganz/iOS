@@ -20,8 +20,11 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 
 @interface MEGAPhotoBrowserViewController : UIViewController
 
-@property (nonatomic) MEGANode *node;
-@property (nonatomic) NSArray<MEGANode *> *nodesArray;
++ (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode presentingNode:(MEGANode *)node preferredIndex:(NSUInteger)preferredIndex;
+
+@property (nonatomic) NSMutableArray<MEGANode *> *mediaNodes;
+@property (nonatomic) NSUInteger preferredIndex;
+
 @property (nonatomic) MEGASdk *api;
 @property (nonatomic) CGRect originFrame;
 @property (nonatomic, weak) id<MEGAPhotoBrowserDelegate> delegate;

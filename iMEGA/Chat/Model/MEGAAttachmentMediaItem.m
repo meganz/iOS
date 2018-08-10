@@ -63,29 +63,16 @@
                                        contactView.frame.origin.y,
                                        contactViewSize.width,
                                        contactViewSize.height);
-        contactView.headingLabel.frame = CGRectMake(contactView.headingLabel.frame.origin.x,
-                                                    contactView.headingLabel.frame.origin.y,
-                                                    contactViewSize.width - 32.0f,
-                                                    contactView.headingLabel.frame.size.height);
-        contactView.attachBackground.frame = CGRectMake(contactView.attachBackground.frame.origin.x,
-                                                        contactView.attachBackground.frame.origin.y,
-                                                        contactViewSize.width - 6.0f,
-                                                        contactView.attachBackground.frame.size.height);
-        contactView.titleLabel.frame = CGRectMake(contactView.titleLabel.frame.origin.x,
-                                                  contactView.titleLabel.frame.origin.y,
-                                                  contactViewSize.width - 118.0f,
-                                                  contactView.titleLabel.frame.size.height);
-        contactView.detailLabel.frame = CGRectMake(contactView.detailLabel.frame.origin.x,
-                                                   contactView.detailLabel.frame.origin.y,
-                                                   contactViewSize.width - 118.0f,
-                                                   contactView.detailLabel.frame.size.height);
         
         // Colors:
         if (self.message.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
             contactView.backgroundColor = [UIColor mnz_green00BFA5];
-            contactView.headingLabel.textColor = [UIColor whiteColor];
+            contactView.titleLabel.textColor = [UIColor whiteColor];
+            contactView.detailLabel.textColor = [UIColor whiteColor];
         } else {
             contactView.backgroundColor = [UIColor mnz_grayE2EAEA];
+            contactView.titleLabel.textColor = [UIColor mnz_black333333];
+            contactView.detailLabel.textColor = [UIColor mnz_gray666666];
         }
         
         if (self.message.type == MEGAChatMessageTypeAttachment) {
@@ -95,9 +82,8 @@
             if (totalNodes == 1) {
                 MEGANode *node = [self.message.nodeList nodeAtIndex:0];
                 filename = node.name;
-                size = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory];
+                size = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue countStyle:NSByteCountFormatterCountStyleMemory];
                 [contactView.avatarImage mnz_setThumbnailByNode:node];
-                contactView.headingLabel.text = AMLocalizedString(@"uploadedFile", @"A summary message when a user has attached one file into the chat.");
             } else {
                 filename = [NSString stringWithFormat:AMLocalizedString(@"files", nil), totalNodes];
                 NSUInteger totalSize = 0;
@@ -107,17 +93,14 @@
                 size = [NSByteCountFormatter stringFromByteCount:totalSize  countStyle:NSByteCountFormatterCountStyleMemory];
                 UIImage *avatar = [UIImage imageForName:[NSString stringWithFormat:@"%lu", totalNodes] size:contactView.avatarImage.frame.size backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(contactView.avatarImage.frame.size.width/2.0f)]];
                 contactView.avatarImage.image = avatar;
-                contactView.headingLabel.text = AMLocalizedString(@"uploadedFiles", @"A summary message when a user has attached many files at once into the chat.");
             }
             contactView.titleLabel.text = filename;
             contactView.detailLabel.text = size;
         } else { // MEGAChatMessageTypeContact
             if (self.message.usersCount == 1) {
-                NSString *userNameInitial = [NSString stringWithFormat:@"%@", [[self.message userNameAtIndex:0].uppercaseString substringToIndex:1]];
-                [contactView.avatarImage mnz_setImageForChatSharedContactHandle:[self.message userHandleAtIndex:0] initial:userNameInitial];
+                [contactView.avatarImage mnz_setImageForUserHandle:[self.message userHandleAtIndex:0]];
                 contactView.titleLabel.text = [self.message userNameAtIndex:0];
                 contactView.detailLabel.text = [self.message userEmailAtIndex:0];
-                contactView.headingLabel.text = AMLocalizedString(@"sharedContact", @"A summary message when a user sent the information of one contact through the chat.");
             } else {
                 NSNumber *users = [NSNumber numberWithUnsignedInteger:self.message.usersCount];
                 NSString *usersString = AMLocalizedString(@"XContactsSelected", nil);
@@ -130,7 +113,6 @@
                     emails = [NSString stringWithFormat:@"%@ %@", emails, [self.message userEmailAtIndex:i]];
                 }
                 contactView.detailLabel.text = emails;
-                contactView.headingLabel.text = AMLocalizedString(@"sharedContacts", @"A summary message when a user sent the information of some contacts at once through the chat.");
             }
         }
         
@@ -144,8 +126,57 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    CGFloat displaySize = [[UIDevice currentDevice] mnz_widthForChatBubble];
-    return CGSizeMake(displaySize, 144.0f);
+    CGFloat maxAttachmentBubbleWidth = [[UIDevice currentDevice] mnz_maxSideForChatBubbleWithMedia:NO] - (10.0f + 40.0f + 10.0f + 10.f);
+    
+    NSString *title;
+    NSString *subtitle;
+    if (self.message.type == MEGAChatMessageTypeAttachment) {
+        NSUInteger totalNodes = [self.message.nodeList.size unsignedIntegerValue];
+        if (totalNodes == 1) {
+            MEGANode *node = [self.message.nodeList nodeAtIndex:0];
+            title = node.name;
+            subtitle = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue countStyle:NSByteCountFormatterCountStyleMemory];
+        } else {
+            title = [NSString stringWithFormat:AMLocalizedString(@"files", nil), totalNodes];
+            NSUInteger totalSize = 0;
+            for (NSUInteger i = 0; i < totalNodes; i++) {
+                totalSize += [[[self.message.nodeList nodeAtIndex:i] size] unsignedIntegerValue];
+            }
+            subtitle = [NSByteCountFormatter stringFromByteCount:totalSize countStyle:NSByteCountFormatterCountStyleMemory];
+        }
+    } else { // MEGAChatMessageTypeContact
+        if (self.message.usersCount == 1) {
+            title = [self.message userNameAtIndex:0];
+            subtitle = [self.message userEmailAtIndex:0];
+        } else {
+            NSNumber *users = [NSNumber numberWithUnsignedInteger:self.message.usersCount];
+            NSString *usersString = AMLocalizedString(@"XContactsSelected", nil);
+            title = [usersString stringByReplacingOccurrencesOfString:@"[X]" withString:users.stringValue];
+            NSString *emails = [self.message userEmailAtIndex:0];
+            for (NSUInteger i = 1; i < self.message.usersCount; i++) {
+                emails = [NSString stringWithFormat:@"%@ %@", emails, [self.message userEmailAtIndex:i]];
+            }
+            subtitle = emails;
+        }
+    }
+    
+    CGRect attachmentTitleRect = [title boundingRectWithSize:CGSizeMake(maxAttachmentBubbleWidth, CGFLOAT_MAX)
+                                                 options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                              attributes:@{NSFontAttributeName : [UIFont mnz_SFUIMediumWithSize:15.0f]}
+                                                 context:nil];
+    
+    CGRect attachmentSubtitleRect = [subtitle boundingRectWithSize:CGSizeMake(maxAttachmentBubbleWidth, CGFLOAT_MAX)
+                                                options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                             attributes:@{NSFontAttributeName : [UIFont mnz_SFUIRegularWithSize:13.0f]}
+                                                context:nil];
+    
+    CGFloat minimumLabelsWidth = (attachmentTitleRect.size.width > attachmentSubtitleRect.size.width) ? attachmentTitleRect.size.width : attachmentSubtitleRect.size.width;
+    
+    // @see MEGAMessageAttachmentView.xib
+    CGFloat attachmentBubbleWidth = 10.0f + 40.0f + 10.0f + minimumLabelsWidth + 10.f;
+    CGFloat attachmentBubbleHeight = (self.message.type == MEGAChatMessageTypeAttachment) ? 60.0f : 64.0f;
+    
+    return CGSizeMake(attachmentBubbleWidth, attachmentBubbleHeight);
 }
 
 - (NSUInteger)mediaHash {

@@ -4,31 +4,31 @@
 #import "SAMKeychain.h"
 #import "UIScrollView+EmptyDataSet.h"
 
+#import "DisplayMode.h"
 #import "Helper.h"
-#import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
-#import "MyAccountHallViewController.h"
+#import "NodeTableViewCell.h"
 #import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
-
-#import "DisplayMode.h"
-#import "NodeTableViewCell.h"
-#import "MainTabBarController.h"
 #import "UnavailableLinkView.h"
-#import "LoginViewController.h"
+
 #import "BrowserViewController.h"
 #import "CustomActionViewController.h"
+#import "LoginViewController.h"
+#import "MainTabBarController.h"
+#import "MEGANavigationController.h"
+#import "MEGAPhotoBrowserViewController.h"
+#import "MyAccountHallViewController.h"
 
 @interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, CustomActionViewControllerDelegate> {
     
     BOOL isLoginDone;
     BOOL isFetchNodesDone;
     BOOL isFolderLinkNotValid;
-    
-    UIAlertView *decryptionAlertView;
+    BOOL isValidatingDecryptionKey;
 }
 
 @property (weak, nonatomic) UILabel *navigationBarLabel;
@@ -263,29 +263,47 @@
 }
 
 - (void)showDecryptionAlert {
-    if (decryptionAlertView == nil) {
-        decryptionAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"decryptionKeyAlertTitle", nil)
-                                                         message:AMLocalizedString(@"decryptionKeyAlertMessage", nil)
-                                                        delegate:self
-                                               cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                               otherButtonTitles:AMLocalizedString(@"decrypt", nil), nil];
-    }
+    UIAlertController *decryptionAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyAlertTitle", nil) message:AMLocalizedString(@"decryptionKeyAlertMessage", nil) preferredStyle:UIAlertControllerStyleAlert];
     
-    [decryptionAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    UITextField *textField = [decryptionAlertView textFieldAtIndex:0];
-    [textField setPlaceholder:AMLocalizedString(@"decryptionKey", nil)];
-    [decryptionAlertView setTag:1];
-    [decryptionAlertView show];
+    [decryptionAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = AMLocalizedString(@"decryptionKey", nil);
+        [textField addTarget:self action:@selector(decryptionTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    }];
+    
+    [decryptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [[MEGASdkManager sharedMEGASdkFolder] logout];
+        [decryptionAlertController.textFields.firstObject resignFirstResponder];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    [decryptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"decrypt", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSString *linkString;
+        NSString *key = decryptionAlertController.textFields.firstObject.text;
+        if ([[key substringToIndex:1] isEqualToString:@"!"]) {
+            linkString = self.folderLinkString;
+        } else {
+            linkString = [self.folderLinkString stringByAppendingString:@"!"];
+        }
+        linkString = [linkString stringByAppendingString:key];
+        
+        isValidatingDecryptionKey = YES;
+        
+        [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:linkString delegate:self];
+    }]];
+    
+    decryptionAlertController.actions.lastObject.enabled = NO;
+    
+    [self presentViewController:decryptionAlertController animated:YES completion:nil];
 }
 
 - (void)showDecryptionKeyNotValidAlert {
-    UIAlertView *decryptionKeyNotValidAlertView  = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"decryptionKeyNotValid", nil)
-                                                                              message:nil
-                                                                             delegate:self
-                                                                    cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                                    otherButtonTitles:nil];
-    [decryptionKeyNotValidAlertView setTag:2];
-    [decryptionKeyNotValidAlertView show];
+    isValidatingDecryptionKey = NO;
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyNotValid", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [self showDecryptionAlert];
+    }]];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)navigateToNodeWithBase64Handle:(NSString *)base64Handle {
@@ -310,8 +328,7 @@
 
                 } else {
                     if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                        NSArray *nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
-                        [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:YES displayMode:DisplayModeSharedItem];
+                        [self presentMediaNode:node];
                     } else {
                         [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
                     }
@@ -319,6 +336,25 @@
             }
         }
     }
+}
+
+- (void)decryptionTextFieldDidChange:(UITextField *)sender {
+    if (self.presentedViewController) {
+        UIAlertController *decryptionAlertController = (UIAlertController *)self.presentedViewController;
+        UITextField *decryptionTextField = decryptionAlertController.textFields.firstObject;
+        UIAlertAction *okAction = decryptionAlertController.actions.lastObject;
+        okAction.enabled = decryptionTextField.text.length > 0;
+    }
+}
+
+- (void)presentMediaNode:(MEGANode *)node {
+    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdkFolder] nodeForHandle:node.parentHandle];
+    MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:parentNode];
+    NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaNodesMutableArrayFromNodeList];
+    
+    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdkFolder] displayMode:DisplayModeSharedItem presentingNode:node preferredIndex:0];
+    
+    [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
 }
 
 #pragma mark - IBActions
@@ -348,9 +384,8 @@
     
     if ([[UIDevice currentDevice] iPadDevice]) {
         actionController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
-        popController.delegate = actionController;
-        popController.barButtonItem = sender;
+        actionController.popoverPresentationController.delegate = actionController;
+        actionController.popoverPresentationController.barButtonItem = sender;
     } else {
         actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }
@@ -428,10 +463,9 @@
     
     if ([[UIDevice currentDevice] iPadDevice]) {
         actionController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
-        popController.delegate = actionController;
-        popController.sourceView = sender;
-        popController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
+        actionController.popoverPresentationController.delegate = actionController;
+        actionController.popoverPresentationController.sourceView = sender;
+        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
     } else {
         actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }
@@ -526,47 +560,11 @@
 - (void)openNode:(MEGANode *)node {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-            [node mnz_openImageInNavigationController:self.navigationController withNodes:@[node] folderLink:YES displayMode:2];
+            [self presentMediaNode:node];
         } else {
             [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
         }
     }
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (alertView.tag == 1) { //Decryption key
-        if (buttonIndex == 0) {
-            [[MEGASdkManager sharedMEGASdkFolder] logout];
-            
-            [[decryptionAlertView textFieldAtIndex:0] resignFirstResponder];
-            [self dismissViewControllerAnimated:YES completion:nil];
-        } else if (buttonIndex == 1) {
-            NSString *linkString;
-            NSString *key = [[alertView textFieldAtIndex:0] text];
-            if ([[key substringToIndex:1] isEqualToString:@"!"]) {
-                linkString = self.folderLinkString;
-            } else {
-                linkString = [self.folderLinkString stringByAppendingString:@"!"];
-            }
-            linkString = [linkString stringByAppendingString:key];
-            
-            [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:linkString delegate:self];
-        }
-    } else if (alertView.tag == 2) { //Decryption key not valid
-        [self showDecryptionAlert];
-    }
-}
-
-- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
-    if (alertView.tag == 1) {
-        NSString *decryptionKey = [[alertView textFieldAtIndex:0] text];
-        if ([decryptionKey isEqualToString:@""]) {
-            return NO;
-        }
-    }
-    return YES;
 }
 
 #pragma mark - UITableViewDataSource
@@ -663,8 +661,7 @@
 
         case MEGANodeTypeFile: {
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                NSArray *nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
-                [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:YES displayMode:DisplayModeSharedItem];
+                [self presentMediaNode:node];
             } else {
                 [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
             }
@@ -840,7 +837,7 @@
         switch (error.type) {
             case MEGAErrorTypeApiEArgs: {
                 if (request.type == MEGARequestTypeLogin) {
-                    if (decryptionAlertView.visible) { //If the user have written the key
+                    if (isValidatingDecryptionKey) { //If the user have written the key
                         [self showDecryptionKeyNotValidAlert];
                     } else {
                         [self showLinkNotValid];
@@ -892,7 +889,7 @@
                 
                 [SVProgressHUD dismiss];
                 
-                if (decryptionAlertView.visible) { //Link without key, after entering a bad one
+                if (isValidatingDecryptionKey) { //Link without key, after entering a bad one
                     [self showDecryptionKeyNotValidAlert];
                 } else { //Link with invalid key
                     [self showLinkNotValid];

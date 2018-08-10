@@ -234,21 +234,21 @@ static const NSUInteger MAX_BUFFER_32MB = 33554432; // 32 MB
     return deviceName;
 }
 
-- (CGFloat)mnz_widthForChatBubble {
-    const CGFloat kMaxBubbleWidth = 566.0f;
+- (CGFloat)mnz_maxSideForChatBubbleWithMedia:(BOOL)media {
+    const CGFloat kMaxBubbleSide = media ? 340.0f : 566.0f;
     CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
     CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
-    CGFloat displaySize;
+    CGFloat maxSide;
     if ([self iPhoneDevice] && screenWidth > screenHeight) {
-        displaySize = screenHeight;
+        maxSide = screenHeight;
     } else {
-        displaySize = screenWidth;
+        maxSide = screenWidth;
     }
-    displaySize -= 92.0f;
-    if (displaySize > kMaxBubbleWidth) {
-        displaySize = kMaxBubbleWidth;
+    maxSide -= media ? 140.0f : 104.0f;
+    if (maxSide > kMaxBubbleSide) {
+        maxSide = kMaxBubbleSide;
     }
-    return displaySize;
+    return maxSide;
 }
 
 @end
