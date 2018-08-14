@@ -355,6 +355,8 @@
 		837A88BF20B42290007B55D1 /* CloudDriveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88BE20B42290007B55D1 /* CloudDriveViewController.m */; };
 		837A88C220B44AA8007B55D1 /* OfflineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88C120B44AA8007B55D1 /* OfflineViewController.m */; };
 		837A88C520B45C11007B55D1 /* SendToViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88C420B45C11007B55D1 /* SendToViewController.m */; };
+		8394CFA3211AE24100A1634A /* GroupCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8394CFA2211AE24100A1634A /* GroupCallViewController.m */; };
+		8394CFB8211B1AFD00A1634A /* GroupCallCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8394CFB7211B1AFD00A1634A /* GroupCallCollectionViewCell.m */; };
 		83B841672051905E00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
 		83B841682051913C00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
 		83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */; };
@@ -1273,6 +1275,11 @@
 		837A88C120B44AA8007B55D1 /* OfflineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OfflineViewController.m; sourceTree = "<group>"; };
 		837A88C320B45C11007B55D1 /* SendToViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SendToViewController.h; path = Chat/SendToViewController.h; sourceTree = "<group>"; };
 		837A88C420B45C11007B55D1 /* SendToViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SendToViewController.m; path = Chat/SendToViewController.m; sourceTree = "<group>"; };
+		8394CFA1211AE24100A1634A /* GroupCallViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GroupCallViewController.h; path = Chat/GroupCallViewController.h; sourceTree = "<group>"; };
+		8394CFA2211AE24100A1634A /* GroupCallViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GroupCallViewController.m; path = Chat/GroupCallViewController.m; sourceTree = "<group>"; };
+		8394CFA4211AE5B700A1634A /* CallType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallType.h; sourceTree = "<group>"; };
+		8394CFB6211B1AFD00A1634A /* GroupCallCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupCallCollectionViewCell.h; sourceTree = "<group>"; };
+		8394CFB7211B1AFD00A1634A /* GroupCallCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupCallCollectionViewCell.m; sourceTree = "<group>"; };
 		83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PasswordReminder.storyboard; sourceTree = "<group>"; };
 		9419B6BE1F20D1D700FEBE31 /* MEGAIndexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAIndexer.h; path = Spotlight/MEGAIndexer.h; sourceTree = "<group>"; };
 		9419B6BF1F20D1D700FEBE31 /* MEGAIndexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAIndexer.m; path = Spotlight/MEGAIndexer.m; sourceTree = "<group>"; };
@@ -2574,6 +2581,7 @@
 		41EABF181DA7C53A0087271C /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				8394CFB2211B1ADF00A1634A /* Cells */,
 				A8BB54191FB9ABBD004FD03B /* Audios */,
 				41C736BD1DBE6CCE00F1F38A /* Model */,
 				41136FB91E1692650031C516 /* Views */,
@@ -2600,6 +2608,8 @@
 				A89629741FACE78B00F02F7A /* MEGACallManager.m */,
 				A89629761FACEAF800F02F7A /* MEGAProviderDelegate.h */,
 				A89629771FACEAF800F02F7A /* MEGAProviderDelegate.m */,
+				8394CFA1211AE24100A1634A /* GroupCallViewController.h */,
+				8394CFA2211AE24100A1634A /* GroupCallViewController.m */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -2838,6 +2848,16 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		8394CFB2211B1ADF00A1634A /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				8394CFB6211B1AFD00A1634A /* GroupCallCollectionViewCell.h */,
+				8394CFB7211B1AFD00A1634A /* GroupCallCollectionViewCell.m */,
+			);
+			name = Cells;
+			path = Chat/Cells;
+			sourceTree = "<group>";
+		};
 		83D64E2B2017873D00E24155 /* PasswordReminder */ = {
 			isa = PBXGroup;
 			children = (
@@ -3011,6 +3031,7 @@
 			isa = PBXGroup;
 			children = (
 				A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */,
+				8394CFA4211AE5B700A1634A /* CallType.h */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -3694,6 +3715,7 @@
 				5B222A74205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m in Sources */,
 				413199791BD7BD5D002CD6EA /* DTTimePeriod.m in Sources */,
 				417279581DB663FA001AC818 /* JSQMessagesLoadEarlierHeaderView.m in Sources */,
+				8394CFA3211AE24100A1634A /* GroupCallViewController.m in Sources */,
 				4156C80D1AD7E79A00F5E818 /* LTHPasscodeViewController.m in Sources */,
 				A819B33F1EAFA7E2004592F9 /* CustomModalAlertViewController.m in Sources */,
 				A8F6C5F91FAB4295001E274D /* MEGAChatEnableDisableVideoRequestDelegate.m in Sources */,
@@ -3863,6 +3885,7 @@
 				415226951A692ECC00EC7BB6 /* MainTabBarController.m in Sources */,
 				41DC6F721D54E7080081832C /* NSFileManager+MNZCategory.m in Sources */,
 				41D21E5F1D01AEC3002E6296 /* CTAssetPlayButton.m in Sources */,
+				8394CFB8211B1AFD00A1634A /* GroupCallCollectionViewCell.m in Sources */,
 				A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */,
 				83681578202AFBC000CA8EFC /* CustomActionViewController.m in Sources */,
 				4172794B1DB663FA001AC818 /* JSQMessagesBubbleImage.m in Sources */,

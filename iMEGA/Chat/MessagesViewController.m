@@ -31,6 +31,7 @@
 
 #import "BrowserViewController.h"
 #import "CallViewController.h"
+#import "GroupCallViewController.h"
 #import "ChatAttachedContactsViewController.h"
 #import "ChatAttachedNodesViewController.h"
 #import "ContactsViewController.h"
@@ -429,20 +430,20 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStyleDone target:self action:@selector(cancelSelecting:)];
         self.navigationItem.rightBarButtonItems = @[cancelBarButtonItem];
     } else {
-        if (self.chatRoom.isGroup) {
-            if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
-                UIBarButtonItem *addContactBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"addContact"] style:UIBarButtonItemStyleDone target:self action:@selector(presentAddOrAttachParticipantToGroup:)];
-                self.navigationItem.rightBarButtonItems = @[addContactBarButtonItem];
-            } else {
-                self.navigationItem.rightBarButtonItems = @[];
-            }
+        
+        _videoCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"videoCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
+        _audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audioCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
+        self.videoCallBarButtonItem.tag = 1;
+        self.navigationItem.rightBarButtonItems = @[self.videoCallBarButtonItem, self.audioCallBarButtonItem];
+        
+        if (self.chatRoom.isGroup && self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
+            UIBarButtonItem *addContactBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"addContact"] style:UIBarButtonItemStyleDone target:self action:@selector(presentAddOrAttachParticipantToGroup:)];
+            self.navigationItem.rightBarButtonItems = @[self.videoCallBarButtonItem, self.audioCallBarButtonItem, addContactBarButtonItem];
         } else {
-            _videoCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"videoCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
-            _audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audioCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
-            self.videoCallBarButtonItem.tag = 1;
             self.navigationItem.rightBarButtonItems = @[self.videoCallBarButtonItem, self.audioCallBarButtonItem];
-            self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard) && [MEGAReachabilityManager isReachable]);
         }
+        
+        self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard) && [MEGAReachabilityManager isReachable]);
     }
 }
 
@@ -471,16 +472,29 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
         [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
     }
-    CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-    callVC.chatRoom = self.chatRoom;
-    callVC.videoCall = videoCall;
-    callVC.callType = CallTypeOutgoing;
-    callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    if (self.chatRoom.isGroup) {
+        GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
+        groupCallVC.callType = CallTypeOutgoing;
+        groupCallVC.videoCall = videoCall;
+        groupCallVC.chatRoom = self.chatRoom;
+        groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
 
-    if (@available(iOS 10.0, *)) {
-        callVC.megaCallManager = [(MainTabBarController *)self.navigationController.tabBarController megaCallManager];
+        if (@available(iOS 10.0, *)) {
+            groupCallVC.megaCallManager = [(MainTabBarController *)self.navigationController.tabBarController megaCallManager];
+        }
+        [self presentViewController:groupCallVC animated:YES completion:nil];
+    } else {
+        CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
+        callVC.chatRoom = self.chatRoom;
+        callVC.videoCall = videoCall;
+        callVC.callType = CallTypeOutgoing;
+        callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        
+        if (@available(iOS 10.0, *)) {
+            callVC.megaCallManager = [(MainTabBarController *)self.navigationController.tabBarController megaCallManager];
+        }
+        [self presentViewController:callVC animated:YES completion:nil];
     }
-    [self presentViewController:callVC animated:YES completion:nil];
 }
 
 - (void)presentAddOrAttachParticipantToGroup:(UIBarButtonItem *)sender {
