@@ -35,6 +35,7 @@
 
 #import "BrowserViewController.h"
 #import "CallViewController.h"
+#import "GroupCallViewController.h"
 #import "CameraUploadsPopUpViewController.h"
 #import "ChangePasswordViewController.h"
 #import "ChatRoomsViewController.h"
@@ -1463,14 +1464,27 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 
 - (void)performCall {
-    CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-    callVC.chatRoom = self.chatRoom;
-    callVC.videoCall = self.videoCall;
-    callVC.callType = CallTypeOutgoing;
-    if (@available(iOS 10.0, *)) {
-        callVC.megaCallManager = [self.mainTBC megaCallManager];
+    if (self.chatRoom.isGroup) {
+        GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
+        groupCallVC.callType = CallTypeOutgoing;
+        groupCallVC.videoCall = self.videoCall;
+        groupCallVC.chatRoom = self.chatRoom;
+        groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        
+        if (@available(iOS 10.0, *)) {
+            groupCallVC.megaCallManager = [self.mainTBC megaCallManager];
+        }
+        [self.mainTBC presentViewController:groupCallVC animated:YES completion:nil];
+    } else {
+        CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
+        callVC.chatRoom = self.chatRoom;
+        callVC.videoCall = self.videoCall;
+        callVC.callType = CallTypeOutgoing;
+        if (@available(iOS 10.0, *)) {
+            callVC.megaCallManager = [self.mainTBC megaCallManager];
+        }
+        [self.mainTBC presentViewController:callVC animated:YES completion:nil];
     }
-    [self.mainTBC presentViewController:callVC animated:YES completion:nil];
     self.chatRoom = nil;
 }
 

@@ -7,7 +7,7 @@
 #import "UIImageView+MNZCategory.h"
 
 #import <AVFoundation/AVFoundation.h>
-#import <AudioToolbox/AudioToolbox.h>
+//#import <AudioToolbox/AudioToolbox.h>
 
 #import "LTHPasscodeViewController.h"
 
@@ -18,7 +18,7 @@
 
 #import "DevicePermissionsHelper.h"
 
-@interface CallViewController () <MEGAChatRequestDelegate, MEGAChatCallDelegate, MEGAChatVideoDelegate>
+@interface CallViewController () <MEGAChatRequestDelegate, MEGAChatCallDelegate>
 
 @property (weak, nonatomic) IBOutlet MEGARemoteImageView *remoteVideoImageView;
 @property (weak, nonatomic) IBOutlet MEGALocalImageView *localVideoImageView;
