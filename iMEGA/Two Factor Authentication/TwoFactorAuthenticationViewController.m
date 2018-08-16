@@ -34,7 +34,7 @@
     
     self.navigationItem.title = AMLocalizedString(@"twoFactorAuthentication", @"");
     
-    self.descriptionLabel.text = AMLocalizedString(@"authenticatorAppDescription", @"");
+    self.descriptionLabel.text = AMLocalizedString(@"pleaseEnterTheSixDigitCode", @"A message on the Verify Login page telling the user to enter their 2FA code.");
     
     self.invalidCodeLabel.text = AMLocalizedString(@"invalidCode", @"Error text shown when the user scans a QR that is not valid. String as short as possible.");
     
@@ -294,7 +294,7 @@
                 
                 [self.navigationController popToViewController:self.navigationController.viewControllers[3] animated:YES];
             } else {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"twoFactorAuthenticationDisabled", @"") message:nil preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"twoFactorAuthenticationDisabled", @"A message on a dialog to say that 2FA has been successfully disabled.") message:nil preferredStyle:UIAlertControllerStyleAlert];
                 
                 [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
                     [self.navigationController popViewControllerAnimated:YES];

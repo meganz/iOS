@@ -55,11 +55,11 @@
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
         customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
         customModalAlertVC.image = [UIImage imageNamed:@"2FASetup"];
-        customModalAlertVC.viewTitle = AMLocalizedString(@"whyYouDoNeedTwoFactorAuthentication", @"");
-        NSString *detail = AMLocalizedString(@"whatIsTwoFactorAuthentication", @"");
-        detail = [detail stringByAppendingString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"whyYouDoNeedTwoFactorAuthenticationDescription", @"")]];
+        customModalAlertVC.viewTitle = AMLocalizedString(@"whyYouDoNeedTwoFactorAuthentication", @"Title shown when you start the process to enable Two-Factor Authentication");
+        NSString *detail = AMLocalizedString(@"whatIsTwoFactorAuthentication", @"Text shown as explanation of what is Two-Factor Authentication");
+        detail = [detail stringByAppendingString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"whyYouDoNeedTwoFactorAuthenticationDescription", @"Complementary text shown next to 'Two-Factor Authentication is a second layer of security for your account.' as a more accurate explanation of what is Two-Factor Authentication")]];
         customModalAlertVC.detail = detail;
-        customModalAlertVC.action = AMLocalizedString(@"beginSetup", @"");
+        customModalAlertVC.action = AMLocalizedString(@"beginSetup", @"Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication");
         customModalAlertVC.actionColor = [UIColor mnz_green00BFA5];
         customModalAlertVC.dismiss = AMLocalizedString(@"cancel", @"");
         customModalAlertVC.dismissColor = [UIColor colorFromHexString:@"899B9C"];
@@ -84,7 +84,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return AMLocalizedString(@"whatIsTwoFactorAuthentication", @"");
+            return AMLocalizedString(@"whatIsTwoFactorAuthentication", @"Text shown as explanation of what is Two-Factor Authentication");
             break;
             
         default:
