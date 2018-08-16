@@ -1594,3 +1594,5 @@
 "twoFactorAuthenticationDisabled"="Two-Factor Authentication Disabled";
 /* A message on the setup two-factor authentication page on the mobile web client. */
 "scanOrCopyTheSeed"="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your phone.";
+/* A button to help them restore their account if they have lost their 2FA device. */
+"lostYourAuthenticatorDevice"="Lost your Authenticator device?";

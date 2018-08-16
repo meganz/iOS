@@ -38,7 +38,7 @@
     
     self.invalidCodeLabel.text = AMLocalizedString(@"invalidCode", @"Error text shown when the user scans a QR that is not valid. String as short as possible.");
     
-    [self.lostYourAuthenticatorDeviceButton setTitle:AMLocalizedString(@"lostYourAuthenticationDevice", @"") forState:UIControlStateNormal];
+    [self.lostYourAuthenticatorDeviceButton setTitle:AMLocalizedString(@"lostYourAuthenticationDevice", @"A button to help them restore their account if they have lost their 2FA device.") forState:UIControlStateNormal];
     if (self.twoFAMode == TwoFactorAuthenticationLogin) {
         self.lostYourAuthenticatorDeviceButton.hidden = self.lostYourAuthenticatorDeviceImage.hidden == NO;
         self.lostYourAuthenticatorDeviceButton.enabled = YES;
@@ -131,15 +131,18 @@
         
         switch (self.twoFAMode) {
             case TwoFactorAuthenticationLogin: {
+                __weak TwoFactorAuthenticationViewController *weakSelf = self;
                 MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
                 loginRequestDelegate.errorCompletion = ^(MEGAError *error) {
                     switch (error.type) {
                         case MEGAErrorTypeApiENoent:
-                            [self.navigationController popViewControllerAnimated:YES];
+                            [weakSelf.navigationController popViewControllerAnimated:YES];
                             break;
                             
                         case MEGAErrorTypeApiEFailed:
-                            [self showInvalidCode];
+                        case MEGAErrorTypeApiEExpired:
+                            weakSelf.invalidCode = code;
+                            [weakSelf showInvalidCode];
                             break;
                             
                         default:
