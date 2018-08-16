@@ -142,8 +142,8 @@
             if (indexPath.row == 0) {
                 [self pushChangeViewControllerType:ChangeTypePassword];
             } else {
-                SetupTwoFactorAuthenticationTableViewController *disablingTwoFactorAuthenticationTVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"SetupTwoFactorAuthenticationTableViewControllerID"];
-                [self.navigationController pushViewController:disablingTwoFactorAuthenticationTVC animated:YES];
+                SetupTwoFactorAuthenticationTableViewController *setupTwoFactorAuthenticationTVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"SetupTwoFactorAuthenticationTableViewControllerID"];
+                [self.navigationController pushViewController:setupTwoFactorAuthenticationTVC animated:YES];
             }
             break;
         }

@@ -361,14 +361,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan or copy the seed to your authenticator app." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l4U-lC-Vjz">
-                                <rect key="frame" x="27" y="36" width="322.5" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your phone." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="l4U-lC-Vjz">
+                                <rect key="frame" x="23.5" y="36" width="329.5" height="50.5"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="W9e-6V-BOw">
-                                <rect key="frame" x="90.5" y="85" width="194" height="194"/>
+                                <rect key="frame" x="90.5" y="118.5" width="194" height="194"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="194" id="CDB-yl-6OL"/>
                                     <constraint firstAttribute="height" constant="194" id="X70-En-TWf"/>
@@ -418,7 +418,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6vi-in-ARt">
-                                <rect key="frame" x="68" y="295" width="239" height="93.5"/>
+                                <rect key="frame" x="68" y="328.5" width="239" height="93.5"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" contentInsetAdjustmentBehavior="always" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Xq-Iu-F8J">
                                         <rect key="frame" x="10" y="10" width="219" height="73.5"/>
@@ -477,6 +477,7 @@ opqr stuv wxyz</string>
                         <outlet property="firstSectionLabel" destination="l4U-lC-Vjz" id="hXE-8n-y8K"/>
                         <outlet property="nextButton" destination="ZPw-hy-opU" id="3C6-5f-NrI"/>
                         <outlet property="openInButton" destination="K5t-8t-WXX" id="jCh-eH-FU6"/>
+                        <outlet property="seedQrImageTopLayoutConstraint" destination="SnY-xH-cej" id="BL1-Hb-kpe"/>
                         <outlet property="seedQrImageView" destination="W9e-6V-BOw" id="2vZ-Uh-zzg"/>
                         <outlet property="seedQrImageViewHeightLayoutConstraint" destination="X70-En-TWf" id="48m-mz-pf6"/>
                         <outlet property="seedQrImageViewWidthLayoutConstraint" destination="CDB-yl-6OL" id="rp4-HL-Yrh"/>

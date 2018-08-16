@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *firstSectionLabel;
 
 @property (weak, nonatomic) IBOutlet UIImageView *seedQrImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *seedQrImageTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *seedQrImageViewWidthLayoutConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *seedQrImageViewHeightLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UITextView *seedTextView;
@@ -31,14 +32,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (([[UIDevice currentDevice] iPhone4X])) {
-        self.seedQrImageViewHeightLayoutConstraint.constant = 140.f;
-        self.seedQrImageViewWidthLayoutConstraint.constant = 140.f;
+    if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
+        self.firstSectionLabel.font = [UIFont mnz_SFUIRegularWithSize:12.f];
+        self.seedQrImageTopLayoutConstraint.constant = 16.f;
+        self.seedQrImageViewHeightLayoutConstraint.constant = [[UIDevice currentDevice] iPhone4X] ? 100.f : 120.f;
+        self.seedQrImageViewWidthLayoutConstraint.constant = [[UIDevice currentDevice] iPhone4X] ? 100.f : 120.f;
+        self.seedTextView.font = [UIFont mnz_SFUIRegularWithSize:14.f];
     }
     
     self.navigationItem.title = AMLocalizedString(@"twoFactorAuthentication", @"");
     
-    self.firstSectionLabel.text = AMLocalizedString(@"scanOrCopyTheSeed", @"");
+    self.firstSectionLabel.text = AMLocalizedString(@"scanOrCopyTheSeed", @"A message on the setup two-factor authentication page on the mobile web client.");
     
     NSString *qrString = [NSString stringWithFormat:@"otpauth://totp/MEGA:%@?secret=%@&issuer=MEGA", [[MEGASdkManager sharedMEGASdk] myEmail], self.seed];
     self.seedQrImageView.image = [UIImage mnz_qrImageWithDotsFromString:qrString withSize:self.seedQrImageView.frame.size color:UIColor.blackColor];
@@ -84,9 +88,17 @@
     return seedSplitInGroupsOfFourCharacters;
 }
 
-- (void)noAuthenticatorAppInstaledAlert {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"noAuthenticatorAppInstalled", @"") message:nil preferredStyle:UIAlertControllerStyleAlert];
+- (void)youNeedATwoFactorAuthenticationApp {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"youNeedATwoFactorAuthenticationApp", @"Alert text shown when enabling the two factor authentication when you don't have a two factor authentication app installed on the device") message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"App Store" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSURL *url = [NSURL URLWithString:@"itms-apps://itunes.apple.com/search"];
+        if (@available(iOS 10.0, *)) {
+            [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:NULL];
+        } else {
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    }]];
     
     [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
 }
@@ -101,7 +113,7 @@
                 MEGALogInfo(@"URL opened on authenticator app");
             } else {
                 MEGALogInfo(@"URL NOT opened");
-                [self noAuthenticatorAppInstaledAlert];
+                [self youNeedATwoFactorAuthenticationApp];
             }
         }];
     } else {
@@ -109,7 +121,7 @@
             MEGALogInfo(@"URL opened on authenticator app");
         } else {
             MEGALogInfo(@"URL NOT opened");
-            [self noAuthenticatorAppInstaledAlert];
+            [self youNeedATwoFactorAuthenticationApp];
         }
     }
 }
