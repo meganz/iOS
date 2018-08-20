@@ -835,7 +835,13 @@ static MEGAIndexer *indexer;
         }
         
         if (nodesArray.count == 1) {
-            OpenInActivity *openInActivity = [[OpenInActivity alloc] initOnView:sender];
+            OpenInActivity *openInActivity;
+            if ([sender isKindOfClass:[UIBarButtonItem class]]) {
+                openInActivity = [[OpenInActivity alloc] initOnBarButtonItem:sender];
+            } else {
+                openInActivity = [[OpenInActivity alloc] initOnView:sender];
+            }
+            
             [activitiesMutableArray addObject:openInActivity];
         }
     } else {
