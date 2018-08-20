@@ -6,6 +6,7 @@
 #import "NSString+MNZCategory.h"
 #import "SVProgressHUD.h"
 
+#import "AwaitingEmailConfirmationView.h"
 #import "TwoFactorAuthenticationViewController.h"
 #import "PasswordStrengthIndicatorView.h"
 #import "PasswordView.h"
@@ -90,9 +91,6 @@
         [self.changePasswordButton setTitle:AMLocalizedString(@"changeEmail", @"The title of the alert dialog to change the email associated to an account.") forState:UIControlStateNormal];
         
         [self.theNewPasswordTextField becomeFirstResponder];
-        
-        self.emailIsChangingTitleLabel.text = AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
-        self.emailIsChangingDescriptionLabel.text = AMLocalizedString(@"emailIsChanging_description", @"Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess");
     } else if (self.changeType == ChangeTypeResetPassword || self.changeType == ChangeTypeParkAccount) {
         
         self.currentPasswordView.hidden = YES;
@@ -283,6 +281,20 @@
     return isAnyTextFieldEmpty;
 }
 
+- (void)processStarted {
+    [self.currentPasswordTextField resignFirstResponder];
+    [self.theNewPasswordTextField resignFirstResponder];
+    [self.confirmPasswordTextField resignFirstResponder];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"processStarted" object:nil];
+    
+    AwaitingEmailConfirmationView *awaitingEmailConfirmationView = [[[NSBundle mainBundle] loadNibNamed:@"AwaitingEmailConfirmationView" owner:self options: nil] firstObject];
+    awaitingEmailConfirmationView.titleLabel.text = AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
+    awaitingEmailConfirmationView.descriptionLabel.text = AMLocalizedString(@"emailIsChanging_description", @"Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess");
+    awaitingEmailConfirmationView.frame = self.view.bounds;
+    self.view = awaitingEmailConfirmationView;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
@@ -315,6 +327,8 @@
                     twoFactorAuthenticationVC.email = self.confirmPasswordTextField.text;
                     
                     [self.navigationController pushViewController:twoFactorAuthenticationVC animated:YES];
+                    
+                    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processStarted) name:@"processStarted" object:nil];
                 } else {
                     self.changePasswordButton.enabled = NO;
                     [[MEGASdkManager sharedMEGASdk] changeEmail:self.confirmPasswordTextField.text delegate:self];
@@ -556,7 +570,7 @@
         }
             
         case MEGARequestTypeGetChangeEmailLink: {
-            self.view = self.emailIsChangingView;
+            [self processStarted];
             break;
         }
             

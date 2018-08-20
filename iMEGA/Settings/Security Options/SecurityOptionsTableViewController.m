@@ -7,6 +7,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 
+#import "AwaitingEmailConfirmationView.h"
 #import "ChangePasswordViewController.h"
 #import "SetupTwoFactorAuthenticationTableViewController.h"
 #import "QRSettingsTableViewController.h"
@@ -183,10 +184,12 @@
             break;
             
         case MEGARequestTypeGetRecoveryLink: {
-            ChangePasswordViewController *changePasswordVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChangePasswordViewControllerID"];
-            changePasswordVC.emailIsChangingTitleLabel.text = AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
-            changePasswordVC.emailIsChangingDescriptionLabel.text = AMLocalizedString(@"ifYouCantAccessYourEmailAccount", @"Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account.");
-            self.view = changePasswordVC.emailIsChangingView;
+            AwaitingEmailConfirmationView *awaitingEmailConfirmationView = [[[NSBundle mainBundle] loadNibNamed:@"AwaitingEmailConfirmationView" owner:self options: nil] firstObject];
+            awaitingEmailConfirmationView.titleLabel.text = AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
+            awaitingEmailConfirmationView.descriptionLabel.text = AMLocalizedString(@"ifYouCantAccessYourEmailAccount", @"Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account.");
+            awaitingEmailConfirmationView.frame = self.view.bounds;
+            
+            self.view = awaitingEmailConfirmationView;
             
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(passwordReset) name:@"passwordReset" object:nil];
             break;

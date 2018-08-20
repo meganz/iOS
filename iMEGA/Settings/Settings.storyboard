@@ -1005,9 +1005,6 @@
                         <outlet property="currentPasswordTextField" destination="I30-Sl-69j" id="p55-du-2pD"/>
                         <outlet property="currentPasswordView" destination="waj-me-qhZ" id="cAn-Tu-WK3"/>
                         <outlet property="currentPasswordViewHeightConstraint" destination="Oj4-uD-F53" id="6cA-7T-yqF"/>
-                        <outlet property="emailIsChangingDescriptionLabel" destination="Gh4-XS-wZS" id="crs-Hs-zMx"/>
-                        <outlet property="emailIsChangingTitleLabel" destination="HrE-UQ-dj9" id="E0a-rs-GSg"/>
-                        <outlet property="emailIsChangingView" destination="1oP-CL-t7s" id="sWg-G5-Y2m"/>
                         <outlet property="passwordStrengthIndicatorView" destination="WOV-1d-qrc" id="eNj-B7-g6C"/>
                         <outlet property="passwordStrengthIndicatorViewHeightLayoutConstraint" destination="6O7-yL-xkN" id="ZpJ-hD-pa3"/>
                         <outlet property="theNewPasswordImageView" destination="ftC-bG-Jrj" id="yss-Fl-twN"/>
@@ -1017,70 +1014,6 @@
                         <outlet property="theNewPasswordViewHeightConstraint" destination="eYM-tk-Nkp" id="Uqb-sJ-VVn"/>
                     </connections>
                 </viewController>
-                <view contentMode="scaleToFill" restorationIdentifier="AwaitingEmailConfirmationViewID" id="1oP-CL-t7s" userLabel="Please check your email View">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Awaiting e-mail confirmation." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HrE-UQ-dj9">
-                            <rect key="frame" x="30" y="318" width="540" height="48"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="200" id="IMi-Xd-cDN"/>
-                                <constraint firstAttribute="height" constant="48" id="boz-Rh-p7N"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="20"/>
-                            <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <nil key="highlightedColor"/>
-                            <variation key="default">
-                                <mask key="constraints">
-                                    <exclude reference="IMi-Xd-cDN"/>
-                                </mask>
-                            </variation>
-                        </label>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mailBig" translatesAutoresizingMaskIntoConstraints="NO" id="KOe-X4-Z3n">
-                            <rect key="frame" x="238" y="186" width="124" height="96"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="124" id="OI7-Yp-gtx"/>
-                                <constraint firstAttribute="height" constant="96" id="txW-W0-6BI"/>
-                            </constraints>
-                        </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please go to your inbox and click the link to confirm your new e-mail address." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gh4-XS-wZS">
-                            <rect key="frame" x="30" y="390" width="540" height="100"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="100" id="5Jx-cb-nfP"/>
-                                <constraint firstAttribute="height" constant="42" id="VXH-Fi-lRL"/>
-                                <constraint firstAttribute="height" constant="42" id="XXc-EL-ZhD"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="18"/>
-                            <color key="textColor" red="0.46666666870000001" green="0.46666666870000001" blue="0.46666666870000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <nil key="highlightedColor"/>
-                            <variation key="default">
-                                <mask key="constraints">
-                                    <exclude reference="VXH-Fi-lRL"/>
-                                    <exclude reference="XXc-EL-ZhD"/>
-                                </mask>
-                            </variation>
-                        </label>
-                    </subviews>
-                    <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="trailing" secondItem="HrE-UQ-dj9" secondAttribute="trailing" constant="30" id="315-Cv-eYV"/>
-                        <constraint firstAttribute="centerX" secondItem="KOe-X4-Z3n" secondAttribute="centerX" id="8Lk-cs-Ha0"/>
-                        <constraint firstItem="Gh4-XS-wZS" firstAttribute="leading" secondItem="1oP-CL-t7s" secondAttribute="leading" constant="30" id="PHA-xv-Z2w"/>
-                        <constraint firstItem="HrE-UQ-dj9" firstAttribute="top" secondItem="KOe-X4-Z3n" secondAttribute="bottom" constant="36" id="U50-i1-iM1"/>
-                        <constraint firstAttribute="trailing" secondItem="Gh4-XS-wZS" secondAttribute="trailing" constant="30" id="UdF-R1-y9F"/>
-                        <constraint firstItem="HrE-UQ-dj9" firstAttribute="centerX" secondItem="KOe-X4-Z3n" secondAttribute="centerX" id="fdT-HS-QH5"/>
-                        <constraint firstItem="Gh4-XS-wZS" firstAttribute="top" secondItem="HrE-UQ-dj9" secondAttribute="bottom" constant="24" id="i6C-9i-Po1"/>
-                        <constraint firstItem="KOe-X4-Z3n" firstAttribute="centerY" secondItem="1oP-CL-t7s" secondAttribute="centerY" constant="-66" id="iI3-F7-Nnf"/>
-                        <constraint firstItem="KOe-X4-Z3n" firstAttribute="top" secondItem="1oP-CL-t7s" secondAttribute="top" constant="92" id="jy1-JR-eqB"/>
-                        <constraint firstItem="HrE-UQ-dj9" firstAttribute="leading" secondItem="1oP-CL-t7s" secondAttribute="leading" constant="30" id="lBE-kl-S10"/>
-                    </constraints>
-                    <viewLayoutGuide key="safeArea" id="qvW-C7-dyf"/>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="jy1-JR-eqB"/>
-                        </mask>
-                    </variation>
-                </view>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bhb-cj-fvD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="96.799999999999997" y="-1198.6506746626687"/>
@@ -2800,7 +2733,6 @@
     <resources>
         <image name="key" width="32" height="32"/>
         <image name="keyDouble" width="32" height="32"/>
-        <image name="mailBig" width="124" height="96"/>
         <image name="padlock" width="32" height="32"/>
         <image name="padlockMasterKey" width="160" height="225"/>
         <image name="red_checkmark" width="22" height="22"/>

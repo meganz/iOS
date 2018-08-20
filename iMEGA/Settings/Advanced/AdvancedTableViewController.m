@@ -12,6 +12,7 @@
 #import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
 
+#import "AwaitingEmailConfirmationView.h"
 #import "ChangePasswordViewController.h"
 #import "TwoFactorAuthenticationViewController.h"
 #import "TwoFactorAuthentication.h"
@@ -169,6 +170,16 @@
     NSString *unitString = [NSString mnz_stringWithoutCountOfComponents:componentsSeparatedByStringArray];
     
     return [NSString stringWithFormat:@"%@ %@", countString, unitString];
+}
+
+- (void)processStarted {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"processStarted" object:nil];
+    
+    AwaitingEmailConfirmationView *awaitingEmailConfirmationView = [[[NSBundle mainBundle] loadNibNamed:@"AwaitingEmailConfirmationView" owner:self options: nil] firstObject];
+    awaitingEmailConfirmationView.titleLabel.text = AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
+    awaitingEmailConfirmationView.descriptionLabel.text = AMLocalizedString(@"ifYouCantAccessYourEmailAccount", @"Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account.");
+    awaitingEmailConfirmationView.frame = self.view.bounds;
+    self.view = awaitingEmailConfirmationView;
 }
 
 #pragma mark - IBActions
@@ -375,6 +386,8 @@
                         twoFactorAuthenticationVC.twoFAMode = TwoFactorAuthenticationCancelAccount;
                         
                         [self.navigationController pushViewController:twoFactorAuthenticationVC animated:YES];
+                        
+                        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processStarted) name:@"processStarted" object:nil];
                     } else {
                         [[MEGASdkManager sharedMEGASdk] cancelAccountWithDelegate:self];
                     }
@@ -400,10 +413,7 @@
     
     switch (request.type) {
         case MEGARequestTypeGetCancelLink: {
-            ChangePasswordViewController *changePasswordVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChangePasswordViewControllerID"];
-            changePasswordVC.emailIsChangingTitleLabel.text = AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
-            changePasswordVC.emailIsChangingDescriptionLabel.text = AMLocalizedString(@"ifYouCantAccessYourEmailAccount", @"Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account.");
-            self.view = changePasswordVC.emailIsChangingView;
+            [self processStarted];
             break;
         }
             
