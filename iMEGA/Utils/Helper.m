@@ -1244,12 +1244,11 @@ static MEGAIndexer *indexer;
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"agreedCopywriteWarning"];
     
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DownloadedNodes"];
-    
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TransfersPaused"];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSavePhotoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSaveVideoToGalleryEnabled"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"ChatVideoQuality"];
     
     //Set default order on logout
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];
