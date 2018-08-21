@@ -40,7 +40,7 @@
     
     [self.lostYourAuthenticatorDeviceButton setTitle:AMLocalizedString(@"lostYourAuthenticationDevice", @"A button to help them restore their account if they have lost their 2FA device.") forState:UIControlStateNormal];
     if (self.twoFAMode == TwoFactorAuthenticationLogin) {
-        self.lostYourAuthenticatorDeviceButton.hidden = self.lostYourAuthenticatorDeviceImage.hidden == NO;
+        self.lostYourAuthenticatorDeviceButton.hidden = self.lostYourAuthenticatorDeviceImage.hidden = NO;
         self.lostYourAuthenticatorDeviceButton.enabled = YES;
     }
     

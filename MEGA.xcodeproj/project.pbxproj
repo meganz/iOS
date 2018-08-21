@@ -2750,6 +2750,7 @@
 		5BB68C9D203599EC00B03C00 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5B1F74D02126E2B000F09A16 /* AwaitingEmailConfirmation */,
 				5BB2E40B20629E2C00E9F45C /* EmptyFooterView.h */,
 				5BB2E40920629E2B00E9F45C /* EmptyFooterView.m */,
 				5BB2E40A20629E2B00E9F45C /* EmptyFooterView.xib */,
@@ -3042,7 +3043,6 @@
 		A819B3401EAFA7E7004592F9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				5B1F74D02126E2B000F09A16 /* AwaitingEmailConfirmation */,
 				832E1020202B097900BDD30F /* CustomActionViewController */,
 				83D64E2B2017873D00E24155 /* PasswordReminder */,
 				A819B33D1EAFA7E2004592F9 /* CustomModalAlertViewController.h */,
