@@ -333,25 +333,24 @@
                     imageView.image = [UIImage imageWithContentsOfFile:temporaryImagePath];
                 }
             } else {
-                if ([node.name.pathExtension isEqualToString:@"gif"]) {
-                    if (node.hasPreview) {
-                        [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
-                    }
-                    [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
+                NSString *previewPath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
+                if ([[NSFileManager defaultManager] fileExistsAtPath:previewPath]) {
+                    imageView.image = [UIImage imageWithContentsOfFile:previewPath];
+                } else if (node.hasPreview) {
+                    [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
                 } else {
-                    if (node.hasPreview) {
-                        [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
-                    } else {
-                        NSString *thumbnailPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
-                        if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailPath]) {
-                            imageView.image = [UIImage imageWithContentsOfFile:thumbnailPath];
-                        } else if (node.hasThumbnail && !node.name.mnz_isImagePathExtension) {
-                            [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeThumbnail];
-                        }
-                        if (node.name.mnz_isImagePathExtension) {
-                            [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
-                        }
+                    NSString *thumbnailPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
+                    if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailPath]) {
+                        imageView.image = [UIImage imageWithContentsOfFile:thumbnailPath];
+                    } else if (node.hasThumbnail && !node.name.mnz_isImagePathExtension) {
+                        [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeThumbnail];
                     }
+                    if (node.name.mnz_isImagePathExtension && ![node.name.pathExtension isEqualToString:@"gif"]) {
+                        [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
+                    }
+                }
+                if ([node.name.pathExtension isEqualToString:@"gif"]) {
+                    [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
                 }
             }
             
