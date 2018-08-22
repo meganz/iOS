@@ -5,6 +5,7 @@
 #import "SVProgressHUD.h"
 
 #import "LaunchViewController.h"
+#import "Helper.h"
 #import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
@@ -61,10 +62,7 @@
     [SVProgressHUD dismiss];
         
     if (self.confirmAccountInOtherClient) {
-        [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionId"];
-        [SAMKeychain deletePasswordForService:@"MEGA" account:@"email"];
-        [SAMKeychain deletePasswordForService:@"MEGA" account:@"name"];
-        [SAMKeychain deletePasswordForService:@"MEGA" account:@"base64pwkey"];
+        [Helper clearEphemeralSession];
     }
     
     if (error.type) {

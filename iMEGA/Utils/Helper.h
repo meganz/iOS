@@ -127,6 +127,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (void)logout;
 + (void)logoutFromConfirmAccount;
 + (void)logoutAfterPasswordReminder;
++ (void)clearEphemeralSession;
 + (void)clearSession;
 + (void)deletePasscode;
 

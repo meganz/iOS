@@ -1147,6 +1147,13 @@ static MEGAIndexer *indexer;
     [[MEGASdkManager sharedMEGASdkFolder] cancelTransfersForDirection:0];
 }
 
++ (void)clearEphemeralSession {
+    [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionId"];
+    [SAMKeychain deletePasswordForService:@"MEGA" account:@"email"];
+    [SAMKeychain deletePasswordForService:@"MEGA" account:@"name"];
+    [SAMKeychain deletePasswordForService:@"MEGA" account:@"base64pwkey"];
+}
+
 + (void)clearSession {
     [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
 }
