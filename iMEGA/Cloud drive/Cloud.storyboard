@@ -700,13 +700,11 @@
                     <navigationItem key="navigationItem" id="7RS-wu-eAB">
                         <barButtonItem key="backBarButtonItem" title=" " id="HnN-nN-oE5"/>
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="K3C-tf-ftL">
-                            <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="cancelAction:" destination="xvu-Xm-WTc" id="wLs-V4-0no"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="Nmj-pH-BhC">
-                            <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="saveAction:" destination="xvu-Xm-WTc" id="Qzw-eg-db6"/>
                             </connections>
@@ -972,7 +970,6 @@
                     <navigationItem key="navigationItem" id="dJb-Gj-wJR">
                         <barButtonItem key="backBarButtonItem" title=" " id="S50-6X-Rph"/>
                         <barButtonItem key="rightBarButtonItem" title="Cancel" id="eAY-hb-l2Q">
-                            <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="cancel:" destination="Z2F-Nr-ypX" id="fg9-2M-mjr"/>
                             </connections>
@@ -1195,6 +1192,7 @@
                     </connections>
                 </barButtonItem>
                 <barButtonItem image="search" id="XMA-eg-oSl">
+                    <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="searchTapped:" destination="zUo-yM-mbH" id="6GC-Dr-7YH"/>
                     </connections>
@@ -1574,7 +1572,6 @@
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="RuD-LE-Jxn">
                         <barButtonItem key="rightBarButtonItem" title="Done" id="Bb8-Kf-AnR">
-                            <color key="tintColor" red="0.80392156859999997" green="0.0" blue="0.043137254899999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="doneTapped:" destination="Lpo-hP-uLZ" id="Pjf-7W-xAn"/>
                             </connections>
@@ -2530,7 +2527,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <!--Navigation Controller-->
         <scene sceneID="7zb-lt-8Ja">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Vnk-U0-2If" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Vnk-U0-2If" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="hih-9K-OhR">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
@@ -2551,7 +2548,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <!--Navigation Controller-->
         <scene sceneID="uE8-MR-U5C">
             <objects>
-                <navigationController storyboardIdentifier="previewDocumentNavigationID" automaticallyAdjustsScrollViewInsets="NO" id="Zki-P6-x9M" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="previewDocumentNavigationID" automaticallyAdjustsScrollViewInsets="NO" id="Zki-P6-x9M" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="Pwp-sd-pPD">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
@@ -2577,7 +2574,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <!--Navigation Controller-->
         <scene sceneID="I07-3w-jaX">
             <objects>
-                <navigationController storyboardIdentifier="SearchInPdfNavigationID" automaticallyAdjustsScrollViewInsets="NO" id="fdi-Ab-mUD" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SearchInPdfNavigationID" automaticallyAdjustsScrollViewInsets="NO" id="fdi-Ab-mUD" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="g5U-xU-c1D">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
