@@ -809,11 +809,23 @@
             
             break;
             
-        case URLTypeConfirmationLink:
-            [[MEGASdkManager sharedMEGASdk] querySignupLink:[url mnz_MEGAURL]];
-            self.link = nil;
-            
+        case URLTypeConfirmationLink: {
+            if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+                UIAlertController *alreadyLoggedInAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"alreadyLoggedInAlertTitle", @"Warning title shown when you try to confirm an account but you are logged in with another one") message:AMLocalizedString(@"alreadyLoggedInAlertMessage", @"Warning message shown when you try to confirm an account but you are logged in with another one") preferredStyle:UIAlertControllerStyleAlert];
+                
+                [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+                
+                [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                    [[MEGASdkManager sharedMEGASdk] logout];
+                }]];
+                
+                [UIApplication.mnz_visibleViewController presentViewController:alreadyLoggedInAlertController animated:YES completion:nil];
+            } else {
+                [[MEGASdkManager sharedMEGASdk] querySignupLink:[url mnz_MEGAURL]];
+                self.link = nil;
+            }
             break;
+        }
             
         case URLTypeNewSignUpLink:
             [[MEGASdkManager sharedMEGASdk] querySignupLink:[url mnz_MEGAURL]];
@@ -1988,7 +2000,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 
             case MEGAErrorTypeApiENoent: {
                 if ([request type] == MEGARequestTypeQuerySignUpLink) {
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"accountAlreadyConfirmed", @"Account already confirmed.") preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"accountAlreadyConfirmed", @"Message shown when the user clicks on a confirm account link that has already been used") message:nil preferredStyle:UIAlertControllerStyleAlert];
                     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                     [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
                 } else if ([request type] == MEGARequestTypeQueryRecoveryLink) {
@@ -2156,7 +2168,28 @@ void uncaughtExceptionHandler(NSException *exception) {
             
         case MEGARequestTypeQuerySignUpLink: {
             if (self.urlType == URLTypeConfirmationLink) {
-                [self presentConfirmViewControllerType:ConfirmTypeAccount link:request.link email:request.email];
+                if (request.flag) {
+                    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionId"]) {
+                        MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
+                        loginRequestDelegate.confirmAccountInOtherClient = YES;
+                        NSString *base64pwkey = [SAMKeychain passwordForService:@"MEGA" account:@"base64pwkey"];
+                        NSString *stringHash = [api hashForBase64pwkey:base64pwkey email:request.email];
+                        [api fastLoginWithEmail:request.email stringHash:stringHash base64pwKey:base64pwkey delegate:loginRequestDelegate];
+                    } else {
+                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"accountAlreadyConfirmed", @"Message shown when the user clicks on a confirm account link that has already been used") message:nil preferredStyle:UIAlertControllerStyleAlert];
+                        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                            MEGANavigationController *navigationController = (MEGANavigationController *)self.window.rootViewController;
+                            if ([navigationController.topViewController isKindOfClass:[LoginViewController class]]) {
+                                LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
+                                loginVC.emailString = request.email;
+                                [loginVC viewWillAppear:NO];
+                            }
+                        }]];
+                        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+                    }
+                } else {
+                    [self presentConfirmViewControllerType:ConfirmTypeAccount link:request.link email:request.email];
+                }
             } else if (self.urlType == URLTypeNewSignUpLink) {
 
                 if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
@@ -2233,6 +2266,11 @@ void uncaughtExceptionHandler(NSException *exception) {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:self.messageForSuspendedAccount preferredStyle:UIAlertControllerStyleAlert];
                 [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                 [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+            }
+            
+            if ((self.urlType == URLTypeConfirmationLink) && self.link) {
+                [[MEGASdkManager sharedMEGASdk] querySignupLink:self.link.mnz_MEGAURL];
+                self.link = nil;
             }
             
             if ((self.urlType == URLTypeNewSignUpLink) && (_emailOfNewSignUpLink != nil)) {

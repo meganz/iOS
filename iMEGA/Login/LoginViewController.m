@@ -72,6 +72,15 @@
     
     [self.navigationItem setTitle:AMLocalizedString(@"login", nil)];
     
+    if (self.emailString) {
+        self.emailTextField.text = self.emailString;
+        self.emailString = nil;
+        
+        [self.passwordView.passwordTextField becomeFirstResponder];
+    } else {
+        self.emailTextField.placeholder = AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email");
+    }
+    
     [[MEGALogger sharedLogger] enableChatlogs];
 }
 
@@ -126,9 +135,6 @@
 }
 
 - (void)generateKeys {
-    NSString *privateKey = [[MEGASdkManager sharedMEGASdk] base64pwkeyForPassword:self.password];
-    NSString *publicKey  = [[MEGASdkManager sharedMEGASdk] hashForBase64pwkey:privateKey email:self.email];
-    
     MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
     loginRequestDelegate.errorCompletion = ^(MEGAError *error) {
         if (error.type == MEGAErrorTypeApiEMFARequired) {
@@ -140,7 +146,7 @@
             [self.navigationController pushViewController:twoFactorAuthenticationVC animated:YES];
         }
     };
-    [[MEGASdkManager sharedMEGASdk] fastLoginWithEmail:self.email stringHash:publicKey base64pwKey:privateKey delegate:loginRequestDelegate];
+    [[MEGASdkManager sharedMEGASdk] loginWithEmail:self.email password:self.password delegate:loginRequestDelegate];
 }
 
 - (BOOL)validateForm {
