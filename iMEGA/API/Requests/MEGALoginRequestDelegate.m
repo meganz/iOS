@@ -72,12 +72,22 @@
             case MEGAErrorTypeApiENoent:
                 message = AMLocalizedString(@"invalidMailOrPassword", @"Message shown when the user writes a wrong email or password on login");
                 
+                // The email or password have been changed in other client while the app requires the 2fa code
                 if ((error.type == MEGAErrorTypeApiENoent) && request.text) {
                     if (request.text.mnz_isDecimalNumber) {
                         if (self.errorCompletion) self.errorCompletion(error);
                     }
                 }
                 break;
+                
+            case MEGAErrorTypeApiEExpired: {
+                if (self.errorCompletion) {
+                    self.errorCompletion(error);
+                } else {
+                    message = [NSString stringWithFormat:@"%@ %@", request.requestString, error.name];
+                }
+                return;
+            }
                 
             case MEGAErrorTypeApiEFailed:
                 if (self.errorCompletion) self.errorCompletion(error);
