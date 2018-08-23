@@ -796,7 +796,6 @@
                     <navigationItem key="navigationItem" title="My Account" id="mjJ-s0-fPl">
                         <barButtonItem key="backBarButtonItem" title=" " id="Cle-ng-NJM"/>
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="znj-ZT-mdS">
-                            <color key="tintColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="editTouchUpInside:" destination="0iP-kU-mqG" id="652-dM-sSb"/>
                             </connections>
