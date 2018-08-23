@@ -745,24 +745,24 @@
                                                 <rect key="frame" x="15" y="12" width="345" height="44"/>
                                                 <subviews>
                                                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="padlock" translatesAutoresizingMaskIntoConstraints="NO" id="ddP-st-5kT" userLabel="Current Password Padlock Image View">
-                                                        <rect key="frame" x="3" y="6" width="32" height="32"/>
+                                                        <rect key="frame" x="3" y="8" width="28" height="28"/>
                                                         <color key="tintColor" red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="32" id="0NE-fI-W7I"/>
-                                                            <constraint firstAttribute="width" constant="32" id="RfQ-Ra-dNS"/>
+                                                            <constraint firstAttribute="height" constant="28" id="0NE-fI-W7I"/>
+                                                            <constraint firstAttribute="width" constant="28" id="RfQ-Ra-dNS"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Current Password" minimumFontSize="15" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="I30-Sl-69j">
-                                                        <rect key="frame" x="47" y="12.5" width="298" height="19"/>
+                                                    <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Current Password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="I30-Sl-69j">
+                                                        <rect key="frame" x="43" y="11.5" width="302" height="21"/>
                                                         <color key="textColor" red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                                                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="next" secureTextEntry="YES"/>
                                                         <connections>
                                                             <outlet property="delegate" destination="Xlz-H7-CBT" id="gDm-FW-WTV"/>
                                                         </connections>
                                                     </textField>
                                                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Kgp-GT-dsf" userLabel="Line Image View">
-                                                        <rect key="frame" x="47" y="43" width="298" height="1"/>
+                                                        <rect key="frame" x="43" y="43" width="302" height="1"/>
                                                         <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="oDq-oX-ZMN"/>
@@ -800,13 +800,13 @@
                                                             <constraint firstAttribute="width" constant="32" id="wZX-fm-3Hv"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <textField hidden="YES" opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New Password" minimumFontSize="15" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Ryf-7d-GGn">
+                                                    <textField hidden="YES" opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New Password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Ryf-7d-GGn">
                                                         <rect key="frame" x="47" y="6" width="298" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="AHL-5m-bh8"/>
                                                         </constraints>
                                                         <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                                                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="next" secureTextEntry="YES"/>
                                                         <connections>
                                                             <outlet property="delegate" destination="Xlz-H7-CBT" id="fgl-6H-hcu"/>
@@ -858,13 +858,13 @@
                                                             <constraint firstAttribute="height" constant="32" id="TXR-3z-paU"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <textField hidden="YES" opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" minimumFontSize="15" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bX8-QE-I91">
+                                                    <textField hidden="YES" opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bX8-QE-I91">
                                                         <rect key="frame" x="47" y="6" width="298" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="opE-ii-KYc"/>
                                                         </constraints>
                                                         <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                                                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES"/>
                                                         <connections>
                                                             <outlet property="delegate" destination="Xlz-H7-CBT" id="AnJ-mn-IXE"/>

@@ -5,6 +5,7 @@
 #import "MEGAReachabilityManager.h"
 #import "NSString+MNZCategory.h"
 #import "SVProgressHUD.h"
+#import "UIApplication+MNZCategory.h"
 
 #import "AwaitingEmailConfirmationView.h"
 #import "TwoFactorAuthenticationViewController.h"
@@ -94,9 +95,7 @@
     } else if (self.changeType == ChangeTypeResetPassword || self.changeType == ChangeTypeParkAccount) {
         
         self.currentPasswordView.hidden = YES;
-        self.currentPasswordTextField.hidden = self.currentPasswordImageView.hidden = NO;
-        
-        self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
+        self.currentPasswordTextField.hidden = self.currentPasswordImageView.hidden = self.currentPasswordLineView.hidden = NO;
         
         self.navigationItem.title = (self.changeType == ChangeTypeResetPassword) ? AMLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") : AMLocalizedString(@"parkAccount", @"Headline for parking an account (basically restarting from scratch)");
         
@@ -170,19 +169,16 @@
             [self.theNewPasswordView.passwordTextField becomeFirstResponder];
         } else {
             [self showPasswordErrorView:self.confirmPasswordView constraint:self.confirmPasswordViewHeightConstraint message:AMLocalizedString(@"passwordsDoNotMatch", @"Passwords do not match")];
-            self.passwordStrengthIndicatorView.customView.hidden = YES;
-            self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
             [self.confirmPasswordView.passwordTextField becomeFirstResponder];
         }
         
         return NO;
     }
     
-    if (([[MEGASdkManager sharedMEGASdk] passwordStrength:self.theNewPasswordView.passwordTextField.text] == PasswordStrengthVeryWeak) && (self.changeType == ChangeTypePassword)) {
-        [self showPasswordErrorView:self.theNewPasswordView constraint:self.theNewPasswordViewHeightConstraint message:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
-        self.passwordStrengthIndicatorView.customView.hidden = YES;
-        self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
+    if (([[MEGASdkManager sharedMEGASdk] passwordStrength:self.theNewPasswordView.passwordTextField.text] == PasswordStrengthVeryWeak) && (self.changeType != ChangeTypeEmail)) {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"pleaseStrengthenYourPassword", @"")];
         [self.theNewPasswordView.passwordTextField becomeFirstResponder];
+        
         return NO;
     }
     
@@ -271,7 +267,7 @@
         }
             
         case 5: {
-            if ((self.changeType != ChangeTypePassword && [self.currentPasswordView.passwordTextField.text isEqualToString:@""]) || [self.theNewPasswordView.passwordTextField.text isEqualToString:@""]) {
+            if ((self.changeType != ChangeTypePassword && [self.confirmPasswordView.passwordTextField.text isEqualToString:@""]) || [self.theNewPasswordView.passwordTextField.text isEqualToString:@""]) {
                 isAnyTextFieldEmpty = YES;
             }
             break;
@@ -361,7 +357,7 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     BOOL shoulBeCreateAccountButtonGray = NO;
-    if (([text isEqualToString:@""] || (([[MEGASdkManager sharedMEGASdk] passwordStrength:text] == PasswordStrengthVeryWeak))) && self.changeType == ChangeTypePassword) {
+    if ([text isEqualToString:@""] || (([[MEGASdkManager sharedMEGASdk] passwordStrength:text] == PasswordStrengthVeryWeak) && self.changeType != ChangeTypeEmail)) {
         shoulBeCreateAccountButtonGray = YES;
     } else {
         shoulBeCreateAccountButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
@@ -579,23 +575,42 @@
                 [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"passwordChanged", @"The label showed when your password has been changed")];
                 [self dismissViewControllerAnimated:YES completion:nil];
             } else {
+                [self.view endEditing:YES];
+                
                 NSString *title;
+                void (^completion)(void);
                 if (self.changeType == ChangeTypeResetPassword) {
                     if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"passwordReset" object:nil];
                         title = AMLocalizedString(@"passwordChanged", @"The label showed when your password has been changed");
                         
-                        [self.navigationController popToViewController:self.navigationController.viewControllers[2] animated:YES];
+                        completion = ^{
+                            if (self.link) {
+                                [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+                            } else {
+                                [self.navigationController popToViewController:self.navigationController.viewControllers[2] animated:YES];
+                            }
+                        };
                     } else {
                         title = AMLocalizedString(@"yourPasswordHasBeenReset", nil);
+                        
+                        completion = ^{
+                            [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+                        };
                     }
                 } else if (self.changeType == ChangeTypeParkAccount) {
                     title = AMLocalizedString(@"yourAccounHasBeenParked", nil);
+                    
+                    completion = ^{
+                        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+                    };
                 }
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                    completion();
+                }]];
                 
-                [self presentViewController:alertController animated:YES completion:nil];
+                [[UIApplication mnz_visibleViewController] presentViewController:alertController animated:YES completion:nil];
             }
             
             break;
