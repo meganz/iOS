@@ -1221,6 +1221,7 @@ static MEGAIndexer *indexer;
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
+    [[MEGAStore shareInstance] configureMEGAStore];
     
     // Delete Spotlight index
     [[CSSearchableIndex defaultSearchableIndex] deleteSearchableItemsWithDomainIdentifiers:@[@"nodes"] completionHandler:^(NSError * _Nullable error) {
