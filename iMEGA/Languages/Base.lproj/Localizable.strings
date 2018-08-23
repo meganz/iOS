@@ -298,8 +298,10 @@
 "newFolderMessage"="Name for the new folder";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Create";
-/* message when trying to create a folder that already exists */
-"folderAlreadyExists"="Folder already exists";
+/* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
+"There is already a folder with the same name"="There is already a folder with the same name";
+/* A tooltip message which shows when a file name is duplicated during renaming. */
+"There is already a file with the same name"="There is already a file with the same name";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Import from…";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
