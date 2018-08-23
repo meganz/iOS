@@ -372,7 +372,6 @@
                     <navigationItem key="navigationItem" title="My Account" id="mxI-vZ-8su">
                         <barButtonItem key="backBarButtonItem" title=" " id="n2C-mH-XhE"/>
                         <barButtonItem key="rightBarButtonItem" title=" Buy PRO" id="yAq-Z4-Blx">
-                            <color key="tintColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="buyPROTouchUpInside:" destination="EN7-B0-mf8" id="bSl-1d-pau"/>
                             </connections>
@@ -1758,7 +1757,6 @@
                     </view>
                     <navigationItem key="navigationItem" title="Change Name" id="zOl-r6-l9A">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="iq9-cY-Q8u" userLabel="Cancel Bar Button Item">
-                            <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="cancelAction:" destination="xQo-am-8Q7" id="X1A-ie-ShO"/>
                             </connections>
