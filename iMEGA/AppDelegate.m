@@ -615,10 +615,10 @@
 #pragma mark - Private
 
 - (void)setupAppearance {
-    
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor}];
+    [[UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]] setBarStyle:UIBarStyleBlack];
+    [[UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]] setBarTintColor:UIColor.mnz_redF0373A];
     [[UINavigationBar appearance] setTintColor:UIColor.whiteColor];
-    [[UINavigationBar appearance] setBarTintColor:UIColor.mnz_redF0373A];
     [[UINavigationBar appearance] setTranslucent:NO];
 
     //QLPreviewDocument
@@ -628,9 +628,6 @@
         [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[QLPreviewController class]]] setTintColor:UIColor.mnz_redF0373A];
         [[UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[[QLPreviewController class]]] setBarTintColor:UIColor.whiteColor];
     }
-
-    //To tint the color of the prompt.
-    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:UIColor.whiteColor];
     
     [[UISearchBar appearance] setTranslucent:NO];
     [[UISearchBar appearance] setBackgroundColor:UIColor.mnz_grayFCFCFC];
@@ -639,7 +636,7 @@
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
     
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
-    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:UIColor.whiteColor];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]] setTintColor:UIColor.whiteColor];
     [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UIToolbar class]]] setTintColor:UIColor.mnz_redF0373A];
 
     [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"backArrow"]];

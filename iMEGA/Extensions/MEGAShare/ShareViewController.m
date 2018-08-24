@@ -52,6 +52,7 @@
 
 @property (nonatomic) NSArray<MEGAChatListItem *> *chats;
 @property (nonatomic) NSArray<MEGAUser *> *users;
+@property (nonatomic) NSMutableSet<NSNumber *> *openedChatIds;
 
 @end
 
@@ -131,6 +132,8 @@
     } else {
         [self requireLogin];
     }
+    
+    self.openedChatIds = [NSMutableSet<NSNumber *> new];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -685,7 +688,10 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)sendMessage:(NSString *)message toChat:(uint64_t)chatId {
-    [[MEGASdkManager sharedMEGAChatSdk] openChatRoom:chatId delegate:self];
+    if (![self.openedChatIds containsObject:@(chatId)]) {
+        [[MEGASdkManager sharedMEGAChatSdk] openChatRoom:chatId delegate:self];
+        [self.openedChatIds addObject:@(chatId)];
+    }
     [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:chatId message:message];
     self.pendingAssets++;
 }
@@ -818,6 +824,11 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)alertIfNeededAndDismiss {
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
     [SVProgressHUD dismiss];
+    
+    for (NSNumber *chatIdNumber in self.openedChatIds) {
+        [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:chatIdNumber.unsignedLongLongValue delegate:self];
+    }
+    
     if (self.unsupportedAssets > 0 || self.alreadyInDestinationAssets > 0) {
         NSString *message;
         if (self.unsupportedAssets > 0) {
