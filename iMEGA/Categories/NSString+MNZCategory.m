@@ -6,7 +6,6 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <Photos/Photos.h>
 
-#import "MEGAChatSdk.h"
 #import "MEGASdkManager.h"
 
 static NSString* const A = @"[A]";
