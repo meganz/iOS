@@ -322,14 +322,10 @@ static MEGAStore *_megaStore = nil;
     [self saveContext];
 }
 
-- (void)deleteUploadTransferWithLocalIdentifier:(NSString *)localIdentifier {
-    MOUploadTransfer *mOUploadTransfer = [self fetchTransferUpdateWithLocalIdentifier:localIdentifier];
+- (void)deleteUploadTransfer:(MOUploadTransfer *)uploadTransfer {
+    [self.managedObjectContext deleteObject:uploadTransfer];
     
-    if (mOUploadTransfer) {
-        [self.managedObjectContext deleteObject:mOUploadTransfer];
-        
-        MEGALogDebug(@"Save context - remove MOUploadTransfer with local identifier %@", mOUploadTransfer.localIdentifier);
-    }
+    MEGALogDebug(@"Save context - remove MOUploadTransfer with local identifier %@", uploadTransfer.localIdentifier);
     
     [self saveContext];
 }
@@ -357,8 +353,10 @@ static MEGAStore *_megaStore = nil;
 - (void)removeAllUploadTransfers {
     NSArray<MOUploadTransfer *> *uploadTransfers = [self fetchUploadTransfers];
     for (MOUploadTransfer *uploadTransfer in uploadTransfers) {
-        [self deleteUploadTransferWithLocalIdentifier:uploadTransfer.localIdentifier];
+        [self.managedObjectContext deleteObject:uploadTransfer];
     }
+    
+    [self saveContext];
 }
 
 @end
