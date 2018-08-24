@@ -837,7 +837,13 @@ static MEGAIndexer *indexer;
         }
         
         if (nodesArray.count == 1) {
-            OpenInActivity *openInActivity = [[OpenInActivity alloc] initOnView:sender];
+            OpenInActivity *openInActivity;
+            if ([sender isKindOfClass:[UIBarButtonItem class]]) {
+                openInActivity = [[OpenInActivity alloc] initOnBarButtonItem:sender];
+            } else {
+                openInActivity = [[OpenInActivity alloc] initOnView:sender];
+            }
+            
             [activitiesMutableArray addObject:openInActivity];
         }
     } else {
@@ -1307,6 +1313,7 @@ static MEGAIndexer *indexer;
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
+    [[MEGAStore shareInstance] configureMEGAStore];
     
     // Delete Spotlight index
     [[CSSearchableIndex defaultSearchableIndex] deleteSearchableItemsWithDomainIdentifiers:@[@"nodes"] completionHandler:^(NSError * _Nullable error) {
@@ -1336,12 +1343,11 @@ static MEGAIndexer *indexer;
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"agreedCopywriteWarning"];
     
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DownloadedNodes"];
-    
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TransfersPaused"];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSavePhotoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSaveVideoToGalleryEnabled"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"ChatVideoQuality"];
     
     //Set default order on logout
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];

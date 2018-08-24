@@ -1135,7 +1135,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="NnT-Q7-EZS">
                         <barButtonItem key="rightBarButtonItem" title="Close" id="2hI-Pc-NTv">
-                            <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="didTapCloseButton:" destination="uCw-IP-Y5s" id="Sde-e7-2c1"/>
                             </connections>
@@ -2757,7 +2756,7 @@
         <!--Navigation Controller-->
         <scene sceneID="FR8-f0-qVt">
             <objects>
-                <navigationController storyboardIdentifier="QRSettingsNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" id="fAe-dF-AIF" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="QRSettingsNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" id="fAe-dF-AIF" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="FOM-zN-HwS">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>

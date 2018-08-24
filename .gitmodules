@@ -55,3 +55,7 @@ url=https://github.com/meganz/CTAssetsPickerController.git
 [submodule "iMEGA/Vendor/PWProgressView"]
 	path = iMEGA/Vendor/PWProgressView
 	url = https://github.com/pwillsey/PWProgressView.git
+	url = https://github.com/pwillsey/PWProgressView
+[submodule "iMEGA/Vendor/FLAnimatedImage"]
+	path = iMEGA/Vendor/FLAnimatedImage
+	url = https://github.com/Flipboard/FLAnimatedImage
