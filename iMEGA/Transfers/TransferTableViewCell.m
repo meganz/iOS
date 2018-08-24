@@ -8,6 +8,7 @@
 #import <Photos/Photos.h>
 #import "MEGAStore.h"
 #import "SVProgressHUD.h"
+#import "QueuedTransferItem.h"
 
 @interface TransferTableViewCell ()
 
@@ -23,7 +24,7 @@
 
 @property (assign, nonatomic) BOOL isPaused;
 @property (strong, nonatomic) MEGATransfer *transfer;
-@property (strong, nonatomic) PHAsset *asset;
+@property (strong, nonatomic) QueuedTransferItem *queuedTransfer;
 
 @end
 
@@ -59,7 +60,7 @@
 - (void)configureCellForTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate {
     self.delegate = delegate;
     self.transfer = transfer;
-    self.asset = nil;
+    self.queuedTransfer = nil;
     
     self.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:self.transfer.fileName];
     self.pauseButton.hidden = NO;
@@ -102,12 +103,12 @@
     [self configureCellState];
 }
 
-- (void)configureCellForAsset:(PHAsset *)asset delegate:(id<TransferTableViewCellDelegate>)delegate {
+- (void)configureCellForQueuedTransfer:(QueuedTransferItem *)queuedTransferItem delegate:(id<TransferTableViewCellDelegate>)delegate {
     self.delegate = delegate;
-    self.asset = asset;
+    self.queuedTransfer = queuedTransferItem;
     self.transfer = nil;
     
-    PHAssetResource *assetResource = [PHAssetResource assetResourcesForAsset:self.asset].firstObject;
+    PHAssetResource *assetResource = [PHAssetResource assetResourcesForAsset:self.queuedTransfer.asset].firstObject;
     self.nameLabel.text = assetResource.originalFilename;
     self.pauseButton.hidden = YES;
 
@@ -115,7 +116,7 @@
     options.version = PHImageRequestOptionsVersionCurrent;
     options.networkAccessAllowed = YES;
     
-    [[PHImageManager defaultManager] requestImageForAsset:self.asset targetSize:self.iconImageView.frame.size contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+    [[PHImageManager defaultManager] requestImageForAsset:self.queuedTransfer.asset targetSize:self.iconImageView.frame.size contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         if (result) {
             self.iconImageView.image = result;
         } else {
@@ -206,8 +207,8 @@
                 [[MEGASdkManager sharedMEGASdkFolder] cancelTransferByTag:self.transfer.tag];
             }
         }
-    } else if (self.asset) {
-        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:self.asset.localIdentifier];
+    } else if (self.queuedTransfer) {
+        [[MEGAStore shareInstance] deleteUploadTransfer:self.queuedTransfer.uploadTransfer];
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
     }
 }

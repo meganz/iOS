@@ -9,6 +9,7 @@
 #import "MEGAGetThumbnailRequestDelegate.h"
 
 #import "TransferTableViewCell.h"
+#import "QueuedTransferItem.h"
 
 #import "MEGAStore.h"
 #import <Photos/Photos.h>
@@ -27,7 +28,7 @@
 @property (strong, nonatomic) NSMutableDictionary *transfersMutableDictionary;
 @property (strong, nonatomic) NSMutableArray *transfers;
 
-@property (nonatomic) PHFetchResult *uploadTransfersQueued;
+@property (strong, nonatomic) NSMutableArray<QueuedTransferItem *> *uploadTransfersQueued;
 
 @end
 
@@ -123,9 +124,8 @@
         }
             
         case 1: {
-            PHAsset *asset = [self.uploadTransfersQueued objectAtIndex:indexPath.row];
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferCell" forIndexPath:indexPath];
-            [cell configureCellForAsset:asset delegate:self];
+            [cell configureCellForQueuedTransfer:[self.uploadTransfersQueued objectAtIndex:indexPath.row] delegate:self];
             break;
         }
             
@@ -271,11 +271,12 @@
 
 - (void)getQueuedUploadTransfers {
     NSArray *uploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
-    NSMutableArray *localIdentifiers = [NSMutableArray new];
+    self.uploadTransfersQueued = [NSMutableArray new];
+    
     for (MOUploadTransfer *uploadTransfer in uploadTransfers) {
-        [localIdentifiers addObject:uploadTransfer.localIdentifier];
+        QueuedTransferItem *transferItem = [[QueuedTransferItem alloc] initWithAsset:[PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransfer.localIdentifier] options:nil].firstObject andUploadTransfer:uploadTransfer];
+        [self.uploadTransfersQueued addObject:transferItem];
     }
-    self.uploadTransfersQueued = [PHAsset fetchAssetsWithLocalIdentifiers:localIdentifiers options:nil];
 }
 
 - (void)cleanTransfersList {

@@ -960,15 +960,9 @@ static MEGAIndexer *indexer;
     return [nameWithoutExtension stringByAppendingPathExtension:extension];
 }
 
-+ (void)startUploadTransferWithLocalIdentifier:(NSString *)localIdentifier {
++ (void)startUploadTransfer:(MOUploadTransfer *)uploadTransfer {
     
-    PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[localIdentifier] options:nil].firstObject;
-    
-    MOUploadTransfer *uploadTransfer = [[MEGAStore shareInstance] fetchTransferUpdateWithLocalIdentifier:localIdentifier];
-    
-    if (!uploadTransfer) {
-        return;
-    }
+    PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransfer.localIdentifier] options:nil].firstObject;
     
     MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:uploadTransfer.parentNodeHandle.unsignedLongLongValue];
     MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset parentNode:parentNode cameraUploads:NO filePath:^(NSString *filePath) {
@@ -991,18 +985,18 @@ static MEGAIndexer *indexer;
         } else {
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:parentNode appData:appData isSourceTemporary:YES];
         }
-        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:asset.localIdentifier];
+        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
     } node:^(MEGANode *node) {
         if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == parentNode.handle) {
             MEGALogDebug(@"The asset exists in MEGA in the parent folder");
         } else {
             [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:parentNode];
         }
-        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:asset.localIdentifier];
+        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
         [Helper startPendingUploadTransferIfNeeded];
     } error:^(NSError *error) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"Transfer failed:", nil), asset.localIdentifier]];
-        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:asset.localIdentifier];
+        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
         [Helper startPendingUploadTransferIfNeeded];
     }];
     [processAsset prepare];
@@ -1025,7 +1019,7 @@ static MEGAIndexer *indexer;
     NSArray<MOUploadTransfer *> *uploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
     
     if (allUploadTransfersPaused && uploadTransfers.count) {
-        [Helper startUploadTransferWithLocalIdentifier:uploadTransfers.firstObject.localIdentifier];
+        [Helper startUploadTransfer:uploadTransfers.firstObject];
     }
 }
 

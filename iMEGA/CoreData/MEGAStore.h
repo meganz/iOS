@@ -47,7 +47,7 @@
 #pragma mark - MOUploadTransfer entity
 
 - (void)insertUploadTransferWithLocalIdentifier:(NSString *)localIdentifier parentNodeHandle:(uint64_t)parentNodeHandle;
-- (void)deleteUploadTransferWithLocalIdentifier:(NSString *)localIdentifier;
+- (void)deleteUploadTransfer:(MOUploadTransfer *)uploadTransfer;
 - (NSArray<MOUploadTransfer *> *)fetchUploadTransfers;
 - (MOUploadTransfer *)fetchTransferUpdateWithLocalIdentifier:(NSString *)localIdentifier;
 - (void)removeAllUploadTransfers;
