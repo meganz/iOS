@@ -29,9 +29,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 @property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
 
-@property (nonatomic) NSString *email;
-@property (nonatomic) NSString *password;
-
 @end
 
 @implementation LoginViewController
@@ -112,12 +109,18 @@
     
     if ([self validateForm]) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-            self.email = self.emailTextField.text;
-            self.password = self.passwordView.passwordTextField.text;
-            
-            NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(generateKeys) object:nil];
-            NSOperationQueue *operationQueue = [NSOperationQueue new];
-            [operationQueue addOperation:operation];
+            MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
+            loginRequestDelegate.errorCompletion = ^(MEGAError *error) {
+                if (error.type == MEGAErrorTypeApiEMFARequired) {
+                    TwoFactorAuthenticationViewController *twoFactorAuthenticationVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"TwoFactorAuthenticationViewControllerID"];
+                    twoFactorAuthenticationVC.twoFAMode = TwoFactorAuthenticationLogin;
+                    twoFactorAuthenticationVC.email = self.emailTextField.text;
+                    twoFactorAuthenticationVC.password = self.passwordView.passwordTextField.text;
+                    
+                    [self.navigationController pushViewController:twoFactorAuthenticationVC animated:YES];
+                }
+            };
+            [[MEGASdkManager sharedMEGASdk] loginWithEmail:self.emailTextField.text password:self.passwordView.passwordTextField.text delegate:loginRequestDelegate];
         }
     }
 }
@@ -132,21 +135,6 @@
     if (sender.state == UIGestureRecognizerStateEnded) {
         [Helper enableOrDisableLog];
     }
-}
-
-- (void)generateKeys {
-    MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
-    loginRequestDelegate.errorCompletion = ^(MEGAError *error) {
-        if (error.type == MEGAErrorTypeApiEMFARequired) {
-            TwoFactorAuthenticationViewController *twoFactorAuthenticationVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"TwoFactorAuthenticationViewControllerID"];
-            twoFactorAuthenticationVC.twoFAMode = TwoFactorAuthenticationLogin;
-            twoFactorAuthenticationVC.email = self.email;
-            twoFactorAuthenticationVC.password = self.password;
-            
-            [self.navigationController pushViewController:twoFactorAuthenticationVC animated:YES];
-        }
-    };
-    [[MEGASdkManager sharedMEGASdk] loginWithEmail:self.email password:self.password delegate:loginRequestDelegate];
 }
 
 - (BOOL)validateForm {
