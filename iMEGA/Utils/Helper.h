@@ -115,9 +115,6 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (UISearchController *)customSearchControllerWithSearchResultsUpdaterDelegate:(id<UISearchResultsUpdating>)searchResultsUpdaterDelegate searchBarDelegate:(id<UISearchBarDelegate>)searchBarDelegate;
 
 + (void)presentSafariViewControllerWithURL:(NSURL *)url;
-
-+ (void)configureRedNavigationAppearance;
-+ (void)configureWhiteNavigationAppearance;
     
 + (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ __nullable)(void))completion;
 + (void)showMasterKeyCopiedAlert;
