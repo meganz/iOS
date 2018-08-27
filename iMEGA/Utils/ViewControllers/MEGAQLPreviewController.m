@@ -40,22 +40,6 @@
     return self;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    if (@available(iOS 11.0, *)) {} else {
-        [Helper configureWhiteNavigationAppearance];
-    }
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    if (@available(iOS 11.0, *)) {} else {
-        if (!self.presentedViewController) {
-            [Helper configureRedNavigationAppearance];
-        }
-    }
-}
-
 #pragma mark - QLPreviewControllerDataSource
 
 - (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller {

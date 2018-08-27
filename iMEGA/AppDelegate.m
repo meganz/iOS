@@ -50,6 +50,7 @@
 #import "LoginViewController.h"
 #import "MainTabBarController.h"
 #import "MasterKeyViewController.h"
+#import "MEGAAssetsPickerController.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "MessagesViewController.h"
 #import "MyAccountHallViewController.h"
@@ -616,40 +617,44 @@
 #pragma mark - Private
 
 - (void)setupAppearance {
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor}];
-    [[UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]] setBarStyle:UIBarStyleBlack];
-    [[UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]] setBarTintColor:UIColor.mnz_redF0373A];
-    [[UINavigationBar appearance] setTintColor:UIColor.whiteColor];
-    [[UINavigationBar appearance] setTranslucent:NO];
+    [UINavigationBar appearance].titleTextAttributes = @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor};
+    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]].barStyle = UIBarStyleBlack;
+    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]].barTintColor = UIColor.mnz_redF0373A;
+    [UINavigationBar appearance].tintColor = UIColor.whiteColor;
+    [UINavigationBar appearance].translucent = NO;
 
     //QLPreviewDocument
-    if (@available(iOS 11.0, *)) {
-        [[UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[[QLPreviewController class]]] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.blackColor}];
-        [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[QLPreviewController class]]] setTextColor:UIColor.mnz_redF0373A];
-        [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[QLPreviewController class]]] setTintColor:UIColor.mnz_redF0373A];
-        [[UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[[QLPreviewController class]]] setBarTintColor:UIColor.whiteColor];
-    }
+    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[QLPreviewController.class]].titleTextAttributes = @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.blackColor};
+    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[QLPreviewController.class]].barTintColor = UIColor.whiteColor;
+    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[QLPreviewController.class]].tintColor = UIColor.mnz_redF0373A;
+    [UILabel appearanceWhenContainedInInstancesOfClasses:@[QLPreviewController.class]].textColor = UIColor.mnz_redF0373A;
+    [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[QLPreviewController.class]].tintColor = UIColor.mnz_redF0373A;
     
-    [[UISearchBar appearance] setTranslucent:NO];
-    [[UISearchBar appearance] setBackgroundColor:UIColor.mnz_grayFCFCFC];
-    [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:UIColor.mnz_grayEEEEEE];
+    //MEGAAssetsPickerController
+    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGAAssetsPickerController.class]].barStyle = UIBarStyleBlack;
+    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGAAssetsPickerController.class]].barTintColor = UIColor.mnz_redF0373A;
+    [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[MEGAAssetsPickerController.class]].tintColor = UIColor.whiteColor;
+
+    [UISearchBar appearance].translucent = NO;
+    [UISearchBar appearance].backgroundColor = UIColor.mnz_grayFCFCFC;
+    [UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]].backgroundColor = UIColor.mnz_grayEEEEEE;
     
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
     
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
-    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]] setTintColor:UIColor.whiteColor];
-    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UIToolbar class]]] setTintColor:UIColor.mnz_redF0373A];
+    [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]].tintColor = UIColor.whiteColor;
+    [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UIToolbar class]]].tintColor = UIColor.mnz_redF0373A;
 
-    [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"backArrow"]];
-    [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backArrow"]];
+    [UINavigationBar appearance].backIndicatorImage = [UIImage imageNamed:@"backArrow"];
+    [UINavigationBar appearance].backIndicatorTransitionMaskImage = [UIImage imageNamed:@"backArrow"];
     
-    [[UITextField appearance] setTintColor:UIColor.mnz_green00BFA5];
+    [UITextField appearance].tintColor = UIColor.mnz_green00BFA5;
     
-    [[UITextView appearance] setTintColor:UIColor.mnz_green00BFA5];
+    [UITextView appearance].tintColor = UIColor.mnz_green00BFA5;
     
-    [[UIView appearanceWhenContainedInInstancesOfClasses:@[[UIAlertController class]]] setTintColor:[UIColor mnz_redF0373A]];
+    [UIView appearanceWhenContainedInInstancesOfClasses:@[[UIAlertController class]]].tintColor = [UIColor mnz_redF0373A];
     
-    [[UIProgressView appearance] setTintColor:UIColor.mnz_redF0373A];
+    [UIProgressView appearance].tintColor = UIColor.mnz_redF0373A;
     
     [SVProgressHUD setFont:[UIFont mnz_SFUIRegularWithSize:12.0f]];
     [SVProgressHUD setRingThickness:2.0];
