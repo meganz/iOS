@@ -645,23 +645,28 @@ void uncaughtExceptionHandler(NSException *exception) {
     }];
     
     for (MEGAChatListItem *chatListItem in self.chats) {
+        self.pendingAssets++;
         [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatListItem.chatId node:nodeHandle delegate:chatAttachNodeRequestDelegate];
     }
     
     for (MEGAUser *user in self.users) {
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
         if (chatRoom) {
+            self.pendingAssets++;
             [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:nodeHandle delegate:chatAttachNodeRequestDelegate];
         } else {
             MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
             MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
             [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
             MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                self.pendingAssets++;
                 [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:nodeHandle delegate:chatAttachNodeRequestDelegate];
             }];
             [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
         }
     }
+    
+    [self onePendingLess];
 }
 
 - (void)performSendMessage:(NSString *)message {
@@ -979,6 +984,12 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    if (error.type) {
+        [self oneUnsupportedMore];
+        MEGALogError(@"Transfer finished with error: %@", error.name);
+        return;
+    }
+    
     if (self.users || self.chats) {
         [self performAttachNodeHandle:transfer.nodeHandle];
     } else {
