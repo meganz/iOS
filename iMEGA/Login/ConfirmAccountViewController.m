@@ -102,10 +102,7 @@
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionId"]) {
                 [[MEGASdkManager sharedMEGASdk] logout];
-                [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionId"];
-                [SAMKeychain deletePasswordForService:@"MEGA" account:@"email"];
-                [SAMKeychain deletePasswordForService:@"MEGA" account:@"name"];
-                [SAMKeychain deletePasswordForService:@"MEGA" account:@"base64pwkey"];
+                [Helper clearEphemeralSession];
             }
             
             [self dismissViewControllerAnimated:YES completion:nil];
@@ -169,24 +166,22 @@
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+        [SVProgressHUD dismiss];
+        
+        [self lockUI:NO];
+        
         switch ([error type]) {
             case MEGAErrorTypeApiENoent: { //MEGARequestTypeConfirmAccount, MEGARequestTypeConfirmChangeEmailLink, MEGARequestTypeConfirmCancelLink
-                [self lockUI:NO];
-                [SVProgressHUD dismiss];
-                
                 [self showErrorInPasswordView:YES];
                 break;
             }
                 
             case MEGAErrorTypeApiEAccess: {
-                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                [SVProgressHUD dismiss];
                 
                 UIAlertController *alreadyLoggedInAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"alreadyLoggedInAlertTitle", @"Warning title shown when you try to confirm an account but you are logged in with another one") message:AMLocalizedString(@"alreadyLoggedInAlertMessage", @"Warning message shown when you try to confirm an account but you are logged in with another one") preferredStyle:UIAlertControllerStyleAlert];
                 
-                [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                    [self lockUI:NO];
-                }]];
+                [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
                 
                 [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
@@ -201,13 +196,11 @@
             }
                 
             case MEGAErrorTypeApiEExist: {
-                [self lockUI:NO];
                 [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailAlreadyInUse", @"Error shown when the user tries to change his mail to one that is already used")];
                 break;
             }
 
             default:
-                [self lockUI:NO];
                 [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ (%ld)", error.name, (long)error.type]];
                 break;
         }
@@ -232,10 +225,7 @@
                 MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
                 [api loginWithEmail:[self.emailTextField text] password:[self.passwordView.passwordTextField text] delegate:loginRequestDelegate];
 
-                [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionId"];
-                [SAMKeychain deletePasswordForService:@"MEGA" account:@"email"];
-                [SAMKeychain deletePasswordForService:@"MEGA" account:@"name"];
-                [SAMKeychain deletePasswordForService:@"MEGA" account:@"base64pwkey"];
+                [Helper clearEphemeralSession];
             }
             break;
         }

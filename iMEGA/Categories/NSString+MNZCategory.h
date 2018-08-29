@@ -41,7 +41,9 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 + (NSString *)mnz_stringFromTimeInterval:(NSTimeInterval)interval;
 + (NSString *)mnz_stringFromCallDuration:(NSInteger)duration;
 
-- (NSString*)SHA256;
+- (NSString *)SHA256;
+
+- (BOOL)mnz_isDecimalNumber;
 
 - (BOOL)mnz_containsEmoji;
 - (BOOL)mnz_isPureEmojiString;

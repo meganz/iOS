@@ -120,9 +120,6 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (UISearchController *)customSearchControllerWithSearchResultsUpdaterDelegate:(id<UISearchResultsUpdating>)searchResultsUpdaterDelegate searchBarDelegate:(id<UISearchBarDelegate>)searchBarDelegate;
 
 + (void)presentSafariViewControllerWithURL:(NSURL *)url;
-
-+ (void)configureRedNavigationAppearance;
-+ (void)configureWhiteNavigationAppearance;
     
 + (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ __nullable)(void))completion;
 + (void)showMasterKeyCopiedAlert;
@@ -132,6 +129,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (void)logout;
 + (void)logoutFromConfirmAccount;
 + (void)logoutAfterPasswordReminder;
++ (void)clearEphemeralSession;
 + (void)clearSession;
 + (void)deletePasscode;
 
