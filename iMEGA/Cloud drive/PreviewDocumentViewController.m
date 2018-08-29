@@ -118,12 +118,9 @@
         [self.imageView mnz_setImageForExtension:[self.filesPathsArray objectAtIndex:self.nodeFileIndex].pathExtension];
     }
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationController.navigationBar.barTintColor = [UIColor colorFromHexString:@"FCFCFC"];
-        self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]};
-    } else {
-        [Helper configureWhiteNavigationAppearance];
-    }
+    self.navigationController.navigationBar.barTintColor = [UIColor colorFromHexString:@"FCFCFC"];
+    self.navigationController.navigationBar.tintColor = UIColor.mnz_redF0373A;
+    self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]};
 }
 
 - (void)loadPreview {
