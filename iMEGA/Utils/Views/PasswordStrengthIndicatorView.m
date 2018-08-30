@@ -42,7 +42,7 @@
         case PasswordStrengthVeryWeak:
             self.imageView.image = [UIImage imageNamed:@"indicatorVeryWeak"];
             self.strengthLabel.text = AMLocalizedString(@"veryWeak", @"Label displayed during checking the strength of the password introduced. Represents Very Weak security");
-            self.strengthLabel.textColor = [UIColor mnz_redF0373A];
+            self.strengthLabel.textColor = UIColor.mnz_redMain;
             self.strengthDescriptionLabel.text = AMLocalizedString(@"passwordVeryWeakOrWeak", @"");
             break;
             

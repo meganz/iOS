@@ -9,7 +9,6 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 + (UIColor *)mnz_black262626;
 + (UIColor *)mnz_black333333;
-+ (UIColor *)mnz_black333333_02;
 + (UIColor *)mnz_black000000_01;
 
 #pragma mark - Blue
@@ -21,15 +20,12 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 + (UIColor *)mnz_gray666666;
 + (UIColor *)mnz_gray777777;
-+ (UIColor *)mnz_gray8A8A8A;
 + (UIColor *)mnz_gray999999;
 + (UIColor *)mnz_grayCCCCCC;
 + (UIColor *)mnz_grayE2EAEA;
 + (UIColor *)mnz_grayE3E3E3;
 + (UIColor *)mnz_grayEEEEEE;
 + (UIColor *)mnz_grayFCFCFC;
-+ (UIColor *)mnz_grayF1F1F2;
-+ (UIColor *)mnz_grayF5F5F5;
 + (UIColor *)mnz_grayF7F7F7;
 + (UIColor *)mnz_grayF9F9F9;
 
@@ -45,24 +41,18 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 #pragma mark - Red
 
-+ (UIColor *)mnz_redE13339;
-+ (UIColor *)mnz_redDC191F;
-+ (UIColor *)mnz_redF0373A;
-+ (UIColor *)mnz_redFF4C52;
-+ (UIColor *)mnz_redFF4D52;
-+ (UIColor *)mnz_redD90007;
-+ (UIColor *)mnz_redFF333A;
-
-#pragma mark - Pink
-
-+ (UIColor *)mnz_pinkFF1A53;
++ (UIColor *)mnz_redMain;
++ (UIColor *)mnz_redProI;
++ (UIColor *)mnz_redProII;
++ (UIColor *)mnz_redProIII;
 
 #pragma mark - White
 
 + (UIColor *)mnz_whiteFFFFFF_02;
 
-+ (UIColor *)colorFromHexString:(NSString *)hexString;
+#pragma mark - Utils
 
++ (UIColor *)colorFromHexString:(NSString *)hexString;
 + (UIColor *)mnz_colorForStatusChange:(MEGAChatStatus)onlineStatus;
 
 @end

@@ -1110,7 +1110,7 @@
         UITextField *textField = newFolderAlertController.textFields.firstObject;
         UIAlertAction *rightButtonAction = newFolderAlertController.actions.lastObject;
         BOOL containsInvalidChars = [sender.text rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"|*/:<>?\"\\"]].length;
-        sender.textColor = containsInvalidChars ? UIColor.mnz_redD90007 : UIColor.darkTextColor;
+        sender.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
         rightButtonAction.enabled = (textField.text.length > 0 && !containsInvalidChars);
     }
 }
