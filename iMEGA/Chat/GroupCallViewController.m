@@ -22,7 +22,7 @@
 
 #import "GroupCallCollectionViewCell.h"
 
-@interface GroupCallViewController () <UICollectionViewDataSource, MEGAChatCallDelegate>
+@interface GroupCallViewController () <UICollectionViewDataSource, MEGAChatCallDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (weak, nonatomic) IBOutlet UIView *outgoingCallView;
 @property (weak, nonatomic) IBOutlet UIView *incomingCallView;
@@ -40,6 +40,7 @@
 @property (weak, nonatomic) IBOutlet UIView *toastView;
 @property (weak, nonatomic) IBOutlet UILabel *toastLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *toastTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *navigationHeightConstraint;
 
 @property BOOL loudSpeakerEnabled;
 
@@ -60,6 +61,7 @@
     self.titleLabel.text = self.chatRoom.title;
     self.durationLabel.text = AMLocalizedString(@"calling...", @"Label shown when you receive an incoming call, before start the call.");
     [self updateParticipants];
+    [self configureNavigationHeight];
     
     self.enableDisableVideoButton.selected = self.videoCall;
     self.enableDisableSpeaker.selected = self.videoCall;
@@ -138,6 +140,10 @@
     return UIInterfaceOrientationMaskAll;
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -151,12 +157,13 @@
     
     if (session.peerId) {
         cell.tag = 0;
+        cell.peerId = session.peerId;
         [cell.avatarImageView mnz_setImageForUserHandle:session.peerId];
         if (session.video) {
-            [[MEGASdkManager sharedMEGAChatSdk] removeChatLocalVideo:self.chatRoom.chatId delegate:cell.videoImageView];
-            for (int i = 0; i < self.call.sessions.size; i++) {
-                [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:[self.call.sessions megaHandleAtIndex:i] delegate:cell.videoImageView];
-            }
+            [cell.videoImageView removeFromSuperview];
+            MEGARemoteImageView *remoteImageView = [[MEGARemoteImageView alloc] initWithFrame:cell.bounds];
+            [cell addSubview:remoteImageView];
+            cell.videoImageView = remoteImageView;
             [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:self.chatRoom.chatId peerId:session.peerId delegate:cell.videoImageView];
             cell.videoImageView.hidden = NO;
             cell.avatarImageView.hidden = YES;
@@ -166,12 +173,13 @@
         }
     } else {
         cell.tag = 1;
+        cell.peerId = 0;
         [cell.avatarImageView mnz_setImageForUserHandle:[MEGASdkManager sharedMEGAChatSdk].myUserHandle];
         if (self.enableDisableVideoButton.selected) {
-            for (int i = 0; i < self.call.sessions.size; i++) {
-                [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:[self.call.sessions megaHandleAtIndex:i] delegate:cell.videoImageView];
-            }
-            [[MEGASdkManager sharedMEGAChatSdk] removeChatLocalVideo:self.chatRoom.chatId delegate:cell.videoImageView];
+            [cell.videoImageView removeFromSuperview];
+            MEGARemoteImageView *remoteImageView = [[MEGARemoteImageView alloc] initWithFrame:cell.bounds];
+            [cell addSubview:remoteImageView];
+            cell.videoImageView = remoteImageView;
             [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideo:self.chatRoom.chatId delegate:cell.videoImageView];
             cell.videoImageView.hidden = NO;
             cell.avatarImageView.hidden = YES;
@@ -182,6 +190,43 @@
     }
     
     return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    switch (self.call.numParticipants) {
+        case 1:
+            return self.collectionView.frame.size;
+            
+        case 2: {
+            float maxWidth = MAX(self.collectionView.frame.size.height, self.collectionView.frame.size.width);
+            return CGSizeMake(maxWidth / 2, maxWidth / 2);
+        }
+            
+        case 3: {
+            float maxWidth = MAX(self.collectionView.frame.size.height, self.collectionView.frame.size.width);
+            return CGSizeMake(maxWidth / 3, maxWidth / 3);
+        }
+            
+        case 4: {
+            float maxWidth = MIN(self.collectionView.frame.size.height, self.collectionView.frame.size.width);
+            return CGSizeMake(maxWidth / 2, maxWidth / 2);
+        }
+            
+        case 5: case 6: {
+            float maxWidth = MIN(self.collectionView.frame.size.height, self.collectionView.frame.size.width);
+            return CGSizeMake(maxWidth / 2, maxWidth / 2);
+        }
+            
+        default:
+            return CGSizeMake(60, 60);
+    }
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self configureNavigationHeight];
+    } completion:nil];
 }
 
 #pragma mark - IBActions
@@ -246,6 +291,11 @@
                                 cell.videoImageView.hidden = YES;
                                 [[MEGASdkManager sharedMEGAChatSdk] removeChatLocalVideo:self.chatRoom.chatId delegate:cell.videoImageView];
                             } else {
+                                if (!cell.videoImageView) {
+                                    MEGARemoteImageView *remoteImageView = [[MEGARemoteImageView alloc] initWithFrame:cell.bounds];
+                                    [cell addSubview:remoteImageView];
+                                    cell.videoImageView = remoteImageView;
+                                }
                                 cell.avatarImageView.hidden = YES;
                                 cell.videoImageView.hidden = NO;
                                 [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideo:self.chatRoom.chatId delegate:cell.videoImageView];
@@ -278,6 +328,23 @@
 }
 
 #pragma mark - Private
+
+- (void)configureNavigationHeight {
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    if (orientation == UIInterfaceOrientationPortrait) {
+        if (UIDevice.currentDevice.iPhoneX) {
+            self.navigationHeightConstraint.constant = 84;
+        } else {
+            self.navigationHeightConstraint.constant = 64;
+        }
+    } else {
+        if (UIDevice.currentDevice.iPhoneX) {
+            self.navigationHeightConstraint.constant = 60;
+        } else {
+            self.navigationHeightConstraint.constant = 40;
+        }
+    }
+}
 
 - (void)didSessionRouteChange:(NSNotification *)notification {
     NSDictionary *interuptionDict = notification.userInfo;
@@ -380,6 +447,24 @@
     }];
 }
 
+- (void)initDurationTimer {
+    self.initDuration = self.call.duration;
+    self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+    self.baseDate = [NSDate date];
+}
+
+- (void)initShowHideControls {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        //Add Tap to hide/show controls
+        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showOrHideControls)];
+        [tapGestureRecognizer setNumberOfTapsRequired:1];
+        [self.view addGestureRecognizer:tapGestureRecognizer];
+        
+        [self showOrHideControls];
+    });
+}
+
 #pragma mark - MEGAChatCallDelegate
 
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
@@ -393,87 +478,72 @@
     
     if ([call hasChangedForType:MEGAChatCallChangeTypeSessionStatus]) {
         MEGAChatSession *chatSession = [self.call sessionForPeer:[self.call peerSessionStatusChange]];
-        if (chatSession.status == MEGAChatSessionStatusInProgress) {
-            if (!self.timer.isValid) {
-                [self.player stop];
-                
-                self.initDuration = self.call.duration;
-                _timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
-                [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-                _baseDate = [NSDate date];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    //Add Tap to hide/show controls
-                    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showOrHideControls)];
-                    [tapGestureRecognizer setNumberOfTapsRequired:1];
-                    [self.view addGestureRecognizer:tapGestureRecognizer];
-                    
-                    [self showOrHideControls];
-                });
-                [self.collectionView reloadData];
-                [self updateParticipants];
+        switch (chatSession.status) {
+            case MEGAChatSessionStatusInitial: {
+                if (!self.timer.isValid) {
+                    [self.player stop];
+                    [self initDurationTimer];
+                    [self initShowHideControls];
+                    [self.collectionView reloadData];
+                } else {
+                    [self.collectionView reloadData];
+                    [self showToastMessage:[NSString stringWithFormat:@"%@ joined the call", [self.chatRoom peerFullnameByHandle:chatSession.peerId]] color:@""];
+                }
+                break;
             }
+                
+            case MEGAChatSessionStatusInProgress: {
+                self.outgoingCallView.hidden = NO;
+                self.incomingCallView.hidden = YES;
+                break;
+            }
+                
+            case MEGAChatSessionStatusDestroyed:
+                [self showToastMessage:[NSString stringWithFormat:@"%@ left the call", [self.chatRoom peerFullnameByHandle:chatSession.peerId]] color:@""];
+                break;
+                
+            case MEGAChatSessionStatusInvalid:
+                MEGALogDebug(@"MEGAChatSessionStatusInvalid");
+                break;
         }
+    }
+    
+    if ([call hasChangedForType:MEGAChatCallChangeTypeCallComposition]) {
+        [self updateParticipants];
+        [self.collectionView reloadData];
     }
     
     switch (self.call.status) {
             
-        case MEGAChatCallStatusJoining:
-            [self.collectionView reloadData];
-            break;
-            
         case MEGAChatCallStatusInProgress: {
-            self.outgoingCallView.hidden = NO;
-            self.incomingCallView.hidden = YES;
             
-            if ([call hasChangedForType:MEGAChatCallChangeTypeCallComposition]) {
-                [self.collectionView reloadData];
-                [self updateParticipants];
-                MEGAChatSession *chatSessionWithCallComposition = [self.call sessionForPeer:[self.call peerSessionStatusChange]];
-                for (int i = 0; i < self.call.sessions.size; i++) {
-                    uint64_t sessionPeerId = [self.call.sessions megaHandleAtIndex:i];
-                    if (chatSessionWithCallComposition.peerId == sessionPeerId) {
-                        [self showToastMessage:[NSString stringWithFormat:@"%@ joined the call", [self.chatRoom peerFullnameByHandle:chatSessionWithCallComposition.peerId]] color:@""];
+            if ([call hasChangedForType:MEGAChatCallChangeTypeRemoteAVFlags]) {
+//              [self.collectionView reloadData];
+
+                MEGAChatSession *chatSessionWithAVFlags = [self.call sessionForPeer:[self.call peerSessionStatusChange]];
+                
+                NSArray<GroupCallCollectionViewCell *> *cells = self.collectionView.visibleCells;
+
+                for (GroupCallCollectionViewCell *cell in cells) {
+                    if (cell.peerId == chatSessionWithAVFlags.peerId) {
+                        if (chatSessionWithAVFlags.hasVideo) {
+                            [cell.videoImageView removeFromSuperview];
+                            MEGARemoteImageView *remoteImageView = [[MEGARemoteImageView alloc] initWithFrame:cell.bounds];
+                            [cell addSubview:remoteImageView];
+                            cell.videoImageView = remoteImageView;
+                            [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:self.chatRoom.chatId peerId:chatSessionWithAVFlags.peerId delegate:cell.videoImageView];
+                            cell.avatarImageView.hidden = YES;
+                            cell.videoImageView.hidden = NO;
+                        } else {
+                            [cell.videoImageView removeFromSuperview];
+                            cell.avatarImageView.hidden = NO;
+                            cell.videoImageView.hidden = YES;
+                            [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:chatSessionWithAVFlags.peerId delegate:cell.videoImageView];
+                        }
                         break;
                     }
                 }
             }
-            
-            if ([call hasChangedForType:MEGAChatCallChangeTypeRemoteAVFlags]) {
-                                            [self.collectionView reloadData];
-
-                /*MEGAChatSession *chatSessionWithAVFlags = [self.call sessionForPeer:[self.call peerSessionStatusChange]];
-                
-                for (int i = 0; i < self.call.sessions.size; i++) {
-                    uint64_t sessionPeerId = [self.call.sessions megaHandleAtIndex:i];
-                    if (chatSessionWithAVFlags.peerId == sessionPeerId) {
-                        GroupCallCollectionViewCell *cell = (GroupCallCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
-                        if (cell) {
-//                            if ([call hasChangedForType:MEGAChatCallChangeTypeSessionStatus]) {
-//                                [self.collectionView reloadData];
-//                            } else {
-                                if (chatSessionWithAVFlags.video) {
-                                    cell.avatarImageView.hidden = YES;
-                                    cell.videoImageView.hidden = NO;
-                                    for (int i = 0; i < self.call.sessions.size; i++) {
-                                        [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:[self.call.sessions megaHandleAtIndex:i] delegate:cell.videoImageView];
-                                    }
-                                    [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:self.chatRoom.chatId peerId:chatSessionWithAVFlags.peerId delegate:cell.videoImageView];
-                                } else {
-                                    cell.avatarImageView.hidden = NO;
-                                    cell.videoImageView.hidden = YES;
-                                    for (int i = 0; i < self.call.sessions.size; i++) {
-                                        [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:[self.call.sessions megaHandleAtIndex:i] delegate:cell.videoImageView];
-                                    }
-                                }
-//                        } else {
-//                            [self.collectionView reloadData];
-//                        }
-                        }
-                        break;
-                    }
-                }*/
-            }
-            
             break;
         }
     
