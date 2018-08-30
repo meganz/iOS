@@ -67,7 +67,7 @@
     
     self.viewControllers = defaultViewControllersMutableArray;
     
-    self.view.tintColor = [UIColor mnz_redF0373A];
+    self.view.tintColor = UIColor.mnz_redMain;
     
     [self setDelegate:self];
     

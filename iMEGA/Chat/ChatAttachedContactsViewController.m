@@ -67,7 +67,7 @@
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     
     self.addBarButtonItem.title = AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
-    [self.addBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]} forState:UIControlStateNormal];
+    [self.addBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain} forState:UIControlStateNormal];
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [self setToolbarItems:@[flexibleItem, self.addBarButtonItem]];
     

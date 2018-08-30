@@ -691,7 +691,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     NSString *confidentialityString = [confidentialityExplanationString mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
     confidentialityExplanationString = [confidentialityExplanationString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"[S]%@[/S]", confidentialityString] withString:@""];
     
-    NSMutableAttributedString *confidentialityAttributedString = [[NSMutableAttributedString alloc] initWithString:confidentialityString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]}];
+    NSMutableAttributedString *confidentialityAttributedString = [[NSMutableAttributedString alloc] initWithString:confidentialityString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
     NSMutableAttributedString *confidentialityExplanationAttributedString = [[NSMutableAttributedString alloc] initWithString:confidentialityExplanationString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]}];
     [confidentialityAttributedString appendAttributedString:confidentialityExplanationAttributedString];
     self.openMessageHeaderView.confidentialityLabel.attributedText = confidentialityAttributedString;
@@ -700,7 +700,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     NSString *authenticityString = [authenticityExplanationString mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
     authenticityExplanationString = [authenticityExplanationString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"[S]%@[/S]", authenticityString] withString:@""];
 
-    NSMutableAttributedString *authenticityAttributedString = [[NSMutableAttributedString alloc] initWithString:authenticityString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]}];
+    NSMutableAttributedString *authenticityAttributedString = [[NSMutableAttributedString alloc] initWithString:authenticityString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
     NSMutableAttributedString *authenticityExplanationAttributedString = [[NSMutableAttributedString alloc] initWithString:authenticityExplanationString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]}];
     [authenticityAttributedString appendAttributedString:authenticityExplanationAttributedString];
     self.openMessageHeaderView.authenticityLabel.attributedText = authenticityAttributedString;
@@ -1396,7 +1396,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             selectOptionAlertController.popoverPresentationController.sourceView = self.inputToolbar.contentView;
             
             [self presentViewController:selectOptionAlertController animated:YES completion:nil];
-            selectOptionAlertController.view.tintColor = [UIColor mnz_redF0373A];
+            selectOptionAlertController.view.tintColor = UIColor.mnz_redMain;
 
             break;
         }

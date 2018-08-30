@@ -218,7 +218,7 @@
         shoulBeLoginButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
     }
     
-    self.loginButton.backgroundColor = shoulBeLoginButtonGray ? UIColor.mnz_grayEEEEEE : UIColor.mnz_redFF4D52;
+    self.loginButton.backgroundColor = shoulBeLoginButtonGray ? UIColor.mnz_grayEEEEEE : UIColor.mnz_redMain;
     
     return YES;
 }

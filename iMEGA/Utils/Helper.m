@@ -1033,7 +1033,7 @@ static MEGAIndexer *indexer;
     searchController.searchBar.translucent = NO;
     searchController.searchBar.backgroundImage = [UIImage imageWithCGImage:(__bridge CGImageRef)(UIColor.clearColor)];
     searchController.searchBar.barTintColor = UIColor.whiteColor;
-    searchController.searchBar.tintColor = UIColor.mnz_redF0373A;
+    searchController.searchBar.tintColor = UIColor.mnz_redMain;
     
     UITextField *searchTextField = [searchController.searchBar valueForKey:@"_searchField"];
     searchTextField.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
@@ -1048,9 +1048,9 @@ static MEGAIndexer *indexer;
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:url];
         if (@available(iOS 10.0, *)) {
-            safariViewController.preferredControlTintColor = [UIColor mnz_redF0373A];
+            safariViewController.preferredControlTintColor = UIColor.mnz_redMain;
         } else {
-            safariViewController.view.tintColor = [UIColor mnz_redF0373A];
+            safariViewController.view.tintColor = UIColor.mnz_redMain;
         }
         
         [UIApplication.mnz_visibleViewController presentViewController:safariViewController animated:YES completion:nil];

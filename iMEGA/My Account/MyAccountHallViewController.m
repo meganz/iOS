@@ -65,7 +65,7 @@
     
     MEGAContactLinkCreateRequestDelegate *delegate = [[MEGAContactLinkCreateRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
         NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
-        self.qrCodeImageView.image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:self.qrCodeImageView.frame.size color:[UIColor colorWithRed:0.94f green:0.22f blue:0.23f alpha:1.0f]];
+        self.qrCodeImageView.image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:self.qrCodeImageView.frame.size color:UIColor.mnz_redMain];
         self.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
         self.avatarImageView.layer.borderWidth = 6.0f;
         self.avatarImageView.layer.cornerRadius = 40.0f;

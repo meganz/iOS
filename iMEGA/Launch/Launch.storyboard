@@ -48,7 +48,7 @@
                                 <color key="color" red="0.97647058959999999" green="0.97647058959999999" blue="0.97647058959999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="63R-NA-Whg" firstAttribute="centerX" secondItem="F07-sj-jc4" secondAttribute="centerX" id="5KU-cU-bcF"/>
                             <constraint firstItem="J4e-dJ-4Yg" firstAttribute="leading" secondItem="F07-sj-jc4" secondAttribute="leadingMargin" constant="20" id="8HA-9q-6Kx"/>
@@ -101,7 +101,7 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ngD-mU-eHw" firstAttribute="centerX" secondItem="bat-qs-IDA" secondAttribute="centerX" id="Dbp-NP-vSb"/>
                             <constraint firstItem="ngD-mU-eHw" firstAttribute="leading" secondItem="bat-qs-IDA" secondAttribute="leadingMargin" constant="-40" id="T3R-hw-li8"/>
