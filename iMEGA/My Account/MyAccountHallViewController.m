@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIView *profileView;
 
 @property (weak, nonatomic) IBOutlet UILabel *viewAndEditProfileLabel;
+@property (weak, nonatomic) IBOutlet UIButton *viewAndEditProfileButton;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -51,7 +52,8 @@
     self.buyPROBarButtonItem.title = AMLocalizedString(@"upgrade", @"Caption of a button to upgrade the account to Pro status");
     
     self.viewAndEditProfileLabel.text = AMLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
-    
+    self.viewAndEditProfileButton.accessibilityLabel = AMLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
+
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewAndEditProfileTouchUpInside:)];
     self.profileView.gestureRecognizers = @[tapGestureRecognizer];
     
