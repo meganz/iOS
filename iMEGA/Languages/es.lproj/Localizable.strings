@@ -298,8 +298,10 @@
 "newFolderMessage"="Nombre para la carpeta";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Crear";
-/* message when trying to create a folder that already exists */
-"folderAlreadyExists"="La carpeta ya existe";
+/* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
+"There is already a folder with the same name"="Ya existe una carpeta con el mismo nombre";
+/* A tooltip message which shows when a file name is duplicated during renaming. */
+"There is already a file with the same name"="Ya existe un archivo con el mismo nombre";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Subir desde...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -519,9 +521,9 @@
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Subidas de la cámara completadas";
 /* Message shown while uploading files. Singular. */
-"cameraUploadsPendingFile"="Upload in progress, 1 file pending";
+"cameraUploadsPendingFile"="Subida en curso, 1 archivo pendiente";
 /* Message shown while uploading files. Plural. */
-"cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
+"cameraUploadsPendingFiles"="Subida en curso, %lu archivos pendientes";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d de %2$d archivo";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -656,8 +658,6 @@
 "about"="Acerca de";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Idioma";
-/* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
-"applicationLanguage"="Español";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Enviar valoración";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -701,7 +701,7 @@
 /*  */
 "masterKey_thirdParagraph"="Un atacante externo no puede acceder a tu cuenta solo con tu clave. Para restablecer la contraseña necesitaría tanto la clave como el acceso a tu correo electrónico.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="Clave de recuperación copiada al portapapeles";
+"recoveryKeyCopiedToClipboard"="Clave de recuperación copiada al portapapeles. Guárdala en un lugar seguro.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Clave de recuperación guardada";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -748,6 +748,8 @@
 "cancellationLinkHasExpired"="El enlace de cancelación ha caducado.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Este es el último paso para cancelar tu cuenta. Perderás de forma permanente todos los datos almacenados en la nube. Por favor, introduce tu contraseña a continuación.";
+/* During account cancellation (deletion) */
+"accountCanceledSuccessfully"="Tu cuenta ha sido cancelada correctamente.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Cancelar cuenta";
 /* Title for the action that allows to remove a file or folder */
@@ -1358,7 +1360,7 @@
 "languageRestartNotification"="Idioma cambiado. Pulsa para abrir la aplicación.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA ofrece un servicio de almacenamiento en la nube cifrado y controlado por el usuario a través del navegador web y de la aplicación para dispositivos móviles.";
+"generalDescriptionParagraph1"="MEGA ofrece un servicio de almacenamiento en la nube cifrado y controlado por el usuario a través del navegador web y de la aplicación para dispositivos móviles. A diferencia de otros proveedores de almacenamiento en la nube, tus datos son cifrados y descifrados únicamente por tus dispositivos y nunca por nosotros.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph2"="Sube tus archivos desde tu smartphone o tablet, luego busca, almacena, descarga, muestra, reproduce, comparte, renombra o elimina tus archivos en cualquier momento, desde cualquier dispositivo, desde cualquier lugar. Comparte carpetas con tus contactos y comprueba sus actualizaciones en tiempo real.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
@@ -1393,13 +1395,13 @@
 /* Button title to see the available bonus */
 "getBonus"="Obtén bonos";
 /* Text shown under the title 'Video quality' that explains what it means */
-"qualityOfVideosUploadedToAChat"="Quality of videos uploaded to a chat";
+"qualityOfVideosUploadedToAChat"="Calidad de los vídeos subidos a un chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
-"videoQuality"="Video quality";
+"videoQuality"="Calidad del vídeo";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
-"low"="Low";
+"low"="Baja";
 /* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
-"high"="High";
+"high"="Alta";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="Original";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
@@ -1553,7 +1555,7 @@
 /* Item of a menu to forward a message chat to another chatroom */
 "forward"="Reenviar";
 /* Success message shown after forwarding messages to other chats */
-"messagesSent"="Messages sent";
+"messagesSent"="Mensajes enviados";
 /* Title of archived chats button */
 "archivedChats"="Chats archivados";
 /* Confirmation message on archive chat dialog for user to confirm. */
@@ -1567,4 +1569,32 @@
 /* Title of flag of archived chats. */
 "archived"="Archivado";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="No Archived Chats";
+"noArchivedChats"="No hay chats archivados";
+/* A title for the Two-Factor Authentication section on the My Account - Security page. */
+"twoFactorAuthentication"="Autenticación de dos factores";
+/* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
+"beginSetup"="Empezar configuración";
+/* A message on the Verify Login page telling the user to enter their 2FA code. */
+"pleaseEnterTheSixDigitCode"="Introduce el código de 6 dígitos generado por tu aplicación de autenticación.";
+/* Title of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthentication"="¿Por qué necesitas la autenticación de dos factores?";
+/* Description for the ‘Two-Factor Authentication’ in the security settings section. */
+"whatIsTwoFactorAuthentication"="La autenticación de dos factores es una segunda capa de seguridad para tu cuenta.";
+/* Description text of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthenticationDescription"="La autenticación de dos factores es una segunda capa de seguridad para tu cuenta. Esto significa que incluso si alguien conoce tu contraseña no va a poder acceder a tu cuenta sin tener acceso al código de seis dígitos al que solo tú tienes acceso.";
+/* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"youNeedATwoFactorAuthenticationApp"="Necesitas una aplicación de autenticación de dos factores en este dispositivo";
+/* A title on the mobile web client page showing that 2FA has been enabled successfully. */
+"twoFactorAuthenticationEnabled"="Autenticación de dos factores activada";
+/* A message on the dialog shown after 2FA was successfully enabled. */
+"twoFactorAuthenticationEnabledDescription"="La próxima vez que inicies sesión en su cuenta, tendrás que introducir un código de 6 dígitos proporcionado por tu aplicación de autenticación.";
+/* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
+"pleaseSaveYourRecoveryKey"="Guarda tu Clave de recuperación en un lugar seguro";
+/* An informational message on the Backup Recovery Key dialog. */
+"twoFactorAuthenticationEnabledWarning"="Si pierdes el acceso a tu cuenta después de activar la autenticación de dos factores y no has hecho una copia de seguridad de tu Clave de recuperación, MEGA no podrá ayudarte a recuperar el acceso.";
+/* A message on a dialog to say that 2FA has been successfully disabled. */
+"twoFactorAuthenticationDisabled"="Autenticación de dos factores desactivada";
+/* A message on the setup two-factor authentication page on the mobile web client. */
+"scanOrCopyTheSeed"="Escanea o copia el código en tu aplicación de autenticación. Asegúrate de guardar este código en un lugar seguro en caso de que pierdas tu dispositivo.";
+/* A button to help them restore their account if they have lost their 2FA device. */
+"lostYourAuthenticatorDevice"="¿Has perdido tu dispositivo de autenticación?";

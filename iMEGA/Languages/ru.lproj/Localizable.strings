@@ -298,8 +298,10 @@
 "newFolderMessage"="Имя для новой папки";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Создать";
-/* message when trying to create a folder that already exists */
-"folderAlreadyExists"="Папка уже существует";
+/* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
+"There is already a folder with the same name"="Папка с таким именем уже существует";
+/* A tooltip message which shows when a file name is duplicated during renaming. */
+"There is already a file with the same name"="Файл с таким именем уже существует";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Импорт из…";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -656,8 +658,6 @@
 "about"="О программе";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Язык";
-/* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
-"applicationLanguage"="Русский";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Отправить отзыв";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -701,7 +701,7 @@
 /*  */
 "masterKey_thirdParagraph"="Внешний злоумышленник не сможет получить доступ к вашему аккаунту при наличии только ключа. Сброс пароля требует и ключ, и доступ к вашей электронной почте.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="Ключ скопирован в буфер обмена";
+"recoveryKeyCopiedToClipboard"="Ключ восстановления скопирован в буфер обмена. Пожалуйста, храните его в надёжном месте.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Ключ восстановления импортирован";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -748,6 +748,8 @@
 "cancellationLinkHasExpired"="Срок действия ссылки удаления истёк.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Остался один шаг перед удалением учётной записи. Все данные в облаке будут безвозвратно утрачены. Введите пароль.";
+/* During account cancellation (deletion) */
+"accountCanceledSuccessfully"="Ваша учётная запись успешно удалена.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Закрыть учётную запись";
 /* Title for the action that allows to remove a file or folder */
@@ -1568,3 +1570,31 @@
 "archived"="Архивировано";
 /* Title of empty state view for archived chats. */
 "noArchivedChats"="Нет архивных чатов";
+/* A title for the Two-Factor Authentication section on the My Account - Security page. */
+"twoFactorAuthentication"="Двухфакторная аутентификация";
+/* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
+"beginSetup"="Начать настройку";
+/* A message on the Verify Login page telling the user to enter their 2FA code. */
+"pleaseEnterTheSixDigitCode"="Введите шестизначный код из приложения-аутентификатора.";
+/* Title of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthentication"="Зачем нужна двухфакторная аутентификация?";
+/* Description for the ‘Two-Factor Authentication’ in the security settings section. */
+"whatIsTwoFactorAuthentication"="Двухфакторная аутентификация — второй слой безопасности вашего аккаунта.";
+/* Description text of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthenticationDescription"="Двухфакторная аутентификация — второй слой безопасности вашего аккаунта. Это значит, что даже если кто-то знает ваш пароль, он не сможет получить к нему доступ без шестизначного кода, который есть только у вас.";
+/* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"youNeedATwoFactorAuthenticationApp"="Нужно приложение для двухфакторной аутентификации";
+/* A title on the mobile web client page showing that 2FA has been enabled successfully. */
+"twoFactorAuthenticationEnabled"="Двухфакторная аутентификация включена.";
+/* A message on the dialog shown after 2FA was successfully enabled. */
+"twoFactorAuthenticationEnabledDescription"="При следующем входе в аккаунт система запросит 6-значный код из приложения аутентификации.";
+/* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
+"pleaseSaveYourRecoveryKey"="Пожалуйста, сохраните ключ восстановления в безопасном месте";
+/* An informational message on the Backup Recovery Key dialog. */
+"twoFactorAuthenticationEnabledWarning"="Если вы сохраните ключ восстановления и потеряете доступ к аккаунту после включения 2FA, MEGA не сможет помочь вернуть его.";
+/* A message on a dialog to say that 2FA has been successfully disabled. */
+"twoFactorAuthenticationDisabled"="Двухфакторная аутентификация отключена";
+/* A message on the setup two-factor authentication page on the mobile web client. */
+"scanOrCopyTheSeed"="Сканируйте или скопируйте seed-ключ в приложение-аутентификатор. Сохраните seed-ключ в безопасном месте на случай потери телефона.";
+/* A button to help them restore their account if they have lost their 2FA device. */
+"lostYourAuthenticatorDevice"="Потеряли аутентификационное устройство?";
