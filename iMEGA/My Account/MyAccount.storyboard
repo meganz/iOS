@@ -384,6 +384,7 @@
                         <outlet property="profileView" destination="eYn-oF-AZu" id="wui-te-f6l"/>
                         <outlet property="qrCodeImageView" destination="7za-S6-P7g" id="zDD-j2-EzC"/>
                         <outlet property="tableView" destination="Yui-UF-WIL" id="dT7-Ok-gtJ"/>
+                        <outlet property="viewAndEditProfileButton" destination="Hcr-fM-O6t" id="EwZ-AC-WyZ"/>
                         <outlet property="viewAndEditProfileLabel" destination="fZw-YY-bXH" id="OMf-Ef-rGd"/>
                     </connections>
                 </viewController>
