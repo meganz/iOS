@@ -1,14 +1,17 @@
 #import "TransferTableViewCell.h"
 
+#import <Photos/Photos.h>
+
+#import "SVProgressHUD.h"
+
 #import "Helper.h"
 #import "MEGAPauseTransferRequestDelegate.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGASdkManager.h"
-#import "UIImageView+MNZCategory.h"
-#import <Photos/Photos.h>
 #import "MEGAStore.h"
-#import "SVProgressHUD.h"
+#import "NSString+MNZCategory.h"
 #import "QueuedTransferItem.h"
+#import "UIImageView+MNZCategory.h"
 
 @interface TransferTableViewCell ()
 
@@ -80,18 +83,18 @@
                     [self.iconImageView mnz_imageForNode:node];
                 }
             } else {
-                if (transfer.type == MEGATransferTypeDownload) {
-                    [self.iconImageView mnz_imageForNode:node];
-                } else {
-                    [self.iconImageView mnz_setImageForExtension:transfer.fileName.pathExtension];
-                }
+                [self.iconImageView mnz_imageForNode:node];
             }
             break;
         }
             
         case MEGATransferTypeUpload: {
-            NSString *transferAbsolutePath = [[[[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpg"] stringByAppendingString:@"_thumbnail"];
-            self.iconImageView.image = [UIImage imageWithContentsOfFile:transferAbsolutePath];
+            if (transfer.fileName.mnz_imagePathExtension || transfer.fileName.mnz_videoPathExtension) {
+                NSString *transferThumbnailAbsolutePath = [[[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] stringByDeletingPathExtension] stringByAppendingString:@"_thumbnail"];
+                self.iconImageView.image = [UIImage imageWithContentsOfFile:transferThumbnailAbsolutePath];
+            } else {
+                [self.iconImageView mnz_setImageForExtension:transfer.fileName.pathExtension];
+            }
             break;
         }
             
@@ -109,7 +112,8 @@
     self.transfer = nil;
     
     PHAssetResource *assetResource = [PHAssetResource assetResourcesForAsset:self.queuedTransfer.asset].firstObject;
-    self.nameLabel.text = assetResource.originalFilename;
+    NSString *name = [[NSString mnz_fileNameWithDate:self.queuedTransfer.asset.creationDate] stringByAppendingPathExtension:assetResource.originalFilename.mnz_lastExtensionInLowercase];
+    self.nameLabel.text = name;
     self.pauseButton.hidden = YES;
 
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];

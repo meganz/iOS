@@ -310,6 +310,7 @@
     
     if (direction == 1) {
         [[MEGAStore shareInstance] removeAllUploadTransfers];
+        self.uploadTransfersQueued = nil;
     }
 }
 
@@ -396,7 +397,6 @@
             case 0: { //All
                 [self cancelTransfersForDirection:0];
                 [self cancelTransfersForDirection:1];
-                self.uploadTransfersQueued = nil;
                 break;
             }
                 
@@ -407,7 +407,6 @@
                 
             case 2: { //Uploads
                 [self cancelTransfersForDirection:1];
-                self.uploadTransfersQueued = nil;
                 break;
             }
         }

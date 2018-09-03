@@ -7,9 +7,10 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
-#import "NSFileManager+MNZCategory.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGASdkManager.h"
+#import "NSFileManager+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 
 @interface MEGAImagePickerController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -191,15 +192,10 @@
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss";
-    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-    formatter.locale = locale;
-    
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     
     if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeImage]) {
-        NSString *imageName = [NSString stringWithFormat:@"%@.jpg", [formatter stringFromDate:[NSDate date]]];
+        NSString *imageName = [NSString stringWithFormat:@"%@.jpg", [NSString mnz_fileNameWithDate:[NSDate date]]];
         NSString *imagePath = (self.toUploadSomething || self.toShareThroughChat) ? [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:imageName] : [NSTemporaryDirectory() stringByAppendingPathComponent:imageName];
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
         NSData *imageData = UIImageJPEGRepresentation(image, 1);
@@ -220,7 +216,7 @@
         NSURL *videoUrl = (NSURL *)[info objectForKey:UIImagePickerControllerMediaURL];
         NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:videoUrl.path error:nil];
         NSDate *modificationDate = [attributesDictionary objectForKey:NSFileModificationDate];
-        NSString *videoName = [[formatter stringFromDate:modificationDate] stringByAppendingPathExtension:@"mov"];
+        NSString *videoName = [[NSString mnz_fileNameWithDate:modificationDate] stringByAppendingPathExtension:@"mov"];
         NSString *localFilePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:videoName];
         NSError *error = nil;
         self.filePath = [localFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];

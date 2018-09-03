@@ -2,9 +2,10 @@
 #import "MEGAProcessAsset.h"
 
 #import "ChatVideoUploadQuality.h"
-#import "NSFileManager+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "NSFileManager+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 
 #import "SDAVAssetExportSession.h"
 #import "UIApplication+MNZCategory.h"
@@ -510,11 +511,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         }
     } else {
         NSString *extension = [self extensionWithInfo:info asset:asset];
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.dateFormat = @"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss";
-        NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-        dateFormatter.locale = locale;
-        name = [[dateFormatter stringFromDate:asset.creationDate] stringByAppendingPathExtension:extension];
+        name = [[NSString mnz_fileNameWithDate:asset.creationDate] stringByAppendingPathExtension:extension];
     }
     
     NSString *filePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:name];

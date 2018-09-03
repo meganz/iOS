@@ -91,7 +91,7 @@
     
     MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:self.phasset parentNode:self.parentNode cameraUploads:self.isCameraUploads filePath:^(NSString *filePath) {
         NSString *name = filePath.lastPathComponent;
-        NSString *newName = [Helper sequentialNameForNodeNamed:name parentNode:self.parentNode];
+        NSString *newName = [name mnz_sequentialFileNameInParentNode:self.parentNode];
         
         NSString *appData = [NSString new];
         if (self.isCameraUploads) {
