@@ -34,6 +34,7 @@
 @property (nonatomic) NSUInteger unsupportedAssets;
 @property (nonatomic) NSUInteger alreadyInDestinationAssets;
 @property (nonatomic) float progress;
+@property (nonatomic) NSDate *lastProgressChange;
 
 @property (nonatomic) UINavigationController *loginRequiredNC;
 @property (nonatomic) LaunchViewController *launchVC;
@@ -134,6 +135,7 @@
     }
     
     self.openedChatIds = [NSMutableSet<NSNumber *> new];
+    self.lastProgressChange = [NSDate new];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -978,8 +980,12 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     self.progress += (transfer.deltaSize.floatValue / transfer.totalBytes.floatValue) / self.totalAssets;
     if (self.progress >= 0.01 && self.progress < 1.0) {
-        NSString *progressCompleted = [NSString stringWithFormat:@"%.f %%", floor(self.progress * 100)];
-        [SVProgressHUD showProgress:self.progress status:progressCompleted];
+        NSDate *now = [NSDate new];
+        if (!UIAccessibilityIsVoiceOverRunning() || [now timeIntervalSinceDate:self.lastProgressChange] > 2) {
+            self.lastProgressChange = now;
+            NSString *progressCompleted = [NSString stringWithFormat:@"%.f %%", floor(self.progress * 100)];
+            [SVProgressHUD showProgress:self.progress status:progressCompleted];
+        }
     }
 }
 
