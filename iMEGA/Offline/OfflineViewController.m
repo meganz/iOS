@@ -847,7 +847,9 @@ static NSString *kisDirectory = @"kisDirectory";
     }
     activityViewController.popoverPresentationController.barButtonItem = self.activityBarButtonItem;
     [activityViewController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed,  NSArray *returnedItems, NSError *activityError) {
-        [self setTableViewEditing:NO animated:YES];
+        if (completed) {
+            [self setTableViewEditing:NO animated:YES];
+        }
     }];
     
     [self presentViewController:activityViewController animated:YES completion:nil];
