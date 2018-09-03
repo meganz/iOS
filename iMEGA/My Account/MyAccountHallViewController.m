@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIView *profileView;
 
 @property (weak, nonatomic) IBOutlet UILabel *viewAndEditProfileLabel;
+@property (weak, nonatomic) IBOutlet UIButton *viewAndEditProfileButton;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -51,7 +52,8 @@
     self.buyPROBarButtonItem.title = AMLocalizedString(@"upgrade", @"Caption of a button to upgrade the account to Pro status");
     
     self.viewAndEditProfileLabel.text = AMLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
-    
+    self.viewAndEditProfileButton.accessibilityLabel = AMLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
+
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewAndEditProfileTouchUpInside:)];
     self.profileView.gestureRecognizers = @[tapGestureRecognizer];
     
@@ -65,7 +67,7 @@
     
     MEGAContactLinkCreateRequestDelegate *delegate = [[MEGAContactLinkCreateRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
         NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
-        self.qrCodeImageView.image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:self.qrCodeImageView.frame.size color:[UIColor colorWithRed:0.94f green:0.22f blue:0.23f alpha:1.0f]];
+        self.qrCodeImageView.image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:self.qrCodeImageView.frame.size color:UIColor.mnz_redMain];
         self.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
         self.avatarImageView.layer.borderWidth = 6.0f;
         self.avatarImageView.layer.cornerRadius = 40.0f;

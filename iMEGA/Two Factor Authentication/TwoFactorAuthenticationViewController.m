@@ -117,7 +117,7 @@
 }
 
 - (void)showInvalidCode {
-    [self tintCodeWithColor:UIColor.mnz_redD90007];
+    [self tintCodeWithColor:UIColor.mnz_redMain];
     self.invalidCodeImageView.hidden = self.invalidCodeLabel.hidden = NO;
 }
 

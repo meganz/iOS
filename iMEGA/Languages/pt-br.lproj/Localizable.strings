@@ -37,7 +37,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="Não é possível baixar uma pasta vazia";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="Sua conta já foi ativada. Por favor, faça o login.";
+"accountAlreadyConfirmed"="A sua conta já foi ativada. Por favor, faça o login.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link inválido";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -109,17 +109,17 @@
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Senha";
 /*  */
-"pleaseStrengthenYourPassword"="Por favor deixe sua senha mais forte";
+"pleaseStrengthenYourPassword"="Escolha uma senha mais forte";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
-"veryWeak"="Muito fraco";
+"veryWeak"="Muito fraca";
 /*  */
 "weak"="Fraca";
 /*  */
 "passwordVeryWeakOrWeak"="A sua senha é muito fácil de adivinhar. Tente deixá-la mais longa, incluir maiúsculas e minúsculas e adicionar caracteres especiais. Não utilize nomes ou palavras do dicionário.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"medium"="Médio";
+"medium"="Média";
 /*  */
-"passwordMedium"="A sua senha é suficientemente boa para prosseguir, mas recomendamos alterá-la para algo mais forte no futuro.";
+"passwordMedium"="A sua senha é suficientemente boa para prosseguir, mas recomendamos uma senha mais forte no futuro.";
 /*  */
 "good"="Boa";
 /*  */
@@ -135,11 +135,11 @@
 /*  */
 "invalidFirstNameAndLastName"="Nome e/ou sobrenome inválido.";
 /* Error text shown when you have not written the same password */
-"passwordsDoNotMatch"="As senhas não são iguais";
+"passwordsDoNotMatch"="As senhas não coincidem";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Você precisa aceitar os termos de serviço para criar uma conta no MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Este endereço de e-mail já está cadastrado com uma conta MEGA.";
+"emailAlreadyRegistered"="Este endereço de email já está cadastrado no MEGA.";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Aguardando email de confirmação.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -219,7 +219,7 @@
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="Convidar contato";
 /* Text shown when the user sends a contact invitation */
-"inviteSent"="Convite enviado";
+"inviteSent"="Solicitação de contato enviada";
 /* Button title to allow the user postpone an action */
 "later"="Depois";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
@@ -298,8 +298,10 @@
 "newFolderMessage"="Nome da nova pasta";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Criar";
-/* message when trying to create a folder that already exists */
-"folderAlreadyExists"="Pasta já existe";
+/* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
+"There is already a folder with the same name"="Já existe uma pasta com o mesmo nome";
+/* A tooltip message which shows when a file name is duplicated during renaming. */
+"There is already a file with the same name"="Já existe um arquivo com o mesmo nome";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importar de...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -383,7 +385,7 @@
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Aberto em...";
 /* */
-"uploadToMega"="Enviar ao MEGA";
+"uploadToMega"="Fazer upload ao MEGA";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Toque no arquivo para renomeá-lo";
 /* */
@@ -399,7 +401,7 @@
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Remover link";
 /* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="remover links";
+"removeLinks"="Remover links";
 /* Message shown when the link to a file or folder has been removed */
 "linkRemoved"="Link removido";
 /* Message shown when the links to files and/or folders have been removed */
@@ -656,8 +658,6 @@
 "about"="Sobre";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Idioma";
-/* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
-"applicationLanguage"="Inglês - Idioma do aplicativo";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Enviar comentários";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -701,7 +701,7 @@
 /*  */
 "masterKey_thirdParagraph"="Um atacante externo não pode obter acesso à sua conta apenas com a sua chave. A recuperação de senha necessita tanto a chave como o acesso ao seu email.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="Chave de recuperação copiada para a área de transferência";
+"recoveryKeyCopiedToClipboard"="A chave de recuperação foi copiada para a área de transferência. Guarde a sua chave em um lugar seguro.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="A chave de recuperação foi exportada";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -743,11 +743,13 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Você perderá todos os dados associados a esta conta. Tem certeza de que deseja continuar?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="Se você não pode acessar o seu e-mail, entre em contato support@mega.nz.";
+"ifYouCantAccessYourEmailAccount"="Se você não puder acessar o seu email, entre em contato com support@mega.nz";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Link de cancelamento expirado.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Este é o último passo para cancelar a sua conta. Você vai perder permanentemente todos os dados armazenados na nuvem. Por favor digite sua senha abaixo.";
+/* During account cancellation (deletion) */
+"accountCanceledSuccessfully"="A sua conta foi cancelada.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Encerrar a conta";
 /* Title for the action that allows to remove a file or folder */
@@ -801,13 +803,13 @@
 /* Headline of the password reset recovery procedure */
 "passwordReset"="Resetar senha";
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
-"pleaseEnterYourRecoveryKey"="Por favor, insira sua chave de recuperação";
+"pleaseEnterYourRecoveryKey"="Digite a sua chave de recuperação";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey"="Chave de recuperação";
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="Chave de recuperação inválida";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="Sua chave de recuperação vai ser usado para redefinir sua senha. Por favor, insira sua nova senha.";
+"youRecoveryKeyIsGoingTo"="A sua chave de recuperação será usada para redefinir a sua senha. Por favor, digite a sua nova senha.";
 /*  */
 "yourPasswordHasBeenReset"="A sua senha foi resetada corretamente. Por favor, faça login na sua conta agora.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
@@ -822,17 +824,17 @@
 /*  */
 "yourAccounHasBeenParked"="A sua conta antiga foi estacionada. Agora você pode fazer login na sua nova conta.";
 /* Hint text to suggest that the user have to write the new email on it */
-"newEmail"="Novo e-mail";
+"newEmail"="Novo email";
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="Confirmar email";
 /* Hint text where the user have to re-write the new email to confirm it */
-"confirmNewEmail"="Confirmar novo e-mail";
+"confirmNewEmail"="Confirmar novo email";
 /* The title of the alert dialog to change the email associated to an account. */
 "changeEmail"="Alterar email";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="O e-mail novo e o e-mail antigo não podem ser o mesmo";
+"oldAndNewEmailMatch"="O email novo e o email antigo não podem iguais";
 /* Error message shown when you have not written the same email when confirming a new one */
-"emailsDoNotMatch"="Os e-mails não coincidem";
+"emailsDoNotMatch"="Os emails não coincidem";
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Você já solicitou um link de confirmação para esse endereço de email.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
@@ -842,7 +844,7 @@
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="Parabéns! O novo endereço de email para esta conta MEGA é: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
-"closeOtherSessions"="Fechar as outras sessões";
+"closeOtherSessions"="Fechar outras sessões";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Sessões finalizadas";
 /* Section title where you can change the app's passcode */
@@ -908,11 +910,11 @@
 /*  */
 "howItWorks"="Como funciona";
 /*  */
-"howItWorksMain"="O seu amigo precisa criar uma conta gratuita no MEGA e [S]instalar pelo menos um app MEGA[/S] (pode ser o cliente de sincronização ou um dos nossos aplicativos móveis)";
+"howItWorksMain"="O seu amigo precisa criar uma conta gratuita no MEGA e [S]instalar pelo menos um aplicativo do MEGA[/S] (pode ser o cliente de sincronização ou um dos nossos aplicativos móveis)";
 /*  */
-"howItWorksSecondary"="Você pode notificar o seu amigo através de qualquer método. Você ganhará a cota se você inseriu o email do seu amigo aqui antes dele se registrar com esse mesmo email.";
+"howItWorksSecondary"="Você pode notificar o seu amigo através de qualquer método. Você receberá a cota se você digitou o email do seu amigo aqui antes dele se registrar com esse email.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
-"howItWorksTertiary"="Você não receberá crédito por ter convidado alguém que já tiver usado o MEGA anteriormente e você não será notificado sobre tal rejeição.";
+"howItWorksTertiary"="Você não receberá bônus por ter convidado alguém que já tiver usado o MEGA anteriormente, e você não será notificado sobre isso.";
 /* Header of block with achievements bonuses. */
 "unlockedBonuses"="Bônus obtidos:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
@@ -952,9 +954,9 @@
 /* Button to remove avatar. Try to keep the text short (as in English) */
 "removeAvatar"="Remover avatar";
 /* button that allows the user the change his avatar */
-"changeAvatar"="Alterar o avatar";
+"changeAvatar"="Alterar avatar";
 /* Button title that allows the user change his name */
-"changeName"="Alterar o nome";
+"changeName"="Alterar nome";
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="Você mudou o seu perfil corretamente.";
 /* Hint text for the first name (Placeholder) */
@@ -982,9 +984,9 @@
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
 "of %@"="de %@";
 /* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="usado %@";
+"used of %@"="usados de %@";
 /* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="disponível de %@";
+"available of %@"="disponíveis de %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Upgrade";
 /*  */
@@ -1070,7 +1072,7 @@
 /* Chat section header */
 "chat"="Chat";
 /* Empty Conversations section */
-"noConversations"="Não há conversas";
+"noConversations"="Não há chats";
 /* Empty Conversations description */
 "noConversationsDescription"="Converse com segurança com os seus contatos usando criptografia de ponta a ponta";
 /* Title show when the chat is disabled */
@@ -1080,7 +1082,7 @@
 /* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
 "disable"="Desativar";
 /* Conversations section */
-"conversations"="Conversas";
+"conversations"="Chats";
 /* A button on a dialog which invites a contact to join MEGA. */
 "invite"="Convidar";
 /* A log message in a chat to indicate that the message has been deleted by the user. */
@@ -1094,7 +1096,7 @@
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
 "joinedTheGroupChatByInvitationFrom"="[A] juntou-se ao grupo de chat por convite de [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
-"clearedTheChatHistory"="[A] apagou o histórico do chat.";
+"clearedTheChatHistory"="[A] deletou o histórico do chat.";
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
 "wasChangedToBy"="[A] foi alterado para [B] por [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
@@ -1146,7 +1148,7 @@
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Deletar o histórico do chat";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
-"clearTheFullMessageHistory"="Você tem certeza de que quer deletar o histórico de mensagens desta conversa?";
+"clearTheFullMessageHistory"="Você tem certeza de que quer deletar o histórico de mensagens deste chat?";
 /* 'Next' button in a dialog */
 "continue"="Continuar";
 /* Button title that allows the user to close a chat. */
@@ -1170,7 +1172,7 @@
 /* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
 "groupInfo"="Informações do grupo";
 /* Label title for a group chat */
-"groupChat"="Conversa em grupo";
+"groupChat"="Chat de grupo";
 /* The title of a menu button which allows users to rename a group chat. */
 "renameGroup"="Renomear grupo";
 /* Title of the action that allows you to change the avatar of a group chat. */
@@ -1188,9 +1190,9 @@
 /* A button label. The button allows the user to close the conversation. */
 "close"="Fechar";
 /* Alert text that explains what means confirming the action 'Leave' */
-"youWillNoLongerHaveAccessToThisConversation"="Você não terá mais acesso a essa conversa";
+"youWillNoLongerHaveAccessToThisConversation"="Você não terá mais acesso a esse chat";
 /* A button label. The button allows the user to leave the conversation. */
-"leaveChat"="Sair do Chat";
+"leaveChat"="Sair do chat";
 /* Button title that allows the user to leave a group chat. */
 "leaveGroup"="Deixar o grupo";
 /* Label to describe the section where you can see the participants of a group chat */
@@ -1208,7 +1210,7 @@
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="O MEGA protege o seu chat com criptografia de ponta a ponta (controlada pelo usuário), proporcionando garantias de segurança essenciais:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"confidentialityExplanation"="[S]Confidencialidade.[/S] Apenas o autor e os destinatários são capazes de decifrar e ler o conteúdo.";
+"confidentialityExplanation"="[S]Confidencialidade.[/S] Apenas o autor e os destinatários são capazes de decodificar e ler o conteúdo.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "authenticityExplanation"="[S]Autenticidade.[/S] O sistema assegura que os dados recebidos são do remetente apresentado, e o seu conteúdo não foi manipulado no caminho.";
 /* Alert message shown when a chat does not exist */
@@ -1222,7 +1224,7 @@
 /* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
 "writeAMessage"="Escrever uma mensagem para %s...";
 /* Information if there are no history messages in current chat conversation */
-"noConversationHistory"="Esta conversa não tem histórico";
+"noConversationHistory"="Este chat não tem histórico";
 /* Button which allows to retry send message in chat conversation. */
 "retry"="Tentar novamente";
 /* Button which allows to delete message in chat conversation. */
@@ -1333,13 +1335,13 @@
 /* Label to show that an error related with an Incomplete SDK operation. */
 "Incomplete"="Incompleto";
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
-"Invalid key/Decryption error"="Chave inválida/Erro de descriptografia";
+"Invalid key/Decryption error"="Chave inválida/Erro de decodificação";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
-"Bad session ID"="ID de sessão inválida";
+"Bad session ID"="ID de sessão inválido";
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
 "Blocked"="Bloqueado";
 /* Label to show that an error related with an over quota occurs during a SDK operation. */
-"Over quota"="Sobrecarga";
+"Over quota"="Limite excedido";
 /* Label to show that an error related with a temporary problem occurs during a SDK operation. */
 "Temporarily not available"="Temporariamente não disponível";
 /* Label to show that an error related with too many connections occurs during a SDK operation. */
@@ -1373,7 +1375,7 @@
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Para mais informações, consulte o nosso site: https://mega.nz/\nTermos de serviço: https://mega.nz/terms\nPolítica de privacidade: https://mega.nz/privacy";
 /* Label shown when you receive an incoming call, before start the call. */
-"calling..."="Chamada recebida...";
+"calling..."="Chamando...";
 /* Notification text body shown when you have missed one audio call */
 "missedAudioCall"="Uma chamada de áudio perdida";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
@@ -1501,7 +1503,7 @@
 /* state previous to import a file */
 "loading"="Carregando...";
 /*   */
-"next"="Próximo";
+"next"="Seguinte";
 /* Button title to allow the user ignore something */
 "ignore"="Ignorar";
 /* Button title to allow the user open the default browser */
@@ -1557,9 +1559,9 @@
 /* Title of archived chats button */
 "archivedChats"="Chats arquivados";
 /* Confirmation message on archive chat dialog for user to confirm. */
-"archiveChatMessage"="Você tem certeza de que quer arquivar esta conversa?";
+"archiveChatMessage"="Você tem certeza de que quer arquivar este chat?";
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
-"unarchiveChatMessage"="Você tem certeza de que quer deixar de arquivar esta conversa?";
+"unarchiveChatMessage"="Você tem certeza de que quer deixar de arquivar este chat?";
 /* The title of the dialog to unarchive an archived chat. */
 "unarchiveChat"="Deixar de arquivar chat";
 /* Title of button to archive chats. */
@@ -1568,3 +1570,31 @@
 "archived"="Arquivado";
 /* Title of empty state view for archived chats. */
 "noArchivedChats"="Não há chats arquivados";
+/* A title for the Two-Factor Authentication section on the My Account - Security page. */
+"twoFactorAuthentication"="Autenticação de dois fatores";
+/* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
+"beginSetup"="Iniciar a configuração";
+/* A message on the Verify Login page telling the user to enter their 2FA code. */
+"pleaseEnterTheSixDigitCode"="Por favor, digite o código de 6 dígitos gerado pelo seu aplicativo de autenticação.";
+/* Title of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthentication"="Por que você precisa da autenticação de dois fatores?";
+/* Description for the ‘Two-Factor Authentication’ in the security settings section. */
+"whatIsTwoFactorAuthentication"="A autenticação de dois fatores é uma segunda camada de segurança para a sua conta.";
+/* Description text of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthenticationDescription"="A autenticação de dois fatores é uma segunda camada de segurança para a sua conta. Isso significa que, mesmo que alguém saiba a sua senha, não poderá acessar a sua conta sem ter acesso ao código de seis dígitos que só você sabe.";
+/* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"youNeedATwoFactorAuthenticationApp"="Você precisa de um aplicativo de autenticação de dois fatores neste dispositivo";
+/* A title on the mobile web client page showing that 2FA has been enabled successfully. */
+"twoFactorAuthenticationEnabled"="Autenticação de dois fatores ativa";
+/* A message on the dialog shown after 2FA was successfully enabled. */
+"twoFactorAuthenticationEnabledDescription"="Na próxima vez que você fizer login na sua conta, você deverá inserir um código de seis dígitos proporcionado pelo seu aplicativo de autenticação.";
+/* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
+"pleaseSaveYourRecoveryKey"="Por favor, salve a sua chave de recuperação em um lugar seguro";
+/* An informational message on the Backup Recovery Key dialog. */
+"twoFactorAuthenticationEnabledWarning"="Se você perder o acesso à sua conta após ativar a autenticação de dois fatores e não tiver feito o backup da sua chave de recuperação, o MEGA não poderá ajudá-lo a recuperar o acesso.";
+/* A message on a dialog to say that 2FA has been successfully disabled. */
+"twoFactorAuthenticationDisabled"="Autenticação de dois fatores desativada";
+/* A message on the setup two-factor authentication page on the mobile web client. */
+"scanOrCopyTheSeed"="Escaneie ou copie o código para o seu aplicativo de autenticação. Certifique-se de salvar este código em um lugar seguro, caso você perca o seu dispositivo.";
+/* A button to help them restore their account if they have lost their 2FA device. */
+"lostYourAuthenticatorDevice"="Você perdeu o seu dispositivo de autenticação?";

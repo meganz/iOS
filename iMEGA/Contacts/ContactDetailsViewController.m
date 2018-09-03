@@ -237,7 +237,7 @@
                     cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
                     cell.nameLabel.text = AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
                     cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
-                    cell.nameLabel.textColor = [UIColor mnz_redF0373A];
+                    cell.nameLabel.textColor = UIColor.mnz_redMain;
                     cell.lineView.hidden = YES;
                     break;
             }
@@ -251,14 +251,14 @@
                 case 1: //Archive chat
                     cell.avatarImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
                     cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
-                    cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redF0373A : UIColor.mnz_black333333;
+                    cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redMain : UIColor.mnz_black333333;
                     cell.lineView.hidden = [self.tableView numberOfRowsInSection:0] == 2;
                     break;
                     
                 case 2: //Remove Contact
                     cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
                     cell.nameLabel.text = AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
-                    cell.nameLabel.textColor = [UIColor mnz_redF0373A];
+                    cell.nameLabel.textColor = UIColor.mnz_redMain;
                     cell.lineView.hidden = YES;
                     break;
             }

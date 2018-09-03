@@ -39,19 +39,19 @@
             
         case MEGAAccountTypeProI:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROI"]];
-            [_headerView setBackgroundColor:[UIColor mnz_redE13339]];
+            [_headerView setBackgroundColor:UIColor.mnz_redProI];
             [self setTitle:@"PRO I"];
             break;
             
         case MEGAAccountTypeProII:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROII"]];
-            [_headerView setBackgroundColor:[UIColor mnz_redDC191F]];
+            [_headerView setBackgroundColor:UIColor.mnz_redProII];
             [self setTitle:@"PRO II"];
             break;
             
         case MEGAAccountTypeProIII:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROIII"]];
-            [_headerView setBackgroundColor:[UIColor mnz_redD90007]];
+            [_headerView setBackgroundColor:UIColor.mnz_redProIII];
             [self setTitle:@"PRO III"];
             break;
             

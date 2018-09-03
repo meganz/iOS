@@ -147,7 +147,7 @@
 - (void)showPasswordErrorView:(PasswordView *)passwordView constraint:(NSLayoutConstraint *)constraint message:(NSString *)message {
     constraint.constant = 83;
     passwordView.wrongPasswordView.hidden = NO;
-    passwordView.leftImageView.tintColor = UIColor.mnz_redD90007;
+    passwordView.leftImageView.tintColor = UIColor.mnz_redMain;
     passwordView.wrongPasswordLabel.text = message;
 }
 
@@ -363,7 +363,7 @@
         shoulBeCreateAccountButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
     }
     
-    shoulBeCreateAccountButtonGray ? [self.changePasswordButton setBackgroundColor:UIColor.mnz_grayCCCCCC] : [self.changePasswordButton setBackgroundColor:UIColor.mnz_redFF4C52];
+    shoulBeCreateAccountButtonGray ? [self.changePasswordButton setBackgroundColor:UIColor.mnz_grayCCCCCC] : [self.changePasswordButton setBackgroundColor:UIColor.mnz_redMain];
     
     if (self.changeType == ChangeTypePassword || self.changeType == ChangeTypeResetPassword || self.changeType == ChangeTypeParkAccount) {
         if (textField.tag == 4) {

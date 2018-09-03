@@ -87,7 +87,7 @@
             self.linkCopyButton.hidden = self.moreButton.hidden = NO;
         }
         
-        self.qrImageView.image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:self.qrImageView.frame.size color:[UIColor colorWithRed:0.94f green:0.22f blue:0.23f alpha:1.0f]];
+        self.qrImageView.image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:self.qrImageView.frame.size color:UIColor.mnz_redMain];
         [self setUserAvatar];
     }];
 }
@@ -159,7 +159,7 @@
             self.qrImageView.hidden = self.avatarBackgroundView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = NO;
             self.linkCopyButton.hidden = self.moreButton.hidden = (self.contactLinkLabel.text.length == 0);
             self.cameraView.hidden = self.cameraMaskView.hidden = self.cameraMaskBorderView.hidden = self.hintLabel.hidden = self.errorLabel.hidden = YES;
-            self.backButton.tintColor = self.segmentedControl.tintColor = [UIColor mnz_redF0373A];
+            self.backButton.tintColor = self.segmentedControl.tintColor = UIColor.mnz_redMain;
             break;
             
         case 1:
