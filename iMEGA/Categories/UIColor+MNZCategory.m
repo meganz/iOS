@@ -15,10 +15,6 @@
     return [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0];
 }
 
-+ (UIColor *)mnz_black333333_02 {
-    return [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:0.2];
-}
-
 + (UIColor *)mnz_black000000_01 {
     return [UIColor colorWithRed:0.0  green:0.0  blue:0.0 alpha:0.100];
 }
@@ -43,10 +39,6 @@
     return [UIColor colorWithRed:119.0/255.0 green:119.0/255.0 blue:119.0/255.0 alpha:1.0];
 }
 
-+ (UIColor *)mnz_gray8A8A8A {
-    return [UIColor colorWithRed:138.0/255.0 green:138.0/255.0 blue:138.0/255.0 alpha:1.0];
-}
-
 + (UIColor *)mnz_gray999999 {
     return [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0];
 }
@@ -69,14 +61,6 @@
 
 + (UIColor *)mnz_grayFCFCFC {
     return [UIColor colorWithRed:252.0/255.0 green:252.0/255.0 blue:252.0/255.0 alpha:1.0];
-}
-
-+ (UIColor *)mnz_grayF1F1F2 {
-    return [UIColor colorWithRed:241.0/255.0 green:241.0/255.0 blue:242.0/255.0 alpha:1.0];
-}
-
-+ (UIColor *)mnz_grayF5F5F5 {
-    return [UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0];
 }
 
 + (UIColor *)mnz_grayF7F7F7 {
@@ -109,6 +93,30 @@
 
 #pragma mark - Red
 
++ (UIColor *)mnz_redMain {
+    return [UIColor mnz_redF30C14];
+}
+
++ (UIColor *)mnz_redProI {
+    return [UIColor mnz_redE13339];
+}
+
++ (UIColor *)mnz_redProII {
+    return [UIColor mnz_redDC191F];
+}
+
++ (UIColor *)mnz_redProIII {
+    return [UIColor mnz_redD90007];
+}
+
++ (UIColor *)mnz_redF30C14 {
+    return [UIColor colorWithRed:243.0f / 255.0f green:12.0f / 255.0f blue:20.0f / 255.0f alpha:1.0f];
+}
+
++ (UIColor *)mnz_redD90007 {
+    return [UIColor colorWithRed:217.0/255.0 green:0.0 blue:7.0/255.0 alpha:1.0];
+}
+
 + (UIColor *)mnz_redE13339 {
     return [UIColor colorWithRed:225.0/255.0 green:51.0/255.0 blue:57.0/255.0 alpha:1.0];
 }
@@ -117,37 +125,13 @@
     return [UIColor colorWithRed:220.0/255.0 green:25.0/255.0 blue:31.0/255.0 alpha:1.0];
 }
 
-+ (UIColor *)mnz_redF0373A {
-    return [UIColor colorWithRed:240.0/255.0 green:55.0/255.0 blue:58.0/255.0 alpha:1.0];
-}
-
-+ (UIColor *)mnz_redFF4C52 {
-    return [UIColor colorWithRed:1.0 green:76.0/255.0 blue:82.0/255.0 alpha:1.0];
-}
-
-+ (UIColor *)mnz_redFF4D52 {
-    return [UIColor colorWithRed:1.0 green:77.0/255.0 blue:82.0/255.0 alpha:1.0];
-}
-
-+ (UIColor *)mnz_redD90007 {
-    return [UIColor colorWithRed:217.0/255.0 green:0.0 blue:7.0/255.0 alpha:1.0];
-}
-
-+ (UIColor *)mnz_redFF333A {
-    return [UIColor colorWithRed:255.0f / 255.0f green:51.0f / 255.0f blue:58.0f / 255.0f alpha:1.0f];
-}
-
-#pragma mark - Pink
-
-+ (UIColor *)mnz_pinkFF1A53 {
-    return [UIColor colorWithRed:1.0 green:26.0/255.0 blue:83.0/255.0 alpha:1.0];
-}
-
 #pragma mark - White
 
 + (UIColor *)mnz_whiteFFFFFF_02 {
     return [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:0.2];
 }
+
+#pragma mark - Utils
 
 + (UIColor *)colorFromHexString:(NSString *)hexString {
     unsigned rgbValue = 0;

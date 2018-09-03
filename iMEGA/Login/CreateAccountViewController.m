@@ -108,7 +108,7 @@
 - (void)showPasswordErrorView:(PasswordView *)passwordView constraint:(NSLayoutConstraint *)constraint message:(NSString *)message {
     constraint.constant = 83;
     passwordView.wrongPasswordView.hidden = NO;
-    passwordView.leftImageView.tintColor = UIColor.mnz_redD90007;
+    passwordView.leftImageView.tintColor = UIColor.mnz_redMain;
     passwordView.wrongPasswordLabel.text = message;
 }
 
@@ -129,7 +129,7 @@
 - (BOOL)validateForm {
     if (![self validateName:self.nameTextField.text] || ![self validateName:self.lastNameTextField.text]) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"invalidFirstNameAndLastName", @"")];
-        self.nameIconImageView.tintColor = UIColor.mnz_redD90007;
+        self.nameIconImageView.tintColor = UIColor.mnz_redMain;
         if (![self validateName:self.nameTextField.text]) {
             [self.nameTextField becomeFirstResponder];
         } else {
@@ -297,7 +297,7 @@
     } else {
         shoulBeCreateAccountButtonGray = [self isEmptyAnyTextFieldForTag:self.retypePasswordView.passwordTextField.tag];
     }
-    self.createAccountButton.backgroundColor = shoulBeCreateAccountButtonGray ? UIColor.mnz_grayEEEEEE : UIColor.mnz_redFF4D52;
+    self.createAccountButton.backgroundColor = shoulBeCreateAccountButtonGray ? UIColor.mnz_grayEEEEEE : UIColor.mnz_redMain;
     
     [self hideKeyboard];
 }
@@ -319,7 +319,7 @@
                         [self.navigationController popViewControllerAnimated:YES];
                     }];
                 } else {
-                    self.emailIconImageView.tintColor = UIColor.mnz_redD90007;
+                    self.emailIconImageView.tintColor = UIColor.mnz_redMain;
                     [self.emailTextField becomeFirstResponder];
                     self.createAccountButton.enabled = YES;
                 }
@@ -375,7 +375,7 @@
         shoulBeCreateAccountButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
     }
     
-    self.createAccountButton.backgroundColor = shoulBeCreateAccountButtonGray ? UIColor.mnz_grayEEEEEE : UIColor.mnz_redFF4D52;
+    self.createAccountButton.backgroundColor = shoulBeCreateAccountButtonGray ? UIColor.mnz_grayEEEEEE : UIColor.mnz_redMain;
     
     if (textField.tag == 0 || textField.tag == 1) {
         self.nameIconImageView.tintColor = UIColor.mnz_gray777777;

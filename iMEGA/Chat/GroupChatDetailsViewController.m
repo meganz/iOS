@@ -262,7 +262,7 @@
             case MEGAChatRoomPrivilegeRm:
                 cell.leftImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
                 cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
-                cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redF0373A : UIColor.mnz_black333333;
+                cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redMain : UIColor.mnz_black333333;
                 cell.lineView.hidden = YES;
                 break;
                 
@@ -273,13 +273,13 @@
                     case 0: {
                         cell.leftImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
                         cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
-                        cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redF0373A : UIColor.mnz_black333333;
+                        cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redMain : UIColor.mnz_black333333;
                         break;
                     }
                     case 1: {
                         cell.leftImageView.image = [UIImage imageNamed:@"leaveGroup"];
                         cell.nameLabel.text = AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
-                        cell.nameLabel.textColor = UIColor.mnz_redF0373A;
+                        cell.nameLabel.textColor = UIColor.mnz_redMain;
                         cell.lineView.hidden = YES;
                         break;
                     }
@@ -303,13 +303,13 @@
                     case 2:
                         cell.leftImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
                         cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
-                        cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redF0373A : UIColor.mnz_black333333;
+                        cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redMain : UIColor.mnz_black333333;
                         break;
                         
                     case 3:
                         cell.leftImageView.image = [UIImage imageNamed:@"leaveGroup"];
                         cell.nameLabel.text = AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
-                        cell.nameLabel.textColor = UIColor.mnz_redF0373A;
+                        cell.nameLabel.textColor = UIColor.mnz_redMain;
                         cell.lineView.hidden = YES;
                         break;
                 }
@@ -529,7 +529,7 @@
 
             UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
             UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil];
-            [cancelAlertAction mnz_setTitleTextColor:[UIColor mnz_redF0373A]];
+            [cancelAlertAction mnz_setTitleTextColor:UIColor.mnz_redMain];
             [permissionsAlertController addAction:cancelAlertAction];
             
             if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {

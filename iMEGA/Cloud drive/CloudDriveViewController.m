@@ -1110,7 +1110,7 @@
         UITextField *textField = newFolderAlertController.textFields.firstObject;
         UIAlertAction *rightButtonAction = newFolderAlertController.actions.lastObject;
         BOOL containsInvalidChars = [sender.text rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"|*/:<>?\"\\"]].length;
-        sender.textColor = containsInvalidChars ? UIColor.mnz_redD90007 : UIColor.darkTextColor;
+        sender.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
         rightButtonAction.enabled = (textField.text.length > 0 && !containsInvalidChars);
     }
 }
@@ -1726,8 +1726,8 @@
             MEGALogError(@"Move item at path failed with error: %@", error);
         }
         
-        NSString *crcLocal = [[MEGASdkManager sharedMEGASdk] CRCForFilePath:localFilePath];
-        MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeByCRC:crcLocal parent:self.parentNode];
+        NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:localFilePath];
+        MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:self.parentNode];
         
         // If file doesn't exist in MEGA then upload it
         if (node == nil) {

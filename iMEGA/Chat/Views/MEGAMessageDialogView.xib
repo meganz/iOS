@@ -100,7 +100,7 @@
                             </constraints>
                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                             <state key="normal" title="Never">
-                                <color key="titleColor" red="0.85098039215686272" green="0.0" blue="0.027450980392156862" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="titleColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <connections>
                                 <action selector="didTapButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="h0v-cZ-DGz"/>
