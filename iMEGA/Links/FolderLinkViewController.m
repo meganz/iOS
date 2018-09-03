@@ -324,6 +324,7 @@
                     FolderLinkViewController *folderLinkVC = [storyboard instantiateViewControllerWithIdentifier:@"FolderLinkViewControllerID"];
                     [folderLinkVC setParentNode:node];
                     [folderLinkVC setIsFolderRootNode:NO];
+                    [folderLinkVC setFolderLinkString:self.folderLinkString];
                     [self.navigationController pushViewController:folderLinkVC animated:NO];
 
                 } else {
@@ -655,6 +656,7 @@
             FolderLinkViewController *folderLinkVC = [storyboard instantiateViewControllerWithIdentifier:@"FolderLinkViewControllerID"];
             [folderLinkVC setParentNode:node];
             [folderLinkVC setIsFolderRootNode:NO];
+            [folderLinkVC setFolderLinkString:self.folderLinkString];
             [self.navigationController pushViewController:folderLinkVC animated:YES];
             break;
         }
