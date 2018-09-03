@@ -4,6 +4,8 @@
 #import <ContactsUI/ContactsUI.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 
+#import "NSString+MNZCategory.h"
+
 @implementation ShareAttachment
 
 static NSMutableArray<ShareAttachment *> *_attachmentsArray;
@@ -113,20 +115,10 @@ static NSMutableArray<ShareAttachment *> *_attachmentsArray;
 }
 
 + (NSString *)suggestedNameForFileURL:(NSURL *)url {
-    NSString *lastPathComponent;
-    NSString *extension;
-    
-    NSString *path = url.path;
-    NSMutableArray<NSString *> *fileNameComponents = [[path.lastPathComponent componentsSeparatedByString:@"."] mutableCopy];
-    if (fileNameComponents.count > 1) {
-        extension = fileNameComponents.lastObject.lowercaseString;
-        [fileNameComponents replaceObjectAtIndex:(fileNameComponents.count - 1) withObject:extension];
-    }
-    lastPathComponent = [fileNameComponents componentsJoinedByString:@"."];
-    
+    NSString *lastPathComponent = url.path.lastPathComponent.mnz_fileNameWithLowercaseExtension;
     NSString *suggestedName = [ShareAttachment suggestedUniqueNameWithString:lastPathComponent];
     if (!suggestedName) {
-        suggestedName = [NSString stringWithFormat:@"%@.%@", [NSUUID UUID].UUIDString, extension];
+        suggestedName = [NSString stringWithFormat:@"%@.%@", [NSUUID UUID].UUIDString, lastPathComponent.mnz_lastExtensionInLowercase];
     }
     
     return suggestedName;

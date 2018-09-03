@@ -69,12 +69,14 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (NSInteger)selectedOptionOnLink;
 + (void)setSelectedOptionOnLink:(NSInteger)option;
 
-#pragma mark - Utils downloaded and downloading nodes
+#pragma mark - Utils for transfers
 
 + (NSMutableDictionary *)downloadingNodes;
 
 + (BOOL)isFreeSpaceEnoughToDownloadNode:(MEGANode *)node isFolderLink:(BOOL)isFolderLink;
 + (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink shouldOverwrite:(BOOL)overwrite;
+
++ (void)startPendingUploadTransferIfNeeded;
 
 #pragma mark - Utils
 
