@@ -47,7 +47,7 @@
 }
 
 - (void)start {
-    self.uploadsDirectory = [[NSFileManager defaultManager] uploadsDirectory];
+    self.uploadsDirectory = [NSFileManager defaultManager].uploadsDirectory;
     
     if (self.isCameraUploads) {
         if (![CameraUploads syncManager].isCameraUploadsEnabled) {
@@ -91,7 +91,7 @@
     
     MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:self.phasset parentNode:self.parentNode cameraUploads:self.isCameraUploads filePath:^(NSString *filePath) {
         NSString *name = filePath.lastPathComponent;
-        NSString *newName = [self newNameForName:name];
+        NSString *newName = [name mnz_sequentialFileNameInParentNode:self.parentNode];
         
         NSString *appData = [NSString new];
         if (self.isCameraUploads) {
@@ -129,25 +129,6 @@
 }
 
 #pragma mark - Private
-
-- (NSString *)newNameForName:(NSString *)name {
-    NSString *nameWithoutExtension = [name stringByDeletingPathExtension];
-    NSString *extension = [name pathExtension];
-    int index = 0;
-    int listSize = 0;
-    
-    do {
-        if (index != 0) {
-            nameWithoutExtension = [[name stringByDeletingPathExtension] stringByAppendingString:[NSString stringWithFormat:@"_%d", index]];
-        }
-        
-        MEGANodeList *nameNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:[nameWithoutExtension stringByAppendingPathExtension:extension]];
-        listSize = [nameNodeList.size intValue];
-        index++;
-    } while (listSize != 0);
-    
-    return [nameWithoutExtension stringByAppendingPathExtension:extension];
-}
 
 - (void)completeOperation {
     [self willChangeValueForKey:@"isFinished"];

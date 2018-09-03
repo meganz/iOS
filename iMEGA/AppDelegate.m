@@ -1891,6 +1891,9 @@ void uncaughtExceptionHandler(NSException *exception) {
                 }
             }
         }
+            
+        [Helper startPendingUploadTransferIfNeeded];
+
     } else {
         NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
         MEGALogDebug(@"Spotlight indexing %lu nodes updated", nodesToIndex.count);
@@ -2461,10 +2464,9 @@ void uncaughtExceptionHandler(NSException *exception) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         [[Helper downloadingNodes] setObject:[NSNumber numberWithInteger:transfer.tag] forKey:base64Handle];
     }
-    if (transfer.type == MEGATransferTypeUpload && transfer.fileName.mnz_isImagePathExtension) {
-        NSString *transferAbsolutePath = [NSHomeDirectory() stringByAppendingPathComponent:transfer.path];
-        [api createThumbnail:transferAbsolutePath destinatioPath:[transferAbsolutePath stringByAppendingString:@"_thumbnail"]];
-        [api createPreview:transferAbsolutePath destinatioPath:[transferAbsolutePath stringByAppendingString:@"_preview"]];
+    
+    if (transfer.type == MEGATransferTypeUpload) {
+        [transfer mnz_createThumbnailAndPreview];
     }
 }
 
@@ -2472,6 +2474,11 @@ void uncaughtExceptionHandler(NSException *exception) {
     if (transfer.type == MEGATransferTypeUpload) {
         [transfer mnz_cancelPendingCUTransfer];
     }
+    
+    if (transfer.state == MEGATransferStatePaused) {
+        [Helper startPendingUploadTransferIfNeeded];
+    }
+
 }
 
 - (void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
@@ -2525,20 +2532,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
     
     if (transfer.type == MEGATransferTypeUpload) {
-        if (transfer.fileName.mnz_isImagePathExtension) {
-            NSString *transferAbsolutePath = [NSHomeDirectory() stringByAppendingPathComponent:transfer.path];
-            NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
-            NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
-            if ([error type] == MEGAErrorTypeApiOk) {
-                MEGANode *node = [api nodeForHandle:transfer.nodeHandle];
-                
-                [[NSFileManager defaultManager] moveItemAtPath:[transferAbsolutePath stringByAppendingString:@"_thumbnail"] toPath:[thumbsDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
-                [[NSFileManager defaultManager] moveItemAtPath:[transferAbsolutePath stringByAppendingString:@"_preview"] toPath:[previewsDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
-            } else {
-                [[NSFileManager defaultManager] removeItemAtPath:[transferAbsolutePath stringByAppendingString:@"_thumbnail"] error:nil];
-                [[NSFileManager defaultManager] removeItemAtPath:[transferAbsolutePath stringByAppendingString:@"_preview"] error:nil];
-            }
-        }
+        [transfer mnz_renameOrRemoveThumbnailAndPreview];
         
         if ([CameraUploads syncManager].shouldCameraUploadsBeDelayed) {
             [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;
@@ -2556,6 +2550,8 @@ void uncaughtExceptionHandler(NSException *exception) {
         }
         
         [transfer mnz_parseAppData];
+        
+        [Helper startPendingUploadTransferIfNeeded];
     }
     
     if (error.type) {

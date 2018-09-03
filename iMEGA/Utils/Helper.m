@@ -30,6 +30,8 @@
 #import "ShareFolderActivity.h"
 #import "SendToChatActivity.h"
 
+#import "MEGAProcessAsset.h"
+
 static MEGANode *linkNode;
 static NSInteger linkNodeOption;
 static NSMutableArray *nodesFromLinkMutableArray;
@@ -465,7 +467,7 @@ static MEGAIndexer *indexer;
     linkNodeOption = option;
 }
 
-#pragma mark - Utils download and downloading nodes
+#pragma mark - Utils for transfers
 
 + (NSMutableDictionary *)downloadingNodes {
     static NSMutableDictionary *downloadingNodes = nil;
@@ -604,6 +606,68 @@ static MEGAIndexer *indexer;
         } else {
             MEGALogError(@"Failed to move from %@ to %@ with error: %@", itemPath, relativeFilePath, error);
         }
+    }
+}
+
++ (void)startUploadTransfer:(MOUploadTransfer *)uploadTransfer {
+    PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransfer.localIdentifier] options:nil].firstObject;
+    
+    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:uploadTransfer.parentNodeHandle.unsignedLongLongValue];
+    MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset parentNode:parentNode cameraUploads:NO filePath:^(NSString *filePath) {
+        NSString *name = filePath.lastPathComponent.mnz_fileNameWithLowercaseExtension;
+        NSString *newName = [name mnz_sequentialFileNameInParentNode:parentNode];
+        
+        NSString *appData = [NSString new];
+        
+        appData = [appData mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
+        
+        if (![name isEqualToString:newName]) {
+            NSString *newFilePath = [[NSFileManager defaultManager].uploadsDirectory stringByAppendingPathComponent:newName];
+            
+            NSError *error = nil;
+            NSString *absoluteFilePath = [NSHomeDirectory() stringByAppendingPathComponent:filePath];
+            if (![[NSFileManager defaultManager] moveItemAtPath:absoluteFilePath toPath:newFilePath error:&error]) {
+                MEGALogError(@"Move item at path failed with error: %@", error);
+            }
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[newFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:parentNode appData:appData isSourceTemporary:YES];
+        } else {
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:parentNode appData:appData isSourceTemporary:YES];
+        }
+        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
+    } node:^(MEGANode *node) {
+        if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == parentNode.handle) {
+            MEGALogDebug(@"The asset exists in MEGA in the parent folder");
+        } else {
+            [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:parentNode];
+        }
+        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
+        [Helper startPendingUploadTransferIfNeeded];
+    } error:^(NSError *error) {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"Transfer failed:", nil), asset.localIdentifier]];
+        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
+        [Helper startPendingUploadTransferIfNeeded];
+    }];
+    [processAsset prepare];
+}
+
++ (void)startPendingUploadTransferIfNeeded {
+    BOOL allUploadTransfersPaused = YES;
+    
+    MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] uploadTransfers];
+    
+    for (int i = 0; i < transferList.size.intValue; i++) {
+        MEGATransfer *transfer = [transferList transferAtIndex:i];
+        
+        if (transfer.state == MEGATransferStateActive) {
+            allUploadTransfersPaused = NO;
+            break;
+        }
+    }
+    
+    NSArray<MOUploadTransfer *> *uploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
+    
+    if (allUploadTransfersPaused && uploadTransfers.count) {
+        [Helper startUploadTransfer:uploadTransfers.firstObject];
     }
 }
 
