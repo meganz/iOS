@@ -2464,16 +2464,9 @@ void uncaughtExceptionHandler(NSException *exception) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         [[Helper downloadingNodes] setObject:[NSNumber numberWithInteger:transfer.tag] forKey:base64Handle];
     }
+    
     if (transfer.type == MEGATransferTypeUpload) {
-        if (transfer.fileName.mnz_isImagePathExtension) {
-            NSString *transferAbsolutePath = [NSHomeDirectory() stringByAppendingPathComponent:transfer.path];
-            [api createThumbnail:transferAbsolutePath destinatioPath:[transferAbsolutePath stringByAppendingString:@"_thumbnail"]];
-            [api createPreview:transferAbsolutePath destinatioPath:[transferAbsolutePath stringByAppendingString:@"_preview"]];
-        } else if (transfer.fileName.mnz_isVideoPathExtension) {
-            NSString *transferAbsolutePath = [NSHomeDirectory() stringByAppendingPathComponent:transfer.path];
-            [transferAbsolutePath mnz_generateTemporaryThumbnailAndPreview];
-        }
-        
+        [transfer mnz_createThumbnailAndPreview];
     }
 }
 
@@ -2539,30 +2532,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
     
     if (transfer.type == MEGATransferTypeUpload) {
-        if (transfer.fileName.mnz_isImagePathExtension || transfer.fileName.mnz_isVideoPathExtension) {
-            NSString *transferAbsolutePath = [NSHomeDirectory() stringByAppendingPathComponent:transfer.path];
-            NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
-            NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
-            if ([error type] == MEGAErrorTypeApiOk) {
-                MEGANode *node = [api nodeForHandle:transfer.nodeHandle];
-                
-                if (transfer.fileName.mnz_isImagePathExtension) {
-                    [[NSFileManager defaultManager] moveItemAtPath:[transferAbsolutePath stringByAppendingString:@"_thumbnail"] toPath:[thumbsDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
-                    [[NSFileManager defaultManager] moveItemAtPath:[transferAbsolutePath stringByAppendingString:@"_preview"] toPath:[previewsDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
-                } else {
-                    [[NSFileManager defaultManager] moveItemAtPath:[[[transferAbsolutePath stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpg"] stringByAppendingString:@"_thumbnail"] toPath:[thumbsDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
-                    [[NSFileManager defaultManager] moveItemAtPath:[[[transferAbsolutePath stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpg"] stringByAppendingString:@"_preview"] toPath:[previewsDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
-                }
-            } else {
-                if (transfer.fileName.mnz_isImagePathExtension) {
-                    [[NSFileManager defaultManager] removeItemAtPath:[transferAbsolutePath stringByAppendingString:@"_thumbnail"] error:nil];
-                    [[NSFileManager defaultManager] removeItemAtPath:[transferAbsolutePath stringByAppendingString:@"_preview"] error:nil];
-                } else {
-                    [[NSFileManager defaultManager] removeItemAtPath:[[[transferAbsolutePath stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpg"] stringByAppendingString:@"_thumbnail"] error:nil];
-                    [[NSFileManager defaultManager] removeItemAtPath:[[[transferAbsolutePath stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpg"] stringByAppendingString:@"_preview"] error:nil];
-                }
-            }
-        }
+        [transfer mnz_renameOrRemoveThumbnailAndPreview];
         
         if ([CameraUploads syncManager].shouldCameraUploadsBeDelayed) {
             [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;

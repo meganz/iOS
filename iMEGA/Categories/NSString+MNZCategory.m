@@ -678,29 +678,57 @@ static NSString* const B = @"[B]";
     return base64FromBase64URLEncoding;
 }
 
-- (void)mnz_generateTemporaryThumbnailAndPreview {
-    NSURL *url = [NSURL fileURLWithPath:self];
-    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:url options:nil];
-    AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
-    generator.appliesPreferredTrackTransform = YES;
-    CMTime requestedTime = CMTimeMake(1, 60);
-    CGImageRef imgRef = [generator copyCGImageAtTime:requestedTime actualTime:NULL error:NULL];
-    UIImage *image = [[UIImage alloc] initWithCGImage:imgRef];
+#pragma mark - File names and extensions
+
++ (NSString *)mnz_fileNameWithDate:(NSDate *)date {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss";
+    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
     
-    NSString *tmpImagePath = [[self stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpg"];
+    return [dateFormatter stringFromDate:date];
+}
+
+- (NSString *)mnz_fileNameWithLowercaseExtension {
+    NSString *fileName;
+    NSString *extension;
     
-    [UIImageJPEGRepresentation(image, 1) writeToFile:tmpImagePath atomically:YES];
+    NSMutableArray<NSString *> *fileNameComponents = [[self componentsSeparatedByString:@"."] mutableCopy];
+    if (fileNameComponents.count > 1) {
+        extension = fileNameComponents.lastObject.lowercaseString;
+        [fileNameComponents replaceObjectAtIndex:(fileNameComponents.count - 1) withObject:extension];
+    }
+    fileName = [fileNameComponents componentsJoinedByString:@"."];
     
-    CGImageRelease(imgRef);
+    return fileName;
+}
+
+- (NSString *)mnz_lastExtensionInLowercase {
+    NSString *extension;
+    NSMutableArray<NSString *> *fileNameComponents = [[self.lastPathComponent componentsSeparatedByString:@"."] mutableCopy];
+    if (fileNameComponents.count > 1) {
+        extension = fileNameComponents.lastObject.lowercaseString;
+    }
     
-    NSString *thumbnailFilePath = [tmpImagePath stringByAppendingString:@"_thumbnail"];
-    [[MEGASdkManager sharedMEGASdk] createThumbnail:tmpImagePath destinatioPath:thumbnailFilePath];
+    return extension;
+}
+
+- (NSString *)mnz_sequentialFileNameInParentNode:(MEGANode *)parentNode {
+    NSString *nameWithoutExtension = self.stringByDeletingPathExtension;
+    NSString *extension = self.pathExtension;
+    int index = 0;
+    int listSize = 0;
     
+    do {
+        if (index != 0) {
+            nameWithoutExtension = [self.stringByDeletingPathExtension stringByAppendingString:[NSString stringWithFormat:@"_%d", index]];
+        }
+        
+        MEGANodeList *nameNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:parentNode searchString:[nameWithoutExtension stringByAppendingPathExtension:extension]];
+        listSize = nameNodeList.size.intValue;
+        index++;
+    } while (listSize != 0);
     
-    NSString *previewFilePath = [tmpImagePath stringByAppendingString:@"_preview"];
-    [[MEGASdkManager sharedMEGASdk] createPreview:tmpImagePath destinatioPath:previewFilePath];
-    
-    [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
+    return [nameWithoutExtension stringByAppendingPathExtension:extension];
 }
 
 @end
