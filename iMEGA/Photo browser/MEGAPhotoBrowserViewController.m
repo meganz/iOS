@@ -861,7 +861,7 @@
                     
                 default:
                     [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-                    [node mnz_downloadNodeOverwriting:NO];
+                    [node mnz_downloadNodeOverwriting:NO api:self.api];
                     break;
             }
             break;

@@ -143,13 +143,18 @@
 #pragma mark - Actions
 
 - (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite {
-    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self api:[MEGASdkManager sharedMEGASdk]];
+    return [self mnz_downloadNodeOverwriting:overwrite api:[MEGASdkManager sharedMEGASdk]];
+}
+
+- (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite api:(MEGASdk *)api {
+    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self api:api];
     if (offlineNodeExist) {
         return YES;
     } else {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-            if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:NO]) {
-                [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:overwrite];
+            BOOL isFolderLink = api != [MEGASdkManager sharedMEGASdk];
+            if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
+                [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:isFolderLink shouldOverwrite:overwrite];
                 return YES;
             } else {
                 return NO;
