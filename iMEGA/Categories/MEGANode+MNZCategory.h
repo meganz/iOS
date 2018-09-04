@@ -9,6 +9,7 @@
 #pragma mark - Actions
 
 - (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite;
+- (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite api:(MEGASdk *)api;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController completion:(void(^)(MEGARequest *request))completion;
 - (void)mnz_moveToTheRubbishBinInViewController:(UIViewController *)viewController;
