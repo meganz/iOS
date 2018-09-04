@@ -205,7 +205,12 @@
 - (BOOL)processMEGANode:(MEGANode *)node {
     static unsigned int processed = 0;
     [self.base64HandlesToIndex addObject:node.base64Handle];
-    if (++processed == self.totalNodes) {
+    if (node.isFile && [[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node]) {
+        processed += [[MEGASdkManager sharedMEGASdk] versionsForNode:node].size.unsignedIntegerValue;
+    } else {
+        processed++;
+    }
+    if (processed == self.totalNodes) {
         processed = 0;
         dispatch_semaphore_signal(self.semaphore);
         return NO;
