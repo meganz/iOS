@@ -214,7 +214,6 @@
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     if ([MEGAReachabilityManager isReachable]) {
-        // TODO: We need change this image with a custom image provided by design team
         if (self.searchController.isActive) {
             if (self.searchController.searchBar.text.length > 0) {
                 return [UIImage imageNamed:@"searchEmptyState"];
@@ -951,8 +950,6 @@
 
     switch (self.chatRoomsType) {
         case ChatRoomsTypeDefault: {
-            
-            //TODO: While the "More" action only shows "Info" on a UIAlertController with UIAlertControllerStyleActionSheet style, it will replaced by the "Info" action itself
             UITableViewRowAction *infoAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
                 [self presentGroupOrContactDetailsForChatListItem:chatListItem];
             }];
