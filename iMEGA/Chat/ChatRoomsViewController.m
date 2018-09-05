@@ -403,7 +403,11 @@
             cell.unreadView.clipsToBounds = YES;
         }
         
-        cell.unreadCount.text = [NSString stringWithFormat:@"%ld", ABS(unreadCount)];
+        if (unreadCount > 0) {
+            cell.unreadCount.text = [NSString stringWithFormat:@"%ld", unreadCount];
+        } else {
+            cell.unreadCount.text = [NSString stringWithFormat:@"%ld+", -unreadCount];
+        }
     } else {
         cell.chatTitle.font = [UIFont mnz_SFUIMediumWithSize:15.0f];
         cell.chatTitle.textColor = UIColor.mnz_black333333;
