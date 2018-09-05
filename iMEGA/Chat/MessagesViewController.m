@@ -1774,7 +1774,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                 if (action == @selector(delete:)) {
                     if (message.isDeletable) return YES;
                 }
-                //TODO: View profile / Start new chat
+                //TODO: Send Message
             } else {
                 if (action == @selector(addContact:message:)) return YES;
             }

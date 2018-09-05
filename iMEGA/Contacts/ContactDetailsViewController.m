@@ -203,10 +203,10 @@
     NSInteger numberOfRows = 0;
     if (section == 0) {
         if (self.contactDetailsMode == ContactDetailsModeDefault) {
-            //TODO: When possible, re-add the rows "Notifications" and "Verify Credentials".
+            //TODO: When possible, re-add the rows "Chat Notifications", "Set Nickname" and "Verify Credentials".
             numberOfRows = 2;
         } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
-            //TODO: When possible, re-add the rows "Notifications", "Close Chat" and "Verify Credentials".
+            //TODO: When possible, re-add the rows "Chat Notifications", "Set Nickname" and "Verify Credentials".
             if (self.user.visibility == MEGAUserVisibilityHidden) {
                 numberOfRows = 2;
             } else {
