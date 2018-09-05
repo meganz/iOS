@@ -44,7 +44,9 @@
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(logoTappedFiveTimes:)];
     tapGestureRecognizer.numberOfTapsRequired = 5;
-    self.logoImageView.gestureRecognizers = @[tapGestureRecognizer];
+    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(logoPressedFiveSeconds:)];
+    longPressGestureRecognizer.minimumPressDuration = 5.0f;
+    self.logoImageView.gestureRecognizers = @[tapGestureRecognizer, longPressGestureRecognizer];
     
     [self.emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", @"Email")];
     self.passwordView.passwordTextField.delegate = self;
@@ -134,6 +136,12 @@
 - (void)logoTappedFiveTimes:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
         [Helper enableOrDisableLog];
+    }
+}
+
+- (void)logoPressedFiveSeconds:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        [Helper changeApiURL];
     }
 }
 
