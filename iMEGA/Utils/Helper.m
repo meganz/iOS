@@ -38,6 +38,8 @@ static NSMutableArray *nodesFromLinkMutableArray;
 
 static MEGAIndexer *indexer;
 
+static BOOL pointToStaging;
+
 @implementation Helper
 
 #pragma mark - Languages
@@ -704,6 +706,35 @@ static MEGAIndexer *indexer;
     }
     
     return totalFreeSpace;
+}
+
++ (void)changeApiURL {
+    if (pointToStaging) {
+        [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
+        [Helper apiURLChanged];
+    } else {
+        NSString *alertTitle = @"Change to a testing server?";
+        NSString *alertMessage = @"Are you sure you want to change to a test server? Your account may run irrecoverable problems";
+        
+        UIAlertController *changeApiServerAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+        [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        
+        [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
+            [Helper apiURLChanged];
+        }]];
+        
+        [UIApplication.mnz_visibleViewController presentViewController:changeApiServerAlertController animated:YES completion:nil];
+    }
+}
+
++ (void)apiURLChanged {
+    pointToStaging = !pointToStaging;
+    [SVProgressHUD showSuccessWithStatus:@"API URL changed"];
+    
+    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        [[MEGASdkManager sharedMEGASdk] fetchNodes];
+    }
 }
 
 #pragma mark - Utils for nodes

@@ -83,6 +83,8 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (unsigned long long)sizeOfFolderAtPath:(NSString *)path;
 + (uint64_t)freeDiskSpace;
 
++ (void)changeApiURL;
+
 #pragma mark - Utils for nodes
 
 + (void)thumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell;

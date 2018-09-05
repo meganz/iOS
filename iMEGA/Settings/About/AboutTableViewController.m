@@ -32,9 +32,11 @@
     
     [self.versionLabel setText:AMLocalizedString(@"version", nil)];
     [self.versionNumberLabel setText:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(logoTappedFiveTimes:)];
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(appVersionTappedFiveTimes:)];
     tapGestureRecognizer.numberOfTapsRequired = 5;
-    self.versionCell.gestureRecognizers = @[tapGestureRecognizer];
+    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(appVersionPressedFiveSeconds:)];
+    longPressGestureRecognizer.minimumPressDuration = 5.0f;
+    self.versionCell.gestureRecognizers = @[tapGestureRecognizer, longPressGestureRecognizer];
     
     self.sdkVersionLabel.text = AMLocalizedString(@"sdkVersion", @"Title of the label where the SDK version is shown");
     self.sdkVersionSHALabel.text = @"df9a6947";
@@ -58,9 +60,15 @@
 
 #pragma mark - Private
 
-- (void)logoTappedFiveTimes:(UITapGestureRecognizer *)sender {
+- (void)appVersionTappedFiveTimes:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
         [Helper enableOrDisableLog];
+    }
+}
+
+- (void)appVersionPressedFiveSeconds:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        [Helper changeApiURL];
     }
 }
 
