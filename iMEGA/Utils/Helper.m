@@ -1069,6 +1069,15 @@ static MEGAIndexer *indexer;
     [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redF0373A} forState:UIControlStateNormal];
 }
 
++ (void)configureBlackNavigationAppearance {
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor}];
+    [[UINavigationBar appearance] setTintColor:UIColor.whiteColor];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.08 green:0.08 blue:0.07 alpha:0.9]];
+    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:UIColor.whiteColor];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:UIColor.whiteColor];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor} forState:UIControlStateNormal];
+}
+
 #pragma mark - Logout
 
 + (void)logout {

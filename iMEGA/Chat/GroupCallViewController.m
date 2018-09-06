@@ -32,15 +32,17 @@
 @property (weak, nonatomic) IBOutlet UIButton *muteUnmuteMicrophone;
 @property (weak, nonatomic) IBOutlet UIButton *enableDisableSpeaker;
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *durationLabel;
-@property (weak, nonatomic) IBOutlet UILabel *participantsLabel;
-@property (weak, nonatomic) IBOutlet UIButton *closeButton;
-
 @property (weak, nonatomic) IBOutlet UIView *toastView;
 @property (weak, nonatomic) IBOutlet UILabel *toastLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *toastTopConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *navigationHeightConstraint;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *peerTalkingViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet MEGARemoteImageView *peerTalkingVideoView;
+@property (weak, nonatomic) IBOutlet UIView *peerTalkingView;
+@property (weak, nonatomic) IBOutlet UIImageView *peerTalkingImageView;
+
+@property (weak, nonatomic) IBOutlet UIView *participantsView;
+@property (weak, nonatomic) IBOutlet UILabel *participantsLabel;
 
 @property BOOL loudSpeakerEnabled;
 
@@ -48,6 +50,7 @@
 @property (strong, nonatomic) NSTimer *timer;
 @property (strong, nonatomic) NSDate *baseDate;
 @property (assign, nonatomic) NSInteger initDuration;
+@property (assign, nonatomic) CGSize cellSize;
 
 @end
 
@@ -58,11 +61,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.titleLabel.text = self.chatRoom.title;
-    self.durationLabel.text = AMLocalizedString(@"calling...", @"Label shown when you receive an incoming call, before start the call.");
+    [self.navigationItem setTitleView:[Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:AMLocalizedString(@"calling...", @"Label shown when you receive an incoming call, before start the call.")]];
+    [self.navigationItem.titleView sizeToFit];
+
+    [Helper configureBlackNavigationAppearance];
+
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.participantsView];
     [self updateParticipants];
-    [self configureNavigationHeight];
-    
     self.enableDisableVideoButton.selected = self.videoCall;
     self.enableDisableSpeaker.selected = self.videoCall;
     if (self.videoCall) {
@@ -78,7 +83,9 @@
         } else {
             _call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
         }
-    } else {
+        [self playCallingSound];
+
+    } else  if (self.callType == CallTypeOutgoing) {
         __weak __typeof(self) weakSelf = self;
 
         MEGAChatStartCallRequestDelegate *startCallRequestDelegate = [[MEGAChatStartCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
@@ -99,25 +106,26 @@
                 }
                
                 [self.collectionView reloadData];
+                [self playCallingSound];
             }
         }];
         
         [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:startCallRequestDelegate];
+    } else  if (self.callType == CallTypeActive) {
+        self.incomingCallView.hidden = YES;
+        if (@available(iOS 10.0, *)) {
+            [self acceptCall:nil];
+        } else {
+            _call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+        }
+        [self initDurationTimer];
+        [self initShowHideControls];
+        [self updateParticipants];
     }
     
     [[UIDevice currentDevice] setProximityMonitoringEnabled:!self.videoCall];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSessionRouteChange:) name:AVAudioSessionRouteChangeNotification object:nil];
-    
-    if (@available(iOS 10.0, *)) {} else {
-        NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"incoming_voice_video_call" ofType:@"mp3"];
-        NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
-        
-        _player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
-        self.player.numberOfLoops = -1; //Infinite
-        
-        [self.player play];
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -129,8 +137,8 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
+    [Helper configureRedNavigationAppearance];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
-    
     [[UIDevice currentDevice] setProximityMonitoringEnabled:NO];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
@@ -193,39 +201,97 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     switch (self.call.numParticipants) {
         case 1:
-            return self.collectionView.frame.size;
+            self.cellSize = self.collectionView.frame.size;
+            break;
             
         case 2: {
             float maxWidth = MAX(self.collectionView.frame.size.height, self.collectionView.frame.size.width);
-            return CGSizeMake(maxWidth / 2, maxWidth / 2);
+            self.cellSize = CGSizeMake(floor(maxWidth / 2), floor(maxWidth / 2));
+            break;
         }
             
         case 3: {
             float maxWidth = MAX(self.collectionView.frame.size.height, self.collectionView.frame.size.width);
-            return CGSizeMake(maxWidth / 3, maxWidth / 3);
+            self.cellSize = CGSizeMake(floor(maxWidth / 3), floor(maxWidth / 3));
+            break;
         }
             
         case 4: {
             float maxWidth = MIN(self.collectionView.frame.size.height, self.collectionView.frame.size.width);
-            return CGSizeMake(maxWidth / 2, maxWidth / 2);
+            self.cellSize = CGSizeMake(floor(maxWidth / 2), floor(maxWidth / 2));
+            break;
         }
             
         case 5: case 6: {
             float maxWidth = MIN(self.collectionView.frame.size.height, self.collectionView.frame.size.width);
-            return CGSizeMake(maxWidth / 2, maxWidth / 2);
+            if ((maxWidth / 2) * 3 < MAX(self.collectionView.frame.size.height, self.collectionView.frame.size.width)) {
+                self.cellSize = CGSizeMake(floor(maxWidth / 2), floor(maxWidth / 2));
+            } else {
+                maxWidth = MAX(self.collectionView.frame.size.height, self.collectionView.frame.size.width);
+                self.cellSize = CGSizeMake(floor(maxWidth / 3) , floor(maxWidth / 3));
+            }
+            break;
         }
             
         default:
-            return CGSizeMake(60, 60);
+            self.cellSize = CGSizeMake(60, 60);
+            break;
+    }
+    
+    return self.cellSize;
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    switch (self.call.numParticipants) {
+        case 1: {
+            return UIEdgeInsetsMake(0, 0, 0, 0);
+        }
+        
+        case 2: case 3: {
+            UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+            if (orientation == UIInterfaceOrientationPortrait) {
+                float widthInset = (self.collectionView.frame.size.width - self.cellSize.width) / 2;
+                return UIEdgeInsetsMake(0, widthInset, 0, widthInset);
+            } else {
+                float heightInset = (self.collectionView.frame.size.height - self.cellSize.height) / 2;
+                return UIEdgeInsetsMake(heightInset, 0, heightInset, 0);
+            }
+        }
+            
+        case 4: {
+                float widthInset = (self.collectionView.frame.size.width - self.cellSize.width * 2) / 2;
+                float heightInset = (self.collectionView.frame.size.height - self.cellSize.height * 2) / 2;
+                return UIEdgeInsetsMake(heightInset, widthInset, heightInset, widthInset);
+        }
+        
+        case 5: case 6: {
+            
+            UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+            if (orientation == UIInterfaceOrientationPortrait) {
+                float widthInset = (self.collectionView.frame.size.width - self.cellSize.width * 2) / 2;
+                float heightInset = (self.collectionView.frame.size.height - self.cellSize.height * 3) / 2;
+                return UIEdgeInsetsMake(heightInset, widthInset, heightInset, widthInset);
+            } else {
+                float widthInset = (self.collectionView.frame.size.width - self.cellSize.width * 3) / 2;
+                float heightInset = (self.collectionView.frame.size.height - self.cellSize.height * 2) / 2;
+                return UIEdgeInsetsMake(heightInset, widthInset, heightInset, widthInset);
+            }
+        }
+            
+        default: {
+            float widthInset = (self.collectionView.frame.size.width - self.cellSize.width * self.call.numParticipants) / 2;
+            return UIEdgeInsetsMake(0, widthInset, 0, widthInset);
+        }
     }
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self configureNavigationHeight];
+        [self.collectionView reloadData];
     } completion:nil];
 }
 
@@ -261,7 +327,6 @@
         [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:self.chatRoom.chatId];
     }
 }
-
 
 - (IBAction)muteOrUnmuteCall:(UIButton *)sender {
     MEGAChatEnableDisableAudioRequestDelegate *enableDisableAudioRequestDelegate = [[MEGAChatEnableDisableAudioRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
@@ -327,24 +392,11 @@
     sender.selected = !sender.selected;
 }
 
-#pragma mark - Private
-
-- (void)configureNavigationHeight {
-    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-    if (orientation == UIInterfaceOrientationPortrait) {
-        if (UIDevice.currentDevice.iPhoneX) {
-            self.navigationHeightConstraint.constant = 84;
-        } else {
-            self.navigationHeightConstraint.constant = 64;
-        }
-    } else {
-        if (UIDevice.currentDevice.iPhoneX) {
-            self.navigationHeightConstraint.constant = 60;
-        } else {
-            self.navigationHeightConstraint.constant = 40;
-        }
-    }
+- (IBAction)hideCall:(UIBarButtonItem *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+#pragma mark - Private
 
 - (void)didSessionRouteChange:(NSNotification *)notification {
     NSDictionary *interuptionDict = notification.userInfo;
@@ -383,11 +435,12 @@
 
 - (void)updateDuration {
     NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - self.baseDate.timeIntervalSince1970 + self.initDuration);
-    self.durationLabel.text = [NSString mnz_stringFromTimeInterval:interval];
+    self.navigationItem.titleView =  [Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:[NSString mnz_stringFromTimeInterval:interval]];
+    [self.navigationItem.titleView sizeToFit];
 }
 
 - (void)updateParticipants {
-    self.participantsLabel.text = [NSString stringWithFormat:@"%lu/%lu", self.call.sessions.size + 1, (unsigned long)self.chatRoom.peerCount];
+    self.participantsLabel.text = [NSString stringWithFormat:@"%lu/%lu", self.call.numParticipants, (unsigned long)self.chatRoom.peerCount];
 }
 
 - (void)showOrHideControls {
@@ -465,6 +518,18 @@
     });
 }
 
+- (void)playCallingSound {
+    if (@available(iOS 10.0, *)) {} else {
+        NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"incoming_voice_video_call" ofType:@"mp3"];
+        NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
+        
+        _player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
+        self.player.numberOfLoops = -1; //Infinite
+        
+        [self.player play];
+    }
+}
+
 #pragma mark - MEGAChatCallDelegate
 
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
@@ -484,11 +549,11 @@
                     [self.player stop];
                     [self initDurationTimer];
                     [self initShowHideControls];
-                    [self.collectionView reloadData];
+                    [self updateParticipants];
                 } else {
-                    [self.collectionView reloadData];
                     [self showToastMessage:[NSString stringWithFormat:@"%@ joined the call", [self.chatRoom peerFullnameByHandle:chatSession.peerId]] color:@""];
                 }
+                [self.collectionView reloadData];
                 break;
             }
                 
@@ -510,6 +575,21 @@
     
     if ([call hasChangedForType:MEGAChatCallChangeTypeCallComposition]) {
         [self updateParticipants];
+        
+        if (self.peerTalkingView.hidden && call.numParticipants > 6) {
+            self.collectionView.scrollEnabled = YES;
+            self.peerTalkingView.hidden = NO;
+            self.peerTalkingViewHeightConstraint.constant = self.collectionView.frame.size.width < 400 ? self.collectionView.frame.size.width : 400;
+        }
+        
+        if (call.numParticipants <= 6 && !self.peerTalkingView.hidden) {
+            self.collectionView.scrollEnabled = NO;
+            self.peerTalkingView.hidden = YES;
+            self.peerTalkingViewHeightConstraint.constant = 0;
+            self.peerTalkingImageView = nil;
+        }
+        
+        [self.collectionView layoutIfNeeded];
         [self.collectionView reloadData];
     }
     
@@ -518,7 +598,6 @@
         case MEGAChatCallStatusInProgress: {
             
             if ([call hasChangedForType:MEGAChatCallChangeTypeRemoteAVFlags]) {
-//              [self.collectionView reloadData];
 
                 MEGAChatSession *chatSessionWithAVFlags = [self.call sessionForPeer:[self.call peerSessionStatusChange]];
                 
@@ -527,6 +606,7 @@
                 for (GroupCallCollectionViewCell *cell in cells) {
                     if (cell.peerId == chatSessionWithAVFlags.peerId) {
                         if (chatSessionWithAVFlags.hasVideo) {
+                            [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:chatSessionWithAVFlags.peerId delegate:cell.videoImageView];
                             [cell.videoImageView removeFromSuperview];
                             MEGARemoteImageView *remoteImageView = [[MEGARemoteImageView alloc] initWithFrame:cell.bounds];
                             [cell addSubview:remoteImageView];
@@ -544,6 +624,47 @@
                     }
                 }
             }
+            
+            if ([call hasChangedForType:MEGAChatCallChangeTypeAudioLevel] && self.call.numParticipants > 6) {
+                MEGAChatSession *chatSessionWithAudioLevel = [self.call sessionForPeer:[self.call peerSessionStatusChange]];
+                
+                if (chatSessionWithAudioLevel.audioDetected) {
+                    if (chatSessionWithAudioLevel.hasVideo) {
+                        [self.peerTalkingVideoView removeFromSuperview];
+                        MEGARemoteImageView *peerTalkingVideo = [[MEGARemoteImageView alloc] initWithFrame:self.peerTalkingView.bounds];
+                        [self.peerTalkingView addSubview:peerTalkingVideo];
+                        self.peerTalkingVideoView = peerTalkingVideo;
+                        [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:self.chatRoom.chatId peerId:chatSessionWithAudioLevel.peerId delegate:self.peerTalkingVideoView];
+                        self.peerTalkingVideoView.hidden = NO;
+                        self.peerTalkingImageView.hidden = YES;
+                    } else {
+                        [self.peerTalkingVideoView removeFromSuperview];
+                        [self.peerTalkingImageView mnz_setImageForUserHandle:chatSessionWithAudioLevel.peerId];
+                        self.peerTalkingVideoView.hidden = NO;
+                        self.peerTalkingImageView.hidden = YES;
+                    }
+                }
+            }
+            
+            if ([call hasChangedForType:MEGAChatCallChangeTypeNetworkQuality]) {
+                
+                MEGAChatSession *chatSessionWithNetworkQuality = [self.call sessionForPeer:[self.call peerSessionStatusChange]];
+                
+                NSArray<GroupCallCollectionViewCell *> *cells = self.collectionView.visibleCells;
+                
+                for (GroupCallCollectionViewCell *cell in cells) {
+                    if (cell.peerId == chatSessionWithNetworkQuality.peerId) {
+                        if (chatSessionWithNetworkQuality.networkQuality <= 1) {
+                            //TODO: añadir frame amarillo
+                        } else {
+                            //TODO: eliminar frame amarillo
+                        }
+                        break;
+                    }
+                }
+                
+            }
+            
             break;
         }
     

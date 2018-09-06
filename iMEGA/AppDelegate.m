@@ -1465,7 +1465,8 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)performCall {
     if (self.chatRoom.isGroup) {
-        GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
+        MEGANavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerNavigationID"];
+        GroupCallViewController *groupCallVC = groupCallNavigation.viewControllers.firstObject;
         groupCallVC.callType = CallTypeOutgoing;
         groupCallVC.videoCall = self.videoCall;
         groupCallVC.chatRoom = self.chatRoom;
@@ -1474,7 +1475,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         if (@available(iOS 10.0, *)) {
             groupCallVC.megaCallManager = [self.mainTBC megaCallManager];
         }
-        [self.mainTBC presentViewController:groupCallVC animated:YES completion:nil];
+        [self.mainTBC presentViewController:groupCallNavigation animated:YES completion:nil];
     } else {
         CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
         callVC.chatRoom = self.chatRoom;
