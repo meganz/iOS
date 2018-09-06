@@ -47,7 +47,7 @@ const CGFloat kGroupChatCellLabelHeight = 35.0f;
 const CGFloat k1on1CellLabelHeight = 28.0f;
 const CGFloat kAvatarImageDiameter = 24.0f;
 
-@interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
+@interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate, MEGAChatCallDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
 @property (nonatomic, strong) MEGAMessagesTypingIndicatorFoorterView *footerView;
@@ -103,6 +103,11 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 @property (nonatomic) BOOL selectingMessages;
 @property (nonatomic) NSMutableArray<MEGAChatMessage *> *selectedMessages;
+
+@property (strong, nonatomic) UIButton *activeCallButton;
+@property (strong, nonatomic) NSTimer *timer;
+@property (strong, nonatomic) NSDate *baseDate;
+@property (assign, nonatomic) NSInteger initDuration;
 
 @end
 
@@ -256,7 +261,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [super viewWillAppear:animated];
     
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
-    
+    [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
     [self customNavigationBarLabel];
@@ -272,6 +278,20 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     [self showOrHideJumpToBottom];
     self.initialToolbarHeight = self.inputToolbar.frame.size.height;
+    
+    if (!self.activeCallButton) {
+        [self createJoinActiveCallButton];
+        [self.view addSubview:self.activeCallButton];
+    }
+    
+    if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId]) {
+        MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+        if ([call sessionForPeer:[MEGASdkManager sharedMEGAChatSdk].myUserHandle]) {
+            [self showTapToReturnCall:call];
+        } else {
+            [self showActiveCallButton];
+        }
+    }
 }
 
 - (void)willEnterForeground {
@@ -326,6 +346,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         [message removeObserver:self forKeyPath:@"node"];
     }
     [self.observedNodeMessages removeAllObjects];
+    [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
 }
 
 #pragma mark - Private
@@ -430,20 +451,95 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStyleDone target:self action:@selector(cancelSelecting:)];
         self.navigationItem.rightBarButtonItems = @[cancelBarButtonItem];
     } else {
+        NSMutableArray *barButtons = [NSMutableArray new];
         
         _videoCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"videoCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
         _audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audioCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
         self.videoCallBarButtonItem.tag = 1;
-        self.navigationItem.rightBarButtonItems = @[self.videoCallBarButtonItem, self.audioCallBarButtonItem];
+        [barButtons addObjectsFromArray:@[self.videoCallBarButtonItem, self.audioCallBarButtonItem]];
         
         if (self.chatRoom.isGroup && self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
             UIBarButtonItem *addContactBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"addContact"] style:UIBarButtonItemStyleDone target:self action:@selector(presentAddOrAttachParticipantToGroup:)];
-            self.navigationItem.rightBarButtonItems = @[self.videoCallBarButtonItem, self.audioCallBarButtonItem, addContactBarButtonItem];
-        } else {
-            self.navigationItem.rightBarButtonItems = @[self.videoCallBarButtonItem, self.audioCallBarButtonItem];
+            [barButtons addObject:addContactBarButtonItem];
         }
         
+        self.navigationItem.rightBarButtonItems = barButtons;
+        
         self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard) && [MEGAReachabilityManager isReachable]);
+    }
+}
+
+- (void)createJoinActiveCallButton {
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, -44, self.view.frame.size.width, 44)];
+    button.hidden = YES;
+    button.backgroundColor = [UIColor colorWithRed:0 green:0.75 blue:0.65 alpha:1];
+    [button setTitle:@"There is an active group call. Tap to join." forState:UIControlStateNormal];
+    [button setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont mnz_SFUIMediumWithSize:12];
+    [button addTarget:self action:@selector(joinActiveCall:) forControlEvents:UIControlEventTouchUpInside];
+    button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.activeCallButton = button;
+}
+
+- (void)showTapToReturnCall:(MEGAChatCall *)call {
+    self.initDuration = call.duration;
+    self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+    self.baseDate = [NSDate date];
+    if (self.activeCallButton.hidden) {
+        self.activeCallButton.hidden = NO;
+        [UIView animateWithDuration:.5f animations:^ {
+            self.activeCallButton.frame = CGRectOffset(self.activeCallButton.frame, 0, 44);
+        } completion:nil];
+    }
+}
+
+- (void)updateDuration {
+    NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - self.baseDate.timeIntervalSince1970 + self.initDuration);
+    [self.activeCallButton setTitle:[NSString stringWithFormat:@"Touch to return to call %@", [NSString mnz_stringFromTimeInterval:interval]] forState:UIControlStateNormal];
+}
+
+- (void)showActiveCallButton {
+    if (self.activeCallButton.hidden) {
+        self.activeCallButton.hidden = NO;
+        [UIView animateWithDuration:.5f animations:^ {
+            self.activeCallButton.frame = CGRectOffset(self.activeCallButton.frame, 0, 44);
+        } completion:nil];
+    }
+}
+
+- (void)hideActiveCallButton {
+    if (!self.activeCallButton.hidden) {
+        [UIView animateWithDuration:.5f animations:^ {
+            self.activeCallButton.frame = CGRectOffset(self.activeCallButton.frame, 0, -44);
+        } completion:^(BOOL finished) {
+            if (finished) {
+                self.activeCallButton.hidden = YES;
+            }
+        }];
+    }
+}
+
+- (IBAction)joinActiveCall:(id)sender {
+    [self.timer invalidate];
+
+    if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId]) {
+        MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+        if ([call sessionForPeer:[MEGASdkManager sharedMEGAChatSdk].myUserHandle]) {
+            MEGANavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerNavigationID"];
+            GroupCallViewController *groupCallVC = groupCallNavigation.viewControllers.firstObject;
+            groupCallVC.callType = CallTypeActive;
+            groupCallVC.videoCall = NO;
+            groupCallVC.chatRoom = self.chatRoom;
+            groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+            
+            if (@available(iOS 10.0, *)) {
+                groupCallVC.megaCallManager = [(MainTabBarController *)self.navigationController.tabBarController megaCallManager];
+            }
+            [self presentViewController:groupCallNavigation animated:YES completion:nil];
+        } else {
+            [self openCallViewWithVideo:NO];
+        }
     }
 }
 
@@ -473,7 +569,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
     }
     if (self.chatRoom.isGroup) {
-        GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
+        MEGANavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerNavigationID"];
+        GroupCallViewController *groupCallVC = groupCallNavigation.viewControllers.firstObject;
         groupCallVC.callType = CallTypeOutgoing;
         groupCallVC.videoCall = videoCall;
         groupCallVC.chatRoom = self.chatRoom;
@@ -482,7 +579,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         if (@available(iOS 10.0, *)) {
             groupCallVC.megaCallManager = [(MainTabBarController *)self.navigationController.tabBarController megaCallManager];
         }
-        [self presentViewController:groupCallVC animated:YES completion:nil];
+        [self presentViewController:groupCallNavigation animated:YES completion:nil];
     } else {
         CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
         callVC.chatRoom = self.chatRoom;
@@ -2128,6 +2225,10 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     MEGALogInfo(@"onMessageReceived %@", message);
     message.chatRoom = self.chatRoom;
     
+    if (message.type == MEGAChatMessageTypeCallEnded) {
+        [self hideActiveCallButton];
+    }
+
     switch (message.type) {
         case MEGAChatMessageTypeInvalid:
             break;
@@ -2494,6 +2595,23 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             
         default:
             break;
+    }
+}
+
+#pragma mark - MEGAChatCallDelegate
+
+- (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
+    if ([[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId].callId == call.callId) {
+        MEGALogDebug(@"onChatCallUpdate %@", call);
+
+        switch (call.status) {
+            case MEGAChatCallStatusUserNoPresent:
+                [self showActiveCallButton];
+                break;
+
+            default:
+                break;
+        }
     }
 }
 

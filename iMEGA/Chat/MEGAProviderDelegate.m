@@ -10,6 +10,7 @@
 #import "UIApplication+MNZCategory.h"
 
 #import "MEGAUser+MNZCategory.h"
+#import "MEGANavigationController.h"
 
 @interface MEGAProviderDelegate ()
 
@@ -185,8 +186,8 @@
     if (call) {
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
         if (chatRoom.isGroup) {
-            GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
-            groupCallVC.callType = CallTypeIncoming;
+            MEGANavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerNavigationID"];
+            GroupCallViewController *groupCallVC = groupCallNavigation.viewControllers.firstObject;
             groupCallVC.videoCall = call.hasVideoInitialCall;
             groupCallVC.chatRoom = chatRoom;
             groupCallVC.megaCallManager = self.megaCallManager;
@@ -194,10 +195,10 @@
             
             if ([UIApplication.mnz_visibleViewController isKindOfClass:GroupCallViewController.class]) {
                 [UIApplication.mnz_visibleViewController dismissViewControllerAnimated:YES completion:^{
-                    [UIApplication.mnz_visibleViewController presentViewController:groupCallVC animated:YES completion:nil];
+                    [UIApplication.mnz_visibleViewController presentViewController:groupCallNavigation animated:YES completion:nil];
                 }];
             } else {
-                [UIApplication.mnz_visibleViewController presentViewController:groupCallVC animated:YES completion:nil];
+                [UIApplication.mnz_visibleViewController presentViewController:groupCallNavigation animated:YES completion:nil];
             }
         } else {
             CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];

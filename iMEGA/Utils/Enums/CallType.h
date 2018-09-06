@@ -1,5 +1,6 @@
 
 typedef NS_ENUM(NSUInteger, CallType) {
     CallTypeIncoming,
-    CallTypeOutgoing
+    CallTypeOutgoing,
+    CallTypeActive
 };

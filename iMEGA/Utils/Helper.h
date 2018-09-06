@@ -118,7 +118,8 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 + (void)configureRedNavigationAppearance;
 + (void)configureWhiteNavigationAppearance;
-    
++ (void)configureBlackNavigationAppearance;
+
 + (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ __nullable)(void))completion;
 + (void)showMasterKeyCopiedAlert;
 
