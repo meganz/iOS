@@ -590,12 +590,12 @@
             
         default: {
             UIActivityViewController *activityViewController;
-            if (node.name.mnz_videoPathExtension) {
+            if (node.name.mnz_isVideoPathExtension) {
                 activityViewController = [Helper activityViewControllerForNodes:@[node] sender:sender];
             } else {
                 MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
                 NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
-                if (node.name.mnz_imagePathExtension) {
+                if (node.name.mnz_isImagePathExtension) {
                     SaveToCameraRollActivity *saveToCameraRollActivity = [[SaveToCameraRollActivity alloc] initWithNode:node];
                     [activitiesMutableArray addObject:saveToCameraRollActivity];
                 }

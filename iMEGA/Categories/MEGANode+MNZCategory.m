@@ -89,13 +89,17 @@
             
             return previewController;
         }
-    } else if (self.name.mnz_isAudiovisualContentUTI && [api httpServerStart:YES port:4443]) {
-        NSURL *path = [api httpServerGetLocalLink:self];
-        
-        MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:path];
-        return megaAVViewController;
+    } else if (self.name.mnz_isMultimediaPathExtension && [api httpServerStart:YES port:4443]) {
+        if (self.mnz_isPlayable) {
+            MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:self folderLink:isFolderLink];
+            return megaAVViewController;
+        } else {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"fileNotSupported", @"Alert title shown when users try to stream an unsupported audio/video file") message:AMLocalizedString(@"message_fileNotSupported", @"Alert message shown when users try to stream an unsupported audio/video file") preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+            return alertController;
+        }
     } else {
-        if ([[[api downloadTransfers] size] integerValue] > 0) {
+        if (api.downloadTransfers.size.integerValue > 0) {
             UIAlertController *documentOpeningAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"documentOpening_alertTitle", @"Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download") message:AMLocalizedString(@"documentOpening_alertMessage", @"Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download") preferredStyle:UIAlertControllerStyleAlert];
             
             [documentOpeningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
@@ -599,6 +603,59 @@
     } else {
         return NO;
     }
+}
+
+- (BOOL)mnz_isPlayable {
+    BOOL supportedShortFormat = NO;
+    BOOL supportedVideoCodecId = NO;
+    
+    // When media information is not available, try to play the node
+    if (self.shortFormat == -1 && self.videoCodecId == -1) {
+        return YES;
+    }
+    
+    NSArray<NSNumber *> *shortFormats = @[@(1),
+                                          @(2),
+                                          @(5),
+                                          @(13),
+                                          @(27),
+                                          @(49),
+                                          @(50),
+                                          @(51),
+                                          @(52)];
+    
+    NSArray<NSNumber *> *videoCodecIds = @[@(15),
+                                           @(37),
+                                           @(144),
+                                           @(215),
+                                           @(224),
+                                           @(266),
+                                           @(346),
+                                           @(348),
+                                           @(393),
+                                           @(405),
+                                           @(523),
+                                           @(532),
+                                           @(551),
+                                           @(630),
+                                           @(703),
+                                           @(740),
+                                           @(802),
+                                           @(887),
+                                           @(957),
+                                           @(961),
+                                           @(973),
+                                           @(1108),
+                                           @(1114),
+                                           @(1119),
+                                           @(1129),
+                                           @(1132),
+                                           @(1177)];
+    
+    supportedShortFormat = [shortFormats containsObject:@(self.shortFormat)];
+    supportedVideoCodecId = [videoCodecIds containsObject:@(self.videoCodecId)];
+    
+    return supportedShortFormat || supportedVideoCodecId;
 }
 
 #pragma mark - Versions
