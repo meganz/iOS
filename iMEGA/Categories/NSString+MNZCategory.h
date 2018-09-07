@@ -6,9 +6,6 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 
 @interface NSString (MNZCategory)
 
-@property (nonatomic, readonly, getter=mnz_isImageUTI) BOOL mnz_imageUTI;
-@property (nonatomic, readonly, getter=mnz_isAudiovisualContentUTI) BOOL mnz_audiovisualContentUTI;
-
 @property (nonatomic, readonly, getter=mnz_isImagePathExtension) BOOL mnz_imagePathExtension;
 @property (nonatomic, readonly, getter=mnz_isVideoPathExtension) BOOL mnz_videoPathExtension;
 @property (nonatomic, readonly, getter=mnz_isMultimediaPathExtension) BOOL mnz_multimediaPathExtension;
