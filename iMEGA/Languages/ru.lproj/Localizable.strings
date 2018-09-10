@@ -225,7 +225,7 @@
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
 "received"="Полученные";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
-"sent"="Отправлено";
+"sent"="Отправленные";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="Запрос принят";
 /* Success message shown when you Cancelled a contact request */
@@ -273,7 +273,7 @@
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="Попробуйте позже или отмените их";
 /* Section title of the 'Sort by' */
-"sortTitle"="СОРТИРОВАТЬ ПО";
+"sortTitle"="Сортировать по";
 /* Button title to 'Save' the selected option */
 "save"="Сохранить";
 /* Sort by option (1/6). This one orders the files alphabethically*/
@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="Только при зарядке";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Если включено, то новые фото и видео будут загружаться.";
+/* App means “Application” */
+"App version"="Версия приложения";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Версия MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
