@@ -9,10 +9,14 @@
 @implementation UIImageView (MNZCategory)
 
 - (void)mnz_setImageForUserHandle:(uint64_t)userHandle {
+    [self mnz_setImageForUserHandle:userHandle name:@"?"];
+}
+
+- (void)mnz_setImageForUserHandle:(uint64_t)userHandle name:(NSString *)name {
     self.layer.cornerRadius = self.frame.size.width / 2;
     self.layer.masksToBounds = YES;
     
-    self.image = [UIImage mnz_imageForUserHandle:userHandle size:self.frame.size delegate:self];
+    self.image = [UIImage mnz_imageForUserHandle:userHandle name:name size:self.frame.size delegate:self];
 }
 
 - (void)mnz_setThumbnailByNode:(MEGANode *)node {
