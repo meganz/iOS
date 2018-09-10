@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="Тільки під час зарядки";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Коли увімкнено, нові фото і відео буде відвантажено.";
+/* App means “Application” */
+"App version"="Версія програми";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK версія";
 /* Title of the label where the MEGAchat SDK version is shown */

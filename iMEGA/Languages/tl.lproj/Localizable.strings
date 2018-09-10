@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="Kapag nag-chacharge lamang";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Kapag pinagana, mga bagong photos ang mai-uupload.";
+/* App means “Application” */
+"App version"="App version";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK version";
 /* Title of the label where the MEGAchat SDK version is shown */

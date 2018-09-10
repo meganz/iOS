@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="فقط عند الشحن";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="عند تفعيل هذا الخيار ، سيتم رفع مقاطع الفيديو والصور الجديدة";
+/* App means “Application” */
+"App version"="نسخة التطبيق";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="نسخة MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
