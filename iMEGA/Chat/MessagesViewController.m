@@ -257,6 +257,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     [super viewWillAppear:animated];
     
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+    [[MEGASdkManager sharedMEGAChatSdk] retryPendingConnections];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     

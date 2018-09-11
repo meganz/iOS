@@ -61,6 +61,7 @@
         [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
     }
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGASdkManager sharedMEGAChatSdk] retryPendingConnections];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
