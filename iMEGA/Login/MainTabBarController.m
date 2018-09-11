@@ -11,6 +11,7 @@
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "DevicePermissionsHelper.h"
+#import "MEGANavigationController.h"
 
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate, MEGAChatCallDelegate>
 
@@ -186,12 +187,13 @@
         } else {
             if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
                 if (chatRoom.isGroup) {
-                    GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
+                    MEGANavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerNavigationID"];
+                    GroupCallViewController *groupCallVC = groupCallNavigation.viewControllers.firstObject;
                     groupCallVC.callType = CallTypeIncoming;
                     groupCallVC.videoCall = call.hasVideoInitialCall;
                     groupCallVC.chatRoom = chatRoom;
 
-                    [UIApplication.mnz_visibleViewController presentViewController:groupCallVC animated:YES completion:nil];
+                    [UIApplication.mnz_visibleViewController presentViewController:groupCallNavigation animated:YES completion:nil];
                 } else {
                     CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
                     callVC.chatRoom  = chatRoom;
