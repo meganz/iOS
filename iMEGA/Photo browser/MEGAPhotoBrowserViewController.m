@@ -368,7 +368,11 @@
 
             if (node.name.mnz_isVideoPathExtension) {
                 UIButton *playButton = [[UIButton alloc] initWithFrame:CGRectMake((zoomableView.frame.size.width - self.playButtonSize) / 2, (zoomableView.frame.size.height - self.playButtonSize) / 2, self.playButtonSize, self.playButtonSize)];
-                [playButton setImage:[UIImage imageNamed:@"video_list"] forState:UIControlStateNormal];
+                if (node.mnz_isPlayable) {
+                    [playButton setImage:[UIImage imageNamed:@"blackPlayButton"] forState:UIControlStateNormal];
+                } else {
+                    [playButton setImage:[UIImage imageNamed:@"blackCrossedPlayButton"] forState:UIControlStateNormal];
+                }
                 playButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
                 playButton.contentVerticalAlignment = UIControlContentHorizontalAlignmentFill;
                 [playButton addTarget:self action:@selector(playVideo:) forControlEvents:UIControlEventTouchUpInside];
