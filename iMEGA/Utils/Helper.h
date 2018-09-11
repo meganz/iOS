@@ -95,6 +95,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (NSString *)dateWithISO8601FormatOfRawTime:(time_t)rawtime;
 + (NSString *)filesAndFoldersInFolderNode:(MEGANode *)node api:(MEGASdk *)api;
 
++ (void)importNode:(MEGANode *)node toShareWithCompletion:(void (^)(MEGANode *node))completion;
 + (UIActivityViewController *)activityViewControllerForChatMessages:(NSArray<MEGAChatMessage *> *)messages sender:(id)sender;
 + (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id)sender;
 

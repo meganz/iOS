@@ -277,6 +277,7 @@
 		7720C5D1206AB2EB00F995D1 /* SF-UI-Text-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 94AAA9A91FD6D1C20029D6EB /* SF-UI-Text-BoldItalic.otf */; };
 		7720C5D2206AB2EB00F995D1 /* SF-UI-Display-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429DC2020A5E7000E0DCB /* SF-UI-Display-Semibold.otf */; };
 		7720C5D3206AB2EB00F995D1 /* SF-UI-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429DB2020A5E6000E0DCB /* SF-UI-Text-Semibold.otf */; };
+		77264F242147D60600DC6BCB /* MEGACopyRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E91911F1F98F4003C6920 /* MEGACopyRequestDelegate.m */; };
 		773DF39C20EF6902004C3418 /* MEGACopyRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E91911F1F98F4003C6920 /* MEGACopyRequestDelegate.m */; };
 		7747B2D8208625B50011814E /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7747B2D6208623660011814E /* Reachability.m */; };
 		7747B2D9208625B50011814E /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7747B2D6208623660011814E /* Reachability.m */; };
@@ -4034,6 +4035,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				834AD6072024697200D2527F /* MGSwipeButton.m in Sources */,
+				77264F242147D60600DC6BCB /* MEGACopyRequestDelegate.m in Sources */,
 				83B841682051913C00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */,
 				5BFA34701FAC5857005BFC4E /* MEGAMoveRequestDelegate.m in Sources */,
 				9432294B1EDD9CE5007DB542 /* MEGAUser+MNZCategory.m in Sources */,

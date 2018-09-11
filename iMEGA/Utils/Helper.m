@@ -12,8 +12,11 @@
 #import "UIImageView+MNZCategory.h"
 
 #import "MEGAActivityItemProvider.h"
+#import "MEGACopyRequestDelegate.h"
+#import "MEGACreateFolderRequestDelegate.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
+#import "MEGAProcessAsset.h"
 #import "MEGALogger.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
@@ -29,8 +32,6 @@
 #import "RemoveSharingActivity.h"
 #import "ShareFolderActivity.h"
 #import "SendToChatActivity.h"
-
-#import "MEGAProcessAsset.h"
 
 static MEGANode *linkNode;
 static NSInteger linkNodeOption;
@@ -802,6 +803,32 @@ static BOOL pointToStaging;
     return [NSString mnz_stringByFiles:files andFolders:folders];
 }
 
++ (void)importNode:(MEGANode *)node toShareWithCompletion:(void (^)(MEGANode *node))completion {
+    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] == MEGAShareTypeAccessOwner) {
+        completion(node);
+    } else {
+        MEGANode *remoteNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
+        if (remoteNode && [[MEGASdkManager sharedMEGASdk] accessLevelForNode:remoteNode] == MEGAShareTypeAccessOwner) {
+            completion(remoteNode);
+        } else {
+            MEGACopyRequestDelegate *copyRequestDelegate = [[MEGACopyRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                MEGANode *resultNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+                completion(resultNode);
+            }];
+            MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
+            if (myChatFilesNode) {
+                [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:myChatFilesNode delegate:copyRequestDelegate];
+            } else {
+                MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                    MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+                    [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:myChatFilesNode delegate:copyRequestDelegate];
+                }];
+                [[MEGASdkManager sharedMEGASdk] createFolderWithName:@"My chat files" parent:[[MEGASdkManager sharedMEGASdk] rootNode] delegate:createFolderRequestDelegate];
+            }
+        }
+    }
+}
+
 + (UIActivityViewController *)activityViewControllerForChatMessages:(NSArray<MEGAChatMessage *> *)messages sender:(id)sender {
     NSUInteger stringCount = 0, fileCount = 0;
 
@@ -850,9 +877,20 @@ static BOOL pointToStaging;
                     [activityItemsMutableArray addObject:offlineURL];
                     fileCount++;
                 } else {
-                    [nodes addObject:node];
-                    MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
-                    [activityItemsMutableArray addObject:activityItemProvider];
+                    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+                    double delayInSeconds = 10.0;
+                    dispatch_time_t waitTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                    
+                    [self importNode:node toShareWithCompletion:^(MEGANode *node) {
+                        [nodes addObject:node];
+                        MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
+                        [activityItemsMutableArray addObject:activityItemProvider];
+                        dispatch_semaphore_signal(semaphore);
+                    }];
+                    if (dispatch_semaphore_wait(semaphore, waitTime)) {
+                        MEGALogError(@"Semaphore timeout importing message attachment to share");
+                        return nil;
+                    }
                 }
 
                 break;
