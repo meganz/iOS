@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="Alleen tijden het laden";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Wanneer ingeschakeld zullen uw foto's en video's automatisch worden geüpload.";
+/* App means “Application” */
+"App version"="Applicatie versie";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK versie";
 /* Title of the label where the MEGAchat SDK version is shown */

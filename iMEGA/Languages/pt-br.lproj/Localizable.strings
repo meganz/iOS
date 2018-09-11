@@ -383,7 +383,7 @@
 /* Title for a button that copies the key of the link to the clipboard */
 "copyKey"="Copiar chave";
 /* Title shown under the action that allows you to open a file in another app */
-"openIn"="Aberto em...";
+"openIn"="Abrir em...";
 /* */
 "uploadToMega"="Fazer upload ao MEGA";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="Somente quando estiver carregando";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Ao ativar, será feito o upload de novas fotos e vídeos.";
+/* App means “Application” */
+"App version"="Versão do aplicativo";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA - versão do SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
@@ -1595,6 +1597,6 @@
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="Autenticação de dois fatores desativada";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="Escaneie ou copie o código para o seu aplicativo de autenticação. Certifique-se de salvar este código em um lugar seguro, caso você perca o seu dispositivo.";
+"scanOrCopyTheSeed"="Escaneie ou copie a chave para o seu aplicativo de autenticação. Certifique-se de salvar esta chave em um lugar seguro, caso você perca o seu dispositivo.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Você perdeu o seu dispositivo de autenticação?";

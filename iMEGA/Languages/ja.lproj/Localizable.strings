@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="チャージ中のみ";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="有効にすると、フォトやビデオがアップロードされます。";
+/* App means “Application” */
+"App version"="アプリ用";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK版";
 /* Title of the label where the MEGAchat SDK version is shown */

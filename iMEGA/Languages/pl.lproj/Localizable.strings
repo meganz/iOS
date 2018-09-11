@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="Tylko gdy podłączone zasilanie";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Gdy odblokowane, to wszystkie nowe zdjęcia i filmy będą wgrywane.";
+/* App means “Application” */
+"App version"="Wersja aplikacji";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK wersja";
 /* Title of the label where the MEGAchat SDK version is shown */

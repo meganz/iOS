@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="Doar când se încarcă";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Când este activat, noile fotografii şi videoclipuri vor fi încărcate.";
+/* App means “Application” */
+"App version"="Versiunea aplicaţiei";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Versiune MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
