@@ -93,6 +93,10 @@
 }
 
 + (UIImage *)mnz_imageForUserHandle:(uint64_t)userHandle size:(CGSize)size delegate:(id<MEGARequestDelegate>)delegate {
+    return [self mnz_imageForUserHandle:userHandle name:@"?" size:size delegate:delegate];
+}
+
++ (UIImage *)mnz_imageForUserHandle:(uint64_t)userHandle name:(NSString *)name size:(CGSize)size delegate:(id<MEGARequestDelegate>)delegate {
     UIImage *image = nil;
     
     NSString *base64Handle = [MEGASdk base64HandleForUserHandle:userHandle];
@@ -110,7 +114,7 @@
                 initialsForAvatar = [user.email substringToIndex:1].uppercaseString;
             }
         } else {
-            initialsForAvatar = @"?";
+            initialsForAvatar = name;
         }
         image = [UIImage imageForName:initialsForAvatar size:size backgroundColor:[UIColor colorFromHexString:colorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(size.width/2.0f)]];
         

@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="Hanya saat sedang men-cas";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Saat diaktifkan foto dan video baru akan terupload.";
+/* App means “Application” */
+"App version"="Versi App";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Versi MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */

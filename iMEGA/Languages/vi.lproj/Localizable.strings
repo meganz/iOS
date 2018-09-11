@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="Chỉ được tải lúc sạc pin";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Nếu Camera Uploads được bật, các hình ảnh mới chụp hoặc các video mới quay sẽ được tải và lưu lên Ổ Mây MEGA của bạn.";
+/* App means “Application” */
+"App version"="Phiên bản ứng dụng";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Phiên bản MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */

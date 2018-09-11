@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="Only when charging";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="When enabled new photos and videos will be uploaded.";
+/* App means “Application” */
+"App version"="App version";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK version";
 /* Title of the label where the MEGAchat SDK version is shown */

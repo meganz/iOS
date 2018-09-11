@@ -795,9 +795,9 @@
         
         cell.avatarImageView.image = avatar;
     } else {
-        [cell.avatarImageView mnz_setImageForUserHandle:chatListItem.peerHandle];
+        [cell.avatarImageView mnz_setImageForUserHandle:chatListItem.peerHandle name:chatListItem.title];
         cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:chatListItem.peerHandle]];
-        cell.onlineStatusView.hidden             = NO;
+        cell.onlineStatusView.hidden = NO;
     }
     
     [self updateCell:cell forUnreadCountChange:chatListItem.unreadCount];

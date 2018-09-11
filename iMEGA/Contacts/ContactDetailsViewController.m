@@ -246,6 +246,8 @@
                 case 0: //Clear Chat History
                     cell.avatarImageView.image = [UIImage imageNamed:@"clearChatHistory"];
                     cell.nameLabel.text = AMLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.");
+                    cell.nameLabel.enabled = self.user.visibility == MEGAUserVisibilityVisible;
+                    cell.userInteractionEnabled = self.user.visibility == MEGAUserVisibilityVisible;
                     break;
                     
                 case 1: //Archive chat

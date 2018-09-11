@@ -1225,8 +1225,18 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)shareSelectedMessages:(UIBarButtonItem *)sender {
-    UIActivityViewController *activityViewController = [Helper activityViewControllerForChatMessages:self.selectedMessages sender:sender];
-    [self presentViewController:activityViewController animated:YES completion:nil];
+    [SVProgressHUD show];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        UIActivityViewController *activityViewController = [Helper activityViewControllerForChatMessages:self.selectedMessages sender:sender];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+            if (activityViewController) {
+                [self presentViewController:activityViewController animated:YES completion:nil];
+            } else {
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkUnavailable", nil)];
+            }
+        });
+    });
 }
 
 #pragma mark - JSQMessagesViewController method overrides

@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="Sadece şarj ederken";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Etkinleştirildiğinde yeni fotoğraflar ve videolar yüklenecektir.";
+/* App means “Application” */
+"App version"="Uygulama sürümü";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK sürümü";
 /* Title of the label where the MEGAchat SDK version is shown */
@@ -1595,6 +1597,6 @@
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="İki Faktörlü Kimlik Doğrulama Devre Dışı";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="Kaynağı Authenticator Uygulamanıza tarayın veya kopyalayın. Telefonunuzu kaybederseniz bu kaynağı güvenli bir yere yedeklediğinizden emin olun.";
+"scanOrCopyTheSeed"="Kaynak kodunu Kimlik Doğrulama uygulamanıza tarayın veya kopyalayın. Telefonunuzu kaybetme ihtimalinize karşın bu kaynak kodunu güvenli bir yere yedeklediğinizden emin olun.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Authenticator cihazınızı mı kaybettiniz?";

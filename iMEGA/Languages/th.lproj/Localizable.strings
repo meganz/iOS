@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="เมื่อชาร์จเท่านั้น";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="เมื่อเปิดใช้งาน รูปถ่ายและวิดีโอใหม่จะถูกอัปโหลด";
+/* App means “Application” */
+"App version"="เวอร์ชันแอป";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="เวอร์ชัน MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */

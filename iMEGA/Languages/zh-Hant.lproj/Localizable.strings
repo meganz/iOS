@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="只在充電狀態下";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="開啟后將上傳新的照片和影片。";
+/* App means “Application” */
+"App version"="App 版本";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK軟體開發包版本";
 /* Title of the label where the MEGAchat SDK version is shown */

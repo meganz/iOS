@@ -213,7 +213,7 @@
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="No tienes carpetas compartidas salientes";
 /* Title of Contacts requests section */
-"contactRequests"="Invitaciones";
+"contactRequests"="Solicitudes de contacto";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Añadir contactos";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
@@ -233,7 +233,7 @@
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Invitación eliminada";
 /* Title shown when there's no pending contact requests */
-"noRequestPending"="No tienes invitaciones pendientes";
+"noRequestPending"="No tienes solicitudes pendientes";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transferencias en pausa";
 /* Title shown when the there is not any transfer and they are not paused */
@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="Solo cargando";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Si está activado, se subirán nuevas fotos y vídeos.";
+/* App means “Application” */
+"App version"="Versión de App";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Versión del SDK de MEGA";
 /* Title of the label where the MEGAchat SDK version is shown */
@@ -1595,6 +1597,6 @@
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="Autenticación de dos factores desactivada";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="Escanea o copia el código en tu aplicación de autenticación. Asegúrate de guardar este código en un lugar seguro en caso de que pierdas tu dispositivo.";
+"scanOrCopyTheSeed"="Escanea o copia la clave en tu aplicación de autenticación. Asegúrate de guardarla en un lugar seguro en caso de que pierdas tu dispositivo.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="¿Has perdido tu dispositivo de autenticación?";
