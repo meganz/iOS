@@ -2,6 +2,7 @@
 #import "GroupCallViewController.h"
 
 #import <AVFoundation/AVFoundation.h>
+#import <QuartzCore/QuartzCore.h>
 
 #import "UIApplication+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -61,7 +62,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self.navigationItem setTitleView:[Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:AMLocalizedString(@"calling...", @"Label shown when you receive an incoming call, before start the call.")]];
+    [self.navigationItem setTitleView:[Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:AMLocalizedString(@"connecting", nil)]];
     [self.navigationItem.titleView sizeToFit];
 
     [Helper configureBlackNavigationAppearance];
@@ -112,15 +113,33 @@
         
         [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:startCallRequestDelegate];
     } else  if (self.callType == CallTypeActive) {
-        self.incomingCallView.hidden = YES;
-        if (@available(iOS 10.0, *)) {
-            [self acceptCall:nil];
+        self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+
+        if (self.call.sessions.size != 0) {
+            self.incomingCallView.hidden = YES;
+            [self initDurationTimer];
+            [self initShowHideControls];
+            [self updateParticipants];
+            [self.collectionView reloadData];
         } else {
-            _call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+            __weak __typeof(self) weakSelf = self;
+            
+            MEGAChatStartCallRequestDelegate *startCallRequestDelegate = [[MEGAChatStartCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
+                if (error.type) {
+                    [weakSelf dismissViewControllerAnimated:YES completion:nil];
+                } else {
+                    weakSelf.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:weakSelf.chatRoom.chatId];
+                    weakSelf.incomingCallView.hidden = YES;
+                    
+                    [self initDurationTimer];
+                    [self initShowHideControls];
+                    [self updateParticipants];
+                    [self.collectionView reloadData];
+                }
+            }];
+            
+            [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:startCallRequestDelegate];
         }
-        [self initDurationTimer];
-        [self initShowHideControls];
-        [self updateParticipants];
     }
     
     [[UIDevice currentDevice] setProximityMonitoringEnabled:!self.videoCall];
@@ -175,10 +194,12 @@
             [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:self.chatRoom.chatId peerId:session.peerId delegate:cell.videoImageView];
             cell.videoImageView.hidden = NO;
             cell.avatarImageView.hidden = YES;
+            [cell sendSubviewToBack:cell.videoImageView];
         } else {
             cell.videoImageView.hidden = YES;
             cell.avatarImageView.hidden = NO;
         }
+        cell.userMutedImageView.hidden = session.hasAudio;
     } else {
         cell.tag = 1;
         cell.peerId = 0;
@@ -195,6 +216,7 @@
             cell.videoImageView.hidden = YES;
             cell.avatarImageView.hidden = NO;
         }
+        cell.userMutedImageView.hidden = YES;
     }
     
     return cell;
@@ -288,6 +310,16 @@
     }
 }
 
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    switch (self.call.numParticipants) {
+        case 1: case 2: case 3: case 4: case 5: case 6:
+            return 0;
+            
+        default:
+            return 8;
+    }
+}
+
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
@@ -322,7 +354,11 @@
 
 - (IBAction)hangCall:(UIButton *)sender {
     if (@available(iOS 10.0, *)) {
-        [self.megaCallManager endCall:self.call];
+        if (self.callType == CallTypeActive) {
+            [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:self.chatRoom.chatId];
+        } else {
+            [self.megaCallManager endCall:self.call];
+        }
     } else {
         [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:self.chatRoom.chatId];
     }
@@ -606,20 +642,27 @@
                 for (GroupCallCollectionViewCell *cell in cells) {
                     if (cell.peerId == chatSessionWithAVFlags.peerId) {
                         if (chatSessionWithAVFlags.hasVideo) {
-                            [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:chatSessionWithAVFlags.peerId delegate:cell.videoImageView];
-                            [cell.videoImageView removeFromSuperview];
-                            MEGARemoteImageView *remoteImageView = [[MEGARemoteImageView alloc] initWithFrame:cell.bounds];
-                            [cell addSubview:remoteImageView];
-                            cell.videoImageView = remoteImageView;
-                            [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:self.chatRoom.chatId peerId:chatSessionWithAVFlags.peerId delegate:cell.videoImageView];
-                            cell.avatarImageView.hidden = YES;
-                            cell.videoImageView.hidden = NO;
+                            if (!cell.videoImageView) {
+                                [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:chatSessionWithAVFlags.peerId delegate:cell.videoImageView];
+                                [cell.videoImageView removeFromSuperview];
+                                MEGARemoteImageView *remoteImageView = [[MEGARemoteImageView alloc] initWithFrame:cell.bounds];
+                                [cell addSubview:remoteImageView];
+                                cell.videoImageView = remoteImageView;
+                                [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:self.chatRoom.chatId peerId:chatSessionWithAVFlags.peerId delegate:cell.videoImageView];
+                                cell.avatarImageView.hidden = YES;
+                                cell.videoImageView.hidden = NO;
+                                [cell sendSubviewToBack:cell.videoImageView];
+                            }
                         } else {
-                            [cell.videoImageView removeFromSuperview];
-                            cell.avatarImageView.hidden = NO;
-                            cell.videoImageView.hidden = YES;
-                            [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:chatSessionWithAVFlags.peerId delegate:cell.videoImageView];
+                            if (cell.videoImageView) {
+                                [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:chatSessionWithAVFlags.peerId delegate:cell.videoImageView];
+                                [cell.videoImageView removeFromSuperview];
+                                cell.videoImageView = nil;
+                                cell.avatarImageView.hidden = NO;
+                                cell.videoImageView.hidden = YES;
+                            }
                         }
+                        cell.userMutedImageView.hidden = chatSessionWithAVFlags.hasAudio;
                         break;
                     }
                 }
@@ -654,11 +697,23 @@
                 
                 for (GroupCallCollectionViewCell *cell in cells) {
                     if (cell.peerId == chatSessionWithNetworkQuality.peerId) {
-                        if (chatSessionWithNetworkQuality.networkQuality <= 1) {
-                            //TODO: añadir frame amarillo
+                        if (chatSessionWithNetworkQuality.hasVideo) {
+                            if (chatSessionWithNetworkQuality.networkQuality <= 1) {
+                                if (self.call.sessions.size < 6) {
+                                    cell.lowQualityView.hidden = NO;
+                                } else {
+                                    cell.layer.borderWidth = 2;
+                                    cell.layer.borderColor = [[UIColor colorWithRed:1 green:0.83 blue:0 alpha:1] CGColor];
+                                }
+                            } else {
+                                cell.lowQualityView.hidden = YES;
+                                cell.contentView.layer.borderWidth = 0;
+                            }
                         } else {
-                            //TODO: eliminar frame amarillo
+                            cell.lowQualityView.hidden = YES;
+                            cell.contentView.layer.borderWidth = 0;
                         }
+                        
                         break;
                     }
                 }

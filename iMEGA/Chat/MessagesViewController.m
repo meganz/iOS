@@ -286,7 +286,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
     if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId]) {
         MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
-        if ([call sessionForPeer:[MEGASdkManager sharedMEGAChatSdk].myUserHandle]) {
+        if (call.sessions.size != 0) {
             [self showTapToReturnCall:call];
         } else {
             [self showActiveCallButton];
@@ -500,6 +500,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)showActiveCallButton {
+    [self.activeCallButton setTitle:@"There is an active group call. Tap to join." forState:UIControlStateNormal];
     if (self.activeCallButton.hidden) {
         self.activeCallButton.hidden = NO;
         [UIView animateWithDuration:.5f animations:^ {
@@ -523,24 +524,14 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 - (IBAction)joinActiveCall:(id)sender {
     [self.timer invalidate];
 
-    if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId]) {
-        MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
-        if ([call sessionForPeer:[MEGASdkManager sharedMEGAChatSdk].myUserHandle]) {
-            MEGANavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerNavigationID"];
-            GroupCallViewController *groupCallVC = groupCallNavigation.viewControllers.firstObject;
-            groupCallVC.callType = CallTypeActive;
-            groupCallVC.videoCall = NO;
-            groupCallVC.chatRoom = self.chatRoom;
-            groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-            
-            if (@available(iOS 10.0, *)) {
-                groupCallVC.megaCallManager = [(MainTabBarController *)self.navigationController.tabBarController megaCallManager];
-            }
-            [self presentViewController:groupCallNavigation animated:YES completion:nil];
-        } else {
-            [self openCallViewWithVideo:NO];
-        }
-    }
+    MEGANavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerNavigationID"];
+    GroupCallViewController *groupCallVC = groupCallNavigation.viewControllers.firstObject;
+    groupCallVC.callType = CallTypeActive;
+    groupCallVC.videoCall = NO;
+    groupCallVC.chatRoom = self.chatRoom;
+    groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    
+    [self presentViewController:groupCallNavigation animated:YES completion:nil];
 }
 
 - (void)startAudioVideoCall:(UIBarButtonItem *)sender {

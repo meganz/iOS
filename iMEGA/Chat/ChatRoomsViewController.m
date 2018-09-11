@@ -23,7 +23,7 @@
 #import "GroupChatDetailsViewController.h"
 #import "MessagesViewController.h"
 
-@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate>
+@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate, MEGAChatCallDelegate>
 
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
@@ -116,6 +116,7 @@
     }
     
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+    [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
     [self.tableView reloadData];
 }
 
@@ -156,6 +157,10 @@
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.tableView reloadEmptyDataSet];
     } completion:nil];
+}
+
+- (void)dealloc {
+    [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
 }
 
 #pragma mark - DZNEmptyDataSetSource
@@ -803,6 +808,8 @@
         cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
     
+    cell.activeCallImageView.hidden = ![[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:chatListItem.chatId];
+    
     return cell;
 }
 
@@ -1165,6 +1172,26 @@
         [self.tableView reloadData];
     }
     [self customNavigationBarLabel];
+}
+
+#pragma mark - MEGAChatCallDelegate
+
+- (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
+    MEGALogDebug(@"onChatCallUpdate %@", call);
+    
+    switch (call.status) {
+        case MEGAChatCallStatusUserNoPresent: {
+            NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(call.chatId)];
+            if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            }
+
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 @end
