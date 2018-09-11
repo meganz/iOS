@@ -97,9 +97,8 @@ static NSString *kisDirectory = @"kisDirectory";
     [[NSNotificationCenter defaultCenter] addObserver:self.tableView selector:@selector(reloadEmptyDataSet) name:kReachabilityChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
-    [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     // If the user has activated the logs, then they are imported to the offline section from the shared sandbox:
     if ([[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] boolForKey:@"logging"]) {

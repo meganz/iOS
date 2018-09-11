@@ -72,6 +72,7 @@
     
     [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGASdkManager sharedMEGAChatSdk] retryPendingConnections];
     
     if (self.searchController && !self.tableView.tableHeaderView) {
         self.tableView.tableHeaderView = self.searchController.searchBar;

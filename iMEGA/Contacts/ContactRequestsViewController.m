@@ -48,6 +48,7 @@
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGASdkManager sharedMEGAChatSdk] retryPendingConnections];
     
     [self reloadUI];
 }

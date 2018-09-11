@@ -126,6 +126,7 @@
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGASdkManager sharedMEGAChatSdk] retryPendingConnections];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(emailHasChanged) name:@"emailHasChanged" object:nil];
 }
