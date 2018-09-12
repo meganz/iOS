@@ -148,7 +148,6 @@
 
 - (void)retryPendingConnections {
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
-    [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     [[MEGASdkManager sharedMEGAChatSdk] retryPendingConnections];
 }
 
