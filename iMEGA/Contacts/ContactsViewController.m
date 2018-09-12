@@ -109,7 +109,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     [self reloadUI];
 }

@@ -132,22 +132,35 @@
     return address;
 }
 
-- (void)reconnectIfIPHasChanged {
+- (void)retryOrReconnect {
     if ([MEGAReachabilityManager isReachable]) {
         NSString *currentIP = [self getIpAddress];
-        if (![self.IpAddress isEqualToString:currentIP]) {
+        if ([self.IpAddress isEqualToString:currentIP]) {
+            MEGALogDebug(@"IP didn't change (%@), retrying...", self.IpAddress);
+            [self retryPendingConnections];
+        } else {
             MEGALogDebug(@"IP has changed (%@ -> %@), reconnecting...", self.IpAddress, currentIP);
-            [[MEGASdkManager sharedMEGASdk] reconnect];
+            [self reconnect];
             self.IpAddress = currentIP;
         }
     }
 }
 
+- (void)retryPendingConnections {
+    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGASdkManager sharedMEGAChatSdk] retryPendingConnections];
+}
+
+- (void)reconnect {
+    [[MEGASdkManager sharedMEGASdk] reconnect];
+    [[MEGASdkManager sharedMEGASdkFolder] reconnect];
+    [[MEGASdkManager sharedMEGAChatSdk] reconnect];
+}
 
 #pragma mark - Reachability Changes
 
 - (void)reachabilityDidChange:(NSNotification *)notification {
-    [self reconnectIfIPHasChanged];
+    [self retryOrReconnect];
     
     if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
         if (![[CameraUploads syncManager] isUseCellularConnectionEnabled]) {

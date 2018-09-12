@@ -116,6 +116,8 @@
     }
     
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
+    
     [self.tableView reloadData];
 }
 

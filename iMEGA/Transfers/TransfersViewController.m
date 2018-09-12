@@ -61,7 +61,7 @@
     
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
