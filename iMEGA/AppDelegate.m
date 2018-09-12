@@ -16,7 +16,7 @@
 #import "CameraUploads.h"
 #import "Helper.h"
 #import "DevicePermissionsHelper.h"
-#import "MEGASdk+MNZCategory.h"
+#import "MEGAApplication.h"
 #import "MEGAIndexer.h"
 #import "MEGALogger.h"
 #import "MEGANavigationController.h"
@@ -24,6 +24,8 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAPurchase.h"
 #import "MEGAReachabilityManager.h"
+#import "MEGASdkManager.h"
+#import "MEGASdk+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGATransfer+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
@@ -72,7 +74,7 @@
 
 #define kFirstRun @"FirstRun"
 
-@interface AppDelegate () <UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, PKPushRegistryDelegate, MEGAPurchasePricingDelegate> {
+@interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, MEGAApplicationDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
     
@@ -114,6 +116,10 @@
 @property (nonatomic, getter=showChooseAccountTypeLater) BOOL chooseAccountTypeLater;
 
 @property (nonatomic, strong) UIAlertController *sslKeyPinningController;
+
+@property (nonatomic) NSMutableDictionary *backgroundTaskMutableDictionary;
+
+@property (nonatomic, getter=wasAppSuspended) BOOL appSuspended;
 
 @end
 
@@ -164,6 +170,8 @@
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"presentPasscodeLater"];
     
     [self languageCompatibility];
+    
+    self.backgroundTaskMutableDictionary = [[NSMutableDictionary alloc] init];
     
     [SAMKeychain setAccessibilityType:kSecAttrAccessibleAfterFirstUnlock];
     // Delete username and password if exists - V1
@@ -384,7 +392,12 @@
 
     BOOL pendingTasks = [[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0 || [[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0 || [[[CameraUploads syncManager] assetsOperationQueue] operationCount] > 0;
     if (pendingTasks) {
-        [self startBackgroundTask];
+        [self beginBackgroundTaskWithName:@"PendingTasks"];
+    }
+    
+    if (self.backgroundTaskMutableDictionary.count == 0) {
+        self.appSuspended = YES;
+        MEGALogDebug(@"App suspended property = YES.");
     }
     
     if (self.privacyView == nil) {
@@ -403,7 +416,15 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     MEGALogDebug(@"Application will enter foreground");
     
-    [[MEGAReachabilityManager sharedManager] reconnectIfIPHasChanged];
+    if (self.wasAppSuspended) {
+        //If the app has been suspended, we assume that the sockets have been closed, so we have to reconnect.
+        [[MEGAReachabilityManager sharedManager] reconnect];
+    } else {
+        [[MEGAReachabilityManager sharedManager] retryOrReconnect];
+    }
+    self.appSuspended = NO;
+    MEGALogDebug(@"App suspended property = NO.");
+    
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
     
     if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
@@ -427,9 +448,6 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     MEGALogDebug(@"Application did become active");
-    
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
-    [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     
     if (self.isSignalActivityRequired) {
         [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
@@ -669,12 +687,25 @@
     [SVProgressHUD setErrorImage:[UIImage imageNamed:@"hudError"]];
 }
 
-- (void)startBackgroundTask {
-    MEGALogDebug(@"Start background task");
-    bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-        [[UIApplication sharedApplication] endBackgroundTask:bgTask];
-        bgTask = UIBackgroundTaskInvalid;
+- (void)beginBackgroundTaskWithName:(NSString *)name {
+    MEGALogDebug(@"Begin background task with name: %@", name);
+    
+    UIBackgroundTaskIdentifier backgroundTaskIdentifier = [[UIApplication sharedApplication] beginBackgroundTaskWithName:name expirationHandler:^{
+        NSArray *allKeysArray = [self.backgroundTaskMutableDictionary allKeysForObject:name];
+        for (NSUInteger i = 0; i < allKeysArray.count; i++) {
+            NSNumber *expiringBackgroundTaskIdentifierNumber = [allKeysArray objectAtIndex:i];
+            [[UIApplication sharedApplication] endBackgroundTask:expiringBackgroundTaskIdentifierNumber.unsignedIntegerValue];
+            
+            [self.backgroundTaskMutableDictionary removeObjectForKey:expiringBackgroundTaskIdentifierNumber];
+            if (self.backgroundTaskMutableDictionary.count == 0) {
+                self.appSuspended = YES;
+                MEGALogDebug(@"App suspended property = YES.");
+            }
+        }
+        MEGALogDebug(@"Ended all background tasks with name: %@", name);
     }];
+    
+    [self.backgroundTaskMutableDictionary setObject:name forKey:[NSNumber numberWithUnsignedInteger:backgroundTaskIdentifier]];
 }
 
 - (void)showCameraUploadsPopUp {
@@ -1770,7 +1801,10 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type {
     MEGALogDebug(@"Did receive incoming push with payload: %@", [payload dictionaryPayload]);
-    [self startBackgroundTask];
+    
+    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground) {
+        [self beginBackgroundTaskWithName:@"VoIP"];
+    }
 }
 
 #pragma mark - UNUserNotificationCenterDelegate

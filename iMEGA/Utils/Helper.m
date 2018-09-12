@@ -712,6 +712,7 @@ static BOOL pointToStaging;
 + (void)changeApiURL {
     if (pointToStaging) {
         [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
+        [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
         [Helper apiURLChanged];
     } else {
         NSString *alertTitle = @"Change to a testing server?";
@@ -722,6 +723,7 @@ static BOOL pointToStaging;
         
         [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
+            [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
             [Helper apiURLChanged];
         }]];
         
