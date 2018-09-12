@@ -41,35 +41,40 @@
         [self reloadInsetsForTabBarItem:tabBarItem];
         switch (tabBarItem.tag) {
             case CLOUD:
-                [tabBarItem setImage:[[UIImage imageNamed:@"cloudDriveIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-                [tabBarItem setSelectedImage:[UIImage imageNamed:@"cloudDriveSelectedIcon"]];
+                tabBarItem.image = [[UIImage imageNamed:@"cloudDriveIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                tabBarItem.selectedImage = [UIImage imageNamed:@"cloudDriveSelectedIcon"];
+                tabBarItem.accessibilityLabel = AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
                 break;
                 
             case PHOTOS:
-                [tabBarItem setImage:[[UIImage imageNamed:@"cameraUploadsIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-                [tabBarItem setSelectedImage:[UIImage imageNamed:@"cameraUploadsSelectedIcon"]];
-                break;
-                
-            case SHARES:
-                [tabBarItem setImage:[[UIImage imageNamed:@"sharedItemsIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-                [tabBarItem setSelectedImage:[UIImage imageNamed:@"sharedItemsSelectedIcon"]];
-                break;
-                
-            case MYACCOUNT:
-                [tabBarItem setImage:[[UIImage imageNamed:@"myAccountIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-                [tabBarItem setSelectedImage:[UIImage imageNamed:@"myAccountSelectedIcon"]];
+                tabBarItem.image = [[UIImage imageNamed:@"cameraUploadsIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                tabBarItem.selectedImage = [UIImage imageNamed:@"cameraUploadsSelectedIcon"];
+                tabBarItem.accessibilityLabel = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
                 break;
                 
             case CHAT:
-                [tabBarItem setImage:[[UIImage imageNamed:@"chatIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-                [tabBarItem setSelectedImage:[UIImage imageNamed:@"chatSelectedIcon"]];
+                tabBarItem.image = [[UIImage imageNamed:@"chatIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                tabBarItem.selectedImage = [UIImage imageNamed:@"chatSelectedIcon"];
+                tabBarItem.accessibilityLabel = AMLocalizedString(@"chat", @"Chat section header");
+                break;
+                
+            case SHARES:
+                tabBarItem.image = [[UIImage imageNamed:@"sharedItemsIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                tabBarItem.selectedImage = [UIImage imageNamed:@"sharedItemsSelectedIcon"];
+                tabBarItem.accessibilityLabel = AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
+                break;
+                
+            case MYACCOUNT:
+                tabBarItem.image = [[UIImage imageNamed:@"myAccountIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                tabBarItem.selectedImage = [UIImage imageNamed:@"myAccountSelectedIcon"];
+                tabBarItem.accessibilityLabel = AMLocalizedString(@"myAccount", @"Title of My Account section. There you can see your account details");
                 break;
         }
     }
     
     self.viewControllers = defaultViewControllersMutableArray;
     
-    self.view.tintColor = [UIColor mnz_redF0373A];
+    self.view.tintColor = UIColor.mnz_redMain;
     
     [self setDelegate:self];
     

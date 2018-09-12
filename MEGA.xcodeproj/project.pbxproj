@@ -177,8 +177,11 @@
 		5B0C55AE1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0C55AD1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m */; };
 		5B118EC31FB1B0C6005D7D90 /* NSMutableArray+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B118EC21FB1B0C5005D7D90 /* NSMutableArray+MNZCategory.m */; };
 		5B134B8F1F86260B000E367E /* HelpModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B134B8E1F86260A000E367E /* HelpModalViewController.xib */; };
+		5B14A41520D10043005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B14A41320D10042005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.m */; };
 		5B17C9B31F73DE310093F162 /* InviteFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B17C9B21F73DE310093F162 /* InviteFriendsViewController.m */; };
 		5B19713D1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B19713C1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m */; };
+		5B1F74D42126E30C00F09A16 /* AwaitingEmailConfirmationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1F74D22126E30B00F09A16 /* AwaitingEmailConfirmationView.m */; };
+		5B1F74D52126E30C00F09A16 /* AwaitingEmailConfirmationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B1F74D32126E30B00F09A16 /* AwaitingEmailConfirmationView.xib */; };
 		5B20F4A21EFA9629007E0A34 /* ChatAttachedNodesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20F4A11EFA9629007E0A34 /* ChatAttachedNodesViewController.m */; };
 		5B21C83E2063A70400324517 /* EmptyHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B21C83B2063A70300324517 /* EmptyHeaderView.xib */; };
 		5B21C83F2063A70400324517 /* EmptyHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B21C83D2063A70400324517 /* EmptyHeaderView.m */; };
@@ -203,13 +206,16 @@
 		5B4429431E6D7B7000BCACC0 /* SF-UI-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B4429421E6D7B7000BCACC0 /* SF-UI-Text-RegularItalic.otf */; };
 		5B48F8031F4C73FE001E3A29 /* AchievementsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B48F8021F4C73FE001E3A29 /* AchievementsViewController.m */; };
 		5B48F8061F4C80F4001E3A29 /* AchievementsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B48F8051F4C80F4001E3A29 /* AchievementsTableViewCell.m */; };
+		5B50DE0720AC1BDD00F2CB09 /* EnablingTwoFactorAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B50DE0520AC1BDC00F2CB09 /* EnablingTwoFactorAuthenticationViewController.m */; };
 		5B5737D61EFBE6410027ECCD /* MEGANode+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5737D51EFBE6410027ECCD /* MEGANode+MNZCategory.m */; };
 		5B5974E4202859400011E819 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B5974E2202858050011E819 /* SafariServices.framework */; };
 		5B5B4FFF1E681BAC00DBEB3B /* UIFont+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */; };
 		5B5B50011E684FDC00DBEB3B /* SF-UI-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B5B50001E684FDC00DBEB3B /* SF-UI-Display-Regular.otf */; };
+		5B5FBDDF20BD8CB2000EE35B /* TwoFactorAuthentication.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B5FBDDE20BD8CB2000EE35B /* TwoFactorAuthentication.storyboard */; };
 		5B6429DD2020A8CB000E0DCB /* SF-UI-Display-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429DC2020A5E7000E0DCB /* SF-UI-Display-Semibold.otf */; };
 		5B6429E02020A8CF000E0DCB /* SF-UI-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429DB2020A5E6000E0DCB /* SF-UI-Text-Semibold.otf */; };
 		5B6429E42020A9A3000E0DCB /* SF-UI-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429E32020A9A2000E0DCB /* SF-UI-Display-Bold.otf */; };
+		5B64D4EE2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B64D4ED2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m */; };
 		5B71631D203D9CE1001E5FBC /* NodeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226711A692ECC00EC7BB6 /* NodeTableViewCell.m */; };
 		5B71631E203D9D28001E5FBC /* NodeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226711A692ECC00EC7BB6 /* NodeTableViewCell.m */; };
 		5B78F0B21F3C5362007ED721 /* MyAccountHallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B78F0B11F3C5362007ED721 /* MyAccountHallViewController.m */; };
@@ -228,6 +234,7 @@
 		5BB50E091F20E840000CA24D /* MEGACreateFolderRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB50E081F20E840000CA24D /* MEGACreateFolderRequestDelegate.m */; };
 		5BB68CA120359B5400B03C00 /* PasswordStrengthIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB68C9F20359B5400B03C00 /* PasswordStrengthIndicatorView.m */; };
 		5BB68CA220359B5400B03C00 /* PasswordStrengthIndicatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BB68CA020359B5400B03C00 /* PasswordStrengthIndicatorView.xib */; };
+		5BC4912F20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC4912E20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m */; };
 		5BD4A0211F838606000E24E6 /* ViewFrameAccessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4A01F1F838606000E24E6 /* ViewFrameAccessor.m */; };
 		5BD4A0221F838606000E24E6 /* ScrollViewFrameAccessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4A0201F838606000E24E6 /* ScrollViewFrameAccessor.m */; };
 		5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */; };
@@ -238,6 +245,7 @@
 		5BEACE2A1FB474060010E02F /* MEGAUser+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 411C8B6A1DECBD87006A0D8C /* MEGAUser+MNZCategory.m */; };
 		5BEACE2B1FB4740E0010E02F /* UIAlertAction+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 944B205C1EE55533003C967B /* UIAlertAction+MNZCategory.m */; };
 		5BEACE2C1FB4740F0010E02F /* UIAlertAction+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 944B205C1EE55533003C967B /* UIAlertAction+MNZCategory.m */; };
+		5BF4B3B720AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF4B3B620AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.m */; };
 		5BFA346B1FAB4169005BFC4E /* MEGARemoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */; };
 		5BFA346E1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
 		5BFA346F1FAC5850005BFC4E /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
@@ -269,6 +277,7 @@
 		7720C5D1206AB2EB00F995D1 /* SF-UI-Text-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 94AAA9A91FD6D1C20029D6EB /* SF-UI-Text-BoldItalic.otf */; };
 		7720C5D2206AB2EB00F995D1 /* SF-UI-Display-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429DC2020A5E7000E0DCB /* SF-UI-Display-Semibold.otf */; };
 		7720C5D3206AB2EB00F995D1 /* SF-UI-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429DB2020A5E6000E0DCB /* SF-UI-Text-Semibold.otf */; };
+		77264F242147D60600DC6BCB /* MEGACopyRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E91911F1F98F4003C6920 /* MEGACopyRequestDelegate.m */; };
 		773DF39C20EF6902004C3418 /* MEGACopyRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E91911F1F98F4003C6920 /* MEGACopyRequestDelegate.m */; };
 		7747B2D8208625B50011814E /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7747B2D6208623660011814E /* Reachability.m */; };
 		7747B2D9208625B50011814E /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7747B2D6208623660011814E /* Reachability.m */; };
@@ -329,6 +338,7 @@
 		832F19EE2091BD8E0067679E /* MOMediaDestination+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 832F19E72091BA970067679E /* MOMediaDestination+CoreDataProperties.m */; };
 		832F19EF2091BD980067679E /* MOMediaDestination+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 832F19EA2091BA970067679E /* MOMediaDestination+CoreDataClass.m */; };
 		832F19F02091BD980067679E /* MOMediaDestination+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 832F19EA2091BA970067679E /* MOMediaDestination+CoreDataClass.m */; };
+		832FC4452130069100740123 /* QueuedTransferItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 832FC4442130069100740123 /* QueuedTransferItem.m */; };
 		83337CAB21009494000F40A7 /* ItemListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83337CAA21009494000F40A7 /* ItemListModel.m */; };
 		83337CAC2100B33D000F40A7 /* ItemListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83337CAA21009494000F40A7 /* ItemListModel.m */; };
 		834AD6052024694200D2527F /* MGSwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 834AD6012024694200D2527F /* MGSwipeButton.m */; };
@@ -341,6 +351,12 @@
 		835223B1205957DD00A47438 /* ItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B0205957DD00A47438 /* ItemCollectionViewCell.m */; };
 		835223B42059588300A47438 /* ItemListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B32059588300A47438 /* ItemListViewController.m */; };
 		835E624B2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 835E624A2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m */; };
+		8361359021074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */; };
+		8361359121074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */; };
+		8361359221074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */; };
+		8361359321074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358F21074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m */; };
+		8361359421074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358F21074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m */; };
+		8361359521074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358F21074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m */; };
 		8364742820723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8364742720723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m */; };
 		83654A5A203C3E4100B5E426 /* NodeVersionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83654A59203C3E4100B5E426 /* NodeVersionsViewController.m */; };
 		83681578202AFBC000CA8EFC /* CustomActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83681576202AFBC000CA8EFC /* CustomActionViewController.m */; };
@@ -529,6 +545,8 @@
 		A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
 		A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1FC1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m */; };
 		A802B2011FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B2001FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m */; };
+		A810CF2F20C157BC00A6C6C5 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = A810CF2D20C157BB00A6C6C5 /* FLAnimatedImage.m */; };
+		A810CF3020C157BC00A6C6C5 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A810CF2E20C157BC00A6C6C5 /* FLAnimatedImageView.m */; };
 		A815FCE41FE1795C0075AC29 /* MEGAChatCreateChatGroupRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A815FCE31FE1795C0075AC29 /* MEGAChatCreateChatGroupRequestDelegate.m */; };
 		A815FCEA1FE2AD080075AC29 /* UIApplication+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A815FCE91FE2AD080075AC29 /* UIApplication+MNZCategory.m */; };
 		A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */; };
@@ -1072,10 +1090,15 @@
 		5B118EC11FB1B0C5005D7D90 /* NSMutableArray+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+MNZCategory.h"; sourceTree = "<group>"; };
 		5B118EC21FB1B0C5005D7D90 /* NSMutableArray+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+MNZCategory.m"; sourceTree = "<group>"; };
 		5B134B8E1F86260A000E367E /* HelpModalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpModalViewController.xib; sourceTree = "<group>"; };
+		5B14A41320D10042005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAMultiFactorAuthCheckRequestDelegate.m; path = API/Requests/MEGAMultiFactorAuthCheckRequestDelegate.m; sourceTree = "<group>"; };
+		5B14A41420D10042005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAMultiFactorAuthCheckRequestDelegate.h; path = API/Requests/MEGAMultiFactorAuthCheckRequestDelegate.h; sourceTree = "<group>"; };
 		5B17C9B11F73DE310093F162 /* InviteFriendsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InviteFriendsViewController.h; sourceTree = "<group>"; };
 		5B17C9B21F73DE310093F162 /* InviteFriendsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InviteFriendsViewController.m; sourceTree = "<group>"; };
 		5B19713B1F2F1D1C00DE1BB2 /* RemoveSharingActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoveSharingActivity.h; sourceTree = "<group>"; };
 		5B19713C1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveSharingActivity.m; sourceTree = "<group>"; };
+		5B1F74D12126E30B00F09A16 /* AwaitingEmailConfirmationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AwaitingEmailConfirmationView.h; sourceTree = "<group>"; };
+		5B1F74D22126E30B00F09A16 /* AwaitingEmailConfirmationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AwaitingEmailConfirmationView.m; sourceTree = "<group>"; };
+		5B1F74D32126E30B00F09A16 /* AwaitingEmailConfirmationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AwaitingEmailConfirmationView.xib; sourceTree = "<group>"; };
 		5B20F4A01EFA9629007E0A34 /* ChatAttachedNodesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatAttachedNodesViewController.h; path = Chat/ChatAttachedNodesViewController.h; sourceTree = "<group>"; };
 		5B20F4A11EFA9629007E0A34 /* ChatAttachedNodesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatAttachedNodesViewController.m; path = Chat/ChatAttachedNodesViewController.m; sourceTree = "<group>"; };
 		5B21C83B2063A70300324517 /* EmptyHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyHeaderView.xib; sourceTree = "<group>"; };
@@ -1112,15 +1135,20 @@
 		5B48F8021F4C73FE001E3A29 /* AchievementsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AchievementsViewController.m; sourceTree = "<group>"; };
 		5B48F8041F4C80F4001E3A29 /* AchievementsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementsTableViewCell.h; sourceTree = "<group>"; };
 		5B48F8051F4C80F4001E3A29 /* AchievementsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AchievementsTableViewCell.m; sourceTree = "<group>"; };
+		5B50DE0520AC1BDC00F2CB09 /* EnablingTwoFactorAuthenticationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnablingTwoFactorAuthenticationViewController.m; sourceTree = "<group>"; };
+		5B50DE0620AC1BDD00F2CB09 /* EnablingTwoFactorAuthenticationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnablingTwoFactorAuthenticationViewController.h; sourceTree = "<group>"; };
 		5B5737D41EFBE6410027ECCD /* MEGANode+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGANode+MNZCategory.h"; sourceTree = "<group>"; };
 		5B5737D51EFBE6410027ECCD /* MEGANode+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGANode+MNZCategory.m"; sourceTree = "<group>"; };
 		5B5974E2202858050011E819 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		5B5B4FFD1E681BAC00DBEB3B /* UIFont+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+MNZCategory.h"; sourceTree = "<group>"; };
 		5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+MNZCategory.m"; sourceTree = "<group>"; };
 		5B5B50001E684FDC00DBEB3B /* SF-UI-Display-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Display-Regular.otf"; path = "Fonts/SF-UI-Display-Regular.otf"; sourceTree = "<group>"; };
+		5B5FBDDE20BD8CB2000EE35B /* TwoFactorAuthentication.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TwoFactorAuthentication.storyboard; sourceTree = "<group>"; };
 		5B6429DB2020A5E6000E0DCB /* SF-UI-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Text-Semibold.otf"; path = "Fonts/SF-UI-Text-Semibold.otf"; sourceTree = "<group>"; };
 		5B6429DC2020A5E7000E0DCB /* SF-UI-Display-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Display-Semibold.otf"; path = "Fonts/SF-UI-Display-Semibold.otf"; sourceTree = "<group>"; };
 		5B6429E32020A9A2000E0DCB /* SF-UI-Display-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Display-Bold.otf"; path = "Fonts/SF-UI-Display-Bold.otf"; sourceTree = "<group>"; };
+		5B64D4EC2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnabledTwoFactorAuthenticationViewController.h; sourceTree = "<group>"; };
+		5B64D4ED2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnabledTwoFactorAuthenticationViewController.m; sourceTree = "<group>"; };
 		5B72A14B20D3A69C007FE4FD /* URLType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLType.h; sourceTree = "<group>"; };
 		5B78F0B01F3C5362007ED721 /* MyAccountHallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAccountHallViewController.h; sourceTree = "<group>"; };
 		5B78F0B11F3C5362007ED721 /* MyAccountHallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAccountHallViewController.m; sourceTree = "<group>"; };
@@ -1143,6 +1171,9 @@
 		5BB68C9E20359B5300B03C00 /* PasswordStrengthIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordStrengthIndicatorView.h; sourceTree = "<group>"; };
 		5BB68C9F20359B5400B03C00 /* PasswordStrengthIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordStrengthIndicatorView.m; sourceTree = "<group>"; };
 		5BB68CA020359B5400B03C00 /* PasswordStrengthIndicatorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasswordStrengthIndicatorView.xib; sourceTree = "<group>"; };
+		5BC4912D20AC457E00F7F952 /* SetupTwoFactorAuthenticationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupTwoFactorAuthenticationTableViewController.h; sourceTree = "<group>"; };
+		5BC4912E20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupTwoFactorAuthenticationTableViewController.m; sourceTree = "<group>"; };
+		5BC4913020AC684500F7F952 /* TwoFactorAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoFactorAuthentication.h; sourceTree = "<group>"; };
 		5BD4A01C1F838605000E24E6 /* ViewFrameAccessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewFrameAccessor.h; path = iMEGA/Vendor/FrameAccessor/FrameAccessor/ViewFrameAccessor.h; sourceTree = SOURCE_ROOT; };
 		5BD4A01D1F838605000E24E6 /* ScrollViewFrameAccessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScrollViewFrameAccessor.h; path = iMEGA/Vendor/FrameAccessor/FrameAccessor/ScrollViewFrameAccessor.h; sourceTree = SOURCE_ROOT; };
 		5BD4A01E1F838605000E24E6 /* FrameAccessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FrameAccessor.h; path = iMEGA/Vendor/FrameAccessor/FrameAccessor/FrameAccessor.h; sourceTree = SOURCE_ROOT; };
@@ -1152,6 +1183,8 @@
 		5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeNameViewController.m; sourceTree = "<group>"; };
 		5BDE180A1F500DEE00CD9F82 /* MyAccountBaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyAccountBaseViewController.h; sourceTree = "<group>"; };
 		5BDE180B1F500DEE00CD9F82 /* MyAccountBaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyAccountBaseViewController.m; sourceTree = "<group>"; };
+		5BF4B3B520AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TwoFactorAuthenticationViewController.h; sourceTree = "<group>"; };
+		5BF4B3B620AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwoFactorAuthenticationViewController.m; sourceTree = "<group>"; };
 		5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGARemoveRequestDelegate.m; path = API/Requests/MEGARemoveRequestDelegate.m; sourceTree = "<group>"; };
 		5BFA346A1FAB4169005BFC4E /* MEGARemoveRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGARemoveRequestDelegate.h; path = API/Requests/MEGARemoveRequestDelegate.h; sourceTree = "<group>"; };
 		5BFA346C1FAB6282005BFC4E /* MEGAMoveRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAMoveRequestDelegate.h; path = API/Requests/MEGAMoveRequestDelegate.h; sourceTree = "<group>"; };
@@ -1233,6 +1266,8 @@
 		832F19E82091BA970067679E /* MOMediaDestination+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOMediaDestination+CoreDataClass.h"; sourceTree = "<group>"; };
 		832F19E92091BA970067679E /* MOMediaDestination+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOMediaDestination+CoreDataProperties.h"; sourceTree = "<group>"; };
 		832F19EA2091BA970067679E /* MOMediaDestination+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOMediaDestination+CoreDataClass.m"; sourceTree = "<group>"; };
+		832FC4432130069000740123 /* QueuedTransferItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QueuedTransferItem.h; sourceTree = "<group>"; };
+		832FC4442130069100740123 /* QueuedTransferItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QueuedTransferItem.m; sourceTree = "<group>"; };
 		83337CA921009494000F40A7 /* ItemListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItemListModel.h; sourceTree = "<group>"; };
 		83337CAA21009494000F40A7 /* ItemListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItemListModel.m; sourceTree = "<group>"; };
 		834AD6012024694200D2527F /* MGSwipeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSwipeButton.m; sourceTree = "<group>"; };
@@ -1247,6 +1282,10 @@
 		835223B32059588300A47438 /* ItemListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItemListViewController.m; sourceTree = "<group>"; };
 		835E62492085ED56007470A2 /* MEGAPauseTransferRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAPauseTransferRequestDelegate.h; sourceTree = "<group>"; };
 		835E624A2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAPauseTransferRequestDelegate.m; sourceTree = "<group>"; };
+		8361358C21074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOUploadTransfer+CoreDataProperties.h"; sourceTree = "<group>"; };
+		8361358D21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOUploadTransfer+CoreDataClass.h"; sourceTree = "<group>"; };
+		8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOUploadTransfer+CoreDataClass.m"; sourceTree = "<group>"; };
+		8361358F21074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOUploadTransfer+CoreDataProperties.m"; sourceTree = "<group>"; };
 		8364742620723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAShowPasswordReminderRequestDelegate.h; path = API/Requests/MEGAShowPasswordReminderRequestDelegate.h; sourceTree = "<group>"; };
 		8364742720723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAShowPasswordReminderRequestDelegate.m; path = API/Requests/MEGAShowPasswordReminderRequestDelegate.m; sourceTree = "<group>"; };
 		83654A58203C3E4100B5E426 /* NodeVersionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeVersionsViewController.h; sourceTree = "<group>"; };
@@ -1359,6 +1398,10 @@
 		A802B1FC1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAChatStartCallRequestDelegate.m; path = iMEGA/API/Chat/MEGAChatStartCallRequestDelegate.m; sourceTree = SOURCE_ROOT; };
 		A802B1FF1FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAChatAnswerCallRequestDelegate.h; path = iMEGA/API/Chat/MEGAChatAnswerCallRequestDelegate.h; sourceTree = SOURCE_ROOT; };
 		A802B2001FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAChatAnswerCallRequestDelegate.m; path = iMEGA/API/Chat/MEGAChatAnswerCallRequestDelegate.m; sourceTree = SOURCE_ROOT; };
+		A810CF2B20C157BB00A6C6C5 /* FLAnimatedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImage.h; sourceTree = "<group>"; };
+		A810CF2C20C157BB00A6C6C5 /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImageView.h; sourceTree = "<group>"; };
+		A810CF2D20C157BB00A6C6C5 /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImage.m; sourceTree = "<group>"; };
+		A810CF2E20C157BC00A6C6C5 /* FLAnimatedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImageView.m; sourceTree = "<group>"; };
 		A815FCE21FE1795C0075AC29 /* MEGAChatCreateChatGroupRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatCreateChatGroupRequestDelegate.h; sourceTree = "<group>"; };
 		A815FCE31FE1795C0075AC29 /* MEGAChatCreateChatGroupRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatCreateChatGroupRequestDelegate.m; sourceTree = "<group>"; };
 		A815FCE81FE2AD080075AC29 /* UIApplication+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIApplication+MNZCategory.h"; sourceTree = "<group>"; };
@@ -1750,6 +1793,7 @@
 				E889C9DE1B55652B00ECEFDF /* My Account */,
 				41EABF181DA7C53A0087271C /* Chat */,
 				9419B6BD1F20D18300FEBE31 /* Spotlight */,
+				5B5FBDDD20BD8C76000EE35B /* Two Factor Authentication */,
 				415226861A692ECC00EC7BB6 /* Utils */,
 				41BADDA61A8E064E008408B3 /* Categories */,
 				415226671A692EBD00EC7BB6 /* Vendor */,
@@ -1853,6 +1897,7 @@
 			children = (
 				A824A9162039EC9F00D777D2 /* SDAVAssetExportSession */,
 				A8665F4F20ADA1600044F8F6 /* PWProgressView */,
+				A810CF2420C1577900A6C6C5 /* FLAnimatedImage */,
 				834AD6002024692200D2527F /* MGSwipeTableCell */,
 				5BD4A01B1F8385EC000E24E6 /* FrameAccessor */,
 				5B22F9721F8373EC00D2B156 /* VENTokenField */,
@@ -2301,6 +2346,7 @@
 		41AA1A191AC07EB900D32691 /* Security Options */ = {
 			isa = PBXGroup;
 			children = (
+				5BF4B3B120AB05FD00A6E6D7 /* Two Factor Authentication */,
 				41AA1A1A1AC081C600D32691 /* SecurityOptionsTableViewController.h */,
 				41AA1A1B1AC081C600D32691 /* SecurityOptionsTableViewController.m */,
 				E8BD127D1DB76E03003DC53F /* MasterKeyViewController.h */,
@@ -2428,6 +2474,10 @@
 		41D1E0B81B58F0B800982830 /* ManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
+				8361358C21074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.h */,
+				8361358D21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.h */,
+				8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */,
+				8361358F21074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m */,
 				832F19E92091BA970067679E /* MOMediaDestination+CoreDataProperties.h */,
 				832F19E82091BA970067679E /* MOMediaDestination+CoreDataClass.h */,
 				832F19EA2091BA970067679E /* MOMediaDestination+CoreDataClass.m */,
@@ -2642,6 +2692,16 @@
 			path = "Camera Uploads";
 			sourceTree = "<group>";
 		};
+		5B1F74D02126E2B000F09A16 /* AwaitingEmailConfirmation */ = {
+			isa = PBXGroup;
+			children = (
+				5B1F74D12126E30B00F09A16 /* AwaitingEmailConfirmationView.h */,
+				5B1F74D22126E30B00F09A16 /* AwaitingEmailConfirmationView.m */,
+				5B1F74D32126E30B00F09A16 /* AwaitingEmailConfirmationView.xib */,
+			);
+			path = AwaitingEmailConfirmation;
+			sourceTree = "<group>";
+		};
 		5B22F9721F8373EC00D2B156 /* VENTokenField */ = {
 			isa = PBXGroup;
 			children = (
@@ -2661,6 +2721,7 @@
 			isa = PBXGroup;
 			children = (
 				5B2417E720527FB800C8DDE2 /* DisplayMode.h */,
+				5BC4913020AC684500F7F952 /* TwoFactorAuthentication.h */,
 				83681574202AFA1700CA8EFC /* MegaNodeActionType.h */,
 				773DF39A20EE1470004C3418 /* SendMode.h */,
 				773DF39B20EE14C1004C3418 /* ShareAttachmentType.h */,
@@ -2701,6 +2762,16 @@
 			path = Achievements;
 			sourceTree = "<group>";
 		};
+		5B5FBDDD20BD8C76000EE35B /* Two Factor Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				5B5FBDDE20BD8CB2000EE35B /* TwoFactorAuthentication.storyboard */,
+				5BF4B3B520AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.h */,
+				5BF4B3B620AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.m */,
+			);
+			path = "Two Factor Authentication";
+			sourceTree = "<group>";
+		};
 		5B8281451E7BE7FA0079C1BB /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -2714,6 +2785,7 @@
 		5BB68C9D203599EC00B03C00 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5B1F74D02126E2B000F09A16 /* AwaitingEmailConfirmation */,
 				5BB2E40B20629E2C00E9F45C /* EmptyFooterView.h */,
 				5BB2E40920629E2B00E9F45C /* EmptyFooterView.m */,
 				5BB2E40A20629E2B00E9F45C /* EmptyFooterView.xib */,
@@ -2741,6 +2813,19 @@
 			);
 			name = FrameAccessor;
 			path = Vendor/FrameAccessor/FrameAccessor;
+			sourceTree = "<group>";
+		};
+		5BF4B3B120AB05FD00A6E6D7 /* Two Factor Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				5BC4912D20AC457E00F7F952 /* SetupTwoFactorAuthenticationTableViewController.h */,
+				5BC4912E20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m */,
+				5B50DE0620AC1BDD00F2CB09 /* EnablingTwoFactorAuthenticationViewController.h */,
+				5B50DE0520AC1BDC00F2CB09 /* EnablingTwoFactorAuthenticationViewController.m */,
+				5B64D4EC2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.h */,
+				5B64D4ED2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m */,
+			);
+			path = "Two Factor Authentication";
 			sourceTree = "<group>";
 		};
 		7747B2D5208623550011814E /* Network */ = {
@@ -3000,6 +3085,18 @@
 			path = API/Chat;
 			sourceTree = "<group>";
 		};
+		A810CF2420C1577900A6C6C5 /* FLAnimatedImage */ = {
+			isa = PBXGroup;
+			children = (
+				A810CF2B20C157BB00A6C6C5 /* FLAnimatedImage.h */,
+				A810CF2D20C157BB00A6C6C5 /* FLAnimatedImage.m */,
+				A810CF2C20C157BB00A6C6C5 /* FLAnimatedImageView.h */,
+				A810CF2E20C157BC00A6C6C5 /* FLAnimatedImageView.m */,
+			);
+			name = FLAnimatedImage;
+			path = Vendor/FLAnimatedImage/FLAnimatedImage;
+			sourceTree = "<group>";
+		};
 		A819B3401EAFA7E7004592F9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -3109,6 +3206,8 @@
 				5B7B4CA11EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m */,
 				8364742620723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.h */,
 				8364742720723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m */,
+				5B14A41420D10042005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.h */,
+				5B14A41320D10042005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.m */,
 			);
 			name = Requests;
 			sourceTree = "<group>";
@@ -3190,6 +3289,8 @@
 				E8B519221AC9CD8000BB7324 /* TransfersViewController.m */,
 				E8B519231AC9CD8000BB7324 /* TransferTableViewCell.h */,
 				E8B519241AC9CD8000BB7324 /* TransferTableViewCell.m */,
+				832FC4432130069000740123 /* QueuedTransferItem.h */,
+				832FC4442130069100740123 /* QueuedTransferItem.m */,
 			);
 			path = Transfers;
 			sourceTree = "<group>";
@@ -3466,6 +3567,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B1F74D52126E30C00F09A16 /* AwaitingEmailConfirmationView.xib in Resources */,
 				947F5DE31FD19AD7004FAC80 /* SF-UI-Text-Bold.otf in Resources */,
 				A82E5BF51F3470B5003C149C /* Spotlight_folder.png in Resources */,
 				41D21E6D1D01AEC3002E6296 /* CTAssetsPickerController.bundle in Resources */,
@@ -3490,6 +3592,7 @@
 				5BB68CA220359B5400B03C00 /* PasswordStrengthIndicatorView.xib in Resources */,
 				41A72F1F1C22EA1600516603 /* LTHPasscodeViewController.bundle in Resources */,
 				E8CD198A1A9270CB00CB8B2A /* UnavailableLinkView.xib in Resources */,
+				5B5FBDDF20BD8CB2000EE35B /* TwoFactorAuthentication.storyboard in Resources */,
 				A841E63E20CAB477005E1D1B /* MEGAMessageCallEndedView.xib in Resources */,
 				417279331DB663FA001AC818 /* JSQMessagesAssets.bundle in Resources */,
 				9462A1811FDFFD4800008F32 /* MEGAToolbarTextContentView.xib in Resources */,
@@ -3665,6 +3768,7 @@
 				E8F791811BC5754A00C58676 /* RemoveLinkActivity.m in Sources */,
 				77B32277209C6EC00037FA89 /* MEGAMessageRichPreviewView.m in Sources */,
 				77D9A56C2023547900B48470 /* MEGAPhotoBrowserViewController.m in Sources */,
+				5BC4912F20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m in Sources */,
 				417279361DB663FA001AC818 /* UIColor+JSQMessages.m in Sources */,
 				137361931A6664C300B740E8 /* AppDelegate.m in Sources */,
 				5BFA346E1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m in Sources */,
@@ -3675,6 +3779,7 @@
 				4131997D1BD7BD5D002CD6EA /* NSDate+DateTools.m in Sources */,
 				5B17C9B31F73DE310093F162 /* InviteFriendsViewController.m in Sources */,
 				4172793E1DB663FA001AC818 /* JSQMessagesTimestampFormatter.m in Sources */,
+				832FC4452130069100740123 /* QueuedTransferItem.m in Sources */,
 				E8C8D73F1B1DCB4000BCDBA4 /* MEGANavigationController.m in Sources */,
 				A8F5D67A1ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m in Sources */,
 				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,
@@ -3708,12 +3813,14 @@
 				945E1F0C1FE10CE8000C5E21 /* MEGAInputToolbar.m in Sources */,
 				41ADA9F21ADE7AC100641BB4 /* HelpTableViewController.m in Sources */,
 				A8F5D67D1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m in Sources */,
+				8361359021074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */,
 				4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */,
 				77F43DD92034637300AE4F42 /* UICollectionView+MNZCategory.m in Sources */,
 				41EAAE461D06B49400622FAF /* NSBundle+CTAssetsPickerController.m in Sources */,
 				A85740C42032F6B80033034C /* MOChatDraft+CoreDataProperties.m in Sources */,
 				5B222A74205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m in Sources */,
 				413199791BD7BD5D002CD6EA /* DTTimePeriod.m in Sources */,
+				A810CF2F20C157BC00A6C6C5 /* FLAnimatedImage.m in Sources */,
 				417279581DB663FA001AC818 /* JSQMessagesLoadEarlierHeaderView.m in Sources */,
 				8394CFA3211AE24100A1634A /* GroupCallViewController.m in Sources */,
 				4156C80D1AD7E79A00F5E818 /* LTHPasscodeViewController.m in Sources */,
@@ -3740,6 +3847,7 @@
 				5BB68CA120359B5400B03C00 /* PasswordStrengthIndicatorView.m in Sources */,
 				5B21C83F2063A70400324517 /* EmptyHeaderView.m in Sources */,
 				E8B519261AC9CD8000BB7324 /* TransfersViewController.m in Sources */,
+				5B64D4EE2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m in Sources */,
 				417279441DB663FA001AC818 /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.m in Sources */,
 				41D21E731D01AEC3002E6296 /* CTAssetThumbnailView.m in Sources */,
 				4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */,
@@ -3774,10 +3882,12 @@
 				837A88BF20B42290007B55D1 /* CloudDriveViewController.m in Sources */,
 				A8AA4F7D1ED433CA00E7BA23 /* MEGABaseRequestDelegate.m in Sources */,
 				41D21DF21D01AE89002E6296 /* NSLayoutConstraint+PureLayout.m in Sources */,
+				A810CF3020C157BC00A6C6C5 /* FLAnimatedImageView.m in Sources */,
 				E8F791801BC5754A00C58676 /* OpenInActivity.m in Sources */,
 				774FA6642090F5A20061DD85 /* MEGADialogMediaItem.m in Sources */,
 				417279571DB663FA001AC818 /* JSQMessagesLabel.m in Sources */,
 				A89629721FACE30900F02F7A /* MEGAChatCall+MNZCategory.m in Sources */,
+				5B1F74D42126E30C00F09A16 /* AwaitingEmailConfirmationView.m in Sources */,
 				410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */,
 				417279561DB663FA001AC818 /* JSQMessagesInputToolbar.m in Sources */,
 				A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */,
@@ -3805,6 +3915,7 @@
 				946B2D161F46E235009ED32C /* GetLinkTableViewController.m in Sources */,
 				41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */,
 				41D21E651D01AEC3002E6296 /* CTAssetsGridViewCell.m in Sources */,
+				5B50DE0720AC1BDD00F2CB09 /* EnablingTwoFactorAuthenticationViewController.m in Sources */,
 				4172793F1DB663FA001AC818 /* JSQMessagesToolbarButtonFactory.m in Sources */,
 				949086881FD5482E002B12BD /* NSAttributedString+MNZCategory.m in Sources */,
 				137361901A6664C300B740E8 /* main.m in Sources */,
@@ -3837,11 +3948,13 @@
 				E85EB30D1DF58EBA0066AC68 /* VerifyCredentialsViewController.m in Sources */,
 				E8F7917F1BC5754A00C58676 /* MEGAActivityItemProvider.m in Sources */,
 				A8EC55B41F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m in Sources */,
+				8361359321074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */,
 				834AD6062024694200D2527F /* MGSwipeTableCell.m in Sources */,
 				5B0062C61F3DBA16008B7A91 /* MyAccountHallTableViewCell.m in Sources */,
 				E8ED84DB1B010BDF008FCDDC /* CameraUploadsPopUpViewController.m in Sources */,
 				415226931A692ECC00EC7BB6 /* LoginViewController.m in Sources */,
 				419A02751DACE848000B9DC9 /* ChatRoomCell.m in Sources */,
+				5BF4B3B720AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.m in Sources */,
 				41BADDAD1A8E1659008408B3 /* NSString+MNZCategory.m in Sources */,
 				83337CAB21009494000F40A7 /* ItemListModel.m in Sources */,
 				7720C5B5206A931E00F995D1 /* MEGATransfer+MNZCategory.m in Sources */,
@@ -3887,6 +4000,7 @@
 				41D21E5F1D01AEC3002E6296 /* CTAssetPlayButton.m in Sources */,
 				8394CFB8211B1AFD00A1634A /* GroupCallCollectionViewCell.m in Sources */,
 				A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */,
+				5B14A41520D10043005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.m in Sources */,
 				83681578202AFBC000CA8EFC /* CustomActionViewController.m in Sources */,
 				4172794B1DB663FA001AC818 /* JSQMessagesBubbleImage.m in Sources */,
 				41CD14701DB150F600E545BC /* MessagesViewController.m in Sources */,
@@ -3944,6 +4058,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				834AD6072024697200D2527F /* MGSwipeButton.m in Sources */,
+				77264F242147D60600DC6BCB /* MEGACopyRequestDelegate.m in Sources */,
 				83B841682051913C00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */,
 				5BFA34701FAC5857005BFC4E /* MEGAMoveRequestDelegate.m in Sources */,
 				9432294B1EDD9CE5007DB542 /* MEGAUser+MNZCategory.m in Sources */,
@@ -3957,6 +4072,7 @@
 				7747B2D9208625B50011814E /* Reachability.m in Sources */,
 				5B367577204FFC150087362D /* SendToChatActivity.m in Sources */,
 				945605451EDD66DA0094EF0F /* UIFont+MNZCategory.m in Sources */,
+				8361359421074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */,
 				943229401EDD8969007DB542 /* UIScrollView+EmptyDataSet.m in Sources */,
 				9456054F1EDD7DBD0094EF0F /* ShareFolderActivity.m in Sources */,
 				9432294F1EDD9CF6007DB542 /* UIImageView+MNZCategory.m in Sources */,
@@ -4002,6 +4118,7 @@
 				5B2E78CE1FA0C3450096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
 				94624CFD1F50517700D52504 /* MEGAExportRequestDelegate.m in Sources */,
 				9432294C1EDD9CE9007DB542 /* NSFileManager+MNZCategory.m in Sources */,
+				8361359121074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4045,6 +4162,7 @@
 				94892C911EFBEA2300AEAC25 /* SAMKeychainQuery.m in Sources */,
 				A824A91C2039F50B00D777D2 /* SDAVAssetExportSession.m in Sources */,
 				7747B2DB208625B70011814E /* Reachability.m in Sources */,
+				8361359221074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */,
 				A81F2C6A1F334FB2008600A5 /* MEGAProcessAsset.m in Sources */,
 				943F8B281EF283D300AFD89F /* UIDevice+MNZCategory.m in Sources */,
 				A836581B21020FB9005E616F /* ItemListViewController.m in Sources */,
@@ -4079,6 +4197,7 @@
 				941135581F01005D00D33428 /* CameraUploads.m in Sources */,
 				941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */,
 				94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */,
+				8361359521074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */,
 				77892EA020E5029E0020A533 /* MOUser.m in Sources */,
 				5BA81EA11FC2FF0100C8146C /* RemoveSharingActivity.m in Sources */,
 				94892C961EFBF03000AEAC25 /* SVRadialGradientLayer.m in Sources */,

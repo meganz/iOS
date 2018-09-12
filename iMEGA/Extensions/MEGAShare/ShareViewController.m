@@ -34,6 +34,7 @@
 @property (nonatomic) NSUInteger unsupportedAssets;
 @property (nonatomic) NSUInteger alreadyInDestinationAssets;
 @property (nonatomic) float progress;
+@property (nonatomic) NSDate *lastProgressChange;
 
 @property (nonatomic) UINavigationController *loginRequiredNC;
 @property (nonatomic) LaunchViewController *launchVC;
@@ -52,6 +53,7 @@
 
 @property (nonatomic) NSArray<MEGAChatListItem *> *chats;
 @property (nonatomic) NSArray<MEGAUser *> *users;
+@property (nonatomic) NSMutableSet<NSNumber *> *openedChatIds;
 
 @end
 
@@ -131,6 +133,9 @@
     } else {
         [self requireLogin];
     }
+    
+    self.openedChatIds = [NSMutableSet<NSNumber *> new];
+    self.lastProgressChange = [NSDate new];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -282,7 +287,7 @@
 - (void)setupAppearance {
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor whiteColor]}];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setBarTintColor:[UIColor mnz_redF0373A]];
+    [[UINavigationBar appearance] setBarTintColor:UIColor.mnz_redMain];
     [[UINavigationBar appearance] setTranslucent:NO];
     
     //To tint the color of the prompt.
@@ -296,16 +301,16 @@
     
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
     [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:[UIColor whiteColor]];
-    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UIToolbar class]]] setTintColor:[UIColor mnz_redF0373A]];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UIToolbar class]]] setTintColor:UIColor.mnz_redMain];
     
     [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"backArrow"]];
     [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backArrow"]];
     
     [[UITextField appearance] setTintColor:UIColor.mnz_green00BFA5];
         
-    [[UIView appearanceWhenContainedInInstancesOfClasses:@[[UIAlertController class]]] setTintColor:[UIColor mnz_redF0373A]];
+    [[UIView appearanceWhenContainedInInstancesOfClasses:@[[UIAlertController class]]] setTintColor:UIColor.mnz_redMain];
     
-    [[UIProgressView appearance] setTintColor:[UIColor mnz_redF0373A]];
+    [[UIProgressView appearance] setTintColor:UIColor.mnz_redMain];
     
     [self configureProgressHUD];
 }
@@ -642,23 +647,28 @@ void uncaughtExceptionHandler(NSException *exception) {
     }];
     
     for (MEGAChatListItem *chatListItem in self.chats) {
+        self.pendingAssets++;
         [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatListItem.chatId node:nodeHandle delegate:chatAttachNodeRequestDelegate];
     }
     
     for (MEGAUser *user in self.users) {
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
         if (chatRoom) {
+            self.pendingAssets++;
             [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:nodeHandle delegate:chatAttachNodeRequestDelegate];
         } else {
             MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
             MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
             [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
             MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                self.pendingAssets++;
                 [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:nodeHandle delegate:chatAttachNodeRequestDelegate];
             }];
             [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
         }
     }
+    
+    [self onePendingLess];
 }
 
 - (void)performSendMessage:(NSString *)message {
@@ -685,7 +695,10 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)sendMessage:(NSString *)message toChat:(uint64_t)chatId {
-    [[MEGASdkManager sharedMEGAChatSdk] openChatRoom:chatId delegate:self];
+    if (![self.openedChatIds containsObject:@(chatId)]) {
+        [[MEGASdkManager sharedMEGAChatSdk] openChatRoom:chatId delegate:self];
+        [self.openedChatIds addObject:@(chatId)];
+    }
     [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:chatId message:message];
     self.pendingAssets++;
 }
@@ -818,6 +831,11 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)alertIfNeededAndDismiss {
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
     [SVProgressHUD dismiss];
+    
+    for (NSNumber *chatIdNumber in self.openedChatIds) {
+        [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:chatIdNumber.unsignedLongLongValue delegate:self];
+    }
+    
     if (self.unsupportedAssets > 0 || self.alreadyInDestinationAssets > 0) {
         NSString *message;
         if (self.unsupportedAssets > 0) {
@@ -962,12 +980,22 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     self.progress += (transfer.deltaSize.floatValue / transfer.totalBytes.floatValue) / self.totalAssets;
     if (self.progress >= 0.01 && self.progress < 1.0) {
-        NSString *progressCompleted = [NSString stringWithFormat:@"%.f %%", floor(self.progress * 100)];
-        [SVProgressHUD showProgress:self.progress status:progressCompleted];
+        NSDate *now = [NSDate new];
+        if (!UIAccessibilityIsVoiceOverRunning() || [now timeIntervalSinceDate:self.lastProgressChange] > 2) {
+            self.lastProgressChange = now;
+            NSString *progressCompleted = [NSString stringWithFormat:@"%.f %%", floor(self.progress * 100)];
+            [SVProgressHUD showProgress:self.progress status:progressCompleted];
+        }
     }
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    if (error.type) {
+        [self oneUnsupportedMore];
+        MEGALogError(@"Transfer finished with error: %@", error.name);
+        return;
+    }
+    
     if (self.users || self.chats) {
         [self performAttachNodeHandle:transfer.nodeHandle];
     } else {

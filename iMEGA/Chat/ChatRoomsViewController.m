@@ -219,7 +219,6 @@
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     if ([MEGAReachabilityManager isReachable]) {
-        // TODO: We need change this image with a custom image provided by design team
         if (self.searchController.isActive) {
             if (self.searchController.searchBar.text.length > 0) {
                 return [UIImage imageNamed:@"searchEmptyState"];
@@ -409,7 +408,11 @@
             cell.unreadView.clipsToBounds = YES;
         }
         
-        cell.unreadCount.text = [NSString stringWithFormat:@"%ld", ABS(unreadCount)];
+        if (unreadCount > 0) {
+            cell.unreadCount.text = [NSString stringWithFormat:@"%ld", unreadCount];
+        } else {
+            cell.unreadCount.text = [NSString stringWithFormat:@"%ld+", -unreadCount];
+        }
     } else {
         cell.chatTitle.font = [UIFont mnz_SFUIMediumWithSize:15.0f];
         cell.chatTitle.textColor = UIColor.mnz_black333333;
@@ -797,9 +800,9 @@
         
         cell.avatarImageView.image = avatar;
     } else {
-        [cell.avatarImageView mnz_setImageForUserHandle:chatListItem.peerHandle];
+        [cell.avatarImageView mnz_setImageForUserHandle:chatListItem.peerHandle name:chatListItem.title];
         cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:chatListItem.peerHandle]];
-        cell.onlineStatusView.hidden             = NO;
+        cell.onlineStatusView.hidden = NO;
     }
     
     [self updateCell:cell forUnreadCountChange:chatListItem.unreadCount];
@@ -958,8 +961,6 @@
 
     switch (self.chatRoomsType) {
         case ChatRoomsTypeDefault: {
-            
-            //TODO: While the "More" action only shows "Info" on a UIAlertController with UIAlertControllerStyleActionSheet style, it will replaced by the "Info" action itself
             UITableViewRowAction *infoAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
                 [self presentGroupOrContactDetailsForChatListItem:chatListItem];
             }];

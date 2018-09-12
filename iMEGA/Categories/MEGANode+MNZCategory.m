@@ -91,16 +91,9 @@
         }
     } else if (self.name.mnz_isAudiovisualContentUTI && [api httpServerStart:YES port:4443]) {
         NSURL *path = [api httpServerGetLocalLink:self];
-        AVURLAsset *asset = [AVURLAsset assetWithURL:path];
         
-        if (asset.playable) {
-            MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:self folderLink:isFolderLink];
-            return megaAVViewController;
-        } else {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"fileNotSupported", @"Alert title shown when users try to stream an unsupported audio/video file") message:AMLocalizedString(@"message_fileNotSupported", @"Alert message shown when users try to stream an unsupported audio/video file") preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-            return alertController;
-        }
+        MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:path];
+        return megaAVViewController;
     } else {
         if ([[[api downloadTransfers] size] integerValue] > 0) {
             UIAlertController *documentOpeningAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"documentOpening_alertTitle", @"Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download") message:AMLocalizedString(@"documentOpening_alertMessage", @"Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download") preferredStyle:UIAlertControllerStyleAlert];
@@ -150,13 +143,18 @@
 #pragma mark - Actions
 
 - (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite {
-    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self api:[MEGASdkManager sharedMEGASdk]];
+    return [self mnz_downloadNodeOverwriting:overwrite api:[MEGASdkManager sharedMEGASdk]];
+}
+
+- (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite api:(MEGASdk *)api {
+    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self api:api];
     if (offlineNodeExist) {
         return YES;
     } else {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-            if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:NO]) {
-                [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:overwrite];
+            BOOL isFolderLink = api != [MEGASdkManager sharedMEGASdk];
+            if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
+                [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:isFolderLink shouldOverwrite:overwrite];
                 return YES;
             } else {
                 return NO;
@@ -186,8 +184,24 @@
         UIAlertAction *renameAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 UITextField *alertViewTextField = renameAlertController.textFields.firstObject;
-                MEGARenameRequestDelegate *delegate = [[MEGARenameRequestDelegate alloc] initWithCompletion:completion];
-                [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text delegate:delegate];
+                MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.parentHandle];
+                MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:parentNode searchString:alertViewTextField.text];
+                
+                if (self.isFolder) {
+                    if ([childrenNodeList mnz_existsFolderWithName:alertViewTextField.text]) {
+                        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
+                    } else {
+                        MEGARenameRequestDelegate *delegate = [[MEGARenameRequestDelegate alloc] initWithCompletion:completion];
+                        [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text delegate:delegate];
+                    }
+                } else {
+                    if ([childrenNodeList mnz_existsFileWithName:alertViewTextField.text]) {
+                        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"There is already a file with the same name", @"A tooltip message which shows when a file name is duplicated during renaming.")];
+                    } else {
+                        MEGARenameRequestDelegate *delegate = [[MEGARenameRequestDelegate alloc] initWithCompletion:completion];
+                        [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text delegate:delegate];
+                    }
+                }
             }
         }];
         renameAlertAction.enabled = NO;
@@ -675,7 +689,7 @@
             } else {
                 enableRightButton = YES;
             }
-            sender.textColor = containsInvalidChars ? UIColor.mnz_redD90007 : UIColor.darkTextColor;
+            sender.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
         }
         
         rightButtonAction.enabled = enableRightButton;

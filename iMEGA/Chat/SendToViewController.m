@@ -321,30 +321,10 @@
         }
             
         case MEGAChatMessageTypeAttachment: {
-            MEGACopyRequestDelegate *copyRequestDelegate = [[MEGACopyRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                [self attachNode:request.nodeHandle];
-            }];
-            
             MEGANode *node = [message.nodeList mnz_nodesArrayFromNodeList].firstObject;
-            if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] == MEGAShareTypeAccessOwner) {
+            [Helper importNode:node toShareWithCompletion:^(MEGANode *node) {
                 [self attachNode:node.handle];
-            } else {
-                MEGANode *remoteNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
-                if (remoteNode && [[MEGASdkManager sharedMEGASdk] accessLevelForNode:remoteNode] == MEGAShareTypeAccessOwner) {
-                    [self attachNode:remoteNode.handle];
-                } else {
-                    MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-                    if (myChatFilesNode) {
-                        [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:myChatFilesNode delegate:copyRequestDelegate];
-                    } else {
-                        MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                            MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
-                            [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:myChatFilesNode delegate:copyRequestDelegate];
-                        }];
-                        [[MEGASdkManager sharedMEGASdk] createFolderWithName:@"My chat files" parent:[[MEGASdkManager sharedMEGASdk] rootNode] delegate:createFolderRequestDelegate];
-                    }
-                }
-            }
+            }];
             
             break;
         }

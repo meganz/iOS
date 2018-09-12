@@ -298,8 +298,10 @@
 "newFolderMessage"="Nume pentru folderul nou";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Creează";
-/* message when trying to create a folder that already exists */
-"folderAlreadyExists"="Folderul există deja";
+/* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
+"There is already a folder with the same name"="There is already a folder with the same name";
+/* A tooltip message which shows when a file name is duplicated during renaming. */
+"There is already a file with the same name"="Există deja un fişier cu acelaşi nume";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importă din...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -389,11 +391,11 @@
 /* */
 "sendToContact"="Trimite contactului";
 /* Toast text upon sending a single file to chat */
-"fileSentToChat"="File sent to chat";
+"fileSentToChat"="Fişiere trimise în chat";
 /* Success message when the attachment has been sent to a many chats */
 "fileSentToXChats"="Fişier trimis către %1$d chaturi";
 /* Toast text upon sending multiple files to chat */
-"filesSentToChat"="Files sent to chat";
+"filesSentToChat"="Fişiere trimise în chat";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="%d fişiere trimise cu succes";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -656,8 +658,6 @@
 "about"="Despre";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Limbă";
-/* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
-"applicationLanguage"="Română";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Trimite feedback";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="Doar când se încarcă";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Când este activat, noile fotografii şi videoclipuri vor fi încărcate.";
+/* App means “Application” */
+"App version"="Versiunea aplicaţiei";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Versiune MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
@@ -748,6 +750,8 @@
 "cancellationLinkHasExpired"="Linkul de anulare a expirat.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Acesta este ultimul pas pentru a-ţi anula contul. Vei pierde definitiv toate datele stocate în cloud. Te rugăm să introduci parola mai jos.";
+/* During account cancellation (deletion) */
+"accountCanceledSuccessfully"="Contul tău a fost anulat cu succes.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Închide contul";
 /* Title for the action that allows to remove a file or folder */
@@ -1068,7 +1072,7 @@
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Sigur vrei să ştergi aceste elemente din Offline?";
 /* Chat section header */
-"chat"="Chat";
+"chat"="Chatuieşte";
 /* Empty Conversations section */
 "noConversations"="Nicio conversaţie";
 /* Empty Conversations description */
@@ -1106,7 +1110,7 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Stare";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Rich URL previews";
+"richUrlPreviews"="Previzualizări îmbogăţite ale URL-urilor";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="Enhance the MEGAchat experience. URL content will be retrieved without end-to-end encryption.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1176,7 +1180,7 @@
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="Schimbă avatarul grupului";
 /* Text used as hint to give the user information to write a name for the group chat. */
-"enterGroupName"="Enter group name";
+"enterGroupName"="Introdu numele grupului";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Părăseşte";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1220,7 +1224,7 @@
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
 "moreThanTwoUsersAreTyping"="%1$s [A]şi mai mulţi tastează...[/A]";
 /* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
-"writeAMessage"="Write a message to %s…";
+"writeAMessage"="Scrie un mesaj către %s…";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="Niciun istoric al conversaţiilor";
 /* Button which allows to retry send message in chat conversation. */
@@ -1234,13 +1238,13 @@
 /* referring to a contact in the contact list of the user */
 "contact"="Contact";
 /* A button label. The button sends contact information to a user in the conversation. */
-"sendContact"="Trimite contactul";
+"sendContact"="Trimite un contact";
 /* */
 "done"="Gata";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Trimite fişiere";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"enableRichUrlPreviews"="Enable rich URL previews";
+"enableRichUrlPreviews"="Activează previzualizările îmbogăţite ale URL-urilor";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="Always Allow";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
@@ -1248,7 +1252,7 @@
 /* */
 "never"="Niciodată";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="You are disabling rich URL previews permanently. You can re-enable rich URL previews in your settings. Do you want to proceed?";
+"richPreviewsConfirmation"="Dezactivezi definitiv previzualizările îmbogăţite ale URL-urilor. Poţi reactiva previzualizările îmbogăţite ale URL-urilor din setări. Doreşti să continui?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="Remove preview";
 /* */
@@ -1290,11 +1294,11 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Mesaje noi";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu unread message";
+"unreadMessage"="%lu mesaj necitit";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu unread messages";
+"unreadMessages"="%lu mesaje necitite";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Abonamentele sunt reînnoite automat pentru perioade de abonare succesive de aceeaşi durată şi la acelaşi preţ ca şi perioada iniţială aleasă. Poţi dezactiva reînnoirea automată a abonamentului tău MEGA PRO nu mai târziu de 24 de ore înainte ca următoarea ta plată pentru abonament să se realizeze prin pagina de setări a contului iTunes. Pentru a gestiona abonamentele, clic pe pictograma App Store de pe telefon, conectează-te cu ID-ul Apple în partea de jos a paginii (dacă nu ai făcut deja acest lucru), iar apoi clic pe Afişaţi ID. Vei ajunge la pagina contului tău unde poţi să derula în jos pentru a gestiona abonamentele aplicaţiilor. De acolo poţi selecta abonamentul MEGA PRO şi să vezi data de reînnoire programată, alege un pachet de abonament diferit sau setează comutatorul on-off la off pentru a dezactiva reînnoirea automată a abonamentului.";
+"autorenewableDescription"="Abonamentele sunt reînnoite automat pentru perioade de abonare succesive de aceeaşi durată şi la acelaşi preţ ca şi perioada iniţială aleasă. Poţi dezactiva reînnoirea automată a abonamentului tău MEGA PRO nu mai târziu de 24 de ore înainte ca următoarea ta plată pentru abonament să se realizeze prin pagina de setări a contului iTunes. Pentru a gestiona abonamentele, clic pe pictograma App Store de pe telefon, autentifică-te cu ID-ul Apple în partea de jos a paginii (dacă nu ai făcut deja acest lucru), iar apoi clic pe Afişaţi ID. Vei ajunge la pagina contului tău unde poţi să derulezi în jos pentru a gestiona abonamentele aplicaţiilor. De acolo poţi selecta abonamentul MEGA PRO şi să vezi data de reînnoire programată, alege un pachet de abonament diferit sau setează comutatorul on-off la off pentru a dezactiva reînnoirea automată a abonamentului.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Deschide MEGA şi autentifică-te pentru a continua";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1358,7 +1362,7 @@
 "languageRestartNotification"="Limbă schimbată. Atinge pentru repornire.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA este un serviciu sigur de stocare în cloud care îţi oferă 50GB spaţiu de stocare gratuit. Spre deosebire de ceilalţi furnizori de stocare în cloud, datele tale sunt criptate şi decriptate doar de către dispozitivele client ale tale şi niciodată de către noi.";
+"generalDescriptionParagraph1"="MEGA oferă stocare în cloud criptată, controlată de utilizatori prin intermediul browserelor web standard, împreună cu aplicaţii dedicate pentru dispozitivele mobile. Spre deosebire de ceilalţi furnizori de stocare în cloud, datele tale sunt criptate şi decriptate doar de către dispozitivele client ale tale şi niciodată de către noi.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph2"="Încarcă fişierele de pe smartphone sau tabletă, apoi caută, stochează, descarcă, transmite, vezi, partajează, redenumeşte sau şterge fişierele oricând, de pe orice dispozitiv, oriunde. Partajează folderele cu contactele tale şi vezi modificările acestora în timp real.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
@@ -1366,12 +1370,12 @@
 /* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
 "generalDescriptionVideoChat"="End-to-end user-encrypted MEGA video chat allows for total privacy, and has been available through the browser since 2016. It has been extended to our mobile app, with chat history accessible across multiple devices. Users can also easily add files to a chat from their MEGA Cloud Drive.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="MEGA offers a generous 50 GB free storage for all registered users with bonus achievements, and offers paid plans with much higher limits:";
+"generalDescriptionParagraph4"="MEGA oferă un spaţiu de stocare generos de 50 GB gratuit pentru toţi utilizatorii înregistraţi cu realizările bonus şi oferă planuri plătite cu limite mult mai mari:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITE subscription: €4.99 (US$4.99) per month or €49.99 (US$49.99) per year gives you 200 GB of storage space and 1 TB of transfer quota per month.\nPRO I subscription: €9.99 (US$9.99) per month or €99.99 (US$99.99) per year gives you 1 TB of storage space and 2 TB of transfer quota per month.\nPRO II subscription: €19.99 (US$19.99) per month or €199.99 (US$199.99) per year gives you 4 TB of storage space and 8 TB of transfer quota per month.\nPRO III subscription: €29.99 (US$29.99) per month or €299.99 (US$299.99) per year gives you 8 TB of storage space and 16 TB of transfer quota per month.";
+"generalDescriptionParagraph5"="Abonamentul PRO LITE: 4,99€ (4,99$ SUA) pe lună sau 49,99€ (49,99$ SUA) pe an îţi oferă 200 GB spaţiu de stocare şi 1 TB cotă de transfer pe lună.\nAbonamentul PRO I: 9,99€ (9,99$ SUA) pe lună sau 99,99€ (99,99$ SUA) pe an îţi oferă 1 TB spaţiu de stocare şi 2 TB cotă de transfer pe lună.\nAbonamentul PRO II: 19,99€ (19,99$ SUA) pe lună sau 199,99€ (199,99$ SUA) pe an îţi oferă 4 TB spaţiu de stocare şi 8 TB cotă de transfer pe lună.\nAbonamentul PRO III: 29,99€ (29,99$ SUA) pe lună sau 299,99€ (299,99$ SUA) pe an îţi oferă 8 TB spaţiu de stocare şi 16 TB cotă de transfer pe lună.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="For more info, please check our website: https://mega.nz/\nTerms of Service: https://mega.nz/terms\nPrivacy Policy: https://mega.nz/privacy";
+"generalDescriptionParagraph6"="Pentru mai multe informaţii, te rugăm să verifici site-ul nostru web: https://mega.nz/\nTermenii de utilizare a serviciului: https://mega.nz/terms\nPolitica de confidenţialitate: https://mega.nz/privacy";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="Se apelează...";
 /* Notification text body shown when you have missed one audio call */
@@ -1395,7 +1399,7 @@
 /* Text shown under the title 'Video quality' that explains what it means */
 "qualityOfVideosUploadedToAChat"="Quality of videos uploaded to a chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
-"videoQuality"="Video quality";
+"videoQuality"="Calitate video";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
 "low"="Low";
 /* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
@@ -1553,18 +1557,46 @@
 /* Item of a menu to forward a message chat to another chatroom */
 "forward"="Forward";
 /* Success message shown after forwarding messages to other chats */
-"messagesSent"="Messages sent";
+"messagesSent"="Mesaje trimise";
 /* Title of archived chats button */
-"archivedChats"="Archived chats";
+"archivedChats"="Chaturi arhivate";
 /* Confirmation message on archive chat dialog for user to confirm. */
-"archiveChatMessage"="Are you sure you want to archive this conversation?";
+"archiveChatMessage"="Sigur vrei să arhivezi această conversaţie?";
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
-"unarchiveChatMessage"="Are you sure you want to unarchive this conversation?";
+"unarchiveChatMessage"="Sigur vrei să dezarhivezi această conversaţie?";
 /* The title of the dialog to unarchive an archived chat. */
-"unarchiveChat"="Unarchive Chat";
+"unarchiveChat"="Dezarhivează chatul";
 /* Title of button to archive chats. */
-"archiveChat"="Archive Chat";
+"archiveChat"="Arhivează chatul";
 /* Title of flag of archived chats. */
-"archived"="Archived";
+"archived"="Arhivate";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="No Archived Chats";
+"noArchivedChats"="Niciun chat arhivat";
+/* A title for the Two-Factor Authentication section on the My Account - Security page. */
+"twoFactorAuthentication"="Two-Factor Authentication";
+/* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
+"beginSetup"="Begin Setup";
+/* A message on the Verify Login page telling the user to enter their 2FA code. */
+"pleaseEnterTheSixDigitCode"="Please enter the 6-digit code generated by your Authentication app.";
+/* Title of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthentication"="De ce ai nevoie de autentificarea cu doi factori?";
+/* Description for the ‘Two-Factor Authentication’ in the security settings section. */
+"whatIsTwoFactorAuthentication"="Two-Factor Authentication is a second layer of security for your account.";
+/* Description text of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthenticationDescription"="Two-Factor Authentication is a second layer of security for your account. Which means that even if someone knows your password they cannot access it, without also having access to the six digit code only you have access to.";
+/* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"youNeedATwoFactorAuthenticationApp"="You need a two factor authentication app on this device";
+/* A title on the mobile web client page showing that 2FA has been enabled successfully. */
+"twoFactorAuthenticationEnabled"="Two-Factor Authentication Enabled";
+/* A message on the dialog shown after 2FA was successfully enabled. */
+"twoFactorAuthenticationEnabledDescription"="Next time you login to your account you will be asked to enter a 6-digit code provided by your authentication app.";
+/* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
+"pleaseSaveYourRecoveryKey"="Please save your Recovery Key in a safe location";
+/* An informational message on the Backup Recovery Key dialog. */
+"twoFactorAuthenticationEnabledWarning"="If you lose access to your account after enabling 2FA and you have not backed up your Recovery Key, MEGA cannot help you gain access to it again.";
+/* A message on a dialog to say that 2FA has been successfully disabled. */
+"twoFactorAuthenticationDisabled"="Two-Factor Authentication Disabled";
+/* A message on the setup two-factor authentication page on the mobile web client. */
+"scanOrCopyTheSeed"="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your phone.";
+/* A button to help them restore their account if they have lost their 2FA device. */
+"lostYourAuthenticatorDevice"="Lost your Authenticator device?";

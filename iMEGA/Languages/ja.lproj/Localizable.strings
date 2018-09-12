@@ -298,8 +298,10 @@
 "newFolderMessage"="新フォルダの名前";
 /* Title button for the create folder alert.  */
 "createFolderButton"="作成";
-/* message when trying to create a folder that already exists */
-"folderAlreadyExists"="そのフォルダは存在しています。";
+/* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
+"There is already a folder with the same name"="同じ名前のフォルダがすでにあります";
+/* A tooltip message which shows when a file name is duplicated during renaming. */
+"There is already a file with the same name"="同じ名前のファイルがすでにあります";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="インポート...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -656,8 +658,6 @@
 "about"="概要";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="言語";
-/* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
-"applicationLanguage"="アプリケーション言語";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="フィードバックを送る";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="チャージ中のみ";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="有効にすると、フォトやビデオがアップロードされます。";
+/* App means “Application” */
+"App version"="アプリ用";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK版";
 /* Title of the label where the MEGAchat SDK version is shown */
@@ -701,7 +703,7 @@
 /*  */
 "masterKey_thirdParagraph"="外部攻撃者があなたの鍵を手に入れてもあなたのアカウントにはアクセスできません。パスワードをリセットするには親鍵とあなたのメールへのアクセスとの両方が必要です。";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="リカバリーキーがクリップボードにコピーされました";
+"recoveryKeyCopiedToClipboard"="回復キーがクリップボードにコピーされました。安全な場所に保管してください。";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="リカバリーキーがエクスポート完了";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -748,6 +750,8 @@
 "cancellationLinkHasExpired"="キャンセルリンクは失効しました。";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="これはあなたのアカウントをキャンセルする最後のステップです。クラウドに保存されているデータはすべて完全に失われます。以下にパスワードを入力してください。";
+/* During account cancellation (deletion) */
+"accountCanceledSuccessfully"="あなたのアカウントはキャンセルされました。";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="アカウントを閉じる";
 /* Title for the action that allows to remove a file or folder */
@@ -1568,3 +1572,31 @@
 "archived"="圧縮済み";
 /* Title of empty state view for archived chats. */
 "noArchivedChats"="圧縮されたチャットがありません";
+/* A title for the Two-Factor Authentication section on the My Account - Security page. */
+"twoFactorAuthentication"="二要素認証";
+/* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
+"beginSetup"="セットアップを開始";
+/* A message on the Verify Login page telling the user to enter their 2FA code. */
+"pleaseEnterTheSixDigitCode"="オーセンティケータアプリで生成された6桁のコードを入力してください。";
+/* Title of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthentication"="なぜ二要素認証が必要ですか？　";
+/* Description for the ‘Two-Factor Authentication’ in the security settings section. */
+"whatIsTwoFactorAuthentication"="二要素認証は、アカウント用のセキュリティの第2層です。";
+/* Description text of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthenticationDescription"="二要素認証は、アカウント用のセキュリティの第2層です。つまり、たとえ誰かがあなたのパスワードを知っていても、あなただけがアクセスできる6桁のコードにアクセスできない限り、それにアクセスすることはできません。";
+/* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"youNeedATwoFactorAuthenticationApp"="この端末では二要素認証アプリが必要です";
+/* A title on the mobile web client page showing that 2FA has been enabled successfully. */
+"twoFactorAuthenticationEnabled"="二要素認証が有効になりました";
+/* A message on the dialog shown after 2FA was successfully enabled. */
+"twoFactorAuthenticationEnabledDescription"="次回アカウントにログインすると、認証アプリで提供される6桁のコードを入力するよう求められます。";
+/* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
+"pleaseSaveYourRecoveryKey"="回復キーは安全な場所に保存しておいてください";
+/* An informational message on the Backup Recovery Key dialog. */
+"twoFactorAuthenticationEnabledWarning"="2FAを有効にした後にアカウントにアクセスできず、回復キーをバックアップしていない場合、MEGAは再度それに対するアクセス取得をご支援することはできません。";
+/* A message on a dialog to say that 2FA has been successfully disabled. */
+"twoFactorAuthenticationDisabled"="二要素認証が無効になりました";
+/* A message on the setup two-factor authentication page on the mobile web client. */
+"scanOrCopyTheSeed"="シードをオーセンティケータアプリにスキャンまたはコピーします。携帯電話を失くした場合に備えて、このシードを安全な場所にバックアップしてください。";
+/* A button to help them restore their account if they have lost their 2FA device. */
+"lostYourAuthenticatorDevice"="オーセンティケータ端末を紛失しましたか？　";

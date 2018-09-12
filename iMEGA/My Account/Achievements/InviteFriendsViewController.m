@@ -93,7 +93,7 @@
     
     self.tokenField.delimiters = @[@",", @" "];
     self.tokenField.placeholderText = AMLocalizedString(@"insertYourFriendsEmails", @"");
-    [self.tokenField setColorScheme:[UIColor mnz_redF0373A]];
+    [self.tokenField setColorScheme:UIColor.mnz_redMain];
 }
 
 - (void)addEmailToTokenList:(NSString *)email {
@@ -103,7 +103,7 @@
     
     [self cleanErrors];
     
-    self.inviteButton.backgroundColor = [UIColor mnz_redF0373A];
+    self.inviteButton.backgroundColor = UIColor.mnz_redMain;
 }
 
 - (void)cleanErrors {
@@ -160,7 +160,7 @@
         [self.tokenField reloadData];
         self.tokenFieldHeightLayoutConstraint.constant = self.tokenField.frame.size.height;
         
-        self.inviteButton.backgroundColor = [UIColor mnz_redF0373A];
+        self.inviteButton.backgroundColor = UIColor.mnz_redMain;
         
         [self cleanErrors];
     }
@@ -181,10 +181,10 @@
         
         [self addEmailToTokenList:text];
     } else {
-        self.tokenField.inputTextFieldTextColor = [UIColor mnz_redF0373A];
+        self.tokenField.inputTextFieldTextColor = UIColor.mnz_redMain;
         
         self.inviteButtonUpperLabel.text = AMLocalizedString(@"theEmailAddressFormatIsInvalid", @"Add contacts and share dialog error message when user try to add wrong email address");
-        self.inviteButtonUpperLabel.textColor = [UIColor mnz_redF0373A];
+        self.inviteButtonUpperLabel.textColor = UIColor.mnz_redMain;
     }
 }
 

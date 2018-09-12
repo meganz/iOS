@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-UI-Display-Regular.otf">
+            <string>SFUIDisplay-Regular</string>
+        </array>
+        <array key="SF-UI-Text-Regular.otf">
+            <string>SFUIText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="2jk-LD-Uqt" userLabel="Please check your email View" customClass="AwaitingEmailConfirmationView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Awaiting e-mail confirmation." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hIq-3x-tfh">
+                    <rect key="frame" x="30" y="351.5" width="315" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="egq-xP-uFQ"/>
+                        <constraint firstAttribute="width" constant="200" id="ogr-bw-Yid"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="20"/>
+                    <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="ogr-bw-Yid"/>
+                        </mask>
+                    </variation>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mailBig" translatesAutoresizingMaskIntoConstraints="NO" id="0sb-yg-ZOf">
+                    <rect key="frame" x="125.5" y="219.5" width="124" height="96"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="96" id="4a4-Vb-kmw"/>
+                        <constraint firstAttribute="width" constant="124" id="tDl-HA-IwT"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please go to your inbox and click the link to confirm your new e-mail address." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jU8-Oa-6ip">
+                    <rect key="frame" x="30" y="423.5" width="315" height="100"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="100" id="9bh-W6-cP9"/>
+                        <constraint firstAttribute="height" constant="42" id="G79-pi-bzl"/>
+                        <constraint firstAttribute="height" constant="42" id="qHD-Tf-qvv"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="18"/>
+                    <color key="textColor" red="0.46666666870000001" green="0.46666666870000001" blue="0.46666666870000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="G79-pi-bzl"/>
+                            <exclude reference="qHD-Tf-qvv"/>
+                        </mask>
+                    </variation>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="hIq-3x-tfh" firstAttribute="centerX" secondItem="0sb-yg-ZOf" secondAttribute="centerX" id="3m2-aT-f7U"/>
+                <constraint firstItem="0sb-yg-ZOf" firstAttribute="top" secondItem="2jk-LD-Uqt" secondAttribute="top" constant="92" id="66E-pi-u8l"/>
+                <constraint firstItem="0sb-yg-ZOf" firstAttribute="centerY" secondItem="2jk-LD-Uqt" secondAttribute="centerY" constant="-66" id="9ob-Ka-2iS"/>
+                <constraint firstAttribute="centerX" secondItem="0sb-yg-ZOf" secondAttribute="centerX" id="J5Q-lw-Uys"/>
+                <constraint firstItem="jU8-Oa-6ip" firstAttribute="leading" secondItem="2jk-LD-Uqt" secondAttribute="leading" constant="30" id="KXq-yn-5Qi"/>
+                <constraint firstAttribute="trailing" secondItem="hIq-3x-tfh" secondAttribute="trailing" constant="30" id="Nxy-9x-snq"/>
+                <constraint firstAttribute="trailing" secondItem="jU8-Oa-6ip" secondAttribute="trailing" constant="30" id="f5L-Pd-pp9"/>
+                <constraint firstItem="jU8-Oa-6ip" firstAttribute="top" secondItem="hIq-3x-tfh" secondAttribute="bottom" constant="24" id="fVE-dI-Kzx"/>
+                <constraint firstItem="hIq-3x-tfh" firstAttribute="top" secondItem="0sb-yg-ZOf" secondAttribute="bottom" constant="36" id="i8c-XE-Qlg"/>
+                <constraint firstItem="hIq-3x-tfh" firstAttribute="leading" secondItem="2jk-LD-Uqt" secondAttribute="leading" constant="30" id="uMb-OY-CsF"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="K3f-lP-shF"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="66E-pi-u8l"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="descriptionLabel" destination="jU8-Oa-6ip" id="YZG-Dl-Ojh"/>
+                <outlet property="titleLabel" destination="hIq-3x-tfh" id="lif-cg-IAh"/>
+            </connections>
+            <point key="canvasLocation" x="29" y="42"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="mailBig" width="124" height="96"/>
+    </resources>
+</document>
