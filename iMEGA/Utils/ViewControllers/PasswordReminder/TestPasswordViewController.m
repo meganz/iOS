@@ -108,7 +108,7 @@
         [self.confirmButton setTitle:AMLocalizedString(@"testPassword", @"Label for test password button") forState:UIControlStateNormal];
         
         [self.backupKeyButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-        self.backupKeyButton.backgroundColor = UIColor.mnz_redFF4D52;
+        self.backupKeyButton.backgroundColor = UIColor.mnz_redMain;
         [self.backupKeyButton setTitle:AMLocalizedString(@"exportRecoveryKey", @"Text 'Export Recovery Key' placed just before two buttons into the 'settings' page to allow see (copy/paste) and export the Recovery Key.") forState:UIControlStateNormal];
     } else {
         self.closeBarButton.title = AMLocalizedString(@"close", @"A button label.");
@@ -131,10 +131,10 @@
     self.passwordViewHeightConstraint.constant = 101;
     self.passwordView.wrongPasswordView.hidden = NO;
 
-    self.passwordView.passwordTextField.textColor = UIColor.mnz_redF0373A;
+    self.passwordView.passwordTextField.textColor = UIColor.mnz_redMain;
     
     [self.backupKeyButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-    self.backupKeyButton.backgroundColor = UIColor.mnz_redFF4D52;
+    self.backupKeyButton.backgroundColor = UIColor.mnz_redMain;
 }
 
 - (void)passwordTestSuccess {
@@ -146,7 +146,7 @@
         self.confirmButton.backgroundColor = UIColor.whiteColor;
         
         [self.backupKeyButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-        self.backupKeyButton.backgroundColor = UIColor.mnz_redFF4D52;
+        self.backupKeyButton.backgroundColor = UIColor.mnz_redMain;
     } else {
         [self.backupKeyButton setTitleColor:UIColor.mnz_gray666666 forState:UIControlStateNormal];
         self.backupKeyButton.backgroundColor = [UIColor colorFromHexString:@"F2F2F2"];

@@ -4,6 +4,8 @@
 #import <ContactsUI/ContactsUI.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 
+#import "NSString+MNZCategory.h"
+
 @implementation ShareAttachment
 
 static NSMutableArray<ShareAttachment *> *_attachmentsArray;
@@ -28,7 +30,7 @@ static NSMutableArray<ShareAttachment *> *_attachmentsArray;
     ShareAttachment *shareAttachment = [[ShareAttachment alloc] init];
     BOOL isPNG = [itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypePNG];
     shareAttachment.type = isPNG ? ShareAttachmentTypePNG : ShareAttachmentTypeImage;
-    shareAttachment.name = [ShareAttachment suggestedNameForItemProvider:itemProvider];
+    shareAttachment.name = [ShareAttachment suggestedNameForImageWithItemProvider:itemProvider];
     shareAttachment.content = image;
     [[ShareAttachment attachmentsArray] addObject:shareAttachment];
 }
@@ -67,12 +69,31 @@ static NSMutableArray<ShareAttachment *> *_attachmentsArray;
 
 #pragma mark - Naming
 
-+ (NSString *)suggestedNameForGIFWithItemProvider:(NSItemProvider *)itemProvider {
-    NSString *suggestedName;
++ (NSString *)suggestedUniqueNameWithItemProvider:(NSItemProvider *)itemProvider {
+    NSString *suggestedName = nil;
     
     if (@available(iOS 11.0, *)) {
-        suggestedName = itemProvider.suggestedName;
+        suggestedName = [ShareAttachment suggestedUniqueNameWithString:itemProvider.suggestedName];
     }
+    
+    return suggestedName;
+}
+
++ (NSString *)suggestedUniqueNameWithString:(NSString *)suggestedName {
+    NSString *newName = suggestedName;
+    for (ShareAttachment *attachment in [ShareAttachment attachmentsArray]) {
+        if ([newName isEqualToString:attachment.name]) {
+            newName = nil;
+            break;
+        }
+    }
+    
+    return newName;
+}
+
++ (NSString *)suggestedNameForGIFWithItemProvider:(NSItemProvider *)itemProvider {
+    NSString *suggestedName = [ShareAttachment suggestedUniqueNameWithItemProvider:itemProvider];
+    
     if (!suggestedName) {
         NSString *name = [NSUUID UUID].UUIDString;
         suggestedName = [NSString stringWithFormat:@"%@.gif", name];
@@ -81,12 +102,9 @@ static NSMutableArray<ShareAttachment *> *_attachmentsArray;
     return suggestedName;
 }
 
-+ (NSString *)suggestedNameForItemProvider:(NSItemProvider *)itemProvider {
-    NSString *suggestedName;
++ (NSString *)suggestedNameForImageWithItemProvider:(NSItemProvider *)itemProvider {
+    NSString *suggestedName = [ShareAttachment suggestedUniqueNameWithItemProvider:itemProvider];
     
-    if (@available(iOS 11.0, *)) {
-        suggestedName = itemProvider.suggestedName;
-    }
     if (!suggestedName) {
         NSString *name = [NSUUID UUID].UUIDString;
         NSString *extension = [itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypePNG] ? @"png" : @"jpg";
@@ -97,17 +115,13 @@ static NSMutableArray<ShareAttachment *> *_attachmentsArray;
 }
 
 + (NSString *)suggestedNameForFileURL:(NSURL *)url {
-    NSString *lastPathComponent;
-    
-    NSString *path = url.path;
-    NSMutableArray<NSString *> *fileNameComponents = [[path.lastPathComponent componentsSeparatedByString:@"."] mutableCopy];
-    if (fileNameComponents.count > 1) {
-        NSString *extension = fileNameComponents.lastObject.lowercaseString;
-        [fileNameComponents replaceObjectAtIndex:(fileNameComponents.count - 1) withObject:extension];
+    NSString *lastPathComponent = url.path.lastPathComponent.mnz_fileNameWithLowercaseExtension;
+    NSString *suggestedName = [ShareAttachment suggestedUniqueNameWithString:lastPathComponent];
+    if (!suggestedName) {
+        suggestedName = [NSString stringWithFormat:@"%@.%@", [NSUUID UUID].UUIDString, lastPathComponent.mnz_lastExtensionInLowercase];
     }
-    lastPathComponent = [fileNameComponents componentsJoinedByString:@"."];
     
-    return lastPathComponent;
+    return suggestedName;
 }
 
 + (NSString *)suggestedNameForContact:(NSData *)vCardData {
@@ -125,12 +139,12 @@ static NSMutableArray<ShareAttachment *> *_attachmentsArray;
             }
         }
     }
-
-    if (suggestedName.length == 0) {
-        suggestedName = [NSUUID UUID].UUIDString;
-    }
     
-    suggestedName = [suggestedName stringByAppendingString:@".vcf"];
+    suggestedName = [ShareAttachment suggestedUniqueNameWithString:[suggestedName stringByAppendingString:@".vcf"]];
+
+    if (!suggestedName || suggestedName.length == 0) {
+        suggestedName = [[NSUUID UUID].UUIDString stringByAppendingString:@".vcf"];
+    }
     
     return suggestedName;
 }

@@ -34,6 +34,8 @@
 @property (nonatomic) BOOL pickerPresented;
 @property (nonatomic) BOOL passcodePresented;
 
+@property (nonatomic) NSDate *lastProgressChange;
+
 @end
 
 @implementation DocumentPickerViewController
@@ -80,7 +82,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground)
                                                  name:NSExtensionHostDidEnterBackgroundNotification
                                                object:nil];
-
+    
+    self.lastProgressChange = [NSDate new];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -464,8 +467,12 @@
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue);
     if (percentage >= 0.01) {
-        NSString *percentageCompleted = [NSString stringWithFormat:@"%.f %%", percentage * 100];
-        [SVProgressHUD showProgress:percentage status:percentageCompleted];
+        NSDate *now = [NSDate new];
+        if (!UIAccessibilityIsVoiceOverRunning() || [now timeIntervalSinceDate:self.lastProgressChange] > 2) {
+            self.lastProgressChange = now;
+            NSString *percentageCompleted = [NSString stringWithFormat:@"%.f %%", percentage * 100];
+            [SVProgressHUD showProgress:percentage status:percentageCompleted];
+        }
     }
 }
 

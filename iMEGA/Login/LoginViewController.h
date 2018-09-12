@@ -1,6 +1,8 @@
+
 #import <UIKit/UIKit.h>
-#import "MEGASdkManager.h"
 
 @interface LoginViewController : UIViewController
+
+@property (strong, nonatomic) NSString *emailString;
 
 @end

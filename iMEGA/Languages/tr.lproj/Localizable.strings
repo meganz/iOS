@@ -298,8 +298,10 @@
 "newFolderMessage"="Yeni klasör için isim";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Oluştur";
-/* message when trying to create a folder that already exists */
-"folderAlreadyExists"="Klasör zaten var";
+/* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
+"There is already a folder with the same name"="Aynı isimli bir klasör zaten var";
+/* A tooltip message which shows when a file name is duplicated during renaming. */
+"There is already a file with the same name"="Aynı isimli bir dosya zaten var";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Şuradan içe aktar...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -656,8 +658,6 @@
 "about"="Hakkında";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Dil";
-/* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
-"applicationLanguage"="Uygulama dili";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Görüş Gönder";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="Sadece şarj ederken";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Etkinleştirildiğinde yeni fotoğraflar ve videolar yüklenecektir.";
+/* App means “Application” */
+"App version"="Uygulama sürümü";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK sürümü";
 /* Title of the label where the MEGAchat SDK version is shown */
@@ -701,7 +703,7 @@
 /*  */
 "masterKey_thirdParagraph"="Harici bir saldırgan sadece anahtarınız ile hesabınıza erişim sağlayamaz. Parola sıfırlama hem anahtar hem de e-posta adresinize erişim gerektirir.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="Kurtarma Anahtarı panoya kopyalandı";
+"recoveryKeyCopiedToClipboard"="Kurtarma Anahtarı panoya kopyalandı. Lütfen güvenli bir yerde saklayın.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Kurtarma Anahtarı dışarı aktarıldı";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -748,6 +750,8 @@
 "cancellationLinkHasExpired"="İptal bağlantısının süresi doldu.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Bu hesabınızı iptal etmeniz için gereken son adım. Bulutda depolanan tüm veri sonsuza dek silinecektir. Lütfen parolanızı aşağıya giriniz.";
+/* During account cancellation (deletion) */
+"accountCanceledSuccessfully"="Hesabınız başarıyla iptal edildi.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Hesabı kapat";
 /* Title for the action that allows to remove a file or folder */
@@ -1568,3 +1572,31 @@
 "archived"="Arşivlendi";
 /* Title of empty state view for archived chats. */
 "noArchivedChats"="Arşivlenmiş Sohbetler Yok";
+/* A title for the Two-Factor Authentication section on the My Account - Security page. */
+"twoFactorAuthentication"="İki Faktörlü Kimlik Doğrulama";
+/* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
+"beginSetup"="Kurulumu Başlat";
+/* A message on the Verify Login page telling the user to enter their 2FA code. */
+"pleaseEnterTheSixDigitCode"="Lütfen Kimlik Doğrulama uygulamanızın oluşturduğu 6 basamaklı kodu girin.";
+/* Title of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthentication"="Neden İki Faktörlü Doğrulamaya ihtiyacınız var?";
+/* Description for the ‘Two-Factor Authentication’ in the security settings section. */
+"whatIsTwoFactorAuthentication"="İki Faktörlü Kimlik Doğrulama, hesabınızın ikinci bir güvenlik katmanıdır.";
+/* Description text of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthenticationDescription"="İki Faktörlü Kimlik Doğrulama, hesabınızın ikinci bir güvenlik katmanıdır. Başka bir deyişle, birisi şifrenizi biliyor olsa bile, sadece sizin erişebildiğiniz altı haneli koda erişimi olmadan hesabınıza erişemez.";
+/* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"youNeedATwoFactorAuthenticationApp"="Bu cihazda iki faktörlü bir kimlik doğrulama uygulamasına ihtiyacınız var";
+/* A title on the mobile web client page showing that 2FA has been enabled successfully. */
+"twoFactorAuthenticationEnabled"="İki Faktörlü Kimlik Doğrulama Etkin";
+/* A message on the dialog shown after 2FA was successfully enabled. */
+"twoFactorAuthenticationEnabledDescription"="Bir dahaki sefere hesabınıza giriş yaptığınızda, kimlik doğrulama uygulamanız tarafından sağlanan 6 basamaklı bir kod girmeniz istenecektir.";
+/* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
+"pleaseSaveYourRecoveryKey"="Lütfen Kurtarma Anahtarınızı güvenli bir yere kaydedin";
+/* An informational message on the Backup Recovery Key dialog. */
+"twoFactorAuthenticationEnabledWarning"="İki Faktörlü Kimlik Doğrulamayı etkinleştirdikten sonra hesabınıza erişimi kaybederseniz ve Kurtarma Anahtarınızı yedeklemediyseniz, MEGA tekrar erişim sağlamanıza yardımcı olamaz.";
+/* A message on a dialog to say that 2FA has been successfully disabled. */
+"twoFactorAuthenticationDisabled"="İki Faktörlü Kimlik Doğrulama Devre Dışı";
+/* A message on the setup two-factor authentication page on the mobile web client. */
+"scanOrCopyTheSeed"="Kaynak kodunu Kimlik Doğrulama uygulamanıza tarayın veya kopyalayın. Telefonunuzu kaybetme ihtimalinize karşın bu kaynak kodunu güvenli bir yere yedeklediğinizden emin olun.";
+/* A button to help them restore their account if they have lost their 2FA device. */
+"lostYourAuthenticatorDevice"="Authenticator cihazınızı mı kaybettiniz?";

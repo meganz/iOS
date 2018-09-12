@@ -22,6 +22,7 @@
 #import "Helper.h"
 
 #import "GroupCallCollectionViewCell.h"
+#import "MEGANavigationController.h"
 
 @interface GroupCallViewController () <UICollectionViewDataSource, MEGAChatCallDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -65,7 +66,7 @@
     [self.navigationItem setTitleView:[Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:AMLocalizedString(@"connecting", nil)]];
     [self.navigationItem.titleView sizeToFit];
 
-    [Helper configureBlackNavigationAppearance];
+    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]].barTintColor = [UIColor colorWithRed:0.08 green:0.08 blue:0.07 alpha:0.9];
 
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.participantsView];
     [self updateParticipants];
@@ -156,7 +157,8 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [Helper configureRedNavigationAppearance];
+    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]].barTintColor = UIColor.mnz_redMain;
+
     [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
     [[UIDevice currentDevice] setProximityMonitoringEnabled:NO];
     [[NSNotificationCenter defaultCenter] removeObserver:self];

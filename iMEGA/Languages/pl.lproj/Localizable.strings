@@ -298,8 +298,10 @@
 "newFolderMessage"="Nazwa nowego katalogu";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Utwórz";
-/* message when trying to create a folder that already exists */
-"folderAlreadyExists"="Katalog już istnieje";
+/* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
+"There is already a folder with the same name"="Istnieje już katalog o takiej nazwie";
+/* A tooltip message which shows when a file name is duplicated during renaming. */
+"There is already a file with the same name"="Istnieje już plik o takiej nazwie";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importuj z...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -656,8 +658,6 @@
 "about"="O Nas";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Język";
-/* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
-"applicationLanguage"="Język";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Wyślij opinię";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="Tylko gdy podłączone zasilanie";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Gdy odblokowane, to wszystkie nowe zdjęcia i filmy będą wgrywane.";
+/* App means “Application” */
+"App version"="Wersja aplikacji";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK wersja";
 /* Title of the label where the MEGAchat SDK version is shown */
@@ -701,7 +703,7 @@
 /*  */
 "masterKey_thirdParagraph"="Atak zewnętrzny na Twoje dane nie może odbyć się wyłącznie za pomocą klucza. Do uzyskania dostępu do danych potrzebny będzie również dostęp do Twojego e-mail.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="Klucz zapasowy został skopiowany do schowka";
+"recoveryKeyCopiedToClipboard"="Klucz zapasowy został skopiowany do schowka. Przechowuj go w bezpiecznym miejscu.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Klucz zapasowy został wyeksportowany";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -748,6 +750,8 @@
 "cancellationLinkHasExpired"="Link nie jest poprawny.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="To jest ostatni krok w procesie usuwania konta. Twoje dane zostaną usunięte. Wprowadź swoje hasło.";
+/* During account cancellation (deletion) */
+"accountCanceledSuccessfully"="Twoje konto zostało anulowane.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Zamknij konto";
 /* Title for the action that allows to remove a file or folder */
@@ -1568,3 +1572,31 @@
 "archived"="Zarchiwizowane";
 /* Title of empty state view for archived chats. */
 "noArchivedChats"="Brak zarchiwizowanych czatów";
+/* A title for the Two-Factor Authentication section on the My Account - Security page. */
+"twoFactorAuthentication"="Uwierzytelnianie dwuetapowe";
+/* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
+"beginSetup"="Rozpocznij instalację";
+/* A message on the Verify Login page telling the user to enter their 2FA code. */
+"pleaseEnterTheSixDigitCode"="Wprowadź 6-cyfrowy kod wygenerowany przez aplikację do uwierzytelniania.";
+/* Title of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthentication"="Dlaczego potrzebujesz uwierzytelniania dwuetapowego?";
+/* Description for the ‘Two-Factor Authentication’ in the security settings section. */
+"whatIsTwoFactorAuthentication"="Uwierzytelnianie dwuetapowe to druga warstwa zabezpieczeń Twojego konta.";
+/* Description text of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthenticationDescription"="Uwierzytelnianie dwuetapowe to druga warstwa zabezpieczeń Twojego konta. Co oznacza, że nawet jeśli ktoś zna twoje hasło, nie może uzyskać do niego dostępu, nie mając dostępu do sześciocyfrowego kodu, do którego masz dostęp.";
+/* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"youNeedATwoFactorAuthenticationApp"="Potrzebujesz aplikacji uwierzytelniania dwustopniowego na tym urządzeniu";
+/* A title on the mobile web client page showing that 2FA has been enabled successfully. */
+"twoFactorAuthenticationEnabled"="Uwierzytelnianie dwuetapowe włączone";
+/* A message on the dialog shown after 2FA was successfully enabled. */
+"twoFactorAuthenticationEnabledDescription"="Gdy następnym razem zalogujesz się na swoje konto, zostaniesz poproszony o podanie 6-cyfrowego kodu dostarczonego przez Twoją aplikację do uwierzytelniania.";
+/* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
+"pleaseSaveYourRecoveryKey"="Zapisz klucz zapasowy w bezpiecznej lokalizacji";
+/* An informational message on the Backup Recovery Key dialog. */
+"twoFactorAuthenticationEnabledWarning"="Jeśli utracisz dostęp do swojego konta po włączeniu opcji 2FA i nie utworzyłeś kopii zapasowej klucza, MEGA nie pomoże ci odzyskać do niego dostępu.";
+/* A message on a dialog to say that 2FA has been successfully disabled. */
+"twoFactorAuthenticationDisabled"="Uwierzytelnianie dwuetapowe wyłączone";
+/* A message on the setup two-factor authentication page on the mobile web client. */
+"scanOrCopyTheSeed"="Zeskanuj lub skopiuj kod do aplikacji do uwierzytelniania. Pamiętaj, aby wykonać kopię zapasową tego materiału w bezpieczne miejsce na wypadek zgubienia telefonu.";
+/* A button to help them restore their account if they have lost their 2FA device. */
+"lostYourAuthenticatorDevice"="Zgubiłeś swoje urządzenie?";

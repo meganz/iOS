@@ -202,21 +202,21 @@
                 
             case MEGAAccountTypeProI: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO I"];
-                self.proStatusLabel.textColor = [UIColor mnz_redE13339];
+                self.proStatusLabel.textColor = UIColor.mnz_redProI;
                 self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
                 break;
             }
                 
             case MEGAAccountTypeProII: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO II"];
-                self.proStatusLabel.textColor = [UIColor mnz_redDC191F];
+                self.proStatusLabel.textColor = UIColor.mnz_redProII;
                 self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
                 break;
             }
                 
             case MEGAAccountTypeProIII: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO III"];
-                self.proStatusLabel.textColor = [UIColor mnz_redD90007];
+                self.proStatusLabel.textColor = UIColor.mnz_redProIII;
                 self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
                 break;
             }

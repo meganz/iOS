@@ -673,7 +673,7 @@
         <scene sceneID="mXn-pT-v0u">
             <objects>
                 <viewController storyboardIdentifier="CallViewControllerID" id="m0F-zS-y46" customClass="CallViewController" sceneMemberID="viewController">
-                    <view key="view" alpha="0.94999999999999996" contentMode="scaleToFill" id="2DR-0o-zFw">
+                    <view key="view" contentMode="scaleToFill" id="2DR-0o-zFw">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -791,7 +791,7 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.2196078431372549" green="0.16078431372549018" blue="0.16078431372549018" alpha="0.94999998807907104" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="fD1-GO-MnE" firstAttribute="centerX" secondItem="ZLl-1s-5Sy" secondAttribute="centerX" id="38a-fS-y8T"/>
                             <constraint firstItem="fD1-GO-MnE" firstAttribute="centerY" secondItem="2DR-0o-zFw" secondAttribute="centerY" multiplier="0.5" id="3fG-3u-r6V"/>

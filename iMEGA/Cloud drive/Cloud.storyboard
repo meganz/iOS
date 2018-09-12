@@ -537,7 +537,7 @@
                                                 </stackView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="share" translatesAutoresizingMaskIntoConstraints="NO" id="h0d-mn-bqe">
                                                     <rect key="frame" x="16" y="15" width="30" height="30"/>
-                                                    <color key="tintColor" red="0.80477464200000004" green="0.0" blue="0.041726302360000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="44v-q1-ofV"/>
                                                         <constraint firstAttribute="width" constant="30" id="Idh-HK-Edn"/>
@@ -700,13 +700,11 @@
                     <navigationItem key="navigationItem" id="7RS-wu-eAB">
                         <barButtonItem key="backBarButtonItem" title=" " id="HnN-nN-oE5"/>
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="K3C-tf-ftL">
-                            <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="cancelAction:" destination="xvu-Xm-WTc" id="wLs-V4-0no"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="Nmj-pH-BhC">
-                            <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="saveAction:" destination="xvu-Xm-WTc" id="Qzw-eg-db6"/>
                             </connections>
@@ -764,7 +762,7 @@
                                             <segment title="Cloud Drive"/>
                                             <segment title="Incoming"/>
                                         </segments>
-                                        <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <action selector="browserSegmentedControl:" destination="Z2F-Nr-ypX" eventType="valueChanged" id="ZrO-H8-3Ox"/>
                                         </connections>
@@ -787,7 +785,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7Nx-88-DiR">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7Nx-88-DiR">
                                 <rect key="frame" x="0.0" y="44" width="414" height="584"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -972,7 +970,6 @@
                     <navigationItem key="navigationItem" id="dJb-Gj-wJR">
                         <barButtonItem key="backBarButtonItem" title=" " id="S50-6X-Rph"/>
                         <barButtonItem key="rightBarButtonItem" title="Cancel" id="eAY-hb-l2Q">
-                            <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="cancel:" destination="Z2F-Nr-ypX" id="fg9-2M-mjr"/>
                             </connections>
@@ -1086,7 +1083,7 @@
                             </view>
                             <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VYB-69-jRQ">
                                 <rect key="frame" x="132" y="335" width="150" height="2"/>
-                                <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="aBH-9X-cH8"/>
                                 </constraints>
@@ -1163,13 +1160,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="HWB-rp-yxf">
                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="uL1-bJ-jlX">
-                            <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="doneTapped:" destination="zUo-yM-mbH" id="hdo-Vw-jfA"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="action" id="vj5-kf-txr">
-                            <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="shareAction:" destination="zUo-yM-mbH" id="dZX-DX-gKG"/>
                             </connections>
@@ -1189,24 +1186,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iif-bv-Vsk" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <barButtonItem image="thumbnailsView" id="vvK-JU-zPC" userLabel="Item">
-                    <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="thumbnailTapped:" destination="zUo-yM-mbH" id="O05-bw-iff"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem image="search" id="XMA-eg-oSl">
+                    <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="searchTapped:" destination="zUo-yM-mbH" id="6GC-Dr-7YH"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem title="Item" image="openWith" id="zhj-Kc-zZm">
-                    <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="shareAction:" destination="zUo-yM-mbH" id="b1e-qb-pHG"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem image="moreSelected" id="R1j-r6-Sll" userLabel="More Bar Button Item">
-                    <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="actionsTapped:" destination="zUo-yM-mbH" id="M4Z-Io-Yhl"/>
                     </connections>
@@ -1403,7 +1401,7 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="yUx-GY-JjA">
                                                     <rect key="frame" x="347" y="6" width="49" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                                    <color key="onTintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="onTintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="expireSwitchChanged:" destination="Lpo-hP-uLZ" eventType="valueChanged" id="w61-6M-qoT"/>
                                                     </connections>
@@ -1480,7 +1478,7 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="bx9-nj-PEb">
                                                     <rect key="frame" x="347" y="6" width="49" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                                    <color key="onTintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="onTintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="passwordProtectionSwitchChanged:" destination="Lpo-hP-uLZ" eventType="valueChanged" id="pte-PZ-m2D"/>
                                                     </connections>
@@ -1559,14 +1557,14 @@
                     </tableView>
                     <toolbarItems>
                         <barButtonItem title="Share" id="Iod-rc-wj6">
-                            <color key="tintColor" red="0.80392156859999997" green="0.0" blue="0.043137254899999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="shareAction:" destination="Lpo-hP-uLZ" id="OCw-no-Cuz"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem systemItem="flexibleSpace" id="FXh-BB-LD2"/>
                         <barButtonItem title="Copy link" id="Ihj-cZ-Oxo">
-                            <color key="tintColor" red="0.80392156859999997" green="0.0" blue="0.043137254899999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="copyLinkTapped:" destination="Lpo-hP-uLZ" id="0zA-Ww-jhd"/>
                             </connections>
@@ -1574,7 +1572,6 @@
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="RuD-LE-Jxn">
                         <barButtonItem key="rightBarButtonItem" title="Done" id="Bb8-Kf-AnR">
-                            <color key="tintColor" red="0.80392156859999997" green="0.0" blue="0.043137254899999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="doneTapped:" destination="Lpo-hP-uLZ" id="Pjf-7W-xAn"/>
                             </connections>
@@ -1631,7 +1628,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="60" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="fi8-tJ-WCt">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="60" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="fi8-tJ-WCt">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1937,7 +1934,7 @@
                                                 </view>
                                                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GVw-Hz-wyh">
                                                     <rect key="frame" x="0.0" y="58" width="414" height="2"/>
-                                                    <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="trackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </progressView>
                                             </subviews>
@@ -2090,14 +2087,14 @@
                                 <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <items>
                                     <barButtonItem title="Disagree" id="3yM-Mt-swH" userLabel="Disagree">
-                                        <color key="tintColor" red="0.80392156859999997" green="0.0" blue="0.043137254899999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <action selector="disagreeTapped:" destination="n0k-ng-oPN" id="1vl-1t-Jiy"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem systemItem="flexibleSpace" id="N3v-gy-33b"/>
                                     <barButtonItem title="Agree" id="igh-Iv-yxF" userLabel="Agree">
-                                        <color key="tintColor" red="0.80392156859999997" green="0.0" blue="0.043137254899999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <action selector="agreeTapped:" destination="n0k-ng-oPN" id="zrC-zW-ToG"/>
                                         </connections>
@@ -2396,7 +2393,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                                                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="ch9-C6-hOH">
                                                     <rect key="frame" x="0.0" y="57.666666666666664" width="414" height="2.6666666666666643"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </progressView>
                                             </subviews>
                                             <constraints>
@@ -2530,7 +2527,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <!--Navigation Controller-->
         <scene sceneID="7zb-lt-8Ja">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Vnk-U0-2If" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Vnk-U0-2If" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="hih-9K-OhR">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
@@ -2551,7 +2548,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <!--Navigation Controller-->
         <scene sceneID="uE8-MR-U5C">
             <objects>
-                <navigationController storyboardIdentifier="previewDocumentNavigationID" automaticallyAdjustsScrollViewInsets="NO" id="Zki-P6-x9M" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="previewDocumentNavigationID" automaticallyAdjustsScrollViewInsets="NO" id="Zki-P6-x9M" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="Pwp-sd-pPD">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
@@ -2577,7 +2574,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <!--Navigation Controller-->
         <scene sceneID="I07-3w-jaX">
             <objects>
-                <navigationController storyboardIdentifier="SearchInPdfNavigationID" automaticallyAdjustsScrollViewInsets="NO" id="fdi-Ab-mUD" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SearchInPdfNavigationID" automaticallyAdjustsScrollViewInsets="NO" id="fdi-Ab-mUD" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="g5U-xU-c1D">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>

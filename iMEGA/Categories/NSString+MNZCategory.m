@@ -342,7 +342,7 @@ static NSString* const B = @"[B]";
     }
 }
 
-- (NSString*)SHA256 {
+- (NSString *)SHA256 {
     unsigned int outputLength = CC_SHA256_DIGEST_LENGTH;
     unsigned char output[outputLength];
     
@@ -357,10 +357,14 @@ static NSString* const B = @"[B]";
     return hash;
 }
 
-#pragma mark - Emoji utils
+- (BOOL)mnz_isDecimalNumber {
+    NSCharacterSet *decimalDigitInvertedCharacterSet = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+    NSRange range = [self rangeOfCharacterFromSet:decimalDigitInvertedCharacterSet];
+    
+    return (range.location == NSNotFound);
+}
 
-- (BOOL)mnz_containsEmoji
-{
+- (BOOL)mnz_containsEmoji {
     __block BOOL containsEmoji = NO;
     
     [self enumerateSubstringsInRange:NSMakeRange(0,
@@ -672,6 +676,59 @@ static NSString* const B = @"[B]";
     NSString *base64FromBase64URLEncoding = [base64URLEncondingString stringByPaddingToLength:paddedLength withString:@"=" startingAtIndex:0];
     
     return base64FromBase64URLEncoding;
+}
+
+#pragma mark - File names and extensions
+
++ (NSString *)mnz_fileNameWithDate:(NSDate *)date {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss";
+    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    
+    return [dateFormatter stringFromDate:date];
+}
+
+- (NSString *)mnz_fileNameWithLowercaseExtension {
+    NSString *fileName;
+    NSString *extension;
+    
+    NSMutableArray<NSString *> *fileNameComponents = [[self componentsSeparatedByString:@"."] mutableCopy];
+    if (fileNameComponents.count > 1) {
+        extension = fileNameComponents.lastObject.lowercaseString;
+        [fileNameComponents replaceObjectAtIndex:(fileNameComponents.count - 1) withObject:extension];
+    }
+    fileName = [fileNameComponents componentsJoinedByString:@"."];
+    
+    return fileName;
+}
+
+- (NSString *)mnz_lastExtensionInLowercase {
+    NSString *extension;
+    NSMutableArray<NSString *> *fileNameComponents = [[self.lastPathComponent componentsSeparatedByString:@"."] mutableCopy];
+    if (fileNameComponents.count > 1) {
+        extension = fileNameComponents.lastObject.lowercaseString;
+    }
+    
+    return extension;
+}
+
+- (NSString *)mnz_sequentialFileNameInParentNode:(MEGANode *)parentNode {
+    NSString *nameWithoutExtension = self.stringByDeletingPathExtension;
+    NSString *extension = self.pathExtension;
+    int index = 0;
+    int listSize = 0;
+    
+    do {
+        if (index != 0) {
+            nameWithoutExtension = [self.stringByDeletingPathExtension stringByAppendingString:[NSString stringWithFormat:@"_%d", index]];
+        }
+        
+        MEGANodeList *nameNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:parentNode searchString:[nameWithoutExtension stringByAppendingPathExtension:extension]];
+        listSize = nameNodeList.size.intValue;
+        index++;
+    } while (listSize != 0);
+    
+    return [nameWithoutExtension stringByAppendingPathExtension:extension];
 }
 
 @end

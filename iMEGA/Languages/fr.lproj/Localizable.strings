@@ -298,8 +298,10 @@
 "newFolderMessage"="Nom du nouveau dossier";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Créer";
-/* message when trying to create a folder that already exists */
-"folderAlreadyExists"="Dossier déjà existant";
+/* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
+"There is already a folder with the same name"="Un dossier du même nom existe déjà";
+/* A tooltip message which shows when a file name is duplicated during renaming. */
+"There is already a file with the same name"="Un fichier du même nom existe déjà";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importer de...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -327,7 +329,7 @@
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Enregistré Hors ligne";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
-"folderInboxError"="\"Boîte de réception\" est réservé à l'usage propre d'Apple.";
+"folderInboxError"="« Boîte de réception » est réservé à l’usage d’Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="Enregistrer l'image";
 /* Title shown under the action that allows you to save several images to your camera roll */
@@ -457,19 +459,19 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
 "moveFileToRubbishBinMessage"="Voulez-vous vraiment déplacer 1 fichier vers la corbeille ?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
-"moveFilesToRubbishBinMessage"="Voulez-vous vraiment déplacer %d fichiers vers la corbeille ?";
+"moveFilesToRubbishBinMessage"="Voulez-vous vraiment déplacer %d fichiers vers la corbeille ?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
-"moveFolderToRubbishBinMessage"="Voulez-vous vraiment déplacer 1 dossier vers la corbeille ?";
+"moveFolderToRubbishBinMessage"="Voulez-vous vraiment déplacer 1 dossier vers la corbeille ?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="Voulez-vous vraiment déplacer %d dossiers vers la corbeille ?";
+"moveFoldersToRubbishBinMessage"="Voulez-vous vraiment déplacer %d dossiers vers la corbeille ?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="Voulez-vous vraiment déplacer 1 fichier et 1 dossier vers la corbeille ?";
+"moveFileFolderToRubbishBinMessage"="Voulez-vous vraiment déplacer 1 fichier et 1 dossier vers la corbeille ?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="Voulez-vous vraiment déplacer 1 fichier et %d dossiers vers la corbeille ?";
+"moveFileFoldersToRubbishBinMessage"="Voulez-vous vraiment déplacer 1 fichier et %d dossiers vers la corbeille ?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="Voulez-vous vraiment déplacer %d fichiers et 1 dossier vers la corbeille ?";
+"moveFilesFolderToRubbishBinMessage"="Voulez-vous vraiment déplacer %d fichiers et 1 dossier vers la corbeille ?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Voulez-vous vraiment déplacer [A] fichiers et [B] dossiers vers la corbeille ?";
+"moveFilesFoldersToRubbishBinMessage"="Voulez-vous vraiment déplacer [A] fichiers et [B] dossiers vers la corbeille ?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="Un fichier a été déplacé vers la corbeille";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -571,7 +573,7 @@
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareMultipleContactsMessage"="Voulez-vous vraiment supprimer ce partage ? (Partagé avec %d contacts)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Voulez-vous vraiment retirer ces partages ? (Partagés avec %d contacts)";
+"removeMultipleSharesMultipleContactsMessage"="Voulez-vous vraiment retirer ces partages ? (Partagés avec %d contacts)";
 /* Message shown when a share have been removed */
 "shareRemoved"="Le partage a été retiré";
 /* Message shown when some shares have been removed */
@@ -603,9 +605,9 @@
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="Supprimer le contact";
 /* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="Voulez-vous vraiment retirer %@ de votre liste de contacts ?";
+"removeUserMessage"="Voulez-vous vraiment retirer %@ de votre liste de contacts ?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
-"removeMultipleUsersMessage"="Voulez-vraiment retirer %d utilisateurs de votre liste de contacts ?";
+"removeMultipleUsersMessage"="Voulez-vraiment retirer %d utilisateurs de votre liste de contacts ?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d contacts ont été supprimés";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
@@ -617,9 +619,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Quitter";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Voulez-vous vraiment quitter ce partage ?";
+"leaveShareAlertMessage"="Voulez-vous vraiment quitter ce partage ?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Voulez-vous vraiment quitter ces partages ?";
+"leaveSharesAlertMessage"="Voulez-vous vraiment quitter ces partages ?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Partager";
 /* Select all items/elements on the list */
@@ -656,8 +658,6 @@
 "about"="À propos";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Langue";
-/* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
-"applicationLanguage"="Anglais";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Envoyer une rétroaction";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="Pendant la charge seulement";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Si cette option est activée, les nouvelles photos et vidéos seront téléversées.";
+/* App means “Application” */
+"App version"="Version de l’appli";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Version de la trousse SDK MEGA";
 /* Title of the label where the MEGAchat SDK version is shown */
@@ -701,11 +703,11 @@
 /*  */
 "masterKey_thirdParagraph"="Un assaillant externe ne peut pas accéder à votre compte avec seulement votre clé. Une réinitialisation du mot de passe exige à la fois la clé et l’accès à votre compte de courriel.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="La clé de récupération a été copiée dans le presse-papiers";
+"recoveryKeyCopiedToClipboard"="La clé de récupération a été copiée dans le presse-papiers. Veuillez la conserver en lieu sûr.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="La clé de récupération a été exportée";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="La clé de récupération a été exportée dans la section Hors ligne sous RecoveryKey.txt. Note : Elle sera supprimée si vous vous déconnectez. Veuillez la conserver dans un endroit sûr.";
+"masterKeyExported_alertMessage"="La clé de récupération a été exportée dans la section Hors ligne sous RecoveryKey.txt. Note : Elle sera supprimée si vous vous déconnectez. Veuillez la conserver en lieu sûr.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Sur votre appareil";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -748,6 +750,8 @@
 "cancellationLinkHasExpired"="Le lien d'annulation a expiré.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Ceci est la dernière étape pour annuler votre compte. Vous perdrez irrémédiablement toutes les données stockées dans le nuage. Veuillez saisir votre mot de passe ci-dessous.";
+/* During account cancellation (deletion) */
+"accountCanceledSuccessfully"="Votre compte a été annulé avec succès.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Fermer le compte";
 /* Title for the action that allows to remove a file or folder */
@@ -1066,7 +1070,7 @@
 /* Alert message shown when the user remove one item from the Offline section */
 "removeItemFromOffline"="Voulez-vous vraiment supprimer cet élément Hors ligne ?";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="Voulez-vous vraiment supprimer ces éléments hors ligne ?";
+"removeItemsFromOffline"="Voulez-vous vraiment supprimer ces éléments Hors ligne ?";
 /* Chat section header */
 "chat"="Dialogue";
 /* Empty Conversations section */
@@ -1568,3 +1572,31 @@
 "archived"="Archivée";
 /* Title of empty state view for archived chats. */
 "noArchivedChats"="Aucune conversation n’est archivée";
+/* A title for the Two-Factor Authentication section on the My Account - Security page. */
+"twoFactorAuthentication"="Authentification à deux facteurs";
+/* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
+"beginSetup"="Lancer la configuration";
+/* A message on the Verify Login page telling the user to enter their 2FA code. */
+"pleaseEnterTheSixDigitCode"="Veuillez saisir le code à 6 chiffres généré par votre appli d’authentification.";
+/* Title of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthentication"="Pourquoi avez-vous besoin de l’authentification à deux facteurs ?";
+/* Description for the ‘Two-Factor Authentication’ in the security settings section. */
+"whatIsTwoFactorAuthentication"="L’authentification à deux facteurs est un niveau supplémentaire de sécurité pour votre compte.";
+/* Description text of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthenticationDescription"="L’authentification à deux facteurs est un niveau supplémentaire de sécurité pour votre compte. Cela signifie que même si quelqu’un connaissait votre mot de passe, il ne pourrait pas y accéder sans avoir aussi le code à 6 chiffres que seul vous aurez.";
+/* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"youNeedATwoFactorAuthenticationApp"="Vous avez besoin d’une appli d’authentification à deux facteurs sur cet appareil";
+/* A title on the mobile web client page showing that 2FA has been enabled successfully. */
+"twoFactorAuthenticationEnabled"="L’authentification à deux facteurs est activée";
+/* A message on the dialog shown after 2FA was successfully enabled. */
+"twoFactorAuthenticationEnabledDescription"="La prochaine fois que vous vous connecterez à votre compte, un code à 6 chiffres fourni par votre appli d’authentification vous sera demandé.";
+/* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
+"pleaseSaveYourRecoveryKey"="Veuillez enregistrer votre clé de récupération en lieu sûr";
+/* An informational message on the Backup Recovery Key dialog. */
+"twoFactorAuthenticationEnabledWarning"="Si vous perdez l’accès à votre compte après avoir activé l’A2F et si vous n’avez pas sauvegardé votre clé de récupération, MEGA ne pourra pas vous aider à y accéder de nouveau.";
+/* A message on a dialog to say that 2FA has been successfully disabled. */
+"twoFactorAuthenticationDisabled"="L’authentification à deux facteurs est désactivée";
+/* A message on the setup two-factor authentication page on the mobile web client. */
+"scanOrCopyTheSeed"="Lisez ou copiez la graine vers votre appli d’authentification. Assurez-vous de sauvegarder cette graine en lieu sûr au cas où vous perdriez votre téléphone.";
+/* A button to help them restore their account if they have lost their 2FA device. */
+"lostYourAuthenticatorDevice"="Avez-vous perdu votre appareil d’authentification ?";

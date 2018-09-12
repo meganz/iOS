@@ -37,13 +37,13 @@
                                 <items>
                                     <navigationItem title="Title" id="u26-RZ-kaH">
                                         <barButtonItem key="leftBarButtonItem" style="plain" systemItem="stop" id="Bfh-QP-H1o">
-                                            <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <connections>
                                                 <action selector="didPressCloseButton:" destination="yD8-RT-K0O" id="y4q-pJ-tUt"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" image="more" id="YVt-M3-aSH">
-                                            <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <connections>
                                                 <action selector="didPressActionsButton:" destination="yD8-RT-K0O" id="cLN-7K-Wry"/>
                                             </connections>
@@ -56,14 +56,14 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <items>
                                     <barButtonItem title="Item" image="thumbnailsView" id="xTs-Xs-c6Q">
-                                        <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <action selector="didPressLeftToolbarButton:" destination="yD8-RT-K0O" id="ZOX-jv-VVR"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="9ow-6i-pKC"/>
                                     <barButtonItem title="Item" image="openWith" id="Rck-W5-yGE">
-                                        <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <action selector="didPressRightToolbarButton:" destination="yD8-RT-K0O" id="08B-ip-amX"/>
                                         </connections>
@@ -132,7 +132,7 @@
                                 <items>
                                     <navigationItem id="iZJ-x1-GIX">
                                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="vUv-17-6IT">
-                                            <color key="tintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <connections>
                                                 <action selector="didPressClose:" destination="p3Y-sw-UEZ" id="Zz4-LR-U1a"/>
                                             </connections>

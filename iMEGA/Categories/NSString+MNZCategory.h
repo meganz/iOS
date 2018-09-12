@@ -41,7 +41,9 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 + (NSString *)mnz_stringFromTimeInterval:(NSTimeInterval)interval;
 + (NSString *)mnz_stringFromCallDuration:(NSInteger)duration;
 
-- (NSString*)SHA256;
+- (NSString *)SHA256;
+
+- (BOOL)mnz_isDecimalNumber;
 
 - (BOOL)mnz_containsEmoji;
 - (BOOL)mnz_isPureEmojiString;
@@ -49,5 +51,13 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 
 - (NSString *)mnz_coordinatesOfPhotoOrVideo;
 + (NSString *)mnz_base64FromBase64URLEncoding:(NSString *)base64URLEncondingString;
+
+#pragma mark - File names and extensions
+
++ (NSString *)mnz_fileNameWithDate:(NSDate *)date;
+
+- (NSString *)mnz_fileNameWithLowercaseExtension;
+- (NSString *)mnz_lastExtensionInLowercase;
+- (NSString *)mnz_sequentialFileNameInParentNode:(MEGANode *)parentNode;
 
 @end

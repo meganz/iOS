@@ -1,6 +1,7 @@
 
 #import "MEGAPhotoBrowserViewController.h"
 
+#import "FLAnimatedImage.h"
 #import "PieChartView.h"
 #import "SVProgressHUD.h"
 
@@ -125,17 +126,18 @@
     self.navigationBar.barTintColor = [UIColor whiteColor];
     
     if (@available(iOS 11.0, *)) {} else {
-        self.navigationBar.tintColor = [UIColor mnz_redFF4D52];
+        self.navigationBar.tintColor = UIColor.mnz_redMain;
     }
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
     [self.view layoutIfNeeded];
-    [self reloadUI];
+    if (self.isBeingPresented) {
+        [self reloadUI];
+    }
 }
-
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
@@ -150,6 +152,10 @@
     [self airplayClear];
     self.secondWindow.hidden = YES;
     self.secondWindow = nil;
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskAll;
 }
 
 #pragma mark - UI
@@ -286,7 +292,7 @@
         if (node.name.mnz_isImagePathExtension) {
             NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:NO];
             if (![[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
-                [self setupNode:node forImageView:(UIImageView *)view withMode:MEGAPhotoModeOriginal];
+                [self setupNode:node forImageView:(FLAnimatedImageView *)view withMode:MEGAPhotoModeOriginal];
             }
             if (!self.interfaceHidden) {
                 [self singleTapGesture:nil];
@@ -318,31 +324,36 @@
                 continue;
             }
             
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+            FLAnimatedImageView *imageView = [[FLAnimatedImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
             MEGANode *node = [self.mediaNodes objectAtIndex:i];
             NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:NO];
             if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
-                imageView.image = [UIImage imageWithContentsOfFile:temporaryImagePath];
+                if ([node.name.pathExtension isEqualToString:@"gif"]) {
+                    imageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:temporaryImagePath]]];
+                } else {
+                    imageView.image = [UIImage imageWithContentsOfFile:temporaryImagePath];
+                }
             } else {
                 NSString *previewPath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
                 if ([[NSFileManager defaultManager] fileExistsAtPath:previewPath]) {
                     imageView.image = [UIImage imageWithContentsOfFile:previewPath];
+                } else if (node.hasPreview) {
+                    [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
                 } else {
-                    if (node.hasPreview) {
-                        [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
-                    } else {
-                        NSString *thumbnailPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
-                        if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailPath]) {
-                            imageView.image = [UIImage imageWithContentsOfFile:thumbnailPath];
-                        } else if (node.hasThumbnail && !node.name.mnz_isImagePathExtension) {
-                            [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeThumbnail];
-                        }
-                        if (node.name.mnz_isImagePathExtension) {
-                            [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
-                        }
+                    NSString *thumbnailPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
+                    if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailPath]) {
+                        imageView.image = [UIImage imageWithContentsOfFile:thumbnailPath];
+                    } else if (node.hasThumbnail && !node.name.mnz_isImagePathExtension) {
+                        [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeThumbnail];
                     }
+                    if (node.name.mnz_isImagePathExtension && ![node.name.pathExtension isEqualToString:@"gif"]) {
+                        [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
+                    }
+                }
+                if ([node.name.pathExtension isEqualToString:@"gif"]) {
+                    [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
                 }
             }
             
@@ -374,7 +385,7 @@
     }
 }
 
-- (void)setupNode:(MEGANode *)node forImageView:(UIImageView *)imageView withMode:(MEGAPhotoMode)mode {
+- (void)setupNode:(MEGANode *)node forImageView:(FLAnimatedImageView *)imageView withMode:(MEGAPhotoMode)mode {
     [self removeActivityIndicatorsFromView:imageView];
 
     void (^requestCompletion)(MEGARequest *request) = ^(MEGARequest *request) {
@@ -394,7 +405,11 @@
                           duration:0.2
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
-                            imageView.image = [UIImage imageWithContentsOfFile:transfer.path];
+                            if ([node.name.pathExtension isEqualToString:@"gif"]) {
+                                imageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:transfer.path]]];
+                            } else {
+                                imageView.image = [UIImage imageWithContentsOfFile:transfer.path];
+                            }
                             [self resizeImageView:imageView];
                             if (transfer.nodeHandle == [self.mediaNodes objectAtIndex:self.currentIndex].handle) {
                                 self.pieChartView.alpha = 0.0f;
@@ -849,7 +864,7 @@
                     
                 default:
                     [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-                    [node mnz_downloadNodeOverwriting:NO];
+                    [node mnz_downloadNodeOverwriting:NO api:self.api];
                     break;
             }
             break;
