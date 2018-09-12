@@ -1800,7 +1800,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type {
     MEGALogDebug(@"Did receive incoming push with payload: %@", [payload dictionaryPayload]);
     
-    if ([[UIApplication sharedApplication] applicationState] != UIApplicationStateActive) {
+    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground) {
         [self beginBackgroundTaskWithName:@"VoIP"];
     }
 }

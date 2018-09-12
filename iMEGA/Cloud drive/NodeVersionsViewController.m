@@ -60,8 +60,7 @@
     if (!self.presentedViewController) {
         [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
     }
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
-    [[MEGASdkManager sharedMEGAChatSdk] retryPendingConnections];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
