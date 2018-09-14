@@ -13,6 +13,6 @@
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
 "quickActionSearchString"="Ricerca";
 /*  */
-"quickActionUploadString"="Upload";
+"quickActionUploadString"="Invia";
 /* Title of the Offline section */
 "quickActionOfflineString"="Offline";

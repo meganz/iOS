@@ -703,7 +703,7 @@
 /*  */
 "masterKey_thirdParagraph"="مهاجم خارجي لا يمكنه الوصول إلى حسابك فقط مع المفتاح الخاص بك. إعادة تعيين كلمة مرور يتطلب المفتاح والوصول إلى البريد الإلكتروني الخاص بك.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="تم نسخ مفتاح الإستعادة إلى الحافظة";
+"recoveryKeyCopiedToClipboard"="تم نسخ المفتاح الرئيسي الي الحافظة. يرجى الاحتفاظ به بمكان آمن";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="تم تصدير مفتاح الاستعادة";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -1305,6 +1305,8 @@
 "connecting"="جاري الاتصال...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="بعض العناصر لايمكن مشاركتها مع MEGA";
+/* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
+"The resources are limited when sharing items. Try uploading these files from MEGA app."="The resources are limited when sharing items. Try uploading these files from MEGA app.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="فشل النقل:";
 /* MEGAError */
@@ -1375,7 +1377,7 @@
 "generalDescriptionParagraph5"="اشتراك برو لايت: 4،99 € (4،99 $) في الشهر أو 49،99 € (49،99 $) سنويا يمنحك 200 غيغابايت من مساحة التخزين و 1 تيرابايت من حصة نقل في الشهر.\nاشتراك برو 1: 9.99 € (9.99 دولار أمريكي) في الشهر أو 99.99 € (99.99 دولار أمريكي) سنويا يمنحك 1 تيرابايت من مساحة التخزين و 2 تيرابايت من حصة نقل شهريا.\nاشتراك برو 2: 19.99 يورو (19.99 دولار أمريكي) في الشهر أو 199.99 يورو (199.99 دولار أمريكي) سنويا يمنحك 4 تيرابايت من مساحة التخزين و 8 تيرابايت من حصة النقل شهريا.\nاشتراك برو 3: 29.99 € (29.99 دولار أمريكي) في الشهر أو 299.99 € (299.99 دولار أمريكي) سنويا يمنحك 8 تيرابايت من مساحة التخزين و 16 تيرابايت من حصة نقل في الشهر.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="For more info, please check our website: https://mega.nz/\nTerms of Service: https://mega.nz/terms\nPrivacy Policy: https://mega.nz/privacy";
+"generalDescriptionParagraph6"="لمزيد من المعلومات يرجى زيارة موقعنا الالكتروني: https://mega.nz \n شروط استخدام الخدمة: https://mega.nz/terms \n سياسة الخصوصية: https://mega.nz/privacy";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="جار الاتصال";
 /* Notification text body shown when you have missed one audio call */

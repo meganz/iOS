@@ -996,7 +996,7 @@
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Maaaring mag-upgrade sa susunod sa My Account";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to 4 TB (4096 GB)[/S] of cloud storage space.";
+"cloudDriveIsAlmostFull"="[S]Mapupuno na ang iyong Cloud Drive.[/S] [A]Mag-upgrade na[/A] sa PRO account at makakuha ng [S]hanggang 4 na TB (4096 GB)[/S] ng cloud storage space.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Ang iyong account ay puno na.[/S] [A]Mag-upgrade na[/A] sa PRO account at makakuha [S]ng hanggang 4 TB (4096 GB)[/S] ng cloud storage space.";
 /* Storage related with the MEGA PRO account level you can subscribe */
@@ -1305,6 +1305,8 @@
 "connecting"="Kumokonekta...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="May ilang items na hindi pwedeng ibahagi sa MEGA";
+/* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
+"The resources are limited when sharing items. Try uploading these files from MEGA app."="The resources are limited when sharing items. Try uploading these files from MEGA app.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Naudlot ang paglilipat:";
 /* MEGAError */

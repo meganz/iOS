@@ -1305,6 +1305,8 @@
 "connecting"="正在连接...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="某些项目无法与MEGA共享";
+/* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
+"The resources are limited when sharing items. Try uploading these files from MEGA app."="The resources are limited when sharing items. Try uploading these files from MEGA app.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="传输失败";
 /* MEGAError */
@@ -1377,7 +1379,7 @@
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="欲了解更多信息，请浏览我们的网站：https://mega.nz/\n服务条款：https://mega.nz/terms\n隐私政策：https://mega.nz/privacy";
 /* Label shown when you receive an incoming call, before start the call. */
-"calling..."="呼叫中...";
+"calling..."="正在通话中…";
 /* Notification text body shown when you have missed one audio call */
 "missedAudioCall"="一个未接语音通话";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
