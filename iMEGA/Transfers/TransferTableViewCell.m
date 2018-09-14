@@ -89,7 +89,7 @@
         }
             
         case MEGATransferTypeUpload: {
-            if (transfer.fileName.mnz_imagePathExtension || transfer.fileName.mnz_videoPathExtension) {
+            if (transfer.fileName.mnz_isImagePathExtension || transfer.fileName.mnz_isVideoPathExtension) {
                 NSString *transferThumbnailAbsolutePath = [[[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] stringByDeletingPathExtension] stringByAppendingString:@"_thumbnail"];
                 self.iconImageView.image = [UIImage imageWithContentsOfFile:transferThumbnailAbsolutePath];
             } else {
