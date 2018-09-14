@@ -7,7 +7,7 @@
 /* */
 "no"="No";
 /* */
-"upload"="Upload";
+"upload"="Invia";
 /*  */
 "error"="Errore";
 /*  */
@@ -1305,6 +1305,8 @@
 "connecting"="Connessione in corso...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Alcuni oggetti potrebbero non essere condivisi con MEGA";
+/* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
+"The resources are limited when sharing items. Try uploading these files from MEGA app."="The resources are limited when sharing items. Try uploading these files from MEGA app.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Trasferimento fallito:";
 /* MEGAError */

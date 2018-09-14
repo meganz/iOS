@@ -683,7 +683,7 @@
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Si está activado, se subirán nuevas fotos y vídeos.";
 /* App means “Application” */
-"App version"="Versión de App";
+"App version"="Versión de la aplicación";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Versión del SDK de MEGA";
 /* Title of the label where the MEGAchat SDK version is shown */
@@ -1305,6 +1305,8 @@
 "connecting"="Conectando...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="No se han podido compartir algunos elementos con MEGA";
+/* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
+"The resources are limited when sharing items. Try uploading these files from MEGA app."="The resources are limited when sharing items. Try uploading these files from MEGA app.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Error en la transferencia:";
 /* MEGAError */
