@@ -746,7 +746,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     if (sourceType == UIImagePickerControllerSourceTypeCamera) {
         MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToShareThroughChatWithSourceType:sourceType filePathCompletion:^(NSString *filePath, UIImagePickerControllerSourceType sourceType) {
             MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-            if (filePath.mnz_imagePathExtension) {
+            if (filePath.mnz_isImagePathExtension) {
                 [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:nil];
             }
             if (filePath.mnz_isVideoPathExtension) {
