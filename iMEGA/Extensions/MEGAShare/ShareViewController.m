@@ -55,6 +55,9 @@
 @property (nonatomic) NSArray<MEGAUser *> *users;
 @property (nonatomic) NSMutableSet<NSNumber *> *openedChatIds;
 
+@property (nonatomic) dispatch_semaphore_t semaphore;
+@property (nonatomic) BOOL waitingSemaphore;
+
 @end
 
 @implementation ShareViewController
@@ -96,13 +99,18 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActive)
                                                  name:NSExtensionHostWillResignActiveNotification
                                                object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActive)
-                                                 name:NSExtensionHostDidBecomeActiveNotification
-                                               object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground)
                                                  name:NSExtensionHostDidEnterBackgroundNotification
                                                object:nil];
-
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground)
+                                                 name:NSExtensionHostWillEnterForegroundNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActive)
+                                                 name:NSExtensionHostDidBecomeActiveNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveMemoryWarning)
+                                                 name:UIApplicationDidReceiveMemoryWarningNotification
+                                               object:nil];
     
     [self setupAppearance];
     [SVProgressHUD setViewForExtension:self.view];
@@ -136,6 +144,8 @@
     
     self.openedChatIds = [NSMutableSet<NSNumber *> new];
     self.lastProgressChange = [NSDate new];
+    
+    self.semaphore = dispatch_semaphore_create(0);
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -157,6 +167,34 @@
         self.privacyView = privacyVC.view;
         [self.view addSubview:self.privacyView];
     }
+}
+
+- (void)didEnterBackground {
+    self.passcodePresented = NO;
+    
+    [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
+    [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
+    
+    if (self.pendingAssets > self.unsupportedAssets) {
+        [[NSProcessInfo processInfo] performExpiringActivityWithReason:@"Share Extension activity in progress" usingBlock:^(BOOL expired) {
+            if (expired) {
+                [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
+                dispatch_semaphore_signal(self.semaphore);
+                [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Share Extension suspended" code:-1 userInfo:nil]];
+            } else {
+                if (!self.waitingSemaphore) {
+                    self.waitingSemaphore = YES;
+                    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+                }
+            }
+        }];
+    }
+}
+
+- (void)willEnterForeground {
+    [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
+    
+    [[MEGAReachabilityManager sharedManager] retryOrReconnect];
 }
 
 - (void)didBecomeActive {
@@ -184,8 +222,17 @@
     }
 }
 
-- (void)didEnterBackground {
-    self.passcodePresented = NO;
+- (void)didReceiveMemoryWarning {
+    MEGALogError(@"Share extension received memory warning");
+    if (!self.presentedViewController) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"shareExtensionUnsupportedAssets", nil) message:AMLocalizedString(@"The resources are limited when sharing items. Try uploading these files from MEGA app.", @"Message shown to the user when the share extension is about to be killed by iOS due to a memory issue") preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [self dismissWithCompletionHandler:^{
+                [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Memory warning" code:-1 userInfo:nil]];
+            }];
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 #pragma mark - Language
@@ -855,6 +902,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
         }];
     }
+    dispatch_semaphore_signal(self.semaphore);
 }
 
 #pragma mark - BrowserViewControllerDelegate
