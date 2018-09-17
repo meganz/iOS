@@ -24,6 +24,8 @@
 #import "GroupCallCollectionViewCell.h"
 #import "MEGANavigationController.h"
 
+#define kSmallPeersLayout 7
+
 @interface GroupCallViewController () <UICollectionViewDataSource, MEGAChatCallDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (weak, nonatomic) IBOutlet UIView *outgoingCallView;
@@ -39,6 +41,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *toastTopConstraint;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *peerTalkingViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionViewBottomConstraint;
 @property (weak, nonatomic) IBOutlet MEGARemoteImageView *peerTalkingVideoView;
 @property (weak, nonatomic) IBOutlet UIView *peerTalkingView;
 @property (weak, nonatomic) IBOutlet UIImageView *peerTalkingImageView;
@@ -121,6 +124,7 @@
             [self initDurationTimer];
             [self initShowHideControls];
             [self updateParticipants];
+            [self shouldChangeCallLayout];
             [self.collectionView reloadData];
         } else {
             __weak __typeof(self) weakSelf = self;
@@ -135,6 +139,7 @@
                     [self initDurationTimer];
                     [self initShowHideControls];
                     [self updateParticipants];
+                    [self shouldChangeCallLayout];
                     [self.collectionView reloadData];
                 }
             }];
@@ -176,7 +181,7 @@
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.call.sessions.size + 1;
+    return self.call.numParticipants;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -306,13 +311,12 @@
         }
             
         default: {
-            float widthInset = (self.collectionView.frame.size.width - self.cellSize.width * self.call.numParticipants) / 2;
-            return UIEdgeInsetsMake(0, widthInset, 0, widthInset);
+            return UIEdgeInsetsMake(0, 0, 0, 0);
         }
     }
 }
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     switch (self.call.numParticipants) {
         case 1: case 2: case 3: case 4: case 5: case 6:
             return 0;
@@ -403,11 +407,11 @@
                                 cell.videoImageView.hidden = NO;
                                 [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideo:self.chatRoom.chatId delegate:cell.videoImageView];
                             }
-                            sender.selected = !sender.selected;
-                            self.loudSpeakerEnabled = sender.selected;
                             break;
                         }
                     }
+                    sender.selected = !sender.selected;
+                    self.loudSpeakerEnabled = sender.selected;
                 }
             }];
             if (sender.selected) {
@@ -431,6 +435,7 @@
 }
 
 - (IBAction)hideCall:(UIBarButtonItem *)sender {
+    [self.timer invalidate];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -478,7 +483,39 @@
 }
 
 - (void)updateParticipants {
-    self.participantsLabel.text = [NSString stringWithFormat:@"%lu/%lu", self.call.numParticipants, (unsigned long)self.chatRoom.peerCount];
+    self.participantsLabel.text = [NSString stringWithFormat:@"%lu/%lu", self.call.numParticipants, (unsigned long)self.chatRoom.peerCount + 1];
+}
+
+- (void)shouldChangeCallLayout {
+    if (self.call.numParticipants < kSmallPeersLayout) {
+        if (!self.peerTalkingView.hidden) {
+            self.peerTalkingView.hidden = YES;
+            [UIView animateWithDuration:0.8f animations:^{
+                self.peerTalkingViewHeightConstraint.constant = 0;
+            } completion:^(BOOL finished) {
+                [UIView animateWithDuration:0.3f animations:^{
+                    self.collectionViewBottomConstraint.constant = 0;
+                    self.collectionView.userInteractionEnabled = NO;
+                } completion:^(BOOL finished) {
+                    [self.collectionView reloadData];
+                }];
+            }];
+        }
+    } else {
+        if (self.peerTalkingView.hidden) {
+            self.peerTalkingView.hidden = NO;
+            [UIView animateWithDuration:0.3f animations:^{
+                self.peerTalkingViewHeightConstraint.constant = self.collectionView.frame.size.width < 400 ? self.collectionView.frame.size.width : 400;
+            } completion:^(BOOL finished) {
+                [UIView animateWithDuration:0.3f animations:^{
+                    self.collectionViewBottomConstraint.constant = 80 - self.collectionView.bounds.size.height;
+                    self.collectionView.userInteractionEnabled = YES;
+                } completion:^(BOOL finished) {
+                    [self.collectionView reloadData];
+                }];
+            }];
+        }
+    }
 }
 
 - (void)showOrHideControls {
@@ -613,21 +650,7 @@
     
     if ([call hasChangedForType:MEGAChatCallChangeTypeCallComposition]) {
         [self updateParticipants];
-        
-        if (self.peerTalkingView.hidden && call.numParticipants > 6) {
-            self.collectionView.scrollEnabled = YES;
-            self.peerTalkingView.hidden = NO;
-            self.peerTalkingViewHeightConstraint.constant = self.collectionView.frame.size.width < 400 ? self.collectionView.frame.size.width : 400;
-        }
-        
-        if (call.numParticipants <= 6 && !self.peerTalkingView.hidden) {
-            self.collectionView.scrollEnabled = NO;
-            self.peerTalkingView.hidden = YES;
-            self.peerTalkingViewHeightConstraint.constant = 0;
-            self.peerTalkingImageView = nil;
-        }
-        
-        [self.collectionView layoutIfNeeded];
+        [self shouldChangeCallLayout];
         [self.collectionView reloadData];
     }
     
@@ -684,9 +707,10 @@
                         self.peerTalkingImageView.hidden = YES;
                     } else {
                         [self.peerTalkingVideoView removeFromSuperview];
+                        self.peerTalkingVideoView = nil;
                         [self.peerTalkingImageView mnz_setImageForUserHandle:chatSessionWithAudioLevel.peerId];
-                        self.peerTalkingVideoView.hidden = NO;
-                        self.peerTalkingImageView.hidden = YES;
+                        self.peerTalkingVideoView.hidden = YES;
+                        self.peerTalkingImageView.hidden = NO;
                     }
                 }
             }
@@ -700,8 +724,8 @@
                 for (GroupCallCollectionViewCell *cell in cells) {
                     if (cell.peerId == chatSessionWithNetworkQuality.peerId) {
                         if (chatSessionWithNetworkQuality.hasVideo) {
-                            if (chatSessionWithNetworkQuality.networkQuality <= 1) {
-                                if (self.call.sessions.size < 6) {
+                            if (chatSessionWithNetworkQuality.networkQuality < 3) {
+                                if (self.call.sessions.size < kSmallPeersLayout) {
                                     cell.lowQualityView.hidden = NO;
                                 } else {
                                     cell.layer.borderWidth = 2;
