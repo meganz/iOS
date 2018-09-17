@@ -2839,9 +2839,9 @@
 		77D9A5692023538600B48470 /* Photo browser */ = {
 			isa = PBXGroup;
 			children = (
+				77D9A56D202355F800B48470 /* MEGAPhotoBrowserViewController.storyboard */,
 				77D9A56A2023547900B48470 /* MEGAPhotoBrowserViewController.h */,
 				77D9A56B2023547900B48470 /* MEGAPhotoBrowserViewController.m */,
-				77D9A56D202355F800B48470 /* MEGAPhotoBrowserViewController.storyboard */,
 				77C544FD2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.h */,
 				77C544FE2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m */,
 				77CAAADE202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.h */,

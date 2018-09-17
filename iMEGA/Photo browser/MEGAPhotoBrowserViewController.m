@@ -50,6 +50,7 @@
 @property (nonatomic) CGFloat playButtonSize;
 @property (nonatomic) CGFloat gapBetweenPages;
 @property (nonatomic) double transferProgress;
+@property (nonatomic) BOOL needsReload;
 
 @property (nonatomic) UIWindow *secondWindow;
 
@@ -134,17 +135,24 @@
     [super viewDidAppear:animated];
     
     [self.view layoutIfNeeded];
-    if (self.isBeingPresented) {
+    if (self.isBeingPresented || self.needsReload) {
         [self reloadUI];
+        self.needsReload = NO;
     }
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-        [self.view layoutIfNeeded];
-        [self reloadUI];
-    } completion:nil];
+        if (!self.presentedViewController) {
+            [self.view layoutIfNeeded];
+            [self reloadUI];
+        }
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        if (self.presentedViewController) {
+            self.needsReload = YES;
+        }
+    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -731,8 +739,17 @@
 
 - (void)playVideo:(UIButton *)sender {
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
-    UIViewController *playerVC = [node mnz_viewControllerForNodeInFolderLink:(self.api == [MEGASdkManager sharedMEGASdkFolder])];
-    [self presentViewController:playerVC animated:YES completion:nil];
+    if (node.mnz_isPlayable) {
+        UIViewController *playerVC = [node mnz_viewControllerForNodeInFolderLink:(self.api == [MEGASdkManager sharedMEGASdkFolder])];
+        [self presentViewController:playerVC animated:YES completion:nil];
+    } else {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"fileNotSupported", @"Alert title shown when users try to stream an unsupported audio/video file") message:AMLocalizedString(@"message_fileNotSupported", @"Alert message shown when users try to stream an unsupported audio/video file") preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [self.view layoutIfNeeded];
+            [self reloadUI];
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 #pragma mark - AirPlay
@@ -786,7 +803,7 @@
 - (void)updateCurrentIndexTo:(NSUInteger)newIndex {
     if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
         self.currentIndex = newIndex;
-        [self reloadUI];
+        self.needsReload = YES;
     }
 }
 
