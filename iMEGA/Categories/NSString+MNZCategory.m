@@ -14,9 +14,35 @@ static NSString* const B = @"[B]";
 @implementation NSString (MNZCategory)
 
 - (BOOL)mnz_isImagePathExtension {
-    NSSet *imagesExtensionsSet = [[NSSet alloc] initWithObjects:@"gif", @"jpg", @"tif", @"jpeg", @"bmp", @"png", @"nef", @"heic", nil];
+    NSArray<NSString *> *supportedExtensions = @[@"bmp",
+                                                 @"cr2",
+                                                 @"crw",
+                                                 @"cur",
+                                                 @"dng",
+                                                 @"gif",
+                                                 @"heic",
+                                                 @"ico",
+                                                 @"j2c",
+                                                 @"jp2",
+                                                 @"jpf",
+                                                 @"jpeg",
+                                                 @"jpg",
+                                                 @"nef",
+                                                 @"orf",
+                                                 @"pbm",
+                                                 @"pgm",
+                                                 @"png",
+                                                 @"pnm",
+                                                 @"ppm",
+                                                 @"psd",
+                                                 @"raf",
+                                                 @"rw2",
+                                                 @"rwl",
+                                                 @"tga",
+                                                 @"tif",
+                                                 @"tiff"];
     
-    return [imagesExtensionsSet containsObject:self.pathExtension.lowercaseString];
+    return [supportedExtensions containsObject:self.pathExtension.lowercaseString];
 }
 
 - (BOOL)mnz_isVideoPathExtension {
