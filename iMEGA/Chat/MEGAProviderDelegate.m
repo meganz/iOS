@@ -176,12 +176,12 @@
         callVC.megaCallManager = self.megaCallManager;
         callVC.call = call;
         
-        if ([UIApplication.mnz_visibleViewController isKindOfClass:CallViewController.class]) {
-            [UIApplication.mnz_visibleViewController dismissViewControllerAnimated:YES completion:^{
-                [UIApplication.mnz_visibleViewController presentViewController:callVC animated:YES completion:nil];
+        if ([UIApplication.mnz_presentingViewController isKindOfClass:CallViewController.class]) {
+            [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
+                [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
             }];
         } else {
-            [UIApplication.mnz_visibleViewController presentViewController:callVC animated:YES completion:nil];
+            [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
         }
         [action fulfill];
         [self disablePasscodeIfNeeded];
