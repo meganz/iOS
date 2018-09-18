@@ -53,14 +53,14 @@
             MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"appPurchaseDisabled", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-            [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+            [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
         }
         
     } else {
         MEGALogWarning(@"[StoreKit] Product \"%@\" not found", product.productIdentifier);
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:AMLocalizedString(@"productNotFound", nil), product.productIdentifier] message:nil preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     }
 }
 
@@ -73,7 +73,7 @@
         MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"allowPurchase_title", nil) message:AMLocalizedString(@"allowPurchase_message", nil) preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     }
 }
 

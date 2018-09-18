@@ -175,7 +175,7 @@
                 MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[node].mutableCopy api:[MEGASdkManager sharedMEGASdkFolder] displayMode:DisplayModeFileLink presentingNode:node preferredIndex:0];
                 photoBrowserVC.publicLink = fileLinkURLString;
                 
-                [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];
+                [UIApplication.mnz_presentingViewController presentViewController:photoBrowserVC animated:YES completion:nil];
             } else {
                 [self presentFileLinkViewForLink:fileLinkURLString request:request error:error];
             }
@@ -196,7 +196,7 @@
     fileLinkVC.request = request;
     fileLinkVC.error = error;
     
-    [UIApplication.mnz_visibleViewController presentViewController:fileLinkNavigationController animated:YES completion:nil];
+    [UIApplication.mnz_presentingViewController presentViewController:fileLinkNavigationController animated:YES completion:nil];
 }
 
 - (void)showFolderLinkView {
@@ -208,7 +208,7 @@
     [folderlinkVC setIsFolderRootNode:YES];
     [folderlinkVC setFolderLinkString:folderLinkURLString];
     
-    [UIApplication.mnz_visibleViewController presentViewController:folderNavigationController animated:YES completion:nil];
+    [UIApplication.mnz_presentingViewController presentViewController:folderNavigationController animated:YES completion:nil];
 }
 
 - (void)handleContactLink {
@@ -241,7 +241,7 @@
     
     inviteOrDismissModal.viewTitle = fullName;
     
-    __weak UIViewController *weakVisibleVC = [UIApplication mnz_visibleViewController];
+    __weak UIViewController *weakVisibleVC = UIApplication.mnz_presentingViewController;
     __weak CustomModalAlertViewController *weakInviteOrDismissModal = inviteOrDismissModal;
     void (^completion)(void) = ^{
         MEGAInviteContactRequestDelegate *delegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1 presentSuccessOver:weakVisibleVC completion:nil];
@@ -286,7 +286,7 @@
         }
     }
     
-    [[UIApplication mnz_visibleViewController] presentViewController:inviteOrDismissModal animated:YES completion:nil];
+    [UIApplication.mnz_presentingViewController presentViewController:inviteOrDismissModal animated:YES completion:nil];
 }
 
 @end

@@ -362,7 +362,7 @@
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
                 BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
                 browserVC.selectedNodesArray = [NSArray arrayWithObject:self];
-                [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+                [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
                 
                 browserVC.browserAction = isFolderLink ? BrowserActionImportFromFolderLink : BrowserActionImport;
             }];
@@ -733,7 +733,7 @@
 
 - (void)renameAlertTextFieldDidChange:(UITextField *)sender {
     
-    UIAlertController *renameAlertController = (UIAlertController*)UIApplication.mnz_visibleViewController;
+    UIAlertController *renameAlertController = (UIAlertController*)UIApplication.mnz_presentingViewController;
     if (renameAlertController) {
         UITextField *textField = renameAlertController.textFields.firstObject;
         UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;

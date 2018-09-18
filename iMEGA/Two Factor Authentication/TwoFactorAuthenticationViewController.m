@@ -295,7 +295,7 @@
             if (request.flag) {
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"EnabledTwoFactorAuthenticationNavigationControllerID"];
                 
-                [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+                [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
                 
                 [self.navigationController popToViewController:self.navigationController.viewControllers[3] animated:YES];
             } else {

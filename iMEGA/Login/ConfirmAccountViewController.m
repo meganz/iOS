@@ -246,7 +246,7 @@
                 
                 [newEmailAddressAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:nil]];
                 
-                [UIApplication.mnz_visibleViewController presentViewController:newEmailAddressAlertController animated:YES completion:nil];
+                [UIApplication.mnz_presentingViewController presentViewController:newEmailAddressAlertController animated:YES completion:nil];
             }];
             break;
         }

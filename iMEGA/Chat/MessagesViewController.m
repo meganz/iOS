@@ -267,6 +267,25 @@ const NSUInteger kMaxMessagesToLoad = 256;
     [self customForwardingToolbar];
     
     self.inputToolbar.contentView.textView.text = [[MEGAStore shareInstance] fetchChatDraftWithChatId:self.chatRoom.chatId].text;
+    
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center getDeliveredNotificationsWithCompletionHandler:^(NSArray<UNNotification *> *notifications) {
+        NSString *base64ChatId = [NSString stringWithFormat:@"%@", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]];
+        for (UNNotification *notification in notifications) {
+            if ([notification.request.identifier containsString:base64ChatId]) {
+                [center removeDeliveredNotificationsWithIdentifiers:@[notification.request.identifier]];
+            }
+        }
+    }];
+    
+    [center getPendingNotificationRequestsWithCompletionHandler:^(NSArray<UNNotificationRequest *> * _Nonnull requests) {
+        NSString *base64ChatId = [NSString stringWithFormat:@"%@", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]];
+        for (UNNotificationRequest *request in requests) {
+            if ([request.identifier containsString:base64ChatId]) {
+                [center removePendingNotificationRequestsWithIdentifiers:@[request.identifier]];
+            }
+        }
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

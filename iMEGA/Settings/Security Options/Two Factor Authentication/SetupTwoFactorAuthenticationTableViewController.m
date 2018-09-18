@@ -73,7 +73,7 @@
             [weakCustom dismissViewControllerAnimated:YES completion:nil];
         };
         
-        [UIApplication.mnz_visibleViewController presentViewController:customModalAlertVC animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:customModalAlertVC animated:YES completion:nil];
     }
 }
 

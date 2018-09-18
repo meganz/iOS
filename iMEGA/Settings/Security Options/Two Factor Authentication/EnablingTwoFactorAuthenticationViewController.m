@@ -100,7 +100,7 @@
         }
     }]];
     
-    [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+    [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - IBActions
