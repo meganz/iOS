@@ -710,7 +710,7 @@ static BOOL pointToStaging;
 }
 
 + (void)changeApiURL {
-    if (pointToStaging) {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {
         [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
         [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
         [Helper apiURLChanged];
@@ -732,11 +732,16 @@ static BOOL pointToStaging;
 }
 
 + (void)apiURLChanged {
-    pointToStaging = !pointToStaging;
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"pointToStaging"];
+    } else {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"pointToStaging"];
+    }
+    
     [SVProgressHUD showSuccessWithStatus:@"API URL changed"];
     
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-        [[MEGASdkManager sharedMEGASdk] fetchNodes];
+        [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]];
     }
 }
 
