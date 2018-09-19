@@ -1648,13 +1648,11 @@
                     </connections>
                 </barButtonItem>
                 <barButtonItem title="Save for Offline" style="plain" id="mXR-cQ-N6z" userLabel="Download Bar Button Item">
-                    <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <action selector="downloadAction:" destination="7lh-MZ-fv2" id="VrJ-TU-0ju"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem title="Import" style="plain" id="3lC-3c-xlc" userLabel="Import Bar Button Item">
-                    <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <action selector="importAction:" destination="7lh-MZ-fv2" id="86a-YR-FpZ"/>
                     </connections>
