@@ -993,31 +993,26 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UcK-nc-stP" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <barButtonItem title="New folder" id="Rgo-oZ-vnm" userLabel="New Folder Bar Button Item">
-                    <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <action selector="newFolder:" destination="Z2F-Nr-ypX" id="UKy-Qz-pfk"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem title="Move" id="7Sv-uf-KA4" userLabel="Move Bar Button Item">
-                    <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <action selector="moveNode:" destination="Z2F-Nr-ypX" id="ufS-m8-fHx"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem title="Copy" id="szH-Sn-BED" userLabel="Copy Bar Button Item">
-                    <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <action selector="copyNode:" destination="Z2F-Nr-ypX" id="cOl-yf-Y7w"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem title="Upload" id="haa-Y0-WYS" userLabel="Upload to MEGA Bar Button Item">
-                    <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <action selector="uploadToMega:" destination="Z2F-Nr-ypX" id="I9K-ql-n04"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem title="Send" id="o2i-Qg-G0n" userLabel="Send Bar Button Item">
-                    <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="sendNodes:" destination="Z2F-Nr-ypX" id="2YC-fK-zah"/>
                     </connections>
