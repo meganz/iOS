@@ -124,7 +124,6 @@
             [self initDurationTimer];
             [self initShowHideControls];
             [self updateParticipants];
-            [self shouldChangeCallLayout];
             [self.collectionView reloadData];
         } else {
             __weak __typeof(self) weakSelf = self;
@@ -157,6 +156,12 @@
     [super viewWillAppear:animated];
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    if (self.callType == CallTypeActive) {
+        [self shouldChangeCallLayout];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -329,7 +334,32 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self.collectionView reloadData];
+        if (self.call.numParticipants >= kSmallPeersLayout) {
+            UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+            if (orientation == UIInterfaceOrientationPortrait) {
+                [UIView animateWithDuration:0.3f animations:^{
+                    self.peerTalkingViewHeightConstraint.constant = self.view.frame.size.width < 400 ? self.view.frame.size.width : 400;
+                    self.collectionViewBottomConstraint.constant = 100 + self.peerTalkingViewHeightConstraint.constant - self.view.frame.size.height;
+                } completion:^(BOOL finished) {
+                    if (finished) {
+                        [self.collectionView reloadData];
+                    }
+                }];
+            } else {
+                [UIView animateWithDuration:0.3f animations:^{
+                    self.collectionViewBottomConstraint.constant = 0;
+                    self.peerTalkingViewHeightConstraint.constant = self.view.frame.size.height - 100;
+                } completion:^(BOOL finished) {
+                    if (finished) {
+                        [self.collectionView reloadData];
+                    }
+                }];
+            }
+            self.collectionView.userInteractionEnabled = YES;
+        } else {
+            [self.collectionView reloadData];
+            self.collectionView.userInteractionEnabled = NO;
+        }
     } completion:nil];
 }
 
@@ -504,16 +534,31 @@
     } else {
         if (self.peerTalkingView.hidden) {
             self.peerTalkingView.hidden = NO;
-            [UIView animateWithDuration:0.3f animations:^{
-                self.peerTalkingViewHeightConstraint.constant = self.collectionView.frame.size.width < 400 ? self.collectionView.frame.size.width : 400;
-            } completion:^(BOOL finished) {
+            UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+            if (orientation == UIInterfaceOrientationPortrait) {
                 [UIView animateWithDuration:0.3f animations:^{
-                    self.collectionViewBottomConstraint.constant = 80 - self.collectionView.bounds.size.height;
-                    self.collectionView.userInteractionEnabled = YES;
+                    self.peerTalkingViewHeightConstraint.constant = self.collectionView.frame.size.width < 400 ? self.collectionView.frame.size.width : 400;
                 } completion:^(BOOL finished) {
-                    [self.collectionView reloadData];
+                    [UIView animateWithDuration:0.3f animations:^{
+                        self.collectionViewBottomConstraint.constant = 80 - self.collectionView.frame.size.height;
+                        self.collectionView.userInteractionEnabled = YES;
+                    } completion:^(BOOL finished) {
+                        [self.collectionView reloadData];
+                    }];
                 }];
-            }];
+            } else {
+                [UIView animateWithDuration:0.3f animations:^{
+                    self.peerTalkingViewHeightConstraint.constant =  self.collectionView.frame.size.height - 80;
+                } completion:^(BOOL finished) {
+                    [UIView animateWithDuration:0.3f animations:^{
+                        self.collectionViewBottomConstraint.constant = 0;
+                        self.collectionView.userInteractionEnabled = YES;
+                    } completion:^(BOOL finished) {
+                        [self.collectionView reloadData];
+                    }];
+                }];
+            }
+            
         }
     }
 }
@@ -561,6 +606,7 @@
 - (void)showToastMessage:(NSString *)message color:(NSString *)color {
     self.toastTopConstraint.constant = -22;
     self.toastLabel.text = message;
+    self.toastView.backgroundColor = [UIColor colorFromHexString:color];
     self.toastView.hidden = NO;
     
     [UIView animateWithDuration:.25 animations:^{
@@ -626,7 +672,7 @@
                     [self initShowHideControls];
                     [self updateParticipants];
                 } else {
-                    [self showToastMessage:[NSString stringWithFormat:@"%@ joined the call", [self.chatRoom peerFullnameByHandle:chatSession.peerId]] color:@""];
+                    [self showToastMessage:[NSString stringWithFormat:@"%@ joined the call", [self.chatRoom peerFullnameByHandle:chatSession.peerId]] color:@"#00BFA5"];
                 }
                 [self.collectionView reloadData];
                 break;
@@ -639,7 +685,7 @@
             }
                 
             case MEGAChatSessionStatusDestroyed:
-                [self showToastMessage:[NSString stringWithFormat:@"%@ left the call", [self.chatRoom peerFullnameByHandle:chatSession.peerId]] color:@""];
+                [self showToastMessage:[NSString stringWithFormat:@"%@ left the call", [self.chatRoom peerFullnameByHandle:chatSession.peerId]] color:@"#00BFA5"];
                 break;
                 
             case MEGAChatSessionStatusInvalid:
@@ -725,6 +771,7 @@
                     if (cell.peerId == chatSessionWithNetworkQuality.peerId) {
                         if (chatSessionWithNetworkQuality.hasVideo) {
                             if (chatSessionWithNetworkQuality.networkQuality < 3) {
+                                [self showToastMessage:@"Poor conection" color:@"#FFBF00"];
                                 if (self.call.sessions.size < kSmallPeersLayout) {
                                     cell.lowQualityView.hidden = NO;
                                 } else {
