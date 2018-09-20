@@ -190,7 +190,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
     } else {
         //TODO: leftItemsSupplementBackButton
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 66, 44)];
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"backArrow"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+        UIImage *image = [[UIImage imageNamed:@"backArrow"] imageFlippedForRightToLeftLayoutDirection];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
         imageView.frame = CGRectMake(0, 10, 22, 22);
         [view addGestureRecognizer:singleTap];
         [view addSubview:imageView];
