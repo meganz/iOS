@@ -27,6 +27,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *viewAndEditProfileLabel;
 @property (weak, nonatomic) IBOutlet UIButton *viewAndEditProfileButton;
+@property (weak, nonatomic) IBOutlet UIImageView *viewAndEditProfileDisclosureImageView;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -56,6 +57,8 @@
 
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewAndEditProfileTouchUpInside:)];
     self.profileView.gestureRecognizers = @[tapGestureRecognizer];
+    
+    self.viewAndEditProfileDisclosureImageView.image = self.viewAndEditProfileDisclosureImageView.image.imageFlippedForRightToLeftLayoutDirection;
     
     _byteCountFormatter = [[NSByteCountFormatter alloc] init];
     [_byteCountFormatter setCountStyle:NSByteCountFormatterCountStyleMemory];
