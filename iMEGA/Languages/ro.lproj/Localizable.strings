@@ -268,10 +268,6 @@
 "Completing..."="Se finalizează...";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
 "Retrying..."="Se reîncearcă...";
-/* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertTitle"="Există descărcări în aşteptare";
-/* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertMessage"="Reîncearcă mai târziu sau anulează";
 /* Section title of the 'Sort by' */
 "sortTitle"="SORTEAZĂ DUPĂ";
 /* Button title to 'Save' the selected option */
