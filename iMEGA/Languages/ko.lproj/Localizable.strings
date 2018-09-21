@@ -268,10 +268,6 @@
 "Completing..."="완료중...";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
 "Retrying..."="재시도중...";
-/* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertTitle"="대기중인 다운로드가 있습니다";
-/* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertMessage"="다시 시도하거나 취소하세요";
 /* Section title of the 'Sort by' */
 "sortTitle"="정렬 기준";
 /* Button title to 'Save' the selected option */
