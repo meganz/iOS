@@ -225,7 +225,7 @@
 - (void)didReceiveMemoryWarning {
     MEGALogError(@"Share extension received memory warning");
     if (!self.presentedViewController) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"shareExtensionUnsupportedAssets", nil) message:AMLocalizedString(@"The resources are limited when sharing items. Try uploading these files from MEGA app.", @"Message shown to the user when the share extension is about to be killed by iOS due to a memory issue") preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"shareExtensionUnsupportedAssets", nil) message:AMLocalizedString(@"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app.", @"Message shown to the user when the share extension is about to be killed by iOS due to a memory issue") preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             [self dismissWithCompletionHandler:^{
                 [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Memory warning" code:-1 userInfo:nil]];
