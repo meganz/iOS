@@ -3,6 +3,7 @@
 
 #import <UserNotifications/UserNotifications.h>
 
+#import <PureLayout/PureLayout.h>
 #import "SVProgressHUD.h"
 #import "UIImage+GKContact.h"
 
@@ -196,6 +197,11 @@ const NSUInteger kMaxMessagesToLoad = 256;
         [view addGestureRecognizer:singleTap];
         [view addSubview:imageView];
         [view addSubview:self.unreadLabel];
+        [imageView configureForAutoLayout];
+        [imageView autoPinEdgesToSuperviewMarginsExcludingEdge:ALEdgeTrailing];
+        [imageView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.unreadLabel];
+        [self.unreadLabel configureForAutoLayout];
+        [self.unreadLabel autoPinEdgesToSuperviewMarginsExcludingEdge:ALEdgeLeading];
         
         self.leftBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:view]];
     }
