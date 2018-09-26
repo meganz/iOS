@@ -12,7 +12,6 @@
 #import "AboutTableViewController.h"
 #import "AdvancedTableViewController.h"
 #import "CameraUploadsTableViewController.h"
-#import "ChatSettingsTableViewController.h"
 #import "HelpTableViewController.h"
 #import "LanguageTableViewController.h"
 #import "PasscodeTableViewController.h"
@@ -172,9 +171,6 @@
             if (indexPath.row == 0) {
                 CameraUploadsTableViewController *cameraUploadsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsSettingsID"];
                 [self.navigationController pushViewController:cameraUploadsTVC animated:YES];
-            } else if (indexPath.row == 1) {
-                ChatSettingsTableViewController *chatSettingsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatSettingsTableViewControllerID"];
-                [self.navigationController pushViewController:chatSettingsTVC animated:YES];
             }
             break;
         }
