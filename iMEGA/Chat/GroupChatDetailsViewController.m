@@ -46,6 +46,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;
     self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
     self.navigationItem.title = AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context");
     
@@ -207,19 +208,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    NSInteger numberOfSections = 0;
-    
-    switch (self.chatRoom.ownPrivilege) {
-        case MEGAChatRoomPrivilegeUnknown:
-        case MEGAChatRoomPrivilegeRm:
-        case MEGAChatRoomPrivilegeRo:
-        case MEGAChatRoomPrivilegeStandard:
-        case MEGAChatRoomPrivilegeModerator:
-            numberOfSections = 2;
-            break;
-    }
-    
-    return numberOfSections;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
