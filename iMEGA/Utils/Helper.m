@@ -241,6 +241,7 @@ static BOOL pointToStaging;
                                 @"torrent":@"torrent",
                                 @"ttf":@"font",
                                 @"txt":@"text",
+                                @"url":@"url",
                                 @"vob":@"video",
                                 @"wav":@"audio",
                                 @"webm":@"video",

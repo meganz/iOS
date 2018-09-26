@@ -208,19 +208,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    NSInteger numberOfSections = 0;
-    
-    switch (self.chatRoom.ownPrivilege) {
-        case MEGAChatRoomPrivilegeUnknown:
-        case MEGAChatRoomPrivilegeRm:
-        case MEGAChatRoomPrivilegeRo:
-        case MEGAChatRoomPrivilegeStandard:
-        case MEGAChatRoomPrivilegeModerator:
-            numberOfSections = 2;
-            break;
-    }
-    
-    return numberOfSections;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

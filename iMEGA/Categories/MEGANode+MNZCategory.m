@@ -99,23 +99,15 @@
             return alertController;
         }
     } else {
-        if (api.downloadTransfers.size.integerValue > 0) {
-            UIAlertController *documentOpeningAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"documentOpening_alertTitle", @"Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download") message:AMLocalizedString(@"documentOpening_alertMessage", @"Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download") preferredStyle:UIAlertControllerStyleAlert];
-            
-            [documentOpeningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-            
-            return documentOpeningAlertController;
-        } else {
-            if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
-                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
-                PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
-                previewController.node = self;
-                previewController.api = api;
-                previewController.isLink = isFolderLink;
-                return navigationController;
-            }
-            return nil;
+        if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+            PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
+            previewController.node = self;
+            previewController.api = api;
+            previewController.isLink = isFolderLink;
+            return navigationController;
         }
+        return nil;
     }
 }
 
