@@ -268,10 +268,6 @@
 "Completing..."="Đang hoàn tất...";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
 "Retrying..."="Đang thử lại...";
-/* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertTitle"="Hiện đang có phiên tải xuống đang chờ";
-/* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertMessage"="Nên thử lại sau hoặc hủy bỏ";
 /* Section title of the 'Sort by' */
 "sortTitle"="Xếp theo";
 /* Button title to 'Save' the selected option */

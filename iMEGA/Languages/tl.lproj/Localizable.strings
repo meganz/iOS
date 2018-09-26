@@ -268,10 +268,6 @@
 "Completing..."="Tinatapos…";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
 "Retrying..."="Sinusubukan…";
-/* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertTitle"="Mayroong pending downloads";
-/* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertMessage"="Subukang muli o itigil na";
 /* Section title of the 'Sort by' */
 "sortTitle"="I-sort batay sa";
 /* Button title to 'Save' the selected option */

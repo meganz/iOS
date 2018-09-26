@@ -268,10 +268,6 @@
 "Completing..."="Tamamlanıyor...";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
 "Retrying..."="Yeniden deneniyor...";
-/* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertTitle"="Bekleyen indirmeler var";
-/* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertMessage"="Daha sonra tekrar deneyin veya iptal edin";
 /* Section title of the 'Sort by' */
 "sortTitle"="SIRALA";
 /* Button title to 'Save' the selected option */

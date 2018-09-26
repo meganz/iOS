@@ -268,10 +268,6 @@
 "Completing..."="Completando...";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
 "Retrying..."="Reintentando...";
-/* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertTitle"="Hay descargas pendientes";
-/* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertMessage"="Inténtalo más tarde o cancela las descargas.";
 /* Section title of the 'Sort by' */
 "sortTitle"="Ordenar por";
 /* Button title to 'Save' the selected option */
