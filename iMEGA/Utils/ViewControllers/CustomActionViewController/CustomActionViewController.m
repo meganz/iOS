@@ -200,7 +200,7 @@
         [actions addObject:[self actionShare]];
     } else {
         switch (accessType) {
-            case MEGAShareTypeAccessUnkown:
+            case MEGAShareTypeAccessUnknown:
                 [actions addObject:[self actionImport]];
                 [actions addObject:[self actionDownload]];
                 break;
