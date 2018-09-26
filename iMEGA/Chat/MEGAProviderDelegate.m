@@ -87,6 +87,7 @@
             }
             break;
             
+        case MEGAChatCallTermCodeRingOutTimeout:
         case MEGAChatCallTermCodeAnswerTimeout:
             callEndedReason = CXCallEndedReasonUnanswered;
             break;

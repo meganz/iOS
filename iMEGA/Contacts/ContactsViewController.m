@@ -428,7 +428,7 @@
         }
     } else if (self.contactsMode == ContactsModeFolderSharedWith) {
         void (^completion)(void);
-        if (shareType == MEGAShareTypeAccessUnkown) {
+        if (shareType == MEGAShareTypeAccessUnknown) {
             completion = ^{
                 if ([self.selectedUsersArray count] == [self.visibleUsersArray count]) {
                     [self.navigationController popToRootViewControllerAnimated:YES];
@@ -793,7 +793,7 @@
         }];
         
         for (MEGAUser *user in self.selectedUsersArray) {
-            [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:user level:MEGAShareTypeAccessUnkown delegate:shareRequestDelegate];
+            [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
         }
     } else {
         NSString *message = (self.selectedUsersArray.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"removeMultipleUsersMessage", nil), self.selectedUsersArray.count] :[NSString stringWithFormat:AMLocalizedString(@"removeUserMessage", nil), [[self.selectedUsersArray objectAtIndex:0] email]];

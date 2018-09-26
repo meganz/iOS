@@ -268,10 +268,6 @@
 "Completing..."="완료중...";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
 "Retrying..."="재시도중...";
-/* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertTitle"="대기중인 다운로드가 있습니다";
-/* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertMessage"="다시 시도하거나 취소하세요";
 /* Section title of the 'Sort by' */
 "sortTitle"="정렬 기준";
 /* Button title to 'Save' the selected option */
@@ -1306,7 +1302,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="일부 항목이 MEGA로 공유될 수 없습니다.";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"The resources are limited when sharing items. Try uploading these files from MEGA app."="The resources are limited when sharing items. Try uploading these files from MEGA app.";
+"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Limited system resources are available when sharing items. Try uploading these files from within the MEGA app.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="전송 실패:";
 /* MEGAError */
@@ -1602,3 +1598,49 @@
 "scanOrCopyTheSeed"="시드를 인증기 앱에서 스캔하거나 복사하세요. 휴대전화를 잃어버렸을 경우를 대비하여 이 시드를 안전한 곳에 백업하세요.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="인증기 장치를 잃어버렸나요?";
+/* Settings section title where you can enable the option to 'Save Images in Library' */
+"Save Images in Library"="Save Images in Library";
+/* Settings section title where you can enable the option to 'Save Videos in Library' */
+"Save Videos in Library"="Save Videos in Library";
+/* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section.";
+/* Setting associated with the 'Camera' of the device */
+"Camera"="Camera";
+/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
+"Save in Library"="Save in Library";
+/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Save a copy of the images and videos taken from the MEGA app in your device’s media library.";
+/* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
+"You hold the keys"="You hold the keys";
+/* Description shown in a page of the onboarding screens explaining the encryption paradigm */
+"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files.";
+/* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
+"Encrypted chat"="Encrypted chat";
+/* Description shown in a page of the onboarding screens explaining the chat feature */
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive.";
+/* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
+"Create your Network"="Create your Network";
+/* Description shown in a page of the onboarding screens explaining contacts */
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA";
+/* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
+"Your Photos in the Cloud"="Your Photos in the Cloud";
+/* Description shown in a page of the onboarding screens explaining the camera uploads feature */
+"Camera Uploads is an essential feature for any mobile device and we got you covered. Create your account now."="Camera Uploads is an essential feature for any mobile device and we got you covered. Create your account now.";
+/* Button which triggers the initial setup */
+"Setup MEGA"="Setup MEGA";
+/* Detailed explanation of why the user should give some permissions to MEGA */
+"To fully take advantage of your MEGA account we need to ask you some permissions."="To fully take advantage of your MEGA account we need to ask you some permissions.";
+/* Title label that explains that the user is going to be asked for the photos permission */
+"Allow Access to Photos"="Allow Access to Photos";
+/* Detailed explanation of why the user should give permission to access to the photos */
+"To share photos and videos allow MEGA to access your photos"="To share photos and videos allow MEGA to access your photos";
+/* Title label that explains that the user is going to be asked for the microphone and camera permission */
+"Enable Microphone and Camera"="Enable Microphone and Camera";
+/* Detailed explanation of why the user should give permission to access to the camera and the microphone */
+"To make encrypted voice and video calls allow MEGA access to your Camera and Microphone"="To make encrypted voice and video calls allow MEGA access to your Camera and Microphone";
+/* Title label that explains that the user is going to be asked for the notifications permission */
+"Enable Notifications"="알림 활성화";
+/* Detailed explanation of why the user should give permission to deliver notifications */
+"We would like to send you notifications so you receive new messages on your device instantly."="We would like to send you notifications so you receive new messages on your device instantly.";
+/* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
+"Enable Access"="Enable Access";

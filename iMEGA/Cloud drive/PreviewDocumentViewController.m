@@ -64,7 +64,7 @@
         self.nodeFilePath = [nodeFolderPath stringByAppendingPathComponent:self.node.name];
         
         if ([[NSFileManager defaultManager] createDirectoryAtPath:nodeFolderPath withIntermediateDirectories:YES attributes:nil error:&error]) {
-            [self.api startDownloadNode:self.node localPath:self.nodeFilePath delegate:self];
+            [self.api startDownloadTopPriorityWithNode:self.node localPath:self.nodeFilePath appData:nil delegate:self];
         } else {
             MEGALogError(@"Create directory at path failed with error: %@", error);
         }
