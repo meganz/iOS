@@ -317,7 +317,7 @@
     
     for (MEGAShare *share in self.selectedSharesMutableArray) {
         MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[share nodeHandle]];
-        [[MEGASdkManager sharedMEGASdk] shareNode:node withEmail:share.user level:MEGAShareTypeAccessUnkown delegate:shareRequestDelegate];
+        [[MEGASdkManager sharedMEGASdk] shareNode:node withEmail:share.user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
     }
     
     [self setEditing:NO animated:YES];
