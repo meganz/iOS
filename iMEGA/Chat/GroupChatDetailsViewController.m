@@ -46,6 +46,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;
     self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
     self.navigationItem.title = AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context");
     

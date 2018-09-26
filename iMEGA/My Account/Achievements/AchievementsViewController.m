@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIView *inviteYourFriendsView;
 @property (weak, nonatomic) IBOutlet UILabel *inviteYourFriendsTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *inviteYourFriendsSubtitleLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *disclosureIndicatorImageView;
 
 @property (weak, nonatomic) IBOutlet UILabel *unlockedBonusesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *unlockedStorageQuotaLabel;
@@ -50,6 +51,7 @@
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(inviteYourFriendsTapped)];
     self.inviteYourFriendsView.gestureRecognizers = @[tapGestureRecognizer];
+    self.disclosureIndicatorImageView.image = self.disclosureIndicatorImageView.image.imageFlippedForRightToLeftLayoutDirection;
     
     self.unlockedBonusesLabel.text = AMLocalizedString(@"unlockedBonuses", @"Header of block with achievements bonuses.");
     self.storageQuotaLabel.text = AMLocalizedString(@"storageQuota", @"A header/title of a section which contains information about used/available storage space on a user's cloud drive.");
@@ -176,6 +178,7 @@
         cell.titleLabel.text = AMLocalizedString(@"referralBonuses", @"achievement type");
         
         cell.disclosureIndicatorImageView.hidden = NO;
+        cell.disclosureIndicatorImageView.image = cell.disclosureIndicatorImageView.image.imageFlippedForRightToLeftLayoutDirection;
         
         [self setStorageAndTransferQuotaRewardsForCell:cell forIndex:-1];
     } else {
