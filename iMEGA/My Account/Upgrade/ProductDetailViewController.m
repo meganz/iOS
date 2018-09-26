@@ -122,6 +122,7 @@
     } else {
         cell.periodLabel.text = AMLocalizedString(@"yearly", nil);
         cell.priceLabel.text = _priceYearlyString;
+        cell.underLineView.hidden = YES;
     }
     return cell;
 }

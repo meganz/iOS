@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -37,13 +37,13 @@
                     </userDefinedRuntimeAttributes>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="title" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OEM-gg-fc0">
-                    <rect key="frame" x="60" y="10" width="180" height="18"/>
+                    <rect key="frame" x="60" y="10" width="28.5" height="18"/>
                     <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IEQ-8n-ld2">
-                    <rect key="frame" x="60" y="33" width="180" height="16"/>
+                    <rect key="frame" x="60" y="33" width="34" height="16"/>
                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
@@ -54,13 +54,13 @@
                 <bool key="isElement" value="YES"/>
             </accessibility>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="OEM-gg-fc0" secondAttribute="trailing" constant="10" id="CeC-Pl-L31"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="OEM-gg-fc0" secondAttribute="trailing" constant="10" id="CeC-Pl-L31"/>
                 <constraint firstItem="OEM-gg-fc0" firstAttribute="top" secondItem="E8u-xp-rJg" secondAttribute="top" id="FxZ-vr-Nmj"/>
                 <constraint firstItem="E8u-xp-rJg" firstAttribute="leading" secondItem="xlP-Ps-QPC" secondAttribute="leading" constant="10" id="Ilp-Q4-Gjg"/>
                 <constraint firstItem="E8u-xp-rJg" firstAttribute="centerY" secondItem="xlP-Ps-QPC" secondAttribute="centerY" id="L2O-u2-mmH"/>
                 <constraint firstItem="IEQ-8n-ld2" firstAttribute="top" secondItem="OEM-gg-fc0" secondAttribute="bottom" constant="5" id="LlM-gQ-eSm"/>
                 <constraint firstItem="IEQ-8n-ld2" firstAttribute="leading" secondItem="E8u-xp-rJg" secondAttribute="trailing" constant="10" id="Z1O-2e-3aE"/>
-                <constraint firstAttribute="trailing" secondItem="IEQ-8n-ld2" secondAttribute="trailing" constant="10" id="qol-HL-ntg"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="IEQ-8n-ld2" secondAttribute="trailing" constant="10" id="qol-HL-ntg"/>
                 <constraint firstItem="OEM-gg-fc0" firstAttribute="leading" secondItem="E8u-xp-rJg" secondAttribute="trailing" constant="10" id="vDy-Ur-avc"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
