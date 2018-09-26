@@ -268,10 +268,6 @@
 "Completing..."="Завершение…";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
 "Retrying..."="Повтор…";
-/* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertTitle"="Есть активные загрузки";
-/* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertMessage"="Попробуйте позже или отмените их";
 /* Section title of the 'Sort by' */
 "sortTitle"="Сортировать по";
 /* Button title to 'Save' the selected option */
