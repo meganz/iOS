@@ -97,8 +97,8 @@ static NSString *kisDirectory = @"kisDirectory";
     [[NSNotificationCenter defaultCenter] addObserver:self.tableView selector:@selector(reloadEmptyDataSet) name:kReachabilityChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     
     // If the user has activated the logs, then they are imported to the offline section from the shared sandbox:
@@ -847,7 +847,9 @@ static NSString *kisDirectory = @"kisDirectory";
     }
     activityViewController.popoverPresentationController.barButtonItem = self.activityBarButtonItem;
     [activityViewController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed,  NSArray *returnedItems, NSError *activityError) {
-        [self setTableViewEditing:NO animated:YES];
+        if (completed) {
+            [self setTableViewEditing:NO animated:YES];
+        }
     }];
     
     [self presentViewController:activityViewController animated:YES completion:nil];

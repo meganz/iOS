@@ -1,6 +1,7 @@
 
 #import "MEGAPhotoBrowserViewController.h"
 
+#import "FLAnimatedImage.h"
 #import "PieChartView.h"
 #import "SVProgressHUD.h"
 
@@ -49,6 +50,7 @@
 @property (nonatomic) CGFloat playButtonSize;
 @property (nonatomic) CGFloat gapBetweenPages;
 @property (nonatomic) double transferProgress;
+@property (nonatomic) BOOL needsReload;
 
 @property (nonatomic) UIWindow *secondWindow;
 
@@ -125,24 +127,32 @@
     self.navigationBar.barTintColor = [UIColor whiteColor];
     
     if (@available(iOS 11.0, *)) {} else {
-        self.navigationBar.tintColor = [UIColor mnz_redFF4D52];
+        self.navigationBar.tintColor = UIColor.mnz_redMain;
     }
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
     [self.view layoutIfNeeded];
-    [self reloadUI];
+    if (self.isBeingPresented || self.needsReload) {
+        [self reloadUI];
+        self.needsReload = NO;
+    }
 }
-
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-        [self.view layoutIfNeeded];
-        [self reloadUI];
-    } completion:nil];
+        if (!self.presentedViewController) {
+            [self.view layoutIfNeeded];
+            [self reloadUI];
+        }
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        if (self.presentedViewController) {
+            self.needsReload = YES;
+        }
+    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -150,6 +160,10 @@
     [self airplayClear];
     self.secondWindow.hidden = YES;
     self.secondWindow = nil;
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskAll;
 }
 
 #pragma mark - UI
@@ -286,7 +300,7 @@
         if (node.name.mnz_isImagePathExtension) {
             NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:NO];
             if (![[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
-                [self setupNode:node forImageView:(UIImageView *)view withMode:MEGAPhotoModeOriginal];
+                [self setupNode:node forImageView:(FLAnimatedImageView *)view withMode:MEGAPhotoModeOriginal];
             }
             if (!self.interfaceHidden) {
                 [self singleTapGesture:nil];
@@ -318,31 +332,36 @@
                 continue;
             }
             
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+            FLAnimatedImageView *imageView = [[FLAnimatedImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
             MEGANode *node = [self.mediaNodes objectAtIndex:i];
             NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:NO];
             if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
-                imageView.image = [UIImage imageWithContentsOfFile:temporaryImagePath];
+                if ([node.name.pathExtension isEqualToString:@"gif"]) {
+                    imageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:temporaryImagePath]]];
+                } else {
+                    imageView.image = [UIImage imageWithContentsOfFile:temporaryImagePath];
+                }
             } else {
                 NSString *previewPath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
                 if ([[NSFileManager defaultManager] fileExistsAtPath:previewPath]) {
                     imageView.image = [UIImage imageWithContentsOfFile:previewPath];
+                } else if (node.hasPreview) {
+                    [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
                 } else {
-                    if (node.hasPreview) {
-                        [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
-                    } else {
-                        NSString *thumbnailPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
-                        if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailPath]) {
-                            imageView.image = [UIImage imageWithContentsOfFile:thumbnailPath];
-                        } else if (node.hasThumbnail && !node.name.mnz_isImagePathExtension) {
-                            [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeThumbnail];
-                        }
-                        if (node.name.mnz_isImagePathExtension) {
-                            [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
-                        }
+                    NSString *thumbnailPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
+                    if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailPath]) {
+                        imageView.image = [UIImage imageWithContentsOfFile:thumbnailPath];
+                    } else if (node.hasThumbnail && !node.name.mnz_isImagePathExtension) {
+                        [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeThumbnail];
                     }
+                    if (node.name.mnz_isImagePathExtension && ![node.name.pathExtension isEqualToString:@"gif"]) {
+                        [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
+                    }
+                }
+                if ([node.name.pathExtension isEqualToString:@"gif"]) {
+                    [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
                 }
             }
             
@@ -360,7 +379,11 @@
 
             if (node.name.mnz_isVideoPathExtension) {
                 UIButton *playButton = [[UIButton alloc] initWithFrame:CGRectMake((zoomableView.frame.size.width - self.playButtonSize) / 2, (zoomableView.frame.size.height - self.playButtonSize) / 2, self.playButtonSize, self.playButtonSize)];
-                [playButton setImage:[UIImage imageNamed:@"video_list"] forState:UIControlStateNormal];
+                if (node.mnz_isPlayable) {
+                    [playButton setImage:[UIImage imageNamed:@"blackPlayButton"] forState:UIControlStateNormal];
+                } else {
+                    [playButton setImage:[UIImage imageNamed:@"blackCrossedPlayButton"] forState:UIControlStateNormal];
+                }
                 playButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
                 playButton.contentVerticalAlignment = UIControlContentHorizontalAlignmentFill;
                 [playButton addTarget:self action:@selector(playVideo:) forControlEvents:UIControlEventTouchUpInside];
@@ -374,7 +397,7 @@
     }
 }
 
-- (void)setupNode:(MEGANode *)node forImageView:(UIImageView *)imageView withMode:(MEGAPhotoMode)mode {
+- (void)setupNode:(MEGANode *)node forImageView:(FLAnimatedImageView *)imageView withMode:(MEGAPhotoMode)mode {
     [self removeActivityIndicatorsFromView:imageView];
 
     void (^requestCompletion)(MEGARequest *request) = ^(MEGARequest *request) {
@@ -394,7 +417,11 @@
                           duration:0.2
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
-                            imageView.image = [UIImage imageWithContentsOfFile:transfer.path];
+                            if ([node.name.pathExtension isEqualToString:@"gif"]) {
+                                imageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:transfer.path]]];
+                            } else {
+                                imageView.image = [UIImage imageWithContentsOfFile:transfer.path];
+                            }
                             [self resizeImageView:imageView];
                             if (transfer.nodeHandle == [self.mediaNodes objectAtIndex:self.currentIndex].handle) {
                                 self.pieChartView.alpha = 0.0f;
@@ -578,12 +605,12 @@
             
         default: {
             UIActivityViewController *activityViewController;
-            if (node.name.mnz_videoPathExtension) {
+            if (node.name.mnz_isVideoPathExtension) {
                 activityViewController = [Helper activityViewControllerForNodes:@[node] sender:sender];
             } else {
                 MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
                 NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
-                if (node.name.mnz_imagePathExtension) {
+                if (node.name.mnz_isImagePathExtension) {
                     SaveToCameraRollActivity *saveToCameraRollActivity = [[SaveToCameraRollActivity alloc] initWithNode:node];
                     [activitiesMutableArray addObject:saveToCameraRollActivity];
                 }
@@ -712,8 +739,17 @@
 
 - (void)playVideo:(UIButton *)sender {
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
-    UIViewController *playerVC = [node mnz_viewControllerForNodeInFolderLink:(self.api == [MEGASdkManager sharedMEGASdkFolder])];
-    [self presentViewController:playerVC animated:YES completion:nil];
+    if (node.mnz_isPlayable) {
+        UIViewController *playerVC = [node mnz_viewControllerForNodeInFolderLink:(self.api == [MEGASdkManager sharedMEGASdkFolder])];
+        [self presentViewController:playerVC animated:YES completion:nil];
+    } else {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"fileNotSupported", @"Alert title shown when users try to stream an unsupported audio/video file") message:AMLocalizedString(@"message_fileNotSupported", @"Alert message shown when users try to stream an unsupported audio/video file") preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [self.view layoutIfNeeded];
+            [self reloadUI];
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 #pragma mark - AirPlay
@@ -767,7 +803,7 @@
 - (void)updateCurrentIndexTo:(NSUInteger)newIndex {
     if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
         self.currentIndex = newIndex;
-        [self reloadUI];
+        self.needsReload = YES;
     }
 }
 
@@ -849,7 +885,7 @@
                     
                 default:
                     [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-                    [node mnz_downloadNodeOverwriting:NO];
+                    [node mnz_downloadNodeOverwriting:NO api:self.api];
                     break;
             }
             break;

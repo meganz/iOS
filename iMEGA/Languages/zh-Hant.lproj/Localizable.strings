@@ -298,8 +298,10 @@
 "newFolderMessage"="新資料夾的名字";
 /* Title button for the create folder alert.  */
 "createFolderButton"="建立";
-/* message when trying to create a folder that already exists */
-"folderAlreadyExists"="資料夾已存在";
+/* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
+"There is already a folder with the same name"="已經有一個同名的資料夾";
+/* A tooltip message which shows when a file name is duplicated during renaming. */
+"There is already a file with the same name"="已經有一個同名的檔案";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="自...匯入";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -656,8 +658,6 @@
 "about"="關於";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="語言";
-/* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
-"applicationLanguage"="應用程式語言選項";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="送出建議";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="只在充電狀態下";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="開啟后將上傳新的照片和影片。";
+/* App means “Application” */
+"App version"="App 版本";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK軟體開發包版本";
 /* Title of the label where the MEGAchat SDK version is shown */
@@ -701,7 +703,7 @@
 /*  */
 "masterKey_thirdParagraph"="外來攻擊者如持有您的金鑰仍將無法獲取您的資料。密碼重置將會需要金鑰以及需可存取您的電子郵件。";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="已複製還原金鑰至剪貼簿";
+"recoveryKeyCopiedToClipboard"="已複製還原金鑰至剪貼簿中。請將它存放在安全的地方。";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="已匯出還原金鑰";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -748,6 +750,8 @@
 "cancellationLinkHasExpired"="註銷連接已失效。";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="這是刪除帳戶的最後步驟。您將永久遺失儲存在雲端空間中的所有資料。請於下方輸入您的密碼。";
+/* During account cancellation (deletion) */
+"accountCanceledSuccessfully"="您的帳號已被成功取消。";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="註銷帳戶";
 /* Title for the action that allows to remove a file or folder */
@@ -1301,6 +1305,8 @@
 "connecting"="正在連線中...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="某些項目無法與MEGA共享";
+/* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
+"The resources are limited when sharing items. Try uploading these files from MEGA app."="The resources are limited when sharing items. Try uploading these files from MEGA app.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="轉移失敗:";
 /* MEGAError */
@@ -1358,7 +1364,7 @@
 "languageRestartNotification"="語言設定已變更。請點此以重新啟動。";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA提供極為安全的雲端存儲服務，您可享有 50 GB 的免費儲存空間。不同於其他雲端空間供應商，您的資料僅由用戶端設備進行加密和解密，而從不是經由我們加解密。";
+"generalDescriptionParagraph1"="MEGA提供極為安全的雲端空間，若您是使用正常的網頁瀏覽器與手機應用程式，則可保證資料完全由使用者操控。不同於其他雲端空間供應商，您的資料僅由用戶端設備進行加密和解密，我們不會經手您的資料，以完整保障您的隱私權。";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph2"="從您的智慧型手機或平板電腦上傳您的檔案後，隨時可從任何設備搜尋、儲存、下載、串流、查看、共享、重新命名或刪除您的檔案。並可與您的聯絡人共享資料夾，隨時查看其更新。";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
@@ -1366,12 +1372,12 @@
 /* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
 "generalDescriptionVideoChat"="End-to-end user-encrypted MEGA video chat allows for total privacy, and has been available through the browser since 2016. It has been extended to our mobile app, with chat history accessible across multiple devices. Users can also easily add files to a chat from their MEGA Cloud Drive.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="MEGA offers a generous 50 GB free storage for all registered users with bonus achievements, and offers paid plans with much higher limits:";
+"generalDescriptionParagraph4"="MEGA提供超大的50GB免費儲存空間給已註冊的使用者們，也有許多獎勵挑戰等著大家，另外，您也可以選擇使用更高級的付費方案：";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITE subscription: €4.99 (US$4.99) per month or €49.99 (US$49.99) per year gives you 200 GB of storage space and 1 TB of transfer quota per month.\nPRO I subscription: €9.99 (US$9.99) per month or €99.99 (US$99.99) per year gives you 1 TB of storage space and 2 TB of transfer quota per month.\nPRO II subscription: €19.99 (US$19.99) per month or €199.99 (US$199.99) per year gives you 4 TB of storage space and 8 TB of transfer quota per month.\nPRO III subscription: €29.99 (US$29.99) per month or €299.99 (US$299.99) per year gives you 8 TB of storage space and 16 TB of transfer quota per month.";
+"generalDescriptionParagraph5"="PRO LITE 訂閱方案：每月€4.99歐元（$4.99美元）或每年€49.99歐元（$49.99美元），即可享有200GB的儲存空間和每月1TB的傳輸配額。\n PRO I 訂閱方案：每月€9.99歐元（$9.99美元） 或每年€99.99歐元（$99.99美元）即可享有1TB的儲存空間和每月2TB的傳輸配額。\n PRO II 訂閱方案：每月€19.99歐元（$19.99美元）或每年€199.99歐元（$199.99美元） 即可享有4TB的儲存空間和每月8TB的傳輸配額。\n PRO III 訂閱方案：每月€29.99歐元（$29.99美元）或每年€299.99歐元（$299.99美元）即可享有8TB的儲存空間和每月16TB傳輸配額。";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="For more info, please check our website: https://mega.nz/\nTerms of Service: https://mega.nz/terms\nPrivacy Policy: https://mega.nz/privacy";
+"generalDescriptionParagraph6"="欲了解更多資訊，請參考我們的網站： https://mega.nz/\n服務條款： https://mega.nz/terms\n隱私權政策： https://mega.nz/privacy";
 /* Label shown when you receive an incoming call, before start the call. */
 "calling..."="撥號中...";
 /* Notification text body shown when you have missed one audio call */
@@ -1477,7 +1483,7 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="您還記得你的密碼嗎？";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset your password without data loss. Please make sure you remember your password.";
+"remindPasswordText"="因MEGA使用安全加密技術，您將無法直接重新設定密碼而不遺失任何資料。所以請確保您已牢記您的密碼。";
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
 /* Text next to a toggle that if enabled won't appear again */
@@ -1568,3 +1574,31 @@
 "archived"="已封存";
 /* Title of empty state view for archived chats. */
 "noArchivedChats"="No Archived Chats";
+/* A title for the Two-Factor Authentication section on the My Account - Security page. */
+"twoFactorAuthentication"="兩階段驗證功能";
+/* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
+"beginSetup"="Begin Setup";
+/* A message on the Verify Login page telling the user to enter their 2FA code. */
+"pleaseEnterTheSixDigitCode"="Please enter the 6-digit code generated by your Authentication app.";
+/* Title of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthentication"="Why do you need Two-Factor Authentication?";
+/* Description for the ‘Two-Factor Authentication’ in the security settings section. */
+"whatIsTwoFactorAuthentication"="Two-Factor Authentication is a second layer of security for your account.";
+/* Description text of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthenticationDescription"="Two-Factor Authentication is a second layer of security for your account. Which means that even if someone knows your password they cannot access it, without also having access to the six digit code only you have access to.";
+/* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"youNeedATwoFactorAuthenticationApp"="You need a two factor authentication app on this device";
+/* A title on the mobile web client page showing that 2FA has been enabled successfully. */
+"twoFactorAuthenticationEnabled"="已啟用兩階段驗證";
+/* A message on the dialog shown after 2FA was successfully enabled. */
+"twoFactorAuthenticationEnabledDescription"="Next time you login to your account you will be asked to enter a 6-digit code provided by your authentication app.";
+/* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
+"pleaseSaveYourRecoveryKey"="Please save your Recovery Key in a safe location";
+/* An informational message on the Backup Recovery Key dialog. */
+"twoFactorAuthenticationEnabledWarning"="If you lose access to your account after enabling 2FA and you have not backed up your Recovery Key, MEGA cannot help you gain access to it again.";
+/* A message on a dialog to say that 2FA has been successfully disabled. */
+"twoFactorAuthenticationDisabled"="已停用兩階段驗證";
+/* A message on the setup two-factor authentication page on the mobile web client. */
+"scanOrCopyTheSeed"="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your phone.";
+/* A button to help them restore their account if they have lost their 2FA device. */
+"lostYourAuthenticatorDevice"="Lost your Authenticator device?";

@@ -50,12 +50,14 @@
     }
     
     [self.actionButton setTitle:self.action forState:UIControlStateNormal];
+    self.actionColor ? (self.actionButton.backgroundColor = self.actionColor) : nil;
     
     if (self.dismiss) {
         [self.dismissButton setTitle:self.dismiss forState:UIControlStateNormal];
     } else {
         self.dismissButton.hidden = YES;
     }
+    self.dismissColor ? [self.dismissButton setTitleColor:self.dismissColor forState:UIControlStateNormal] : nil;
     
     if (self.bonus) {
         [self.bonusButton setTitle:self.bonus forState:UIControlStateNormal];

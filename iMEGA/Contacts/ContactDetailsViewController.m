@@ -203,10 +203,10 @@
     NSInteger numberOfRows = 0;
     if (section == 0) {
         if (self.contactDetailsMode == ContactDetailsModeDefault) {
-            //TODO: When possible, re-add the rows "Notifications" and "Verify Credentials".
+            //TODO: When possible, re-add the rows "Chat Notifications", "Set Nickname" and "Verify Credentials".
             numberOfRows = 2;
         } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
-            //TODO: When possible, re-add the rows "Notifications", "Close Chat" and "Verify Credentials".
+            //TODO: When possible, re-add the rows "Chat Notifications", "Set Nickname" and "Verify Credentials".
             if (self.user.visibility == MEGAUserVisibilityHidden) {
                 numberOfRows = 2;
             } else {
@@ -237,7 +237,7 @@
                     cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
                     cell.nameLabel.text = AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
                     cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
-                    cell.nameLabel.textColor = [UIColor mnz_redF0373A];
+                    cell.nameLabel.textColor = UIColor.mnz_redMain;
                     cell.lineView.hidden = YES;
                     break;
             }
@@ -246,19 +246,21 @@
                 case 0: //Clear Chat History
                     cell.avatarImageView.image = [UIImage imageNamed:@"clearChatHistory"];
                     cell.nameLabel.text = AMLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.");
+                    cell.nameLabel.enabled = self.user.visibility == MEGAUserVisibilityVisible;
+                    cell.userInteractionEnabled = self.user.visibility == MEGAUserVisibilityVisible;
                     break;
                     
                 case 1: //Archive chat
                     cell.avatarImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
                     cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
-                    cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redF0373A : UIColor.mnz_black333333;
+                    cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redMain : UIColor.mnz_black333333;
                     cell.lineView.hidden = [self.tableView numberOfRowsInSection:0] == 2;
                     break;
                     
                 case 2: //Remove Contact
                     cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
                     cell.nameLabel.text = AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
-                    cell.nameLabel.textColor = [UIColor mnz_redF0373A];
+                    cell.nameLabel.textColor = UIColor.mnz_redMain;
                     cell.lineView.hidden = YES;
                     break;
             }

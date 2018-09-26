@@ -2,9 +2,10 @@
 #import "MEGAProcessAsset.h"
 
 #import "ChatVideoUploadQuality.h"
-#import "NSFileManager+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "NSFileManager+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 
 #import "SDAVAssetExportSession.h"
 #import "UIApplication+MNZCategory.h"
@@ -510,11 +511,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         }
     } else {
         NSString *extension = [self extensionWithInfo:info asset:asset];
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.dateFormat = @"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss";
-        NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-        dateFormatter.locale = locale;
-        name = [[dateFormatter stringFromDate:asset.creationDate] stringByAppendingPathExtension:extension];
+        name = [[NSString mnz_fileNameWithDate:asset.creationDate] stringByAppendingPathExtension:extension];
     }
     
     NSString *filePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:name];
@@ -827,7 +824,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     CGRect rect = CGRectMake(margin, 72.0, self.alertController.view.frame.size.width - margin * 2.0 , 2.0);
     self.progressView = [[UIProgressView alloc] initWithFrame:rect];
     self.progressView.progress = 0.0;
-    self.progressView.tintColor = [UIColor mnz_redD90007];
+    self.progressView.tintColor = UIColor.mnz_redMain;
     [self.alertController.view addSubview:self.progressView];
 }
 

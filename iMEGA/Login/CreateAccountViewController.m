@@ -35,7 +35,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet UITextField *activeTextField;
+@property (weak, nonatomic) IBOutlet PasswordView *activePasswordView;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *retypePasswordViewHeightConstraint;
@@ -108,7 +108,7 @@
 - (void)showPasswordErrorView:(PasswordView *)passwordView constraint:(NSLayoutConstraint *)constraint message:(NSString *)message {
     constraint.constant = 83;
     passwordView.wrongPasswordView.hidden = NO;
-    passwordView.leftImageView.tintColor = UIColor.mnz_redD90007;
+    passwordView.leftImageView.tintColor = UIColor.mnz_redMain;
     passwordView.wrongPasswordLabel.text = message;
 }
 
@@ -129,7 +129,7 @@
 - (BOOL)validateForm {
     if (![self validateName:self.nameTextField.text] || ![self validateName:self.lastNameTextField.text]) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"invalidFirstNameAndLastName", @"")];
-        self.nameIconImageView.tintColor = UIColor.mnz_redD90007;
+        self.nameIconImageView.tintColor = UIColor.mnz_redMain;
         if (![self validateName:self.nameTextField.text]) {
             [self.nameTextField becomeFirstResponder];
         } else {
@@ -161,6 +161,7 @@
     
     if ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordView.passwordTextField.text] == PasswordStrengthVeryWeak) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"pleaseStrengthenYourPassword", @"")];
+        [self.passwordView.passwordTextField becomeFirstResponder];
         
         return NO;
     }
@@ -251,15 +252,15 @@
     NSDictionary *info = aNotification.userInfo;
     CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
 
-    CGFloat bottomSpaceToLineSeparator = 14.0f;
+    CGFloat bottomSpaceToLineSeparator = self.activePasswordView.wrongPasswordView.hidden ? 14.0f : 34.f;
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height + (bottomSpaceToLineSeparator * 2), 0.0);
     self.scrollView.contentInset = contentInsets;
     self.scrollView.scrollIndicatorInsets = contentInsets;
 
     CGRect viewFrame = self.view.frame;
     viewFrame.size.height -= keyboardSize.height;
-    if (!CGRectContainsPoint(viewFrame, self.activeTextField.frame.origin)) {
-        [self.scrollView scrollRectToVisible:self.activeTextField.frame animated:YES];
+    if (!CGRectContainsPoint(viewFrame, self.activePasswordView.frame.origin)) {
+        [self.scrollView scrollRectToVisible:self.activePasswordView.frame animated:YES];
     }
 }
 
@@ -296,7 +297,7 @@
     } else {
         shoulBeCreateAccountButtonGray = [self isEmptyAnyTextFieldForTag:self.retypePasswordView.passwordTextField.tag];
     }
-    self.createAccountButton.backgroundColor = shoulBeCreateAccountButtonGray ? UIColor.mnz_grayEEEEEE : UIColor.mnz_redFF4D52;
+    self.createAccountButton.backgroundColor = shoulBeCreateAccountButtonGray ? UIColor.mnz_grayEEEEEE : UIColor.mnz_redMain;
     
     [self hideKeyboard];
 }
@@ -318,7 +319,7 @@
                         [self.navigationController popViewControllerAnimated:YES];
                     }];
                 } else {
-                    self.emailIconImageView.tintColor = UIColor.mnz_redD90007;
+                    self.emailIconImageView.tintColor = UIColor.mnz_redMain;
                     [self.emailTextField becomeFirstResponder];
                     self.createAccountButton.enabled = YES;
                 }
@@ -333,13 +334,14 @@
 #pragma mark - UITextFieldDelegate
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    self.activeTextField = textField;
     switch (textField.tag) {
         case 3:
+            self.activePasswordView = self.passwordView;
             self.passwordView.rightImageView.hidden = NO;
             break;
             
         case 4:
+            self.activePasswordView = self.retypePasswordView;
             self.retypePasswordView.rightImageView.hidden = NO;
             break;
             
@@ -349,7 +351,7 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    self.activeTextField = nil;
+    self.activePasswordView = nil;
     switch (textField.tag) {
         case 3:
             self.passwordView.rightImageView.hidden = YES;
@@ -373,7 +375,7 @@
         shoulBeCreateAccountButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
     }
     
-    self.createAccountButton.backgroundColor = shoulBeCreateAccountButtonGray ? UIColor.mnz_grayEEEEEE : UIColor.mnz_redFF4D52;
+    self.createAccountButton.backgroundColor = shoulBeCreateAccountButtonGray ? UIColor.mnz_grayEEEEEE : UIColor.mnz_redMain;
     
     if (textField.tag == 0 || textField.tag == 1) {
         self.nameIconImageView.tintColor = UIColor.mnz_gray777777;

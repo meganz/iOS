@@ -7,7 +7,7 @@
 /* */
 "no"="Nee";
 /* */
-"upload"="Upload";
+"upload"="Uploaden";
 /*  */
 "error"="Fout";
 /*  */
@@ -298,8 +298,10 @@
 "newFolderMessage"="Naam voor de nieuwe map";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Maak";
-/* message when trying to create a folder that already exists */
-"folderAlreadyExists"="Map bestaat al";
+/* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
+"There is already a folder with the same name"="Er is al een map met dezelfde naam";
+/* A tooltip message which shows when a file name is duplicated during renaming. */
+"There is already a file with the same name"="Er is al een bestand met dezelfde naam";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importeren van...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -656,8 +658,6 @@
 "about"="Over";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Taal";
-/* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
-"applicationLanguage"="Nederlands";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Feedback versturen";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="Alleen tijden het laden";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Wanneer ingeschakeld zullen uw foto's en video's automatisch worden geüpload.";
+/* App means “Application” */
+"App version"="Applicatie versie";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK versie";
 /* Title of the label where the MEGAchat SDK version is shown */
@@ -701,7 +703,7 @@
 /*  */
 "masterKey_thirdParagraph"="Een externe aanvaller kan geen toegang krijgen tot uw account met alleen de master sleutel. Om het wachtwoord te wijzigen is toegang tot de master sleutel én uw e-mail vereist.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="Herstel Sleutel is gekopieerd naar het klembord";
+"recoveryKeyCopiedToClipboard"="De Herstelsleutel is gekopieerd naar het klembord. Bewaar het op een veilige plaats.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Herstel sleutel geëxporteerd";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -748,6 +750,8 @@
 "cancellationLinkHasExpired"="Annuleringskoppeling is verstreken.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Dit is de laatste stap om uw account te annuleren. U verliest alle gegevens die zijn opgeslagen in de cloud permanent. Voer alstublieft uw wachtwoord hieronder in.";
+/* During account cancellation (deletion) */
+"accountCanceledSuccessfully"="Uw account is succesvol geannuleerd.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Beëindig account";
 /* Title for the action that allows to remove a file or folder */
@@ -1301,6 +1305,8 @@
 "connecting"="Verbinden...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Sommige items konden niet gedeeld worden in MEGA";
+/* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
+"The resources are limited when sharing items. Try uploading these files from MEGA app."="The resources are limited when sharing items. Try uploading these files from MEGA app.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Overdracht mislukt:";
 /* MEGAError */
@@ -1568,3 +1574,31 @@
 "archived"="Gearchiveerd";
 /* Title of empty state view for archived chats. */
 "noArchivedChats"="Geen Gearchiveerde Gesprekken";
+/* A title for the Two-Factor Authentication section on the My Account - Security page. */
+"twoFactorAuthentication"="Twee-Stap Authenticatie";
+/* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
+"beginSetup"="Begin Setup";
+/* A message on the Verify Login page telling the user to enter their 2FA code. */
+"pleaseEnterTheSixDigitCode"="Voer de 6-cijferige code gegenereerd door uw Authenticatie applicatie in.";
+/* Title of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthentication"="Why do you need Two-Factor Authentication?";
+/* Description for the ‘Two-Factor Authentication’ in the security settings section. */
+"whatIsTwoFactorAuthentication"="Two-Factor Authentication is a second layer of security for your account.";
+/* Description text of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthenticationDescription"="Two-Factor Authentication is a second layer of security for your account. Which means that even if someone knows your password they cannot access it, without also having access to the six digit code only you have access to.";
+/* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"youNeedATwoFactorAuthenticationApp"="You need a two factor authentication app on this device";
+/* A title on the mobile web client page showing that 2FA has been enabled successfully. */
+"twoFactorAuthenticationEnabled"="Twee-Stap Authenticatie Ingeschakeld";
+/* A message on the dialog shown after 2FA was successfully enabled. */
+"twoFactorAuthenticationEnabledDescription"="Next time you login to your account you will be asked to enter a 6-digit code provided by your authentication app.";
+/* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
+"pleaseSaveYourRecoveryKey"="Sla uw Herstelsleutel op op een veilige locatie";
+/* An informational message on the Backup Recovery Key dialog. */
+"twoFactorAuthenticationEnabledWarning"="Als u toegang verliest tot uw account nadat u 2FA heeft ingeschakeld en u uw Herstelsleutel niet heeft opgeslagen, dan kan MEGA u niet helpen de toegang terug te krijgen.";
+/* A message on a dialog to say that 2FA has been successfully disabled. */
+"twoFactorAuthenticationDisabled"="Twee-Stap Authenticatie Uitgeschakeld";
+/* A message on the setup two-factor authentication page on the mobile web client. */
+"scanOrCopyTheSeed"="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your phone.";
+/* A button to help them restore their account if they have lost their 2FA device. */
+"lostYourAuthenticatorDevice"="Bent u uw Authenticatie apparaat verloren?";

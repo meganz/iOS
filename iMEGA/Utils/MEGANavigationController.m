@@ -16,15 +16,20 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    if (self.topViewController.presentedViewController) {
+        if ([self.topViewController.presentedViewController respondsToSelector:@selector(supportedInterfaceOrientations)]) {
+            return [self.topViewController.presentedViewController supportedInterfaceOrientations];
+        }
+    } else {
+        if ([self.topViewController respondsToSelector:@selector(supportedInterfaceOrientations)]) {
+            return [self.topViewController supportedInterfaceOrientations];
+        }
+    }
     if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
         return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+    } else {
+        return UIInterfaceOrientationMaskAll;
     }
-    
-    if([self.topViewController respondsToSelector:@selector(supportedInterfaceOrientations)]) {
-        return [self.topViewController supportedInterfaceOrientations];
-    }
-    
-    return UIInterfaceOrientationMaskAll;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
